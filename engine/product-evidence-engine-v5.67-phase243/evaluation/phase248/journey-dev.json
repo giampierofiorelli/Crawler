@@ -1,0 +1,19 @@
+{"schema":"pee248.journey-benchmark.v1","split":"development",
+ "cases":[
+ {"id":"d01","text":"What's a good air fryer for one person?","expectedCategory":"air_fryers","expectedConcepts":["cook_single_portion"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d02","text":"I want crispy food but I live in a studio flat with very little counter space.","expectedCategory":"air_fryers","expectedConcepts":["crisp_texture","small_kitchen"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d03","text":"Which airfryer is easiest to clean?","expectedCategory":"air_fryers","expectedConcepts":["cleaning_effort"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d04","text":"I'm worried about non-stick coating peeling off in an air fryer.","expectedCategory":"air_fryers","expectedConcepts":["coating_wear"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d05","text":"Which espresso machine makes the best tasting coffee?","expectedCategory":"coffee_machines","expectedConcepts":["espresso_quality"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d06","text":"We live in a hard water area, so limescale is a problem for coffee machines.","expectedCategory":"coffee_machines","expectedConcepts":["scale_buildup"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d07","text":"Coffee maker with low maintenance please.","expectedCategory":"coffee_machines","expectedConcepts":["low_maintenance"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d08","text":"I want a toaster that browns evenly.","expectedCategory":"toasters","expectedConcepts":["even_browning"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d09","text":"Toaster with wide slots for bagels and thick bread?","expectedCategory":"toasters","expectedConcepts":["thick_bread_fit"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d10","text":"I want toast to come out the same every time, round after round.","expectedCategory":"toasters","expectedConcepts":["repeatable_results"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"d11","text":"Help me choose an appliance.","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"clarify"},
+ {"id":"d12","text":"What deep fat fryer is safest?","expectedCategory":"deep_fryers","expectedConcepts":[],"expectedDecision":"unsupported_category"},
+ {"id":"d13","text":"Recommend a rice cooker for a family.","expectedCategory":"rice_cookers","expectedConcepts":[],"expectedDecision":"unsupported_category"},
+ {"id":"d14","text":"Which running shoes are best for marathons?","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"out_of_scope"},
+ {"id":"d15","text":"Coffee machine or kettle and cafetiere, which is better for me?","expectedCategory":"ambiguous","expectedConcepts":[],"expectedDecision":"clarify"},
+ {"id":"d16","text":"Air fryer under £80 for two people?","expectedCategory":"air_fryers","expectedConcepts":[],"expectedDecision":"withhold_insufficient_evidence","expectedBudget":{"currency":"GBP","max":80}}
+ ]}

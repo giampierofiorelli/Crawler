@@ -29,6 +29,7 @@ import {join,resolve} from 'node:path';
 import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,defaultKnowledgeDir246} from '../dist/src/phase246_knowledge_store.js';
 import {seedCategoryHypotheses246,CATEGORY_ALIASES246} from '../dist/src/phase246_category_seeds.js';
 import {seedRelations247} from '../dist/src/phase247_relation_seeds.js';
+import {CONCEPT_VOCABULARY248} from '../dist/src/phase248_concept_vocabulary.js';
 import {relations247,attributeVocabulary247,compileTo116,researchPriorities247} from '../dist/src/phase247_category_relations.js';
 import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../dist/src/phase245_spec_extraction.js';
 
@@ -112,6 +113,7 @@ try{
   case 'revisit-plan':{const p=store.revisitPlan246({asOf:flags['as-of']??new Date().toISOString(),extractorVersion:SPEC_EXTRACTOR_VERSION,baseIntervalDays:flags.days?Number(flags.days):undefined});
    out(flags.full?p:{...p,plan:p.plan.filter(x=>x.action!=='skip').slice(0,100)});break;}
   case 'rights-worksheet':out(store.rightsWorksheet246());break;
+  case 'seed-vocabulary':{let n=0;for(const [c,m] of Object.entries(CONCEPT_VOCABULARY248))for(const [id,al] of Object.entries(m))n+=store.addConceptAliases246(c,id,al);out({itemsUpdated:n});break;}
   case 'seed-relations':out({category:flags.category,...seedRelations247(store,flags.category)});break;
   case 'category-graph':{const c=flags.category;const comp=compileTo116(store,c);
    out({categoryId:c,relations:relations247(store,c),vocabulary:attributeVocabulary247(store,c),phase116Audit:comp.audit,phase116Reason:comp.reason,

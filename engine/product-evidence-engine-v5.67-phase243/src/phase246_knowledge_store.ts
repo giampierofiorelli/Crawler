@@ -557,6 +557,16 @@ export class KnowledgeStore246 {
    this.invalidate(['category:'+it.category_id,'catitem:'+itemId],'category_item_reviewed');
   });
  }
+ /** Adds request vocabulary to every item carrying a concept (vocabulary only; class, state and review unchanged). */
+ addConceptAliases246(categoryId:string,conceptId:string,aliases:readonly string[],at=new Date().toISOString()):number{
+  const rows=this.db.prepare('SELECT item_id,aliases_json FROM category_items WHERE category_id=? AND concept_id=?').all(categoryId,conceptId) as {item_id:string;aliases_json:string}[];
+  let changed=0;
+  for(const r of rows){const cur:string[]=JSON.parse(r.aliases_json);
+   const next=[...new Map([...cur,...aliases].filter(a=>shortText(a,80)).map(a=>[a.toLowerCase(),a.trim()])).values()].slice(0,40);
+   if(next.length!==cur.length){this.db.prepare('UPDATE category_items SET aliases_json=?,updated_at=? WHERE item_id=?').run(canon(next),at,r.item_id);changed++;}}
+  if(changed){this.event('concept_aliases_added',{categoryId,conceptId,count:aliases.length},at);this.invalidate(['category:'+categoryId],'concept_aliases_added');}
+  return changed;
+ }
  categoryItems246(categoryId:string){
   return (this.db.prepare("SELECT * FROM category_items WHERE category_id=? AND superseded_by IS NULL ORDER BY section,item_id").all(categoryId) as Record<string,string>[])
    .map(r=>({itemId:r.item_id,section:r.section as CategorySection246,statement:r.statement,knowledgeClass:r.knowledge_class as KnowledgeClass246,

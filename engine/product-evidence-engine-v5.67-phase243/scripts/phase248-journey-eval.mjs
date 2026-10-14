@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+/** Runs the Phase248 advisory journey over a benchmark file against a store (opened read-only in practice:
+ * the journey performs no writes). Usage: node scripts/phase248-journey-eval.mjs --bench FILE [--db FILE] [--out FILE] [--verbose 1] */
+import {readFileSync,writeFileSync} from 'node:fs';import {resolve,join} from 'node:path';
+import {KnowledgeStore246,defaultKnowledgeDir246} from '../dist/src/phase246_knowledge_store.js';
+import {runJourney248,scoreJourneys248} from '../dist/src/phase248_advisory_journey.js';
+import {CATEGORY_REGISTRY248} from '../dist/src/phase248_category_registry.js';
+const F=Object.fromEntries(process.argv.slice(2).reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/,''),arr[i+1]]],[]));
+const bench=JSON.parse(readFileSync(resolve(F.bench),'utf8'));
+const store=new KnowledgeStore246(resolve(F.db??join(defaultKnowledgeDir246(),'pee246.sqlite')));
+const texts=Object.fromEntries(bench.cases.map(c=>[c.id,c.text]));
+const t0=performance.now();
+const score=scoreJourneys248(bench.cases,t=>runJourney248(t,store,CATEGORY_REGISTRY248),texts);
+const ms=performance.now()-t0;
+const journeys=Object.fromEntries(bench.cases.map(c=>[c.id,runJourney248(c.text,store,CATEGORY_REGISTRY248)]));
+store.close();
+const out={schema:'pee248.journey-eval.v1',bench:F.bench,split:bench.split,generatedAt:new Date().toISOString(),msTotal:+ms.toFixed(1),score,journeys};
+if(F.out)writeFileSync(resolve(F.out),JSON.stringify(out,null,1)+'\n');
+const {rows,...summary}=score;console.log(JSON.stringify(summary));
+if(F.verbose)for(const r of rows)if(!r.categoryOk||!r.decisionOk||r.conceptTp<r.conceptExpected||r.conceptFp||!r.budgetOk)console.log(' ',r.id,JSON.stringify({cat:r.gotCategory,concepts:r.gotConcepts,dec:r.gotDecision,block:r.blockingStage,budget:r.budgetOk}),'|',texts[r.id]);
