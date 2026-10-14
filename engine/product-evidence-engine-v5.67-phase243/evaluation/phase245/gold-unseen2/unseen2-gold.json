@@ -1,0 +1,679 @@
+{
+ "pololu_2135": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 6.95,
+     "currency": "USD"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [
+   {
+    "product": "main",
+    "property": "xOUT1",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "xOUT2",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "operating mode",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "xENABLE",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "xPHASE",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "xIN1",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "xIN2",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "Default State",
+    "why": "motor-control truth table / pin table, not product specifications"
+   },
+   {
+    "product": "main",
+    "property": "Description",
+    "why": "motor-control truth table / pin table, not product specifications"
+   }
+  ],
+  "note": "description tab page; its tables are layout, truth tables, pin descriptions and link lists"
+ },
+ "pololu_2135_specs": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 6.95,
+     "currency": "USD"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Motor driver",
+    "value": {
+     "kind": "text",
+     "text": "DRV8835"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Motor channels",
+    "value": {
+     "kind": "number",
+     "number": 2
+    }
+   },
+   {
+    "product": "main",
+    "property": "Minimum operating voltage",
+    "value": {
+     "kind": "quantity",
+     "number": 0,
+     "unit": "V"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Maximum operating voltage",
+    "value": {
+     "kind": "quantity",
+     "number": 11,
+     "unit": "V"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Continuous output current per channel",
+    "value": {
+     "kind": "quantity",
+     "number": 1.2,
+     "unit": "A"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Peak output current per channel",
+    "value": {
+     "kind": "quantity",
+     "number": 1.5,
+     "unit": "A"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Continuous paralleled output current",
+    "value": {
+     "kind": "quantity",
+     "number": 2.4,
+     "unit": "A"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Maximum PWM frequency",
+    "value": {
+     "kind": "quantity",
+     "number": 250,
+     "unit": "kHz"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Minimum logic voltage",
+    "value": {
+     "kind": "quantity",
+     "number": 2,
+     "unit": "V"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Maximum logic voltage",
+    "value": {
+     "kind": "quantity",
+     "number": 7,
+     "unit": "V"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Reverse voltage protection?",
+    "value": {
+     "kind": "boolean",
+     "value": true
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [],
+  "note": "'1.2 A 2' carries a footnote digit; volume price-break rows (1 -> 6.95, 5 -> 6.39 ...) are not specifications and count as false positives"
+ },
+ "wickes_dhr242": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 189,
+     "currency": "GBP"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Blows per Minute",
+    "value": {
+     "kind": "quantity",
+     "number": 4700,
+     "unit": "bpm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Maximum Diameter (Wood)",
+    "value": {
+     "kind": "quantity",
+     "number": 27,
+     "unit": "mm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Maximum Diameter (Steel)",
+    "value": {
+     "kind": "quantity",
+     "number": 13,
+     "unit": "mm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "No Load Speed",
+    "value": {
+     "kind": "range",
+     "min": 0,
+     "max": 950,
+     "unit": "rpm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 3.3,
+     "unit": "kg"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Power Type",
+    "value": {
+     "kind": "text",
+     "text": "Cordless"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Battery Type",
+    "value": {
+     "kind": "text",
+     "text": "Li-ion"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Voltage",
+    "value": {
+     "kind": "quantity",
+     "number": 18,
+     "unit": "V"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Type",
+    "value": {
+     "kind": "text",
+     "text": "Hammer Drills"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Years Guaranteed",
+    "value": {
+     "kind": "number",
+     "number": 3
+    }
+   },
+   {
+    "product": "main",
+    "property": "Manufacturer Model No",
+    "value": {
+     "kind": "text",
+     "text": "BHR242Z"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Brand Name",
+    "value": {
+     "kind": "text",
+     "text": "Makita"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [],
+  "note": "a features bullet 'Years Guaranteed: 1 (Register online ... additional FREE 2 years)' is conditional and not expected"
+ },
+ "richer_audiolab9000a": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 1999,
+     "currency": "GBP"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Colour",
+    "value": {
+     "kind": "text",
+     "text": "Silver"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Remote Control Included",
+    "value": {
+     "kind": "boolean",
+     "value": true
+    }
+   },
+   {
+    "product": "main",
+    "property": "Amplifier Type",
+    "value": {
+     "kind": "text",
+     "text": "Integrated Amplifier"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Power Output",
+    "value": {
+     "kind": "quantity",
+     "number": 100,
+     "unit": "W"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Phono Input Type",
+    "value": {
+     "kind": "text",
+     "text": "Moving Magnet"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Wireless Connectivity",
+    "value": {
+     "kind": "text",
+     "text": "Bluetooth Input"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Speaker Sets",
+    "value": {
+     "kind": "number",
+     "number": 1
+    }
+   },
+   {
+    "product": "main",
+    "property": "Manufacturer's guarantee",
+    "value": {
+     "kind": "text",
+     "text": "3 Years"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Product Dimensions (mm)",
+    "value": {
+     "kind": "dimensions",
+     "numbers": [
+      444,
+      89,
+      342
+     ],
+     "unit": "mm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 8.4,
+     "unit": "kg"
+    }
+   },
+   {
+    "product": "main",
+    "property": "High Resolution Audio",
+    "value": {
+     "kind": "boolean",
+     "value": true
+    }
+   },
+   {
+    "product": "main",
+    "property": "DAC make/model",
+    "value": {
+     "kind": "text",
+     "text": "ES9038Pro 32-bit"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Frequency Response (Hz)",
+    "value": {
+     "kind": "range",
+     "min": 20,
+     "max": 20000,
+     "unit": "Hz"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Power Consumption - Standby",
+    "value": {
+     "kind": "quantity",
+     "number": 0.5,
+     "unit": "W"
+    }
+   },
+   {
+    "product": "main",
+    "property": "SKU",
+    "value": {
+     "kind": "text",
+     "text": "AUDI-9000A-SIL"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "acceptableExtra": [
+   {
+    "property": "Inputs",
+    "why": "list or service value"
+   },
+   {
+    "property": "Outputs",
+    "why": "list or service value"
+   },
+   {
+    "property": "Features",
+    "why": "list or service value"
+   },
+   {
+    "property": "Richer Sounds extended guarantee",
+    "why": "list or service value"
+   },
+   {
+    "property": "UPC",
+    "why": "list or service value"
+   }
+  ],
+  "forbidden": []
+ },
+ "sparkfun_redboard": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 21.95,
+     "currency": "USD"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Input voltage",
+    "value": {
+     "kind": "range",
+     "min": 7,
+     "max": 15,
+     "unit": "V"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [],
+  "note": "'Input voltage - 7-15V' uses a hyphen separator inside an unlabelled bullet list; volume discounts are not specifications"
+ },
+ "johnlewis_1": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 599,
+     "currency": "GBP"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Automatic or manual",
+    "value": {
+     "kind": "text",
+     "text": "Automatic"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Brand",
+    "value": {
+     "kind": "text",
+     "text": "De'Longhi"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Cable length",
+    "value": {
+     "kind": "quantity",
+     "number": 100,
+     "unit": "cm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Corded or cordless",
+    "value": {
+     "kind": "text",
+     "text": "Corded"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Country of origin",
+    "value": {
+     "kind": "text",
+     "text": "Romania"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Cup warmer",
+    "value": {
+     "kind": "boolean",
+     "value": false
+    }
+   },
+   {
+    "product": "main",
+    "property": "Dimensions",
+    "value": {
+     "kind": "dimensions",
+     "numbers": [
+      385,
+      245,
+      430
+     ],
+     "unit": "mm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Guarantee",
+    "value": {
+     "kind": "text",
+     "text": "2 year guarantee included"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Installation required",
+    "value": {
+     "kind": "boolean",
+     "value": false
+    }
+   },
+   {
+    "product": "main",
+    "property": "Milk functionality",
+    "value": {
+     "kind": "text",
+     "text": "Automatic"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Model name / number",
+    "value": {
+     "kind": "text",
+     "text": "EXAM420.55.BXL"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Power",
+    "value": {
+     "kind": "quantity",
+     "number": 1450,
+     "unit": "W"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Power supply",
+    "value": {
+     "kind": "text",
+     "text": "Mains"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Pressure",
+    "value": {
+     "kind": "quantity",
+     "number": 15,
+     "unit": "bar"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Removable reservoir",
+    "value": {
+     "kind": "boolean",
+     "value": true
+    }
+   },
+   {
+    "product": "main",
+    "property": "Washing instructions",
+    "value": {
+     "kind": "text",
+     "text": "Wipe Clean Only"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 9.45,
+     "unit": "kg"
+    }
+   }
+  ],
+  "mustAbstain": [
+   {
+    "product": "main",
+    "property": "Capacity",
+    "why": "'Bean hopper 250g Water tank 1.4L': two components in one value"
+   }
+  ],
+  "acceptableExtra": [
+   {
+    "property": "Types of drink produced",
+    "why": "list value"
+   }
+  ],
+  "forbidden": [],
+  "note": "three colour variants (ProductGroup); delivery-option dl entries are not product facts and count as false positives"
+ }
+}
