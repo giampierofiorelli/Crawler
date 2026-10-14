@@ -134,11 +134,17 @@ export function textOf245(n:Node245,opts:{skip?:(n:Node245)=>boolean}={}):string
   if(x.tag==='br'){out.push(' ');return;}
   // Citation markers ("[4]", "[a]") are reference links, not values.
   if(x.tag==='sup'&&/\breference\b/.test(x.attrs.class??''))return;
+  // Footnote markers: a superscript that only links to an in-page note ("1.2 A<sup><a href=#note2>2</a></sup>").
+  if(x.tag==='sup'&&isFootnoteMarker(x))return;
   for(const c of x.children)walk(c);
   if(x.tag!=='span'&&x.tag!=='a'&&x.tag!=='b'&&x.tag!=='strong'&&x.tag!=='em'&&x.tag!=='i'&&x.tag!=='sup'&&x.tag!=='sub')out.push(' ');
  };
  walk(n);
  return clean245(out.join(''));
+}
+function isFootnoteMarker(sup:Node245):boolean{
+ const els=sup.children.filter(c=>c.kind==='element');const text=sup.children.filter(c=>c.kind==='text').map(c=>c.text).join('').trim();
+ return els.length===1&&els[0].tag==='a'&&(els[0].attrs.href??'').startsWith('#')&&!text&&/^[\w*†‡§]{1,4}$/.test(els[0].children.map(c=>c.text).join('').trim());
 }
 export const clean245=(s:string)=>s.normalize('NFKC').replace(/\[(?:\d{1,3}|[a-z]|note \d+|citation needed)\]/gi,' ')
  .replace(/[​-‍﻿]/g,'').replace(/\s+/g,' ').trim();

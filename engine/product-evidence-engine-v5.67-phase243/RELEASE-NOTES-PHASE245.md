@@ -1,0 +1,3 @@
+# PEE Phase245 (on v5.67.0)
+
+Generic HTML specification extraction (JSON-LD, microdata, dl, repeated div/span label/value structures, reusable components) with main-content vs related/listing/navigation separation, section context, variants, conflicts and explicit abstention; HTML table grid with rowspan/colspan, multilevel headers and product/attribute orientation. Wired into Phase222 receipts as `specifications245`. Held-out results, each set run once on frozen code: unseen-1 4/31 correct (3 FP) at the first freeze; unseen-2 37/62 correct (13 strict FP, 0 false associations) at the second freeze, versus a 12/62 baseline. 26 new tests; 4,287/4,287 TS tests pass. No new dependencies. Details `docs/phase245/PHASE245-TECHNICAL-REPORT.md`.

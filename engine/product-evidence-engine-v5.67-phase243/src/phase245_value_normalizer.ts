@@ -103,10 +103,10 @@ export function normalizeValue245(raw:string,label=''):Value245{
  // A base value followed by a labelled alternative: "Jan 2021 W: Jun 2022", "US$4 W: US$6".
  const alt=/^(.*\d.*?)\s([A-Za-z][\w+.-]{0,12}):\s+(.*\d.*)$/.exec(t);
  if(alt)return {kind:'per_variant',segments:2}; // abstaining is the safe side even if the label looks like a unit
- // Booleans.
+ // Booleans. A bare "Y"/"N" only answers a question-shaped label ("Reverse voltage protection?").
  const yn=/^(yes|no|y|n|true|false|included|not included)\b\s*(?:\((.{1,40})\))?$/i.exec(t);
- if(yn&&/^(yes|no|true|false|included|not included)$/i.test(yn[1]))
-  return {kind:'boolean',value:/^(yes|true|included)$/i.test(yn[1]),qualifier:yn[2]??null};
+ if(yn&&(/^(yes|no|true|false|included|not included)$/i.test(yn[1])||/\?\s*:?\s*$/.test(label)))
+  return {kind:'boolean',value:/^(yes|y|true|included)$/i.test(yn[1]),qualifier:yn[2]??null};
  // Prices.
  const cur='(US\\$|A\\$|C\\$|\\$|€|£|¥|USD|EUR|GBP|CHF|AUD|CAD|SEK|NOK|DKK|PLN)';
  let m=new RegExp(`^${cur}\\s?${NUM}(?:\\s?[-–]\\s?${cur}?\\s?${NUM})?$`,'i').exec(t);
@@ -145,6 +145,10 @@ export function normalizeValue245(raw:string,label=''):Value245{
    const q:Value245={kind:'quantity',number:n,unit,approximate};
    if(alt&&alt.number!==null)q.alternative=alt;if(bound)q.bound=bound;if(m[5]?.trim())q.qualifier=m[5].trim();
    return q;}}
+ // A quantity with a bracketed condition that is not a unit conversion: "100 Watts (into 8 Ohms)".
+ m=new RegExp(`^${NUM}\\s*([A-Za-z°%]{1,8})\\s*\\(([^()]{2,40})\\)$`).exec(t);
+ if(m){const unit=canonicalUnit245(m[2]);const n=parseNumber245(m[1]);
+  if(unit&&n!==null&&!/^\s*[\d.,]+\s*[A-Za-z"″]{1,5}\s*$/.test(m[3]))return {kind:'quantity',number:n,unit,approximate,qualifier:'('+m[3].trim()+')',...(bound?{bound}:{})};}
  // Bare number, with a unit or currency from the label when present.
  m=new RegExp(`^${NUM}$`).exec(t);
  if(m){const n=parseNumber245(m[1]);if(n!==null){

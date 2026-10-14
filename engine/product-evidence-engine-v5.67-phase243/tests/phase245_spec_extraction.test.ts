@@ -188,3 +188,62 @@ test('a page with a main product and only a listing of other products yields no 
  const x=run(html);
  assert.equal(x.facts.length,0);assert.equal(x.mainProduct.name,'Pedal Bin, 36 litre');
 });
+test('definition list with swapped dt/dd per wrapper: document order decides label and value',()=>{
+ const html=page(`<h1>Coffee C1</h1><dl class="spec">${[['Power','1450.00W'],['Pressure','15.0bar'],['Cup warmer','No']].map(([l,v])=>`<div><dd>${l}</dd><dt>${v}</dt></div>`).join('')}</dl>`);
+ const x=run(html);
+ assert.deepEqual(fact(x.facts,'power')[0].value,{kind:'quantity',number:1450,unit:'W',approximate:false});
+ assert.deepEqual(fact(x.facts,'pressure')[0].value,{kind:'quantity',number:15,unit:'bar',approximate:false});
+ assert.deepEqual(fact(x.facts,'cup warmer')[0].value,{kind:'boolean',value:false,qualifier:null});
+ assert.ok(fact(x.facts,'power')[0].flags.includes('dt_dd_order_swapped_by_source'));
+});
+test('specifications inside a dialog/drawer are page content; footnote markers are not part of values',()=>{
+ const html=page(`<h1>Driver D</h1><dialog class="drawer"><table><tr><th>Continuous current:</th><td>1.2 A<sup><a href="#note2">2</a></sup></td></tr>
+  <tr><th>Reverse voltage protection?:</th><td>Y</td></tr><tr><th>Weight:</th><td>0.5 g<sup><a href="#note1">1</a></sup></td></tr></table></dialog>`);
+ const x=run(html);
+ assert.deepEqual(fact(x.facts,'continuous current')[0].value,{kind:'quantity',number:1.2,unit:'A',approximate:false});
+ assert.deepEqual(fact(x.facts,'reverse voltage protection')[0].value,{kind:'boolean',value:true,qualifier:null});
+ assert.deepEqual(fact(x.facts,'weight')[0].value,{kind:'quantity',number:0.5,unit:'g',approximate:false});
+});
+test('a reusable label/value component repeated across sections is read even when each section holds one pair',()=>{
+ const sec=(h:string,l:string,v:string)=>`<h5>${h}</h5><div class="section"><div class="pair"><span class="key">${l}</span><span class="val">${v}</span></div></div>`;
+ const html=page(`<h1>Amp A9</h1>${sec('Overview','Colour','Silver')}${sec('Dimensions','Product Dimensions (mm):','W 444 mm x H 89 mm x D 342 mm')}${sec('Weight','Weight:','8.4 KG')}`);
+ const x=run(html);
+ assert.deepEqual(fact(x.facts,'weight')[0].value,{kind:'quantity',number:8.4,unit:'kg',approximate:false});
+ assert.deepEqual(fact(x.facts,'product dimensions mm')[0].value,{kind:'dimensions',numbers:[444,89,342],unit:'mm',axes:['W','H','D'],approximate:false});
+ assert.equal(fact(x.facts,'product dimensions mm')[0].section,'Dimensions');
+ assert.equal(fact(x.facts,'weight')[0].section,null,'a heading equal to the property adds nothing');
+ // The same component repeating one label is a widget template, not specifications.
+ const widget=page(`<h1>Boot B</h1>${[1,2,3,4].map(()=>`<div class="tab"><div class="pair"><span class="key">Your selection</span><span class="val">Firm Ground</span></div></div>`).join('')}`);
+ assert.equal(fact(run(widget).facts,'your selection').length,0);
+});
+test('mixed bullet lists: only explicit, measurable "Label: value" items are read; bold lead phrases are features',()=>{
+ const html=page(`<h1>Ice pack</h1><ul class="feat"><li>Keeps food cold for longer during a power failure</li><li>Also suitable for a cool box</li>
+  <li>Dimensions: 21.8 cm x 13.5 cm (length x height)</li><li>Note: hand wash only</li><li>Tested and approved accessory</li></ul>
+  <ul class="feat2"><li><strong>5 x LEDs</strong> for status and fun</li><li><strong>Triple-axis accelerometer</strong> (motion sensor)</li><li><strong>Light sensor</strong>, front facing</li></ul>`);
+ const x=run(html);
+ assert.deepEqual(x.facts.map(f=>f.propertyKey),['dimensions']);
+ assert.deepEqual(x.facts[0].value,{kind:'dimensions',numbers:[21.8,13.5],unit:'cm',axes:['L','H'],approximate:false});
+});
+test('unit conversions and conditions: "A / B", trailing axis notes, bracketed conditions, case-sensitive grams',()=>{
+ assert.deepEqual(normalizeValue245('29.3g / 1.0oz'),{kind:'quantity',number:29.3,unit:'g',approximate:false,alternative:{number:1,unit:'oz'}});
+ assert.deepEqual(normalizeValue245('22.15 x 2.38 x 80.15 mm (WxHxD)'),{kind:'dimensions',numbers:[22.15,2.38,80.15],unit:'mm',axes:['W','H','D'],approximate:false});
+ assert.deepEqual(normalizeValue245('100 Watts (into 8 Ohms)'),{kind:'quantity',number:100,unit:'W',approximate:false,qualifier:'(into 8 Ohms)'});
+ assert.equal(normalizeValue245('600 mm sides / 900 mm back').kind,'compound','same unit on both sides is not a conversion');
+ assert.equal(normalizeValue245('20G').kind,'text','upper-case G is g-force, not grams');
+ assert.deepEqual(normalizeValue245('10000 MB/s'),{kind:'quantity',number:10000,unit:'MB/s',approximate:false});
+});
+test('product codes across the header row mean products are columns even with a corner label',()=>{
+ const html=page(`<h1>Laptop L12 models</h1><table><tr><th>Model</th><th>21KC00FKMZ</th><th>21KC00FFIX</th></tr>
+  <tr><td>Storage</td><td>1TB SSD</td><td>512GB SSD</td></tr><tr><td>Weight</td><td>1.08 kg</td><td>1.10 kg</td></tr></table>`);
+ const x=run(html);
+ assert.deepEqual(fact(x.facts,'weight').map(f=>[f.product.name,(f.value as {number:number}).number]),[['21KC00FKMZ',1.08],['21KC00FFIX',1.1]]);
+ assert.equal(fact(x.facts,'21kc00fkmz').length,0);
+});
+test('<main> holding almost no text (a search widget) does not hide the product content outside it',()=>{
+ const html=`<html><body><main><form><input name="q"></form>Search</main><div class="product"><h1>Badge B</h1>
+  <h2>Technical details</h2><ul><li>Product Weight: 29.3g / 1.0oz</li><li>Product Dimensions: 85.7mm x 54.6mm x 10.0mm</li></ul>
+  <p>${'Long description text. '.repeat(120)}</p></div></body></html>`;
+ const x=run(html);
+ assert.deepEqual(fact(x.facts,'product weight')[0]?.value,{kind:'quantity',number:29.3,unit:'g',approximate:false,alternative:{number:1,unit:'oz'}});
+ assert.equal(x.mainProduct.name,'Badge B');
+});

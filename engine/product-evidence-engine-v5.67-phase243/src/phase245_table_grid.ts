@@ -178,9 +178,17 @@ export function interpretTableGrid245(g:TableGrid245):TableInterpretation245{
  if(headerRows===0){return {mode:'unsupported',readings:[],reasons:['no_header_row_for_multi_column_table']};}
  const cornerCells=uniq([...Array(headerRows).keys()].flatMap(r=>[...Array(Math.max(1,headerCols)).keys()].map(c=>cell(r,c)?.text??'')));
  const cornerEmpty=cornerCells.every(t=>!t.trim());
+ // Model/part codes across the header (single tokens mixing letters and digits, e.g. "21KC00FKMZ")
+ // over word labels in the first column: products run across the columns.
+ const CODE=/^(?=[^\s]*\d)(?=[^\s]*[A-Za-z])[A-Za-z0-9][A-Za-z0-9._/-]{4,24}$/;
+ const headerTexts=[...Array(g.cols).keys()].slice(1).map(c=>cell(headerRows-1,c)?.text??'');
+ const firstColTexts=bodyRows.map(r=>cell(r,0)?.text??'').filter(Boolean);
+ const codesAcross=headerTexts.length>=2&&headerTexts.filter(t=>CODE.test(t)).length>=headerTexts.length*0.8&&
+  firstColTexts.filter(t=>/[a-z]{3}/i.test(t)&&!CODE.test(t)).length>=firstColTexts.length*0.8;
+ if(codesAcross)reasons.push('product_codes_in_header_row');
  // Body rows headed by header cells name properties, so products run across the columns; a corner
  // text ("Version", "Model") then only labels the header row.
- if(cornerEmpty||headerCols>0){
+ if(cornerEmpty||headerCols>0||codesAcross){
   // ---- products in columns: column header path = [product, ...variant levels]; row label = property.
   const firstValueCol=Math.max(1,headerCols);
   for(let c=firstValueCol;c<g.cols;c++){

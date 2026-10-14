@@ -8,8 +8,9 @@
  *     sibling-shape repetition, never from site-specific class names or selectors.
  *
  * Ownership: facts are attributed to the page's main product only when they come from main content
- * (not navigation, listings, related/recommended products, ads, reviews or comparison widgets) and the
- * page declares exactly one main product. Table facts are attributed to the product named by the
+ * (not navigation, listings of other items, related/recommended products, ads, reviews, finance or
+ * pagination widgets) and the page declares exactly one main product. Comparison widgets are handled by
+ * structure: their tables name each product in header/key cells. Table facts are attributed to the product named by the
  * table's own header/key cells. Anything ambiguous is returned in `ambiguous` with reasons, never
  * promoted. All output is an unverified source declaration: rankingAuthorized=false, no page text kept.
  */
@@ -53,8 +54,10 @@ const productKey=(s:string)=>clean245(s).toLowerCase().replace(/\s+/g,' ').trim(
 const cleanLabel=(s:string)=>clean245(s).replace(/\s*[:：]\s*$/,'').trim();
 
 // ---------- regions: main content vs boilerplate, listings, related products, ads, reviews ----------
-const BOILER_TAGS=new Set(['nav','header','footer','aside','dialog','template','noscript','button','select','option','svg','form']);
-const BOILER_ROLES=new Set(['navigation','banner','contentinfo','complementary','search','dialog','alertdialog','menu','menubar','tablist','toolbar']);
+// <dialog>/role=dialog are not excluded by themselves: product pages put full specification lists in
+// drawers and dialogs. Cookie, newsletter, cart and similar dialogs are caught by their class words.
+const BOILER_TAGS=new Set(['nav','header','footer','aside','template','noscript','button','select','option','svg','form']);
+const BOILER_ROLES=new Set(['navigation','banner','contentinfo','complementary','search','alertdialog','menu','menubar','tablist','toolbar']);
 /** Generic words used by authors to label non-main content. Matched as whole class/id tokens. */
 const BOILER_TOKENS=new Set(['related','recommend','recommended','recommendation','recommendations','similar','upsell','upsells',
  'crosssell','crosssells','recently','recentlyviewed','alsobought','alsoviewed','youmayalsolike','breadcrumb','breadcrumbs','menu',
@@ -402,6 +405,19 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   if(dl.tag!=='dl')continue;
   if(regionOf(dl)==='excluded'){abstain('dl_in_non_main_region');continue;}
   const items:Node245[]=[];
+  const wrappers=elementChildren245(dl).filter(c=>c.tag==='div');
+  // One term and one description per wrapper: document order says which is the label, even where a
+  // site swaps dt and dd (label in <dd>, value in <dt>).
+  const pairWrapped=wrappers.length>=2&&wrappers.every(w=>{const k=elementChildren245(w).filter(x=>x.tag==='dt'||x.tag==='dd');
+   return k.length===2&&new Set(k.map(x=>x.tag)).size===2;});
+  if(pairWrapped){
+   for(const w of wrappers){const [a,b]=elementChildren245(w).filter(x=>x.tag==='dt'||x.tag==='dd');
+    used.add(a);used.add(b);const ref=mainRef();
+    raws.push({label:textOf245(a),valueText:textOf245(b),method:'definition_list',locator:locator245(a),productRef:ref.productRef,
+     productName:ref.productName,variant:null,section:sectionOf(dl,byId,null),region:regionOf(dl),
+     ambiguity:[...ref.amb,...(a.tag==='dd'?['dt_dd_order_swapped_by_source']:[])]});}
+   continue;
+  }
   for(const c of elementChildren245(dl)){if(c.tag==='dt'||c.tag==='dd')items.push(c);else if(c.tag==='div')items.push(...elementChildren245(c).filter(x=>x.tag==='dt'||x.tag==='dd'));}
   for(let i=0;i<items.length;i++){
    if(items[i].tag!=='dt')continue;
@@ -435,6 +451,8 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    const good=pairs.filter(x=>x&&labelLike(x.label)&&x.value&&!used.has(x.labelNode)&&!linkOnlyValue(x.valueNode)&&
     !containsUsed(x.valueNode,used)&&!insideLink(x.labelNode)&&!insideLink(x.valueNode));
    const ref=mainRef();
+   // The same label in every repeated item is a template widget (tabs of a guide, cards), not a spec list.
+   if(good.length>=2&&new Set(good.map(x=>key245(x!.label))).size<good.length*0.6){abstain('repeated_identical_labels_widget');emitted=true;break;}
    if(good.length<2||good.length<group.length*0.6){
     // Mixed lists (prose bullets with a few "Label: value" items): only explicitly ":"-marked items
     // whose value is measurable are read.
@@ -475,6 +493,34 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
       raws.push({label:x.label,valueText:x.value,method:'repeated_label_value',locator:locator245(x.labelNode),productRef:ref.productRef,
        productName:ref.productName,variant:null,section:sectionOf(p,byId,null),region:regionOf(p),ambiguity:[...ref.amb]});}
     }
+   }
+  }
+ }
+
+ // ---- 5b. reusable components: one pair per container, the same component shape repeated across the page
+ {
+  const sig=(w:Node245,x:{labelNode:Node245;valueNode:Node245})=>[w.tag,w.attrs.class??'',x.labelNode.kind==='element'?x.labelNode.tag+'.'+(x.labelNode.attrs.class??''):'#text',
+   x.valueNode.kind==='element'?x.valueNode.tag+'.'+(x.valueNode.attrs.class??''):'#text'].join('|');
+  const bySig=new Map<string,{w:Node245;x:NonNullable<ReturnType<typeof pairOf>>}[]>();
+  for(const w of all){
+   if(w.kind!=='element'||used.has(w)||regionOf(w)==='excluded'||insideLink(w)||!w.attrs.class)continue;
+   const kids=elementChildren245(w);if(kids.length!==2||kids.some(k=>used.has(k)))continue;
+   const x=pairOf(w);if(!x||x.labelNode.kind!=='element'||x.valueNode.kind!=='element'||!labelLike(x.label)||!x.value)continue;
+   if(!(x.labelNode.attrs.class&&x.valueNode.attrs.class&&x.labelNode.attrs.class!==x.valueNode.attrs.class))continue;
+   const k=sig(w,x);bySig.set(k,[...(bySig.get(k)??[]),{w,x}]);
+  }
+  for(const [,inst] of bySig){
+   if(inst.length<3)continue;
+   // A component repeating the same label is a template widget (e.g. a guide's "Your selection"),
+   // whereas specification components carry mostly distinct labels.
+   if(new Set(inst.map(i=>key245(i.x.label))).size<inst.length*0.6)continue;
+   const ref=mainRef();
+   for(const {w,x} of inst){
+    if(used.has(x.labelNode)||containsUsed(x.valueNode,used)||linkOnlyValue(x.valueNode))continue;
+    if(normalizeValue245(x.value,x.label).kind==='prose')continue;
+    used.add(x.labelNode);used.add(x.valueNode);used.add(w);
+    raws.push({label:x.label,valueText:x.value,method:'repeated_label_value',locator:locator245(x.labelNode),productRef:ref.productRef,
+     productName:ref.productName,variant:null,section:sectionOf(w,byId,null),region:regionOf(w),ambiguity:[...ref.amb]});
    }
   }
  }

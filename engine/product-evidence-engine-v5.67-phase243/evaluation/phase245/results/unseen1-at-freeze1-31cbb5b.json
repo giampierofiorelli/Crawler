@@ -1,0 +1,307 @@
+{
+ "schema": "pee245.evaluation.v1",
+ "gold": "evaluation/phase245/gold-unseen/unseen-gold.json",
+ "generatedAt": "2026-10-14T14:43:04.406Z",
+ "totals": {
+  "baseline": {
+   "expected": 31,
+   "correct": 3,
+   "falseAssociations": 0,
+   "falsePositives": 0,
+   "missed": 28,
+   "abstentionsRequired": 6,
+   "abstentionsCorrect": 6,
+   "ms": 28.6,
+   "precision": 1,
+   "recall": 0.097
+  },
+  "phase245": {
+   "expected": 31,
+   "correct": 4,
+   "falseAssociations": 0,
+   "falsePositives": 3,
+   "missed": 27,
+   "abstentionsRequired": 6,
+   "abstentionsCorrect": 5,
+   "ms": 150.8,
+   "precision": 0.571,
+   "recall": 0.129
+  }
+ },
+ "pages": [
+  {
+   "tag": "apple_airpodspro_specs",
+   "sha256": "7ba35a93871fe6be4cd46e345669931410293a1946eaf8f0304a0e66e086f874",
+   "bytes": 176924,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 1,
+    "abstentionsRequired": 5,
+    "abstentionsCorrect": 5,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Connectivity"
+    ],
+    "ms": 5.8
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 1,
+    "expected": 1,
+    "abstentionsRequired": 5,
+    "abstentionsCorrect": 4,
+    "fpList": [
+     "AirPods Pro 3 | Weight = {\"kind\":\"quantity\",\"number\":0.2,\"unit\":\"oz\",\"approximate\":false,\"alternative\":{\"number\":5.55,\"unit\":\"g\"}}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Connectivity"
+    ],
+    "ms": 54.9,
+    "ambiguousKept": 7
+   }
+  },
+  {
+   "tag": "bosch_coolingset",
+   "sha256": "18a0414c2c92396180b875bc4966cd3c5ddc403fac80c4418f82e50c69be244b",
+   "bytes": 694163,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 2,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Dimensions"
+    ],
+    "ms": 6.3
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 2,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Dimensions"
+    ],
+    "ms": 23.6,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "bosch_mum8meat",
+   "sha256": "5d58660c9da26f45c8ce874222a020f5a9c5915d4c0f463b2b422bb4b2b61db7",
+   "bytes": 685764,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 2,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Diameter"
+    ],
+    "ms": 5.3
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 2,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Diameter"
+    ],
+    "ms": 22.3,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "pimoroni_pybadge",
+   "sha256": "438edbf609cba20a79ad4f7b47110f50bf96414647a51abdd7679fcebe43d109",
+   "bytes": 320850,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 2,
+    "expected": 3,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Product Dimensions",
+     "main |  | Product Weight"
+    ],
+    "ms": 4
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 2,
+    "expected": 3,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Product Dimensions",
+     "main |  | Product Weight"
+    ],
+    "ms": 21.6,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "rtings_athanc70",
+   "sha256": "fa19f2c18a84bdfbf5065eda41acdf6b2daf36fd0c046f39f720ed0c19a8ef25",
+   "bytes": 258330,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 0,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 2
+   },
+   "phase245": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 0,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 4.7,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "scan_kioxia1tb",
+   "sha256": "abdfe87761c3591a837a2f72dfe356221d16b652c409fde0ec90f7c62a578a34",
+   "bytes": 118192,
+   "baseline": {
+    "scopedFacts": 3,
+    "correct": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 23,
+    "expected": 23,
+    "abstentionsRequired": 1,
+    "abstentionsCorrect": 1,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Capacity",
+     "main |  | Edition",
+     "main |  | Form Factor",
+     "main |  | Interface",
+     "main |  | Host Controller Interface",
+     "main |  | Flash Memory Type",
+     "main |  | Max. Read",
+     "main |  | Max. Write",
+     "main |  | Max. Random Read 4K",
+     "main |  | Max. Random Write 4K",
+     "main |  | Power Consumption (active)",
+     "main |  | Max. Endurance Rating",
+     "main |  | MTBF",
+     "main |  | Max. Operating Vibration",
+     "main |  | Max. Operating Shock",
+     "main |  | Connectivity",
+     "main |  | Dimensions",
+     "main |  | Weight",
+     "main |  | Package Type",
+     "main |  | Scan Code",
+     "main |  | Model Number",
+     "main |  | GTIN",
+     "main |  | Price"
+    ],
+    "ms": 5.2
+   },
+   "phase245": {
+    "scopedFacts": 7,
+    "correct": 1,
+    "falseAssociations": 0,
+    "falsePositives": 2,
+    "missed": 22,
+    "expected": 23,
+    "abstentionsRequired": 1,
+    "abstentionsCorrect": 1,
+    "fpList": [
+     "Kioxia Exceria G3 1TB M.2 (2280) PCIe Gen 5 NVMe SSD / Solid State Drive | Monthly Payment = {\"kind\":\"price\",\"amount\":13.23,\"currency\":\"GBP\"}",
+     "Kioxia Exceria G3 1TB M.2 (2280) PCIe Gen 5 NVMe SSD / Solid State Drive | Minimum Spend = {\"kind\":\"price\",\"amount\":99,\"currency\":\"GBP\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Capacity",
+     "main |  | Edition",
+     "main |  | Form Factor",
+     "main |  | Interface",
+     "main |  | Host Controller Interface",
+     "main |  | Flash Memory Type",
+     "main |  | Max. Read",
+     "main |  | Max. Write",
+     "main |  | Max. Random Read 4K",
+     "main |  | Max. Random Write 4K",
+     "main |  | Power Consumption (active)",
+     "main |  | Max. Endurance Rating",
+     "main |  | MTBF",
+     "main |  | Max. Operating Vibration",
+     "main |  | Max. Operating Shock",
+     "main |  | Connectivity",
+     "main |  | Dimensions",
+     "main |  | Weight",
+     "main |  | Package Type",
+     "main |  | Scan Code",
+     "main |  | Model Number",
+     "main |  | GTIN"
+    ],
+    "ms": 23.7,
+    "ambiguousKept": 31
+   }
+  }
+ ]
+}
