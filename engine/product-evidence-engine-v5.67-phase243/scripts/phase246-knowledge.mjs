@@ -13,7 +13,7 @@
  *   export --out FILE [--include-pending-rights]
  *   import --from FILE --db NEW  rebuild a store from an export into a new database file
  *   backup --out FILE            consistent SQLite copy (VACUUM INTO)
- *   export-shards --out DIR      deterministic NDJSON shards + manifest (diff-friendly; for a git or bucket destination)
+ *   export-shards --out DIR --audience public|private   deterministic NDJSON shards + manifest; public = publication rules
  *   import-shards --from DIR --db NEW
  *   revisit-plan [--as-of ISO] [--days N] [--full]   which current revisions are worth fetching again, and why
  *   rights-worksheet             per-source rights decision worksheet (grants nothing)
@@ -109,7 +109,10 @@ try{
      provenance:'professional_method_reference',sourceRevisionIds:[rev.revision_id],studyStream:i.studyStream,concept:i.concept})});
    }
    out(res);break;}
-  case 'export-shards':{if(!flags.out)throw Error('--out DIR required');out({dir:resolve(flags.out),...store.exportShards246(resolve(flags.out),{includePendingRights:!!flags['include-pending-rights']})});break;}
+  case 'export-shards':{
+   // --audience public|private (required): public = a destination others can read (e.g. a public repository).
+   if(!flags.out||!['public','private'].includes(flags.audience))throw Error('--out DIR and --audience public|private required');
+   out({dir:resolve(flags.out),...store.exportShards246(resolve(flags.out),{includePendingRights:!!flags['include-pending-rights'],audience:flags.audience})});break;}
   case 'revisit-plan':{const p=store.revisitPlan246({asOf:flags['as-of']??new Date().toISOString(),extractorVersion:SPEC_EXTRACTOR_VERSION,baseIntervalDays:flags.days?Number(flags.days):undefined});
    out(flags.full?p:{...p,plan:p.plan.filter(x=>x.action!=='skip').slice(0,100)});break;}
   case 'rights-worksheet':out(store.rightsWorksheet246());break;

@@ -384,6 +384,18 @@ test('identity: re-derivation recomputes product links; a record no source suppo
  s.close();
 });
 
+test('separation: a public export carries declaration values only from sources whose policy permits publication',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ observe(s,'https://maker.example/a',productPage({name:'Fryer A',brand:'Acme',gtin:G1,watts:1500,litres:4}),src(MAKER,'manufacturer'));
+ const pubPolicy={...approved(SHOP),permittedOperations:[...approved(SHOP).permittedOperations,'derived_publication' as const]};
+ observe(s,'https://shop.example/b',productPage({name:'Fryer B',brand:'Acme',gtin:G2,watts:1400,litres:3}),src(SHOP,'retailer',pubPolicy));
+ const priv=s.exportShards246(join(dir,'priv'+n),{audience:'private'});const pub=s.exportShards246(join(dir,'pub'+n),{audience:'public'});
+ assert.equal(priv.files['declarations.ndjson'].rows,4);assert.equal(pub.files['declarations.ndjson'].rows,2);
+ assert.ok(!readFileSync(join(dir,'pub'+n,'declarations.ndjson'),'utf8').includes('1500'));
+ assert.throws(()=>s.exportShards246(join(dir,'x'+n),{audience:'public',includePendingRights:true}),/246_pending_rights_never_public/);
+ s.close();
+});
+
 test.after(()=>{rmSync(dir,{recursive:true,force:true});});
 
 test('robots re-check freshness: a stale robots check downgrades retention instead of reusing old permission',()=>{

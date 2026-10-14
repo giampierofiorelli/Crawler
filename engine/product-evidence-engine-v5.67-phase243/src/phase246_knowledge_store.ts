@@ -755,20 +755,28 @@ export class KnowledgeStore246 {
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
- exportShards246(dir:string,opts:{includePendingRights?:boolean}={}):{manifestSha256:string;files:Record<string,{rows:number;sha256:string}>}{
+ exportShards246(dir:string,opts:{includePendingRights?:boolean;audience?:'private'|'public'}={}):{manifestSha256:string;files:Record<string,{rows:number;sha256:string}>;audience:'private'|'public'}{
+  // A public destination (e.g. a public repository) is publication: declaration values go there only when the
+  // source policy permits derived publication; pending-rights values never do.
+  const audience=opts.audience??'private';
+  if(audience==='public'&&opts.includePendingRights)throw Error('246_pending_rights_never_public');
+  const publishable=new Set((this.db.prepare('SELECT source_id,policy_json FROM sources').all() as {source_id:string;policy_json:string|null}[])
+   .filter(r=>{try{return !!r.policy_json&&(JSON.parse(r.policy_json).permittedOperations??[]).includes('derived_publication');}catch{return false;}}).map(r=>r.source_id));
+  const revSource=new Map((this.db.prepare('SELECT revision_id,source_id FROM revisions').all() as {revision_id:string;source_id:string}[]).map(r=>[r.revision_id,r.source_id]));
   mkdirSync(dir,{recursive:true});
   const files:Record<string,{rows:number;sha256:string}>={};
   for(const [t,key] of Object.entries(KnowledgeStore246.TABLE_KEYS)){
    let rows=this.db.prepare(`SELECT * FROM ${t} ORDER BY ${key}`).all() as Record<string,unknown>[];
    if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained');
+   if(t==='declarations'&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);
    files[t+'.ndjson']={rows:rows.length,sha256:sha(body)};
   }
   const manifest={schema:'pee246.knowledge-shards.v1',storeSchemaVersion:this.schemaVersion(),storagePolicy:this.storage,
-   includesPendingRights:!!opts.includePendingRights,files};
+   includesPendingRights:!!opts.includePendingRights,audience,files};
   const text=JSON.stringify(manifest,null,1)+'\n';writeFileSync(join(dir,'manifest.json'),text,{mode:0o600});
-  return {manifestSha256:sha(text),files};
+  return {manifestSha256:sha(text),files,audience};
  }
  /** Rebuilds a NEW store from a shard directory after verifying every file hash. */
  static importShards246(dir:string,dbPath:string,storage:StoragePolicy246=DEFAULT_STORAGE_POLICY246):KnowledgeStore246{
