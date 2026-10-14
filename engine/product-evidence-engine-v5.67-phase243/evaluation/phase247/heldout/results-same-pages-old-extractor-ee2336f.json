@@ -1,0 +1,361 @@
+{
+ "schema": "pee245.evaluation.v1",
+ "gold": "/tmp/claude-0/-home-user-Crawler/bd9afe5f-596c-54bb-82da-d49f2aed691c/scratchpad/hg247.json",
+ "generatedAt": "2026-10-14T16:19:30.804Z",
+ "totals": {
+  "baseline": {
+   "expected": 65,
+   "correct": 0,
+   "falseAssociations": 0,
+   "falsePositives": 1,
+   "missed": 65,
+   "abstentionsRequired": 6,
+   "abstentionsCorrect": 6,
+   "ms": 36.7,
+   "precision": 0,
+   "recall": 0
+  },
+  "phase245": {
+   "expected": 65,
+   "correct": 41,
+   "falseAssociations": 5,
+   "falsePositives": 4,
+   "missed": 24,
+   "abstentionsRequired": 6,
+   "abstentionsCorrect": 6,
+   "ms": 380.5,
+   "precision": 0.82,
+   "recall": 0.631
+  }
+ },
+ "pages": [
+  {
+   "tag": "h_tefal_vc1401",
+   "sha256": "21070bfaa42b149a77fd0fc9053ed788ba06b0ca7306510f563ac970d89e853b",
+   "bytes": 319037,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 11,
+    "expected": 11,
+    "abstentionsRequired": 6,
+    "abstentionsCorrect": 6,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Grids",
+     "main |  | Capacity",
+     "main |  | Timer (water cooking)",
+     "main |  | Number of bowls",
+     "main |  | Keep warm",
+     "main |  | Dishwasher safe - details",
+     "main |  | Colours",
+     "main |  | Energy Consumption - Off mode (W)",
+     "main |  | Time to reach off mode (minutes)",
+     "main |  | Frequency",
+     "main |  | Voltage"
+    ],
+    "ms": 8.8
+   },
+   "phase245": {
+    "scopedFacts": 15,
+    "correct": 11,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 11,
+    "abstentionsRequired": 6,
+    "abstentionsCorrect": 6,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 94.3,
+    "ambiguousKept": 2
+   }
+  },
+  {
+   "tag": "h_euronics_af300",
+   "sha256": "c09db9b0b5daddf9cbb3c0355edef59bf6161486a94a1f046c79a9a3ef52ffcd",
+   "bytes": 501792,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 19,
+    "expected": 19,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Product Dimensions (H x W x D)",
+     "main |  | Power Consumption",
+     "main |  | Product Type",
+     "main |  | Depth",
+     "main |  | Height",
+     "main |  | Shipping Depth",
+     "main |  | Weight",
+     "main |  | Width",
+     "main |  | Colour",
+     "main |  | Colour Group",
+     "main |  | Keep Warm Function",
+     "main |  | Start Delay Option",
+     "main |  | Interior Light",
+     "main |  | Product Category Group",
+     "main |  | Automatic Shut Off",
+     "main |  | Bluetooth",
+     "main |  | Smart Connect",
+     "main |  | Wi-Fi"
+    ],
+    "ms": 6
+   },
+   "phase245": {
+    "scopedFacts": 15,
+    "correct": 14,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 5,
+    "expected": 19,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Product Dimensions (H x W x D)",
+     "main |  | Power Consumption",
+     "main |  | Interior Light",
+     "main |  | Product Category Group",
+     "main |  | Automatic Shut Off"
+    ],
+    "ms": 67,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "h_macafeine_bianca",
+   "sha256": "ebe690bf851d964d81120edace3ac926d72c0e2d952cb260256257c1279558b9",
+   "bytes": 830166,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 17,
+    "expected": 17,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Lelit | Bianca LEPL162T V1 espresso coffee machine | Price = {\"kind\":\"quantity\",\"number\":4315,\"unit\":\"cad\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Anti-scald wands",
+     "main |  | Pump type",
+     "main |  | PID",
+     "main |  | Coffee boiler materials",
+     "main |  | Automatic cleaning",
+     "main |  | Water level indicator",
+     "main |  | Energy saving/standby mode",
+     "main |  | Appliance body",
+     "main |  | Group size",
+     "main |  | Number of boilers",
+     "main |  | Coffee boiler capacity",
+     "main |  | Steam boiler capacity",
+     "main |  | Power",
+     "main |  | Weight",
+     "main |  | Width",
+     "main |  | Height"
+    ],
+    "ms": 7.6
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 16,
+    "expected": 17,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Anti-scald wands",
+     "main |  | Pump type",
+     "main |  | PID",
+     "main |  | Coffee boiler materials",
+     "main |  | Automatic cleaning",
+     "main |  | Water level indicator",
+     "main |  | Energy saving/standby mode",
+     "main |  | Appliance body",
+     "main |  | Group size",
+     "main |  | Number of boilers",
+     "main |  | Coffee boiler capacity",
+     "main |  | Steam boiler capacity",
+     "main |  | Power",
+     "main |  | Weight",
+     "main |  | Width",
+     "main |  | Height"
+    ],
+    "ms": 89.2,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "h_did_rh24570",
+   "sha256": "fecf3c163cf3ce62f57fb82233e1f14536b9f71ec6fd6277c18cdfaf445bab29",
+   "bytes": 1268115,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 15,
+    "expected": 15,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Brand",
+     "main |  | Colour",
+     "main |  | Fryer Type",
+     "main |  | Power",
+     "main |  | Food Capacity (kg)",
+     "main |  | Oil Capacity (l)",
+     "main |  | Control Type",
+     "main |  | Adjustable Thermostat",
+     "main |  | Removable Basket",
+     "main |  | Weight (kg)",
+     "main |  | Width (mm)",
+     "main |  | Depth (mm)",
+     "main |  | Height (mm)",
+     "main |  | Main Warranty"
+    ],
+    "ms": 6.9
+   },
+   "phase245": {
+    "scopedFacts": 18,
+    "correct": 13,
+    "duplicatesOfCorrect": 2,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 2,
+    "expected": 15,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Russell Hobbs 1800W 1KG Maxi Deep Fryer - Black | 24570 | Warranty = {\"kind\":\"text\",\"text\":\"1 Year\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Main Warranty"
+    ],
+    "ms": 68,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "h_balance_bambino",
+   "sha256": "87d45929a58a4d5c60632e6d21bf7f36f3928a2982839a87007f83c76535266c",
+   "bytes": 1478098,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 3,
+    "expected": 3,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Dimensions (WxDxH)",
+     "main |  | Construction Materials",
+     "main |  | Capacity"
+    ],
+    "ms": 5.8
+   },
+   "phase245": {
+    "scopedFacts": 5,
+    "correct": 2,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 3,
+    "missed": 1,
+    "expected": 3,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Sage Bambino Plus Espresso Machine | Compact Size = {\"kind\":\"text\",\"text\":\"Squeeze this machine into the smallest of kitchen counters\"}",
+     "Sage Bambino Plus Espresso Machine | Milk Foaming Wand = {\"kind\":\"text\",\"text\":\"Make lattes, flat whites, americano's from home\"}",
+     "Sage Bambino Plus Espresso Machine | Capacity = {\"kind\":\"text\",\"text\":\"Water tank 1.9L (64 fl.oz)\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Capacity"
+    ],
+    "ms": 47.1,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "h_abanista_tower",
+   "sha256": "42df4ab282b5b49eac78f61eee3e44785a31c8f4dcf8617010bb601329ff2031",
+   "bytes": 312930,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 0,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 1.6
+   },
+   "phase245": {
+    "scopedFacts": 5,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 5,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 0,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [
+     "Tower Air Fryers |  | UGX 440,000 – UGX 442,000",
+     "Tower Air Fryers |  | UGX 442,000 – UGX 444,000",
+     "Tower Air Fryers |  | UGX 444,000 – UGX 446,000",
+     "Tower Air Fryers |  | UGX 446,000 – UGX 448,000",
+     "Tower Air Fryers |  | UGX 448,000 – UGX 450,000"
+    ],
+    "missedList": [],
+    "ms": 14.9,
+    "ambiguousKept": 0
+   }
+  }
+ ]
+}
