@@ -209,6 +209,29 @@ function offerPrice(p:Obj):string|null{
  return min===max?`${prices[0].c} ${min}`:`${prices[0].c} ${min}–${max}`;
 }
 
+// ---------- page entity resolution ----------
+/** Strong identifiers that denote one product entity when two structured-data nodes share them. */
+const ID_KEYS=['sku','mpn','gtin','gtin8','gtin12','gtin13','gtin14','productID','@id'];
+const urlKey=(u:unknown,base:string):string|null=>{
+ if(typeof u!=='string'||!u.trim())return null;
+ try{const x=new URL(u.trim(),base);return (x.host.toLowerCase()+x.pathname.replace(/\/+$/,'')).toLowerCase();}catch{return null;}
+};
+/** Groups JSON-LD Product nodes that describe the same entity: shared strong identifier, same resolved
+ * URL (query and fragment ignored), or the same exact name. Similar names alone never join nodes. */
+function clusterEntities(nodes:Obj[],base:string):Obj[][]{
+ const parent=nodes.map((_,i)=>i);const find=(i:number):number=>parent[i]===i?i:(parent[i]=find(parent[i]));
+ const keysOf=(o:Obj)=>{const k:string[]=[];
+  for(const id of ID_KEYS){const v=str(o[id],120);if(v&&v.length>=3)k.push((id==='@id'?'url:'+(urlKey(v,base)??v):'id:'+v.toLowerCase()));}
+  const u=urlKey(o.url,base);if(u)k.push('url:'+u);
+  for(const off of asList(o.offers).filter(isObj)){const ou=urlKey(off.url,base);if(ou)k.push('url:'+ou);const os=str(off.sku,120);if(os&&os.length>=3)k.push('id:'+os.toLowerCase());}
+  const n=str(o.name);if(n)k.push('name:'+productKey(n));
+  return k;};
+ const seen=new Map<string,number>();
+ nodes.forEach((o,i)=>{for(const k of keysOf(o)){const j=seen.get(k);if(j===undefined)seen.set(k,i);else parent[find(i)]=find(j);}});
+ const groups=new Map<number,Obj[]>();nodes.forEach((o,i)=>{const r=find(i);groups.set(r,[...(groups.get(r)??[]),o]);});
+ return [...groups.values()];
+}
+
 // ---------- microdata ----------
 function microdataProducts(root:Node245,region:Map<Node245,{kind:Region}>):{node:Node245;name:string|null;props:{name:string;value:string;node:Node245}[];offerPrice:string|null}[]{
  const out:ReturnType<typeof microdataProducts>=[];
@@ -275,6 +298,13 @@ const containsUsed=(n:Node245,used:Set<Node245>)=>{for(const d of walk245(n))if(
 const insideLink=(n:Node245)=>{let x:Node245|null=n;while(x){if(x.tag==='a'&&x.attrs.href!==undefined)return true;x=x.parent;}return false;};
 const MEASURABLE=new Set(['quantity','dimensions','range','price','options']);
 const INLINE=new Set(['b','strong','em','i','span','a','u','mark','small','label']);
+/** Labels under which a price can be a property of the page's product. A price under any other label
+ * ("Home Brewing Guide £2.95") names another item: a product card, upsell or bundle line. */
+const PRICE_LABEL=/\b(?:price|prices|cost|rrp|msrp|mrp|was|now|from|sale|offer|list|retail|you pay|total|each|per)\b/i;
+/** Section words that mark a block of declared product attributes. */
+const SPEC_CONTEXT=/\b(?:spec|specs|specification|specifications|technical|tech|details|dimensions|characteristics|information|key facts|at a glance|product info|in the box|what'?s in the box)\b/i;
+/** "Boiler capacity 250 cc": an attribute phrase followed by one measurable value, without a colon. */
+const INLINE_ATTR=/^(\p{L}[\p{L}\s'()/-]{2,40}?)\s+(\d[\d.,]*\s*[\p{L}°%"″]{0,6}\.?)$/u;
 const walk245Has=(n:Node245,tag:string)=>{for(const d of walk245(n))if(d!==n&&d.tag===tag)return true;return false;};
 /** A value that is entirely a link (download, document, other page) references content elsewhere. */
 const linkOnlyValue=(v:Node245)=>{
@@ -289,6 +319,9 @@ const labelLike=(t:string)=>{const s=t.replace(/[:：]\s*$/,'').trim();
 const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative245(c)).slice(0,6)
  .map(c=>c.tag+'('+elementChildren245(c).slice(0,4).map(g=>g.tag).join(',')+')').join(',')+')';
 
+/** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
+ * and re-derived per source revision. Bump on any behavioural change. */
+export const SPEC_EXTRACTOR_VERSION='spec-extractor-2';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
  if(typeof html!=='string'||html.length>PAGE_MAX_BYTES)throw Error('245_html_size');
@@ -308,31 +341,56 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   try{jsonObjs.push(...asList(JSON.parse(n.text)).filter(isObj));}catch{abstain('json_ld_unparseable');}
  }
  const ldProducts=topLevelProducts(jsonObjs);
- const ldNames=[...new Set(ldProducts.map(p=>str(p.name)).filter(Boolean) as string[])];
+ // The page's own URL (canonical, then og:url, then the fetched URL) anchors which declared entity is the page's subject.
+ const canonical=all.find(n=>n.tag==='link'&&/(?:^|\s)canonical(?:\s|$)/i.test(n.attrs.rel??''))?.attrs.href??
+  all.find(n=>n.tag==='meta'&&n.attrs.property==='og:url')?.attrs.content??null;
+ const base=/^https?:/.test(sourceUrl)?sourceUrl:'https://page.invalid/';
+ const pageKey=urlKey(canonical??sourceUrl,base);
+ const clusters=clusterEntities(ldProducts,base);
  const micro=microdataProducts(root,region);
  const microNames=[...new Set(micro.map(m=>m.name).filter(Boolean) as string[])];
  const h1s=all.filter(n=>n.tag==='h1'&&regionOf(n)!=='excluded').map(n=>textOf245(n)).filter(Boolean);
  const og=all.find(n=>n.tag==='meta'&&n.attrs.property==='og:title')?.attrs.content??null;
+ const h1Keys=new Set(h1s.map(productKey));
+ const clusterUrls=(c:Obj[])=>new Set(c.flatMap(o=>[urlKey(o.url,base),urlKey(o['@id'],base),...asList(o.offers).filter(isObj).map(f=>urlKey(f.url,base))]).filter(Boolean) as string[]);
+ const clusterNames=(c:Obj[])=>[...new Set(c.map(o=>str(o.name)).filter(Boolean) as string[])];
+ // Several entities: the one bound to the page URL, else the one whose name is the page heading, is the subject.
+ let mainCluster:Obj[]|null=clusters.length===1?clusters[0]:null;
+ let mainBasis:string|null=clusters.length===1?'single_entity':null;
+ if(clusters.length>1){
+  const byUrl=pageKey?clusters.filter(c=>clusterUrls(c).has(pageKey)):[];
+  const byH1=clusters.filter(c=>clusterNames(c).some(n=>h1Keys.has(productKey(n))));
+  if(byUrl.length===1){mainCluster=byUrl[0];mainBasis='page_url';}
+  else if(byH1.length===1){mainCluster=byH1[0];mainBasis='page_heading';}
+ }
+ if(clusters.length>1)abstain(mainCluster?'json_ld_other_entities_not_main':'json_ld_multiple_products');
+ // Within the subject entity, the name matching the page heading wins; otherwise the shortest declared name.
+ const ldNames=mainCluster?clusterNames(mainCluster):[];
+ const mainLdName=ldNames.find(n=>h1Keys.has(productKey(n)))??[...ldNames].sort((a,b)=>a.length-b.length||a.localeCompare(b))[0]??null;
  let mainName:string|null=null,mainSource:SpecExtraction245['mainProduct']['source']=null;
- const declared=new Set([...ldNames,...microNames].map(productKey));
- if(ldNames.length===1){mainName=ldNames[0];mainSource='json_ld';}
- else if(!ldNames.length&&microNames.length===1){mainName=microNames[0];mainSource='microdata';}
- else if(!ldNames.length&&!microNames.length&&h1s.length===1){mainName=h1s[0];mainSource='h1';}
- else if(!ldNames.length&&!microNames.length&&!h1s.length&&og){mainName=clean245(og);mainSource='og_title';}
- const mainAmbiguous=declared.size>1||(!declared.size&&h1s.length>1);
+ const otherEntityNames=new Set(clusters.filter(c=>c!==mainCluster).flatMap(clusterNames).map(productKey));
+ const declared=new Set([...clusters.map(c=>clusterNames(c)[0]??'entity').map(productKey),...microNames.map(productKey).filter(k=>!ldNames.some(n=>productKey(n)===k))]);
+ if(mainLdName){mainName=mainLdName;mainSource='json_ld';}
+ else if(!clusters.length&&microNames.length===1){mainName=microNames[0];mainSource='microdata';}
+ else if(!clusters.length&&!microNames.length&&h1s.length===1){mainName=h1s[0];mainSource='h1';}
+ else if(!clusters.length&&!microNames.length&&!h1s.length&&og){mainName=clean245(og);mainSource='og_title';}
+ // Microdata naming another product than the resolved subject does not make the page ambiguous by itself.
+ const microOther=microNames.filter(n=>!mainName||productKey(n)!==productKey(mainName));
+ const mainAmbiguous=(clusters.length>1&&!mainCluster)||(!clusters.length&&microNames.length>1)||(!clusters.length&&!microNames.length&&h1s.length>1)||
+  (!!mainCluster&&microOther.length>0&&!microOther.every(n=>otherEntityNames.has(productKey(n))));
  const identifiers:Record<string,string>={};
- const mainLd=ldProducts.length===1?ldProducts[0]:null;
- if(mainLd){for(const k of ['sku','mpn','gtin','gtin8','gtin12','gtin13','gtin14','productGroupID','model']){const v=str(mainLd[k],80);if(v)identifiers[k]=v;}
-  const b=brandName(mainLd.brand);if(b)identifiers.brand=b;}
+ if(mainCluster){for(const o of mainCluster){for(const k of ['sku','mpn','gtin','gtin8','gtin12','gtin13','gtin14','productGroupID','model']){const v=str(o[k],80);if(v)identifiers[k]??=v;}
+  const b=brandName(o.brand);if(b)identifiers.brand??=b;}}
  const mainRef=():{productRef:'main'|'unknown';productName:string|null;amb:string[]}=>mainAmbiguous?
   {productRef:'unknown',productName:null,amb:['main_product_ambiguous']}:mainName?{productRef:'main',productName:mainName,amb:[]}:
   {productRef:'unknown',productName:null,amb:['main_product_unnamed']};
 
  // ---- variants (ProductGroup)
  const variants:SpecExtraction245['variants']=[];
- if(mainLd&&types(mainLd['@type']).includes('ProductGroup')){
-  const varies=asList(mainLd.variesBy).map(v=>String(v).replace(/^.*[/#]/,'')).slice(0,6);
-  for(const v of asList(mainLd.hasVariant).filter(isObj).slice(0,60)){
+ const group=mainCluster?.find(o=>types(o['@type']).includes('ProductGroup'))??null;
+ if(group){
+  const varies=asList(group.variesBy).map(v=>String(v).replace(/^.*[/#]/,'')).slice(0,6);
+  for(const v of asList(group.hasVariant).filter(isObj).slice(0,60)){
    const props:Record<string,string>={};for(const k of varies){const t=quantitative(v[k]);if(t)props[k]=t;}
    variants.push({name:str(v.name)??'',sku:str(v.sku,80),properties:props});
   }
@@ -340,18 +398,19 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
  const multiVariant=variants.length>1||all.some(n=>n.tag==='select'&&regionOf(n)!=='excluded'&&/(?:size|colou?r|variant|capacity|option)/i.test(`${n.attrs.name??''} ${n.attrs.id??''} ${n.attrs['aria-label']??''}`));
 
  // ---- 1. JSON-LD
- if(mainLd&&!mainAmbiguous){
-  productPropertiesFromSchema(mainLd,(label,value,loc)=>{
+ if(mainCluster&&!mainAmbiguous){
+  // Every node of the subject entity contributes; equal values merge and different values become conflicts.
+  mainCluster.forEach((node,ni)=>productPropertiesFromSchema(node,(label,value,loc)=>{
    if(/^(?:sku|mpn|gtin\d*|model)$/.test(label))return; // identifiers, reported in mainProduct
-   raws.push({label,valueText:value,method:'json_ld',locator:'jsonld:'+loc,productRef:'main',productName:mainName,variant:null,
+   raws.push({label,valueText:value,method:'json_ld',locator:'jsonld:'+(ni?`n${ni}:`:'')+loc,productRef:'main',productName:mainName,variant:null,
     section:'structured data',region:'main',ambiguity:[]});
-  },'product');
-  const price=offerPrice(mainLd);
+  },'product'));
+  const price=offerPrice({offers:mainCluster.flatMap(o=>asList(o.offers)),hasVariant:mainCluster.flatMap(o=>asList(o.hasVariant))});
   if(price)raws.push({label:'Price',valueText:price.replace(/^([A-Z]{3}) (.*)$/,'$2 $1'),method:'json_ld',locator:'jsonld:offers',
    productRef:'main',productName:mainName,variant:null,section:'structured data',region:'main',ambiguity:[],
    preValue:(()=>{const m=/^([A-Z]{3}) ([\d.]+)(?:–([\d.]+))?$/.exec(price)!;return m[3]?{kind:'price',amount:+m[2],maxAmount:+m[3],currency:m[1]}:{kind:'price',amount:+m[2],currency:m[1]};})()});
   // Variant-specific declarations: each variant's own additionalProperty values.
-  asList(mainLd.hasVariant).filter(isObj).slice(0,60).forEach((v,vi)=>{
+  mainCluster.flatMap(o=>asList(o.hasVariant)).filter(isObj).slice(0,60).forEach((v,vi)=>{
    const vname=str(v.name)??str(v.sku,80)??`variant ${vi+1}`;
    productPropertiesFromSchema(v,(label,value,loc)=>{
     if(/^(?:sku|mpn|gtin\d*|model)$/.test(label))return;
@@ -359,7 +418,7 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
      variant:vname,section:'structured data',region:'main',ambiguity:[]});
    },'variant');
   });
- }else if(ldProducts.length>1)abstain('json_ld_multiple_products');
+ }
 
  // ---- 2. microdata
  for(const m of micro){
@@ -466,15 +525,35 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
     continue;
    }
    // Title + paragraph cards are not specifications: prose values are dropped item by item.
+   // A group of short text values with no measurable value and no specification context is a set of
+   // feature/marketing cards ("Voted Europe's best: ..."), not attributes: held back, not promoted.
+   // Context is read from this block and the two enclosing blocks: specification pages split one sheet
+   // into sub-groups ("Connectivity", "Overview") under a shared heading or container.
+   const ctx=[p,p.parent,p.parent?.parent].filter(Boolean).map(a=>sectionOf(a!,byId,null)??'').join(' | ');
+   const ATTRIBUTE_KINDS=new Set([...MEASURABLE,'number','boolean']);
+   const groupMeasurable=good.some(x=>ATTRIBUTE_KINDS.has(normalizeValue245(x!.value,x!.label).kind)||
+    (x!.valueNode.kind==='element'&&[...walk245(x!.valueNode)].some(d=>d.tag==='li'&&INLINE_ATTR.test(textOf245(d)))));
+   const textOnlyNoContext=!groupMeasurable&&!SPEC_CONTEXT.test(ctx)&&![...tokensOf(p)].some(t=>SPEC_CONTEXT.test(t));
    let prose=0;
    for(const x of good){
     if(normalizeValue245(x!.value,x!.label).kind==='prose'){prose++;continue;}
     used.add(x!.labelNode);used.add(x!.valueNode);
-    // One label over a list of several items is several values, not one.
-    const listItems=x!.valueNode.kind==='element'?[...walk245(x!.valueNode)].filter(d=>d.tag==='li').length:0;
+    // One label over a list of several items is several values, not one -- unless every item is itself an
+    // attribute with one measurable value ("Boiler capacity 250 cc"), which is read item by item.
+    const lis=x!.valueNode.kind==='element'?[...walk245(x!.valueNode)].filter(d=>d.tag==='li'):[];
+    const listItems=lis.length;
+    if(listItems>=2){
+     const split=lis.map(li=>INLINE_ATTR.exec(textOf245(li))).map((m,i)=>m&&MEASURABLE.has(normalizeValue245(m[2],m[1]).kind)?{label:m[1],value:m[2],node:lis[i]}:null);
+     if(split.every(Boolean)){
+      for(const it of split)raws.push({label:it!.label,valueText:it!.value,method:'repeated_label_value',locator:locator245(it!.node),
+       productRef:ref.productRef,productName:ref.productName,variant:null,section:x!.label,region:regionOf(p),ambiguity:[...ref.amb]});
+      continue;
+     }
+    }
     raws.push({label:x!.label,valueText:x!.value,method:'repeated_label_value',locator:locator245(x!.labelNode.kind==='text'?x!.labelNode.parent!:x!.labelNode),
      productRef:ref.productRef,productName:ref.productName,variant:null,section:sectionOf(p,byId,null),region:regionOf(p),
-     ambiguity:[...ref.amb,...(listItems>=2?['multiple_values_for_one_label']:[])]});
+     ambiguity:[...ref.amb,...(listItems>=2?['multiple_values_for_one_label']:[]),
+      ...(textOnlyNoContext&&normalizeValue245(x!.value,x!.label).kind==='text'?['text_group_without_spec_context']:[])]});
    }
    if(prose)abstain('title_and_prose_items_not_specifications');
    emitted=true;break;
@@ -536,6 +615,9 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    productName:ref.productName,variant:null,section:sectionOf(li,byId,null),region:regionOf(li),ambiguity:[...ref.amb]});
  }
 
+ // A listing whose own visible content says the product is discontinued: a declared price is not current.
+ const mainText=(()=>{const m=all.find(n=>n.tag==='main'&&regionOf(n)!=='excluded')??all.find(n=>n.tag==='body');return m?textOf245(m).slice(0,4000):'';})();
+ const listingDiscontinued=/\bdiscontinued\b|\bno longer (?:available|sold|stocked|manufactured)\b/i.test(mainText);
  // ---- normalize, attribute, detect conflicts
  const facts:Fact245[]=[];const ambiguous:Fact245[]=[];
  const candidates:Fact245[]=[];
@@ -550,8 +632,10 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   const value=r.preValue??normalizeValue245(r.valueText,label);
   if(value.kind==='empty'){abstain('empty_value');continue;}
   if(value.kind==='prose'){abstain('prose_value_not_kept');continue;}
+  if(value.kind==='price'&&r.method!=='json_ld'&&r.method!=='microdata'&&!PRICE_LABEL.test(label)){abstain('price_labelled_by_other_item');continue;}
   const flags=[...r.ambiguity];
   if(!promotable245(value))flags.push('value_'+value.kind);
+  if(value.kind==='price'&&listingDiscontinued)flags.push('listing_states_discontinued');
   if(r.productRef==='main'&&multiVariant&&!r.variant&&r.method!=='json_ld')flags.push('variant_scope_unverified');
   if(r.region==='comparison')flags.push('in_comparison_marked_region');
   // A section equal to the property or to the product title adds nothing.
@@ -561,7 +645,7 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    method:r.method,locator:r.locator,flags,status:'unverified_source_declaration',producer:'unknown',scientificTestEvidence:false,rankingAuthorized:false});
  }
  // Blocking reasons: everything else is a non-blocking note.
- const BLOCKING=/^(?:main_product_ambiguous|main_product_unnamed|comparison_region_without_product_key|missing_property_label|missing_product_header|missing_product_key|value_spans_multiple_properties|value_cell_is_header|multiple_values_for_one_label|value_per_variant|value_compound|conflicting_values)$/;
+ const BLOCKING=/^(?:main_product_ambiguous|text_group_without_spec_context|listing_states_discontinued|main_product_unnamed|comparison_region_without_product_key|missing_property_label|missing_product_header|missing_product_key|value_spans_multiple_properties|value_cell_is_header|multiple_values_for_one_label|value_per_variant|value_compound|conflicting_values)$/;
  const valueKey=(v:Value245)=>JSON.stringify(v);
  const groups=new Map<string,Fact245[]>();
  for(const c of candidates){const k=JSON.stringify([c.product.ref,c.product.name&&productKey(c.product.name),c.variant&&productKey(c.variant),c.section&&key245(c.section),c.propertyKey]);

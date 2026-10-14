@@ -9,7 +9,7 @@ export type Value245=
   bound?:'max'|'min';qualifier?:string}|
  {kind:'range';min:number;max:number;unit:string;approximate:boolean}|
  {kind:'price';amount:number;maxAmount?:number;currency:string}|
- {kind:'dimensions';numbers:number[];unit:string;axes:string[]|null;approximate:boolean}|
+ {kind:'dimensions';numbers:number[];unit:string;axes:string[]|null;approximate:boolean;qualifier?:string}|
  {kind:'options';numbers:number[];unit:string}|
  {kind:'number';number:number}|
  {kind:'text';text:string}|
@@ -25,7 +25,7 @@ const UNIT_ALIASES:[RegExp,string][]=[
  [/^(?:km|kilomet(?:er|re)s?)$/i,'km'],[/^(?:in|inch|inches|"|″|'')$/i,'in'],[/^(?:ft|feet|foot|'|′)$/i,'ft'],
  // "g" is grams only in lower case: "20G" on a spec sheet is g-force (acceleration), not mass.
  [/^(?:mg)$/i,'mg'],[/^(?:g|gr|GR|grams?|grammes?|Grams?)$/,'g'],[/^(?:kg|kgs|kilo(?:gram)?s?)$/i,'kg'],[/^(?:lb|lbs|pounds?)$/i,'lb'],
- [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
+ [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:cc|cm3|cm³)$/i,'cm³'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
  [/^(?:gal|gallons?)$/i,'gal'],[/^(?:fl\.? ?oz)$/i,'fl oz'],[/^(?:mw)$/,'mW'],[/^(?:w|watts?)$/i,'W'],[/^(?:kw|kilowatts?)$/i,'kW'],
  [/^(?:wh)$/i,'Wh'],[/^(?:kwh)$/i,'kWh'],[/^(?:mah)$/i,'mAh'],[/^(?:v|volts?)$/i,'V'],[/^(?:mv)$/,'mV'],[/^(?:kv)$/i,'kV'],
  [/^(?:a|amps?|amperes?)$/i,'A'],[/^(?:ma)$/,'mA'],[/^(?:hz|hertz)$/i,'Hz'],[/^(?:khz)$/i,'kHz'],[/^(?:mhz)$/i,'MHz'],
@@ -82,6 +82,17 @@ export function normalizeValue245(raw:string,label=''):Value245{
  const axisNote=/^(.*\d.*?)\s*\(\s*((?:width|height|depth|length|w|h|d|l)(?:\s*[x×]\s*(?:width|height|depth|length|w|h|d|l)){1,3})\s*\)$/i.exec(t);
  if(axisNote){const inner=normalizeValue245(axisNote[1],label);const ax=axisNote[2].split(/\s*[x×]\s*/).map(a=>a[0].toUpperCase());
   if(inner.kind==='dimensions'&&inner.numbers.length===ax.length&&new Set(ax).size===ax.length)return {...inner,axes:ax};}
+ // Axis marked on each number: "32.6(D) x 37.9(W) x 31.4(H) cm", "(W) 34.1 x 30(D) x 41.2(H) cm",
+ // "35mm(W) x 145mm(L)"; an optional trailing note ("(front to back)") is kept as a qualifier.
+ const AXIS_MARK=/\(\s*(width|height|depth|length|w|h|d|l)\s*\)/gi;
+ const marks=[...t.matchAll(AXIS_MARK)];
+ if(marks.length>=2&&/[x×]/i.test(t)){
+  let rest=t.replace(AXIS_MARK,' ').replace(/\s+/g,' ').trim();let qualifier:string|undefined;
+  const note=/^(.*\d.*?[a-z"″]*)\s*\(([^()\d]{2,40})\)$/i.exec(rest);if(note){rest=note[1].trim();qualifier='('+note[2].trim()+')';}
+  const inner=normalizeValue245(rest,label);const ax=marks.map(m=>m[1][0].toUpperCase());
+  if(inner.kind==='dimensions'&&inner.numbers.length===ax.length&&new Set(ax).size===ax.length)
+   return {...inner,axes:ax,...(qualifier?{qualifier}:{})};
+ }
  let approximate=false;let bound:'max'|'min'|undefined;
  const ap=/^(?:approx\.?|approximately|ca\.?|circa|about|~|≈)\s*/i.exec(t);if(ap){approximate=true;t=t.slice(ap[0].length);}
  const bd=/^(?:(max\.?|maximum|up to|≤)|(min\.?|minimum|at least|≥))\s*/i.exec(t);if(bd){bound=bd[1]?'max':'min';t=t.slice(bd[0].length);}
@@ -155,6 +166,9 @@ export function normalizeValue245(raw:string,label=''):Value245{
   if(hint.currency)return {kind:'price',amount:n,currency:hint.currency};
   if(hint.unit)return {kind:'quantity',number:n,unit:hint.unit,approximate};
   return {kind:'number',number:n};}}
+ // A count of named items: "6 Slices", "240 slices", "2 baskets". The noun is kept as the unit.
+ m=new RegExp(`^${NUM}\\s+([A-Za-z]{3,15})$`).exec(t);
+ if(m&&!canonicalUnit245(m[2])){const n=parseNumber245(m[1]);if(n!==null)return {kind:'quantity',number:n,unit:m[2].toLowerCase(),approximate,...(bound?{bound}:{})};}
  // Several quantities with words between them: different things, not one value.
  const qty=[...t.matchAll(new RegExp(`${NUM}\\s?([a-zA-Z°"″%]{1,5})\\b`,'g'))].filter(x=>canonicalUnit245(x[2]));
  if(qty.length>=2)return {kind:'compound'};

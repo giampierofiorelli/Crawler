@@ -118,7 +118,11 @@ export const restrictedHttpsTransport:SourceTransport={
      // (autoSelectFamily), which expects an address array, so answer in whichever form was asked for.
      :{lookup:((_hostname:string,options:{all?:boolean},cb:(...a:unknown[])=>void)=>
        options?.all?cb(null,[{address:pinned,family:4}]):cb(null,pinned,4)) as never,agent:false})},res=>{
-     if((res.statusCode??0)>=300&& (res.statusCode??0)<400){res.resume();reject(Error('Redirect denied'));return;}
+     // Redirects are never followed here. The target is reported so a caller can apply its own policy
+     // (same-site only, robots re-check, counted as a new request) and issue a separate request.
+     if((res.statusCode??0)>=300&& (res.statusCode??0)<400){res.resume();
+      const e=Object.assign(Error('Redirect denied'),{redirectStatus:res.statusCode,redirectLocation:typeof res.headers.location==='string'?res.headers.location.slice(0,2000):null});
+      reject(e);return;}
      if(res.headers['content-encoding']&&res.headers['content-encoding']!=='identity'){
        res.resume();reject(Error('Encoded response denied'));return;
      }

@@ -20,8 +20,9 @@ const norm=s=>String(s??'').normalize('NFKC').toLowerCase().replace(/\s+/g,' ').
 const pkey=s=>norm(s).replace(/[:：]\s*$/,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const near=(a,b)=>Math.abs(a-b)<=Math.max(0.005*Math.abs(b),0.001);
 const unitEq=(a,b)=>(canonicalUnit245(a??'')??norm(a))===(canonicalUnit245(b??'')??norm(b));
-function valueMatches(f,g){
- if(g.kind==='text')return f.kind==='text'&&norm(f.text)===norm(g.text);
+function valueMatches(f,g,raw){
+ // A text gold also matches a structured reading of exactly the same authored text ("3 years").
+ if(g.kind==='text')return (f.kind==='text'&&norm(f.text)===norm(g.text))||(raw!==undefined&&norm(raw)===norm(g.text));
  if(g.kind==='number')return f.kind==='number'&&near(f.number,g.number);
  if(g.kind==='boolean')return f.kind==='boolean'&&f.value===g.value&&(g.qualifier===undefined||norm(f.qualifier)===norm(g.qualifier));
  if(g.kind==='quantity')return f.kind==='quantity'&&near(f.number,g.number)&&unitEq(f.unit,g.unit);
@@ -58,7 +59,7 @@ function score(facts,g,mainName,{respectMethods}){
  const matched=new Set();let tp=0,falseAssoc=0,fp=0,duplicates=0;const fpList=[],assocList=[];
  for(const f of scoped){
   const hit=g.expected.findIndex((e,i)=>!matched.has(i)&&pkey(e.property)===f.propertyKey&&ownerOk(f,e)&&sectionOk(f,e)&&
-   (e.variant??null)===(f.variant??null)&&valueMatches(f.value,e.value));
+   (e.variant??null)===(f.variant??null)&&valueMatches(f.value,e.value,f.rawValue));
   if(hit>=0){matched.add(hit);tp++;continue;}
   // The same correct declaration repeated elsewhere on the page is a duplicate, not a false positive.
   const dup=g.expected.findIndex((e,i)=>matched.has(i)&&pkey(e.property)===f.propertyKey&&ownerOk(f,e)&&valueMatches(f.value,e.value));

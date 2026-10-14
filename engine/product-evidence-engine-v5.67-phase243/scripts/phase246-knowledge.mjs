@@ -21,7 +21,7 @@ import {createHash} from 'node:crypto';
 import {join,resolve} from 'node:path';
 import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,defaultKnowledgeDir246} from '../dist/src/phase246_knowledge_store.js';
 import {seedCategoryHypotheses246,CATEGORY_ALIASES246} from '../dist/src/phase246_category_seeds.js';
-import {extractSpecifications245} from '../dist/src/phase245_spec_extraction.js';
+import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../dist/src/phase245_spec_extraction.js';
 
 const [cmd,...rest]=process.argv.slice(2);
 const flags={};for(let i=0;i<rest.length;i++){if(rest[i].startsWith('--')){const k=rest[i].slice(2);const v=rest[i+1]&&!rest[i+1].startsWith('--')?rest[++i]:true;flags[k]=v;}}
@@ -58,7 +58,7 @@ try{
     const host=new URL(p.url).host;
     const r=store.ingestObservation246({source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:SOURCE_TYPE_BY_HOST[host]??'unknown',
       sourceTypeBasis:'operator_asserted'},url:p.url,sha256:p.recordedSha256,bytes:p.bytes,httpStatus:200,fetchedAt:new Date(p.fetchedAt).toISOString(),
-     runId:'phase245_recovered_'+p.set,extractorVersion:'phase245@ee2336f',extraction:extractSpecifications245(bytes.toString('utf8'),p.url),
+     runId:'phase245_recovered_'+p.set,extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:extractSpecifications245(bytes.toString('utf8'),p.url),
      categoryHypotheses:p.categoryHypothesis?[p.categoryHypothesis]:[]});
     res.push({tag:p.tag,ingested:true,newRevision:r.newRevision,retention:r.retention,products:r.productIds.length,variants:r.variantIds.length,
      declarationsSeen:r.declarationsSeen,declarationsRetained:r.declarationsRetained});

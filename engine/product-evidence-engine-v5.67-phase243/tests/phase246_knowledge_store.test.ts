@@ -328,7 +328,7 @@ test('seeded category profiles cover all 12 sections, stay unreviewed and compil
 test('an ambiguous main product records a gap instead of guessing an identity',()=>{
  const s=new KnowledgeStore246(dbPath());
  const prod=(n:string)=>({'@context':'https://schema.org','@type':'Product',name:n,additionalProperty:[{'@type':'PropertyValue',name:'Power',value:1700,unitText:'W'}]});
- const html=`<!doctype html><html><head>${ld(prod('Air Fryer - Black'))}${ld(prod('Air Fryer'))}</head><body><main><h1>Air Fryer</h1><ul><li>Power: 1700W</li></ul></main></body></html>`;
+ const html=`<!doctype html><html><head>${ld(prod('Air Fryer 4L'))}${ld(prod('Air Fryer 6L'))}</head><body><main><h1>Air fryers</h1><ul><li>Power: 1700W</li></ul></main></body></html>`;
  const r=observe(s,'https://maker.example/af',html,src(MAKER,'manufacturer'));
  assert.equal(r.productIds.length,0,'similar names are not merged into one identity');
  assert.ok(s.gaps246({scope:'source',refId:r.revisionId}).some(g=>g.kind==='main_product_ambiguous'));

@@ -58,26 +58,48 @@ async function polite(host){
  const last=S.hosts[host]?.lastAt?Date.parse(S.hosts[host].lastAt):0;const d=POLITENESS_MS-(Date.now()-last);
  if(d>0)await new Promise(r=>setTimeout(r,d));
 }
+/** Same-site redirect policy: https only, same host or its www./bare twin, at most 3 hops. Each hop is a
+ * separate, counted, robots-checked request; anything else stops with the redirect recorded. */
+const sameSite=(a,b)=>a.replace(/^www\./,'')===b.replace(/^www\./,'');
+async function requestFollowing(url,purpose,maxBytes=PAGE_MAX_BYTES){
+ let cur=url;const chain=[];
+ for(let hop=0;hop<=3;hop++){
+  const x=await request(cur,purpose,maxBytes);
+  const loc=x.rec?.redirectLocation;
+  if(!loc)return {...x,finalUrl:cur,redirects:chain};
+  let next;try{next=new URL(loc,cur);}catch{return {...x,finalUrl:cur,redirects:chain};}
+  chain.push({from:cur,to:next.href,status:x.rec.redirectStatus});
+  if(next.protocol!=='https:'||!sameSite(next.host,new URL(cur).host)){S.stopReasons.push({at:now(),url:cur,reason:'cross_site_redirect_not_followed:'+next.host});save();return {...x,finalUrl:cur,redirects:chain};}
+  if(next.host!==new URL(cur).host){const d=await allowed(next.href);if(d!=='allow')return {...x,finalUrl:cur,redirects:chain,robots:d};}
+  cur=next.href;
+ }
+ return {blocked:'too_many_redirects',finalUrl:cur,redirects:chain};
+}
 async function request(url,purpose,maxBytes=PAGE_MAX_BYTES){
  const host=new URL(url).host;const block=budgetBlock(host);
  if(block){S.stopReasons.push({at:now(),url,reason:block});save();return {blocked:block};}
  await polite(host);
  const t0=Date.now();let r,err=null;
- try{r=await T.get(url,RESEARCH_AGENT,maxBytes);}catch(e){err=(e.code??'')+' '+e.message;}
- const rec={at:now(),host,url,purpose,status:r?.status??null,bytes:r?.rawBytes?.length??0,ms:Date.now()-t0,error:err};
+ let redirect=null;
+ try{r=await T.get(url,RESEARCH_AGENT,maxBytes);}catch(e){err=(e.code??'')+' '+e.message;if(e.redirectLocation)redirect={status:e.redirectStatus,location:e.redirectLocation};}
+ const rec={at:now(),host,url,purpose,status:r?.status??redirect?.status??null,bytes:r?.rawBytes?.length??0,ms:Date.now()-t0,error:err,
+  ...(redirect?{redirectStatus:redirect.status,redirectLocation:redirect.location}:{})};
  S.requests.push(rec);
  const h=S.hosts[host]??={ok:0,restricted:0,errors:0,suspended:null,lastAt:null};h.lastAt=rec.at;
  if(r&&r.status>=200&&r.status<300)h.ok++;
  else if(r&&(r.status===401||r.status===403||r.status===429)){h.restricted++;h.suspended=`http_${r.status}`;S.stopReasons.push({at:rec.at,url,reason:`host_suspended_after_http_${r.status}`});}
- else h.errors++;
+ else if(!redirect)h.errors++;
  if(h.errors>=3&&!h.suspended){h.suspended='repeated_errors';S.stopReasons.push({at:rec.at,url,reason:'host_suspended_after_repeated_errors'});}
  save();return {r,rec};
 }
 async function robotsFor(host){
  if(S.robots[host])return S.robots[host];
- const x=await request(`https://${host}/robots.txt`,'robots',512000);
+ const x=await requestFollowing(`https://${host}/robots.txt`,'robots',512000);
  if(x.blocked)return null;
- S.robots[host]={status:x.r?.status??null,finalUrl:x.r?.finalUrl??null,contentType:x.r?.contentType??null,fetchedAt:x.rec.at,body:x.r?x.r.body:null,error:x.rec.error};save();
+ // RFC 9309 2.3.1.2: robots.txt redirects may be followed; only a same-site chain ending at /robots.txt is accepted here.
+ const endedAtRobots=x.redirects?.length&&new URL(x.finalUrl).pathname==='/robots.txt'&&sameSite(new URL(x.finalUrl).host,host);
+ S.robots[host]={status:x.r?.status??null,finalUrl:endedAtRobots&&x.r?`https://${host}/robots.txt`:(x.r?.finalUrl??null),contentType:x.r?.contentType??null,
+  fetchedAt:x.rec?.at??now(),body:x.r?x.r.body:null,error:x.rec?.error??x.blocked??null,redirects:x.redirects??[]};save();
  return S.robots[host];
 }
 async function allowed(url){
@@ -147,27 +169,27 @@ switch(cmd){
    if(S.pages.some(p=>p.tag===tag))throw Error('duplicate tag '+tag);
    const d=await allowed(url);
    if(d!=='allow'){S.pages.push({tag,url,role:F.role,category:F.category??null,sourceType:F['source-type']??'unknown',outcome:'not_fetched_'+d});save();console.log(tag,'NOT FETCHED',d);continue;}
-   const x=await request(url,F.role);
+   const x=await requestFollowing(url,F.role);
    if(x.blocked){S.pages.push({tag,url,role:F.role,category:F.category??null,sourceType:F['source-type']??'unknown',outcome:'not_fetched_'+x.blocked});save();console.log(tag,'BLOCKED',x.blocked);continue;}
    const ok=x.r&&x.r.status===200;
-   const row={tag,url,role:F.role,category:F.category??null,sourceType:F['source-type']??'unknown',outcome:ok?'fetched':'http_'+(x.r?.status??'error'),
+   const row={tag,url,finalUrl:x.finalUrl,redirects:x.redirects,role:F.role,category:F.category??null,sourceType:F['source-type']??'unknown',outcome:ok?'fetched':'http_'+(x.r?.status??'error'),
     httpStatus:x.r?.status??null,contentType:x.r?.contentType??null,bytes:x.rec.bytes,ms:x.rec.ms,fetchedAt:x.rec.at,sha256:x.r?sha(x.r.rawBytes):null};
    if(ok)writeFileSync(join(rawDir,tag+'.html'),x.r.rawBytes);
    S.pages.push(row);save();console.log(tag,row.outcome,row.bytes,row.ms+'ms',row.sha256?.slice(0,12));
   }
   break;}
  case 'observations':{
-  const {extractSpecifications245}=await import('../dist/src/phase245_spec_extraction.js');
+  const {extractSpecifications245,SPEC_EXTRACTOR_VERSION}=await import('../dist/src/phase245_spec_extraction.js');
   const out=[];
   for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
   for(const p of S.pages){
    if(p.outcome!=='fetched'||!rawDir)continue;const f=join(rawDir,p.tag+'.html');if(!existsSync(f))continue;
    const b=readFileSync(f);if(sha(b)!==p.sha256)continue; // never trust bytes that do not match the receipt
-   const host=new URL(p.url).host;const t0=Date.now();
-   const x=extractSpecifications245(b.toString('utf8'),p.url);
+   const host=new URL(p.finalUrl??p.url).host;const t0=Date.now();
+   const x=extractSpecifications245(b.toString('utf8'),p.finalUrl??p.url);
    out.push({observation:{source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:p.sourceType,sourceTypeBasis:'operator_asserted'},
-    url:p.url,sha256:p.sha256,bytes:p.bytes,httpStatus:p.httpStatus,fetchedAt:p.fetchedAt,runId:'phase246_wave1_'+p.role,
-    extractorVersion:'phase245@ee2336f',extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category?[p.category]:[]},
+    url:p.finalUrl??p.url,sha256:p.sha256,bytes:p.bytes,httpStatus:p.httpStatus,fetchedAt:p.fetchedAt,runId:(F.run??'phase246_wave1')+'_'+p.role,
+    extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category?[p.category]:[]},
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
   }
