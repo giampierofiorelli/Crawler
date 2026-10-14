@@ -1,0 +1,20 @@
+{"schema":"pee248.journey-benchmark.v1","split":"heldout","written":"before any Phase248 journey code exists; not to be used for development",
+ "decisionMeaning":{"clarify":"category or need cannot be established from the request; ask","unsupported_category":"category recognised but PEE holds no category knowledge for it","withhold_insufficient_evidence":"category and need understood; no independent evidence that can support a recommendation","out_of_scope":"not a product-advice request PEE handles"},
+ "cases":[
+ {"id":"h01","text":"I'm on my own most evenings and want chips that come out properly crispy without a deep fat fryer.","expectedCategory":"air_fryers","expectedConcepts":["cook_single_portion","crisp_texture"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h02","text":"Our kitchen is tiny but we often cook two things at once for dinner. Is a two-drawer air fryer sensible?","expectedCategory":"air_fryers","expectedConcepts":["small_kitchen","cook_two_foods_simultaneously"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h03","text":"Which air fryer gives the most even results across the whole basket?","expectedCategory":"air_fryers","expectedConcepts":["cooking_evenness"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h04","text":"I want a proper espresso every morning but I hate cleaning things.","expectedCategory":"coffee_machines","expectedConcepts":["espresso_quality","low_maintenance"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h05","text":"What should I watch out for with running costs on a coffee machine?","expectedCategory":"coffee_machines","expectedConcepts":["ongoing_costs"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h06","text":"I need a coffee maker that gives the same result every time, my old one was all over the place.","expectedCategory":"coffee_machines","expectedConcepts":["shot_consistency"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h07","text":"My toast always comes out pale on one side and burnt on the other. What toaster fixes that?","expectedCategory":"toasters","expectedConcepts":["even_browning"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h08","text":"We buy thick sourdough loaves; most toasters won't fit the slices.","expectedCategory":"toasters","expectedConcepts":["thick_bread_fit"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h09","text":"I have small kids, so I don't want a toaster whose sides get dangerously hot.","expectedCategory":"toasters","expectedConcepts":["hot_exterior"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"h10","text":"Can you recommend something for the kitchen?","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"clarify"},
+ {"id":"h11","text":"I want something to make my mornings easier.","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"clarify"},
+ {"id":"h12","text":"Which kettle boils fastest and is quiet?","expectedCategory":"kettles","expectedConcepts":[],"expectedDecision":"unsupported_category"},
+ {"id":"h13","text":"I'd like a blender strong enough for frozen fruit smoothies.","expectedCategory":"blenders","expectedConcepts":[],"expectedDecision":"unsupported_category"},
+ {"id":"h14","text":"What's the best laptop for a university student?","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"out_of_scope"},
+ {"id":"h15","text":"Air fryer or toaster oven for reheating pizza?","expectedCategory":"ambiguous","expectedConcepts":[],"expectedDecision":"clarify"},
+ {"id":"h16","text":"Is a cheap coffee machine under £100 worth it, or should I spend more?","expectedCategory":"coffee_machines","expectedConcepts":[],"expectedDecision":"withhold_insufficient_evidence","expectedBudget":{"currency":"GBP","max":100}}
+ ]}
