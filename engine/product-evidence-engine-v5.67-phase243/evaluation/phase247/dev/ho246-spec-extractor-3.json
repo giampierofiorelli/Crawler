@@ -1,0 +1,291 @@
+{
+ "schema": "pee245.evaluation.v1",
+ "gold": "evaluation/phase246/gold-heldout/heldout-gold.json",
+ "generatedAt": "2026-10-14T16:22:14.336Z",
+ "totals": {
+  "baseline": {
+   "expected": 29,
+   "correct": 0,
+   "falseAssociations": 0,
+   "falsePositives": 1,
+   "missed": 29,
+   "abstentionsRequired": 0,
+   "abstentionsCorrect": 0,
+   "ms": 48.2,
+   "precision": 0,
+   "recall": 0
+  },
+  "phase245": {
+   "expected": 29,
+   "correct": 28,
+   "falseAssociations": 0,
+   "falsePositives": 2,
+   "missed": 1,
+   "abstentionsRequired": 0,
+   "abstentionsCorrect": 0,
+   "ms": 392.6,
+   "precision": 0.933,
+   "recall": 0.966
+  }
+ },
+ "pages": [
+  {
+   "tag": "ho_af_dualit_55",
+   "sha256": "99397c967d28c360ba6488ac94d0da57bd4dd4ea64e02d997e6a24e2f83a5f82",
+   "bytes": 411998,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 5,
+    "expected": 5,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Power",
+     "main |  | Dimensions",
+     "main |  | Weight",
+     "main |  | Material"
+    ],
+    "ms": 16.3
+   },
+   "phase245": {
+    "scopedFacts": 6,
+    "correct": 5,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 0,
+    "expected": 5,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Air Fryer | Adjustable Temperature Control = {\"kind\":\"range\",\"min\":50,\"max\":200,\"unit\":\"°C\",\"approximate\":false}"
+    ],
+    "assocList": [],
+    "missedList": [],
+    "ms": 77.2,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "ho_af_lakeland_dual8",
+   "sha256": "d2ed43685f92dcc82585c2eca450f87d192f5c181ffd602f0c34a5abf2a8a283",
+   "bytes": 645505,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 0,
+    "expected": 0,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Lakeland Dual Basket Air Fryer with Easy View Windows 8L | Price = {\"kind\":\"price\",\"amount\":59.99,\"currency\":\"GBP\"}"
+    ],
+    "assocList": [],
+    "missedList": [],
+    "ms": 10.3
+   },
+   "phase245": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 0,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 78.1,
+    "ambiguousKept": 1
+   }
+  },
+  {
+   "tag": "ho_cm_origin_lelit",
+   "sha256": "02a5e4631d41364f744b7d873aeeec646dfd036b20fef80721245766313117b1",
+   "bytes": 2234685,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 6,
+    "expected": 6,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Dimensions (WxDxH)",
+     "main |  | Materials",
+     "main |  | Boiler capacity",
+     "main |  | Water tank capacity",
+     "main |  | Brewing System"
+    ],
+    "ms": 10.5
+   },
+   "phase245": {
+    "scopedFacts": 7,
+    "correct": 6,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 0,
+    "expected": 6,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Lelit Anna - Steel | Interface = {\"kind\":\"text\",\"text\":\"Machine ready and/or warming-up LED\"}"
+    ],
+    "assocList": [],
+    "missedList": [],
+    "ms": 113.6,
+    "ambiguousKept": 2
+   }
+  },
+  {
+   "tag": "ho_cm_dualit_espressivo",
+   "sha256": "851b58768827a9bc1899a643f5e02466fe8d3c140c867d4192e7a4c2c491203f",
+   "bytes": 399549,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 4,
+    "expected": 4,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Dimensions",
+     "main |  | Weight",
+     "main |  | Included Accessories"
+    ],
+    "ms": 3.5
+   },
+   "phase245": {
+    "scopedFacts": 3,
+    "correct": 3,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 4,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Included Accessories"
+    ],
+    "ms": 42.6,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "ho_t_dualit_studio2",
+   "sha256": "6c97ccf6d731d6d7f7116cfa5f1835d2dbcedd62a24f0109dc4573e854ac2c94",
+   "bytes": 415646,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 5,
+    "expected": 5,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Power",
+     "main |  | Dimensions",
+     "main |  | Slot Dimensions",
+     "main |  | Weight"
+    ],
+    "ms": 3.3
+   },
+   "phase245": {
+    "scopedFacts": 5,
+    "correct": 5,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 5,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 41.2,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "ho_t_dualit_classic6",
+   "sha256": "c7207b26435f9b18f67754c22e1c9192888b5e4765ad7da0526107b27c7a3f09",
+   "bytes": 433368,
+   "baseline": {
+    "scopedFacts": 0,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 9,
+    "expected": 9,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Capacity",
+     "main |  | Power",
+     "main |  | Weight",
+     "main |  | Dimensions",
+     "main |  | Slot Dimensions",
+     "main |  | Output per hour",
+     "main |  | Materials",
+     "main |  | Elements"
+    ],
+    "ms": 4.3
+   },
+   "phase245": {
+    "scopedFacts": 9,
+    "correct": 9,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 9,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 39.9,
+    "ambiguousKept": 0
+   }
+  }
+ ]
+}

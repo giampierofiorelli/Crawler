@@ -1,0 +1,319 @@
+{
+ "schema": "pee245.evaluation.v1",
+ "gold": "evaluation/phase245/gold-unseen2/unseen2-gold.json",
+ "generatedAt": "2026-10-14T16:22:13.565Z",
+ "totals": {
+  "baseline": {
+   "expected": 62,
+   "correct": 12,
+   "falseAssociations": 0,
+   "falsePositives": 0,
+   "missed": 50,
+   "abstentionsRequired": 1,
+   "abstentionsCorrect": 1,
+   "ms": 51.5,
+   "precision": 1,
+   "recall": 0.194
+  },
+  "phase245": {
+   "expected": 62,
+   "correct": 61,
+   "falseAssociations": 0,
+   "falsePositives": 10,
+   "missed": 1,
+   "abstentionsRequired": 1,
+   "abstentionsCorrect": 1,
+   "ms": 387.3,
+   "precision": 0.859,
+   "recall": 0.984
+  }
+ },
+ "pages": [
+  {
+   "tag": "pololu_2135",
+   "sha256": "2375982dfe32ea3d30a89664b79a91a236a43a58be67beb8b4c199bc437f481b",
+   "bytes": 75259,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 1,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 10.2
+   },
+   "phase245": {
+    "scopedFacts": 3,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 2,
+    "missed": 0,
+    "expected": 1,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "DRV8835 Dual Motor Driver Carrier | Motor supply voltage = {\"kind\":\"range\",\"min\":0,\"max\":11,\"unit\":\"V\",\"approximate\":false}",
+     "DRV8835 Dual Motor Driver Carrier | Logic supply voltage = {\"kind\":\"range\",\"min\":2,\"max\":7,\"unit\":\"V\",\"approximate\":false}"
+    ],
+    "assocList": [],
+    "missedList": [],
+    "ms": 68.2,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "pololu_2135_specs",
+   "sha256": "aa851774479a8839428c4a11f0e02ae60ff18eafe9d77d85f65da07be8f97ba5",
+   "bytes": 56712,
+   "baseline": {
+    "scopedFacts": 7,
+    "correct": 7,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 5,
+    "expected": 12,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Motor driver",
+     "main |  | Motor channels",
+     "main |  | Continuous output current per channel",
+     "main |  | Continuous paralleled output current",
+     "main |  | Reverse voltage protection?"
+    ],
+    "ms": 3.9
+   },
+   "phase245": {
+    "scopedFacts": 16,
+    "correct": 12,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 4,
+    "missed": 0,
+    "expected": 12,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "DRV8835 Dual Motor Driver Carrier | Size = {\"kind\":\"text\",\"text\":\"0.4′′ × 0.7′′\"}",
+     "DRV8835 Dual Motor Driver Carrier | Weight = {\"kind\":\"quantity\",\"number\":0.5,\"unit\":\"g\",\"approximate\":false}",
+     "DRV8835 Dual Motor Driver Carrier | PCB dev codes = {\"kind\":\"text\",\"text\":\"md18a\"}",
+     "DRV8835 Dual Motor Driver Carrier | Other PCB markings = {\"kind\":\"text\",\"text\":\"0J3901\"}"
+    ],
+    "assocList": [],
+    "missedList": [],
+    "ms": 23.2,
+    "ambiguousKept": 1
+   }
+  },
+  {
+   "tag": "wickes_dhr242",
+   "sha256": "3ba22e9b03c46378c6204242b58f96f133e166d40930fe469287cdc5e5286b07",
+   "bytes": 444472,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 12,
+    "expected": 13,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Blows per Minute",
+     "main |  | Maximum Diameter (Wood)",
+     "main |  | Maximum Diameter (Steel)",
+     "main |  | No Load Speed",
+     "main |  | Weight",
+     "main |  | Power Type",
+     "main |  | Battery Type",
+     "main |  | Voltage",
+     "main |  | Type",
+     "main |  | Years Guaranteed",
+     "main |  | Manufacturer Model No",
+     "main |  | Brand Name"
+    ],
+    "ms": 6.6
+   },
+   "phase245": {
+    "scopedFacts": 13,
+    "correct": 13,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 13,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 92.5,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "richer_audiolab9000a",
+   "sha256": "d060a163ee86a4271c8b0c852b45d7c7fd202e86b8f1ea1dfad988fb5e67b0b2",
+   "bytes": 2297178,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 15,
+    "expected": 16,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Colour",
+     "main |  | Remote Control Included",
+     "main |  | Amplifier Type",
+     "main |  | Power Output",
+     "main |  | Phono Input Type",
+     "main |  | Wireless Connectivity",
+     "main |  | Speaker Sets",
+     "main |  | Manufacturer's guarantee",
+     "main |  | Product Dimensions (mm)",
+     "main |  | Weight",
+     "main |  | High Resolution Audio",
+     "main |  | DAC make/model",
+     "main |  | Frequency Response (Hz)",
+     "main |  | Power Consumption - Standby",
+     "main |  | SKU"
+    ],
+    "ms": 18.4
+   },
+   "phase245": {
+    "scopedFacts": 18,
+    "correct": 16,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 16,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 89.1,
+    "ambiguousKept": 1
+   }
+  },
+  {
+   "tag": "sparkfun_redboard",
+   "sha256": "0250753d623a5d2390cee4d060366388c126831bf92a90647f800d42fd6fb58b",
+   "bytes": 589734,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 2,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Input voltage"
+    ],
+    "ms": 6.2
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 1,
+    "expected": 2,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Input voltage"
+    ],
+    "ms": 68.8,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "johnlewis_1",
+   "sha256": "a26c032891b8121b11394b31d010d0070b7a0147c411fe8177bbe9918644460d",
+   "bytes": 435682,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 17,
+    "expected": 18,
+    "abstentionsRequired": 1,
+    "abstentionsCorrect": 1,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Automatic or manual",
+     "main |  | Brand",
+     "main |  | Cable length",
+     "main |  | Corded or cordless",
+     "main |  | Country of origin",
+     "main |  | Cup warmer",
+     "main |  | Dimensions",
+     "main |  | Guarantee",
+     "main |  | Installation required",
+     "main |  | Milk functionality",
+     "main |  | Model name / number",
+     "main |  | Power",
+     "main |  | Power supply",
+     "main |  | Pressure",
+     "main |  | Removable reservoir",
+     "main |  | Washing instructions",
+     "main |  | Weight"
+    ],
+    "ms": 6.2
+   },
+   "phase245": {
+    "scopedFacts": 22,
+    "correct": 18,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 4,
+    "missed": 0,
+    "expected": 18,
+    "abstentionsRequired": 1,
+    "abstentionsCorrect": 1,
+    "fpList": [
+     "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine | Useful guides = {\"kind\":\"text\",\"text\":\"Coffee Machines Buying GuideView the guide\"}",
+     "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine | color = {\"kind\":\"text\",\"text\":\"Black\"}",
+     "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine | color = {\"kind\":\"text\",\"text\":\"Green\"}",
+     "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine | color = {\"kind\":\"text\",\"text\":\"White\"}"
+    ],
+    "assocList": [],
+    "missedList": [],
+    "ms": 45.5,
+    "ambiguousKept": 1
+   }
+  }
+ ]
+}

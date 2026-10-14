@@ -17,11 +17,11 @@
 import {createHash} from 'node:crypto';
 import {type Node245,parseHtml245,walk245,textOf245,elementChildren245,locator245,clean245,isDecorative245} from './phase245_html_dom.js';
 import {buildTableGrid245,interpretTableGrid245} from './phase245_table_grid.js';
-import {normalizeValue245,promotable245,type Value245} from './phase245_value_normalizer.js';
+import {normalizeValue245,promotable245,canonicalUnit245,type Value245} from './phase245_value_normalizer.js';
 import type {Fact241} from './phase241_unified_product_facts.js';
 import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 
-export type Method245='json_ld'|'microdata'|'definition_list'|'table_key_value'|'table_products_in_columns'|
+export type Method245='line_label_value'|'json_ld'|'microdata'|'definition_list'|'table_key_value'|'table_products_in_columns'|
  'table_products_in_rows'|'repeated_label_value'|'list_item_label_value';
 export interface Fact245 {
  property:string;propertyKey:string;
@@ -305,6 +305,7 @@ const PRICE_LABEL=/\b(?:price|prices|cost|rrp|msrp|mrp|was|now|from|sale|offer|l
 const SPEC_CONTEXT=/\b(?:spec|specs|specification|specifications|technical|tech|details|dimensions|characteristics|information|key facts|at a glance|product info|in the box|what'?s in the box)\b/i;
 /** "Boiler capacity 250 cc": an attribute phrase followed by one measurable value, without a colon. */
 const INLINE_ATTR=/^(\p{L}[\p{L}\s'()/-]{2,40}?)\s+(\d[\d.,]*\s*[\p{L}°%"″]{0,6}\.?)$/u;
+const BLOCK_TAGS=new Set(['div','p','ul','ol','li','table','section','article','dl','h1','h2','h3','h4','h5','h6']);
 const walk245Has=(n:Node245,tag:string)=>{for(const d of walk245(n))if(d!==n&&d.tag===tag)return true;return false;};
 /** A value that is entirely a link (download, document, other page) references content elsewhere. */
 const linkOnlyValue=(v:Node245)=>{
@@ -321,7 +322,7 @@ const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative
 
 /** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
  * and re-derived per source revision. Bump on any behavioural change. */
-export const SPEC_EXTRACTOR_VERSION='spec-extractor-2';
+export const SPEC_EXTRACTOR_VERSION='spec-extractor-3';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
  if(typeof html!=='string'||html.length>PAGE_MAX_BYTES)throw Error('245_html_size');
@@ -440,6 +441,17 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   if(regionOf(t)==='excluded'){abstain('table_in_non_main_region');continue;}
   if(t.attrs.role==='presentation'||t.attrs.role==='none'){abstain('layout_table');continue;}
   const g=buildTableGrid245(t);if(!g){abstain('table_grid_failed');continue;}
+  // A one-row, two-cell table is a single key/value declaration (sites often render each attribute as its own
+  // table under a group heading). Accepted only when the first cell reads as a label and the value is not a link.
+  if(g.rows===1&&g.cols===2&&g.cells.length===2){
+   const [a,b]=g.cells;
+   if(labelLike(a.text)&&b.text&&!linkOnlyValue(b.node)&&!walk245Has(a.node,'img')){
+    used.add(a.node);used.add(b.node);const ref=mainRef();
+    raws.push({label:a.text,valueText:b.text,method:'table_key_value',locator:`${g.locator}@r0c1`,productRef:ref.productRef,productName:ref.productName,
+     variant:null,section:g.caption??sectionOf(t,byId,null),region:regionOf(t),ambiguity:[...ref.amb]});
+    continue;
+   }
+  }
   const it=interpretTableGrid245(g);
   if(it.mode==='unsupported'){abstain('table_'+(it.reasons[0]??'unsupported'));continue;}
   const sec=g.caption??sectionOf(t,byId,null);
@@ -604,6 +616,29 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   }
  }
 
+ // ---- 5c. "Label: value" lines separated by <br> inside one block (rich-text editors, cells with several lines)
+ for(const el of all){
+  if(el.kind!=='element'||regionOf(el)==='excluded'||insideLink(el)||used.has(el))continue;
+  if(!el.children.some(c=>c.tag==='br'))continue;
+  const lines:{text:string;nodes:Node245[]}[]=[{text:'',nodes:[]}];
+  for(const c of el.children){
+   if(c.tag==='br'){lines.push({text:'',nodes:[]});continue;}
+   if(c.kind==='element'&&BLOCK_TAGS.has(c.tag)){lines.length=0;break;} // nested blocks: not a line-structured block
+   const t=c.kind==='text'?c.text:textOf245(c);lines[lines.length-1].text+=(t??'')+' ';lines[lines.length-1].nodes.push(c);
+  }
+  const pairs=lines.map(l=>{const t=clean245(l.text).replace(/^[•·▪◦*–—-]\s*/,'');
+   const m=/^([^:：]{1,60})[:：]\s*(.{1,160})$/.exec(t);return m&&labelLike(m[1])?{label:m[1],value:m[2],nodes:l.nodes}:null;}).filter(Boolean);
+  const kinds=pairs.map(x=>normalizeValue245(x!.value,x!.label).kind);
+  if(!(pairs.length>=2||(pairs.length===1&&MEASURABLE.has(kinds[0]))))continue;
+  const ref=mainRef();const sec=sectionOf(el,byId,null);
+  pairs.forEach((x,i)=>{
+   if(pairs.length===1&&!MEASURABLE.has(kinds[i]))return;
+   raws.push({label:x!.label,valueText:x!.value,method:'line_label_value',locator:locator245(el)+`:line${i}`,productRef:ref.productRef,
+    productName:ref.productName,variant:null,section:sec,region:regionOf(el),ambiguity:[...ref.amb]});
+  });
+  used.add(el);
+ }
+
  // ---- 6. single "Label: value" list items among prose bullets, accepted only for measurable values
  for(const li of all){
   if(li.tag!=='li'||used.has(li)||regionOf(li)==='excluded'||insideLink(li))continue;
@@ -645,11 +680,24 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    method:r.method,locator:r.locator,flags,status:'unverified_source_declaration',producer:'unknown',scientificTestEvidence:false,rankingAuthorized:false});
  }
  // Blocking reasons: everything else is a non-blocking note.
- const BLOCKING=/^(?:main_product_ambiguous|text_group_without_spec_context|listing_states_discontinued|main_product_unnamed|comparison_region_without_product_key|missing_property_label|missing_product_header|missing_product_key|value_spans_multiple_properties|value_cell_is_header|multiple_values_for_one_label|value_per_variant|value_compound|conflicting_values)$/;
+ const BLOCKING=/^(?:main_product_ambiguous|structured_data_disagrees_with_visible|text_group_without_spec_context|listing_states_discontinued|main_product_unnamed|comparison_region_without_product_key|missing_property_label|missing_product_header|missing_product_key|value_spans_multiple_properties|value_cell_is_header|multiple_values_for_one_label|value_per_variant|value_compound|conflicting_values)$/;
  const valueKey=(v:Value245)=>JSON.stringify(v);
  const groups=new Map<string,Fact245[]>();
  for(const c of candidates){const k=JSON.stringify([c.product.ref,c.product.name&&productKey(c.product.name),c.variant&&productKey(c.variant),c.section&&key245(c.section),c.propertyKey]);
   groups.set(k,[...(groups.get(k)??[]),c]);}
+ // Structured data that disagrees with a visible declaration of the same property (unit suffixes such as
+ // "Weight (kg)" ignored) is held back and noted; the visible declaration stays, flagged with the disagreement.
+ const baseKey=(k:string)=>k.replace(/\s+(?:kg|g|mm|cm|m|l|ml|w|kw|v|hz|in|lb|oz|min|s|h)$/,'');
+ const visibleByBase=new Map<string,Fact245[]>();
+ for(const c of candidates)if(c.method!=='json_ld'&&c.method!=='microdata'&&c.product.ref==='main')
+  visibleByBase.set(baseKey(c.propertyKey),[...(visibleByBase.get(baseKey(c.propertyKey))??[]),c]);
+ const comparable=(a:Value245,b:Value245)=>a.kind==='quantity'&&b.kind==='quantity'?canonicalUnit245(a.unit)===canonicalUnit245(b.unit)&&Math.abs(a.number-b.number)<=1e-6*Math.max(1,Math.abs(b.number)):valueKey(a)===valueKey(b);
+ for(const c of candidates){
+  if(c.method!=='json_ld'||c.product.ref!=='main'||c.variant)continue;
+  const vis=visibleByBase.get(baseKey(c.propertyKey));
+  if(vis&&vis.some(v=>v.value.kind===c.value.kind)&&!vis.some(v=>comparable(v.value,c.value))){
+   c.flags.push('structured_data_disagrees_with_visible');for(const v of vis)v.flags.push('structured_data_declares_other_value');}
+ }
  for(const [,g] of groups){
   const distinct=new Set(g.map(x=>valueKey(x.value)));
   if(distinct.size>1){for(const x of g){x.flags.push('conflicting_values');ambiguous.push(x);}continue;}

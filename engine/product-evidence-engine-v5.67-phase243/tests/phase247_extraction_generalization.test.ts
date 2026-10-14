@@ -73,3 +73,33 @@ test('normalizer: per-number axis marks, trailing notes and counted items',()=>{
  assert.deepEqual(normalizeValue245('6 Slices'),{kind:'quantity',number:6,unit:'slices',approximate:false});
  assert.equal(normalizeValue245('Series 9').kind,'text');
 });
+
+test('one-row key/value tables under group headings are read; a one-row layout table with an image label is not',()=>{
+ const html=page(ld(product({name:'F'})),'<h1>F</h1><h3>White Goods Features</h3><table><tr><td>Interior Light</td><td>No</td></tr></table>'+
+  '<h3>Product Type</h3><table><tr><td>Product Category Group</td><td>SDA</td></tr></table>'+
+  '<table><tr><td><img src="a.png"></td><td>Great value</td></tr></table>');
+ const x=run(html);
+ assert.deepEqual(get(x.facts,'interior light')[0].value,{kind:'boolean',value:false,qualifier:null});
+ assert.equal(get(x.facts,'interior light')[0].section,'White Goods Features');
+ assert.equal(get(x.facts,'product category group').length,1);
+ assert.equal(x.facts.filter(f=>f.method!=='json_ld').length,2);
+});
+test('"• Label: value" lines separated by <br> are read; a single non-measurable line in prose is not',()=>{
+ const html=page(ld(product({name:'B'})),'<h1>B</h1><div><span>• E61 group with manual pressure control<br>• Pump type: Rotary<br>• PID: Yes<br>• Coffee boiler capacity: 800 ml</span></div>'+
+  '<p>We love this machine.<br>Note: ships in a gift box</p>');
+ const x=run(html);
+ assert.deepEqual(x.facts.filter(f=>f.method==='line_label_value').map(f=>f.propertyKey).sort(),['coffee boiler capacity','pid','pump type']);
+ assert.equal(get(x.facts,'note').length,0);
+});
+test('a structured-data value that disagrees with the visible declaration is held back; the visible value stays, flagged',()=>{
+ const html=page(ld(product({name:'D',weight:{'@type':'QuantitativeValue',value:1,unitText:'kg'}})),
+  '<h1>D</h1><h2>Specifications</h2><table><tr><td>Weight (kg)</td><td>2.1</td></tr><tr><td>Width (mm)</td><td>295</td></tr></table>');
+ const x=run(html);
+ const vis=get(x.facts,'weight kg')[0];assert.deepEqual(vis.value,{kind:'quantity',number:2.1,unit:'kg',approximate:false});
+ assert.ok(vis.flags.includes('structured_data_declares_other_value'));
+ assert.ok(get(x.ambiguous,'weight')[0].flags.includes('structured_data_disagrees_with_visible'));
+});
+test('normalizer: a described quantity keeps its description as a qualifier',()=>{
+ assert.deepEqual(normalizeValue245('Water tank 1.9L (64 fl.oz)'),{kind:'quantity',number:1.9,unit:'l',approximate:false,alternative:{number:64,unit:'fl oz'},qualifier:'Water tank'});
+ assert.equal(normalizeValue245('Size 4').kind,'text');
+});

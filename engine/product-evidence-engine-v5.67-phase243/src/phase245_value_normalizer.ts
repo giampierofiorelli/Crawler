@@ -166,6 +166,10 @@ export function normalizeValue245(raw:string,label=''):Value245{
   if(hint.currency)return {kind:'price',amount:n,currency:hint.currency};
   if(hint.unit)return {kind:'quantity',number:n,unit:hint.unit,approximate};
   return {kind:'number',number:n};}}
+ // A described quantity: "Water tank 1.9L (64 fl.oz)" -> 1.9 l, the leading words kept as a qualifier.
+ m=new RegExp(`^([A-Za-z][A-Za-z ]{2,30}?)\\s+(${NUM}\\s*[A-Za-z°%.]{1,6}(?:\\s*\\([^()]{1,20}\\))?)$`).exec(t);
+ if(m&&!/\d/.test(m[1])){const inner=normalizeValue245(m[2],label);
+  if(inner.kind==='quantity'&&!inner.qualifier)return {...inner,qualifier:m[1].trim()};}
  // A count of named items: "6 Slices", "240 slices", "2 baskets". The noun is kept as the unit.
  m=new RegExp(`^${NUM}\\s+([A-Za-z]{3,15})$`).exec(t);
  if(m&&!canonicalUnit245(m[2])){const n=parseNumber245(m[1]);if(n!==null)return {kind:'quantity',number:n,unit:m[2].toLowerCase(),approximate,...(bound?{bound}:{})};}
