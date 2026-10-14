@@ -1,0 +1,36 @@
+{
+ "schema": "pee248.safety-notice-gold.v1",
+ "about": "Hand annotations for 24 GOV.UK OPSS notices fetched after the parser opss-notice-1 was frozen (commit b186870). Written from the notices' plain text before running the parser on them. Development used only six air-fryer notices. Notice files are identified by their GOV.UK path in the manifest; raw bodies are not committed.",
+ "conventions": {
+  "categories": "registry ids from phase248_category_registry; [] when the product is outside them; categoryAmbiguous excludes the notice from category accuracy",
+  "identifiers": "required = codes that identify the product, batch, SKU or barcode; optional = neither required nor penalised (plug models, serial-range bounds, carton fragments); forbidden = sizes, powers, years or standards that must not become identifiers",
+  "hazards": "classes stated in the summary hazard line; 'other' when none of the taxonomy applies",
+  "brand": "null when no brand is declared or the brand is 'Unbranded'; brandAmbiguous excludes the notice from brand accuracy"
+ },
+ "notices": {
+  "h01": {"type":"recall","categories":["kettles"],"brand":"Zwilling","required":["4009839537189","4009839427169","4009839537172","4009839538957","4009839538964","4009839546211","4009839546228"],"optional":[],"forbidden":["1.5L"],"hazards":["burns"]},
+  "h02": {"type":"safety_report","categories":["kettles"],"brand":null,"required":["CZ-8520","1060211","OCC087533541475"],"optional":[],"forbidden":[],"hazards":["fire"]},
+  "h03": {"type":"safety_report","categories":["kettles"],"brand":null,"required":["B040000000129703","WI43895358","M010000000006390636","1123"],"optional":["1491"],"forbidden":[],"hazards":["fire"]},
+  "h04": {"type":"safety_report","categories":["kettles"],"brand":null,"required":["RVG15096-251127-0001-383"],"optional":["EL-210"],"forbidden":["1363"],"hazards":["fire"]},
+  "h05": {"type":"recall","categories":["toasters"],"brand":"Bosch","required":["TAT8611GB","TAT8613GB","FD0201","FD0306"],"optional":[],"forbidden":[],"hazards":["fire","injury"]},
+  "h06": {"type":"safety_report","categories":["toaster_ovens"],"brand":null,"required":["BH-003","UV54","RVG17153-250910-0001-1284","G17153-G9309137754"],"optional":[],"forbidden":["1363"],"hazards":["fire"]},
+  "h07": {"type":"safety_report","categories":[],"categoryAmbiguous":true,"brand":null,"required":["NGC-206","MOGJ2601160017","ZJ-3inlzaocang.ji"],"optional":["203/300"],"forbidden":[],"hazards":["fire"]},
+  "h08": {"type":"safety_report","categories":["coffee_machines"],"brand":"SOKANY","required":["CM-102","697824283878","G4042-W2543608748","HG-K69601","RVG4042-251218-0006-115","FBE251218UK-1"],"optional":[],"forbidden":["1363"],"hazards":["fire"]},
+  "h09": {"type":"safety_report","categories":[],"brand":"Yuchengtech","required":["JMS-270","B081WQWG12","FBA15HV046FDU000003"],"optional":["SASO2203/AC-019/QOL1","SASO2203","AC-019","QOL1"],"forbidden":["1200W","220-240V"],"hazards":["fire"]},
+  "h10": {"type":"safety_report","categories":[],"brand":null,"required":["D60558162-50","RV000013-250504-0001-50","JD60558162"],"optional":["LP-60L","GB-WR4","WR4","0S1","ZT1","AN1","AW1","044"],"forbidden":["1362"],"hazards":["fire"]},
+  "h11": {"type":"recall","categories":["blenders"],"brand":"BlendJet","required":[],"optional":["5201000000","5542999999"],"forbidden":[],"hazards":["fire","injury"]},
+  "h12": {"type":"recall","categories":["blenders"],"brand":null,"required":["5052775617803","61780"],"optional":[],"forbidden":[],"hazards":["injury"]},
+  "h13": {"type":"safety_report","categories":["blenders"],"brand":"Jizya","required":["806","RVG15096-251127-0001-684"],"optional":[],"forbidden":["1362"],"hazards":["fire"]},
+  "h14": {"type":"recall","categories":["blenders"],"brand":null,"required":["5056384032767"],"optional":[],"forbidden":[],"hazards":["fire"]},
+  "h15": {"type":"safety_report","categories":["rice_cookers"],"brand":null,"required":["6464-UK","B0CXVWZH21","080313025242"],"optional":[],"forbidden":[],"hazards":["fire"]},
+  "h16": {"type":"recall","categories":["rice_cookers"],"brand":"Spree TV","required":["080313025242"],"optional":[],"forbidden":[],"hazards":["fire"]},
+  "h17": {"type":"safety_report","categories":[],"brand":null,"required":[],"optional":[],"forbidden":["2010","2022"],"hazards":["other"]},
+  "h18": {"type":"safety_report","categories":[],"brand":null,"required":[],"optional":["4444"],"forbidden":[],"hazards":["other"]},
+  "h19": {"type":"safety_report","categories":[],"categoryAmbiguous":true,"brand":null,"required":["HX-22A","UK09552BK","B0400000001210628972","M010000000005340067","WI39159134"],"optional":[],"forbidden":["22L","1363"],"hazards":["fire"]},
+  "h20": {"type":"recall","categories":[],"brand":null,"brandAmbiguous":true,"required":["PC-8802"],"optional":["BS1363/A","BS1363"],"forbidden":["13AMP","250V"],"hazards":["fire"]},
+  "h21": {"type":"recall","categories":[],"categoryAmbiguous":true,"brand":null,"brandAmbiguous":true,"required":[],"optional":["2040","2204"],"forbidden":[],"hazards":["burns"]},
+  "h22": {"type":"safety_report","categories":[],"brand":null,"brandAmbiguous":true,"required":["ABS-2400"],"optional":[],"forbidden":[],"hazards":["entrapment"]},
+  "h23": {"type":"safety_report","categories":[],"brand":null,"required":["ERT 1500"],"optional":[],"forbidden":[],"hazards":["injury"]},
+  "h24": {"type":"safety_report","categories":[],"brand":"Pearson","required":["ZYS-6X3200"],"optional":[],"forbidden":[],"hazards":["entrapment","injury"]}
+ }
+}
