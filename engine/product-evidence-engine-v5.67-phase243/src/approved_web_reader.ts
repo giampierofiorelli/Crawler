@@ -5,6 +5,9 @@
  */
 import {lookup} from 'node:dns/promises';
 import {request} from 'node:https';
+import {request as httpRequest} from 'node:http';
+import {connect as tlsConnect} from 'node:tls';
+import type {Socket} from 'node:net';
 import type {WebCandidate,WebSourcePolicy,EvidenceAcquisitionPlan,EvidenceQueueItem,EvidenceProcessingResult} from './web_evidence_acquisition.js';
 import {quarantineRetrievedEvidence,planWebEvidenceAcquisition} from './web_evidence_acquisition.js';
 
@@ -51,7 +54,46 @@ function secureUrl(raw:string):URL {
  return u;
 }
 
-/** Real network implementation. Refuses redirects, private DNS answers, compression and oversize responses. */
+/** HTTPS_PROXY from the environment, if any. Only plain http:// proxies (CONNECT over TCP) are supported. */
+function configuredProxy(hostname:string):URL|null{
+ const raw=process.env.HTTPS_PROXY??process.env.https_proxy;
+ if(!raw)return null;
+ const noProxy=(process.env.NO_PROXY??process.env.no_proxy??'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
+ if(noProxy.some(e=>e==='*'||hostname===e.replace(/^\*?\./,'')||hostname.endsWith('.'+e.replace(/^\*?\./,''))))return null;
+ const proxy=new URL(raw);
+ if(proxy.protocol!=='http:')throw Error('Unsupported HTTPS_PROXY scheme');
+ return proxy;
+}
+/** Opens a CONNECT tunnel to host:443 through the proxy and resolves with the raw tunnelled socket. */
+function connectTunnel(proxy:URL,hostname:string):Promise<Socket>{
+ return new Promise((resolve,reject)=>{
+  const headers:Record<string,string>={Host:`${hostname}:443`};
+  if(proxy.username)headers['Proxy-Authorization']='Basic '+Buffer.from(
+   `${decodeURIComponent(proxy.username)}:${decodeURIComponent(proxy.password)}`).toString('base64');
+  const req=httpRequest({host:proxy.hostname,port:Number(proxy.port||80),method:'CONNECT',
+   path:`${hostname}:443`,headers,agent:false,timeout:8000});
+  req.on('connect',(res,socket)=>{
+   if(res.statusCode!==200){socket.destroy();reject(Error(`Proxy CONNECT refused: ${res.statusCode}`));return;}
+   resolve(socket);
+  });
+  req.on('timeout',()=>req.destroy(Error('Proxy CONNECT timeout')));
+  req.on('error',reject);req.end();
+ });
+}
+
+/** Real network implementation. Refuses redirects, private DNS answers, compression and oversize responses.
+ *
+ * When HTTPS_PROXY is set (and the host is not excluded by NO_PROXY) the request is tunnelled through the
+ * proxy with HTTP CONNECT. TLS is still negotiated end-to-end inside the tunnel against the origin hostname,
+ * with certificate verification on (default CA store plus NODE_EXTRA_CA_CERTS, which Node loads at startup).
+ * HTTPS-only, no redirects, the byte cap and identity-only encoding apply unchanged on both paths.
+ *
+ * LIMITATION: in proxy mode, private-IP pinning CANNOT be enforced. The local DNS lookup and publicIPv4()
+ * check below still run, but the proxy resolves the hostname itself and may connect to a different address
+ * (DNS rebinding, split-horizon DNS, or a proxy that can reach internal networks). The guarantee that the
+ * bytes came from a public IPv4 address only holds on the direct path, where the socket is pinned to the
+ * checked address. In proxy mode that guarantee rests on the proxy's own egress policy.
+ */
 export const restrictedHttpsTransport:SourceTransport={
  async get(raw,agent,maxBytes){
   const url=secureUrl(raw);
@@ -59,10 +101,20 @@ export const restrictedHttpsTransport:SourceTransport={
   const answers=await lookup(url.hostname,{family:4,all:true,verbatim:true});
   if(answers.length===0||answers.some(a=>!publicIPv4(a.address)))throw Error('No safe public IPv4 address');
   const pinned=answers[0].address;
+  const proxy=configuredProxy(url.hostname);
+  const tunnel=proxy?await connectTunnel(proxy,url.hostname):null;
   return new Promise((resolve,reject)=>{
    const req=request(url,{method:'GET',headers:{'User-Agent':agent,'Accept':'text/plain,text/html;q=0.9,application/pdf;q=0.8,application/vnd.openxmlformats-officedocument.wordprocessingml.document;q=0.8','Accept-Encoding':'identity'},
-    timeout:8000,agent:false,
-    lookup:(_hostname,_options,cb)=>cb(null,pinned,4)},res=>{
+    timeout:8000,rejectUnauthorized:true,
+    ...(tunnel
+     // TLS inside the CONNECT tunnel; SNI and certificate checks use the origin hostname, not the proxy.
+     // `agent` must stay undefined here: with agent:false Node builds a fresh Agent that ignores
+     // createConnection and silently dials the origin directly instead of using the tunnel.
+     ?{createConnection:()=>tlsConnect({socket:tunnel,servername:url.hostname,rejectUnauthorized:true})}
+     // Direct path: pin the socket to the checked address. Node >=20 calls lookup with {all:true}
+     // (autoSelectFamily), which expects an address array, so answer in whichever form was asked for.
+     :{lookup:((_hostname:string,options:{all?:boolean},cb:(...a:unknown[])=>void)=>
+       options?.all?cb(null,[{address:pinned,family:4}]):cb(null,pinned,4)) as never,agent:false})},res=>{
      if((res.statusCode??0)>=300&& (res.statusCode??0)<400){res.resume();reject(Error('Redirect denied'));return;}
      if(res.headers['content-encoding']&&res.headers['content-encoding']!=='identity'){
        res.resume();reject(Error('Encoded response denied'));return;
@@ -81,7 +133,7 @@ export const restrictedHttpsTransport:SourceTransport={
      res.on('error',reject);
     });
    req.on('timeout',()=>req.destroy(Error('Timeout')));
-   req.on('error',reject);req.end();
+   req.on('error',e=>{tunnel?.destroy();reject(e);});req.end();
   });
  }
 };
