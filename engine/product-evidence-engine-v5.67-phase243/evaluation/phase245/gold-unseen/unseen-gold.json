@@ -1,0 +1,424 @@
+{
+ "apple_airpodspro_specs": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Connectivity",
+    "value": {
+     "kind": "text",
+     "text": "Bluetooth 5.3 wireless technology"
+    }
+   }
+  ],
+  "mustAbstain": [
+   {
+    "product": "main",
+    "property": "Height",
+    "why": "two identical label lists for earbud and charging case; no text says which is which"
+   },
+   {
+    "product": "main",
+    "property": "Width",
+    "why": "two identical label lists for earbud and charging case; no text says which is which"
+   },
+   {
+    "product": "main",
+    "property": "Depth",
+    "why": "two identical label lists for earbud and charging case; no text says which is which"
+   },
+   {
+    "product": "main",
+    "property": "Weight",
+    "why": "two identical label lists for earbud and charging case; no text says which is which"
+   },
+   {
+    "product": "main",
+    "property": "Chip",
+    "why": "two different chips listed; a merged value would be wrong"
+   }
+  ],
+  "forbidden": [
+   {
+    "product": "main",
+    "property": "Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 1.55,
+     "unit": "oz"
+    },
+    "why": "charging case weight"
+   },
+   {
+    "product": "main",
+    "property": "Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 43.99,
+     "unit": "g"
+    },
+    "why": "charging case weight"
+   }
+  ],
+  "note": "Each spec row is an h2 heading + list. Prose rows (battery, accessibility, environment) carry no single declared value."
+ },
+ "bosch_coolingset": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 10.09,
+     "currency": "GBP"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Dimensions",
+    "value": {
+     "kind": "dimensions",
+     "numbers": [
+      21.8,
+      13.5
+     ],
+     "unit": "cm"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [],
+  "note": "'Dimensions: 21.8 cm x 13.5 cm (length x height)' is one item in a list of prose bullets"
+ },
+ "bosch_mum8meat": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 6.26,
+     "currency": "GBP"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Diameter",
+    "value": {
+     "kind": "quantity",
+     "number": 51,
+     "unit": "mm"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [],
+  "note": "'Diameter: 51 mm' is one item in a list of prose bullets"
+ },
+ "pimoroni_pybadge": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 34.5,
+     "currency": "GBP"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Product Dimensions",
+    "value": {
+     "kind": "dimensions",
+     "numbers": [
+      85.7,
+      54.6,
+      10.0
+     ],
+     "unit": "mm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Product Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 29.3,
+     "unit": "g"
+    }
+   }
+  ],
+  "mustAbstain": [],
+  "forbidden": [],
+  "note": "product content is outside the page's <main> element, which only holds a search widget"
+ },
+ "rtings_athanc70": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [],
+  "mustAbstain": [],
+  "forbidden": [
+   {
+    "product": "main",
+    "propertyAny": true,
+    "why": "test results are client-rendered from JSON; static HTML carries no measured values"
+   }
+  ]
+ },
+ "scan_kioxia1tb": {
+  "scopeProducts": [
+   "main"
+  ],
+  "expected": [
+   {
+    "product": "main",
+    "property": "Capacity",
+    "value": {
+     "kind": "quantity",
+     "number": 1,
+     "unit": "TB"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Edition",
+    "value": {
+     "kind": "text",
+     "text": "EXCERIA G3"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Form Factor",
+    "value": {
+     "kind": "text",
+     "text": "M.2 (2280)"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Interface",
+    "value": {
+     "kind": "text",
+     "text": "PCIe 5.0 (x4)"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Host Controller Interface",
+    "value": {
+     "kind": "text",
+     "text": "NVMe 2.0c"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Flash Memory Type",
+    "value": {
+     "kind": "text",
+     "text": "3D QLC"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Read",
+    "value": {
+     "kind": "quantity",
+     "number": 10000,
+     "unit": "MB/s"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Write",
+    "value": {
+     "kind": "quantity",
+     "number": 8900,
+     "unit": "MB/s"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Random Read 4K",
+    "value": {
+     "kind": "text",
+     "text": "1300K IOPS"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Random Write 4K",
+    "value": {
+     "kind": "text",
+     "text": "1450K IOPS"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Power Consumption (active)",
+    "value": {
+     "kind": "quantity",
+     "number": 5.5,
+     "unit": "W"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Endurance Rating",
+    "value": {
+     "kind": "quantity",
+     "number": 600,
+     "unit": "TB"
+    }
+   },
+   {
+    "product": "main",
+    "property": "MTBF",
+    "value": {
+     "kind": "quantity",
+     "number": 1500000,
+     "unit": "h"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Operating Vibration",
+    "value": {
+     "kind": "text",
+     "text": "20G"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Max. Operating Shock",
+    "value": {
+     "kind": "text",
+     "text": "9.806 km/s"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Connectivity",
+    "value": {
+     "kind": "text",
+     "text": "1 x M.2"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Dimensions",
+    "value": {
+     "kind": "dimensions",
+     "numbers": [
+      22.15,
+      2.38,
+      80.15
+     ],
+     "unit": "mm"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Weight",
+    "value": {
+     "kind": "quantity",
+     "number": 5.7,
+     "unit": "g"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Package Type",
+    "value": {
+     "kind": "text",
+     "text": "Retail"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Scan Code",
+    "value": {
+     "kind": "text",
+     "text": "LN175586"
+    }
+   },
+   {
+    "product": "main",
+    "property": "Model Number",
+    "value": {
+     "kind": "text",
+     "text": "LVC10Z001TG8"
+    }
+   },
+   {
+    "product": "main",
+    "property": "GTIN",
+    "value": {
+     "kind": "number",
+     "number": 4582761161504
+    }
+   },
+   {
+    "product": "main",
+    "property": "Price",
+    "value": {
+     "kind": "price",
+     "amount": 145.99,
+     "currency": "GBP"
+    }
+   }
+  ],
+  "mustAbstain": [
+   {
+    "product": "main",
+    "property": "Special Features",
+    "why": "list of several features in one cell"
+   }
+  ],
+  "acceptableExtra": [
+   {
+    "property": "DRAM Cache Memory",
+    "why": "'N/A' declared"
+   },
+   {
+    "property": "Latency",
+    "why": "'N/A' declared"
+   },
+   {
+    "property": "Bracket",
+    "why": "'N/A' declared"
+   },
+   {
+    "property": "Duration",
+    "why": "warranty terms (service declaration, not a product specification, not wrong)"
+   },
+   {
+    "property": "Type",
+    "why": "warranty terms (service declaration, not a product specification, not wrong)"
+   },
+   {
+    "property": "DOA Period",
+    "why": "warranty terms (service declaration, not a product specification, not wrong)"
+   },
+   {
+    "property": "RTB Period",
+    "why": "warranty terms (service declaration, not a product specification, not wrong)"
+   }
+  ],
+  "forbidden": [],
+  "note": "finance tables (Monthly Payment, Instalment Rate, Cost of purchase, Total inc. interest, Minimum Spend) are not product specifications: counted as false positives if promoted"
+ }
+}
