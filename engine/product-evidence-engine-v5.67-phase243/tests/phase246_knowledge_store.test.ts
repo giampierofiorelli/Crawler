@@ -234,7 +234,7 @@ test('10. a clean new process reloads from durable storage, export/import and ba
   {encoding:'utf8',env:{...process.env,PEE_ALLOW_TMP_STORE:'1'}});
   assert.equal(o.status,0,o.stderr);return JSON.parse(o.stdout.trim().split('\n').pop()!);};
  for(const p of [path,bak]){const c=child(p);
-  assert.equal(c.name,'Fryer A');assert.equal(c.decl,2);assert.equal(c.versions,1);assert.ok(c.journal.ok);assert.equal(c.stats.schemaVersion,1);}
+  assert.equal(c.name,'Fryer A');assert.equal(c.decl,2);assert.equal(c.versions,1);assert.ok(c.journal.ok);assert.equal(c.stats.schemaVersion,2);}
  const imported=join(dir,'imported'+n+'.sqlite');
  const t=KnowledgeStore246.import246(exp,imported);
  assert.equal(t.product246(r.productIds[0])!.name,'Fryer A');assert.equal(t.declarations246(r.productIds[0]).length,2);
@@ -252,7 +252,7 @@ test('10b. safe schema handling: refuses ephemeral /tmp by default and stores ne
  try{assert.throws(()=>new KnowledgeStore246('/tmp/pee246-should-not-exist.sqlite'),/246_refusing_ephemeral_tmp_store/);}
  finally{process.env.PEE_ALLOW_TMP_STORE=prev;}
  assert.ok(!existsSync('/tmp/pee246-should-not-exist.sqlite'));
- const path=dbPath();const s=new KnowledgeStore246(path);assert.equal(s.schemaVersion(),1);
+ const path=dbPath();const s=new KnowledgeStore246(path);assert.equal(s.schemaVersion(),2);
  s.db.exec('PRAGMA user_version=99');s.close();
  assert.throws(()=>new KnowledgeStore246(path),/246_store_newer_than_software/);
  const j=new KnowledgeStore246(dbPath());j.recordAccess246('robots.example','robots_disallowed');
@@ -298,6 +298,89 @@ test('profile: category profile keeps classes and sections apart and reports no 
  assert.equal(p.sections.mechanisms.technicalHypotheses.length,1);
  assert.equal(p.sections.mechanisms.reviewedGeneralKnowledge.length,0);
  assert.equal(p.rankingAuthorized,false);assert.equal(p.performanceEstablished,false);
+ s.close();
+});
+
+test('reuse: same bytes under new extraction rules re-derive only that revision; unchanged values revive, reviewed ones stay',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ const url='https://maker.example/a';const html=productPage({name:'Fryer A',brand:'Acme',gtin:G1,watts:1500,litres:4});
+ const r1=observe(s,url,html,src(MAKER,'manufacturer'),AT,['air_fryers'],{extractorVersion:'rules-1'});
+ const pid=r1.productIds[0];const d1=s.declarations246(pid);
+ s.verifyDeclarationForPurpose246(d1.find(d=>d.propertyKey==='power')!.declarationId,'spec_comparison',receipt([r1.revisionId]),trusted);
+ s.registerDerived246('summary:'+pid,'product_summary',['rev:'+r1.revisionId],'a'.repeat(64));
+ assert.equal(observe(s,url,html,src(MAKER,'manufacturer'),later(1),['air_fryers'],{extractorVersion:'rules-1'}).newRevision,false,'same rules: nothing re-derived');
+ // New rules read capacity differently (simulated) and keep power.
+ const x=extractSpecifications245(html,url);const cap=x.facts.find(f=>f.propertyKey==='capacity')!;
+ const changed={...x,facts:x.facts.map(f=>f===cap?{...f,value:{kind:'quantity' as const,number:4.2,unit:'l',approximate:false}}:f)};
+ const r2=observe(s,url,html,src(MAKER,'manufacturer'),later(2),['air_fryers'],{extractorVersion:'rules-2',extraction:changed});
+ assert.equal(r2.rederived,true);assert.equal(r2.newRevision,false);assert.equal(r2.revisionId,r1.revisionId);
+ assert.ok(r2.staleNodes.includes('summary:'+pid));
+ const cur=s.declarations246(pid);
+ assert.deepEqual(cur.map(d=>[d.propertyKey,d.state]).sort(),[['capacity','extracted_unverified'],['power','verified_for_purpose']]);
+ assert.equal((cur.find(d=>d.propertyKey==='capacity')!.value as {number:number}).number,4.2);
+ assert.ok(s.declarations246(pid,{includeSuperseded:true}).some(d=>d.state==='superseded_by_extractor'),'old reading kept as history');
+ assert.equal(s.stats246().revisions,1);
+ s.close();
+});
+test('reuse: the revisit plan skips recently verified sources, flags rule changes worth a refetch and low-value metadata-only revisits',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ observe(s,'https://maker.example/a',productPage({name:'Fryer A',brand:'Acme',gtin:G1,watts:1500,litres:4}),src(MAKER,'manufacturer'),AT,['air_fryers'],{extractorVersion:'rules-1'});
+ observe(s,'https://unknown.example/u',productPage({name:'Fryer U',brand:'U',gtin:G2,watts:1500,litres:4}),src('unknown.example','retailer',null),AT,['air_fryers'],{extractorVersion:'rules-1'});
+ const soon=s.revisitPlan246({asOf:later(24*5),extractorVersion:'rules-1'});
+ assert.deepEqual(soon.plan.map(p=>p.action),['skip','skip']);
+ const rules=s.revisitPlan246({asOf:later(24*5),extractorVersion:'rules-2'});
+ assert.deepEqual(rules.plan.map(p=>[p.url.split('/')[2],p.action,p.reason]),[['maker.example','refetch','extraction_rules_changed_values_retainable'],['unknown.example','skip','verified_5d_ago_interval_30d']]);
+ const late=s.revisitPlan246({asOf:later(24*40),extractorVersion:'rules-1'});
+ assert.deepEqual(late.plan.map(p=>p.action),['refetch','low_value']);
+ s.close();
+});
+test('durability: sharded NDJSON export is deterministic, verifiable and rebuilds an equivalent store',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ observe(s,'https://maker.example/a',productPage({name:'Fryer A',brand:'Acme',gtin:G1,watts:1500,litres:4}),src(MAKER,'manufacturer'));
+ seedCategoryHypotheses246(s,'toasters',AT);
+ const d1=join(dir,'shards'+n),d2=join(dir,'shards2'+n);
+ const a=s.exportShards246(d1),b=s.exportShards246(d2);
+ assert.equal(a.manifestSha256,b.manifestSha256,'unchanged store exports identical bytes');
+ const t=KnowledgeStore246.importShards246(d1,join(dir,'fromshards'+n+'.sqlite'));
+ assert.deepEqual(t.stats246(),s.stats246());assert.ok(t.verifyJournal().ok);t.close();
+ writeFileSync(join(d1,'products.ndjson'),readFileSync(join(d1,'products.ndjson'),'utf8').replace('Fryer A','Fryer B'));
+ assert.throws(()=>KnowledgeStore246.importShards246(d1,join(dir,'bad'+n+'.sqlite')),/246_shard_integrity_failed:products.ndjson/);
+ const w=s.rightsWorksheet246();
+ assert.equal(w[0].host,'maker.example');assert.equal(w[0].currentRetention,'facts_retained');assert.equal(w[0].decisionNeeded,'none');
+ s.close();
+});
+
+test('identity: a product later seen with a stronger identifier resolves to the same record through alias keys',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ const page=(ids:Record<string,string>)=>`<!doctype html><html><head>${ld({'@context':'https://schema.org','@type':'Product',name:'Machine L',...ids,
+  additionalProperty:[{'@type':'PropertyValue',name:'Power',value:1200,unitText:'W'}]})}</head><body><main><h1>Machine L</h1></main></body></html>`;
+ const a=observe(s,'https://shop.example/l',page({sku:'SAG_L'}),src(SHOP,'retailer'));
+ const b=observe(s,'https://shop.example/l',page({sku:'SAG_L',mpn:'PL41',brand:'Lelit'}),src(SHOP,'retailer'),later(30));
+ assert.deepEqual(b.productIds,a.productIds,'sku alias reaches the first record although brand+mpn is now the strongest key');
+ assert.equal(s.product246(a.productIds[0])!.identifiers.mpn,'PL41','identifiers accumulate');
+ assert.equal(s.products246().length,1);
+ s.close();
+});
+test('identity: a page title without product data or declarations does not create a product',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ const r=observe(s,'https://shop.example/c/air-fryers','<!doctype html><html><head><meta property="og:title" content="Tower Air Fryers"></head><body><main><h1>Tower Air Fryers</h1><p>Fast and healthy cooking.</p></main></body></html>',src(SHOP,'retailer'));
+ assert.equal(r.productIds.length,0);
+ assert.ok(s.gaps246({refId:r.revisionId}).some(g=>g.kind==='no_product_declared'));
+ // The same kind of page with one purchase control is a product page.
+ const p=observe(s,'https://shop.example/p/bin-36','<!doctype html><html><head></head><body><main><h1>Bo Pedal Bin, 36 litre</h1><button>Add to basket</button></main></body></html>',src(SHOP,'retailer'));
+ assert.equal(p.productIds.length,1);
+ s.close();
+});
+test('identity: re-derivation recomputes product links; a record no source supports any more is kept but marked, not deleted',()=>{
+ const s=new KnowledgeStore246(dbPath());
+ const url='https://shop.example/x';const html=productPage({name:'Fryer X',brand:'Acme',gtin:G3,watts:1500,litres:4});
+ const r1=observe(s,url,html,src(SHOP,'retailer'),AT,['air_fryers'],{extractorVersion:'rules-1'});
+ const x=extractSpecifications245(html,url);
+ const renamed={...x,mainProduct:{...x.mainProduct,name:'Fryer X (renamed)',identifiers:{gtin13:G2}}};
+ const r2=observe(s,url,html,src(SHOP,'retailer'),later(1),['air_fryers'],{extractorVersion:'rules-2',extraction:renamed});
+ assert.notDeepEqual(r2.productIds,r1.productIds);
+ assert.equal(s.product246(r1.productIds[0])!.identityState,'unsupported_after_rederivation');
+ assert.equal(s.products246().length,1);assert.equal(s.products246({includeInactive:true}).length,2);
  s.close();
 });
 

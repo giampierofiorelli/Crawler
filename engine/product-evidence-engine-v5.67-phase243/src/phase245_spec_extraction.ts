@@ -41,7 +41,10 @@ export interface Fact245 {
 export interface SpecExtraction245 {
  schema:'pee245.spec-extraction.v1';sourceUrl:string;documentSha256:string;
  mainProduct:{name:string|null;source:'json_ld'|'microdata'|'h1'|'og_title'|null;identifiers:Record<string,string>;
-  declaredProductCount:number;ambiguous:boolean};
+  declaredProductCount:number;ambiguous:boolean;
+  /** Page-type cues (not facts): og:type and the number of purchase controls (one or two on a product page,
+   * many on a listing). Used by consumers to decide whether a title-only page denotes one product. */
+  pageSignals?:{ogType:string|null;purchaseControls:number}};
  variants:{name:string;sku:string|null;properties:Record<string,string>}[];
  facts:Fact245[];ambiguous:Fact245[];
  abstentions:Record<string,number>;
@@ -709,7 +712,10 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
  const sortF=(a:Fact245,b:Fact245)=>a.locator.localeCompare(b.locator)||a.propertyKey.localeCompare(b.propertyKey)||String(a.product.name).localeCompare(String(b.product.name));
  facts.sort(sortF);ambiguous.sort(sortF);
  return {schema:'pee245.spec-extraction.v1',sourceUrl,documentSha256,
-  mainProduct:{name:mainName,source:mainSource,identifiers,declaredProductCount:declared.size,ambiguous:mainAmbiguous},
+  mainProduct:{name:mainName,source:mainSource,identifiers,declaredProductCount:declared.size,ambiguous:mainAmbiguous,
+   pageSignals:{ogType:all.find(n=>n.tag==='meta'&&n.attrs.property==='og:type')?.attrs.content?.toLowerCase().slice(0,40)??null,
+    purchaseControls:all.filter(n=>(n.tag==='button'||n.tag==='a'||(n.tag==='input'&&/^(?:submit|button)$/i.test(n.attrs.type??'')))&&
+     /^\s*(?:add to (?:cart|basket|bag|trolley)|buy (?:it )?now)\s*$/i.test(n.tag==='input'?(n.attrs.value??''):textOf245(n))).length}},
   variants,facts:facts.slice(0,1500),ambiguous:ambiguous.slice(0,1500),abstentions:abst,
   stats:{nodes:nodeCount,tables:tableCount,excludedRegions:excludedCount,truncated,milliseconds:Math.round(performance.now()-started)},
   rawSourceStored:false,rankingAuthorized:false,identityVerified:false};

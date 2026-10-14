@@ -36,12 +36,15 @@ import type {StudyStream179} from './phase179_category_learning.js';
 import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from './phase193_screening_memory.js';
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
 
-export const STORE_SCHEMA_VERSION246=1;
+export const STORE_SCHEMA_VERSION246=2;
+/** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
+ * change re-derives revisions whose bytes are available, like an extractor change. */
+export const IDENTITY_RULES246='identity-3';
 export type SourceType246='manufacturer'|'retailer'|'independent_original_test'|'editorial'|'community'|
  'promotional_announcement'|'reference_encyclopedia'|'unknown';
 export type RetentionClass246='facts_retained'|'local_pending_rights_review'|'metadata_only'|'blocked';
-export type IdentityState246='discovered'|'extracted_unverified'|'reviewed';
-export type DeclarationState246='extracted_unverified'|'reviewed'|'verified_for_purpose'|'superseded_by_revision'|'expired_pending_rights';
+export type IdentityState246='discovered'|'extracted_unverified'|'reviewed'|'unsupported_after_rederivation'|'merged';
+export type DeclarationState246='extracted_unverified'|'reviewed'|'verified_for_purpose'|'superseded_by_revision'|'superseded_by_extractor'|'expired_pending_rights';
 export type KnowledgeClass246='observed_pattern'|'technical_hypothesis'|'reviewed_general_knowledge'|'evidence_supported_finding';
 export const CATEGORY_SECTIONS246=['user_goals','product_subtypes','mechanisms','technical_characteristics',
  'performance_outcomes','spec_need_relevance','quality_measurements','constraints_requirements',
@@ -93,6 +96,17 @@ export function productKey246(i:{host:string;name:string|null;brand?:string|null
  if(i.sku)return {key:`sku:${i.host}:${slug(i.sku)}`,basis:'host_sku'};
  if(!i.name)throw Error('246_product_without_identity');
  return {key:`name:${i.host}:${slug(i.name)}`,basis:'host_name'};
+}
+/** Every exact-identifier key of one identity, strongest first. The host-scoped name is used only when no
+ * identifier exists. Two records sharing any of these keys denote the same product. */
+export function productKeys246(i:Parameters<typeof productKey246>[0]):string[]{
+ const keys:string[]=[];const g=i.gtin?validGtin246(i.gtin):null;
+ if(g)keys.push('gtin:'+g);
+ if(i.brand&&i.mpn&&i.mpn.trim().length>=3)keys.push(`mpn:${slug(i.brand)}:${slug(i.mpn)}`);
+ if(i.productGroupId)keys.push(`group:${i.host}:${slug(i.productGroupId)}`);
+ if(i.sku)keys.push(`sku:${i.host}:${slug(i.sku)}`);
+ if(!keys.length)keys.push(productKey246(i).key);
+ return keys;
 }
 /** Rights gate: what may be kept from one source under this installation's storage policy. */
 export function retentionFor246(policy:WebSourcePolicy|undefined,storage:StoragePolicy246,asOf:string):RetentionClass246{
@@ -152,6 +166,9 @@ const MIGRATIONS:string[]=[
   CREATE TRIGGER events_no_update BEFORE UPDATE ON events BEGIN SELECT RAISE(ABORT,'append_only_events'); END;
   CREATE TRIGGER events_no_delete BEFORE DELETE ON events BEGIN SELECT RAISE(ABORT,'append_only_events'); END;
   CREATE TABLE store_meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);`,
+ // v2: alias keys, so an identity found later under a stronger identifier resolves to the same product.
+ `CREATE TABLE product_keys (key TEXT PRIMARY KEY, product_id TEXT NOT NULL REFERENCES products(product_id));
+  INSERT OR IGNORE INTO product_keys SELECT json_extract(identifiers_json,'$._key'),product_id FROM products WHERE json_extract(identifiers_json,'$._key') IS NOT NULL;`,
 ];
 
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;
@@ -162,7 +179,7 @@ export interface ObservationInput246 {
  /** Optional Phase193 ledger to link screening decisions for this revision. */
  screening?:{ledger:ScreeningLedger193;market:string;policyVersion:string};
 }
-export interface IngestResult246 {revisionId:string;newRevision:boolean;retention:RetentionClass246;
+export interface IngestResult246 {revisionId:string;newRevision:boolean;rederived?:boolean;retention:RetentionClass246;
  productIds:string[];variantIds:string[];declarationsSeen:number;declarationsRetained:number;
  supersededRevisionIds:string[];staleNodes:string[];screeningVerdict:string|null;}
 export interface CategoryItemInput246 {categoryId:string;section:CategorySection246;statement:string;
@@ -257,6 +274,7 @@ export class KnowledgeStore246 {
  ingestObservation246(o:ObservationInput246):IngestResult246{
   if(!o||!/^https:\/\//.test(o.url)||!hex64(o.sha256)||!iso(o.fetchedAt)||!Number.isInteger(o.httpStatus)||
    !/^[a-z0-9_.:-]{1,80}$/i.test(o.runId)||!shortText(o.extractorVersion,80))throw Error('246_invalid_observation');
+  const derivationVersion=o.extractorVersion+'+'+IDENTITY_RULES246;
   return this.tx(()=>{
    const retention=this.registerSource(o.source,o.fetchedAt);
    if(retention==='blocked'){this.event('observation_blocked',{url:o.url,sourceId:o.source.sourceId},o.fetchedAt);
@@ -264,16 +282,30 @@ export class KnowledgeStore246 {
      supersededRevisionIds:[],staleNodes:[],screeningVerdict:null};}
    const revisionId='rev_'+sha(o.url+'|'+o.sha256).slice(0,24);
    const existing=this.db.prepare('SELECT revision_id FROM revisions WHERE revision_id=?').get(revisionId);
+   let rederive=false;let priorLinks:string[]=[];const stale=new Set<string>();
    if(existing){
     this.db.prepare('INSERT OR IGNORE INTO sightings VALUES (?,?,?)').run(revisionId,o.fetchedAt,o.runId);
-    this.event('revision_seen_again',{revisionId},o.fetchedAt);
-    const products=(this.db.prepare('SELECT DISTINCT product_id FROM product_sources WHERE revision_id=?').all(revisionId) as {product_id:string}[]).map(r=>r.product_id);
-    return {revisionId,newRevision:false,retention,productIds:products,variantIds:[],declarationsSeen:0,declarationsRetained:0,
-     supersededRevisionIds:[],staleNodes:[],screeningVerdict:null};
+    const prev=this.db.prepare('SELECT extractor_version,retention FROM revisions WHERE revision_id=?').get(revisionId) as {extractor_version:string;retention:string};
+    // Same bytes, same extraction rules: nothing new to learn. Same bytes under NEW rules (or a retention
+    // class that now allows keeping values): re-derive this revision only; reviewed declarations are kept.
+    if(!o.extraction||(prev.extractor_version===derivationVersion&&prev.retention===retention)){
+     this.event('revision_seen_again',{revisionId},o.fetchedAt);
+     const products=(this.db.prepare('SELECT DISTINCT product_id FROM product_sources WHERE revision_id=?').all(revisionId) as {product_id:string}[]).map(r=>r.product_id);
+     return {revisionId,newRevision:false,retention,productIds:products,variantIds:[],declarationsSeen:0,declarationsRetained:0,
+      supersededRevisionIds:[],staleNodes:[],screeningVerdict:null};
+    }
+    rederive=true;
+    // Product links of this revision are derived: recomputed under the new rules (products themselves are kept).
+    priorLinks=(this.db.prepare('SELECT DISTINCT product_id FROM product_sources WHERE revision_id=?').all(revisionId) as {product_id:string}[]).map(r=>r.product_id);
+    this.db.prepare('DELETE FROM product_sources WHERE revision_id=?').run(revisionId);
+    const old=this.db.prepare("SELECT declaration_id FROM declarations WHERE revision_id=? AND state='extracted_unverified'").all(revisionId) as {declaration_id:string}[];
+    this.db.prepare("UPDATE declarations SET state='superseded_by_extractor' WHERE revision_id=? AND state='extracted_unverified'").run(revisionId);
+    for(const n of this.invalidate(['rev:'+revisionId,...old.map(d=>'decl:'+d.declaration_id)],'extraction_rules_changed'))stale.add(n);
+    this.event('revision_rederived',{revisionId,from:prev.extractor_version,to:derivationVersion,retentionFrom:prev.retention,retentionTo:retention,superseded:old.length},o.fetchedAt);
    }
    // A different revision of the same URL supersedes the current one.
-   const previous=this.db.prepare("SELECT revision_id FROM revisions WHERE url=? AND state='current'").all(o.url) as {revision_id:string}[];
-   const superseded:string[]=[];const stale=new Set<string>();
+   const previous=rederive?[]:this.db.prepare("SELECT revision_id FROM revisions WHERE url=? AND state='current'").all(o.url) as {revision_id:string}[];
+   const superseded:string[]=[];
    for(const p of previous){
     this.db.prepare("UPDATE revisions SET state='superseded',superseded_by=? WHERE revision_id=?").run(revisionId,p.revision_id);
     const decls=this.db.prepare("SELECT declaration_id FROM declarations WHERE revision_id=? AND state!='superseded_by_revision'").all(p.revision_id) as {declaration_id:string}[];
@@ -290,14 +322,19 @@ export class KnowledgeStore246 {
     verdict=lookupScreening193(o.screening.ledger,rev,'document').verdict;
    }
    const facts=x?.facts??[];
-   this.db.prepare('INSERT INTO revisions VALUES (?,?,?,?,?,?,?,?,?,?,NULL,?,0,?,0)').run(revisionId,o.source.sourceId,o.url,o.sha256,o.bytes,o.httpStatus,
-    o.fetchedAt,o.extractorVersion,retention,'current',verdict,facts.length);
+   if(rederive)this.db.prepare('UPDATE revisions SET extractor_version=?,retention=?,declarations_seen=? WHERE revision_id=?').run(derivationVersion,retention,facts.length,revisionId);
+   else this.db.prepare('INSERT INTO revisions VALUES (?,?,?,?,?,?,?,?,?,?,NULL,?,0,?,0)').run(revisionId,o.source.sourceId,o.url,o.sha256,o.bytes,o.httpStatus,
+    o.fetchedAt,derivationVersion,retention,'current',verdict,facts.length);
    // Products and variants (identity metadata is retained under every non-blocked class).
    const productIds:string[]=[];const variantIds:string[]=[];
    const upsertProduct=(name:string|null,ids:Record<string,string>,state:IdentityState246,role:string):string=>{
-    const k=productKey246({host,name,brand:ids.brand??null,gtin:ids.gtin13??ids.gtin14??ids.gtin12??ids.gtin8??ids.gtin??null,
-     mpn:ids.mpn??null,sku:ids.sku??null,productGroupId:ids.productGroupID??null});
-    const pid='prd_'+sha(k.key).slice(0,24);
+    const ki={host,name,brand:ids.brand??null,gtin:ids.gtin13??ids.gtin14??ids.gtin12??ids.gtin8??ids.gtin??null,
+     mpn:ids.mpn??null,sku:ids.sku??null,productGroupId:ids.productGroupID??null};
+    const k=productKey246(ki);const keys=productKeys246(ki);
+    // Resolve through alias keys first: the same product may have been recorded under a weaker identifier.
+    const hits=[...new Set(keys.map(key=>(this.db.prepare('SELECT product_id FROM product_keys WHERE key=?').get(key) as {product_id:string}|undefined)?.product_id).filter(Boolean) as string[])];
+    if(hits.length>1)this.addGap('product',hits[0],'identity_keys_split_across_products',`exact identifiers of one page product point to ${hits.length} stored products: ${hits.join(',')}`.slice(0,300),'review_identity_merge',o.fetchedAt);
+    const pid=hits[0]??'prd_'+sha(k.key).slice(0,24);
     const row=this.db.prepare('SELECT identity_state,category_hypotheses_json,identifiers_json FROM products WHERE product_id=?').get(pid) as
      {identity_state:string;category_hypotheses_json:string;identifiers_json:string}|undefined;
     if(!row){
@@ -305,15 +342,27 @@ export class KnowledgeStore246 {
       canon({...ids,_key:k.key}),state,canon([...new Set(o.categoryHypotheses)].sort()),o.fetchedAt,o.fetchedAt);
     }else{
      const cats=[...new Set([...JSON.parse(row.category_hypotheses_json),...o.categoryHypotheses])].sort();
-     const newState=row.identity_state==='reviewed'?'reviewed':(state==='extracted_unverified'?'extracted_unverified':row.identity_state);
-     this.db.prepare('UPDATE products SET last_seen=?,category_hypotheses_json=?,identity_state=? WHERE product_id=?').run(o.fetchedAt,canon(cats),newState,pid);
+     const keepState=row.identity_state==='reviewed'?'reviewed':row.identity_state==='merged'?'merged':null;
+     const newState=keepState??(state==='extracted_unverified'||row.identity_state==='unsupported_after_rederivation'?state==='discovered'&&row.identity_state!=='unsupported_after_rederivation'?row.identity_state:state:row.identity_state);
+     // Identifiers only accumulate (first value per identifier kept); the original key stays the record's _key.
+     const merged={...ids,...JSON.parse(row.identifiers_json)};
+     this.db.prepare('UPDATE products SET last_seen=?,category_hypotheses_json=?,identity_state=?,identifiers_json=? WHERE product_id=?').run(o.fetchedAt,canon(cats),newState,canon(merged),pid);
     }
+    for(const key of keys)this.db.prepare('INSERT OR IGNORE INTO product_keys VALUES (?,?)').run(key,pid);
     this.db.prepare('INSERT OR IGNORE INTO product_sources VALUES (?,?,?)').run(pid,revisionId,role);
     if(!productIds.includes(pid))productIds.push(pid);
     return pid;
    };
    let mainId:string|null=null;
-   if(x&&x.mainProduct.name&&!x.mainProduct.ambiguous){
+   // A page title alone (h1/og:title without structured product data or any product declaration) is not
+   // evidence that the page is about one product: category pages and app shells have titles too.
+   // A product-type page (og:type product, or one or two purchase controls rather than a grid of them) also counts.
+   const sig=x?.mainProduct.pageSignals;
+   const productPage=!!sig&&(/^(?:product|og:product|product\.item)$/.test(sig.ogType??'')||(sig.purchaseControls>=1&&sig.purchaseControls<=2&&!/^(?:article|website|blog)$/.test(sig.ogType??'')));
+   const productEvidence=!!x&&(x.mainProduct.source==='json_ld'||x.mainProduct.source==='microdata'||x.facts.some(f=>f.product.ref==='main')||productPage);
+   if(x&&x.mainProduct.name&&!x.mainProduct.ambiguous&&!productEvidence)
+    this.addGap('source',revisionId,'no_product_declared',`page title "${x.mainProduct.name.slice(0,80)}" without product data or declarations`,'classify_page_type',o.fetchedAt);
+   if(x&&x.mainProduct.name&&!x.mainProduct.ambiguous&&productEvidence){
     mainId=upsertProduct(x.mainProduct.name,{...x.mainProduct.identifiers},'extracted_unverified','main_product');
     for(const v of x.variants){
      const vk=productKey246({host,name:v.name,sku:v.sku});
@@ -340,14 +389,22 @@ export class KnowledgeStore246 {
     const pid=ownerOf(f);if(!pid)continue;
     const vid=f.variant&&mainId===pid?variantIds.find(v=>(this.db.prepare('SELECT name FROM variants WHERE variant_id=?').get(v) as {name:string}).name===f.variant)??null:null;
     const did='dcl_'+sha(canon([revisionId,pid,vid,f.variant,f.section,f.propertyKey,f.value])).slice(0,24);
-    const res=this.db.prepare(`INSERT OR IGNORE INTO declarations(declaration_id,revision_id,product_id,variant_id,property,property_key,value_json,
-     raw_value,section,component,method,locator,flags_json,evidence_role,retention,state,expires_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+    // A declaration re-derived unchanged under new rules is revived rather than duplicated.
+    const res=this.db.prepare(`INSERT INTO declarations(declaration_id,revision_id,product_id,variant_id,property,property_key,value_json,
+     raw_value,section,component,method,locator,flags_json,evidence_role,retention,state,expires_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+     ON CONFLICT(declaration_id) DO UPDATE SET state='extracted_unverified',retention=excluded.retention,expires_at=excluded.expires_at,
+      method=excluded.method,locator=excluded.locator,flags_json=excluded.flags_json WHERE declarations.state='superseded_by_extractor'`)
      .run(did,revisionId,pid,vid,f.property,f.propertyKey,canon(f.value),f.rawValue.slice(0,120),f.section,f.component,f.method,f.locator.slice(-200),
       canon(f.flags),role,retention,'extracted_unverified',expires);
     if(Number(res.changes))retained++;
    }
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
    this.db.prepare('INSERT OR IGNORE INTO sightings VALUES (?,?,?)').run(revisionId,o.fetchedAt,o.runId);
+   for(const pid of priorLinks)if(!this.db.prepare('SELECT 1 FROM product_sources WHERE product_id=?').get(pid)){
+    this.db.prepare("UPDATE products SET identity_state='unsupported_after_rederivation' WHERE product_id=? AND identity_state NOT IN ('reviewed','merged')").run(pid);
+    this.event('product_unsupported_after_rederivation',{productId:pid,revisionId},o.fetchedAt);}
+   if(x&&!x.mainProduct.ambiguous)this.resolveGaps246(revisionId,'main_product_ambiguous',o.fetchedAt);
+   if(mainId)this.resolveGaps246(revisionId,'no_product_declared',o.fetchedAt);
    if(x&&x.mainProduct.ambiguous)this.addGap('source',revisionId,'main_product_ambiguous',
     `page declares ${x.mainProduct.declaredProductCount} products; identity not assigned, ${x.ambiguous.length} values held back`,'resolve_main_product_identity',o.fetchedAt);
    if(!keep&&facts.length)this.addGap('product',mainId??revisionId,'declarations_not_retained_rights',
@@ -357,7 +414,7 @@ export class KnowledgeStore246 {
    // Category-level aggregates over this category become stale when new declarations arrive.
    for(const c of o.categoryHypotheses)for(const n of this.invalidate(['category_observations:'+c],'new_observation'))stale.add(n);
    this.event('revision_ingested',{revisionId,url:o.url,sha256:o.sha256,retention,seen:facts.length,retained,superseded},o.fetchedAt);
-   return {revisionId,newRevision:true,retention,productIds,variantIds,declarationsSeen:facts.length,declarationsRetained:retained,
+   return {revisionId,newRevision:!rederive,rederived:rederive,retention,productIds,variantIds,declarationsSeen:facts.length,declarationsRetained:retained,
     supersededRevisionIds:superseded,staleNodes:[...stale].sort(),screeningVerdict:verdict};
   });
  }
@@ -381,12 +438,12 @@ export class KnowledgeStore246 {
     JOIN sources s USING(source_id) WHERE ps.product_id=? ORDER BY r.fetched_at`).all(productId) as Record<string,string>[]),
    rankingAuthorized:false as const,independentTestEvidence:false as const};
  }
- products246(filter:{category?:string}={}):string[]{
-  const rows=this.db.prepare('SELECT product_id,category_hypotheses_json FROM products ORDER BY product_id').all() as {product_id:string;category_hypotheses_json:string}[];
+ products246(filter:{category?:string;includeInactive?:boolean}={}):string[]{
+  const rows=this.db.prepare(`SELECT product_id,category_hypotheses_json FROM products ${filter.includeInactive?'':"WHERE identity_state NOT IN ('unsupported_after_rederivation','merged')"} ORDER BY product_id`).all() as {product_id:string;category_hypotheses_json:string}[];
   return rows.filter(r=>!filter.category||JSON.parse(r.category_hypotheses_json).includes(filter.category)).map(r=>r.product_id);
  }
  declarations246(productId:string,opts:{includeSuperseded?:boolean}={}){
-  const rows=this.db.prepare(`SELECT * FROM declarations WHERE product_id=? ${opts.includeSuperseded?'':"AND state NOT IN ('superseded_by_revision','expired_pending_rights')"} ORDER BY property_key,declaration_id`).all(productId) as Record<string,string|number|null>[];
+  const rows=this.db.prepare(`SELECT * FROM declarations WHERE product_id=? ${opts.includeSuperseded?'':"AND state NOT IN ('superseded_by_revision','superseded_by_extractor','expired_pending_rights')"} ORDER BY property_key,declaration_id`).all(productId) as Record<string,string|number|null>[];
   return rows.map(r=>({declarationId:r.declaration_id as string,revisionId:r.revision_id as string,variantId:r.variant_id as string|null,
    property:r.property as string,propertyKey:r.property_key as string,value:JSON.parse(r.value_json as string) as Value245|null,
    rawValue:r.raw_value as string,section:r.section as string|null,method:r.method as string,evidenceRole:r.evidence_role as string,
@@ -430,6 +487,18 @@ export class KnowledgeStore246 {
   const id='gap_'+sha(canon([scope,refId,kind])).slice(0,20);
   this.db.prepare('INSERT OR IGNORE INTO research_gaps VALUES (?,?,?,?,?,?,?,NULL)').run(id,scope,refId,kind,detail.slice(0,300),nextAction,at);
   return id;
+ }
+ /** Closes open gaps of one kind for one reference (the gap row is kept with its resolution time). */
+ resolveGaps246(refId:string,kind:string,at=new Date().toISOString()):number{
+  const n=Number(this.db.prepare('UPDATE research_gaps SET resolved_at=? WHERE ref_id=? AND kind=? AND resolved_at IS NULL').run(at,refId,kind).changes);
+  if(n)this.event('gap_resolved',{refId,kind,count:n},at);
+  return n;
+ }
+ /** Maintenance: identity gaps of revisions that now have a main product are resolved. */
+ reconcileIdentityGaps246(at=new Date().toISOString()):number{
+  const rows=this.db.prepare(`SELECT g.ref_id,g.kind FROM research_gaps g WHERE g.kind IN ('main_product_ambiguous','no_product_declared') AND g.resolved_at IS NULL AND EXISTS
+   (SELECT 1 FROM product_sources ps WHERE ps.revision_id=g.ref_id AND ps.role='main_product')`).all() as {ref_id:string;kind:string}[];
+  return rows.reduce((a,r)=>a+this.resolveGaps246(r.ref_id,r.kind,at),0);
  }
  gaps246(filter:{scope?:string;refId?:string}={}){
   return (this.db.prepare('SELECT * FROM research_gaps WHERE resolved_at IS NULL ORDER BY gap_id').all() as Record<string,string>[])
@@ -655,6 +724,89 @@ export class KnowledgeStore246 {
   }catch(err){s.db.exec('ROLLBACK');s.close();rmSync(dbPath,{force:true});throw err;}
   if(!s.verifyJournal().ok){s.close();throw Error('246_imported_journal_broken');}
   return s;
+ }
+ private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
+  products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
+  category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq'};
+ /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
+  * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
+  * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
+ exportShards246(dir:string,opts:{includePendingRights?:boolean}={}):{manifestSha256:string;files:Record<string,{rows:number;sha256:string}>}{
+  mkdirSync(dir,{recursive:true});
+  const files:Record<string,{rows:number;sha256:string}>={};
+  for(const [t,key] of Object.entries(KnowledgeStore246.TABLE_KEYS)){
+   let rows=this.db.prepare(`SELECT * FROM ${t} ORDER BY ${key}`).all() as Record<string,unknown>[];
+   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained');
+   const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
+   const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);
+   files[t+'.ndjson']={rows:rows.length,sha256:sha(body)};
+  }
+  const manifest={schema:'pee246.knowledge-shards.v1',storeSchemaVersion:this.schemaVersion(),storagePolicy:this.storage,
+   includesPendingRights:!!opts.includePendingRights,files};
+  const text=JSON.stringify(manifest,null,1)+'\n';writeFileSync(join(dir,'manifest.json'),text,{mode:0o600});
+  return {manifestSha256:sha(text),files};
+ }
+ /** Rebuilds a NEW store from a shard directory after verifying every file hash. */
+ static importShards246(dir:string,dbPath:string,storage:StoragePolicy246=DEFAULT_STORAGE_POLICY246):KnowledgeStore246{
+  const m=JSON.parse(readFileSync(join(dir,'manifest.json'),'utf8'));
+  if(m.schema!=='pee246.knowledge-shards.v1')throw Error('246_shards_schema');
+  if(m.storeSchemaVersion>STORE_SCHEMA_VERSION246)throw Error('246_export_newer_than_software');
+  const tables:Record<string,unknown[]>={};
+  for(const [f,info] of Object.entries(m.files as Record<string,{rows:number;sha256:string}>)){
+   const body=readFileSync(join(dir,f),'utf8');
+   if(sha(body)!==info.sha256)throw Error('246_shard_integrity_failed:'+f);
+   tables[f.replace(/\.ndjson$/,'')]=body.split('\n').filter(Boolean).map(l=>JSON.parse(l));
+  }
+  const body={schema:'pee246.knowledge-export.v1',storeSchemaVersion:m.storeSchemaVersion,storagePolicy:m.storagePolicy,
+   includesPendingRights:m.includesPendingRights,notice:'rebuilt from shards',tables};
+  const tmp=dbPath+'.import.json';writeFileSync(tmp,JSON.stringify({...body,contentSha256:sha(canon(body))}),{mode:0o600});
+  try{return KnowledgeStore246.import246(tmp,dbPath,storage);}finally{rmSync(tmp,{force:true});}
+ }
+
+ // ---------------- revisit planning ----------------
+ /** Decides, per current source revision, whether visiting it again has a purpose. Deterministic for a
+  * given store state and asOf. Nothing is fetched here. */
+ revisitPlan246(opts:{asOf:string;extractorVersion:string;baseIntervalDays?:number;urls?:readonly string[]}){
+  const base=opts.baseIntervalDays??30;const asOf=Date.parse(opts.asOf);
+  const revs=this.db.prepare(`SELECT r.revision_id,r.url,r.retention,r.extractor_version,r.declarations_seen,s.host,
+   (SELECT MAX(seen_at) FROM sightings x WHERE x.revision_id=r.revision_id) AS last_seen FROM revisions r JOIN sources s USING(source_id)
+   WHERE r.state='current' ORDER BY r.url`).all() as {revision_id:string;url:string;retention:string;extractor_version:string;declarations_seen:number;host:string;last_seen:string}[];
+  const plan:{url:string;revisionId:string;action:string;reason:string;intervalDays:number;ageDays:number;rulesChanged:boolean}[]=[];
+  for(const r of revs){
+   if(opts.urls&&!opts.urls.includes(r.url))continue;
+   const history=this.db.prepare('SELECT fetched_at FROM revisions WHERE url=? ORDER BY fetched_at').all(r.url) as {fetched_at:string}[];
+   // Pages observed to change get a shorter interval (half the shortest observed change gap, 3..base days).
+   const gaps=history.slice(1).map((h,i)=>(Date.parse(h.fetched_at)-Date.parse(history[i].fetched_at))/86400000).filter(g=>g>0);
+   const interval=gaps.length?Math.max(3,Math.min(base,Math.min(...gaps)/2)):base;
+   const age=(asOf-Date.parse(r.last_seen))/86400000;
+   const identityGap=!!this.db.prepare("SELECT 1 FROM research_gaps WHERE resolved_at IS NULL AND ref_id=? AND kind='main_product_ambiguous'").get(r.revision_id);
+   const valuesKeepable=r.retention==='facts_retained'||r.retention==='local_pending_rights_review';
+   const rulesChanged=r.extractor_version!==opts.extractorVersion+'+'+IDENTITY_RULES246;
+   let action:string,reason:string;
+   if(this.hostSuspended246(r.host,opts.asOf)){action='skip';reason='host_suspended';}
+   else if(r.retention==='blocked'){action='skip';reason='source_blocked';}
+   else if(rulesChanged&&(valuesKeepable||identityGap)){action='refetch';reason=valuesKeepable?'extraction_rules_changed_values_retainable':'extraction_rules_changed_identity_gap';}
+   else if(age<interval){action='skip';reason=`verified_${Math.floor(age)}d_ago_interval_${Math.round(interval)}d`;}
+   else if(!valuesKeepable&&!identityGap){action='low_value';reason='metadata_only_source_revisit_yields_hash_only';}
+   else {action='refetch';reason='revisit_interval_elapsed';}
+   plan.push({url:r.url,revisionId:r.revision_id,action,reason,intervalDays:Math.round(interval*10)/10,ageDays:Math.round(age*10)/10,rulesChanged});
+  }
+  const count=(a:string)=>plan.filter(p=>p.action===a).length;
+  return {asOf:opts.asOf,extractorVersion:opts.extractorVersion,summary:{revisions:plan.length,refetch:count('refetch'),skip:count('skip'),lowValue:count('low_value')},plan};
+ }
+
+ // ---------------- rights review ----------------
+ /** Per-source worksheet for an operator rights decision: what is observed, what is retained now, and what a
+  * fact_storage policy would allow keeping. It grants nothing. */
+ rightsWorksheet246(){
+  return (this.db.prepare(`SELECT s.source_id,s.host,s.source_type,s.retention,COUNT(r.revision_id) AS revisions,
+   COALESCE(SUM(r.declarations_seen),0) AS seen,COALESCE(SUM(r.declarations_retained),0) AS retained
+   FROM sources s LEFT JOIN revisions r USING(source_id) GROUP BY s.source_id ORDER BY seen DESC,s.host`).all() as Record<string,string|number>[]).map(x=>({
+   sourceId:x.source_id,host:x.host,sourceType:x.source_type,currentRetention:x.retention,revisions:x.revisions,
+   declarationsObserved:x.seen,declarationsRetained:x.retained,
+   retainableWithFactStoragePolicy:x.seen,
+   decisionNeeded:x.retention==='facts_retained'?'none':'operator review of the site terms; record a WebSourcePolicy with basis, rights document, reviewer, validity and permittedOperations including fact_storage, or keep metadata only',
+   whatWouldBeStored:'short declared values (<=120 chars) with property, unit, section, locator and the page hash; never page text or images'}));
  }
  /** Consistent online backup (SQLite VACUUM INTO) to a new file. */
  backup246(destPath:string):void{

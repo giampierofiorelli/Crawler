@@ -11,6 +11,11 @@
  *   export --out FILE [--include-pending-rights]
  *   import --from FILE --db NEW  rebuild a store from an export into a new database file
  *   backup --out FILE            consistent SQLite copy (VACUUM INTO)
+ *   export-shards --out DIR      deterministic NDJSON shards + manifest (diff-friendly; for a git or bucket destination)
+ *   import-shards --from DIR --db NEW
+ *   revisit-plan [--as-of ISO] [--days N] [--full]   which current revisions are worth fetching again, and why
+ *   rights-worksheet             per-source rights decision worksheet (grants nothing)
+ *   (any ingest) --rights FILE   operator-reviewed WebSourcePolicy per host; absent = nothing retained beyond metadata
  *   purge                        expire local pending-rights declarations past their expiry
  *
  * Default DB: $PEE_KNOWLEDGE_DIR/pee246.sqlite, else ~/.local/share/product-evidence-engine/knowledge/pee246.sqlite.
@@ -29,6 +34,9 @@ const root=resolve(new URL('..',import.meta.url).pathname);
 const dbPath=resolve(flags.db??join(defaultKnowledgeDir246(),'pee246.sqlite'));
 const storage=flags['storage-policy']?JSON.parse(readFileSync(flags['storage-policy'],'utf8')):DEFAULT_STORAGE_POLICY246;
 const sha=b=>createHash('sha256').update(b).digest('hex');
+// Operator-reviewed rights policies (WebSourcePolicy per host). Absent by default: nothing is self-granted.
+const rights=flags.rights?JSON.parse(readFileSync(resolve(flags.rights),'utf8')):{};
+const policyFor=host=>rights[host]??undefined;
 const out=x=>console.log(JSON.stringify(x,null,1));
 
 // Operator-assigned source types for the recovered pages: a classification of the publisher's role,
@@ -39,6 +47,10 @@ const SOURCE_TYPE_BY_HOST={'www.switchbacktravel.com':'editorial','www.prodirect
  'www.rtings.com':'independent_original_test','www.scan.co.uk':'retailer','www.pololu.com':'manufacturer','www.wickes.co.uk':'retailer',
  'www.richersounds.com':'retailer','www.sparkfun.com':'manufacturer','www.johnlewis.com':'retailer'};
 
+if(cmd==='import-shards'){
+ if(!flags.from)throw Error('--from DIR required');
+ const s=KnowledgeStore246.importShards246(resolve(flags.from),dbPath,storage);out({imported:dbPath,stats:s.stats246(),journal:s.verifyJournal()});s.close();process.exit(0);
+}
 if(cmd==='import'){
  if(!flags.from)throw Error('--from required');
  const s=KnowledgeStore246.import246(resolve(flags.from),dbPath,storage);out({imported:dbPath,stats:s.stats246(),journal:s.verifyJournal()});s.close();process.exit(0);
@@ -57,7 +69,7 @@ try{
     if(!bytes||!p.url){res.push({tag:p.tag,ingested:false,reason:bytes?'no_url':'raw_bytes_not_verified'});continue;}
     const host=new URL(p.url).host;
     const r=store.ingestObservation246({source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:SOURCE_TYPE_BY_HOST[host]??'unknown',
-      sourceTypeBasis:'operator_asserted'},url:p.url,sha256:p.recordedSha256,bytes:p.bytes,httpStatus:200,fetchedAt:new Date(p.fetchedAt).toISOString(),
+      sourceTypeBasis:'operator_asserted',policy:policyFor(host)},url:p.url,sha256:p.recordedSha256,bytes:p.bytes,httpStatus:200,fetchedAt:new Date(p.fetchedAt).toISOString(),
      runId:'phase245_recovered_'+p.set,extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:extractSpecifications245(bytes.toString('utf8'),p.url),
      categoryHypotheses:p.categoryHypothesis?[p.categoryHypothesis]:[]});
     res.push({tag:p.tag,ingested:true,newRevision:r.newRevision,retention:r.retention,products:r.productIds.length,variants:r.variantIds.length,
@@ -70,7 +82,7 @@ try{
     if(o.access)store.recordAccess246(o.access.host,o.access.outcome,o.access.at);
     if(!o.observation)continue;
     const x=o.observation;
-    const r=store.ingestObservation246({...x,extraction:x.extraction??null});
+    const r=store.ingestObservation246({...x,source:{...x.source,policy:policyFor(x.source.host)},extraction:x.extraction??null});
     res.push({url:x.url,newRevision:r.newRevision,retention:r.retention,products:r.productIds.length,declarationsSeen:r.declarationsSeen,declarationsRetained:r.declarationsRetained});
    }
    out({results:res,stats:store.stats246()});break;}
@@ -92,6 +104,11 @@ try{
      provenance:'professional_method_reference',sourceRevisionIds:[rev.revision_id],studyStream:i.studyStream,concept:i.concept})});
    }
    out(res);break;}
+  case 'export-shards':{if(!flags.out)throw Error('--out DIR required');out({dir:resolve(flags.out),...store.exportShards246(resolve(flags.out),{includePendingRights:!!flags['include-pending-rights']})});break;}
+  case 'revisit-plan':{const p=store.revisitPlan246({asOf:flags['as-of']??new Date().toISOString(),extractorVersion:SPEC_EXTRACTOR_VERSION,baseIntervalDays:flags.days?Number(flags.days):undefined});
+   out(flags.full?p:{...p,plan:p.plan.filter(x=>x.action!=='skip').slice(0,100)});break;}
+  case 'rights-worksheet':out(store.rightsWorksheet246());break;
+  case 'reconcile':out({identityGapsResolved:store.reconcileIdentityGaps246()});break;
   case 'purge':out({expired:store.purgeExpired246()});break;
   default:console.error('unknown command; see header of scripts/phase246-knowledge.mjs');process.exitCode=2;
  }
