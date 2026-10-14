@@ -1,0 +1,1349 @@
+{
+ "schema": "pee249.sampled-gold.v1",
+ "design": "Untouched Phase249 extraction held-out: 34 pages from 20 hosts never fetched in earlier phases, 14 product categories not in earlier sets (dehumidifiers, slow cookers, sewing machines, fans, juicers, lawn mowers, cameras, robot vacuums, scales, vacuum cleaners, leaf blowers, tents, e-bikes, chainsaws, bins). Gold written from each page's visible text before any extractor ran on these pages, after spec-extractor-6 was frozen (ec485d9). Both spec-extractor-5 and spec-extractor-6 are run once each. Sampled gold: expected facts are a pre-registered sample per page, not every fact; precision comes from a separate post-run audit.",
+ "pages": {
+  "y_meaco1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 7.8,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Dimensions (HWD)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       548,
+       358,
+       200
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Power Consumption at 20°C and 60%rh",
+     {
+      "kind": "quantity",
+      "number": 351,
+      "unit": "W"
+     }
+    ],
+    [
+     "Fan Speeds",
+     {
+      "kind": "number",
+      "number": 3
+     }
+    ],
+    [
+     "Compressor or Desiccant?",
+     {
+      "kind": "text",
+      "text": "Desiccant"
+     }
+    ],
+    [
+     "Digital Display",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [
+    "20°C and 60%rh - fan speed 1",
+    "10°C and 60%rh - fan speed 1"
+   ],
+   "forbiddenMainValues": [],
+   "note": "extraction-rate table rows are operating conditions, not products"
+  },
+  "y_meaco2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 13.6,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Dimensions (HWD)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       595,
+       385,
+       290
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Tank Size",
+     {
+      "kind": "quantity",
+      "number": 6,
+      "unit": "l"
+     }
+    ],
+    [
+     "Fan Speeds",
+     {
+      "kind": "number",
+      "number": 2
+     }
+    ],
+    [
+     "Compressor or Desiccant?",
+     {
+      "kind": "text",
+      "text": "Compressor"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [
+    "10°C and 60%rh",
+    "20°C and 60%rh"
+   ],
+   "forbiddenMainValues": []
+  },
+  "y_ebac1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 13,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Water container capacity",
+     {
+      "kind": "quantity",
+      "number": 2.5,
+      "unit": "l"
+     }
+    ],
+    [
+     "Noise level",
+     {
+      "kind": "quantity",
+      "number": 46,
+      "unit": "dB"
+     }
+    ],
+    [
+     "Max power consumption",
+     {
+      "kind": "quantity",
+      "number": 190,
+      "unit": "W"
+     }
+    ],
+    [
+     "Power cord length",
+     {
+      "kind": "quantity",
+      "number": 2.1,
+      "unit": "m"
+     }
+    ],
+    [
+     "Speed settings",
+     {
+      "kind": "number",
+      "number": 2
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_ebac2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Height",
+     {
+      "kind": "quantity",
+      "number": 54,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Width",
+     {
+      "kind": "quantity",
+      "number": 34,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Depth",
+     {
+      "kind": "quantity",
+      "number": 26.5,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 13,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Water container capacity",
+     {
+      "kind": "quantity",
+      "number": 3.5,
+      "unit": "l"
+     }
+    ],
+    [
+     "Noise level",
+     {
+      "kind": "quantity",
+      "number": 44,
+      "unit": "dB"
+     }
+    ],
+    [
+     "Speed settings",
+     {
+      "kind": "number",
+      "number": 2
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_morphy1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       31,
+       30,
+       22.2
+      ],
+      "unit": "cm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 2.2,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Wattage",
+     {
+      "kind": "quantity",
+      "number": 0.16,
+      "unit": "kW"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 0.95,
+      "unit": "m"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 64.99,
+      "currency": "GBP"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_morphy2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       37.5,
+       25.5,
+       21
+      ],
+      "unit": "cm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 2.2,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Wattage",
+     {
+      "kind": "quantity",
+      "number": 0.16,
+      "unit": "kW"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 0.95,
+      "unit": "m"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 59.99,
+      "currency": "GBP"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_singer1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 439.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 369.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "note": "specification section is feature bullets with prose, not label/value data"
+  },
+  "y_singer2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 159.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 189.99,
+      "currency": "USD"
+     }
+    ]
+   ]
+  },
+  "y_singer3": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 369.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_vornado1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 289.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "product specifications are not in the served HTML"
+  },
+  "y_vornado2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 149.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_hurom1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Chamber Capacity",
+     {
+      "kind": "quantity",
+      "number": 500,
+      "unit": "ml"
+     }
+    ],
+    [
+     "Auger Speed",
+     {
+      "kind": "quantity",
+      "number": 43,
+      "unit": "rpm"
+     }
+    ],
+    [
+     "Product Weight",
+     {
+      "kind": "quantity",
+      "number": 8.3,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Product Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       223,
+       180,
+       407
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 1.4,
+      "unit": "m"
+     }
+    ],
+    [
+     "Chamber Type",
+     {
+      "kind": "text",
+      "text": "Alpha Chamber"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_hurom2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Chamber Capacity",
+     {
+      "kind": "quantity",
+      "number": 350,
+      "unit": "ml"
+     }
+    ],
+    [
+     "Auger Speed",
+     {
+      "kind": "quantity",
+      "number": 43,
+      "unit": "rpm"
+     }
+    ],
+    [
+     "Product Weight",
+     {
+      "kind": "quantity",
+      "number": 4.3,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Product Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       192,
+       176,
+       394
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 1.4,
+      "unit": "m"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_hurom3": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Chamber Capacity",
+     {
+      "kind": "quantity",
+      "number": 500,
+      "unit": "ml"
+     }
+    ],
+    [
+     "Auger Speed",
+     {
+      "kind": "quantity",
+      "number": 43,
+      "unit": "rpm"
+     }
+    ],
+    [
+     "Product Weight",
+     {
+      "kind": "quantity",
+      "number": 6.2,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Product Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       251,
+       178,
+       411
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 1.4,
+      "unit": "m"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_greenw1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 379.99,
+      "currency": "GBP"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_greenw2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 124.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Voltage",
+     {
+      "kind": "quantity",
+      "number": 24,
+      "unit": "V"
+     }
+    ],
+    [
+     "Cutting Width",
+     {
+      "kind": "quantity",
+      "number": 33,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 9.5,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Min. Cut Height",
+     {
+      "kind": "quantity",
+      "number": 25,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Max. Cut Height",
+     {
+      "kind": "quantity",
+      "number": 70,
+      "unit": "mm"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_eufy1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 59.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 99.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 164.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 199.99,
+      "currency": "USD"
+     }
+    ]
+   ]
+  },
+  "y_eufy2": {
+   "pageType": "product",
+   "expected": [],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Max Suction Power",
+     {
+      "kind": "quantity",
+      "number": 1300,
+      "unit": "Pa"
+     }
+    ]
+   ],
+   "note": "comparison table lists other models (RoboVac 11S, 15C MAX); the page product is 11S MAX"
+  },
+  "y_withings1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 229.95,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       12.8,
+       12.8,
+       1.1
+      ],
+      "unit": "in"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_tgg1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Power",
+     {
+      "kind": "quantity",
+      "number": 890,
+      "unit": "W"
+     }
+    ],
+    [
+     "Noise Level (dBA)",
+     {
+      "kind": "quantity",
+      "number": 78,
+      "unit": "dB"
+     }
+    ],
+    [
+     "Product Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 7.8,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Cord Length (m)",
+     {
+      "kind": "quantity",
+      "number": 6.5,
+      "unit": "m"
+     }
+    ],
+    [
+     "Bin/Bag Capacity (L)",
+     {
+      "kind": "quantity",
+      "number": 1,
+      "unit": "l"
+     }
+    ],
+    [
+     "Model Number",
+     {
+      "kind": "text",
+      "text": "11640600"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_tgg2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Power",
+     {
+      "kind": "quantity",
+      "number": 1800,
+      "unit": "W"
+     }
+    ],
+    [
+     "Product Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 6.7,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Cord Length (m)",
+     {
+      "kind": "quantity",
+      "number": 9,
+      "unit": "m"
+     }
+    ],
+    [
+     "Bin/Bag Capacity (L)",
+     {
+      "kind": "quantity",
+      "number": 1.6,
+      "unit": "l"
+     }
+    ],
+    [
+     "Noise Level (dBA)",
+     {
+      "kind": "quantity",
+      "number": 78,
+      "unit": "dB"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 5.42,
+      "unit": "kg"
+     }
+    ]
+   ],
+   "note": "an AI-generated summary on the page states 5.42 kg; the specification table states 6.7 kg"
+  },
+  "y_worx1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Voltage",
+     {
+      "kind": "quantity",
+      "number": 40,
+      "unit": "V"
+     }
+    ],
+    [
+     "Collection Capacity",
+     {
+      "kind": "quantity",
+      "number": 1,
+      "unit": "bushels"
+     }
+    ],
+    [
+     "Mulch Ratio",
+     {
+      "kind": "text",
+      "text": "12:1"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Air Speed",
+    "Unit Weight"
+   ],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_worx2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Power Input",
+     {
+      "kind": "quantity",
+      "number": 12,
+      "unit": "A"
+     }
+    ],
+    [
+     "Air Speed",
+     {
+      "kind": "range",
+      "min": 80,
+      "max": 210,
+      "unit": "mph"
+     }
+    ],
+    [
+     "Air Volume",
+     {
+      "kind": "quantity",
+      "number": 350,
+      "unit": "cfm"
+     }
+    ],
+    [
+     "Mulch Ratio",
+     {
+      "kind": "text",
+      "text": "16:1"
+     }
+    ],
+    [
+     "Machine Weight",
+     {
+      "kind": "quantity",
+      "number": 9.5,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Bag Capacity",
+     {
+      "kind": "quantity",
+      "number": 1.2,
+      "unit": "bushels"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_ryobi1": {
+   "pageType": "listing",
+   "expected": [],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "country-selection interstitial, no product"
+  },
+  "y_einhell1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Height garage",
+     {
+      "kind": "quantity",
+      "number": 16.5,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Length garage",
+     {
+      "kind": "quantity",
+      "number": 79,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Width garage",
+     {
+      "kind": "quantity",
+      "number": 52.8,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Product weight",
+     {
+      "kind": "quantity",
+      "number": 2.75,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Material garage",
+     {
+      "kind": "text",
+      "text": "Plastic"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_kitchenaid1": {
+   "pageType": "product",
+   "expected": [],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "bundle page whose content is rendered client-side; no label/value data in the served HTML"
+  },
+  "y_decath1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 199.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "weight (in kg)",
+     {
+      "kind": "quantity",
+      "number": 11.5,
+      "unit": "kg"
+     }
+    ],
+    [
+     "main material",
+     {
+      "kind": "text",
+      "text": "polyester"
+     }
+    ],
+    [
+     "type of poles",
+     {
+      "kind": "text",
+      "text": "fiberglass"
+     }
+    ],
+    [
+     "shape of the tent",
+     {
+      "kind": "text",
+      "text": "tunnel"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 39.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 9.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 4.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 214.97,
+      "currency": "GBP"
+     }
+    ]
+   ]
+  },
+  "y_halfords1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Number of Gears",
+     {
+      "kind": "number",
+      "number": 9
+     }
+    ],
+    [
+     "Approximate Weight (KG)",
+     {
+      "kind": "quantity",
+      "number": 21.5,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Frame",
+     {
+      "kind": "text",
+      "text": "HYB, aluminium"
+     }
+    ],
+    [
+     "Type",
+     {
+      "kind": "text",
+      "text": "Electric Hybrid Bikes"
+     }
+    ],
+    [
+     "Front Brake",
+     {
+      "kind": "text",
+      "text": "Tektro HD-M275, hydraulic disc brake, 180mm rotor"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_igenix1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 24.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       32,
+       12,
+       12
+      ],
+      "unit": "cm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 1.12,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Power",
+     {
+      "kind": "quantity",
+      "number": 50,
+      "unit": "W"
+     }
+    ],
+    [
+     "Colour",
+     {
+      "kind": "text",
+      "text": "Black"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_igenix2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 11.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       30,
+       20,
+       20
+      ],
+      "unit": "cm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 0.6,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Colour",
+     {
+      "kind": "text",
+      "text": "White"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_jj1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 9.7,
+      "unit": "kg"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_mw1": {
+   "pageType": "listing",
+   "expected": [],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "brand tents category listing"
+  },
+  "y_stihl1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Displacement",
+     {
+      "kind": "quantity",
+      "number": 31.8,
+      "unit": "cm³"
+     }
+    ],
+    [
+     "Power",
+     {
+      "kind": "quantity",
+      "number": 1.4,
+      "unit": "kW"
+     }
+    ],
+    [
+     "Device weight without refuelling",
+     {
+      "kind": "quantity",
+      "number": 4.5,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Engine power",
+     {
+      "kind": "quantity",
+      "number": 1.9,
+      "unit": "hp"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "y_stihl2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Displacement",
+     {
+      "kind": "quantity",
+      "number": 38.6,
+      "unit": "cm³"
+     }
+    ],
+    [
+     "Power",
+     {
+      "kind": "quantity",
+      "number": 1.8,
+      "unit": "kW"
+     }
+    ],
+    [
+     "Device weight without refuelling",
+     {
+      "kind": "quantity",
+      "number": 4.6,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Engine power",
+     {
+      "kind": "quantity",
+      "number": 2.4,
+      "unit": "hp"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  }
+ }
+}
