@@ -1,0 +1,19 @@
+{"schema":"pee248.journey-benchmark.v1","split":"heldout2","written":"after the first held-out run, before any round-2 journey change; not for development",
+ "cases":[
+ {"id":"k01","text":"Cooking dinner for just myself, I'd like fries with a real crunch but no vat of oil.","expectedCategory":"air_fryers","expectedConcepts":["cook_single_portion","crisp_texture"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k02","text":"Which airfryer cooks food uniformly so nothing is half raw?","expectedCategory":"air_fryers","expectedConcepts":["cooking_evenness"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k03","text":"I don't have much room on my worktop for another gadget, is an air fryer realistic?","expectedCategory":"air_fryers","expectedConcepts":["small_kitchen"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k04","text":"Scrubbing greasy baskets is my least favourite job; which air fryer is simplest to wash?","expectedCategory":"air_fryers","expectedConcepts":["cleaning_effort"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k05","text":"I want café-quality espresso at home.","expectedCategory":"coffee_machines","expectedConcepts":["espresso_quality"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k06","text":"Which espresso machine needs the least looking after?","expectedCategory":"coffee_machines","expectedConcepts":["low_maintenance"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k07","text":"How much will capsules or beans cost me per year with a coffee machine?","expectedCategory":"coffee_machines","expectedConcepts":["ongoing_costs"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k08","text":"My shots vary a lot from one cup to the next. Which machine is more stable?","expectedCategory":"coffee_machines","expectedConcepts":["shot_consistency"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k09","text":"I'm tired of toast with stripes and dark patches.","expectedCategory":"toasters","expectedConcepts":["even_browning"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k10","text":"Toaster for crumpets and chunky homemade bread?","expectedCategory":"toasters","expectedConcepts":["thick_bread_fit"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k11","text":"Our toaster gets so hot outside that I worry about burns.","expectedCategory":"toasters","expectedConcepts":["hot_exterior"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k12","text":"I'd rather not use a deep fryer; what's a healthier way to get crispy chicken?","expectedCategory":"air_fryers","expectedConcepts":["crisp_texture"],"expectedDecision":"withhold_insufficient_evidence"},
+ {"id":"k13","text":"Which steamer is best for vegetables?","expectedCategory":"steam_cookers","expectedConcepts":[],"expectedDecision":"unsupported_category"},
+ {"id":"k14","text":"Which headphones cancel noise best on planes?","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"out_of_scope"},
+ {"id":"k15","text":"I need a gift idea for my mum's new house.","expectedCategory":null,"expectedConcepts":[],"expectedDecision":"clarify"},
+ {"id":"k16","text":"Bean-to-cup or pod machine for a busy office of ten people?","expectedCategory":"coffee_machines","expectedConcepts":[],"expectedDecision":"withhold_insufficient_evidence"}
+ ]}
