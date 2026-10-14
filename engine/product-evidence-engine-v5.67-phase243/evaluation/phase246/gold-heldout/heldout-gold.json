@@ -1,0 +1,43 @@
+{
+ "ho_af_dualit_55": {"scopeProducts":["main"],"expected":[
+  {"product":"main","property":"Price","value":{"kind":"price","amount":129.99,"currency":"GBP"}},
+  {"product":"main","property":"Power","value":{"kind":"quantity","number":1700,"unit":"W"}},
+  {"product":"main","property":"Dimensions","value":{"kind":"dimensions","numbers":[32.6,37.9,31.4],"unit":"cm"}},
+  {"product":"main","property":"Weight","value":{"kind":"quantity","number":5.1,"unit":"kg"}},
+  {"product":"main","property":"Material","value":{"kind":"text","text":"ABS"}}],
+  "mustAbstain":[],"forbidden":[],"note":"manufacturer page; 'Specifications' label:value list; 5.5L capacity appears only in marketing prose and FAQ, so it is not expected"},
+ "ho_af_lakeland_dual8": {"scopeProducts":["main"],"expected":[],"mustAbstain":[],"forbidden":[],
+  "note":"discontinued retailer page; visible main content has only 'Why buy me?' bullets and no specification section. Nothing is expected; any promoted fact is listed as a false positive and adjudicated separately"},
+ "ho_cm_origin_lelit": {"scopeProducts":["main"],"expected":[
+  {"product":"main","property":"Price","value":{"kind":"price","amount":509.95,"currency":"GBP"}},
+  {"product":"main","property":"Dimensions (WxDxH)","value":{"kind":"dimensions","numbers":[230,380,340],"unit":"mm"}},
+  {"product":"main","property":"Materials","value":{"kind":"text","text":"Polished stainless steel appliance body"}},
+  {"product":"main","property":"Boiler capacity","value":{"kind":"quantity","number":250,"unit":"cc"}},
+  {"product":"main","property":"Water tank capacity","value":{"kind":"quantity","number":2.7,"unit":"L"}},
+  {"product":"main","property":"Brewing System","value":{"kind":"text","text":"Single brass coffee boiler"}}],
+  "mustAbstain":[],"forbidden":[],"note":"coffee retailer; icon cards with h3 label and rich-text value; multi-line feature cards (Settings, Group Head, Interface, Control, Additional Features) are lists, not single values, and are not expected"},
+ "ho_cm_dualit_espressivo": {"scopeProducts":["main"],"expected":[
+  {"product":"main","property":"Price","value":{"kind":"price","amount":549.99,"currency":"GBP"}},
+  {"product":"main","property":"Dimensions","value":{"kind":"dimensions","numbers":[34.1,30,41.2],"unit":"cm"}},
+  {"product":"main","property":"Weight","value":{"kind":"quantity","number":9.98,"unit":"kg"}},
+  {"product":"main","property":"Included Accessories","value":{"kind":"text","text":"Portafilter with single and double baskets, Stainless Steel Milk Jug, Bean Hopper, Coffee Tamper, Cleaning Brush and Pin"}}],
+  "mustAbstain":[],"forbidden":[],"note":"unlabelled list items ('2.8L Removable Water Tank', '250g Removable Bean Hopper') are not expected"},
+ "ho_t_dualit_studio2": {"scopeProducts":["main"],"expected":[
+  {"product":"main","property":"Price","value":{"kind":"price","amount":64.99,"currency":"GBP"}},
+  {"product":"main","property":"Power","value":{"kind":"range","min":1000,"max":1200,"unit":"W"}},
+  {"product":"main","property":"Dimensions","value":{"kind":"dimensions","numbers":[17.8,27.3,19.7],"unit":"cm"}},
+  {"product":"main","property":"Slot Dimensions","value":{"kind":"dimensions","numbers":[35,145],"unit":"mm"}},
+  {"product":"main","property":"Weight","value":{"kind":"quantity","number":1.497,"unit":"kg"}}],
+  "mustAbstain":[],"forbidden":[],"note":"page shows two colour variants; specification list is shared"},
+ "ho_t_dualit_classic6": {"scopeProducts":["main"],"expected":[
+  {"product":"main","property":"Price","value":{"kind":"price","amount":299.99,"currency":"GBP"}},
+  {"product":"main","property":"Capacity","value":{"kind":"quantity","number":6,"unit":"slices"}},
+  {"product":"main","property":"Power","value":{"kind":"quantity","number":3,"unit":"kW"}},
+  {"product":"main","property":"Weight","value":{"kind":"quantity","number":5.1,"unit":"kg"}},
+  {"product":"main","property":"Dimensions","value":{"kind":"dimensions","numbers":[46,21,22],"unit":"cm"}},
+  {"product":"main","property":"Slot Dimensions","value":{"kind":"dimensions","numbers":[28,140,120],"unit":"mm"}},
+  {"product":"main","property":"Output per hour","value":{"kind":"quantity","number":240,"unit":"slices"}},
+  {"product":"main","property":"Materials","value":{"kind":"text","text":"Cast aluminium ends, stainless steel body"}},
+  {"product":"main","property":"Elements","value":{"kind":"text","text":"Award-winning, patented ProHeat elements"}}],
+  "mustAbstain":[],"forbidden":[],"note":"six colour options; specification list is shared. 'Elements' is a manufacturer claim recorded as a declaration only"}
+}
