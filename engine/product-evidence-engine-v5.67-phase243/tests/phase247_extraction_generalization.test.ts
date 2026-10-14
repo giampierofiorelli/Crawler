@@ -103,3 +103,15 @@ test('normalizer: a described quantity keeps its description as a qualifier',()=
  assert.deepEqual(normalizeValue245('Water tank 1.9L (64 fl.oz)'),{kind:'quantity',number:1.9,unit:'l',approximate:false,alternative:{number:64,unit:'fl oz'},qualifier:'Water tank'});
  assert.equal(normalizeValue245('Size 4').kind,'text');
 });
+
+test('comparison widget: prices or "This item" in the header row are never product names; the Name row identifies each column',()=>{
+ const html=page(ld(product({name:'Blender X'})),'<h1>Blender X</h1><div class="compare"><table><tr><th>Compare</th><th>This item</th><th>£175.98</th></tr>'+
+  '<tr><td>Name</td><td>Blender X</td><td>Mixer Y</td></tr><tr><td>Weight (kg)</td><td>11.36</td><td>14.6</td></tr><tr><td>Colour</td><td>Clear</td><td>Silver</td></tr></table></div>');
+ const x=run(html);
+ const all=[...x.facts,...x.ambiguous];
+ assert.ok(!all.some(f=>/£|this item/i.test(f.product.name??'')),'no product keyed by a price or a pointer');
+ assert.deepEqual(get(x.facts,'weight kg').map(f=>[f.product.ref,(f.value as {number:number}).number]).sort(),[['main',11.36],['named',14.6]]);
+ assert.equal(get(all,'name').length,0,'the name row is identity, not a property');
+ const noName=run(page(ld(product({name:'Blender X'})),'<h1>Blender X</h1><table><tr><th></th><th>£10</th><th>£12</th></tr><tr><td>Weight</td><td>1 kg</td><td>2 kg</td></tr></table>'));
+ assert.ok([...noName.facts,...noName.ambiguous].filter(f=>f.method==='table_products_in_columns').every(f=>f.product.ref==='unknown'||f.flags.includes('missing_product_header')));
+});

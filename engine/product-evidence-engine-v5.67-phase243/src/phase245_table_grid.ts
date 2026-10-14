@@ -188,12 +188,30 @@ export function interpretTableGrid245(g:TableGrid245):TableInterpretation245{
  if(codesAcross)reasons.push('product_codes_in_header_row');
  // Body rows headed by header cells name properties, so products run across the columns; a corner
  // text ("Version", "Model") then only labels the header row.
- if(cornerEmpty||headerCols>0||codesAcross){
+ // A header row of prices or "This item" pointers is a product comparison header: products run across the
+ // columns (a price or a pointer cannot be a property label).
+ const pointerHeaders=headerTexts.length>=2&&headerTexts.every(t=>PRICE.test(t.trim())||/^(?:this item|this product|current item|current product)$/i.test(t.trim()));
+ if(pointerHeaders)reasons.push('price_or_pointer_header_row');
+ if(cornerEmpty||headerCols>0||codesAcross||pointerHeaders){
   // ---- products in columns: column header path = [product, ...variant levels]; row label = property.
   const firstValueCol=Math.max(1,headerCols);
+  // Comparison widgets often put prices or "This item" in the header row and the product names in a body
+  // row labelled "Name"/"Product"/"Model". A price or a generic pointer never names a product: the name row
+  // does, and it is then identity, not a property. Without a name row such columns have no product key.
+  const NAME_ROW=/^(?:name|product|product name|model|item|title)$/i;
+  const GENERIC=/^(?:this item|this product|current item|current product|selected|you are viewing)$/i;
+  const nameRow=bodyRows.find(r=>NAME_ROW.test((cell(r,0)?.text??'').trim()));
+  const unusableHeader=(c:number)=>{const p=colHeaderPath(c,true);return !p.length||PRICE.test(p[0])||GENERIC.test(p[0].trim());};
+  const useNameRow=nameRow!==undefined&&[...Array(g.cols).keys()].slice(firstValueCol).some(unusableHeader);
+  const productPath=(c:number):string[]=>{
+   if(useNameRow){const n=cell(nameRow!,c)?.text?.trim();return n?[n]:[];}
+   return unusableHeader(c)?[]:colHeaderPath(c,true);
+  };
+  if(useNameRow)reasons.push('product_names_from_name_row');
   for(let c=firstValueCol;c<g.cols;c++){
-   const path=colHeaderPath(c,true);
+   const path=productPath(c);
    for(const r of bodyRows){
+    if(useNameRow&&r===nameRow)continue;
     const v=cell(r,c);if(!v||v.row!==r)continue;if(v.col!==c&&v.colspan>1)continue;
     const label=rowHeaderPath(r,firstValueCol);const title=sectionTitle(r);
     const amb:string[]=[];
@@ -203,7 +221,7 @@ export function interpretTableGrid245(g:TableGrid245):TableInterpretation245{
     // A value spanning several product columns is shared by each of them (HTML table semantics).
     const span=Math.min(v.colspan,g.cols-c);
     for(let k=0;k<span;k++){
-     const p=colHeaderPath(c+k,true);
+     const p=productPath(c+k);
      pushValue(v,p[0]??null,p.length>1?p.slice(1).join(' › '):null,title?[title,...label]:label,span,
       p.length?amb:[...new Set([...amb,'missing_product_header'])]);
     }
