@@ -1,0 +1,98 @@
+{
+  "phase": 134,
+  "version": "4.58-phase134",
+  "parent": "4.57-phase133",
+  "date": "2026-10-11",
+  "parentArchiveSHA256": "f285e30c5e89ee9ff15fa565437cfc8fd1edb9f708c1e4fd68edeccff1692abe",
+  "parentFiles": 1349,
+  "currentFilesBeforeVerification": 1364,
+  "missingPreviousFiles": [],
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerification": [
+    "PHASE134-CONSTRUCTED-SCENARIO-TRACE.json",
+    "PHASE134-CUMULATIVE-SOURCE-TO-NATIVE-ENGINEERING.md",
+    "PHASE134-REGRESSION-GROUPS.json",
+    "PHASE134-RELEASE-VERIFICATION.json",
+    "dist/src/phase134_atomic_context_evidence.js",
+    "dist/tests/phase134_atomic_context_evidence.test.js",
+    "research/phase134_reference_studies/GLINER2-SOURCE-AUDIT.md",
+    "research/phase134_reference_studies/GLINER2-STUDY-FIRST.md",
+    "research/phase134_reference_studies/REPOSITORY-ARCHIVE-SHA256.json",
+    "research/phase134_reference_studies/THREE-REPOSITORIES-SOURCE-STUDY.md",
+    "research/phase134_reference_studies/TYPESAFE-DOCS-ENGINEERING-STUDY.md",
+    "scripts/evaluate-phase134.mjs",
+    "scripts/phase134_regress.mjs",
+    "src/phase134_atomic_context_evidence.ts",
+    "tests/phase134_atomic_context_evidence.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passed": 1496,
+    "testFiles": 93,
+    "groups": 12,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "phase134Focused": {
+    "passed": 34,
+    "failed": 0
+  },
+  "devAuthoredScenarioReplay": {
+    "count": 8,
+    "data": "constructed",
+    "independentReviewBenchmark": false
+  },
+  "noNewDependencies": true,
+  "noThirdPartyCodeCopied": true,
+  "noModelOrWeightsInstalled": true,
+  "noPaidAPIs": true,
+  "noAutonomousCanonicalWrites": true,
+  "realProductExpertReviewEvaluationDone": false,
+  "upstreamOriginalSourceAuthenticityVerifiedEndToEnd": false,
+  "notes": [
+    "All new conclusions are candidate hypotheses, not verified facts.",
+    "Checksums reflect byte consistency of caller-provided documents; they cannot authenticate an external website.",
+    "A multi-sentence claim without resolved coreference abstains rather than infer a relation.",
+    "No model benchmark against GLiNER2/TypeSafe was performed.",
+    "Two legacy test files are excluded from the completed TypeScript regression."
+  ],
+  "uploadedReferenceSourceArchives": {
+    "GLiNER2-main.zip": {
+      "exists": true,
+      "sha256": "ce0259e4143ba9027720314373d18956f8d5803e12208b2bc14b39870b98f300"
+    },
+    "medspacy-master.zip": {
+      "exists": true,
+      "sha256": "278797185c70e2274664d8186a5ed36670c6fc13e8477dbf353f85b9a91074a3"
+    },
+    "DeepKE-main.zip": {
+      "exists": true,
+      "sha256": "4ac9b84952b5e457405c114d0d8d5da50ea8bc4a5589f84ffa663c0df25af51a"
+    },
+    "snorkel-main.zip": {
+      "exists": true,
+      "sha256": "decc813bcc86745424e3fb36632bd52603d54b4b85f7ebba60f5526caedc210e"
+    }
+  },
+  "reproducibility": [
+    "npm run build",
+    "npm run test:phase134",
+    "node scripts/evaluate-phase134.mjs",
+    "python /mnt/data/run_phase134_regressions.py",
+    "python -m unittest discover -s primary_sources -t . -p test_*.py",
+    "python -m unittest discover -s ingestion -p test_*.py",
+    "python -m unittest discover -s tests-python -p test_phase133*.py"
+  ]
+}

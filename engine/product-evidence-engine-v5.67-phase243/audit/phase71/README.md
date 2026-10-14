@@ -1,0 +1,2 @@
+# Phase 71 verification bundle
+All fixtures in new schema tests are synthetic and are not reports about actual products or sources. `javascript-tests.txt` and `typescript-build.txt` record the full suite and compilation. Python suites retain their original coverage. Database migration was not executed on PostgreSQL, and no live webpage was fetched in this phase. Audit results do not imply legal clearance or correctness of AI extracted product claims.

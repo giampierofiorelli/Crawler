@@ -1,0 +1,37 @@
+{
+  "project": "Product Evidence Engine",
+  "phase": 107,
+  "version": "4.31.0",
+  "date": "2026-10-11",
+  "baseline_archive": "product-evidence-engine-v4.30-phase106.zip",
+  "baseline_file_count": 946,
+  "all_baseline_files_retained": true,
+  "modified_baseline_files": [
+    "README.md",
+    "dist/src/phase100_adaptive_preference_envelope.js",
+    "dist/src/phase105_incremental_reasoning_graph.js",
+    "package.json",
+    "src/phase100_adaptive_preference_envelope.ts",
+    "src/phase105_incremental_reasoning_graph.ts"
+  ],
+  "new_file_count_before_verification": 22,
+  "tested_suite_counts": {
+    "compiled_js_ts": 841,
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3
+  },
+  "verified_test_total": 1018,
+  "new_phase107_tests": 15,
+  "compile": "passed",
+  "note": "Five bounded JS shards completed across separate invocations. The concatenated invocation was terminated after four groups; the last/first shard results were verified individually. Further iterations re-ran focused tests and the changed last shard.",
+  "demonstration": "audit/phase107/constructed-personalized-revision.json",
+  "research": "PHASE107-REVIEWED-PERSONALIZATION-RECOMPUTATION.md",
+  "limitations": "Software fixture tests only, no signed reviewer identity, no validated human calibration, no atomic three-store snapshot, no production public ranking",
+  "publicationReady": false,
+  "rankingEligible": false
+}

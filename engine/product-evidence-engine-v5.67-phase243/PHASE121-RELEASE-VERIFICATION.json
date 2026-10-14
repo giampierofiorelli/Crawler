@@ -1,0 +1,79 @@
+{
+  "version": "v4.45-phase121",
+  "date": "2026-10-11",
+  "baseline": "v4.44-phase120",
+  "baselineFileCount": 1290,
+  "missingBaselineFiles": [],
+  "newFilesBeforeVerification": [
+    "PHASE121-INTERVENTION-FIRST-AUTONOMY-RESEARCH-AND-ARCHITECTURE.md",
+    "dist/src/phase121_autonomy_workload_comparison.js",
+    "dist/tests/phase121_autonomy_workload_comparison.test.js",
+    "src/phase121_autonomy_workload_comparison.ts",
+    "tests/phase121_autonomy_workload_comparison.test.ts"
+  ],
+  "modifiedBaselineFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "capability": "reviewed-source-only partial autonomy comparisons, separate from performance/value, not production recommendation",
+  "evidence": "published original expert methodologies consulted; all automated outcome tests use synthetic constructed fixtures",
+  "testResults": {
+    "TypeScriptBuild": "passed",
+    "focusAndNeighbors": {
+      "phase119": {
+        "passed": 22,
+        "failed": 0
+      },
+      "phase120": {
+        "passed": 24,
+        "failed": 0
+      },
+      "phase121": {
+        "passed": 36,
+        "failed": 0
+      }
+    },
+    "fullShardRun": "incomplete_timeout_after_shards_7_and_6",
+    "successfulIndependentShards": {
+      "1": 168,
+      "2": 167,
+      "3": 241,
+      "4": 259,
+      "6": 191,
+      "7": 26
+    },
+    "distinctTestsInCompleteShards": 1052,
+    "group5IndividualCompletedFiles": {
+      "phase77_user_intent_and_progress.test.js": 14,
+      "phase78_http_customer_update.test.js": 3,
+      "phase78_market_coverage.test.js": 13,
+      "phase79_adaptive_search_decision.test.js": 18,
+      "phase80_population_portfolio.test.js": 15,
+      "phase81_lifecycle_and_new_models.test.js": 12,
+      "phase82_market_watch.test.js": 17,
+      "phase85_source_recipes.test.js": 16,
+      "phase86_local_recipe_generation.test.js": 17,
+      "phase90_html_mainline.test.js": 8,
+      "phase93_operational_controls.test.js": 8
+    },
+    "group5IndividualTimeoutFiles": {
+      "phase91_watch_gate.test.js": "incomplete_timeout",
+      "phase92_recipe_lifecycle.test.js": "incomplete_timeout"
+    },
+    "group5CompletedIndividualTests": 141,
+    "distinctConfirmedPassingTypeScriptAssertions": 1193,
+    "completeRegressionValidated": false,
+    "primarySourcesSuite": "passed",
+    "ingestionSuite": "passed",
+    "evaluationPhase84Suite": "passed"
+  },
+  "capabilityNotValidated": [
+    "independent 30-day human-workload observations across real products",
+    "calibrated cleaning-quality floors",
+    "source-to-SKU linkage from autonomous extraction",
+    "general natural-language intent understanding",
+    "full end-to-end web research and product ranking",
+    "live local LLM and production integration"
+  ],
+  "researchReport": "PHASE121-INTERVENTION-FIRST-AUTONOMY-RESEARCH-AND-ARCHITECTURE.md"
+}

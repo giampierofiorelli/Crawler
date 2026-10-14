@@ -1,0 +1,106 @@
+{
+  "schema": "pee235.new-original-pdf-replay.1",
+  "version": "5.59.0",
+  "evaluation": "in-development-sample: documents became development cases after initial v5.58 baseline",
+  "publisherOriginalBytesRetained": false,
+  "originalTextStored": false,
+  "results": [
+    {
+      "id": "lavazza",
+      "documentSha256": "a851ddd9b399f3b14d85a6128c7ac187e878e8d91f118b7f9ef7d09a183f9fca",
+      "claims": 2,
+      "byMethod": {
+        "pdf_explicit_conditional_component_use_candidate": 2
+      },
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_conditional_configuration_selection_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "rankingAuthorized": false
+    },
+    {
+      "id": "tefal_multicook",
+      "documentSha256": "d0384d370b157931930fabb06bed1ecf208eb68ba0a18e075ed3a5bccb3cf371",
+      "claims": 1,
+      "byMethod": {
+        "pdf_author_explicit_operating_program_candidate": 1
+      },
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_fragmentary_optional_heading_rejected",
+        "pdf_no_stable_two_column_rows",
+        "pdf_operating_program_setting_not_product_performance",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "rankingAuthorized": false
+    },
+    {
+      "id": "miele_wwi860",
+      "documentSha256": "6cd00f14b3405fe6d3c25f0051775ad015bed7bd2681ab6698751a8ba09e44af",
+      "claims": 10,
+      "byMethod": {
+        "pdf_typed_technical_sheet_candidate": 7,
+        "pdf_explicit_three_axis_dimension_candidate": 1,
+        "pdf_typed_sheet_interval_candidate": 2
+      },
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified",
+        "pdf_typed_technical_sheet_claims_unverified"
+      ],
+      "rankingAuthorized": false
+    },
+    {
+      "id": "tefal_steam",
+      "documentSha256": "65ca15a02bfc8fd668b7e376381f2bc153674ae492bc61ce0db42ccfb653f19b",
+      "claims": 1,
+      "byMethod": {
+        "pdf_explicit_unresolved_model_condition_candidate": 1
+      },
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_conditional_accessory_model_identity_unresolved",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "rankingAuthorized": false
+    },
+    {
+      "id": "miele_catalog",
+      "documentSha256": "f41387ddb3ba41eecdcb15fd23d7782e3f7e55181a5dec4fe44d15e632eb9459",
+      "claims": 23,
+      "byMethod": {
+        "pdf_explicit_catalog_model_column_candidate": 23
+      },
+      "reasonCodes": [
+        "pdf_catalog_product_columns_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_geometry_control_glyphs_ignored",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "rankingAuthorized": false
+    }
+  ],
+  "manualAnchorChecks": {
+    "false_option_fragment_rejected": true,
+    "miele_energy_100": true,
+    "miele_water_per_cycle": true,
+    "miele_nominal_load": true,
+    "miele_dimensions": true,
+    "miele_weight": true,
+    "miele_rated_load": true,
+    "tefal_rice_model_dependent": true,
+    "catalog_pwm507_mass": true,
+    "catalog_pwm507h_mass": true,
+    "catalog_pdr507hp_mass": true,
+    "catalog_pdr507_mass": true
+  }
+}

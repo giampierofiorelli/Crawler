@@ -1,0 +1,69 @@
+{
+  "phase": 152,
+  "version": "4.76-phase152",
+  "parent": "4.75-phase151",
+  "date": "2026-10-11",
+  "parentZipSha256": "600aa1d5a3b0aecdea66a30a5adaea774d03db7e259df88b47206c11347cdc35",
+  "parentFileCount": 1573,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE152-FILE-MANIFEST.sha256",
+    "PHASE152-POSTCODE-EDITORIAL-DIAGNOSTIC.json",
+    "PHASE152-REGRESSION-GROUPS.json",
+    "PHASE152-UNSEEN-PRODUCT-SURFACE-SAFETY.md",
+    "dist/src/phase152_product_surface_safety.js",
+    "dist/tests/phase152_product_surface_safety.test.js",
+    "scripts/evaluate-phase152.mjs",
+    "scripts/phase152_regress.mjs",
+    "src/phase152_product_surface_safety.ts",
+    "tests/phase152_product_surface_safety.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passed": 1975,
+    "eligibleFiles": 111,
+    "phase152Focused": 24,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "evaluation": {
+    "publisherShortExcerptCount": 6,
+    "independentLabels": 0,
+    "genuinelyBlinded": false,
+    "fullReviewCorpusEvaluated": false,
+    "accuracy": null,
+    "precision": null,
+    "recall": null,
+    "scannerCandidatesInExcerpts": 2
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "newModels": 0,
+    "remoteInference": 0,
+    "newPaidApis": 0,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false,
+    "copiedThirdPartyCode": false
+  },
+  "limitations": [
+    "Structured-name scanner is incomplete and may falsely veto links.",
+    "Short excerpts are not independently annotated, full-document/source-disjoint benchmarks.",
+    "Source-text hash verifies supplied bytes, not publisher authenticity.",
+    "New layer is opt-in/explicit and is not connected to authoritative ranking or knowledge.",
+    "Two legacy test suites excluded from regression."
+  ],
+  "archiveFileCount": 1584
+}

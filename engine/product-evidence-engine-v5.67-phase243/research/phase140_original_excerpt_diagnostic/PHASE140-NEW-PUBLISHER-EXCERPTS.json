@@ -1,0 +1,44 @@
+{
+  "phase": 140,
+  "date": "2026-10-11",
+  "dataOrigin": "three manually selected short, publisher-attributed ORIGINAL English excerpts, checked against public webpages",
+  "selection": "developer-selected after designing the structural expansion; NOT an independent or frozen holdout",
+  "independentGold": false,
+  "fullArticleRights": "not asserted or acquired",
+  "benchmarkReady": false,
+  "examples": [
+    {
+      "id": "rtings_qrevo_limitation",
+      "publisher": "RTINGS",
+      "url": "https://www.rtings.com/robot-vacuum/reviews/roborock/qrevo",
+      "text": "The Roborock Qrevo is poor at picking up pet hair on carpeted surfaces.",
+      "reviewedProductId": "roborock_qrevo",
+      "reviewedVariantId": "qrevo",
+      "reviewedAliases": ["Roborock Qrevo"],
+      "developerCheck": "explicit model and negative performance assessment, not a quantified measurement",
+      "expectedStatus": "quarantined_negative_statement"
+    },
+    {
+      "id": "techradar_dreame_ambiguous_subject",
+      "publisher": "TechRadar",
+      "url": "https://www.techradar.com/home/robot-vacuums/dreame-l40-ultra-review",
+      "text": "The robot itself uses LiDAR, an RGB camera, sensors and AI to help it map and navigate around the home",
+      "reviewedProductId": "dreame_l40",
+      "reviewedVariantId": "l40_ultra",
+      "reviewedAliases": ["Dreame L40 Ultra"],
+      "developerCheck": "a generic noun phrase, not an explicit model mention inside this excerpt; requires document context",
+      "expectedStatus": "unresolved_reference"
+    },
+    {
+      "id": "tomsguide_roomba_app",
+      "publisher": "Tom's Guide",
+      "url": "https://www.tomsguide.com/home/home-appliances/roomba-max-775-combo-review",
+      "text": "The Roomba Max 775 Combo uses the Roomba Home app.",
+      "reviewedProductId": "roomba_775",
+      "reviewedVariantId": "max_775_combo",
+      "reviewedAliases": ["Roomba Max 775 Combo"],
+      "developerCheck": "an explicit product uses an app; the app name must not be merged into product identity",
+      "expectedStatus": "quarantined_surface_hypothesis"
+    }
+  ]
+}

@@ -1,0 +1,425 @@
+TAP version 13
+# Subtest: Atomic numeric and categorical declarations, tied to publisher model hypothesis, never independent evidence
+ok 1 - Atomic numeric and categorical declarations, tied to publisher model hypothesis, never independent evidence
+  ---
+  duration_ms: 18.588218
+  type: 'test'
+  ...
+# Subtest: Recycling-bin capacity only when actually structured; no fabricated per-compartment inference
+ok 2 - Recycling-bin capacity only when actually structured; no fabricated per-compartment inference
+  ---
+  duration_ms: 1.8174
+  type: 'test'
+  ...
+# Subtest: Reprinted Review is not measurement; itemReviewed product can carry unverified properties
+ok 3 - Reprinted Review is not measurement; itemReviewed product can carry unverified properties
+  ---
+  duration_ms: 0.694791
+  type: 'test'
+  ...
+# Subtest: Ignore free text, rating aggregations, non-Schema markup and malformed HTML
+ok 4 - Ignore free text, rating aggregations, non-Schema markup and malformed HTML
+  ---
+  duration_ms: 0.730115
+  type: 'test'
+  ...
+# Subtest: Reject prose, unsafe property names, unsafe units, non numeric strings, tracking numbers
+ok 5 - Reject prose, unsafe property names, unsafe units, non numeric strings, tracking numbers
+  ---
+  duration_ms: 0.600889
+  type: 'test'
+  ...
+# Subtest: Reject malicious source URL and bounded input; never trust arbitrary local URLs
+ok 6 - Reject malicious source URL and bounded input; never trust arbitrary local URLs
+  ---
+  duration_ms: 14.381562
+  type: 'test'
+  ...
+# Subtest: Deduplicate identical declarations and mark contradictory values on same page
+ok 7 - Deduplicate identical declarations and mark contradictory values on same page
+  ---
+  duration_ms: 0.884157
+  type: 'test'
+  ...
+# Subtest: Different claim value or source URL changes deterministic provenance IDs
+ok 8 - Different claim value or source URL changes deterministic provenance IDs
+  ---
+  duration_ms: 1.48052
+  type: 'test'
+  ...
+# Subtest: Arrays and graph syntax are bounded, and result is deterministically sorted
+ok 9 - Arrays and graph syntax are bounded, and result is deterministically sorted
+  ---
+  duration_ms: 1.782998
+  type: 'test'
+  ...
+# Subtest: Weak product identity is recorded instead of claiming exact variant
+ok 10 - Weak product identity is recorded instead of claiming exact variant
+  ---
+  duration_ms: 0.995297
+  type: 'test'
+  ...
+# Subtest: INTEGRATED Phase223 URL -> Phase222 same transient GET -> Phase224 declared claims, no second fetch
+ok 11 - INTEGRATED Phase223 URL -> Phase222 same transient GET -> Phase224 declared claims, no second fetch
+  ---
+  duration_ms: 21.502417
+  type: 'test'
+  ...
+# Subtest: Agreement between unverified sources still does not authenticate a measurement or market variant
+ok 12 - Agreement between unverified sources still does not authenticate a measurement or market variant
+  ---
+  duration_ms: 3.856866
+  type: 'test'
+  ...
+# Subtest: Explicit registry prohibition blocks Phase224 before source page GET
+ok 13 - Explicit registry prohibition blocks Phase224 before source page GET
+  ---
+  duration_ms: 1.499039
+  type: 'test'
+  ...
+# Subtest: Reject tampered observations that could promote publisher declarations
+ok 14 - Reject tampered observations that could promote publisher declarations
+  ---
+  duration_ms: 5.224175
+  type: 'test'
+  ...
+# Subtest: Without readable structured facts the audit refuses to infer product specifications
+ok 15 - Without readable structured facts the audit refuses to infer product specifications
+  ---
+  duration_ms: 0.211119
+  type: 'test'
+  ...
+# Subtest: Repeated identical pages across source discovery and search do not inflate claim count
+ok 16 - Repeated identical pages across source discovery and search do not inflate claim count
+  ---
+  duration_ms: 1.532869
+  type: 'test'
+  ...
+# Subtest: Product variants with differing model codes are not conflated for cross-page conflict
+ok 17 - Product variants with differing model codes are not conflated for cross-page conflict
+  ---
+  duration_ms: 1.340659
+  type: 'test'
+  ...
+# Subtest: No false cross-source merge when product has no manufacturer and model
+ok 18 - No false cross-source merge when product has no manufacturer and model
+  ---
+  duration_ms: 0.89226
+  type: 'test'
+  ...
+# Subtest: football: method plus measured first-person outcome yields research-only hypothesis with no body storage
+ok 19 - football: method plus measured first-person outcome yields research-only hypothesis with no body storage
+  ---
+  duration_ms: 45.817501
+  type: 'test'
+  ...
+# Subtest: bin: no compartment inference, only literal measured numeric outcome
+ok 20 - bin: no compartment inference, only literal measured numeric outcome
+  ---
+  duration_ms: 9.530832
+  type: 'test'
+  ...
+# Subtest: manufacturer marketing and unsupported number are not treated as tested evidence
+ok 21 - manufacturer marketing and unsupported number are not treated as tested evidence
+  ---
+  duration_ms: 7.786743
+  type: 'test'
+  ...
+# Subtest: explicit negation and comparator claims cannot become test results
+ok 22 - explicit negation and comparator claims cannot become test results
+  ---
+  duration_ms: 2.103342
+  type: 'test'
+  ...
+# Subtest: JS and script JSON-LD fake method prose are excluded
+ok 23 - JS and script JSON-LD fake method prose are excluded
+  ---
+  duration_ms: 1.31519
+  type: 'test'
+  ...
+# Subtest: ambiguous multiple models never force an exact variant
+ok 24 - ambiguous multiple models never force an exact variant
+  ---
+  duration_ms: 2.192598
+  type: 'test'
+  ...
+# Subtest: same content yields deterministic candidate IDs; distinct URL changes provenance
+ok 25 - same content yields deterministic candidate IDs; distinct URL changes provenance
+  ---
+  duration_ms: 7.184872
+  type: 'test'
+  ...
+# Subtest: bad URLs, bodies outside budget, and no article body retention
+ok 26 - bad URLs, bodies outside budget, and no article body retention
+  ---
+  duration_ms: 0.354706
+  type: 'test'
+  ...
+# Subtest: excerpt quoted by seller cannot masquerade as independent test
+ok 27 - excerpt quoted by seller cannot masquerade as independent test
+  ---
+  duration_ms: 1.686302
+  type: 'test'
+  ...
+# Subtest: integrated already-approved HTML GET runs Phase224 and Phase225 in same fetch
+ok 28 - integrated already-approved HTML GET runs Phase224 and Phase225 in same fetch
+  ---
+  duration_ms: 8.60414
+  type: 'test'
+  ...
+# Subtest: audit deduplicates repeated source observation and detects version change
+ok 29 - audit deduplicates repeated source observation and detects version change
+  ---
+  duration_ms: 14.027617
+  type: 'test'
+  ...
+# Subtest: explicit registry prohibition blocks page fetch and no candidate is produced
+ok 30 - explicit registry prohibition blocks page fetch and no candidate is produced
+  ---
+  duration_ms: 3.939246
+  type: 'test'
+  ...
+# Subtest: audit rejects forged scientific admission, reviewer verification or scope mismatch
+ok 31 - audit rejects forged scientific admission, reviewer verification or scope mismatch
+  ---
+  duration_ms: 10.741273
+  type: 'test'
+  ...
+# Subtest: two explicit tested row models remain distinct with different candidate identities
+ok 32 - two explicit tested row models remain distinct with different candidate identities
+  ---
+  duration_ms: 47.04634
+  type: 'test'
+  ...
+# Subtest: missing nearby first-person testing text: table numbers never automatically count as tests
+ok 33 - missing nearby first-person testing text: table numbers never automatically count as tests
+  ---
+  duration_ms: 2.652705
+  type: 'test'
+  ...
+# Subtest: manufacturer attribution and negative testing block table lead
+ok 34 - manufacturer attribution and negative testing block table lead
+  ---
+  duration_ms: 3.939501
+  type: 'test'
+  ...
+# Subtest: units must be explicitly present and match, no implicit conversion or inference
+ok 35 - units must be explicitly present and match, no implicit conversion or inference
+  ---
+  duration_ms: 10.989509
+  type: 'test'
+  ...
+# Subtest: model match is exact; AX11 does not automatically match AX110 or other page products
+ok 36 - model match is exact; AX11 does not automatically match AX110 or other page products
+  ---
+  duration_ms: 1.662586
+  type: 'test'
+  ...
+# Subtest: explicitly advertised column excluded while test column remains a candidate
+ok 37 - explicitly advertised column excluded while test column remains a candidate
+  ---
+  duration_ms: 0.792459
+  type: 'test'
+  ...
+# Subtest: complex table colspan/rowspan and ambiguous headers safely abstain
+ok 38 - complex table colspan/rowspan and ambiguous headers safely abstain
+  ---
+  duration_ms: 2.038335
+  type: 'test'
+  ...
+# Subtest: table-only without product leads does not attach unverified row to wrong product
+ok 39 - table-only without product leads does not attach unverified row to wrong product
+  ---
+  duration_ms: 0.308246
+  type: 'test'
+  ...
+# Subtest: compartment capacity cannot be substituted with total product volume
+ok 40 - compartment capacity cannot be substituted with total product volume
+  ---
+  duration_ms: 1.001816
+  type: 'test'
+  ...
+# Subtest: data from script, JSON-LD, and HTML comments cannot create table measurements
+ok 41 - data from script, JSON-LD, and HTML comments cannot create table measurements
+  ---
+  duration_ms: 0.900312
+  type: 'test'
+  ...
+# Subtest: same page is deterministic and changing source/model/value changes identity
+ok 42 - same page is deterministic and changing source/model/value changes identity
+  ---
+  duration_ms: 5.564079
+  type: 'test'
+  ...
+# Subtest: budgets bound tables and output to 20 candidates
+ok 43 - budgets bound tables and output to 20 candidates
+  ---
+  duration_ms: 2.130444
+  type: 'test'
+  ...
+# Subtest: honours alternative row model labelled by full product name
+ok 44 - honours alternative row model labelled by full product name
+  ---
+  duration_ms: 0.859661
+  type: 'test'
+  ...
+# Subtest: no table can authenticate publisher originality or approve ranking
+ok 45 - no table can authenticate publisher originality or approve ranking
+  ---
+  duration_ms: 0.565996
+  type: 'test'
+  ...
+# Subtest: end-to-end fixture: one HTML GET, JSON-LD product ID, table lead, source audit, zero promotion
+ok 46 - end-to-end fixture: one HTML GET, JSON-LD product ID, table lead, source audit, zero promotion
+  ---
+  duration_ms: 5.734627
+  type: 'test'
+  ...
+# Subtest: auditor rejects forged table evidence and missing dimensional annotation
+ok 47 - auditor rejects forged table evidence and missing dimensional annotation
+  ---
+  duration_ms: 2.256845
+  type: 'test'
+  ...
+# Subtest: explicit headers: two model rows and tested column correctly linked by references
+ok 48 - explicit headers: two model rows and tested column correctly linked by references
+  ---
+  duration_ms: 45.702867
+  type: 'test'
+  ...
+# Subtest: header references can appear in either order and are still checked by identity
+ok 49 - header references can appear in either order and are still checked by identity
+  ---
+  duration_ms: 11.330695
+  type: 'test'
+  ...
+# Subtest: cross-row, wrong column, extra and duplicate references always abstain
+ok 50 - cross-row, wrong column, extra and duplicate references always abstain
+  ---
+  duration_ms: 35.503573
+  type: 'test'
+  ...
+# Subtest: duplicate ids, missing column ids and missing row ids block the entire table
+ok 51 - duplicate ids, missing column ids and missing row ids block the entire table
+  ---
+  duration_ms: 3.059079
+  type: 'test'
+  ...
+# Subtest: id/headers does not override contradictory scope or accept spans
+ok 52 - id/headers does not override contradictory scope or accept spans
+  ---
+  duration_ms: 1.624198
+  type: 'test'
+  ...
+# Subtest: marketing column cannot become a measurement through explicit header links
+ok 53 - marketing column cannot become a measurement through explicit header links
+  ---
+  duration_ms: 0.804147
+  type: 'test'
+  ...
+# Subtest: exact product model still required: a product group or similar model is not enough
+ok 54 - exact product model still required: a product group or similar model is not enough
+  ---
+  duration_ms: 1.029638
+  type: 'test'
+  ...
+# Subtest: no explicit method near table means no scientific test lead
+ok 55 - no explicit method near table means no scientific test lead
+  ---
+  duration_ms: 0.459756
+  type: 'test'
+  ...
+# Subtest: malformed explicit references do not fall back to positional scope associations
+ok 56 - malformed explicit references do not fall back to positional scope associations
+  ---
+  duration_ms: 0.923307
+  type: 'test'
+  ...
+# Subtest: bounded observations have stable identities and no source quotations
+ok 57 - bounded observations have stable identities and no source quotations
+  ---
+  duration_ms: 1.762257
+  type: 'test'
+  ...
+# Subtest: Phase228 PDF text retains page/line provenance, PDF digest, not article body
+ok 58 - Phase228 PDF text retains page/line provenance, PDF digest, not article body
+  ---
+  duration_ms: 1684.177351
+  type: 'test'
+  ...
+# Subtest: Phase228 Word table capacity scope is not automatically reassigned
+ok 59 - Phase228 Word table capacity scope is not automatically reassigned
+  ---
+  duration_ms: 1830.678266
+  type: 'test'
+  ...
+# Subtest: Phase228 two models remain unresolved
+ok 60 - Phase228 two models remain unresolved
+  ---
+  duration_ms: 1292.598741
+  type: 'test'
+  ...
+# Subtest: Phase228 scans require OCR and cannot hallucinate a spec
+ok 61 - Phase228 scans require OCR and cannot hallucinate a spec
+  ---
+  duration_ms: 1453.939408
+  type: 'test'
+  ...
+# Subtest: Phase228 Word merged cells are refused instead of inferred
+ok 62 - Phase228 Word merged cells are refused instead of inferred
+  ---
+  duration_ms: 1503.175782
+  type: 'test'
+  ...
+# Subtest: Phase228 bad binary rejection and no extra state
+ok 63 - Phase228 bad binary rejection and no extra state
+  ---
+  duration_ms: 2956.521844
+  type: 'test'
+  ...
+# Subtest: Phase228 actual synthetic fixture transport -> both docs, zero scientific evidence
+ok 64 - Phase228 actual synthetic fixture transport -> both docs, zero scientific evidence
+  ---
+  duration_ms: 4835.300171
+  type: 'test'
+  ...
+# Subtest: Phase228 robots disallow prevents document network access
+ok 65 - Phase228 robots disallow prevents document network access
+  ---
+  duration_ms: 1.006353
+  type: 'test'
+  ...
+# Subtest: Phase228 explicitly refused site cannot be reopened by fixture
+ok 66 - Phase228 explicitly refused site cannot be reopened by fixture
+  ---
+  duration_ms: 0.710925
+  type: 'test'
+  ...
+# Subtest: Phase228 rejects wrong MIME, missing raw bytes and 404
+ok 67 - Phase228 rejects wrong MIME, missing raw bytes and 404
+  ---
+  duration_ms: 1.756608
+  type: 'test'
+  ...
+# Subtest: Phase228 live fixture injection prohibited
+ok 68 - Phase228 live fixture injection prohibited
+  ---
+  duration_ms: 0.396159
+  type: 'test'
+  ...
+# Subtest: Phase228 general search docs are connected to observer
+ok 69 - Phase228 general search docs are connected to observer
+  ---
+  duration_ms: 1775.142448
+  type: 'test'
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18009.01087
+

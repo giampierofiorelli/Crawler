@@ -1,0 +1,56 @@
+{
+  "version": "4.9.0",
+  "phase": 81,
+  "date": "2026-10-10",
+  "build": "local source compiled; not a production deploy",
+  "checks": {
+    "typescript_javascript_tests": 560,
+    "python_primary_tests": 47,
+    "python_ingestion_tests": 21,
+    "launch_artifact_tests": 4,
+    "release_tests": 3
+  },
+  "limitations": [
+    "No real publisher/source attestation or web monitoring",
+    "No live PostgreSQL migration or application",
+    "Legacy synthetic demo entrypoints do not apply lifecycle gate by default",
+    "No autonomous model lifecycle identification; upstream evidence is assumed verified"
+  ],
+  "changed_artifacts": [
+    {
+      "path": "src/phase80_product_lifecycle.ts",
+      "bytes": 3310,
+      "sha256": "f33155f560a52376714c5fdc075082f7a7df3610fe6325184ff05cde41966840"
+    },
+    {
+      "path": "src/phase81_new_model_intake.ts",
+      "bytes": 3945,
+      "sha256": "cdff266dd4610062d2f50c240e80b8d10bc2156b2e06ffc676e42980d14ada25"
+    },
+    {
+      "path": "src/phase81_competition_gate.ts",
+      "bytes": 3393,
+      "sha256": "8f2026638e7140c9548806d7e5a76e136e7254a6737f7bc23964b8eeb6b0c433"
+    },
+    {
+      "path": "db/migrations/014_model_retirement_and_new_model_evidence.sql",
+      "bytes": 2386,
+      "sha256": "924925556663d6caa0ac8e57e09e3288cb6ae2659d773f289ffaee3dcd53e837"
+    },
+    {
+      "path": "docs/PHASE-81-NEW-MODEL-AND-PERMANENT-RETIREMENT.md",
+      "bytes": 3464,
+      "sha256": "616490fde5b38997c22599555aa38a8f860aa398b93352fc3b46a58a2410af89"
+    },
+    {
+      "path": "tests/phase81_lifecycle_and_new_models.test.ts",
+      "bytes": 5980,
+      "sha256": "cc99ee53e944bc18539bd5e886bbb779f812dae0127e440aab193ac29b9998c2"
+    },
+    {
+      "path": "examples/phase81-archived-product-page.html",
+      "bytes": 1482,
+      "sha256": "a38591dc62afcc8ec6be8484508bf76583b5d62563feac5892faefb0b5b7cc6d"
+    }
+  ]
+}

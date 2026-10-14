@@ -1,0 +1,168 @@
+{
+  "schema": "pee.phase206.test-results.v1",
+  "date": "2026-10-13",
+  "baseline": "5.29.0",
+  "release": "5.30.0",
+  "typescript_build": {
+    "status": "passed",
+    "log": "docs/phase206/test-logs/ts-build.log"
+  },
+  "phase206_targeted": {
+    "status": "passed",
+    "passed": 25,
+    "failed": 0,
+    "log": "docs/phase206/test-logs/targeted.log"
+  },
+  "typescript_cumulative": {
+    "status": "partial_legacy_timeout",
+    "verified_tests_passed": 3645,
+    "completed_shards": [
+      {
+        "shard": 1,
+        "status": "passed",
+        "passed": 168,
+        "log": "docs/phase206/test-logs/shard1.log"
+      },
+      {
+        "shard": 2,
+        "status": "passed",
+        "passed": 167,
+        "log": "docs/phase206/test-logs/shard2.log"
+      },
+      {
+        "shard": 3,
+        "status": "passed",
+        "passed": 241,
+        "log": "docs/phase206/test-logs/shard3.log"
+      },
+      {
+        "shard": 4,
+        "status": "passed",
+        "passed": 283,
+        "log": "docs/phase206/test-logs/shard4.log"
+      },
+      {
+        "shard": 5,
+        "status": "passed",
+        "passed": 322,
+        "log": "docs/phase206/test-logs/shard5.log"
+      },
+      {
+        "shard": 6,
+        "status": "passed",
+        "passed": 343,
+        "log": "docs/phase206/test-logs/shard6.log"
+      },
+      {
+        "shard": 7,
+        "status": "passed",
+        "passed": 165,
+        "log": "docs/phase206/test-logs/shard7.log"
+      },
+      {
+        "shard": 8,
+        "status": "passed",
+        "passed": 398,
+        "log": "docs/phase206/test-logs/shard8.log"
+      },
+      {
+        "shard": 9,
+        "status": "passed",
+        "passed": 353,
+        "log": "docs/phase206/test-logs/shard9.log"
+      },
+      {
+        "shard": 10,
+        "status": "passed",
+        "passed": 488,
+        "log": "docs/phase206/test-logs/shard10.log"
+      },
+      {
+        "shard": 11,
+        "status": "passed",
+        "passed": 359,
+        "log": "docs/phase206/test-logs/shard11.log"
+      },
+      {
+        "shard": 12,
+        "status": "unresolved_timeout",
+        "passed": 0,
+        "log": "docs/phase206/test-logs/shard12.log"
+      },
+      {
+        "shard": 13,
+        "status": "passed",
+        "passed": 191,
+        "log": "docs/phase206/test-logs/shard13.log"
+      },
+      {
+        "shard": 14,
+        "status": "passed",
+        "passed": 26,
+        "log": "docs/phase206/test-logs/shard14.log"
+      }
+    ],
+    "shard12_extra": {
+      "status": "passed_excluding_91_92",
+      "passed": 141,
+      "log": "docs/phase206/test-logs/shard12_without_91_92.log"
+    },
+    "not_completed": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "note": "Never include partial TAP ok lines or tests from timed out runs."
+  },
+  "python": {
+    "status": "passed",
+    "verified_passed": 212,
+    "groups": [
+      {
+        "name": "primary",
+        "passed": 47,
+        "log": "docs/phase206/test-logs/primary.log"
+      },
+      {
+        "name": "ingestion",
+        "passed": 21,
+        "log": "docs/phase206/test-logs/ingestion.log"
+      },
+      {
+        "name": "evaluation",
+        "passed": 26,
+        "log": "docs/phase206/test-logs/evaluation.log"
+      },
+      {
+        "name": "phase95",
+        "passed": 12,
+        "log": "docs/phase206/test-logs/phase95.log"
+      },
+      {
+        "name": "tests-python",
+        "passed": 35,
+        "log": "docs/phase206/test-logs/tests-python.log"
+      }
+    ],
+    "companion": {
+      "status": "passed",
+      "verified_passed": 71,
+      "log": "docs/phase206/test-logs/companion.log"
+    }
+  },
+  "real_video_metadata_pilot": {
+    "records": 6,
+    "watched_or_rights_reviewed": 0,
+    "independent_gold_annotations": 0,
+    "eligible_accuracy": null,
+    "eligible_event_pairs": 0,
+    "source": "docs/phase206/REAL-VIDEO-METADATA-PILOT.json",
+    "replay": "docs/phase206/PUBLIC-PILOT-EVALUATION.json"
+  },
+  "source_archives": {
+    "previously_preserved": 3,
+    "runtime_installed": false,
+    "register": "research/phase205-external-code/SOURCE-RETENTION-REGISTER.json"
+  },
+  "public_ranking_changed": false,
+  "trust_badges_authorized": false
+}

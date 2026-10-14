@@ -1,0 +1,2562 @@
+
+> product-evidence-engine@4.0.0 test
+> npm run build && node --test dist/tests/*.test.js
+
+
+> product-evidence-engine@4.0.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: an authorized, anchored missing category field creates quarantined gap only
+ok 1 - an authorized, anchored missing category field creates quarantined gap only
+  ---
+  duration_ms: 4.278124
+  type: 'test'
+  ...
+# Subtest: unreviewed rights, wrong host, expired robots and fabricated digests are rejected
+ok 2 - unreviewed rights, wrong host, expired robots and fabricated digests are rejected
+  ---
+  duration_ms: 0.76291
+  type: 'test'
+  ...
+# Subtest: cannot silently overwrite a field even with a different declared meaning
+ok 3 - cannot silently overwrite a field even with a different declared meaning
+  ---
+  duration_ms: 0.949279
+  type: 'test'
+  ...
+# Subtest: single source or duplicate cannot create research schema field
+ok 4 - single source or duplicate cannot create research schema field
+  ---
+  duration_ms: 2.440546
+  type: 'test'
+  ...
+# Subtest: independent test, source and variant signals auto-extend RESEARCH catalogue
+ok 5 - independent test, source and variant signals auto-extend RESEARCH catalogue
+  ---
+  duration_ms: 0.710921
+  type: 'test'
+  ...
+# Subtest: two web pages reporting ONE original test cannot satisfy independence
+ok 6 - two web pages reporting ONE original test cannot satisfy independence
+  ---
+  duration_ms: 0.701256
+  type: 'test'
+  ...
+# Subtest: same field name with incompatible units becomes semantic conflict, no silent conversion
+ok 7 - same field name with incompatible units becomes semantic conflict, no silent conversion
+  ---
+  duration_ms: 10.161685
+  type: 'test'
+  ...
+# Subtest: requires explicit reviewer before new immutable operational registry version
+ok 8 - requires explicit reviewer before new immutable operational registry version
+  ---
+  duration_ms: 1.541672
+  type: 'test'
+  ...
+# Subtest: new relationship types become research graph relations rather than fake scalar fields
+ok 9 - new relationship types become research graph relations rather than fake scalar fields
+  ---
+  duration_ms: 1.329192
+  type: 'test'
+  ...
+# Subtest: historical quarantined observations remain readable when unchanged across schema versions
+ok 10 - historical quarantined observations remain readable when unchanged across schema versions
+  ---
+  duration_ms: 1.880342
+  type: 'test'
+  ...
+# Subtest: unknown or invalid independent statements never gain auto-research status
+ok 11 - unknown or invalid independent statements never gain auto-research status
+  ---
+  duration_ms: 0.380433
+  type: 'test'
+  ...
+# Subtest: unmet needs prioritize incremental research but cannot independently create facts
+ok 12 - unmet needs prioritize incremental research but cannot independently create facts
+  ---
+  duration_ms: 0.616889
+  type: 'test'
+  ...
+# Subtest: robots matching: disallow, specific agent, longest-prefix allow, unknown
+ok 13 - robots matching: disallow, specific agent, longest-prefix allow, unknown
+  ---
+  duration_ms: 2.165272
+  type: 'test'
+  ...
+# Subtest: unknown, reserved and private IPs do not pass outbound network filter
+ok 14 - unknown, reserved and private IPs do not pass outbound network filter
+  ---
+  duration_ms: 1.423444
+  type: 'test'
+  ...
+# Subtest: licence, robots and terms checked prior to page retrieval; no body returned
+ok 15 - licence, robots and terms checked prior to page retrieval; no body returned
+  ---
+  duration_ms: 8.614194
+  type: 'test'
+  ...
+# Subtest: robots disallow stops page IO even with rights
+ok 16 - robots disallow stops page IO even with rights
+  ---
+  duration_ms: 0.60443
+  type: 'test'
+  ...
+# Subtest: open licence without approved website terms cannot execute any IO
+ok 17 - open licence without approved website terms cannot execute any IO
+  ---
+  duration_ms: 0.391499
+  type: 'test'
+  ...
+# Subtest: redirected or invalid robots response cannot be accepted
+ok 18 - redirected or invalid robots response cannot be accepted
+  ---
+  duration_ms: 0.45126
+  type: 'test'
+  ...
+# Subtest: rights expiration and stale policy reject previously scheduled plan
+ok 19 - rights expiration and stale policy reject previously scheduled plan
+  ---
+  duration_ms: 0.324819
+  type: 'test'
+  ...
+# Subtest: replaces prose with typed contextual fact, strictly research quarantine
+ok 20 - replaces prose with typed contextual fact, strictly research quarantine
+  ---
+  duration_ms: 11.300771
+  type: 'test'
+  ...
+# Subtest: unknown field cannot be created freely by a language model
+ok 21 - unknown field cannot be created freely by a language model
+  ---
+  duration_ms: 1.273188
+  type: 'test'
+  ...
+# Subtest: numeric invented star-score cannot inhabit an editorial enum field
+ok 22 - numeric invented star-score cannot inhabit an editorial enum field
+  ---
+  duration_ms: 0.205088
+  type: 'test'
+  ...
+# Subtest: matching user context must be complete and category controlled
+ok 23 - matching user context must be complete and category controlled
+  ---
+  duration_ms: 0.495427
+  type: 'test'
+  ...
+# Subtest: independent measurement requires protocol and identified original test
+ok 24 - independent measurement requires protocol and identified original test
+  ---
+  duration_ms: 0.248334
+  type: 'test'
+  ...
+# Subtest: the same field supports distinct contextual observations, not one global rating
+ok 25 - the same field supports distinct contextual observations, not one global rating
+  ---
+  duration_ms: 0.314474
+  type: 'test'
+  ...
+# Subtest: unsupported ingestion rights, blocked analysis or source mismatch exclude everything
+ok 26 - unsupported ingestion rights, blocked analysis or source mismatch exclude everything
+  ---
+  duration_ms: 1.402312
+  type: 'test'
+  ...
+# Subtest: metadata hash changes never imply scientific validation or scoring approval
+ok 27 - metadata hash changes never imply scientific validation or scoring approval
+  ---
+  duration_ms: 0.29212
+  type: 'test'
+  ...
+# Subtest: an unsupported manufacturer marketing source cannot impersonate a laboratory report
+ok 28 - an unsupported manufacturer marketing source cannot impersonate a laboratory report
+  ---
+  duration_ms: 0.293362
+  type: 'test'
+  ...
+# Subtest: alternative categories can define their own dimensions without altering old categories
+ok 29 - alternative categories can define their own dimensions without altering old categories
+  ---
+  duration_ms: 0.544129
+  type: 'test'
+  ...
+# Subtest: unsupported or unanchored observations rejected, even when proposed by AI
+ok 30 - unsupported or unanchored observations rejected, even when proposed by AI
+  ---
+  duration_ms: 0.201874
+  type: 'test'
+  ...
+# Subtest: the same original test and context cannot be counted twice
+ok 31 - the same original test and context cannot be counted twice
+  ---
+  duration_ms: 0.143466
+  type: 'test'
+  ...
+# Subtest: no grant defaults deny
+ok 32 - no grant defaults deny
+  ---
+  duration_ms: 2.21752
+  type: 'test'
+  ...
+# Subtest: approved and scoped written grant permits exactly authorized use
+ok 33 - approved and scoped written grant permits exactly authorized use
+  ---
+  duration_ms: 0.23194
+  type: 'test'
+  ...
+# Subtest: history rights are separate from current price rights
+ok 34 - history rights are separate from current price rights
+  ---
+  duration_ms: 0.094913
+  type: 'test'
+  ...
+# Subtest: market mismatch denied
+ok 35 - market mismatch denied
+  ---
+  duration_ms: 0.124958
+  type: 'test'
+  ...
+# Subtest: missing signed agreement denied
+ok 36 - missing signed agreement denied
+  ---
+  duration_ms: 0.11932
+  type: 'test'
+  ...
+# Subtest: revocation denies even within term
+ok 37 - revocation denies even within term
+  ---
+  duration_ms: 0.096475
+  type: 'test'
+  ...
+# Subtest: expired agreement denied
+ok 38 - expired agreement denied
+  ---
+  duration_ms: 0.082394
+  type: 'test'
+  ...
+# Subtest: Amazon current display requires explicit use case review
+ok 39 - Amazon current display requires explicit use case review
+  ---
+  duration_ms: 0.138428
+  type: 'test'
+  ...
+# Subtest: Amazon history needs both tracking and aggregation exceptions
+ok 40 - Amazon history needs both tracking and aggregation exceptions
+  ---
+  duration_ms: 0.335105
+  type: 'test'
+  ...
+# Subtest: Amazon exceptions can be represented but are not presumed
+ok 41 - Amazon exceptions can be represented but are not presumed
+  ---
+  duration_ms: 0.376757
+  type: 'test'
+  ...
+# Subtest: Google Merchant pricing reports denied even with nominal grant
+ok 42 - Google Merchant pricing reports denied even with nominal grant
+  ---
+  duration_ms: 0.150987
+  type: 'test'
+  ...
+# Subtest: multiple grants ambiguous: no cherry picking
+ok 43 - multiple grants ambiguous: no cherry picking
+  ---
+  duration_ms: 0.129605
+  type: 'test'
+  ...
+# Subtest: integrates technical fit, test outcomes and need importance without a winner or score
+ok 44 - integrates technical fit, test outcomes and need importance without a winner or score
+  ---
+  duration_ms: 11.663307
+  type: 'test'
+  ...
+# Subtest: non-compensatory mandatory connection failure is visible despite optional microphone advantage
+ok 45 - non-compensatory mandatory connection failure is visible despite optional microphone advantage
+  ---
+  duration_ms: 0.879525
+  type: 'test'
+  ...
+# Subtest: lab reported expanded intervals support only qualified threshold screening
+ok 46 - lab reported expanded intervals support only qualified threshold screening
+  ---
+  duration_ms: 0.754306
+  type: 'test'
+  ...
+# Subtest: opposed task advantages remain a tradeoff, never averaged into a winner
+ok 47 - opposed task advantages remain a tradeoff, never averaged into a winner
+  ---
+  duration_ms: 0.634034
+  type: 'test'
+  ...
+# Subtest: missing interval never makes unknown precision seem zero
+ok 48 - missing interval never makes unknown precision seem zero
+  ---
+  duration_ms: 0.525842
+  type: 'test'
+  ...
+# Subtest: overlapping intervals and point differences never imply a practical advantage
+ok 49 - overlapping intervals and point differences never imply a practical advantage
+  ---
+  duration_ms: 0.806234
+  type: 'test'
+  ...
+# Subtest: without a documented meaningful difference, even separated intervals do not establish practicality
+ok 50 - without a documented meaningful difference, even separated intervals do not establish practicality
+  ---
+  duration_ms: 0.456878
+  type: 'test'
+  ...
+# Subtest: technical nominal performance claims cannot substitute for missing independent tests
+ok 51 - technical nominal performance claims cannot substitute for missing independent tests
+  ---
+  duration_ms: 0.562577
+  type: 'test'
+  ...
+# Subtest: a manufacturer field with explicit marketing label is rejected by inherited gate
+ok 52 - a manufacturer field with explicit marketing label is rejected by inherited gate
+  ---
+  duration_ms: 0.629989
+  type: 'test'
+  ...
+# Subtest: incompatible original test protocol leaves no supported pair
+ok 53 - incompatible original test protocol leaves no supported pair
+  ---
+  duration_ms: 0.6109
+  type: 'test'
+  ...
+# Subtest: products missing independent results are not punished with fabricated low scores
+ok 54 - products missing independent results are not punished with fabricated low scores
+  ---
+  duration_ms: 0.511561
+  type: 'test'
+  ...
+# Subtest: unconfirmed user interpretation cannot be treated as established task success
+ok 55 - unconfirmed user interpretation cannot be treated as established task success
+  ---
+  duration_ms: 0.61105
+  type: 'test'
+  ...
+# Subtest: inputs that attempt to inject commercial data into any nested record are rejected
+ok 56 - inputs that attempt to inject commercial data into any nested record are rejected
+  ---
+  duration_ms: 0.208805
+  type: 'test'
+  ...
+# Subtest: an arbitrary practical threshold without a declared basis is invalid
+ok 57 - an arbitrary practical threshold without a declared basis is invalid
+  ---
+  duration_ms: 0.212831
+  type: 'test'
+  ...
+# Subtest: technical-only structural constraint never turns into independently verified performance
+ok 58 - technical-only structural constraint never turns into independently verified performance
+  ---
+  duration_ms: 0.405842
+  type: 'test'
+  ...
+# Subtest: marketing payload in an otherwise shaped technical record is rejected
+ok 59 - marketing payload in an otherwise shaped technical record is rejected
+  ---
+  duration_ms: 0.18586
+  type: 'test'
+  ...
+# Subtest: empty pilot never claims coverage
+ok 60 - empty pilot never claims coverage
+  ---
+  duration_ms: 2.235577
+  type: 'test'
+  ...
+# Subtest: only exact variant identity contributes to matching coverage
+ok 61 - only exact variant identity contributes to matching coverage
+  ---
+  duration_ms: 0.267833
+  type: 'test'
+  ...
+# Subtest: current offer with no verified rights is not publishable
+ok 62 - current offer with no verified rights is not publishable
+  ---
+  duration_ms: 0.180132
+  type: 'test'
+  ...
+# Subtest: stale offer does not count as fresh
+ok 63 - stale offer does not count as fresh
+  ---
+  duration_ms: 0.157928
+  type: 'test'
+  ...
+# Subtest: duplicate variants rejected
+ok 64 - duplicate variants rejected
+  ---
+  duration_ms: 0.306312
+  type: 'test'
+  ...
+# Subtest: unverified variants excluded from denominator and flagged
+ok 65 - unverified variants excluded from denominator and flagged
+  ---
+  duration_ms: 0.21262
+  type: 'test'
+  ...
+# Subtest: synthetic bridge runs full deterministic ranking and retains evidence trace
+ok 66 - synthetic bridge runs full deterministic ranking and retains evidence trace
+  ---
+  duration_ms: 2.114564
+  type: 'test'
+  ...
+# Subtest: production rejects synthetic input regardless of its contents
+ok 67 - production rejects synthetic input regardless of its contents
+  ---
+  duration_ms: 0.354985
+  type: 'test'
+  ...
+# Subtest: production refuses real evidence without validated normalization
+ok 68 - production refuses real evidence without validated normalization
+  ---
+  duration_ms: 0.29905
+  type: 'test'
+  ...
+# Subtest: rejects stale or future merchant offers, rather than assuming current price
+ok 69 - rejects stale or future merchant offers, rather than assuming current price
+  ---
+  duration_ms: 0.406582
+  type: 'test'
+  ...
+# Subtest: rejects cross-market transfer of evidence
+ok 70 - rejects cross-market transfer of evidence
+  ---
+  duration_ms: 0.389997
+  type: 'test'
+  ...
+# Subtest: rejects unsupported measurement units, never assumes scale equivalence
+ok 71 - rejects unsupported measurement units, never assumes scale equivalence
+  ---
+  duration_ms: 0.228855
+  type: 'test'
+  ...
+# Subtest: rejects missing source citation URL
+ok 72 - rejects missing source citation URL
+  ---
+  duration_ms: 0.261614
+  type: 'test'
+  ...
+# Subtest: unknown snapshot origin cannot be used in either mode
+ok 73 - unknown snapshot origin cannot be used in either mode
+  ---
+  duration_ms: 0.921158
+  type: 'test'
+  ...
+# Subtest: baseline captures opposed task advantages and mandatory mismatch without inventing a winner
+ok 74 - baseline captures opposed task advantages and mandatory mismatch without inventing a winner
+  ---
+  duration_ms: 19.59275
+  type: 'test'
+  ...
+# Subtest: removing an actual original test changes the evidence without negative imputation
+ok 75 - removing an actual original test changes the evidence without negative imputation
+  ---
+  duration_ms: 1.836957
+  type: 'test'
+  ...
+# Subtest: user-confirmed alternative preference remains separate from missing evidence
+ok 76 - user-confirmed alternative preference remains separate from missing evidence
+  ---
+  duration_ms: 2.126008
+  type: 'test'
+  ...
+# Subtest: analyst alternative never masquerades as confirmed preference
+ok 77 - analyst alternative never masquerades as confirmed preference
+  ---
+  duration_ms: 1.218826
+  type: 'test'
+  ...
+# Subtest: no tested change cannot be called scientific robustness or probability
+ok 78 - no tested change cannot be called scientific robustness or probability
+  ---
+  duration_ms: 1.39392
+  type: 'test'
+  ...
+# Subtest: original input is immutable during counterfactual test withholding
+ok 79 - original input is immutable during counterfactual test withholding
+  ---
+  duration_ms: 1.185786
+  type: 'test'
+  ...
+# Subtest: unreferenced withdrawal is forbidden
+ok 80 - unreferenced withdrawal is forbidden
+  ---
+  duration_ms: 1.427921
+  type: 'test'
+  ...
+# Subtest: invalid, duplicated and undocumented scenarios fail closed
+ok 81 - invalid, duplicated and undocumented scenarios fail closed
+  ---
+  duration_ms: 3.978942
+  type: 'test'
+  ...
+# Subtest: missing baseline evidence is not filled with a synthetic point estimate
+ok 82 - missing baseline evidence is not filled with a synthetic point estimate
+  ---
+  duration_ms: 0.884272
+  type: 'test'
+  ...
+# Subtest: commercial data injection is rejected through upstream validation
+ok 83 - commercial data injection is rejected through upstream validation
+  ---
+  duration_ms: 1.131745
+  type: 'test'
+  ...
+# Subtest: scenario count is an implementation guard, not scientific sample
+ok 84 - scenario count is an implementation guard, not scientific sample
+  ---
+  duration_ms: 0.435716
+  type: 'test'
+  ...
+# Subtest: all-directional-evidence-missing still reports mandatory priority change
+ok 85 - all-directional-evidence-missing still reports mandatory priority change
+  ---
+  duration_ms: 0.722418
+  type: 'test'
+  ...
+# Subtest: public reference remains research-only and never creates a winner
+ok 86 - public reference remains research-only and never creates a winner
+  ---
+  duration_ms: 2.035195
+  type: 'test'
+  ...
+# Subtest: exact context records are separated from different contexts
+ok 87 - exact context records are separated from different contexts
+  ---
+  duration_ms: 0.649739
+  type: 'test'
+  ...
+# Subtest: same topic does not silently count as two independent lab tests
+ok 88 - same topic does not silently count as two independent lab tests
+  ---
+  duration_ms: 0.186732
+  type: 'test'
+  ...
+# Subtest: missing criterion is explicitly unobserved
+ok 89 - missing criterion is explicitly unobserved
+  ---
+  duration_ms: 0.231469
+  type: 'test'
+  ...
+# Subtest: source rights may not be marked cleared
+ok 90 - source rights may not be marked cleared
+  ---
+  duration_ms: 0.354965
+  type: 'test'
+  ...
+# Subtest: cannot label a single-human extraction as expert adjudication
+ok 91 - cannot label a single-human extraction as expert adjudication
+  ---
+  duration_ms: 0.165569
+  type: 'test'
+  ...
+# Subtest: rejects numeric lab-data claim not present in source capture
+ok 92 - rejects numeric lab-data claim not present in source capture
+  ---
+  duration_ms: 0.124127
+  type: 'test'
+  ...
+# Subtest: duplicate document observation ID rejected
+ok 93 - duplicate document observation ID rejected
+  ---
+  duration_ms: 0.161343
+  type: 'test'
+  ...
+# Subtest: no Amazon or arbitrary URL as primary article
+ok 94 - no Amazon or arbitrary URL as primary article
+  ---
+  duration_ms: 0.286252
+  type: 'test'
+  ...
+# Subtest: two separately supplied ratings calculate agreement only, not validation
+ok 95 - two separately supplied ratings calculate agreement only, not validation
+  ---
+  duration_ms: 0.440584
+  type: 'test'
+  ...
+# Subtest: cannot invent fake independent annotator without two submitted judgments
+ok 96 - cannot invent fake independent annotator without two submitted judgments
+  ---
+  duration_ms: 0.255685
+  type: 'test'
+  ...
+# Subtest: contradictory duplicate ratings rejected
+ok 97 - contradictory duplicate ratings rejected
+  ---
+  duration_ms: 0.194804
+  type: 'test'
+  ...
+# Subtest: one source identifier cannot silently switch original article
+ok 98 - one source identifier cannot silently switch original article
+  ---
+  duration_ms: 0.129725
+  type: 'test'
+  ...
+# Subtest: non-text unsupported annotation fails closed
+ok 99 - non-text unsupported annotation fails closed
+  ---
+  duration_ms: 0.138889
+  type: 'test'
+  ...
+# Subtest: different needs change the leading fully-covered candidate
+ok 100 - different needs change the leading fully-covered candidate
+  ---
+  duration_ms: 1.251575
+  type: 'test'
+  ...
+# Subtest: missing critical evidence does not become zero or a winner
+ok 101 - missing critical evidence does not become zero or a winner
+  ---
+  duration_ms: 0.320893
+  type: 'test'
+  ...
+# Subtest: UK request excludes US variants and their evidence
+ok 102 - UK request excludes US variants and their evidence
+  ---
+  duration_ms: 0.135544
+  type: 'test'
+  ...
+# Subtest: budget excludes out-of-budget products
+ok 103 - budget excludes out-of-budget products
+  ---
+  duration_ms: 0.127622
+  type: 'test'
+  ...
+# Subtest: duplicate articles sharing originalTestId do not change scoring
+ok 104 - duplicate articles sharing originalTestId do not change scoring
+  ---
+  duration_ms: 0.847206
+  type: 'test'
+  ...
+# Subtest: unlicensed evidence cannot influence ranking
+ok 105 - unlicensed evidence cannot influence ranking
+  ---
+  duration_ms: 0.178098
+  type: 'test'
+  ...
+# Subtest: incompatible protocols withhold pooled score
+ok 106 - incompatible protocols withhold pooled score
+  ---
+  duration_ms: 0.256937
+  type: 'test'
+  ...
+# Subtest: no positive weights is invalid
+ok 107 - no positive weights is invalid
+  ---
+  duration_ms: 0.334484
+  type: 'test'
+  ...
+# Subtest: hard requirements are enforced
+ok 108 - hard requirements are enforced
+  ---
+  duration_ms: 0.280443
+  type: 'test'
+  ...
+# Subtest: scores reproducible regardless of repeat execution
+ok 109 - scores reproducible regardless of repeat execution
+  ---
+  duration_ms: 0.432211
+  type: 'test'
+  ...
+# Subtest: two separately documented original executions remain documentary observations not statistical confidence
+ok 110 - two separately documented original executions remain documentary observations not statistical confidence
+  ---
+  duration_ms: 11.283244
+  type: 'test'
+  ...
+# Subtest: missing independent method review is NOT a failed test or evidence of misconduct
+ok 111 - missing independent method review is NOT a failed test or evidence of misconduct
+  ---
+  duration_ms: 0.555987
+  type: 'test'
+  ...
+# Subtest: missing method field is documentation_incomplete not documented_concern
+ok 112 - missing method field is documentation_incomplete not documented_concern
+  ---
+  duration_ms: 0.453143
+  type: 'test'
+  ...
+# Subtest: documented method concern remains visible even if another domain is not reported
+ok 113 - documented method concern remains visible even if another domain is not reported
+  ---
+  duration_ms: 0.723289
+  type: 'test'
+  ...
+# Subtest: no fixed weights or overall quality rating is emitted
+ok 114 - no fixed weights or overall quality rating is emitted
+  ---
+  duration_ms: 0.61705
+  type: 'test'
+  ...
+# Subtest: a changed original measurement invalidates previous method review
+ok 115 - a changed original measurement invalidates previous method review
+  ---
+  duration_ms: 0.611681
+  type: 'test'
+  ...
+# Subtest: edited data after the original lineage audit is rejected
+ok 116 - edited data after the original lineage audit is rejected
+  ---
+  duration_ms: 0.540163
+  type: 'test'
+  ...
+# Subtest: different conditions do not establish applicability even with favorable outcome
+ok 117 - different conditions do not establish applicability even with favorable outcome
+  ---
+  duration_ms: 0.831923
+  type: 'test'
+  ...
+# Subtest: different test protocol version does not silently count as relevant
+ok 118 - different test protocol version does not silently count as relevant
+  ---
+  duration_ms: 1.057022
+  type: 'test'
+  ...
+# Subtest: mismatched measurement unit cannot be treated as same outcome
+ok 119 - mismatched measurement unit cannot be treated as same outcome
+  ---
+  duration_ms: 0.682288
+  type: 'test'
+  ...
+# Subtest: matching variant alone cannot make different criterion applicable
+ok 120 - matching variant alone cannot make different criterion applicable
+  ---
+  duration_ms: 0.392732
+  type: 'test'
+  ...
+# Subtest: lineage-quarantined record cannot contribute to exact context coverage
+ok 121 - lineage-quarantined record cannot contribute to exact context coverage
+  ---
+  duration_ms: 0.317939
+  type: 'test'
+  ...
+# Subtest: no use-case mapping means no claim of fitness for use
+ok 122 - no use-case mapping means no claim of fitness for use
+  ---
+  duration_ms: 0.273081
+  type: 'test'
+  ...
+# Subtest: duplicated method domains are rejected
+ok 123 - duplicated method domains are rejected
+  ---
+  duration_ms: 0.244018
+  type: 'test'
+  ...
+# Subtest: no arbitrary five-domain review is accepted as complete six-domain appraisal
+ok 124 - no arbitrary five-domain review is accepted as complete six-domain appraisal
+  ---
+  duration_ms: 0.229486
+  type: 'test'
+  ...
+# Subtest: not_applicable requires explicit reference and rationale
+ok 125 - not_applicable requires explicit reference and rationale
+  ---
+  duration_ms: 0.231859
+  type: 'test'
+  ...
+# Subtest: not_reported cannot falsely carry a supporting document citation
+ok 126 - not_reported cannot falsely carry a supporting document citation
+  ---
+  duration_ms: 0.258189
+  type: 'test'
+  ...
+# Subtest: marketing, retailer and Amazon terms cannot be smuggled in use-case identity
+ok 127 - marketing, retailer and Amazon terms cannot be smuggled in use-case identity
+  ---
+  duration_ms: 0.29212
+  type: 'test'
+  ...
+# Subtest: unknown or duplicated method reviews are rejected
+ok 128 - unknown or duplicated method reviews are rejected
+  ---
+  duration_ms: 0.494144
+  type: 'test'
+  ...
+# Subtest: invalid field types and forged review fingerprints are rejected
+ok 129 - invalid field types and forged review fingerprints are rejected
+  ---
+  duration_ms: 0.464189
+  type: 'test'
+  ...
+# Subtest: observed between-test variation is descriptive, not a significance test
+ok 130 - observed between-test variation is descriptive, not a significance test
+  ---
+  duration_ms: 0.284609
+  type: 'test'
+  ...
+# Subtest: mixed method versions do not count as variation with matching protocol
+ok 131 - mixed method versions do not count as variation with matching protocol
+  ---
+  duration_ms: 0.3583
+  type: 'test'
+  ...
+# Subtest: an observed method concern is not automatically inferred from funding disclosure alone
+ok 132 - an observed method concern is not automatically inferred from funding disclosure alone
+  ---
+  duration_ms: 0.362175
+  type: 'test'
+  ...
+# Subtest: two originally reported test executions, not two reports, count as two documented tests
+ok 133 - two originally reported test executions, not two reports, count as two documented tests
+  ---
+  duration_ms: 13.059551
+  type: 'test'
+  ...
+# Subtest: 10 syndicated reports keep original test count unchanged
+ok 134 - 10 syndicated reports keep original test count unchanged
+  ---
+  duration_ms: 0.899906
+  type: 'test'
+  ...
+# Subtest: multiple identical first-party records of the same test are counted once
+ok 135 - multiple identical first-party records of the same test are counted once
+  ---
+  duration_ms: 2.322458
+  type: 'test'
+  ...
+# Subtest: conflicting values attributed to the SAME original measurement trigger quarantine
+ok 136 - conflicting values attributed to the SAME original measurement trigger quarantine
+  ---
+  duration_ms: 0.731111
+  type: 'test'
+  ...
+# Subtest: the same dataset hash under two different test IDs does NOT count as replication
+ok 137 - the same dataset hash under two different test IDs does NOT count as replication
+  ---
+  duration_ms: 0.376517
+  type: 'test'
+  ...
+# Subtest: missing documentary review quarantines without substituting synthetic evidence
+ok 138 - missing documentary review quarantines without substituting synthetic evidence
+  ---
+  duration_ms: 0.276216
+  type: 'test'
+  ...
+# Subtest: unresolved identity is not silently accepted
+ok 139 - unresolved identity is not silently accepted
+  ---
+  duration_ms: 0.25262
+  type: 'test'
+  ...
+# Subtest: fake source role does not make a syndicated copy count as primary
+ok 140 - fake source role does not make a syndicated copy count as primary
+  ---
+  duration_ms: 0.327193
+  type: 'test'
+  ...
+# Subtest: edited measurement invalidates the original documentary fingerprint
+ok 141 - edited measurement invalidates the original documentary fingerprint
+  ---
+  duration_ms: 0.517209
+  type: 'test'
+  ...
+# Subtest: records with different protocols must not be called statistically conflicting
+ok 142 - records with different protocols must not be called statistically conflicting
+  ---
+  duration_ms: 0.597911
+  type: 'test'
+  ...
+# Subtest: two measured values are descriptive variation, not a statistical confidence claim
+ok 143 - two measured values are descriptive variation, not a statistical confidence claim
+  ---
+  duration_ms: 0.307123
+  type: 'test'
+  ...
+# Subtest: quarantined export is derived, hash changed and never approved for ranking
+ok 144 - quarantined export is derived, hash changed and never approved for ranking
+  ---
+  duration_ms: 0.410198
+  type: 'test'
+  ...
+# Subtest: unknown downstream reports are not counted as primary and are flagged
+ok 145 - unknown downstream reports are not counted as primary and are flagged
+  ---
+  duration_ms: 0.352
+  type: 'test'
+  ...
+# Subtest: quarantined feeds only: cannot input a live/approved ranking feed
+ok 146 - quarantined feeds only: cannot input a live/approved ranking feed
+  ---
+  duration_ms: 0.453192
+  type: 'test'
+  ...
+# Subtest: two attestations on one original record are not interpreted as stronger evidence
+ok 147 - two attestations on one original record are not interpreted as stronger evidence
+  ---
+  duration_ms: 0.262806
+  type: 'test'
+  ...
+# Subtest: publisher mismatch on claimed primary report is blocked
+ok 148 - publisher mismatch on claimed primary report is blocked
+  ---
+  duration_ms: 0.268154
+  type: 'test'
+  ...
+# Subtest: inconsistent execution metadata within same original test is quarantined
+ok 149 - inconsistent execution metadata within same original test is quarantined
+  ---
+  duration_ms: 0.427624
+  type: 'test'
+  ...
+# Subtest: source roles and publication readiness remain distinct from actual license validation
+ok 150 - source roles and publication readiness remain distinct from actual license validation
+  ---
+  duration_ms: 0.89673
+  type: 'test'
+  ...
+# Subtest: cannot replay a prior lineage audit against modified records
+ok 151 - cannot replay a prior lineage audit against modified records
+  ---
+  duration_ms: 0.308385
+  type: 'test'
+  ...
+# Subtest: method and context mismatch is reported without merging results
+ok 152 - method and context mismatch is reported without merging results
+  ---
+  duration_ms: 0.265019
+  type: 'test'
+  ...
+# Subtest: documented synthetic proof passes pilot gate but can NEVER be called publishable
+ok 153 - documented synthetic proof passes pilot gate but can NEVER be called publishable
+  ---
+  duration_ms: 2.016928
+  type: 'test'
+  ...
+# Subtest: no reviewer, duplicate reviews, revoked and expired reviews all fail closed
+ok 154 - no reviewer, duplicate reviews, revoked and expired reviews all fail closed
+  ---
+  duration_ms: 0.801527
+  type: 'test'
+  ...
+# Subtest: every material field is review-bound: value, URL, tested variant, conditions and rights
+ok 155 - every material field is review-bound: value, URL, tested variant, conditions and rights
+  ---
+  duration_ms: 0.399021
+  type: 'test'
+  ...
+# Subtest: cross-variant inference is barred even if reviewer record claims to approve it
+ok 156 - cross-variant inference is barred even if reviewer record claims to approve it
+  ---
+  duration_ms: 0.203066
+  type: 'test'
+  ...
+# Subtest: non-HTTPS and credential-bearing source references fail closed
+ok 157 - non-HTTPS and credential-bearing source references fail closed
+  ---
+  duration_ms: 0.288454
+  type: 'test'
+  ...
+# Subtest: conflicting syndicated measurements for the same original test are excluded
+ok 158 - conflicting syndicated measurements for the same original test are excluded
+  ---
+  duration_ms: 0.890511
+  type: 'test'
+  ...
+# Subtest: literal duplicate evidence identifiers are rejected
+ok 159 - literal duplicate evidence identifiers are rejected
+  ---
+  duration_ms: 0.308004
+  type: 'test'
+  ...
+# Subtest: missing commercial reuse permission reference blocks score admission
+ok 160 - missing commercial reuse permission reference blocks score admission
+  ---
+  duration_ms: 0.26544
+  type: 'test'
+  ...
+# Subtest: fingerprint stable under ordering of protocol conditions and variant IDs
+ok 161 - fingerprint stable under ordering of protocol conditions and variant IDs
+  ---
+  duration_ms: 9.928333
+  type: 'test'
+  ...
+# Subtest: audit rejects malformed evaluation timestamps
+ok 162 - audit rejects malformed evaluation timestamps
+  ---
+  duration_ms: 0.919375
+  type: 'test'
+  ...
+# Subtest: Amazon-sourced measurements cannot enter independent ranking, even with a forged approval
+ok 163 - Amazon-sourced measurements cannot enter independent ranking, even with a forged approval
+  ---
+  duration_ms: 0.276567
+  type: 'test'
+  ...
+# Subtest: retailers and manufacturer materials are not treated as independent product tests
+ok 164 - retailers and manufacturer materials are not treated as independent product tests
+  ---
+  duration_ms: 0.269786
+  type: 'test'
+  ...
+# Subtest: preserves user needs: battery mapped but ANC missing blocks readiness
+ok 165 - preserves user needs: battery mapped but ANC missing blocks readiness
+  ---
+  duration_ms: 8.675196
+  type: 'test'
+  ...
+# Subtest: reports observed direction, actual units, and original test URLs without numerical scores
+ok 166 - reports observed direction, actual units, and original test URLs without numerical scores
+  ---
+  duration_ms: 0.482377
+  type: 'test'
+  ...
+# Subtest: protocol version mismatch does not silently compare
+ok 167 - protocol version mismatch does not silently compare
+  ---
+  duration_ms: 0.465742
+  type: 'test'
+  ...
+# Subtest: different recorded conditions do not compare
+ok 168 - different recorded conditions do not compare
+  ---
+  duration_ms: 0.349747
+  type: 'test'
+  ...
+# Subtest: unit mismatch does not automatically convert incompatible measurements
+ok 169 - unit mismatch does not automatically convert incompatible measurements
+  ---
+  duration_ms: 0.303547
+  type: 'test'
+  ...
+# Subtest: exact variant mismatch does not grant evidence for sibling model
+ok 170 - exact variant mismatch does not grant evidence for sibling model
+  ---
+  duration_ms: 0.83029
+  type: 'test'
+  ...
+# Subtest: multiple results for same variant refuse arbitrary pick or mean
+ok 171 - multiple results for same variant refuse arbitrary pick or mean
+  ---
+  duration_ms: 0.284989
+  type: 'test'
+  ...
+# Subtest: missing source-to-need mapping refuses invented link between ANC and battery
+ok 172 - missing source-to-need mapping refuses invented link between ANC and battery
+  ---
+  duration_ms: 0.479703
+  type: 'test'
+  ...
+# Subtest: incorrect direction is not inferred from raw number
+ok 173 - incorrect direction is not inferred from raw number
+  ---
+  duration_ms: 0.40471
+  type: 'test'
+  ...
+# Subtest: unreviewed mapping is rejected
+ok 174 - unreviewed mapping is rejected
+  ---
+  duration_ms: 0.653885
+  type: 'test'
+  ...
+# Subtest: ambiguous duplicate mapping is rejected
+ok 175 - ambiguous duplicate mapping is rejected
+  ---
+  duration_ms: 0.247223
+  type: 'test'
+  ...
+# Subtest: cannot disguise research-only feed as production approved
+ok 176 - cannot disguise research-only feed as production approved
+  ---
+  duration_ms: 0.107451
+  type: 'test'
+  ...
+# Subtest: wrong publisher URL rejected
+ok 177 - wrong publisher URL rejected
+  ---
+  duration_ms: 0.128925
+  type: 'test'
+  ...
+# Subtest: price or Amazon integration cannot be a source criterion
+ok 178 - price or Amazon integration cannot be a source criterion
+  ---
+  duration_ms: 0.107702
+  type: 'test'
+  ...
+# Subtest: unconfirmed needs never become publishable
+ok 179 - unconfirmed needs never become publishable
+  ---
+  duration_ms: 0.195174
+  type: 'test'
+  ...
+# Subtest: ties do not imply a winner
+ok 180 - ties do not imply a winner
+  ---
+  duration_ms: 0.156426
+  type: 'test'
+  ...
+# Subtest: reversed observations reverse the descriptive direction
+ok 181 - reversed observations reverse the descriptive direction
+  ---
+  duration_ms: 0.171568
+  type: 'test'
+  ...
+# Subtest: identifies multi-criterion directional tradeoff without manufacturing an overall winner
+ok 182 - identifies multi-criterion directional tradeoff without manufacturing an overall winner
+  ---
+  duration_ms: 0.336917
+  type: 'test'
+  ...
+# Subtest: reported expanded intervals may be separated but no winner, readiness or statistical confidence is asserted
+ok 183 - reported expanded intervals may be separated but no winner, readiness or statistical confidence is asserted
+  ---
+  duration_ms: 2.360235
+  type: 'test'
+  ...
+# Subtest: uncertainties that overlap cannot be called separated
+ok 184 - uncertainties that overlap cannot be called separated
+  ---
+  duration_ms: 0.233451
+  type: 'test'
+  ...
+# Subtest: intervals touching are treated as overlap
+ok 185 - intervals touching are treated as overlap
+  ---
+  duration_ms: 0.293281
+  type: 'test'
+  ...
+# Subtest: one or both missing uncertainty records means no interval inference
+ok 186 - one or both missing uncertainty records means no interval inference
+  ---
+  duration_ms: 0.443448
+  type: 'test'
+  ...
+# Subtest: different coverage factors block comparability
+ok 187 - different coverage factors block comparability
+  ---
+  duration_ms: 0.271329
+  type: 'test'
+  ...
+# Subtest: no fabricated uncertainty allowed (non-positive and non-finite)
+ok 188 - no fabricated uncertainty allowed (non-positive and non-finite)
+  ---
+  duration_ms: 0.543549
+  type: 'test'
+  ...
+# Subtest: coverage factor must be finite > 1, not inferred as 95% confidence
+ok 189 - coverage factor must be finite > 1, not inferred as 95% confidence
+  ---
+  duration_ms: 0.361825
+  type: 'test'
+  ...
+# Subtest: reject self-asserted uncertainty instead of original lab
+ok 190 - reject self-asserted uncertainty instead of original lab
+  ---
+  duration_ms: 0.186591
+  type: 'test'
+  ...
+# Subtest: reject instrument-only accuracy mislabelled as full measurement uncertainty
+ok 191 - reject instrument-only accuracy mislabelled as full measurement uncertainty
+  ---
+  duration_ms: 0.472382
+  type: 'test'
+  ...
+# Subtest: reject mismatched numerical observation, variant, unit, or test identity
+ok 192 - reject mismatched numerical observation, variant, unit, or test identity
+  ---
+  duration_ms: 0.574426
+  type: 'test'
+  ...
+# Subtest: reject unknown and duplicate record identifiers
+ok 193 - reject unknown and duplicate record identifiers
+  ---
+  duration_ms: 0.309005
+  type: 'test'
+  ...
+# Subtest: uncertainty method URL must be at exact original publisher domain
+ok 194 - uncertainty method URL must be at exact original publisher domain
+  ---
+  duration_ms: 0.291188
+  type: 'test'
+  ...
+# Subtest: without an adequate mapping, uncertainty cannot convert a need to supported
+ok 195 - without an adequate mapping, uncertainty cannot convert a need to supported
+  ---
+  duration_ms: 0.390438
+  type: 'test'
+  ...
+# Subtest: changed source measurement after bridge calculation causes explicit rejection
+ok 196 - changed source measurement after bridge calculation causes explicit rejection
+  ---
+  duration_ms: 0.202956
+  type: 'test'
+  ...
+# Subtest: source hash mismatch cannot link stale comparisons
+ok 197 - source hash mismatch cannot link stale comparisons
+  ---
+  duration_ms: 0.15307
+  type: 'test'
+  ...
+# Subtest: different original protocol prevents inference even if uncertainty exists
+ok 198 - different original protocol prevents inference even if uncertainty exists
+  ---
+  duration_ms: 0.569968
+  type: 'test'
+  ...
+# Subtest: a contrary commercial field or Amazon information cannot be used as an uncertainty record
+ok 199 - a contrary commercial field or Amazon information cannot be used as an uncertainty record
+  ---
+  duration_ms: 0.149825
+  type: 'test'
+  ...
+# Subtest: reject numeric interval overflow
+ok 200 - reject numeric interval overflow
+  ---
+  duration_ms: 0.751953
+  type: 'test'
+  ...
+# Subtest: product ranking completes before independently approved retailer links
+ok 201 - product ranking completes before independently approved retailer links
+  ---
+  duration_ms: 3.231978
+  type: 'test'
+  ...
+# Subtest: missing merchant approval fails closed without removing ranked products
+ok 202 - missing merchant approval fails closed without removing ranked products
+  ---
+  duration_ms: 1.107107
+  type: 'test'
+  ...
+# Subtest: independent scores and winner remain identical with legacy price properties of any value
+ok 203 - independent scores and winner remain identical with legacy price properties of any value
+  ---
+  duration_ms: 1.419438
+  type: 'test'
+  ...
+# Subtest: launch output has no price, budget band, historic tracking, or purchase timing
+ok 204 - launch output has no price, budget band, historic tracking, or purchase timing
+  ---
+  duration_ms: 0.392121
+  type: 'test'
+  ...
+# Subtest: launch rejects legacy budget and manufacturer-list-price payloads instead of silently ignoring them
+ok 205 - launch rejects legacy budget and manufacturer-list-price payloads instead of silently ignoring them
+  ---
+  duration_ms: 0.479012
+  type: 'test'
+  ...
+# Subtest: pricing and merchant specs cannot affect ranking even when disguised as product specifications
+ok 206 - pricing and merchant specs cannot affect ranking even when disguised as product specifications
+  ---
+  duration_ms: 0.388055
+  type: 'test'
+  ...
+# Subtest: valid nonfinancial hard specification constraints remain active
+ok 207 - valid nonfinancial hard specification constraints remain active
+  ---
+  duration_ms: 0.364079
+  type: 'test'
+  ...
+# Subtest: price-free pipeline does not mutate source arrays or merchant approvals
+ok 208 - price-free pipeline does not mutate source arrays or merchant approvals
+  ---
+  duration_ms: 0.214804
+  type: 'test'
+  ...
+# Subtest: missing evidence rights review fails closed and cannot create a winner
+ok 209 - missing evidence rights review fails closed and cannot create a winner
+  ---
+  duration_ms: 0.434094
+  type: 'test'
+  ...
+# Subtest: a score tampered after reviewer approval is excluded
+ok 210 - a score tampered after reviewer approval is excluded
+  ---
+  duration_ms: 0.388195
+  type: 'test'
+  ...
+# Subtest: launch only operates in explicitly marked nonpublishable demonstration mode
+ok 211 - launch only operates in explicitly marked nonpublishable demonstration mode
+  ---
+  duration_ms: 0.33196
+  type: 'test'
+  ...
+# Subtest: launch gate fails closed without review and does not change fit ranking
+ok 212 - launch gate fails closed without review and does not change fit ranking
+  ---
+  duration_ms: 0.883871
+  type: 'test'
+  ...
+# Subtest: launch gate accepts exactly one documented unexpired approval
+ok 213 - launch gate accepts exactly one documented unexpired approval
+  ---
+  duration_ms: 0.386302
+  type: 'test'
+  ...
+# Subtest: draft, revoked, expired, incomplete and ambiguous approvals fail closed
+ok 214 - draft, revoked, expired, incomplete and ambiguous approvals fail closed
+  ---
+  duration_ms: 0.294533
+  type: 'test'
+  ...
+# Subtest: review must match exact destination, variant, retailer and market
+ok 215 - review must match exact destination, variant, retailer and market
+  ---
+  duration_ms: 0.242405
+  type: 'test'
+  ...
+# Subtest: production entrypoint does not expose price timing or history functionality
+ok 216 - production entrypoint does not expose price timing or history functionality
+  ---
+  duration_ms: 0.1062
+  type: 'test'
+  ...
+# Subtest: verified manufacturer reference gives a band, not an actual price
+ok 217 - verified manufacturer reference gives a band, not an actual price
+  ---
+  duration_ms: 2.01848
+  type: 'test'
+  ...
+# Subtest: independent reference within budget is contextual only
+ok 218 - independent reference within budget is contextual only
+  ---
+  duration_ms: 0.228794
+  type: 'test'
+  ...
+# Subtest: ambiguous, unauthorized, stale, wrong market, wrong variant records fail closed
+ok 219 - ambiguous, unauthorized, stale, wrong market, wrong variant records fail closed
+  ---
+  duration_ms: 0.337268
+  type: 'test'
+  ...
+# Subtest: missing budget or none preference cannot produce a band
+ok 220 - missing budget or none preference cannot produce a band
+  ---
+  duration_ms: 0.235925
+  type: 'test'
+  ...
+# Subtest: invalid budget or timestamp rejected
+ok 221 - invalid budget or timestamp rejected
+  ---
+  duration_ms: 0.273502
+  type: 'test'
+  ...
+# Subtest: flexible budget marks a nearby official list reference without excluding or reprioritising products
+ok 222 - flexible budget marks a nearby official list reference without excluding or reprioritising products
+  ---
+  duration_ms: 0.155475
+  type: 'test'
+  ...
+# Subtest: budget reference never treats unverified or mismatched list prices as affordability evidence
+ok 223 - budget reference never treats unverified or mismatched list prices as affordability evidence
+  ---
+  duration_ms: 0.162555
+  type: 'test'
+  ...
+# Subtest: flexible tolerance is bounded and validated
+ok 224 - flexible tolerance is bounded and validated
+  ---
+  duration_ms: 0.1993
+  type: 'test'
+  ...
+# Subtest: audit rejects future verification, inverted dates and unsafe evidence URLs
+ok 225 - audit rejects future verification, inverted dates and unsafe evidence URLs
+  ---
+  duration_ms: 0.539572
+  type: 'test'
+  ...
+# Subtest: audit accepts only exact reviewed and authorized manufacturer references
+ok 226 - audit accepts only exact reviewed and authorized manufacturer references
+  ---
+  duration_ms: 1.172346
+  type: 'test'
+  ...
+# Subtest: no editorial approval or publisher domain registry => fail closed
+ok 227 - no editorial approval or publisher domain registry => fail closed
+  ---
+  duration_ms: 1.683146
+  type: 'test'
+  ...
+# Subtest: separate editorial and source approvals admit synthetic reference
+ok 228 - separate editorial and source approvals admit synthetic reference
+  ---
+  duration_ms: 0.762589
+  type: 'test'
+  ...
+# Subtest: approval fingerprint binds amount, variant, market, evidence URL, review status and evidence refs
+ok 229 - approval fingerprint binds amount, variant, market, evidence URL, review status and evidence refs
+  ---
+  duration_ms: 0.410979
+  type: 'test'
+  ...
+# Subtest: source must match publisher exact hostname, not plausible suffix or lookalike
+ok 230 - source must match publisher exact hostname, not plausible suffix or lookalike
+  ---
+  duration_ms: 0.394765
+  type: 'test'
+  ...
+# Subtest: cannot self-approve manufacturer record or publisher
+ok 231 - cannot self-approve manufacturer record or publisher
+  ---
+  duration_ms: 0.181604
+  type: 'test'
+  ...
+# Subtest: rights, publisher revocation, approval expiry and revoked review fail closed
+ok 232 - rights, publisher revocation, approval expiry and revoked review fail closed
+  ---
+  duration_ms: 1.265115
+  type: 'test'
+  ...
+# Subtest: ambiguous and duplicate editorial approvals fail closed
+ok 233 - ambiguous and duplicate editorial approvals fail closed
+  ---
+  duration_ms: 0.198298
+  type: 'test'
+  ...
+# Subtest: invalid review timestamps are rejected
+ok 234 - invalid review timestamps are rejected
+  ---
+  duration_ms: 0.32539
+  type: 'test'
+  ...
+# Subtest: captured evidence fingerprint and right scope are mandatory
+ok 235 - captured evidence fingerprint and right scope are mandatory
+  ---
+  duration_ms: 0.283938
+  type: 'test'
+  ...
+# Subtest: changing explicitly declared needs changes demonstrative winner, not merchant ranking
+ok 236 - changing explicitly declared needs changes demonstrative winner, not merchant ranking
+  ---
+  duration_ms: 2.020023
+  type: 'test'
+  ...
+# Subtest: an unmeasured critical need blocks a synthetic winner
+ok 237 - an unmeasured critical need blocks a synthetic winner
+  ---
+  duration_ms: 0.302886
+  type: 'test'
+  ...
+# Subtest: unconfirmed needs do not start ranking
+ok 238 - unconfirmed needs do not start ranking
+  ---
+  duration_ms: 0.286521
+  type: 'test'
+  ...
+# Subtest: incomplete product evidence blocks winner, even if another product fully covered
+ok 239 - incomplete product evidence blocks winner, even if another product fully covered
+  ---
+  duration_ms: 0.235725
+  type: 'test'
+  ...
+# Subtest: commercial fields are not accepted
+ok 240 - commercial fields are not accepted
+  ---
+  duration_ms: 0.434815
+  type: 'test'
+  ...
+# Subtest: synthetic evidence cannot be marked as real publication output
+ok 241 - synthetic evidence cannot be marked as real publication output
+  ---
+  duration_ms: 0.222005
+  type: 'test'
+  ...
+# Subtest: essential context asked before refinements
+ok 242 - essential context asked before refinements
+  ---
+  duration_ms: 1.837428
+  type: 'test'
+  ...
+# Subtest: after basics only contextual refinements shown; at most two
+ok 243 - after basics only contextual refinements shown; at most two
+  ---
+  duration_ms: 0.318981
+  type: 'test'
+  ...
+# Subtest: user confirmation can skip optional questions
+ok 244 - user confirmation can skip optional questions
+  ---
+  duration_ms: 0.180131
+  type: 'test'
+  ...
+# Subtest: distinct user priorities alter synthetic weights
+ok 245 - distinct user priorities alter synthetic weights
+  ---
+  duration_ms: 0.170106
+  type: 'test'
+  ...
+# Subtest: hard-floor interest absent from demo evidence blocks readiness
+ok 246 - hard-floor interest absent from demo evidence blocks readiness
+  ---
+  duration_ms: 0.377308
+  type: 'test'
+  ...
+# Subtest: unmeasured noise need cannot be silently discarded
+ok 247 - unmeasured noise need cannot be silently discarded
+  ---
+  duration_ms: 0.189235
+  type: 'test'
+  ...
+# Subtest: user may explicitly dismiss unwanted criterion
+ok 248 - user may explicitly dismiss unwanted criterion
+  ---
+  duration_ms: 0.2056
+  type: 'test'
+  ...
+# Subtest: empty needs leads to confirmation instead of invented rank
+ok 249 - empty needs leads to confirmation instead of invented rank
+  ---
+  duration_ms: 0.134482
+  type: 'test'
+  ...
+# Subtest: unconfirmed inferred priorities block automatic scoring
+ok 250 - unconfirmed inferred priorities block automatic scoring
+  ---
+  duration_ms: 0.449257
+  type: 'test'
+  ...
+# Subtest: commercial field injected into answer is rejected
+ok 251 - commercial field injected into answer is rejected
+  ---
+  duration_ms: 0.738702
+  type: 'test'
+  ...
+# Subtest: unknown option is rejected
+ok 252 - unknown option is rejected
+  ---
+  duration_ms: 0.19901
+  type: 'test'
+  ...
+# Subtest: unknown priority is rejected
+ok 253 - unknown priority is rejected
+  ---
+  duration_ms: 0.851402
+  type: 'test'
+  ...
+# Subtest: duplicate IDs in category definition are rejected
+ok 254 - duplicate IDs in category definition are rejected
+  ---
+  duration_ms: 0.159821
+  type: 'test'
+  ...
+# Subtest: negative/non-integer question limit is rejected
+ok 255 - negative/non-integer question limit is rejected
+  ---
+  duration_ms: 0.089174
+  type: 'test'
+  ...
+# Subtest: irrelevant option does not create fake criterion
+ok 256 - irrelevant option does not create fake criterion
+  ---
+  duration_ms: 0.121653
+  type: 'test'
+  ...
+# Subtest: proof of unavailable category evidence cannot be assumed from capabilities elsewhere
+ok 257 - proof of unavailable category evidence cannot be assumed from capabilities elsewhere
+  ---
+  duration_ms: 0.093911
+  type: 'test'
+  ...
+# Subtest: the result explicitly prohibits publication
+ok 258 - the result explicitly prohibits publication
+  ---
+  duration_ms: 0.08626
+  type: 'test'
+  ...
+# Subtest: headphone scenario uses original-domain criteria, not toy vacuum dimensions
+ok 259 - headphone scenario uses original-domain criteria, not toy vacuum dimensions
+  ---
+  duration_ms: 0.35165
+  type: 'test'
+  ...
+# Subtest: real attributed open-licensed measurement excerpt has no ranking route
+ok 260 - real attributed open-licensed measurement excerpt has no ranking route
+  ---
+  duration_ms: 0.972205
+  type: 'test'
+  ...
+# Subtest: unrecognized values and disorder fail closed
+ok 261 - unrecognized values and disorder fail closed
+  ---
+  duration_ms: 1.104564
+  type: 'test'
+  ...
+# Subtest: mocked local semantic suggestion is grounded, quarantined and creates a schema gap
+ok 262 - mocked local semantic suggestion is grounded, quarantined and creates a schema gap
+  ---
+  duration_ms: 12.421069
+  type: 'test'
+  ...
+# Subtest: invented quantified evaluation has no proof and is excluded
+ok 263 - invented quantified evaluation has no proof and is excluded
+  ---
+  duration_ms: 0.874356
+  type: 'test'
+  ...
+# Subtest: a hallucinated quote is excluded and never appears in output
+ok 264 - a hallucinated quote is excluded and never appears in output
+  ---
+  duration_ms: 0.570319
+  type: 'test'
+  ...
+# Subtest: unreviewed terms block request before adapter or page fetch
+ok 265 - unreviewed terms block request before adapter or page fetch
+  ---
+  duration_ms: 0.296527
+  type: 'test'
+  ...
+# Subtest: semantic category interpreter does not need a production field to store a quarantined gap
+ok 266 - semantic category interpreter does not need a production field to store a quarantined gap
+  ---
+  duration_ms: 1.079726
+  type: 'test'
+  ...
+# Subtest: existing field cannot be redefined by a local model suggestion
+ok 267 - existing field cannot be redefined by a local model suggestion
+  ---
+  duration_ms: 1.723676
+  type: 'test'
+  ...
+# Subtest: a single source cannot manufacture multiple independent observations of identical context
+ok 268 - a single source cannot manufacture multiple independent observations of identical context
+  ---
+  duration_ms: 1.24154
+  type: 'test'
+  ...
+# Subtest: a proposed number must match a literal number, not a substring of 14
+ok 269 - a proposed number must match a literal number, not a substring of 14
+  ---
+  duration_ms: 0.817281
+  type: 'test'
+  ...
+# Subtest: malformed model ontology proposal is rejected without unhandled exceptions
+ok 270 - malformed model ontology proposal is rejected without unhandled exceptions
+  ---
+  duration_ms: 0.994798
+  type: 'test'
+  ...
+# Subtest: strict parser yields original numeric facts without interpolation, advice or raw text
+ok 271 - strict parser yields original numeric facts without interpolation, advice or raw text
+  ---
+  duration_ms: 2.261246
+  type: 'test'
+  ...
+# Subtest: end-to-end: authorized transient bytes to quarantined adaptive schema gap
+ok 272 - end-to-end: authorized transient bytes to quarantined adaptive schema gap
+  ---
+  duration_ms: 10.318201
+  type: 'test'
+  ...
+# Subtest: same source becomes quarantined typed observations when a reviewed field already exists
+ok 273 - same source becomes quarantined typed observations when a reviewed field already exists
+  ---
+  duration_ms: 7.943955
+  type: 'test'
+  ...
+# Subtest: robots disallow prevents article fetch and source analysis
+ok 274 - robots disallow prevents article fetch and source analysis
+  ---
+  duration_ms: 0.389116
+  type: 'test'
+  ...
+# Subtest: insufficient rights or external model transfer request cannot be inferred as authorized
+ok 275 - insufficient rights or external model transfer request cannot be inferred as authorized
+  ---
+  duration_ms: 0.274072
+  type: 'test'
+  ...
+# Subtest: unattested method/profile mismatches never touch network
+ok 276 - unattested method/profile mismatches never touch network
+  ---
+  duration_ms: 0.129575
+  type: 'test'
+  ...
+# Subtest: unparseable, HTML-looking, extra-column and non-monotonic data remain blocked
+ok 277 - unparseable, HTML-looking, extra-column and non-monotonic data remain blocked
+  ---
+  duration_ms: 1.161499
+  type: 'test'
+  ...
+# Subtest: missing original-test lineage fails before any download
+ok 278 - missing original-test lineage fails before any download
+  ---
+  duration_ms: 0.212119
+  type: 'test'
+  ...
+# Subtest: incremental approved cache skips web if reviewed snapshot is fresh
+ok 279 - incremental approved cache skips web if reviewed snapshot is fresh
+  ---
+  duration_ms: 0.445822
+  type: 'test'
+  ...
+# Subtest: sampling large datasets is bounded and cannot become a full curve
+ok 280 - sampling large datasets is bounded and cannot become a full curve
+  ---
+  duration_ms: 0.773826
+  type: 'test'
+  ...
+# Subtest: same field name with changed protocol/context meaning is blocked
+ok 281 - same field name with changed protocol/context meaning is blocked
+  ---
+  duration_ms: 1.871899
+  type: 'test'
+  ...
+# Subtest: authorized observation is quarantined, not published
+ok 282 - authorized observation is quarantined, not published
+  ---
+  duration_ms: 1.382232
+  type: 'test'
+  ...
+# Subtest: unknown and prohibited permissions denied
+ok 283 - unknown and prohibited permissions denied
+  ---
+  duration_ms: 0.255014
+  type: 'test'
+  ...
+# Subtest: rights need documentary URL and both permitted uses
+ok 284 - rights need documentary URL and both permitted uses
+  ---
+  duration_ms: 0.306031
+  type: 'test'
+  ...
+# Subtest: expired rights denied
+ok 285 - expired rights denied
+  ---
+  duration_ms: 0.172891
+  type: 'test'
+  ...
+# Subtest: wrong merchant or market is denied
+ok 286 - wrong merchant or market is denied
+  ---
+  duration_ms: 0.296837
+  type: 'test'
+  ...
+# Subtest: unverified SKU is denied
+ok 287 - unverified SKU is denied
+  ---
+  duration_ms: 0.177738
+  type: 'test'
+  ...
+# Subtest: tax or shipping uncertainty denied
+ok 288 - tax or shipping uncertainty denied
+  ---
+  duration_ms: 0.243818
+  type: 'test'
+  ...
+# Subtest: negative and nonfinite prices denied
+ok 289 - negative and nonfinite prices denied
+  ---
+  duration_ms: 0.22514
+  type: 'test'
+  ...
+# Subtest: future and stale observations denied
+ok 290 - future and stale observations denied
+  ---
+  duration_ms: 0.489597
+  type: 'test'
+  ...
+# Subtest: insecure and credential-bearing URLs denied
+ok 291 - insecure and credential-bearing URLs denied
+  ---
+  duration_ms: 0.51733
+  type: 'test'
+  ...
+# Subtest: duplicate observation IDs denied
+ok 292 - duplicate observation IDs denied
+  ---
+  duration_ms: 0.222305
+  type: 'test'
+  ...
+# Subtest: distinct observation IDs can share a timestamp
+ok 293 - distinct observation IDs can share a timestamp
+  ---
+  duration_ms: 0.150367
+  type: 'test'
+  ...
+# Subtest: missing source denied
+ok 294 - missing source denied
+  ---
+  duration_ms: 0.109766
+  type: 'test'
+  ...
+# Subtest: dense single-merchant series yields descriptive median only
+ok 295 - dense single-merchant series yields descriptive median only
+  ---
+  duration_ms: 0.449147
+  type: 'test'
+  ...
+# Subtest: sparse series cannot produce median
+ok 296 - sparse series cannot produce median
+  ---
+  duration_ms: 0.217187
+  type: 'test'
+  ...
+# Subtest: duplicate same-day snapshots count once
+ok 297 - duplicate same-day snapshots count once
+  ---
+  duration_ms: 0.133571
+  type: 'test'
+  ...
+# Subtest: merchant panels cannot be blended
+ok 298 - merchant panels cannot be blended
+  ---
+  duration_ms: 1.018103
+  type: 'test'
+  ...
+# Subtest: long gap blocks median even if enough days
+ok 299 - long gap blocks median even if enough days
+  ---
+  duration_ms: 0.157808
+  type: 'test'
+  ...
+# Subtest: refurbished, different market and unverified observations excluded
+ok 300 - refurbished, different market and unverified observations excluded
+  ---
+  duration_ms: 0.145569
+  type: 'test'
+  ...
+# Subtest: invalid history policy fails closed
+ok 301 - invalid history policy fails closed
+  ---
+  duration_ms: 0.444129
+  type: 'test'
+  ...
+# Subtest: CSV handles quoted comma and BOM
+ok 302 - CSV handles quoted comma and BOM
+  ---
+  duration_ms: 2.648359
+  type: 'test'
+  ...
+# Subtest: CSV handles escaped quotes
+ok 303 - CSV handles escaped quotes
+  ---
+  duration_ms: 0.200922
+  type: 'test'
+  ...
+# Subtest: CSV rejects unterminated quote
+ok 304 - CSV rejects unterminated quote
+  ---
+  duration_ms: 0.488516
+  type: 'test'
+  ...
+# Subtest: CSV rejects row width mismatch
+ok 305 - CSV rejects row width mismatch
+  ---
+  duration_ms: 0.181864
+  type: 'test'
+  ...
+# Subtest: Awin-like feed remains unverified
+ok 306 - Awin-like feed remains unverified
+  ---
+  duration_ms: 0.45145
+  type: 'test'
+  ...
+# Subtest: Awin-like feed preserves original SKU and shipping
+ok 307 - Awin-like feed preserves original SKU and shipping
+  ---
+  duration_ms: 0.281454
+  type: 'test'
+  ...
+# Subtest: Awin-like feed rejects currency mismatch
+ok 308 - Awin-like feed rejects currency mismatch
+  ---
+  duration_ms: 0.183577
+  type: 'test'
+  ...
+# Subtest: Awin-like feed rejects invalid price and insecure URL
+ok 309 - Awin-like feed rejects invalid price and insecure URL
+  ---
+  duration_ms: 0.291038
+  type: 'test'
+  ...
+# Subtest: Awin missing shipping stays null, not zero
+ok 310 - Awin missing shipping stays null, not zero
+  ---
+  duration_ms: 0.465261
+  type: 'test'
+  ...
+# Subtest: eBay-like listing is unverified and shipping unknown
+ok 311 - eBay-like listing is unverified and shipping unknown
+  ---
+  duration_ms: 0.569699
+  type: 'test'
+  ...
+# Subtest: eBay-like listing rejects mismatched currency
+ok 312 - eBay-like listing rejects mismatched currency
+  ---
+  duration_ms: 0.216676
+  type: 'test'
+  ...
+# Subtest: eBay-like listing rejects invalid input
+ok 313 - eBay-like listing rejects invalid input
+  ---
+  duration_ms: 0.126881
+  type: 'test'
+  ...
+# Subtest: eBay-like listing rejects missing seller
+ok 314 - eBay-like listing rejects missing seller
+  ---
+  duration_ms: 0.154173
+  type: 'test'
+  ...
+# Subtest: best-fit stays A even when B has favorable price
+ok 315 - best-fit stays A even when B has favorable price
+  ---
+  duration_ms: 3.146459
+  type: 'test'
+  ...
+# Subtest: price includes shipping
+ok 316 - price includes shipping
+  ---
+  duration_ms: 0.258239
+  type: 'test'
+  ...
+# Subtest: urgent alternatives exclude incomplete evidence
+ok 317 - urgent alternatives exclude incomplete evidence
+  ---
+  duration_ms: 0.380854
+  type: 'test'
+  ...
+# Subtest: no forced buy/wait advice for flexible user
+ok 318 - no forced buy/wait advice for flexible user
+  ---
+  duration_ms: 0.396046
+  type: 'test'
+  ...
+# Subtest: stale offers are not actionable
+ok 319 - stale offers are not actionable
+  ---
+  duration_ms: 0.178689
+  type: 'test'
+  ...
+# Subtest: wrong market and refurbished offers are excluded
+ok 320 - wrong market and refurbished offers are excluded
+  ---
+  duration_ms: 0.173341
+  type: 'test'
+  ...
+# Subtest: delivery constraint excludes slow offers
+ok 321 - delivery constraint excludes slow offers
+  ---
+  duration_ms: 0.180582
+  type: 'test'
+  ...
+# Subtest: few daily history observations produce no timing signal
+ok 322 - few daily history observations produce no timing signal
+  ---
+  duration_ms: 0.120071
+  type: 'test'
+  ...
+# Subtest: duplicate daily snapshots do not count as extra history days
+ok 323 - duplicate daily snapshots do not count as extra history days
+  ---
+  duration_ms: 0.323418
+  type: 'test'
+  ...
+# Subtest: future prices are excluded
+ok 324 - future prices are excluded
+  ---
+  duration_ms: 0.324809
+  type: 'test'
+  ...
+# Subtest: invalid price is rejected
+ok 325 - invalid price is rejected
+  ---
+  duration_ms: 0.490579
+  type: 'test'
+  ...
+# Subtest: bad freshness policy rejected
+ok 326 - bad freshness policy rejected
+  ---
+  duration_ms: 0.122554
+  type: 'test'
+  ...
+# Subtest: does not mutate source ranking
+ok 327 - does not mutate source ranking
+  ---
+  duration_ms: 0.138629
+  type: 'test'
+  ...
+# Subtest: commercial resolution cannot alter ranking, even when winner has no offers
+ok 328 - commercial resolution cannot alter ranking, even when winner has no offers
+  ---
+  duration_ms: 1.097714
+  type: 'test'
+  ...
+# Subtest: only verified and approved exact-variant offers survive
+ok 329 - only verified and approved exact-variant offers survive
+  ---
+  duration_ms: 0.362365
+  type: 'test'
+  ...
+# Subtest: Amazon links require canonical UK product destination and matching affiliate tag
+ok 330 - Amazon links require canonical UK product destination and matching affiliate tag
+  ---
+  duration_ms: 0.284468
+  type: 'test'
+  ...
+# Subtest: other retailer links must be independently approved, and cannot masquerade as Amazon
+ok 331 - other retailer links must be independently approved, and cannot masquerade as Amazon
+  ---
+  duration_ms: 0.368776
+  type: 'test'
+  ...
+# Subtest: market mismatch and unranked variants are omitted
+ok 332 - market mismatch and unranked variants are omitted
+  ---
+  duration_ms: 0.216977
+  type: 'test'
+  ...
+# Subtest: no human annotation yields no accuracy or assumed gold truth
+ok 333 - no human annotation yields no accuracy or assumed gold truth
+  ---
+  duration_ms: 2.367115
+  type: 'test'
+  ...
+# Subtest: blind template excludes predictions and internal grants
+ok 334 - blind template excludes predictions and internal grants
+  ---
+  duration_ms: 0.262485
+  type: 'test'
+  ...
+# Subtest: single assessor not gold standard
+ok 335 - single assessor not gold standard
+  ---
+  duration_ms: 0.357348
+  type: 'test'
+  ...
+# Subtest: two concordant reported labels produce descriptive metrics, not validation
+ok 336 - two concordant reported labels produce descriptive metrics, not validation
+  ---
+  duration_ms: 0.303818
+  type: 'test'
+  ...
+# Subtest: disagreement leaves metrics null
+ok 337 - disagreement leaves metrics null
+  ---
+  duration_ms: 0.234813
+  type: 'test'
+  ...
+# Subtest: third-person adjudication records disagreement and metric
+ok 338 - third-person adjudication records disagreement and metric
+  ---
+  duration_ms: 0.282145
+  type: 'test'
+  ...
+# Subtest: adjudicator cannot be a previous assessor
+ok 339 - adjudicator cannot be a previous assessor
+  ---
+  duration_ms: 0.622137
+  type: 'test'
+  ...
+# Subtest: identical case ID or question ID is rejected
+ok 340 - identical case ID or question ID is rejected
+  ---
+  duration_ms: 0.263156
+  type: 'test'
+  ...
+# Subtest: unknown case in annotation is rejected
+ok 341 - unknown case in annotation is rejected
+  ---
+  duration_ms: 0.354504
+  type: 'test'
+  ...
+# Subtest: nonblinded annotation is not accepted
+ok 342 - nonblinded annotation is not accepted
+  ---
+  duration_ms: 0.377108
+  type: 'test'
+  ...
+# Subtest: a contradictory variant changes none of the evaluation input outside the case
+ok 343 - a contradictory variant changes none of the evaluation input outside the case
+  ---
+  duration_ms: 1.006056
+  type: 'test'
+  ...
+# Subtest: constructed no-rights case is marked rights blocked but not publication-approved
+ok 344 - constructed no-rights case is marked rights blocked but not publication-approved
+  ---
+  duration_ms: 0.140011
+  type: 'test'
+  ...
+# Subtest: material situational gap creates a limited candidate research plan
+ok 345 - material situational gap creates a limited candidate research plan
+  ---
+  duration_ms: 2.425122
+  type: 'test'
+  ...
+# Subtest: professional evidence sufficient: do not search
+ok 346 - professional evidence sufficient: do not search
+  ---
+  duration_ms: 0.198579
+  type: 'test'
+  ...
+# Subtest: a missing use context calls for one clarification instead
+ok 347 - a missing use context calls for one clarification instead
+  ---
+  duration_ms: 0.109906
+  type: 'test'
+  ...
+# Subtest: unknown need is clarified first
+ok 348 - unknown need is clarified first
+  ---
+  duration_ms: 0.175014
+  type: 'test'
+  ...
+# Subtest: missing controlled measurement does not trigger subjective reviews
+ok 349 - missing controlled measurement does not trigger subjective reviews
+  ---
+  duration_ms: 0.138569
+  type: 'test'
+  ...
+# Subtest: technical compatibility must not be answered with anecdotes
+ok 350 - technical compatibility must not be answered with anecdotes
+  ---
+  duration_ms: 0.112299
+  type: 'test'
+  ...
+# Subtest: non material gaps do not trigger new gathering
+ok 351 - non material gaps do not trigger new gathering
+  ---
+  duration_ms: 0.18557
+  type: 'test'
+  ...
+# Subtest: no permission: fail closed
+ok 352 - no permission: fail closed
+  ---
+  duration_ms: 0.114512
+  type: 'test'
+  ...
+# Subtest: expired grant: fail closed
+ok 353 - expired grant: fail closed
+  ---
+  duration_ms: 0.447975
+  type: 'test'
+  ...
+# Subtest: mere read access without commercial processing rights does not suffice
+ok 354 - mere read access without commercial processing rights does not suffice
+  ---
+  duration_ms: 0.462837
+  type: 'test'
+  ...
+# Subtest: AI access not granted means no AI processing
+ok 355 - AI access not granted means no AI processing
+  ---
+  duration_ms: 0.255956
+  type: 'test'
+  ...
+# Subtest: an Amazon review source cannot enter this path
+ok 356 - an Amazon review source cannot enter this path
+  ---
+  duration_ms: 0.237037
+  type: 'test'
+  ...
+# Subtest: source document cannot be an Amazon URL
+ok 357 - source document cannot be an Amazon URL
+  ---
+  duration_ms: 0.142775
+  type: 'test'
+  ...
+# Subtest: duplicate grant ambiguity fails closed
+ok 358 - duplicate grant ambiguity fails closed
+  ---
+  duration_ms: 0.486974
+  type: 'test'
+  ...
+# Subtest: invalid claimed certainty is rejected without reference
+ok 359 - invalid claimed certainty is rejected without reference
+  ---
+  duration_ms: 0.173942
+  type: 'test'
+  ...
+# Subtest: commercial questions are not admitted into review search
+ok 360 - commercial questions are not admitted into review search
+  ---
+  duration_ms: 1.24199
+  type: 'test'
+  ...
+# Subtest: anchored AI candidate stays quarantined, even with a matching excerpt
+ok 361 - anchored AI candidate stays quarantined, even with a matching excerpt
+  ---
+  duration_ms: 0.278099
+  type: 'test'
+  ...
+# Subtest: fabricated excerpt detected
+ok 362 - fabricated excerpt detected
+  ---
+  duration_ms: 0.156106
+  type: 'test'
+  ...
+# Subtest: wrong product variant is detected
+ok 363 - wrong product variant is detected
+  ---
+  duration_ms: 0.120852
+  type: 'test'
+  ...
+# Subtest: source link host must match the approved grant
+ok 364 - source link host must match the approved grant
+  ---
+  duration_ms: 0.100792
+  type: 'test'
+  ...
+# Subtest: different criterion detected
+ok 365 - different criterion detected
+  ---
+  duration_ms: 0.100892
+  type: 'test'
+  ...
+# Subtest: declared incentives require disclosure
+ok 366 - declared incentives require disclosure
+  ---
+  duration_ms: 0.095303
+  type: 'test'
+  ...
+# Subtest: no plan no extraction
+ok 367 - no plan no extraction
+  ---
+  duration_ms: 0.088093
+  type: 'test'
+  ...
+# Subtest: new criteria are only research proposals tied to an unresolved real case
+ok 368 - new criteria are only research proposals tied to an unresolved real case
+  ---
+  duration_ms: 0.223477
+  type: 'test'
+  ...
+# Subtest: legacy manufacturer marketing performance claims fail closed after Phase 60
+ok 369 - legacy manufacturer marketing performance claims fail closed after Phase 60
+  ---
+  duration_ms: 1.266397
+  type: 'test'
+  ...
+# Subtest: tests override manufacturer numbers as measured values but retain discrepancies and original source
+ok 370 - tests override manufacturer numbers as measured values but retain discrepancies and original source
+  ---
+  duration_ms: 7.672326
+  type: 'test'
+  ...
+# Subtest: missing test for one variant does not turn manufacturer data into measured comparison
+ok 371 - missing test for one variant does not turn manufacturer data into measured comparison
+  ---
+  duration_ms: 0.427334
+  type: 'test'
+  ...
+# Subtest: missing data is not treated as bad performance
+ok 372 - missing data is not treated as bad performance
+  ---
+  duration_ms: 0.182776
+  type: 'test'
+  ...
+# Subtest: different contexts prevent product claim from being called disproven
+ok 373 - different contexts prevent product claim from being called disproven
+  ---
+  duration_ms: 0.330698
+  type: 'test'
+  ...
+# Subtest: manufacturer physical attribute allowed only as provisional screening
+ok 374 - manufacturer physical attribute allowed only as provisional screening
+  ---
+  duration_ms: 0.395937
+  type: 'test'
+  ...
+# Subtest: regulatory declared value is not treated as independent sample test
+ok 375 - regulatory declared value is not treated as independent sample test
+  ---
+  duration_ms: 0.135434
+  type: 'test'
+  ...
+# Subtest: incompatible independent test contexts not silently compared
+ok 376 - incompatible independent test contexts not silently compared
+  ---
+  duration_ms: 0.186651
+  type: 'test'
+  ...
+# Subtest: repeated measurements or contradictory declarations are quarantined as ambiguous
+ok 377 - repeated measurements or contradictory declarations are quarantined as ambiguous
+  ---
+  duration_ms: 2.2837
+  type: 'test'
+  ...
+# Subtest: reject commercial fields and unsafe source provenance
+ok 378 - reject commercial fields and unsafe source provenance
+  ---
+  duration_ms: 0.448656
+  type: 'test'
+  ...
+# Subtest: reject falsely licensed facts without license documentation
+ok 379 - reject falsely licensed facts without license documentation
+  ---
+  duration_ms: 0.271669
+  type: 'test'
+  ...
+# Subtest: cannot score any consumer product or assert permission regardless of results
+ok 380 - cannot score any consumer product or assert permission regardless of results
+  ---
+  duration_ms: 0.174533
+  type: 'test'
+  ...
+# Subtest: two independent measurements under different laboratory protocols are not directly comparable
+ok 381 - two independent measurements under different laboratory protocols are not directly comparable
+  ---
+  duration_ms: 0.123036
+  type: 'test'
+  ...
+# Subtest: manufacturer statement stays visible when unrelated lab conditions cannot verify it
+ok 382 - manufacturer statement stays visible when unrelated lab conditions cannot verify it
+  ---
+  duration_ms: 0.238499
+  type: 'test'
+  ...
+# Subtest: missing mapping for an essential need is itself a critical evidence gap
+ok 383 - missing mapping for an essential need is itself a critical evidence gap
+  ---
+  duration_ms: 0.109485
+  type: 'test'
+  ...
+# Subtest: nominal technical specification remains visibly different from independent test
+ok 384 - nominal technical specification remains visibly different from independent test
+  ---
+  duration_ms: 8.854636
+  type: 'test'
+  ...
+# Subtest: without independent tests, nominal performance never becomes a tested comparison
+ok 385 - without independent tests, nominal performance never becomes a tested comparison
+  ---
+  duration_ms: 0.335055
+  type: 'test'
+  ...
+# Subtest: missing evidence is not negative evidence
+ok 386 - missing evidence is not negative evidence
+  ---
+  duration_ms: 0.437468
+  type: 'test'
+  ...
+# Subtest: mixed tested and specified values are not compared directly
+ok 387 - mixed tested and specified values are not compared directly
+  ---
+  duration_ms: 0.937131
+  type: 'test'
+  ...
+# Subtest: incompatible lab methods cannot be compared even when numeric fields match
+ok 388 - incompatible lab methods cannot be compared even when numeric fields match
+  ---
+  duration_ms: 0.357848
+  type: 'test'
+  ...
+# Subtest: duplicate observations are not silently averaged or counted twice
+ok 389 - duplicate observations are not silently averaged or counted twice
+  ---
+  duration_ms: 0.224739
+  type: 'test'
+  ...
+# Subtest: document from a promotional page is not a technical specification
+ok 390 - document from a promotional page is not a technical specification
+  ---
+  duration_ms: 0.495466
+  type: 'test'
+  ...
+# Subtest: reject broad manufacturer claims at the API boundary
+ok 391 - reject broad manufacturer claims at the API boundary
+  ---
+  duration_ms: 0.184708
+  type: 'test'
+  ...
+# Subtest: reject self asserted or mismatched approval fingerprint
+ok 392 - reject self asserted or mismatched approval fingerprint
+  ---
+  duration_ms: 0.362776
+  type: 'test'
+  ...
+# Subtest: reject approval assigned to a different product variant
+ok 393 - reject approval assigned to a different product variant
+  ---
+  duration_ms: 0.403197
+  type: 'test'
+  ...
+# Subtest: marketing source text cannot be laundered as numeric value
+ok 394 - marketing source text cannot be laundered as numeric value
+  ---
+  duration_ms: 0.182004
+  type: 'test'
+  ...
+# Subtest: independent editorial assessment is not masqueraded as a measurement
+ok 395 - independent editorial assessment is not masqueraded as a measurement
+  ---
+  duration_ms: 0.204488
+  type: 'test'
+  ...
+# Subtest: technical physical attributes may be compared but are still only declared specs
+ok 396 - technical physical attributes may be compared but are still only declared specs
+  ---
+  duration_ms: 0.160231
+  type: 'test'
+  ...
+# Subtest: Amazon, affiliate, marketing, prices and unapproved fields cannot enter review mapping
+ok 397 - Amazon, affiliate, marketing, prices and unapproved fields cannot enter review mapping
+  ---
+  duration_ms: 1.136532
+  type: 'test'
+  ...
+# Subtest: rights and source assertions never make a consumer recommendation publication ready
+ok 398 - rights and source assertions never make a consumer recommendation publication ready
+  ---
+  duration_ms: 0.257938
+  type: 'test'
+  ...
+# Subtest: opt-in is required and primary ranking never changes
+ok 399 - opt-in is required and primary ranking never changes
+  ---
+  duration_ms: 2.486255
+  type: 'test'
+  ...
+# Subtest: hard budget cannot be relaxed
+ok 400 - hard budget cannot be relaxed
+  ---
+  duration_ms: 0.320462
+  type: 'test'
+  ...
+# Subtest: soft budget surfaces justified near-miss and keeps it outside primary
+ok 401 - soft budget surfaces justified near-miss and keeps it outside primary
+  ---
+  duration_ms: 0.384159
+  type: 'test'
+  ...
+# Subtest: small benefit and expensive alternatives are rejected
+ok 402 - small benefit and expensive alternatives are rejected
+  ---
+  duration_ms: 0.269656
+  type: 'test'
+  ...
+# Subtest: cheaper near-equivalent option is also surfaced
+ok 403 - cheaper near-equivalent option is also surfaced
+  ---
+  duration_ms: 0.373443
+  type: 'test'
+  ...
+# Subtest: flexible width allows only small overage, while price stays strict
+ok 404 - flexible width allows only small overage, while price stays strict
+  ---
+  duration_ms: 1.038685
+  type: 'test'
+  ...
+# Subtest: size not marked flexible is never relaxed
+ok 405 - size not marked flexible is never relaxed
+  ---
+  duration_ms: 0.205579
+  type: 'test'
+  ...
+# Subtest: no cross-market transfer, hard feature relaxation, or unlicensed evidence
+ok 406 - no cross-market transfer, hard feature relaxation, or unlicensed evidence
+  ---
+  duration_ms: 0.283477
+  type: 'test'
+  ...
+# Subtest: no complete baseline prevents superiority claim
+ok 407 - no complete baseline prevents superiority claim
+  ---
+  duration_ms: 0.764302
+  type: 'test'
+  ...
+# Subtest: invalid thresholds and unknown size keys fail closed
+ok 408 - invalid thresholds and unknown size keys fail closed
+  ---
+  duration_ms: 0.821588
+  type: 'test'
+  ...
+# Subtest: out-of-filter evidence must be complete and authorized
+ok 409 - out-of-filter evidence must be complete and authorized
+  ---
+  duration_ms: 0.241634
+  type: 'test'
+  ...
+# Subtest: new independently evidenced product yields permission-gated retrieval plan without ranking
+ok 410 - new independently evidenced product yields permission-gated retrieval plan without ranking
+  ---
+  duration_ms: 6.425158
+  type: 'test'
+  ...
+# Subtest: no rights document, expired or stale robots => never retrieve
+ok 411 - no rights document, expired or stale robots => never retrieve
+  ---
+  duration_ms: 2.24403
+  type: 'test'
+  ...
+# Subtest: robot approval alone with no commercial rights is insufficient
+ok 412 - robot approval alone with no commercial rights is insufficient
+  ---
+  duration_ms: 0.261634
+  type: 'test'
+  ...
+# Subtest: stored source no revision and recent check is reused without fetching
+ok 413 - stored source no revision and recent check is reused without fetching
+  ---
+  duration_ms: 0.523569
+  type: 'test'
+  ...
+# Subtest: new update or due refresh plans retrieval
+ok 414 - new update or due refresh plans retrieval
+  ---
+  duration_ms: 0.278089
+  type: 'test'
+  ...
+# Subtest: second report on one original test is not independent evidence
+ok 415 - second report on one original test is not independent evidence
+  ---
+  duration_ms: 0.25922
+  type: 'test'
+  ...
+# Subtest: different variants, syndicated reports and Amazon get no retrieval
+ok 416 - different variants, syndicated reports and Amazon get no retrieval
+  ---
+  duration_ms: 0.246201
+  type: 'test'
+  ...
+# Subtest: unknown source, host mismatch and duplicate grants block all extraction
+ok 417 - unknown source, host mismatch and duplicate grants block all extraction
+  ---
+  duration_ms: 0.1925
+  type: 'test'
+  ...
+# Subtest: transient analysis emits only hashes and original URL; never exposes text as ranking
+ok 418 - transient analysis emits only hashes and original URL; never exposes text as ranking
+  ---
+  duration_ms: 0.98264
+  type: 'test'
+  ...
+# Subtest: unanchored, redirected or storage unlicensed analysis is blocked
+ok 419 - unanchored, redirected or storage unlicensed analysis is blocked
+  ---
+  duration_ms: 0.560064
+  type: 'test'
+  ...
+# Subtest: a blocked publisher must not prevent a properly authorized original-source copy from being examined
+ok 420 - a blocked publisher must not prevent a properly authorized original-source copy from being examined
+  ---
+  duration_ms: 0.32495
+  type: 'test'
+  ...
+# Subtest: ambiguous existing stored records fail closed
+ok 421 - ambiguous existing stored records fail closed
+  ---
+  duration_ms: 0.17905
+  type: 'test'
+  ...
+# Subtest: unverified identical original test identifiers are not enough to suppress a distinct original source
+ok 422 - unverified identical original test identifiers are not enough to suppress a distinct original source
+  ---
+  duration_ms: 0.176136
+  type: 'test'
+  ...
+# Subtest: unreviewed cached analysis cannot be silently reused as approved evidence
+ok 423 - unreviewed cached analysis cannot be silently reused as approved evidence
+  ---
+  duration_ms: 0.216977
+  type: 'test'
+  ...
+# Subtest: an original editorial hands-on assessment is eligible for targeted research, without being a lab measurement
+ok 424 - an original editorial hands-on assessment is eligible for targeted research, without being a lab measurement
+  ---
+  duration_ms: 0.138329
+  type: 'test'
+  ...
+1..424
+# tests 424
+# suites 0
+# pass 424
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 831.72754

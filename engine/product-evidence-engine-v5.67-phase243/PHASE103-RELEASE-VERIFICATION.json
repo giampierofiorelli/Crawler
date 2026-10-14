@@ -1,0 +1,48 @@
+{
+  "release": "4.27.0-phase103",
+  "date": "2026-10-11",
+  "classification": "research_only",
+  "based_on": "4.26.0-phase102",
+  "baseline_file_count": 863,
+  "baseline_missing": [],
+  "baseline_existing_files_changed": [
+    "README.md",
+    "package.json"
+  ],
+  "new_files_count": 25,
+  "total_files_before_manifest": 888,
+  "source_sha256": {
+    "src/phase103_evidence_consensus.ts": "5c4a2674254469f873393d86d2ffee61505eea000d4c5156bc0297e75c7dd4d5",
+    "tests/phase103_evidence_consensus.test.ts": "4696047f34b8485ac2f730b7515e426aa2d08cf6bc7b5182e83076d99284b492",
+    "PHASE103-EVIDENCE-CONVERGENCE-AND-ARCHITECTURE-AUDIT.md": "c952443e9c067edda9c9d70d63a1cb1be5839ae41ae21ba24bc77c88db06ab82"
+  },
+  "tests_executed": {
+    "compiled_js_ts_disjoint_shards": [
+      168,
+      167,
+      150,
+      177,
+      123
+    ],
+    "mainline_js_ts_total": 785,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "companion_python": 60,
+    "companion_node": 16,
+    "launch": 4,
+    "release": 3,
+    "total_disjoint_completed": 962,
+    "focused_phase103_included_in_mainline": 14
+  },
+  "tests_note": "Initial Python discovery and companion Node glob were incorrect; rerun with supported commands. Only successful corrected runs counted.",
+  "evidence_scope": {
+    "synthetic_examples_only": true,
+    "human_annotated_genuine_review_goldset": false,
+    "real_publisher_heldout_validation": false,
+    "source_text_required_during_query": false,
+    "llm_calls_during_query": 0,
+    "overall_product_consensus_percentage": "not_computed",
+    "ranking_activated": false
+  }
+}

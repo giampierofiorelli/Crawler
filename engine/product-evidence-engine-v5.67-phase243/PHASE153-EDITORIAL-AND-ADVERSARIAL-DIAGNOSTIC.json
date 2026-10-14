@@ -1,0 +1,478 @@
+{
+  "phase": 153,
+  "version": "4.77-phase153",
+  "date": "2026-10-11",
+  "diagnosticType": "developer_selected_short_original_excerpts_and_constructed_negative_controls",
+  "independentGoldAnnotations": 0,
+  "sourceDisjointIndependentHoldout": false,
+  "fullProfessionalReviewsEvaluated": 0,
+  "originalPublisherPagesAttestedAsStoredSnapshots": false,
+  "precision": null,
+  "recall": null,
+  "accuracy": null,
+  "disclaimers": [
+    "author-selected explicit name surfaces, not a random sample of all mentions",
+    "no independent annotators, frozen pre-tuning protocol or publisher-disjoint gold split",
+    "source URLs and hashes ground supplied excerpt bytes, not a live publisher snapshot",
+    "Phase153 is an opt-in advisory candidate layer; no ranking or canonical DB integration"
+  ],
+  "summary": {
+    "selectedTargets": 12,
+    "baseline152ExactPatternMatches": 2,
+    "phase153ExactPatternMatches": 12,
+    "publisherShortExcerpts": 9,
+    "previouslyViewedExcerpts": 6,
+    "newlyCheckedExcerpts": 3,
+    "uniquePublisherHostnames": 8,
+    "missedAuthorSelectedTargets": []
+  },
+  "rows": [
+    {
+      "id": "p152_techradar_airfryer",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "air_fryer",
+      "publisher": "TechRadar",
+      "sourceUrl": "https://www.techradar.com/home/air-fryers/cosori-dual-blaze-twinfry-compact-review",
+      "sourceHostname": "www.techradar.com",
+      "excerptSha256": "d593c52440cc1e5d91006458fb2cf90025bd7f96410cae8e3440af868a976261",
+      "originalExcerpt": "The Cosori Dual Blaze Twinfry Compact Air Fryer is nicely designed, with a sleek matte finish and clear controls.",
+      "sourceReusedFromPriorPhase": true,
+      "authorSelectedTargets": [
+        {
+          "name": "Cosori Dual Blaze Twinfry Compact Air Fryer",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "Cosori Dual Blaze Twinfry Compact Air Fryer",
+          "offset": 4,
+          "kind": "possible_product",
+          "signals": [
+            "local_product_context",
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 11.936,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p152_whathifi_cd",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "cd_player",
+      "publisher": "What Hi-Fi?",
+      "sourceUrl": "https://www.whathifi.com/hi-fi/cd-players/thought-cd-was-dead-our-audio-experts-pick-out-the-best-cd-players-and-some-of-our-favourite-test-discs-that-you-can-own-for-ever",
+      "sourceHostname": "www.whathifi.com",
+      "excerptSha256": "48eb746fd53216749278b19763d41015064067c5c5f8231c5a415d7823fd0873",
+      "originalExcerpt": "The Marantz CD6007 may have been succeeded by the recently released CD 70, but there’s still stock available and at a lower price.",
+      "sourceReusedFromPriorPhase": true,
+      "authorSelectedTargets": [
+        {
+          "name": "Marantz CD6007",
+          "exactSourceSpan": true,
+          "baseline152": true,
+          "phase153": true
+        },
+        {
+          "name": "CD 70",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [
+        "Marantz CD6007"
+      ],
+      "phase153Candidates": [
+        {
+          "literal": "Marantz CD6007",
+          "offset": 4,
+          "kind": "possible_product",
+          "signals": [
+            "local_product_context",
+            "open_class_name",
+            "phase148_anchor",
+            "structured_phase152"
+          ],
+          "baselineIndexed": true
+        },
+        {
+          "literal": "CD 70",
+          "offset": 68,
+          "kind": "unresolved_shorthand",
+          "signals": [
+            "local_product_context",
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 7.544,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p152_housefresh_air",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "air_purifier",
+      "publisher": "HouseFresh",
+      "sourceUrl": "https://housefresh.com/philips-3200-review/",
+      "sourceHostname": "housefresh.com",
+      "excerptSha256": "538e70a56f5925e78a45803f1e6c45b207a36633a6a46bcd2c52638722e1e877",
+      "originalExcerpt": "The 3200 is a stylish mid-sized device that promises performance on par with the larger, now-discontinued Philips 3000i Series.",
+      "sourceReusedFromPriorPhase": true,
+      "authorSelectedTargets": [
+        {
+          "name": "3200",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        },
+        {
+          "name": "Philips 3000i Series",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "3200",
+          "offset": 4,
+          "kind": "unresolved_shorthand",
+          "signals": [
+            "local_product_context"
+          ],
+          "baselineIndexed": false
+        },
+        {
+          "literal": "Philips 3000i Series",
+          "offset": 106,
+          "kind": "possible_family",
+          "signals": [
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 2.187,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p152_trusted_washer",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "washing_machine",
+      "publisher": "Trusted Reviews",
+      "sourceUrl": "https://www.trustedreviews.com/reviews/hisense-wf5s1045bw/",
+      "sourceHostname": "www.trustedreviews.com",
+      "excerptSha256": "c97d0c453d883aa52884be76de334de398fda4ad9db2563a9ca94bd93160f1fe",
+      "originalExcerpt": "the similarly-priced Samsung WW90T684DLH cost just 30p for this cycle.",
+      "sourceReusedFromPriorPhase": true,
+      "authorSelectedTargets": [
+        {
+          "name": "Samsung WW90T684DLH",
+          "exactSourceSpan": true,
+          "baseline152": true,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [
+        "Samsung WW90T684DLH"
+      ],
+      "phase153Candidates": [
+        {
+          "literal": "Samsung WW90T684DLH",
+          "offset": 21,
+          "kind": "possible_product",
+          "signals": [
+            "open_class_name",
+            "phase148_anchor",
+            "structured_phase152"
+          ],
+          "baselineIndexed": true
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 5.795,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p152_notebookcheck_laptop",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "laptop",
+      "publisher": "Notebookcheck",
+      "sourceUrl": "https://www.notebookcheck.net/More-than-24-hrs-battery-life-for-less-than-1-000-Lenovo-ThinkBook-16-G7-QOY-laptop-review.958162.0.html",
+      "sourceHostname": "www.notebookcheck.net",
+      "excerptSha256": "72762a2b2a4c54cf0ac045d9410feccc95ee129e24a3d509799b9f81dadd856d",
+      "originalExcerpt": "Lenovo ThinkBook 16 G7 QOY 21NH0005GE",
+      "sourceReusedFromPriorPhase": true,
+      "authorSelectedTargets": [
+        {
+          "name": "Lenovo ThinkBook 16 G7 QOY 21NH0005GE",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "Lenovo ThinkBook 16 G7 QOY 21NH0005GE",
+          "offset": 0,
+          "kind": "possible_variant",
+          "signals": [
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 0.751,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p152_rtings_tv",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "television",
+      "publisher": "RTINGS",
+      "sourceUrl": "https://www.rtings.com/tv/reviews/lg/gallery-2026",
+      "sourceHostname": "www.rtings.com",
+      "excerptSha256": "5ee1af3e709123a1021ec4ac729a2c57285bb66920731c584823e1efd023636b",
+      "originalExcerpt": "The Samsung The Frame Pro 2026 is a much better TV than the LG Gallery 2026.",
+      "sourceReusedFromPriorPhase": true,
+      "authorSelectedTargets": [
+        {
+          "name": "Samsung The Frame Pro 2026",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        },
+        {
+          "name": "LG Gallery 2026",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "Samsung The Frame Pro 2026",
+          "offset": 4,
+          "kind": "possible_variant",
+          "signals": [
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        },
+        {
+          "literal": "LG Gallery 2026",
+          "offset": 60,
+          "kind": "possible_variant",
+          "signals": [
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 2.608,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p153_which_toaster",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "toaster",
+      "publisher": "Which?",
+      "sourceUrl": "https://www.which.co.uk/reviews/toasters/2-slice-lite-26205",
+      "sourceHostname": "www.which.co.uk",
+      "excerptSha256": "ce4273e8dee57a38630780c03a71bdbffa49e6ff575cff42afd1fdb504e0dfe6",
+      "originalExcerpt": "Dualit 2 Slice Lite 26205",
+      "sourceReusedFromPriorPhase": false,
+      "authorSelectedTargets": [
+        {
+          "name": "Dualit 2 Slice Lite 26205",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "Dualit 2 Slice Lite 26205",
+          "offset": 0,
+          "kind": "possible_variant",
+          "signals": [
+            "local_product_context",
+            "open_class_name",
+            "page_title_correspondence"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 0.6,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p153_tomsguide_breville",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "coffee_machine",
+      "publisher": "Tom's Guide",
+      "sourceUrl": "https://www.tomsguide.com/home/coffee-makers/breville-luxe-brewer-review",
+      "sourceHostname": "www.tomsguide.com",
+      "excerptSha256": "bd362574c4580744d758f2ad989041e014fa7767695d0a32086dca5af21a66c5",
+      "originalExcerpt": "The Breville Luxe Brewer makes coffee incredibly quickly.",
+      "sourceReusedFromPriorPhase": false,
+      "authorSelectedTargets": [
+        {
+          "name": "Breville Luxe Brewer",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "Breville Luxe Brewer",
+          "offset": 4,
+          "kind": "possible_product",
+          "signals": [
+            "open_class_name",
+            "page_title_correspondence"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 0.257,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "p153_tomsguide_delonghi",
+      "sourceKind": "real_publisher_short_excerpt_not_full_review",
+      "category": "coffee_machine",
+      "publisher": "Tom's Guide",
+      "sourceUrl": "https://www.tomsguide.com/home/coffee-makers/no-you-dont-need-to-spend-usd1-000-on-an-espresso-machine-i-recommend-these-4-breville-and-delonghi-models-for-delicious-coffee-at-home",
+      "sourceHostname": "www.tomsguide.com",
+      "excerptSha256": "50d4a23a0f8d61993b07ce0321e64702d09af15c79adeb478b4542668c75ccab",
+      "originalExcerpt": "De'Longhi Stilosa",
+      "sourceReusedFromPriorPhase": false,
+      "authorSelectedTargets": [
+        {
+          "name": "De'Longhi Stilosa",
+          "exactSourceSpan": true,
+          "baseline152": false,
+          "phase153": true
+        }
+      ],
+      "phase152Candidates": [],
+      "phase153Candidates": [
+        {
+          "literal": "De'Longhi Stilosa",
+          "offset": 0,
+          "kind": "possible_product",
+          "signals": [
+            "open_class_name"
+          ],
+          "baselineIndexed": false
+        }
+      ],
+      "phase152Decisions": [],
+      "phase153Decisions": [],
+      "runtimeMsSingleNonBenchmarkedRun": 0.44,
+      "originalFullReviewEvaluated": false,
+      "independentHumanLabels": 0,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    }
+  ],
+  "constructedNegativeControls": [
+    {
+      "id": "lab_mode",
+      "text": "HDR 1000 and Heavy Duty 60 were laboratory settings.",
+      "rejected": [
+        "HDR 1000",
+        "Heavy Duty 60"
+      ],
+      "proposed": [],
+      "wrongNominations": [],
+      "developerCreated": true
+    },
+    {
+      "id": "measurement",
+      "text": "LG C6 was tested at 120 Hz and used 3200 rpm.",
+      "rejected": [
+        "120 Hz",
+        "3200"
+      ],
+      "proposed": [
+        "LG C6"
+      ],
+      "wrongNominations": [],
+      "developerCreated": true
+    },
+    {
+      "id": "unknown_two_word",
+      "text": "Digital Power was improved after cleaning.",
+      "rejected": [
+        "Digital Power"
+      ],
+      "proposed": [],
+      "wrongNominations": [],
+      "developerCreated": true
+    },
+    {
+      "id": "component",
+      "text": "The Steam Wand was wiped down after testing.",
+      "rejected": [
+        "Steam Wand"
+      ],
+      "proposed": [],
+      "wrongNominations": [],
+      "developerCreated": true
+    }
+  ]
+}

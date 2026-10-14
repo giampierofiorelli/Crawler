@@ -1,0 +1,34 @@
+{
+  "project": "Product Evidence Engine",
+  "version": "4.16.0",
+  "phase": 91,
+  "baseline_file": "product-evidence-engine-v4.15-phase90.zip",
+  "baseline_sha256": "5ff8960a0c0efad588925c7ef185d91e7fbb56a2174daff50880b704efc73e1a",
+  "change_files": {
+    "src/phase91_watch_gate.ts": "9f773da73879008872abc00d87ce1bb890d1587988b80ff71769315caf5cf7da",
+    "src/phase90_html_mainline.ts": "cece96a1d2632cecb317a83201ab54cacca9776ea3806b0b4c2a16aa7474a81f",
+    "phase89/watch_ledger.py": "55cd5686a809f25b3a9a29c5f3e720b257a10c821d8738dde35d8df70e8ad5bb",
+    "phase89/cli.py": "bd28daa760a1a2a8979bbe6c4df825909dddf9a38709bce359975c611f29b92e",
+    "tests/phase91_watch_gate.test.ts": "ec5d13aca343faadcb3139ad4b92b8c2881fa23929465e9f5e903de1546792ca",
+    "package.json": "ee7a959e474574bffc66e3bd4db692706c0864c7b3cd374116fc5f5a1eefc058",
+    "README.md": "5bf0eabc4481966afb42e3eb9e51e99060bf223743c95be79384c3d1205d27f0",
+    "PHASE91-RECIPE-DRIFT-GATE.md": "55a81d912fb7b43e48381d15762a3b68c575b97a02128f4d165fa76f70ce6f05"
+  },
+  "test_counts": {
+    "mainline_ts_js": 624,
+    "companion_python": 60,
+    "companion_node_ts": 16,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3,
+    "total": 801
+  },
+  "combined_command_completed": false,
+  "separately_completed_suites": true,
+  "data_validation": "offline synthetic fixtures only",
+  "production_ready": false,
+  "real_sites_tested": false,
+  "unchanged_release_manifest": "PHASE90-RELEASE-MANIFEST.json"
+}

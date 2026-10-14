@@ -1,0 +1,80 @@
+{
+  "phase": 148,
+  "version": "4.72-phase148",
+  "parent": "4.71-phase147",
+  "date": "2026-10-11",
+  "parentZipSha256": "e02196c8a1f9cf6fbe3ebc753d0545c60c45e4ec5ed65709f866fe3b3c7918ed",
+  "parentFileCount": 1525,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE148-DOCUMENT-REFERENCE-DIAGNOSTIC.json",
+    "PHASE148-DOCUMENT-REFERENCE-RESEARCH.md",
+    "PHASE148-FILE-MANIFEST.sha256",
+    "PHASE148-REGRESSION-GROUPS.json",
+    "dist/src/phase148_document_reference_hypotheses.js",
+    "dist/tests/phase148_document_reference_hypotheses.test.js",
+    "research/phase148_fresh_published_excerpts.json",
+    "scripts/evaluate-phase148.mjs",
+    "scripts/phase148_regress.mjs",
+    "src/phase148_document_reference_hypotheses.ts",
+    "tests/phase148_document_reference_hypotheses.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1872,
+    "eligibleFiles": 107,
+    "phase148Focused": 24,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "sourceEvaluation": {
+    "publishedShortExcerpts": 3,
+    "developerAuthoredControls": 6,
+    "blind": false,
+    "independentGoldAnnotations": 0,
+    "precision": null,
+    "recall": null,
+    "falseMergeRate": null,
+    "copyrightFullReviewRightsEstablished": false
+  },
+  "futureCategoryStatus": {
+    "additionalCategoriesRequiredNow": false,
+    "retainedBacklog": [
+      "traditional deep fryers",
+      "air fryers",
+      "toasters",
+      "coffee makers",
+      "food steamers"
+    ]
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "externalModels": 0,
+    "paidAPIs": 0,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false,
+    "thirdPartyModelCodeCopied": false
+  },
+  "limitations": [
+    "All 24 targeted tests are developer-authored, not independent general-language accuracy measurements",
+    "Three short published excerpts were reviewed after code generation, not a frozen independent holdout",
+    "Unique antecedent remains an unverified surface candidate; unresolved forward references remain",
+    "Paragraph boundary and competing candidates block automatic reference attachment",
+    "Text hashes prove only integrity of caller input, not publisher authenticity",
+    "Two legacy test suites Phase91 and Phase92 remain excluded from full regression"
+  ],
+  "archiveFileCount": 1537
+}

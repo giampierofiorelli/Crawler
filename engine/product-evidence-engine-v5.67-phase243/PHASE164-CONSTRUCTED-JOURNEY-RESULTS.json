@@ -1,0 +1,440 @@
+{
+  "protocol": "pee.phase164.offline_journey.v1",
+  "fixtureOnly": true,
+  "canonicalSourceFactsValidated": false,
+  "independentlyAdjudicatedLanguageBenchmark": false,
+  "modelExecutionPerformed": false,
+  "productRankingPerformed": false,
+  "registrySha256": "051d7913822689441ce34ac7356956ac30d0725a971510577ade16aaf4ba0552",
+  "questionsSha256": "d29bdd5be52fffe0d5cc065621db0b2b823985ef3a4e9ebb7d83f19e9371290e",
+  "totals": {
+    "events": 13,
+    "accepted": 13,
+    "quarantined": 0
+  },
+  "outcomes": [
+    {
+      "sessionId": "home_a",
+      "turnId": "a1",
+      "kind": "question",
+      "requestSha256": "5c5fdb91254006f61c3faf04ce689ada37d47c48cd3135406c24d133af542e83",
+      "categoryId": "air_fryer",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "explicit",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [
+        {
+          "aspectId": "small_household",
+          "role": "environment",
+          "matchedText": "for one person"
+        }
+      ],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "independent_professional_tests_only",
+        "test_small_household",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "independent_professional_only",
+      "questionToUser": null,
+      "reasons": [
+        "no_verified_original_product_comparison"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "home_a",
+      "turnId": "a2",
+      "kind": "question",
+      "requestSha256": "4bd54dd533c000f3e798f086b9abbd362bd378d50a452427232057f710e441ce",
+      "categoryId": "air_fryer",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "scoped_followup",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [
+        {
+          "aspectId": "quiet_operation",
+          "role": "requested_capability",
+          "matchedText": "quiet"
+        }
+      ],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "independent_professional_tests_only",
+        "test_quiet_operation",
+        "verify_inherited_goal_before_ranking",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "independent_professional_only",
+      "questionToUser": null,
+      "reasons": [
+        "inherited_goal_is_unverified_candidate",
+        "no_verified_original_product_comparison",
+        "unresolved_decision_goal"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "home_a",
+      "turnId": "a3",
+      "kind": "question",
+      "requestSha256": "0b5c0df6adb5793c764c1224fa342d6aecbc60de2dd8f806d1e15034f3bbc2e8",
+      "categoryId": "air_fryer",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "scoped_followup",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [
+        {
+          "aspectId": "basket_size",
+          "role": "requested_capability",
+          "matchedText": "small basket"
+        }
+      ],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "independent_professional_tests_only",
+        "test_basket_size",
+        "verify_inherited_goal_before_ranking",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "independent_professional_only",
+      "questionToUser": null,
+      "reasons": [
+        "inherited_goal_is_unverified_candidate",
+        "no_verified_original_product_comparison",
+        "unresolved_decision_goal"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "home_a",
+      "turnId": "a4",
+      "kind": "question",
+      "requestSha256": "abe302988381cbf5e72985ae8cfdcc8ce3afcf23025414fa335c6d2b25b53f55",
+      "categoryId": "coffee_machine",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "explicit",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": null,
+      "reasons": [
+        "no_verified_original_product_comparison"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "home_a",
+      "turnId": "a5",
+      "kind": "question",
+      "requestSha256": "e186f63fb99724be6084e0bcb9114036aa61cc4c8dcaa3959f36614cb967e370",
+      "categoryId": "coffee_machine",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "scoped_followup",
+      "action": "review_meaning",
+      "goals": [],
+      "aspects": [],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [],
+      "sourcePreference": "not_specified",
+      "questionToUser": "Do you want to remove your previous budget limit?",
+      "reasons": [
+        "budget_revision_needs_explicit_user_confirmation"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "home_a",
+      "turnId": "a6",
+      "kind": "budget_reply",
+      "action": "budget_revision_confirmed",
+      "activeCategoryId": "coffee_machine",
+      "rankingAuthorized": false
+    },
+    {
+      "sessionId": "home_a",
+      "turnId": "a7",
+      "kind": "question",
+      "requestSha256": "85ad6b01d399f9d424a858f9d6feb15e55b231caba1da36c6c986847e0326784",
+      "categoryId": "coffee_machine",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "scoped_followup",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [
+        {
+          "aspectId": "steam_wand",
+          "role": "requested_capability",
+          "matchedText": "steam wand"
+        }
+      ],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "test_steam_wand",
+        "verify_inherited_goal_before_ranking",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": null,
+      "reasons": [
+        "inherited_goal_is_unverified_candidate",
+        "no_verified_original_product_comparison",
+        "unresolved_decision_goal"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "compare_b",
+      "turnId": "b1",
+      "kind": "question",
+      "requestSha256": "a846a755a13fab9528adc61eab04838c528d06117478477df0743441612dae48",
+      "categoryId": null,
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "unresolved",
+      "action": "resolve_category_collision",
+      "goals": [],
+      "aspects": [],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [],
+      "sourcePreference": "not_specified",
+      "questionToUser": "Which product category do you mean?",
+      "reasons": [
+        "multiple_explicit_product_categories"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "kitchen_c",
+      "turnId": "c1",
+      "kind": "question",
+      "requestSha256": "622a0ec157cd9c65bac3098710bee79f684583d4df43afb5321017ab0bc5857d",
+      "categoryId": "refrigerator",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "explicit",
+      "action": "review_meaning",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [],
+      "unhandledConstraintPhrases": [
+        "a narrow kitchen"
+      ],
+      "evidenceObligations": [
+        "adjudicate_unmapped_user_constraint",
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": null,
+      "reasons": [
+        "no_verified_original_product_comparison",
+        "unmapped_user_constraints_not_silently_discarded"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "steam_d",
+      "turnId": "d1",
+      "kind": "question",
+      "requestSha256": "afcafb18d6fe161c21f144225d76fe70b369904db3ff0593e9bdbc60e3323516",
+      "categoryId": "steamer",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "explicit",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [
+        {
+          "aspectId": "capacity",
+          "role": "requested_capability",
+          "matchedText": "large capacity"
+        }
+      ],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "test_capacity",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": null,
+      "reasons": [
+        "no_verified_original_product_comparison"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "toaster_e",
+      "turnId": "e1",
+      "kind": "question",
+      "requestSha256": "0fcf76ab3fa5c2c57aeaa821faa5680b20af4e1eb979507e852e0e0eb036325b",
+      "categoryId": "toaster",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "explicit",
+      "action": "research_requested_outcomes",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": null,
+      "reasons": [
+        "no_verified_original_product_comparison"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "toaster_e",
+      "turnId": "e2",
+      "kind": "question",
+      "requestSha256": "2a5ead1aea12ae6da41126c3d83a8f5e7eafdcc6aba5bb640154334bab87ec97",
+      "categoryId": "toaster",
+      "candidateResearchCategoryId": null,
+      "newCategoryTasks": [],
+      "categoryProvenance": "scoped_followup",
+      "action": "ask_one_question",
+      "goals": [
+        "performance"
+      ],
+      "aspects": [],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "compare_test_protocols",
+        "independent_domain_outcomes",
+        "independent_expert_quality_floor",
+        "verify_product_identities"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": "Which models would you like to compare?",
+      "reasons": [
+        "no_verified_original_product_comparison",
+        "unresolved_comparative_referent"
+      ],
+      "publicRecommendationAuthorized": false
+    },
+    {
+      "sessionId": "other_f",
+      "turnId": "f1",
+      "kind": "question",
+      "requestSha256": "231ed8fb395047573e9ed59e262271f8155fbfbc3ace93e856f7757011abc090",
+      "categoryId": null,
+      "candidateResearchCategoryId": "washing_machine",
+      "newCategoryTasks": [
+        {
+          "capability": "category_identity",
+          "status": "ready_for_research"
+        },
+        {
+          "capability": "use_case_research",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "failure_and_safety_research",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "variant_taxonomy",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "source_landscape",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "source_rights_review",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "test_method_research",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "criterion_design",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "source_acquisition",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "evidence_independence_audit",
+          "status": "awaiting_dependencies"
+        },
+        {
+          "capability": "category_schema_review",
+          "status": "awaiting_dependencies"
+        }
+      ],
+      "categoryProvenance": "unresolved",
+      "action": "research_unreviewed_category",
+      "goals": [],
+      "aspects": [],
+      "unhandledConstraintPhrases": [],
+      "evidenceObligations": [
+        "category_definition_review",
+        "category_specific_test_methods_required"
+      ],
+      "sourcePreference": "not_specified",
+      "questionToUser": null,
+      "reasons": [
+        "category_registry_entry_unreviewed_cold_start_required"
+      ],
+      "publicRecommendationAuthorized": false
+    }
+  ]
+}

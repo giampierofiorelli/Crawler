@@ -1,0 +1,122 @@
+{
+  "scope": "LOCAL CONSTRUCTED HTML ONLY; no public sources; no LLM used",
+  "arms": {
+    "inhouse": {
+      "state": "run",
+      "cases": [
+        {
+          "page": "launch.html",
+          "mode": "static_html",
+          "status": "ok",
+          "error": null,
+          "expected": 3,
+          "found": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "elapsed_ms": 10.8
+        },
+        {
+          "page": "lab.html",
+          "mode": "static_html",
+          "status": "ok",
+          "error": null,
+          "expected": 2,
+          "found": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "elapsed_ms": 1.27
+        },
+        {
+          "page": "lifecycle.html",
+          "mode": "static_html",
+          "status": "ok",
+          "error": null,
+          "expected": 3,
+          "found": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "elapsed_ms": 1.07
+        },
+        {
+          "page": "variants.html",
+          "mode": "static_html",
+          "status": "ok",
+          "error": null,
+          "expected": 4,
+          "found": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "elapsed_ms": 1.16
+        },
+        {
+          "page": "editorial.html",
+          "mode": "static_html",
+          "status": "ok",
+          "error": null,
+          "expected": 0,
+          "found": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": null,
+          "recall": null,
+          "elapsed_ms": 1.28
+        },
+        {
+          "page": "catalogue.html",
+          "mode": "dynamic_browser",
+          "status": "error",
+          "error": "Error: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:40275/catalogue.html\nCall log:\n  - navigating to \"http://127.0.0.1:40275/catalogue.html\", waiting until \"domcontentloaded\"\n",
+          "expected": 4,
+          "found": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 4,
+          "precision": null,
+          "recall": 0.0,
+          "elapsed_ms": 648.45
+        }
+      ],
+      "summary": {
+        "completed_cases": 5,
+        "total_cases": 6,
+        "untested_cases": [
+          "catalogue.html"
+        ],
+        "evaluated_true_positives": 12,
+        "evaluated_false_positives": 0,
+        "evaluated_false_negatives": 0,
+        "micro_precision_on_completed": 1.0,
+        "micro_recall_on_completed": 1.0,
+        "median_case_ms": 1.27
+      },
+      "dependencies": "stdlib urllib + BeautifulSoup + optional Playwright, no commercial API or LLM"
+    },
+    "crawl4ai": {
+      "state": "not_run",
+      "reason": "crawl4ai_not_installed: ModuleNotFoundError",
+      "cases": []
+    }
+  },
+  "limitations": [
+    "Evidence extraction uses fixture-specific data-* attributes, not free-text semantics",
+    "Browser rendering requires accessible Chromium and may be blocked by the execution environment",
+    "This is not a live web performance test, nor an independent framework comparison unless both arms run",
+    "No market coverage, source licensing, or product recommendation accuracy is measured"
+  ],
+  "local_fixture_http_requests": 5,
+  "local_fixture_http_body_bytes": 2416,
+  "comparison_valid": false
+}

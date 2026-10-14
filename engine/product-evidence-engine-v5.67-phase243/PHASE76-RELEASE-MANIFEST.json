@@ -1,0 +1,31 @@
+{
+  "phase": 76,
+  "version": "4.4.0",
+  "as_of": "2026-10-10",
+  "purpose": "unknown product/category on-demand research with honest async status",
+  "tests": {
+    "typescript_javascript": 484,
+    "python": 68,
+    "launch_release": 7
+  },
+  "verified_environment": "local simulated source metadata, TypeScript compilation, loopback HTTP and persistent file ledger",
+  "not_verified": [
+    "live public web acquisition",
+    "running local LLM",
+    "production hosting",
+    "PostgreSQL migration execution",
+    "independent human review workflow",
+    "email or push notifications"
+  ],
+  "new_components": [
+    "src/phase76_request_queue.ts",
+    "src/phase76_service.ts",
+    "src/phase76_http.ts",
+    "tests/phase76_customer_requests.test.ts",
+    "examples/phase76-consumer-request.html",
+    "scripts/demo-phase76.mjs",
+    "db/migrations/011_consumer_research_requests.sql",
+    "docs/PHASE76-ON-DEMAND-RESEARCH.md"
+  ],
+  "disclaimer": "No product recommendation becomes ready automatically from a model or unsupervised research worker."
+}

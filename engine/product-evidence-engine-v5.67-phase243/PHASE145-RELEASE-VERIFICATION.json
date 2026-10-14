@@ -1,0 +1,74 @@
+{
+  "phase": 145,
+  "version": "4.69-phase145",
+  "parent": "4.68-phase144",
+  "date": "2026-10-11",
+  "parentZipSha256": "fb39f5655fa076f909de70eb0c3d124b5bd0f2c288ae2f3953797c3d87218735",
+  "parentFileCount": 1489,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE145-CROSS-CATEGORY-UNITS-AND-REFERENCE-LINKS.md",
+    "PHASE145-CROSS-DOMAIN-DIAGNOSTIC.json",
+    "PHASE145-FILE-MANIFEST.sha256",
+    "PHASE145-REGRESSION-GROUPS.json",
+    "dist/src/phase145_unit_context_bridge.js",
+    "dist/tests/phase145_unit_context_bridge.test.js",
+    "research/phase145_cross_domain_postcode_challenge.json",
+    "scripts/evaluate-phase145.mjs",
+    "scripts/phase145_regress.mjs",
+    "src/phase145_unit_context_bridge.ts",
+    "tests/phase145_unit_context_bridge.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1783,
+    "eligibleFiles": 104,
+    "phase145Focused": 30,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "publisherExcerptDiagnostic": {
+    "categories": [
+      "oven",
+      "loudspeakers",
+      "television",
+      "cd_player"
+    ],
+    "sources": 4,
+    "prior144Candidates": 1,
+    "phase145Candidates": 5,
+    "independentGoldAnnotations": 0,
+    "accuracy": null,
+    "blind": false,
+    "sourceRightsForFullTextRedistributionEstablished": false
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "externalModels": 0,
+    "paidAPIs": 0,
+    "thirdPartyRuntimeSourceCopied": false,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false
+  },
+  "limitations": [
+    "30 tests use developer-authored fixtures, not unseen independent labels",
+    "Publisher short excerpts selected after module code was authored, not a statistical holdout",
+    "Surface repetition does not establish entity coreference",
+    "Role labels, test protocols and manufacturer vs laboratory reporting remain uncertain",
+    "The same two Phase91/92 legacy test files are not part of the passing regression"
+  ],
+  "archiveFileCount": 1501
+}

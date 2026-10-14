@@ -1,0 +1,86 @@
+{
+  "phase": 154,
+  "version": "4.78-phase154",
+  "date": "2026-10-11",
+  "parentVersion": "4.77-phase153",
+  "parentZipSha256": "7212066728c73ee9cfae35c9eca2d5fc4bc924021d3e8fc39323d7b4adf90186",
+  "parentFileCount": 1600,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "dist/src/index.js",
+    "package.json",
+    "src/index.ts"
+  ],
+  "addedFilesExcludingManifestAndVerification": [
+    "PEE-START-NEW-CHAT-PHASE155.md",
+    "PHASE154-CONSTRUCTED-DIAGNOSTIC.json",
+    "PHASE154-OSS-REUSE-AND-CONTEXT-INTEGRATION.md",
+    "THIRD-PARTY-PHASE154.md",
+    "dist/src/phase154_context_graph.js",
+    "dist/src/phase154_integrated_review.js",
+    "dist/src/phase154_label_diagnostics.js",
+    "dist/tests/phase154_oss_context_and_labels.test.js",
+    "research/upstream_source_archives/DeepKE-main-original-upload.zip",
+    "research/upstream_source_archives/GLiNER2-main-original-upload.zip",
+    "research/upstream_source_archives/medspacy-master-original-upload.zip",
+    "research/upstream_source_archives/snorkel-main-original-upload.zip",
+    "scripts/evaluate-phase154.mjs",
+    "src/phase154_context_graph.ts",
+    "src/phase154_integrated_review.ts",
+    "src/phase154_label_diagnostics.ts",
+    "tests/phase154_oss_context_and_labels.test.ts",
+    "third_party/phase154_reference_sources/medspacy-master/LICENSE",
+    "third_party/phase154_reference_sources/medspacy-master/medspacy/context/context_graph.py",
+    "third_party/phase154_reference_sources/medspacy-master/medspacy/context/context_modifier.py",
+    "third_party/phase154_reference_sources/medspacy-master/medspacy/context/context_rule.py",
+    "third_party/phase154_reference_sources/snorkel-main/LICENSE",
+    "third_party/phase154_reference_sources/snorkel-main/snorkel/labeling/analysis.py",
+    "third_party/phase154_reference_sources/snorkel-main/test/labeling/test_analysis.py"
+  ],
+  "sources": {
+    "userUploadedRepositoriesRetainedAsUnchangedZIPs": 4,
+    "upstreamSourceFilesCopiedVerbatim": 5,
+    "licenceFilesCopied": 2,
+    "originalUploadsShaMatch": true
+  },
+  "tests": {
+    "typescript": {
+      "eligiblePassedAcrossShards": 2023,
+      "excludedLegacy": [
+        "phase91_watch_gate.test.js",
+        "phase92_recipe_lifecycle.test.js"
+      ],
+      "focusedPhase154": 12,
+      "focusedPhase153": 36,
+      "focusedPhase152": 24,
+      "singleRunTimedOut": true,
+      "groupsChecked": "1-7 and 9; shard8 excluding Phase91/92"
+    },
+    "python": {
+      "primary": 47,
+      "ingestion": 21,
+      "phase133": 9,
+      "total": 77
+    }
+  },
+  "modelOrHostedDependenciesAdded": 0,
+  "publicUiCreditsAdded": false,
+  "reusesExistingRuntimeDependencies": true,
+  "mainlineAutomaticIntegrationProven": false,
+  "explicitEvidenceIntakeExport": true,
+  "canonicalWriteAuthorized": false,
+  "rankingAltered": false,
+  "benchmark": {
+    "developerConstructedScenarios": 5,
+    "independentHumanAnnotations": 0,
+    "independentPrecision": null,
+    "independentRecall": null
+  },
+  "knownFailures": [
+    "iRobot Roomba j9+ full span missed",
+    "No independent full-review evaluation",
+    "Unknown generalization",
+    "Historical Phase91/92 tests excluded"
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "title": "PEE phase231 real Philips PDF diagnostic and manually selected anchor set",
+  "status": "offline baseline only; phase231 not implemented, no new release",
+  "method": "Ran unmodified Python PDF extractor from cumulative PEE v5.54 zip against original user-uploaded PDF bytes. Anchor fields selected manually from the documents and are not a comprehensive independently annotated gold set.",
+  "document_sources": "user uploads only, original website download URLs not verified",
+  "no_binary_pdfs_embedded": true,
+  "pdf_claim_role": "manufacturer-stated specification, NOT independent measurement",
+  "limits": [
+    "No live web acquisition by PEE",
+    "No complete recall/precision estimate",
+    "No medical equipment suitability determination",
+    "No proof of product variant or market availability",
+    "Manufacturer claims never automatically ranking-authorized"
+  ],
+  "documents": [
+    {
+      "uploaded_filename": "Philips-CX50-Specifications.pdf",
+      "sha256": "1fa87e955bcfa473a0153d1bb32ce3899a813b2af38a50f4edd926253876a2f6",
+      "size_bytes": 1000907,
+      "document_subject": "Philips CX50 CompactXtreme",
+      "manufacturer_publication_year_stated": "2014",
+      "baseline_pee_v5_54": {
+        "claims_count": 0,
+        "reason_codes": [
+          "exact_product_model_not_established",
+          "no_unambiguous_key_value_specifications",
+          "pdf_first_twenty_four_pages_only",
+          "pdf_no_stable_two_column_rows",
+          "pdf_table_cell_geometry_not_verified"
+        ],
+        "claims": []
+      },
+      "manually_selected_reference_anchors": [
+        {
+          "page": 19,
+          "scope": "main ultrasound system",
+          "field": "weight",
+          "value": 7.3,
+          "unit": "kg"
+        },
+        {
+          "page": 19,
+          "scope": "optional mobility cart",
+          "field": "weight",
+          "value": 47.4,
+          "unit": "kg"
+        },
+        {
+          "page": 19,
+          "scope": "main ultrasound system",
+          "field": "width",
+          "value": 41.3,
+          "unit": "cm"
+        },
+        {
+          "page": 12,
+          "scope": "C5-1 curved array transducer",
+          "field": "broadband frequency range",
+          "value": [
+            1,
+            5
+          ],
+          "unit": "MHz"
+        },
+        {
+          "page": 12,
+          "scope": "C8-5 curved array transducer",
+          "field": "broadband frequency range",
+          "value": [
+            5,
+            8
+          ],
+          "unit": "MHz"
+        },
+        {
+          "page": 13,
+          "scope": "X7-2t xMATRIX TEE transducer",
+          "field": "number of elements",
+          "value": 2500,
+          "unit": "elements"
+        },
+        {
+          "page": 20,
+          "scope": "main ultrasound system",
+          "field": "battery duration (approximate; new battery)",
+          "value": 45,
+          "unit": "minutes"
+        }
+      ]
+    },
+    {
+      "uploaded_filename": "philips-azurion-bi-plane-specifications-7b20-12.pdf",
+      "sha256": "53f7cead3420b2466e3d0fc5f279143b6e15326e7060c7fb84554389e10a00fd",
+      "size_bytes": 3492561,
+      "document_subject": "Philips Azurion 7 B20/12",
+      "manufacturer_publication_year_stated": "2018",
+      "baseline_pee_v5_54": {
+        "claims_count": 1,
+        "reason_codes": [
+          "exact_product_model_not_established",
+          "pdf_first_twenty_four_pages_only",
+          "pdf_no_stable_two_column_rows",
+          "pdf_table_cell_geometry_not_verified"
+        ],
+        "claims": [
+          {
+            "label": "two speed control to accurately position the beam longitudinally in the region of interest",
+            "value": 6.0,
+            "unit": "cm",
+            "page": 5,
+            "model": null,
+            "ranking_authorized": false
+          }
+        ]
+      },
+      "manually_selected_reference_anchors": [
+        {
+          "page": 5,
+          "scope": "frontal C-arm",
+          "field": "source image distance",
+          "value": [
+            89.5,
+            119.5
+          ],
+          "unit": "cm"
+        },
+        {
+          "page": 5,
+          "scope": "lateral L-arc",
+          "field": "source image distance",
+          "value": [
+            87.9,
+            130.6
+          ],
+          "unit": "cm"
+        },
+        {
+          "page": 5,
+          "scope": "lateral L-arc",
+          "field": "fine positioning speed within working area",
+          "value": 6,
+          "unit": "cm/s"
+        },
+        {
+          "page": 5,
+          "scope": "lateral L-arc",
+          "field": "positioning speed outside working area",
+          "value": 12,
+          "unit": "cm/s"
+        },
+        {
+          "page": 6,
+          "scope": "patient table",
+          "field": "maximum table load",
+          "value": 325,
+          "unit": "kg"
+        },
+        {
+          "page": 6,
+          "scope": "patient table",
+          "field": "maximum patient weight (separate from table load)",
+          "value": 250,
+          "unit": "kg"
+        },
+        {
+          "page": 19,
+          "scope": "frontal dynamic flat detector",
+          "field": "x-ray sensitive area",
+          "value": [
+            1904,
+            2586
+          ],
+          "unit": "pixels"
+        },
+        {
+          "page": 19,
+          "scope": "lateral dynamic flat detector",
+          "field": "x-ray sensitive area",
+          "value": [
+            1344,
+            1344
+          ],
+          "unit": "pixels"
+        },
+        {
+          "page": 17,
+          "scope": "x-ray generator",
+          "field": "nominal power",
+          "value": 100,
+          "unit": "kW"
+        },
+        {
+          "page": 19,
+          "scope": "ClarityIQ technology",
+          "field": "availability",
+          "value": "optional",
+          "unit": null
+        }
+      ]
+    }
+  ],
+  "engineering_test_targets": [
+    "Parse compound units cm/s without dropping /s; reject value 6 cm where original is 6 cm/s",
+    "Scope each specification to main device versus cart, transducer, detector, tube, table, accessory, or option",
+    "Reconstruct dense two-column and multi-column tables even when Poppler linearizes labels and values on separate lines",
+    "Keep front and lateral Azurion detector dimensions distinct despite shared parent device",
+    "Differentiate max table load from max patient weight",
+    "Never infer optional configuration is included in the base product",
+    "Keep source page and SHA provenance and output no article/document bodies"
+  ]
+}

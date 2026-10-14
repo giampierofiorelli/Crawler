@@ -1,0 +1,55 @@
+{
+  "product": "Product Evidence Engine",
+  "release": "v4.34",
+  "phase": 110,
+  "date_utc": "2026-10-11T08:39:51.209906+00:00",
+  "baseline": "product-evidence-engine-v4.33-phase109",
+  "baseline_file_count": 1014,
+  "baseline_missing": [],
+  "baseline_modified": [
+    "README.md",
+    "package.json"
+  ],
+  "new_source": "src/phase110_local_semantic_extractor.ts",
+  "new_tests": "tests/phase110_local_semantic_extractor.test.ts",
+  "new_targeted_passed": 24,
+  "js_ts_shard_passed": {
+    "1": 168,
+    "2": 167,
+    "3": 193,
+    "4": 151,
+    "5": 184,
+    "6": 41
+  },
+  "js_ts_total": 904,
+  "other_test_suites_passed": {
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "phase84_evaluation_python": 26,
+    "launch_node": 4,
+    "release_node": 3
+  },
+  "tests_completed_successfully": 1081,
+  "test_logs": "audit/phase110/tests/",
+  "scientific_report": "PHASE110-LOCAL-SOURCE-WIDE-EXTRACTION-RESEARCH.md",
+  "demo_json": "audit/phase110/constructed-extraction.json",
+  "sample_data": "constructed simulated review and model responses, not real professional reviews",
+  "real_local_model_executed": false,
+  "independent_real_world_recall_measured": false,
+  "semantic_accuracy_certified": false,
+  "source_parser_document_coverage_verified": false,
+  "actual_review_approval_infrastructure_integrated": false,
+  "public_ranking_changed": false,
+  "notable_limitations": [
+    "only injected approved source blocks",
+    "per-block cap 14000 UTF-16 units",
+    "LLM token and latency impact unbenchmarked",
+    "2 LLM passes not two independent expert reviewers",
+    "schema and span validation do not establish semantic entailment",
+    "human receipt authentication external injection, demonstrated via mock",
+    "no multimodal decoding in this phase",
+    "no production automatic capture or publication"
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "pilot": "original_professional_source_metadata_only",
+  "sources": [
+    {
+      "variantId": "miele_boost_cx1_cat_dog",
+      "url": "https://www.rtings.com/vacuum/reviews/miele/boost-cx1"
+    },
+    {
+      "variantId": "shark_wandvac",
+      "url": "https://www.rtings.com/vacuum/reviews/shark/wandvac"
+    }
+  ],
+  "scientificResearchAccessByPEE": false,
+  "sourceLicensingUnknown": true,
+  "methodComparabilityApproved": false,
+  "actualMeasuredValueExtracted": false,
+  "rankingAuthorized": false,
+  "plan": {
+    "phase": 182,
+    "schema": "182.1",
+    "categoryId": "vacuum",
+    "categoryLabel": "Vacuum cleaners",
+    "market": "uk",
+    "asOf": "2026-10-12T21:00:00Z",
+    "inputFingerprint": "pilot_english_need_scope",
+    "knowledgeRevision": "pilot_unreviewed",
+    "policyRevision": "not_authorized",
+    "jobs": [
+      {
+        "jobId": "research_f8703d0fe9cd97ddf719ea0a82c6544e",
+        "categoryId": "vacuum",
+        "kind": "exact_variant_source_research",
+        "gapKind": "missing_test",
+        "reference": "shark_wandvac:stairs",
+        "exactVariantId": "shark_wandvac",
+        "criterionId": "stairs",
+        "priorityOrder": 1,
+        "authority": "research_only",
+        "status": "queued"
+      },
+      {
+        "jobId": "research_992f024f9ac19fd12704668c69a9bdd3",
+        "categoryId": "vacuum",
+        "kind": "exact_variant_source_research",
+        "gapKind": "missing_product",
+        "reference": "miele_boost_cx1_cat_dog",
+        "exactVariantId": "miele_boost_cx1_cat_dog",
+        "criterionId": null,
+        "priorityOrder": 2,
+        "authority": "research_only",
+        "status": "queued"
+      }
+    ],
+    "omittedByBudget": 0,
+    "planningOnly": true,
+    "rankingAuthorized": false,
+    "hardExclusionsAuthorized": false,
+    "planHash": "a4c7f429db7cf7f952d1adfe73711a5217a65f33c168fef913ae30df9fc3b7fa"
+  },
+  "run": {
+    "phase": 182,
+    "schema": "182.1",
+    "planHash": "a4c7f429db7cf7f952d1adfe73711a5217a65f33c168fef913ae30df9fc3b7fa",
+    "asOf": "2026-10-12T21:00:00Z",
+    "outcomes": [
+      {
+        "jobId": "research_f8703d0fe9cd97ddf719ea0a82c6544e",
+        "kind": "exact_variant_source_research",
+        "status": "source_policy_blocked",
+        "discoveryRecords": [
+          {
+            "candidateId": "rtings_wandvac",
+            "action": "metadata_only",
+            "reasons": [
+              "rights_basis_not_cleared_for_commercial_use",
+              "missing_or_expired_rights_review",
+              "robots_unverified_or_stale",
+              "terms_unverified_or_stale"
+            ],
+            "sourceUrl": "https://www.rtings.com/vacuum/reviews/shark/wandvac",
+            "contentSha256": null
+          }
+        ],
+        "sourceReferenceIds": [],
+        "notes": [
+          "Retrieved page bytes and extracted claims are not published or retained; independent method and rights review remains required."
+        ]
+      },
+      {
+        "jobId": "research_992f024f9ac19fd12704668c69a9bdd3",
+        "kind": "exact_variant_source_research",
+        "status": "source_policy_blocked",
+        "discoveryRecords": [
+          {
+            "candidateId": "rtings_boost_cx1",
+            "action": "metadata_only",
+            "reasons": [
+              "rights_basis_not_cleared_for_commercial_use",
+              "missing_or_expired_rights_review",
+              "robots_unverified_or_stale",
+              "terms_unverified_or_stale"
+            ],
+            "sourceUrl": "https://www.rtings.com/vacuum/reviews/miele/boost-cx1",
+            "contentSha256": null
+          }
+        ],
+        "sourceReferenceIds": [],
+        "notes": [
+          "Retrieved page bytes and extracted claims are not published or retained; independent method and rights review remains required."
+        ]
+      }
+    ],
+    "categoryExecution": null,
+    "sourceRetrievalAttempts": 0,
+    "sourcePagesQuarantined": 0,
+    "sourceBodiesRetained": false,
+    "allFindingsPendingIndependentReview": true,
+    "canonicalKnowledgeUpdated": false,
+    "rankingAuthorized": false,
+    "reviewReceiptsIssued": 0,
+    "runHash": "4b3a1a5a274f3717052ee7fc07a98b1e981dda1f65f544c4737a547eeadbd1db"
+  },
+  "journal": {
+    "phase": 182,
+    "schema": "182.journal.1",
+    "categoryId": "vacuum",
+    "revision": 1,
+    "receipts": [
+      {
+        "sequence": 1,
+        "planHash": "a4c7f429db7cf7f952d1adfe73711a5217a65f33c168fef913ae30df9fc3b7fa",
+        "runHash": "4b3a1a5a274f3717052ee7fc07a98b1e981dda1f65f544c4737a547eeadbd1db",
+        "previousHash": "21a70059e91f047085f19c5f2accc395680e377498266fc10de24003c0797c49",
+        "statuses": [
+          {
+            "jobId": "research_f8703d0fe9cd97ddf719ea0a82c6544e",
+            "status": "source_policy_blocked"
+          },
+          {
+            "jobId": "research_992f024f9ac19fd12704668c69a9bdd3",
+            "status": "source_policy_blocked"
+          }
+        ],
+        "receiptHash": "adf363a6eac5f735a9e57666238760c676e9bcfcd6d9fd1481495cbf07a44e0a"
+      }
+    ],
+    "snapshotHash": "adf363a6eac5f735a9e57666238760c676e9bcfcd6d9fd1481495cbf07a44e0a",
+    "researchOnly": true,
+    "rankingAuthorized": false,
+    "scientificClaimsReviewed": false
+  }
+}

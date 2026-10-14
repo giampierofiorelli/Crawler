@@ -1,0 +1,97 @@
+{
+  "phase": 155,
+  "method": "unblinded_editorial_diagnostic_on_locally_supplied_real_review_excerpts",
+  "url": "https://www.rtings.com/refrigerator/reviews/maytag/mrt311fffh-black",
+  "sourceDigest": "129a8cbada828a1cea73b4de35658369aed254823f0760737445be7832b1f233",
+  "characterCount": 2470,
+  "elapsedMs": 60.2,
+  "baseline153RawMentions": 18,
+  "review155Mentions": 11,
+  "modelSurfaces": [
+    "Maytag MRT311FFFE",
+    "Whirlpool WRT311FZDW",
+    "MRT311FFFH",
+    "MRT311FFFE",
+    "MRT311FFFZ",
+    "GE GTS22KGNRWW"
+  ],
+  "roleCounts": {
+    "reviewed_surface": 3,
+    "comparison_surface": 5,
+    "variant_surface": 3,
+    "unresolved": 0
+  },
+  "variantRows": [
+    {
+      "code": "MRT311FFFH",
+      "reviewedVariantCode": false
+    },
+    {
+      "code": "MRT311FFFE",
+      "reviewedVariantCode": true
+    },
+    {
+      "code": "MRT311FFFZ",
+      "reviewedVariantCode": false
+    }
+  ],
+  "relationProposals": [
+    {
+      "object": "Whirlpool WRT311FZDW",
+      "relation": "similarity",
+      "justification": "local_comparison_with_page_subject",
+      "validated": false
+    },
+    {
+      "object": "GE GTS22KGNRWW",
+      "relation": "comparison",
+      "justification": "local_comparison_with_page_subject",
+      "validated": false
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Produce Moisture Retention",
+      "value": 81,
+      "unit": "%",
+      "assignment": "review_page_context_unverified",
+      "assignedTo": "Maytag MRT311FFFE",
+      "reportingClass": "publisher_test_observation_candidate"
+    },
+    {
+      "label": "Produce Drawer Humidity Level",
+      "value": 36,
+      "unit": "%",
+      "assignment": "review_page_context_unverified",
+      "assignedTo": "Maytag MRT311FFFE",
+      "reportingClass": "publisher_test_observation_candidate"
+    },
+    {
+      "label": "Fridge Compartment Humidity Level",
+      "value": 21.5,
+      "unit": "%",
+      "assignment": "review_page_context_unverified",
+      "assignedTo": "Maytag MRT311FFFE",
+      "reportingClass": "publisher_test_observation_candidate"
+    },
+    {
+      "label": "Noise During Cooling Cycle",
+      "value": 44.9,
+      "unit": "dBA",
+      "assignment": "review_page_context_unverified",
+      "assignedTo": "Maytag MRT311FFFE",
+      "reportingClass": "publisher_test_observation_candidate"
+    }
+  ],
+  "diagnostics": {
+    "signalCoverage": 0.8181818181818182,
+    "signalConflict": 0,
+    "truncated": false,
+    "unresolved": []
+  },
+  "scientificValidation": false,
+  "sourceAuthenticated": false,
+  "independentlyAnnotated": false,
+  "rankingAuthorized": false,
+  "canonicalWriteAuthorized": false
+}

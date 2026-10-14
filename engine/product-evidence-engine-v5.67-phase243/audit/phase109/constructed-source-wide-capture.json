@@ -1,0 +1,50 @@
+{
+  "phase": 109,
+  "synthetic": true,
+  "sourceTextStored": false,
+  "llmCallsDuringQuery": 0,
+  "coverage": {
+    "reportId": "demo_vacuum_review_v1",
+    "declaredSegments": 4,
+    "reviewedSegments": 4,
+    "atoms": 3,
+    "provisionalAtoms": 0,
+    "unmappedAtoms": 0,
+    "blockedSegments": [],
+    "unreviewedSegments": [],
+    "unreconciledSegments": [],
+    "unmappedConcepts": [],
+    "canSeal": true,
+    "sealed": true,
+    "completenessClaim": "declared_inventory_only_not_document_recall"
+  },
+  "originalTestId": "test_original_1",
+  "conditionsPreserved": [
+    "high_power_mode"
+  ],
+  "unexpectedAspectBefore": null,
+  "unexpectedAspectAfter": "brush_maintenance",
+  "evidenceForProduct": [
+    {
+      "id": "mode_context",
+      "conceptId": "power_setting",
+      "criterionId": "operating_conditions",
+      "kind": "context",
+      "assertionCode": "test_in_high_mode"
+    },
+    {
+      "id": "noise_tone",
+      "conceptId": "tonal_whine",
+      "criterionId": "noise",
+      "kind": "observation",
+      "assertionCode": "tonal_whine_present"
+    },
+    {
+      "id": "pet_hair",
+      "conceptId": "pet_hair_wrap",
+      "criterionId": null,
+      "kind": "maintenance",
+      "assertionCode": "brush_wrap_with_pet_hair"
+    }
+  ]
+}

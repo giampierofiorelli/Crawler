@@ -1,0 +1,888 @@
+
+> product-evidence-engine@2.0.0 test
+> npm run build && node --test dist/tests/*.test.js
+
+
+> product-evidence-engine@2.0.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: no grant defaults deny
+ok 1 - no grant defaults deny
+  ---
+  duration_ms: 2.367805
+  type: 'test'
+  ...
+# Subtest: approved and scoped written grant permits exactly authorized use
+ok 2 - approved and scoped written grant permits exactly authorized use
+  ---
+  duration_ms: 0.227624
+  type: 'test'
+  ...
+# Subtest: history rights are separate from current price rights
+ok 3 - history rights are separate from current price rights
+  ---
+  duration_ms: 0.094643
+  type: 'test'
+  ...
+# Subtest: market mismatch denied
+ok 4 - market mismatch denied
+  ---
+  duration_ms: 0.090356
+  type: 'test'
+  ...
+# Subtest: missing signed agreement denied
+ok 5 - missing signed agreement denied
+  ---
+  duration_ms: 0.165199
+  type: 'test'
+  ...
+# Subtest: revocation denies even within term
+ok 6 - revocation denies even within term
+  ---
+  duration_ms: 0.120922
+  type: 'test'
+  ...
+# Subtest: expired agreement denied
+ok 7 - expired agreement denied
+  ---
+  duration_ms: 0.088704
+  type: 'test'
+  ...
+# Subtest: Amazon current display requires explicit use case review
+ok 8 - Amazon current display requires explicit use case review
+  ---
+  duration_ms: 0.137558
+  type: 'test'
+  ...
+# Subtest: Amazon history needs both tracking and aggregation exceptions
+ok 9 - Amazon history needs both tracking and aggregation exceptions
+  ---
+  duration_ms: 0.300023
+  type: 'test'
+  ...
+# Subtest: Amazon exceptions can be represented but are not presumed
+ok 10 - Amazon exceptions can be represented but are not presumed
+  ---
+  duration_ms: 0.373283
+  type: 'test'
+  ...
+# Subtest: Google Merchant pricing reports denied even with nominal grant
+ok 11 - Google Merchant pricing reports denied even with nominal grant
+  ---
+  duration_ms: 0.156496
+  type: 'test'
+  ...
+# Subtest: multiple grants ambiguous: no cherry picking
+ok 12 - multiple grants ambiguous: no cherry picking
+  ---
+  duration_ms: 0.130017
+  type: 'test'
+  ...
+# Subtest: empty pilot never claims coverage
+ok 13 - empty pilot never claims coverage
+  ---
+  duration_ms: 1.505703
+  type: 'test'
+  ...
+# Subtest: only exact variant identity contributes to matching coverage
+ok 14 - only exact variant identity contributes to matching coverage
+  ---
+  duration_ms: 0.419143
+  type: 'test'
+  ...
+# Subtest: current offer with no verified rights is not publishable
+ok 15 - current offer with no verified rights is not publishable
+  ---
+  duration_ms: 0.287253
+  type: 'test'
+  ...
+# Subtest: stale offer does not count as fresh
+ok 16 - stale offer does not count as fresh
+  ---
+  duration_ms: 0.175034
+  type: 'test'
+  ...
+# Subtest: duplicate variants rejected
+ok 17 - duplicate variants rejected
+  ---
+  duration_ms: 0.446153
+  type: 'test'
+  ...
+# Subtest: unverified variants excluded from denominator and flagged
+ok 18 - unverified variants excluded from denominator and flagged
+  ---
+  duration_ms: 0.214944
+  type: 'test'
+  ...
+# Subtest: synthetic bridge runs full deterministic ranking and retains evidence trace
+ok 19 - synthetic bridge runs full deterministic ranking and retains evidence trace
+  ---
+  duration_ms: 2.318761
+  type: 'test'
+  ...
+# Subtest: production rejects synthetic input regardless of its contents
+ok 20 - production rejects synthetic input regardless of its contents
+  ---
+  duration_ms: 0.465423
+  type: 'test'
+  ...
+# Subtest: production refuses real evidence without validated normalization
+ok 21 - production refuses real evidence without validated normalization
+  ---
+  duration_ms: 0.562138
+  type: 'test'
+  ...
+# Subtest: rejects stale or future merchant offers, rather than assuming current price
+ok 22 - rejects stale or future merchant offers, rather than assuming current price
+  ---
+  duration_ms: 0.407235
+  type: 'test'
+  ...
+# Subtest: rejects cross-market transfer of evidence
+ok 23 - rejects cross-market transfer of evidence
+  ---
+  duration_ms: 0.419163
+  type: 'test'
+  ...
+# Subtest: rejects unsupported measurement units, never assumes scale equivalence
+ok 24 - rejects unsupported measurement units, never assumes scale equivalence
+  ---
+  duration_ms: 0.314625
+  type: 'test'
+  ...
+# Subtest: rejects missing source citation URL
+ok 25 - rejects missing source citation URL
+  ---
+  duration_ms: 0.322547
+  type: 'test'
+  ...
+# Subtest: unknown snapshot origin cannot be used in either mode
+ok 26 - unknown snapshot origin cannot be used in either mode
+  ---
+  duration_ms: 1.151319
+  type: 'test'
+  ...
+# Subtest: different needs change the leading fully-covered candidate
+ok 27 - different needs change the leading fully-covered candidate
+  ---
+  duration_ms: 2.264989
+  type: 'test'
+  ...
+# Subtest: missing critical evidence does not become zero or a winner
+ok 28 - missing critical evidence does not become zero or a winner
+  ---
+  duration_ms: 0.274794
+  type: 'test'
+  ...
+# Subtest: UK request excludes US variants and their evidence
+ok 29 - UK request excludes US variants and their evidence
+  ---
+  duration_ms: 0.232441
+  type: 'test'
+  ...
+# Subtest: budget excludes out-of-budget products
+ok 30 - budget excludes out-of-budget products
+  ---
+  duration_ms: 0.136646
+  type: 'test'
+  ...
+# Subtest: duplicate articles sharing originalTestId do not change scoring
+ok 31 - duplicate articles sharing originalTestId do not change scoring
+  ---
+  duration_ms: 1.128744
+  type: 'test'
+  ...
+# Subtest: unlicensed evidence cannot influence ranking
+ok 32 - unlicensed evidence cannot influence ranking
+  ---
+  duration_ms: 0.186201
+  type: 'test'
+  ...
+# Subtest: incompatible protocols withhold pooled score
+ok 33 - incompatible protocols withhold pooled score
+  ---
+  duration_ms: 0.378832
+  type: 'test'
+  ...
+# Subtest: no positive weights is invalid
+ok 34 - no positive weights is invalid
+  ---
+  duration_ms: 0.219902
+  type: 'test'
+  ...
+# Subtest: hard requirements are enforced
+ok 35 - hard requirements are enforced
+  ---
+  duration_ms: 0.47065
+  type: 'test'
+  ...
+# Subtest: scores reproducible regardless of repeat execution
+ok 36 - scores reproducible regardless of repeat execution
+  ---
+  duration_ms: 0.422107
+  type: 'test'
+  ...
+# Subtest: documented synthetic proof passes pilot gate but can NEVER be called publishable
+ok 37 - documented synthetic proof passes pilot gate but can NEVER be called publishable
+  ---
+  duration_ms: 1.64275
+  type: 'test'
+  ...
+# Subtest: no reviewer, duplicate reviews, revoked and expired reviews all fail closed
+ok 38 - no reviewer, duplicate reviews, revoked and expired reviews all fail closed
+  ---
+  duration_ms: 0.629911
+  type: 'test'
+  ...
+# Subtest: every material field is review-bound: value, URL, tested variant, conditions and rights
+ok 39 - every material field is review-bound: value, URL, tested variant, conditions and rights
+  ---
+  duration_ms: 0.302377
+  type: 'test'
+  ...
+# Subtest: cross-variant inference is barred even if reviewer record claims to approve it
+ok 40 - cross-variant inference is barred even if reviewer record claims to approve it
+  ---
+  duration_ms: 0.213873
+  type: 'test'
+  ...
+# Subtest: non-HTTPS and credential-bearing source references fail closed
+ok 41 - non-HTTPS and credential-bearing source references fail closed
+  ---
+  duration_ms: 0.211389
+  type: 'test'
+  ...
+# Subtest: conflicting syndicated measurements for the same original test are excluded
+ok 42 - conflicting syndicated measurements for the same original test are excluded
+  ---
+  duration_ms: 0.664072
+  type: 'test'
+  ...
+# Subtest: literal duplicate evidence identifiers are rejected
+ok 43 - literal duplicate evidence identifiers are rejected
+  ---
+  duration_ms: 0.19199
+  type: 'test'
+  ...
+# Subtest: missing commercial reuse permission reference blocks score admission
+ok 44 - missing commercial reuse permission reference blocks score admission
+  ---
+  duration_ms: 0.144799
+  type: 'test'
+  ...
+# Subtest: fingerprint stable under ordering of protocol conditions and variant IDs
+ok 45 - fingerprint stable under ordering of protocol conditions and variant IDs
+  ---
+  duration_ms: 6.820216
+  type: 'test'
+  ...
+# Subtest: audit rejects malformed evaluation timestamps
+ok 46 - audit rejects malformed evaluation timestamps
+  ---
+  duration_ms: 0.70199
+  type: 'test'
+  ...
+# Subtest: Amazon-sourced measurements cannot enter independent ranking, even with a forged approval
+ok 47 - Amazon-sourced measurements cannot enter independent ranking, even with a forged approval
+  ---
+  duration_ms: 0.192361
+  type: 'test'
+  ...
+# Subtest: retailers and manufacturer materials are not treated as independent product tests
+ok 48 - retailers and manufacturer materials are not treated as independent product tests
+  ---
+  duration_ms: 0.152781
+  type: 'test'
+  ...
+# Subtest: product ranking completes before independently approved retailer links
+ok 49 - product ranking completes before independently approved retailer links
+  ---
+  duration_ms: 3.458842
+  type: 'test'
+  ...
+# Subtest: missing merchant approval fails closed without removing ranked products
+ok 50 - missing merchant approval fails closed without removing ranked products
+  ---
+  duration_ms: 2.266182
+  type: 'test'
+  ...
+# Subtest: independent scores and winner remain identical with legacy price properties of any value
+ok 51 - independent scores and winner remain identical with legacy price properties of any value
+  ---
+  duration_ms: 1.416328
+  type: 'test'
+  ...
+# Subtest: launch output has no price, budget band, historic tracking, or purchase timing
+ok 52 - launch output has no price, budget band, historic tracking, or purchase timing
+  ---
+  duration_ms: 0.483259
+  type: 'test'
+  ...
+# Subtest: launch rejects legacy budget and manufacturer-list-price payloads instead of silently ignoring them
+ok 53 - launch rejects legacy budget and manufacturer-list-price payloads instead of silently ignoring them
+  ---
+  duration_ms: 0.491833
+  type: 'test'
+  ...
+# Subtest: pricing and merchant specs cannot affect ranking even when disguised as product specifications
+ok 54 - pricing and merchant specs cannot affect ranking even when disguised as product specifications
+  ---
+  duration_ms: 0.393835
+  type: 'test'
+  ...
+# Subtest: valid nonfinancial hard specification constraints remain active
+ok 55 - valid nonfinancial hard specification constraints remain active
+  ---
+  duration_ms: 0.256617
+  type: 'test'
+  ...
+# Subtest: price-free pipeline does not mutate source arrays or merchant approvals
+ok 56 - price-free pipeline does not mutate source arrays or merchant approvals
+  ---
+  duration_ms: 0.262647
+  type: 'test'
+  ...
+# Subtest: missing evidence rights review fails closed and cannot create a winner
+ok 57 - missing evidence rights review fails closed and cannot create a winner
+  ---
+  duration_ms: 0.427034
+  type: 'test'
+  ...
+# Subtest: a score tampered after reviewer approval is excluded
+ok 58 - a score tampered after reviewer approval is excluded
+  ---
+  duration_ms: 0.406253
+  type: 'test'
+  ...
+# Subtest: launch only operates in explicitly marked nonpublishable demonstration mode
+ok 59 - launch only operates in explicitly marked nonpublishable demonstration mode
+  ---
+  duration_ms: 0.287294
+  type: 'test'
+  ...
+# Subtest: launch gate fails closed without review and does not change fit ranking
+ok 60 - launch gate fails closed without review and does not change fit ranking
+  ---
+  duration_ms: 1.606365
+  type: 'test'
+  ...
+# Subtest: launch gate accepts exactly one documented unexpired approval
+ok 61 - launch gate accepts exactly one documented unexpired approval
+  ---
+  duration_ms: 1.409128
+  type: 'test'
+  ...
+# Subtest: draft, revoked, expired, incomplete and ambiguous approvals fail closed
+ok 62 - draft, revoked, expired, incomplete and ambiguous approvals fail closed
+  ---
+  duration_ms: 0.290229
+  type: 'test'
+  ...
+# Subtest: review must match exact destination, variant, retailer and market
+ok 63 - review must match exact destination, variant, retailer and market
+  ---
+  duration_ms: 0.203066
+  type: 'test'
+  ...
+# Subtest: production entrypoint does not expose price timing or history functionality
+ok 64 - production entrypoint does not expose price timing or history functionality
+  ---
+  duration_ms: 0.098048
+  type: 'test'
+  ...
+# Subtest: verified manufacturer reference gives a band, not an actual price
+ok 65 - verified manufacturer reference gives a band, not an actual price
+  ---
+  duration_ms: 2.280834
+  type: 'test'
+  ...
+# Subtest: independent reference within budget is contextual only
+ok 66 - independent reference within budget is contextual only
+  ---
+  duration_ms: 0.222286
+  type: 'test'
+  ...
+# Subtest: ambiguous, unauthorized, stale, wrong market, wrong variant records fail closed
+ok 67 - ambiguous, unauthorized, stale, wrong market, wrong variant records fail closed
+  ---
+  duration_ms: 0.455618
+  type: 'test'
+  ...
+# Subtest: missing budget or none preference cannot produce a band
+ok 68 - missing budget or none preference cannot produce a band
+  ---
+  duration_ms: 0.425272
+  type: 'test'
+  ...
+# Subtest: invalid budget or timestamp rejected
+ok 69 - invalid budget or timestamp rejected
+  ---
+  duration_ms: 0.325431
+  type: 'test'
+  ...
+# Subtest: flexible budget marks a nearby official list reference without excluding or reprioritising products
+ok 70 - flexible budget marks a nearby official list reference without excluding or reprioritising products
+  ---
+  duration_ms: 0.215996
+  type: 'test'
+  ...
+# Subtest: budget reference never treats unverified or mismatched list prices as affordability evidence
+ok 71 - budget reference never treats unverified or mismatched list prices as affordability evidence
+  ---
+  duration_ms: 0.171769
+  type: 'test'
+  ...
+# Subtest: flexible tolerance is bounded and validated
+ok 72 - flexible tolerance is bounded and validated
+  ---
+  duration_ms: 0.155004
+  type: 'test'
+  ...
+# Subtest: audit rejects future verification, inverted dates and unsafe evidence URLs
+ok 73 - audit rejects future verification, inverted dates and unsafe evidence URLs
+  ---
+  duration_ms: 0.667148
+  type: 'test'
+  ...
+# Subtest: audit accepts only exact reviewed and authorized manufacturer references
+ok 74 - audit accepts only exact reviewed and authorized manufacturer references
+  ---
+  duration_ms: 1.269216
+  type: 'test'
+  ...
+# Subtest: no editorial approval or publisher domain registry => fail closed
+ok 75 - no editorial approval or publisher domain registry => fail closed
+  ---
+  duration_ms: 1.807569
+  type: 'test'
+  ...
+# Subtest: separate editorial and source approvals admit synthetic reference
+ok 76 - separate editorial and source approvals admit synthetic reference
+  ---
+  duration_ms: 0.32431
+  type: 'test'
+  ...
+# Subtest: approval fingerprint binds amount, variant, market, evidence URL, review status and evidence refs
+ok 77 - approval fingerprint binds amount, variant, market, evidence URL, review status and evidence refs
+  ---
+  duration_ms: 0.642169
+  type: 'test'
+  ...
+# Subtest: source must match publisher exact hostname, not plausible suffix or lookalike
+ok 78 - source must match publisher exact hostname, not plausible suffix or lookalike
+  ---
+  duration_ms: 0.41013
+  type: 'test'
+  ...
+# Subtest: cannot self-approve manufacturer record or publisher
+ok 79 - cannot self-approve manufacturer record or publisher
+  ---
+  duration_ms: 0.189446
+  type: 'test'
+  ...
+# Subtest: rights, publisher revocation, approval expiry and revoked review fail closed
+ok 80 - rights, publisher revocation, approval expiry and revoked review fail closed
+  ---
+  duration_ms: 0.512874
+  type: 'test'
+  ...
+# Subtest: ambiguous and duplicate editorial approvals fail closed
+ok 81 - ambiguous and duplicate editorial approvals fail closed
+  ---
+  duration_ms: 0.19234
+  type: 'test'
+  ...
+# Subtest: invalid review timestamps are rejected
+ok 82 - invalid review timestamps are rejected
+  ---
+  duration_ms: 0.49026
+  type: 'test'
+  ...
+# Subtest: captured evidence fingerprint and right scope are mandatory
+ok 83 - captured evidence fingerprint and right scope are mandatory
+  ---
+  duration_ms: 0.284219
+  type: 'test'
+  ...
+# Subtest: authorized observation is quarantined, not published
+ok 84 - authorized observation is quarantined, not published
+  ---
+  duration_ms: 1.477931
+  type: 'test'
+  ...
+# Subtest: unknown and prohibited permissions denied
+ok 85 - unknown and prohibited permissions denied
+  ---
+  duration_ms: 0.270158
+  type: 'test'
+  ...
+# Subtest: rights need documentary URL and both permitted uses
+ok 86 - rights need documentary URL and both permitted uses
+  ---
+  duration_ms: 0.365903
+  type: 'test'
+  ...
+# Subtest: expired rights denied
+ok 87 - expired rights denied
+  ---
+  duration_ms: 0.225891
+  type: 'test'
+  ...
+# Subtest: wrong merchant or market is denied
+ok 88 - wrong merchant or market is denied
+  ---
+  duration_ms: 0.284349
+  type: 'test'
+  ...
+# Subtest: unverified SKU is denied
+ok 89 - unverified SKU is denied
+  ---
+  duration_ms: 0.164048
+  type: 'test'
+  ...
+# Subtest: tax or shipping uncertainty denied
+ok 90 - tax or shipping uncertainty denied
+  ---
+  duration_ms: 0.279823
+  type: 'test'
+  ...
+# Subtest: negative and nonfinite prices denied
+ok 91 - negative and nonfinite prices denied
+  ---
+  duration_ms: 0.200433
+  type: 'test'
+  ...
+# Subtest: future and stale observations denied
+ok 92 - future and stale observations denied
+  ---
+  duration_ms: 0.447135
+  type: 'test'
+  ...
+# Subtest: insecure and credential-bearing URLs denied
+ok 93 - insecure and credential-bearing URLs denied
+  ---
+  duration_ms: 0.472304
+  type: 'test'
+  ...
+# Subtest: duplicate observation IDs denied
+ok 94 - duplicate observation IDs denied
+  ---
+  duration_ms: 0.213242
+  type: 'test'
+  ...
+# Subtest: distinct observation IDs can share a timestamp
+ok 95 - distinct observation IDs can share a timestamp
+  ---
+  duration_ms: 0.171969
+  type: 'test'
+  ...
+# Subtest: missing source denied
+ok 96 - missing source denied
+  ---
+  duration_ms: 0.158088
+  type: 'test'
+  ...
+# Subtest: dense single-merchant series yields descriptive median only
+ok 97 - dense single-merchant series yields descriptive median only
+  ---
+  duration_ms: 0.414316
+  type: 'test'
+  ...
+# Subtest: sparse series cannot produce median
+ok 98 - sparse series cannot produce median
+  ---
+  duration_ms: 0.237549
+  type: 'test'
+  ...
+# Subtest: duplicate same-day snapshots count once
+ok 99 - duplicate same-day snapshots count once
+  ---
+  duration_ms: 0.195335
+  type: 'test'
+  ...
+# Subtest: merchant panels cannot be blended
+ok 100 - merchant panels cannot be blended
+  ---
+  duration_ms: 0.281505
+  type: 'test'
+  ...
+# Subtest: long gap blocks median even if enough days
+ok 101 - long gap blocks median even if enough days
+  ---
+  duration_ms: 0.912497
+  type: 'test'
+  ...
+# Subtest: refurbished, different market and unverified observations excluded
+ok 102 - refurbished, different market and unverified observations excluded
+  ---
+  duration_ms: 0.122805
+  type: 'test'
+  ...
+# Subtest: invalid history policy fails closed
+ok 103 - invalid history policy fails closed
+  ---
+  duration_ms: 0.424781
+  type: 'test'
+  ...
+# Subtest: CSV handles quoted comma and BOM
+ok 104 - CSV handles quoted comma and BOM
+  ---
+  duration_ms: 2.866027
+  type: 'test'
+  ...
+# Subtest: CSV handles escaped quotes
+ok 105 - CSV handles escaped quotes
+  ---
+  duration_ms: 0.179771
+  type: 'test'
+  ...
+# Subtest: CSV rejects unterminated quote
+ok 106 - CSV rejects unterminated quote
+  ---
+  duration_ms: 0.504152
+  type: 'test'
+  ...
+# Subtest: CSV rejects row width mismatch
+ok 107 - CSV rejects row width mismatch
+  ---
+  duration_ms: 0.182115
+  type: 'test'
+  ...
+# Subtest: Awin-like feed remains unverified
+ok 108 - Awin-like feed remains unverified
+  ---
+  duration_ms: 0.507486
+  type: 'test'
+  ...
+# Subtest: Awin-like feed preserves original SKU and shipping
+ok 109 - Awin-like feed preserves original SKU and shipping
+  ---
+  duration_ms: 0.224219
+  type: 'test'
+  ...
+# Subtest: Awin-like feed rejects currency mismatch
+ok 110 - Awin-like feed rejects currency mismatch
+  ---
+  duration_ms: 0.209967
+  type: 'test'
+  ...
+# Subtest: Awin-like feed rejects invalid price and insecure URL
+ok 111 - Awin-like feed rejects invalid price and insecure URL
+  ---
+  duration_ms: 0.338962
+  type: 'test'
+  ...
+# Subtest: Awin missing shipping stays null, not zero
+ok 112 - Awin missing shipping stays null, not zero
+  ---
+  duration_ms: 0.519684
+  type: 'test'
+  ...
+# Subtest: eBay-like listing is unverified and shipping unknown
+ok 113 - eBay-like listing is unverified and shipping unknown
+  ---
+  duration_ms: 0.63618
+  type: 'test'
+  ...
+# Subtest: eBay-like listing rejects mismatched currency
+ok 114 - eBay-like listing rejects mismatched currency
+  ---
+  duration_ms: 0.221835
+  type: 'test'
+  ...
+# Subtest: eBay-like listing rejects invalid input
+ok 115 - eBay-like listing rejects invalid input
+  ---
+  duration_ms: 0.161995
+  type: 'test'
+  ...
+# Subtest: eBay-like listing rejects missing seller
+ok 116 - eBay-like listing rejects missing seller
+  ---
+  duration_ms: 0.133612
+  type: 'test'
+  ...
+# Subtest: best-fit stays A even when B has favorable price
+ok 117 - best-fit stays A even when B has favorable price
+  ---
+  duration_ms: 4.121983
+  type: 'test'
+  ...
+# Subtest: price includes shipping
+ok 118 - price includes shipping
+  ---
+  duration_ms: 0.263307
+  type: 'test'
+  ...
+# Subtest: urgent alternatives exclude incomplete evidence
+ok 119 - urgent alternatives exclude incomplete evidence
+  ---
+  duration_ms: 0.125759
+  type: 'test'
+  ...
+# Subtest: no forced buy/wait advice for flexible user
+ok 120 - no forced buy/wait advice for flexible user
+  ---
+  duration_ms: 0.124598
+  type: 'test'
+  ...
+# Subtest: stale offers are not actionable
+ok 121 - stale offers are not actionable
+  ---
+  duration_ms: 0.158129
+  type: 'test'
+  ...
+# Subtest: wrong market and refurbished offers are excluded
+ok 122 - wrong market and refurbished offers are excluded
+  ---
+  duration_ms: 0.126611
+  type: 'test'
+  ...
+# Subtest: delivery constraint excludes slow offers
+ok 123 - delivery constraint excludes slow offers
+  ---
+  duration_ms: 0.253393
+  type: 'test'
+  ...
+# Subtest: few daily history observations produce no timing signal
+ok 124 - few daily history observations produce no timing signal
+  ---
+  duration_ms: 0.208254
+  type: 'test'
+  ...
+# Subtest: duplicate daily snapshots do not count as extra history days
+ok 125 - duplicate daily snapshots do not count as extra history days
+  ---
+  duration_ms: 0.386704
+  type: 'test'
+  ...
+# Subtest: future prices are excluded
+ok 126 - future prices are excluded
+  ---
+  duration_ms: 0.409088
+  type: 'test'
+  ...
+# Subtest: invalid price is rejected
+ok 127 - invalid price is rejected
+  ---
+  duration_ms: 0.44397
+  type: 'test'
+  ...
+# Subtest: bad freshness policy rejected
+ok 128 - bad freshness policy rejected
+  ---
+  duration_ms: 0.176887
+  type: 'test'
+  ...
+# Subtest: does not mutate source ranking
+ok 129 - does not mutate source ranking
+  ---
+  duration_ms: 0.18547
+  type: 'test'
+  ...
+# Subtest: commercial resolution cannot alter ranking, even when winner has no offers
+ok 130 - commercial resolution cannot alter ranking, even when winner has no offers
+  ---
+  duration_ms: 1.205821
+  type: 'test'
+  ...
+# Subtest: only verified and approved exact-variant offers survive
+ok 131 - only verified and approved exact-variant offers survive
+  ---
+  duration_ms: 0.324681
+  type: 'test'
+  ...
+# Subtest: Amazon links require canonical UK product destination and matching affiliate tag
+ok 132 - Amazon links require canonical UK product destination and matching affiliate tag
+  ---
+  duration_ms: 0.214704
+  type: 'test'
+  ...
+# Subtest: other retailer links must be independently approved, and cannot masquerade as Amazon
+ok 133 - other retailer links must be independently approved, and cannot masquerade as Amazon
+  ---
+  duration_ms: 0.390499
+  type: 'test'
+  ...
+# Subtest: market mismatch and unranked variants are omitted
+ok 134 - market mismatch and unranked variants are omitted
+  ---
+  duration_ms: 0.17166
+  type: 'test'
+  ...
+# Subtest: opt-in is required and primary ranking never changes
+ok 135 - opt-in is required and primary ranking never changes
+  ---
+  duration_ms: 2.554066
+  type: 'test'
+  ...
+# Subtest: hard budget cannot be relaxed
+ok 136 - hard budget cannot be relaxed
+  ---
+  duration_ms: 0.376728
+  type: 'test'
+  ...
+# Subtest: soft budget surfaces justified near-miss and keeps it outside primary
+ok 137 - soft budget surfaces justified near-miss and keeps it outside primary
+  ---
+  duration_ms: 0.266252
+  type: 'test'
+  ...
+# Subtest: small benefit and expensive alternatives are rejected
+ok 138 - small benefit and expensive alternatives are rejected
+  ---
+  duration_ms: 0.374165
+  type: 'test'
+  ...
+# Subtest: cheaper near-equivalent option is also surfaced
+ok 139 - cheaper near-equivalent option is also surfaced
+  ---
+  duration_ms: 0.436459
+  type: 'test'
+  ...
+# Subtest: flexible width allows only small overage, while price stays strict
+ok 140 - flexible width allows only small overage, while price stays strict
+  ---
+  duration_ms: 1.018948
+  type: 'test'
+  ...
+# Subtest: size not marked flexible is never relaxed
+ok 141 - size not marked flexible is never relaxed
+  ---
+  duration_ms: 0.207913
+  type: 'test'
+  ...
+# Subtest: no cross-market transfer, hard feature relaxation, or unlicensed evidence
+ok 142 - no cross-market transfer, hard feature relaxation, or unlicensed evidence
+  ---
+  duration_ms: 0.243036
+  type: 'test'
+  ...
+# Subtest: no complete baseline prevents superiority claim
+ok 143 - no complete baseline prevents superiority claim
+  ---
+  duration_ms: 0.659266
+  type: 'test'
+  ...
+# Subtest: invalid thresholds and unknown size keys fail closed
+ok 144 - invalid thresholds and unknown size keys fail closed
+  ---
+  duration_ms: 0.819207
+  type: 'test'
+  ...
+# Subtest: out-of-filter evidence must be complete and authorized
+ok 145 - out-of-filter evidence must be complete and authorized
+  ---
+  duration_ms: 0.239421
+  type: 'test'
+  ...
+1..145
+# tests 145
+# suites 0
+# pass 145
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 337.851786

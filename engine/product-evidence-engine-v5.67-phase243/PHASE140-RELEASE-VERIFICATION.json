@@ -1,0 +1,67 @@
+{
+  "phase": 140,
+  "version": "4.64-phase140",
+  "parent": "4.63-phase139",
+  "date": "2026-10-11",
+  "parentArchiveSHA256": "b84ae3c6458725e8d42d26ab64dc1223195bce558ff8cae929ee047dd14fe73a",
+  "parentFileCount": 1424,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilePathsBeforeRelease": [
+    "PHASE140-NEW-ORIGINAL-EXCERPT-DIAGNOSTIC.json",
+    "PHASE140-REGRESSION-GROUPS.json",
+    "PHASE140-STRUCTURAL-RECALL-ENGINEERING.md",
+    "dist/src/phase140_bounded_english_recall.js",
+    "dist/tests/phase140_bounded_english_recall.test.js",
+    "research/phase140_original_excerpt_diagnostic/PHASE140-NEW-PUBLISHER-EXCERPTS.json",
+    "scripts/evaluate-phase140.mjs",
+    "scripts/phase140_regress.mjs",
+    "src/phase140_bounded_english_recall.ts",
+    "tests/phase140_bounded_english_recall.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1660,
+    "eligibleFiles": 99,
+    "focused140": 28,
+    "groups": 13,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Offline": 9,
+    "total": 77
+  },
+  "originalLanguageDiagnostic": {
+    "numberOfPublishers": 3,
+    "numberOfShortExcerpts": 3,
+    "baseline139Proposals": 0,
+    "supplemental140Proposals": 3,
+    "developerExpectationsMatched": 3,
+    "independentAnnotations": 0,
+    "frozenExternalHoldout": false,
+    "accuracyEstimable": false,
+    "fullArticleRightsToRedistributeAsserted": false
+  },
+  "newRuntimeDependencies": 0,
+  "vendorCodeWeightsOrAPIsIntegrated": false,
+  "sourceDocumentAuthentication": false,
+  "canonicalWriteAuthorized": false,
+  "rankingWriteAuthorized": false,
+  "limitations": [
+    "Rule-bounded English structural patterns, not general semantic understanding",
+    "Three selected and developer-labelled new snippets are not an independent benchmark",
+    "The source URL and digest do not prove authenticated page or model identity",
+    "Upstream Stage139 candidate names can still include app or component names",
+    "Long-range coreference, measurement protocols and independent scientific evidence remain unresolved",
+    "Two prior legacy TypeScript suites remain excluded"
+  ]
+}

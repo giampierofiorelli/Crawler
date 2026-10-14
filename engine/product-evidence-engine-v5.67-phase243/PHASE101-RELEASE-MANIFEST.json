@@ -1,0 +1,50 @@
+{
+  "release": "Product Evidence Engine v4.25 — Phase 101",
+  "release_type": "cumulative_research_release_not_production",
+  "base_archive": "product-evidence-engine-v4.24-phase100.zip",
+  "base_file_count": 826,
+  "base_files_missing": [],
+  "modified_base_files": [
+    "README.md",
+    "package.json"
+  ],
+  "features": [
+    "durable SQLite interpretation memory",
+    "recorded comparative qualitative claims",
+    "measurement protocol and uncertainty separation",
+    "cross-review conflict detection",
+    "source-body-free repeated query",
+    "unranked products retained",
+    "Phase98 performance handoff for separately calibrated stored levels",
+    "immutable claims and withdrawal events"
+  ],
+  "test_runs": {
+    "mainline_js_ts_sharded_pass": 755,
+    "phase101_new_tests_included": 20,
+    "companion_python_pass": 60,
+    "companion_node_pass": 16,
+    "primary_python_pass": 47,
+    "ingestion_python_pass": 21,
+    "evaluation_python_pass": 26,
+    "launch_pass": 4,
+    "release_pass": 3,
+    "total_completed_passes": 932
+  },
+  "test_explanation": "20 Phase101 tests included within 755 mainline tests and rerun separately, not double-counted.",
+  "empirical_limitations": [
+    "no real newly crawled review corpus tested",
+    "no learned/calibrated cross-publisher adjective scale",
+    "Node 22 SQLite experimental single-process driver",
+    "receipt formats do not authenticate human reviewers",
+    "public ranking unchanged",
+    "cannot generate numerical measurements from words"
+  ],
+  "sources": [
+    "https://www.w3.org/TR/prov-overview/",
+    "https://www.w3.org/TR/annotation-model/",
+    "https://www.cambridge.org/core/journals/american-political-science-review/article/abs/enhancing-the-validity-and-cross-cultural-comparability-of-measurement-in-survey-research/220C13F13BA152E91A53F794BE3575ED",
+    "https://doi.org/10.1111/rssa.12959",
+    "https://webstore.iec.ch/en/publication/86833",
+    "https://www.iso.org/standard/63077.html"
+  ]
+}

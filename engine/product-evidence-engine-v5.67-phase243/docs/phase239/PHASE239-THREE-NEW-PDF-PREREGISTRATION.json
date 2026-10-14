@@ -1,0 +1,327 @@
+{
+  "schema": "pee239.new-3-pdfs.pre-execution-annotation.v1",
+  "registered_before_baseline": true,
+  "purpose": "locked prospective audit of selected targets and negative guards on three first-time PDF samples; not exhaustive ground truth",
+  "corpus_role_at_freeze": "new_holdout_before_any_phase239_code_change",
+  "reader_version": "5.62.0",
+  "max_pdf_pages_read": 24,
+  "reader_limitations": "English first, machine extraction only, no inference from filename as exact product identity; no PDF originals distributed",
+  "documents": [
+    {
+      "document_type": "multilingual manufacturer dual-air-fryer user manual",
+      "model_policy": "Filename contains EY905J; the cover identifies Jamie Oliver by Tefal Dual Air Fryer but does not independently establish this SKU or retail variant.",
+      "frozen_targets": [
+        {
+          "id": "ey-drawer1",
+          "page": 6,
+          "field": "drawer 1",
+          "value": "large drawer",
+          "scope": "component",
+          "kind": "component description"
+        },
+        {
+          "id": "ey-drawer2",
+          "page": 6,
+          "field": "drawer 2",
+          "value": "regular drawer",
+          "scope": "component",
+          "kind": "component description"
+        },
+        {
+          "id": "ey-manual-temp",
+          "page": 8,
+          "field": "manual thermostat range",
+          "lower": 40,
+          "upper": 200,
+          "unit": "°C",
+          "scope": "manual programme",
+          "kind": "machine control"
+        },
+        {
+          "id": "ey-manual-time",
+          "page": 8,
+          "field": "manual timer range",
+          "lower": 0,
+          "upper": 60,
+          "unit": "minutes",
+          "scope": "manual programme",
+          "kind": "machine control"
+        },
+        {
+          "id": "ey-grill-only",
+          "page": 8,
+          "field": "grill programme supported drawer",
+          "value": 1,
+          "scope": "drawer 1 only",
+          "kind": "component operating constraint"
+        },
+        {
+          "id": "ey-grill-temp",
+          "page": 9,
+          "field": "grill automatically set temperature",
+          "value": 200,
+          "unit": "°C",
+          "scope": "grill programme / drawer 1",
+          "kind": "machine control"
+        },
+        {
+          "id": "ey-frozen-fries-d1",
+          "page": 10,
+          "field": "frozen fries guide",
+          "weight": 600,
+          "weight_unit": "g",
+          "duration_lower": 15,
+          "duration_upper": 20,
+          "duration_unit": "minutes",
+          "temperature": 180,
+          "temperature_unit": "°C",
+          "scope": "drawer 1",
+          "kind": "manufacturer cooking guide not test"
+        },
+        {
+          "id": "ey-frozen-fries-d2",
+          "page": 10,
+          "field": "frozen fries guide",
+          "weight": 300,
+          "weight_unit": "g",
+          "duration_lower": 10,
+          "duration_upper": 15,
+          "duration_unit": "minutes",
+          "temperature": 180,
+          "temperature_unit": "°C",
+          "scope": "drawer 2",
+          "kind": "manufacturer cooking guide not test"
+        },
+        {
+          "id": "ey-chicken",
+          "page": 10,
+          "field": "whole chicken cooking guide",
+          "weight": 1.2,
+          "weight_unit": "kg",
+          "duration_lower": 45,
+          "duration_upper": 60,
+          "duration_unit": "minutes",
+          "temperature": 200,
+          "temperature_unit": "°C",
+          "scope": "drawer 1",
+          "kind": "manufacturer cooking guide not test"
+        }
+      ],
+      "negative_guards": [
+        {
+          "page": 7,
+          "hazard": "15 cm clearance for airflow is not a product dimension"
+        },
+        {
+          "page": 10,
+          "hazard": "food grams and cooking-guide minutes are not basket capacities, product weight, or independent test results"
+        },
+        {
+          "page": 13,
+          "hazard": "French translated section must not duplicate English programme evidence as independent corroboration"
+        },
+        {
+          "page": 2,
+          "hazard": "generic depending-on-model cleaning instruction cannot certify dishwasher suitability of each exact model"
+        }
+      ],
+      "filename": "EY905J_IFU_User_Manual.pdf",
+      "sha256": "f8eeb4c7e3c2f37d22b5835798cd9be69f427efba072b7e66151337aeed25a2e",
+      "byteCount": 3980735,
+      "pages": 45
+    },
+    {
+      "document_type": "multi-language multipage spread manufacturer ice cream maker manual",
+      "model_policy": "Filename is not a verified saleable SKU; model-dependent asterisks and alternate panels are not exact SKU assignments.",
+      "frozen_targets": [
+        {
+          "id": "dolci-spoon",
+          "page": 2,
+          "field": "ice cream spoon",
+          "condition": "depending on model",
+          "kind": "accessory availability unresolved"
+        },
+        {
+          "id": "dolci-sorbet",
+          "page": 5,
+          "field": "Sorbet programme nominal duration",
+          "value": 194,
+          "unit": "seconds",
+          "scope": "Scoopable",
+          "kind": "manufacturer programme"
+        },
+        {
+          "id": "dolci-icecream",
+          "page": 5,
+          "field": "Ice Cream programme nominal duration",
+          "value": 196,
+          "unit": "seconds",
+          "scope": "Scoopable",
+          "kind": "manufacturer programme"
+        },
+        {
+          "id": "dolci-gelato",
+          "page": 5,
+          "field": "Gelato programme nominal duration",
+          "value": 225,
+          "unit": "seconds",
+          "scope": "Scoopable",
+          "kind": "manufacturer programme"
+        },
+        {
+          "id": "dolci-froyo",
+          "page": 5,
+          "field": "Frozen Yogurt programme nominal duration",
+          "value": 194,
+          "unit": "seconds",
+          "scope": "Scoopable",
+          "kind": "manufacturer programme"
+        },
+        {
+          "id": "dolci-slushy",
+          "page": 6,
+          "field": "Slushy programme nominal duration",
+          "value": 142,
+          "unit": "seconds",
+          "scope": "Drinkable",
+          "kind": "manufacturer programme"
+        },
+        {
+          "id": "dolci-frappe",
+          "page": 6,
+          "field": "Frappe programme nominal duration",
+          "value": 141,
+          "unit": "seconds",
+          "scope": "Drinkable",
+          "kind": "manufacturer programme"
+        },
+        {
+          "id": "dolci-mixin",
+          "page": 6,
+          "field": "Mix-in optional programme",
+          "condition": "only after a Scoopable programme",
+          "value": "conditional",
+          "kind": "operating dependency"
+        },
+        {
+          "id": "dolci-mixin-qty",
+          "page": 6,
+          "field": "Mix-in maximum ingredient amount",
+          "value": 50,
+          "unit": "g",
+          "scope": "Mix-in programme",
+          "kind": "ingredient quantity limit"
+        },
+        {
+          "id": "dolci-freeze",
+          "page": 7,
+          "field": "required freezer setting",
+          "lower": -22,
+          "upper": -13,
+          "unit": "°C",
+          "scope": "external freezer; preparation precondition",
+          "kind": "preparation precondition not machine capability"
+        },
+        {
+          "id": "dolci-freeze-duration",
+          "page": 6,
+          "field": "minimum freezer preparation duration",
+          "value": 24,
+          "unit": "hours",
+          "scope": "freezing before programme",
+          "kind": "preparation precondition"
+        }
+      ],
+      "negative_guards": [
+        {
+          "page": 5,
+          "hazard": "programmes marked * depending on model must not be asserted available on every saleable SKU"
+        },
+        {
+          "page": 6,
+          "hazard": "450 ml water in rinse recipe is not freezing-bowl capacity"
+        },
+        {
+          "page": 7,
+          "hazard": "freezer temperature -13 to -22°C is a recommended temperature for an external freezer, not cooling capability of the ice cream maker"
+        },
+        {
+          "page": 2,
+          "hazard": "alternate B* control-panel diagram does not justify asserting that all buttons are on every version"
+        },
+        {
+          "page": 9,
+          "hazard": "troubleshooting symptoms and motor failure codes are not measured reliability evidence"
+        }
+      ],
+      "filename": "IFU_User_Manual_Tefal_Dolci_Ice_Cream_Maker.pdf",
+      "sha256": "2fceaae2bff7736ecd92459d15d587c9cdf60178458d0f21ec78be0ba6ae35ee",
+      "byteCount": 10327975,
+      "pages": 56
+    },
+    {
+      "document_type": "manufacturer grill pictographic manual plus warranty country listings",
+      "model_policy": "Filename has GC242D; cover shows Inicio Grill Adjust only. No automatically confirmed SKU/variant.",
+      "frozen_targets": [
+        {
+          "id": "grill-preheat",
+          "page": 3,
+          "field": "illustrated preheat step",
+          "lower": 5,
+          "upper": 10,
+          "unit": "minutes",
+          "scope": "operation step, not performance test",
+          "kind": "pictographic operating instruction"
+        },
+        {
+          "id": "grill-cool",
+          "page": 4,
+          "field": "illustrated cooldown",
+          "value": 2,
+          "unit": "hours",
+          "scope": "before storage/cleaning operating instruction",
+          "kind": "pictographic instruction"
+        },
+        {
+          "id": "grill-food-thickness",
+          "page": 5,
+          "field": "cooking guide footnote",
+          "value": "depending on food thickness",
+          "kind": "conditional cooking-guide note"
+        },
+        {
+          "id": "grill-firstrow",
+          "page": 5,
+          "field": "first guide cooking time",
+          "lower": 5,
+          "upper": 11,
+          "unit": "minutes",
+          "scope": "food represented by pictograms not reliably resolved from extracted text",
+          "kind": "NOT safely attributable without visual alignment"
+        }
+      ],
+      "negative_guards": [
+        {
+          "page": 5,
+          "hazard": "range 5–11 minutes lacks a plain-text food association; do not assign the time to a guessed food or machine test"
+        },
+        {
+          "page": 5,
+          "hazard": "cooking instruction rows do not establish measured cooking performance"
+        },
+        {
+          "page": 6,
+          "hazard": "country hotline phone numbers must not be treated as technical specs"
+        },
+        {
+          "page": 7,
+          "hazard": "visibly overlapped extracted warranty text should not be fed as structured technical information"
+        }
+      ],
+      "filename": "GC242D_IFU.pdf",
+      "sha256": "149fb40880a0ada1e486cfb2f75e8e4bdaba61139e1f61c50d31280823c96258",
+      "byteCount": 1119679,
+      "pages": 8
+    }
+  ]
+}

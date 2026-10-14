@@ -1,0 +1,112 @@
+{
+  "schema": "pee228.test-results.v1",
+  "date": "2026-10-13",
+  "sourcePredecessor": "product-evidence-engine-v5.51-phase227-FULL.zip",
+  "typescriptFullShardRegression": {
+    "groups": 15,
+    "passed": 4059,
+    "failed": 0,
+    "execution": "node scripts/run-test-shards.mjs <N> for N=1..15, executed independently",
+    "shards": [
+      {
+        "shard": 1,
+        "exit": 0,
+        "passed": 168
+      },
+      {
+        "shard": 2,
+        "exit": 0,
+        "passed": 167
+      },
+      {
+        "shard": 3,
+        "exit": 0,
+        "passed": 241
+      },
+      {
+        "shard": 4,
+        "exit": 0,
+        "passed": 283
+      },
+      {
+        "shard": 5,
+        "exit": 0,
+        "passed": 322
+      },
+      {
+        "shard": 6,
+        "exit": 0,
+        "passed": 343
+      },
+      {
+        "shard": 7,
+        "exit": 0,
+        "passed": 165
+      },
+      {
+        "shard": 8,
+        "exit": 0,
+        "passed": 398
+      },
+      {
+        "shard": 9,
+        "exit": 0,
+        "passed": 353
+      },
+      {
+        "shard": 10,
+        "exit": 0,
+        "passed": 488
+      },
+      {
+        "shard": 11,
+        "exit": 0,
+        "passed": 433
+      },
+      {
+        "shard": 12,
+        "exit": 0,
+        "passed": 209
+      },
+      {
+        "shard": 13,
+        "exit": 0,
+        "passed": 144
+      },
+      {
+        "shard": 14,
+        "exit": 0,
+        "passed": 170
+      },
+      {
+        "shard": 15,
+        "exit": 0,
+        "passed": 175
+      }
+    ]
+  },
+  "newTargeted": {
+    "passed": 12,
+    "failed": 0,
+    "command": "node --test dist/tests/phase228_document_observer.test.js"
+  },
+  "syntheticReplay": {
+    "documents": 2,
+    "publisherSpecificationLeads": 5,
+    "originalIndependentTestsVerified": 0,
+    "rankingAuthorized": false,
+    "note": "Fixture PDF and DOCX created for tests; no real publisher source read."
+  },
+  "cli": {
+    "footballRealNetworkRequests": 0,
+    "binsRealNetworkRequests": 0,
+    "independentProductsVerified": 0
+  },
+  "pythonDocumentModule": {
+    "formatPdf": "Poppler pdftotext (system executable required)",
+    "formatDocx": "Python stdlib zipfile/xml.etree",
+    "actualOnlineFetchTested": false,
+    "legacyDocSupported": false,
+    "ocrSupported": false
+  }
+}

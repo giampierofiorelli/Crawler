@@ -1,0 +1,238 @@
+TAP version 13
+# Subtest: 200 authentic signatures and complete bytes permit STAGING only
+ok 1 - 200 authentic signatures and complete bytes permit STAGING only
+  ---
+  duration_ms: 16.800378
+  type: 'test'
+  ...
+# Subtest: 200 signed ordinary expert outcome has distinct provenance kind
+ok 2 - 200 signed ordinary expert outcome has distinct provenance kind
+  ---
+  duration_ms: 3.806975
+  type: 'test'
+  ...
+# Subtest: 200 no raw publisher document in returned decision
+ok 3 - 200 no raw publisher document in returned decision
+  ---
+  duration_ms: 3.548933
+  type: 'test'
+  ...
+# Subtest: 200 no unsigned capture accepted
+ok 4 - 200 no unsigned capture accepted
+  ---
+  duration_ms: 2.406773
+  type: 'test'
+  ...
+# Subtest: 200 capture full-document bytes must match signed SHA256
+ok 5 - 200 capture full-document bytes must match signed SHA256
+  ---
+  duration_ms: 2.206285
+  type: 'test'
+  ...
+# Subtest: 200 mismatched original document version rejected
+ok 6 - 200 mismatched original document version rejected
+  ---
+  duration_ms: 1.572608
+  type: 'test'
+  ...
+# Subtest: 200 capture copied from a different product variant rejected
+ok 7 - 200 capture copied from a different product variant rejected
+  ---
+  duration_ms: 3.468054
+  type: 'test'
+  ...
+# Subtest: 200 expert review cannot impersonate primary issuer registry capture
+ok 8 - 200 expert review cannot impersonate primary issuer registry capture
+  ---
+  duration_ms: 1.544966
+  type: 'test'
+  ...
+# Subtest: 200 issuer programme cannot impersonate specialist authored experiment
+ok 9 - 200 issuer programme cannot impersonate specialist authored experiment
+  ---
+  duration_ms: 1.937668
+  type: 'test'
+  ...
+# Subtest: 200 capture from before maximum freshness denied
+ok 10 - 200 capture from before maximum freshness denied
+  ---
+  duration_ms: 1.880043
+  type: 'test'
+  ...
+# Subtest: 200 stale status snapshot denies all badges despite perfect signatures
+ok 11 - 200 stale status snapshot denies all badges despite perfect signatures
+  ---
+  duration_ms: 2.180298
+  type: 'test'
+  ...
+# Subtest: 200 signed revocation overrides valid old approvals
+ok 12 - 200 signed revocation overrides valid old approvals
+  ---
+  duration_ms: 1.980582
+  type: 'test'
+  ...
+# Subtest: 200 forged revocation-free status is rejected
+ok 13 - 200 forged revocation-free status is rejected
+  ---
+  duration_ms: 1.130203
+  type: 'test'
+  ...
+# Subtest: 200 different signing key not in pinned policy cannot authorize capture
+ok 14 - 200 different signing key not in pinned policy cannot authorize capture
+  ---
+  duration_ms: 1.46603
+  type: 'test'
+  ...
+# Subtest: 200 incomplete second reviewer stops staging
+ok 15 - 200 incomplete second reviewer stops staging
+  ---
+  duration_ms: 1.257091
+  type: 'test'
+  ...
+# Subtest: 200 one human cannot play two review roles through two keys
+ok 16 - 200 one human cannot play two review roles through two keys
+  ---
+  duration_ms: 1.714117
+  type: 'test'
+  ...
+# Subtest: 200 altered signed reviewer scope is rejected
+ok 17 - 200 altered signed reviewer scope is rejected
+  ---
+  duration_ms: 1.707498
+  type: 'test'
+  ...
+# Subtest: 200 correct scope but forged reviewer signature denied
+ok 18 - 200 correct scope but forged reviewer signature denied
+  ---
+  duration_ms: 1.723882
+  type: 'test'
+  ...
+# Subtest: 200 altered claim hash with correctly re-signed reviewer still fails scope
+ok 19 - 200 altered claim hash with correctly re-signed reviewer still fails scope
+  ---
+  duration_ms: 1.713466
+  type: 'test'
+  ...
+# Subtest: 200 altered presentation hash invalidates previously approved state
+ok 20 - 200 altered presentation hash invalidates previously approved state
+  ---
+  duration_ms: 1.370959
+  type: 'test'
+  ...
+# Subtest: 200 non-Ed25519 anchor rejected, no fallback to insecure algorithms
+ok 21 - 200 non-Ed25519 anchor rejected, no fallback to insecure algorithms
+  ---
+  duration_ms: 252.338843
+  type: 'test'
+  ...
+# Subtest: 200 policy date bounds reject invalid cryptographic trust configuration
+ok 22 - 200 policy date bounds reject invalid cryptographic trust configuration
+  ---
+  duration_ms: 0.725193
+  type: 'test'
+  ...
+# Subtest: 200 capture signer with wrong role cannot authorize issuer record
+ok 23 - 200 capture signer with wrong role cannot authorize issuer record
+  ---
+  duration_ms: 1.259695
+  type: 'test'
+  ...
+# Subtest: 200 expired pin stops old valid signature
+ok 24 - 200 expired pin stops old valid signature
+  ---
+  duration_ms: 1.215179
+  type: 'test'
+  ...
+# Subtest: 200 extra unqualified evidence packet cannot issue additional trust card
+ok 25 - 200 extra unqualified evidence packet cannot issue additional trust card
+  ---
+  duration_ms: 1.89183
+  type: 'test'
+  ...
+# Subtest: 200 absent specialist validation yields no signal, not bad product
+ok 26 - 200 absent specialist validation yields no signal, not bad product
+  ---
+  duration_ms: 1.497216
+  type: 'test'
+  ...
+# Subtest: 200 unordered status revocation list is not trusted
+ok 27 - 200 unordered status revocation list is not trusted
+  ---
+  duration_ms: 0.891961
+  type: 'test'
+  ...
+# Subtest: 200 no document body can exceed bounded transient maximum
+ok 28 - 200 no document body can exceed bounded transient maximum
+  ---
+  duration_ms: 1.437297
+  type: 'test'
+  ...
+# Subtest: 200 Phase193 identical publisher bytes and reviewed star-only decision blocks staged original claim
+ok 29 - 200 Phase193 identical publisher bytes and reviewed star-only decision blocks staged original claim
+  ---
+  duration_ms: 2.642832
+  type: 'test'
+  ...
+# Subtest: 200 Phase193 revised document does not silently reuse an old negative screen
+ok 30 - 200 Phase193 revised document does not silently reuse an old negative screen
+  ---
+  duration_ms: 5.256541
+  type: 'test'
+  ...
+# Subtest: 200 Phase193 policy change forces new evaluation; stale exclusion does not become a domain blacklist
+ok 31 - 200 Phase193 policy change forces new evaluation; stale exclusion does not become a domain blacklist
+  ---
+  duration_ms: 2.430368
+  type: 'test'
+  ...
+# Subtest: 200 Phase193 unrelated domain-wide exclusion does not suppress new original
+ok 32 - 200 Phase193 unrelated domain-wide exclusion does not suppress new original
+  ---
+  duration_ms: 2.068973
+  type: 'test'
+  ...
+# Subtest: 200 Phase193 review metadata hash chains cannot be spoofed
+ok 33 - 200 Phase193 review metadata hash chains cannot be spoofed
+  ---
+  duration_ms: 1.474943
+  type: 'test'
+  ...
+# Subtest: 200 unknown scheme registry version cannot produce eligible Phase199 card
+ok 34 - 200 unknown scheme registry version cannot produce eligible Phase199 card
+  ---
+  duration_ms: 1.248027
+  type: 'test'
+  ...
+# Subtest: 200 commercial professional endorsement cannot be signed into official approval
+ok 35 - 200 commercial professional endorsement cannot be signed into official approval
+  ---
+  duration_ms: 1.226526
+  type: 'test'
+  ...
+# Subtest: 200 source data change despite identical text annotation forces new signatures
+ok 36 - 200 source data change despite identical text annotation forces new signatures
+  ---
+  duration_ms: 1.029354
+  type: 'test'
+  ...
+# Subtest: 200 policy does not accept duplicate capture service key identifiers
+ok 37 - 200 policy does not accept duplicate capture service key identifiers
+  ---
+  duration_ms: 0.477557
+  type: 'test'
+  ...
+# Subtest: 200 signed status with unsorted revoked set fails closed, not sanitized
+ok 38 - 200 signed status with unsorted revoked set fails closed, not sanitized
+  ---
+  duration_ms: 0.854234
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 440.580028

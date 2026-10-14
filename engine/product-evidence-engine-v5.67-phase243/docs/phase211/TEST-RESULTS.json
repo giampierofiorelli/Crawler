@@ -1,0 +1,48 @@
+{
+  "schema": "pee.phase211.test-results.v1",
+  "phase": 211,
+  "version": "5.35.0",
+  "typescriptCompilation": "passed",
+  "typescriptRegressions": {
+    "pass": 3764,
+    "groups": 14,
+    "allAdmittedGroupsPassed": true,
+    "historicalNotAdmitted": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "logs": "docs/phase211/test-logs/ts-group-*.log"
+  },
+  "pythonRegressions": {
+    "pass": 212,
+    "groups": 6,
+    "logs": "docs/phase211/test-logs/python-*.log"
+  },
+  "phase211Targeted": {
+    "allPassed": true,
+    "total": 38,
+    "typescript": 35,
+    "cliNode": 3,
+    "log": "docs/phase211/test-logs/targeted.log"
+  },
+  "realUploadAudioAnalysis": {
+    "processed": true,
+    "byteHashMatchesPhase210": true,
+    "durationSeconds": 65.2,
+    "inputByteLength": 47544531,
+    "inputSha256": "2ffa85cdab9abe838265d83c0faaf01ae4d5e564ad276496e95d8ec23b19c932",
+    "ffmpegBelowThresholdIntervalsSeconds": [[39.974, 40.416], [51.565, 52.025]],
+    "thresholdDb": -20,
+    "minimumDurationSeconds": 0.4,
+    "actualSpeechRecognized": false,
+    "asrModelInstalledOrUsed": false,
+    "scientificGoldLabels": 0,
+    "productRankingAuthorized": false
+  },
+  "limitations": [
+    "FFmpeg sound-level silence is not voice activity detection or speech transcription",
+    "subtitle and caption fixtures were constructed, not independent gold labels",
+    "no independently verified original publisher URL or named reviewer",
+    "historic Phase91/92 test files excluded as predecessor due inconclusive runner behavior"
+  ]
+}

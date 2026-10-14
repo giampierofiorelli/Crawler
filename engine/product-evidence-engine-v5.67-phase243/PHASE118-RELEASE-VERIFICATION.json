@@ -1,0 +1,67 @@
+{
+  "version": "v4.42-phase118",
+  "asOf": "2026-10-11",
+  "baseline": "v4.41-phase117 user-provided cumulative archive",
+  "baselineFiles": 1234,
+  "baselineFilesMissing": [],
+  "baselineFilesModified": [
+    "README.md",
+    "package.json"
+  ],
+  "newPhaseSourceAndExamples": [
+    "src/phase118_real_stair_capability_audit.ts",
+    "src/phase118_stair_reviewed_source_case.ts",
+    "tests/phase118_real_stair_capability_audit.test.ts",
+    "examples/phase118-stairs-demo.ts"
+  ],
+  "manualOriginalSourcesWithLinks": 11,
+  "distinctRobotAndCarrierSystems": 8,
+  "originalIndependentThresholdProductTests": [
+    "Roborock Saros 20 57mm Vacuum Wars",
+    "Dreame X50 Ultra 36mm Vacuum Wars"
+  ],
+  "factualCapabilities": "controlled exhibition staircase demonstration vs original independent threshold test vs original manufacturer threshold claims; retail status separate",
+  "focusedPhase118": {
+    "passed": 35,
+    "failed": 0
+  },
+  "typescriptRegression": {
+    "execution": "six separately completed bounded shards",
+    "shards": {
+      "1": 168,
+      "2": 167,
+      "3": 241,
+      "4": 207,
+      "5": 170,
+      "6": 175
+    },
+    "passed": 1128,
+    "failed": 0,
+    "combinedSingleInvocation": "timed out/incomplete, excluded from pass claims"
+  },
+  "otherSuites": {
+    "individualAndCombinedPassCounts": {
+      "companionPython": 60,
+      "companionNode": 16,
+      "primarySourcePython": 47,
+      "ingestionPython": 21,
+      "evaluationPython": 26,
+      "launchNode": 4,
+      "releaseNode": 3
+    },
+    "passed": 177,
+    "failed": 0
+  },
+  "passCountWithoutDoubleCountingFocusedTest": 1305,
+  "realOriginalWebEvidence": true,
+  "liveEcommerceInventoryValidated": false,
+  "stairDevicesReliableAtHomeValidated": false,
+  "stairTreadCleaningQuantified": false,
+  "wholeMarketCatalogComplete": false,
+  "automaticReviewExtractionValidated": false,
+  "liveLocalLLMValidated": false,
+  "productionMainlineIntegrated": false,
+  "calibratedCrossPublisherProductRankings": false,
+  "phase118ResultArtifact": "PHASE118-REAL-SOURCE-RESULTS.json",
+  "testMeaning": "Original-source facts manually reviewed; software behavior tested against fixed ground-truth examples and constructed adversarial records, not real-world consumer performance prediction"
+}

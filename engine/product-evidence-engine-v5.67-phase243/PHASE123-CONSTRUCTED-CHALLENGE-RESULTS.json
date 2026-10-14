@@ -1,0 +1,365 @@
+{
+  "date": "2026-10-11",
+  "name": "Phase123 constructed diagnostic, NOT blind real-user evaluation",
+  "trainingSize": 100,
+  "calibrationSize": 25,
+  "challengeSize": 30,
+  "trainingProvenance": "author_constructed_not_independently_labeled",
+  "challengeProvenance": "developer_authored_frozen_at_execution_not_independent",
+  "modelHash": "1e422201cdbc42570c64a2c273611b6739ec70f10657c34e11ce606daf1f54ed",
+  "thresholds": {
+    "cosine": 0.28,
+    "margin": 0.1
+  },
+  "calibration": {
+    "calibrationCount": 25,
+    "selectedOnConstructedData": true,
+    "calibrationIncorrectAccepted": 0,
+    "calibrationCorrectAccepted": 2,
+    "calibrationAbstentions": 23
+  },
+  "baseline": {
+    "correctAccepted": 0,
+    "incorrectAccepted": 1
+  },
+  "proposed": {
+    "correctAccepted": 4,
+    "incorrectAccepted": 0,
+    "abstained": 26
+  },
+  "examples": [
+    {
+      "id": "UE-01",
+      "expected": "autonomy",
+      "baseline": null,
+      "proposal": "autonomy",
+      "status": "proposed",
+      "similarity": 0.377201,
+      "margin": 0.237616,
+      "correct": true,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-02",
+      "expected": "autonomy",
+      "baseline": null,
+      "proposal": "autonomy",
+      "status": "proposed",
+      "similarity": 0.29938,
+      "margin": 0.171322,
+      "correct": true,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-03",
+      "expected": "autonomy",
+      "baseline": null,
+      "proposal": "autonomy",
+      "status": "proposed",
+      "similarity": 0.368431,
+      "margin": 0.271133,
+      "correct": true,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-04",
+      "expected": "autonomy",
+      "baseline": null,
+      "proposal": null,
+      "status": "needs_constraint_review",
+      "similarity": 0.17078,
+      "margin": 0.015677,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-05",
+      "expected": "autonomy",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.178504,
+      "margin": 0.019948,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-06",
+      "expected": "performance",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.267989,
+      "margin": 0.153107,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-07",
+      "expected": "performance",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.278763,
+      "margin": 0.171489,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-08",
+      "expected": "performance",
+      "baseline": null,
+      "proposal": null,
+      "status": "needs_constraint_review",
+      "similarity": 0.238575,
+      "margin": 0.025456,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-09",
+      "expected": "performance",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.346224,
+      "margin": 0.082585,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-10",
+      "expected": "performance",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.365542,
+      "margin": 0.037666,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-11",
+      "expected": "value",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.315409,
+      "margin": 0.091881,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-12",
+      "expected": "value",
+      "baseline": null,
+      "proposal": "value",
+      "status": "proposed",
+      "similarity": 0.400274,
+      "margin": 0.204313,
+      "correct": true,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-13",
+      "expected": "value",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.25984,
+      "margin": 0.207809,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-14",
+      "expected": "value",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.273115,
+      "margin": 0.039244,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-15",
+      "expected": "value",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.201307,
+      "margin": 0.046011,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-16",
+      "expected": "capability",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.203043,
+      "margin": 0.001991,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-17",
+      "expected": "capability",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.215668,
+      "margin": 0.097586,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-18",
+      "expected": "capability",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.142674,
+      "margin": 0.000471,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-19",
+      "expected": "capability",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.225823,
+      "margin": 0.098438,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-20",
+      "expected": "capability",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.310194,
+      "margin": 0.096474,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-21",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.342197,
+      "margin": 0.179437,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-22",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.206143,
+      "margin": 0.045163,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-23",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.291901,
+      "margin": 0.080406,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-24",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.229525,
+      "margin": 0.151288,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-25",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.227443,
+      "margin": 0.026839,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-26",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "needs_constraint_review",
+      "similarity": 0.190282,
+      "margin": 0.007573,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-27",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "needs_constraint_review",
+      "similarity": 0.329501,
+      "margin": 0.165448,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-28",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "needs_constraint_review",
+      "similarity": 0.152039,
+      "margin": 0.004362,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-29",
+      "expected": "other",
+      "baseline": "performance",
+      "proposal": null,
+      "status": "abstain",
+      "similarity": 0.161317,
+      "margin": 0.030847,
+      "correct": false,
+      "wrongAcceptance": false
+    },
+    {
+      "id": "UE-30",
+      "expected": "other",
+      "baseline": null,
+      "proposal": null,
+      "status": "needs_constraint_review",
+      "similarity": 0.323493,
+      "margin": 0.057142,
+      "correct": false,
+      "wrongAcceptance": false
+    }
+  ],
+  "realBlindUserAccuracy": null,
+  "rankingValidated": false,
+  "webExecuted": false
+}

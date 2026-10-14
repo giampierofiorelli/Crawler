@@ -1,0 +1,60 @@
+# Phase 85 — In-house, source-adaptive acquisition
+
+**Date:** 10 October 2026  
+**Decision:** Keep the Product Evidence Engine's acquisition architecture in-house. Do not adopt Crawl4AI, ScrapeGraphAI or an API-based scraping service without evidence of a specific, otherwise unattainable or uneconomical benefit. Reuse commodity software (HTTP, a standards-compliant HTML parser when needed, and optionally Playwright for JS rendering). This is a design decision, not a claim that internal software always outperforms third-party packages.
+
+## What changed in code
+
+`src/phase85_source_recipes.ts` supplies a deterministic, repeatable strategy for **one restricted input class**: a manufacturer page containing a single JSON-LD `Product` node with schema.org `additionalProperty` / `PropertyValue` numeric specifications.
+
+A proposed recipe identifies an authorized host, a path prefix, category, field meanings and units. It contains **no executable selectors or arbitrary JavaScript**, no source webpage and no saved prompt. Two distinct independently human-labelled product pages must reproduce the expected values before the recipe can be marked ready for human review. An operator must then separately review the recipe, its scope and source rights. The persistent store saves **reviewed recipe definitions only**, versioned, locked on write and SHA-256 integrity checked. No raw HTML is saved in the recipe store.
+
+The reviewed recipe can serve as the `LocalSemanticAdapter` already supported by `src/phase72_semantic_intake.ts`. That module accesses source content through `readApprovedSource`, respecting prior access/rights checks and sending proposed facts to a quarantined evidence matrix. The new recipe **does not bypass** those checks, does not score a product, and does not make source claims independent or trustworthy merely because their syntax is parseable.
+
+## Why this matters for the product
+
+A product maker may publish the same machine-readable specification pattern on hundreds of pages. An LLM can assist in proposing what a field means on an initial specimen. Once independently verified, the deterministic recipe can parse additional models without another LLM call. If the field vanishes, its unit changes, a model does not match, or the page aggregates multiple models, the recipe fails closed and queues that source for deeper interpretation or review. It must not invent a value or infer discontinued status from commercial availability.
+
+This is the first practical mechanism for **learning acquisition procedures** independently of learning facts about products or categories. It lays the groundwork for an in-house strategy memory, not a complete general-purpose crawler.
+
+## Technical boundaries and limitations
+
+- Supports **only** numeric `schema.org/Product` + `additionalProperty` values with explicit unit and exact model, using bounded JSON parsing. No arbitrary HTML, web-wide discovery, PDFs or prose-based tests. Narrative reviews remain under separate semantic intake with human/method review.
+- Does not create or operate a live model. A local LLM can propose recipes in a future phase; currently proposal creation is an interface, not an autonomous capability.
+- Does not authorize web retrieval: `extractBySourceRecipe` is a pure transient parser intended to run **only downstream of** `readApprovedSource` when used with real web content. Tests include one end-to-end mocked authorized read.
+- Does not make a qualification sample's labels independent automatically: the labels must actually come from an assessor rather than the model proposing the recipe.
+- No real publisher was contacted in Phase 85. Tests use local controlled fixtures. No external comparative benchmark has been performed or is asserted.
+- A human review receipt is a system input, not cryptographic proof of the reviewer's identity. Production requires authenticated approval flows and persistence controls.
+- JSON-LD on some sites is incomplete, inaccurate, or contains multiple variants; strict failure is intentional. A broader extractor and optional rendered DOM can later handle these cases, with a proper HTML parsing library rather than expanding regex hacks.
+
+## Security and data safeguards
+
+Source host/path and model identity are required to match. Ambiguous multiple product nodes, duplicate fields, missing units, type conflicts and malformed JSON-LD are rejected. Recipe definitions remain versioned and non-executable. Raw source content is not persisted by the adapter or recipe store. Access, robots and terms are upstream checks and must be revalidated at execution. A site's JSON-LD may state factual manufacturer claims but must not become independent performance evidence or a ranking score.
+
+## Test evidence
+
+- `npm test`: **593 passed** (includes 16 new phase-85 tests).
+- `npm run test:ingestion`: **21 passed**.
+- `npm run test:primary`: **47 passed**.
+- `npm run test:launch`: **4 passed**.
+- `npm run test:release`: **3 passed**.
+
+These are local software tests. The comparison with Crawl4AI is **not** claimed to be complete, and an additional round of synthetic framework-versus-in-house exercises is not required as a prerequisite to ordinary in-house development.
+
+## Why this architecture is technically reasonable
+
+- Playwright documentation describes access to rendered DOM and JavaScript through `page.evaluate` when rendering is actually required: https://playwright.dev/docs/evaluating
+- Google explains that accurate `<lastmod>` timestamps may help identify meaningful page updates, while a sitemap does not guarantee discovery or freshness: https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+- Schema.org specifies `Product`, `PropertyValue` and product attributes: https://schema.org/Product and https://schema.org/PropertyValue
+- Crawl4AI documents that deterministic CSS/XPath extraction is generally appropriate when a reusable structure is available; LLM extraction is for cases where selectors or structure do not suffice: https://docs.crawl4ai.com/extraction/no-llm-strategies/
+
+These references support component selection, not a claim that our extractor has equivalent performance or coverage to any named framework.
+
+## Next in-house tasks
+
+1. Connect a **source-specific strategy proposer** to a local LLM and ensure it cannot review its own proposals.
+2. Extend stable extraction to a proper HTML parser for authorized static pages, and optional Playwright for approved JS-rendered pages. Keep the selected tool behind the existing source access boundary.
+3. Link recipe outcome and failure reason to the persistent market-watch scheduler; repeated unchanged sources should not repeat LLM work, and structural changes should trigger recipe requalification.
+4. Verify on actual permitted sources and measure omissions, incorrect values, maintenance time and unit economics only when an environment supporting authorized acquisition exists.
+
+**Decision rule for external packages:** consider adopting any external framework only after documenting an observed, material internal limitation in required coverage, correctness, security or operating cost. Avoid mandatory commercial scraping/search APIs.

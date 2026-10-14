@@ -1,0 +1,12 @@
+
+> product-evidence-engine@4.7.0 demo:phase79
+> npm run build && node dist/examples/phase79-stop-or-search-demo.js
+
+
+> product-evidence-engine@4.7.0 build
+> tsc -p tsconfig.json
+
+{"scenario":"one after audited hard filters","discovered":3,"verified":1,"hardFilterExclusions":2,"conclusion":"bounded_single_option","nextActions":["independent_decision_review"],"message":"Dopo aver verificato le alternative e i vincoli specifici, abbiamo individuato una soluzione supportata dalle evidenze. Non significa che sia l’unica sul mercato. La proposta richiede ancora la revisione finale."}
+{"scenario":"one only because discovery was not established","discovered":1,"verified":1,"hardFilterExclusions":0,"conclusion":"continue_research","nextActions":["expand_solution_discovery"],"message":"Stiamo lavorando per te: approfondiamo le alternative che potrebbero cambiare la risposta alla tua richiesta, prima di consigliarti cosa scegliere."}
+{"scenario":"three after filtering a large explored catalogue","discovered":103,"verified":3,"hardFilterExclusions":100,"conclusion":"bounded_multiple_options","nextActions":["independent_decision_review"],"message":"La ricerca di alternative pertinenti è sufficientemente documentata per passare alla revisione comparativa. Il numero di opzioni non determina da solo quali consigliare."}
+{"scenario":"one hundred viable options in a well-documented search","discovered":100,"verified":100,"hardFilterExclusions":0,"conclusion":"bounded_multiple_options","nextActions":["independent_decision_review"],"message":"La ricerca di alternative pertinenti è sufficientemente documentata per passare alla revisione comparativa. Il numero di opzioni non determina da solo quali consigliare."}

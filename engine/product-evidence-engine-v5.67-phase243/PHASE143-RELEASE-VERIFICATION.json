@@ -1,0 +1,61 @@
+{
+  "phase": 143,
+  "version": "4.67-phase143",
+  "parent": "4.66-phase142",
+  "date": "2026-10-11",
+  "parentArchiveSHA256": "f34cbd296da692cbdfb64d20eca0db1fd30885130ba6c706e92db796f8ef1807",
+  "parentFiles": 1465,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerification": [
+    "PHASE143-CROSS-CATEGORY-BASELINE-DIAGNOSTIC.json",
+    "PHASE143-CROSS-CATEGORY-ORIGINAL-REVIEW-PILOT.md",
+    "PHASE143-REGRESSION-GROUPS.json",
+    "dist/src/phase143_cross_domain_subject_guard.js",
+    "dist/tests/phase143_cross_domain_subject_guard.test.js",
+    "research/phase143_cross_category_sources.json",
+    "scripts/evaluate-phase143.mjs",
+    "scripts/phase143_regress.mjs",
+    "src/phase143_cross_domain_subject_guard.ts",
+    "tests/phase143_cross_domain_subject_guard.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passed": 1727,
+    "testFiles": 102,
+    "phase143Focused": 7,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Offline": 9,
+    "total": 77
+  },
+  "diagnostic": {
+    "newSourceExcerpts": 6,
+    "distinctPublishers": 5,
+    "distinctCategories": 5,
+    "before139Pairs": 1,
+    "phase140NewProposals": 0,
+    "phase141NewProposals": 0,
+    "phase142Frames": 0,
+    "phase143UnsafeSubjectAbstentions": 1,
+    "independentGoldAnnotations": 0,
+    "independentAccuracy": null
+  },
+  "noNewRuntimeDependencies": true,
+  "noModelOrWeightsInstalled": true,
+  "noRemotePaidApi": true,
+  "noCanonicalWrites": true,
+  "noRankingChanges": true,
+  "sourceRightsToRedistributeWholeReviewsVerified": false,
+  "note": "New source snippets selected by developer are diagnostic and now exposed, not a blinded gold holdout. Direct fetch of TrustedReviews failed; search excerpt available."
+}

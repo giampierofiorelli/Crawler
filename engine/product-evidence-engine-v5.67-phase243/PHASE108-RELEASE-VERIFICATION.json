@@ -1,0 +1,60 @@
+{
+  "release": "4.32.0",
+  "phase": 108,
+  "researchOnly": true,
+  "publicRankingModified": false,
+  "cumulativeBaseline": "v4.31 phase107",
+  "baselineFiles": 970,
+  "baselineFilesMissing": [],
+  "changedPreviouslyExistingFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newPhase108Code": "src/phase108_query_neutral_evidence.ts",
+  "newFocusedTests": 18,
+  "newHardeningTests": 4,
+  "jsTestShardCounts": [
+    95,
+    73,
+    167,
+    164,
+    152,
+    194,
+    15
+  ],
+  "executedPassingTests": {
+    "javascriptTypescript": 860,
+    "primaryPython": 47,
+    "ingestionPython": 21,
+    "evaluationPython": 26,
+    "companionPython": 60,
+    "companionNode": 16,
+    "launch": 4,
+    "release": 3
+  },
+  "totalExecutedPassingTests": 1037,
+  "sameFirstQueryOrderTested": true,
+  "pairwiseCoverageBothVariantsTested": true,
+  "representativeRealReviewCalibrationValidated": false,
+  "authenticatedReviewerApprovalValidated": false,
+  "allLegacyCanonicalWritePathsProtected": false,
+  "crossDatabaseAtomicityProven": false,
+  "limitations": [
+    "Source completeness and reviewer receipts are declarations not authenticated audits",
+    "Legacy Phase101 writer may bypass Phase108 intake boundary",
+    "No real virus inactivation claim is substantiated for an actual model",
+    "No production user ranking has been enabled"
+  ],
+  "evidenceSources": [
+    "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs",
+    "https://www.w3.org/TR/prov-primer/",
+    "https://www.nsf.org/consumer-resources/articles/dishwasher-certification",
+    "https://developers.google.com/machine-learning/guides/rules-of-ml"
+  ],
+  "sourceSHA256": {
+    "src/phase108_query_neutral_evidence.ts": "7b3a025cd05b89510a99ba4e356ff8d905ecf7b09d0a642265fa0ac590ea5bd6",
+    "tests/phase108_query_neutral_evidence.test.ts": "129f01802b705858f606b957e4488f5feb3924c836d32b282e682522478cab47",
+    "PHASE108-QUERY-NEUTRAL-CANONICAL-EVIDENCE.md": "915283cca86f35e5efbd14191b7ee6b138440709bfde51c9fa5414c089e57af0"
+  },
+  "manifestSHA256": "013d5a2e1d6aff9c0f234ac144d3e459da8f59bf6c95ac86e6bf54ad55382dc5"
+}

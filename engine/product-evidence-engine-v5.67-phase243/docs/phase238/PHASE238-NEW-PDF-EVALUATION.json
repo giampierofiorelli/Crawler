@@ -1,0 +1,90 @@
+{
+  "schema": "pee238.preregistered-original-pdf-results.v1",
+  "baselineFrozenFile": "PHASE238-NEW-PDF-PREREGISTRATION.json",
+  "documentSha256": "8bb542d9f76ccd5598738af60273157dbf10387144fa480407528cabac93800f",
+  "wasUnseenBeforePhase238Development": true,
+  "isUnseenAfterTuning": false,
+  "priorV561ExtractedClaims": 0,
+  "phase238ExtractedClaims": 9,
+  "preregisteredTargets": 14,
+  "matchedPreRegisteredTargets": 9,
+  "matchedTargetRefs": [
+    {
+      "field": "input voltage",
+      "condition": null,
+      "structuredValue": {
+        "lower": 220.0,
+        "unit": "v",
+        "upper": 240.0
+      }
+    },
+    {
+      "field": "input frequency",
+      "condition": null,
+      "structuredValue": {
+        "lower": 50.0,
+        "unit": "hz",
+        "upper": 60.0
+      }
+    },
+    {
+      "field": "nominal power",
+      "condition": null,
+      "structuredValue": 1550.0
+    },
+    {
+      "field": "dimensions (h x w x l)",
+      "condition": null,
+      "structuredValue": {
+        "axes": [
+          "height",
+          "width",
+          "length"
+        ],
+        "unit": "mm",
+        "values": [
+          358,
+          220,
+          435
+        ]
+      }
+    },
+    {
+      "field": "water tank capacity",
+      "condition": "without filter",
+      "structuredValue": 1.5
+    },
+    {
+      "field": "water tank capacity",
+      "condition": "with filter",
+      "structuredValue": 1.3
+    },
+    {
+      "field": "weight",
+      "condition": null,
+      "structuredValue": 10.0
+    },
+    {
+      "field": "power consumption",
+      "condition": "networked standby",
+      "structuredValue": 0.6
+    },
+    {
+      "field": "power consumption",
+      "condition": "low power",
+      "structuredValue": 0.47
+    }
+  ],
+  "unrecoveredTargetLabels": [
+    "minimum programmable coffee dose",
+    "espresso nominal delivery",
+    "lungo nominal delivery",
+    "lungo xl nominal delivery",
+    "free dose maximum"
+  ],
+  "reviewedMismatchCountAmongRecovered": 0,
+  "scopeCaveat": "Recovered nine of the fourteen pre-declared target fields on this development document; not a population-level false positive rate. Conditions and source page were checked. No automated independent measurement or retail identity.",
+  "readerWindow": "first 24 PDF pages only; 204 page original; last target page 25 not processed",
+  "manufacturerSourceRole": "unverified_author_declared",
+  "rankingAuthorized": false
+}

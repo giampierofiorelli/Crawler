@@ -1,0 +1,170 @@
+{
+  "schema": "pee.phase205.test-results.v1",
+  "date": "2026-10-13",
+  "base_version": "5.28.0",
+  "release_version": "5.29.0",
+  "typescript_build": {
+    "status": "passed",
+    "command": "tsc -p tsconfig.json",
+    "log": "docs/phase205/test-logs/build-final.log"
+  },
+  "targeted": {
+    "status": "passed",
+    "tests_passed": 57,
+    "tests_failed": 0,
+    "log": "docs/phase205/test-logs/phase205-targeted-final.log"
+  },
+  "typescript_cumulative": {
+    "status": "partial_legacy_timeout",
+    "verified_tests_passed": 3620,
+    "shards": [
+      {
+        "shard": 1,
+        "passed": 168,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard1.log"
+      },
+      {
+        "shard": 2,
+        "passed": 167,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard2.log"
+      },
+      {
+        "shard": 3,
+        "passed": 241,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard3.log"
+      },
+      {
+        "shard": 4,
+        "passed": 283,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard4.log"
+      },
+      {
+        "shard": 5,
+        "passed": 322,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard5.log"
+      },
+      {
+        "shard": 6,
+        "passed": 343,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard6.log"
+      },
+      {
+        "shard": 7,
+        "passed": 165,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard7.log"
+      },
+      {
+        "shard": 8,
+        "passed": 398,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard8.log"
+      },
+      {
+        "shard": 9,
+        "passed": 353,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard9.log"
+      },
+      {
+        "shard": 10,
+        "passed": 488,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard10.log"
+      },
+      {
+        "shard": 11,
+        "passed": 348,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard11-final.log"
+      },
+      {
+        "shard": 12,
+        "status": "partial_timeout",
+        "passed": 135,
+        "test_files_passed": 11,
+        "test_files_unresolved": [
+          "phase91_watch_gate.test.js",
+          "phase92_recipe_lifecycle.test.js"
+        ],
+        "combined_run": "docs/phase205/test-logs/shard12-serial-retry.log",
+        "per_file_results": "docs/phase205/test-logs/shard12-isolated-results.json"
+      },
+      {
+        "shard": 13,
+        "passed": 194,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard13.log"
+      },
+      {
+        "shard": 14,
+        "passed": 15,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/shard14.log"
+      }
+    ],
+    "unresolved_historic_test_files": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "note": "All 13 other shards completed; shard12 was retried as a group and individual files. Two inherited Phase91/92 files timed out and are NOT counted as passed. Some preceding tests in the timed-out run had ok TAP subtest lines but no final suite result and are NOT counted."
+  },
+  "python": {
+    "status": "passed_after_isolation",
+    "tests_passed": 212,
+    "groups": [
+      {
+        "group": "primary",
+        "tests_passed": 47,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/python-primary.log"
+      },
+      {
+        "group": "ingestion",
+        "tests_passed": 21,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/python-ingestion.log"
+      },
+      {
+        "group": "evaluation",
+        "tests_passed": 26,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/python-evaluation.log"
+      },
+      {
+        "group": "phase95",
+        "tests_passed": 12,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/python-phase95.log"
+      },
+      {
+        "group": "tests-python",
+        "tests_passed": 35,
+        "status": "passed",
+        "log": "docs/phase205/test-logs/python-tests-python.log"
+      },
+      {
+        "group": "companion",
+        "tests_passed": 71,
+        "status": "passed_on_isolated_retry",
+        "log": "docs/phase205/test-logs/python-companion-retry-runner.log"
+      }
+    ],
+    "initial_companion_run": "had 2 subprocess timeouts amid concurrent TypeScript regression; isolated repeat completed 71/71",
+    "legacy_warnings": "ResourceWarning lines from existing phase89 sqlite companion tests"
+  },
+  "external_code_archives": {
+    "crc_and_sha256": "passed",
+    "count": 3,
+    "runtime_installed": false,
+    "register": "research/phase205-external-code/SOURCE-RETENTION-REGISTER.json"
+  },
+  "test_data": "authored/synthetic; no independently annotated real YouTube corpus",
+  "public_ranking_or_badges_changed": false
+}

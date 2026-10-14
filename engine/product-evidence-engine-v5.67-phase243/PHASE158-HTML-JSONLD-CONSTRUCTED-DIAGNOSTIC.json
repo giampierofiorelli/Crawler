@@ -1,0 +1,58 @@
+{
+  "json-ld": [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Product",
+          "name": "Example upholstery cleaner A",
+          "brand": {
+            "@type": "Brand",
+            "name": "Demo"
+          },
+          "model": "clean-a",
+          "sku": "CA-UK",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "power",
+              "value": "280",
+              "unitText": "W"
+            }
+          ],
+          "offers": {
+            "availability": "https://schema.org/OutOfStock"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Example upholstery cleaner B",
+          "brand": {
+            "@type": "Brand",
+            "name": "Demo"
+          },
+          "model": "clean-b",
+          "sku": "CB-UK",
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "water_tank",
+              "value": "1.2",
+              "unitText": "L"
+            }
+          ],
+          "offers": {
+            "availability": "https://schema.org/Discontinued"
+          }
+        }
+      ]
+    }
+  ],
+  "microdata": [],
+  "errors": [],
+  "extructFullLibraryExecuted": false,
+  "adaptedFromExtructJsonLdExtractor": true,
+  "truncated": false,
+  "htmlSha256": "501dcbc793f98d3db123f39032d08d19c8f5c7b1da1ec9ca5c8bfeca71805a0c",
+  "sourcePath": "/mnt/data/pee158-work/product-evidence-engine-v4.82-phase158/evaluation/phase83/fixtures/site/schemaorg.html"
+}

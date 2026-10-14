@@ -1,0 +1,181 @@
+{
+  "date": "2026-10-11",
+  "status": "exploratory_nonrepresentative_not_blind",
+  "userProvidedOrAdapted": true,
+  "correctnessScoresNotAsserted": true,
+  "sampleDesign": "Convenience selection of user-style queries, some referring to prior context; outputs checked qualitatively, not independently scored",
+  "results": [
+    {
+      "ordinal": 1,
+      "query": "E una come gestirebbe sistemare la classifica per quanto riguarda i migliori robot che riescono a essere molto autonomi e quindi richiedono meno intervento umano",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": "least_human_work",
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "bounded_proposal",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "objective:least_human_work",
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 2,
+      "query": "Se io chiedessi 1) miglior robot 2) migliore robot qualità prezzo ?",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "multiple_objectives_need_resolution",
+          "objective:best_value",
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 3,
+      "query": "Trovami i robot che sono in grado di salire gli scalini",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 4,
+      "query": "E se cercassimo robot con vapore?",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 5,
+      "query": "un utente può chiederlo in generale senza filtri",
+      "result": {
+        "category": "unknown",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_context",
+        "contextUsed": false,
+        "protectedNegation": false,
+        "evidenceSignals": [],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 6,
+      "query": "quale robot mi permette di non dover mai svuotare il serbatoio",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 7,
+      "query": "voglio un robot che richiede poca supervisione",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 8,
+      "query": "qual è il robot che mi fa perdere meno tempo con la manutenzione",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 9,
+      "query": "trova i robot che aspirano meglio sui tappeti",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "undecided",
+        "mode": "general",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    },
+    {
+      "ordinal": 10,
+      "query": "I want a low-maintenance vacuum robot that handles pet hair",
+      "result": {
+        "category": "floor_cleaning_robot",
+        "objective": null,
+        "scope": "vacuum",
+        "mode": "personal",
+        "queryState": "needs_semantic_review",
+        "contextUsed": true,
+        "protectedNegation": false,
+        "evidenceSignals": [
+          "scope:vacuum",
+          "verified_conversation_context"
+        ],
+        "confirmedByUser": false
+      }
+    }
+  ]
+}

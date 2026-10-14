@@ -1,0 +1,81 @@
+{
+  "constructed": true,
+  "kind": "incremental_knowledge_invalidation",
+  "eventCount": 5,
+  "update": {
+    "read": 1,
+    "affectedNodeIds": [
+      "noise_comparison",
+      "overall_tradeoff",
+      "tradeoff_explanation"
+    ],
+    "checkpoint": {
+      "sequence": 5,
+      "sha256": "48f2937402ed74a3e29a4c9a96f248d0e2a5b8f4f6b18d19be60a8f0d1a00094"
+    },
+    "moreAvailable": false,
+    "sourceTextRequired": false,
+    "llmCalls": 0,
+    "publicationReady": false
+  },
+  "affectedNodes": [
+    {
+      "nodeId": "noise_comparison",
+      "state": "needs_recomputation",
+      "triggers": [
+        "belief:vacuum:alpha:noise:hard_floor_normal_mode"
+      ]
+    },
+    {
+      "nodeId": "overall_tradeoff",
+      "state": "needs_recomputation",
+      "triggers": [
+        "belief:vacuum:alpha:noise:hard_floor_normal_mode"
+      ]
+    },
+    {
+      "nodeId": "tradeoff_explanation",
+      "state": "needs_recomputation",
+      "triggers": [
+        "belief:vacuum:alpha:noise:hard_floor_normal_mode"
+      ]
+    }
+  ],
+  "unaffectedErgonomics": {
+    "definition": {
+      "nodeId": "ergonomics_comparison",
+      "categoryId": "vacuum",
+      "useContextId": "home_daily_use",
+      "kind": "comparison",
+      "dependencies": [
+        {
+          "kind": "belief",
+          "variantId": "alpha",
+          "categoryId": "vacuum",
+          "criterionId": "ergonomics",
+          "frameId": "home_daily_use"
+        },
+        {
+          "kind": "belief",
+          "variantId": "beta",
+          "categoryId": "vacuum",
+          "criterionId": "ergonomics",
+          "frameId": "home_daily_use"
+        }
+      ],
+      "engineReference": "phase105 constructed dependency-only sample"
+    },
+    "state": "computed_unverified",
+    "firstDirtySequence": null,
+    "lastDirtySequence": null,
+    "triggeringEvidenceKeys": [],
+    "resultSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "computedAtJournalSequence": 4,
+    "publicationReady": false,
+    "rankingEligible": false,
+    "llmCalls": 0
+  },
+  "sourceTextRequired": false,
+  "llmCalls": 0,
+  "publicationReady": false
+}

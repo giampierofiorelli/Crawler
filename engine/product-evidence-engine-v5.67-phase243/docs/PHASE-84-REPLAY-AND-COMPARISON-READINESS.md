@@ -1,0 +1,83 @@
+# Product Evidence Engine — Phase 84
+## Actual-source replay, fairer product extraction, and A/B readiness
+
+**10 October 2026 | v4.12 | Architecture decision: NOT YET JUSTIFIED**
+
+### Decision
+
+Do **not** install or integrate Crawl4AI into the Product Evidence Engine. Do not claim the internal method is better either. Direct networking to public hosts is unavailable from this build container, Crawl4AI is absent, and Chromium navigation is administratively blocked. Thus **no live source was crawled and no valid A/B comparison was performed**. We preserve the custom TypeScript orchestrator, category learning, producer-discontinuation tombstones, provenance, user-query reasoning and selective database population.
+
+This is a meaningful evaluation increment rather than evidence of a winner. It exposes and reduces two biases in Phase 83: a source parser tuned to custom `data-*` fields and a report that showed perfect static-fixture recall while the JS fixture was untested. No ranking logic or public product recommendations have been altered.
+
+### What we verified
+
+1. **An authentic, partial source excerpt**: twenty actual numeric frequency-response samples already supplied in the project from the SBAF HPDB/Sennheiser HD600 left-channel dataset. We checked the immutable file SHA-256, UTF-8/ASCII rows, monotonic frequency, ranges, and agreement with a locked reference copy. **20/20 reference points match**. This verifies repeatable interpretation of *this existing excerpt*, not source accuracy, instrument validity, complete frequency response, quality of headphones, a live crawl or independent transcription. The reference numbers were transcribed from the same pre-existing source excerpt.
+2. **A less artificial public-web-shaped fixture**: the common parser for both Phase 83 arms now recognises `schema.org/Product` JSON-LD, using a separate research-stage structured parser with two constructed (not real) demonstration models. It extracts identifiers and *declared* specifications without promoting promotional copy to measurement outcomes. `Offer.availability=OutOfStock` and `Offer.availability=Discontinued` do **not** retire manufacturing or affect current-product competition. Only authoritative retirement evidence, handled by the existing Phase 81 logic, can do that.
+3. **Full-corpus refusal**: an A/B outcome cannot pass the comparison gate if Crawl4AI has not run, a required page is blocked, or records are duplicated. Missing cases are prominently listed; recall reported for completed cases is labelled accordingly, not passed off as whole-corpus recall.
+4. **Independent readiness preflight**: inspected browser runtime, package presence and DNS. This session has Playwright 1.57.0 and Chromium 144, but no Crawl4AI package and no public DNS resolution. Browser `set_content` can render a constructed JS catalogue, but `page.goto` is blocked. No attempt to bypass these restrictions was made.
+
+### Actual recorded output
+
+| Measurement | Executed result | Interpretation |
+|---|---:|---|
+| Authentic source excerpt | 20/20 points, 0 parser mismatches | Existing licensed-data parser replay only |
+| Constructed static pages | 6/6 completed, 16/16 expected facts | Includes newly added JSON-LD source; not live market data |
+| Constructed JS-only catalogue | Acquisition blocked | In-memory rendering worked; no navigation proven |
+| Crawl4AI | Not installed; not run | No benchmark evidence for the external framework |
+| A/B decision gate | `comparison_valid=false` | Insufficient evidence |
+| Evaluation suite, Phases 83–84 | 26 tests passed | Independent of product ranking |
+| Existing JS/TS suite | 577 tests passed | No existing product-engine regressions identified |
+| Existing Python suites | 47 primary + 21 ingestion tests passed | Legacy checks maintained |
+| Release artefact | 4 launch + 3 release checks passed | Same established isolated launch artefact |
+
+See `audit/phase84/` for machine-readable manifests and full logs. `audit/phase84/controlled-comparison.json` deliberately retains the failed dynamic page, and `audit/phase84/readiness-decision.json` refuses to show a winner.
+
+### Why the 20 measurements are not a comparative web benchmark
+
+- The bytes were supplied before Phase 84, not retrieved through a running crawler.
+- They describe only part of one original test and contain no authored HTML, scripts, rankings or market discovery.
+- The lock values were derived from the same sample, so agreement is a parser regression signal, not an independent gold-standard assessment.
+- The source declares CC BY 4.0, but that alone does not approve automated access to its hosting website; robots, terms and commercial rights remain separate checks.
+
+Attribution: **SBAF / Super Best Audio Friends — HPDB headphone measurements**, CC BY 4.0. Original repository: https://github.com/superbestaudiofriends/headphone-measurements-frequency-response . Source example: https://github.com/superbestaudiofriends/headphone-measurements-frequency-response/blob/master/cEAR30-Sennheiser-HD600-L.txt . Licence: https://creativecommons.org/licenses/by/4.0/legalcode.en . Our included sample is only the first twenty rows, unchanged.
+
+### Production design implications
+
+The expensive and valuable decisions remain internal to the Product Evidence Engine: map needs to solution families, select which product entities to populate, audit search sufficiency rather than product counts, maintain independent-original-test lineage, require source-specific extraction clearance, distinguish evidence from AI hypotheses, retain historical discontinued-product pages while permanently excluding confirmed retired models from current rankings, and show real progress on user requests.
+
+The acquisition interface must remain **replaceable**. Adopt only low-level reusable capabilities where needed (HTTP validation, `ETag`, parsers, Playwright for legitimate JS rendering). Avoid introducing a full agentic crawler as an architectural dependency until it outperforms the internal path on representative approved sources and passes maintainability and resource-cost checks. Open source does not mean zero maintenance or runtime cost. No paid search/scraping API is introduced.
+
+### What must happen to close the decision
+
+1. Run a **source rights and access review** on a fixed, representative list of public pages, including current robots/terms, rights basis and whether temporary research snapshots are permitted. Do not copy professional review articles into the product database. Where rights or access cannot be established, obtain permission or select another source; don't evade technical restrictions.
+2. In a network-enabled, approved execution environment, install a pinned Crawl4AI version in an *isolated comparison environment*; do not add it as a production dependency. Run both arms with the same source list and budgets. Official API: https://docs.crawl4ai.com/api/async-webcrawler/ . Config: https://docs.crawl4ai.com/api/parameters/ . Playwright docs: https://playwright.dev/python/docs/library .
+3. Include source types that stress failure modes: official product launches (specification-only), original laboratory measurements with methods, expert prose, product variants, JS-rendered manufacturer indexes, official retirement notices, repeated news syndication, and stable archive pages. Sample categories should include at least one long-tail need and one large catalogue; do not confuse narrow-filter outcomes with under-populated databases.
+4. Use a locked, independently annotated truth set of product/variant IDs, provenance, methods, measurements, unsupported assertions and false manufacturing-retirement cases. Record failed and blocked pages within the denominator. The schema.org test added in this phase remains **constructed**, not part of the real-world gold set.
+5. Measure retrieval and semantic understanding **separately**, on the *same inputs*. A retrieval-only A/B must use the same parser. If testing LLM extraction, use the same approved local model and record prompts/settings; neither side may infer ranking from manufacturer claims.
+6. Compare quality, missing cases, number of requests/bytes, duration, browser/LLM memory and compute, source coverage, engineering integration time, and repairs after changing source layout. Never optimize solely for the number of products captured.
+7. Accept a framework only if it demonstrates material, repeatable, net benefit at no additional **mandatory commercial API** cost and does not weaken source-rights controls, quality or personalization. Otherwise continue internal implementation.
+
+### Reproduce
+
+```bash
+cd product-evidence-engine-v4.12-phase84
+python -m evaluation.phase84.preflight
+python -m evaluation.phase84.replay --manifest evaluation/phase84/authentic_source_manifest.json
+python -m unittest discover -s evaluation -t . -p 'test_*.py'
+python evaluation/phase83/benchmark.py --arm both --chromium /usr/bin/chromium --output audit/phase84/replay.json
+npm test
+npm run test:primary && npm run test:ingestion
+npm run test:launch && npm run test:release
+```
+
+**Safety:** This is an offline research harness by default. Running the source-replay command makes no external requests. The constructed fixture server binds only to `127.0.0.1`. For real source collection, reuse production-safe HTTPS/robots/rights controls; do not remove their restrictions to make the benchmark pass. Import external snapshots only with documented acquisition and temporary retention authorization.
+
+### Primary technical references
+
+- Crawl4AI official API: https://docs.crawl4ai.com/api/async-webcrawler/
+- Crawl4AI extraction options: https://docs.crawl4ai.com/extraction/no-llm-strategies/
+- Playwright Python library: https://playwright.dev/python/docs/library
+- Playwright network routing: https://playwright.dev/docs/api/class-route
+- schema.org Product vocabulary: https://schema.org/Product
+- HTTP validators (ETag/conditional requests): https://www.rfc-editor.org/rfc/rfc9110.html
+- Creative Commons BY 4.0 legal code: https://creativecommons.org/licenses/by/4.0/legalcode.en

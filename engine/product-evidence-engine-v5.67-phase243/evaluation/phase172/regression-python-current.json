@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-12",
+  "commands": [
+    {
+      "command": "python3 -m unittest discover -s evaluation -t . -p test_*.py",
+      "returnCode": 0,
+      "passed": 26,
+      "resourceWarnings": 0,
+      "tail": "\n..........................\n----------------------------------------------------------------------\nRan 26 tests in 1.670s\n\nOK\n"
+    },
+    {
+      "command": "python3 -m unittest discover -s ingestion -p test_*.py",
+      "returnCode": 0,
+      "passed": 21,
+      "resourceWarnings": 0,
+      "tail": "\n.....................\n----------------------------------------------------------------------\nRan 21 tests in 0.003s\n\nOK\n"
+    },
+    {
+      "command": "python3 -m unittest discover -s phase95 -p test_*.py",
+      "returnCode": 0,
+      "passed": 12,
+      "resourceWarnings": 0,
+      "tail": "\n............\n----------------------------------------------------------------------\nRan 12 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "command": "python3 -m unittest discover -s primary_sources -t . -p test_*.py",
+      "returnCode": 0,
+      "passed": 47,
+      "resourceWarnings": 0,
+      "tail": "\n...............................................\n----------------------------------------------------------------------\nRan 47 tests in 0.006s\n\nOK\n"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests-python -p test_*.py",
+      "returnCode": 0,
+      "passed": 35,
+      "resourceWarnings": 0,
+      "tail": "\n...................................\n----------------------------------------------------------------------\nRan 35 tests in 0.781s\n\nOK\n"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests-companion -p test_phase*.py",
+      "returnCode": 0,
+      "passed": 71,
+      "resourceWarnings": 54,
+      "tail": "7fb6ab870040>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab870130>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab870220>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab870310>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab870400>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab8704f0>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab8705e0>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/usr/lib/python3.13/re/_parser.py:175: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fb6ab8706d0>\n  def append(self, code):\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n.................\n----------------------------------------------------------------------\nRan 71 tests in 25.192s\n\nOK\n"
+    }
+  ],
+  "passed": 212,
+  "allPassed": true,
+  "warningNote": "Legacy SQLite ResourceWarning does not mean all resources are leak-free"
+}

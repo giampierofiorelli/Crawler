@@ -1,0 +1,168 @@
+Phase93 shard 15 FAILED: spawnSync /opt/nvm/versions/node/v22.16.0/bin/node ETIMEDOUT
+ 3.104217
+  type: 'test'
+  ...
+# Subtest: an unauthorized page blocks all inference
+ok 112 - an unauthorized page blocks all inference
+  ---
+  duration_ms: 0.589452
+  type: 'test'
+  ...
+# Subtest: one sample outside source or wrong kind blocks before network
+ok 113 - one sample outside source or wrong kind blocks before network
+  ---
+  duration_ms: 0.35692
+  type: 'test'
+  ...
+# Subtest: AI cannot mark its own recipe reviewed or override policy
+ok 114 - AI cannot mark its own recipe reviewed or override policy
+  ---
+  duration_ms: 1.836689
+  type: 'test'
+  ...
+# Subtest: incorrect expected assessor label prevents human-review-ready result
+ok 115 - incorrect expected assessor label prevents human-review-ready result
+  ---
+  duration_ms: 2.204645
+  type: 'test'
+  ...
+# Subtest: no single independently labelled product is accepted
+ok 116 - no single independently labelled product is accepted
+  ---
+  duration_ms: 0.331622
+  type: 'test'
+  ...
+# Subtest: model cannot relabel manufacturer technical specification as independent test
+ok 117 - model cannot relabel manufacturer technical specification as independent test
+  ---
+  duration_ms: 1.792361
+  type: 'test'
+  ...
+# Subtest: reused proposal without human review cannot be persisted as approved recipe
+ok 118 - reused proposal without human review cannot be persisted as approved recipe
+  ---
+  duration_ms: 52.417711
+  type: 'test'
+  ...
+# Subtest: different model product label is rejected even if property name matches
+ok 119 - different model product label is rejected even if property name matches
+  ---
+  duration_ms: 1.243261
+  type: 'test'
+  ...
+# Subtest: changed unit cannot be normalized or assumed by the model
+ok 120 - changed unit cannot be normalized or assumed by the model
+  ---
+  duration_ms: 5.454173
+  type: 'test'
+  ...
+# Subtest: duplicate Product nodes on a source are not eligible for automatic proposal
+ok 121 - duplicate Product nodes on a source are not eligible for automatic proposal
+  ---
+  duration_ms: 0.821814
+  type: 'test'
+  ...
+# Subtest: bad registry context rejects the AI mapping rather than creating it
+ok 122 - bad registry context rejects the AI mapping rather than creating it
+  ---
+  duration_ms: 0.795083
+  type: 'test'
+  ...
+# Subtest: model failure does not leak raw output or source body to caller
+ok 123 - model failure does not leak raw output or source body to caller
+  ---
+  duration_ms: 0.880732
+  type: 'test'
+  ...
+# Subtest: Ollama adapter supports mock local loopback JSON response, without network API dependency
+ok 124 - Ollama adapter supports mock local loopback JSON response, without network API dependency
+  ---
+  duration_ms: 62.335608
+  type: 'test'
+  ...
+# Subtest: Ollama adapter rejects unsafe model names and broken local response
+ok 125 - Ollama adapter rejects unsafe model names and broken local response
+  ---
+  duration_ms: 7.007142
+  type: 'test'
+  ...
+# Subtest: phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+ok 126 - phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+  ---
+  duration_ms: 149.168111
+  type: 'test'
+  ...
+# Subtest: real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+ok 127 - real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+  ---
+  duration_ms: 3306.088256
+  type: 'test'
+  ...
+# Subtest: rights denied upstream before network I/O and no bypass
+ok 128 - rights denied upstream before network I/O and no bypass
+  ---
+  duration_ms: 20.80527
+  type: 'test'
+  ...
+# Subtest: wrong exact product and changed table structure do not contaminate evidence
+ok 129 - wrong exact product and changed table structure do not contaminate evidence
+  ---
+  duration_ms: 8426.961727
+  type: 'test'
+  ...
+# Subtest: changes in mainline approved registry block before source retrieval
+ok 130 - changes in mainline approved registry block before source retrieval
+  ---
+  duration_ms: 39.756726
+  type: 'test'
+  ...
+# Subtest: phase89 advisory record sees successes and distinguishes structural changes
+ok 131 - phase89 advisory record sees successes and distinguishes structural changes
+  ---
+  duration_ms: 22232.554067
+  type: 'test'
+  ...
+# Subtest: legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+ok 132 - legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+  ---
+  duration_ms: 20.730127
+  type: 'test'
+  ...
+# Subtest: two distinct broken products create a manual requalification advisory, never invoke an LLM
+ok 133 - two distinct broken products create a manual requalification advisory, never invoke an LLM
+  ---
+  duration_ms: 19018.446374
+  type: 'test'
+  ...
+# Subtest: Phase91: no drift case permits reviewed recipe only through unchanged Phase68/69/70 route
+ok 134 - Phase91: no drift case permits reviewed recipe only through unchanged Phase68/69/70 route
+  ---
+  duration_ms: 17080.141981
+  type: 'test'
+  ...
+# Subtest: Phase91: two distinct structural drift products block all subsequent reuse before network I/O
+ok 135 - Phase91: two distinct structural drift products block all subsequent reuse before network I/O
+  ---
+  duration_ms: 19269.745431
+  type: 'test'
+  ...
+# Subtest: Phase91: manually closing a watch ticket does not silently re-authorize stale recipe
+ok 136 - Phase91: manually closing a watch ticket does not silently re-authorize stale recipe
+  ---
+  duration_ms: 29483.492529
+  type: 'test'
+  ...
+# Subtest: Phase91: market discovery stays scheduled even when the exact HTML recipe is blocked
+ok 137 - Phase91: market discovery stays scheduled even when the exact HTML recipe is blocked
+  ---
+  duration_ms: 15313.69866
+  type: 'test'
+  ...
+# Subtest: Phase91: unavailable telemetry fails closed on monitored HTML reuse, with no source requests
+ok 138 - Phase91: unavailable telemetry fails closed on monitored HTML reuse, with no source requests
+  ---
+  duration_ms: 2122.912065
+  type: 'test'
+  ...
+
+

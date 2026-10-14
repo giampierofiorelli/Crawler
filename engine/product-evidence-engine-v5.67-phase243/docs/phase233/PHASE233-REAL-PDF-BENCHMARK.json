@@ -1,0 +1,196 @@
+{
+  "schema": "pee233.original-pdf-interval-evaluation.1",
+  "date": "2026-10-13",
+  "inSampleDevelopmentNotHeldOut": true,
+  "manufacturerDeclarationsOnly": true,
+  "noOriginalDocumentsPackaged": true,
+  "independentEvidenceVerified": false,
+  "rankingAuthorized": false,
+  "manuallyAnnotatedIntervalAnchorsExpected": 6,
+  "manuallyAnnotatedIntervalAnchorsMatched": 6,
+  "documents": [
+    {
+      "id": "purifier",
+      "sha256": "0fbfcdaa9485c7ea0743507216b4d428ec000a3e7872996836833651e2635973",
+      "claimCount": 10,
+      "priorCount": 10,
+      "intervalCount": 0,
+      "variantCount": 0,
+      "componentCount": 0,
+      "ranges": [],
+      "reasonCodes": [
+        "component_weight_not_promoted_to_product_weight",
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified",
+        "pdf_variant_weight_scope_ambiguous"
+      ]
+    },
+    {
+      "id": "washdry",
+      "sha256": "c3c1c1848ba87215d8a52e8493808743e8b76850a1359d9e887f10d5ad488493",
+      "claimCount": 10,
+      "priorCount": 6,
+      "intervalCount": 4,
+      "variantCount": 6,
+      "componentCount": 0,
+      "ranges": [
+        {
+          "label": "input voltage",
+          "range": {
+            "lower": 100,
+            "unit": "v",
+            "upper": 120
+          },
+          "scopeComponent": null,
+          "condition": "low voltage",
+          "locator": {
+            "line": 3,
+            "page": 1
+          }
+        },
+        {
+          "label": "input voltage",
+          "range": {
+            "lower": 200,
+            "unit": "v",
+            "upper": 240
+          },
+          "scopeComponent": null,
+          "condition": "high voltage",
+          "locator": {
+            "line": 3,
+            "page": 1
+          }
+        },
+        {
+          "label": "operating temperature range",
+          "range": {
+            "lower": 0,
+            "unit": "celsius",
+            "upper": 40
+          },
+          "scopeComponent": null,
+          "condition": null,
+          "locator": {
+            "line": 49,
+            "page": 1
+          }
+        },
+        {
+          "label": "water pressure required",
+          "range": {
+            "lower": 14.5,
+            "unit": "psi",
+            "upper": 116
+          },
+          "scopeComponent": null,
+          "condition": null,
+          "locator": {
+            "line": 58,
+            "page": 1
+          }
+        }
+      ],
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_explicit_variant_weight_claims_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_geometry_control_glyphs_ignored",
+        "pdf_no_stable_two_column_rows",
+        "pdf_numeric_interval_claims_unverified",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "id": "dreame",
+      "sha256": "f3710035ec24fa0de3f57703936858cc3241b5bfb150924fe8bc9015ff71d6fd",
+      "claimCount": 2,
+      "priorCount": 2,
+      "intervalCount": 0,
+      "variantCount": 0,
+      "componentCount": 0,
+      "ranges": [],
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_coordinate_rows_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "id": "cx50",
+      "sha256": "1fa87e955bcfa473a0153d1bb32ce3899a813b2af38a50f4edd926253876a2f6",
+      "claimCount": 22,
+      "priorCount": 22,
+      "intervalCount": 0,
+      "variantCount": 0,
+      "componentCount": 22,
+      "ranges": [],
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_component_column_claims_unverified",
+        "pdf_coordinate_rows_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_interval_ambiguous_or_unhandled",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "id": "azurion",
+      "sha256": "53f7cead3420b2466e3d0fc5f279143b6e15326e7060c7fb84554389e10a00fd",
+      "claimCount": 3,
+      "priorCount": 1,
+      "intervalCount": 2,
+      "variantCount": 0,
+      "componentCount": 0,
+      "ranges": [
+        {
+          "label": "source image distance",
+          "range": {
+            "lower": 89.5,
+            "unit": "cm",
+            "upper": 119.5
+          },
+          "scopeComponent": "frontal c-arm",
+          "condition": null,
+          "locator": {
+            "line": 15,
+            "page": 5
+          }
+        },
+        {
+          "label": "source-image distance",
+          "range": {
+            "lower": 87.9,
+            "unit": "cm",
+            "upper": 130.6
+          },
+          "scopeComponent": "lateral l-arc",
+          "condition": null,
+          "locator": {
+            "line": 42,
+            "page": 5
+          }
+        }
+      ],
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_interval_ambiguous_or_unhandled",
+        "pdf_no_stable_two_column_rows",
+        "pdf_numeric_interval_claims_unverified",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    }
+  ],
+  "missingAnchors": [],
+  "priorPhase232Counts": {
+    "purifier": 10,
+    "washdry": 6,
+    "dreame": 2,
+    "cx50": 22,
+    "azurion": 1
+  }
+}

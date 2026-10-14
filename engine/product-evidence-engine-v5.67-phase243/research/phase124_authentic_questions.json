@@ -1,0 +1,19 @@
+{
+  "dateFrozen": "2026-10-11",
+  "provenance": "Verbatim English question extracts from public Reddit posts published BEFORE freeze. Sources browsed manually; user questions are not independent expert annotations. No examples incorporated into Phase123 model fitting. Evaluation was visible to the developer and is NOT independent blind accuracy.",
+  "selection": "Small purposive sample of robot-vacuum purchase questions covering autonomy, value, best performance, stair traversal and strict vacuum-only preferences; not representative sampling.",
+  "cases": [
+    {"id":"real_01","text":"what is the most maintenance-free robot vacuum in 2026?","expected":"autonomy","source":"https://www.reddit.com/r/RobotVacuums/comments/1s9mi5l/what_is_the_most_maintenancefree_robot_vacuum_in/","note":"explicit minimum maintenance"},
+    {"id":"real_02","text":"what's the closest thing to set it and forget it right now?","expected":"autonomy","source":"https://www.reddit.com/r/RobotVacuums/comments/1s9mi5l/what_is_the_most_maintenancefree_robot_vacuum_in/","note":"elliptical question requiring verified robot conversation context"},
+    {"id":"real_03","text":"What robot vacuum brand do you think offers the best value for money right now, and why?","expected":"value","source":"https://www.reddit.com/r/RobotVacuums/comments/1uau897/best_robot_vacuum_brand_offers_the_best_value_for/","note":"brand rather than model"},
+    {"id":"real_04","text":"what's the best value-for-money robot vacuum out there?","expected":"value","source":"https://www.reddit.com/r/RobotVacuums/comments/1fzo4rj","note":"economic trade-off"},
+    {"id":"real_05","text":"what's the best value out there today?","expected":"value","source":"https://www.reddit.com/r/RobotVacuums/comments/z77s26","note":"ellipsis anchored by conversation"},
+    {"id":"real_06","text":"What are your recommendations for the best value-for-money robot vacuum out there?","expected":"value","source":"https://www.reddit.com/r/RobotVacuums/comments/1fzo4rj","note":"full value request"},
+    {"id":"real_07","text":"Are there any robot vacuums that will climb stairs after one level is finished?","expected":"capability","source":"https://www.reddit.com/r/RobotVacuums/comments/1tod8v1/are_there_robot_vacuums_that_will_climb_stairs/","note":"staircase travel, no stair tread cleaning commitment"},
+    {"id":"real_08","text":"what is going to be my best options for a vacuum that can handle debris and pet hair in carpets and DOES NOT have a mopping function.","expected":"performance","source":"https://www.reddit.com/r/RobotVacuums/comments/1rdytw4/best_option_for_pets_and_lots_of_carpet/","note":"strict negative mopping constraint must be retained"},
+    {"id":"real_09","text":"Best robot vacuum for pet hair and cat litter that does not include a mopping function (95% carpet). Budget $400-500","expected":"performance","source":"https://www.reddit.com/r/RobotVacuums/comments/1rdytw4/best_option_for_pets_and_lots_of_carpet/","note":"personal carpet/pet context plus hard negative"},
+    {"id":"real_10","text":"best robot vacuum for high pile carpet?","expected":"performance","source":"https://www.reddit.com/r/RobotVacuums/comments/1qo44xr/best_robot_vacuum_for_high_pile_carpet/","note":"carpet-specific"},
+    {"id":"real_11","text":"what is the BEST robot for pet hair and carpets. Full stop.","expected":"performance","source":"https://www.reddit.com/r/RobotVacuums/comments/1mpytrf","note":"strong goal prioritisation"},
+    {"id":"real_12","text":"Which one would you choose?","expected":"performance","source":"https://www.reddit.com/r/RobotVacuums/comments/1p432yp/best_option_under_1000/","note":"underspecified comparative follow-up, must NOT assume goal absent prior model list"}
+  ]
+}

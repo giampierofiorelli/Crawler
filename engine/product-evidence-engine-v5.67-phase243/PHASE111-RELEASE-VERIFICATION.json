@@ -1,0 +1,41 @@
+{
+  "phase": 111,
+  "version": "4.35.0",
+  "date": "2026-10-11",
+  "baseline_archive": "product-evidence-engine-v4.34-phase110.zip",
+  "baseline_files": 1038,
+  "baseline_missing": [],
+  "baseline_changed": [
+    "README.md",
+    "package.json"
+  ],
+  "new_source_files": [
+    "src/phase111_long_context_and_query_ambiguity.ts",
+    "tests/phase111_long_context_and_query_ambiguity.test.ts"
+  ],
+  "targeted_tests_passed": 25,
+  "javascript_tests_passed": 929,
+  "auxiliary_tests_passed": 177,
+  "all_suites_total_passed": 1106,
+  "suite_counts": {
+    "js_shard_1": 168,
+    "js_shard_2": 167,
+    "js_shard_3": 208,
+    "js_shard_4": 150,
+    "js_shard_5": 180,
+    "js_shard_6": 56,
+    "aux_1": 60,
+    "aux_2": 16,
+    "aux_3": 47,
+    "aux_4": 21,
+    "aux_5": 26,
+    "aux_6": 4,
+    "aux_7": 3
+  },
+  "real_local_model_run": false,
+  "real_review_gold_evaluation": false,
+  "semantic_scope_resolution_validated": false,
+  "query_parser_validated": false,
+  "publication_ready": false,
+  "readme_notes": "Code runs experimental guards, not full NLP semantic understanding."
+}

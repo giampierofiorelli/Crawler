@@ -1,0 +1,301 @@
+{
+  "phase": 134,
+  "date": "2026-10-11",
+  "dataset": "developer-authored-constructed-scenarios",
+  "real_original_reviews": 0,
+  "independent_evaluation": false,
+  "model_accuracy_claim": false,
+  "policy": "hypotheses_only_no_autonomous_learning_or_ranking",
+  "counts": {
+    "quarantined_candidate": 3,
+    "abstain_for_review": 2,
+    "rejected_candidate": 3,
+    "invalid_source": 0
+  },
+  "rows": [
+    {
+      "id": "explicit_measurement",
+      "text": "The airflow metric measures particle delivery.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "explicit_measurement",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "quarantined_candidate",
+        "modifiers": [],
+        "reasons": [
+          "clear_bounded_context"
+        ]
+      }
+    },
+    {
+      "id": "missing_evidence",
+      "text": "No evidence establishes that the steam feature measures surface sterilization.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "missing_evidence",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "rejected_candidate",
+        "modifiers": [
+          {
+            "kind": "lack_of_evidence",
+            "span": {
+              "start": 0,
+              "end": 11
+            },
+            "literal": "No evidence",
+            "scope": {
+              "start": 0,
+              "end": 77
+            },
+            "target": "relation_pair"
+          }
+        ],
+        "reasons": [
+          "unsupported_polarity"
+        ]
+      }
+    },
+    {
+      "id": "missing_proof_not_ineffectiveness",
+      "text": "No evidence establishes that the steam feature measures surface sterilization.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "missing_proof_not_ineffectiveness",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "quarantined_candidate",
+        "modifiers": [
+          {
+            "kind": "lack_of_evidence",
+            "span": {
+              "start": 0,
+              "end": 11
+            },
+            "literal": "No evidence",
+            "scope": {
+              "start": 0,
+              "end": 77
+            },
+            "target": "relation_pair"
+          }
+        ],
+        "reasons": [
+          "absence_of_evidence_not_proof_of_absence"
+        ]
+      }
+    },
+    {
+      "id": "explicit_negative",
+      "text": "The heater does not improve dust removal.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "explicit_negative",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "rejected_candidate",
+        "modifiers": [
+          {
+            "kind": "direct_negation",
+            "span": {
+              "start": 11,
+              "end": 19
+            },
+            "literal": "does not",
+            "scope": {
+              "start": 0,
+              "end": 40
+            },
+            "target": "relation_pair"
+          }
+        ],
+        "reasons": [
+          "unsupported_polarity"
+        ]
+      }
+    },
+    {
+      "id": "contracted_negative",
+      "text": "The heater doesn't improve dust removal.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "contracted_negative",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "rejected_candidate",
+        "modifiers": [
+          {
+            "kind": "direct_negation",
+            "span": {
+              "start": 11,
+              "end": 18
+            },
+            "literal": "doesn't",
+            "scope": {
+              "start": 0,
+              "end": 39
+            },
+            "target": "relation_pair"
+          }
+        ],
+        "reasons": [
+          "unsupported_polarity"
+        ]
+      }
+    },
+    {
+      "id": "uncertain_effect",
+      "text": "The fan setting may improve particulate capture.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "uncertain_effect",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "abstain_for_review",
+        "modifiers": [
+          {
+            "kind": "uncertainty",
+            "span": {
+              "start": 16,
+              "end": 19
+            },
+            "literal": "may",
+            "scope": {
+              "start": 0,
+              "end": 47
+            },
+            "target": "relation_pair"
+          }
+        ],
+        "reasons": [
+          "hypothetical_not_observed"
+        ]
+      }
+    },
+    {
+      "id": "manufacturer_only",
+      "text": "The manufacturer claims that its heater improves hygiene.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "manufacturer_only",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "quarantined_candidate",
+        "modifiers": [
+          {
+            "kind": "attributed_claim",
+            "span": {
+              "start": 0,
+              "end": 23
+            },
+            "literal": "The manufacturer claims",
+            "scope": {
+              "start": 0,
+              "end": 56
+            },
+            "target": "relation_pair"
+          }
+        ],
+        "reasons": [
+          "attributed_not_independent"
+        ]
+      }
+    },
+    {
+      "id": "multi_sentence",
+      "text": "The robot has a heated dock. It removes more soil after two passes.",
+      "decision": {
+        "phase": 134,
+        "candidateId": "multi_sentence",
+        "signalAudit": {
+          "status": "no_signals",
+          "supportFamilies": [],
+          "opposeFamilies": [],
+          "abstentions": 0,
+          "independenceNotVerified": true
+        },
+        "sourceVerified": true,
+        "spanVerified": true,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentReviewRequired": true,
+        "status": "abstain_for_review",
+        "modifiers": [],
+        "reasons": [
+          "cross_clause"
+        ]
+      }
+    }
+  ]
+}

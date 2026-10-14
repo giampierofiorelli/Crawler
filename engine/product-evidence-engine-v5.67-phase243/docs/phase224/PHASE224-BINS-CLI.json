@@ -1,0 +1,96 @@
+{
+  "schema": "pee224.cli.v1",
+  "sourceDiscovery": {
+    "schema": "pee220.run.1",
+    "mode": "live",
+    "requestSha256": "754d1767f7097e828768e5d5b8d32cd13ebd0459c3b4c643b07b0e966a712694",
+    "intent": {
+      "status": "bounded_category_hypothesis",
+      "categoryId": "recycling_bins",
+      "slotValues": {
+        "waste_streams": "paper_plastic"
+      },
+      "clarification": null,
+      "key": "7850711034d22c622992e660e319dfdd5154cbbfac03327875ba21f143d3dfe4",
+      "confirmedByUser": false
+    },
+    "localIntake": {
+      "suggestionCount": 0,
+      "unresolvedIssues": 1
+    },
+    "decision": "awaiting_authorized_sources",
+    "networkRequests": [],
+    "plannedSourceIds": [],
+    "sourceOutcomes": [],
+    "candidates": [],
+    "limitations": [
+      "Discovery URLs do not establish product existence, exact variant, test originality or performance.",
+      "Phase193 screening/Phases196-219 evidence admission and independent ranking remain separate gates.",
+      "No operator-registered sources for this category. No general web index is connected."
+    ],
+    "rankingAuthorized": false,
+    "independentEvidenceVerified": false
+  },
+  "observations": {
+    "schema": "pee222.page-observation.v1",
+    "mode": "live",
+    "requestSha256": "754d1767f7097e828768e5d5b8d32cd13ebd0459c3b4c643b07b0e966a712694",
+    "sourceDiscoveryRun": "pee220.run.1",
+    "networkRequests": [],
+    "receipts": [],
+    "blockedCount": 0,
+    "identityLeadCount": 0,
+    "noSourceBodiesStored": true,
+    "rankingAuthorized": false,
+    "independentEvidenceVerified": false,
+    "limits": [
+      "Publisher-declared JSON-LD is an identity hypothesis, not verified product existence, editorial independence or test results.",
+      "HTTPS and robots access is not an all-purpose copyright or commercial text/data-mining licence.",
+      "Page HTML is processed in volatile memory and omitted from outputs; no page body or article excerpts are persisted.",
+      "Phase224 JSON-LD attributes are unverified publisher claims; they do not prove exact variant, market, independent measurement or suitability.",
+      "No network search index, live site acquisition, scientific evidence admission or ranking is demonstrated by fixture tests."
+    ]
+  },
+  "search": {
+    "schema": "pee223.search.v1",
+    "mode": "live",
+    "intentKey": "7850711034d22c622992e660e319dfdd5154cbbfac03327875ba21f143d3dfe4",
+    "intentStatus": "bounded_category_hypothesis",
+    "queries": [],
+    "networkRequests": [],
+    "candidates": [],
+    "responseDigests": [],
+    "reasonCodes": [
+      "search_provider_disabled"
+    ],
+    "noSnippetsOrPageBodiesStored": true,
+    "rankingAuthorized": false,
+    "independentEvidenceVerified": false
+  },
+  "searchObservations": null,
+  "structuredClaimAudit": {
+    "schema": "pee224.claim-audit.v1",
+    "claimCount": 0,
+    "observedSources": 0,
+    "originalTestsVerified": 0,
+    "exactVariantsVerified": 0,
+    "independenceReviewed": false,
+    "reasonCodes": [
+      "claims_are_unverified_publisher_declarations",
+      "no_independent_performance_tests_authenticated",
+      "no_exact_market_variant_scope_authenticated",
+      "no_machine_readable_atomic_claims"
+    ],
+    "disagreements": [],
+    "noSourceBodiesStored": true,
+    "rankingAuthorized": false
+  },
+  "verifiedProductCount": 0,
+  "independentEvidenceAdmitted": 0,
+  "rankingAuthorized": false,
+  "noSourceBodiesStored": true,
+  "limitations": [
+    "Publisher numeric and categorical declarations are not independently tested facts; no ranking is authorized.",
+    "A configured search endpoint is required for general web discovery."
+  ]
+}

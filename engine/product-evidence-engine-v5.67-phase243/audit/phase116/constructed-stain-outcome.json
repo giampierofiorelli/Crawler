@@ -1,0 +1,129 @@
+{
+  "warning": "FICTIONAL EXAMPLE; no real consumer-product performance implied",
+  "generic": {
+    "phase": 116,
+    "scope": "stain_outcome_not_general_cleaning_quality",
+    "snapshotId": "demo116",
+    "intent": {
+      "goal": "remove_stains",
+      "primary": "final_stain_removal",
+      "implicitPassLimit": null,
+      "efficiencyIsSecondary": true,
+      "status": "bounded_not_general_nlp"
+    },
+    "contract": {
+      "labId": "demo-lab",
+      "protocolVersion": "v1",
+      "testSetupId": "same-dried-stain",
+      "floorType": "tile",
+      "stainKind": "coffee",
+      "cleaningMode": "full"
+    },
+    "results": [
+      {
+        "variant": "alpha",
+        "rank": 1,
+        "status": "ranked",
+        "value": 2,
+        "metric": "remaining_stain_percent",
+        "passCount": 4,
+        "sourceUrl": "https://example.org/alpha",
+        "reason": "exact_protocol_and_horizon_matched"
+      },
+      {
+        "variant": "beta",
+        "rank": 1,
+        "status": "ranked",
+        "value": 2,
+        "metric": "remaining_stain_percent",
+        "passCount": 4,
+        "sourceUrl": "https://example.org/beta",
+        "reason": "exact_protocol_and_horizon_matched"
+      }
+    ],
+    "fullSetComparable": true,
+    "ranking": [
+      {
+        "variant": "alpha",
+        "rank": 1
+      },
+      {
+        "variant": "beta",
+        "rank": 1
+      }
+    ],
+    "efficientPassesUsedForGeneralRanking": false,
+    "compositeSpeedScoresExcluded": true,
+    "explanation": "Compared measured outcomes at the same original test horizon; did not infer fastest or one-pass preferences.",
+    "optionalAlternativeViews": [
+      "single_pass_removal",
+      "elapsed_time_to_clear",
+      "passes_to_clear"
+    ],
+    "originalTextNeeded": false,
+    "publicRankingReady": false
+  },
+  "singlePass": {
+    "phase": 116,
+    "scope": "stain_outcome_not_general_cleaning_quality",
+    "snapshotId": "demo116",
+    "intent": {
+      "goal": "remove_stains",
+      "primary": "single_pass_removal",
+      "implicitPassLimit": 1,
+      "efficiencyIsSecondary": false,
+      "status": "bounded_not_general_nlp"
+    },
+    "contract": {
+      "labId": "demo-lab",
+      "protocolVersion": "v1",
+      "testSetupId": "same-dried-stain",
+      "floorType": "tile",
+      "stainKind": "coffee",
+      "cleaningMode": "full"
+    },
+    "results": [
+      {
+        "variant": "beta",
+        "rank": 1,
+        "status": "ranked",
+        "value": 10,
+        "metric": "remaining_stain_percent",
+        "passCount": 1,
+        "sourceUrl": "https://example.org/beta",
+        "reason": "exact_protocol_and_horizon_matched"
+      },
+      {
+        "variant": "alpha",
+        "rank": 2,
+        "status": "ranked",
+        "value": 50,
+        "metric": "remaining_stain_percent",
+        "passCount": 1,
+        "sourceUrl": "https://example.org/alpha",
+        "reason": "exact_protocol_and_horizon_matched"
+      }
+    ],
+    "fullSetComparable": true,
+    "ranking": [
+      {
+        "variant": "beta",
+        "rank": 1
+      },
+      {
+        "variant": "alpha",
+        "rank": 2
+      }
+    ],
+    "efficientPassesUsedForGeneralRanking": false,
+    "compositeSpeedScoresExcluded": true,
+    "explanation": "Compared measured outcomes at the same original test horizon; did not infer fastest or one-pass preferences.",
+    "optionalAlternativeViews": [
+      "single_pass_removal",
+      "elapsed_time_to_clear",
+      "passes_to_clear"
+    ],
+    "originalTextNeeded": false,
+    "publicRankingReady": false
+  }
+}

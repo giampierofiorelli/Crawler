@@ -1,0 +1,13 @@
+# Product Evidence Engine — new-chat continuity / Phase 154
+
+Date: 11 October 2026. Current cumulative release: v4.77 / phase 153. Attach the corresponding cumulative ZIP and this file if transferring to a new chat.
+
+Continue **from the actual ZIP** and inspect its README, `PHASE153-ENGLISH-COMMERCIAL-ENTITY-INVENTORY.md`, `PHASE153-RELEASE-VERIFICATION.json`, `PHASE153-REGRESSION-GROUPS.json`, the developer diagnostic and distinct post-code challenge, and cumulative research. Verify ZIP/SHA, preserve historical files, licences and all engineering studies before changing code.
+
+Phase153 added a **separately invoked** original English candidate inventory for all-word commercial names, complex letter/number family surfaces, titles, caller aliases, grouped exact written mentions and conservative reference vetoes. It never authenticates product identities, auto-writes to scientific evidence, or changes deterministic ranking. The observed diagnostics are NOT independent accuracy/recall; there is still no independently annotated licensed full-professional-review corpus. Existing baseline Phase152 remains embedded and no production user-facing mainline integration was established. New observed failure: a TechHive short excerpt containing `iRobot Roomba j9+` produces an incomplete `Roomba j9` candidate.
+
+Preserve commitments: English first; all previous deep research cumulative; GLiNER2/DeepKE/medSpaCy/Snorkel/TypeSafe studies as research **without automatic adoption**; WordNet/VerbNet/VADER licences retained; original reversible, light runtime preferred; no paid scraping/search APIs or canonical DB/ranking writes from unverified inferences; deterministic identical rankings for canonical-equivalent intent; exact sources/offsets/versions/conditions and guarded provenance; tests on varied product categories with optional future fryers, toasters, coffee machines and food steamers.
+
+Next: prioritize a reproducible source-/family-disjoint, human-annotated full-review benchmark with permission, negative-example and false-veto coverage, and controlled latency/memory measurements. If an independent corpus cannot be obtained, report that blocking evidence gap rather than pretending the developer-selected excerpts are a validation benchmark. Only then justify additional native algorithms or an optional licensed offline local model. Do not reinstall outside model repositories without cost/licence/security review. Add new product categories only if a concrete gap requires user action.
+
+Work concretely; compare to v4.77; preserve the full package; deliver a new cumulative ZIP, technical report with real source URLs, explicit failures and regression results. Do not re-ask decisions already settled.

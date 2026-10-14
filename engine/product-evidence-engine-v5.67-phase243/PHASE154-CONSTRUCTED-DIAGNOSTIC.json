@@ -1,0 +1,146 @@
+{
+  "phase": 154,
+  "evaluation": "developer_constructed_not_source_disjoint",
+  "samples": [
+    {
+      "id": "negation_contrast",
+      "baseline153": [
+        "Breville Bambino",
+        "Ninja Prestige DualBrew"
+      ],
+      "phase154": [
+        {
+          "literal": "Breville Bambino",
+          "context": [
+            "TEST_NOT_PERFORMED"
+          ]
+        },
+        {
+          "literal": "Ninja Prestige DualBrew",
+          "context": []
+        }
+      ],
+      "phase154ContextEdges": 1,
+      "phase154LFConflict": 0,
+      "expectedDeveloperLimitations": [],
+      "timingsMs": {
+        "phase153Median": 0.13187400000001048,
+        "phase154Median": 0.183716000000004,
+        "phase153P95": 0.7395920000000018,
+        "phase154P95": 0.7196140000000071
+      }
+    },
+    {
+      "id": "other_category",
+      "baseline153": [
+        "Samsung QN90D",
+        "Sony Bravia 9"
+      ],
+      "phase154": [
+        {
+          "literal": "Samsung QN90D",
+          "context": []
+        },
+        {
+          "literal": "Sony Bravia 9",
+          "context": []
+        }
+      ],
+      "phase154ContextEdges": 0,
+      "phase154LFConflict": 0,
+      "expectedDeveloperLimitations": [],
+      "timingsMs": {
+        "phase153Median": 0.2270069999999862,
+        "phase154Median": 0.25959499999999025,
+        "phase153P95": 0.7614549999999838,
+        "phase154P95": 0.8773280000000057
+      }
+    },
+    {
+      "id": "coffeemaker",
+      "baseline153": [
+        "Sage Barista Touch",
+        "Breville Bambino Plus"
+      ],
+      "phase154": [
+        {
+          "literal": "Sage Barista Touch",
+          "context": [
+            "TEST_NOT_PERFORMED"
+          ]
+        },
+        {
+          "literal": "Breville Bambino Plus",
+          "context": []
+        }
+      ],
+      "phase154ContextEdges": 1,
+      "phase154LFConflict": 0,
+      "expectedDeveloperLimitations": [],
+      "timingsMs": {
+        "phase153Median": 0.16180800000000772,
+        "phase154Median": 0.18603100000001405,
+        "phase153P95": 0.5552220000000148,
+        "phase154P95": 0.802031999999997
+      }
+    },
+    {
+      "id": "excluded",
+      "baseline153": [
+        "Excluding Kenwood MultiPro Compact",
+        "Philips Airfryer Dual Basket"
+      ],
+      "phase154": [
+        {
+          "literal": "Excluding Kenwood MultiPro Compact",
+          "context": [
+            "EXCLUDED_FROM_TEST"
+          ]
+        },
+        {
+          "literal": "Philips Airfryer Dual Basket",
+          "context": []
+        }
+      ],
+      "phase154ContextEdges": 1,
+      "phase154LFConflict": 0.5,
+      "expectedDeveloperLimitations": [],
+      "timingsMs": {
+        "phase153Median": 0.11481000000000563,
+        "phase154Median": 0.18244700000002467,
+        "phase153P95": 0.396109000000024,
+        "phase154P95": 0.539480999999995
+      }
+    },
+    {
+      "id": "missing_sku_challenge",
+      "baseline153": [
+        "Roomba j9"
+      ],
+      "phase154": [
+        {
+          "literal": "Roomba j9",
+          "context": [
+            "EXCLUDED_FROM_TEST"
+          ]
+        }
+      ],
+      "phase154ContextEdges": 1,
+      "phase154LFConflict": 0,
+      "expectedDeveloperLimitations": [
+        "phase153_may_return_partial_name"
+      ],
+      "timingsMs": {
+        "phase153Median": 0.03760099999999511,
+        "phase154Median": 0.06301999999999452,
+        "phase153P95": 0.24137999999999238,
+        "phase154P95": 0.29699899999999957
+      }
+    }
+  ],
+  "independentGoldAnnotations": 0,
+  "accuracy": null,
+  "recall": null,
+  "precision": null,
+  "qualifier": "Timings reflect this environment, are short-text microbenchmarks and are not a general compute-cost estimate."
+}

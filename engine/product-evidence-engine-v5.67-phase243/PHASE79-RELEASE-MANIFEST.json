@@ -1,0 +1,27 @@
+{
+  "phase": 79,
+  "version": "4.7.0",
+  "date": "2026-10-10",
+  "purpose": "Demand-specific evidence-based adaptive search continuation; distinguish true narrow matching after filters from an underexplored catalog, independent of candidate count",
+  "new_phase_tests": 18,
+  "verified_test_counts": {
+    "typescript_javascript": 533,
+    "python": 68,
+    "launch_release": 7
+  },
+  "new_files": [
+    "src/phase79_adaptive_search_decision.ts",
+    "tests/phase79_adaptive_search_decision.test.ts",
+    "examples/phase79-stop-or-search-demo.ts",
+    "docs/PHASE-79-DEMAND-SPECIFIC-SEARCH-STOPPING.md"
+  ],
+  "limitations": [
+    "All research inputs synthetic/attested not externally authenticated",
+    "No online web research or live AI pipeline connected",
+    "No independent shopping-market recall estimate",
+    "No execution of PostgreSQL migrations",
+    "In-memory legacy portfolio audit supports maximum 500 candidates, no scalable batch workflow",
+    "No independent production ranking or proof of market exhaustiveness"
+  ],
+  "files_in_audit": "audit/phase79"
+}

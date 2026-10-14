@@ -1,0 +1,56 @@
+{
+  "version": "4.47-phase123",
+  "date": "2026-10-11",
+  "basedOn": "4.46-phase122",
+  "status": "experimental_native_language_learning_with_abstention_not_autonomous_recommendation",
+  "model": {
+    "trainingSamples": 100,
+    "calibrationSamples": 25,
+    "pilotClasses": 5,
+    "algorithm": "in-house_sparse_word_subword_tfidf_nearest_neighbor_class_centroid",
+    "trainedFoundationModelFromScratch": false,
+    "externalLLMCalled": false,
+    "externalSearchServiceCalled": false
+  },
+  "constructedDiagnostic": {
+    "caseCount": 30,
+    "correctlyAccepted": 4,
+    "wronglyAccepted": 0,
+    "abstained": 26,
+    "baselineCorrectlyAccepted": 0,
+    "baselineWronglyAccepted": 1,
+    "independentBlindBenchmark": false,
+    "evaluatedDuringDevelopment": true,
+    "realUserAccuracyValidated": false
+  },
+  "completedTests": {
+    "phase123New": 29,
+    "selectedTypeScriptRegressionIncludingNew": 272,
+    "primarySourcesPython": 47,
+    "ingestionPython": 21,
+    "totalPassedAcrossTheseSuites": 340
+  },
+  "fullCumulativeRegressionCompleted": false,
+  "legacyPhase91And92TimeoutsResolved": false,
+  "sourceDiscoveryOnPublicWebExecutedByModule": false,
+  "retrievalOfCallerSuppliedLocalPassagesTested": true,
+  "originalSourceIdentityVerificationValidated": false,
+  "publicRankingAllowed": false,
+  "previousFileCount": 1309,
+  "missingPreviousFiles": [],
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newNativeTestsNotIndependentLanguageValidation": true,
+  "limitations": [
+    "Synthetic author-constructed training and evaluation labels, challenge inspected during development",
+    "Sparse n-gram baseline abstains in 26 of 30 development challenges",
+    "Limited category and goal recognition, negation scope and multi-intent unresolved",
+    "Research queries are plans; no real online source discovery executed",
+    "Local BM25 passage hits are not verification of facts, rights or product identity",
+    "No autonomous evidence-based ranked consumer recommendations validated"
+  ],
+  "finalFileCount": 1325,
+  "newFileCount": 16
+}

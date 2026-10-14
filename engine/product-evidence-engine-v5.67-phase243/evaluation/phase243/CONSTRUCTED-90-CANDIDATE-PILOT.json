@@ -1,0 +1,65 @@
+{
+  "schema": "pee243.constructed-evaluation.v1",
+  "fixtureOnly": true,
+  "originalWebPagesFetched": 0,
+  "realModelsTested": 0,
+  "measuredCrawlerOrLLMLatency": false,
+  "category": "fictional_air_fryers",
+  "inputCount": 90,
+  "effortUnitsNotDollars": true,
+  "config": {
+    "version": "demo_lean_v1",
+    "effortBudget": 40,
+    "minimumCredibleCandidateCount": 3,
+    "reservedTailActionPercent": 20,
+    "auditSuspendedMaxPerWave": 2,
+    "auditEveryNWaves": 5,
+    "mode": "lean_bootstrap",
+    "unitCost": {
+      "identity": 1,
+      "cheap_screen": 1,
+      "deep_review": 5,
+      "revisit": 2
+    }
+  },
+  "firstWave": {
+    "budget": 40,
+    "spent": 40,
+    "unused": 0,
+    "actions": 20,
+    "byAction": {
+      "verify_identity": 0,
+      "cheap_screen": 15,
+      "deep_review": 5,
+      "revisit_suspended": 0
+    },
+    "triageCounts": {
+      "already_deep_reviewed": 10,
+      "priority": 7,
+      "standard": 45,
+      "temporarily_deprioritized": 8,
+      "temporarily_suspended": 20
+    },
+    "remainingDiscoveryMandatory": true,
+    "rankingAuthorized": false
+  },
+  "periodicAudit": {
+    "waveNumber": 5,
+    "auditedSuspendedCount": 2,
+    "spentUnits": 40
+  },
+  "recovery": {
+    "revisited": 5,
+    "shortageTriggered": true
+  },
+  "hashValidated": true,
+  "auditedOutcomeExample": {
+    "reviewedCount": 0,
+    "missedPromisingCount": 0,
+    "inconclusiveCount": 0,
+    "recommendation": "insufficient_independent_reviews",
+    "automaticPolicyUpdateAuthorized": false,
+    "rankingAuthorized": false
+  },
+  "limitation": "Synthetic inputs and human-defined signals; does not estimate actual savings, precision, recall, latency or USD cost."
+}

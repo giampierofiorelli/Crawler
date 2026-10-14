@@ -1,0 +1,79 @@
+{
+  "phase": 149,
+  "version": "4.73-phase149",
+  "parent": "4.72-phase148",
+  "date": "2026-10-11",
+  "parentZipSha256": "bf530cd3208ac0f7ae34b72fce903d8629ea319453edf92ac124875d27ce2d2b",
+  "parentFileCount": 1537,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE149-BIDIRECTIONAL-REFERENCE-DIAGNOSTIC.json",
+    "PHASE149-BIDIRECTIONAL-REFERENCE-RESEARCH.md",
+    "PHASE149-FILE-MANIFEST.sha256",
+    "PHASE149-REGRESSION-GROUPS.json",
+    "dist/src/phase149_bidirectional_discourse_candidates.js",
+    "dist/tests/phase149_bidirectional_document.test.js",
+    "research/phase149_fresh_editorial_excerpts.json",
+    "scripts/evaluate-phase149.mjs",
+    "scripts/phase149_regress.mjs",
+    "src/phase149_bidirectional_discourse_candidates.ts",
+    "tests/phase149_bidirectional_document.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1899,
+    "eligibleFiles": 108,
+    "phase149Focused": 27,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "sourceEvaluation": {
+    "publishedShortExcerpts": 3,
+    "developerAuthoredControls": 6,
+    "blind": false,
+    "independentGoldAnnotations": 0,
+    "precision": null,
+    "recall": null,
+    "falseMergeRate": null,
+    "copyrightFullReviewRightsEstablished": false
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "newExternalModels": 0,
+    "paidApis": 0,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false,
+    "copiedThirdPartyCode": false
+  },
+  "futureCategoryStatus": {
+    "additionalCategoriesRequiredNow": false,
+    "retainedBacklog": [
+      "traditional fryers",
+      "air fryers",
+      "toasters",
+      "coffee makers",
+      "food steamers"
+    ]
+  },
+  "limitations": [
+    "All 27 targeted tests are authored fixtures, not independent accuracy",
+    "Three short editorial excerpts observed after code implementation are diagnostic only",
+    "Surface candidates remain unverified identity; component/comparison guards are incomplete",
+    "Document hash checks only caller-provided text integrity, not external source authenticity",
+    "Two legacy Phase91/Phase92 TypeScript suites remain excluded"
+  ],
+  "archiveFileCount": 1549
+}

@@ -1,0 +1,259 @@
+{
+  "kind": "developer_constructed_contrast_cases_not_independent_gold",
+  "language": "en",
+  "category": "coffee_machine",
+  "cases": [
+    {
+      "id": "constructed_001",
+      "group": "required",
+      "question": "Best coffee machine must have a steam wand",
+      "expected": "steam_wand=required"
+    },
+    {
+      "id": "constructed_002",
+      "group": "required",
+      "question": "An espresso machine with a steam wand is essential",
+      "expected": "steam_wand=required"
+    },
+    {
+      "id": "constructed_003",
+      "group": "required",
+      "question": "I need a coffee machine with a steam wand",
+      "expected": "steam_wand=required"
+    },
+    {
+      "id": "constructed_004",
+      "group": "required",
+      "question": "Best coffee machine has to have a steam wand",
+      "expected": "steam_wand=required"
+    },
+    {
+      "id": "constructed_005",
+      "group": "required",
+      "question": "Coffee machine: steam wand required",
+      "expected": "steam_wand=required"
+    },
+    {
+      "id": "constructed_006",
+      "group": "optional",
+      "question": "Best coffee machine, I don't need a steam wand",
+      "expected": "steam_wand=optional"
+    },
+    {
+      "id": "constructed_007",
+      "group": "optional",
+      "question": "Best coffee machine, I do not need a steam wand",
+      "expected": "steam_wand=optional"
+    },
+    {
+      "id": "constructed_008",
+      "group": "optional",
+      "question": "Best coffee machine, no need for a steam wand",
+      "expected": "steam_wand=optional"
+    },
+    {
+      "id": "constructed_009",
+      "group": "optional",
+      "question": "Coffee machine, steam wand not necessary",
+      "expected": "steam_wand=optional"
+    },
+    {
+      "id": "constructed_010",
+      "group": "optional",
+      "question": "Coffee machine, steam wand not essential",
+      "expected": "steam_wand=optional"
+    },
+    {
+      "id": "constructed_011",
+      "group": "optional",
+      "question": "Coffee machine, steam wand isn't necessary",
+      "expected": "steam_wand=optional"
+    },
+    {
+      "id": "constructed_012",
+      "group": "excluded",
+      "question": "Best coffee machine without a steam wand",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_013",
+      "group": "excluded",
+      "question": "Best coffee machine no steam wand",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_014",
+      "group": "excluded",
+      "question": "Best coffee machine I don't want a steam wand",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_015",
+      "group": "excluded",
+      "question": "Best coffee machine I do not want a steam wand",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_016",
+      "group": "excluded",
+      "question": "Best coffee machine must not have a steam wand",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_017",
+      "group": "excluded",
+      "question": "Best coffee machine avoid a steam wand",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_018",
+      "group": "preferred",
+      "question": "Best coffee machine prefer a steam wand",
+      "expected": "steam_wand=preferred"
+    },
+    {
+      "id": "constructed_019",
+      "group": "preferred",
+      "question": "Best coffee machine ideally with a steam wand",
+      "expected": "steam_wand=preferred"
+    },
+    {
+      "id": "constructed_020",
+      "group": "preferred",
+      "question": "Best coffee machine I would like a steam wand",
+      "expected": "steam_wand=preferred"
+    },
+    {
+      "id": "constructed_021",
+      "group": "mixed",
+      "question": "Best coffee machine, no steam wand but preferably app control",
+      "expected": "steam_wand=excluded"
+    },
+    {
+      "id": "constructed_022",
+      "group": "mixed",
+      "question": "Best coffee machine, no steam wand but ideally app control",
+      "expected": "app_control=preferred"
+    },
+    {
+      "id": "constructed_023",
+      "group": "mixed",
+      "question": "Best coffee machine, no steam wand but must have app control",
+      "expected": "app_control=required"
+    },
+    {
+      "id": "constructed_024",
+      "group": "mixed",
+      "question": "Best coffee machine must have quiet and app control",
+      "expected": "quiet_operation=required"
+    },
+    {
+      "id": "constructed_025",
+      "group": "mixed",
+      "question": "Best coffee machine must have quiet and app control",
+      "expected": "app_control=required"
+    },
+    {
+      "id": "constructed_026",
+      "group": "mixed",
+      "question": "Best coffee machine, no customer reviews, must have a steam wand",
+      "expected": "steam_wand=required"
+    },
+    {
+      "id": "constructed_027",
+      "group": "mixed",
+      "question": "Best coffee machine with steam wand, but without app control",
+      "expected": "app_control=excluded"
+    },
+    {
+      "id": "constructed_028",
+      "group": "mixed",
+      "question": "Best coffee machine with steam wand, but without app control",
+      "expected": "steam_wand=unresolved"
+    },
+    {
+      "id": "constructed_029",
+      "group": "quantity",
+      "question": "Best coffee machine under 35 cm",
+      "expected": "issue=unmapped_hard_quantity"
+    },
+    {
+      "id": "constructed_030",
+      "group": "quantity",
+      "question": "Best coffee machine no more than 40 cm",
+      "expected": "issue=unmapped_hard_quantity"
+    },
+    {
+      "id": "constructed_031",
+      "group": "quantity",
+      "question": "Best coffee machine at most 22 kg",
+      "expected": "issue=unmapped_hard_quantity"
+    },
+    {
+      "id": "constructed_032",
+      "group": "quantity",
+      "question": "Best coffee machine under 50 dBA",
+      "expected": "issue=unmapped_hard_quantity"
+    },
+    {
+      "id": "constructed_033",
+      "group": "scalar",
+      "question": "Best coffee machine not too expensive",
+      "expected": "issue=ambiguous_scalar_negation"
+    },
+    {
+      "id": "constructed_034",
+      "group": "scalar",
+      "question": "Best coffee machine not too noisy",
+      "expected": "issue=ambiguous_scalar_negation"
+    },
+    {
+      "id": "constructed_035",
+      "group": "scalar",
+      "question": "Best coffee machine not very big",
+      "expected": "issue=ambiguous_scalar_negation"
+    },
+    {
+      "id": "constructed_036",
+      "group": "scalar",
+      "question": "Best coffee machine not overly heavy",
+      "expected": "issue=ambiguous_scalar_negation"
+    },
+    {
+      "id": "constructed_037",
+      "group": "source",
+      "question": "Best coffee machine don't trust customer ratings",
+      "expected": "issue=unreviewed_source_policy"
+    },
+    {
+      "id": "constructed_038",
+      "group": "source",
+      "question": "Best coffee machine only objective tests",
+      "expected": "issue=unreviewed_source_policy"
+    },
+    {
+      "id": "constructed_039",
+      "group": "source",
+      "question": "Best coffee machine only laboratory tests",
+      "expected": "issue=unreviewed_source_policy"
+    },
+    {
+      "id": "constructed_040",
+      "group": "source",
+      "question": "Best coffee machine skip Amazon reviews",
+      "expected": "issue=unreviewed_source_policy"
+    },
+    {
+      "id": "constructed_041",
+      "group": "negative",
+      "question": "Best coffee machine not a steam wand",
+      "expected": "issue=scope_ambiguous_negation"
+    },
+    {
+      "id": "constructed_042",
+      "group": "negative",
+      "question": "Best coffee machine never a steam wand",
+      "expected": "issue=scope_ambiguous_negation"
+    }
+  ]
+}

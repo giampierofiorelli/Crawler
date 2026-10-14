@@ -1,0 +1,34 @@
+{
+  "project": "Product Evidence Engine",
+  "phase": 106,
+  "version": "4.30.0",
+  "date": "2026-10-11",
+  "baseline": "product-evidence-engine-v4.29-phase105.zip",
+  "baseline_file_count": 926,
+  "no_missing_prior_files": true,
+  "modified_prior_files": [
+    "README.md",
+    "dist/src/phase105_incremental_reasoning_graph.js",
+    "package.json",
+    "src/phase105_incremental_reasoning_graph.ts"
+  ],
+  "added_file_count_before_packaging": 18,
+  "test_suites": {
+    "compiled_js_ts": 827,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "companion_python": 60,
+    "companion_node": 16,
+    "launch": 4,
+    "release": 3
+  },
+  "completed_test_total": 1004,
+  "new_phase106_tests_included_in_js": 16,
+  "verification": "All groups completed separately. A later concatenated run was interrupted before final release checks; the release tests were repeated and passed separately.",
+  "validation_limit": "Only constructed fixture tests. No authorized real-source ingestion, human expert-calibration or production concurrency demonstrated.",
+  "publicationReady": false,
+  "rankingEligible": false,
+  "demo": "audit/phase106/constructed-recomputation.json",
+  "research": "PHASE106-DETERMINISTIC-KNOWLEDGE-RECOMPUTATION.md"
+}

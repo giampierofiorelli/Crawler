@@ -1,0 +1,72 @@
+{
+  "phase": 138,
+  "version": "4.62-phase138",
+  "parent": "4.61-phase137",
+  "date": "2026-10-11",
+  "parentArchiveSha256": "83c1e31eaa4bf6cbe3e71b746b2611f6ca7527a286ad5e59b22f3d42a9d901ac",
+  "parentFiles": 1401,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerification": [
+    "PHASE138-ORIGINAL-REVIEW-EXCERPT-PILOT.md",
+    "PHASE138-REAL-EXCERPT-DIAGNOSTIC.json",
+    "PHASE138-REGRESSION-GROUPS.json",
+    "dist/src/phase138_original_excerpt_pilot.js",
+    "dist/tests/phase138_original_excerpt_pilot.test.js",
+    "research/phase138_original_review_pilot/PHASE138-ORIGINAL-EXCERPT-PILOT.json",
+    "scripts/evaluate-phase138.mjs",
+    "scripts/phase138_regress.mjs",
+    "src/phase138_original_excerpt_pilot.ts",
+    "tests/phase138_original_excerpt_pilot.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1603,
+    "eligibleTestFiles": 97,
+    "phase138Focused": 19,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "originalReviewExcerptPilot": {
+    "sourcePageURLs": 3,
+    "manuallyTranscribedShortPassages": 6,
+    "publisherAuthenticatedFullSourceSnapshots": 0,
+    "independentAnnotators": 0,
+    "automaticallyDetectedMentionPairs": 0,
+    "sourceAndProductDisjointIndependentHoldout": 0,
+    "populationAccuracyOrPrecisionEstimated": false,
+    "modelAliasesProvidedByDeveloper": true,
+    "sourceRightsToFullArticleRedistributionAuthenticated": false,
+    "statusCounts": {
+      "candidate_quarantined": 2,
+      "abstain_reference_unresolved": 2,
+      "abstain_ambiguous_context": 1,
+      "abstain_variant_not_reviewed": 1
+    }
+  },
+  "noNewRuntimeDependencies": true,
+  "noThirdPartyFrameworkOrWeightsBundled": true,
+  "noPaidAPIs": true,
+  "canonicalWritesAuthorized": false,
+  "rankingWritesAuthorized": false,
+  "limits": [
+    "Only short manually transcribed original passages; not entire reviews",
+    "Original excerpt digest cannot authenticate live publisher text",
+    "Selected and developer-labelled: selection bias and no external ground truth",
+    "No automated entity mention extraction or independent source-disjoint held-out evaluation",
+    "New first-mention screen is not connected to production ranking/database",
+    "Two known Phase91/92 legacy suites excluded as in parent"
+  ]
+}

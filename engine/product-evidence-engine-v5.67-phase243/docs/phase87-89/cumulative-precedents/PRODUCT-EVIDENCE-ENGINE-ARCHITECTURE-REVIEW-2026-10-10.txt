@@ -1,0 +1,99 @@
+# Product Evidence Engine — Revisione architetturale prima della fase 83
+**Data:** 10 ottobre 2026  
+**Baseline verificata:** archivio `product-evidence-engine-v4.10-phase82.zip` (518 voci ZIP)  
+**Stato:** decisione tecnica preliminare; **nessuna modifica al codice, nessun crawler o LLM collaudato dal vivo in questa revisione**.
+
+## 1. Decisione principale
+L'adozione di un motore open-source per navigazione e acquisizione web AI-assisted cambia la divisione delle responsabilità del Product Evidence Engine. Non cambia l'obiettivo: raccomandazioni su misura, basate su evidenze e indipendenti dalla popolarità dei prodotti.
+
+**Decisione proposta:** non implementare un altro crawler generalista. Prima selezionare e misurare uno o più componenti open-source self-hosted (candidato iniziale: Crawl4AI; sfidanti: ScrapeGraphAI e Browser Use). Il Product Evidence Engine conserva il controllo di scopi, fonti ammissibili, significato delle prove, evoluzione del database, priorità di popolamento, scelta dei prodotti, ciclo di vita, tempi e comunicazioni.
+
+**Vincolo già deciso:** nessuna dipendenza obbligatoria da API commerciali di ricerca o scraping, né browser gestiti a pagamento. Un'API locale HTTP tra processi del nostro software **non** è un'API commerciale esterna. Il calcolo locale resta un costo infrastrutturale.
+
+## 2. Che cosa cambia nella struttura
+
+| Responsabilità | Implementazione prima della scelta | Assetto da testare |
+|---|---|---|
+| Visita delle pagine, rendering JavaScript, gestione browser e navigazione | Lettore HTTP controllato e integrazioni simulate; niente crawler live | Delegare al motore open source, con guardrail esterni obbligatori |
+| Esplorazione di URL e approfondimento dei collegamenti | Sitemap discovery Phase 75 + watch planner Phase 82 | Il motore esterno esplora i siti autorizzati; il planner decide fonti, limiti, frequenza e finalità |
+| Estrazione in JSON | Parser di prova Phase 72 e interfaccia Ollama Phase 75 | Valutare l'estrazione integrata del motore scelto; conservare schema e validatore indipendenti |
+| Rilevazione di novità | Phase 82 seleziona segnali senza effettuare rete | Scheduler nostro + osservazione periodica via crawler; il crawler non invia magicamente notifiche su tutto il web |
+| Test originali, provenienza, diritti | Phase 63–70 | **Conservare integralmente** e integrare a valle; nessuna fonte guadagna credibilità perché estratta da un LLM |
+| Cold start di categoria | Phase 73–74 | **Conservare**: la copertura di una singola pagina/sito non dimostra la copertura di una categoria |
+| Matrice dinamica, schema evolutivo | Phase 70–71 | **Conservare**: gli schemi generici di estrazione non rappresentano da soli ontologia, protocolli e conflitti |
+| Richieste e avanzamento utenti | Phase 76–78 | **Conservare e integrare** con stati e prove di avanzamento reali |
+| Quando approfondire e fermarsi | Phase 79 | **Conservare**: nessun punteggio di saturazione del crawler sostituisce una verifica del mercato |
+| Priorità di popolamento | Phase 80 | **Conservare**: distinta da ordine del crawling, valore del prodotto e ranking |
+| Nuovi modelli e dismissione della produzione | Phase 81 | **Conservare**: annuncio/specifiche ≠ prove di prestazioni; fine produzione verificata ⇒ pagina storica, non competizione |
+
+**Moduli da rivedere**: `src/approved_web_reader.ts`, `src/phase75_source_discovery.ts`, `src/phase72_semantic_intake.ts`, `src/phase72_structured_acquisition.ts`, `src/phase75_local_model.ts`, `src/web_evidence_acquisition.ts` e `src/phase82_market_watch.ts`. Non eliminarli automaticamente: i controlli su permessi, accesso, identità, qualità e tracciabilità non sono duplicazioni da buttare. Il trasporto e i passaggi deterministici di navigazione potrebbero essere sostituiti o semplificati.
+
+**Moduli core da conservare**: `category_evidence_matrix.ts`, `adaptive_schema_evolution.ts`, `category_cognitive_mesh.ts`, `category_research_execution.ts`, `evidence_lineage.ts`, `evidence_appraisal.ts`, `phase79_adaptive_search_decision.ts`, `phase80_population_portfolio.ts`, `phase81_competition_gate.ts`, `phase81_new_model_intake.ts`, `phase76_request_queue.ts` e i progress ledger. L'interfaccia futura dovrà essere indipendente dal crawler scelto.
+
+## 3. Architettura proposta (non ancora implementata)
+
+Richiesta utente o sorveglianza programmata → **Coordinatore Product Evidence Engine** (obiettivo, categoria, vincoli, budget, priorità, stato) → **Discovery Plan** (fonti, URL iniziali, permessi, livello di approfondimento, scadenze) → **Acquisition Adapter** (Crawl4AI o sfidante, senza dipendenze commerciali esterne) → **Temporary Evidence Envelope** (origine, URL, data, autore/editor, modello/variante, prove, osservazioni, hash, metodi, errori) → **Validation/Quarantine** (diritti, identità, test indipendente, units/protocolli, conflitti) → **Dynamic Knowledge Graph / PostgreSQL** → **Ranking/decisione** → **Risultati per l'utente, con progressione verificabile**.
+
+Il crawler produce **candidati e osservazioni**; non scrive direttamente nelle tabelle approvate e non pubblica classifiche. Le istruzioni trovate nelle pagine sono dati non attendibili: nessuna azione o autorizzazione può derivare dal testo della pagina. L'API interna, se impiegata, deve essere accessibile solo su rete privata e autenticata.
+
+## 4. Confronto documentale dei progetti
+
+### Crawl4AI — candidato principale per crawling strutturato su siti noti
+- Open source e self-hosted, browser integrato, scraping senza LLM quando sono sufficienti regole CSS/XPath, estrazione assistita da LLM e supporto a Ollama.
+- Adaptive crawling: misura copertura/coerenza/saturazione **rispetto alla query nella porzione di web esplorata**; non dimostra che si siano confrontati tutti i prodotti potenzialmente competitivi sul mercato.
+- Configurazione robot: `check_robots_txt=False` nella documentazione corrente; **deve essere abilitato esplicitamente**, insieme ai controlli contrattuali e legali del progetto.
+- Cache configurabile: in generale tenere disabilitata la memorizzazione persistente del contenuto integrale delle fonti quando i diritti non lo permettono. Verificare anche screenshot, log e dump temporanei.
+- Più adatto a volumi e pagine ripetitive; l'esplorazione cross-site senza URL iniziali non equivale a un motore di ricerca universale.
+- Sicurezza: la versione 0.9.4 (23 settembre 2026) corregge diverse vulnerabilità SSRF e di trust boundary. Bloccare una versione verificata, non affidarsi a immagini floating `latest`.
+- Licenza: il repository dichiara Apache 2.0 con requisito di attribuzione esplicito nel file LICENSE; verificare condizioni di attribuzione e dipendenze prima del lancio.
+- Fonti: https://docs.crawl4ai.com/ ; https://docs.crawl4ai.com/core/adaptive-crawling/ ; https://docs.crawl4ai.com/core/deep-crawling/ ; https://docs.crawl4ai.com/core/cache-modes/ ; https://docs.crawl4ai.com/api/parameters/ ; https://github.com/unclecode/crawl4ai/security ; https://github.com/unclecode/crawl4ai/blob/main/LICENSE
+
+### ScrapeGraphAI — sfidante soprattutto per estrazione semantica
+- Biblioteca Python MIT self-hosted con grafi di estrazione tramite LLM; Ollama disponibile. L'offerta cloud di scraping/monitoraggio è separata e a pagamento: **non assume il ruolo di servizio scelto**.
+- Buon candidato per pagine narrative e dati non uniformi, ma nei ticket del progetto emergono problemi documentati di false risposte negative quando l'informazione si trova in una pagina collegata, errori/troncamenti e specifiche problematiche di runtime/sicurezza; alcuni ticket potrebbero essere stati risolti nelle versioni successive.
+- Fonti: https://github.com/ScrapeGraphAI/Scrapegraph-ai ; https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1120 ; https://github.com/ScrapeGraphAI/Scrapegraph-ai/releases
+
+### Browser Use — sfidante per navigazione veramente agentica
+- Biblioteca Python MIT capace di navigare, cliccare, gestire UI dinamiche e interagire con un browser tramite LLM; supporta Ollama locale.
+- Adatto a siti pubblici che richiedono diversi passaggi visivi, ma può essere più lento e fragile rispetto a estrazione deterministica di elenchi e schede. Le discussioni tecniche segnalano problemi di formati di azione nei modelli piccoli locali e costi di contesto/VRAM.
+- Non è un sistema di sorveglianza permanente dei lanci; occorre comunque il nostro scheduler e la nostra memoria.
+- Fonti: https://github.com/browser-use/browser-use ; https://github.com/browser-use/browser-use/discussions/4261 ; https://github.com/browser-use/browser-use/issues/5747 ; https://github.com/browser-use/browser-use/issues/584
+
+### Skyvern — quarta opzione, meno adatta al primo pilota
+- Open source self-hosted, interazione autonoma con web tramite browser + modello, inclusa compatibilità Ollama. Maggiore orientamento a workflow interattivi che a raccolta massiva di schede/test per categoria; maggiore complessità infrastrutturale di partenza.
+- Fonte: https://github.com/Skyvern-AI/skyvern/blob/main/docs/developers/self-hosted/overview.mdx
+
+**Non esiste, sulla base delle fonti consultate, un benchmark indipendente e omogeneo che dimostri un vincitore universale sui nostri specifici compiti.** Queste sono capacità dichiarate e problemi documentati, non una classifica di accuratezza dimostrata.
+
+## 5. Cosa NON acquistiamo scegliendo un crawler AI
+- Un indice completo di tutti i prodotti al mondo.
+- Segnalazioni spontanee, senza alcun controllo programmato, per tutti i nuovi modelli.
+- Accesso lecito automatico a qualsiasi sito pubblico, né diritti automatici di estrazione, archiviazione e riutilizzo commerciale.
+- Validazione del significato tecnico dei test, dei protocolli e della loro indipendenza.
+- Autonomia nell'approvare nuovi campi o alterare il ranking.
+- Un LLM locale gratuito in termini di calcolo, RAM, GPU, elettricità e manutenzione.
+
+## 6. Il test corretto prima della fase 83
+Nessun candidato viene adottato sulla sola documentazione o sul numero di stelle GitHub. Preparare una batteria **con gli stessi compiti, fonti e vincoli** per Crawl4AI, ScrapeGraphAI e Browser Use:
+
+1. **Pagine:** schede prodotto strutturate, comunicati, recensioni discorsive, dati tecnici tabulari, pagine JS e un sito bloccato/non autorizzato (deve fermarsi).
+2. **Scenari reali:** (A) nuovo modello con sole specifiche; (B) nuovo modello con test indipendente; (C) cessazione della produzione; (D) categoria sconosciuta; (E) tre candidati rimasti dopo vincoli specifici; (F) annuncio ripubblicato da più siti.
+3. **Verità di riferimento:** doppia verifica indipendente su identità del prodotto, versione, fonte originale, criterio, valore, unità, metodo, incertezza, rilascio/discontinuazione.
+4. **Misure:** richiamo dei modelli realmente lanciati; precisione dell'identificazione; percentuale di osservazioni ancorate correttamente; falsi 'fuori produzione'; falsi blocchi/permessi; omissioni; richieste per scoperta valida; secondi/CPU/RAM/VRAM; riproducibilità; tasso di fallback manuale.
+5. **Diritti e sicurezza:** `robots.txt` attivo, permessi registrati fuori dal modello, nessun bypass, URL e redirect filtrati, isolamento rete, cache e log compatibili con i diritti, difesa prompt injection su testi web.
+6. **Decisione:** mantenere *un solo motore* nel pilota se possibile; aggiungere un secondo solo per casi in cui un miglioramento misurato compensi costo e complessità.
+
+I test software delle fasi precedenti non sono confronti di crawler reali: non vanno presentati come prove di accuratezza sul web.
+
+## 7. Conclusione tecnica provvisoria
+Il più promettente come **motore base di acquisizione** è Crawl4AI, non perché sia stato provato migliore, ma perché corrisponde meglio a raccolta ripetibile, estrazione strutturata e crawling focalizzato su fonti già individuate. ScrapeGraphAI va misurato per interpretazione semantica di testi; Browser Use per pagine con interazioni complesse. Non occorre introdurre tutti e tre.
+
+La **fase 83 va ridefinita** come **architecture integration spike** con collaudo comparativo, non come ennesima espansione speculativa del motore scritto in casa. È probabile che i primi test suggeriscano la rimozione o semplificazione di alcuni moduli di acquisizione, ma non la cancellazione delle funzioni specialistiche di valutazione e governance.
+
+## 8. Fonti aggiuntive per sicurezza e qualità
+- OWASP, indirect prompt injection da pagine esterne: https://genai.owasp.org/llmrisk2023-24/llm01-24-prompt-injection/
+- Crawl4AI, robots opzionale e parametri reali: https://docs.crawl4ai.com/api/parameters/
+- Crawl4AI, problemi di sicurezza corretti: https://github.com/unclecode/crawl4ai/security
+- ScrapeGraphAI, differenza tra libreria OSS e cloud monitor a pagamento: https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/README.md
+
+**Stato finale:** analisi e decisione di lavoro, nessuna implementazione o verifica end-to-end di navigazione/live LLM. Il codice baseline v4.10 deve restare recuperabile finché non completiamo il pilota.

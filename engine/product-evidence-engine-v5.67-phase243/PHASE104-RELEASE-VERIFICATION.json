@@ -1,0 +1,58 @@
+{
+  "version": "4.28.0-phase104",
+  "date": "2026-10-11",
+  "classification": "research_only",
+  "baseline": "product-evidence-engine-v4.27-phase103.zip",
+  "baseline_file_count": 888,
+  "baseline_missing": [],
+  "baseline_existing_files_changed": [
+    "README.md",
+    "package.json"
+  ],
+  "added_files": [
+    "PHASE104-ENTITY-CENTRED-REASONING-ARCHITECTURE.md",
+    "audit/phase104/constructed-entity-evolution.json",
+    "audit/phase104/focused-tests.log",
+    "audit/phase104/mainline-sharded-tests.log",
+    "audit/phase104/test-companion.log",
+    "audit/phase104/test-ingestion.log",
+    "audit/phase104/test-launch.log",
+    "audit/phase104/test-phase84.log",
+    "audit/phase104/test-primary.log",
+    "audit/phase104/test-release.log",
+    "audit/phase104/typescript-build.log",
+    "dist/src/phase104_entity_cognition.js",
+    "dist/tests/phase104_entity_cognition.test.js",
+    "scripts/phase104-demo.mjs",
+    "src/phase104_entity_cognition.ts",
+    "tests/phase104_entity_cognition.test.ts"
+  ],
+  "test_suites": {
+    "mainline_js_ts": 799,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "companion_python": 60,
+    "companion_node": 16,
+    "launch": 4,
+    "release": 3,
+    "distinct_successful_total": 976,
+    "new_phase104_in_mainline": 14
+  },
+  "limitations": {
+    "synthetic_only": true,
+    "no_authentic_heldout_test_corpus": true,
+    "full_ATMS_implemented": false,
+    "agent_autonomy": false,
+    "LLM_calls_query": 0,
+    "public_ranking_unchanged": true,
+    "new_derived_store_not_source_of_truth": true,
+    "multiworker_transactional_integration": false
+  },
+  "source_sha256": {
+    "src/phase104_entity_cognition.ts": "241fa1eca9d3ea1b346fb96b0e52f9fd351adee375c758d4d0f877188062e8ab",
+    "tests/phase104_entity_cognition.test.ts": "96160968c493415971ced03d0bfeef88cb2487b50337b2cf46fd1ef162a63a7a",
+    "scripts/phase104-demo.mjs": "1568e4a60a1da168e4ceb15a5c48bdfbf09f814d343de9101969453283d3d128",
+    "PHASE104-ENTITY-CENTRED-REASONING-ARCHITECTURE.md": "8b7749a0307786ed380ae0f8381515409e600aa4768c493649c72029c176e49e"
+  }
+}

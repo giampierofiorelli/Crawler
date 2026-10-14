@@ -1,0 +1,75 @@
+{
+  "phase": 139,
+  "version": "4.63-phase139",
+  "parent": "4.62-phase138",
+  "date": "2026-10-11",
+  "parentArchiveSha256": "e55c2d1ef48c0620f845ea99c28db9a3111c316fea634c316e8d43092f71672c",
+  "parentFiles": 1413,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerification": [
+    "PHASE139-REGRESSION-GROUPS.json",
+    "PHASE139-UNMARKED-ENGLISH-CANDIDATE-READER.md",
+    "PHASE139-UNMARKED-ORIGINAL-EXCERPT-DIAGNOSTIC.json",
+    "dist/src/phase139_unmarked_english_candidate_reader.js",
+    "dist/tests/phase139_unmarked_english_candidate_reader.test.js",
+    "scripts/evaluate-phase139.mjs",
+    "scripts/phase139_regress.mjs",
+    "src/phase139_unmarked_english_candidate_reader.ts",
+    "tests/phase139_unmarked_english_candidate_reader.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1632,
+    "eligibleTestFiles": 98,
+    "phase139Focused": 29,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "shards": 13
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "unmarkedOriginalReviewPilot": {
+    "publisherSourcePages": 3,
+    "previouslySelectedShortExcerpts": 6,
+    "automaticProposedMentions": 12,
+    "subjectOrObjectSpansSuppliedToReader": false,
+    "relationLabelsSuppliedToReader": false,
+    "pageIdentityAliasesSuppliedToReader": true,
+    "independentAnnotators": 0,
+    "publisherAuthenticatedFullSnapshots": 0,
+    "sourceDisjointIndependentHoldout": 0,
+    "populationAccuracyEstimated": false,
+    "statusCounts": {
+      "candidate_quarantined": 2,
+      "unresolved_reference": 2,
+      "missing_measurement_endpoint": 1,
+      "variant_not_reviewed": 1
+    },
+    "coverageCapsHaveExplicitIncompleteIndicators": true
+  },
+  "noNewRuntimeDependencies": true,
+  "noThirdPartyAIFrameworkOrWeightsInstalled": true,
+  "noPaidAPIs": true,
+  "canonicalWritesAuthorized": false,
+  "rankingWritesAuthorized": false,
+  "limitations": [
+    "Lexical English candidate extraction, not broad natural-language comprehension",
+    "Review page aliases are caller-supplied, not authenticated identity",
+    "Six preselected source snippets from Phase138, no new independently labelled evaluation",
+    "Excerpt hashes do not authenticate publisher-original full article",
+    "Missing verbs and uncommon syntactic structures can suppress candidates without signalling truncation",
+    "Extracted relation type remains an untyped hypothesis; no scientific protocol or ranking authority",
+    "Two legacy TypeScript suites Phase91 and Phase92 remain excluded"
+  ]
+}

@@ -1,0 +1,216 @@
+
+> product-evidence-engine@5.26.0 test:phase202
+> npm run build && node --test dist/tests/phase202_*.test.js
+
+
+> product-evidence-engine@5.26.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: exactly scoped fresh record is a candidate, never a certified badge
+ok 1 - exactly scoped fresh record is a candidate, never a certified badge
+  ---
+  duration_ms: 6.357373
+  type: 'test'
+  ...
+# Subtest: case variants can match only identical ASCII model components
+ok 2 - case variants can match only identical ASCII model components
+  ---
+  duration_ms: 1.926135
+  type: 'test'
+  ...
+# Subtest: model-variant suffix cannot be silently substituted
+ok 3 - model-variant suffix cannot be silently substituted
+  ---
+  duration_ms: 0.252801
+  type: 'test'
+  ...
+# Subtest: different brand is never confused with correct model
+ok 4 - different brand is never confused with correct model
+  ---
+  duration_ms: 0.538058
+  type: 'test'
+  ...
+# Subtest: different market cannot share certification
+ok 5 - different market cannot share certification
+  ---
+  duration_ms: 0.36513
+  type: 'test'
+  ...
+# Subtest: country array accepted but no substring matching
+ok 6 - country array accepted but no substring matching
+  ---
+  duration_ms: 0.367791
+  type: 'test'
+  ...
+# Subtest: fuzzy, free text family alias cannot stand in for an exact variant
+ok 7 - fuzzy, free text family alias cannot stand in for an exact variant
+  ---
+  duration_ms: 0.507057
+  type: 'test'
+  ...
+# Subtest: model row wildcards cannot be upgraded to exact model certification
+ok 8 - model row wildcards cannot be upgraded to exact model certification
+  ---
+  duration_ms: 0.369842
+  type: 'test'
+  ...
+# Subtest: homoglyphs and whitespace quirks do not lead to a false match
+ok 9 - homoglyphs and whitespace quirks do not lead to a false match
+  ---
+  duration_ms: 0.641298
+  type: 'test'
+  ...
+# Subtest: two separate ESUIDs for same model require manual reconciliation
+ok 10 - two separate ESUIDs for same model require manual reconciliation
+  ---
+  duration_ms: 0.745827
+  type: 'test'
+  ...
+# Subtest: same duplicate ESUID twice is still an ambiguous dataset
+ok 11 - same duplicate ESUID twice is still an ambiguous dataset
+  ---
+  duration_ms: 0.320171
+  type: 'test'
+  ...
+# Subtest: operator noted possible withdrawal triggers explicit human review
+ok 12 - operator noted possible withdrawal triggers explicit human review
+  ---
+  duration_ms: 0.429967
+  type: 'test'
+  ...
+# Subtest: absence cannot become a negative product quality evaluation
+ok 13 - absence cannot become a negative product quality evaluation
+  ---
+  duration_ms: 0.287155
+  type: 'test'
+  ...
+# Subtest: expired snapshot is not accepted even when model matches
+ok 14 - expired snapshot is not accepted even when model matches
+  ---
+  duration_ms: 0.110683
+  type: 'test'
+  ...
+# Subtest: snapshot acquired after decision date is rejected
+ok 15 - snapshot acquired after decision date is rejected
+  ---
+  duration_ms: 0.08972
+  type: 'test'
+  ...
+# Subtest: wrong dataset identity is rejected
+ok 16 - wrong dataset identity is rejected
+  ---
+  duration_ms: 0.08387
+  type: 'test'
+  ...
+# Subtest: wrong host, mirror or path cannot pass source mapping
+ok 17 - wrong host, mirror or path cannot pass source mapping
+  ---
+  duration_ms: 0.170769
+  type: 'test'
+  ...
+# Subtest: old v2 row cannot silently support v3 scope
+ok 18 - old v2 row cannot silently support v3 scope
+  ---
+  duration_ms: 0.09359
+  type: 'test'
+  ...
+# Subtest: replaced source bytes without digest update are rejected
+ok 19 - replaced source bytes without digest update are rejected
+  ---
+  duration_ms: 0.113381
+  type: 'test'
+  ...
+# Subtest: incorrect recorded document digest is rejected
+ok 20 - incorrect recorded document digest is rejected
+  ---
+  duration_ms: 0.117337
+  type: 'test'
+  ...
+# Subtest: invalid UTF8 and syntactically invalid JSON are refused
+ok 21 - invalid UTF8 and syntactically invalid JSON are refused
+  ---
+  duration_ms: 0.939416
+  type: 'test'
+  ...
+# Subtest: a single record object does not masquerade as full dataset array
+ok 22 - a single record object does not masquerade as full dataset array
+  ---
+  duration_ms: 0.144632
+  type: 'test'
+  ...
+# Subtest: bad API record id prevents positive match
+ok 23 - bad API record id prevents positive match
+  ---
+  duration_ms: 0.132103
+  type: 'test'
+  ...
+# Subtest: non 7-digit ESUID refused
+ok 24 - non 7-digit ESUID refused
+  ---
+  duration_ms: 0.130934
+  type: 'test'
+  ...
+# Subtest: unreviewed attempted authentication flag refused
+ok 25 - unreviewed attempted authentication flag refused
+  ---
+  duration_ms: 0.11049
+  type: 'test'
+  ...
+# Subtest: invalid asOf and unreasonable freshness policy throw
+ok 26 - invalid asOf and unreasonable freshness policy throw
+  ---
+  duration_ms: 1.189499
+  type: 'test'
+  ...
+# Subtest: large unbounded input is rejected
+ok 27 - large unbounded input is rejected
+  ---
+  duration_ms: 0.13426
+  type: 'test'
+  ...
+# Subtest: malformed or duplicate withdrawal IDs are not accepted
+ok 28 - malformed or duplicate withdrawal IDs are not accepted
+  ---
+  duration_ms: 0.164229
+  type: 'test'
+  ...
+# Subtest: market incorrect string does not produce supported scope
+ok 29 - market incorrect string does not produce supported scope
+  ---
+  duration_ms: 0.172001
+  type: 'test'
+  ...
+# Subtest: sparse dataset row with unrelated fields is not a performance test
+ok 30 - sparse dataset row with unrelated fields is not a performance test
+  ---
+  duration_ms: 0.494659
+  type: 'test'
+  ...
+# Subtest: date after October 2025 condition enforced for v3
+ok 31 - date after October 2025 condition enforced for v3
+  ---
+  duration_ms: 1.024013
+  type: 'test'
+  ...
+# Subtest: snapshot future update relative to capture is impossible
+ok 32 - snapshot future update relative to capture is impossible
+  ---
+  duration_ms: 0.348027
+  type: 'test'
+  ...
+# Subtest: different input rows order leaves deterministic output
+ok 33 - different input rows order leaves deterministic output
+  ---
+  duration_ms: 0.186368
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 148.962384

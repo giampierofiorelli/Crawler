@@ -1,0 +1,68 @@
+{
+  "phase": 196,
+  "version": "5.20.0",
+  "dataset": "authored_synthetic_not_independent_benchmark",
+  "observedSourceCount": 4,
+  "queue": [
+    {
+      "sourceId": "known_uk",
+      "lane": "method_scope_review",
+      "purpose": "research_only",
+      "claimedIndependenceUnverified": true
+    },
+    {
+      "sourceId": "new_expert",
+      "lane": "new_source_probe",
+      "purpose": "research_only",
+      "claimedIndependenceUnverified": true
+    },
+    {
+      "sourceId": "rare_only",
+      "lane": "unscoped_review",
+      "purpose": "research_only",
+      "claimedIndependenceUnverified": true
+    }
+  ],
+  "unknownExploration": true,
+  "expectedOriginalTestVerification": 0,
+  "productCoverage": [
+    {
+      "category": "coffee_machines",
+      "variantId": "maker_one",
+      "sourceCount": 3,
+      "originalTestsVerified": 0,
+      "noTestsDoesNotImplyPoorProduct": true
+    },
+    {
+      "category": "steamers",
+      "variantId": "rare_model",
+      "sourceCount": 1,
+      "originalTestsVerified": 0,
+      "noTestsDoesNotImplyPoorProduct": true
+    }
+  ],
+  "sourceBodiesStored": false,
+  "performanceOnSuppliedSyntheticLabels": {
+    "schema": "196.evaluation.1",
+    "labelProvenance": [
+      "synthetic_fixture"
+    ],
+    "labelCoverageComplete": true,
+    "queueSize": 3,
+    "labeledSources": 4,
+    "positiveSources": 2,
+    "trueOriginalsInQueue": 2,
+    "nonOriginalsInQueue": 1,
+    "precisionAtQueue": 0.6666666666666666,
+    "recallAtQueue": 1,
+    "newSourceOriginalsInQueue": 1,
+    "marketplaceOnlyInQueue": 0,
+    "fullCorpusBenchmarked": false,
+    "goldLabelsExternallyAuthenticated": false,
+    "testEventFalseMergeRate": null,
+    "rewrittenCopyRecall": null,
+    "finalRecommendationEffect": null,
+    "conclusionsRestrictedToSuppliedLabels": true
+  },
+  "publicRankingAllowed": false
+}

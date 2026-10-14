@@ -1,0 +1,134 @@
+{
+  "schema": "pee216.primary-claim-triage.v1",
+  "uploadSha256": "2ffa85cdab9abe838265d83c0faaf01ae4d5e564ad276496e95d8ec23b19c932",
+  "modelSha256": "60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe",
+  "state": "research_only",
+  "transcriptBodyRetained": false,
+  "publisherBodiesRetained": false,
+  "framesRetained": false,
+  "inputVerifiedModelRan": true,
+  "sourcePagesByteAuthenticated": false,
+  "inputCrossDecodeIsCorrelated": true,
+  "claims": [
+    {
+      "claimId": "weight_delta",
+      "startSecond": 36.08,
+      "endSecond": 41.92,
+      "metricId": "mass",
+      "conditionId": "nominal",
+      "variants": [
+        "iphone18promax",
+        "iphone17promax"
+      ],
+      "reported": {
+        "value": 16,
+        "surfaceUnit": "grams"
+      },
+      "state": "market_scope_unresolved",
+      "specComparison": "analyst_observed_manufacturer_statement_only",
+      "comparedFacts": [
+        {
+          "factId": "apple17uk_weight",
+          "sourceUrl": "https://support.apple.com/en-gb/125091",
+          "market": "uk",
+          "value": 231,
+          "unit": "g"
+        },
+        {
+          "factId": "apple18uk_weight",
+          "sourceUrl": "https://www.apple.com/uk/iphone-18-pro/specs/",
+          "market": "uk",
+          "value": 249,
+          "unit": "g"
+        }
+      ],
+      "crossDecodeAlerts": [],
+      "visualTemporalProximitySeconds": [],
+      "originalPublisherVideoAuthenticated": false,
+      "spokenWordsVerified": false,
+      "reviewExperimentIndependentlyVerified": false,
+      "manufacturerClaimsIndependentlyMeasured": false,
+      "allowedAsPerformanceEvidence": false,
+      "rankingAuthorized": false,
+      "trustBadgeAuthorized": false
+    },
+    {
+      "claimId": "brightness",
+      "startSecond": 47.2,
+      "endSecond": 51.84,
+      "metricId": "display_brightness",
+      "conditionId": "peak_outdoor",
+      "variants": [
+        "iphone18promax"
+      ],
+      "reported": {
+        "value": 3000,
+        "surfaceUnit": "bits"
+      },
+      "state": "possible_asr_unit_error",
+      "specComparison": "analyst_observed_manufacturer_statement_only",
+      "comparedFacts": [
+        {
+          "factId": "apple18uk_outdoor_brightness",
+          "sourceUrl": "https://www.apple.com/uk/iphone-18-pro/specs/",
+          "market": "uk",
+          "value": 3000,
+          "unit": "nits"
+        }
+      ],
+      "crossDecodeAlerts": [
+        "context_sensitive_unit",
+        "unit_disagreement"
+      ],
+      "visualTemporalProximitySeconds": [],
+      "originalPublisherVideoAuthenticated": false,
+      "spokenWordsVerified": false,
+      "reviewExperimentIndependentlyVerified": false,
+      "manufacturerClaimsIndependentlyMeasured": false,
+      "allowedAsPerformanceEvidence": false,
+      "rankingAuthorized": false,
+      "trustBadgeAuthorized": false
+    },
+    {
+      "claimId": "refresh",
+      "startSecond": 47.2,
+      "endSecond": 51.84,
+      "metricId": "display_refresh",
+      "conditionId": "adaptive_max",
+      "variants": [
+        "iphone18promax"
+      ],
+      "reported": {
+        "value": 120,
+        "surfaceUnit": "hertz"
+      },
+      "state": "spec_quantity_matches",
+      "specComparison": "analyst_observed_manufacturer_statement_only",
+      "comparedFacts": [
+        {
+          "factId": "apple18uk_max_refresh",
+          "sourceUrl": "https://www.apple.com/uk/iphone-18-pro/specs/",
+          "market": "uk",
+          "value": 120,
+          "unit": "hz"
+        }
+      ],
+      "crossDecodeAlerts": [
+        "context_sensitive_unit",
+        "unit_disagreement"
+      ],
+      "visualTemporalProximitySeconds": [],
+      "originalPublisherVideoAuthenticated": false,
+      "spokenWordsVerified": false,
+      "reviewExperimentIndependentlyVerified": false,
+      "manufacturerClaimsIndependentlyMeasured": false,
+      "allowedAsPerformanceEvidence": false,
+      "rankingAuthorized": false,
+      "trustBadgeAuthorized": false
+    }
+  ],
+  "goldAccuracy": null,
+  "independentReviewers": 0,
+  "rankingAuthorized": false,
+  "trustBadgeAuthorized": false
+}

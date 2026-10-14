@@ -1,0 +1,159 @@
+{
+  "phase": 199,
+  "version": "5.23.0",
+  "date": "2026-10-13",
+  "baselineZipSha256": "75fd43715f2a54a6024760daaab558fa169043b38be4399475769aac0b46788f",
+  "typescriptBuildPassed": true,
+  "typescriptShards": [
+    {
+      "shard": 1,
+      "testCount": 168,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard01.log"
+    },
+    {
+      "shard": 2,
+      "testCount": 167,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard02.log"
+    },
+    {
+      "shard": 3,
+      "testCount": 241,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard03.log"
+    },
+    {
+      "shard": 4,
+      "testCount": 283,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard04.log"
+    },
+    {
+      "shard": 5,
+      "testCount": 322,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard05.log"
+    },
+    {
+      "shard": 6,
+      "testCount": 343,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard06.log"
+    },
+    {
+      "shard": 7,
+      "testCount": 165,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard07.log"
+    },
+    {
+      "shard": 8,
+      "testCount": 398,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard08.log"
+    },
+    {
+      "shard": 9,
+      "testCount": 353,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard09.log"
+    },
+    {
+      "shard": 10,
+      "testCount": 488,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard10.log"
+    },
+    {
+      "shard": 11,
+      "testCount": 176,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard11.log"
+    },
+    {
+      "shard": 12,
+      "testCount": 173,
+      "fileCount": 13,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard12.log"
+    },
+    {
+      "shard": 13,
+      "testCount": 110,
+      "fileCount": 8,
+      "passed": true,
+      "log": "docs/phase199/test-logs/final-shard13.log"
+    }
+  ],
+  "typescriptPassed": 3387,
+  "pythonGroups": [
+    {
+      "group": "tests-companion",
+      "testCount": 71,
+      "passed": true,
+      "log": "docs/phase199/test-logs/python-tests-companion.log"
+    },
+    {
+      "group": "primary_sources",
+      "testCount": 47,
+      "passed": true,
+      "log": "docs/phase199/test-logs/python-primary_sources.log"
+    },
+    {
+      "group": "ingestion",
+      "testCount": 21,
+      "passed": true,
+      "log": "docs/phase199/test-logs/python-ingestion.log"
+    },
+    {
+      "group": "evaluation",
+      "testCount": 26,
+      "passed": true,
+      "log": "docs/phase199/test-logs/python-evaluation.log"
+    },
+    {
+      "group": "phase95",
+      "testCount": 12,
+      "passed": true,
+      "log": "docs/phase199/test-logs/python-phase95.log"
+    },
+    {
+      "group": "tests-python",
+      "testCount": 35,
+      "passed": true,
+      "log": "docs/phase199/test-logs/python-tests-python.log"
+    }
+  ],
+  "pythonPassed": 212,
+  "phase199TargetedPassed": 39,
+  "suiteType": "authored_software_and_inherited_regressions",
+  "realEditorialBenchmarkAccuracyMeasured": false,
+  "realCredentialVerificationMeasured": false,
+  "consumerA_B_TrustCalibrationMeasured": false,
+  "diagnostics": [
+    "An intermediate concurrent shard12 command exceeded runner time; final shard12 log records 173 passing tests.",
+    "Separate Phase91/92 individual invocations hit timeouts; both files included in final successful shard12.",
+    "Initial Python primary_sources discovery without -t . import root failed; corrected command passed 47 tests.",
+    "Inherited Python sqlite ResourceWarning lines persist."
+  ],
+  "baselineFileRetention": {
+    "files": 2362,
+    "unchanged": 2361,
+    "modified": [
+      "package.json"
+    ],
+    "missing": []
+  }
+}

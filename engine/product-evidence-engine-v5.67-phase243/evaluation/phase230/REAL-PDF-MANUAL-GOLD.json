@@ -1,0 +1,40 @@
+{
+  "schema":"pee230.manually-reviewed-original-pdf-gold.1",
+  "warning":"Finite, manually annotated anchors from three user-uploaded manufacturer-authored documents. Not a random sample, not independent performance testing, and not an exhaustive annotation of each document. The PDFs themselves are not bundled.",
+  "sourceOriginalUrls":"not supplied; uploaded PDF bytes are the sole material observed",
+  "sources":{
+    "purifier":{
+      "display":"Dyson Purifier Big+Quiet Formaldehyde technical specification",
+      "expectedSelectedClaims":[
+        ["height",830,"mm",1], ["width",415,"mm",1], ["depth",434,"mm",1],
+        ["base diameter",371,"mm",1],["input voltage",120,"v",2],
+        ["net weight",11.9,"kg",2],["box weight",17.55,"kg",2],
+        ["cable length",1800,"mm",2],
+        ["sound power level at airflow setting 2",39.8,"dba",2],
+        ["sound power level at airflow setting 10",56,"dba",2]
+      ],
+      "forbiddenCrossScopeClaims":[["net weight",0.9,"kg",2],["net weight",1.5,"kg",2],["net weight",0.15,"kg",2]]
+    },
+    "washdry":{
+      "display":"Dyson Airblade Wash+Dry WD04 WD05 WD06 technical specification",
+      "expectedSelectedClaims":[
+        ["net weight wd04",4.25,"kg",1],["net weight wd05",4.52,"kg",1],
+        ["net weight wd06",8.38,"kg",1], ["motor specification",1000,"w",1],
+        ["motor speed",81000,"rpm",1]
+      ],
+      "mustRemainUnresolvedUntilScopedVariantReader":true
+    },
+    "dreame":{
+      "display":"Dreame Aqua 10 Pro Track multi-language manual",
+      "expectedSelectedClaims":[
+        ["rated voltage",14.4,"v",19],["rated power",75,"w",19],
+        ["dock dust emptying rated power",650,"w",19],
+        ["dock hot wash rated power",410,"w",19],
+        ["dock charge/dry rated power",89,"w",19],
+        ["battery capacity",5.8,"ah",19],
+        ["battery energy",83.52,"wh",19]
+      ],
+      "mustRemainUnresolvedUntilComponentScoping":true
+    }
+  }
+}

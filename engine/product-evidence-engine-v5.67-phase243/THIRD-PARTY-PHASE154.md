@@ -1,0 +1,10 @@
+# Phase 154: internal source provenance and licence obligations
+
+The following original files were copied verbatim from the **user-supplied** archives. They are reference/traceability copies, not executed by the PEE runtime. PEE TypeScript modules port the specified algorithms into a source-aware document analysis pipeline. Do not remove original copyright/licence notices from distributions of these files or derivatives. This internal notice is not required to be a visible user-interface credit.
+
+- **medSpaCy** (user archive `medspacy-master(2).zip`), MIT; `third_party/phase154_reference_sources/medspacy-master/LICENSE`. Source copies: `medspacy/context/context_graph.py`, `context_modifier.py`, `context_rule.py`. Adaptations: `src/phase154_context_graph.ts`. Ported: scoped forward/backward/bidirectional modifiers, pseudo-pruning, target edges, contrast terminators, overlaps and target count limits. Not copied: clinical rules, spaCy NLP tokenisation or learned NER.
+- **Snorkel** (user archive `snorkel-main(2).zip`), Apache-2.0; `third_party/phase154_reference_sources/snorkel-main/LICENSE`. Source copies: `snorkel/labeling/analysis.py`, `test/labeling/test_analysis.py`. Adaptation: `src/phase154_label_diagnostics.ts`. Ported: LF analysis for abstention, label coverage, overlap, conflict, per-LF polarity and (with gold) accuracy. NOT the trained label model.
+- **GLiNER2** (user archive `GLiNER2-main(2).zip`), Apache-2.0. Examined schema/constraint AST and neural extraction source; the model capability depends on weights and transformer inference not in PEE, hence not represented as ported.
+- **DeepKE** (user archive `DeepKE-main(2).zip`), MIT. Examined repository layout; many model-based NER/RE implementations require external runtimes and checkpoints, hence not represented as ported.
+
+No new production dependencies, hosted services, model weights, public-facing credits, or ranking writes. Before distributing any derivative or source extracts, recheck full applicable notice requirements. This is engineering documentation, not legal advice.

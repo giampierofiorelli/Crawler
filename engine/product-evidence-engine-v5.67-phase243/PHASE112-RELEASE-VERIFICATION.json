@@ -1,0 +1,70 @@
+{
+  "version": "4.36.0",
+  "phase": 112,
+  "date": "2026-10-11",
+  "baseline": "v4.35-phase111",
+  "baseline_file_count": 1134,
+  "old_paths_missing": [],
+  "modified_preexisting_files": [
+    "README.md",
+    "package.json"
+  ],
+  "all_preexisting_other_files_byte_identical": true,
+  "total_source_files_pre_manifest": 1142,
+  "regression_tests": {
+    "phase112_specific_typescript": 22,
+    "compiled_typescript_javascript_all": 951,
+    "primary_source_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "companion_python": 60,
+    "companion_node": 16,
+    "launch_node": 4,
+    "release_node": 3
+  },
+  "total_test_executions_passed": 1128,
+  "phase112_specific_tests_included_in_all": true,
+  "test_shards": [
+    {
+      "command": "node scripts/run-test-shards.mjs 1",
+      "passed": 168
+    },
+    {
+      "command": "node scripts/run-test-shards.mjs 2",
+      "passed": 167
+    },
+    {
+      "command": "node scripts/run-test-shards.mjs 3",
+      "passed": 216
+    },
+    {
+      "command": "node scripts/run-test-shards.mjs 4",
+      "passed": 158
+    },
+    {
+      "command": "node --test dist/tests/phase92_recipe_lifecycle.test.js",
+      "passed": 11
+    },
+    {
+      "command": "node --test [other twelve shard-five files]",
+      "passed": 151
+    },
+    {
+      "command": "node scripts/run-test-shards.mjs 6",
+      "passed": 80
+    }
+  ],
+  "interrupted_run_not_counted": "original shard five combined execution hit 120s environment limit, replaced by two successful completed commands",
+  "real_professional_review_sources": [
+    "https://www.rtings.com/vacuum/reviews/tineco/pure-one-s11",
+    "https://www.rtings.com/vacuum/reviews/dyson/v11",
+    "https://www.rtings.com/vacuum/reviews/dyson/v15-detect",
+    "https://www.rtings.com/vacuum/reviews/shark/stratos-cordless"
+  ],
+  "real_data_basis": "manually verified source readings (one publisher, common v1.4 methodology), not live machine extraction",
+  "general_natural_language_equivalence_validated": false,
+  "authentic_human_user_rephrasing_tested": false,
+  "real_local_llm_inference_tested": false,
+  "publication_ready": false,
+  "not_an_overall_product_suitability_ranking": true
+}

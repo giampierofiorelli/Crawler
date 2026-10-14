@@ -1,0 +1,103 @@
+{
+  "version": "4.46-phase122",
+  "date": "2026-10-11",
+  "basedOn": "4.45-phase121",
+  "status": "limited_in_house_question_research_prototype",
+  "no_new_external_services": true,
+  "newTests": {
+    "tests": 24,
+    "pass": 24,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "selectedRegressions": [
+    {
+      "test_file": "phase79_adaptive_search_decision.test.ts",
+      "tests": 18,
+      "pass": 18,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase111_long_context_and_query_ambiguity.test.ts",
+      "tests": 25,
+      "pass": 25,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase113_local_intent_interpreter.test.ts",
+      "tests": 31,
+      "pass": 31,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase116_category_function_model.test.ts",
+      "tests": 33,
+      "pass": 33,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase116_stain_outcome_semantics.test.ts",
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase119_task_scope_and_value_gate.test.ts",
+      "tests": 22,
+      "pass": 22,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase120_general_personal_dual_lens.test.ts",
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "test_file": "phase121_autonomy_workload_comparison.test.ts",
+      "tests": 36,
+      "pass": 36,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  ],
+  "selectedTestsPassedTotal": 227,
+  "fullLegacyRegressionCompleted": false,
+  "fullEndToEndLiveValidated": false,
+  "realUserBlindLanguageBenchmarkPassed": false,
+  "publicRankingValidated": false,
+  "nativeWebDiscoveryExecuted": false,
+  "originalFileCount": 1297,
+  "retainedOriginalFiles": 1297,
+  "missingOriginalFiles": [],
+  "modifiedOriginalFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "limitations": [
+    "No real online search executed",
+    "No verified source ingestion from arbitrary new question",
+    "No authenticated original-text to metric pipeline",
+    "Native lexical parser has deliberately limited coverage",
+    "No live local LLM benchmark and no scratch language model training",
+    "Previous legacy test timeouts not claimed fixed"
+  ],
+  "finalFileCount": 1309,
+  "newFileCount": 12
+}

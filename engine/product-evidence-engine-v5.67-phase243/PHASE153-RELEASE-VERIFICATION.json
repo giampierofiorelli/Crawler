@@ -1,0 +1,89 @@
+{
+  "phase": 153,
+  "version": "4.77-phase153",
+  "parentVersion": "4.76-phase152",
+  "date": "2026-10-11",
+  "parentZipSha256": "a23171e4951513a6131817366b457572e324a223177670230b15e516fbd0f7a2",
+  "parentFileCount": 1584,
+  "parentMissingFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PEE-START-NEW-CHAT-PHASE154.md",
+    "PHASE153-COMPUTE-DIAGNOSTIC.json",
+    "PHASE153-EDITORIAL-AND-ADVERSARIAL-DIAGNOSTIC.json",
+    "PHASE153-ENGLISH-COMMERCIAL-ENTITY-INVENTORY.md",
+    "PHASE153-FILE-MANIFEST.sha256",
+    "PHASE153-POSTCODE-CHALLENGE.json",
+    "PHASE153-REGRESSION-GROUPS.json",
+    "PHASE153-RELEASE-VERIFICATION.json",
+    "dist/src/phase153_entity_inventory.js",
+    "dist/tests/phase153_entity_inventory.test.js",
+    "scripts/benchmark-phase153.mjs",
+    "scripts/challenge-phase153.mjs",
+    "scripts/evaluate-phase153.mjs",
+    "scripts/phase153_regress.mjs",
+    "src/phase153_entity_inventory.ts",
+    "tests/phase153_entity_inventory.test.ts"
+  ],
+  "typescript": {
+    "status": "all_eligible_groups_passed_across_resumed_runs",
+    "passing": 2011,
+    "eligibleFiles": 112,
+    "phase153Focused": 36,
+    "legacyExcluded": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "note": "Initial orchestration timed out after 11 passing groups. Remaining groups were separately verified. Modified group 11 rerun."
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "evaluation": {
+    "publisherShortExcerptsInDevelopment": 9,
+    "developerSelectedTargetSurfaces": 12,
+    "phase152ExactTargets": 2,
+    "phase153ExactTargets": 12,
+    "laterPublisherSnippets": 3,
+    "laterChallengeTargets": 4,
+    "laterChallengeExactMatches": 3,
+    "laterChallengeFailure": "iRobot Roomba j9+ not recovered as complete span",
+    "independentHumanAnnotations": 0,
+    "fullProfessionalReviewBenchmarks": 0,
+    "independentPrecision": null,
+    "independentRecall": null,
+    "independentAccuracy": null,
+    "blinded": false,
+    "publisherOriginalSnapshotRightsVerified": false
+  },
+  "runtime": {
+    "runtimeDependenciesAdded": 0,
+    "weightsAdded": 0,
+    "paidApisAdded": 0,
+    "networkInferenceAdded": false,
+    "mainlineUserResearchIntegrationProven": false,
+    "canonicalWritesChanged": false,
+    "rankingChanged": false
+  },
+  "researchRetention": {
+    "phase134ReferenceStudiesPreserved": true,
+    "phase136UserReferenceStudiesPreserved": true,
+    "phase141EnglishLexiconAndLicensesPreserved": true
+  },
+  "limits": [
+    "opt_in_unverified_candidate_stage",
+    "source_sha_does_not_authenticate_publisher",
+    "partial_model_spans_still_missed",
+    "no_independent_source_disjoint_full_review_benchmark",
+    "heuristic_false_veto_not_quantified",
+    "aggregate_regression_completed_in_separate_groups_after_timeout"
+  ],
+  "archiveFileCount": 1600
+}

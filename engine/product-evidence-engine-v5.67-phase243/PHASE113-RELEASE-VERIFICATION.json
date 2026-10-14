@@ -1,0 +1,101 @@
+{
+  "version": "4.37.0",
+  "phase": 113,
+  "date": "2026-10-11",
+  "base": "v4.36-phase112",
+  "baseline_file_count": 1144,
+  "missing_baseline_files": [],
+  "modified_preexisting_files": [
+    "README.md",
+    "package.json"
+  ],
+  "all_other_baseline_files_unchanged": true,
+  "new_technical_files": [
+    "src/phase113_local_intent_interpreter.ts",
+    "tests/phase113_local_intent_interpreter.test.ts",
+    "examples/phase113-intent-demo.ts",
+    "audit/phase113/constructed-language-robustness.json"
+  ],
+  "node_typescript_compiled_all": 982,
+  "phase113_new_tests_included": 31,
+  "extra_test_suites": {
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch_node": 4,
+    "release_node": 3
+  },
+  "completed_test_total": 1159,
+  "completed_node_shards": [
+    {
+      "suite": "shard1",
+      "passed": 168,
+      "log": "phase113-shard1.log"
+    },
+    {
+      "suite": "shard2",
+      "passed": 167,
+      "log": "phase113-shard2.log"
+    },
+    {
+      "suite": "shard3",
+      "passed": 236,
+      "log": "phase113-shard3.log"
+    },
+    {
+      "suite": "shard4",
+      "passed": 161,
+      "log": "phase113-shard4.log"
+    },
+    {
+      "suite": "shard6",
+      "passed": 92,
+      "log": "phase113-shard6.log"
+    },
+    {
+      "suite": "phase90",
+      "passed": 8,
+      "log": "phase113-single-phase90_html_mainline.test.log"
+    },
+    {
+      "suite": "phase91",
+      "passed": 6,
+      "log": "phase113-single-phase91_watch_gate.test.log"
+    },
+    {
+      "suite": "phase92",
+      "passed": 11,
+      "log": "phase113-phase92.log"
+    },
+    {
+      "suite": "phase93",
+      "passed": 8,
+      "log": "phase113-phase93.log"
+    },
+    {
+      "suite": "shard5other",
+      "passed": 125,
+      "log": "phase113-shard5-other.log"
+    }
+  ],
+  "interrupted_invocations_not_counted": [
+    "aggregated shard5 attempt",
+    "individual group loop interrupted"
+  ],
+  "local_ollama_available": false,
+  "real_local_model_inference_performed": false,
+  "constructed_benchmark_has_independent_human_gold": false,
+  "constructed_benchmark_has_empirical_accuracy": false,
+  "public_ranking_enabled": false,
+  "source_provenance": "original RTINGS professional-review measurements reused from Phase112 manual public-source reading; no new live model parsing",
+  "direct_research_links": [
+    "https://aclanthology.org/2020.acl-main.442/",
+    "https://aclanthology.org/2021.eacl-main.257/",
+    "https://aclanthology.org/2025.emnlp-main.906/",
+    "https://aclanthology.org/2021.acl-long.84/",
+    "https://aclanthology.org/2020.acl-main.651/",
+    "https://github.com/ollama/ollama/blob/main/docs/capabilities/structured-outputs.mdx"
+  ]
+}

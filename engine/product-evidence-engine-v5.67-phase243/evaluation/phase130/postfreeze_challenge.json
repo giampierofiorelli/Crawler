@@ -1,0 +1,13 @@
+{
+  "freezeNotice": "Constructed AFTER Phase130 extractor source was compiled. Evaluated once without modifying the extractor. Editorial restatements of public official statements with citations; labels set by the same developer, not independent adjudication.",
+  "cases": [
+    {"id":"fan_eff", "group":"ceiling_fan", "source":"https://www.energystar.gov/products/ceiling_fans/key-product-criteria", "sourceRole":"original_expert_method", "text":"Ceiling Fan Efficiency: A weighted metric expressed in cubic feet per minute per watt.", "expected":["ceiling fan efficiency"]},
+    {"id":"fan_airflow", "group":"ceiling_fan", "source":"https://www.energystar.gov/products/ceiling_fans/key-product-criteria", "sourceRole":"original_expert_method", "text":"Minimum High Speed Airflow: A test requirement reported in cubic feet per minute.", "expected":["minimum high speed airflow"]},
+    {"id":"shower_force", "group":"showerhead", "source":"https://www.epa.gov/watersense/showerheads", "sourceRole":"original_expert_method", "text":"Spray force is measured in ounces under the required showerhead test.", "expected":["spray force"]},
+    {"id":"shower_coverage", "group":"showerhead", "source":"https://www.epa.gov/watersense/showerheads", "sourceRole":"original_expert_method", "text":"The test examines spray coverage by collecting water in different concentric rings.", "expected":["spray coverage"]},
+    {"id":"shower_flow", "group":"showerhead", "source":"https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100VLRA.txt", "sourceRole":"original_expert_method", "text":"Maximum flow rate is measured in gallons per minute at specified pressures.", "expected":["maximum flow rate"]},
+    {"id":"negative_no_protocol", "group":"synthetic_adversarial", "source":"https://example.org/challenge-1", "sourceRole":"manufacturer_specification", "text":"An Energy Magic Index (EMI) is marketed as the answer, but no independent test procedure exists.", "expected":[]},
+    {"id":"negative_context", "group":"synthetic_adversarial", "source":"https://example.org/challenge-2", "sourceRole":"user_problem_report", "text":"A person may prefer a compact unit when their bathroom is small.", "expected":[]},
+    {"id":"shower_pressure", "group":"showerhead", "source":"https://www.epa.gov/watersense/showerheads", "sourceRole":"original_expert_method", "text":"Pressure compensation is tested by checking minimum flow at several inlet pressure levels.", "expected":["pressure compensation"]}
+  ]
+}

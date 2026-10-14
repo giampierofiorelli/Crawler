@@ -1,0 +1,43 @@
+
+> product-evidence-engine@4.11.0 test:launch
+> npm run build:launch && node --test tests/launch_artifact.test.mjs
+
+
+> product-evidence-engine@4.11.0 build:launch
+> node scripts/build-launch.mjs
+
+Launch artifact verified: 14 allowlisted files; only buildLaunchRecommendation runtime export.
+TAP version 13
+# Subtest: compiled launch surface exposes only the independent recommendation pipeline
+ok 1 - compiled launch surface exposes only the independent recommendation pipeline
+  ---
+  duration_ms: 1.020907
+  type: 'test'
+  ...
+# Subtest: launch distribution excludes legacy experimental modules
+ok 2 - launch distribution excludes legacy experimental modules
+  ---
+  duration_ms: 3.465791
+  type: 'test'
+  ...
+# Subtest: compiled release verifier rejects an accidentally included legacy file
+ok 3 - compiled release verifier rejects an accidentally included legacy file
+  ---
+  duration_ms: 32.718501
+  type: 'test'
+  ...
+# Subtest: compiled release verifier rejects references to prohibited price modules
+ok 4 - compiled release verifier rejects references to prohibited price modules
+  ---
+  duration_ms: 31.958963
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 132.967943

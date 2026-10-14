@@ -1,0 +1,154 @@
+TAP version 13
+# Subtest: Phase231: scoped table does not turn component measurements into parent-product measurements
+ok 1 - Phase231: scoped table does not turn component measurements into parent-product measurements
+  ---
+  duration_ms: 906.089328
+  type: 'test'
+  ...
+# Subtest: Phase231: duplicate model headers abort the table rather than misassign
+ok 2 - Phase231: duplicate model headers abort the table rather than misassign
+  ---
+  duration_ms: 811.540172
+  type: 'test'
+  ...
+# Subtest: Phase231: ambiguous multiple values in one cell abstain for that component
+ok 3 - Phase231: ambiguous multiple values in one cell abstain for that component
+  ---
+  duration_ms: 916.982798
+  type: 'test'
+  ...
+# Subtest: Phase231: two-column rows without sufficient model-header evidence remain quarantined
+ok 4 - Phase231: two-column rows without sufficient model-header evidence remain quarantined
+  ---
+  duration_ms: 757.901975
+  type: 'test'
+  ...
+# Subtest: Phase231: component table extraction is deterministic and non-retentive
+ok 5 - Phase231: component table extraction is deterministic and non-retentive
+  ---
+  duration_ms: 1677.214521
+  type: 'test'
+  ...
+# Subtest: Phase231: compound units remain speeds rather than silently becoming lengths
+ok 6 - Phase231: compound units remain speeds rather than silently becoming lengths
+  ---
+  duration_ms: 817.505927
+  type: 'test'
+  ...
+# Subtest: Phase232: exact authored variant weights including wrapped continuation
+ok 7 - Phase232: exact authored variant weights including wrapped continuation
+  ---
+  duration_ms: 807.223682
+  type: 'test'
+  ...
+# Subtest: Phase232: duplicate/conflicting model assignments invalidate whole field
+ok 8 - Phase232: duplicate/conflicting model assignments invalidate whole field
+  ---
+  duration_ms: 826.032149
+  type: 'test'
+  ...
+# Subtest: Phase232: reject partially recognized units rather than cherry-picking variants
+ok 9 - Phase232: reject partially recognized units rather than cherry-picking variants
+  ---
+  duration_ms: 853.987414
+  type: 'test'
+  ...
+# Subtest: Phase232: no range reduced silently to one value
+ok 10 - Phase232: no range reduced silently to one value
+  ---
+  duration_ms: 803.203485
+  type: 'test'
+  ...
+# Subtest: Phase232: one author-declared model is insufficient to infer multi-variant section
+ok 11 - Phase232: one author-declared model is insufficient to infer multi-variant section
+  ---
+  duration_ms: 816.063004
+  type: 'test'
+  ...
+# Subtest: Phase232: generic variant codes work without hardcoding Dyson model names
+ok 12 - Phase232: generic variant codes work without hardcoding Dyson model names
+  ---
+  duration_ms: 705.046564
+  type: 'test'
+  ...
+# Subtest: Phase232: component filter weights are never promoted to product variants
+ok 13 - Phase232: component filter weights are never promoted to product variants
+  ---
+  duration_ms: 773.870533
+  type: 'test'
+  ...
+# Subtest: Phase232: appended marketing material invalidates the whole field
+ok 14 - Phase232: appended marketing material invalidates the whole field
+  ---
+  duration_ms: 756.253246
+  type: 'test'
+  ...
+# Subtest: Phase232: hashes, receipts, no document bodies and deterministic replay
+ok 15 - Phase232: hashes, receipts, no document bodies and deterministic replay
+  ---
+  duration_ms: 1680.372767
+  type: 'test'
+  ...
+# Subtest: Phase233: full numeric intervals preserve both endpoints and units
+ok 16 - Phase233: full numeric intervals preserve both endpoints and units
+  ---
+  duration_ms: 838.484518
+  type: 'test'
+  ...
+# Subtest: Phase233: voltage qualifiers are conditions, never inferred variants
+ok 17 - Phase233: voltage qualifiers are conditions, never inferred variants
+  ---
+  duration_ms: 870.629371
+  type: 'test'
+  ...
+# Subtest: Phase233: Celsius and pressure ranges retain author-written values
+ok 18 - Phase233: Celsius and pressure ranges retain author-written values
+  ---
+  duration_ms: 952.922073
+  type: 'test'
+  ...
+# Subtest: Phase233: identical numeric values remain scoped to different components
+ok 19 - Phase233: identical numeric values remain scoped to different components
+  ---
+  duration_ms: 945.660905
+  type: 'test'
+  ...
+# Subtest: Phase233: descending, equal or partially parsed intervals abstain
+ok 20 - Phase233: descending, equal or partially parsed intervals abstain
+  ---
+  duration_ms: 957.82534
+  type: 'test'
+  ...
+# Subtest: Phase233: prose containing numbers is not a technical specification
+ok 21 - Phase233: prose containing numbers is not a technical specification
+  ---
+  duration_ms: 878.301617
+  type: 'test'
+  ...
+# Subtest: Phase233: manufacturer ranges never become evidence for ranking
+ok 22 - Phase233: manufacturer ranges never become evidence for ranking
+  ---
+  duration_ms: 787.20531
+  type: 'test'
+  ...
+# Subtest: Phase233: document SHA, location and replay deterministic without article bodies
+ok 23 - Phase233: document SHA, location and replay deterministic without article bodies
+  ---
+  duration_ms: 1718.333628
+  type: 'test'
+  ...
+# Subtest: Phase233: previous variant PDF weights stay distinct from intervals
+ok 24 - Phase233: previous variant PDF weights stay distinct from intervals
+  ---
+  duration_ms: 749.40832
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8770.604451

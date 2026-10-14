@@ -1,0 +1,180 @@
+{
+  "notice": "Synthetic data — illustrative product, scales, reviewers and tests; NOT observed product performance",
+  "result": {
+    "purpose": "phase103_product_profile_research_only",
+    "publicationReady": false,
+    "rankingEligible": false,
+    "variantId": "vacuum_demo",
+    "categoryId": "vacuum",
+    "criterionFrames": [
+      {
+        "categoryId": "vacuum",
+        "criterionId": "cleaning",
+        "frameId": "carpet_normal",
+        "variantId": "vacuum_demo",
+        "status": "consistent_calibrated_levels",
+        "distinctOriginalTests": 3,
+        "originalTestIds": [
+          "test_1",
+          "test_2",
+          "test_3"
+        ],
+        "numberOfReportsOrClaims": 3,
+        "calibratedScaleReferences": [
+          "synthetic independently qualified scale"
+        ],
+        "levels": [
+          {
+            "scaleReference": "synthetic independently qualified scale",
+            "levelId": "strong",
+            "originalTestIds": [
+              "test_1",
+              "test_2",
+              "test_3"
+            ],
+            "claimIds": [
+              "illustrative_claim_1",
+              "illustrative_claim_2",
+              "illustrative_claim_3"
+            ]
+          }
+        ],
+        "descriptors": [],
+        "measurementGroups": [],
+        "intervalOrUncertainTestIds": [],
+        "interpretation": "At least two identified original tests give the same reviewed level on an identical scale and context. Descriptive convergence, not a certainty estimate.",
+        "confidenceInAccuracy": "not_estimated",
+        "syntheticConsensusPercentage": null,
+        "sourceTextRequired": false,
+        "llmCalls": 0
+      },
+      {
+        "categoryId": "vacuum",
+        "criterionId": "noise",
+        "frameId": "hard_floor_normal",
+        "variantId": "vacuum_demo",
+        "status": "discordant_calibrated_levels",
+        "distinctOriginalTests": 2,
+        "originalTestIds": [
+          "test_1",
+          "test_2"
+        ],
+        "numberOfReportsOrClaims": 2,
+        "calibratedScaleReferences": [
+          "synthetic independently qualified scale"
+        ],
+        "levels": [
+          {
+            "scaleReference": "synthetic independently qualified scale",
+            "levelId": "high",
+            "originalTestIds": [
+              "test_2"
+            ],
+            "claimIds": [
+              "illustrative_claim_5"
+            ]
+          },
+          {
+            "scaleReference": "synthetic independently qualified scale",
+            "levelId": "moderate",
+            "originalTestIds": [
+              "test_1"
+            ],
+            "claimIds": [
+              "illustrative_claim_4"
+            ]
+          }
+        ],
+        "descriptors": [],
+        "measurementGroups": [],
+        "intervalOrUncertainTestIds": [],
+        "interpretation": "Independent tests give different levels on the same reviewed scale and context. Expose disagreement; do not average it away.",
+        "confidenceInAccuracy": "not_estimated",
+        "syntheticConsensusPercentage": null,
+        "sourceTextRequired": false,
+        "llmCalls": 0
+      },
+      {
+        "categoryId": "vacuum",
+        "criterionId": "comfort",
+        "frameId": "long_session",
+        "variantId": "vacuum_demo",
+        "status": "single_original_test",
+        "distinctOriginalTests": 1,
+        "originalTestIds": [
+          "test_3"
+        ],
+        "numberOfReportsOrClaims": 1,
+        "calibratedScaleReferences": [
+          "synthetic independently qualified scale"
+        ],
+        "levels": [
+          {
+            "scaleReference": "synthetic independently qualified scale",
+            "levelId": "comfortable",
+            "originalTestIds": [
+              "test_3"
+            ],
+            "claimIds": [
+              "illustrative_claim_6"
+            ]
+          }
+        ],
+        "descriptors": [],
+        "measurementGroups": [],
+        "intervalOrUncertainTestIds": [],
+        "interpretation": "Only one independently identified test supports the available calibrated assessment, or evidence is limited to one test. Agreement between experts cannot be inferred.",
+        "confidenceInAccuracy": "not_estimated",
+        "syntheticConsensusPercentage": null,
+        "sourceTextRequired": false,
+        "llmCalls": 0
+      },
+      {
+        "categoryId": "vacuum",
+        "criterionId": "durability",
+        "frameId": "long_term",
+        "variantId": "vacuum_demo",
+        "status": "no_registered_evidence",
+        "distinctOriginalTests": 0,
+        "originalTestIds": [],
+        "numberOfReportsOrClaims": 0,
+        "calibratedScaleReferences": [],
+        "levels": [],
+        "descriptors": [],
+        "measurementGroups": [],
+        "intervalOrUncertainTestIds": [],
+        "interpretation": "No applicable claim is recorded for this product in this criterion/context. This does not prove the feature was not tested.",
+        "confidenceInAccuracy": "not_estimated",
+        "syntheticConsensusPercentage": null,
+        "sourceTextRequired": false,
+        "llmCalls": 0
+      }
+    ],
+    "coverage": {
+      "framesRequested": 4,
+      "framesWithAnyRegisteredEvidence": 3,
+      "framesWithoutRegisteredEvidence": 1,
+      "framesWithAtLeastTwoOriginalTests": 2
+    },
+    "consistentFrameKeys": [
+      "cleaning/carpet_normal"
+    ],
+    "disputedFrameKeys": [
+      "noise/hard_floor_normal"
+    ],
+    "unassessedFrameKeys": [
+      "durability/long_term"
+    ],
+    "overallConsensusScore": null,
+    "sourceTextRequired": false,
+    "llmCalls": 0,
+    "caveats": [
+      "Agreement is per criterion and controlled context; a product-wide percent would conflate unlike constructs.",
+      "Recorded evidence coverage is not proof that every original review examined, omitted or endorsed a criterion.",
+      "Two concordant tests are descriptive convergence, not a calibrated probability of correctness.",
+      "Review pages may share a source or methods; original-test independence requires prior real lineage verification.",
+      "Divergent results may indicate legitimate changes in operating mode, users or protocols rather than faulty testing.",
+      "Consensus is supporting information for confidence, not a positive/negative performance score or an automatic ranking bonus."
+    ]
+  }
+}

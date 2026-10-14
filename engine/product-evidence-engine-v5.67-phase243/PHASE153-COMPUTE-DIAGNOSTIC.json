@@ -1,0 +1,47 @@
+{
+  "phase": 153,
+  "origin": "local_developer_constructed_single_pass_not_production_benchmark",
+  "platform": {
+    "node": "v22.16.0",
+    "architecture": "x64",
+    "os": "linux"
+  },
+  "warmups": 0,
+  "repeatsPerSize": 1,
+  "controlledCPU": false,
+  "isolatedGC": false,
+  "heapMeasurementsNotPeakRSS": true,
+  "rows": [
+    {
+      "repeats": 2,
+      "sourceCharacters": 194,
+      "phase152ElapsedMs": 16.914,
+      "phase153ElapsedMsIncludingPhase152": 7.73,
+      "heapDeltaBytes": 823480,
+      "baselineTruncated": false,
+      "phase153Truncated": false,
+      "observedInventoryCount": 4
+    },
+    {
+      "repeats": 20,
+      "sourceCharacters": 1940,
+      "phase152ElapsedMs": 5.18,
+      "phase153ElapsedMsIncludingPhase152": 11.052,
+      "heapDeltaBytes": 34760,
+      "baselineTruncated": false,
+      "phase153Truncated": false,
+      "observedInventoryCount": 40
+    },
+    {
+      "repeats": 100,
+      "sourceCharacters": 9700,
+      "phase152ElapsedMs": 25.237,
+      "phase153ElapsedMsIncludingPhase152": 96.601,
+      "heapDeltaBytes": 3789800,
+      "baselineTruncated": true,
+      "phase153Truncated": true,
+      "observedInventoryCount": 200
+    }
+  ],
+  "comparativeSpeedClaimAuthorized": false
+}

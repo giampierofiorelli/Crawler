@@ -1,0 +1,38 @@
+[
+  {
+    "command": "python3 -m unittest discover -s evaluation -t . -p test_*.py",
+    "status": 0,
+    "count": 26,
+    "tail": "..........................\n----------------------------------------------------------------------\nRan 26 tests in 1.366s\n\nOK\n"
+  },
+  {
+    "command": "python3 -m unittest discover -s ingestion -p test_*.py",
+    "status": 0,
+    "count": 21,
+    "tail": ".....................\n----------------------------------------------------------------------\nRan 21 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "command": "python3 -m unittest discover -s phase95 -p test_*.py",
+    "status": 0,
+    "count": 12,
+    "tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.001s\n\nOK\n"
+  },
+  {
+    "command": "python3 -m unittest discover -s primary_sources -t . -p test_*.py",
+    "status": 0,
+    "count": 47,
+    "tail": "...............................................\n----------------------------------------------------------------------\nRan 47 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "command": "python3 -m unittest discover -s tests-python -p test_*.py",
+    "status": 0,
+    "count": 35,
+    "tail": "...................................\n----------------------------------------------------------------------\nRan 35 tests in 0.752s\n\nOK\n"
+  },
+  {
+    "command": "python3 -m unittest discover -s tests-companion -p test_phase*.py",
+    "status": 0,
+    "count": 71,
+    "tail": " event_id FROM watch_events WHERE event_id=?',(eid,)).fetchone()\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/mnt/data/pee172-work/product-evidence-engine-v4.95-phase171/phase89/watch_ledger.py:178: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f76c6ffc9a0>\n  existing=con.execute('SELECT event_id FROM watch_events WHERE event_id=?',(eid,)).fetchone()\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n................\n----------------------------------------------------------------------\nRan 71 tests in 23.237s\n\nOK\n"
+  }
+]

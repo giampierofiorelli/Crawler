@@ -1,0 +1,82 @@
+{
+  "phase": 150,
+  "version": "4.74-phase150",
+  "parent": "4.73-phase149",
+  "date": "2026-10-11",
+  "parentZipSha256": "3da2bed7a1256308c05c4b717edc172f588500d9a60b2619c0a06aa664cfa5b5",
+  "parentFileCount": 1549,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE150-FILE-MANIFEST.sha256",
+    "PHASE150-LONG-DOCUMENT-REFERENCE-DIAGNOSTIC.json",
+    "PHASE150-LONG-DOCUMENT-REFERENCE-RESEARCH.md",
+    "PHASE150-REGRESSION-GROUPS.json",
+    "dist/src/phase150_document_reference_benchmark.js",
+    "dist/tests/phase150_document_reference_benchmark.test.js",
+    "evaluation/phase150/CONSTRUCTED-LONG-DOCUMENT-CORPUS.json",
+    "research/phase150_original_editorial_short_excerpt_registry.json",
+    "scripts/evaluate-phase150.mjs",
+    "scripts/phase150_regress.mjs",
+    "src/phase150_document_reference_benchmark.ts",
+    "tests/phase150_document_reference_benchmark.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1927,
+    "eligibleFiles": 109,
+    "phase150Focused": 28,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "evaluation": {
+    "constructedLongDocuments": 7,
+    "originalShortEditorialExcerpts": 3,
+    "developmentLabeledSame": 3,
+    "developmentMissedSame": 3,
+    "developmentProposed": 0,
+    "independentOriginalProfessionalFullLengthDocuments": 0,
+    "independentGoldAnnotations": 0,
+    "scientificAccuracy": null,
+    "falseMergeRateIndependent": null,
+    "originalFullArticleRedistributionRightsEstablished": false,
+    "developerFixtureLabelsNonblind": true
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "newModels": 0,
+    "remoteInference": 0,
+    "newPaidApis": 0,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false,
+    "copiedThirdPartyCode": false
+  },
+  "retainedCategoryBacklog": [
+    "traditional fryers",
+    "air fryers",
+    "toasters",
+    "coffee makers",
+    "food steamers"
+  ],
+  "limitations": [
+    "This is an evaluation harness, not a new neural or grammar parser.",
+    "Seven longer texts are constructed and developer-labeled, not independent gold.",
+    "Three publisher passages are brief attributed quotations, not entire reviews.",
+    "No performance comparison of pretrained models was performed.",
+    "Publisher source authenticity, original text rights, annotator independence and preregistration are not authenticated.",
+    "Two legacy test files remain excluded from TypeScript regression."
+  ],
+  "archiveFileCount": 1562
+}

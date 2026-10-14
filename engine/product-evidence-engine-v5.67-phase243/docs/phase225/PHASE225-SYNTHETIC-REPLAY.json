@@ -1,0 +1,75 @@
+{
+  "schema": "pee225.synthetic-demonstration.v1",
+  "synthetic": true,
+  "requests": [
+    "https://synthetic-footwear.test/robots.txt",
+    "https://synthetic-footwear.test/article",
+    "https://synthetic-waste.test/robots.txt",
+    "https://synthetic-waste.test/article"
+  ],
+  "methodLeads": [
+    {
+      "url": "https://synthetic-footwear.test/article",
+      "status": "metadata_observed",
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "value": 206,
+          "unit": "g",
+          "instrument": "digital scale",
+          "subject": "Fictional Shoe A11",
+          "subjectAssignment": "page_context_unverified",
+          "scientificEvidenceAdmitted": false
+        }
+      ]
+    },
+    {
+      "url": "https://synthetic-waste.test/article",
+      "status": "metadata_observed",
+      "candidateCount": 1,
+      "candidates": [
+        {
+          "value": 23,
+          "unit": "l",
+          "instrument": "digital scale",
+          "subject": "Fictional Recycling Bin B22",
+          "subjectAssignment": "page_context_unverified",
+          "scientificEvidenceAdmitted": false
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "schema": "pee225.test-lead-audit.v1",
+    "status": "research_only",
+    "candidateCount": 2,
+    "observedSourceCount": 2,
+    "sourceRevisionConflicts": [],
+    "methodBlocksObserved": 8,
+    "instrumentBlocksObserved": 4,
+    "needsHumanReview": [
+      {
+        "sourceUrl": "https://synthetic-footwear.test/article",
+        "leadId": "2f6c4885f2b40a4b2df9306eec048597635714446f566a537d26caae5dbeddc5",
+        "action": "verify_original_work_method_reviewer_and_variant"
+      },
+      {
+        "sourceUrl": "https://synthetic-waste.test/article",
+        "leadId": "e5bc5fa60f40450d1102157ef9414ba91dae07f5a9a97c3cf7633a839fc41698",
+        "action": "verify_original_work_method_reviewer_and_variant"
+      }
+    ],
+    "reasons": [
+      "original_publication_editorial_independence_unverified",
+      "test_method_instrument_conditions_and_protocol_require_review",
+      "product_variant_and_market_scope_unverified"
+    ],
+    "sourceBodiesStored": false,
+    "sourcePassagesStored": false,
+    "independentTestsAuthenticated": 0,
+    "evidencePromoted": 0,
+    "rankingAuthorized": false
+  },
+  "sourceBodiesStored": false,
+  "rankedProducts": 0
+}

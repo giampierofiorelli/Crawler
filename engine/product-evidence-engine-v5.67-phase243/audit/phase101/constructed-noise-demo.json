@@ -1,0 +1,120 @@
+{
+  "purpose": "phase101_stored_evidence_reuse_research_only",
+  "publicationReady": false,
+  "rankingEligible": false,
+  "sourceTextRequired": false,
+  "llmCalls": 0,
+  "categoryId": "vacuum",
+  "criterionId": "noise",
+  "frameId": "normal_mode_hard_floor",
+  "tiers": [
+    {
+      "tier": 1,
+      "variantIds": [
+        "alpha"
+      ],
+      "meaning": "supported_relative_order_not_cardinal_score"
+    },
+    {
+      "tier": 2,
+      "variantIds": [
+        "beta"
+      ],
+      "meaning": "supported_relative_order_not_cardinal_score"
+    },
+    {
+      "tier": 3,
+      "variantIds": [
+        "gamma"
+      ],
+      "meaning": "supported_relative_order_not_cardinal_score"
+    }
+  ],
+  "uncertainVariantIds": [],
+  "unassessedVariantIds": [
+    "delta"
+  ],
+  "cases": [
+    {
+      "variantId": "alpha",
+      "name": "Constructed Vacuum alpha",
+      "descriptors": [
+        "somewhat_noisy"
+      ],
+      "status": "supported_preference",
+      "sourceUrls": [
+        "https://example.org/research/test_one"
+      ],
+      "claimIds": [
+        "comparison_alpha_beta",
+        "noisy_alpha"
+      ]
+    },
+    {
+      "variantId": "beta",
+      "name": "Constructed Vacuum beta",
+      "descriptors": [],
+      "status": "supported_preference",
+      "sourceUrls": [
+        "https://example.org/research/test_two"
+      ],
+      "claimIds": [
+        "comparison_beta_gamma"
+      ]
+    },
+    {
+      "variantId": "delta",
+      "name": "Constructed Vacuum delta",
+      "descriptors": [],
+      "status": "not_comparable",
+      "sourceUrls": [],
+      "claimIds": []
+    },
+    {
+      "variantId": "epsilon",
+      "name": "Constructed Vacuum epsilon",
+      "descriptors": [
+        "very_quiet"
+      ],
+      "status": "qualitatively_described",
+      "sourceUrls": [
+        "https://example.org/research/test_three"
+      ],
+      "claimIds": [
+        "quiet_epsilon"
+      ]
+    },
+    {
+      "variantId": "gamma",
+      "name": "Constructed Vacuum gamma",
+      "descriptors": [],
+      "status": "supported_preference",
+      "sourceUrls": [],
+      "claimIds": []
+    }
+  ],
+  "blockedComparisons": [],
+  "edgeEvidence": [
+    {
+      "better": "alpha",
+      "worse": "beta",
+      "claimIds": [
+        "comparison_alpha_beta"
+      ]
+    },
+    {
+      "better": "beta",
+      "worse": "gamma",
+      "claimIds": [
+        "comparison_beta_gamma"
+      ]
+    }
+  ],
+  "limitations": [
+    "A noisy descriptor alone has no cardinal score or universal quietness rank.",
+    "Partial-order tiers are not additive utility or probabilities; tiers do not imply complete ordering across disconnected chains.",
+    "Unknown and incomparable products remain visible instead of being screened out.",
+    "Source/page hash and locator are retained for audit, not full review text; approval receipts need authenticated production controls.",
+    "SQLite single-process research store requires transactional operational validation; no public ranking or rights clearance is asserted."
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "source": "developer_created_not_independent",
+  "frozenBeforeCode": false,
+  "entries": [
+    {
+      "id": "washer_long_context",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "washer_long_context",
+      "productFamilyId": "washer_long_context",
+      "categoryId": "washing_machine",
+      "input": {
+        "document": {
+          "text": "Aster X100 was tested with cotton shirts on the standard cycle. The washing cycle took 114 minutes, while the spin speed was set to 1200 rpm. The detergent drawer was checked separately. The lab retained the same water supply.\n\nThis model then ran a synthetic-fabric cycle at another temperature. The remaining moisture was recorded, but the report did not claim that the temperature alone caused the change. The operator cleaned the filter before the next session.\n\nA later test repeated the first programme. The results were recorded but have not been compared to another product.",
+          "sha256": "81d8982891b6976ed3c3123407f890354dfa7e2f0df4fdd5fcf763c01211c529",
+          "source": {
+            "id": "washer_long_context",
+            "originalDocumentId": "washer_long_context",
+            "url": "https://example.com/developer-authored/washer_long_context",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        }
+      },
+      "annotations": [
+        {
+          "id": "washer_long_context_a1",
+          "mention": {
+            "start": 228,
+            "end": 238,
+            "literal": "This model"
+          },
+          "phenomenon": "cross_paragraph",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "same_textual_referent",
+              "targetSpan": {
+                "start": 0,
+                "end": 10,
+                "literal": "Aster X100"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cd_forward_context",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "cd_forward_context",
+      "productFamilyId": "cd_forward_context",
+      "categoryId": "cd_player",
+      "input": {
+        "document": {
+          "text": "This player sounded balanced on the first recording. The reviewer kept the amplifier and speakers unchanged and did not measure the frequency response directly. The disc transport was inspected separately from the sound test. TEAC VRDS-701 includes a DAC and analogue outputs.\n\nA listening session used the same recordings but a different pair of headphones. The reviewer described a change in presentation and explicitly called this a subjective judgement.\n\nNo measurement of the transport mechanism was published.",
+          "sha256": "ba8ba3e72b32093534b8a1b8dcc58ef3b2e2241a481814493b1143d22328fcf0",
+          "source": {
+            "id": "cd_forward_context",
+            "originalDocumentId": "cd_forward_context",
+            "url": "https://example.com/developer-authored/cd_forward_context",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        }
+      },
+      "annotations": [
+        {
+          "id": "cd_forward_context_a1",
+          "mention": {
+            "start": 0,
+            "end": 11,
+            "literal": "This player"
+          },
+          "phenomenon": "forward",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "same_textual_referent",
+              "targetSpan": {
+                "start": 226,
+                "end": 239,
+                "literal": "TEAC VRDS-701"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tv_competing_models",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "tv_competing_models",
+      "productFamilyId": "tv_competing_models",
+      "categoryId": "television",
+      "input": {
+        "document": {
+          "text": "Orion V500 and Birch B200 were tested in the same room. The first television had its brightness measured in HDR mode. The second television used SDR settings with a different white point. The reviewing team logged both protocols separately.\n\nThis TV looked brighter in a scene that contained very small highlights. However, the reviewer did not identify which model was connected during the second viewing. The colorimeter was calibrated before the test.\n\nNeither observation establishes a superiority claim across the two models.",
+          "sha256": "ccb5f90b533cdfc7c7e2fb0baa3d23945cebfd8fb442415e49ee59e503ea6d88",
+          "source": {
+            "id": "tv_competing_models",
+            "originalDocumentId": "tv_competing_models",
+            "url": "https://example.com/developer-authored/tv_competing_models",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        }
+      },
+      "annotations": [
+        {
+          "id": "tv_competing_models_a1",
+          "mention": {
+            "start": 242,
+            "end": 249,
+            "literal": "This TV"
+          },
+          "phenomenon": "comparison",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "unresolved_from_passage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oven_variant_context",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "oven_variant_context",
+      "productFamilyId": "oven_variant_context",
+      "categoryId": "oven",
+      "input": {
+        "document": {
+          "text": "Aster X100 and Aster X100 Pro were placed side by side. The base version was set to 180°C. The Pro model used a different convection setting and the reviewers recorded its energy use separately. A temperature probe was installed on both shelves.\n\nThis model reached the higher reading after twenty minutes. The notes did not specify whether the sentence described the base oven or the Pro variant. The fan was switched off before a later test.\n\nThe numerical readings were kept as separate observations.",
+          "sha256": "51d1edfb3abf9d9159af0923e6f927a41cca236697234bead622bb85f3a455f2",
+          "source": {
+            "id": "oven_variant_context",
+            "originalDocumentId": "oven_variant_context",
+            "url": "https://example.com/developer-authored/oven_variant_context",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        },
+        "pageIdentity": {
+          "reviewedProductId": "caller_hint_not_authenticated",
+          "reviewedVariantId": "caller_hint_not_authenticated",
+          "reviewedAliases": [
+            "Aster X100",
+            "Aster X100 Pro"
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "id": "oven_variant_context_a1",
+          "mention": {
+            "start": 247,
+            "end": 257,
+            "literal": "This model"
+          },
+          "phenomenon": "variant",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "unresolved_from_passage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaker_component_context",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "speaker_component_context",
+      "productFamilyId": "speaker_component_context",
+      "categoryId": "loudspeaker",
+      "input": {
+        "document": {
+          "text": "Lumen S100 uses a tweeter and a woofer. The woofer enclosure was damped for the listening trial, and the crossover was adjusted for the second run. The engineer took notes about both.\n\nIt sounded harsh during the first recording. The sentence did not say whether the woofer, the whole speaker or the crossover adjustment produced this impression. The amplifier was replaced before the next recording.\n\nNo isolated frequency response was reported.",
+          "sha256": "a9a2826bb925153687e09e35de0b77a103a195e0923a4add11dd81d425885769",
+          "source": {
+            "id": "speaker_component_context",
+            "originalDocumentId": "speaker_component_context",
+            "url": "https://example.com/developer-authored/speaker_component_context",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        }
+      },
+      "annotations": [
+        {
+          "id": "speaker_component_context_a1",
+          "mention": {
+            "start": 185,
+            "end": 187,
+            "literal": "It"
+          },
+          "phenomenon": "component",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "unresolved_from_passage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coffee_claim_vs_measure",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "coffee_claim_vs_measure",
+      "productFamilyId": "coffee_claim_vs_measure",
+      "categoryId": "coffee_machine",
+      "input": {
+        "document": {
+          "text": "Lumen C30 advertises a fast brewing time according to the packaging. The manufacturer also describes a detachable milk tank and a warming plate. Neither statement is presented as an independent laboratory measurement.\n\nThis model measured a longer extraction time under the review setup. The water temperature was changed, and the filter basket was cleaned between shots. The reviewer did not publish identical settings for the advertised number.\n\nThese reports must remain distinct until the protocols can be checked.",
+          "sha256": "99c928a8c4947cf35fecdb81ad9f363c838d49903590495ab49583e26b299242",
+          "source": {
+            "id": "coffee_claim_vs_measure",
+            "originalDocumentId": "coffee_claim_vs_measure",
+            "url": "https://example.com/developer-authored/coffee_claim_vs_measure",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        }
+      },
+      "annotations": [
+        {
+          "id": "coffee_claim_vs_measure_a1",
+          "mention": {
+            "start": 219,
+            "end": 229,
+            "literal": "This model"
+          },
+          "phenomenon": "condition",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "same_textual_referent",
+              "targetSpan": {
+                "start": 0,
+                "end": 9,
+                "literal": "Lumen C30"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airfryer_basket_context",
+      "split": "development",
+      "origin": "constructed",
+      "permission": "unestablished",
+      "sourceGroupId": "airfryer_basket_context",
+      "productFamilyId": "airfryer_basket_context",
+      "categoryId": "air_fryer",
+      "input": {
+        "document": {
+          "text": "Raven A120 was used for a batch of potato wedges. The removable basket has a perforated insert and a temperature sensor near the back of its cavity. The sensor was not independently calibrated during this trial.\n\nIt ran hotter than expected after twelve minutes. The editor did not clarify whether the sentence described the basket sensor, the cooking compartment or the temperature setting. The model was unplugged before the final inspection.\n\nA further cooking trial used a different portion size.",
+          "sha256": "9dc6de163e48aea8c0cb88ac3c9a172d25c36356aa9358442c6b65960d2d8968",
+          "source": {
+            "id": "airfryer_basket_context",
+            "originalDocumentId": "airfryer_basket_context",
+            "url": "https://example.com/developer-authored/airfryer_basket_context",
+            "title": "Invented evaluation text",
+            "role": "original_product_test"
+          }
+        }
+      },
+      "annotations": [
+        {
+          "id": "airfryer_basket_context_a1",
+          "mention": {
+            "start": 213,
+            "end": 215,
+            "literal": "It"
+          },
+          "phenomenon": "component",
+          "votes": [
+            {
+              "reviewerId": "phase150_developer",
+              "truth": "unresolved_from_passage"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

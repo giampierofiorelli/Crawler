@@ -1,0 +1,268 @@
+TAP version 13
+# Subtest: 200 authentic signatures and complete bytes permit STAGING only
+ok 1 - 200 authentic signatures and complete bytes permit STAGING only
+  ---
+  duration_ms: 14.793059
+  type: 'test'
+  ...
+# Subtest: 200 signed ordinary expert outcome has distinct provenance kind
+ok 2 - 200 signed ordinary expert outcome has distinct provenance kind
+  ---
+  duration_ms: 2.277952
+  type: 'test'
+  ...
+# Subtest: 200 no raw publisher document in returned decision
+ok 3 - 200 no raw publisher document in returned decision
+  ---
+  duration_ms: 3.520441
+  type: 'test'
+  ...
+# Subtest: 200 no unsigned capture accepted
+ok 4 - 200 no unsigned capture accepted
+  ---
+  duration_ms: 2.08752
+  type: 'test'
+  ...
+# Subtest: 200 capture full-document bytes must match signed SHA256
+ok 5 - 200 capture full-document bytes must match signed SHA256
+  ---
+  duration_ms: 1.700958
+  type: 'test'
+  ...
+# Subtest: 200 mismatched original document version rejected
+ok 6 - 200 mismatched original document version rejected
+  ---
+  duration_ms: 1.562683
+  type: 'test'
+  ...
+# Subtest: 200 capture copied from a different product variant rejected
+ok 7 - 200 capture copied from a different product variant rejected
+  ---
+  duration_ms: 1.262309
+  type: 'test'
+  ...
+# Subtest: 200 expert review cannot impersonate primary issuer registry capture
+ok 8 - 200 expert review cannot impersonate primary issuer registry capture
+  ---
+  duration_ms: 1.174058
+  type: 'test'
+  ...
+# Subtest: 200 issuer programme cannot impersonate specialist authored experiment
+ok 9 - 200 issuer programme cannot impersonate specialist authored experiment
+  ---
+  duration_ms: 1.531667
+  type: 'test'
+  ...
+# Subtest: 200 capture from before maximum freshness denied
+ok 10 - 200 capture from before maximum freshness denied
+  ---
+  duration_ms: 1.468153
+  type: 'test'
+  ...
+# Subtest: 200 stale status snapshot denies all badges despite perfect signatures
+ok 11 - 200 stale status snapshot denies all badges despite perfect signatures
+  ---
+  duration_ms: 1.016705
+  type: 'test'
+  ...
+# Subtest: 200 signed revocation overrides valid old approvals
+ok 12 - 200 signed revocation overrides valid old approvals
+  ---
+  duration_ms: 2.239596
+  type: 'test'
+  ...
+# Subtest: 200 forged revocation-free status is rejected
+ok 13 - 200 forged revocation-free status is rejected
+  ---
+  duration_ms: 1.025448
+  type: 'test'
+  ...
+# Subtest: 200 different signing key not in pinned policy cannot authorize capture
+ok 14 - 200 different signing key not in pinned policy cannot authorize capture
+  ---
+  duration_ms: 1.341225
+  type: 'test'
+  ...
+# Subtest: 200 incomplete second reviewer stops staging
+ok 15 - 200 incomplete second reviewer stops staging
+  ---
+  duration_ms: 1.314967
+  type: 'test'
+  ...
+# Subtest: 200 one human cannot play two review roles through two keys
+ok 16 - 200 one human cannot play two review roles through two keys
+  ---
+  duration_ms: 1.589223
+  type: 'test'
+  ...
+# Subtest: 200 altered signed reviewer scope is rejected
+ok 17 - 200 altered signed reviewer scope is rejected
+  ---
+  duration_ms: 1.740306
+  type: 'test'
+  ...
+# Subtest: 200 correct scope but forged reviewer signature denied
+ok 18 - 200 correct scope but forged reviewer signature denied
+  ---
+  duration_ms: 1.689882
+  type: 'test'
+  ...
+# Subtest: 200 altered claim hash with correctly re-signed reviewer still fails scope
+ok 19 - 200 altered claim hash with correctly re-signed reviewer still fails scope
+  ---
+  duration_ms: 1.616343
+  type: 'test'
+  ...
+# Subtest: 200 altered presentation hash invalidates previously approved state
+ok 20 - 200 altered presentation hash invalidates previously approved state
+  ---
+  duration_ms: 1.29727
+  type: 'test'
+  ...
+# Subtest: 200 non-Ed25519 anchor rejected, no fallback to insecure algorithms
+ok 21 - 200 non-Ed25519 anchor rejected, no fallback to insecure algorithms
+  ---
+  duration_ms: 350.247713
+  type: 'test'
+  ...
+# Subtest: 200 policy date bounds reject invalid cryptographic trust configuration
+ok 22 - 200 policy date bounds reject invalid cryptographic trust configuration
+  ---
+  duration_ms: 0.784181
+  type: 'test'
+  ...
+# Subtest: 200 capture signer with wrong role cannot authorize issuer record
+not ok 23 - 200 capture signer with wrong role cannot authorize issuer record
+  ---
+  duration_ms: 0.809378
+  type: 'test'
+  location: '/mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:299:1'
+  failureType: 'testCodeFailure'
+  error: 'phase200_key'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:29:32)
+    validatePolicy (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:69:13)
+    stageSpecialistTrust200 (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:112:21)
+    verdict (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:159:43)
+    TestContext.<anonymous> (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:302:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: 200 expired pin stops old valid signature
+not ok 24 - 200 expired pin stops old valid signature
+  ---
+  duration_ms: 0.684373
+  type: 'test'
+  location: '/mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:304:1'
+  failureType: 'testCodeFailure'
+  error: 'phase200_key'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:29:32)
+    validatePolicy (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:69:13)
+    stageSpecialistTrust200 (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:112:21)
+    verdict (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:159:43)
+    TestContext.<anonymous> (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:307:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: 200 extra unqualified evidence packet cannot issue additional trust card
+not ok 25 - 200 extra unqualified evidence packet cannot issue additional trust card
+  ---
+  duration_ms: 0.670633
+  type: 'test'
+  location: '/mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:309:1'
+  failureType: 'testCodeFailure'
+  error: 'phase200_key'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:29:32)
+    validatePolicy (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:69:13)
+    stageSpecialistTrust200 (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:112:21)
+    verdict (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:159:43)
+    TestContext.<anonymous> (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:312:15)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: 200 absent specialist validation yields no signal, not bad product
+not ok 26 - 200 absent specialist validation yields no signal, not bad product
+  ---
+  duration_ms: 1.225514
+  type: 'test'
+  location: '/mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:316:1'
+  failureType: 'testCodeFailure'
+  error: 'phase200_key'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:29:32)
+    validatePolicy (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:69:13)
+    stageSpecialistTrust200 (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:112:21)
+    verdict (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:159:43)
+    TestContext.<anonymous> (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:319:15)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: 200 unordered status revocation list is not trusted
+not ok 27 - 200 unordered status revocation list is not trusted
+  ---
+  duration_ms: 0.667969
+  type: 'test'
+  location: '/mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:323:1'
+  failureType: 'testCodeFailure'
+  error: 'phase200_key'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:29:32)
+    validatePolicy (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:69:13)
+    stageSpecialistTrust200 (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:112:21)
+    verdict (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:159:43)
+    TestContext.<anonymous> (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:327:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: 200 no document body can exceed bounded transient maximum
+not ok 28 - 200 no document body can exceed bounded transient maximum
+  ---
+  duration_ms: 0.634459
+  type: 'test'
+  location: '/mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:329:1'
+  failureType: 'testCodeFailure'
+  error: 'phase200_key'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:29:32)
+    validatePolicy (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:69:13)
+    stageSpecialistTrust200 (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/src/phase200_signed_source_publication_gate.js:112:21)
+    verdict (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:159:43)
+    TestContext.<anonymous> (file:///mnt/data/pee_phase200_work/product-evidence-engine-v5.23-phase199/dist/tests/phase200_signed_source_publication_gate.test.js:332:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 22
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 481.468694

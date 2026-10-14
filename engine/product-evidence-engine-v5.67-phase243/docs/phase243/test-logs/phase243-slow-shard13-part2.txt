@@ -1,0 +1,251 @@
+TAP version 13
+# Subtest: Phase229: Poppler aligned two-column rows are parsed and located, not verified
+ok 1 - Phase229: Poppler aligned two-column rows are parsed and located, not verified
+  ---
+  duration_ms: 3611.701143
+  type: 'test'
+  ...
+# Subtest: Phase229: isolated row is not evidence for a table
+ok 2 - Phase229: isolated row is not evidence for a table
+  ---
+  duration_ms: 2642.982128
+  type: 'test'
+  ...
+# Subtest: Phase229: parallel value/model columns are refused, not mixed
+ok 3 - Phase229: parallel value/model columns are refused, not mixed
+  ---
+  duration_ms: 2725.216511
+  type: 'test'
+  ...
+# Subtest: Phase229: multiple explicitly declared models never acquire an exact model
+ok 4 - Phase229: multiple explicitly declared models never acquire an exact model
+  ---
+  duration_ms: 2946.399235
+  type: 'test'
+  ...
+# Subtest: Phase229: unrecognized unit does not create plausible evidence
+ok 5 - Phase229: unrecognized unit does not create plausible evidence
+  ---
+  duration_ms: 3248.332158
+  type: 'test'
+  ...
+# Subtest: Phase229: a stray intervening column invalidates its row and singleton run
+ok 6 - Phase229: a stray intervening column invalidates its row and singleton run
+  ---
+  duration_ms: 2220.782502
+  type: 'test'
+  ...
+# Subtest: Phase229: duplicate value extracted in key-value and geometry paths counts once
+ok 7 - Phase229: duplicate value extracted in key-value and geometry paths counts once
+  ---
+  duration_ms: 1785.092708
+  type: 'test'
+  ...
+# Subtest: Phase229: repeat parse is deterministic and does not leak PDF body
+ok 8 - Phase229: repeat parse is deterministic and does not leak PDF body
+  ---
+  duration_ms: 5682.520339
+  type: 'test'
+  ...
+# Subtest: Phase229: existing Phase228 PDF/DOCX paths stay valid
+ok 9 - Phase229: existing Phase228 PDF/DOCX paths stay valid
+  ---
+  duration_ms: 3324.010726
+  type: 'test'
+  ...
+# Subtest: Phase229: existing discovery -> robots -> PDF -> typed claims works offline
+ok 10 - Phase229: existing discovery -> robots -> PDF -> typed claims works offline
+  ---
+  duration_ms: 1666.863481
+  type: 'test'
+  ...
+# Subtest: Phase230: synthetic PDF dual-unit labels preserve document-authored metric and part scopes
+ok 11 - Phase230: synthetic PDF dual-unit labels preserve document-authored metric and part scopes
+  ---
+  duration_ms: 2249.754458
+  type: 'test'
+  ...
+# Subtest: Phase230: 19th page is accessible within bounded 24-page PDF preview
+ok 12 - Phase230: 19th page is accessible within bounded 24-page PDF preview
+  ---
+  duration_ms: 1992.161732
+  type: 'test'
+  ...
+# Subtest: Phase230: same document yields deterministic claims and SHA and no raw paragraphs
+ok 13 - Phase230: same document yields deterministic claims and SHA and no raw paragraphs
+  ---
+  duration_ms: 5532.490773
+  type: 'test'
+  ...
+# Subtest: Phase230: PDF max size remains strictly bounded at 40MB
+ok 14 - Phase230: PDF max size remains strictly bounded at 40MB
+  ---
+  duration_ms: 1.222049
+  type: 'test'
+  ...
+# Subtest: Phase230: DOCX retains its original 6MB limit
+ok 15 - Phase230: DOCX retains its original 6MB limit
+  ---
+  duration_ms: 1.274759
+  type: 'test'
+  ...
+# Subtest: Phase230: existing authored PDF geometry fixture remains valid
+ok 16 - Phase230: existing authored PDF geometry fixture remains valid
+  ---
+  duration_ms: 2088.858392
+  type: 'test'
+  ...
+# Subtest: Phase231: scoped table does not turn component measurements into parent-product measurements
+ok 17 - Phase231: scoped table does not turn component measurements into parent-product measurements
+  ---
+  duration_ms: 2584.710349
+  type: 'test'
+  ...
+# Subtest: Phase231: duplicate model headers abort the table rather than misassign
+ok 18 - Phase231: duplicate model headers abort the table rather than misassign
+  ---
+  duration_ms: 3161.343523
+  type: 'test'
+  ...
+# Subtest: Phase231: ambiguous multiple values in one cell abstain for that component
+ok 19 - Phase231: ambiguous multiple values in one cell abstain for that component
+  ---
+  duration_ms: 1847.943471
+  type: 'test'
+  ...
+# Subtest: Phase231: two-column rows without sufficient model-header evidence remain quarantined
+ok 20 - Phase231: two-column rows without sufficient model-header evidence remain quarantined
+  ---
+  duration_ms: 2402.829363
+  type: 'test'
+  ...
+# Subtest: Phase231: component table extraction is deterministic and non-retentive
+ok 21 - Phase231: component table extraction is deterministic and non-retentive
+  ---
+  duration_ms: 4443.690063
+  type: 'test'
+  ...
+# Subtest: Phase231: compound units remain speeds rather than silently becoming lengths
+ok 22 - Phase231: compound units remain speeds rather than silently becoming lengths
+  ---
+  duration_ms: 1602.648566
+  type: 'test'
+  ...
+# Subtest: Phase232: exact authored variant weights including wrapped continuation
+ok 23 - Phase232: exact authored variant weights including wrapped continuation
+  ---
+  duration_ms: 1906.415303
+  type: 'test'
+  ...
+# Subtest: Phase232: duplicate/conflicting model assignments invalidate whole field
+ok 24 - Phase232: duplicate/conflicting model assignments invalidate whole field
+  ---
+  duration_ms: 1663.351587
+  type: 'test'
+  ...
+# Subtest: Phase232: reject partially recognized units rather than cherry-picking variants
+ok 25 - Phase232: reject partially recognized units rather than cherry-picking variants
+  ---
+  duration_ms: 1753.361176
+  type: 'test'
+  ...
+# Subtest: Phase232: no range reduced silently to one value
+ok 26 - Phase232: no range reduced silently to one value
+  ---
+  duration_ms: 1622.640066
+  type: 'test'
+  ...
+# Subtest: Phase232: one author-declared model is insufficient to infer multi-variant section
+ok 27 - Phase232: one author-declared model is insufficient to infer multi-variant section
+  ---
+  duration_ms: 1523.64416
+  type: 'test'
+  ...
+# Subtest: Phase232: generic variant codes work without hardcoding Dyson model names
+ok 28 - Phase232: generic variant codes work without hardcoding Dyson model names
+  ---
+  duration_ms: 1381.889991
+  type: 'test'
+  ...
+# Subtest: Phase232: component filter weights are never promoted to product variants
+ok 29 - Phase232: component filter weights are never promoted to product variants
+  ---
+  duration_ms: 1392.502461
+  type: 'test'
+  ...
+# Subtest: Phase232: appended marketing material invalidates the whole field
+ok 30 - Phase232: appended marketing material invalidates the whole field
+  ---
+  duration_ms: 1338.519716
+  type: 'test'
+  ...
+# Subtest: Phase232: hashes, receipts, no document bodies and deterministic replay
+ok 31 - Phase232: hashes, receipts, no document bodies and deterministic replay
+  ---
+  duration_ms: 2750.85223
+  type: 'test'
+  ...
+# Subtest: Phase233: full numeric intervals preserve both endpoints and units
+ok 32 - Phase233: full numeric intervals preserve both endpoints and units
+  ---
+  duration_ms: 1721.3044
+  type: 'test'
+  ...
+# Subtest: Phase233: voltage qualifiers are conditions, never inferred variants
+ok 33 - Phase233: voltage qualifiers are conditions, never inferred variants
+  ---
+  duration_ms: 1701.605456
+  type: 'test'
+  ...
+# Subtest: Phase233: Celsius and pressure ranges retain author-written values
+ok 34 - Phase233: Celsius and pressure ranges retain author-written values
+  ---
+  duration_ms: 1712.119614
+  type: 'test'
+  ...
+# Subtest: Phase233: identical numeric values remain scoped to different components
+ok 35 - Phase233: identical numeric values remain scoped to different components
+  ---
+  duration_ms: 1488.241153
+  type: 'test'
+  ...
+# Subtest: Phase233: descending, equal or partially parsed intervals abstain
+ok 36 - Phase233: descending, equal or partially parsed intervals abstain
+  ---
+  duration_ms: 1428.09948
+  type: 'test'
+  ...
+# Subtest: Phase233: prose containing numbers is not a technical specification
+ok 37 - Phase233: prose containing numbers is not a technical specification
+  ---
+  duration_ms: 1394.405385
+  type: 'test'
+  ...
+# Subtest: Phase233: manufacturer ranges never become evidence for ranking
+ok 38 - Phase233: manufacturer ranges never become evidence for ranking
+  ---
+  duration_ms: 1327.947787
+  type: 'test'
+  ...
+# Subtest: Phase233: document SHA, location and replay deterministic without article bodies
+ok 39 - Phase233: document SHA, location and replay deterministic without article bodies
+  ---
+  duration_ms: 2684.881806
+  type: 'test'
+  ...
+# Subtest: Phase233: previous variant PDF weights stay distinct from intervals
+ok 40 - Phase233: previous variant PDF weights stay distinct from intervals
+  ---
+  duration_ms: 1150.679454
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 44885.74936
+

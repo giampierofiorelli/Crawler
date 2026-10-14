@@ -1,0 +1,100 @@
+{
+  "groups": [
+    {
+      "group": "companion",
+      "passed": 71,
+      "success": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests-companion",
+        "-p",
+        "test_phase*.py"
+      ]
+    },
+    {
+      "group": "primary",
+      "passed": 47,
+      "success": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "primary_sources",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    {
+      "group": "ingestion",
+      "passed": 21,
+      "success": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "ingestion",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    {
+      "group": "evaluation",
+      "passed": 26,
+      "success": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "evaluation",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    {
+      "group": "phase95",
+      "passed": 12,
+      "success": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "phase95",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    {
+      "group": "tests-python",
+      "passed": 35,
+      "success": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests-python",
+        "-p",
+        "test_*.py"
+      ]
+    }
+  ],
+  "count": 212,
+  "allPassed": true
+}

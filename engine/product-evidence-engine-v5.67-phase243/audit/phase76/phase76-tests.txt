@@ -1,0 +1,78 @@
+
+> product-evidence-engine@4.4.0 test:phase76
+> npm run build && node --test dist/tests/phase76_*.test.js
+
+
+> product-evidence-engine@4.4.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: new category queues an actionable job; no invented recommendations
+ok 1 - new category queues an actionable job; no invented recommendations
+  ---
+  duration_ms: 9.199346
+  type: 'test'
+  ...
+# Subtest: category with two aliases requires clarification, not a phantom work item
+ok 2 - category with two aliases requires clarification, not a phantom work item
+  ---
+  duration_ms: 1.583435
+  type: 'test'
+  ...
+# Subtest: same category/use-case deduplicates with independent bearer tokens; different use-cases differ
+ok 3 - same category/use-case deduplicates with independent bearer tokens; different use-cases differ
+  ---
+  duration_ms: 6.533271
+  type: 'test'
+  ...
+# Subtest: no worker reports capacity honestly; later installed capability resumes
+ok 4 - no worker reports capacity honestly; later installed capability resumes
+  ---
+  duration_ms: 22.607891
+  type: 'test'
+  ...
+# Subtest: unknown category executes research-only with independent review gate
+ok 5 - unknown category executes research-only with independent review gate
+  ---
+  duration_ms: 11.752836
+  type: 'test'
+  ...
+# Subtest: an unsupported research response cannot become approved automatically
+ok 6 - an unsupported research response cannot become approved automatically
+  ---
+  duration_ms: 11.735381
+  type: 'test'
+  ...
+# Subtest: leases prevent duplicate claims, expired workers cannot overwrite new attempt
+ok 7 - leases prevent duplicate claims, expired workers cannot overwrite new attempt
+  ---
+  duration_ms: 10.21149
+  type: 'test'
+  ...
+# Subtest: persistent storage reloads and detects tampering
+ok 8 - persistent storage reloads and detects tampering
+  ---
+  duration_ms: 3.619451
+  type: 'test'
+  ...
+# Subtest: HTTP supports asynchronous submit/status, no source or result leakage, and bearer auth
+ok 9 - HTTP supports asynchronous submit/status, no source or result leakage, and bearer auth
+  ---
+  duration_ms: 35.86296
+  type: 'test'
+  ...
+# Subtest: unknown product and unknown category are distinct; product requires its own worker
+ok 10 - unknown product and unknown category are distinct; product requires its own worker
+  ---
+  duration_ms: 13.507275
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 230.048465

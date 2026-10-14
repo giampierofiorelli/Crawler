@@ -1,0 +1,128 @@
+# Product Evidence Engine — Conviene integrare un framework AI di scraping o sviluppare internamente?
+
+**Revisione tecnica e ricerca documentale | 10 ottobre 2026**  
+**Baseline:** Product Evidence Engine v4.10, fase 82.  
+**Stato:** analisi e proposta di esperimento; **nessuna sostituzione del codice approvata, nessun benchmark end-to-end eseguito**.
+
+## Decisione proposta
+
+**Non adottare ora un framework AI di scraping come infrastruttura obbligatoria.** Conservare internamente l'orchestrazione, la ricerca di mercato, l'interpretazione delle evidenze, le autorizzazioni, lo schema adattivo e la decisione finale. Utilizzare componenti tecnici open source strettamente necessari — trasporto HTTP, parser HTML/XML, browser Playwright *soltanto quando necessario*, inferenza locale *soltanto per compiti semantici* — senza ricostruire da zero un browser.
+
+La proposta è condizionata a una prova comparativa breve e riproducibile. **Crawl4AI rimane uno sfidante opzionale**, non il candidato già vincitore. ScrapeGraphAI e Browser Use non hanno attualmente una motivazione sufficiente per entrare nel percorso principale; potranno essere testati su classi di siti problematiche.
+
+La decisione è coerente con il vincolo **zero contratti obbligatori per API commerciali di ricerca, crawling o scraping**. Non implica costo operativo zero: CPU, RAM, eventuale GPU, elettricità, monitoraggio e manutenzione rimangono costi reali anche con codice open source.
+
+## Che cosa esiste già nella v4.10
+
+Ispezione diretta dell'archivio e del codice:
+
+- `src/approved_web_reader.ts`: 173 righe; trasporto HTTPS ristretto, DNS/IP e limiti di risposta; **non** un crawler generalista o un browser che rende pagine JavaScript.
+- `src/phase75_source_discovery.ts`: 89 righe; trova URL candidati in sitemap approvate; **non** un sistema di scoperta di prodotti in tutto il web.
+- `src/phase75_local_model.ts`: 48 righe; adattatore HTTP a Ollama su loopback; verifica formale delle proposte; **non** un modello già installato, collaudato o misurato nel progetto.
+- `src/phase82_market_watch.ts`: 172 righe; pianificazione, frequenze, limiti di accesso e classificazione dei segnali; il piano segnala `actualNetworkRequests:0`, quindi **non è un monitor live**.
+- Il sistema di prove, schema e ranking resta distinto nei moduli delle fasi 63–81. Il pacchetto è prevalentemente TypeScript/Node; l'adozione di framework Python introduce interfacce e un runtime aggiuntivo oppure richiede l'isolamento in un processo separato.
+- I test già superati verificano soprattutto regole interne e simulazioni. **Non sono una prova di copertura del mercato, qualità dell'estrazione reale, latenza o sostenibilità del servizio.**
+
+Questa constatazione conta: scegliere di non adottare Crawl4AI **non significa che il crawling sia già risolto**. Serve comunque completare un nucleo di acquisizione.
+
+## La questione fondamentale: chi decide che cosa cercare?
+
+La nostra differenziazione non è leggere una pagina web. È rispondere, con prove riproducibili, a richieste come «voglio pulire il materasso rispettando questi vincoli», anche se la categoria è nuova o la selezione finale comprende un unico modello.
+
+Il sistema deve stabilire autonomamente:
+
+1. Quali famiglie di soluzioni siano pertinenti e quali criteri contino per la richiesta.
+2. Quali fonti sia legittimo consultare e come distinguere pubblicità, specifiche, test originali e ripubblicazioni.
+3. Quali prodotti **popolare prima nel database**, anche usando selezioni professionali soltanto come segnali di scoperta.
+4. Quando la selezione di uno, tre o cento prodotti sia sufficiente a livello di **copertura del mercato**, distinguendo assenza di concorrenti compatibili da ignoranza del catalogo.
+5. Quali lacune giustifichino altre ricerche e quando fermarsi.
+6. Quando aprire una scheda preliminare per un nuovo prodotto con sole specifiche; quando aggiungere misure indipendenti; come impedire il rientro automatico di modelli di cui è confermata la cessazione della produzione, mantenendo la pagina storica.
+7. Quali campi, criteri e relazioni aggiornare nella memoria cognitiva senza alterare i dati storici.
+
+Nessuno dei framework esaminati promette, né dimostra sui nostri dati, di risolvere interamente questi problemi. L'adaptive crawling di Crawl4AI misura la sufficienza delle **pagine esplorate in relazione a una query**, non la copertura delle alternative competitive di tutto il mercato [1].
+
+## Evidenze di ricerca: che cosa mostrano gli studi
+
+### WebLists, 2025: gli agenti che «leggono tutto» perdono elementi
+
+Il lavoro *WebLists: Extracting Structured Information From Complex Interactive Websites Using Executable LLM Agents* propone un benchmark di **200 compiti su 50 siti web**. Nelle condizioni sperimentali riportate, l'LLM con ricerca ottiene circa **3,3% di recall** e l'agente migliore fra due baseline circa **30,5%**. Il metodo degli autori, che trasforma la navigazione in un programma ripetibile con selettori HTML, raggiunge **66,2% di recall** e **72,5% di precision**, con costo per riga corretta inferiore rispetto alle baseline agentiche [2].
+
+**Interpretazione utile:** identificare una struttura una volta, poi riutilizzare una procedura verificabile, può essere più efficace dell'affidare a un LLM ogni singola pagina. **Limiti:** benchmark su aggiornamenti aziendali, job listing e testimonianze, non sul ranking di prodotti; il lavoro valuta anche l'architettura proposta dagli autori e non è una comparativa neutrale fra Crawl4AI e il nostro codice.
+
+### Estrazione di informazioni da prodotti alimentari, 2025
+
+Brosch e colleghi studiano **3.000 pagine di prodotti alimentari su tre negozi online**, confrontando estrazione diretta con LLM ed estrazione indiretta tramite funzioni generate. L'approccio indiretto riporta **96,48% di accuratezza**, circa **1,61 punti percentuali** in meno della modalità diretta, ma **95,82% in meno di chiamate LLM** [3].
+
+**Interpretazione utile:** investire una volta nel riconoscimento della struttura di un sito può ridurre nettamente il ricorso al modello. **Limiti:** i risultati dipendono dai tre siti e dai campi osservati; non dimostrano che l'estrazione di giudizi professionali o metodi di laboratorio raggiunga la stessa accuratezza.
+
+### La stessa documentazione di Crawl4AI consiglia il non-LLM quando basta
+
+Crawl4AI documenta CSS, XPath e regex come strategie più rapide, economiche e deterministiche per strutture ripetitive; propone gli LLM per contenuto irregolare o per generare e validare schemi riutilizzabili [4]. È un'indicazione del produttore, non un benchmark imparziale, ma converge con gli studi precedenti.
+
+### Costi di esercizio e affidabilità dei framework
+
+La libreria open source Crawl4AI è utilizzabile senza acquistare il suo servizio cloud [5]. Questo non rende irrilevanti le segnalazioni di problemi infrastrutturali: il suo tracker registra, per esempio, casi di accumulo di browser e ritardi dovuti alla gestione delle risorse [6]; il progetto ha inoltre corretto vulnerabilità di sicurezza nella versione 0.9.4 [7]. Questi ticket non dimostrano che la versione corrente fallirà nel nostro contesto, ma richiedono prova su versioni fissate e aggiornamenti verificati.
+
+Le discussioni di sviluppatori che usano Playwright e sistemi LLM segnalano una difficoltà pratica ricorrente: il livello «agentico» non elimina la necessità di controllare affidabilità, errori, timeout e configurazioni dei siti. Sono testimonianze, non statistiche rappresentative [8].
+
+## Confronto delle scelte
+
+| Scelta | Benefici | Costi o rischi aggiunti | Esito provvisorio |
+|---|---|---|---|
+| **A. Nucleo nostro + HTTP + parser + Playwright quando serve + LLM locale mirato** | Controllo completo; TypeScript coerente con v4.10; chiamate LLM limitate; tracciabilità personalizzata; zero canoni di scraping | Dobbiamo sviluppare e mantenere adattatori per fonti, pianificazione errori, osservabilità e browser fallback | **Baseline preferita, da misurare** |
+| **B. Crawl4AI self-hosted come esecutore, sotto il nostro coordinatore** | Crawling adattivo, estrazione strutturata, gestione browser e cache già disponibili | Runtime Python/interfaccia, superficie di configurazione, aggiornamenti, risorse, potenziale duplicazione col planner e controlli di v4.10 | **Sfidante da confrontare; non integrazione automatica** |
+| **C. ScrapeGraphAI self-hosted per estrazione semantica** | Astrazione comoda per pagine narrative irregolari e modelli locali | Più livelli software; errori di interpretazione da verificare; sovrapposizione con nostro modulo Ollama | Solo esperimento circoscritto se A non basta |
+| **D. Browser Use, agente browser generale** | Navigazione interattiva complessa | Inferenza ripetuta, maggiore variabilità, peso delle azioni/contesto; richiede un modello locale capace di tool calling | Non adatto come percorso ordinario |
+| **E. Tutto scritto da zero, incluso un motore browser** | Controllo teorico totale | Replica di anni di sviluppo di browser automation; sicurezza e aggiornamenti a nostro carico | **Sconsigliato** |
+
+Crawl4AI documenta crawling adattivo e generazione LLM/no-LLM [1,4]. Playwright è una libreria Apache-2.0 per automatizzare browser [9]. Browser Use permette libreria open source e Ollama locale, ma gli sviluppatori avvertono che i modelli locali più piccoli possono sbagliare le azioni [10]. Le capacità pubblicizzate non costituiscono prova di miglioramento sulla nostra applicazione.
+
+## La soluzione concretamente più compatibile con il Product Evidence Engine
+
+**Uno strato di acquisizione estremamente piccolo, governato dal nostro coordinatore:**
+
+1. **Segnale economico:** sitemap, RSS/Atom, metadati `lastmod`, HTTP ETag e feed autorizzati; eseguire l'LLM soltanto quando serve interpretare una novità.
+2. **Visita:** riutilizzare il lettore HTTP controllato quando possibile; Playwright solo per pagine pubbliche con contenuto realmente generato via JavaScript. Mantenere isolamento di rete, verifica URL/reindirizzamenti, limiti per host, quote, scadenze, robot policy e autorizzazioni. L'introduzione di un browser richiede di rivalutare i controlli di sicurezza oggi applicati al trasporto HTTP.
+3. **Estrazione:** campi tecnici, codici prodotto, date, relazioni e tabelle tramite parser deterministici per strutture ripetibili; preferire schemi riutilizzabili per editore o tipo di pagina.
+4. **Interpretazione semantica:** LLM locale per affermazioni professionali, differenze di metodo, bisogni nuovi e campi dinamici; output vincolato a campi tipizzati e prova letterale minima in memoria transitoria. Nessuna promozione automatica dell'ipotesi a fatto.
+5. **Validazione indipendente:** riconoscere modello/variante, test originale, protocolli e qualità della fonte; gestire contraddizioni, vincoli d'uso e diritti prima di scrivere nel database approvato.
+6. **Memoria e ranking nostri:** usare gli sviluppi delle fasi 63–82 per priorità, nuove categorie, decisione di arresto, storico fuori produzione e risposta all'utente.
+
+Il browser non deve essere autorizzato ad aggirare paywall, autenticazioni o blocchi di accesso. Le librerie non concedono diritti sulle pagine: le fonti devono essere qualificate nel contesto commerciale concreto.
+
+## Come decidere senza pregiudizi: esperimento controllato prima di modificare l'architettura
+
+**Confronto A/B:** nucleo nostro (A) vs Crawl4AI self-hosted (B), stessa infrastruttura, stesso eventuale LLM locale, stesso elenco di fonti, stesse regole di accesso. Se la versione A soddisfa già i requisiti, non serve installare B in produzione. Nessuna API commerciale.
+
+**Casi obbligatori:**
+
+- Produttore: comunicato di lancio e specifiche del nuovo modello.
+- Produttore: conferma ufficiale della cessazione di produzione, distinguendola dalla mancata disponibilità nei negozi.
+- Testata/laboratorio: tabella di misure, metodologia e variante precisa.
+- Recensione narrativa: pro e contro contestuali, differenza fra opinione dell'autore e fatti misurati.
+- Sito con JavaScript: indice di prodotti e più varianti, con paginazione.
+- Categoria poco conosciuta: scoperta di alternative fuori dalle classifiche più note; provare sia richieste generali sia filtri molto restrittivi.
+- Aggiornamento: ripetere il monitoraggio senza rileggere i contenuti invariati o creare duplicati.
+
+**Metriche:** accuratezza dell'identità/variante; precisione e richiamo dei modelli rintracciati rispetto a un campione manuale; correttezza dei campi; verifica dei test originali; assenza di promozioni premature nel ranking; errori nel ciclo di vita; copertura delle fonti autorizzate; chiamate/byte; CPU, RAM, tempo, chiamate LLM; ore di integrazione, manutenzione e risoluzione di un layout modificato; rispetto dei blocchi e auditability. Separare errori critici da omissioni minori.
+
+**Regola di ammissione:** un framework entra soltanto se offre un miglioramento misurabile **senza peggiorare** affidabilità, provenienza, sicurezza, personalizzazione o costo totale; deve inoltre consentire disinstallazione/sostituzione tramite un'interfaccia. Le soglie numeriche, se adottate, devono essere concordate prima del test; oggi non esistono misure reali per fissarle scientificamente.
+
+**Limite della presente ricerca:** le fonti citate dimostrano alcune capacità generali e alcuni rischi. **Non dimostrano ancora che la soluzione A sia più accurata, veloce o economica di B nei siti che useremo.** La preferenza per A è una decisione di minimizzazione delle dipendenze, coerente con i requisiti, in attesa della prova empirica.
+
+## Fonti verificabili
+
+1. Crawl4AI, *Adaptive Crawling*: https://docs.crawl4ai.com/core/adaptive-crawling/
+2. Bohra et al., *WebLists: Extracting Structured Information From Complex Interactive Websites Using Executable LLM Agents* (2025), testo e metodologia: https://arxiv.org/abs/2504.12682
+3. Brosch et al., *Evaluation of LLM-based Strategies for the Extraction of Food Product Information from Online Shops* (2025), studio su 3.000 pagine: https://arxiv.org/abs/2506.21585
+4. Crawl4AI, *LLM-Free Strategies*: https://docs.crawl4ai.com/extraction/no-llm-strategies/
+5. Crawl4AI, documentazione open source/self-hosted: https://docs.crawl4ai.com/
+6. Crawl4AI, issue/discussione sulla gestione della memoria/browser: https://github.com/unclecode/crawl4ai/issues/2202 e https://github.com/unclecode/crawl4ai/discussions/1041
+7. Crawl4AI, *Security Advisories*, correzioni 0.9.4: https://github.com/unclecode/crawl4ai/security
+8. Discussione practitioner (esperienze aneddotiche): https://www.reddit.com/r/webscraping/comments/1rtjng3/experiences_of_using_mcp_for_content_scraping/ e https://www.reddit.com/r/WebScrapingInsider/comments/1stguri/what_are_the_best_ai_web_scraping_tools_in_2026/
+9. Microsoft, *Playwright Installation*: https://playwright.dev/docs/intro ; licenza del pacchetto: https://github.com/microsoft/playwright/blob/main/packages/playwright/package.json
+10. Browser Use, repository/licenza/compatibilità con modello locale: https://github.com/browser-use/browser-use ; discussione Ollama e affidabilità: https://github.com/browser-use/browser-use/discussions/4261
+11. Scrapy, *Architecture* e *AutoThrottle* (riferimenti tecnici per l'acquisizione programmata, non proposta di nuova dipendenza obbligatoria): https://docs.scrapy.org/en/latest/topics/architecture.html e https://docs.scrapy.org/en/master/topics/autothrottle.html
+12. Architettura/Product Evidence Engine: sorgenti della v4.10-phase82, specificamente `src/approved_web_reader.ts`, `src/phase75_source_discovery.ts`, `src/phase75_local_model.ts`, `src/phase82_market_watch.ts`, `src/phase79_adaptive_search_decision.ts`, `src/phase80_population_portfolio.ts`, `src/phase81_competition_gate.ts`.
+
+**Esito operativo:** nessuna sostituzione adesso. Passare dalla progettazione di nuovi livelli teorici a un collaudo ristretto su fonti realmente autorizzate, dove il criterio di scelta sia il beneficio dimostrato, non la notorietà del framework.

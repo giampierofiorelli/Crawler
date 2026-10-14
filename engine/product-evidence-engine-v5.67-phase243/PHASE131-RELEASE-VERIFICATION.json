@@ -1,0 +1,62 @@
+{
+  "version": "4.55-phase131",
+  "date": "2026-10-11",
+  "parent": "v4.54-phase130",
+  "parentArchiveSha256": "76ef102e0d8c2292055039e1c3013d1af0fc778c51d4545b925274636edde6d6",
+  "previousFileCount": 1385,
+  "missingPreviousFiles": [],
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE131-NATIVE-RELATION-LEARNING-ENGINEERING-RESEARCH.md",
+    "PHASE131-RELATION-LEARNING-EVALUATION.json",
+    "dist/src/phase131_local_relation_learning.js",
+    "dist/tests/phase131_local_relation_learning.test.js",
+    "evaluation/phase131/challenge.json",
+    "evaluation/phase131/train.json",
+    "evaluation/phase131/validation.json",
+    "scripts/evaluate-phase131.mjs",
+    "src/phase131_local_relation_learning.ts",
+    "tests/phase131_local_relation_learning.test.ts",
+    "PHASE131-RELEASE-VERIFICATION.json"
+  ],
+  "typescript": {
+    "passed": 1438,
+    "failed": 0,
+    "excludedLegacyTestFiles": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "historicalFullSuiteVerified": false
+  },
+  "python": {
+    "primary_source_tests": 47,
+    "ingestion_tests": 21,
+    "passed_total": 68
+  },
+  "phase131TargetedTestsPassed": 11,
+  "statisticalPilot": {
+    "algorithm": "multinomial_naive_bayes_from_scratch",
+    "train": 60,
+    "validation": 12,
+    "challenge": 18,
+    "challengeAccepted": 5,
+    "challengeCorrect": 4,
+    "challengeWrong": 1,
+    "challengeAbstentions": 13,
+    "highMarginNegationErrorObserved": true,
+    "groundTruth": "Author-created, short constructed relation samples; entities premarked; not independent original publisher data",
+    "challengeFrozenBeforeModelCode": true,
+    "challengeNotUsedForRetuning": true
+  },
+  "autonomousOriginalSourceAcquisitionTested": false,
+  "independentGoldLabels": false,
+  "reliableCrossSentenceRelations": false,
+  "llmUsed": false,
+  "extraExternalInferenceDependency": false,
+  "rankingAuthorized": false,
+  "completelyAutonomousProductResearchValidated": false,
+  "next": "Independently annotated original publisher corpus and source-heldout comparison with position-aware local classifier; verify scope, negation, product identity and review effort"
+}

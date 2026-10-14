@@ -1,0 +1,54 @@
+{
+  "project": "Product Evidence Engine",
+  "version": "4.17.0",
+  "phase": 92,
+  "baseline_file": "product-evidence-engine-v4.16-phase91.zip",
+  "baseline_sha256": "27104a7b1f831776eb0a7a1367a759720095aa7694c806aa6abdef49e92ac670",
+  "scope": "reviewer-signed append-only recipe suspension and deterministic held-out-qualified supersession in Phase85; original Phase68/69/70/82/89/90/91 roles retained",
+  "test_counts": {
+    "mainline_ts_js": 635,
+    "companion_python": 60,
+    "companion_node_ts": 16,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3,
+    "total": 812
+  },
+  "suite_execution": "separate complete test runs; logs in audit/phase92",
+  "signatures": "Ed25519 public-key verified; private signing keys NOT in package; tests only use ephemeral test keys",
+  "real_website_testing": false,
+  "production_deployed": false,
+  "authenticated_human_approvals_tested": false,
+  "rights_verified_in_live_trial": false,
+  "new_technical_files": [
+    "src/phase92_recipe_lifecycle.ts",
+    "tests/phase92_recipe_lifecycle.test.ts",
+    "dist/src/phase92_recipe_lifecycle.js",
+    "dist/tests/phase92_recipe_lifecycle.test.js"
+  ],
+  "modified_existing_files": [
+    "src/phase85_source_recipes.ts",
+    "dist/src/phase85_source_recipes.js",
+    "README.md",
+    "package.json"
+  ],
+  "old_version_audit_preserved": true,
+  "workflow_validation": "constructed locally authored HTML and locally simulated trusted reviewer signing keys only",
+  "baseline_file_count": 632,
+  "baseline_files_missing": 0,
+  "actual_changed_baseline_files": [
+    "README.md",
+    "dist/src/phase85_source_recipes.js",
+    "package.json",
+    "src/phase85_source_recipes.ts"
+  ],
+  "unmodified_baseline_files": 628,
+  "changed_files_sha256": {
+    "README.md": "aeae5b85079d5fc183f9963647f19f1d3ecd851407afe132a6db9a87be580a24",
+    "dist/src/phase85_source_recipes.js": "e55a30996c71a2886bdfbf08339793f40eb0e691af4431811afe62be3b316075",
+    "package.json": "616f079282c7f539af487704394e5be37f19edefef56148a2a28fb1fbdd97ae4",
+    "src/phase85_source_recipes.ts": "1c93af680eaba296a30dd25b89087ec113d9e8e742b7eebd1f69ffb55f4d561c"
+  }
+}

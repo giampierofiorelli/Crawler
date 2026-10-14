@@ -1,0 +1,417 @@
+{
+  "synthetic": true,
+  "independentHumanCalibrationPerformed": false,
+  "sourceTextUsedDuringQuery": false,
+  "modelCallsDuringQuery": 0,
+  "invalidated": true,
+  "before": {
+    "type": "reviewed_personalized_tradeoff",
+    "profileSha256": "2f9f0a9c18fa8c5089f9672206fd2278c5d723d3e0eec0e3e0e587b46af45681",
+    "variantIds": [
+      "alpha",
+      "beta"
+    ],
+    "primary": {
+      "purpose": "phase98_compensatory_criterion_value_model_research_only",
+      "publicationReady": false,
+      "rankingEligible": false,
+      "conditionalOrder": [
+        "beta",
+        "alpha"
+      ],
+      "rankStatus": "robust_within_elicited_value_model",
+      "variants": [
+        {
+          "variantId": "alpha",
+          "eligibility": "tradeoff_eligible",
+          "totalValueBounds": [
+            40,
+            40
+          ],
+          "exactTotalValue": 40,
+          "contributions": [
+            {
+              "criterionId": "noise",
+              "weightedValueBounds": [
+                0,
+                0
+              ],
+              "testedLevelId": "poor",
+              "originalTestIds": [
+                "first_noise_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/first_noise_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            },
+            {
+              "criterionId": "cleaning",
+              "weightedValueBounds": [
+                40,
+                40
+              ],
+              "testedLevelId": "good",
+              "originalTestIds": [
+                "first_cleaning_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/first_cleaning_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            }
+          ],
+          "missingCriteria": [],
+          "vetoReasons": [],
+          "holdReasons": []
+        },
+        {
+          "variantId": "beta",
+          "eligibility": "tradeoff_eligible",
+          "totalValueBounds": [
+            60,
+            60
+          ],
+          "exactTotalValue": 60,
+          "contributions": [
+            {
+              "criterionId": "noise",
+              "weightedValueBounds": [
+                60,
+                60
+              ],
+              "testedLevelId": "good",
+              "originalTestIds": [
+                "second_noise_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/second_noise_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            },
+            {
+              "criterionId": "cleaning",
+              "weightedValueBounds": [
+                0,
+                0
+              ],
+              "testedLevelId": "poor",
+              "originalTestIds": [
+                "second_cleaning_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/second_cleaning_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            }
+          ],
+          "missingCriteria": [],
+          "vetoReasons": [],
+          "holdReasons": []
+        }
+      ],
+      "limitations": [
+        "Numerical values and swing weights must be independently elicited; none are generated from review sentiment.",
+        "No demonstrated calibration on real consumer preferences, no signed reviewer identity or production scoring permission.",
+        "Value bounds are logical intervals on an elicited scale, never probabilities or confidence intervals.",
+        "Correlated criteria, conflicting original tests and duplicate evidence must be resolved before input.",
+        "Manufacturer specifications, retail prices, availability, star ratings and affiliate signals do not enter this model.",
+        "Phase97 essential flags must not become vetoes unless a distinct explicit hard requirement is confirmed."
+      ]
+    },
+    "ordinalRobustness": {
+      "purpose": "phase100_bounded_adaptive_preference_research_only",
+      "sourceVariantIds": [
+        "alpha",
+        "beta"
+      ],
+      "publicationReady": false,
+      "rankingEligible": false,
+      "question": {
+        "firstCriterionId": "noise",
+        "secondCriterionId": "cleaning",
+        "prompt": "Which complete improvement matters more: noise from \"noisy performance\" to \"quiet performance\", or cleaning from \"weak cleaning\" to \"excellent cleaning\"?",
+        "responses": [
+          "first_more_important",
+          "second_more_important",
+          "equally_important"
+        ],
+        "conditionalFirstMore": [
+          -100,
+          0.00002
+        ],
+        "conditionalSecondMore": [
+          -0.00003,
+          100
+        ]
+      },
+      "limitations": [
+        "Source-free handoff from Phase101 approved level mappings through Phase98, not a Phase99 raw-text replay.",
+        "Exact restricted convex polytope for at most 5 criteria; not full UTA-GMS or empirical preference calibration.",
+        "Plausible performance intervals are logical worst cases, not statistical uncertainty distributions.",
+        "Unknown criterion evidence cannot be silently treated as poor performance.",
+        "No public ranking, reviewer authentication proof, or empirical real-consumer validation."
+      ],
+      "status": "underdetermined",
+      "differenceBounds": [
+        -100,
+        100
+      ],
+      "compatiblePolytopeVertices": 2,
+      "missingOrPendingEvidence": [],
+      "admissibleWeightBounds": [
+        {
+          "criterionId": "noise",
+          "minimum": 0,
+          "maximum": 1
+        },
+        {
+          "criterionId": "cleaning",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ]
+    },
+    "unresolvedCalibrations": [],
+    "sourceReferences": [
+      {
+        "criterionId": "noise",
+        "variantId": "alpha",
+        "originalTestId": "first_noise_test",
+        "sourceUrl": "https://constructed.example.org/first_noise_test"
+      },
+      {
+        "criterionId": "noise",
+        "variantId": "beta",
+        "originalTestId": "second_noise_test",
+        "sourceUrl": "https://constructed.example.org/second_noise_test"
+      },
+      {
+        "criterionId": "cleaning",
+        "variantId": "alpha",
+        "originalTestId": "first_cleaning_test",
+        "sourceUrl": "https://constructed.example.org/first_cleaning_test"
+      },
+      {
+        "criterionId": "cleaning",
+        "variantId": "beta",
+        "originalTestId": "second_cleaning_test",
+        "sourceUrl": "https://constructed.example.org/second_cleaning_test"
+      }
+    ],
+    "sourceTextRequired": false,
+    "llmCalls": 0,
+    "publicationReady": false,
+    "rankingEligible": false,
+    "interpretation": "research_conditional_only"
+  },
+  "after": {
+    "type": "reviewed_personalized_tradeoff",
+    "profileSha256": "2f9f0a9c18fa8c5089f9672206fd2278c5d723d3e0eec0e3e0e587b46af45681",
+    "variantIds": [
+      "alpha",
+      "beta"
+    ],
+    "primary": {
+      "purpose": "phase98_compensatory_criterion_value_model_research_only",
+      "publicationReady": false,
+      "rankingEligible": false,
+      "conditionalOrder": [
+        "alpha",
+        "beta"
+      ],
+      "rankStatus": "robust_within_elicited_value_model",
+      "variants": [
+        {
+          "variantId": "alpha",
+          "eligibility": "tradeoff_eligible",
+          "totalValueBounds": [
+            100,
+            100
+          ],
+          "exactTotalValue": 100,
+          "contributions": [
+            {
+              "criterionId": "noise",
+              "weightedValueBounds": [
+                60,
+                60
+              ],
+              "testedLevelId": "good",
+              "originalTestIds": [
+                "corrected_noise_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/corrected_noise_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            },
+            {
+              "criterionId": "cleaning",
+              "weightedValueBounds": [
+                40,
+                40
+              ],
+              "testedLevelId": "good",
+              "originalTestIds": [
+                "first_cleaning_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/first_cleaning_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            }
+          ],
+          "missingCriteria": [],
+          "vetoReasons": [],
+          "holdReasons": []
+        },
+        {
+          "variantId": "beta",
+          "eligibility": "tradeoff_eligible",
+          "totalValueBounds": [
+            60,
+            60
+          ],
+          "exactTotalValue": 60,
+          "contributions": [
+            {
+              "criterionId": "noise",
+              "weightedValueBounds": [
+                60,
+                60
+              ],
+              "testedLevelId": "good",
+              "originalTestIds": [
+                "second_noise_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/second_noise_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            },
+            {
+              "criterionId": "cleaning",
+              "weightedValueBounds": [
+                0,
+                0
+              ],
+              "testedLevelId": "poor",
+              "originalTestIds": [
+                "second_cleaning_test"
+              ],
+              "sourceUrls": [
+                "https://constructed.example.org/second_cleaning_test"
+              ],
+              "note": "Reviewed original-test observation mapped to a separately elicited criterion value scale."
+            }
+          ],
+          "missingCriteria": [],
+          "vetoReasons": [],
+          "holdReasons": []
+        }
+      ],
+      "limitations": [
+        "Numerical values and swing weights must be independently elicited; none are generated from review sentiment.",
+        "No demonstrated calibration on real consumer preferences, no signed reviewer identity or production scoring permission.",
+        "Value bounds are logical intervals on an elicited scale, never probabilities or confidence intervals.",
+        "Correlated criteria, conflicting original tests and duplicate evidence must be resolved before input.",
+        "Manufacturer specifications, retail prices, availability, star ratings and affiliate signals do not enter this model.",
+        "Phase97 essential flags must not become vetoes unless a distinct explicit hard requirement is confirmed."
+      ]
+    },
+    "ordinalRobustness": {
+      "purpose": "phase100_bounded_adaptive_preference_research_only",
+      "sourceVariantIds": [
+        "alpha",
+        "beta"
+      ],
+      "publicationReady": false,
+      "rankingEligible": false,
+      "question": {
+        "firstCriterionId": "noise",
+        "secondCriterionId": "cleaning",
+        "prompt": "Which complete improvement matters more: noise from \"noisy performance\" to \"quiet performance\", or cleaning from \"weak cleaning\" to \"excellent cleaning\"?",
+        "responses": [
+          "first_more_important",
+          "second_more_important",
+          "equally_important"
+        ],
+        "conditionalFirstMore": [
+          -0.00002,
+          50.00001
+        ],
+        "conditionalSecondMore": [
+          49.99996,
+          100
+        ]
+      },
+      "limitations": [
+        "Source-free handoff from Phase101 approved level mappings through Phase98, not a Phase99 raw-text replay.",
+        "Exact restricted convex polytope for at most 5 criteria; not full UTA-GMS or empirical preference calibration.",
+        "Plausible performance intervals are logical worst cases, not statistical uncertainty distributions.",
+        "Unknown criterion evidence cannot be silently treated as poor performance.",
+        "No public ranking, reviewer authentication proof, or empirical real-consumer validation."
+      ],
+      "status": "underdetermined",
+      "differenceBounds": [
+        -0.00002,
+        100
+      ],
+      "compatiblePolytopeVertices": 2,
+      "missingOrPendingEvidence": [],
+      "admissibleWeightBounds": [
+        {
+          "criterionId": "noise",
+          "minimum": 0,
+          "maximum": 1
+        },
+        {
+          "criterionId": "cleaning",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ]
+    },
+    "unresolvedCalibrations": [],
+    "sourceReferences": [
+      {
+        "criterionId": "noise",
+        "variantId": "beta",
+        "originalTestId": "second_noise_test",
+        "sourceUrl": "https://constructed.example.org/second_noise_test"
+      },
+      {
+        "criterionId": "noise",
+        "variantId": "alpha",
+        "originalTestId": "corrected_noise_test",
+        "sourceUrl": "https://constructed.example.org/corrected_noise_test"
+      },
+      {
+        "criterionId": "cleaning",
+        "variantId": "alpha",
+        "originalTestId": "first_cleaning_test",
+        "sourceUrl": "https://constructed.example.org/first_cleaning_test"
+      },
+      {
+        "criterionId": "cleaning",
+        "variantId": "beta",
+        "originalTestId": "second_cleaning_test",
+        "sourceUrl": "https://constructed.example.org/second_cleaning_test"
+      }
+    ],
+    "sourceTextRequired": false,
+    "llmCalls": 0,
+    "publicationReady": false,
+    "rankingEligible": false,
+    "interpretation": "research_conditional_only"
+  },
+  "beforeCacheSha256": "e16dd42b9587d390f539fb045b30d27754bb3348769fb2011ad7349ee624d263",
+  "afterCacheSha256": "0d339313a3979d9d1dd2d4bc8b1c625c371355258da0f435660824a5d16d7046",
+  "publicRankingAllowed": false,
+  "limitations": [
+    "Constructed source pointers, test outcomes and user preferences",
+    "Cross-database transactions are not atomic; revalidation mitigates but does not eliminate races",
+    "Scores conditional on unvalidated reviewed-scale assumptions"
+  ]
+}

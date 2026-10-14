@@ -1,0 +1,79 @@
+{
+  "phase": 151,
+  "version": "4.75-phase151",
+  "parent": "4.74-phase150",
+  "date": "2026-10-11",
+  "parentZipSha256": "e5c12703b656f53535c5427f2e0d50e5dfc8a88fac207858ef97276f70a5ffe5",
+  "parentFileCount": 1562,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE151-FILE-MANIFEST.sha256",
+    "PHASE151-REGRESSION-GROUPS.json",
+    "PHASE151-TYPED-DISCOURSE-REFERENCE-RECOVERY.md",
+    "PHASE151-TYPED-REFERENCE-RECOVERY-DIAGNOSTIC.json",
+    "dist/src/phase151_type_aware_discourse_recovery.js",
+    "dist/tests/phase151_type_aware_discourse_recovery.test.js",
+    "scripts/evaluate-phase151.mjs",
+    "scripts/phase151_regress.mjs",
+    "src/phase151_type_aware_discourse_recovery.ts",
+    "tests/phase151_type_aware_discourse_recovery.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1951,
+    "eligibleFiles": 110,
+    "phase151Focused": 24,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "evaluation": {
+    "retrospectiveConstructedCases": 7,
+    "developerGoldPositiveTextualLinks": 3,
+    "phase149CorrectDeveloperLinks": 0,
+    "phase151CorrectDeveloperLinks": 3,
+    "phase151FalseDeveloperLinks": 0,
+    "independentGoldAnnotations": 0,
+    "independentOriginalReviewAccuracy": null,
+    "originalFullReviewResearchRightsEstablished": false,
+    "evaluationBlinded": false,
+    "resultsGeneralizable": false
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "newModels": 0,
+    "remoteInference": 0,
+    "newPaidApis": 0,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false,
+    "copiedThirdPartyCode": false
+  },
+  "retainedCategoryBacklog": [
+    "traditional fryers",
+    "air fryers",
+    "toasters",
+    "coffee makers",
+    "food steamers"
+  ],
+  "limitations": [
+    "The recovered links are candidates of textual reference only, not verified identity or evidence.",
+    "All seven previously seen developer-authored scenarios are nonblind.",
+    "No scientific precision/recall measured on independently annotated original reviews.",
+    "The added spaced-model-code guard is incomplete and conservatively abstains.",
+    "Proposed Phase151 reader is an explicitly callable new layer, not a ranking/database update.",
+    "Two legacy test files excluded from regression."
+  ],
+  "archiveFileCount": 1573
+}

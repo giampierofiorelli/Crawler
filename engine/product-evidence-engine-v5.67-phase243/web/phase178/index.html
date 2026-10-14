@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PEE Research Prototype — Your product needs</title><link rel="stylesheet" href="/style.css" defer></head>
+<body><a class="skip" href="#main">Skip to your criteria</a>
+<header class="top"><div><strong>Product Evidence Engine</strong><span class="meta"> · research prototype</span></div><div class="meta">English · local demonstration</div></header>
+<main id="main" class="shell"><section class="intro"><p class="eyebrow">Find what works for your situation</p><h1>What are you trying to achieve?</h1>
+<p>Describe your everyday problem in your own words. Check what we've understood, correct it and explore what matters to you.</p>
+<form id="intake-form"><label for="goal">Describe your goal</label><textarea id="goal" name="goal" maxlength="4000" minlength="3" rows="3" required placeholder="e.g. I need a water filter because my tap water tastes bad, but I'm worried about lead too."></textarea>
+<div class="form-bottom"><small>Suggestions are provisional until you confirm them. No purchase recommendation is made at this stage.</small><button type="submit" id="interpret">Explore my needs</button></div></form></section>
+<div id="notice" role="status" aria-live="polite" tabindex="-1"></div>
+<section aria-label="Decision safety notices" id="safety" class="safety" hidden><h2>What you should know</h2><ul id="cautions"></ul></section>
+<div class="columns"><section class="panel" aria-labelledby="criteria-title"><div class="panel-head"><div><p class="eyebrow">Your decision</p><h2 id="criteria-title">Your criteria</h2></div><span id="revision" class="revision">Revision 0</span></div>
+<p class="muted" id="goal-echo">Start by describing what you're trying to do.</p><p id="unmapped" class="warning" hidden></p>
+<details class="extra" id="scope-details"><summary>Change product area or task</summary><form id="scope-form"><label for="task">What are you doing?</label><select id="task"><option value="unresolved">Not decided yet</option><option value="product_selection">Selecting a product</option><option value="solution_comparison">Comparing different solutions</option><option value="use_or_troubleshoot">Using or troubleshooting</option></select><label for="category">Product category (optional, English identifier)</label><input id="category" placeholder="e.g. water_filter" pattern="[a-z][a-z0-9_.-]*" maxlength="91"><button type="submit">Update choice scope</button></form></details><h3>Suggestions to review</h3><div id="candidates" class="stack"><p class="empty">No suggestions yet.</p></div>
+<h3>Confirmed needs</h3><div id="confirmed" class="stack"><p class="empty">You haven't confirmed any criteria yet.</p></div>
+<h3>Set aside or unresolved</h3><div id="inactive" class="stack"><p class="empty">None.</p></div><details class="extra"><summary>Add a criterion yourself</summary><form id="add-form"><label for="criterion-key">Criterion ID (English words, no spaces)</label><input id="criterion-key" pattern="[a-z][a-z0-9_.-]*" maxlength="91" placeholder="e.g. max_budget" required>
+<label for="criterion-label">What matters to you?</label><input id="criterion-label" minlength="3" maxlength="300" required placeholder="e.g. Easy to clean">
+<label for="criterion-value">Value</label><input id="criterion-value" maxlength="120" value="Required" required>
+<label for="criterion-priority">Importance</label><select id="criterion-priority"><option value="normal">Normal</option><option value="high">High</option><option value="hard">Essential (must-have)</option><option value="low">Low</option></select><button type="submit">Add and confirm</button></form></details>
+<div class="toolbar"><button id="undo" type="button" class="secondary" disabled>Undo last change</button><button id="reset" type="button" class="tertiary">Start a fresh choice</button></div></section>
+<aside class="panel" aria-labelledby="compare-title"><p class="eyebrow">Explore and reconsider</p><h2 id="compare-title">What changed?</h2>
+<p id="change-summary">Your confirmed requirements will be tracked when you revise them.</p><ul id="changed-keys"></ul>
+<details><summary>How this decision is tracked</summary><p id="detail-trace" class="small">Every explicit edit creates an auditable state revision. Product comparisons require independently checked evidence.</p></details>
+<div class="divider"></div><h2>Product comparisons</h2><div id="products-status" class="no-products"><strong>Not available yet</strong><p>No professional product tests, exact model variants, or ranking policy have been connected to this interface. It would be misleading to show winners now.</p></div>
+<h3>What happens next?</h3><p class="small">Once verified evidence is admitted, comparisons must expose incompatible products, uncertain measurements, methods and the exact reason an order changes.</p></aside></div>
+<footer><p>Research-only English prototype. This demonstration stores your decision in temporary server memory; refreshing starts a new session. It is not a production service.</p></footer></main>
+<script type="module" src="/app.js"></script></body></html>

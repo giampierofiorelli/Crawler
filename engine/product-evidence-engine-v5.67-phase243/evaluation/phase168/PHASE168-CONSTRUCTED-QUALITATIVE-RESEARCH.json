@@ -1,0 +1,330 @@
+{
+  "phase": 168,
+  "experiment": "synthetic context/variant/source gating only",
+  "evidenceAuthenticity": "all schemas, confirmations, review findings and review receipts are constructed fixtures",
+  "modelInference": "none",
+  "independentAnnotation": false,
+  "results": [
+    {
+      "question": "Best coffee machine must have a steam wand",
+      "result": {
+        "phase": 168,
+        "questionSha256": "00fdcee2b518f84f82b9c59aac1f00c22f8315ed5f8d1d0e3217568c3e2d868c",
+        "categoryId": "coffee_machine",
+        "requirements": [
+          {
+            "id": "qual168_steam_wand",
+            "aspectId": "steam_wand",
+            "criterionId": "frother_availability",
+            "variantIndependent": true,
+            "mentionSpans": [
+              {
+                "start": 32,
+                "end": 42,
+                "literal": "steam wand",
+                "sha256": "2462a1a6db51517892a451237e5c68da0068ba058e8ecaf64315c7cf203fd826"
+              }
+            ],
+            "proposedMeaning": "required",
+            "status": "structural_feature_verification",
+            "userConfirmationDocumented": true,
+            "userConfirmationAuthenticated": false,
+            "confirmationId": "constructed_confirmation_steam_wand",
+            "method": "feature_presence",
+            "researchAction": "verify_feature_present_for_exact_variant",
+            "rankingAuthorized": false
+          }
+        ],
+        "variantPreviews": [
+          {
+            "variantId": "model_a",
+            "assessments": [],
+            "sourceFindingIds": [
+              "constructed_noise_test"
+            ],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          },
+          {
+            "variantId": "model_b",
+            "assessments": [],
+            "sourceFindingIds": [],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          }
+        ],
+        "researchObligations": [
+          "compare_test_protocols",
+          "independent_domain_outcomes",
+          "independent_expert_quality_floor",
+          "test_steam_wand",
+          "verify_feature_present_for_exact_variant_steam_wand",
+          "verify_product_identities",
+          "verify_rule_based_constraint_correction_before_ranking"
+        ],
+        "untrustedDocumentaryConfirmations": 1,
+        "independentUserConfirmationAuthentication": false,
+        "independentlyAuthenticatedReviewEvidence": false,
+        "publicationAuthorized": false,
+        "rankingAuthorized": false,
+        "candidateOnly": true
+      }
+    },
+    {
+      "question": "Best coffee machine ideally quiet",
+      "result": {
+        "phase": 168,
+        "questionSha256": "8ebb42533104f8ee062074cffe3637021dc924cc85122ba2492bf111c6c3819f",
+        "categoryId": "coffee_machine",
+        "requirements": [
+          {
+            "id": "qual168_quiet_operation",
+            "aspectId": "quiet_operation",
+            "criterionId": "noise_comfort",
+            "variantIndependent": true,
+            "mentionSpans": [
+              {
+                "start": 28,
+                "end": 33,
+                "literal": "quiet",
+                "sha256": "008f0747f4e27c8462baa991a538025bcc2dd143e78422f1afbdfcd9e757a20f"
+              }
+            ],
+            "proposedMeaning": "preferred",
+            "status": "qualitative_test_research",
+            "userConfirmationDocumented": true,
+            "userConfirmationAuthenticated": false,
+            "confirmationId": "constructed_confirmation_quiet_operation",
+            "method": "performance_quality",
+            "researchAction": "independently_review_contextual_original_test_and_protocol",
+            "rankingAuthorized": false
+          }
+        ],
+        "variantPreviews": [
+          {
+            "variantId": "model_a",
+            "assessments": [
+              {
+                "criterionId": "noise_comfort",
+                "status": "contextual_concern",
+                "supportingFindingIds": [],
+                "contrastingFindingIds": [
+                  "constructed_noise_test"
+                ],
+                "excludedFindingIds": [],
+                "recommendationGuard": "no_additional_hold",
+                "conclusion": "A context-matched original professional observation identifies a potential drawback.",
+                "numericScore": null
+              }
+            ],
+            "sourceFindingIds": [
+              "constructed_noise_test"
+            ],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          },
+          {
+            "variantId": "model_b",
+            "assessments": [
+              {
+                "criterionId": "noise_comfort",
+                "status": "no_evidence",
+                "supportingFindingIds": [],
+                "contrastingFindingIds": [],
+                "excludedFindingIds": [],
+                "recommendationGuard": "no_additional_hold",
+                "conclusion": "No relevant qualitative observation is available; absence is not evidence of poor quality.",
+                "numericScore": null
+              }
+            ],
+            "sourceFindingIds": [],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          }
+        ],
+        "researchObligations": [
+          "compare_test_protocols",
+          "independent_domain_outcomes",
+          "independent_expert_quality_floor",
+          "independently_review_contextual_original_test_and_protocol_quiet_operation",
+          "revalidate_authenticity_and_protocol_model_a_noise_comfort",
+          "revalidate_authenticity_and_protocol_model_b_noise_comfort",
+          "seek_relevant_independent_review_model_b_noise_comfort",
+          "test_quiet_operation",
+          "verify_product_identities"
+        ],
+        "untrustedDocumentaryConfirmations": 1,
+        "independentUserConfirmationAuthentication": false,
+        "independentlyAuthenticatedReviewEvidence": false,
+        "publicationAuthorized": false,
+        "rankingAuthorized": false,
+        "candidateOnly": true
+      }
+    },
+    {
+      "question": "Best coffee machine no need for quick heat-up",
+      "result": {
+        "phase": 168,
+        "questionSha256": "e482d9aee5c14d0608037f6fad5144d8e46a43b37cc1c1320e6b3801d0e5d026",
+        "categoryId": "coffee_machine",
+        "requirements": [
+          {
+            "id": "qual168_quick_heatup",
+            "aspectId": "quick_heatup",
+            "criterionId": "warmup_speed",
+            "variantIndependent": true,
+            "mentionSpans": [
+              {
+                "start": 32,
+                "end": 45,
+                "literal": "quick heat-up",
+                "sha256": "3cfa9e77ad41671d37646189168e81202190c7cf1c2a97a4a8611039e07698e0"
+              }
+            ],
+            "proposedMeaning": "optional",
+            "status": "optional_not_requirement",
+            "userConfirmationDocumented": false,
+            "userConfirmationAuthenticated": false,
+            "confirmationId": null,
+            "method": "performance_quality",
+            "researchAction": "preserve_optionality_without_exclusion",
+            "rankingAuthorized": false
+          }
+        ],
+        "variantPreviews": [
+          {
+            "variantId": "model_a",
+            "assessments": [],
+            "sourceFindingIds": [
+              "constructed_noise_test"
+            ],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          },
+          {
+            "variantId": "model_b",
+            "assessments": [],
+            "sourceFindingIds": [],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          }
+        ],
+        "researchObligations": [
+          "compare_test_protocols",
+          "independent_domain_outcomes",
+          "independent_expert_quality_floor",
+          "preserve_optionality_without_exclusion_quick_heatup",
+          "verify_product_identities",
+          "verify_rule_based_constraint_correction_before_ranking"
+        ],
+        "untrustedDocumentaryConfirmations": 0,
+        "independentUserConfirmationAuthentication": false,
+        "independentlyAuthenticatedReviewEvidence": false,
+        "publicationAuthorized": false,
+        "rankingAuthorized": false,
+        "candidateOnly": true
+      }
+    },
+    {
+      "question": "Best coffee machine must have quiet",
+      "result": {
+        "phase": 168,
+        "questionSha256": "f1c56334c1e90201848da110f26d2b670d4bfeec80217d34aeda4bfe11b8c862",
+        "categoryId": "coffee_machine",
+        "requirements": [
+          {
+            "id": "qual168_quiet_operation",
+            "aspectId": "quiet_operation",
+            "criterionId": "noise_comfort",
+            "variantIndependent": true,
+            "mentionSpans": [
+              {
+                "start": 30,
+                "end": 35,
+                "literal": "quiet",
+                "sha256": "008f0747f4e27c8462baa991a538025bcc2dd143e78422f1afbdfcd9e757a20f"
+              }
+            ],
+            "proposedMeaning": "required",
+            "status": "qualitative_test_research",
+            "userConfirmationDocumented": true,
+            "userConfirmationAuthenticated": false,
+            "confirmationId": "constructed_confirmation_quiet_operation",
+            "method": "performance_quality",
+            "researchAction": "independently_review_contextual_original_test_and_protocol",
+            "rankingAuthorized": false
+          }
+        ],
+        "variantPreviews": [
+          {
+            "variantId": "model_a",
+            "assessments": [
+              {
+                "criterionId": "noise_comfort",
+                "status": "potential_essential_constraint_conflict",
+                "supportingFindingIds": [],
+                "contrastingFindingIds": [
+                  "constructed_noise_test"
+                ],
+                "excludedFindingIds": [],
+                "recommendationGuard": "hold_for_review",
+                "conclusion": "A directly relevant adverse finding may violate an explicit essential user constraint; hold recommendation for adjudication.",
+                "numericScore": null
+              }
+            ],
+            "sourceFindingIds": [
+              "constructed_noise_test"
+            ],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          },
+          {
+            "variantId": "model_b",
+            "assessments": [
+              {
+                "criterionId": "noise_comfort",
+                "status": "no_evidence",
+                "supportingFindingIds": [],
+                "contrastingFindingIds": [],
+                "excludedFindingIds": [],
+                "recommendationGuard": "no_additional_hold",
+                "conclusion": "No relevant qualitative observation is available; absence is not evidence of poor quality.",
+                "numericScore": null
+              }
+            ],
+            "sourceFindingIds": [],
+            "originalReviewReceiptsAuthenticated": false,
+            "eligibleForRanking": false,
+            "eligibleForExclusion": false
+          }
+        ],
+        "researchObligations": [
+          "adjudicate_conflicting_or_adverse_evidence_model_a_noise_comfort",
+          "compare_test_protocols",
+          "independent_domain_outcomes",
+          "independent_expert_quality_floor",
+          "independently_review_contextual_original_test_and_protocol_quiet_operation",
+          "revalidate_authenticity_and_protocol_model_a_noise_comfort",
+          "revalidate_authenticity_and_protocol_model_b_noise_comfort",
+          "seek_relevant_independent_review_model_b_noise_comfort",
+          "test_quiet_operation",
+          "verify_product_identities",
+          "verify_rule_based_constraint_correction_before_ranking"
+        ],
+        "untrustedDocumentaryConfirmations": 1,
+        "independentUserConfirmationAuthentication": false,
+        "independentlyAuthenticatedReviewEvidence": false,
+        "publicationAuthorized": false,
+        "rankingAuthorized": false,
+        "candidateOnly": true
+      }
+    }
+  ]
+}

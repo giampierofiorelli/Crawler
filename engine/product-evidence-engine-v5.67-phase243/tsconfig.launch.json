@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "outDir": "dist-launch", "rootDir": "src", "declaration": true },
+  "include": ["src/launch/index.ts"],
+  "exclude": ["tests", "examples", "dist", "dist-launch"]
+}

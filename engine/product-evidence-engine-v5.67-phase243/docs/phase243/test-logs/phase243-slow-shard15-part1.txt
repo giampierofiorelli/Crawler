@@ -1,0 +1,305 @@
+TAP version 13
+# Subtest: loopback research HTTP requires permitted intake, preserves private progress and rejects raw text
+ok 1 - loopback research HTTP requires permitted intake, preserves private progress and rejects raw text
+  ---
+  duration_ms: 115.548768
+  type: 'test'
+  ...
+# Subtest: new problem is not invented category, can span multiple reviewed solution families
+ok 2 - new problem is not invented category, can span multiple reviewed solution families
+  ---
+  duration_ms: 3.961044
+  type: 'test'
+  ...
+# Subtest: new demand with zero categories triggers solution research, not an unknown-category publication
+ok 3 - new demand with zero categories triggers solution research, not an unknown-category publication
+  ---
+  duration_ms: 0.378282
+  type: 'test'
+  ...
+# Subtest: different constraints lead to different research scopes and dedupe is insensitive to order
+ok 4 - different constraints lead to different research scopes and dedupe is insensitive to order
+  ---
+  duration_ms: 3.924809
+  type: 'test'
+  ...
+# Subtest: specific model is a different request type, requires exact product id
+ok 5 - specific model is a different request type, requires exact product id
+  ---
+  duration_ms: 0.239933
+  type: 'test'
+  ...
+# Subtest: no fixed top-N, yet minimum comparable alternatives and audited search scope
+ok 6 - no fixed top-N, yet minimum comparable alternatives and audited search scope
+  ---
+  duration_ms: 0.64078
+  type: 'test'
+  ...
+# Subtest: insufficient sources or variants never masquerade as full recommendation
+ok 7 - insufficient sources or variants never masquerade as full recommendation
+  ---
+  duration_ms: 0.32373
+  type: 'test'
+  ...
+# Subtest: an unverified exclusion or an untested desired outcome invalidates a product
+ok 8 - an unverified exclusion or an untested desired outcome invalidates a product
+  ---
+  duration_ms: 0.453166
+  type: 'test'
+  ...
+# Subtest: new product announcement alone does not reorder; relevant original test starts targeted comparison
+ok 9 - new product announcement alone does not reorder; relevant original test starts targeted comparison
+  ---
+  duration_ms: 0.319444
+  type: 'test'
+  ...
+# Subtest: progress is a verifiable sequence and never invented percent or ETA
+ok 10 - progress is a verifiable sequence and never invented percent or ETA
+  ---
+  duration_ms: 28.302448
+  type: 'test'
+  ...
+# Subtest: blocked research resumes after verified capacity/source change; no false waiting spinner
+ok 11 - blocked research resumes after verified capacity/source change; no false waiting spinner
+  ---
+  duration_ms: 17.762428
+  type: 'test'
+  ...
+# Subtest: check back time appears only after a backend-confirmed schedule
+ok 12 - check back time appears only after a backend-confirmed schedule
+  ---
+  duration_ms: 16.066141
+  type: 'test'
+  ...
+# Subtest: only verified milestones plus independent publication permit ready
+ok 13 - only verified milestones plus independent publication permit ready
+  ---
+  duration_ms: 96.181901
+  type: 'test'
+  ...
+# Subtest: identical scopes share research but have separate private access tokens
+ok 14 - identical scopes share research but have separate private access tokens
+  ---
+  duration_ms: 10.47425
+  type: 'test'
+  ...
+# Subtest: ledger corruption fails closed
+ok 15 - ledger corruption fails closed
+  ---
+  duration_ms: 11.073947
+  type: 'test'
+  ...
+# Subtest: authenticated HTTP status shows truthful copy and reviewed unranked cards without leaking private demand
+ok 16 - authenticated HTTP status shows truthful copy and reviewed unranked cards without leaking private demand
+  ---
+  duration_ms: 79.290211
+  type: 'test'
+  ...
+# Subtest: no certified backend evidence => no option cards or market completeness claim
+ok 17 - no certified backend evidence => no option cards or market completeness claim
+  ---
+  duration_ms: 32.496353
+  type: 'test'
+  ...
+# Subtest: mismatched trusted assessment silently fails closed rather than claim research on another demand
+ok 18 - mismatched trusted assessment silently fails closed rather than claim research on another demand
+  ---
+  duration_ms: 19.77286
+  type: 'test'
+  ...
+# Subtest: one verified match after documented exclusions can be a narrow result without declaring sole product on market
+ok 19 - one verified match after documented exclusions can be a narrow result without declaring sole product on market
+  ---
+  duration_ms: 2.908021
+  type: 'test'
+  ...
+# Subtest: same three catalogued products with missing discovery are NOT evidence of a narrow market
+ok 20 - same three catalogued products with missing discovery are NOT evidence of a narrow market
+  ---
+  duration_ms: 0.518885
+  type: 'test'
+  ...
+# Subtest: unexamined known candidates block coverage even with signed-looking boundary identifier
+ok 21 - unexamined known candidates block coverage even with signed-looking boundary identifier
+  ---
+  duration_ms: 0.392724
+  type: 'test'
+  ...
+# Subtest: not tested is never evidence of exclusion
+ok 22 - not tested is never evidence of exclusion
+  ---
+  duration_ms: 0.321266
+  type: 'test'
+  ...
+# Subtest: one candidate in the catalog does not imply narrow market without audited discovery
+ok 23 - one candidate in the catalog does not imply narrow market without audited discovery
+  ---
+  duration_ms: 0.276558
+  type: 'test'
+  ...
+# Subtest: even 30 catalogued products do not prove search adequacy
+ok 24 - even 30 catalogued products do not prove search adequacy
+  ---
+  duration_ms: 0.320374
+  type: 'test'
+  ...
+# Subtest: closed reviewed search with no eligible product produces no unsupported recommendation
+ok 25 - closed reviewed search with no eligible product produces no unsupported recommendation
+  ---
+  duration_ms: 0.418093
+  type: 'test'
+  ...
+# Subtest: multiple individually approved cards are unranked, approval cannot name unverified products
+ok 26 - multiple individually approved cards are unranked, approval cannot name unverified products
+  ---
+  duration_ms: 0.731156
+  type: 'test'
+  ...
+# Subtest: cross-demand audit and editorial approvals are rejected
+ok 27 - cross-demand audit and editorial approvals are rejected
+  ---
+  duration_ms: 1.363373
+  type: 'test'
+  ...
+# Subtest: one source mirrored through two discovery paths is not independent
+ok 28 - one source mirrored through two discovery paths is not independent
+  ---
+  duration_ms: 0.612867
+  type: 'test'
+  ...
+# Subtest: outstanding alternatives, discovery in progress, and unchecked solution family block closure
+ok 29 - outstanding alternatives, discovery in progress, and unchecked solution family block closure
+  ---
+  duration_ms: 0.358282
+  type: 'test'
+  ...
+# Subtest: honest messages distinguish queued, working, paused, reviewing, and ready
+ok 30 - honest messages distinguish queued, working, paused, reviewing, and ready
+  ---
+  duration_ms: 0.363851
+  type: 'test'
+  ...
+# Subtest: approval alone never displays cards when queued, paused, or final result exists
+ok 31 - approval alone never displays cards when queued, paused, or final result exists
+  ---
+  duration_ms: 0.234104
+  type: 'test'
+  ...
+# Subtest: ONE after verified filters and independent challenge is a legitimate narrow selection
+ok 32 - ONE after verified filters and independent challenge is a legitimate narrow selection
+  ---
+  duration_ms: 4.94955
+  type: 'test'
+  ...
+# Subtest: ONE in catalog without independently bounded discovery must prompt more discovery
+ok 33 - ONE in catalog without independently bounded discovery must prompt more discovery
+  ---
+  duration_ms: 1.969951
+  type: 'test'
+  ...
+# Subtest: THREE left after confirmed hard filters is valid when search is audited
+ok 34 - THREE left after confirmed hard filters is valid when search is audited
+  ---
+  duration_ms: 1.445658
+  type: 'test'
+  ...
+# Subtest: 100 verified fits can be research-bounded; do not demand fixed top N
+ok 35 - 100 verified fits can be research-bounded; do not demand fixed top N
+  ---
+  duration_ms: 1.80378
+  type: 'test'
+  ...
+# Subtest: 100 items with missing product checks are NOT adequate even if 3 known items fit
+ok 36 - 100 items with missing product checks are NOT adequate even if 3 known items fit
+  ---
+  duration_ms: 1.248849
+  type: 'test'
+  ...
+# Subtest: same number of products, independent discovery missing: more research
+ok 37 - same number of products, independent discovery missing: more research
+  ---
+  duration_ms: 0.385694
+  type: 'test'
+  ...
+# Subtest: independent challenge must be independent of initial sources
+ok 38 - independent challenge must be independent of initial sources
+  ---
+  duration_ms: 0.523903
+  type: 'test'
+  ...
+# Subtest: a challenge discovering a plausible entrant reopens the search despite complete original portfolio
+ok 39 - a challenge discovering a plausible entrant reopens the search despite complete original portfolio
+  ---
+  duration_ms: 0.293064
+  type: 'test'
+  ...
+# Subtest: challenge still pending is not a completed independent check
+ok 40 - challenge still pending is not a completed independent check
+  ---
+  duration_ms: 0.572276
+  type: 'test'
+  ...
+# Subtest: new risk, conflicting test, freshness or material uncertainty causes targeted research
+ok 41 - new risk, conflicting test, freshness or material uncertainty causes targeted research
+  ---
+  duration_ms: 0.756355
+  type: 'test'
+  ...
+# Subtest: unconfirmed meaning of filters must never close the search
+ok 42 - unconfirmed meaning of filters must never close the search
+  ---
+  duration_ms: 0.646779
+  type: 'test'
+  ...
+# Subtest: zero verified products may be a bounded, truthful negative, without asking to relax hard limits automatically
+ok 43 - zero verified products may be a bounded, truthful negative, without asking to relax hard limits automatically
+  ---
+  duration_ms: 0.436531
+  type: 'test'
+  ...
+# Subtest: unseen viable alternative must not be interpreted as a narrow market
+ok 44 - unseen viable alternative must not be interpreted as a narrow market
+  ---
+  duration_ms: 0.24429
+  type: 'test'
+  ...
+# Subtest: mislabelled untested product as verified fit is rejected
+ok 45 - mislabelled untested product as verified fit is rejected
+  ---
+  duration_ms: 0.578465
+  type: 'test'
+  ...
+# Subtest: an exclusion without real user filter evidence cannot narrow the field
+ok 46 - an exclusion without real user filter evidence cannot narrow the field
+  ---
+  duration_ms: 0.472064
+  type: 'test'
+  ...
+# Subtest: cross-demand request is never permitted to reuse another filter audit
+ok 47 - cross-demand request is never permitted to reuse another filter audit
+  ---
+  duration_ms: 0.274826
+  type: 'test'
+  ...
+# Subtest: hard-filter evidence shows why a narrow selection arose, not simply number in database
+ok 48 - hard-filter evidence shows why a narrow selection arose, not simply number in database
+  ---
+  duration_ms: 0.222166
+  type: 'test'
+  ...
+# Subtest: 500 candidates at legacy portfolio boundary can be handled without a forced quota
+ok 49 - 500 candidates at legacy portfolio boundary can be handled without a forced quota
+  ---
+  duration_ms: 18.826899
+  type: 'test'
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 620.369111
+

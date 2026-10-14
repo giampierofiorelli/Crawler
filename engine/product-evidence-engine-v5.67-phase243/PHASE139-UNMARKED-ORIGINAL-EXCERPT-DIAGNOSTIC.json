@@ -1,0 +1,276 @@
+{
+  "phase": 139,
+  "version": "4.63-phase139",
+  "date": "2026-10-11",
+  "originalExcerptSources": 3,
+  "originalShortExcerpts": 6,
+  "independentlyAnnotatedSources": 0,
+  "evaluatedOnPreselectedPhase138Excerpts": true,
+  "relationCandidateSpansManuallySuppliedToReader": false,
+  "reviewedPageAliasesStillProvided": true,
+  "modelPrecisionOrRecallOnUnseenReviews": null,
+  "originalFullArticleSnapshots": 0,
+  "scientificFactsAdded": 0,
+  "rankingAuthorized": false,
+  "canonicalWriteAuthorized": false,
+  "byStatus": {
+    "candidate_quarantined": 2,
+    "unresolved_reference": 2,
+    "missing_measurement_endpoint": 1,
+    "variant_not_reviewed": 1
+  },
+  "cases": [
+    {
+      "id": "rtings_floor",
+      "publisher": "rtings",
+      "url": "https://www.rtings.com/robot-vacuum/reviews/roborock/qrevo-curv",
+      "excerptSha256": "d631ebd0d92ba259b639c1ae42d0ed6958a4e7f4e0fed794f64d236d41f1ffb1",
+      "inputContainedDeveloperSubjectSpans": false,
+      "inputContainedDeveloperObjectSpans": false,
+      "inputContainedDeveloperRelationLabels": false,
+      "mentions": [
+        {
+          "literal": "Roborock Qrevo Curv",
+          "type": "product_name",
+          "span": {
+            "start": 4,
+            "end": 23
+          },
+          "identityClaim": "page_alias_asserted_not_authenticated"
+        },
+        {
+          "literal": "debris pick-up performance",
+          "type": "outcome_phrase",
+          "span": {
+            "start": 45,
+            "end": 71
+          },
+          "identityClaim": "not_applicable"
+        }
+      ],
+      "pairs": [
+        {
+          "status": "candidate_quarantined",
+          "reasons": [
+            "unreviewed_bounded_textual_pattern"
+          ],
+          "subject": "Roborock Qrevo Curv",
+          "object": "debris pick-up performance",
+          "pattern": "performance_description"
+        }
+      ],
+      "reviewedPageIdentityWasSupplied": true,
+      "scientificTruthValidated": false
+    },
+    {
+      "id": "rtings_its_negation",
+      "publisher": "rtings",
+      "url": "https://www.rtings.com/robot-vacuum/reviews/roborock/qrevo-curv",
+      "excerptSha256": "15d39b0af9c8bf592711d423d200684b6b45c7b5b56aa33a0d3b819f6bc5888b",
+      "inputContainedDeveloperSubjectSpans": false,
+      "inputContainedDeveloperObjectSpans": false,
+      "inputContainedDeveloperRelationLabels": false,
+      "mentions": [
+        {
+          "literal": "its",
+          "type": "anaphor",
+          "span": {
+            "start": 0,
+            "end": 3
+          },
+          "identityClaim": "unresolved_anaphor"
+        },
+        {
+          "literal": "obstacle avoidance system",
+          "type": "feature_phrase",
+          "span": {
+            "start": 4,
+            "end": 29
+          },
+          "identityClaim": "not_applicable"
+        },
+        {
+          "literal": "hazards like power cords",
+          "type": "outcome_phrase",
+          "span": {
+            "start": 66,
+            "end": 90
+          },
+          "identityClaim": "not_applicable"
+        }
+      ],
+      "pairs": [
+        {
+          "status": "unresolved_reference",
+          "reasons": [
+            "no_verified_coreference_link"
+          ],
+          "subject": "its",
+          "object": "hazards like power cords",
+          "pattern": "capability_description"
+        }
+      ],
+      "reviewedPageIdentityWasSupplied": true,
+      "scientificTruthValidated": false
+    },
+    {
+      "id": "vacuumwars_pe",
+      "publisher": "vacuumwars",
+      "url": "https://vacuumwars.com/dreame-l60-ultra-pe-review/",
+      "excerptSha256": "73727751849e39261a721b65e946f613535bf21bcd24795e5b82ad2906074aee",
+      "inputContainedDeveloperSubjectSpans": false,
+      "inputContainedDeveloperObjectSpans": false,
+      "inputContainedDeveloperRelationLabels": false,
+      "mentions": [
+        {
+          "literal": "L60 Ultra PE",
+          "type": "product_name",
+          "span": {
+            "start": 4,
+            "end": 16
+          },
+          "identityClaim": "page_alias_asserted_not_authenticated"
+        },
+        {
+          "literal": "94%",
+          "type": "numeric_value",
+          "span": {
+            "start": 27,
+            "end": 30
+          },
+          "identityClaim": "not_applicable"
+        }
+      ],
+      "pairs": [
+        {
+          "status": "missing_measurement_endpoint",
+          "reasons": [
+            "number_has_no_explicit_measured_endpoint"
+          ],
+          "subject": "L60 Ultra PE",
+          "object": "94%",
+          "pattern": "numeric_report"
+        }
+      ],
+      "reviewedPageIdentityWasSupplied": true,
+      "scientificTruthValidated": false
+    },
+    {
+      "id": "vacuumwars_fe_variant",
+      "publisher": "vacuumwars",
+      "url": "https://vacuumwars.com/dreame-l60-ultra-pe-review/",
+      "excerptSha256": "548ef2e44b24ad5595744497601cb50555a66db3d6f9a0616707048eb0f60c91",
+      "inputContainedDeveloperSubjectSpans": false,
+      "inputContainedDeveloperObjectSpans": false,
+      "inputContainedDeveloperRelationLabels": false,
+      "mentions": [
+        {
+          "literal": "L60 Ultra FE",
+          "type": "product_name",
+          "span": {
+            "start": 20,
+            "end": 32
+          },
+          "identityClaim": "different_or_unverified_variant"
+        },
+        {
+          "literal": "80%",
+          "type": "numeric_value",
+          "span": {
+            "start": 43,
+            "end": 46
+          },
+          "identityClaim": "not_applicable"
+        }
+      ],
+      "pairs": [
+        {
+          "status": "variant_not_reviewed",
+          "reasons": [
+            "similar_name_does_not_prove_same_variant"
+          ],
+          "subject": "L60 Ultra FE",
+          "object": "80%",
+          "pattern": "numeric_report"
+        }
+      ],
+      "reviewedPageIdentityWasSupplied": true,
+      "scientificTruthValidated": false
+    },
+    {
+      "id": "techgearlab_carpet",
+      "publisher": "techgearlab",
+      "url": "https://www.techgearlab.com/reviews/smart-home/robot-vacuum/mova-p10-pro-ultra",
+      "excerptSha256": "48068209f0178aa4257efdf51d806d5e464178586d1bf425e3e20fbe89d32f55",
+      "inputContainedDeveloperSubjectSpans": false,
+      "inputContainedDeveloperObjectSpans": false,
+      "inputContainedDeveloperRelationLabels": false,
+      "mentions": [
+        {
+          "literal": "P10 Pro Ultra",
+          "type": "product_name",
+          "span": {
+            "start": 4,
+            "end": 17
+          },
+          "identityClaim": "page_alias_asserted_not_authenticated"
+        },
+        {
+          "literal": "carpet cleaning",
+          "type": "outcome_phrase",
+          "span": {
+            "start": 35,
+            "end": 50
+          },
+          "identityClaim": "not_applicable"
+        }
+      ],
+      "pairs": [
+        {
+          "status": "candidate_quarantined",
+          "reasons": [
+            "unreviewed_bounded_textual_pattern"
+          ],
+          "subject": "P10 Pro Ultra",
+          "object": "carpet cleaning",
+          "pattern": "performance_description"
+        }
+      ],
+      "reviewedPageIdentityWasSupplied": true,
+      "scientificTruthValidated": false
+    },
+    {
+      "id": "techgearlab_it_negative",
+      "publisher": "techgearlab",
+      "url": "https://www.techgearlab.com/reviews/smart-home/robot-vacuum/mova-p10-pro-ultra",
+      "excerptSha256": "3d0c7dadb0266d27303ffb015522d85b904476a34a6137acb423bc880c8c1519",
+      "inputContainedDeveloperSubjectSpans": false,
+      "inputContainedDeveloperObjectSpans": false,
+      "inputContainedDeveloperRelationLabels": false,
+      "mentions": [
+        {
+          "literal": "it",
+          "type": "anaphor",
+          "span": {
+            "start": 4,
+            "end": 6
+          },
+          "identityClaim": "unresolved_anaphor"
+        }
+      ],
+      "pairs": [
+        {
+          "status": "unresolved_reference",
+          "reasons": [
+            "no_verified_coreference_link"
+          ],
+          "subject": "it",
+          "object": null,
+          "pattern": null
+        }
+      ],
+      "reviewedPageIdentityWasSupplied": true,
+      "scientificTruthValidated": false
+    }
+  ]
+}

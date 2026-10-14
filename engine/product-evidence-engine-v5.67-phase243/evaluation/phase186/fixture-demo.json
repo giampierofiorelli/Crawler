@@ -1,0 +1,92 @@
+{
+  "disclaimer": "FIXTURES ONLY: no real reviewed models, tests or source signatures",
+  "result": {
+    "phase": 186,
+    "status": "conditional_specification_comparison",
+    "ordered": [
+      {
+        "variantId": "fixture_a",
+        "name": "Fictional AC A",
+        "rank": 1,
+        "ceer": 15,
+        "comparisonBasis": "certified_ceer_only",
+        "evidenceUrls": [
+          "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results"
+        ]
+      },
+      {
+        "variantId": "fixture_b",
+        "name": "Fictional AC B",
+        "rank": 2,
+        "ceer": 14,
+        "comparisonBasis": "certified_ceer_only",
+        "evidenceUrls": [
+          "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results"
+        ]
+      }
+    ],
+    "screened": [
+      {
+        "variantId": "fixture_a",
+        "name": "Fictional AC A",
+        "outcome": "sized_from_certified_capacity",
+        "capacityBtuPerHour": 8000,
+        "capacityTier": "certification_register",
+        "ceer": 15,
+        "ceerSourceUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results",
+        "evidenceUrls": [
+          "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results"
+        ],
+        "cautions": []
+      },
+      {
+        "variantId": "fixture_b",
+        "name": "Fictional AC B",
+        "outcome": "sized_from_certified_capacity",
+        "capacityBtuPerHour": 8000,
+        "capacityTier": "certification_register",
+        "ceer": 14,
+        "ceerSourceUrl": "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results",
+        "evidenceUrls": [
+          "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results"
+        ],
+        "cautions": []
+      }
+    ],
+    "provisional": [
+      {
+        "variantId": "fixture_c",
+        "name": "Fictional AC C",
+        "outcome": "manufacturer_indicated_only",
+        "capacityBtuPerHour": 8000,
+        "capacityTier": "manufacturer_technical_spec",
+        "ceer": null,
+        "ceerSourceUrl": null,
+        "evidenceUrls": [
+          "https://www.energystar.gov/productfinder/product/certified-room-air-conditioners/results"
+        ],
+        "cautions": [
+          "Capacity is manufacturer-stated; verify model identity and rating method before confirming suitability."
+        ]
+      }
+    ],
+    "held": [],
+    "cautions": [
+      "A specification-based comparison is not a measured whole-product performance ranking.",
+      "Source authenticity, legal reuse, product identity, sizing guidance and scoring relevance require external domain review; a signature alone does not prove them.",
+      "Missing tests or data do not mean poor product performance. Market coverage is not established.",
+      "Sizing guidance: 300–350 sq ft; nominal cooling band 8000–8000 Btu/h.",
+      "The displayed order compares certified CEER ONLY, not cooling speed, noise, reliability or general best product.",
+      "Manufacturer-only capacity matches are displayed in a separate provisional group, NOT ranked as certified matches."
+    ],
+    "researchGaps": [
+      "fixture_c: manufacturer-only capacity fit: confirm exact-variant certification and rating method."
+    ],
+    "knowledgeVersion": "fixture_1",
+    "policyVersion": "fixture_1",
+    "noIndependentConsumerCoolingReviewAssumed": true,
+    "notAGeneralBestProductRanking": true,
+    "marketCoverageComplete": false,
+    "researchAccessPerformed": false
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "phase": 135,
+  "version": "4.59-phase135",
+  "parent": "4.58-phase134",
+  "date": "2026-10-11",
+  "parentArchiveSHA256": "c749d37868cf940e6df5ad8ba0c953e214f79cd08c38b58f7a3b957841342a44",
+  "parentFileCount": 1364,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeReleaseVerification": [
+    "PHASE135-CONSTRUCTED-TRACE.json",
+    "PHASE135-DOCUMENT-MENTION-REFERENCE-GRAPH.md",
+    "PHASE135-REGRESSION-GROUPS.json",
+    "dist/src/phase135_document_mention_graph.js",
+    "dist/tests/phase135_document_mention_graph.test.js",
+    "scripts/evaluate-phase135.mjs",
+    "scripts/phase135_regress.mjs",
+    "src/phase135_document_mention_graph.ts",
+    "tests/phase135_document_mention_graph.test.ts"
+  ],
+  "newFilesBeforeReleaseVerificationCount": 9,
+  "typescript": {
+    "status": "pass",
+    "passed": 1525,
+    "testFiles": 94,
+    "groupCount": 12,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "phase135Focused": {
+    "passed": 29,
+    "failed": 0,
+    "data": "developer-authored"
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "constructedScenarios": {
+    "count": 4,
+    "blinded": false,
+    "realProfessionalReviewSamples": 0
+  },
+  "newRuntimeDependencies": 0,
+  "externalModelOrWeightsInstalled": false,
+  "thirdPartyRuntimeSourceBundled": false,
+  "newCommercialAPI": false,
+  "canonicalWritesFromPhase135": 0,
+  "rankingWritesFromPhase135": 0,
+  "coreferencePronounsAutomaticallyConsideredVerified": false,
+  "reviewReceiptSignatureAuthenticated": false,
+  "websiteSourceAuthenticityVerifiedByHashes": false,
+  "realIndependentProductReviewEvaluationDone": false,
+  "uploadedSourceRepositories": {
+    "GLiNER2-main(1).zip": "ce0259e4143ba9027720314373d18956f8d5803e12208b2bc14b39870b98f300",
+    "snorkel-main(1).zip": "decc813bcc86745424e3fb36632bd52603d54b4b85f7ebba60f5526caedc210e",
+    "medspacy-master(1).zip": "278797185c70e2274664d8186a5ed36670c6fc13e8477dbf353f85b9a91074a3",
+    "DeepKE-main(1).zip": "4ac9b84952b5e457405c114d0d8d5da50ea8bc4a5589f84ffa663c0df25af51a"
+  },
+  "limits": [
+    "Annotations and identity IDs supplied upstream; missing mentions can hide competitors",
+    "Human review receipt is a local assertion, not externally authenticated",
+    "No auto coreference, no scientific truth promotion, no blind evaluation",
+    "Original Phase91/92 legacy test exclusions persist"
+  ],
+  "reproduce": [
+    "npm run test:phase135",
+    "node scripts/phase135_regress.mjs",
+    "npm run demo:phase135",
+    "python -m unittest discover -s primary_sources -t . -p test_*.py",
+    "python -m unittest discover -s ingestion -p test_*.py",
+    "python -m unittest discover -s tests-python -p test_phase133*.py"
+  ]
+}

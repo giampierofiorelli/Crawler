@@ -1,0 +1,71 @@
+{
+  "version": "4.54-phase130",
+  "date": "2026-10-11",
+  "cumulativeBasis": "v4.53-phase129",
+  "originalArchiveSha256": "e27d4a071459a62b2808f85e486f5070b7f91253796e3e08d2f4723908105a35",
+  "oldArchiveFiles": 1373,
+  "oldArchiveFilesRemoved": 0,
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFileCount": 12,
+  "newFiles": [
+    "PHASE130-AI-ENGINEERING-NATIVE-READER-AND-UNSEEN-CORPUS-AUDIT.md",
+    "PHASE130-FROZEN-CORPUS-DIAGNOSTIC.json",
+    "PHASE130-POSTFREEZE-CHALLENGE-RESULTS.json",
+    "PHASE130-REGRESSION-GROUPS.json",
+    "dist/src/phase130_native_scientific_reader.js",
+    "dist/tests/phase130_native_scientific_reader.test.js",
+    "evaluation/phase130/frozen_corpus.json",
+    "evaluation/phase130/postfreeze_challenge.json",
+    "scripts/evaluate-phase130.mjs",
+    "src/phase130_native_scientific_reader.ts",
+    "tests/phase130_native_scientific_reader.test.ts",
+    "PHASE130-RELEASE-VERIFICATION.json"
+  ],
+  "typescript": {
+    "passed": 1427,
+    "failed": 0,
+    "completedGroups": 9,
+    "excludedLegacyFiles": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "completeHistoricalRegression": false
+  },
+  "phase130NewTests": {
+    "passed": 17,
+    "failed": 0
+  },
+  "python": {
+    "primarySourceTestsPassed": 47,
+    "ingestionTestsPassed": 21
+  },
+  "empiricalPilot": {
+    "developmentCorpus": {
+      "cases": 10,
+      "metricNames": 9,
+      "phase129Recall": "0/9",
+      "phase130Recall": "9/9",
+      "developmentDataTunedAfterBaseline": true
+    },
+    "postCodeChallenge": {
+      "cases": 8,
+      "metricNames": 6,
+      "phase129Recall": "0/6",
+      "phase130Recall": "2/6",
+      "phase130FalsePositives": 0,
+      "notTunedToChallenge": true
+    },
+    "corpusMode": "Manually written short editorial summaries of web-verified primary sources, plus constructed negatives; not original downloaded raw documents or blinded independent ground truth"
+  },
+  "liveOriginalWebAcquisitionCompleted": false,
+  "realSourceAuthorshipAndRightVerifiedInRuntime": false,
+  "independentSemanticGoldLabels": false,
+  "locallyTrainedSemanticModel": false,
+  "llmUsed": false,
+  "productRankingAuthorized": false,
+  "nextGate": "Permissioned live crawl + independently annotated open-category corpus + learned local semantics comparison",
+  "archiveIntegrity": "written_and_tested_below"
+}

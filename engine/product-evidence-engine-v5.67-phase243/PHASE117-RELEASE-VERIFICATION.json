@@ -1,0 +1,88 @@
+{
+  "version": "4.41-phase117",
+  "date": "2026-10-11",
+  "basis": "v4.40 Phase116 cumulative user-provided archive",
+  "previousArchiveMembersPreserved": 1223,
+  "previousFilesMissing": [],
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "src/phase117_goal_outcome_comparison.ts",
+    "tests/phase117_goal_outcome_comparison.test.ts",
+    "PHASE117-GOAL-OUTCOME-COMPARABILITY.md",
+    "PHASE117-RELEASE-VERIFICATION.json",
+    "PHASE117-FILE-MANIFEST.sha256",
+    "audit/phase117/PHASE116-FOCUSED.log",
+    "audit/phase117/PHASE117-FOCUSED.log",
+    "audit/phase117/REGRESSION-TS.log",
+    "audit/phase117/ADDITIONAL-SUITES.log",
+    "audit/phase117/LAUNCH.log",
+    "audit/phase117/RELEASE.log"
+  ],
+  "build": {
+    "typescript": "passed"
+  },
+  "targetedPhase116Tests": {
+    "passed": 47,
+    "failed": 0
+  },
+  "targetedPhase117Tests": {
+    "passed": 24,
+    "failed": 0
+  },
+  "compiledTypeScriptRegression": {
+    "complete": true,
+    "totalPassed": 1093,
+    "failed": 0,
+    "shardPassed": {
+      "1": 168,
+      "2": 167,
+      "3": 241,
+      "4": 190,
+      "5": 165,
+      "6": 162
+    },
+    "priorPhase116UncompletedShard5NowVerified": true
+  },
+  "additionalResearchSuites": {
+    "companionPython": {
+      "passed": 60,
+      "failed": 0
+    },
+    "companionNode": {
+      "passed": 16,
+      "failed": 0
+    },
+    "primarySourcePython": {
+      "passed": 47,
+      "failed": 0
+    },
+    "ingestionPython": {
+      "passed": 21,
+      "failed": 0
+    },
+    "evaluationPython": {
+      "passed": 26,
+      "failed": 0
+    },
+    "launchTests": {
+      "passed": 4,
+      "failed": 0
+    },
+    "releasePackageTests": {
+      "passed": 3,
+      "failed": 0
+    }
+  },
+  "allListedSuitePassesTotal": 1270,
+  "empiricalRealProductRankingsValidated": false,
+  "realUserMultilingualIntentsValidated": false,
+  "liveLocalLLMValidated": false,
+  "productionMainlineIntegration": false,
+  "sourceReviewAuthenticityVerifiedByNewModule": false,
+  "testData": "constructed synthetic measurement examples; primary methodology sources inherited from Phase116",
+  "scope": "research-only comparator; no consumer-ranking release",
+  "auditFilesIncluded": true
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "pee.phase210.test-results.v1",
+  "phase": 210,
+  "version": "5.34.0",
+  "compilation": "passed",
+  "typescriptOrNodeDistShards": {
+    "pass": 3729,
+    "groups": 14,
+    "allEligibleGroupsPassed": true,
+    "historicalUnconcluded": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "additionalNodeCliTests": {
+    "pass": 2,
+    "suite": "tests/phase210_user_clip_probe.test.mjs"
+  },
+  "python": {
+    "pass": 212,
+    "groups": 6,
+    "logSummary": "docs/phase210/test-logs/python-summary.json"
+  },
+  "targeted": {
+    "typescriptPhase210": 14,
+    "cliPhase210": 2,
+    "combinedPhase203Through210Pass": 262
+  },
+  "actualUploadedMediaProbe": {
+    "success": true,
+    "hasAudio": true,
+    "durationSeconds": 65.2,
+    "bytes": 47544531,
+    "sha256": "2ffa85cdab9abe838265d83c0faaf01ae4d5e564ad276496e95d8ec23b19c932",
+    "decodedSampleFrames": 4,
+    "scientificGoldLabels": 0,
+    "audioTranscribed": false,
+    "originalPublisherAuthenticated": false
+  },
+  "benchmarkQualifiers": [
+    "synthetic and authored test data are not independent scientific validation",
+    "one user-uploaded real excerpt decoded; no authenticated external original media or source",
+    "inherited historical Phase91/92 tests excluded as previously inconclusive",
+    "visual analyst notes are not independent human gold labels",
+    "no product ranking or trust badge authorized"
+  ]
+}

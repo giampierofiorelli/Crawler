@@ -1,0 +1,152 @@
+{
+  "phase": 136,
+  "manifestDigest": "82786072ff6be6e6bf0f14feb3b90e3dd0558cdeb7dfba36f19ca74a45f4f88d",
+  "referenceManifestMatched": true,
+  "preregistrationIndependentlyVerified": false,
+  "annotationIdentityVerified": false,
+  "rightsVerifiedByThisModule": false,
+  "signalFamilyIndependenceVerified": false,
+  "rankingAuthorized": false,
+  "canonicalWriteAuthorized": false,
+  "scientificAccuracyClaimAuthorized": false,
+  "counts": {
+    "development": 0,
+    "holdout": 3,
+    "descriptivelyScorableHoldout": 0,
+    "holdoutExcluded": 3
+  },
+  "holdout": {
+    "total": 0,
+    "screened": 0,
+    "rejected": 0,
+    "abstained": 0,
+    "invalid": 0,
+    "baselineScreened": 0,
+    "baselineInvalid": 0,
+    "coverage": null,
+    "baselineCoverage": null,
+    "goldSupportedCases": 0,
+    "falseAcceptCount": 0,
+    "baselineFalseAcceptCount": 0,
+    "acceptedContradictedCount": 0,
+    "acceptedIndeterminateCount": 0,
+    "falseRejectSupportedCount": 0,
+    "baselineFalseRejectSupportedCount": 0,
+    "supportedRecallAmongGoldSupported": null,
+    "baselineSupportedRecallAmongGoldSupported": null,
+    "falseAcceptRateAmongScreened": null,
+    "baselineFalseAcceptRateAmongScreened": null,
+    "textualSupportPrecisionAmongScreened": null,
+    "baselineTextualSupportPrecisionAmongScreened": null,
+    "abstentionRate": null
+  },
+  "byPhenomenon": {},
+  "byCategory": {},
+  "bySourceGroup": {},
+  "signals": {
+    "caseCount": 3,
+    "nonAbstainVoteCases": 1,
+    "signalCoverage": 0.3333333333333333,
+    "overlapCases": 1,
+    "conflictCases": 1,
+    "conflictRateAmongVoted": 1,
+    "familyCounts": [
+      {
+        "family": "alternate",
+        "votes": 1,
+        "cases": 1,
+        "supports": 0,
+        "opposes": 1,
+        "abstains": 0
+      },
+      {
+        "family": "scope",
+        "votes": 1,
+        "cases": 1,
+        "supports": 1,
+        "opposes": 0,
+        "abstains": 0
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "conflict",
+      "split": "frozen_holdout",
+      "sourceGroupId": "illustrative_conflict",
+      "categoryId": "robot_vacuum",
+      "phenomena": [
+        "other"
+      ],
+      "screen": "abstain",
+      "phase135Status": "quarantined_cross_sentence_hypothesis",
+      "phase134Baseline": "abstain",
+      "signalStatus": "conflicting_signals",
+      "signalFamilies": [
+        "alternate",
+        "scope"
+      ],
+      "signalConflictingFamilies": [
+        "alternate",
+        "scope"
+      ],
+      "gold": null,
+      "goldUsableForDescriptiveScoring": false,
+      "goldExclusionReason": "constructed_not_original",
+      "rankingAuthorized": false,
+      "canonicalWriteAuthorized": false
+    },
+    {
+      "id": "explicit",
+      "split": "frozen_holdout",
+      "sourceGroupId": "illustrative_explicit",
+      "categoryId": "robot_vacuum",
+      "phenomena": [
+        "other"
+      ],
+      "screen": "candidate_quarantined",
+      "phase135Status": "quarantined_cross_sentence_hypothesis",
+      "phase134Baseline": "candidate_quarantined",
+      "signalStatus": "no_signals",
+      "signalFamilies": [],
+      "signalConflictingFamilies": [],
+      "gold": null,
+      "goldUsableForDescriptiveScoring": false,
+      "goldExclusionReason": "constructed_not_original",
+      "rankingAuthorized": false,
+      "canonicalWriteAuthorized": false
+    },
+    {
+      "id": "pronoun",
+      "split": "frozen_holdout",
+      "sourceGroupId": "illustrative_pronoun",
+      "categoryId": "robot_vacuum",
+      "phenomena": [
+        "pronoun"
+      ],
+      "screen": "abstain",
+      "phase135Status": "reference_unresolved",
+      "phase134Baseline": "candidate_quarantined",
+      "signalStatus": "no_signals",
+      "signalFamilies": [],
+      "signalConflictingFamilies": [],
+      "gold": null,
+      "goldUsableForDescriptiveScoring": false,
+      "goldExclusionReason": "constructed_not_original",
+      "rankingAuthorized": false,
+      "canonicalWriteAuthorized": false
+    }
+  ],
+  "warnings": [
+    "SOURCE_AND_ANNOTATOR_ATTESTATIONS_NOT_AUTHENTICATED",
+    "DIGEST_MATCH_DOES_NOT_PROVE_HOLDOUT_WAS_FROZEN_BEFORE_TUNING",
+    "ACCEPTED_SCREEN_STATUS_IS_NOT_SCIENTIFIC_TRUTH",
+    "NO_INDEPENDENT_ORIGINAL_HOLDOUT_SCORABLE",
+    "SMALL_HOLDOUT_NO_POPULATION_ACCURACY_ESTIMATE",
+    "SOME_HOLDOUT_CASES_EXCLUDED_FROM_METRICS",
+    "REPEATED_DOCUMENT_SNAPSHOTS_CASES_ARE_NOT_INDEPENDENT_SAMPLES"
+  ],
+  "dataset": "3 developer-authored constructed scenarios",
+  "independentOriginalReviews": 0,
+  "independentAccuracyBenchmarksCompleted": false
+}

@@ -1,0 +1,94 @@
+{
+  "phase": 140,
+  "comparison": "baseline139-versus-structural-supplement",
+  "labelOrigin": "developer_own_interpretation_not_independent",
+  "neverCountAsStatisticalAccuracy": true,
+  "benchmarkReady": false,
+  "independentlyAnnotatedCases": 0,
+  "realHoldoutAccuracy": null,
+  "examples": [
+    {
+      "id": "rtings_qrevo_limitation",
+      "publisher": "RTINGS",
+      "url": "https://www.rtings.com/robot-vacuum/reviews/roborock/qrevo",
+      "sha256": "1a797ce93e766bcd2282dc2ea9f48a8727109c1456f5ed4799f3a9f44cc69b0b",
+      "previous139Pairs": 0,
+      "new140Proposals": 1,
+      "cueCount": 1,
+      "manualExpectation": "quarantined_negative_statement",
+      "outcomes": [
+        {
+          "status": "quarantined_negative_statement",
+          "structure": "limitation",
+          "reasons": [
+            "text_reports_limitation_not_positive_product_evidence"
+          ],
+          "subject": "Roborock Qrevo",
+          "predicate": "is poor at",
+          "object": "picking up pet hair on carpeted surfaces",
+          "sourceSpanEvidence": "The Roborock Qrevo is poor at picking up pet hair on carpeted surfaces.",
+          "conditions": [
+            "on carpeted surfaces"
+          ],
+          "canonicalWriteAuthorized": false,
+          "rankingAuthorized": false
+        }
+      ],
+      "matchesDeveloperExpectation": true
+    },
+    {
+      "id": "techradar_dreame_ambiguous_subject",
+      "publisher": "TechRadar",
+      "url": "https://www.techradar.com/home/robot-vacuums/dreame-l40-ultra-review",
+      "sha256": "b55e5b51ebc07482d5ac9076b24497fe910e98e0f110d15cc84373d208315617",
+      "previous139Pairs": 0,
+      "new140Proposals": 1,
+      "cueCount": 1,
+      "manualExpectation": "unresolved_reference",
+      "outcomes": [
+        {
+          "status": "unresolved_reference",
+          "structure": "feature_presence",
+          "reasons": [
+            "no_explicit_product_subject_in_clause"
+          ],
+          "subject": null,
+          "predicate": "uses",
+          "object": "LiDAR, an RGB camera, sensors and AI to help it map and navigate around the home",
+          "sourceSpanEvidence": "The robot itself uses LiDAR, an RGB camera, sensors and AI to help it map and navigate around the home",
+          "conditions": [],
+          "canonicalWriteAuthorized": false,
+          "rankingAuthorized": false
+        }
+      ],
+      "matchesDeveloperExpectation": true
+    },
+    {
+      "id": "tomsguide_roomba_app",
+      "publisher": "Tom's Guide",
+      "url": "https://www.tomsguide.com/home/home-appliances/roomba-max-775-combo-review",
+      "sha256": "f14ba9350a596858fc77256ecbe0388629b9d9e3abc9a1be25d143705c030b01",
+      "previous139Pairs": 0,
+      "new140Proposals": 1,
+      "cueCount": 1,
+      "manualExpectation": "quarantined_surface_hypothesis",
+      "outcomes": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "structure": "feature_presence",
+          "reasons": [
+            "named_app_or_component_is_not_a_verified_product"
+          ],
+          "subject": "Roomba Max 775 Combo",
+          "predicate": "uses",
+          "object": "the Roomba Home app",
+          "sourceSpanEvidence": "The Roomba Max 775 Combo uses the Roomba Home app.",
+          "conditions": [],
+          "canonicalWriteAuthorized": false,
+          "rankingAuthorized": false
+        }
+      ],
+      "matchesDeveloperExpectation": true
+    }
+  ]
+}

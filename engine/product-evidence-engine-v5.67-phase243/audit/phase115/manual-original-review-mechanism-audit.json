@@ -1,0 +1,323 @@
+{
+  "audit": {
+    "phase": 115,
+    "revision": "v115_original_review_manual_20261011",
+    "queryDigest": "b6f61f73bdd51181e1dc62a135259d4cb6b826358bd82d0b92959c6e4fa8d5eb",
+    "intent": {
+      "objective": "best_overall_with_capability",
+      "category": "robot_vacuum_mop",
+      "capability": "floor_hygiene",
+      "capabilityRole": "eligibility_preference_needing_clarification",
+      "scope": "ambiguous_cleaning_vs_microbes",
+      "microorganismTargets": [],
+      "queryHash": "b6f61f73bdd51181e1dc62a135259d4cb6b826358bd82d0b92959c6e4fa8d5eb",
+      "hardRequirements": [],
+      "status": "bounded_interpretation_not_approved"
+    },
+    "interpretedMeaning": "unresolved_igienizzare",
+    "primaryObjective": "best_overall_with_capability",
+    "clarification": "Does ordinary hygienic floor cleaning meet your need, or do you require independently demonstrated bacterial/viral reduction?",
+    "sciencePolicy": "Expert studies support mechanisms at a general level; they do NOT calibrate a specific robot or prove microbial efficacy.",
+    "products": [
+      {
+        "id": "dreame_aqua10_ultra_roller",
+        "name": "Dreame Aqua10 Ultra Roller",
+        "capability": "independent_wet_floor_cleaning_documented",
+        "mechanismStates": {
+          "wet_floor_wiping": "observed",
+          "measured_floor_soil_removal": "not_in_examined_sources",
+          "observed_stain_removal": "not_in_examined_sources",
+          "pre_cycle_pad_washing": "not_in_examined_sources",
+          "during_cycle_pad_rinsing": "observed",
+          "onboard_dirty_water_capture": "not_in_examined_sources",
+          "post_cycle_pad_washing": "observed",
+          "pad_drying": "observed",
+          "dock_heated_pad_washing": "not_in_examined_sources",
+          "heated_water_on_floor": "not_in_examined_sources",
+          "measured_dock_water_temperature": "not_in_examined_sources",
+          "observed_soil_smearing": "not_in_examined_sources",
+          "observed_pet_waste_smearing": "not_in_examined_sources",
+          "expert_warns_pet_waste_transfer": "observed",
+          "microbial_assay_pad": "not_in_examined_sources",
+          "microbial_assay_floor": "not_in_examined_sources"
+        },
+        "claims": [
+          {
+            "id": "ordinary_wet_floor_cleaning",
+            "description": "Documented wet wiping can contribute to ordinary household floor cleaning, subject to actual cleaning performance.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_aqua10_v1_1"
+            ],
+            "scientificBridge": "https://www.cdc.gov/hygiene/cleaning-disinfecting/",
+            "neverMeans": "certified_floor_sanitization_or_viral_disinfection"
+          },
+          {
+            "id": "pet_waste_spreading_warning",
+            "description": "Independent reviewer warns that missed pet waste could be dragged across floors; this is a risk assessment, not an observed spreading event.",
+            "status": "risk_flagged_by_expert",
+            "evidence": [
+              "rtings_aqua10_v1_1"
+            ],
+            "neverMeans": "an_observed_pet_waste_smearing_event"
+          },
+          {
+            "id": "post_run_pad_drying",
+            "description": "Pad is dried after cleaning, potentially reducing problems associated with wet storage.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_aqua10_v1_1"
+            ],
+            "scientificBridge": "https://www.cdc.gov/infection-control/hcp/disinfection-sterilization/rational-approach.html",
+            "neverMeans": "sterilization_of_pad"
+          },
+          {
+            "id": "post_run_pad_reprocessing",
+            "description": "Pad is cleaned after the run, supporting maintenance and a subsequent cycle.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_aqua10_v1_1"
+            ],
+            "scientificBridge": "https://pubmed.ncbi.nlm.nih.gov/33892975/",
+            "neverMeans": "floor_disinfection_during_current_run"
+          },
+          {
+            "id": "reduce_soil_carryover_during_run",
+            "description": "Pad rinsing occurs during cleaning and may reduce retained soil and cross-transfer risk.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_aqua10_v1_1"
+            ],
+            "scientificBridge": "https://www.cdc.gov/healthcare-associated-infections/hcp/cleaning-global/procedures.html",
+            "neverMeans": "measured_bacterial_reduction_on_floor"
+          }
+        ],
+        "assays": {
+          "bacteria": [],
+          "viruses": []
+        },
+        "evidenceCountDistinctOriginalTests": 1,
+        "provenanceSources": [
+          "https://www.rtings.com/robot-vacuum/reviews/dreame/aqua10-ultra-roller"
+        ],
+        "suitabilityMustNotUseClaimCountAsScore": true
+      },
+      {
+        "id": "eufy_omni_s2",
+        "name": "eufy Omni S2",
+        "capability": "independent_wet_floor_cleaning_documented",
+        "mechanismStates": {
+          "wet_floor_wiping": "observed",
+          "measured_floor_soil_removal": "not_in_examined_sources",
+          "observed_stain_removal": "not_in_examined_sources",
+          "pre_cycle_pad_washing": "not_in_examined_sources",
+          "during_cycle_pad_rinsing": "not_in_examined_sources",
+          "onboard_dirty_water_capture": "not_in_examined_sources",
+          "post_cycle_pad_washing": "observed",
+          "pad_drying": "not_in_examined_sources",
+          "dock_heated_pad_washing": "observed",
+          "heated_water_on_floor": "not_in_examined_sources",
+          "measured_dock_water_temperature": "not_in_examined_sources",
+          "observed_soil_smearing": "not_in_examined_sources",
+          "observed_pet_waste_smearing": "not_in_examined_sources",
+          "expert_warns_pet_waste_transfer": "not_in_examined_sources",
+          "microbial_assay_pad": "not_in_examined_sources",
+          "microbial_assay_floor": "not_in_examined_sources"
+        },
+        "claims": [
+          {
+            "id": "heated_dock_cleaning",
+            "description": "Heated water is used or measured at the dock for mop maintenance.",
+            "status": "observed_mechanism",
+            "evidence": [
+              "rtings_s2_v1_1"
+            ],
+            "neverMeans": "floor_microbial_kill_or_pad_decontamination_without_assay"
+          },
+          {
+            "id": "ordinary_wet_floor_cleaning",
+            "description": "Documented wet wiping can contribute to ordinary household floor cleaning, subject to actual cleaning performance.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_s2_v1_1"
+            ],
+            "scientificBridge": "https://www.cdc.gov/hygiene/cleaning-disinfecting/",
+            "neverMeans": "certified_floor_sanitization_or_viral_disinfection"
+          },
+          {
+            "id": "post_run_pad_reprocessing",
+            "description": "Pad is cleaned after the run, supporting maintenance and a subsequent cycle.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_s2_v1_1"
+            ],
+            "scientificBridge": "https://pubmed.ncbi.nlm.nih.gov/33892975/",
+            "neverMeans": "floor_disinfection_during_current_run"
+          }
+        ],
+        "assays": {
+          "bacteria": [],
+          "viruses": []
+        },
+        "evidenceCountDistinctOriginalTests": 1,
+        "provenanceSources": [
+          "https://www.rtings.com/robot-vacuum/reviews/eufy/omni-s2"
+        ],
+        "suitabilityMustNotUseClaimCountAsScore": true
+      },
+      {
+        "id": "narwal_flow",
+        "name": "Narwal Flow",
+        "capability": "independent_wet_floor_cleaning_documented",
+        "mechanismStates": {
+          "wet_floor_wiping": "observed",
+          "measured_floor_soil_removal": "not_in_examined_sources",
+          "observed_stain_removal": "not_in_examined_sources",
+          "pre_cycle_pad_washing": "not_in_examined_sources",
+          "during_cycle_pad_rinsing": "observed",
+          "onboard_dirty_water_capture": "observed",
+          "post_cycle_pad_washing": "observed",
+          "pad_drying": "not_in_examined_sources",
+          "dock_heated_pad_washing": "not_in_examined_sources",
+          "heated_water_on_floor": "observed",
+          "measured_dock_water_temperature": "not_in_examined_sources",
+          "observed_soil_smearing": "not_in_examined_sources",
+          "observed_pet_waste_smearing": "not_in_examined_sources",
+          "expert_warns_pet_waste_transfer": "not_in_examined_sources",
+          "microbial_assay_pad": "not_in_examined_sources",
+          "microbial_assay_floor": "not_in_examined_sources"
+        },
+        "claims": [
+          {
+            "id": "heated_water_during_mopping",
+            "description": "Heated water is used on the floor during mopping.",
+            "status": "observed_mechanism",
+            "evidence": [
+              "vacuumwars_narwal_flow_2026"
+            ],
+            "neverMeans": "validated_thermal_disinfection"
+          },
+          {
+            "id": "isolate_soiled_water",
+            "description": "Dirty water is captured separately rather than retained on the wiping surface.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "vacuumwars_narwal_flow_2026"
+            ],
+            "scientificBridge": "https://www.cdc.gov/healthcare-associated-infections/hcp/cleaning-global/procedures.html",
+            "neverMeans": "no_cross_contamination"
+          },
+          {
+            "id": "ordinary_wet_floor_cleaning",
+            "description": "Documented wet wiping can contribute to ordinary household floor cleaning, subject to actual cleaning performance.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "vacuumwars_narwal_flow_2026"
+            ],
+            "scientificBridge": "https://www.cdc.gov/hygiene/cleaning-disinfecting/",
+            "neverMeans": "certified_floor_sanitization_or_viral_disinfection"
+          },
+          {
+            "id": "post_run_pad_reprocessing",
+            "description": "Pad is cleaned after the run, supporting maintenance and a subsequent cycle.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "vacuumwars_narwal_flow_2026"
+            ],
+            "scientificBridge": "https://pubmed.ncbi.nlm.nih.gov/33892975/",
+            "neverMeans": "floor_disinfection_during_current_run"
+          },
+          {
+            "id": "reduce_soil_carryover_during_run",
+            "description": "Pad rinsing occurs during cleaning and may reduce retained soil and cross-transfer risk.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "vacuumwars_narwal_flow_2026"
+            ],
+            "scientificBridge": "https://www.cdc.gov/healthcare-associated-infections/hcp/cleaning-global/procedures.html",
+            "neverMeans": "measured_bacterial_reduction_on_floor"
+          }
+        ],
+        "assays": {
+          "bacteria": [],
+          "viruses": []
+        },
+        "evidenceCountDistinctOriginalTests": 1,
+        "provenanceSources": [
+          "https://vacuumwars.com/narwal-flow-review/"
+        ],
+        "suitabilityMustNotUseClaimCountAsScore": true
+      },
+      {
+        "id": "roborock_saros_10r",
+        "name": "Roborock Saros 10R",
+        "capability": "independent_wet_floor_cleaning_documented",
+        "mechanismStates": {
+          "wet_floor_wiping": "observed",
+          "measured_floor_soil_removal": "not_in_examined_sources",
+          "observed_stain_removal": "not_in_examined_sources",
+          "pre_cycle_pad_washing": "not_in_examined_sources",
+          "during_cycle_pad_rinsing": "not_in_examined_sources",
+          "onboard_dirty_water_capture": "not_in_examined_sources",
+          "post_cycle_pad_washing": "observed",
+          "pad_drying": "not_in_examined_sources",
+          "dock_heated_pad_washing": "not_in_examined_sources",
+          "heated_water_on_floor": "not_in_examined_sources",
+          "measured_dock_water_temperature": "not_in_examined_sources",
+          "observed_soil_smearing": "not_in_examined_sources",
+          "observed_pet_waste_smearing": "not_in_examined_sources",
+          "expert_warns_pet_waste_transfer": "not_in_examined_sources",
+          "microbial_assay_pad": "not_in_examined_sources",
+          "microbial_assay_floor": "not_in_examined_sources"
+        },
+        "claims": [
+          {
+            "id": "ordinary_wet_floor_cleaning",
+            "description": "Documented wet wiping can contribute to ordinary household floor cleaning, subject to actual cleaning performance.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_saros10r_v1_1"
+            ],
+            "scientificBridge": "https://www.cdc.gov/hygiene/cleaning-disinfecting/",
+            "neverMeans": "certified_floor_sanitization_or_viral_disinfection"
+          },
+          {
+            "id": "post_run_pad_reprocessing",
+            "description": "Pad is cleaned after the run, supporting maintenance and a subsequent cycle.",
+            "status": "qualified_mechanistic_inference",
+            "evidence": [
+              "rtings_saros10r_v1_1"
+            ],
+            "scientificBridge": "https://pubmed.ncbi.nlm.nih.gov/33892975/",
+            "neverMeans": "floor_disinfection_during_current_run"
+          }
+        ],
+        "assays": {
+          "bacteria": [],
+          "viruses": []
+        },
+        "evidenceCountDistinctOriginalTests": 1,
+        "provenanceSources": [
+          "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-10r"
+        ],
+        "suitabilityMustNotUseClaimCountAsScore": true
+      }
+    ],
+    "rankedProducts": null,
+    "floorDisinfectionRanking": null,
+    "publishReady": false,
+    "positiveProcessClaimsAreNotFloorMicrobiology": true,
+    "noAutomaticExclusionForMissingAssay": true,
+    "usesManufacturerClaimAsIndependentTest": false,
+    "arbitraryFeatureCountScore": false,
+    "canonicalKnowledgeChanged": false,
+    "llmCalls": 0
+  },
+  "sourceMethod": "manually structured from original professional articles reviewed via public web; not live crawler/LLM nor a measured microbiological comparison",
+  "reviewedSourceUrls": [
+    "https://www.rtings.com/robot-vacuum/reviews/dreame/aqua10-ultra-roller",
+    "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-10r",
+    "https://www.rtings.com/robot-vacuum/reviews/eufy/omni-s2",
+    "https://vacuumwars.com/narwal-flow-review/"
+  ]
+}

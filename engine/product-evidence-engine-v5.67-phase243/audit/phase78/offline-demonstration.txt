@@ -1,0 +1,45 @@
+
+> product-evidence-engine@4.6.0 demo:phase78
+> npm run build && node scripts/demo-phase78.mjs
+
+
+> product-evidence-engine@4.6.0 build
+> tsc -p tsconfig.json
+
+{
+  "demo_only": true,
+  "all_inputs_constructed": true,
+  "narrowed": {
+    "searchAdequacy": "bounded_for_this_demand",
+    "verifiedOptions": 1,
+    "userUpdate": {
+      "kind": "researching",
+      "title": "Stiamo lavorando per te",
+      "body": "Stiamo approfondendo le soluzioni che potrebbero rispondere alle tue esigenze. La ricerca documentata ha individuato una soluzione verificata rispetto ai tuoi vincoli. Non significa che sia l’unica sul mercato.",
+      "thanks": "Grazie: la tua domanda ci aiuta a individuare nuove esigenze. Le conoscenze verificate potranno migliorare anche le risposte per altre persone.",
+      "nextCheckAt": null,
+      "verifiedOptionCount": 1,
+      "optionCards": null,
+      "isRanking": false,
+      "isMarketExhaustiveClaim": false
+    }
+  },
+  "underexplored": {
+    "searchAdequacy": "coverage_not_established",
+    "verifiedOptions": 1,
+    "userUpdate": {
+      "kind": "researching",
+      "title": "Stiamo lavorando per te",
+      "body": "Stiamo approfondendo le soluzioni che potrebbero rispondere alle tue esigenze. Non sappiamo ancora se le soluzioni già individuate rappresentino adeguatamente le alternative disponibili.",
+      "thanks": "Grazie: la tua domanda ci aiuta a individuare nuove esigenze. Le conoscenze verificate potranno migliorare anche le risposte per altre persone.",
+      "nextCheckAt": null,
+      "verifiedOptionCount": 1,
+      "optionCards": null,
+      "isRanking": false,
+      "isMarketExhaustiveClaim": false
+    }
+  },
+  "no_live_crawling": true,
+  "no_live_llm": true,
+  "no_live_postgres": true
+}

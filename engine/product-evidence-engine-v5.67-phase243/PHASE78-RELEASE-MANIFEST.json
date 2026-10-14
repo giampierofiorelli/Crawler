@@ -1,0 +1,47 @@
+{
+  "phase": 78,
+  "version": "4.6.0",
+  "as_of": "2026-10-10",
+  "purpose": "Evidence-based search coverage and humane, verifiable user research updates; distinguish catalog sparsity from genuinely narrowed outcomes",
+  "tests": {
+    "typescript_javascript": 515,
+    "python": 68,
+    "launch_release": 7,
+    "new_phase_tests": 16
+  },
+  "verified_environment": "TypeScript compilation, constructed evidence, private loopback HTTP, local ledger and launch/release testing",
+  "not_verified": [
+    "independent real-market discovery",
+    "live external crawling",
+    "external editorial approvals",
+    "live AI model",
+    "PostgreSQL production",
+    "real notifications",
+    "completion ETA",
+    "production security hardening"
+  ],
+  "new_components": [
+    "src/phase78_search_adequacy.ts",
+    "src/phase78_user_updates.ts",
+    "tests/phase78_market_coverage.test.ts",
+    "tests/phase78_http_customer_update.test.ts",
+    "docs/PHASE78-DEMAND-BASED-RESEARCH-ADEQUACY-AND-CUSTOMER-CARE.md",
+    "scripts/demo-phase78.mjs"
+  ],
+  "modified_components": [
+    "src/phase77_progress_ledger.ts",
+    "src/phase77_http.ts",
+    "examples/phase77-discovery-status.html",
+    "README.md",
+    "package.json"
+  ],
+  "product_constraints": [
+    "No top-N by arbitrary product count",
+    "No market-exclusivity claim",
+    "No unchecked-product exclusion",
+    "No ranking without downstream approval",
+    "No progress spinner while queued or blocked",
+    "No fake completion ETA",
+    "No personal query sharing without additional safeguards"
+  ]
+}

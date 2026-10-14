@@ -1,0 +1,9 @@
+# PEE continuity — Phase 182
+
+Canonical predecessor is `product-evidence-engine-v5.05-phase181.zip` once verified. Prior canonical base v5.04 Phase180. Read `docs/phase181/PRODUCT-KNOWLEDGE-FIRST-ENGINEERING-DECISION.md`, the Phase181 technical report, Phase180 work and all cumulative earlier research before implementation.
+
+**Architectural correction:** Do NOT treat precomputed whole rankings as the PEE's knowledge base. Product/category evidence, exact variants, performance observations, protocol comparability, permissions, conflicts and reviewed normalization/policy are primary. Dynamically calculate deterministic rankings for actual canonical user needs; reuse whole-ranking cache only on exact compatible snapshots. Research continuously beforehand and initiate targeted just-in-time investigation for unknown products, categories, unmeasured criteria and stale tests. Do not claim all web content has been scanned.
+
+Phase181 prototype `src/phase181_dynamic_knowledge_ranking.ts` holds signed per-product evidence and recomputes ranks per confirmed need snapshot; Phase178 site optionally exposes dynamic results. Research gaps are explicit, **not executed**; the review authority is represented by fake keys/products in tests. No real expert-approved corpus or autonomous source audit was connected; no scientific validity should be inferred.
+
+Phase182 priority: connect the gap queue to EXISTING bounded Phases73–74, 128–129, 179 research workers, with source custody and independent review gate from Phases169–171. Run a narrow real original-source exact-variant pilot; assess permission, methods, measured identity and normalization; preserve offline snapshot versions. Avoid automatic adoption of heavyweight GitHub libraries. Preserve web-first English interaction and ability to inspect an individual product without asking for a ranking.

@@ -1,0 +1,349 @@
+{
+  "phase": 142,
+  "date": "2026-10-11",
+  "evaluationType": "authored_adversarial_regression_plus_previously_seen_professional_passages",
+  "independentGoldCases": 0,
+  "independentAccuracy": null,
+  "originalReviewSourceCheckedByThisRun": false,
+  "rightsForRedistributionNotClaimed": true,
+  "constructed": [
+    {
+      "id": "affirmative",
+      "text": "The Aster X2 utilizes a filter.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 22,
+            "end": 30
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "utilize",
+          "structure": "feature_presence",
+          "status": "quarantined_surface_hypothesis",
+          "issue": "scope_preserved",
+          "object": {
+            "start": 22,
+            "end": 30
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 0,
+      "bounded": 0
+    },
+    {
+      "id": "negated_target",
+      "text": "The Aster X2 utilizes no filter.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 22,
+            "end": 31
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "utilize",
+          "structure": "feature_presence",
+          "status": "unsupported_scope",
+          "issue": "negated_target",
+          "object": {
+            "start": 22,
+            "end": 31
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 1,
+      "bounded": 0
+    },
+    {
+      "id": "passive",
+      "text": "The Aster X2 is outmatched by B4 Pro on carpets.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 27,
+            "end": 47
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "outmatch",
+          "structure": "comparison",
+          "status": "unsupported_scope",
+          "issue": "passive_voice",
+          "object": {
+            "start": 27,
+            "end": 47
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 1,
+      "bounded": 0
+    },
+    {
+      "id": "incidental_comparator",
+      "text": "The Aster X2 outmatches competitors including B4 Pro.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 24,
+            "end": 52
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "outmatch",
+          "structure": "comparison",
+          "status": "unsupported_scope",
+          "issue": "comparator_not_direct_object",
+          "object": {
+            "start": 24,
+            "end": 52
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 1,
+      "bounded": 0
+    },
+    {
+      "id": "explicit_comparator",
+      "text": "The Aster X2 outmatches B4 Pro on carpets.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 24,
+            "end": 41
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "outmatch",
+          "structure": "comparison",
+          "status": "quarantined_surface_hypothesis",
+          "issue": "scope_preserved",
+          "object": {
+            "start": 24,
+            "end": 41
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 0,
+      "bounded": 0
+    },
+    {
+      "id": "modal",
+      "text": "If the Aster X2 utilizes a filter, its performance may improve.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 25,
+            "end": 62
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "utilize",
+          "structure": "feature_presence",
+          "status": "unsupported_scope",
+          "issue": "conditional_or_modal",
+          "object": {
+            "start": 25,
+            "end": 62
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 1,
+      "bounded": 0
+    },
+    {
+      "id": "coordinated",
+      "text": "The Aster X2 supplies a dock and furnishes a brush.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 22,
+            "end": 50
+          }
+        },
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 43,
+            "end": 50
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "supply",
+          "structure": "feature_presence",
+          "status": "quarantined_surface_hypothesis",
+          "issue": "coordinated_predicate",
+          "object": {
+            "start": 22,
+            "end": 28
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        },
+        {
+          "lemma": "furnish",
+          "structure": "feature_presence",
+          "status": "unsupported_scope",
+          "issue": "coordinated_predicate",
+          "object": {
+            "start": 43,
+            "end": 50
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 1,
+      "bounded": 1
+    },
+    {
+      "id": "quoted",
+      "text": "The brochure reads “Aster X2 supplies perfect cleaning”.",
+      "old": [
+        {
+          "status": "quarantined_surface_hypothesis",
+          "object": {
+            "start": 38,
+            "end": 55
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "supply",
+          "structure": "feature_presence",
+          "status": "unsupported_scope",
+          "issue": "quoted_claim",
+          "object": {
+            "start": 38,
+            "end": 55
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 1,
+      "bounded": 0
+    },
+    {
+      "id": "unknown_reference",
+      "text": "It utilizes a filter.",
+      "old": [
+        {
+          "status": "unresolved_reference",
+          "object": {
+            "start": 12,
+            "end": 20
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "utilize",
+          "structure": "feature_presence",
+          "status": "unresolved_reference",
+          "issue": "scope_preserved",
+          "object": {
+            "start": 12,
+            "end": 20
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 0,
+      "bounded": 0
+    },
+    {
+      "id": "different_variant",
+      "text": "The Aster X3 supplies a filter.",
+      "old": [
+        {
+          "status": "different_variant",
+          "object": {
+            "start": 22,
+            "end": 30
+          }
+        }
+      ],
+      "new": [
+        {
+          "lemma": "supply",
+          "structure": "feature_presence",
+          "status": "different_variant",
+          "issue": "scope_preserved",
+          "object": {
+            "start": 22,
+            "end": 30
+          },
+          "sourceVerified": false,
+          "roleAssignmentsVerified": false
+        }
+      ],
+      "changed": 0,
+      "bounded": 0
+    }
+  ],
+  "previousOriginalExcerpts": [
+    {
+      "id": "rtings_qrevo_limitation",
+      "publisher": "RTINGS",
+      "sourceUrl": "https://www.rtings.com/robot-vacuum/reviews/roborock/qrevo",
+      "previousCount": 0,
+      "newCount": 0,
+      "changed": 0,
+      "objectBounds": 0
+    },
+    {
+      "id": "techradar_dreame_ambiguous_subject",
+      "publisher": "TechRadar",
+      "sourceUrl": "https://www.techradar.com/home/robot-vacuums/dreame-l40-ultra-review",
+      "previousCount": 0,
+      "newCount": 0,
+      "changed": 0,
+      "objectBounds": 0
+    },
+    {
+      "id": "tomsguide_roomba_app",
+      "publisher": "Tom's Guide",
+      "sourceUrl": "https://www.tomsguide.com/home/home-appliances/roomba-max-775-combo-review",
+      "previousCount": 0,
+      "newCount": 0,
+      "changed": 0,
+      "objectBounds": 0
+    }
+  ]
+}

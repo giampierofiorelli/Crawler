@@ -1,0 +1,149 @@
+{
+  "phase": 141,
+  "kind": "developer-authored lexical recall smoke test + previously selected real text diagnostic",
+  "independentEvaluation": false,
+  "realHoldoutAccuracy": null,
+  "sourceAuthentication": false,
+  "rightsForOriginalReviewsNotInferred": true,
+  "resourceCounts": {
+    "vaderEntries": 7506,
+    "verbnetLemmas": 3694,
+    "reviewedWordnetSynsets": 5,
+    "reviewedCues": 9
+  },
+  "constructedCases": [
+    {
+      "id": "utilises",
+      "text": "The Aster X2 utilises a heated dock.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [
+        {
+          "lemma": "utilise",
+          "sense": "01161188-v",
+          "structure": "feature_presence",
+          "status": "quarantined_surface_hypothesis",
+          "reasons": [
+            "lexical_sense_is_not_contextual_entailment"
+          ]
+        }
+      ],
+      "coverageTruncated": false
+    },
+    {
+      "id": "supplies",
+      "text": "The Aster X2 supplies a crevice tool.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [
+        {
+          "lemma": "supply",
+          "sense": "02332196-v",
+          "structure": "feature_presence",
+          "status": "quarantined_surface_hypothesis",
+          "reasons": [
+            "lexical_sense_is_not_contextual_entailment"
+          ]
+        }
+      ],
+      "coverageTruncated": false
+    },
+    {
+      "id": "outmatches",
+      "text": "The Aster X2 outmatches B4 Pro on carpet.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [
+        {
+          "lemma": "outmatch",
+          "sense": "01108050-v",
+          "structure": "comparison",
+          "status": "quarantined_surface_hypothesis",
+          "reasons": [
+            "lexical_sense_is_not_contextual_entailment",
+            "relative_claim_not_absolute_product_performance"
+          ]
+        }
+      ],
+      "coverageTruncated": false
+    },
+    {
+      "id": "grapples",
+      "text": "The Aster X2 grapples with long hair.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [
+        {
+          "lemma": "grapple",
+          "sense": "02593624-v",
+          "structure": "limitation",
+          "status": "quarantined_negative_statement",
+          "reasons": [
+            "lexical_sense_is_not_contextual_entailment",
+            "negative_connotation_requires_context"
+          ]
+        }
+      ],
+      "coverageTruncated": false
+    },
+    {
+      "id": "negated",
+      "text": "The Aster X2 does not utilize a filter.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [
+        {
+          "lemma": "utilize",
+          "sense": "01161188-v",
+          "structure": "feature_presence",
+          "status": "unsupported_scope",
+          "reasons": [
+            "lexical_sense_is_not_contextual_entailment",
+            "negation_or_hedge_requires_scope_analysis"
+          ]
+        }
+      ],
+      "coverageTruncated": false
+    },
+    {
+      "id": "unresolved",
+      "text": "It utilizes the filter.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [
+        {
+          "lemma": "utilize",
+          "sense": "01161188-v",
+          "structure": "feature_presence",
+          "status": "unresolved_reference",
+          "reasons": [
+            "lexical_sense_is_not_contextual_entailment",
+            "no_unique_explicit_subject"
+          ]
+        }
+      ],
+      "coverageTruncated": false
+    },
+    {
+      "id": "unsafe_synonym",
+      "text": "The Aster X2 misses dust on carpets.",
+      "baseline140Proposals": 0,
+      "lexicalProposals": [],
+      "coverageTruncated": false
+    }
+  ],
+  "previousOriginalExcerpts": [
+    {
+      "id": "rtings_qrevo_limitation",
+      "publisher": "RTINGS",
+      "baseline140Proposals": 1,
+      "addedLexicalProposals": 0
+    },
+    {
+      "id": "techradar_dreame_ambiguous_subject",
+      "publisher": "TechRadar",
+      "baseline140Proposals": 1,
+      "addedLexicalProposals": 0
+    },
+    {
+      "id": "tomsguide_roomba_app",
+      "publisher": "Tom's Guide",
+      "baseline140Proposals": 1,
+      "addedLexicalProposals": 0
+    }
+  ]
+}

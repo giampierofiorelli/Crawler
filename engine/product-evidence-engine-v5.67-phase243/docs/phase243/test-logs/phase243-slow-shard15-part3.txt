@@ -1,0 +1,161 @@
+TAP version 13
+# Subtest: phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+ok 1 - phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+  ---
+  duration_ms: 19.352935
+  type: 'test'
+  ...
+# Subtest: real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+ok 2 - real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+  ---
+  duration_ms: 1380.183422
+  type: 'test'
+  ...
+# Subtest: rights denied upstream before network I/O and no bypass
+ok 3 - rights denied upstream before network I/O and no bypass
+  ---
+  duration_ms: 14.877172
+  type: 'test'
+  ...
+# Subtest: wrong exact product and changed table structure do not contaminate evidence
+ok 4 - wrong exact product and changed table structure do not contaminate evidence
+  ---
+  duration_ms: 4033.785182
+  type: 'test'
+  ...
+# Subtest: changes in mainline approved registry block before source retrieval
+ok 5 - changes in mainline approved registry block before source retrieval
+  ---
+  duration_ms: 5.554013
+  type: 'test'
+  ...
+# Subtest: phase89 advisory record sees successes and distinguishes structural changes
+ok 6 - phase89 advisory record sees successes and distinguishes structural changes
+  ---
+  duration_ms: 15095.906209
+  type: 'test'
+  ...
+# Subtest: legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+ok 7 - legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+  ---
+  duration_ms: 13.517304
+  type: 'test'
+  ...
+# Subtest: two distinct broken products create a manual requalification advisory, never invoke an LLM
+ok 8 - two distinct broken products create a manual requalification advisory, never invoke an LLM
+  ---
+  duration_ms: 15626.044143
+  type: 'test'
+  ...
+# Subtest: Phase91: no drift case permits reviewed recipe only through unchanged Phase68/69/70 route
+ok 9 - Phase91: no drift case permits reviewed recipe only through unchanged Phase68/69/70 route
+  ---
+  duration_ms: 6540.028033
+  type: 'test'
+  ...
+# Subtest: Phase91: two distinct structural drift products block all subsequent reuse before network I/O
+ok 10 - Phase91: two distinct structural drift products block all subsequent reuse before network I/O
+  ---
+  duration_ms: 14765.342426
+  type: 'test'
+  ...
+# Subtest: Phase91: manually closing a watch ticket does not silently re-authorize stale recipe
+ok 11 - Phase91: manually closing a watch ticket does not silently re-authorize stale recipe
+  ---
+  duration_ms: 21983.081748
+  type: 'test'
+  ...
+# Subtest: Phase91: market discovery stays scheduled even when the exact HTML recipe is blocked
+ok 12 - Phase91: market discovery stays scheduled even when the exact HTML recipe is blocked
+  ---
+  duration_ms: 10687.416184
+  type: 'test'
+  ...
+# Subtest: Phase91: unavailable telemetry fails closed on monitored HTML reuse, with no source requests
+ok 13 - Phase91: unavailable telemetry fails closed on monitored HTML reuse, with no source requests
+  ---
+  duration_ms: 1362.304693
+  type: 'test'
+  ...
+# Subtest: Phase91: watch scopes and source integrity match exact recipe digest, never unrelated URL prefixes
+ok 14 - Phase91: watch scopes and source integrity match exact recipe digest, never unrelated URL prefixes
+  ---
+  duration_ms: 3647.757269
+  type: 'test'
+  ...
+# Subtest: Phase92 suspended HTML recipe is removed from Phase90 intake before any HTTP; audit is immutable
+ok 15 - Phase92 suspended HTML recipe is removed from Phase90 intake before any HTTP; audit is immutable
+  ---
+  duration_ms: 59.462237
+  type: 'test'
+  ...
+# Subtest: Phase92 replacement is signed, held-out validated, append-only, and works through original Phase68/69/70 route
+ok 16 - Phase92 replacement is signed, held-out validated, append-only, and works through original Phase68/69/70 route
+  ---
+  duration_ms: 18842.718696
+  type: 'test'
+  ...
+# Subtest: Phase92 refuses incorrect held-out labels without touching existing store
+ok 17 - Phase92 refuses incorrect held-out labels without touching existing store
+  ---
+  duration_ms: 9107.377759
+  type: 'test'
+  ...
+# Subtest: Phase92 refuses same-model pseudo-held-out and reviewer-labelled test cases
+ok 18 - Phase92 refuses same-model pseudo-held-out and reviewer-labelled test cases
+  ---
+  duration_ms: 4527.43382
+  type: 'test'
+  ...
+# Subtest: Phase92 rejects unsigned, wrong-key and manipulated transitions
+ok 19 - Phase92 rejects unsigned, wrong-key and manipulated transitions
+  ---
+  duration_ms: 5.718793
+  type: 'test'
+  ...
+# Subtest: Phase92 rejects forged or missing reviewer trust on reopening a changed catalogue
+ok 20 - Phase92 rejects forged or missing reviewer trust on reopening a changed catalogue
+  ---
+  duration_ms: 10.567511
+  type: 'test'
+  ...
+# Subtest: Phase92 rejects stale predecessor and does not allow duplicate promotions
+ok 21 - Phase92 rejects stale predecessor and does not allow duplicate promotions
+  ---
+  duration_ms: 13675.265641
+  type: 'test'
+  ...
+# Subtest: Phase92 checked catalogue remains compatible with original JSON-LD additions and legacy HTML
+ok 22 - Phase92 checked catalogue remains compatible with original JSON-LD additions and legacy HTML
+  ---
+  duration_ms: 53.582749
+  type: 'test'
+  ...
+# Subtest: Phase92 rejects held-out data overlapping the original qualification set
+ok 23 - Phase92 rejects held-out data overlapping the original qualification set
+  ---
+  duration_ms: 8711.779028
+  type: 'test'
+  ...
+# Subtest: Phase92 rejects a signed replacement timestamp older than the recorded suspension
+ok 24 - Phase92 rejects a signed replacement timestamp older than the recorded suspension
+  ---
+  duration_ms: 11151.876775
+  type: 'test'
+  ...
+# Subtest: Phase92 detects mutation of an older version even when an attacker recomputes the outer envelope hash
+ok 25 - Phase92 detects mutation of an older version even when an attacker recomputes the outer envelope hash
+  ---
+  duration_ms: 8.708688
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 102612.267805
+

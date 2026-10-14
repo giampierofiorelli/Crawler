@@ -1,0 +1,143 @@
+{
+  "schema": "pee238.pre-parser-holdout.v1",
+  "createdOn": "2026-10-14",
+  "frozenBeforeFirstPEEParse": true,
+  "role": "Independent initial exposure only. Any subsequent tuning renders these documents development samples; no post-tuning unseen accuracy claims.",
+  "documents": [
+    {
+      "id": "miele_wwi860_duplicate_upload",
+      "filename": "FS_11359330_GBE_GB-en-GB(2).pdf",
+      "sha256": "6cd00f14b3405fe6d3c25f0051775ad015bed7bd2681ab6698751a8ba09e44af",
+      "bytes": 327963,
+      "pages": 4,
+      "preidentified": "Previously used WWI860 WCS material number 11359330; likely repeated source, NOT independent evidence. Check exact SHA against previous, do not pool as independent manufacturer corroboration.",
+      "checks": [
+        {
+          "page": 1,
+          "field": "load",
+          "value": 9,
+          "unit": "kg"
+        },
+        {
+          "page": 2,
+          "field": "water per cycle",
+          "value": 48,
+          "unit": "l/cycle"
+        },
+        {
+          "page": 3,
+          "field": "weight",
+          "value": 94,
+          "unit": "kg"
+        }
+      ]
+    },
+    {
+      "id": "lavazza_assoluta_new",
+      "filename": "BTC_Assoluta_MAN_UTE_WEB_PKG00002365_A_20250711.pdf",
+      "sha256": "8bb542d9f76ccd5598738af60273157dbf10387144fa480407528cabac93800f",
+      "bytes": 37628569,
+      "pages": 204,
+      "preidentified": "Previously untested Lavazza Assoluta, multilingual: English pp 3-45, Italian pp 47-89, French/German/Danish later. Only original English editorial statements below represent audit targets; translations are not independent evidence.",
+      "checks": [
+        {
+          "page": 7,
+          "field": "input voltage",
+          "lower": 220,
+          "upper": 240,
+          "unit": "v"
+        },
+        {
+          "page": 7,
+          "field": "input frequency",
+          "lower": 50,
+          "upper": 60,
+          "unit": "hz"
+        },
+        {
+          "page": 7,
+          "field": "nominal power",
+          "value": 1550,
+          "unit": "w"
+        },
+        {
+          "page": 7,
+          "field": "dimensions",
+          "values": [
+            358,
+            220,
+            435
+          ],
+          "axes": [
+            "height",
+            "width",
+            "length"
+          ],
+          "unit": "mm"
+        },
+        {
+          "page": 7,
+          "field": "water tank capacity without filter",
+          "value": 1.5,
+          "unit": "l"
+        },
+        {
+          "page": 7,
+          "field": "water tank capacity with filter",
+          "value": 1.3,
+          "unit": "l"
+        },
+        {
+          "page": 7,
+          "field": "weight",
+          "value": 10,
+          "unit": "kg"
+        },
+        {
+          "page": 15,
+          "field": "networked standby consumption",
+          "value": 0.6,
+          "unit": "w"
+        },
+        {
+          "page": 15,
+          "field": "low power consumption",
+          "value": 0.47,
+          "unit": "w"
+        },
+        {
+          "page": 23,
+          "field": "minimum programmable coffee dose",
+          "value": 20,
+          "unit": "ml"
+        },
+        {
+          "page": 25,
+          "field": "espresso nominal delivery",
+          "value": 30,
+          "unit": "ml"
+        },
+        {
+          "page": 25,
+          "field": "lungo nominal delivery",
+          "value": 60,
+          "unit": "ml"
+        },
+        {
+          "page": 25,
+          "field": "lungo xl nominal delivery",
+          "value": 110,
+          "unit": "ml"
+        },
+        {
+          "page": 25,
+          "field": "free dose maximum",
+          "value": 230,
+          "unit": "ml"
+        }
+      ],
+      "high_priority_misassignment": "1.5L and 1.3L are two different FILTER CONDITIONS; do not silently take max 1.5L as universal water tank capacity or conflate 0.6W standby with 0.47W low power."
+    }
+  ],
+  "accuracyMetricGuard": "Calculate denominator only over frozen manually noted fields, report errors by entity/condition, no general scientific evidence or purchase ranking."
+}

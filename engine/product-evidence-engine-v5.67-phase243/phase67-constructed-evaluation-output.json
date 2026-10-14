@@ -1,0 +1,586 @@
+{
+  "researchStatus": "constructed_software_scenarios_only",
+  "note": "These cases are authored testing prompts; not observed user questions, licensed reviews or independently assigned gold labels.",
+  "evaluation": {
+    "purpose": "selective_review_research_gate_research_only",
+    "publicationReady": false,
+    "humanValidationVerifiedBySoftware": false,
+    "caseCount": 16,
+    "annotatedCaseCount": 0,
+    "evaluatedCaseCount": 0,
+    "rows": [
+      {
+        "caseId": "comfort_held",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "candidate_research_only",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "earfatigue_demo",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "candidate_research_only",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "training_fit_held",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "candidate_research_only",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "battery_meas_demo",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "professional_test_required",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "bluetooth_codec_held",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "professional_test_required",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "expert_covered_demo",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "no_search_sufficient_professional_evidence",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "unknown_setting_held",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "clarify_user_need_first",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "no_rights_demo",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "rights_blocked",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "not_material_held",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "not_decision_material",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "vacuum_pets_demo",
+        "category": "vacuum",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "candidate_research_only",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "vacuum_noise_held",
+        "category": "vacuum",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "professional_test_required",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "vacuum_storage_demo",
+        "category": "vacuum",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "candidate_research_only",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "vacuum_filter_held",
+        "category": "vacuum",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "professional_test_required",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "noise_context_demo",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "no_search_sufficient_professional_evidence",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "vacuum_ask_held",
+        "category": "vacuum",
+        "origin": "constructed_scenario",
+        "split": "held_out",
+        "predicted": "clarify_user_need_first",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      },
+      {
+        "caseId": "no_material_demo",
+        "category": "headphones",
+        "origin": "constructed_scenario",
+        "split": "development",
+        "predicted": "not_decision_material",
+        "reference": null,
+        "referenceStatus": "not_annotated",
+        "match": null
+      }
+    ],
+    "metrics": null,
+    "limitations": [
+      "Constructed scenarios are software tests, not representative user data or independent human validation.",
+      "Two assessor IDs and blinded-attestation fields are metadata; software cannot verify identities, independence or blinding.",
+      "No threshold, confidence interval or claim of generalization is justified by a small convenience sample.",
+      "A source-rights grant contained in a fixture does not prove a real license or permission for AI processing.",
+      "No user reviews are acquired; Amazon review data never enters this evaluation or the ranking."
+    ]
+  },
+  "annotationsTemplate": [
+    {
+      "caseId": "comfort_held",
+      "category": "headphones",
+      "question": {
+        "id": "comfort_held",
+        "productVariantId": "headphone_a",
+        "criterionId": "comfort_long",
+        "question": "Does the headband cause pressure on the temples when wearing glasses for eight hours?",
+        "context": "Eight hours with prescription glasses",
+        "gapType": "ergonomic_experience",
+        "professionalCoverage": "partial",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case comfort_held"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "earfatigue_demo",
+      "category": "headphones",
+      "question": {
+        "id": "earfatigue_demo",
+        "productVariantId": "headphone_a",
+        "criterionId": "ear_thermal",
+        "question": "Do the ear pads make ears too warm after wearing headphones for several hours?",
+        "context": "Four-hour work sessions",
+        "gapType": "long_term_use",
+        "professionalCoverage": "missing",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case earfatigue_demo"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "training_fit_held",
+      "category": "headphones",
+      "question": {
+        "id": "training_fit_held",
+        "productVariantId": "headphone_a",
+        "criterionId": "sport_fit",
+        "question": "Will these headphones slip when running on an indoor treadmill for forty minutes?",
+        "context": "Indoor running on treadmill",
+        "gapType": "situational_experience",
+        "professionalCoverage": "partial",
+        "materialityBasis": "mandatory_user_requirement",
+        "materialityReference": "constructed example research case training_fit_held"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "battery_meas_demo",
+      "category": "headphones",
+      "question": {
+        "id": "battery_meas_demo",
+        "productVariantId": "headphone_a",
+        "criterionId": "battery_life",
+        "question": "How long does battery life last at the specified volume with ANC enabled?",
+        "context": "ANC at measured volume",
+        "gapType": "controlled_performance_measurement",
+        "professionalCoverage": "missing",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case battery_meas_demo"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "bluetooth_codec_held",
+      "category": "headphones",
+      "question": {
+        "id": "bluetooth_codec_held",
+        "productVariantId": "headphone_a",
+        "criterionId": "codec_compatibility",
+        "question": "Does this model support the specific Bluetooth codec required by my device?",
+        "context": "Device supports only a particular codec",
+        "gapType": "technical_compatibility",
+        "professionalCoverage": "missing",
+        "materialityBasis": "mandatory_user_requirement",
+        "materialityReference": "constructed example research case bluetooth_codec_held"
+      },
+      "rightsDocuments": [],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "expert_covered_demo",
+      "category": "headphones",
+      "question": {
+        "id": "expert_covered_demo",
+        "productVariantId": "headphone_a",
+        "criterionId": "anc_attenuation",
+        "question": "What is the measured noise attenuation in the controlled acoustic test?",
+        "context": "Controlled standardized laboratory condition",
+        "gapType": "controlled_performance_measurement",
+        "professionalCoverage": "sufficient_for_question",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case expert_covered_demo"
+      },
+      "rightsDocuments": [],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "unknown_setting_held",
+      "category": "headphones",
+      "question": {
+        "id": "unknown_setting_held",
+        "productVariantId": "headphone_a",
+        "criterionId": "unknown_context",
+        "question": "Will these headphones be comfortable and suitable for my needs?",
+        "context": null,
+        "gapType": "unknown_need",
+        "professionalCoverage": "missing",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case unknown_setting_held"
+      },
+      "rightsDocuments": [],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "no_rights_demo",
+      "category": "headphones",
+      "question": {
+        "id": "no_rights_demo",
+        "productVariantId": "headphone_a",
+        "criterionId": "comfort_long",
+        "question": "Does the headband become uncomfortable after a whole working day?",
+        "context": "Eight-hour workday with glasses",
+        "gapType": "ergonomic_experience",
+        "professionalCoverage": "missing",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case no_rights_demo"
+      },
+      "rightsDocuments": [],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "not_material_held",
+      "category": "headphones",
+      "question": {
+        "id": "not_material_held",
+        "productVariantId": "headphone_a",
+        "criterionId": "hinge_feel",
+        "question": "Do some people dislike how the case hinge feels after months?",
+        "context": "Case opening during normal use",
+        "gapType": "long_term_use",
+        "professionalCoverage": "missing",
+        "materialityBasis": "not_established",
+        "materialityReference": null
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "vacuum_pets_demo",
+      "category": "vacuum",
+      "question": {
+        "id": "vacuum_pets_demo",
+        "productVariantId": "vacuum_a",
+        "criterionId": "hair_tangle",
+        "question": "Does hair tangle around the roller after months of using it with a long-haired cat?",
+        "context": "Long-haired pets over several months",
+        "gapType": "long_term_use",
+        "professionalCoverage": "partial",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case vacuum_pets_demo"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "vacuum_noise_held",
+      "category": "vacuum",
+      "question": {
+        "id": "vacuum_noise_held",
+        "productVariantId": "vacuum_a",
+        "criterionId": "vacuum_noise",
+        "question": "What is the measured noise level when using the motorized floor head?",
+        "context": "Controlled measurement on hard floors",
+        "gapType": "controlled_performance_measurement",
+        "professionalCoverage": "partial",
+        "materialityBasis": "mandatory_user_requirement",
+        "materialityReference": "constructed example research case vacuum_noise_held"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "vacuum_storage_demo",
+      "category": "vacuum",
+      "question": {
+        "id": "vacuum_storage_demo",
+        "productVariantId": "vacuum_a",
+        "criterionId": "storage_access",
+        "question": "Is the vacuum easy to carry and store in a narrow hallway daily?",
+        "context": "Small flat with narrow hallway",
+        "gapType": "ergonomic_experience",
+        "professionalCoverage": "partial",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case vacuum_storage_demo"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "vacuum_filter_held",
+      "category": "vacuum",
+      "question": {
+        "id": "vacuum_filter_held",
+        "productVariantId": "vacuum_a",
+        "criterionId": "filter_class",
+        "question": "Is a certified HEPA filtration class stated for the exact vacuum variant?",
+        "context": "Certified filter specification required",
+        "gapType": "technical_compatibility",
+        "professionalCoverage": "missing",
+        "materialityBasis": "mandatory_user_requirement",
+        "materialityReference": "constructed example research case vacuum_filter_held"
+      },
+      "rightsDocuments": [],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "noise_context_demo",
+      "category": "headphones",
+      "question": {
+        "id": "noise_context_demo",
+        "productVariantId": "headphone_a",
+        "criterionId": "comfort_train",
+        "question": "Does the product remain comfortable on a six-hour train journey?",
+        "context": "Six-hour train journey",
+        "gapType": "situational_experience",
+        "professionalCoverage": "sufficient_for_question",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case noise_context_demo"
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "vacuum_ask_held",
+      "category": "vacuum",
+      "question": {
+        "id": "vacuum_ask_held",
+        "productVariantId": "vacuum_a",
+        "criterionId": "home_context",
+        "question": "Would this vacuum work well for the conditions in my home?",
+        "context": null,
+        "gapType": "unknown_need",
+        "professionalCoverage": "partial",
+        "materialityBasis": "user_explicit",
+        "materialityReference": "constructed example research case vacuum_ask_held"
+      },
+      "rightsDocuments": [],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    },
+    {
+      "caseId": "no_material_demo",
+      "category": "headphones",
+      "question": {
+        "id": "no_material_demo",
+        "productVariantId": "headphone_a",
+        "criterionId": "bag_touch",
+        "question": "Does the carry bag feel pleasant to touch during unpacking?",
+        "context": "Unboxing and touching carry pouch",
+        "gapType": "situational_experience",
+        "professionalCoverage": "missing",
+        "materialityBasis": "not_established",
+        "materialityReference": null
+      },
+      "rightsDocuments": [
+        {
+          "sourceId": "example_authorized",
+          "documentUrl": "https://example.org/license-fixture"
+        }
+      ],
+      "evidenceAccess": "CONSTRUCTED FIXTURE — not a source or a user interview",
+      "annotationRequired": [
+        "search_decision",
+        "written_rationale",
+        "source_references"
+      ]
+    }
+  ]
+}

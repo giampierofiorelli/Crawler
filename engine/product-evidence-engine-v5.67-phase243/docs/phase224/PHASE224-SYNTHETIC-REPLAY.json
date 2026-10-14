@@ -1,0 +1,229 @@
+{
+  "schema": "pee224.synthetic-demo.v1",
+  "sourceType": "fabricated_test_fixture_not_live",
+  "networkMode": "synthetic_fixture",
+  "transportCalls": 4,
+  "observations": {
+    "schema": "pee222.page-observation.v1",
+    "mode": "synthetic_fixture",
+    "requestSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "sourceDiscoveryRun": "pee220.run.1",
+    "networkRequests": [
+      "https://synthetic-footwear-source.test/robots.txt",
+      "https://synthetic-footwear-source.test/catalog/ax20",
+      "https://synthetic-review-source.test/robots.txt",
+      "https://synthetic-review-source.test/catalog/ax20"
+    ],
+    "receipts": [
+      {
+        "sourceId": "fixture_0",
+        "url": "https://synthetic-footwear-source.test/catalog/ax20",
+        "observedAt": "2026-10-13T19:00:00Z",
+        "status": "metadata_observed",
+        "reasonCodes": [
+          "terms_not_reviewed_no_licence_claim",
+          "publisher_metadata_unverified"
+        ],
+        "responseSha256": "a06565bf65a527062abc3b5370d9c6baa95b8b0995b86e05bb6c0c0281beb5a9",
+        "byteExact": true,
+        "declaredTypes": [
+          "Product"
+        ],
+        "productLeads": [
+          {
+            "name": "Fictional AG Boot",
+            "brand": "Fictional Company",
+            "model": "AX20",
+            "sku": "AX20-AG"
+          }
+        ],
+        "publicationLeads": [],
+        "structuredDeclarations224": {
+          "schema": "pee224.transient-declarations.v1",
+          "claims": [
+            {
+              "claimId": "77b2b03c763b72091201aeb91f5f52ba31e409a48b96d847fb062caa0a5035e5",
+              "sourceUrl": "https://synthetic-footwear-source.test/catalog/ax20",
+              "productHypothesisKey": "c0e6f80e2ea623354ed840005dc1a1728d02996801ecf7bf75b0990220c930a8",
+              "subject": {
+                "name": "Fictional AG Boot",
+                "brand": "Fictional Company",
+                "model": "AX20",
+                "sku": "AX20-AG"
+              },
+              "propertyKey": "surface",
+              "value": "AG",
+              "valueType": "short_enum",
+              "unit": null,
+              "claimStatus": "publisher_declaration_unverified",
+              "exactVariantAuthenticated": false,
+              "independentMeasurement": false,
+              "market": "unknown",
+              "rankingAuthorized": false
+            },
+            {
+              "claimId": "a267719dfcbac3d693a3f4d8bc9917e629d1f4e7a3bbf17cdc018c63e34d86cb",
+              "sourceUrl": "https://synthetic-footwear-source.test/catalog/ax20",
+              "productHypothesisKey": "c0e6f80e2ea623354ed840005dc1a1728d02996801ecf7bf75b0990220c930a8",
+              "subject": {
+                "name": "Fictional AG Boot",
+                "brand": "Fictional Company",
+                "model": "AX20",
+                "sku": "AX20-AG"
+              },
+              "propertyKey": "stud height",
+              "value": 12,
+              "valueType": "number",
+              "unit": "mm",
+              "claimStatus": "publisher_declaration_unverified",
+              "exactVariantAuthenticated": false,
+              "independentMeasurement": false,
+              "market": "unknown",
+              "rankingAuthorized": false
+            }
+          ],
+          "conflictingPropertyKeys": [],
+          "subjectsWithWeakIdentity": 0,
+          "truncated": false,
+          "sourceBodiesRetained": false,
+          "publisherClaimsAreNotMeasurements": true,
+          "rankingAuthorized": false
+        },
+        "identityNextAction": "verify_exact_variant",
+        "scientificEvidenceAdmitted": false,
+        "rankingAuthorized": false,
+        "noArticleTextStored": true
+      },
+      {
+        "sourceId": "fixture_1",
+        "url": "https://synthetic-review-source.test/catalog/ax20",
+        "observedAt": "2026-10-13T19:00:00Z",
+        "status": "metadata_observed",
+        "reasonCodes": [
+          "terms_not_reviewed_no_licence_claim",
+          "publisher_metadata_unverified"
+        ],
+        "responseSha256": "5ae73526ea55d3e8790e4e61ef1ccf115cc69180adbd012de43b66bf811bef63",
+        "byteExact": true,
+        "declaredTypes": [
+          "Product"
+        ],
+        "productLeads": [
+          {
+            "name": "Fictional AG Boot",
+            "brand": "Fictional Company",
+            "model": "AX20",
+            "sku": "AX20-AG"
+          }
+        ],
+        "publicationLeads": [],
+        "structuredDeclarations224": {
+          "schema": "pee224.transient-declarations.v1",
+          "claims": [
+            {
+              "claimId": "1e854bb6626c1077ad5c78dd03e13f6db4dc14188f7adbdc50abf03cea268eaa",
+              "sourceUrl": "https://synthetic-review-source.test/catalog/ax20",
+              "productHypothesisKey": "c0e6f80e2ea623354ed840005dc1a1728d02996801ecf7bf75b0990220c930a8",
+              "subject": {
+                "name": "Fictional AG Boot",
+                "brand": "Fictional Company",
+                "model": "AX20",
+                "sku": "AX20-AG"
+              },
+              "propertyKey": "stud height",
+              "value": 15,
+              "valueType": "number",
+              "unit": "mm",
+              "claimStatus": "publisher_declaration_unverified",
+              "exactVariantAuthenticated": false,
+              "independentMeasurement": false,
+              "market": "unknown",
+              "rankingAuthorized": false
+            },
+            {
+              "claimId": "760444fe095c5a7dccd6b0acc31f24e43e01362d641e9c5f4e46ba2685d1c298",
+              "sourceUrl": "https://synthetic-review-source.test/catalog/ax20",
+              "productHypothesisKey": "c0e6f80e2ea623354ed840005dc1a1728d02996801ecf7bf75b0990220c930a8",
+              "subject": {
+                "name": "Fictional AG Boot",
+                "brand": "Fictional Company",
+                "model": "AX20",
+                "sku": "AX20-AG"
+              },
+              "propertyKey": "surface",
+              "value": "AG",
+              "valueType": "short_enum",
+              "unit": null,
+              "claimStatus": "publisher_declaration_unverified",
+              "exactVariantAuthenticated": false,
+              "independentMeasurement": false,
+              "market": "unknown",
+              "rankingAuthorized": false
+            }
+          ],
+          "conflictingPropertyKeys": [],
+          "subjectsWithWeakIdentity": 0,
+          "truncated": false,
+          "sourceBodiesRetained": false,
+          "publisherClaimsAreNotMeasurements": true,
+          "rankingAuthorized": false
+        },
+        "identityNextAction": "verify_exact_variant",
+        "scientificEvidenceAdmitted": false,
+        "rankingAuthorized": false,
+        "noArticleTextStored": true
+      }
+    ],
+    "blockedCount": 0,
+    "identityLeadCount": 2,
+    "noSourceBodiesStored": true,
+    "rankingAuthorized": false,
+    "independentEvidenceVerified": false,
+    "limits": [
+      "Publisher-declared JSON-LD is an identity hypothesis, not verified product existence, editorial independence or test results.",
+      "HTTPS and robots access is not an all-purpose copyright or commercial text/data-mining licence.",
+      "Page HTML is processed in volatile memory and omitted from outputs; no page body or article excerpts are persisted.",
+      "Phase224 JSON-LD attributes are unverified publisher claims; they do not prove exact variant, market, independent measurement or suitability.",
+      "No network search index, live site acquisition, scientific evidence admission or ranking is demonstrated by fixture tests."
+    ]
+  },
+  "audit": {
+    "schema": "pee224.claim-audit.v1",
+    "claimCount": 4,
+    "observedSources": 2,
+    "originalTestsVerified": 0,
+    "exactVariantsVerified": 0,
+    "independenceReviewed": false,
+    "reasonCodes": [
+      "claims_are_unverified_publisher_declarations",
+      "no_independent_performance_tests_authenticated",
+      "no_exact_market_variant_scope_authenticated",
+      "conflicting_publisher_values_require_review"
+    ],
+    "disagreements": [
+      {
+        "identity": "[\"fictional company\",\"ax20\",\"ax20 ag\"]",
+        "propertyKey": "stud height",
+        "sourceUrls": [
+          "https://synthetic-footwear-source.test/catalog/ax20",
+          "https://synthetic-review-source.test/catalog/ax20"
+        ],
+        "declarations": [
+          {
+            "sourceUrl": "https://synthetic-footwear-source.test/catalog/ax20",
+            "value": 12,
+            "unit": "mm"
+          },
+          {
+            "sourceUrl": "https://synthetic-review-source.test/catalog/ax20",
+            "value": 15,
+            "unit": "mm"
+          }
+        ],
+        "status": "unresolved_source_or_market_or_variant_conflict"
+      }
+    ],
+    "noSourceBodiesStored": true,
+    "rankingAuthorized": false
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "phase": 174,
+  "unseenDuringInitialRules": true,
+  "subsequentlyObservedDuringDevelopment": true,
+  "independentlyAnnotated": false,
+  "benchmarkAccuracyEstablished": false,
+  "performanceClaimsSupported": false,
+  "cases": [
+    {
+      "id": "kettle_contact_parts",
+      "source": "https://www.reddit.com/r/BuyItForLife/comments/1j75qty/electric_kettle_with_plasticfree_internals/",
+      "input": "Looking for an electric kettle with no plastic parts touching the water",
+      "issueToCheck": "all wetted components; do not equate steel exterior with contact path",
+      "target": "electric_kettle",
+      "task": "product_selection",
+      "owned": [],
+      "recognized": [
+        "kettle_wetted_material:wanted"
+      ],
+      "issues": [],
+      "clarification": null,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "filter_rental_ro",
+      "source": "https://www.reddit.com/r/WaterFilters/comments/1v9tqul/ro_system_for_renting/",
+      "input": "I rent and want a water filter for PFAS that is easy to remove when I move. I'm weighing countertop RO against an under-sink system",
+      "issueToCheck": "renting alone is not an explicit ban on drilling; service life and installation need separate checks",
+      "target": "drinking_water_filter",
+      "task": "product_selection",
+      "owned": [],
+      "recognized": [
+        "water_pfas:wanted"
+      ],
+      "issues": [],
+      "clarification": null,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "filter_budget_upgrade",
+      "source": "https://www.reddit.com/r/WaterFilters/comments/1ofn2ye/water_filter_recommendation/",
+      "input": "I have a pitcher water filter but want an upgraded water filter with a $200 budget and little counter space",
+      "issueToCheck": "ownership of same category, absolute budget, footprint and accessory scope",
+      "target": "drinking_water_filter",
+      "task": "product_selection",
+      "owned": [],
+      "recognized": [
+        "transfer_space:wanted"
+      ],
+      "issues": [
+        "water_quality_objective_or_contaminant_unknown"
+      ],
+      "clarification": "What problem are you trying to solve with the water: taste, limescale, or a contaminant identified in a water report?",
+      "rankingAuthorized": false
+    },
+    {
+      "id": "pasta_owned_roller",
+      "source": "https://www.reddit.com/r/pasta/comments/vpkzzz",
+      "input": "I already have a pasta roller and cutters, but I'm looking for an automatic pasta extruder",
+      "issueToCheck": "owned versus wanted type of pasta equipment; does not establish any model capability",
+      "target": "pasta_maker",
+      "task": "product_selection",
+      "owned": [
+        {
+          "family": "pasta_maker",
+          "span": "pasta roller",
+          "start": 17,
+          "end": 29
+        }
+      ],
+      "recognized": [
+        "pasta_extruded_shapes:wanted"
+      ],
+      "issues": [
+        "owned_equipment_is_not_automatically_a_purchase_target"
+      ],
+      "clarification": null,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "pasta_mixer",
+      "source": "https://www.reddit.com/r/pasta/comments/cbfii3",
+      "input": "I own a stand mixer and want a pasta roller attachment for homemade ravioli",
+      "issueToCheck": "host mixer accessory compatibility, exact model, and owned equipment",
+      "target": "pasta_maker",
+      "task": "product_selection",
+      "owned": [],
+      "recognized": [
+        "pasta_sheets:wanted"
+      ],
+      "issues": [],
+      "clarification": null,
+      "rankingAuthorized": false
+    }
+  ]
+}

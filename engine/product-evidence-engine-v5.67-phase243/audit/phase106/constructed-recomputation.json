@@ -1,0 +1,93 @@
+{
+  "constructed": true,
+  "phase": 106,
+  "originalTextStored": false,
+  "modelCalls": 0,
+  "publishable": false,
+  "initial": {
+    "status": "ready_research",
+    "projection": {
+      "type": "evidence_explanation",
+      "status": "supported_better",
+      "firstVariantId": "alpha",
+      "secondVariantId": "beta",
+      "criterionId": "noise",
+      "explanation": "The available direct original tests favor alpha over beta for noise in this test context.",
+      "originalTestIds": [
+        "test_one"
+      ],
+      "upstreamNodeId": "compare_alpha_beta",
+      "upstreamResultSha256": "cc5e848e2a69e7bc95b5a9f39613f9dcc57877a9c79e0cfad0ab05d516500cbe",
+      "sourceReferences": [
+        {
+          "claimId": "evidence_one",
+          "originalTestId": "test_one",
+          "sourceUrl": "https://example.org/original/test_one",
+          "methodologyReference": "fictional independently labelled method"
+        }
+      ],
+      "confidencePercentage": null,
+      "consumerWinnerId": null
+    },
+    "resultSha256": "b5bbb2938906d8dbec25cfcfff23da7832868996dcfb2bdf187cb1fce7784e05"
+  },
+  "secondLookupSameCache": true,
+  "unaffectedByUnrelatedProduct": true,
+  "staleReadBlocked": true,
+  "afterConflictingTest": {
+    "status": "ready_research",
+    "projection": {
+      "type": "evidence_explanation",
+      "status": "contested",
+      "firstVariantId": "alpha",
+      "secondVariantId": "beta",
+      "criterionId": "noise",
+      "explanation": "Original test reports conflict for this comparison; the disagreement has not been reconciled.",
+      "originalTestIds": [
+        "test_one",
+        "test_two"
+      ],
+      "upstreamNodeId": "compare_alpha_beta",
+      "upstreamResultSha256": "14caa4d078fd8e2660eef6b1cc86b949c28cca8a6ae7811eace84b6788162f62",
+      "sourceReferences": [
+        {
+          "claimId": "evidence_one",
+          "originalTestId": "test_one",
+          "sourceUrl": "https://example.org/original/test_one",
+          "methodologyReference": "fictional independently labelled method"
+        },
+        {
+          "claimId": "evidence_two",
+          "originalTestId": "test_two",
+          "sourceUrl": "https://example.org/original/test_two",
+          "methodologyReference": "fictional independently labelled method"
+        }
+      ],
+      "confidencePercentage": null,
+      "consumerWinnerId": null
+    }
+  },
+  "eventCount": 4,
+  "invalidationHistory": [
+    {
+      "sequence": 1,
+      "sourceEventSha256": "eb099ce0fc7d72892392bcd08a3d63b08b2fa0cf48f322ef5c855176db3bc679",
+      "dependency": "belief:vacuum:alpha:noise:normal_mode"
+    },
+    {
+      "sequence": 2,
+      "sourceEventSha256": "5f322d822d54399ba3c806b765634d4c934b45b5e87eea3f8d73eea9968ee9bd",
+      "dependency": "belief:vacuum:beta:noise:normal_mode"
+    },
+    {
+      "sequence": 3,
+      "sourceEventSha256": "e3e656e92f4de6fb9f8ef5d051af8551528decf44e5d028bb2a2874972ee5385",
+      "dependency": "belief:vacuum:alpha:noise:normal_mode"
+    },
+    {
+      "sequence": 4,
+      "sourceEventSha256": "c35d975e0c6b724af0e6bc14a66d4c69fb091aad4adab2ba24d8dd8abba6c75c",
+      "dependency": "belief:vacuum:beta:noise:normal_mode"
+    }
+  ]
+}

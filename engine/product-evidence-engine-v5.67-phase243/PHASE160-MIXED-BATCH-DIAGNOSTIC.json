@@ -1,0 +1,156 @@
+{
+  "protocol": "pee.phase160.results.v1",
+  "datasetId": "five_selected_cases_160",
+  "docCount": 5,
+  "mode": "mixed",
+  "cases": [
+    {
+      "id": "constructed_fridge",
+      "kind": "constructed",
+      "category": "refrigerator",
+      "sourceUrl": "https://example.org/constructed-diagnostic",
+      "documentSha256": "dde4f8f0eb95bc819e5dabfd977b38531004f0a2908b9e71995c518f88c45b87",
+      "neuralProcessed": true,
+      "nativeMentionCount": 2,
+      "nativeMeasurementCount": 0,
+      "nativeRelationCount": 1,
+      "neuralSpanCount": 7,
+      "roleSummaries": [
+        {
+          "surface": "MRT311FFFE",
+          "status": "explicitly_tested"
+        },
+        {
+          "surface": "GTS22KGNRWW",
+          "status": "comparison_only"
+        }
+      ],
+      "featureValueSummaries": [
+        {
+          "feature": "cooling noise",
+          "value": "44.9 dBA",
+          "assignment": "provisional_name_reference"
+        }
+      ],
+      "unresolved": [
+        "external_colab_runtime_not_cryptographically_attested",
+        "neural_mentions_not_all_exact_heuristic_matches",
+        "original_model_checkpoint_revision_not_attested",
+        "source_is_constructed_diagnostic"
+      ],
+      "result": "processed",
+      "independentlyAnnotated": false,
+      "sourceAuthenticated": false,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "constructed_coffee",
+      "kind": "constructed",
+      "category": "coffee_machine",
+      "sourceUrl": "https://example.org/constructed-diagnostic",
+      "documentSha256": "65fea61815897ff3535efade13048e1fdc3fd8964e7de5f28e9510953071f00b",
+      "neuralProcessed": true,
+      "nativeMentionCount": 2,
+      "nativeMeasurementCount": 0,
+      "nativeRelationCount": 0,
+      "neuralSpanCount": 5,
+      "roleSummaries": [
+        {
+          "surface": "De'Longhi Dedica Duo",
+          "status": "explicitly_tested"
+        },
+        {
+          "surface": "Breville Bambino",
+          "status": "explicitly_not_tested"
+        }
+      ],
+      "featureValueSummaries": [],
+      "unresolved": [
+        "external_colab_runtime_not_cryptographically_attested",
+        "neural_mentions_not_all_exact_heuristic_matches",
+        "original_model_checkpoint_revision_not_attested",
+        "reviewed_model_not_observed_in_body",
+        "source_is_constructed_diagnostic"
+      ],
+      "result": "processed",
+      "independentlyAnnotated": false,
+      "sourceAuthenticated": false,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "maytag_excerpt",
+      "kind": "published_short_excerpt",
+      "category": "refrigerator",
+      "sourceUrl": "https://www.rtings.com/refrigerator/reviews/maytag/mrt311fffh-black",
+      "documentSha256": "3dc20d7f71cb3bcaab2a5181faa3fee0f3e90df276f5290bfa3fcafec1efa3fa",
+      "neuralProcessed": false,
+      "nativeMentionCount": 0,
+      "nativeMeasurementCount": 0,
+      "nativeRelationCount": 0,
+      "neuralSpanCount": 0,
+      "roleSummaries": [],
+      "featureValueSummaries": [],
+      "unresolved": [
+        "reviewed_model_not_observed_in_body"
+      ],
+      "result": "processed",
+      "independentlyAnnotated": false,
+      "sourceAuthenticated": false,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "lg_excerpt",
+      "kind": "published_short_excerpt",
+      "category": "refrigerator",
+      "sourceUrl": "https://www.rtings.com/refrigerator/reviews/lg/studio-srfb27w3",
+      "documentSha256": "47f130d519cce20d170319cdb5bb7d4bbe942739ff69d00b2312f998d888d7e7",
+      "neuralProcessed": false,
+      "nativeMentionCount": 1,
+      "nativeMeasurementCount": 0,
+      "nativeRelationCount": 0,
+      "neuralSpanCount": 0,
+      "roleSummaries": [],
+      "featureValueSummaries": [],
+      "unresolved": [],
+      "result": "processed",
+      "independentlyAnnotated": false,
+      "sourceAuthenticated": false,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    },
+    {
+      "id": "cosori_excerpt",
+      "kind": "published_short_excerpt",
+      "category": "air_fryer",
+      "sourceUrl": "https://www.rtings.com/air-fryer/reviews/cosori/dual-blaze-6-8qt-caf-p583s-single-basket",
+      "documentSha256": "4cc6e461ffee2f078c9662253d2497fdaaeeb30a919b68f5251976a08e277a84",
+      "neuralProcessed": false,
+      "nativeMentionCount": 1,
+      "nativeMeasurementCount": 0,
+      "nativeRelationCount": 0,
+      "neuralSpanCount": 0,
+      "roleSummaries": [],
+      "featureValueSummaries": [],
+      "unresolved": [
+        "reviewed_model_not_observed_in_body"
+      ],
+      "result": "processed",
+      "independentlyAnnotated": false,
+      "sourceAuthenticated": false,
+      "canonicalWriteAuthorized": false,
+      "rankingAuthorized": false
+    }
+  ],
+  "safety": {
+    "scientificEvidenceApproved": false,
+    "sourceRightsAuthenticated": false,
+    "checkpointAuthenticated": false,
+    "modelQualityBenchmark": false,
+    "identityMergeAuthorized": false,
+    "canonicalWriteAuthorized": false,
+    "rankingAuthorized": false
+  }
+}

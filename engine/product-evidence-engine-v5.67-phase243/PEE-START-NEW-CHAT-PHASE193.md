@@ -1,0 +1,9 @@
+# PEE continuation — Phase193
+
+Canonical predecessor (Phase192 completion): `/mnt/data/product-evidence-engine-v5.16-phase192.zip`. If missing from subsequent container, request actual ZIP; don't infer availability from chat summaries.
+
+Read `PHASE192-TECHNICAL-REPORT.md` and `docs/phase192/README.md` and cumulative Phase181–191. Preserve earlier user's source/test independence, sparse-product retention, goal-based recommendations and no fixed weights rules.
+
+Phase192 adds original implementation `src/phase192_lineage_marketplace_screen.ts`, on top of Phase189/191: explicit source/document counts and per-field relevance; annotation-based study/event lineage; exact URL and normalised-text duplicate detection; near-text resemblance; suspected recycled result detection; marketing/affiliate Amazon-star-only lists discovery-only rather than scientific comparison; no generic affiliate domain blacklist. Explicit flags prevent claims that text resemblance proves copied tests, that shared numeric data proves common origin, or that studied annotations are independently authenticated. Public rank authorization remains blocked.
+
+Highest value next: independently annotated/blinded source-origin dataset with realistic copied, syndicated and rewritten texts across categories; quantify precision/recall false source merges and false missed origin; test unknown publisher test events; establish snapshot and candidate coverage protocols; use publisher-original bytes only with legitimate access and reuse rights. Couple approved lineage to Phase182 research queues and durable canonical knowledge of exact product variants, then examine Phase181 ranking. Avoid immediately integrating large OSS repositories and avoid creating a parallel ranking system. Historical Phase91/92 suites excluded from eligible regression; not claimed passed.

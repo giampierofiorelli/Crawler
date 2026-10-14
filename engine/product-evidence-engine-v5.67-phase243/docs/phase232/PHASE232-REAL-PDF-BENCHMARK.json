@@ -1,0 +1,99 @@
+{
+  "schema": "pee232.original-pdf-scope-evaluation.1",
+  "date": "2026-10-13",
+  "basis": "five user-supplied exact original manufacturer documents",
+  "inSampleDevelopmentNotHeldOut": true,
+  "manufacturerDeclarationsOnly": true,
+  "noOriginalDocumentsPackaged": true,
+  "independentEvidenceVerified": false,
+  "rankingAuthorized": false,
+  "documents": [
+    {
+      "id": "purifier",
+      "sha256": "0fbfcdaa9485c7ea0743507216b4d428ec000a3e7872996836833651e2635973",
+      "pagesInspectedAtMost": 24,
+      "claims": 10,
+      "componentScopedCount": 0,
+      "variantScopedCount": 0,
+      "reasonCodes": [
+        "component_weight_not_promoted_to_product_weight",
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified",
+        "pdf_variant_weight_scope_ambiguous"
+      ]
+    },
+    {
+      "id": "washdry",
+      "sha256": "c3c1c1848ba87215d8a52e8493808743e8b76850a1359d9e887f10d5ad488493",
+      "pagesInspectedAtMost": 24,
+      "claims": 6,
+      "componentScopedCount": 0,
+      "variantScopedCount": 6,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_explicit_variant_weight_claims_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_geometry_control_glyphs_ignored",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "id": "dreame",
+      "sha256": "f3710035ec24fa0de3f57703936858cc3241b5bfb150924fe8bc9015ff71d6fd",
+      "pagesInspectedAtMost": 24,
+      "claims": 2,
+      "componentScopedCount": 0,
+      "variantScopedCount": 0,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_coordinate_rows_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "id": "cx50",
+      "sha256": "1fa87e955bcfa473a0153d1bb32ce3899a813b2af38a50f4edd926253876a2f6",
+      "pagesInspectedAtMost": 24,
+      "claims": 22,
+      "componentScopedCount": 22,
+      "variantScopedCount": 0,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_component_column_claims_unverified",
+        "pdf_coordinate_rows_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "id": "azurion",
+      "sha256": "53f7cead3420b2466e3d0fc5f279143b6e15326e7060c7fb84554389e10a00fd",
+      "pagesInspectedAtMost": 24,
+      "claims": 1,
+      "componentScopedCount": 0,
+      "variantScopedCount": 0,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    }
+  ],
+  "manuallyCheckedVariantAnchors": {
+    "expected": 6,
+    "matched": 6,
+    "missing": []
+  },
+  "comparisonToPhase231": {
+    "purifier": 10,
+    "washdry": 0,
+    "dreame": 2,
+    "cx50": 22,
+    "azurion": 1
+  }
+}

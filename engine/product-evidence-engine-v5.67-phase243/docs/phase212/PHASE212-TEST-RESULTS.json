@@ -1,0 +1,40 @@
+{
+  "schema": "pee.phase212.test-results.v1",
+  "date": "2026-10-13",
+  "version": "5.36.0",
+  "compilation": "passed",
+  "typescriptRegressions": {
+    "passed": 3783,
+    "groups": 14,
+    "allAdmittedGroupsPassed": true,
+    "historicalInconclusiveExcluded": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "logDirectory": "docs/phase212/test-logs"
+  },
+  "pythonRegressions": {
+    "passed": 212,
+    "groups": 6,
+    "allPassed": true
+  },
+  "phase212Targeted": {
+    "typescriptPureTests": 19,
+    "nodeCliTests": 4,
+    "passed": 23,
+    "log": "docs/phase212/test-logs/targeted.log"
+  },
+  "userVideo": {
+    "sourceSha256": "2ffa85cdab9abe838265d83c0faaf01ae4d5e564ad276496e95d8ec23b19c932",
+    "sourceSeconds": 65.2,
+    "realASRInferencePerformed": false,
+    "transcriptionAvailable": false,
+    "werMeasured": false,
+    "cerMeasured": false,
+    "trueLanguageSwitchLabeled": false,
+    "modelWeightsAvailableLocally": false,
+    "optionalPythonRuntimeInstalled": false,
+    "offlineNegativeControlPassed": true
+  },
+  "interpretation": "Software and subprocess guards tested with authored fixtures; no verified ASR accuracy on the real uploaded audio."
+}

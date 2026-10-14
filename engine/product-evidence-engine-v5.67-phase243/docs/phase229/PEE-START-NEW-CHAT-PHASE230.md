@@ -1,0 +1,11 @@
+# Continue Product Evidence Engine — Phase230 after Phase229 v5.53.0
+
+Canonical source of truth: complete `product-evidence-engine-v5.53-phase229-FULL.zip`, not only the checkpoint. Preserve cumulative research and the exact original files actually present. Read `docs/phase229/PHASE229-TECHNICAL-REPORT.md`, all accompanying test logs and the new Python/TypeScript source.
+
+Phase229 implementation: cautiously extract explicit two-column PDF specification leads using already installed Poppler `pdftotext -bbox-layout`. Group aligned rows on stable columns, require >=2 consecutive rows, reject parallel values/stray middle columns/unknown units, preserve page and bounding-box provenance and file digest, deduplicate same PDF page claims. All values remain publisher statements without exact-variant verification or ranking authorization. No extra runtime dependencies or OCR. DOCX path unchanged.
+
+Verified: TypeScript build, 22 focused tests (10 new), 4,069 compiled TS tests across 15 shards (0 failures), synthetic PDF gold 7 correct of 7 on 7 **fictional** PDFs. Optional pdfplumber comparison is not a fair claim-level accuracy test. No live PEE Internet fetch; both github.com and www.gov.uk failed DNS. Python companion tests not rerun. No authentic manufacturer PDF benchmark and no ranking outcome.
+
+Next priorities: acquire lawful original multi-publisher technical PDFs where accessible (from user's iPhone upload if necessary, but do not demand a computer); create independent gold cells with exact model, market, units, table positions; quantify false model/variant assignment first and precision/recall after; benchmark Poppler geometry vs pdfplumber and heavy deployment cost, choose by measured benefit. Retain transient handling, SHA-256/source date and original URLs; integrate verified claims with existing versioned spec registers; do not conflate producer specs with independent tests. Separately prove PEE access to a real SearXNG instance when network infrastructure permits.
+
+Final delivery: source-linked Markdown technical report, test logs, structured replay and manifest SHA-256, full cumulative ZIP and incremental checkpoint only with concrete verified development; disclose all limits. User works only via iPhone, so do not require laptop action for offline tasks.

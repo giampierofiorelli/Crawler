@@ -1,0 +1,49 @@
+{
+  "schema": "pee239.freeze-before-engineering-case-evaluation.v1",
+  "developmentSetNow": true,
+  "claimsArePublisherInstructionsNotScientificTests": true,
+  "preregisteredSelectedTargets": 24,
+  "preregisteredPositiveTargetsRecovered": 5,
+  "recoveredIds": [
+    "ey-manual-temp",
+    "ey-manual-time",
+    "ey-frozen-fries-d1",
+    "ey-frozen-fries-d2",
+    "ey-chicken"
+  ],
+  "preregisteredNegativeGuardCount": 13,
+  "observedViolationsOfSelectedNegativeGuards": 0,
+  "notes": [
+    "5/24 is selected-case recall, NOT a representative accuracy estimate.",
+    "The 11 EY905J statements consist of 9 cooking-guide tuples and 2 machine controls; other six guide tuples were not preregistered targets.",
+    "The model code in the file name is not verified as the manufacturer-declared exact retail SKU.",
+    "Dolci icon-labelled programme columns and GC242D pictograms are intentionally not attributed.",
+    "All three source PDFs are now development samples; subsequent evaluation requires a fresh sealed holdout."
+  ],
+  "results": [
+    {
+      "filename": "EY905J_IFU_User_Manual.pdf",
+      "sha256": "f8eeb4c7e3c2f37d22b5835798cd9be69f427efba072b7e66151337aeed25a2e",
+      "baselineCount": 0,
+      "phase239Count": 11,
+      "structuredMethods": {
+        "pdf_author_explicit_manual_control_candidate": 2,
+        "pdf_authored_cooking_guide_tuple_candidate": 9
+      }
+    },
+    {
+      "filename": "IFU_User_Manual_Tefal_Dolci_Ice_Cream_Maker.pdf",
+      "sha256": "2fceaae2bff7736ecd92459d15d587c9cdf60178458d0f21ec78be0ba6ae35ee",
+      "baselineCount": 0,
+      "phase239Count": 0,
+      "structuredMethods": {}
+    },
+    {
+      "filename": "GC242D_IFU.pdf",
+      "sha256": "149fb40880a0ada1e486cfb2f75e8e4bdaba61139e1f61c50d31280823c96258",
+      "baselineCount": 0,
+      "phase239Count": 0,
+      "structuredMethods": {}
+    }
+  ]
+}

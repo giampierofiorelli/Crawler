@@ -1,0 +1,140 @@
+{
+  "schema": "193.1",
+  "state": "research_only",
+  "events": [
+    {
+      "seq": 1,
+      "supersedesSeq": null,
+      "decision": {
+        "source": {
+          "contentBasis": "publisher_bytes",
+          "policyVersion": "review-v1",
+          "market": "uk",
+          "classificationRevision": "method-trace-v1",
+          "observedAt": "2026-10-01T10:00:00Z",
+          "sourceId": "stars_vac",
+          "url": "https://fixtures.example/vacuums",
+          "category": "vacuum",
+          "variantId": "rare_vacuum",
+          "field": "carpet_pickup",
+          "contentHash": "f3b28fc4f50a9d1fb80b234aa0c2f74f1be3a7944857d96f04e79fc962b5aa7a"
+        },
+        "scope": "document",
+        "action": "discovery_only",
+        "reason": "marketplace_stars_without_original_test",
+        "reviewerId": "simulated_reviewer_fixture",
+        "reviewTicket": "SYNTHETIC-REVIEW-stars_vac",
+        "reviewedAt": "2026-10-01T11:00:00Z",
+        "reviewBasis": "human_source_screen",
+        "evidenceNote": "Synthetic reviewed example used to test caching logic; NOT a real person or verified commercial source.",
+        "originalTestEventId": null,
+        "retainedCandidateVariantIds": [
+          "rare_vacuum"
+        ]
+      },
+      "previousHash": "0b155aa97425276501588aa7f9a98518bdae381e41f8220ea2e5056cf7cd2255",
+      "eventHash": "e556b491749b996e29bb0ac73589d31a044eb857a39c76565af5199e22436428"
+    },
+    {
+      "seq": 2,
+      "supersedesSeq": null,
+      "decision": {
+        "source": {
+          "contentBasis": "publisher_bytes",
+          "policyVersion": "review-v1",
+          "market": "uk",
+          "classificationRevision": "method-trace-v1",
+          "observedAt": "2026-10-01T10:00:00Z",
+          "sourceId": "stars_coffee",
+          "url": "https://fixtures.example/coffee",
+          "category": "coffee_machine",
+          "variantId": "rare_coffee",
+          "field": "espresso_pressure",
+          "contentHash": "4deba58f0d2c99639f4e031c783d68ea67a3538c086372ea6a8b101d4eedeb4c"
+        },
+        "scope": "document",
+        "action": "discovery_only",
+        "reason": "marketplace_stars_without_original_test",
+        "reviewerId": "simulated_reviewer_fixture",
+        "reviewTicket": "SYNTHETIC-REVIEW-stars_coffee",
+        "reviewedAt": "2026-10-01T11:00:00Z",
+        "reviewBasis": "human_source_screen",
+        "evidenceNote": "Synthetic reviewed example used to test caching logic; NOT a real person or verified commercial source.",
+        "originalTestEventId": null,
+        "retainedCandidateVariantIds": [
+          "rare_coffee"
+        ]
+      },
+      "previousHash": "e556b491749b996e29bb0ac73589d31a044eb857a39c76565af5199e22436428",
+      "eventHash": "9571a74a6602cc5e844d22c59327e407efc4baf7177c13f987ed2e50350fb4ba"
+    },
+    {
+      "seq": 3,
+      "supersedesSeq": null,
+      "decision": {
+        "source": {
+          "contentBasis": "publisher_bytes",
+          "policyVersion": "review-v1",
+          "market": "uk",
+          "classificationRevision": "method-trace-v1",
+          "observedAt": "2026-10-01T10:00:00Z",
+          "sourceId": "stars_purifier",
+          "url": "https://fixtures.example/purifiers",
+          "category": "air_purifier",
+          "variantId": "rare_air_purifier",
+          "field": "smoke_cadr",
+          "contentHash": "385aa1e069eb03ce511c79191a6a34d1f5fb1f665a67e4075d17dc30ba698fef"
+        },
+        "scope": "document",
+        "action": "discovery_only",
+        "reason": "marketplace_stars_without_original_test",
+        "reviewerId": "simulated_reviewer_fixture",
+        "reviewTicket": "SYNTHETIC-REVIEW-stars_purifier",
+        "reviewedAt": "2026-10-01T11:00:00Z",
+        "reviewBasis": "human_source_screen",
+        "evidenceNote": "Synthetic reviewed example used to test caching logic; NOT a real person or verified commercial source.",
+        "originalTestEventId": null,
+        "retainedCandidateVariantIds": [
+          "rare_air_purifier"
+        ]
+      },
+      "previousHash": "9571a74a6602cc5e844d22c59327e407efc4baf7177c13f987ed2e50350fb4ba",
+      "eventHash": "9d9507d9c73ce80e3443f69754d1bf9d43ee5e9aadf88b18607cf205802027c1"
+    },
+    {
+      "seq": 4,
+      "supersedesSeq": null,
+      "decision": {
+        "source": {
+          "contentBasis": "publisher_bytes",
+          "policyVersion": "review-v1",
+          "market": "uk",
+          "classificationRevision": "method-trace-v1",
+          "observedAt": "2026-10-01T10:00:00Z",
+          "sourceId": "professional",
+          "url": "https://lab-fixture.example/vacuum",
+          "category": "vacuum",
+          "variantId": "reviewed_vacuum",
+          "field": "hard_floor_noise",
+          "contentHash": "884464f28ec170db0eb334872d37846e7f50d42f6875e3714ce6618920cd5ea7"
+        },
+        "scope": "field",
+        "action": "original_evidence_candidate",
+        "reason": "reported_original_method_pending_independent_review",
+        "reviewerId": "simulated_reviewer_fixture",
+        "reviewTicket": "SYNTHETIC-REVIEW-professional",
+        "reviewedAt": "2026-10-01T11:00:00Z",
+        "reviewBasis": "human_source_screen",
+        "evidenceNote": "Synthetic reviewed example used to test caching logic; NOT a real person or verified commercial source.",
+        "originalTestEventId": "fixture_experiment_1",
+        "retainedCandidateVariantIds": [
+          "reviewed_vacuum"
+        ]
+      },
+      "previousHash": "9d9507d9c73ce80e3443f69754d1bf9d43ee5e9aadf88b18607cf205802027c1",
+      "eventHash": "c5653d67ed6530a801110e877746670e2a4724e50eccedd996713be5b699307b"
+    }
+  ],
+  "rankingAuthorized": false,
+  "tamperEvidentNotAuthenticated": true
+}

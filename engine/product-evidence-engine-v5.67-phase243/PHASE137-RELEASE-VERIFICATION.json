@@ -1,0 +1,70 @@
+{
+  "phase": 137,
+  "version": "4.61-phase137",
+  "parent": "4.60-phase136",
+  "date": "2026-10-11",
+  "parentArchiveSHA256": "7e87b9cd89443affc636d7832beb4fc9c0d1036044de5bd9aa3b9aa1ca9e9c63",
+  "parentFiles": 1389,
+  "currentFilesBeforeVerificationAndManifest": 1399,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerificationAndManifest": [
+    "PHASE137-INTAKE-AND-BLIND-ANNOTATION-TRACE.json",
+    "PHASE137-ORIGINAL-SOURCE-CUSTODY-AND-BLIND-ANNOTATION.md",
+    "PHASE137-REGRESSION-GROUPS.json",
+    "dist/src/phase137_original_source_annotation.js",
+    "dist/tests/phase137_original_source_annotation.test.js",
+    "research/phase137_source_candidates/PHASE137-ORIGINAL-SOURCE-CANDIDATES.json",
+    "scripts/evaluate-phase137.mjs",
+    "scripts/phase137_regress.mjs",
+    "src/phase137_original_source_annotation.ts",
+    "tests/phase137_original_source_annotation.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1584,
+    "eligibleFiles": 96,
+    "newFocusedTests": 21,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77,
+    "status": "pass"
+  },
+  "realSourceIntake": {
+    "publicOriginalReviewCandidateURLs": 3,
+    "reviewSourceSnapshotsInRelease": 0,
+    "permissionsAuthenticated": 0,
+    "realIndependentReviewAnnotations": 0,
+    "scorableOriginalHoldoutCases": 0,
+    "validatedScientificAccuracy": false
+  },
+  "illustrative": {
+    "constructedFixtureCases": 1,
+    "simulatedVoteIDs": 2,
+    "simulatedConsensus": 1
+  },
+  "noNewRuntimeDependencies": true,
+  "noVendorLibrariesModelsWeightsBundled": true,
+  "noPaidAPIs": true,
+  "canonicalWritesAuthorized": false,
+  "rankingWritesAuthorized": false,
+  "dataAndAnnotatorRightsNotAuthenticated": true,
+  "independentHoldoutPreregistrationValidated": false,
+  "limitations": [
+    "No right-cleared source snapshot acquired",
+    "No real independent annotators or source-disjoint empirical accuracy",
+    "Checksum validates internal byte consistency but not publisher authenticity",
+    "Two legacy Phase91/92 test files excluded as in parent",
+    "No actual production hardware benchmark"
+  ]
+}

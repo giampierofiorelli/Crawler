@@ -1,0 +1,126 @@
+
+> product-evidence-engine@4.7.0 test:phase79
+> npm run build && node --test dist/tests/phase79_*.test.js
+
+
+> product-evidence-engine@4.7.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: ONE after verified filters and independent challenge is a legitimate narrow selection
+ok 1 - ONE after verified filters and independent challenge is a legitimate narrow selection
+  ---
+  duration_ms: 3.116682
+  type: 'test'
+  ...
+# Subtest: ONE in catalog without independently bounded discovery must prompt more discovery
+ok 2 - ONE in catalog without independently bounded discovery must prompt more discovery
+  ---
+  duration_ms: 0.363297
+  type: 'test'
+  ...
+# Subtest: THREE left after confirmed hard filters is valid when search is audited
+ok 3 - THREE left after confirmed hard filters is valid when search is audited
+  ---
+  duration_ms: 0.920726
+  type: 'test'
+  ...
+# Subtest: 100 verified fits can be research-bounded; do not demand fixed top N
+ok 4 - 100 verified fits can be research-bounded; do not demand fixed top N
+  ---
+  duration_ms: 1.324444
+  type: 'test'
+  ...
+# Subtest: 100 items with missing product checks are NOT adequate even if 3 known items fit
+ok 5 - 100 items with missing product checks are NOT adequate even if 3 known items fit
+  ---
+  duration_ms: 0.625552
+  type: 'test'
+  ...
+# Subtest: same number of products, independent discovery missing: more research
+ok 6 - same number of products, independent discovery missing: more research
+  ---
+  duration_ms: 0.234804
+  type: 'test'
+  ...
+# Subtest: independent challenge must be independent of initial sources
+ok 7 - independent challenge must be independent of initial sources
+  ---
+  duration_ms: 0.249876
+  type: 'test'
+  ...
+# Subtest: a challenge discovering a plausible entrant reopens the search despite complete original portfolio
+ok 8 - a challenge discovering a plausible entrant reopens the search despite complete original portfolio
+  ---
+  duration_ms: 0.256837
+  type: 'test'
+  ...
+# Subtest: challenge still pending is not a completed independent check
+ok 9 - challenge still pending is not a completed independent check
+  ---
+  duration_ms: 0.436908
+  type: 'test'
+  ...
+# Subtest: new risk, conflicting test, freshness or material uncertainty causes targeted research
+ok 10 - new risk, conflicting test, freshness or material uncertainty causes targeted research
+  ---
+  duration_ms: 0.47146
+  type: 'test'
+  ...
+# Subtest: unconfirmed meaning of filters must never close the search
+ok 11 - unconfirmed meaning of filters must never close the search
+  ---
+  duration_ms: 0.545371
+  type: 'test'
+  ...
+# Subtest: zero verified products may be a bounded, truthful negative, without asking to relax hard limits automatically
+ok 12 - zero verified products may be a bounded, truthful negative, without asking to relax hard limits automatically
+  ---
+  duration_ms: 0.18581
+  type: 'test'
+  ...
+# Subtest: unseen viable alternative must not be interpreted as a narrow market
+ok 13 - unseen viable alternative must not be interpreted as a narrow market
+  ---
+  duration_ms: 0.165019
+  type: 'test'
+  ...
+# Subtest: mislabelled untested product as verified fit is rejected
+ok 14 - mislabelled untested product as verified fit is rejected
+  ---
+  duration_ms: 0.485982
+  type: 'test'
+  ...
+# Subtest: an exclusion without real user filter evidence cannot narrow the field
+ok 15 - an exclusion without real user filter evidence cannot narrow the field
+  ---
+  duration_ms: 0.165279
+  type: 'test'
+  ...
+# Subtest: cross-demand request is never permitted to reuse another filter audit
+ok 16 - cross-demand request is never permitted to reuse another filter audit
+  ---
+  duration_ms: 0.162825
+  type: 'test'
+  ...
+# Subtest: hard-filter evidence shows why a narrow selection arose, not simply number in database
+ok 17 - hard-filter evidence shows why a narrow selection arose, not simply number in database
+  ---
+  duration_ms: 0.152249
+  type: 'test'
+  ...
+# Subtest: 500 candidates at legacy portfolio boundary can be handled without a forced quota
+ok 18 - 500 candidates at legacy portfolio boundary can be handled without a forced quota
+  ---
+  duration_ms: 3.591948
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 74.731326

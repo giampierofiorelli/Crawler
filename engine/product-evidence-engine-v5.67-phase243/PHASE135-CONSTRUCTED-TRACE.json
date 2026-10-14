@@ -1,0 +1,201 @@
+{
+  "phase": 135,
+  "version": "4.59-phase135",
+  "dataset": "developer-authored-examples-not-original_reviews",
+  "realIndependentEvaluation": false,
+  "rankedProducts": 0,
+  "canonicalWrites": 0,
+  "rows": [
+    {
+      "case": "explicit_model_repeat",
+      "graph": {
+        "sourceId": "illustrative_author_written",
+        "documentSha256": "b43571dfbf3c43080b6ec496f731046ce4f2f5f40233fbdc1e39b1b5365d0e6f",
+        "links": [
+          {
+            "mentionId": "first",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "second",
+            "status": "resolved_explicit_repeat",
+            "antecedentId": "first",
+            "candidateAntecedentIds": [
+              "first"
+            ],
+            "reason": "exact_name_and_upstream_identity",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "soil",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          }
+        ],
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "reviewReceiptsIndependentlyAuthenticated": false
+      }
+    },
+    {
+      "case": "unreviewed_pronoun",
+      "graph": {
+        "sourceId": "illustrative_author_written",
+        "documentSha256": "ea1d0b48e29dc645f4690008eb01da37d5eaf018779ed956bf3d4c058896c97b",
+        "links": [
+          {
+            "mentionId": "original",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "ref",
+            "status": "unresolved",
+            "antecedentId": null,
+            "candidateAntecedentIds": [
+              "original"
+            ],
+            "reason": "requires_coreference_review",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "soil",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          }
+        ],
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "reviewReceiptsIndependentlyAuthenticated": false
+      }
+    },
+    {
+      "case": "reviewed_reference_then_atomic_screen",
+      "graph": {
+        "sourceId": "illustrative_author_written",
+        "documentSha256": "ea1d0b48e29dc645f4690008eb01da37d5eaf018779ed956bf3d4c058896c97b",
+        "links": [
+          {
+            "mentionId": "original",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "ref",
+            "status": "resolved_reviewed_reference",
+            "antecedentId": "original",
+            "candidateAntecedentIds": [
+              "original"
+            ],
+            "reason": "upstream_review_receipt_not_authenticated",
+            "reviewReceiptId": "illustrative_review_receipt"
+          },
+          {
+            "mentionId": "soil",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          }
+        ],
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "reviewReceiptsIndependentlyAuthenticated": false
+      },
+      "bridge": {
+        "phase": 135,
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "independentScientificReviewRequired": true,
+        "status": "quarantined_cross_sentence_hypothesis",
+        "antecedentMentionId": "original",
+        "referenceStatus": "resolved_reviewed_reference",
+        "atomicDecision": {
+          "phase": 134,
+          "candidateId": "6806bb68822a1f49b88068f45ce79508",
+          "signalAudit": {
+            "status": "no_signals",
+            "supportFamilies": [],
+            "opposeFamilies": [],
+            "abstentions": 0,
+            "independenceNotVerified": true
+          },
+          "sourceVerified": true,
+          "spanVerified": true,
+          "rankingAuthorized": false,
+          "canonicalWriteAuthorized": false,
+          "independentReviewRequired": true,
+          "status": "quarantined_candidate",
+          "modifiers": [],
+          "reasons": [
+            "clear_bounded_context"
+          ]
+        }
+      }
+    },
+    {
+      "case": "product_or_dock_ambiguity",
+      "graph": {
+        "sourceId": "illustrative_author_written",
+        "documentSha256": "3eaec1172457125876030576161a2619d88eb335d9aa1c125e87c82ef71efa5a",
+        "links": [
+          {
+            "mentionId": "original",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "dock",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "ref",
+            "status": "unresolved",
+            "antecedentId": null,
+            "candidateAntecedentIds": [
+              "dock",
+              "original"
+            ],
+            "reason": "multiple_candidate_referents",
+            "reviewReceiptId": null
+          },
+          {
+            "mentionId": "soil",
+            "status": "anchor",
+            "antecedentId": null,
+            "candidateAntecedentIds": [],
+            "reason": "first_explicit_mention",
+            "reviewReceiptId": null
+          }
+        ],
+        "rankingAuthorized": false,
+        "canonicalWriteAuthorized": false,
+        "reviewReceiptsIndependentlyAuthenticated": false
+      }
+    }
+  ]
+}

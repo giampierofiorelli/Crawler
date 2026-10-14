@@ -1,0 +1,1 @@
+Third-party GitHub ZIPs are held separately by the user. See PHASE158-EXTERNAL-REPOSITORY-PROVENANCE.json for original filenames and SHA-256, and licences/phase158_upstream for licence notices. Ask user for only the required archive when needed. Do not distribute full upstream archives in cumulative PEE ZIP.

@@ -1,0 +1,67 @@
+{
+  "phase": 144,
+  "version": "4.68-phase144",
+  "parent": "4.67-phase143",
+  "date": "2026-10-11",
+  "parentArchiveSha256": "68f9d1a62e10ca2f92d66ee43cb94d987d4b300b387bd2272e968c367345f05d",
+  "parentFileCount": 1477,
+  "currentFileCount": 1489,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE144-CROSS-CATEGORY-OBSERVATION-DIAGNOSTIC.json",
+    "PHASE144-CROSS-CATEGORY-TYPED-OBSERVATION-GRAPH.md",
+    "PHASE144-FILE-MANIFEST.sha256",
+    "PHASE144-REGRESSION-GROUPS.json",
+    "dist/src/phase144_cross_category_observation_graph.js",
+    "dist/tests/phase144_cross_category_observation_graph.test.js",
+    "research/phase144_postcode_challenge.json",
+    "scripts/evaluate-phase144.mjs",
+    "scripts/phase144_regress.mjs",
+    "src/phase144_cross_category_observation_graph.ts",
+    "tests/phase144_cross_category_observation_graph.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1753,
+    "eligibleFiles": 103,
+    "newFocused": 26,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "developerSelectedPilot": {
+    "previouslyExposedExcerpts": 6,
+    "newSelectedExcerpts": 3,
+    "numericalCandidatesPreviouslyExposed": 12,
+    "numericalCandidatesNew": 1,
+    "blinded": false,
+    "independentlyAnnotated": false,
+    "generalizationAccuracy": null
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "externalModelsInstalled": 0,
+    "paidAPIs": 0,
+    "thirdPartyCodeCopied": false,
+    "rankingModified": false,
+    "automaticCanonicalWrites": false
+  },
+  "limitations": [
+    "Quantity candidates are not verified scientific facts",
+    "Publisher original page snapshots not authenticated end to end",
+    "Missing °C, dB and many units; no full document coreference",
+    "Same two Phase91/92 legacy test files excluded from cumulative TS regression"
+  ]
+}

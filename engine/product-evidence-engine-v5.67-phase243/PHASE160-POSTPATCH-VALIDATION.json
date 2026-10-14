@@ -1,0 +1,28 @@
+{
+  "phase": 160,
+  "reason": "After all-file regression, fixed a source-status label for rights_permitted_full_review_unannotated and added an assertion.",
+  "priorFullEligibleTypeScriptRegression": {
+    "tests": 2085,
+    "files": 120,
+    "completed": true,
+    "beforeFinalSmallLabelPatch": true
+  },
+  "postPatchTargeted": {
+    "testFiles": [
+      "phase159_gliner25_colab_coordinator.test.js",
+      "phase160_batch_and_attribute_eval.test.js"
+    ],
+    "passed": 19,
+    "failed": 0
+  },
+  "secondAllFilesAttempt": {
+    "completed": false,
+    "reason": "tool_call_timeout",
+    "fullPostPatchPassClaim": false
+  },
+  "postPatchPythonPhase160": {
+    "passed": 3,
+    "failed": 0
+  },
+  "modelInferenceInPhase160": false
+}

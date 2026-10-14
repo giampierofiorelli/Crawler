@@ -1,0 +1,126 @@
+{
+  "schema": "pee229.synthetic-pdf-geometry-evaluation.v1",
+  "mode": "synthetic_local_only",
+  "realVendorDocuments": 0,
+  "liveSearches": 0,
+  "parser": "Poppler -bbox-layout + bounded two-column alignment; existing plain keys preserved",
+  "methodology": "Hand-authored fictional PDFs and explicit expected cells; not a real-world accuracy benchmark",
+  "totals": {
+    "documents": 7,
+    "truePositive": 7,
+    "falseAssociation": 0,
+    "missed": 0,
+    "precision": 1,
+    "recall": 1,
+    "elapsedMs": 4890
+  },
+  "cases": [
+    {
+      "name": "two-columns",
+      "expected": 3,
+      "observed": 3,
+      "correct": 3,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 712,
+      "rankings": 0,
+      "reasonCodes": [
+        "pdf_coordinate_rows_unverified",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "name": "single-row",
+      "expected": 0,
+      "observed": 0,
+      "correct": 0,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 705,
+      "rankings": 0,
+      "reasonCodes": [
+        "no_unambiguous_key_value_specifications",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "name": "parallel-variants",
+      "expected": 0,
+      "observed": 0,
+      "correct": 0,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 696,
+      "rankings": 0,
+      "reasonCodes": [
+        "no_unambiguous_key_value_specifications",
+        "pdf_no_stable_two_column_rows",
+        "pdf_parallel_or_ambiguous_columns_skipped",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "name": "multi-model",
+      "expected": 2,
+      "observed": 2,
+      "correct": 2,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 675,
+      "rankings": 0,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "multiple_declared_models_unresolved",
+        "pdf_coordinate_rows_unverified",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "name": "invalid-unit",
+      "expected": 0,
+      "observed": 0,
+      "correct": 0,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 694,
+      "rankings": 0,
+      "reasonCodes": [
+        "no_unambiguous_key_value_specifications",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "name": "interloper",
+      "expected": 0,
+      "observed": 0,
+      "correct": 0,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 725,
+      "rankings": 0,
+      "reasonCodes": [
+        "no_unambiguous_key_value_specifications",
+        "pdf_no_stable_two_column_rows",
+        "pdf_parallel_or_ambiguous_columns_skipped",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    },
+    {
+      "name": "duplicate-two-paths",
+      "expected": 2,
+      "observed": 2,
+      "correct": 2,
+      "falseAssociations": 0,
+      "missed": 0,
+      "elapsedMs": 682,
+      "rankings": 0,
+      "reasonCodes": [
+        "pdf_coordinate_rows_unverified",
+        "pdf_table_cell_geometry_not_verified"
+      ]
+    }
+  ],
+  "qualityGate": "all candidates remain unverified; rankings not authorized"
+}

@@ -1,0 +1,78 @@
+{
+  "phase": 147,
+  "version": "4.71-phase147",
+  "parent": "4.70-phase146",
+  "date": "2026-10-11",
+  "parentZipSha256": "c97172101c6530ddc688cd443c95dc0f0b28d732df893b7006f89c33fc99984c",
+  "parentFileCount": 1513,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE147-CLAUSE-ATTRIBUTION-DIAGNOSTIC.json",
+    "PHASE147-CLAUSE-SCOPED-EVIDENCE-ATTACHMENT.md",
+    "PHASE147-FILE-MANIFEST.sha256",
+    "PHASE147-REGRESSION-GROUPS.json",
+    "dist/src/phase147_local_claim_attachment.js",
+    "dist/tests/phase147_local_claim_attachment.test.js",
+    "research/phase147_new_source_excerpts.json",
+    "scripts/evaluate-phase147.mjs",
+    "scripts/phase147_regress.mjs",
+    "src/phase147_local_claim_attachment.ts",
+    "tests/phase147_local_claim_attachment.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1848,
+    "eligibleFiles": 106,
+    "phase147Focused": 30,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "sourceEvaluation": {
+    "shortPublishedExcerpts": 4,
+    "developerAuthoredControls": 6,
+    "blind": false,
+    "independentGoldAnnotations": 0,
+    "accuracy": null,
+    "copyrightFullReviewRightsEstablished": false
+  },
+  "futureCategoryStatus": {
+    "additionalCategoriesRequiredNow": false,
+    "retainedBacklog": [
+      "traditional deep fryers",
+      "air fryers",
+      "toasters",
+      "coffee makers",
+      "food steamers"
+    ]
+  },
+  "runtime": {
+    "newDependencies": 0,
+    "externalModels": 0,
+    "paidAPIs": 0,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false,
+    "thirdPartyModelCodeCopied": false
+  },
+  "limitations": [
+    "The 30 new regression tests are authored controls, not blinded scientific accuracy estimates",
+    "Published excerpts were selected and inspected during development; not source-disjoint holdout",
+    "Partial numbers in ranges trigger abstention; no full range normalization or comparability assessment",
+    "Repeated surface names do not establish identical products, variants or protocols",
+    "Clause partition is a bounded heuristic, not syntactic coreference resolution",
+    "The previous two Phase91/92 legacy tests are excluded from regressions"
+  ],
+  "archiveFileCount": 1525
+}

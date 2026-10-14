@@ -1,0 +1,77 @@
+{
+  "release": "4.26.0-phase102",
+  "date": "2026-10-11",
+  "classification": "research_only",
+  "baseline": "4.25.0-phase101",
+  "base_file_count": 846,
+  "base_files_missing": [],
+  "changed_base_files": [
+    "README.md",
+    "dist/src/phase101_interpretation_memory.js",
+    "package.json",
+    "src/phase101_interpretation_memory.ts"
+  ],
+  "tests_completed": {
+    "compiled_js_ts_shards": [
+      168,
+      167,
+      153,
+      173,
+      110
+    ],
+    "phase101_focused": 20,
+    "phase102_focused": 16,
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3,
+    "total_unique_by_full_suite_and_other_suites": 948
+  },
+  "full_monolithic_test_run": "timed_out; disjoint individual shards completed successfully",
+  "no_real_external_source_validation": true,
+  "no_user_research_validation": true,
+  "algorithm_scientific_calibration_validated": false,
+  "logs": {
+    "js-shards": {
+      "path": "audit/phase102/logs/js-shards.log",
+      "sha256": "41cd5bac7c1fdaec6072f0d89ace0fedd079cfae2f5a0bbc45140163bfab794d"
+    },
+    "focused": {
+      "path": "audit/phase102/logs/focused.log",
+      "sha256": "8cc80170b58997d31cdac23d2d5502046707e969f23a587b3f69b9e1354d590e"
+    },
+    "phase101-regression": {
+      "path": "audit/phase102/logs/phase101-regression.log",
+      "sha256": "685bcb885df4406d914bbe0bd774a4c72a2a365997b028c63d5e439b5c3d3180"
+    },
+    "primary": {
+      "path": "audit/phase102/logs/primary.log",
+      "sha256": "1dcc91fe8d23208f6efb8a13741a39804cf27752a38fb25c8b6318d6800347c7"
+    },
+    "ingestion": {
+      "path": "audit/phase102/logs/ingestion.log",
+      "sha256": "31a5288721155622ba39cc58fdd70a0802480b81143975ad86ada66adad83a3f"
+    },
+    "evaluation": {
+      "path": "audit/phase102/logs/evaluation.log",
+      "sha256": "e0bf31702972f57899a75a0a9032cead8226791e83ec11f96df64182e16c849a"
+    },
+    "companion": {
+      "path": "audit/phase102/logs/companion.log",
+      "sha256": "2531b5fa5c96df8805ced5dbaccf5a5e7d5e0fec6d871af1939f3a9402c7a491"
+    },
+    "launch": {
+      "path": "audit/phase102/logs/launch.log",
+      "sha256": "94dfd27c3fd6cff42db44dc2017fe19cad41635d0b4c1b361bb9a2524d503eee"
+    },
+    "release": {
+      "path": "audit/phase102/logs/release.log",
+      "sha256": "3affde148c78ab87419c3159ebf71172bfc6f345437dfc569a5ecc3d31bd0621"
+    }
+  },
+  "source_text_at_query_time": false,
+  "llm_calls_at_query_time": 0
+}

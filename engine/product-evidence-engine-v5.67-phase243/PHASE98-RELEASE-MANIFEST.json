@@ -1,0 +1,56 @@
+{
+  "version": "4.22.0",
+  "phase": 98,
+  "baseline_version": "4.21.0",
+  "purpose": "research_only_compensatory_tradeoff_value_model",
+  "baseline_files": 773,
+  "files_before_manifest": 792,
+  "all_baseline_files_preserved": true,
+  "modified_paths": [
+    "README.md",
+    "package.json"
+  ],
+  "new_paths": [
+    "FILE-MANIFEST-PHASE98.sha256",
+    "PHASE98-COMPENSATORY-RANKING-RESEARCH.md",
+    "PHASE98-RELEASE-MANIFEST.json",
+    "audit/phase98/phase98-companion.log",
+    "audit/phase98/phase98-ingestion.log",
+    "audit/phase98/phase98-launch.log",
+    "audit/phase98/phase98-mainline-test.log",
+    "audit/phase98/phase98-phase84.log",
+    "audit/phase98/phase98-primary.log",
+    "audit/phase98/phase98-release-sequential.log",
+    "audit/phase98/phase98-shard-1.log",
+    "audit/phase98/phase98-shard-2.log",
+    "audit/phase98/phase98-shard-3.log",
+    "audit/phase98/phase98-shard-4.log",
+    "audit/phase98/phase98-shard-5.log",
+    "dist/src/phase98_tradeoff_value_model.js",
+    "dist/tests/phase98_tradeoff_value_model.test.js",
+    "src/phase98_tradeoff_value_model.ts",
+    "tests/phase98_tradeoff_value_model.test.ts"
+  ],
+  "test_counts": {
+    "mainline_typescript_javascript": 698,
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_sources_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3
+  },
+  "distinct_passed_tests": 875,
+  "test_warning": "The initial monolithic command timed out; five independent JS/TS shards completed. First concurrent release run clashed with launch artifact output; sequential release rerun succeeded.",
+  "production_ranking_changed": false,
+  "real_user_preference_calibration": false,
+  "live_review_crawling_validated": false,
+  "published_recommendations_eligible": false,
+  "research_refs": [
+    "https://analysisfunction.civilservice.gov.uk/policy-store/an-introductory-guide-to-mcda/",
+    "https://www.gov.uk/government/publications/the-green-book--2/the-green-book-2026",
+    "https://doi.org/10.1111/j.1475-3995.1994.00325.x",
+    "https://doi.org/10.1016/j.ejor.2019.05.015"
+  ]
+}

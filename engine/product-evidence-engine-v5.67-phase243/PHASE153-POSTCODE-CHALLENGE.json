@@ -1,0 +1,81 @@
+{
+  "phase": 153,
+  "origin": "postcode_short_excerpt_challenge_not_independent",
+  "tuningWithTheseExamples": false,
+  "validatedFullReviews": 0,
+  "independentAnnotators": 0,
+  "precision": null,
+  "recall": null,
+  "rows": [
+    {
+      "id": "p153_postcode_reviewed_bosch",
+      "url": "https://www.reviewed.com/dishwashers/best-right-now/best-bosch-dishwashers/",
+      "publisher": "Reviewed",
+      "category": "dishwasher",
+      "excerpt": "Bosch 800 Series SHP78CM5N",
+      "excerptSha256": "6e91f1c4c6372820e1cdb5d34651d3cc36616079bbfe8083ccdf1474bcb217de",
+      "targets": [
+        {
+          "target": "Bosch 800 Series SHP78CM5N",
+          "located": true
+        }
+      ],
+      "observedCandidates": [
+        "Bosch 800 Series SHP78CM5N"
+      ],
+      "independentAnnotation": false,
+      "scientificEvidence": false
+    },
+    {
+      "id": "p153_postcode_expertreviews_eufy",
+      "url": "https://www.expertreviews.co.uk/home-garden/vacuums-cleaning/eufy-clean-x10-pro-omni-review",
+      "publisher": "Expert Reviews",
+      "category": "robot_vacuum",
+      "excerpt": "The Eufy Clean X10 Pro Omni has gathered them all into one convenient package.",
+      "excerptSha256": "804f89c12004ca32f62b613b3293ead2fc17e2330f625a178ccade46f8620a39",
+      "targets": [
+        {
+          "target": "Eufy Clean X10 Pro Omni",
+          "located": true
+        }
+      ],
+      "observedCandidates": [
+        "Eufy Clean X10 Pro Omni"
+      ],
+      "independentAnnotation": false,
+      "scientificEvidence": false
+    },
+    {
+      "id": "p153_postcode_techhive_robot",
+      "url": "https://www.techhive.com/article/2340503/roborock-s8-maxv-ultra-review.html",
+      "publisher": "TechHive",
+      "category": "robot_vacuum",
+      "excerpt": "Alternatives like the Eufy X10 Pro Omni and iRobot Roomba j9+ offer comparable or even better performance.",
+      "excerptSha256": "3678eed5f94059caf2abc6616eed2d6b3c7f554b2cc43a7764942de81c90fbca",
+      "targets": [
+        {
+          "target": "Eufy X10 Pro Omni",
+          "located": true
+        },
+        {
+          "target": "iRobot Roomba j9+",
+          "located": false
+        }
+      ],
+      "observedCandidates": [
+        "Eufy X10 Pro Omni",
+        "Roomba j9"
+      ],
+      "independentAnnotation": false,
+      "scientificEvidence": false
+    }
+  ],
+  "matched": 3,
+  "targetCount": 4,
+  "errors": [
+    {
+      "sourceId": "p153_postcode_techhive_robot",
+      "target": "iRobot Roomba j9+"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+
+> product-evidence-engine@4.18.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: robots matching: disallow, specific agent, longest-prefix allow, unknown
+ok 1 - robots matching: disallow, specific agent, longest-prefix allow, unknown
+  ---
+  duration_ms: 1.722814
+  type: 'test'
+  ...
+# Subtest: unknown, reserved and private IPs do not pass outbound network filter
+ok 2 - unknown, reserved and private IPs do not pass outbound network filter
+  ---
+  duration_ms: 1.0386
+  type: 'test'
+  ...
+# Subtest: licence, robots and terms checked prior to page retrieval; no body returned
+ok 3 - licence, robots and terms checked prior to page retrieval; no body returned
+  ---
+  duration_ms: 6.978265
+  type: 'test'
+  ...
+# Subtest: robots disallow stops page IO even with rights
+ok 4 - robots disallow stops page IO even with rights
+  ---
+  duration_ms: 0.615059
+  type: 'test'
+  ...
+# Subtest: open licence without approved website terms cannot execute any IO
+ok 5 - open licence without approved website terms cannot execute any IO
+  ---
+  duration_ms: 0.373615
+  type: 'test'
+  ...
+# Subtest: redirected or invalid robots response cannot be accepted
+ok 6 - redirected or invalid robots response cannot be accepted
+  ---
+  duration_ms: 0.46286
+  type: 'test'
+  ...
+# Subtest: rights expiration and stale policy reject previously scheduled plan
+ok 7 - rights expiration and stale policy reject previously scheduled plan
+  ---
+  duration_ms: 0.355818
+  type: 'test'
+  ...
+# Subtest: phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+ok 8 - phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+  ---
+  duration_ms: 17.345903
+  type: 'test'
+  ...
+# Subtest: real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+ok 9 - real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+  ---
+  duration_ms: 685.968724
+  type: 'test'
+  ...
+# Subtest: rights denied upstream before network I/O and no bypass
+ok 10 - rights denied upstream before network I/O and no bypass
+  ---
+  duration_ms: 5.013316
+  type: 'test'
+  ...
+# Subtest: wrong exact product and changed table structure do not contaminate evidence
+ok 11 - wrong exact product and changed table structure do not contaminate evidence
+  ---
+  duration_ms: 1957.954254
+  type: 'test'
+  ...
+# Subtest: changes in mainline approved registry block before source retrieval
+ok 12 - changes in mainline approved registry block before source retrieval
+  ---
+  duration_ms: 3.1034
+  type: 'test'
+  ...
+# Subtest: phase89 advisory record sees successes and distinguishes structural changes
+ok 13 - phase89 advisory record sees successes and distinguishes structural changes
+  ---
+  duration_ms: 4736.30139
+  type: 'test'
+  ...
+# Subtest: legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+ok 14 - legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+  ---
+  duration_ms: 9.037688
+  type: 'test'
+  ...
+# Subtest: two distinct broken products create a manual requalification advisory, never invoke an LLM
+ok 15 - two distinct broken products create a manual requalification advisory, never invoke an LLM
+  ---
+  duration_ms: 3993.230307
+  type: 'test'
+  ...
+# Subtest: root-signed role and scope policy validates and fails on tampering, wrong root and expiration
+ok 16 - root-signed role and scope policy validates and fails on tampering, wrong root and expiration
+  ---
+  duration_ms: 3.989199
+  type: 'test'
+  ...
+# Subtest: an older still-signed approval policy is rejected when the deployment pins a newer digest
+ok 17 - an older still-signed approval policy is rejected when the deployment pins a newer digest
+  ---
+  duration_ms: 1.754731
+  type: 'test'
+  ...
+# Subtest: reviewer-grant policy allows signed suspension with matching host/category/path
+ok 18 - reviewer-grant policy allows signed suspension with matching host/category/path
+  ---
+  duration_ms: 16.0406
+  type: 'test'
+  ...
+# Subtest: revoked and scope-ineligible reviewer cannot suspend; old catalog remains active
+ok 19 - revoked and scope-ineligible reviewer cannot suspend; old catalog remains active
+  ---
+  duration_ms: 8.188414
+  type: 'test'
+  ...
+# Subtest: strict monitor requirement blocks acquisition before HTTP when absent
+ok 20 - strict monitor requirement blocks acquisition before HTTP when absent
+  ---
+  duration_ms: 3.140676
+  type: 'test'
+  ...
+# Subtest: strict monitor with persistent SQLite ledger can quarantine exact declared values
+ok 21 - strict monitor with persistent SQLite ledger can quarantine exact declared values
+  ---
+  duration_ms: 3596.837448
+  type: 'test'
+  ...
+# Subtest: catalog change while source is being fetched blocks quarantining those bytes
+ok 22 - catalog change while source is being fetched blocks quarantining those bytes
+  ---
+  duration_ms: 878.314437
+  type: 'test'
+  ...
+# Subtest: permissioned-pilot harness counts both correct and blocked reference fields in denominator
+ok 23 - permissioned-pilot harness counts both correct and blocked reference fields in denominator
+  ---
+  duration_ms: 5344.577694
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11475.81414

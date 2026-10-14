@@ -1,0 +1,287 @@
+
+> product-evidence-engine@4.1.0 demo:phase73
+> npm run build && node scripts/demo-phase73.mjs
+
+
+> product-evidence-engine@4.1.0 build
+> tsc -p tsconfig.json
+
+{
+  "phase": 73,
+  "status": "offline_research_planner_only",
+  "coldStart": {
+    "status": "unknown",
+    "provisionalId": "provisional_dehumidifiers",
+    "label": "dehumidifiers",
+    "requiresCategoryValidation": true
+  },
+  "coldTasks": [
+    {
+      "id": "provisional_dehumidifiers_category_identity",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "category_identity",
+      "dependsOn": [],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_use_case_research",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "use_case_research",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_failure_and_safety_research",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "failure_and_safety_research",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_variant_taxonomy",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "variant_taxonomy",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_source_landscape",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "source_landscape",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_source_rights_review",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "source_rights_review",
+      "dependsOn": [
+        "provisional_dehumidifiers_source_landscape"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_test_method_research",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "test_method_research",
+      "dependsOn": [
+        "provisional_dehumidifiers_source_landscape",
+        "provisional_dehumidifiers_failure_and_safety_research"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_criterion_design",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "criterion_design",
+      "dependsOn": [
+        "provisional_dehumidifiers_use_case_research",
+        "provisional_dehumidifiers_test_method_research",
+        "provisional_dehumidifiers_variant_taxonomy"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_source_acquisition",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "source_acquisition",
+      "dependsOn": [
+        "provisional_dehumidifiers_criterion_design",
+        "provisional_dehumidifiers_source_rights_review"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_evidence_independence_audit",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "evidence_independence_audit",
+      "dependsOn": [
+        "provisional_dehumidifiers_source_acquisition"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_category_schema_review",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "category_schema_review",
+      "dependsOn": [
+        "provisional_dehumidifiers_criterion_design",
+        "provisional_dehumidifiers_evidence_independence_audit"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    }
+  ],
+  "nextReadyAfterExternalCategoryIdentityReview": [
+    {
+      "id": "provisional_dehumidifiers_use_case_research",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "use_case_research",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_failure_and_safety_research",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "failure_and_safety_research",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_variant_taxonomy",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "variant_taxonomy",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "provisional_dehumidifiers_source_landscape",
+      "categoryId": "provisional_dehumidifiers",
+      "capability": "source_landscape",
+      "dependsOn": [
+        "provisional_dehumidifiers_category_identity"
+      ],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    }
+  ],
+  "knownCategoryTasks": [
+    {
+      "id": "headphones_coverage_analysis",
+      "categoryId": "headphones",
+      "capability": "coverage_analysis",
+      "dependsOn": [],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "headphones_freshness_review",
+      "categoryId": "headphones",
+      "capability": "freshness_review",
+      "dependsOn": [],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "headphones_targeted_backfill",
+      "categoryId": "headphones",
+      "capability": "targeted_backfill",
+      "dependsOn": [
+        "headphones_coverage_analysis"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    },
+    {
+      "id": "headphones_category_change_watch",
+      "categoryId": "headphones",
+      "capability": "category_change_watch",
+      "dependsOn": [
+        "headphones_freshness_review"
+      ],
+      "status": "awaiting_dependencies",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    }
+  ],
+  "preventiveTasks": [
+    {
+      "id": "headphones_freshness_review",
+      "categoryId": "headphones",
+      "capability": "freshness_review",
+      "dependsOn": [],
+      "status": "ready_for_research",
+      "automaticWebAccessAuthorized": false,
+      "publicationReady": false,
+      "rankingEligible": false,
+      "purpose": "category_research"
+    }
+  ],
+  "networkRequests": 0,
+  "aiModelCalls": 0,
+  "databaseTransactions": 0,
+  "existingProductionRankingChanged": false
+}

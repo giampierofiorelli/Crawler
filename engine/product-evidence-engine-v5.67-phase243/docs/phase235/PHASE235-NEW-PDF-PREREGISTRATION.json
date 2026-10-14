@@ -1,0 +1,287 @@
+{
+  "schema": "pee235.new-manufacturer-pdf-preregister.1",
+  "preregistered_before_running_existing_parser": true,
+  "existing_software_version": "5.58.0 Phase234",
+  "new_files": [
+    {
+      "id": "lavazza",
+      "original_filename": "B18ba7+ic+L.pdf",
+      "title": "Lavazza Classy Pro DWC 36-page instructions",
+      "size_bytes": 3584801,
+      "sha256": "a851ddd9b399f3b14d85a6128c7ac187e878e8d91f118b7f9ef7d09a183f9fca",
+      "anchors": [
+        {
+          "id": "water_pressure",
+          "expected_type": "range",
+          "page": 7,
+          "applies_to": "water connection",
+          "expected": "15–116 psi; also 1–8 bar",
+          "guardrail": "installation constraint, not product performance"
+        },
+        {
+          "id": "milk_tube_with_fridge",
+          "expected_type": "conditional",
+          "page": 9,
+          "applies_to": "milk tube",
+          "expected": "50 cm",
+          "guardrail": "only when optional refrigerator combined"
+        },
+        {
+          "id": "milk_tube_without_fridge",
+          "expected_type": "conditional",
+          "page": 9,
+          "applies_to": "milk tube",
+          "expected": "40 cm",
+          "guardrail": "otherwise"
+        },
+        {
+          "id": "daily_limit",
+          "expected_type": "constraint",
+          "page": 7,
+          "applies_to": "machine usage",
+          "expected": "45 supplies/day",
+          "guardrail": "warranty limitation, not measured output"
+        }
+      ]
+    },
+    {
+      "id": "tefal_multicook",
+      "original_filename": "medias 2(1).pdf",
+      "title": "Tefal MultiCook Advanced 45 in 1 33-page instructions",
+      "size_bytes": 949705,
+      "sha256": "d0384d370b157931930fabb06bed1ecf208eb68ba0a18e075ed3a5bccb3cf371",
+      "anchors": [
+        {
+          "id": "programs_total",
+          "expected_type": "count",
+          "page": 12,
+          "applies_to": "MultiCook Advanced",
+          "expected": "45",
+          "guardrail": "total cooking programs, not litres or watts"
+        },
+        {
+          "id": "steam_program_time",
+          "expected_type": "range",
+          "page": 12,
+          "applies_to": "Steam program",
+          "expected": "5 min–3 h",
+          "guardrail": "program-specific configurable cooking time"
+        },
+        {
+          "id": "diy_temperature",
+          "expected_type": "range",
+          "page": 12,
+          "applies_to": "DIY program",
+          "expected": "40–160 °C",
+          "guardrail": "program setting not ambient operating temperature"
+        },
+        {
+          "id": "steam_water_guide",
+          "expected_type": "constraint",
+          "page": 14,
+          "applies_to": "steam cooking",
+          "expected": "2.5 L",
+          "guardrail": "max water during steaming, NOT bowl nominal capacity"
+        }
+      ]
+    },
+    {
+      "id": "miele_wwi860",
+      "original_filename": "FS_11359330_GBE_GB-en-GB(1).pdf",
+      "title": "Miele WWI860 WCS 4-page technical sheet",
+      "size_bytes": 327963,
+      "sha256": "6cd00f14b3405fe6d3c25f0051775ad015bed7bd2681ab6698751a8ba09e44af",
+      "anchors": [
+        {
+          "id": "material_id",
+          "expected_type": "product_identifier",
+          "page": 1,
+          "applies_to": "WWI860 WCS",
+          "expected": "11359330",
+          "guardrail": "Miele material number"
+        },
+        {
+          "id": "nominal_wash_load",
+          "expected_type": "quantity",
+          "page": 1,
+          "applies_to": "WWI860 WCS",
+          "expected": "9 kg",
+          "guardrail": "washing load"
+        },
+        {
+          "id": "spin_max",
+          "expected_type": "scalar",
+          "page": 1,
+          "applies_to": "WWI860 WCS",
+          "expected": "1600 rpm",
+          "guardrail": "maximum spin speed"
+        },
+        {
+          "id": "energy_per_100_cycles",
+          "expected_type": "rate",
+          "page": 2,
+          "applies_to": "WWI860 WCS",
+          "expected": "49 kWh / 100 cycles",
+          "guardrail": "must preserve denominator"
+        },
+        {
+          "id": "water_per_cycle",
+          "expected_type": "rate",
+          "page": 2,
+          "applies_to": "WWI860 WCS",
+          "expected": "48 L / cycle",
+          "guardrail": "must preserve denominator"
+        },
+        {
+          "id": "dimensions",
+          "expected_type": "vector",
+          "page": 3,
+          "applies_to": "WWI860 WCS",
+          "expected": "850 × 596 × 643 mm",
+          "guardrail": "H x W x D; vector, not scalar"
+        },
+        {
+          "id": "weight",
+          "expected_type": "scalar",
+          "page": 3,
+          "applies_to": "WWI860 WCS",
+          "expected": "94 kg",
+          "guardrail": "device mass"
+        },
+        {
+          "id": "rated_load",
+          "expected_type": "range",
+          "page": 3,
+          "applies_to": "WWI860 WCS",
+          "expected": "2.10–2.40 kW",
+          "guardrail": "rated load interval"
+        }
+      ]
+    },
+    {
+      "id": "tefal_steam",
+      "original_filename": "medias.pdf",
+      "title": "Tefal Steam Cuisine 700 CL / 1000 CL 8-page instructions",
+      "size_bytes": 1167783,
+      "sha256": "65ca15a02bfc8fd668b7e376381f2bc153674ae492bc61ce0db42ccfb653f19b",
+      "anchors": [
+        {
+          "id": "catalog_models",
+          "expected_type": "model_list",
+          "page": 2,
+          "applies_to": "Steam Cuisine",
+          "expected": "700 CL / 1000 CL",
+          "guardrail": "model designations, NOT 700/1000 centilitres capacity"
+        },
+        {
+          "id": "rice_bowl",
+          "expected_type": "conditional",
+          "page": 5,
+          "applies_to": "rice bowl",
+          "expected": "on certain models only",
+          "guardrail": "do not mark as universally included"
+        },
+        {
+          "id": "steam_bowls",
+          "expected_type": "conditional",
+          "page": 6,
+          "applies_to": "steam bowls",
+          "expected": "1, 2, or 3 depending on model",
+          "guardrail": "do not assume 3 bowls for all variants"
+        },
+        {
+          "id": "rice_guideline",
+          "expected_type": "recipe_data",
+          "page": 6,
+          "applies_to": "rice cooking",
+          "expected": "maximum 300 g rice",
+          "guardrail": "recipe guideline not appliance capacity"
+        },
+        {
+          "id": "fish_cooking_time",
+          "expected_type": "recipe_data",
+          "page": 8,
+          "applies_to": "frozen fish fillets",
+          "expected": "10–12 minutes for 250 g",
+          "guardrail": "NOT steaming-machine performance"
+        }
+      ]
+    },
+    {
+      "id": "miele_catalog",
+      "original_filename": "Full_Miele_PRO_Range_brochure_2021.pdf",
+      "title": "Miele Professional product range 40-page catalog",
+      "size_bytes": 5342851,
+      "sha256": "f41387ddb3ba41eecdcb15fd23d7782e3f7e55181a5dec4fe44d15e632eb9459",
+      "anchors": [
+        {
+          "id": "pwm506_capacity",
+          "expected_type": "model_scalar",
+          "page": 10,
+          "applies_to": "PWM 506 MopStar",
+          "expected": "6 kg",
+          "guardrail": "specific model column"
+        },
+        {
+          "id": "pwm507_capacity",
+          "expected_type": "model_scalar",
+          "page": 10,
+          "applies_to": "PWM 507",
+          "expected": "7 kg",
+          "guardrail": "specific model column"
+        },
+        {
+          "id": "pwm507_spin",
+          "expected_type": "model_scalar",
+          "page": 10,
+          "applies_to": "PWM 507",
+          "expected": "1600 rpm",
+          "guardrail": "specific model column"
+        },
+        {
+          "id": "pwm507_mass",
+          "expected_type": "model_scalar",
+          "page": 10,
+          "applies_to": "PWM 507",
+          "expected": "98 kg",
+          "guardrail": "specific model column"
+        },
+        {
+          "id": "pwm507h_mass",
+          "expected_type": "model_scalar",
+          "page": 10,
+          "applies_to": "PWM 507 Hygiene",
+          "expected": "101 kg",
+          "guardrail": "must not be assigned to PWM 507"
+        },
+        {
+          "id": "pwm508_capacity",
+          "expected_type": "model_scalar",
+          "page": 10,
+          "applies_to": "PWM 508 MopStar",
+          "expected": "8 kg",
+          "guardrail": "specific model column"
+        },
+        {
+          "id": "pdr507hp_mass",
+          "expected_type": "model_scalar",
+          "page": 16,
+          "applies_to": "PDR 507 HP",
+          "expected": "68.5 kg",
+          "guardrail": "dryer HP variant"
+        },
+        {
+          "id": "pdr507_mass",
+          "expected_type": "model_scalar",
+          "page": 16,
+          "applies_to": "PDR 507",
+          "expected": "49 kg",
+          "guardrail": "dryer non-HP variant"
+        }
+      ]
+    }
+  ],
+  "assessment": "original new inputs from user, holdout to be opened only once before model modifications; any later tuning invalidates same-file holdout status",
+  "no_original_pdf_embedded": true,
+  "not_independent_performance_evidence": true
+}

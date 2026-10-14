@@ -1,0 +1,341 @@
+{
+  "phase": 131,
+  "model": "multinomial_naive_bayes_from_scratch",
+  "modelVersion": "c04176d8b403b251",
+  "splitSizes": {
+    "train": 60,
+    "validation": 12,
+    "challenge": 18
+  },
+  "contaminationWarning": "All three datasets authored by the same developer; challenge text written and frozen before model code but is NOT an independently adjudicated blind original-source benchmark.",
+  "inputLimit": "Model receives manually marked entity spans. No autonomous entity recognition, retrieval, publisher authentication or cross-sentence coreference.",
+  "sourceMode": "Constructed statements, not live original publisher prose",
+  "calibration": {
+    "margin": 1.7031197500670672,
+    "accepted": 3,
+    "correct": 3,
+    "validationN": 12,
+    "minPrecisionRequested": 0.9,
+    "observedPrecision": 1,
+    "status": "validation_only_not_probability"
+  },
+  "validation": {
+    "size": 12,
+    "accepted": 3,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 9,
+    "coverage": 0.25,
+    "precisionWhenAccepted": 1,
+    "perClass": {
+      "measures": {
+        "total": 3,
+        "accepted": 1,
+        "correct": 1
+      },
+      "contributes_to": {
+        "total": 2,
+        "accepted": 0,
+        "correct": 0
+      },
+      "conditioned_on": {
+        "total": 3,
+        "accepted": 1,
+        "correct": 1
+      },
+      "not_evidence_of": {
+        "total": 2,
+        "accepted": 1,
+        "correct": 1
+      },
+      "unrelated": {
+        "total": 2,
+        "accepted": 0,
+        "correct": 0
+      }
+    },
+    "items": [
+      {
+        "index": 0,
+        "expected": "measures",
+        "predicted": "abstain",
+        "rawWinner": "contributes_to",
+        "margin": 1.5765,
+        "accepted": false
+      },
+      {
+        "index": 1,
+        "expected": "measures",
+        "predicted": "measures",
+        "rawWinner": "measures",
+        "margin": 2.087,
+        "accepted": true
+      },
+      {
+        "index": 2,
+        "expected": "contributes_to",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 0.0835,
+        "accepted": false
+      },
+      {
+        "index": 3,
+        "expected": "contributes_to",
+        "predicted": "abstain",
+        "rawWinner": "not_evidence_of",
+        "margin": 0.3147,
+        "accepted": false
+      },
+      {
+        "index": 4,
+        "expected": "conditioned_on",
+        "predicted": "abstain",
+        "rawWinner": "not_evidence_of",
+        "margin": 0.5643,
+        "accepted": false
+      },
+      {
+        "index": 5,
+        "expected": "conditioned_on",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 0.5247,
+        "accepted": false
+      },
+      {
+        "index": 6,
+        "expected": "not_evidence_of",
+        "predicted": "abstain",
+        "rawWinner": "not_evidence_of",
+        "margin": 0.3007,
+        "accepted": false
+      },
+      {
+        "index": 7,
+        "expected": "not_evidence_of",
+        "predicted": "not_evidence_of",
+        "rawWinner": "not_evidence_of",
+        "margin": 1.7031,
+        "accepted": true
+      },
+      {
+        "index": 8,
+        "expected": "unrelated",
+        "predicted": "abstain",
+        "rawWinner": "unrelated",
+        "margin": 5.5393,
+        "accepted": false
+      },
+      {
+        "index": 9,
+        "expected": "unrelated",
+        "predicted": "abstain",
+        "rawWinner": "unrelated",
+        "margin": 9.0077,
+        "accepted": false
+      },
+      {
+        "index": 10,
+        "expected": "conditioned_on",
+        "predicted": "conditioned_on",
+        "rawWinner": "conditioned_on",
+        "margin": 7.2395,
+        "accepted": true
+      },
+      {
+        "index": 11,
+        "expected": "measures",
+        "predicted": "abstain",
+        "rawWinner": "measures",
+        "margin": 0.3567,
+        "accepted": false
+      }
+    ]
+  },
+  "challenge": {
+    "size": 18,
+    "accepted": 5,
+    "correct": 4,
+    "wrong": 1,
+    "abstained": 13,
+    "coverage": 0.2777777777777778,
+    "precisionWhenAccepted": 0.8,
+    "perClass": {
+      "measures": {
+        "total": 4,
+        "accepted": 1,
+        "correct": 1
+      },
+      "contributes_to": {
+        "total": 4,
+        "accepted": 0,
+        "correct": 0
+      },
+      "conditioned_on": {
+        "total": 3,
+        "accepted": 1,
+        "correct": 1
+      },
+      "not_evidence_of": {
+        "total": 4,
+        "accepted": 3,
+        "correct": 2
+      },
+      "unrelated": {
+        "total": 3,
+        "accepted": 0,
+        "correct": 0
+      }
+    },
+    "items": [
+      {
+        "index": 0,
+        "expected": "measures",
+        "predicted": "abstain",
+        "rawWinner": "measures",
+        "margin": 1.6732,
+        "accepted": false
+      },
+      {
+        "index": 1,
+        "expected": "measures",
+        "predicted": "abstain",
+        "rawWinner": "unrelated",
+        "margin": 0.3533,
+        "accepted": false
+      },
+      {
+        "index": 2,
+        "expected": "measures",
+        "predicted": "measures",
+        "rawWinner": "measures",
+        "margin": 5.0207,
+        "accepted": true
+      },
+      {
+        "index": 3,
+        "expected": "contributes_to",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 1.2485,
+        "accepted": false
+      },
+      {
+        "index": 4,
+        "expected": "contributes_to",
+        "predicted": "abstain",
+        "rawWinner": "measures",
+        "margin": 1.273,
+        "accepted": false
+      },
+      {
+        "index": 5,
+        "expected": "contributes_to",
+        "predicted": "abstain",
+        "rawWinner": "contributes_to",
+        "margin": 1.5765,
+        "accepted": false
+      },
+      {
+        "index": 6,
+        "expected": "conditioned_on",
+        "predicted": "conditioned_on",
+        "rawWinner": "conditioned_on",
+        "margin": 3.035,
+        "accepted": true
+      },
+      {
+        "index": 7,
+        "expected": "conditioned_on",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 0.0835,
+        "accepted": false
+      },
+      {
+        "index": 8,
+        "expected": "conditioned_on",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 0.5247,
+        "accepted": false
+      },
+      {
+        "index": 9,
+        "expected": "not_evidence_of",
+        "predicted": "not_evidence_of",
+        "rawWinner": "not_evidence_of",
+        "margin": 4.3184,
+        "accepted": true
+      },
+      {
+        "index": 10,
+        "expected": "not_evidence_of",
+        "predicted": "abstain",
+        "rawWinner": "not_evidence_of",
+        "margin": 0.6237,
+        "accepted": false
+      },
+      {
+        "index": 11,
+        "expected": "not_evidence_of",
+        "predicted": "not_evidence_of",
+        "rawWinner": "not_evidence_of",
+        "margin": 2.5822,
+        "accepted": true
+      },
+      {
+        "index": 12,
+        "expected": "unrelated",
+        "predicted": "abstain",
+        "rawWinner": "unrelated",
+        "margin": 0.7169,
+        "accepted": false
+      },
+      {
+        "index": 13,
+        "expected": "unrelated",
+        "predicted": "abstain",
+        "rawWinner": "unrelated",
+        "margin": 7.4952,
+        "accepted": false
+      },
+      {
+        "index": 14,
+        "expected": "unrelated",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 0.0835,
+        "accepted": false
+      },
+      {
+        "index": 15,
+        "expected": "not_evidence_of",
+        "predicted": "measures",
+        "rawWinner": "measures",
+        "margin": 7.9885,
+        "accepted": true
+      },
+      {
+        "index": 16,
+        "expected": "measures",
+        "predicted": "abstain",
+        "rawWinner": "contributes_to",
+        "margin": 1.0296,
+        "accepted": false
+      },
+      {
+        "index": 17,
+        "expected": "contributes_to",
+        "predicted": "abstain",
+        "rawWinner": "conditioned_on",
+        "margin": 0.0835,
+        "accepted": false
+      }
+    ]
+  },
+  "reference": "Trainable local multinomial naive Bayes with n-gram features and deterministic abstention threshold; does not calibrate probability",
+  "independentlyValidated": false,
+  "productRankingAuthorized": false
+}

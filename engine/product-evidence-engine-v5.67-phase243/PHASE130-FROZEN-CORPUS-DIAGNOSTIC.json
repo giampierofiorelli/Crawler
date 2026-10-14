@@ -1,0 +1,277 @@
+{
+  "corpusId": "phase130_frozen_development",
+  "cases": 10,
+  "caveat": "Curated human-written restatements and synthetic adversarial decoys. No live raw-page crawl, blinded annotation or open-domain validation.",
+  "results": {
+    "baseline_phase129": {
+      "tp": 0,
+      "fp": 2,
+      "fn": 9,
+      "precision": 0,
+      "recall": 0,
+      "exactCases": 1,
+      "caseCount": 10,
+      "cases": [
+        {
+          "id": "dehum_ief",
+          "expected": [
+            "integrated energy factor"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/dehumidifiers/key_efficiency_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dehum_capacity",
+          "expected": [
+            "product capacity"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/dehumidifiers/key_efficiency_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dehum_simplified",
+          "expected": [
+            "energy efficiency",
+            "water removal capacity"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/dehumidifier_testing_and_capacity",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dryer_cef",
+          "expected": [
+            "combined energy factor"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/clothes_dryers/key_product_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dryer_cycle",
+          "expected": [
+            "maximum test cycle time"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/clothes_dryers/key_product_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dryer_explanation",
+          "expected": [
+            "combined energy factor",
+            "drying efficiency"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/clothes_dryers",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "neg_marketing",
+          "expected": [],
+          "predicted": [
+            "brochure promotes a superior comfort index"
+          ],
+          "correct": [],
+          "exact": false,
+          "source": "https://example.org/fixture-neg-marketing",
+          "sourceMode": "synthetic"
+        },
+        {
+          "id": "neg_unmeasured",
+          "expected": [],
+          "predicted": [
+            "does not measure air quality rating"
+          ],
+          "correct": [],
+          "exact": false,
+          "source": "https://example.org/fixture-neg-unmeasured",
+          "sourceMode": "synthetic"
+        },
+        {
+          "id": "neg_feature",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/fixture-neg-feature",
+          "sourceMode": "synthetic"
+        },
+        {
+          "id": "neg_legacy",
+          "expected": [
+            "integrated energy factor"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://example.org/fixture-neg-legacy",
+          "sourceMode": "synthetic"
+        }
+      ]
+    },
+    "native_phase130": {
+      "tp": 9,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "exactCases": 10,
+      "caseCount": 10,
+      "cases": [
+        {
+          "id": "dehum_ief",
+          "expected": [
+            "integrated energy factor"
+          ],
+          "predicted": [
+            "integrated energy factor"
+          ],
+          "correct": [
+            "integrated energy factor"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/dehumidifiers/key_efficiency_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dehum_capacity",
+          "expected": [
+            "product capacity"
+          ],
+          "predicted": [
+            "product capacity"
+          ],
+          "correct": [
+            "product capacity"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/dehumidifiers/key_efficiency_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dehum_simplified",
+          "expected": [
+            "energy efficiency",
+            "water removal capacity"
+          ],
+          "predicted": [
+            "energy efficiency",
+            "water removal capacity"
+          ],
+          "correct": [
+            "energy efficiency",
+            "water removal capacity"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/dehumidifier_testing_and_capacity",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dryer_cef",
+          "expected": [
+            "combined energy factor"
+          ],
+          "predicted": [
+            "combined energy factor"
+          ],
+          "correct": [
+            "combined energy factor"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/clothes_dryers/key_product_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dryer_cycle",
+          "expected": [
+            "maximum test cycle time"
+          ],
+          "predicted": [
+            "maximum test cycle time"
+          ],
+          "correct": [
+            "maximum test cycle time"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/clothes_dryers/key_product_criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "dryer_explanation",
+          "expected": [
+            "combined energy factor",
+            "drying efficiency"
+          ],
+          "predicted": [
+            "combined energy factor",
+            "drying efficiency"
+          ],
+          "correct": [
+            "combined energy factor",
+            "drying efficiency"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/clothes_dryers",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "neg_marketing",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/fixture-neg-marketing",
+          "sourceMode": "synthetic"
+        },
+        {
+          "id": "neg_unmeasured",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/fixture-neg-unmeasured",
+          "sourceMode": "synthetic"
+        },
+        {
+          "id": "neg_feature",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/fixture-neg-feature",
+          "sourceMode": "synthetic"
+        },
+        {
+          "id": "neg_legacy",
+          "expected": [
+            "integrated energy factor"
+          ],
+          "predicted": [
+            "integrated energy factor"
+          ],
+          "correct": [
+            "integrated energy factor"
+          ],
+          "exact": true,
+          "source": "https://example.org/fixture-neg-legacy",
+          "sourceMode": "synthetic"
+        }
+      ]
+    }
+  }
+}

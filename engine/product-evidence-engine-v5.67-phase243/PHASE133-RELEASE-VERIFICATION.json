@@ -1,0 +1,69 @@
+{
+  "version": "4.57-phase133",
+  "date": "2026-10-11",
+  "parent": "v4.56-phase132",
+  "parentArchiveSha256": "06b60b671cd15fcbbc4494e33d7f7c5760570a224d831c1f0a27b0098fb5f35c",
+  "previousFileCount": 1408,
+  "missingPreviousFiles": [],
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE133-CANDIDATE-AUDIT.json",
+    "PHASE133-GLINER2-FREE-LICENCE-AND-OFFLINE-BENCHMARK.md",
+    "PHASE133-OFFLINE-PROBE-RESULT.json",
+    "PHASE133-REGRESSION-GROUPS.json",
+    "dist/src/phase133_licence_release_gate.js",
+    "dist/tests/phase133_licence_release_gate.test.js",
+    "scripts/phase133_offline_checkpoint_probe.py",
+    "scripts/phase133_regress.mjs",
+    "src/phase133_licence_release_gate.ts",
+    "tests-python/test_phase133_offline_probe.py",
+    "tests/phase133_licence_release_gate.test.ts",
+    "PHASE133-RELEASE-VERIFICATION.json"
+  ],
+  "fileCount": 1420,
+  "typescript": {
+    "passed": 1462,
+    "failed": 0,
+    "files": 92,
+    "groupedRegressionCompleted": true,
+    "excludedLegacyTestFiles": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "fullHistoricalSuiteVerified": false,
+    "newTargetedTestsPassed": 10
+  },
+  "python": {
+    "primaryTestsPassed": 47,
+    "ingestionTestsPassed": 21,
+    "newPhase133TestsPassed": 9,
+    "passed": 77
+  },
+  "license": {
+    "externalPackagesAdded": 0,
+    "externalModelsAdded": 0,
+    "newPaidDependencies": 0,
+    "upstreamModelCodeApacheDeclared": true,
+    "upstreamWeightsApacheDeclared": true,
+    "transitiveDependencyLicenseReviewComplete": false,
+    "productionIntegrationApproved": false
+  },
+  "gliner2Comparison": {
+    "attempted": false,
+    "modelExecuted": false,
+    "status": "blocked_missing_checkpoint",
+    "reportedAccuracy": null,
+    "nativeBaselinePreviouslyObserved": {
+      "acceptedCorrect": 4,
+      "acceptedWrong": 0,
+      "abstentions": 14,
+      "recordCount": 18,
+      "evaluationType": "retrospective_developer_authored_not_blind"
+    }
+  },
+  "realProductRankingValidated": false,
+  "independentOriginalDocumentGoldCorpusAvailable": false
+}

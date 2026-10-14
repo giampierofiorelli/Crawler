@@ -1,0 +1,56 @@
+{
+  "phase": 177,
+  "groupsExecuted": 6,
+  "passed": 212,
+  "allGroupsPass": true,
+  "results": [
+    {
+      "group": 1,
+      "command": "python -m unittest discover -s evaluation -t . -p test_*.py",
+      "tests": 26,
+      "returncode": 0,
+      "allPass": true,
+      "resourceWarnings": 0
+    },
+    {
+      "group": 2,
+      "command": "python -m unittest discover -s ingestion -p test_*.py",
+      "tests": 21,
+      "returncode": 0,
+      "allPass": true,
+      "resourceWarnings": 0
+    },
+    {
+      "group": 3,
+      "command": "python -m unittest discover -s phase95 -p test_*.py",
+      "tests": 12,
+      "returncode": 0,
+      "allPass": true,
+      "resourceWarnings": 0
+    },
+    {
+      "group": 4,
+      "command": "python -m unittest discover -s primary_sources -t . -p test_*.py",
+      "tests": 47,
+      "returncode": 0,
+      "allPass": true,
+      "resourceWarnings": 0
+    },
+    {
+      "group": 5,
+      "command": "python -m unittest discover -s tests-python -p test_*.py",
+      "tests": 35,
+      "returncode": 0,
+      "allPass": true,
+      "resourceWarnings": 0
+    },
+    {
+      "group": 6,
+      "command": "python -m unittest discover -s tests-companion -p test_phase*.py",
+      "tests": 71,
+      "returncode": 0,
+      "allPass": true,
+      "resourceWarnings": 58
+    }
+  ]
+}

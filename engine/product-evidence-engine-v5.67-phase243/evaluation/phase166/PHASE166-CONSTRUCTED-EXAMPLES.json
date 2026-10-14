@@ -1,0 +1,468 @@
+{
+  "phase": 166,
+  "kind": "synthetic-engineering-diagnostic-not-expert-review",
+  "sourceNote": "All sample questions and measurements are invented test cases; example.org is not an authentic expert source.",
+  "sampleCount": 12,
+  "samples": [
+    {
+      "question": "Coffee machine width under 35 cm",
+      "phase": 166,
+      "sourceQuestionSha256": "b31e12d8220869e56294a0c503a3010a04c4bf7f7f76146632a894fda317dadf",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 21,
+            "end": 32,
+            "literal": "under 35 cm"
+          },
+          "metric": "width",
+          "direction": "strict_lt",
+          "minimum": null,
+          "maximum": 35,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "7ecad7b9f998e4b0b26683d09b43db24891582e98f4bf0f363c2701a53c3004e",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine width below 350 mm",
+      "phase": 166,
+      "sourceQuestionSha256": "5a7f1dd52efab82d74a7b935c2d2039052e37d9772a4cea156cf477f49dd3702",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 21,
+            "end": 33,
+            "literal": "below 350 mm"
+          },
+          "metric": "width",
+          "direction": "strict_lt",
+          "minimum": null,
+          "maximum": 35,
+          "canonicalUnit": "cm",
+          "rawUnit": "mm",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "7ecad7b9f998e4b0b26683d09b43db24891582e98f4bf0f363c2701a53c3004e",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine width under 30 cm and width over 35 cm",
+      "phase": 166,
+      "sourceQuestionSha256": "abaac770c099156cd6402255a5ae2c831626139364d78ede076001d50c26f7e5",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 21,
+            "end": 32,
+            "literal": "under 30 cm"
+          },
+          "metric": "width",
+          "direction": "unresolved",
+          "minimum": null,
+          "maximum": 30,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "unresolved",
+          "reason": "contradictory_quantity_bounds",
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        },
+        {
+          "id": "q166_1",
+          "span": {
+            "start": 43,
+            "end": 53,
+            "literal": "over 35 cm"
+          },
+          "metric": "width",
+          "direction": "unresolved",
+          "minimum": 35,
+          "maximum": null,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "unresolved",
+          "reason": "contradictory_quantity_bounds",
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [
+        {
+          "start": 21,
+          "end": 32,
+          "literal": "under 30 cm",
+          "reason": "contradictory_quantity_bounds"
+        },
+        {
+          "start": 43,
+          "end": 53,
+          "literal": "over 35 cm",
+          "reason": "contradictory_quantity_bounds"
+        }
+      ],
+      "canonicalConstraintFingerprint": "b79b2910b633650e1c3c28a6e4c719dc6c71a0a8c14f7bd54a5eb6bf2bf94d3b",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine under 35 cm",
+      "phase": 166,
+      "sourceQuestionSha256": "778a368d5454ccdf77de29ef853821cbaf38b4f6e8d07e8974494485c5dd1f5f",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 15,
+            "end": 26,
+            "literal": "under 35 cm"
+          },
+          "metric": "unbound_dimension",
+          "direction": "unresolved",
+          "minimum": null,
+          "maximum": 35,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "unresolved",
+          "reason": "unbound_dimension",
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [
+        {
+          "start": 15,
+          "end": 26,
+          "literal": "under 35 cm",
+          "reason": "unbound_dimension"
+        }
+      ],
+      "canonicalConstraintFingerprint": "ddb4e6e43866339df050c4680751a35d6fb2a40f0e89eba2c586546032fcb095",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine no deeper than 40 cm",
+      "phase": 166,
+      "sourceQuestionSha256": "6fe2878bb74a3910e898d4442964b35364a874d99c0ddf18f452eaaccea007d4",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 15,
+            "end": 35,
+            "literal": "no deeper than 40 cm"
+          },
+          "metric": "depth",
+          "direction": "lte",
+          "minimum": null,
+          "maximum": 40,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "8ecec2a2b4e1fc5c7acb91e4bd3071086e7d3deee5341170a3a84ecab64dbf5e",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine noise under 45 dB",
+      "phase": 166,
+      "sourceQuestionSha256": "2e05125731dc9bcbedd2febe56d8385cc36c8fede86039585a077bc050c74880",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 21,
+            "end": 32,
+            "literal": "under 45 dB"
+          },
+          "metric": "noise",
+          "direction": "unresolved",
+          "minimum": null,
+          "maximum": 45,
+          "canonicalUnit": null,
+          "rawUnit": "dB",
+          "scope": "unresolved",
+          "reason": "ambiguous_acoustic_weighting",
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [
+        {
+          "start": 21,
+          "end": 32,
+          "literal": "under 45 dB",
+          "reason": "ambiguous_acoustic_weighting"
+        }
+      ],
+      "canonicalConstraintFingerprint": "39d9b60a172f4351e3720b259d7f9586e2516506dd5f7018abd7aa1d90de36b5",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine tank capacity at least 750 ml",
+      "phase": 166,
+      "sourceQuestionSha256": "56a8b00f23341588d97d1094aeb7110af2b51b5addcf3982886d4565fd6670cf",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 29,
+            "end": 44,
+            "literal": "at least 750 ml"
+          },
+          "metric": "capacity",
+          "direction": "gte",
+          "minimum": 0.75,
+          "maximum": null,
+          "canonicalUnit": "L",
+          "rawUnit": "ml",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "f62334647c0d3b0defa0741f38205df1745477b705b3cb704b2f02bd4c7e6de8",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine width between 25 and 35 cm",
+      "phase": 166,
+      "sourceQuestionSha256": "c7618fde95618bd9824e7ab34fe2b02d24e215e32e09b89f5c5c278a75db5a5f",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 21,
+            "end": 41,
+            "literal": "between 25 and 35 cm"
+          },
+          "metric": "width",
+          "direction": "range_inclusive",
+          "minimum": 25,
+          "maximum": 35,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "9f3178be4745a9f18d8671c07078aa969338ab177b91292499a1bd438d9bb3cc",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Best coffee machine under £300",
+      "phase": 166,
+      "sourceQuestionSha256": "d93a4fa552f56a293a23579f94f2da70d7eb6d209990e3347e4869b9f5e92def",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 20,
+            "end": 30,
+            "literal": "under £300"
+          },
+          "metric": "price",
+          "direction": "strict_lt",
+          "minimum": null,
+          "maximum": 300,
+          "canonicalUnit": "GBP",
+          "rawUnit": "£",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "79bd13e554f7d80b778651a33caa704849cad342fa818f8a11dcab4e568e9b1a",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine width preferably under 35 cm",
+      "phase": 166,
+      "sourceQuestionSha256": "71af71c801cdac68c7eaf223c6ad8d44416f016b4879dfae8e8efcde7f87cd9e",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 32,
+            "end": 43,
+            "literal": "under 35 cm"
+          },
+          "metric": "width",
+          "direction": "strict_lt",
+          "minimum": null,
+          "maximum": 35,
+          "canonicalUnit": "cm",
+          "rawUnit": "cm",
+          "scope": "soft_preference",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "77ffe7b76b4ae4ddc7db5f9b4b0e5450a975885e57eb2a815ecd1faafab004ed",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Air fryer basket capacity under 2 quarts",
+      "phase": 166,
+      "sourceQuestionSha256": "783618bd1cc59e73c480590f702db4019c6132ea4be956cf467271b410c76cbd",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 26,
+            "end": 40,
+            "literal": "under 2 quarts"
+          },
+          "metric": "unbound_dimension",
+          "direction": "unresolved",
+          "minimum": null,
+          "maximum": null,
+          "canonicalUnit": null,
+          "rawUnit": "quarts",
+          "scope": "unresolved",
+          "reason": "unsupported_or_unbound_quantity_unit",
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [
+        {
+          "start": 26,
+          "end": 40,
+          "literal": "under 2 quarts",
+          "reason": "unsupported_or_unbound_quantity_unit"
+        }
+      ],
+      "canonicalConstraintFingerprint": "632f689aba21bfa6386e141fd07f32c7c7646cc4354e7f3789778960e12af4c9",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    },
+    {
+      "question": "Coffee machine noise no more than 45 dBA",
+      "phase": 166,
+      "sourceQuestionSha256": "98cbc15ca6e315fcbd9a8ce48124963c4c2d90b82799238e16ece7da8cd3928a",
+      "kind": "english_quantity_candidates",
+      "candidates": [
+        {
+          "id": "q166_0",
+          "span": {
+            "start": 21,
+            "end": 40,
+            "literal": "no more than 45 dBA"
+          },
+          "metric": "noise",
+          "direction": "lte",
+          "minimum": null,
+          "maximum": 45,
+          "canonicalUnit": "dBA",
+          "rawUnit": "dBA",
+          "scope": "hard_candidate",
+          "reason": null,
+          "userMeaningConfirmed": false,
+          "evidenceValidated": false
+        }
+      ],
+      "unresolvedSpans": [],
+      "canonicalConstraintFingerprint": "093065ab72d5485fde3e49a450ada8e7f3a63ee924f49061642b40c29c8b6047",
+      "requiresUserConfirmation": true,
+      "userMeaningVerified": false,
+      "rankingAuthorized": false
+    }
+  ],
+  "screening": {
+    "screens": [
+      {
+        "productId": "machine_a",
+        "quantityId": "q166_0",
+        "status": "candidate_fit_not_verified",
+        "citedObservationIds": [
+          "measurement_1"
+        ],
+        "excludedFromRanking": false,
+        "reason": "compatible_candidate_requires_authentication_and_user_confirmation"
+      },
+      {
+        "productId": "machine_b",
+        "quantityId": "q166_0",
+        "status": "candidate_failure_not_verified",
+        "citedObservationIds": [
+          "measurement_2"
+        ],
+        "excludedFromRanking": false,
+        "reason": "potential_failure_requires_independent_adjudication"
+      }
+    ],
+    "obligations": [
+      "adjudicate_user_context_scope_before_committing_preferences",
+      "compare_test_protocols",
+      "confirm_quantity_q166_0_width",
+      "confirm_user_nonnegotiable_constraints_before_exclusion",
+      "independent_domain_outcomes",
+      "independent_expert_quality_floor",
+      "independently_authenticate_original_sources_and_review_receipts",
+      "verify_product_identities"
+    ],
+    "independentlyAuthenticated": false,
+    "publicationAuthorized": false
+  }
+}

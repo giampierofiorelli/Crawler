@@ -1,0 +1,423 @@
+{
+  "phase": 159,
+  "modelInferenceInPEE": false,
+  "sourceFileSha256": "6211b9883828c5de8e5153e98a5829aa3fa60c9053be33ab45853fef42138056",
+  "cases": {
+    "constructed_fridge": {
+      "inputSha256": "dde4f8f0eb95bc819e5dabfd977b38531004f0a2908b9e71995c518f88c45b87",
+      "neuralSpans": [
+        {
+          "id": "n159_brand_21_27",
+          "label": "brand",
+          "text": "Maytag",
+          "start": 21,
+          "end": 27,
+          "confidence": 0.9693088531494141,
+          "baselineMatch": "overlap",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_product_model_28_38",
+          "label": "product_model",
+          "text": "MRT311FFFE",
+          "start": 28,
+          "end": 38,
+          "confidence": 0.9139253497123718,
+          "baselineMatch": "overlap",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_brand_57_59",
+          "label": "brand",
+          "text": "GE",
+          "start": 57,
+          "end": 59,
+          "confidence": 0.9525284767150879,
+          "baselineMatch": "overlap",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_product_model_60_71",
+          "label": "product_model",
+          "text": "GTS22KGNRWW",
+          "start": 60,
+          "end": 71,
+          "confidence": 0.7990700006484985,
+          "baselineMatch": "overlap",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_product_feature_119_132",
+          "label": "product_feature",
+          "text": "cooling noise",
+          "start": 119,
+          "end": 132,
+          "confidence": 0.9882665276527405,
+          "baselineMatch": "not_found",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_measured_value_136_144",
+          "label": "measured_value",
+          "text": "44.9 dBA",
+          "start": 136,
+          "end": 144,
+          "confidence": 0.9984068274497986,
+          "baselineMatch": "not_found",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_brand_152_158",
+          "label": "brand",
+          "text": "Maytag",
+          "start": 152,
+          "end": 158,
+          "confidence": 0.5685482621192932,
+          "baselineMatch": "not_found",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        }
+      ],
+      "modelInterpretations": [
+        {
+          "spanId": "n159_product_model_28_38",
+          "surface": "MRT311FFFE",
+          "status": "explicitly_tested",
+          "positiveCues": [
+            {
+              "start": 28,
+              "end": 38,
+              "surface": "MRT311FFFE"
+            }
+          ],
+          "negativeCues": [],
+          "comparisonCues": [],
+          "usedUniqueAlias": false,
+          "neuralSourceOnly": true,
+          "identityVerified": false
+        },
+        {
+          "spanId": "n159_product_model_60_71",
+          "surface": "GTS22KGNRWW",
+          "status": "comparison_only",
+          "positiveCues": [],
+          "negativeCues": [],
+          "comparisonCues": [
+            {
+              "start": 60,
+              "end": 71,
+              "surface": "GTS22KGNRWW"
+            }
+          ],
+          "usedUniqueAlias": false,
+          "neuralSourceOnly": true,
+          "identityVerified": false
+        }
+      ],
+      "featureValueCandidates": [
+        {
+          "featureSpanId": "n159_product_feature_119_132",
+          "valueSpanId": "n159_measured_value_136_144",
+          "feature": "cooling noise",
+          "value": "44.9 dBA",
+          "sentence": {
+            "start": 106,
+            "end": 239
+          },
+          "subjectModelSpanId": "n159_product_model_28_38",
+          "assignment": "provisional_name_reference",
+          "isPublisherMeasurement": false,
+          "scientificEvidence": false,
+          "canonicalWriteAuthorized": false
+        }
+      ],
+      "heuristicMentions": [
+        {
+          "surface": "Maytag MRT311FFFE",
+          "start": 21,
+          "end": 38,
+          "role": "reviewed_surface"
+        },
+        {
+          "surface": "GE GTS22KGNRWW",
+          "start": 57,
+          "end": 71,
+          "role": "comparison_surface"
+        }
+      ],
+      "voteDiagnostics": {
+        "rows": 2,
+        "functions": 3,
+        "labelCoverage": 1,
+        "labelOverlap": 0,
+        "labelConflict": 0,
+        "byFunction": [
+          {
+            "name": "explicit_test_statement",
+            "polarity": [
+              0
+            ],
+            "coverage": 0.5,
+            "overlap": 0,
+            "conflict": 0,
+            "normalizedOverlap": 0,
+            "normalizedConflict": 0,
+            "empiricalAccuracy": null
+          },
+          {
+            "name": "explicit_non_test_statement",
+            "polarity": [],
+            "coverage": 0,
+            "overlap": 0,
+            "conflict": 0,
+            "normalizedOverlap": 0,
+            "normalizedConflict": 0,
+            "empiricalAccuracy": null
+          },
+          {
+            "name": "local_comparison_statement",
+            "polarity": [
+              2
+            ],
+            "coverage": 0.5,
+            "overlap": 0,
+            "conflict": 0,
+            "normalizedOverlap": 0,
+            "normalizedConflict": 0,
+            "empiricalAccuracy": null
+          }
+        ],
+        "unverifiedVotes": true
+      },
+      "reportedInferenceSeconds": 0.838,
+      "unresolved": [
+        "external_colab_runtime_not_cryptographically_attested",
+        "neural_mentions_not_all_exact_heuristic_matches",
+        "original_model_checkpoint_revision_not_attested",
+        "source_is_constructed_diagnostic"
+      ],
+      "modelQualityBenchmark": false,
+      "neuralModelExecutedWithinPEE": false,
+      "sourceAuthenticated": false,
+      "rankingAuthorized": false,
+      "canonicalWriteAuthorized": false
+    },
+    "constructed_coffee": {
+      "inputSha256": "65fea61815897ff3535efade13048e1fdc3fd8964e7de5f28e9510953071f00b",
+      "neuralSpans": [
+        {
+          "id": "n159_brand_14_23",
+          "label": "brand",
+          "text": "De'Longhi",
+          "start": 14,
+          "end": 23,
+          "confidence": 0.7850920557975769,
+          "baselineMatch": "overlap",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_product_model_14_34",
+          "label": "product_model",
+          "text": "De'Longhi Dedica Duo",
+          "start": 14,
+          "end": 34,
+          "confidence": 0.7380064725875854,
+          "baselineMatch": "exact",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_brand_60_68",
+          "label": "brand",
+          "text": "Breville",
+          "start": 60,
+          "end": 68,
+          "confidence": 0.9226780533790588,
+          "baselineMatch": "not_found",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_product_model_60_76",
+          "label": "product_model",
+          "text": "Breville Bambino",
+          "start": 60,
+          "end": 76,
+          "confidence": 0.6341668367385864,
+          "baselineMatch": "not_found",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        },
+        {
+          "id": "n159_product_feature_164_174",
+          "label": "product_feature",
+          "text": "steam wand",
+          "start": 164,
+          "end": 174,
+          "confidence": 0.9917770624160767,
+          "baselineMatch": "not_found",
+          "contextCategories": [],
+          "claimValidated": false,
+          "identityVerified": false,
+          "scientificEvidence": false,
+          "rankingAuthorized": false
+        }
+      ],
+      "modelInterpretations": [
+        {
+          "spanId": "n159_product_model_14_34",
+          "surface": "De'Longhi Dedica Duo",
+          "status": "explicitly_tested",
+          "positiveCues": [
+            {
+              "start": 14,
+              "end": 34,
+              "surface": "De'Longhi Dedica Duo"
+            }
+          ],
+          "negativeCues": [],
+          "comparisonCues": [],
+          "usedUniqueAlias": false,
+          "neuralSourceOnly": true,
+          "identityVerified": false
+        },
+        {
+          "spanId": "n159_product_model_60_76",
+          "surface": "Breville Bambino",
+          "status": "explicitly_not_tested",
+          "positiveCues": [],
+          "negativeCues": [
+            {
+              "start": 98,
+              "end": 105,
+              "surface": "Bambino"
+            }
+          ],
+          "comparisonCues": [
+            {
+              "start": 60,
+              "end": 76,
+              "surface": "Breville Bambino"
+            }
+          ],
+          "usedUniqueAlias": true,
+          "neuralSourceOnly": true,
+          "identityVerified": false
+        }
+      ],
+      "featureValueCandidates": [],
+      "heuristicMentions": [
+        {
+          "surface": "De'Longhi Dedica Duo",
+          "start": 14,
+          "end": 34,
+          "role": "unresolved"
+        },
+        {
+          "surface": "Dedica Duo",
+          "start": 127,
+          "end": 137,
+          "role": "unresolved"
+        }
+      ],
+      "voteDiagnostics": {
+        "rows": 2,
+        "functions": 3,
+        "labelCoverage": 1,
+        "labelOverlap": 0.5,
+        "labelConflict": 0.5,
+        "byFunction": [
+          {
+            "name": "explicit_test_statement",
+            "polarity": [
+              0
+            ],
+            "coverage": 0.5,
+            "overlap": 0,
+            "conflict": 0,
+            "normalizedOverlap": 0,
+            "normalizedConflict": 0,
+            "empiricalAccuracy": null
+          },
+          {
+            "name": "explicit_non_test_statement",
+            "polarity": [
+              1
+            ],
+            "coverage": 0.5,
+            "overlap": 0.5,
+            "conflict": 0.5,
+            "normalizedOverlap": 1,
+            "normalizedConflict": 1,
+            "empiricalAccuracy": null
+          },
+          {
+            "name": "local_comparison_statement",
+            "polarity": [
+              2
+            ],
+            "coverage": 0.5,
+            "overlap": 0.5,
+            "conflict": 0.5,
+            "normalizedOverlap": 1,
+            "normalizedConflict": 1,
+            "empiricalAccuracy": null
+          }
+        ],
+        "unverifiedVotes": true
+      },
+      "reportedInferenceSeconds": 0.43,
+      "unresolved": [
+        "external_colab_runtime_not_cryptographically_attested",
+        "neural_mentions_not_all_exact_heuristic_matches",
+        "original_model_checkpoint_revision_not_attested",
+        "source_is_constructed_diagnostic"
+      ],
+      "modelQualityBenchmark": false,
+      "neuralModelExecutedWithinPEE": false,
+      "sourceAuthenticated": false,
+      "rankingAuthorized": false,
+      "canonicalWriteAuthorized": false
+    }
+  }
+}

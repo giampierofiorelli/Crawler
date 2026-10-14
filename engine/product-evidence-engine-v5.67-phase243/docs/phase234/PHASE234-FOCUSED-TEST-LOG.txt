@@ -1,0 +1,376 @@
+TAP version 13
+# Subtest: Phase228 PDF text retains page/line provenance, PDF digest, not article body
+ok 1 - Phase228 PDF text retains page/line provenance, PDF digest, not article body
+  ---
+  duration_ms: 944.074693
+  type: 'test'
+  ...
+# Subtest: Phase228 Word table capacity scope is not automatically reassigned
+ok 2 - Phase228 Word table capacity scope is not automatically reassigned
+  ---
+  duration_ms: 841.580494
+  type: 'test'
+  ...
+# Subtest: Phase228 two models remain unresolved
+ok 3 - Phase228 two models remain unresolved
+  ---
+  duration_ms: 739.442526
+  type: 'test'
+  ...
+# Subtest: Phase228 scans require OCR and cannot hallucinate a spec
+ok 4 - Phase228 scans require OCR and cannot hallucinate a spec
+  ---
+  duration_ms: 748.795623
+  type: 'test'
+  ...
+# Subtest: Phase228 Word merged cells are refused instead of inferred
+ok 5 - Phase228 Word merged cells are refused instead of inferred
+  ---
+  duration_ms: 776.117498
+  type: 'test'
+  ...
+# Subtest: Phase228 bad binary rejection and no extra state
+ok 6 - Phase228 bad binary rejection and no extra state
+  ---
+  duration_ms: 764.626774
+  type: 'test'
+  ...
+# Subtest: Phase228 actual synthetic fixture transport -> both docs, zero scientific evidence
+ok 7 - Phase228 actual synthetic fixture transport -> both docs, zero scientific evidence
+  ---
+  duration_ms: 1599.301965
+  type: 'test'
+  ...
+# Subtest: Phase228 robots disallow prevents document network access
+ok 8 - Phase228 robots disallow prevents document network access
+  ---
+  duration_ms: 0.63755
+  type: 'test'
+  ...
+# Subtest: Phase228 explicitly refused site cannot be reopened by fixture
+ok 9 - Phase228 explicitly refused site cannot be reopened by fixture
+  ---
+  duration_ms: 0.469312
+  type: 'test'
+  ...
+# Subtest: Phase228 rejects wrong MIME, missing raw bytes and 404
+ok 10 - Phase228 rejects wrong MIME, missing raw bytes and 404
+  ---
+  duration_ms: 1.616844
+  type: 'test'
+  ...
+# Subtest: Phase228 live fixture injection prohibited
+ok 11 - Phase228 live fixture injection prohibited
+  ---
+  duration_ms: 0.238091
+  type: 'test'
+  ...
+# Subtest: Phase228 general search docs are connected to observer
+ok 12 - Phase228 general search docs are connected to observer
+  ---
+  duration_ms: 804.792102
+  type: 'test'
+  ...
+# Subtest: Phase229: Poppler aligned two-column rows are parsed and located, not verified
+ok 13 - Phase229: Poppler aligned two-column rows are parsed and located, not verified
+  ---
+  duration_ms: 855.636843
+  type: 'test'
+  ...
+# Subtest: Phase229: isolated row is not evidence for a table
+ok 14 - Phase229: isolated row is not evidence for a table
+  ---
+  duration_ms: 806.516864
+  type: 'test'
+  ...
+# Subtest: Phase229: parallel value/model columns are refused, not mixed
+ok 15 - Phase229: parallel value/model columns are refused, not mixed
+  ---
+  duration_ms: 734.76965
+  type: 'test'
+  ...
+# Subtest: Phase229: multiple explicitly declared models never acquire an exact model
+ok 16 - Phase229: multiple explicitly declared models never acquire an exact model
+  ---
+  duration_ms: 835.570958
+  type: 'test'
+  ...
+# Subtest: Phase229: unrecognized unit does not create plausible evidence
+ok 17 - Phase229: unrecognized unit does not create plausible evidence
+  ---
+  duration_ms: 765.85849
+  type: 'test'
+  ...
+# Subtest: Phase229: a stray intervening column invalidates its row and singleton run
+ok 18 - Phase229: a stray intervening column invalidates its row and singleton run
+  ---
+  duration_ms: 756.216146
+  type: 'test'
+  ...
+# Subtest: Phase229: duplicate value extracted in key-value and geometry paths counts once
+ok 19 - Phase229: duplicate value extracted in key-value and geometry paths counts once
+  ---
+  duration_ms: 808.469814
+  type: 'test'
+  ...
+# Subtest: Phase229: repeat parse is deterministic and does not leak PDF body
+ok 20 - Phase229: repeat parse is deterministic and does not leak PDF body
+  ---
+  duration_ms: 1763.953271
+  type: 'test'
+  ...
+# Subtest: Phase229: existing Phase228 PDF/DOCX paths stay valid
+ok 21 - Phase229: existing Phase228 PDF/DOCX paths stay valid
+  ---
+  duration_ms: 1615.504443
+  type: 'test'
+  ...
+# Subtest: Phase229: existing discovery -> robots -> PDF -> typed claims works offline
+ok 22 - Phase229: existing discovery -> robots -> PDF -> typed claims works offline
+  ---
+  duration_ms: 759.822209
+  type: 'test'
+  ...
+# Subtest: Phase230: synthetic PDF dual-unit labels preserve document-authored metric and part scopes
+ok 23 - Phase230: synthetic PDF dual-unit labels preserve document-authored metric and part scopes
+  ---
+  duration_ms: 940.619963
+  type: 'test'
+  ...
+# Subtest: Phase230: 19th page is accessible within bounded 24-page PDF preview
+ok 24 - Phase230: 19th page is accessible within bounded 24-page PDF preview
+  ---
+  duration_ms: 852.034745
+  type: 'test'
+  ...
+# Subtest: Phase230: same document yields deterministic claims and SHA and no raw paragraphs
+ok 25 - Phase230: same document yields deterministic claims and SHA and no raw paragraphs
+  ---
+  duration_ms: 1579.302844
+  type: 'test'
+  ...
+# Subtest: Phase230: PDF max size remains strictly bounded at 12MB
+ok 26 - Phase230: PDF max size remains strictly bounded at 12MB
+  ---
+  duration_ms: 0.912706
+  type: 'test'
+  ...
+# Subtest: Phase230: DOCX retains its original 6MB limit
+ok 27 - Phase230: DOCX retains its original 6MB limit
+  ---
+  duration_ms: 0.270549
+  type: 'test'
+  ...
+# Subtest: Phase230: existing authored PDF geometry fixture remains valid
+ok 28 - Phase230: existing authored PDF geometry fixture remains valid
+  ---
+  duration_ms: 740.013258
+  type: 'test'
+  ...
+# Subtest: Phase231: scoped table does not turn component measurements into parent-product measurements
+ok 29 - Phase231: scoped table does not turn component measurements into parent-product measurements
+  ---
+  duration_ms: 768.026181
+  type: 'test'
+  ...
+# Subtest: Phase231: duplicate model headers abort the table rather than misassign
+ok 30 - Phase231: duplicate model headers abort the table rather than misassign
+  ---
+  duration_ms: 873.963712
+  type: 'test'
+  ...
+# Subtest: Phase231: ambiguous multiple values in one cell abstain for that component
+ok 31 - Phase231: ambiguous multiple values in one cell abstain for that component
+  ---
+  duration_ms: 831.647938
+  type: 'test'
+  ...
+# Subtest: Phase231: two-column rows without sufficient model-header evidence remain quarantined
+ok 32 - Phase231: two-column rows without sufficient model-header evidence remain quarantined
+  ---
+  duration_ms: 907.997892
+  type: 'test'
+  ...
+# Subtest: Phase231: component table extraction is deterministic and non-retentive
+ok 33 - Phase231: component table extraction is deterministic and non-retentive
+  ---
+  duration_ms: 1608.249349
+  type: 'test'
+  ...
+# Subtest: Phase231: compound units remain speeds rather than silently becoming lengths
+ok 34 - Phase231: compound units remain speeds rather than silently becoming lengths
+  ---
+  duration_ms: 919.60912
+  type: 'test'
+  ...
+# Subtest: Phase232: exact authored variant weights including wrapped continuation
+ok 35 - Phase232: exact authored variant weights including wrapped continuation
+  ---
+  duration_ms: 895.668256
+  type: 'test'
+  ...
+# Subtest: Phase232: duplicate/conflicting model assignments invalidate whole field
+ok 36 - Phase232: duplicate/conflicting model assignments invalidate whole field
+  ---
+  duration_ms: 782.328028
+  type: 'test'
+  ...
+# Subtest: Phase232: reject partially recognized units rather than cherry-picking variants
+ok 37 - Phase232: reject partially recognized units rather than cherry-picking variants
+  ---
+  duration_ms: 755.631309
+  type: 'test'
+  ...
+# Subtest: Phase232: no range reduced silently to one value
+ok 38 - Phase232: no range reduced silently to one value
+  ---
+  duration_ms: 951.769512
+  type: 'test'
+  ...
+# Subtest: Phase232: one author-declared model is insufficient to infer multi-variant section
+ok 39 - Phase232: one author-declared model is insufficient to infer multi-variant section
+  ---
+  duration_ms: 795.041216
+  type: 'test'
+  ...
+# Subtest: Phase232: generic variant codes work without hardcoding Dyson model names
+ok 40 - Phase232: generic variant codes work without hardcoding Dyson model names
+  ---
+  duration_ms: 796.388864
+  type: 'test'
+  ...
+# Subtest: Phase232: component filter weights are never promoted to product variants
+ok 41 - Phase232: component filter weights are never promoted to product variants
+  ---
+  duration_ms: 872.565468
+  type: 'test'
+  ...
+# Subtest: Phase232: appended marketing material invalidates the whole field
+ok 42 - Phase232: appended marketing material invalidates the whole field
+  ---
+  duration_ms: 830.380828
+  type: 'test'
+  ...
+# Subtest: Phase232: hashes, receipts, no document bodies and deterministic replay
+ok 43 - Phase232: hashes, receipts, no document bodies and deterministic replay
+  ---
+  duration_ms: 1668.110813
+  type: 'test'
+  ...
+# Subtest: Phase233: full numeric intervals preserve both endpoints and units
+ok 44 - Phase233: full numeric intervals preserve both endpoints and units
+  ---
+  duration_ms: 909.71021
+  type: 'test'
+  ...
+# Subtest: Phase233: voltage qualifiers are conditions, never inferred variants
+ok 45 - Phase233: voltage qualifiers are conditions, never inferred variants
+  ---
+  duration_ms: 790.193122
+  type: 'test'
+  ...
+# Subtest: Phase233: Celsius and pressure ranges retain author-written values
+ok 46 - Phase233: Celsius and pressure ranges retain author-written values
+  ---
+  duration_ms: 765.376604
+  type: 'test'
+  ...
+# Subtest: Phase233: identical numeric values remain scoped to different components
+ok 47 - Phase233: identical numeric values remain scoped to different components
+  ---
+  duration_ms: 764.280894
+  type: 'test'
+  ...
+# Subtest: Phase233: descending, equal or partially parsed intervals abstain
+ok 48 - Phase233: descending, equal or partially parsed intervals abstain
+  ---
+  duration_ms: 779.00124
+  type: 'test'
+  ...
+# Subtest: Phase233: prose containing numbers is not a technical specification
+ok 49 - Phase233: prose containing numbers is not a technical specification
+  ---
+  duration_ms: 880.415543
+  type: 'test'
+  ...
+# Subtest: Phase233: manufacturer ranges never become evidence for ranking
+ok 50 - Phase233: manufacturer ranges never become evidence for ranking
+  ---
+  duration_ms: 809.652397
+  type: 'test'
+  ...
+# Subtest: Phase233: document SHA, location and replay deterministic without article bodies
+ok 51 - Phase233: document SHA, location and replay deterministic without article bodies
+  ---
+  duration_ms: 1530.148471
+  type: 'test'
+  ...
+# Subtest: Phase233: previous variant PDF weights stay distinct from intervals
+ok 52 - Phase233: previous variant PDF weights stay distinct from intervals
+  ---
+  duration_ms: 687.034221
+  type: 'test'
+  ...
+# Subtest: Phase234: one bounded page/column provides distinct standard vs optional accessories
+ok 53 - Phase234: one bounded page/column provides distinct standard vs optional accessories
+  ---
+  duration_ms: 828.515638
+  type: 'test'
+  ...
+# Subtest: Phase234: conditional arm support is not an unqualified standard accessory
+ok 54 - Phase234: conditional arm support is not an unqualified standard accessory
+  ---
+  duration_ms: 793.782276
+  type: 'test'
+  ...
+# Subtest: Phase234: an unscoped optional-accessories heading cannot create product leads
+ok 55 - Phase234: an unscoped optional-accessories heading cannot create product leads
+  ---
+  duration_ms: 828.152257
+  type: 'test'
+  ...
+# Subtest: Phase234: an accessory list ends at footnotes and cannot absorb later text
+ok 56 - Phase234: an accessory list ends at footnotes and cannot absorb later text
+  ---
+  duration_ms: 1004.794186
+  type: 'test'
+  ...
+# Subtest: Phase234: intervening technical prose ends a scoped list rather than granting accessories
+ok 57 - Phase234: intervening technical prose ends a scoped list rather than granting accessories
+  ---
+  duration_ms: 944.652516
+  type: 'test'
+  ...
+# Subtest: Phase234: explicitly parenthesized feature flags produce distinct categorical leads
+ok 58 - Phase234: explicitly parenthesized feature flags produce distinct categorical leads
+  ---
+  duration_ms: 794.267061
+  type: 'test'
+  ...
+# Subtest: Phase234: all feature and accessory claims are unresolved manufacturer statements
+ok 59 - Phase234: all feature and accessory claims are unresolved manufacturer statements
+  ---
+  duration_ms: 798.281871
+  type: 'test'
+  ...
+# Subtest: Phase234: same PDF produces deterministic claim provenance
+ok 60 - Phase234: same PDF produces deterministic claim provenance
+  ---
+  duration_ms: 1447.099183
+  type: 'test'
+  ...
+# Subtest: Phase234: prior phase interval and variant types remain structurally separate
+ok 61 - Phase234: prior phase interval and variant types remain structurally separate
+  ---
+  duration_ms: 1332.771967
+  type: 'test'
+  ...
+1..61
+# tests 61
+# suites 0
+# pass 61
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19030.402283

@@ -1,0 +1,215 @@
+{
+  "researchOnly": true,
+  "fictional": true,
+  "sourceTextStored": false,
+  "fullyAutonomousAgent": false,
+  "scenario": "A product updates its derived evidence state without rereading sources",
+  "observations": [
+    {
+      "step": "initial",
+      "epistemicState": "unobserved",
+      "dependentClaims": [],
+      "distinctOriginalTests": [],
+      "requestedReviewTasks": [
+        "collect_targeted_evidence"
+      ],
+      "transition": "first_observation",
+      "llmCalls": 0,
+      "sourceTextRequired": false
+    },
+    {
+      "step": "one original test",
+      "epistemicState": "provisionally_supported",
+      "dependentClaims": [
+        "claim_1"
+      ],
+      "distinctOriginalTests": [
+        "test_one"
+      ],
+      "requestedReviewTasks": [
+        "collect_targeted_evidence"
+      ],
+      "transition": "evidence_changed",
+      "llmCalls": 0,
+      "sourceTextRequired": false
+    },
+    {
+      "step": "two independent identical anchored levels",
+      "epistemicState": "convergent",
+      "dependentClaims": [
+        "claim_1",
+        "claim_2"
+      ],
+      "distinctOriginalTests": [
+        "test_one",
+        "test_two"
+      ],
+      "requestedReviewTasks": [],
+      "transition": "evidence_changed",
+      "llmCalls": 0,
+      "sourceTextRequired": false
+    },
+    {
+      "step": "new original test disagrees",
+      "epistemicState": "disputed",
+      "dependentClaims": [
+        "claim_1",
+        "claim_2",
+        "claim_3"
+      ],
+      "distinctOriginalTests": [
+        "test_one",
+        "test_three",
+        "test_two"
+      ],
+      "requestedReviewTasks": [
+        "reconcile_original_test_claims"
+      ],
+      "transition": "evidence_changed",
+      "llmCalls": 0,
+      "sourceTextRequired": false
+    },
+    {
+      "step": "disputed source removed after review",
+      "epistemicState": "convergent",
+      "dependentClaims": [
+        "claim_1",
+        "claim_2"
+      ],
+      "distinctOriginalTests": [
+        "test_one",
+        "test_two"
+      ],
+      "requestedReviewTasks": [],
+      "transition": "evidence_changed",
+      "llmCalls": 0,
+      "sourceTextRequired": false
+    }
+  ],
+  "productMind": {
+    "variantId": "vacuum_alpha",
+    "cells": [
+      {
+        "categoryId": "vacuum",
+        "variantId": "vacuum_alpha",
+        "criterionId": "noise",
+        "frameId": "hard_floor_normal_mode",
+        "evidenceFingerprint": "52b8cd06614638c65db7cf748b03f73550f499999e6207e793b471274340bc29",
+        "frameSnapshotSha256": "25dfbea00275241703256d435ad68b548bba1a0ef8c038c2425ffa0c84966877",
+        "state": "convergent",
+        "convergence": "consistent_calibrated_levels",
+        "activeClaimIds": [
+          "claim_1",
+          "claim_2"
+        ],
+        "originalTestIds": [
+          "test_one",
+          "test_two"
+        ],
+        "reviewTasks": [],
+        "lastObservedAt": "2026-10-11T06:00:05.000Z",
+        "probabilityCorrect": null,
+        "consumerRankingApproved": false,
+        "llmCalls": 0
+      }
+    ],
+    "pendingTasks": [],
+    "llmCalls": 0
+  },
+  "history": [
+    {
+      "sequence": 1,
+      "categoryId": "vacuum",
+      "variantId": "vacuum_alpha",
+      "criterionId": "noise",
+      "frameId": "hard_floor_normal_mode",
+      "fromState": null,
+      "toState": "unobserved",
+      "addedClaimIds": [],
+      "removedClaimIds": [],
+      "evidenceFingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "observedAt": "2026-10-11T06:00:00.000Z",
+      "eventType": "first_observation",
+      "previousEventSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "eventSha256": "41e07859d4e6156fd5098119fb2260951ba0105b484115224caf03890d386ce8"
+    },
+    {
+      "sequence": 2,
+      "categoryId": "vacuum",
+      "variantId": "vacuum_alpha",
+      "criterionId": "noise",
+      "frameId": "hard_floor_normal_mode",
+      "fromState": "unobserved",
+      "toState": "provisionally_supported",
+      "addedClaimIds": [
+        "claim_1"
+      ],
+      "removedClaimIds": [],
+      "evidenceFingerprint": "e5851c54a5afb1a5a4eb6373e2efaa1bd3d1addedfcbe8765f65abdb1ef82854",
+      "observedAt": "2026-10-11T06:00:01.000Z",
+      "eventType": "evidence_changed",
+      "previousEventSha256": "41e07859d4e6156fd5098119fb2260951ba0105b484115224caf03890d386ce8",
+      "eventSha256": "cc2cb10f3c5e5249e5eae768d5ae9d54d65be786f1ca9a32506599bdb77dc3cc"
+    },
+    {
+      "sequence": 3,
+      "categoryId": "vacuum",
+      "variantId": "vacuum_alpha",
+      "criterionId": "noise",
+      "frameId": "hard_floor_normal_mode",
+      "fromState": "provisionally_supported",
+      "toState": "convergent",
+      "addedClaimIds": [
+        "claim_2"
+      ],
+      "removedClaimIds": [],
+      "evidenceFingerprint": "52b8cd06614638c65db7cf748b03f73550f499999e6207e793b471274340bc29",
+      "observedAt": "2026-10-11T06:00:02.000Z",
+      "eventType": "evidence_changed",
+      "previousEventSha256": "cc2cb10f3c5e5249e5eae768d5ae9d54d65be786f1ca9a32506599bdb77dc3cc",
+      "eventSha256": "d61817901985e6bd5d2056100025f0b8de3fd35991414cb81a3a8909d77f557a"
+    },
+    {
+      "sequence": 4,
+      "categoryId": "vacuum",
+      "variantId": "vacuum_alpha",
+      "criterionId": "noise",
+      "frameId": "hard_floor_normal_mode",
+      "fromState": "convergent",
+      "toState": "disputed",
+      "addedClaimIds": [
+        "claim_3"
+      ],
+      "removedClaimIds": [],
+      "evidenceFingerprint": "f255de04a4fd3086af963d1ea70e21b6888ac1708fc0276687d0d1e40fe3fee0",
+      "observedAt": "2026-10-11T06:00:03.000Z",
+      "eventType": "evidence_changed",
+      "previousEventSha256": "d61817901985e6bd5d2056100025f0b8de3fd35991414cb81a3a8909d77f557a",
+      "eventSha256": "b09d442dd6bea75497a275e0479e07c435ca775c0e9ab22c42abbb485ca47041"
+    },
+    {
+      "sequence": 5,
+      "categoryId": "vacuum",
+      "variantId": "vacuum_alpha",
+      "criterionId": "noise",
+      "frameId": "hard_floor_normal_mode",
+      "fromState": "disputed",
+      "toState": "convergent",
+      "addedClaimIds": [],
+      "removedClaimIds": [
+        "claim_3"
+      ],
+      "evidenceFingerprint": "52b8cd06614638c65db7cf748b03f73550f499999e6207e793b471274340bc29",
+      "observedAt": "2026-10-11T06:00:05.000Z",
+      "eventType": "evidence_changed",
+      "previousEventSha256": "b09d442dd6bea75497a275e0479e07c435ca775c0e9ab22c42abbb485ca47041",
+      "eventSha256": "fdfd3573b5c759c5d7d1a698db8ff28dcf4cdf49585cb77458af35b5a1f17077"
+    }
+  ],
+  "journalIntegrity": {
+    "valid": true,
+    "events": 5,
+    "headSha256": "fdfd3573b5c759c5d7d1a698db8ff28dcf4cdf49585cb77458af35b5a1f17077"
+  },
+  "consumerRecommendations": false
+}

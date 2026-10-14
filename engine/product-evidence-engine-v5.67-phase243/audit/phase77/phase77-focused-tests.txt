@@ -1,0 +1,108 @@
+
+> product-evidence-engine@4.5.0 test:phase77
+> npm run build && node --test dist/tests/phase77_*.test.js
+
+
+> product-evidence-engine@4.5.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: loopback research HTTP requires permitted intake, preserves private progress and rejects raw text
+ok 1 - loopback research HTTP requires permitted intake, preserves private progress and rejects raw text
+  ---
+  duration_ms: 50.098942
+  type: 'test'
+  ...
+# Subtest: new problem is not invented category, can span multiple reviewed solution families
+ok 2 - new problem is not invented category, can span multiple reviewed solution families
+  ---
+  duration_ms: 1.753371
+  type: 'test'
+  ...
+# Subtest: new demand with zero categories triggers solution research, not an unknown-category publication
+ok 3 - new demand with zero categories triggers solution research, not an unknown-category publication
+  ---
+  duration_ms: 0.135915
+  type: 'test'
+  ...
+# Subtest: different constraints lead to different research scopes and dedupe is insensitive to order
+ok 4 - different constraints lead to different research scopes and dedupe is insensitive to order
+  ---
+  duration_ms: 1.255781
+  type: 'test'
+  ...
+# Subtest: specific model is a different request type, requires exact product id
+ok 5 - specific model is a different request type, requires exact product id
+  ---
+  duration_ms: 0.150406
+  type: 'test'
+  ...
+# Subtest: no fixed top-N, yet minimum comparable alternatives and audited search scope
+ok 6 - no fixed top-N, yet minimum comparable alternatives and audited search scope
+  ---
+  duration_ms: 0.395876
+  type: 'test'
+  ...
+# Subtest: insufficient sources or variants never masquerade as full recommendation
+ok 7 - insufficient sources or variants never masquerade as full recommendation
+  ---
+  duration_ms: 0.208204
+  type: 'test'
+  ...
+# Subtest: an unverified exclusion or an untested desired outcome invalidates a product
+ok 8 - an unverified exclusion or an untested desired outcome invalidates a product
+  ---
+  duration_ms: 0.231188
+  type: 'test'
+  ...
+# Subtest: new product announcement alone does not reorder; relevant original test starts targeted comparison
+ok 9 - new product announcement alone does not reorder; relevant original test starts targeted comparison
+  ---
+  duration_ms: 0.194833
+  type: 'test'
+  ...
+# Subtest: progress is a verifiable sequence and never invented percent or ETA
+ok 10 - progress is a verifiable sequence and never invented percent or ETA
+  ---
+  duration_ms: 17.20776
+  type: 'test'
+  ...
+# Subtest: blocked research resumes after verified capacity/source change; no false waiting spinner
+ok 11 - blocked research resumes after verified capacity/source change; no false waiting spinner
+  ---
+  duration_ms: 9.177822
+  type: 'test'
+  ...
+# Subtest: check back time appears only after a backend-confirmed schedule
+ok 12 - check back time appears only after a backend-confirmed schedule
+  ---
+  duration_ms: 13.089917
+  type: 'test'
+  ...
+# Subtest: only verified milestones plus independent publication permit ready
+ok 13 - only verified milestones plus independent publication permit ready
+  ---
+  duration_ms: 30.818246
+  type: 'test'
+  ...
+# Subtest: identical scopes share research but have separate private access tokens
+ok 14 - identical scopes share research but have separate private access tokens
+  ---
+  duration_ms: 5.253421
+  type: 'test'
+  ...
+# Subtest: ledger corruption fails closed
+ok 15 - ledger corruption fails closed
+  ---
+  duration_ms: 6.052335
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 159.180394

@@ -1,0 +1,47 @@
+{
+  "schema": "pee.phase213.source-audit.v1",
+  "sourceType": "user_uploaded_repository_source_only",
+  "reviewDate": "2026-10-13",
+  "modelsBundled": false,
+  "runtimeLibrariesInstalledIntoPEE": false,
+  "archives": [
+    {
+      "archive": "Qwen3-ASR-main(1).zip",
+      "sha256": "be1dc8fc34f5a9f185b9f1a81e9a0b56bbd9212156cea4399f83bf8b37d0f119",
+      "bytes": 2391680,
+      "members": 47,
+      "zipIntegrity": true,
+      "containsUsableAsrWeights": false
+    },
+    {
+      "archive": "faster-whisper-master.zip",
+      "sha256": "89b3e01c9817eb0203f15dc0453c03e66ed65e1b7ed9781cca717bd653d4f20c",
+      "bytes": 21387096,
+      "members": 49,
+      "zipIntegrity": true,
+      "containsUsableAsrWeights": false
+    },
+    {
+      "archive": "whisper.cpp-master.zip",
+      "sha256": "dd7fb109d0bfc5bb74fd9389294d7437ba5e21432d307fec81dc1deabab37152",
+      "bytes": 10644759,
+      "members": 2318,
+      "zipIntegrity": true,
+      "containsUsableAsrWeights": false
+    },
+    {
+      "archive": "whisperX-main.zip",
+      "sha256": "5b15447c5fa1230ef7a86bef2a07c0c50341d9b505456ef2d038bf98305d1c5a",
+      "bytes": 16795031,
+      "members": 42,
+      "zipIntegrity": true,
+      "containsUsableAsrWeights": false
+    }
+  ],
+  "findings": {
+    "faster_whisper": "Python source; includes audio/VAD fixtures, not complete Whisper weights; optional local model and CTranslate2 needed",
+    "whisper_cpp": "Native C++ source, CPU CLI compiled locally and version checked; bundled for-tests GGML files contain no actual model weights",
+    "whisperX": "Includes auxiliary pyannote VAD model in whisperx/assets/pytorch_model.bin; no full Whisper transcription weights",
+    "Qwen3_ASR": "Python code and model architecture; 0.6B/1.7B and forced aligner model weights absent; heavier Torch/transformers runtime"
+  }
+}

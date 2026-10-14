@@ -1,0 +1,72 @@
+{
+  "version": "4.49-phase125",
+  "date": "2026-10-11",
+  "base": "v4.48-phase124",
+  "previousFileCount": 1337,
+  "missingPreviousFiles": [],
+  "modifiedOriginalFilesExpected": [
+    "README.md",
+    "package.json"
+  ],
+  "phase125TargetedTestsPassed": 38,
+  "typedRegression": {
+    "passed": 1300,
+    "files": 84,
+    "shards": 11,
+    "failureCount": 0,
+    "excludedLegacyTestFiles": [
+      "tests/phase91_watch_gate.test.ts",
+      "tests/phase92_recipe_lifecycle.test.ts"
+    ],
+    "completeCumulativeRegression": false
+  },
+  "pythonOriginalSourceTestsPassed": 47,
+  "pythonIngestionTestsPassed": 21,
+  "totalDistinctCompletedTestsPassed": 1368,
+  "phase124FrozenPromptReplay": {
+    "total": 12,
+    "expectedCoarseGoalInCandidateFrame": 11,
+    "needsPriorCandidateContext": 1,
+    "blinded": false,
+    "independentAnnotations": false,
+    "usedDuringDevelopment": true,
+    "representativeSample": false
+  },
+  "newComponents": {
+    "nativeCompositionalFrame": true,
+    "typedConversationReferents": true,
+    "constraintNegationScopeChecks": true,
+    "nativeLocalBm25Invocation": true,
+    "usesHostedExternalAPI": false,
+    "realFreshPublicWebCrawlThisPhase": false,
+    "sourceMeasurementAuthenticated": false,
+    "autonomousRankingValidated": false
+  },
+  "knownLimitations": [
+    "Phase91/92 historical tests remain unverified",
+    "No validated open-domain multilingual parser or independent quality calibration",
+    "Previously visible public questions are not a blind benchmark",
+    "No original-source measurement extraction or publishable best robot ranking"
+  ],
+  "evidenceLinks": [
+    "https://aclanthology.org/2020.acl-main.442/",
+    "https://aclanthology.org/2020.nlp4convai-1.13/",
+    "https://research.google/pubs/towards-scalable-multi-domain-conversational-agents-the-schema-guided-dialogue-dataset/",
+    "https://doi.org/10.1561/1500000019"
+  ],
+  "finalFileCount": 1345,
+  "addedFiles": [
+    "PHASE125-COMPOSITIONAL-QUESTION-UNDERSTANDING-AND-EVIDENCE-PATH.md",
+    "PHASE125-FROZEN-QUESTION-DIAGNOSTIC.json",
+    "PHASE125-RELEASE-VERIFICATION.json",
+    "dist/src/phase125_compositional_dialogue_frame.js",
+    "dist/tests/phase125_compositional_dialogue_frame.test.js",
+    "scripts/evaluate-phase125.mjs",
+    "src/phase125_compositional_dialogue_frame.ts",
+    "tests/phase125_compositional_dialogue_frame.test.ts"
+  ],
+  "modifiedPreviousFiles": [
+    "README.md",
+    "package.json"
+  ]
+}

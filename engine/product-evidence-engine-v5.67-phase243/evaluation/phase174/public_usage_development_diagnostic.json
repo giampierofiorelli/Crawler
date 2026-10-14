@@ -1,0 +1,461 @@
+{
+  "phase": 174,
+  "sourceStatus": "developer-curated_authentic_thread_paraphrases_NOT_independently_annotated",
+  "benchmarkAccuracyEstablished": false,
+  "authorsOfLabelsIndependent": false,
+  "publicPostOriginalsAreProductEvidence": false,
+  "cases": [
+    {
+      "id": "kettle_k1",
+      "source": "https://www.reddit.com/r/BuyItForLife/comments/1v40u3t/electric_kettle_recommendation/",
+      "input": "Need a durable electric kettle to replace the fourth kettle that stopped working",
+      "reviewFocus": "durability is generalizable but evidence for field failure rates is missing",
+      "observedTarget": "electric_kettle",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "transfer_reliability"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "transfer_reliability",
+          "observable": "field_failure_rate_by_cohort",
+          "status": "method_missing"
+        },
+        {
+          "facet": "transfer_reliability",
+          "observable": "repair_and_parts_support",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "kettle_k2",
+      "source": "https://www.reddit.com/r/BuyItForLife/comments/uh0u4p",
+      "input": "I want a kettle with temperature control but good water flow for tasks besides tea",
+      "reviewFocus": "pouring speed and temperature; trade-off",
+      "observedTarget": "electric_kettle",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "kettle_temperature",
+        "kettle_fast_pour"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "kettle_temperature",
+          "observable": "water_temperature_accuracy",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_temperature",
+          "observable": "temperature_setting_range",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_fast_pour",
+          "observable": "pouring_flow_rate",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_fast_pour",
+          "observable": "handling_and_spillage",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "kettle_k3",
+      "source": "https://www.reddit.com/r/BuyItForLife/comments/1nr9y8g/high_quality_electric_kettle/",
+      "input": "Need a kettle with no plastic parts touching the water, double walls and accurate temperature settings",
+      "reviewFocus": "material constraint not in bounded rules",
+      "observedTarget": "electric_kettle",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "kettle_wetted_material",
+        "kettle_double_wall",
+        "kettle_temperature"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "kettle_wetted_material",
+          "observable": "wetted_parts_materials_by_variant",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_double_wall",
+          "observable": "wall_construction",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_double_wall",
+          "observable": "external_surface_temperature_under_test",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_temperature",
+          "observable": "water_temperature_accuracy",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_temperature",
+          "observable": "temperature_setting_range",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "kettle_k4",
+      "source": "https://www.reddit.com/r/BuyItForLife/comments/rp524o/looking_to_buy_an_electric_kettle_that_will_last/",
+      "input": "Looking for a long lasting electric kettle with temperature control for tea and coffee",
+      "reviewFocus": "durability and temperature",
+      "observedTarget": "electric_kettle",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "transfer_reliability",
+        "kettle_temperature"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "transfer_reliability",
+          "observable": "field_failure_rate_by_cohort",
+          "status": "method_missing"
+        },
+        {
+          "facet": "transfer_reliability",
+          "observable": "repair_and_parts_support",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_temperature",
+          "observable": "water_temperature_accuracy",
+          "status": "method_missing"
+        },
+        {
+          "facet": "kettle_temperature",
+          "observable": "temperature_setting_range",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "filter_f1",
+      "source": "https://www.reddit.com/r/WaterTreatment/comments/16m7vl6/best_water_filter_for_a_rental_apartment/",
+      "input": "Need a water filter for a rented apartment, cannot drill, and want PFAS and heavy metal reduction backed by tests",
+      "reviewFocus": "non-invasive installation and contaminant-specific certification",
+      "observedTarget": "drinking_water_filter",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "water_no_plumbing",
+        "water_pfas",
+        "water_lead"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "water_no_plumbing",
+          "observable": "installation_modification_requirements",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_no_plumbing",
+          "observable": "leak_containment_and_space",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_pfas",
+          "observable": "certified_named_pfas_reduction_claim",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "water_pfas",
+          "observable": "feed_water_and_service_conditions",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "water_lead",
+          "observable": "certified_specific_contaminant_reduction_claim",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "water_lead",
+          "observable": "feed_water_and_service_conditions",
+          "status": "published_scope_to_review"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "filter_f2",
+      "source": "https://www.reddit.com/r/WaterTreatment/comments/1hiqsxt",
+      "input": "Need a water filter but cannot install a separate faucet; want lead reduction and better taste",
+      "reviewFocus": "faucet constraint; water taste not necessarily chlorine",
+      "observedTarget": "drinking_water_filter",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "water_no_faucet",
+        "water_lead",
+        "water_general_taste"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "water_no_faucet",
+          "observable": "faucet_installation_requirement",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_lead",
+          "observable": "certified_specific_contaminant_reduction_claim",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "water_lead",
+          "observable": "feed_water_and_service_conditions",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "water_general_taste",
+          "observable": "taste_odor_problem_identification",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_general_taste",
+          "observable": "claim_specific_performance",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "filter_f3",
+      "source": "https://www.reddit.com/r/WaterFilters/comments/1vyytcu/best_renterfriendly_water_filter_that_requires/",
+      "input": "Looking for a renter-friendly water filter with no drilling; hard water taste and affordable replacement filters",
+      "reviewFocus": "renter limits, mineral taste not evidence of exposure, maintenance",
+      "observedTarget": "drinking_water_filter",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "water_no_plumbing",
+        "water_hardness",
+        "water_replacement_cost"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [
+        "hardness_is_not_equivalent_to_health_contaminant_reduction"
+      ],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "water_no_plumbing",
+          "observable": "installation_modification_requirements",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_no_plumbing",
+          "observable": "leak_containment_and_space",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_hardness",
+          "observable": "hardness_change_under_test",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_hardness",
+          "observable": "treatment_process_suitability",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_replacement_cost",
+          "observable": "certified_capacity_and_replacement_interval",
+          "status": "method_missing"
+        },
+        {
+          "facet": "water_replacement_cost",
+          "observable": "consumable_cost",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "filter_f4",
+      "source": "https://www.reddit.com/r/WaterTreatment/comments/1uw9o6m/new_home_need_help_deciding_on_water_filtration/",
+      "input": "Need an under sink water filter rather than countertop. Not sure if RO is needed or another treatment",
+      "reviewFocus": "solution family comparison and absent contaminant objective",
+      "observedTarget": "drinking_water_filter",
+      "targetBasis": "explicit_target",
+      "task": "solution_comparison",
+      "recognizedFacetIds": [],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [
+        "compare_solution_families_before_models",
+        "no_supported_usage_goal_detected",
+        "water_quality_objective_or_contaminant_unknown"
+      ],
+      "clarification": "What problem are you trying to solve with the water: taste, limescale, or a contaminant identified in a water report?",
+      "methodCoverage": [],
+      "rankAuthorized": false
+    },
+    {
+      "id": "pasta_p1",
+      "source": "https://www.reddit.com/r/pasta/comments/d1qahk",
+      "input": "I already own a pasta roller and am considering an extruder for bucatini",
+      "reviewFocus": "owned roller versus wanted different machine",
+      "observedTarget": "pasta_maker",
+      "targetBasis": "explicit_target",
+      "task": "unresolved",
+      "recognizedFacetIds": [
+        "pasta_extruded_shapes"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [
+        "owned_equipment_is_not_automatically_a_purchase_target",
+        "purchase_or_research_task_unresolved"
+      ],
+      "clarification": "Are you choosing a product or trying to use one you already have?",
+      "methodCoverage": [
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "shape_die_compatibility",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "dough_hydration_workflow",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "extrusion_cleaning",
+          "status": "published_scope_to_review"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "pasta_p2",
+      "source": "https://www.reddit.com/r/pastamakers/comments/1uml1q3/ive_been_looking_for_fresh_pasta_extruders_that/",
+      "input": "Need a pasta extruder that makes good pasta with bronze dies on a budget",
+      "reviewFocus": "die compatibility and quality assertion uncertainty",
+      "observedTarget": "pasta_maker",
+      "targetBasis": "explicit_target",
+      "task": "product_selection",
+      "recognizedFacetIds": [
+        "pasta_extruded_shapes"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "shape_die_compatibility",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "dough_hydration_workflow",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "extrusion_cleaning",
+          "status": "published_scope_to_review"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "pasta_p3",
+      "source": "https://www.reddit.com/r/pasta/comments/10mvn9z",
+      "input": "My automatic pasta maker gives dense penne, what should I change?",
+      "reviewFocus": "troubleshooting not purchasing",
+      "observedTarget": "pasta_maker",
+      "targetBasis": "explicit_target",
+      "task": "use_or_troubleshoot",
+      "recognizedFacetIds": [
+        "pasta_extruded_shapes"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [
+        "not_a_product_selection_request"
+      ],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "shape_die_compatibility",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "dough_hydration_workflow",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_extruded_shapes",
+          "observable": "extrusion_cleaning",
+          "status": "published_scope_to_review"
+        }
+      ],
+      "rankAuthorized": false
+    },
+    {
+      "id": "pasta_p4",
+      "source": "https://www.reddit.com/r/pasta/comments/i722xe",
+      "input": "Dough gets stuck in my pasta machine rollers and takes ages to clean",
+      "reviewFocus": "troubleshooting and cleaning; no need to purchase",
+      "observedTarget": "pasta_maker",
+      "targetBasis": "explicit_target",
+      "task": "use_or_troubleshoot",
+      "recognizedFacetIds": [
+        "pasta_cleanup"
+      ],
+      "nonRequestedFacets": [],
+      "unresolvedIssues": [
+        "not_a_product_selection_request",
+        "owned_equipment_is_not_automatically_a_purchase_target"
+      ],
+      "clarification": null,
+      "methodCoverage": [
+        {
+          "facet": "pasta_cleanup",
+          "observable": "post_use_cleaning_steps",
+          "status": "published_scope_to_review"
+        },
+        {
+          "facet": "pasta_cleanup",
+          "observable": "component_access_for_cleaning",
+          "status": "method_missing"
+        }
+      ],
+      "rankAuthorized": false
+    }
+  ]
+}

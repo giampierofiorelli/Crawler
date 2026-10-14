@@ -1,0 +1,279 @@
+{
+  "phase": 149,
+  "version": "4.73-phase149",
+  "independentEvaluation": false,
+  "independentGoldAnnotations": 0,
+  "precision": null,
+  "recall": null,
+  "scienceValidatedFacts": 0,
+  "developerFixtures": [
+    {
+      "id": "cataphora",
+      "kind": "developer_constructed",
+      "sourceUrl": null,
+      "sourceSha256": "caf6b2e26337585c57a6f885d4da22cb5980eb12f8118588733e69a7acdaa6aa",
+      "phase148": {
+        "references": [
+          {
+            "text": "This player",
+            "decision": "unresolved_no_antecedent",
+            "candidateCount": 0
+          }
+        ],
+        "anchorCount": 1
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This player",
+            "status": "forward_candidate_unverified",
+            "direction": "forward_same_paragraph",
+            "candidateCount": 1
+          }
+        ],
+        "anchors": 1,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "cross_paragraph",
+      "kind": "developer_constructed",
+      "sourceUrl": null,
+      "sourceSha256": "cbda4b651009aeb8c236438c279f51bc96cf710d996c9d0767f4e931c756d4b3",
+      "phase148": {
+        "references": [
+          {
+            "text": "This model",
+            "decision": "blocked_paragraph_boundary",
+            "candidateCount": 1
+          }
+        ],
+        "anchorCount": 1
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This model",
+            "status": "cross_paragraph_candidate_unverified",
+            "direction": "cross_paragraph",
+            "candidateCount": 1
+          }
+        ],
+        "anchors": 1,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "variant_competition",
+      "kind": "developer_constructed",
+      "sourceUrl": null,
+      "sourceSha256": "b1e0d02e560cf2c07bef287e0117a68bf7841aaef8b7c4f02bc1988962a2258a",
+      "phase148": {
+        "references": [
+          {
+            "text": "This model",
+            "decision": "unresolved_no_antecedent",
+            "candidateCount": 0
+          }
+        ],
+        "anchorCount": 2
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This model",
+            "status": "blocked_variant_collision",
+            "direction": "forward_same_paragraph",
+            "candidateCount": 2
+          }
+        ],
+        "anchors": 2,
+        "variantWarnings": 1,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "claim_to_measurement",
+      "kind": "developer_constructed",
+      "sourceUrl": null,
+      "sourceSha256": "934703f3bd7c9eea97917355aebd8310e688e69ecd4904ba7b0c36466c80d45d",
+      "phase148": {
+        "references": [
+          {
+            "text": "This model",
+            "decision": "blocked_paragraph_boundary",
+            "candidateCount": 1
+          }
+        ],
+        "anchorCount": 1
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This model",
+            "status": "blocked_reporting_transition",
+            "direction": "cross_paragraph",
+            "candidateCount": 1
+          }
+        ],
+        "anchors": 1,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "pronoun_no_forward",
+      "kind": "developer_constructed",
+      "sourceUrl": null,
+      "sourceSha256": "f05d1dd67c2a4f0b36eb18dcbdf3823962e226df50612219b678f90c5d25efde",
+      "phase148": {
+        "references": [
+          {
+            "text": "It",
+            "decision": "unresolved_no_antecedent",
+            "candidateCount": 0
+          }
+        ],
+        "anchorCount": 1
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "It",
+            "status": "unresolved_no_safe_candidate",
+            "direction": null,
+            "candidateCount": 0
+          }
+        ],
+        "anchors": 1,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "comparison_not_identity",
+      "kind": "developer_constructed",
+      "sourceUrl": null,
+      "sourceSha256": "d5f89c8a83b4f050b5a581bfa8cc9242804f028dfae5b9f198e551ff51c17bf1",
+      "phase148": {
+        "references": [
+          {
+            "text": "This TV",
+            "decision": "unresolved_no_antecedent",
+            "candidateCount": 0
+          }
+        ],
+        "anchorCount": 1
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This TV",
+            "status": "blocked_comparison_target",
+            "direction": "forward_same_paragraph",
+            "candidateCount": 1
+          }
+        ],
+        "anchors": 1,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    }
+  ],
+  "publishedExcerpts": [
+    {
+      "id": "techradar_airfryer_page_context_missing",
+      "kind": "published_short_excerpt_seen_after_development",
+      "sourceUrl": "https://www.techradar.com/home/air-fryers/ninja-5-in-1-grill-and-air-fryer-review",
+      "sourceSha256": "a9a9151b067884b96bdd007841df86d7f379dc0ef97f2087340857e26ff93595",
+      "phase148": {
+        "references": [
+          {
+            "text": "This model",
+            "decision": "unresolved_no_antecedent",
+            "candidateCount": 0
+          }
+        ],
+        "anchorCount": 0
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This model",
+            "status": "unresolved_no_safe_candidate",
+            "direction": null,
+            "candidateCount": 0
+          }
+        ],
+        "anchors": 0,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "whathifi_two_speaker_variants",
+      "kind": "published_short_excerpt_seen_after_development",
+      "sourceUrl": "https://www.whathifi.com/reviews/pmc-prodigy-1",
+      "sourceSha256": "bd940cc90fde9625b4b7a375139fb93a6a86cffea7698ba9644664f463894fc5",
+      "phase148": {
+        "references": [],
+        "anchorCount": 2
+      },
+      "phase149": {
+        "proposals": [],
+        "anchors": 2,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    },
+    {
+      "id": "rtings_television_comparison_target",
+      "kind": "published_short_excerpt_seen_after_development",
+      "sourceUrl": "https://www.rtings.com/tv/reviews/sony",
+      "sourceSha256": "9029edd889f57bb53d0fceec53ff7cf7b304ceeefecc17ddb9e6ab0cc7249143",
+      "phase148": {
+        "references": [
+          {
+            "text": "This TV",
+            "decision": "unresolved_no_antecedent",
+            "candidateCount": 0
+          }
+        ],
+        "anchorCount": 1
+      },
+      "phase149": {
+        "proposals": [
+          {
+            "text": "This TV",
+            "status": "blocked_comparison_target",
+            "direction": "forward_same_paragraph",
+            "candidateCount": 1
+          }
+        ],
+        "anchors": 1,
+        "variantWarnings": 0,
+        "coverageTruncated": false,
+        "canonicalWriteAuthorized": false,
+        "rankingAuthorized": false
+      }
+    }
+  ]
+}

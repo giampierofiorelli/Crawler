@@ -1,0 +1,89 @@
+{
+  "phase": 141,
+  "version": "4.65-phase141",
+  "parent": "4.64-phase140",
+  "parentArchiveSHA256": "39942348215d02a8fade1e897b6cb6e7d7c1e9c7fc9a859eba09ed9f034f8af5",
+  "parentFiles": 1436,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerification": [
+    "PHASE141-LEXICAL-RECALL-DIAGNOSTIC.json",
+    "PHASE141-REGRESSION-GROUPS.json",
+    "PHASE141-REUSABLE-LEXICAL-RESOURCE-BRIDGE.md",
+    "dist/src/phase141_local_lexical_resources.js",
+    "dist/tests/phase141_local_lexical_resources.test.js",
+    "research/phase141_licences/OEWN-LICENSE.md",
+    "research/phase141_licences/OEWN-WNDB-LICENSE.txt",
+    "research/phase141_licences/VADER-LICENSE.txt",
+    "research/phase141_licences/VERBNET-3X-LICENSE.txt",
+    "resources/phase141/ATTRIBUTION.md",
+    "resources/phase141/english_lexical_bundle.json",
+    "scripts/build-phase141-lexicon.py",
+    "scripts/evaluate-phase141.mjs",
+    "scripts/phase141_regress.mjs",
+    "src/phase141_local_lexical_resources.ts",
+    "tests/phase141_local_lexical_resources.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passed": 1691,
+    "testFiles": 100,
+    "focused141": 31,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Offline": 9,
+    "total": 77
+  },
+  "lexicalSources": {
+    "vader": {
+      "entries": 7506,
+      "lexiconSha256": "ec636f884f36b5de6a4d681b2f61c08c2ec90eeb440472033f3307d0d6fa8bc9",
+      "license": "MIT",
+      "sha256": "48917868711e2db6ce6a4a32ddbf6c0365b993a95adcff7080e5c86b80e8ac13",
+      "source": "https://github.com/cjhutto/vaderSentiment"
+    },
+    "verbnet": {
+      "classes": 329,
+      "lemmaCount": 3694,
+      "license": "VerbNet-3.X-custom-license",
+      "sha256": "2c7c32785aa13238f9bc8ba11ccf040e6e89421f30c9e530d9b25eed07badc3b",
+      "source": "https://github.com/cu-clear/verbnet"
+    },
+    "wordnet": {
+      "license": "CC-BY-4.0+Princeton-WordNet",
+      "selectedSynsets": 5,
+      "sha256": "491a8d3e389f3fdddba475130d538bafad605e4bab1e3066ff850a32365dbdd2",
+      "source": "https://github.com/globalwordnet/english-wordnet"
+    }
+  },
+  "dataAssetBytes": 486656,
+  "dataProjection": {
+    "wordnetSynsets": 5,
+    "reviewedCues": 9,
+    "verbnetLemmas": 3694,
+    "vaderEntries": 7506
+  },
+  "independentPerformanceEvaluationDone": false,
+  "developerConstructedExamples": 7,
+  "lexicalProposalsOnConstructedExamples": 6,
+  "previousProfessionalExcerpts": 3,
+  "additionalLexicalProposalsOnThose": 0,
+  "runtimeDependenciesAdded": 0,
+  "pythonModelRuntimeAdded": false,
+  "externalInferenceAPIsAdded": false,
+  "userSuppliedThirdPartySourceZIPsBundled": false,
+  "derivedThirdPartyLexicalDataBundledWithAttribution": true,
+  "canonicalWriteAuthorized": false,
+  "rankingAuthorized": false,
+  "note": "Tests exercise authored examples; only a limited reviewed lexical subset is allowed to generate candidate propositions."
+}

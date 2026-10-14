@@ -1,0 +1,128 @@
+{
+  "schema": "phase94_genuine_source_evidence_v1",
+  "status": "REAL_SOURCE_PREFLIGHT_AND_PREEXISTING_AUTHENTIC_REPLAY_ONLY",
+  "project_basis": "v4.18_phase93_original_repository",
+  "live_pages_fetched": 0,
+  "live_html_bytes_fetched": 0,
+  "live_extraction_precision": null,
+  "live_extraction_recall": null,
+  "third_party_web_text_mode": "manual_source_verification_only_not_source_html",
+  "public_source_count": 4,
+  "sources": [
+    {
+      "id": "raspberry_pi_documentation",
+      "kind": "manufacturer_html",
+      "url": "https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html",
+      "licence_url": "https://www.raspberrypi.com/licensing/",
+      "terms_url": "https://www.raspberrypi.com/terms-and-conditions/",
+      "robots_url": "https://www.raspberrypi.com/robots.txt",
+      "rights": "source_text_cc_by_sa_4_not_website_scrape_permission",
+      "terms": "explicit_anti_scraping_clause_5_8",
+      "automated_acquisition": "denied_pending_permission_or_applicable_exception",
+      "explanation": "2026-06-02 site terms clause 5.8 expressly reserves scraping/TDM rights.",
+      "automatic_acquisition_eligible": false,
+      "live_html_or_csv_acquired": false,
+      "site_contents_replayed_as_live": false
+    },
+    {
+      "id": "arduino_product_docs",
+      "kind": "manufacturer_html",
+      "url": "https://docs.arduino.cc/hardware/uno-r4-wifi/",
+      "licence_url": null,
+      "terms_url": "https://www.arduino.cc/en/terms-conditions",
+      "robots_url": "https://docs.arduino.cc/robots.txt",
+      "rights": "site_content_reuse_not_independently_cleared",
+      "terms": "review_not_completed_for_commercial_automated_reuse",
+      "automated_acquisition": "denied_until_reviewed",
+      "explanation": "Actual documentation publicly viewable; commercial machine ingestion not authorized by fact of public accessibility.",
+      "automatic_acquisition_eligible": false,
+      "live_html_or_csv_acquired": false,
+      "site_contents_replayed_as_live": false
+    },
+    {
+      "id": "blender_open_data",
+      "kind": "original_benchmark",
+      "url": "https://opendata.blender.org/benchmarks/query/?blender_version=4.4.0&compute_type=OPTIX&group_by=device_name",
+      "licence_url": "https://opendata.blender.org/download/",
+      "terms_url": null,
+      "robots_url": "https://opendata.blender.org/robots.txt",
+      "rights": "cc0_for_published_raw_archive_as_documented",
+      "terms": "automatic_web_download_not_separately_audited",
+      "automated_acquisition": "not_executed_network_blocked",
+      "explanation": "Offline fixture contains prior manually transcribed public-page values, NOT a downloaded official CSV.",
+      "automatic_acquisition_eligible": false,
+      "live_html_or_csv_acquired": false,
+      "site_contents_replayed_as_live": false
+    },
+    {
+      "id": "sbaf_headphone_database",
+      "kind": "original_lab_excerpt",
+      "url": "https://github.com/superbestaudiofriends/headphone-measurements-frequency-response/blob/master/cEAR30-Sennheiser-HD600-L.txt",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0/legalcode.en",
+      "terms_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "robots_url": "https://github.com/robots.txt",
+      "rights": "author_declared_cc_by_4_data",
+      "terms": "fresh_automated_website_intake_not_reviewed",
+      "automated_acquisition": "not_executed_network_blocked",
+      "explanation": "Offline source excerpt predates this evaluation, 20 of an original longer measurement series.",
+      "automatic_acquisition_eligible": false,
+      "live_html_or_csv_acquired": false,
+      "site_contents_replayed_as_live": false
+    }
+  ],
+  "dns": [
+    {
+      "host": "opendata.blender.org",
+      "available": false,
+      "reason": "gaierror"
+    },
+    {
+      "host": "github.com",
+      "available": false,
+      "reason": "gaierror"
+    },
+    {
+      "host": "www.raspberrypi.com",
+      "available": false,
+      "reason": "gaierror"
+    },
+    {
+      "host": "docs.arduino.cc",
+      "available": false,
+      "reason": "gaierror"
+    }
+  ],
+  "existing_original_evidence": {
+    "sbaf": {
+      "source_id": "sbaf_hd600_cear30_left_20_point_excerpt",
+      "sha256": "4320f9033e35189d73646b28d8f605c8522e7ea951d683d6a70954c14bff7757",
+      "original_lab_points_replayed": 20,
+      "reference_points_matched": 20,
+      "mismatches": 0,
+      "independent_gold_standard": false,
+      "live_fetch": false,
+      "ranking_allowed": false
+    },
+    "blender": {
+      "device_count": 3,
+      "input_sha256": "630cf85140e7a0680cdf18cfc825a6eb6fd00418665f27634115788824a8f194",
+      "acquisition_method": "documented_public_page_transcription",
+      "original_csv_export_downloaded": false,
+      "benchmark_version": "4.4.0",
+      "backend": "OPTIX",
+      "ranking_allowed": false,
+      "products": [
+        "NVIDIA GeForce RTX 5090",
+        "NVIDIA GeForce RTX 4090",
+        "NVIDIA GeForce RTX 5080"
+      ]
+    }
+  },
+  "reasons": [
+    "No direct external DNS/HTTPS in execution environment (when probes fail)",
+    "Raspberry Pi site terms expressly reserve automated scraping/TDM rights",
+    "Arduino site-specific automated commercial reuse and robots not cleared",
+    "No independently acquired fresh native HTML or current benchmark CSV bytes"
+  ],
+  "next_valid_test": "Acquire original source bytes via explicitly authorized transport and independently label held-out models before measuring extraction quality."
+}

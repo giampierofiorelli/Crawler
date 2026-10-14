@@ -1,0 +1,58 @@
+{
+  "phase": 110,
+  "status": "constructed_fixture_not_live_ollama",
+  "reportId": "constructed_review_v1",
+  "segments": 3,
+  "proposals": [
+    {
+      "conceptId": "cleaning_quality",
+      "kind": "observation",
+      "polarity": "favorable",
+      "sourceSegment": "body",
+      "isProvisional": true
+    },
+    {
+      "conceptId": "noise_tone",
+      "kind": "observation",
+      "polarity": "unfavorable",
+      "sourceSegment": "body",
+      "isProvisional": true
+    },
+    {
+      "conceptId": "pet_hair_wrap",
+      "kind": "maintenance",
+      "polarity": "unfavorable",
+      "sourceSegment": "footnote",
+      "isProvisional": true
+    }
+  ],
+  "unresolvedSegments": [],
+  "issues": [],
+  "passageTextPersisted": false,
+  "semanticApprovalPending": true,
+  "demonstrationOnlyMetrics": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 1,
+    "precision": 1,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "bySurface": {
+      "paragraph": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "footnote": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1,
+        "recall": 0.5
+      }
+    },
+    "benchmarkStatus": "requires_independent_real_source_annotation"
+  }
+}

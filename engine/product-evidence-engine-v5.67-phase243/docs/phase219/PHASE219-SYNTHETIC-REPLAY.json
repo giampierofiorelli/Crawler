@@ -1,0 +1,115 @@
+{
+  "schema": "pee219.synthetic-replay.v1",
+  "fixtureOnly": true,
+  "publication": {
+    "schema": "pee219.publication-intake.v1",
+    "state": "research_only",
+    "decisions": [
+      {
+        "sourceId": "maker",
+        "url": "https://maker.org/newsroom/2026/new-model",
+        "originalWorkId": "release_123",
+        "action": "collect_official_specs",
+        "sourceCategory": "commercial_announcement",
+        "canReadFullText": false,
+        "scientificEvidenceAdmitted": false,
+        "independentTestAdmitted": false,
+        "rankingAuthorized": false,
+        "reasonCodes": [
+          "producer_claims_not_independent_test"
+        ]
+      },
+      {
+        "sourceId": "wire",
+        "url": "https://presswire.org/releases/new-model",
+        "originalWorkId": "release_123",
+        "action": "discovery_only",
+        "sourceCategory": "commercial_announcement",
+        "canReadFullText": false,
+        "scientificEvidenceAdmitted": false,
+        "independentTestAdmitted": false,
+        "rankingAuthorized": false,
+        "reasonCodes": [
+          "wire_reprint_not_independent"
+        ]
+      },
+      {
+        "sourceId": "magazine",
+        "url": "https://magazine.org/review/coffee-a",
+        "originalWorkId": "editorial_888",
+        "action": "inspect_original_editorial_work",
+        "sourceCategory": "editorial",
+        "canReadFullText": false,
+        "scientificEvidenceAdmitted": false,
+        "independentTestAdmitted": false,
+        "rankingAuthorized": false,
+        "reasonCodes": [
+          "original_test_method_unverified"
+        ]
+      }
+    ],
+    "phase82": {
+      "candidates": [
+        {
+          "productId": "coffee_a",
+          "categoryId": "coffee_machine",
+          "action": "review_independent_evidence",
+          "priority": "high",
+          "sources": 3,
+          "distinctOriginalWorks": 2,
+          "candidateNotRecommendation": true,
+          "rankingAuthorized": false,
+          "manufacturingRetirementAuthorized": false,
+          "missingCategoryResearch": false
+        }
+      ],
+      "rejectedSignalCount": 0,
+      "deduplicatedReprints": 1
+    },
+    "mediaStoryReviewRequired": [
+      "https://magazine.org/review/coffee-a"
+    ],
+    "safetyNoticesToVerify": [],
+    "noNetworkRequests": true,
+    "noFullTextStored": true,
+    "rankingsChanged": false
+  },
+  "company": {
+    "schema": "pee219.company-experience.v1",
+    "state": "research_only",
+    "manufacturerId": "maker",
+    "acceptedDistinctReports": 0,
+    "blockedOrHeld": 1,
+    "duplicateObservations": 0,
+    "companyExperience": {
+      "supportOrWarranty": 0,
+      "directCommerce": 0,
+      "productProblemLeads": 0
+    },
+    "excludedAsDifferentResponsibleParty": 0,
+    "unresolvedResponsibility": 0,
+    "needsIndependentVerification": [
+      "report_sampling_bias",
+      "representativeness_unknown",
+      "review_authenticity",
+      "source_permission_not_verified"
+    ],
+    "notProductPerformanceEvidence": true,
+    "noTrustScoreInference": true,
+    "noReviewBodiesStored": true,
+    "noPlatformAccessPerformed": true,
+    "rankingAuthorized": false
+  },
+  "watch": {
+    "selectedSourceIds": [],
+    "blockedSourceIds": [
+      "newsroom"
+    ],
+    "deferredDueSourceIds": [],
+    "budgetUsed": 0,
+    "actualNetworkRequests": 0
+  },
+  "realSourceFetched": false,
+  "trustpilotAccess": false,
+  "rankingAuthorized": false
+}

@@ -1,0 +1,46 @@
+{
+  "phase": 75,
+  "version": "4.3.0",
+  "date": "2026-10-10",
+  "status": "single_host_offline_loopback_pilot_not_live_validated",
+  "source_base": "product-evidence-engine-v4.2-phase74.zip",
+  "verification": {
+    "typescript_javascript_pass": 474,
+    "python_primary_pass": 47,
+    "python_ingestion_pass": 21,
+    "launch_pass": 4,
+    "release_pass": 3,
+    "phase75_new_tests_pass": 14
+  },
+  "capabilities": {
+    "research_metadata_journal_persisted_and_reloaded": true,
+    "task_priority_heuristics": true,
+    "sitemap_metadata_discovery_adapter": true,
+    "ollama_loopback_http_adapter_mocked": true,
+    "local_model_real_inference_tested": false,
+    "live_public_site_discovery_tested": false,
+    "postgresql_migration_executed": false,
+    "automated_commercial_publication": false,
+    "automatic_category_schema_promotion": false
+  },
+  "modified_file_sha256": {
+    "src/category_research_execution.ts": "78464b08b4711d40798e9d1c2e54104fa9a83b98430cb0b0edd9a417691b87fd",
+    "src/phase75_priority.ts": "d3b16fd31c741812a2c5e21655ef0b6892e20d4f85f26b4bff135a674dfdcc4b",
+    "src/phase75_memory.ts": "d5443017170910f04209cc3cb159dfd473b5e62cdc85fefb10d498163f91a0c7",
+    "src/phase75_runtime.ts": "8f712aa93bb34541b25993b5dc0a87c68b93608c844ea29fb1f3ede495f27a64",
+    "src/phase75_local_model.ts": "90572d42bdb7083434c212c128556916a37748ba033c005cdb9625d8e2491d77",
+    "src/phase75_source_discovery.ts": "ba985e9420773ee96a80df8bf7aefe83cca7a0ac2cd3b6666388801080b64577",
+    "tests/phase75_research_runtime.test.ts": "bd495b43b6bef71e4e392f2d6cbf707dfe412576a9cb89fb0cec22cbbb83e568",
+    "scripts/demo-phase75.mjs": "da90d82c8455729fe62a9d9c2f850badacf7e06ca1763c68eb3bcfd4cf59f3b4",
+    "db/migrations/010_category_research_priorities.sql": "d0c2ec0c9e2dbdad5d7b14d460daceab9df23945f22f699b4e4bfecd3ff1c6c8",
+    "docs/PHASE-75-DURABLE-RESEARCH-AND-LOCAL-INFERENCE.md": "07ce1d6a2cd59e24647fa4126d8c1842cac3ce97d21168f9ef28df9a01a5cf33",
+    "package.json": "be38b13d8d248be788ce76b5aa33dd6484ae45fdc8963f82bbfa5d49cde45328",
+    "README.md": "530c4e511fdcaefa25289a567d333df41580d42a15651fa5e08dfb41b1f33e00"
+  },
+  "caveats": [
+    "Software tests and mock inference are not field-level model accuracy measurements.",
+    "Sitemap discovery is scoped to previously reviewed source policies, not general web search.",
+    "JSON journal checksum is tamper-detection only, not authentication of reviewers.",
+    "Database schema migration is proposed and was not executed."
+  ]
+}

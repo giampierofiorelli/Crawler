@@ -1,0 +1,710 @@
+TAP version 13
+# (node:82379) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: two passes extract an unexpectedly negative claim missed on first pass
+ok 1 - two passes extract an unexpectedly negative claim missed on first pass
+  ---
+  duration_ms: 3.441129
+  type: 'test'
+  ...
+# Subtest: provenance uses source offsets, hashes, no long review text or search query
+ok 2 - provenance uses source offsets, hashes, no long review text or search query
+  ---
+  duration_ms: 0.644284
+  type: 'test'
+  ...
+# Subtest: runtime rejects hidden user query or intent metadata
+ok 3 - runtime rejects hidden user query or intent metadata
+  ---
+  duration_ms: 0.418442
+  type: 'test'
+  ...
+# Subtest: rejects request-based reinterpretation as a canonical boolean fact
+ok 4 - rejects request-based reinterpretation as a canonical boolean fact
+  ---
+  duration_ms: 0.485684
+  type: 'test'
+  ...
+# Subtest: invalid source span is quarantined rather than creating a fact
+ok 5 - invalid source span is quarantined rather than creating a fact
+  ---
+  duration_ms: 0.411552
+  type: 'test'
+  ...
+# Subtest: fabricated measurement whose number is missing from evidence is rejected
+ok 6 - fabricated measurement whose number is missing from evidence is rejected
+  ---
+  duration_ms: 0.278121
+  type: 'test'
+  ...
+# Subtest: numeric check does not assert calibrated unit or protocol correctness
+ok 7 - numeric check does not assert calibrated unit or protocol correctness
+  ---
+  duration_ms: 0.998228
+  type: 'test'
+  ...
+# Subtest: missing review of one accessible segment cannot be treated as complete
+ok 8 - missing review of one accessible segment cannot be treated as complete
+  ---
+  duration_ms: 0.247104
+  type: 'test'
+  ...
+# Subtest: nontext visual representation partial blocks review even if caption exists
+ok 9 - nontext visual representation partial blocks review even if caption exists
+  ---
+  duration_ms: 0.483391
+  type: 'test'
+  ...
+# Subtest: unavailable figure prevents sealing, even if a model claims it was empty
+ok 10 - unavailable figure prevents sealing, even if a model claims it was empty
+  ---
+  duration_ms: 0.495078
+  type: 'test'
+  ...
+# Subtest: model cannot claim nonexistent segment is empty
+ok 11 - model cannot claim nonexistent segment is empty
+  ---
+  duration_ms: 0.297029
+  type: 'test'
+  ...
+# Subtest: deduplicates exact identical observations proposed on two model passes
+ok 12 - deduplicates exact identical observations proposed on two model passes
+  ---
+  duration_ms: 0.41069
+  type: 'test'
+  ...
+# Subtest: model says there are no claims but it still requires explicit independent review
+ok 13 - model says there are no claims but it still requires explicit independent review
+  ---
+  duration_ms: 1.126321
+  type: 'test'
+  ...
+# Subtest: authenticated human approval bridges the source-wide packet to phase109 authoritative memory
+ok 14 - authenticated human approval bridges the source-wide packet to phase109 authoritative memory
+  ---
+  duration_ms: 2.649793
+  type: 'test'
+  ...
+# Subtest: review refuses to ignore a candidate just because it was not in the query
+ok 15 - review refuses to ignore a candidate just because it was not in the query
+  ---
+  duration_ms: 0.654158
+  type: 'test'
+  ...
+# Subtest: rejected claim cannot be relabeled as empty without independent resolution
+ok 16 - rejected claim cannot be relabeled as empty without independent resolution
+  ---
+  duration_ms: 0.644103
+  type: 'test'
+  ...
+# Subtest: unresolved source or invalid candidate blocks all promotion
+ok 17 - unresolved source or invalid candidate blocks all promotion
+  ---
+  duration_ms: 0.600327
+  type: 'test'
+  ...
+# Subtest: SQLite retains reviewed atomic observations, not review paragraphs after close/reopen
+ok 18 - SQLite retains reviewed atomic observations, not review paragraphs after close/reopen
+  ---
+  duration_ms: 4.858239
+  type: 'test'
+  ...
+# Subtest: uses a local-only inference endpoint and rejects remote inference
+ok 19 - uses a local-only inference endpoint and rejects remote inference
+  ---
+  duration_ms: 0.366333
+  type: 'test'
+  ...
+# Subtest: held-out validation reports real false negatives and stratifies by source surface
+ok 20 - held-out validation reports real false negatives and stratifies by source surface
+  ---
+  duration_ms: 0.29757
+  type: 'test'
+  ...
+# Subtest: literal evidence anchor determines correct indices, and anchor is discarded
+ok 21 - literal evidence anchor determines correct indices, and anchor is discarded
+  ---
+  duration_ms: 0.327204
+  type: 'test'
+  ...
+# Subtest: fabricated literal anchor cannot become a semantic observation
+ok 22 - fabricated literal anchor cannot become a semantic observation
+  ---
+  duration_ms: 0.235766
+  type: 'test'
+  ...
+# Subtest: oversized content is flagged, never silently truncated or sealed
+ok 23 - oversized content is flagged, never silently truncated or sealed
+  ---
+  duration_ms: 0.795882
+  type: 'test'
+  ...
+# Subtest: local model errors quarantine review instead of auto accepting an empty block
+ok 24 - local model errors quarantine review instead of auto accepting an empty block
+  ---
+  duration_ms: 0.236227
+  type: 'test'
+  ...
+# (node:82380) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: long passages split into multiple bounded windows without losing any characters
+ok 25 - long passages split into multiple bounded windows without losing any characters
+  ---
+  duration_ms: 2.59502
+  type: 'test'
+  ...
+# Subtest: preserves explicit source methodology segments along with windowed text
+ok 26 - preserves explicit source methodology segments along with windowed text
+  ---
+  duration_ms: 0.506144
+  type: 'test'
+  ...
+# Subtest: unavailable figures stay inaccessible, never become empty favorable evidence
+ok 27 - unavailable figures stay inaccessible, never become empty favorable evidence
+  ---
+  duration_ms: 0.368497
+  type: 'test'
+  ...
+# Subtest: no query or preferences can sneak into the canonical source plan
+ok 28 - no query or preferences can sneak into the canonical source plan
+  ---
+  duration_ms: 0.373364
+  type: 'test'
+  ...
+# Subtest: rejects unsafe window size/overlap rather than truncating a long source
+ok 29 - rejects unsafe window size/overlap rather than truncating a long source
+  ---
+  duration_ms: 0.153422
+  type: 'test'
+  ...
+# Subtest: preserves source utf16 surrogate pairs at window boundaries
+ok 30 - preserves source utf16 surrogate pairs at window boundaries
+  ---
+  duration_ms: 0.364511
+  type: 'test'
+  ...
+# Subtest: scope audit records reference to later method negation without promoting interpretation
+ok 31 - scope audit records reference to later method negation without promoting interpretation
+  ---
+  duration_ms: 0.428057
+  type: 'test'
+  ...
+# Subtest: scope proposals cannot invent a source quote outside the document
+ok 32 - scope proposals cannot invent a source quote outside the document
+  ---
+  duration_ms: 0.247744
+  type: 'test'
+  ...
+# Subtest: scope proposal must refer to an existing observation
+ok 33 - scope proposal must refer to an existing observation
+  ---
+  duration_ms: 0.381697
+  type: 'test'
+  ...
+# Subtest: source scope audit fails when the original inventory changes
+ok 34 - source scope audit fails when the original inventory changes
+  ---
+  duration_ms: 0.343799
+  type: 'test'
+  ...
+# Subtest: no detected context issues never implies independently proven comprehension
+ok 35 - no detected context issues never implies independently proven comprehension
+  ---
+  duration_ms: 0.259963
+  type: 'test'
+  ...
+# Subtest: quietest is a relative preference, not a hard exclusion
+ok 36 - quietest is a relative preference, not a hard exclusion
+  ---
+  duration_ms: 0.29747
+  type: 'test'
+  ...
+# Subtest: material ambiguity changing recommended winner asks one relevant question
+ok 37 - material ambiguity changing recommended winner asks one relevant question
+  ---
+  duration_ms: 0.124628
+  type: 'test'
+  ...
+# Subtest: different absolute capabilities require clarification even if winner unchanged
+ok 38 - different absolute capabilities require clarification even if winner unchanged
+  ---
+  duration_ms: 0.201064
+  type: 'test'
+  ...
+# Subtest: different eligibility sets are material regardless of same top product
+ok 39 - different eligibility sets are material regardless of same top product
+  ---
+  duration_ms: 0.109114
+  type: 'test'
+  ...
+# Subtest: when all plausible interpretations have the same grounded result no redundant question
+ok 40 - when all plausible interpretations have the same grounded result no redundant question
+  ---
+  duration_ms: 0.175966
+  type: 'test'
+  ...
+# Subtest: evidence missing is not an ambiguous preference and cannot prove virus removal
+ok 41 - evidence missing is not an ambiguous preference and cannot prove virus removal
+  ---
+  duration_ms: 2.237821
+  type: 'test'
+  ...
+# Subtest: without alternatives checked must run interpretive pass before ranking
+ok 42 - without alternatives checked must run interpretive pass before ranking
+  ---
+  duration_ms: 0.100372
+  type: 'test'
+  ...
+# Subtest: materially different readings without a prepared user question cannot silently rank
+ok 43 - materially different readings without a prepared user question cannot silently rank
+  ---
+  duration_ms: 0.089745
+  type: 'test'
+  ...
+# Subtest: invalid user interpretation cannot silently remove impossible best product
+ok 44 - invalid user interpretation cannot silently remove impossible best product
+  ---
+  duration_ms: 0.143657
+  type: 'test'
+  ...
+# Subtest: ranking decisions never contain reviewed observations or source prose
+ok 45 - ranking decisions never contain reviewed observations or source prose
+  ---
+  duration_ms: 0.087182
+  type: 'test'
+  ...
+# Subtest: changing source text with same inventory identity invalidates scope provenance
+ok 46 - changing source text with same inventory identity invalidates scope provenance
+  ---
+  duration_ms: 0.217528
+  type: 'test'
+  ...
+# Subtest: end-to-end windowed extraction returns separate provisional claims for overlap review
+ok 47 - end-to-end windowed extraction returns separate provisional claims for overlap review
+  ---
+  duration_ms: 1.564633
+  type: 'test'
+  ...
+# Subtest: nested user query or unexpected block metadata never enters canonical extraction
+ok 48 - nested user query or unexpected block metadata never enters canonical extraction
+  ---
+  duration_ms: 0.136887
+  type: 'test'
+  ...
+# Subtest: unusually long intact source section can be partitioned, not silently truncated
+ok 49 - unusually long intact source section can be partitioned, not silently truncated
+  ---
+  duration_ms: 7.854996
+  type: 'test'
+  ...
+# Subtest: Italian and English paraphrases give the identical canonical intent fingerprint
+ok 50 - Italian and English paraphrases give the identical canonical intent fingerprint
+  ---
+  duration_ms: 1.648921
+  type: 'test'
+  ...
+# Subtest: real source values from four original professional reviews sort consistently for bare floor
+ok 51 - real source values from four original professional reviews sort consistently for bare floor
+  ---
+  duration_ms: 7.37453
+  type: 'test'
+  ...
+# Subtest: paraphrases of the same intent give identical rank, ties and provenance
+ok 52 - paraphrases of the same intent give identical rank, ties and provenance
+  ---
+  duration_ms: 1.603292
+  type: 'test'
+  ...
+# Subtest: same reviewed data, reordered candidate rows and evidence rows cannot change results or fingerprint
+ok 53 - same reviewed data, reordered candidate rows and evidence rows cannot change results or fingerprint
+  ---
+  duration_ms: 0.310739
+  type: 'test'
+  ...
+# Subtest: carpet is a material context difference and inverts V11/V15 relative order
+ok 54 - carpet is a material context difference and inverts V11/V15 relative order
+  ---
+  duration_ms: 0.504112
+  type: 'test'
+  ...
+# Subtest: carpet paraphrases still remain invariant
+ok 55 - carpet paraphrases still remain invariant
+  ---
+  duration_ms: 0.153091
+  type: 'test'
+  ...
+# Subtest: query lacking test surface abstains rather than silently choosing bare floor
+ok 56 - query lacking test surface abstains rather than silently choosing bare floor
+  ---
+  duration_ms: 0.16523
+  type: 'test'
+  ...
+# Subtest: query with conflicting surfaces abstains
+ok 57 - query with conflicting surfaces abstains
+  ---
+  duration_ms: 0.093211
+  type: 'test'
+  ...
+# Subtest: unknown additional constraint cannot silently disappear from the request
+ok 58 - unknown additional constraint cannot silently disappear from the request
+  ---
+  duration_ms: 0.328456
+  type: 'test'
+  ...
+# Subtest: potentially absolute silence is not parsed as an ordinary relative preference
+ok 59 - potentially absolute silence is not parsed as an ordinary relative preference
+  ---
+  duration_ms: 0.297489
+  type: 'test'
+  ...
+# Subtest: no arbitrary category is inferred from a generic quiet request
+ok 60 - no arbitrary category is inferred from a generic quiet request
+  ---
+  duration_ms: 0.142245
+  type: 'test'
+  ...
+# Subtest: unverified frame cannot be used, even if everything else is valid
+ok 61 - unverified frame cannot be used, even if everything else is valid
+  ---
+  duration_ms: 0.415077
+  type: 'test'
+  ...
+# Subtest: personal profiles are part of meaning even when measurements are identical
+ok 62 - personal profiles are part of meaning even when measurements are identical
+  ---
+  duration_ms: 0.254254
+  type: 'test'
+  ...
+# Subtest: hard requirements may never be silently treated as already passed
+ok 63 - hard requirements may never be silently treated as already passed
+  ---
+  duration_ms: 0.113671
+  type: 'test'
+  ...
+# Subtest: missing measurements stay visible as unranked, not auto-excluded
+ok 64 - missing measurements stay visible as unranked, not auto-excluded
+  ---
+  duration_ms: 0.14513
+  type: 'test'
+  ...
+# Subtest: multiple original tests without approved synthesis are not averaged
+ok 65 - multiple original tests without approved synthesis are not averaged
+  ---
+  duration_ms: 0.162846
+  type: 'test'
+  ...
+# Subtest: published comparison re-reporting same original test does not increase weight
+ok 66 - published comparison re-reporting same original test does not increase weight
+  ---
+  duration_ms: 0.214144
+  type: 'test'
+  ...
+# Subtest: conflicting values as same original test are rejected rather than double counted
+ok 67 - conflicting values as same original test are rejected rather than double counted
+  ---
+  duration_ms: 0.581919
+  type: 'test'
+  ...
+# Subtest: tie groups do not invent superiority through stable alphabetical order
+ok 68 - tie groups do not invent superiority through stable alphabetical order
+  ---
+  duration_ms: 0.239983
+  type: 'test'
+  ...
+# Subtest: changed evidence snapshot is not treated as query instability
+ok 69 - changed evidence snapshot is not treated as query instability
+  ---
+  duration_ms: 0.193352
+  type: 'test'
+  ...
+# Subtest: numeric dBA values do not masquerade as overall product quality or public recommendation
+ok 70 - numeric dBA values do not masquerade as overall product quality or public recommendation
+  ---
+  duration_ms: 0.128524
+  type: 'test'
+  ...
+# Subtest: cross-methodology readings fail closed; v1.3 cannot be treated as v1.4 automatically
+ok 71 - cross-methodology readings fail closed; v1.3 cannot be treated as v1.4 automatically
+  ---
+  duration_ms: 0.140312
+  type: 'test'
+  ...
+# Subtest: a grounded proposal remains pending independent confirmation, never auto ranking
+ok 72 - a grounded proposal remains pending independent confirmation, never auto ranking
+  ---
+  duration_ms: 3.650765
+  type: 'test'
+  ...
+# Subtest: another language produces compatible proposed slots without proving general NLP
+ok 73 - another language produces compatible proposed slots without proving general NLP
+  ---
+  duration_ms: 0.485673
+  type: 'test'
+  ...
+# Subtest: missing evidence anchor for a category cannot be auto accepted
+ok 74 - missing evidence anchor for a category cannot be auto accepted
+  ---
+  duration_ms: 0.393995
+  type: 'test'
+  ...
+# Subtest: invented source quote fails exact anchor
+ok 75 - invented source quote fails exact anchor
+  ---
+  duration_ms: 0.162526
+  type: 'test'
+  ...
+# Subtest: wrong character index fails even with a correct quote
+ok 76 - wrong character index fails even with a correct quote
+  ---
+  duration_ms: 0.135835
+  type: 'test'
+  ...
+# Subtest: unexpected JSON keys fail closed
+ok 77 - unexpected JSON keys fail closed
+  ---
+  duration_ms: 0.354987
+  type: 'test'
+  ...
+# Subtest: invalid numeric offsets fail closed
+ok 78 - invalid numeric offsets fail closed
+  ---
+  duration_ms: 0.20474
+  type: 'test'
+  ...
+# Subtest: oversized model response fails closed
+ok 79 - oversized model response fails closed
+  ---
+  duration_ms: 0.100552
+  type: 'test'
+  ...
+# Subtest: invalid JSON produces an abstention, not automatic parsing
+ok 80 - invalid JSON produces an abstention, not automatic parsing
+  ---
+  duration_ms: 0.357861
+  type: 'test'
+  ...
+# Subtest: local model timeout/transport error produces abstention
+ok 81 - local model timeout/transport error produces abstention
+  ---
+  duration_ms: 0.418953
+  type: 'test'
+  ...
+# Subtest: single category/goal but unknown surface asks instead of defaulting
+ok 82 - single category/goal but unknown surface asks instead of defaulting
+  ---
+  duration_ms: 0.283368
+  type: 'test'
+  ...
+# Subtest: conflicting surface stays unresolved even if model returns a plausible goal
+ok 83 - conflicting surface stays unresolved even if model returns a plausible goal
+  ---
+  duration_ms: 0.13888
+  type: 'test'
+  ...
+# Subtest: unexpected cordless requirement omitted by model triggers safety abstention
+ok 84 - unexpected cordless requirement omitted by model triggers safety abstention
+  ---
+  duration_ms: 0.150768
+  type: 'test'
+  ...
+# Subtest: mentioned cordless captured but requires separate eligibility review
+ok 85 - mentioned cordless captured but requires separate eligibility review
+  ---
+  duration_ms: 0.151979
+  type: 'test'
+  ...
+# Subtest: numerical budget not silently erased
+ok 86 - numerical budget not silently erased
+  ---
+  duration_ms: 0.0999
+  type: 'test'
+  ...
+# Subtest: negative constraints get scope review even with identical positive slots
+ok 87 - negative constraints get scope review even with identical positive slots
+  ---
+  duration_ms: 0.091458
+  type: 'test'
+  ...
+# Subtest: absolute must condition cannot be mistaken for a soft preference
+ok 88 - absolute must condition cannot be mistaken for a soft preference
+  ---
+  duration_ms: 0.084487
+  type: 'test'
+  ...
+# Subtest: dishwasher bacteria and viruses are distinct goals and never noise-rankable
+ok 89 - dishwasher bacteria and viruses are distinct goals and never noise-rankable
+  ---
+  duration_ms: 0.180503
+  type: 'test'
+  ...
+# Subtest: failure to mention virus when present is a critical omission
+ok 90 - failure to mention virus when present is a critical omission
+  ---
+  duration_ms: 0.146752
+  type: 'test'
+  ...
+# Subtest: different contexts reverse evidence-based ranking, so clarification matters
+ok 91 - different contexts reverse evidence-based ranking, so clarification matters
+  ---
+  duration_ms: 7.483444
+  type: 'test'
+  ...
+# Subtest: same order across contexts does not presume a user specified a surface
+ok 92 - same order across contexts does not presume a user specified a surface
+  ---
+  duration_ms: 0.514928
+  type: 'test'
+  ...
+# Subtest: model output cannot be fed to rankSameIntent112 without verified frame
+ok 93 - model output cannot be fed to rankSameIntent112 without verified frame
+  ---
+  duration_ms: 0.197849
+  type: 'test'
+  ...
+# Subtest: independent frames produce identical rankings for same context and snapshot
+ok 94 - independent frames produce identical rankings for same context and snapshot
+  ---
+  duration_ms: 0.800119
+  type: 'test'
+  ...
+# Subtest: independent frames do not merge different surface contexts
+ok 95 - independent frames do not merge different surface contexts
+  ---
+  duration_ms: 0.272992
+  type: 'test'
+  ...
+# Subtest: evidence revision mismatch prevents declaring invariant ranking
+ok 96 - evidence revision mismatch prevents declaring invariant ranking
+  ---
+  duration_ms: 0.168695
+  type: 'test'
+  ...
+# Subtest: developer-authored benchmark cannot report empirical accuracy
+ok 97 - developer-authored benchmark cannot report empirical accuracy
+  ---
+  duration_ms: 0.34402
+  type: 'test'
+  ...
+# Subtest: a benchmark cannot pretend one adjudicator is two
+ok 98 - a benchmark cannot pretend one adjudicator is two
+  ---
+  duration_ms: 0.188435
+  type: 'test'
+  ...
+# Subtest: externally labeled benchmark shows metrics only with two separate adjudicator IDs
+ok 99 - externally labeled benchmark shows metrics only with two separate adjudicator IDs
+  ---
+  duration_ms: 0.152411
+  type: 'test'
+  ...
+# Subtest: remote Ollama endpoint is always rejected
+ok 100 - remote Ollama endpoint is always rejected
+  ---
+  duration_ms: 0.255967
+  type: 'test'
+  ...
+# Subtest: local Ollama adapter sends enforced JSON schema and temperature zero
+ok 101 - local Ollama adapter sends enforced JSON schema and temperature zero
+  ---
+  duration_ms: 0.716212
+  type: 'test'
+  ...
+# Subtest: Ollama HTTP failure abstains without cloud fallback
+ok 102 - Ollama HTTP failure abstains without cloud fallback
+  ---
+  duration_ms: 0.236247
+  type: 'test'
+  ...
+# Subtest: overall quality WITH hygiene, not hygiene as sole optimization goal
+ok 103 - overall quality WITH hygiene, not hygiene as sole optimization goal
+  ---
+  duration_ms: 2.106071
+  type: 'test'
+  ...
+# Subtest: different actual objective maximizing hygiene is not conflated
+ok 104 - different actual objective maximizing hygiene is not conflated
+  ---
+  duration_ms: 0.391331
+  type: 'test'
+  ...
+# Subtest: paraphrase preserves primary objective in bounded grammar
+ok 105 - paraphrase preserves primary objective in bounded grammar
+  ---
+  duration_ms: 0.276748
+  type: 'test'
+  ...
+# Subtest: hygiene meaning is unresolved without microbial target
+ok 106 - hygiene meaning is unresolved without microbial target
+  ---
+  duration_ms: 0.124869
+  type: 'test'
+  ...
+# Subtest: manufacturer claim not mistaken for independently validated germ reduction
+ok 107 - manufacturer claim not mistaken for independently validated germ reduction
+  ---
+  duration_ms: 6.884529
+  type: 'test'
+  ...
+# Subtest: independent mop washing or pad rinsing not presented as floor disinfection
+ok 108 - independent mop washing or pad rinsing not presented as floor disinfection
+  ---
+  duration_ms: 0.265852
+  type: 'test'
+  ...
+# Subtest: ranking must abstain without validated MCDA and assay
+ok 109 - ranking must abstain without validated MCDA and assay
+  ---
+  duration_ms: 0.163417
+  type: 'test'
+  ...
+# Subtest: candidate order cannot change knowledge audit
+ok 110 - candidate order cannot change knowledge audit
+  ---
+  duration_ms: 0.393895
+  type: 'test'
+  ...
+# Subtest: two different requests never mutate the product evidence inputs
+ok 111 - two different requests never mutate the product evidence inputs
+  ---
+  duration_ms: 0.369198
+  type: 'test'
+  ...
+# Subtest: strict floor microbial claim needs actual microbe-targeted original assay
+ok 112 - strict floor microbial claim needs actual microbe-targeted original assay
+  ---
+  duration_ms: 0.63559
+  type: 'test'
+  ...
+# Subtest: verified bacteria floor assay is not a verified virus floor assay
+ok 113 - verified bacteria floor assay is not a verified virus floor assay
+  ---
+  duration_ms: 0.237448
+  type: 'test'
+  ...
+# Subtest: cannot recast promotional observation as independent
+ok 114 - cannot recast promotional observation as independent
+  ---
+  duration_ms: 0.181965
+  type: 'test'
+  ...
+# Subtest: cannot include duplicate exact variant
+ok 115 - cannot include duplicate exact variant
+  ---
+  duration_ms: 0.111318
+  type: 'test'
+  ...
+# Subtest: does not infer non-tested product as failing mandatory feature
+ok 116 - does not infer non-tested product as failing mandatory feature
+  ---
+  duration_ms: 0.099119
+  type: 'test'
+  ...
+1..116
+# tests 116
+# suites 0
+# pass 116
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 177.580124

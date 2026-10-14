@@ -1,0 +1,74 @@
+{
+  "phase": 190,
+  "releaseStatus": "RESEARCH ONLY: no source admission, no retail ranking",
+  "sourceReuse": "Phase189 manual annotations, not publisher-source custody",
+  "scenarios": {
+    "original": {
+      "stage": "research_only_unreviewed",
+      "publicRankingAllowed": false,
+      "status": "robustly_a_on_selected_criteria",
+      "deltaMinimum": 0.06080952381,
+      "deltaMaximum": 0.07671428571,
+      "evidenceGroups": [
+        "rtings_stratos_airflow",
+        "rtings_stratos_noise",
+        "rtings_v15_airflow",
+        "rtings_v15_noise"
+      ],
+      "issues": [
+        "Scenario-only analysis; utility anchors and weight envelopes require independent justification.",
+        "Reported test points do not provide empirically calibrated measurement uncertainty.",
+        "No publisher-source custody, verified rights, signed admission or public ranking is established.",
+        "Robustness is conditional on the *specified scenario*, not proof of overall product superiority."
+      ],
+      "baselineRelation": "robust_or_sensitive_model_only"
+    },
+    "missingNewCriterion": {
+      "stage": "research_only_unreviewed",
+      "publicRankingAllowed": false,
+      "status": "missing_or_conflicting_evidence",
+      "evidenceGroups": [
+        "rtings_stratos_airflow",
+        "rtings_stratos_noise",
+        "rtings_v15_airflow",
+        "rtings_v15_noise"
+      ],
+      "issues": [
+        "Scenario-only analysis; utility anchors and weight envelopes require independent justification.",
+        "Reported test points do not provide empirically calibrated measurement uncertainty.",
+        "No publisher-source custody, verified rights, signed admission or public ranking is established.",
+        "carpet_deep_cleaning: missing or conflicting exact-variant/original-condition observation."
+      ],
+      "baselineRelation": "unavailable"
+    },
+    "duplicateConflictingObservation": {
+      "stage": "research_only_unreviewed",
+      "publicRankingAllowed": false,
+      "status": "missing_or_conflicting_evidence",
+      "evidenceGroups": [
+        "rtings_stratos_airflow",
+        "rtings_v15_airflow"
+      ],
+      "issues": [
+        "Scenario-only analysis; utility anchors and weight envelopes require independent justification.",
+        "Reported test points do not provide empirically calibrated measurement uncertainty.",
+        "No publisher-source custody, verified rights, signed admission or public ranking is established.",
+        "operating_noise: missing or conflicting exact-variant/original-condition observation."
+      ],
+      "baselineRelation": "unavailable"
+    },
+    "unconfirmedGoal": {
+      "stage": "research_only_unreviewed",
+      "publicRankingAllowed": false,
+      "status": "unconfirmed_goal",
+      "evidenceGroups": [],
+      "issues": [
+        "Scenario-only analysis; utility anchors and weight envelopes require independent justification.",
+        "Reported test points do not provide empirically calibrated measurement uncertainty.",
+        "No publisher-source custody, verified rights, signed admission or public ranking is established.",
+        "User requirement is not confirmed."
+      ],
+      "baselineRelation": "unavailable"
+    }
+  }
+}

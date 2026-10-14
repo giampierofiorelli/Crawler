@@ -1,0 +1,146 @@
+{
+  "schema": "pee230.original-pdf-benchmark.1",
+  "mode": "offline_actual_user_uploaded_manufacturer_documents",
+  "originalUrlsUnknown": true,
+  "manufacturerClaimsOnly": true,
+  "independentEvidenceVerified": false,
+  "rankingAuthorized": false,
+  "selectedGoldNotExhaustive": true,
+  "sources": [
+    {
+      "id": "purifier",
+      "documentSha256": "0fbfcdaa9485c7ea0743507216b4d428ec000a3e7872996836833651e2635973",
+      "bytes": 787070,
+      "pagesSelectedForReading": 24,
+      "durationMs": 971,
+      "selectedGoldCount": 10,
+      "selectedMatchedCount": 10,
+      "selectedMissing": [],
+      "emittedCount": 10,
+      "unmatchedEmittedCount": 0,
+      "unmatchedEmitted": [],
+      "modelResolved": false,
+      "reasonCodes": [
+        "component_weight_not_promoted_to_product_weight",
+        "exact_product_model_not_established",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "metadataOnly": true
+    },
+    {
+      "id": "washdry",
+      "documentSha256": "c3c1c1848ba87215d8a52e8493808743e8b76850a1359d9e887f10d5ad488493",
+      "bytes": 1048938,
+      "pagesSelectedForReading": 24,
+      "durationMs": 1047,
+      "selectedGoldCount": 5,
+      "selectedMatchedCount": 0,
+      "selectedMissing": [
+        [
+          "net weight wd04",
+          4.25,
+          "kg",
+          1
+        ],
+        [
+          "net weight wd05",
+          4.52,
+          "kg",
+          1
+        ],
+        [
+          "net weight wd06",
+          8.38,
+          "kg",
+          1
+        ],
+        [
+          "motor specification",
+          1000,
+          "w",
+          1
+        ],
+        [
+          "motor speed",
+          81000,
+          "rpm",
+          1
+        ]
+      ],
+      "emittedCount": 0,
+      "unmatchedEmittedCount": 0,
+      "unmatchedEmitted": [],
+      "modelResolved": false,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "no_unambiguous_key_value_specifications",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_geometry_control_glyphs_ignored",
+        "pdf_no_stable_two_column_rows",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "metadataOnly": true
+    },
+    {
+      "id": "dreame",
+      "documentSha256": "f3710035ec24fa0de3f57703936858cc3241b5bfb150924fe8bc9015ff71d6fd",
+      "bytes": 10344975,
+      "pagesSelectedForReading": 24,
+      "durationMs": 2130,
+      "selectedGoldCount": 7,
+      "selectedMatchedCount": 2,
+      "selectedMissing": [
+        [
+          "dock dust emptying rated power",
+          650,
+          "w",
+          19
+        ],
+        [
+          "dock hot wash rated power",
+          410,
+          "w",
+          19
+        ],
+        [
+          "dock charge/dry rated power",
+          89,
+          "w",
+          19
+        ],
+        [
+          "battery capacity",
+          5.8,
+          "ah",
+          19
+        ],
+        [
+          "battery energy",
+          83.52,
+          "wh",
+          19
+        ]
+      ],
+      "emittedCount": 2,
+      "unmatchedEmittedCount": 0,
+      "unmatchedEmitted": [],
+      "modelResolved": false,
+      "reasonCodes": [
+        "exact_product_model_not_established",
+        "pdf_coordinate_rows_unverified",
+        "pdf_first_twenty_four_pages_only",
+        "pdf_table_cell_geometry_not_verified"
+      ],
+      "metadataOnly": true
+    }
+  ],
+  "totals": {
+    "selectedGold": 22,
+    "selectedMatched": 12,
+    "emitted": 12,
+    "unmatchedEmitted": 0,
+    "selectedGoldRecall": 0.5454545454545454
+  }
+}

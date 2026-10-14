@@ -1,0 +1,162 @@
+{
+  "schema": "pee.phase198.test-receipt.v1",
+  "release": "v5.22.0",
+  "date": "2026-10-13",
+  "predecessor": {
+    "archive": "product-evidence-engine-v5.21-phase197.zip",
+    "sha256": "5f5e7d13a7be8acc72aa8ff4c7fff5cf2c3e5f12e1522f5c6ee5254341a341ea",
+    "zipCRC": true,
+    "entries": 2323
+  },
+  "compile": {
+    "command": "tsc -p tsconfig.json",
+    "passed": true,
+    "log": "docs/phase198/test-logs/final-build.log"
+  },
+  "targeted": {
+    "file": "tests/phase198_specialist_outcome_validation.test.ts",
+    "passed": 59,
+    "failed": 0,
+    "fixtureKind": "authored_synthetic",
+    "log": "docs/phase198/test-logs/phase198-target.tap",
+    "finalCompileConfirmed": true
+  },
+  "typescriptRegression": {
+    "passed": 3348,
+    "failed": 0,
+    "shardsPassed": 13,
+    "shardsExpected": 13,
+    "logs": "docs/phase198/test-logs/shardNN.log",
+    "parallelRerunStatus": "PASS on final compiled source",
+    "shards": [
+      {
+        "shard": 1,
+        "passed": 168,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard01.log"
+      },
+      {
+        "shard": 2,
+        "passed": 167,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard02.log"
+      },
+      {
+        "shard": 3,
+        "passed": 241,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard03.log"
+      },
+      {
+        "shard": 4,
+        "passed": 283,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard04.log"
+      },
+      {
+        "shard": 5,
+        "passed": 322,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard05.log"
+      },
+      {
+        "shard": 6,
+        "passed": 343,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard06.log"
+      },
+      {
+        "shard": 7,
+        "passed": 165,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard07.log"
+      },
+      {
+        "shard": 8,
+        "passed": 398,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard08.log"
+      },
+      {
+        "shard": 9,
+        "passed": 353,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard09.log"
+      },
+      {
+        "shard": 10,
+        "passed": 488,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard10.log"
+      },
+      {
+        "shard": 11,
+        "passed": 153,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard11.log"
+      },
+      {
+        "shard": 12,
+        "passed": 170,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard12.log"
+      },
+      {
+        "shard": 13,
+        "passed": 97,
+        "result": "PASS",
+        "log": "docs/phase198/test-logs/shard13.log"
+      }
+    ]
+  },
+  "pythonRegression": {
+    "passed": 212,
+    "failed": 0,
+    "groups": [
+      {
+        "name": "companion",
+        "passed": 71,
+        "log": "docs/phase198/test-logs/python-cumulative.log"
+      },
+      {
+        "name": "primary_sources",
+        "passed": 47,
+        "log": "docs/phase198/test-logs/python-cumulative.log"
+      },
+      {
+        "name": "ingestion",
+        "passed": 21,
+        "log": "docs/phase198/test-logs/python-cumulative.log"
+      },
+      {
+        "name": "evaluation",
+        "passed": 26,
+        "log": "docs/phase198/test-logs/python-cumulative.log"
+      },
+      {
+        "name": "phase95",
+        "passed": 12,
+        "log": "docs/phase198/test-logs/python-cumulative.log"
+      },
+      {
+        "name": "tests-python",
+        "passed": 35,
+        "log": "docs/phase198/test-logs/python-tests_python.log"
+      }
+    ],
+    "historicalResourceWarningsObserved": true,
+    "invalidAdditionalProbe": {
+      "path": "phase96",
+      "status": "directory_does_not_exist",
+      "countedAsSuite": false
+    }
+  },
+  "validationLimitations": {
+    "externalIndependentCorpusEvaluated": false,
+    "realCredentialAttributionAccuracyMeasured": false,
+    "realRegistryIndependentAudit": false,
+    "downstreamRankingEffectMeasured": false,
+    "rankingsChanged": false,
+    "realWorldPrecisionRecall": null
+  }
+}

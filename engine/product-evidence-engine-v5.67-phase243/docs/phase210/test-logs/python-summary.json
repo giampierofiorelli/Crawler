@@ -1,0 +1,37 @@
+{
+  "schema": "phase210.python-regression.v1",
+  "groups": [
+    {
+      "group": "primary",
+      "tests_passed": 47,
+      "log": "docs/phase210/test-logs/python-primary.log"
+    },
+    {
+      "group": "ingestion",
+      "tests_passed": 21,
+      "log": "docs/phase210/test-logs/python-ingestion.log"
+    },
+    {
+      "group": "evaluation",
+      "tests_passed": 26,
+      "log": "docs/phase210/test-logs/python-evaluation.log"
+    },
+    {
+      "group": "phase95",
+      "tests_passed": 12,
+      "log": "docs/phase210/test-logs/python-phase95.log"
+    },
+    {
+      "group": "tests-python",
+      "tests_passed": 35,
+      "log": "docs/phase210/test-logs/python-tests-python.log"
+    },
+    {
+      "group": "companion",
+      "tests_passed": 71,
+      "log": "docs/phase210/test-logs/python-companion-standalone.log"
+    }
+  ],
+  "verifiedPass": 212,
+  "note": "First five groups reported passed by bounded runner; companion confirmed by isolated /usr/bin/python3 process with 0 exit and 71 tests."
+}

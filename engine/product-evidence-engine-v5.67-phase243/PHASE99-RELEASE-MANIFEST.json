@@ -1,0 +1,57 @@
+{
+  "version": "4.23.0",
+  "phase": 99,
+  "baseline_archive": "product-evidence-engine-v4.22-phase98.zip",
+  "baseline_zip_sha256": "b09c9439208db5c103ca563dc40acbdaf5cd1618ffacc40e657b70baf3b36835",
+  "baseline_file_count": 755,
+  "baseline_paths_missing": [],
+  "modified_existing_paths": [
+    "README.md",
+    "package.json"
+  ],
+  "new_paths": [
+    "PHASE99-QUALITATIVE-TO-TRADEOFF-RESEARCH.md",
+    "audit/phase99/companion_node.log",
+    "audit/phase99/companion_python.log",
+    "audit/phase99/evaluation.log",
+    "audit/phase99/ingestion.log",
+    "audit/phase99/launch.log",
+    "audit/phase99/new_phase99.log",
+    "audit/phase99/primary.log",
+    "audit/phase99/release.log",
+    "audit/phase99/shard1.log",
+    "audit/phase99/shard2.log",
+    "audit/phase99/shard3.log",
+    "audit/phase99/shard4-summary.log",
+    "audit/phase99/shard5-summary.log",
+    "dist/src/phase99_qualitative_tradeoff_bridge.js",
+    "dist/tests/phase99_qualitative_tradeoff_bridge.test.js",
+    "src/phase99_qualitative_tradeoff_bridge.ts",
+    "tests/phase99_qualitative_tradeoff_bridge.test.ts"
+  ],
+  "test_counts_completed_separately": {
+    "mainline_js_ts": 717,
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_sources_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3
+  },
+  "total_distinct_passed_tests": 894,
+  "test_warning": "One combined JS/TS sharded run hit an execution timeout after completing shards 5 and 4; shards 1, 2 and 3 were then run separately and completed successfully. Group summary logs recorded; monolithic run not presented as passed.",
+  "proposed_sensitivity_status": "reviewed_scenarios_only_not_full_robust_ordinal_regression",
+  "expert_sources": [
+    "https://www.gov.uk/government/publications/green-book-supplementary-guidance-use-of-multi-criteria-decision-analysis/use-of-multi-criteria-decision-analysis-in-options-appraisal-of-economic-cases",
+    "https://orbi.umons.ac.be/handle/20.500.12907/34054",
+    "https://www.ispor.org/heor-resources/good-practices/article/multiple-criteria-decision-analysis-for-health-care-decision-making---emerging-good-practices",
+    "https://link.springer.com/article/10.1007/s10994-013-5365-4",
+    "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-21"
+  ],
+  "public_product_ranking_changed": false,
+  "validated_with_real_users": false,
+  "autonomous_live_qualitative_extraction_validated": false,
+  "authenticated_reviewer_signatures_integrated": false,
+  "uses_mandatory_commercial_apis": false
+}

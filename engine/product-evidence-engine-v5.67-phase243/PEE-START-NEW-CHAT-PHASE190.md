@@ -1,0 +1,9 @@
+# PEE continuation — Start Phase190
+
+Canonical target after successful release: `/mnt/data/product-evidence-engine-v5.13-phase189.zip`. If missing next turn, request the actual ZIP; never rebuild from conversation summary. Read `PHASE189-TECHNICAL-REPORT.md` and `docs/phase189/README.md` plus Phase188 and relevant Phase102–106, 181–188.
+
+Phase189 studied four **original publicly available expert webpages** in three categories, manually annotating 14 atomic observations, not original page bytes and not source-rights approval; implemented a research-only TS scope/conditions/protocol checking pilot and strictly bounded Pareto comparison, with 32 tests. No PEE ranking authorized, no third-party dependencies installed. The original source audit of Carneades, Scikit-Criteria, ASReview and pgmpy remains mandatory background.
+
+Next: independently reviewed original provenance on unseen products, real methodological uncertainty, usage-context exceptions, source independence and conflicting documents; benchmark decision correctness and time-to-answer on authentic user goals against existing PEE and assistant baselines. Study whether ASReview-inspired active source screening materially improves Phase182 query/task discovery without missing decisive negative evidence. Avoid installing expensive models or editing cumulative architecture without proof. Product specs remain eligible for their justified property, practical professional observations should not be ignored, and neither expert editorial judgment nor manufacturer claims are lab readings.
+
+English-first web-first; deterministic rankings from cumulative knowledge, not precomputed static lists; preserve hard incompatibilities and coverage uncertainty. Ask user for exact missing original professional report only if it becomes unavoidable.

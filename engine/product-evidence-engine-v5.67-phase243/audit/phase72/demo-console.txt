@@ -1,0 +1,33 @@
+
+> product-evidence-engine@4.0.0 demo:phase72
+> npm run build && node scripts/demo-phase72.mjs
+
+
+> product-evidence-engine@4.0.0 build
+> tsc -p tsconfig.json
+
+{
+  "demo": "offline simulated transport / documented open-license excerpt",
+  "sourceRepository": "https://github.com/superbestaudiofriends/headphone-measurements-frequency-response",
+  "realNetworkRequestMade": false,
+  "sourceAuthorizationVerifiedLive": false,
+  "state": "quarantined_new_schema_gap",
+  "sourceSha256": "4320f9033e35189d73646b28d8f605c8522e7ea951d683d6a70954c14bff7757",
+  "measurements": 20,
+  "novelDimensions": [
+    {
+      "key": "relative_frequency_response_db",
+      "status": "needs_more_evidence",
+      "originalTestCount": 1,
+      "sourceCount": 1,
+      "variantCount": 1,
+      "blockers": [
+        "insufficient_distinct_original_tests",
+        "insufficient_distinct_sources",
+        "insufficient_distinct_product_variants"
+      ]
+    }
+  ],
+  "rankingEligible": false,
+  "publicationReady": false
+}

@@ -1,0 +1,9 @@
+# PEE — continue from Phase173 cumulative v4.97
+
+Use `product-evidence-engine-v4.97-phase173.zip` as canonical. Read `docs/phase173/PHASE173-SCOPE-GRAPH-AND-UPSTREAM-AUDIT.md` and all prior cumulative research, tests and original source-control decisions. The ten original GitHub ZIP snapshots were supplied during Phase173 and inventoried by exact SHA256 in `evaluation/phase173/upstream_archive_inventory.json`, **but those ZIPs are not bundled here**. Ask the user for only the specific original archive again if required in a later session; do not claim installed models or source access if missing.
+
+Phase173 introduced a bounded English task/equipment ownership vs target adapter, supplemental needs, a versioned proposed need-mechanism graph, and explicitly unverified human review receipts. These are RESEARCH PROTOTYPES; no genuine scientific ranking, source authenticity, causal approval, user-goal semantic equivalence, deployed recommendation, real product evidence, full access needs or real neural model inference is completed.
+
+Read `evaluation/phase173/regression-ts.json` (2,352 passing eligible tests/133 files excluding Phase91/92), `regression-python.json` (212 passing with legacy SQLite warnings), and `postfreeze_public_diagnostic.json` (developer-chosen online paraphrases **used to refine rules**, not independent held-out accuracy). Reuse the real Phase164, 169–171 and 172 interfaces; never bypass existing variant/independent-evidence/rights checks.
+
+Next: build independently labelled authentic English request tasks with ownership/referent/negation and repair-vs-purchase; design a multi-component system budget and category bridge; review original professional causal relationships with source protocols; only then connect verified ranking provenance to concise, caution-first explanations. Do not ask user for Colab or PC for now. English first, no heavy model weights/dependencies by default.

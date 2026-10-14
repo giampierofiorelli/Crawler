@@ -1,0 +1,148 @@
+{
+  "schema": "pee.phase204.test-results.v1",
+  "as_of": "2026-10-13",
+  "base_version": "5.27.0",
+  "release_version": "5.28.0",
+  "compile": {
+    "result": "pass",
+    "command": "tsc -p tsconfig.json",
+    "log": "docs/phase204/test-logs/build-method-cues.log"
+  },
+  "phase204_targeted": {
+    "result": "pass",
+    "tests_passed": 48,
+    "failed": 0,
+    "log": "docs/phase204/test-logs/targeted-method-cues.log"
+  },
+  "typescript": {
+    "status": "passed",
+    "tests_passed": 3580,
+    "test_files": 169,
+    "shards_completed": 13,
+    "shards": [
+      {
+        "shard": 1,
+        "tests_passed": 168,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard1.log"
+      },
+      {
+        "shard": 2,
+        "tests_passed": 167,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard2.log"
+      },
+      {
+        "shard": 3,
+        "tests_passed": 241,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard3.log"
+      },
+      {
+        "shard": 4,
+        "tests_passed": 283,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard4.log"
+      },
+      {
+        "shard": 5,
+        "tests_passed": 322,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard5.log"
+      },
+      {
+        "shard": 6,
+        "tests_passed": 343,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard6.log"
+      },
+      {
+        "shard": 7,
+        "tests_passed": 165,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard7.log"
+      },
+      {
+        "shard": 8,
+        "tests_passed": 398,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard8.log"
+      },
+      {
+        "shard": 9,
+        "tests_passed": 353,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard9.log"
+      },
+      {
+        "shard": 10,
+        "tests_passed": 488,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard10.log"
+      },
+      {
+        "shard": 11,
+        "tests_passed": 294,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard11-final.log"
+      },
+      {
+        "shard": 12,
+        "tests_passed": 164,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard12.log"
+      },
+      {
+        "shard": 13,
+        "tests_passed": 194,
+        "test_files": 13,
+        "log": "docs/phase204/test-logs/shard13.log"
+      }
+    ],
+    "note": "Shard 11 rerun on final seven-test extension; other shards unchanged. Test results use authored fixtures, not independent source validation."
+  },
+  "python": {
+    "status": "passed",
+    "tests_passed": 212,
+    "groups": [
+      {
+        "group": "primary",
+        "tests_passed": 47,
+        "log": "docs/phase204/test-logs/python-primary.log"
+      },
+      {
+        "group": "ingestion",
+        "tests_passed": 21,
+        "log": "docs/phase204/test-logs/python-ingestion.log"
+      },
+      {
+        "group": "evaluation",
+        "tests_passed": 26,
+        "log": "docs/phase204/test-logs/python-evaluation.log"
+      },
+      {
+        "group": "phase95",
+        "tests_passed": 12,
+        "log": "docs/phase204/test-logs/python-phase95.log"
+      },
+      {
+        "group": "tests-python",
+        "tests_passed": 35,
+        "log": "docs/phase204/test-logs/python-tests-python.log"
+      },
+      {
+        "group": "companion",
+        "tests_passed": 71,
+        "log": "docs/phase204/test-logs/python-companion.log"
+      }
+    ],
+    "known_warning": "inherited ResourceWarning in companion group"
+  },
+  "scope_limits": [
+    "No live video or credential fetch",
+    "No external award authentication",
+    "No independent source reliability benchmark",
+    "No public badge or ranking authority"
+  ],
+  "baseline_comparison": "Phase203 earlier cumulative success count was incomplete (3,507 verified); not a like-for-like clean-suite delta."
+}

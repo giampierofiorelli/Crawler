@@ -1,0 +1,91 @@
+{
+  "phase": 136,
+  "version": "4.60-phase136",
+  "parent": "4.59-phase135",
+  "date": "2026-10-11",
+  "parentZipSHA256": "13775a9e365996c3517bcb5c47adb5183e32ba57be41be7e8f5d31cb818bb49d",
+  "parentFiles": 1374,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesPriorToManifest": [
+    "PHASE136-CONSTRUCTED-TRACE.json",
+    "PHASE136-INDEPENDENT-EVIDENCE-SCREEN-EVALUATION.md",
+    "PHASE136-REGRESSION-GROUPS.json",
+    "dist/src/phase136_independent_signal_benchmark.js",
+    "dist/tests/phase136_independent_signal_benchmark.test.js",
+    "research/phase136_user_reference_studies/PEE-GLINER2-STUDY-FIRST-ENGINEERING-DECISION-2026-10-11.md",
+    "research/phase136_user_reference_studies/PEE-SOURCE-STUDY-THREE-AI-REPOSITORIES-2026-10-11.md",
+    "research/phase136_user_reference_studies/PEE-THREE-AI-REPOSITORIES-INTEGRITY-2026-10-11.json",
+    "research/phase136_user_reference_studies/PEE-TYPESAFE-AI-DOCUMENTATION-ENGINEERING-STUDY-2026-10-11.md",
+    "scripts/evaluate-phase136.mjs",
+    "scripts/phase136_regress.mjs",
+    "src/phase136_independent_signal_benchmark.ts",
+    "tests/phase136_independent_signal_benchmark.test.ts"
+  ],
+  "newFilesPriorToManifestCount": 13,
+  "typescript": {
+    "status": "pass",
+    "passed": 1563,
+    "testFiles": 95,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ],
+    "groupCount": 12
+  },
+  "phase136Focused": {
+    "passed": 38,
+    "failed": 0,
+    "source": "developer-authored-fixtures"
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "constructedScenarios": {
+    "count": 3,
+    "originalProfessionalDocumentCount": 0,
+    "scorableHoldoutCount": 0,
+    "accuracyClaim": false
+  },
+  "noNewRuntimeDependencies": true,
+  "originalIndependentEvaluationCompleted": false,
+  "noThirdPartyVendorRuntimeCodeOrWeights": true,
+  "noCommercialAPIs": true,
+  "rankingWritesFrom136": 0,
+  "canonicalWritesFrom136": 0,
+  "userUploadedStudyMaterialsPreservedInResearch": 4,
+  "sourceRightsAuthenticatedByPhase136": false,
+  "annotatorIndependenceAuthenticatedByPhase136": false,
+  "benchmarkPreregistrationVerifiedExternally": false,
+  "newEvaluationTechniques": [
+    "source_and_product_family_disjointness",
+    "source_hostname_split_guard",
+    "sha256_manifest_integrity",
+    "two_distinct_concordant_gold_ids_required_for_descriptive_scoring",
+    "family_signal_overlap_conflict",
+    "phenomenon_and_category_breakdowns",
+    "phase134_baseline_comparison"
+  ],
+  "limits": [
+    "No independently annotated original expert review benchmark",
+    "Split and annotator metadata is caller-declared; authenticity cannot be established from hashes",
+    "No new trainable weak supervision model; no autonomy in coreference",
+    "Two inherited Phase91/92 test files remain excluded",
+    "No CPU/memory benchmark against production data or third-party models"
+  ],
+  "reproduction": [
+    "npm run test:phase136",
+    "npm run demo:phase136",
+    "npm run regress:phase136",
+    "python -m unittest discover -s primary_sources -t . -p test_*.py",
+    "python -m unittest discover -s ingestion -p test_*.py",
+    "python -m unittest discover -s tests-python -p test_phase133*.py"
+  ]
+}

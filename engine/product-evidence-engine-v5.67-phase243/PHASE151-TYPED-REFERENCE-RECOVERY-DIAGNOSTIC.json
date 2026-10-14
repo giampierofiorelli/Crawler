@@ -1,0 +1,229 @@
+{
+  "phase": 151,
+  "build": "4.75-phase151",
+  "baseline": "phase149",
+  "evaluationDesign": "retrospective nonblind developer-labelled constructed cases only",
+  "originalFullProfessionalDocuments": 0,
+  "originalIndependentGold": 0,
+  "precisionOnIndependentOriginalReviews": null,
+  "recallOnIndependentOriginalReviews": null,
+  "editorialShortExcerptsPreviouslyChecked": [
+    {
+      "id": "whathifi_cd_short",
+      "url": "https://www.whathifi.com/hi-fi/cd-players/marantz-cd-70",
+      "independentGold": false
+    },
+    {
+      "id": "rtings_tv_panel_short",
+      "url": "https://www.rtings.com/tv/reviews/tcl/qm8k",
+      "independentGold": false
+    },
+    {
+      "id": "techradar_coffee_frother_short",
+      "url": "https://www.techradar.com/home/coffee-machines/one-year-on-the-ninja-prestige-dualbrew-is-still-the-most-versatile-coffee-maker-ive-ever-tested-heres-why-its-the-best-pick-for-your-small-kitchen",
+      "independentGold": false
+    }
+  ],
+  "sourceTruthUnverified": true,
+  "allProposalsQuarantined": true,
+  "phase149": {
+    "constructedCases": 7,
+    "positiveTextualGold": 3,
+    "proposed": 0,
+    "correctProposalsOnDeveloperGold": 0,
+    "falseProposalsOnDeveloperGold": 0,
+    "missedDeveloperSame": 3,
+    "descriptiveProposalPrecision": null,
+    "descriptiveSameRecall": 0
+  },
+  "phase151": {
+    "constructedCases": 7,
+    "positiveTextualGold": 3,
+    "proposed": 3,
+    "correctProposalsOnDeveloperGold": 3,
+    "falseProposalsOnDeveloperGold": 0,
+    "missedDeveloperSame": 0,
+    "descriptiveProposalPrecision": 1,
+    "descriptiveSameRecall": 1
+  },
+  "rows": [
+    {
+      "caseId": "washer_long_context",
+      "categoryId": "washing_machine",
+      "phenomenon": "cross_paragraph",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "same_textual_referent",
+      "phase149": {
+        "status": "blocked_nonproduct_competitor",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "typed_cross_paragraph_candidate_unverified",
+        "proposed": true,
+        "correctTentative": true,
+        "evidenceChannelSeparated": false,
+        "candidateAnchorIds": [
+          "a148_0_10"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    },
+    {
+      "caseId": "cd_forward_context",
+      "categoryId": "cd_player",
+      "phenomenon": "forward",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "same_textual_referent",
+      "phase149": {
+        "status": "unresolved_no_safe_candidate",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "typed_forward_candidate_unverified",
+        "proposed": true,
+        "correctTentative": true,
+        "evidenceChannelSeparated": false,
+        "candidateAnchorIds": [
+          "a148_226_239"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    },
+    {
+      "caseId": "tv_competing_models",
+      "categoryId": "television",
+      "phenomenon": "comparison",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "unresolved_from_passage",
+      "phase149": {
+        "status": "blocked_competing_candidates",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "abstain_multiple_named_products",
+        "proposed": false,
+        "correctTentative": false,
+        "evidenceChannelSeparated": false,
+        "candidateAnchorIds": [
+          "a148_0_10",
+          "a148_15_25"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    },
+    {
+      "caseId": "oven_variant_context",
+      "categoryId": "oven",
+      "phenomenon": "variant",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "unresolved_from_passage",
+      "phase149": {
+        "status": "blocked_variant_collision",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "abstain_variant_collision",
+        "proposed": false,
+        "correctTentative": false,
+        "evidenceChannelSeparated": false,
+        "candidateAnchorIds": [
+          "a148_0_10",
+          "a148_15_29"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    },
+    {
+      "caseId": "speaker_component_context",
+      "categoryId": "loudspeaker",
+      "phenomenon": "component",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "unresolved_from_passage",
+      "phase149": {
+        "status": "prior_blocked",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "abstain_only_pronoun",
+        "proposed": false,
+        "correctTentative": false,
+        "evidenceChannelSeparated": false,
+        "candidateAnchorIds": [
+          "a148_0_10"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    },
+    {
+      "caseId": "coffee_claim_vs_measure",
+      "categoryId": "coffee_machine",
+      "phenomenon": "condition",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "same_textual_referent",
+      "phase149": {
+        "status": "blocked_nonproduct_competitor",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "typed_cross_paragraph_candidate_unverified",
+        "proposed": true,
+        "correctTentative": true,
+        "evidenceChannelSeparated": true,
+        "candidateAnchorIds": [
+          "a148_0_9"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    },
+    {
+      "caseId": "airfryer_basket_context",
+      "categoryId": "air_fryer",
+      "phenomenon": "component",
+      "labelProvenance": "developer_created_nonblind",
+      "gold": "unresolved_from_passage",
+      "phase149": {
+        "status": "prior_blocked",
+        "proposed": false,
+        "correctTentative": false
+      },
+      "phase151": {
+        "status": "abstain_only_pronoun",
+        "proposed": false,
+        "correctTentative": false,
+        "evidenceChannelSeparated": false,
+        "candidateAnchorIds": [
+          "a148_0_10"
+        ]
+      },
+      "sourceAuthenticated": false,
+      "identityAuthenticated": false,
+      "scientificClaimAuthorized": false
+    }
+  ],
+  "limitations": [
+    "not a prospective or source-disjoint holdout",
+    "no independent annotation",
+    "original source excerpts are not long original source-document evaluations",
+    "hypotheses are textual links only: scientific evidence and manufacturer identity not verified",
+    "product model detection can miss alternate surface forms",
+    "reference recovery not wired to canonical facts or ranking"
+  ]
+}

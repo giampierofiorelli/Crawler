@@ -1,0 +1,178 @@
+TAP version 13
+# Subtest: 200 authentic signatures and complete bytes permit STAGING only
+ok 1 - 200 authentic signatures and complete bytes permit STAGING only
+  ---
+  duration_ms: 13.615114
+  type: 'test'
+  ...
+# Subtest: 200 signed ordinary expert outcome has distinct provenance kind
+ok 2 - 200 signed ordinary expert outcome has distinct provenance kind
+  ---
+  duration_ms: 2.267076
+  type: 'test'
+  ...
+# Subtest: 200 no raw publisher document in returned decision
+ok 3 - 200 no raw publisher document in returned decision
+  ---
+  duration_ms: 3.611356
+  type: 'test'
+  ...
+# Subtest: 200 no unsigned capture accepted
+ok 4 - 200 no unsigned capture accepted
+  ---
+  duration_ms: 2.016716
+  type: 'test'
+  ...
+# Subtest: 200 capture full-document bytes must match signed SHA256
+ok 5 - 200 capture full-document bytes must match signed SHA256
+  ---
+  duration_ms: 1.923478
+  type: 'test'
+  ...
+# Subtest: 200 mismatched original document version rejected
+ok 6 - 200 mismatched original document version rejected
+  ---
+  duration_ms: 1.265213
+  type: 'test'
+  ...
+# Subtest: 200 capture copied from a different product variant rejected
+ok 7 - 200 capture copied from a different product variant rejected
+  ---
+  duration_ms: 1.197323
+  type: 'test'
+  ...
+# Subtest: 200 expert review cannot impersonate primary issuer registry capture
+ok 8 - 200 expert review cannot impersonate primary issuer registry capture
+  ---
+  duration_ms: 1.222099
+  type: 'test'
+  ...
+# Subtest: 200 issuer programme cannot impersonate specialist authored experiment
+ok 9 - 200 issuer programme cannot impersonate specialist authored experiment
+  ---
+  duration_ms: 1.484999
+  type: 'test'
+  ...
+# Subtest: 200 capture from before maximum freshness denied
+ok 10 - 200 capture from before maximum freshness denied
+  ---
+  duration_ms: 1.487192
+  type: 'test'
+  ...
+# Subtest: 200 stale status snapshot denies all badges despite perfect signatures
+ok 11 - 200 stale status snapshot denies all badges despite perfect signatures
+  ---
+  duration_ms: 1.058096
+  type: 'test'
+  ...
+# Subtest: 200 signed revocation overrides valid old approvals
+ok 12 - 200 signed revocation overrides valid old approvals
+  ---
+  duration_ms: 1.85772
+  type: 'test'
+  ...
+# Subtest: 200 forged revocation-free status is rejected
+ok 13 - 200 forged revocation-free status is rejected
+  ---
+  duration_ms: 1.232855
+  type: 'test'
+  ...
+# Subtest: 200 different signing key not in pinned policy cannot authorize capture
+ok 14 - 200 different signing key not in pinned policy cannot authorize capture
+  ---
+  duration_ms: 1.906852
+  type: 'test'
+  ...
+# Subtest: 200 incomplete second reviewer stops staging
+ok 15 - 200 incomplete second reviewer stops staging
+  ---
+  duration_ms: 1.221017
+  type: 'test'
+  ...
+# Subtest: 200 one human cannot play two review roles through two keys
+ok 16 - 200 one human cannot play two review roles through two keys
+  ---
+  duration_ms: 1.655992
+  type: 'test'
+  ...
+# Subtest: 200 altered signed reviewer scope is rejected
+ok 17 - 200 altered signed reviewer scope is rejected
+  ---
+  duration_ms: 1.423056
+  type: 'test'
+  ...
+# Subtest: 200 correct scope but forged reviewer signature denied
+ok 18 - 200 correct scope but forged reviewer signature denied
+  ---
+  duration_ms: 1.559278
+  type: 'test'
+  ...
+# Subtest: 200 altered claim hash with correctly re-signed reviewer still fails scope
+ok 19 - 200 altered claim hash with correctly re-signed reviewer still fails scope
+  ---
+  duration_ms: 1.426291
+  type: 'test'
+  ...
+# Subtest: 200 altered presentation hash invalidates previously approved state
+ok 20 - 200 altered presentation hash invalidates previously approved state
+  ---
+  duration_ms: 1.361005
+  type: 'test'
+  ...
+# Subtest: 200 non-Ed25519 anchor rejected, no fallback to insecure algorithms
+ok 21 - 200 non-Ed25519 anchor rejected, no fallback to insecure algorithms
+  ---
+  duration_ms: 61.953949
+  type: 'test'
+  ...
+# Subtest: 200 policy date bounds reject invalid cryptographic trust configuration
+ok 22 - 200 policy date bounds reject invalid cryptographic trust configuration
+  ---
+  duration_ms: 0.687207
+  type: 'test'
+  ...
+# Subtest: 200 capture signer with wrong role cannot authorize issuer record
+ok 23 - 200 capture signer with wrong role cannot authorize issuer record
+  ---
+  duration_ms: 1.187608
+  type: 'test'
+  ...
+# Subtest: 200 expired pin stops old valid signature
+ok 24 - 200 expired pin stops old valid signature
+  ---
+  duration_ms: 1.096493
+  type: 'test'
+  ...
+# Subtest: 200 extra unqualified evidence packet cannot issue additional trust card
+ok 25 - 200 extra unqualified evidence packet cannot issue additional trust card
+  ---
+  duration_ms: 1.779334
+  type: 'test'
+  ...
+# Subtest: 200 absent specialist validation yields no signal, not bad product
+ok 26 - 200 absent specialist validation yields no signal, not bad product
+  ---
+  duration_ms: 1.577766
+  type: 'test'
+  ...
+# Subtest: 200 unordered status revocation list is not trusted
+ok 27 - 200 unordered status revocation list is not trusted
+  ---
+  duration_ms: 1.02648
+  type: 'test'
+  ...
+# Subtest: 200 no document body can exceed bounded transient maximum
+ok 28 - 200 no document body can exceed bounded transient maximum
+  ---
+  duration_ms: 1.116774
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 193.739543

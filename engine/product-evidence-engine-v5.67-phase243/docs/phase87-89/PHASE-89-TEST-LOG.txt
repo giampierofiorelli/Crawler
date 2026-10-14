@@ -1,0 +1,345 @@
+test_bad_human_approval_not_reuse (test_phase87.Phase87Tests.test_bad_human_approval_not_reuse) ... ok
+test_cli_roundtrip (test_phase87.Phase87Tests.test_cli_roundtrip) ... ok
+test_depth_limit_fails_closed (test_phase87.Phase87Tests.test_depth_limit_fails_closed) ... ok
+test_duplicate_labels_rejected (test_phase87.Phase87Tests.test_duplicate_labels_rejected) ... ok
+test_duplicate_sample (test_phase87.Phase87Tests.test_duplicate_sample) ... ok
+test_hash_tampering_disallowed (test_phase87.Phase87Tests.test_hash_tampering_disallowed) ... ok
+test_html_size_bound (test_phase87.Phase87Tests.test_html_size_bound) ... ok
+test_http_disallowed (test_phase87.Phase87Tests.test_http_disallowed) ... ok
+test_local_model_cannot_be_remote (test_phase87.Phase87Tests.test_local_model_cannot_be_remote) ... ok
+test_local_model_protocol_simulator (test_phase87.Phase87Tests.test_local_model_protocol_simulator) ... ok
+test_markup_injection_not_in_inventory (test_phase87.Phase87Tests.test_markup_injection_not_in_inventory) ... ok
+test_memory_success_resets_streak (test_phase87.Phase87Tests.test_memory_success_resets_streak) ... ok
+test_memory_suspend_on_two_structure_failures (test_phase87.Phase87Tests.test_memory_suspend_on_two_structure_failures) ... ok
+test_minimal_model_input_no_sensitive_content (test_phase87.Phase87Tests.test_minimal_model_input_no_sensitive_content) ... ok
+test_model_generated_value_not_accepted (test_phase87.Phase87Tests.test_model_generated_value_not_accepted) ... ok
+test_model_swap_fails (test_phase87.Phase87Tests.test_model_swap_fails) ... ok
+test_negative_impossible_runtime_rejected (test_phase87.Phase87Tests.test_negative_impossible_runtime_rejected) ... ok
+test_nested_h1_document_order (test_phase87.Phase87Tests.test_nested_h1_document_order) ... ok
+test_no_html_retained_in_sqlite (test_phase87.Phase87Tests.test_no_html_retained_in_sqlite) ... ok
+test_no_inference_on_reviewed_reuse (test_phase87.Phase87Tests.test_no_inference_on_reviewed_reuse) ... ok
+test_no_source_automation_side_effect (test_phase87.Phase87Tests.test_no_source_automation_side_effect) ... ok
+test_other_host (test_phase87.Phase87Tests.test_other_host) ... ok
+test_ranges_and_claims_rejected (test_phase87.Phase87Tests.test_ranges_and_claims_rejected) ... ok
+test_review_and_reuse_third_model (test_phase87.Phase87Tests.test_review_and_reuse_third_model) ... ok
+test_reviewer_must_differ (test_phase87.Phase87Tests.test_reviewer_must_differ) ... ok
+test_spec_card (test_phase87.Phase87Tests.test_spec_card) ... ok
+test_three_fields_qualified (test_phase87.Phase87Tests.test_three_fields_qualified) ... ok
+test_three_html_structures (test_phase87.Phase87Tests.test_three_html_structures) ... ok
+test_two_h1_ambiguous (test_phase87.Phase87Tests.test_two_h1_ambiguous) ... ok
+test_unapproved_field_key (test_phase87.Phase87Tests.test_unapproved_field_key) ... ok
+test_unclosed_table_cells_common_html (test_phase87.Phase87Tests.test_unclosed_table_cells_common_html) ... ok
+test_undefined_proposal_extra_instruction (test_phase87.Phase87Tests.test_undefined_proposal_extra_instruction) ... ok
+test_unreviewed_recipe_disallowed (test_phase87.Phase87Tests.test_unreviewed_recipe_disallowed) ... ok
+test_userinfo_url_disallowed (test_phase87.Phase87Tests.test_userinfo_url_disallowed) ... ok
+test_wrong_reference_disallowed (test_phase87.Phase87Tests.test_wrong_reference_disallowed) ... ok
+test_wrong_units_rejected (test_phase87.Phase87Tests.test_wrong_units_rejected) ... ok
+test_access_denial_never_counts_as_layout_drift (test_phase89.WatchLedgerTests.test_access_denial_never_counts_as_layout_drift) ... ok
+test_bad_utc_timestamp (test_phase89.WatchLedgerTests.test_bad_utc_timestamp) ... ok
+test_category_separate_scope (test_phase89.WatchLedgerTests.test_category_separate_scope) ... ok
+test_idempotent_same_receipt_and_event (test_phase89.WatchLedgerTests.test_idempotent_same_receipt_and_event) ... ok
+test_new_recipe_separate_scope (test_phase89.WatchLedgerTests.test_new_recipe_separate_scope) ... ok
+test_no_persisted_numeric_values_or_html (test_phase89.WatchLedgerTests.test_no_persisted_numeric_values_or_html) ... ok
+test_old_failures_outside_window_do_not_count (test_phase89.WatchLedgerTests.test_old_failures_outside_window_do_not_count) ... ok
+test_out_of_order_rejected (test_phase89.WatchLedgerTests.test_out_of_order_rejected) ... ok
+test_recovered_model_no_longer_counts_as_failure (test_phase89.WatchLedgerTests.test_recovered_model_no_longer_counts_as_failure) ... ok
+test_reject_prefix_confusion (test_phase89.WatchLedgerTests.test_reject_prefix_confusion) ... ok
+test_reject_unapproved_http (test_phase89.WatchLedgerTests.test_reject_unapproved_http) ... ok
+test_review_closure_does_not_activate_method (test_phase89.WatchLedgerTests.test_review_closure_does_not_activate_method) ... ok
+test_same_model_different_urls_not_counted_twice (test_phase89.WatchLedgerTests.test_same_model_different_urls_not_counted_twice) ... ok
+test_same_timestamp_conflict_rejected (test_phase89.WatchLedgerTests.test_same_timestamp_conflict_rejected) ... ok
+test_single_model_failure_is_not_source_drift (test_phase89.WatchLedgerTests.test_single_model_failure_is_not_source_drift) ... ok
+test_source_host_scope_restriction (test_phase89.WatchLedgerTests.test_source_host_scope_restriction) ... ok
+test_success_is_advisory_only (test_phase89.WatchLedgerTests.test_success_is_advisory_only) ... ok
+test_two_models_trigger_review_queue_no_autonomous_ai (test_phase89.WatchLedgerTests.test_two_models_trigger_review_queue_no_autonomous_ai) ... /mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d61ffb50>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d61ff3d0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d61ff4c0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60209a0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022020>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022200>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60222f0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60223e0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60224d0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60225c0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60226b0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60227a0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022890>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022980>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022a70>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022b60>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022c50>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022d40>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022e30>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6022f20>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023010>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023100>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60231f0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60233d0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60234c0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60235b0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60236a0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023790>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023880>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023970>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023a60>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d60232e0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023c40>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023b50>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023d30>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023e20>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d6023f10>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0040>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0130>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0220>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d61ff790>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d61ff5b0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0310>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0400>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee04f0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee05e0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee06d0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee07c0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee08b0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee09a0>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0a90>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0b80>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0c70>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0d60>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0e50>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/mnt/data/product-evidence-engine-phase89-cumulative-companion/phase89/watch_ledger.py:145: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fc4d5ee0f40>
+  rows=con.execute('''SELECT product_key,event_type,observed_at,event_id
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_unexpected_input_key_refused (test_phase89.WatchLedgerTests.test_unexpected_input_key_refused) ... ok
+test_unknown_event_refused (test_phase89.WatchLedgerTests.test_unknown_event_refused) ... ok
+test_path_segment_boundary (test_phase89_scope_regression.Phase87ScopeBoundaryRegression.test_path_segment_boundary) ... ok
+test_prefix_out_of_scope (test_phase89_scope_regression.Phase87ScopeBoundaryRegression.test_prefix_out_of_scope) ... ok
+test_trailing_slash_prefix (test_phase89_scope_regression.Phase87ScopeBoundaryRegression.test_trailing_slash_prefix) ... ok
+test_url_fragment_rejected (test_phase89_scope_regression.Phase87ScopeBoundaryRegression.test_url_fragment_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 60 tests in 1.194s
+
+OK
+TAP version 13
+# (node:3077) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: approved HTML -> reviewed extraction -> quarantine once; no model calls, no ranking
+ok 1 - approved HTML -> reviewed extraction -> quarantine once; no model calls, no ranking
+  ---
+  duration_ms: 2.183059
+  type: 'test'
+  ...
+# Subtest: source access denial must stop before extraction and quarantine
+ok 2 - source access denial must stop before extraction and quarantine
+  ---
+  duration_ms: 5.00903
+  type: 'test'
+  ...
+# Subtest: redirect, host, port, query or protocol mismatch stops before extraction
+ok 3 - redirect, host, port, query or protocol mismatch stops before extraction
+  ---
+  duration_ms: 0.511323
+  type: 'test'
+  ...
+# Subtest: non-HTML source and large HTML stop before Python subprocess
+ok 4 - non-HTML source and large HTML stop before Python subprocess
+  ---
+  duration_ms: 0.541689
+  type: 'test'
+  ...
+# Subtest: source claims masquerading as independent tests refused, without intake
+ok 5 - source claims masquerading as independent tests refused, without intake
+  ---
+  duration_ms: 0.260784
+  type: 'test'
+  ...
+# Subtest: wrong model, changed source, wrong strategy, NaN and unknown field rejected
+ok 6 - wrong model, changed source, wrong strategy, NaN and unknown field rejected
+  ---
+  duration_ms: 0.633518
+  type: 'test'
+  ...
+# Subtest: no source read when field registry or recipe ID invalid
+ok 7 - no source read when field registry or recipe ID invalid
+  ---
+  duration_ms: 0.384691
+  type: 'test'
+  ...
+# Subtest: quarantine receipt failure never yields a successful return
+ok 8 - quarantine receipt failure never yields a successful return
+  ---
+  duration_ms: 0.306252
+  type: 'test'
+  ...
+# Subtest: missing Phase85, Phase69 and Phase72 dependencies prohibited
+ok 9 - missing Phase85, Phase69 and Phase72 dependencies prohibited
+  ---
+  duration_ms: 0.318942
+  type: 'test'
+  ...
+# Subtest: unreviewed category field rejected before source read
+ok 10 - unreviewed category field rejected before source read
+  ---
+  duration_ms: 0.37742
+  type: 'test'
+  ...
+# (node:3078) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Python SQLite recipe, TypeScript bridge, authorisation seam and quarantine seam
+ok 11 - actual Python SQLite recipe, TypeScript bridge, authorisation seam and quarantine seam
+  ---
+  duration_ms: 4564.847008
+  type: 'test'
+  ...
+# (node:3079) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real Python SQLite monitoring bridge queues distinct-model drift without an LLM
+ok 12 - real Python SQLite monitoring bridge queues distinct-model drift without an LLM
+  ---
+  duration_ms: 4539.219185
+  type: 'test'
+  ...
+# Subtest: phase89 wraps actual phase88/87/SQLite success; no network, no LLM, quarantine only
+ok 13 - phase89 wraps actual phase88/87/SQLite success; no network, no LLM, quarantine only
+  ---
+  duration_ms: 4326.383153
+  type: 'test'
+  ...
+# Subtest: two distinct models with changed layout raise human review, never quarantine bad values
+ok 14 - two distinct models with changed layout raise human review, never quarantine bad values
+  ---
+  duration_ms: 6152.536187
+  type: 'test'
+  ...
+# Subtest: rights denial blocks extraction and records access review, not strategy drift
+ok 15 - rights denial blocks extraction and records access review, not strategy drift
+  ---
+  duration_ms: 1187.679622
+  type: 'test'
+  ...
+# Subtest: monitoring failure after completed quarantine explicitly reports partial monitoring
+ok 16 - monitoring failure after completed quarantine explicitly reports partial monitoring
+  ---
+  duration_ms: 2992.102271
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19328.51625

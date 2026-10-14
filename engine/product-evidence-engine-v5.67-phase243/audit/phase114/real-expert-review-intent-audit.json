@@ -1,0 +1,207 @@
+{
+  "caseDescription": "Manually reviewed, real professional RTINGS review evidence; small deliberately selected sample, not representative",
+  "testedReviewUrls": [
+    "https://www.rtings.com/robot-vacuum/reviews/eufy/omni-s2",
+    "https://www.rtings.com/robot-vacuum/reviews/dreame/aqua10-ultra-roller",
+    "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-10r",
+    "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-20"
+  ],
+  "modelCalls": 0,
+  "humanLabelledIntent": {
+    "first": "best_overall_with_capability",
+    "second": "maximize_floor_hygiene"
+  },
+  "protocolNotes": "RTINGS Saros20 tested methodology v1.0; S2, Aqua10, Saros10R reported v1.1. No automatic cross-version numeric comparison.",
+  "findings": [
+    {
+      "purpose": "phase114_test_not_public_recommendation",
+      "revision": "manual_four_rtings_reviews_20261011",
+      "intent": {
+        "objective": "best_overall_with_capability",
+        "category": "robot_vacuum_mop",
+        "capability": "floor_hygiene",
+        "capabilityRole": "eligibility_preference_needing_clarification",
+        "scope": "ambiguous_cleaning_vs_microbes",
+        "microorganismTargets": [],
+        "queryHash": "b6f61f73bdd51181e1dc62a135259d4cb6b826358bd82d0b92959c6e4fa8d5eb",
+        "hardRequirements": [],
+        "status": "bounded_interpretation_not_approved"
+      },
+      "rows": [
+        {
+          "id": "dreame_aqua10_ultra_roller",
+          "name": "Dreame Aqua10 Ultra Roller",
+          "kinds": [
+            "continuous_clean_roller_rinse",
+            "dock_hot_mop_wash",
+            "independent_hard_floor_pickup",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "not_found_in_examined_sources",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/dreame/aqua10-ultra-roller"
+          ]
+        },
+        {
+          "id": "eufy_omni_s2",
+          "name": "eufy Omni S2",
+          "kinds": [
+            "dock_hot_mop_wash",
+            "independent_stain_removal",
+            "manufacturer_floor_germ_claim",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "manufacturer_declared_only",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/eufy/omni-s2"
+          ]
+        },
+        {
+          "id": "roborock_saros_10r",
+          "name": "Roborock Saros 10R",
+          "kinds": [
+            "dock_hot_mop_wash",
+            "independent_stain_removal",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "not_found_in_examined_sources",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-10r"
+          ]
+        },
+        {
+          "id": "roborock_saros_20",
+          "name": "Roborock Saros 20",
+          "kinds": [
+            "dock_hot_mop_wash",
+            "independent_hard_floor_pickup",
+            "independent_stain_removal",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "not_found_in_examined_sources",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-20"
+          ]
+        }
+      ],
+      "primaryGoal": "best_overall_with_capability",
+      "secondaryOptionalGoal": "maximize_floor_hygiene",
+      "verificationGaps": [
+        "meaning_of_igienizzare_unverified",
+        "no_floor_microbiological_qualification_in_checked_evidence",
+        "no_validated_overall_MCDA_for_this_candidate_set"
+      ],
+      "floorDisinfectionCannotBeInferredFromDockWash": true,
+      "manufacturerClaimCannotBeTreatedAsLabTest": true,
+      "noProductExcludedBecauseOfMissingTests": true,
+      "overallRanking": null,
+      "secondaryHygieneRanking": null,
+      "publicationReady": false,
+      "canonicalFactsChanged": false,
+      "llmCalls": 0
+    },
+    {
+      "purpose": "phase114_test_not_public_recommendation",
+      "revision": "manual_four_rtings_reviews_20261011",
+      "intent": {
+        "objective": "maximize_floor_hygiene",
+        "category": "robot_vacuum_mop",
+        "capability": "floor_hygiene",
+        "capabilityRole": "eligibility_preference_needing_clarification",
+        "scope": "ambiguous_cleaning_vs_microbes",
+        "microorganismTargets": [],
+        "queryHash": "f47e78f01a254b3edf3e26a4109fb15e96f2b2acce82fef5ef60bed857dbad45",
+        "hardRequirements": [],
+        "status": "bounded_interpretation_not_approved"
+      },
+      "rows": [
+        {
+          "id": "dreame_aqua10_ultra_roller",
+          "name": "Dreame Aqua10 Ultra Roller",
+          "kinds": [
+            "continuous_clean_roller_rinse",
+            "dock_hot_mop_wash",
+            "independent_hard_floor_pickup",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "not_found_in_examined_sources",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/dreame/aqua10-ultra-roller"
+          ]
+        },
+        {
+          "id": "eufy_omni_s2",
+          "name": "eufy Omni S2",
+          "kinds": [
+            "dock_hot_mop_wash",
+            "independent_stain_removal",
+            "manufacturer_floor_germ_claim",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "manufacturer_declared_only",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/eufy/omni-s2"
+          ]
+        },
+        {
+          "id": "roborock_saros_10r",
+          "name": "Roborock Saros 10R",
+          "kinds": [
+            "dock_hot_mop_wash",
+            "independent_stain_removal",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "not_found_in_examined_sources",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-10r"
+          ]
+        },
+        {
+          "id": "roborock_saros_20",
+          "name": "Roborock Saros 20",
+          "kinds": [
+            "dock_hot_mop_wash",
+            "independent_hard_floor_pickup",
+            "independent_stain_removal",
+            "wet_mopping_floor"
+          ],
+          "wetMoppingDocumented": true,
+          "independentlyTestedTargets": [],
+          "floorMicrobeEvidence": "not_found_in_examined_sources",
+          "sources": [
+            "https://www.rtings.com/robot-vacuum/reviews/roborock/saros-20"
+          ]
+        }
+      ],
+      "primaryGoal": "maximize_floor_hygiene",
+      "secondaryOptionalGoal": "best_overall_with_capability",
+      "verificationGaps": [
+        "meaning_of_igienizzare_unverified",
+        "no_floor_microbiological_qualification_in_checked_evidence",
+        "no_validated_overall_MCDA_for_this_candidate_set"
+      ],
+      "floorDisinfectionCannotBeInferredFromDockWash": true,
+      "manufacturerClaimCannotBeTreatedAsLabTest": true,
+      "noProductExcludedBecauseOfMissingTests": true,
+      "overallRanking": null,
+      "secondaryHygieneRanking": null,
+      "publicationReady": false,
+      "canonicalFactsChanged": false,
+      "llmCalls": 0
+    }
+  ]
+}

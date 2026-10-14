@@ -1,0 +1,120 @@
+{
+  "phase": 113,
+  "status": "constructed_fixture_not_local_model_inference",
+  "proposalAudit": {
+    "querySha256": "271d4bddc4dbbc4c700a4a42f93a00ee05c8b236ead9e673a4899b30308addf7",
+    "proposalSha256": "3f3372f7e45b07c8381f926e36a19f04f0969a4c85a13db74a31118671d84b2e",
+    "status": "proposal_pending_independent_confirmation",
+    "problems": [],
+    "proposal": {
+      "schema": "phase113_intent_proposal_v1",
+      "category": "vacuum_cleaner",
+      "goal": "least_noise",
+      "surface": "bare_floor",
+      "requirements": [],
+      "hygieneTargets": [],
+      "ambiguous": false,
+      "unresolvedText": [],
+      "anchors": [
+        {
+          "slot": "category",
+          "value": "vacuum_cleaner",
+          "exactText": "vacuum cleaners",
+          "start": 6,
+          "end": 21
+        },
+        {
+          "slot": "goal",
+          "value": "least_noise",
+          "exactText": "quietest",
+          "start": 26,
+          "end": 34
+        },
+        {
+          "slot": "surface",
+          "value": "bare_floor",
+          "exactText": "hard floors",
+          "start": 38,
+          "end": 49
+        }
+      ]
+    },
+    "suggestedQuestion": null,
+    "canonicalEvidenceMutations": 0,
+    "publicationReady": false,
+    "rankingEligible": false,
+    "fullRequestStored": false
+  },
+  "surfaceSensitivity": {
+    "status": "clarify_material_surface_change",
+    "candidateRankingNotPublished": true,
+    "sameEvidenceRevision": true,
+    "contexts": [
+      "bare_floor",
+      "low_pile_carpet"
+    ],
+    "bareFloorRanks": [
+      [
+        "tineco_s11",
+        1
+      ],
+      [
+        "dyson_v11",
+        2
+      ],
+      [
+        "dyson_v15",
+        3
+      ],
+      [
+        "shark_stratos_iz682h",
+        4
+      ]
+    ],
+    "carpetRanks": [
+      [
+        "tineco_s11",
+        1
+      ],
+      [
+        "dyson_v15",
+        2
+      ],
+      [
+        "dyson_v11",
+        3
+      ],
+      [
+        "shark_stratos_iz682h",
+        4
+      ]
+    ]
+  },
+  "benchmark": {
+    "referenceStatus": "constructed_reference_only",
+    "diagnostic": {
+      "totalCases": 5,
+      "totalEquivalentPairs": 1,
+      "totalDifferentPairs": 5,
+      "inconsistentEquivalentPairs": 0,
+      "falseMergedDifferentIntents": 2,
+      "ambiguityOrUnsupportedMisses": 0,
+      "unnecessaryAbstentions": 1
+    },
+    "empiricalModelAccuracy": null,
+    "caveat": "external label metadata requires audited provenance; no live model has been benchmarked by this function"
+  },
+  "qualifications": {
+    "localModelWasRun": false,
+    "annotationsIndependentlyJudged": false,
+    "representsRealConsumerUtterances": false,
+    "measurementsManuallyTranscribedFromProfessionalReviews": true,
+    "originalSources": [
+      "https://www.rtings.com/vacuum/reviews/tineco/pure-one-s11",
+      "https://www.rtings.com/vacuum/reviews/dyson/v11",
+      "https://www.rtings.com/vacuum/reviews/dyson/v15-detect",
+      "https://www.rtings.com/vacuum/reviews/shark/stratos-cordless"
+    ],
+    "rankNotPublished": true
+  }
+}

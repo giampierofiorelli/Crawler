@@ -1,0 +1,49 @@
+{
+  "project": "Product Evidence Engine",
+  "release": "v4.18.0",
+  "phase": 93,
+  "date": "2026-10-10",
+  "cumulative_base": "product-evidence-engine-v4.17-phase92.zip",
+  "baseline_archive_files": 646,
+  "missing_baseline_archive_files": 0,
+  "baseline_unchanged_files": 640,
+  "baseline_modified_files": [
+    "README.md",
+    "dist/src/phase85_source_recipes.js",
+    "dist/src/phase90_html_mainline.js",
+    "package.json",
+    "src/phase85_source_recipes.ts",
+    "src/phase90_html_mainline.ts"
+  ],
+  "all_tests": {
+    "javascript_typescript_shards": [
+      168,
+      149,
+      158,
+      168
+    ],
+    "javascript_typescript_total": 643,
+    "companion_python": 60,
+    "companion_node": 16,
+    "primary_sources_python": 47,
+    "ingestion_python": 21,
+    "evaluation_python": 26,
+    "launch": 4,
+    "release": 3,
+    "sum_separate_completed_runs": 820,
+    "single_node_invocation": "timed_out_in_container; independent shards completed",
+    "live_source_tests": 0
+  },
+  "implementation": [
+    "src/phase93_reviewer_policy.ts",
+    "src/phase93_permissioned_pilot.ts",
+    "src/phase85_source_recipes.ts",
+    "src/phase90_html_mainline.ts",
+    "tests/phase93_operational_controls.test.ts",
+    "scripts/run-test-shards.mjs"
+  ],
+  "reproducibility": "Source and compiled files included; Node dependencies not bundled. npm ci; npm run test:phase93; individual npm run test:shard1..4; Python suites in package scripts.",
+  "status": "offline_research_only_not_live_validated",
+  "file_manifest": "PHASE93-FILE-MANIFEST.sha256",
+  "privacy": "no user private keys, secrets, live site HTML or licensed source corpus"
+}

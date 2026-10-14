@@ -1,0 +1,75 @@
+{
+  "phase": 146,
+  "version": "4.70-phase146",
+  "parent": "4.69-phase145",
+  "date": "2026-10-11",
+  "parentZipSha256": "f7142a383fb0d708146865ac5bf7a584f5aad000b67cb5d0a38ceccfd2fae2a6",
+  "parentFileCount": 1501,
+  "missingParentFiles": [],
+  "changedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFiles": [
+    "PHASE146-COMPOUND-CONTEXT-DIAGNOSTIC.json",
+    "PHASE146-COMPOUND-SPECIFICATIONS-AND-TEST-CONDITIONS.md",
+    "PHASE146-FILE-MANIFEST.sha256",
+    "PHASE146-REGRESSION-GROUPS.json",
+    "dist/src/phase146_compound_conditions.js",
+    "dist/tests/phase146_compound_conditions.test.js",
+    "research/phase146_future_category_backlog.json",
+    "scripts/evaluate-phase146.mjs",
+    "scripts/phase146_regress.mjs",
+    "src/phase146_compound_conditions.ts",
+    "tests/phase146_compound_conditions.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passing": 1818,
+    "eligibleFiles": 105,
+    "phase146Focused": 35,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Probe": 9,
+    "total": 77
+  },
+  "sourceEvaluation": {
+    "previouslyExposedPublisherExcerpts": 4,
+    "newCompoundCandidatesInExposedExcerpts": 1,
+    "developerAuthoredExamples": 5,
+    "independentGoldAnnotations": 0,
+    "accuracy": null,
+    "blind": false
+  },
+  "futureCategoriesQueued": [
+    "traditional deep fryers",
+    "air fryers",
+    "toasters",
+    "coffee machines",
+    "food steamers"
+  ],
+  "runtime": {
+    "newDependencies": 0,
+    "externalModels": 0,
+    "paidAPIs": 0,
+    "thirdPartyRuntimeSourceCopied": false,
+    "automaticCanonicalWrites": false,
+    "rankingChanged": false
+  },
+  "limitations": [
+    "35 new tests use developer-authored fixtures, not unseen independent annotations",
+    "Existing four publisher excerpts have already been examined; not an independent holdout",
+    "Compound extraction recognizes select formats and conditions only, not general natural-language entailment",
+    "Same literal subject surface does not prove physical model identity",
+    "A TV test window surface does not authenticate published testing protocols",
+    "Phase91/92 legacy test files remain excluded"
+  ],
+  "archiveFileCount": 1513
+}

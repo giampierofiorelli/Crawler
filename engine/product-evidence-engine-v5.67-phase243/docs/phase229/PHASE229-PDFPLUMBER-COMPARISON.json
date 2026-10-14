@@ -1,0 +1,51 @@
+{
+  "mode": "optional_offline_comparison_not_a_pep_dependency",
+  "library": "pdfplumber",
+  "version": "0.11.9",
+  "settings": {
+    "vertical_strategy": "text",
+    "horizontal_strategy": "text",
+    "min_words_vertical": 2,
+    "min_words_horizontal": 1
+  },
+  "realManufacturerDocs": 0,
+  "not_a_valid_accuracy_comparison": true,
+  "reason": "Raw extracted table cells were not mapped into the PEE claim/variant schema or independently validated. The library has distinct Python dependencies.",
+  "results": [
+    {
+      "syntheticFixture": "two-columns",
+      "detectedTables": 1,
+      "rawRows": 7,
+      "nonemptyCells": 10,
+      "wallMsIncludingPdfOpen": 3.82
+    },
+    {
+      "syntheticFixture": "parallel-variants",
+      "detectedTables": 1,
+      "rawRows": 7,
+      "nonemptyCells": 16,
+      "wallMsIncludingPdfOpen": 4.14
+    },
+    {
+      "syntheticFixture": "multi-model",
+      "detectedTables": 1,
+      "rawRows": 7,
+      "nonemptyCells": 10,
+      "wallMsIncludingPdfOpen": 3.18
+    },
+    {
+      "syntheticFixture": "invalid-unit",
+      "detectedTables": 1,
+      "rawRows": 5,
+      "nonemptyCells": 7,
+      "wallMsIncludingPdfOpen": 2.67
+    },
+    {
+      "syntheticFixture": "single-row",
+      "detectedTables": 1,
+      "rawRows": 3,
+      "nonemptyCells": 2,
+      "wallMsIncludingPdfOpen": 1.99
+    }
+  ]
+}

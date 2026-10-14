@@ -1,0 +1,81 @@
+{
+  "phase": 142,
+  "version": "4.66-phase142",
+  "parent": "4.65-phase141",
+  "date": "2026-10-11",
+  "parentArchiveSHA256": "24a2c337856e18d98e1d144b5a2a21a825a5e54f1738235f13eb5438775930ed",
+  "parentFiles": 1454,
+  "missingParentFiles": [],
+  "modifiedParentFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "newFilesBeforeVerification": [
+    "PHASE142-REGRESSION-GROUPS.json",
+    "PHASE142-SCOPE-AND-ROLE-DIAGNOSTIC.json",
+    "PHASE142-SCOPED-LEXICAL-FRAME-ENGINEERING.md",
+    "dist/src/phase142_scoped_lexical_frames.js",
+    "dist/tests/phase142_scoped_lexical_frames.test.js",
+    "scripts/evaluate-phase142.mjs",
+    "scripts/phase142_regress.mjs",
+    "src/phase142_scoped_lexical_frames.ts",
+    "tests/phase142_scoped_lexical_frames.test.ts"
+  ],
+  "typescript": {
+    "status": "pass",
+    "passed": 1720,
+    "testFiles": 101,
+    "focused142": 29,
+    "excludedLegacy": [
+      "phase91_watch_gate.test.js",
+      "phase92_recipe_lifecycle.test.js"
+    ]
+  },
+  "python": {
+    "status": "pass",
+    "primary": 47,
+    "ingestion": 21,
+    "phase133Offline": 9,
+    "total": 77
+  },
+  "diagnostic": {
+    "constructedCases": 10,
+    "previousLexicalProposals": 11,
+    "newLexicalProposals": 11,
+    "dispositionChangesToSaferReview": 6,
+    "previouslySelectedProfessionalExcerpts": 3,
+    "lexicalProposalsOnPreviousProfessionalExcerpts": 0,
+    "independentAccuracy": null,
+    "independentGoldCases": 0
+  },
+  "lexicalAssets": {
+    "vader": {
+      "entries": 7506,
+      "lexiconSha256": "ec636f884f36b5de6a4d681b2f61c08c2ec90eeb440472033f3307d0d6fa8bc9",
+      "license": "MIT",
+      "sha256": "48917868711e2db6ce6a4a32ddbf6c0365b993a95adcff7080e5c86b80e8ac13",
+      "source": "https://github.com/cjhutto/vaderSentiment"
+    },
+    "verbnet": {
+      "classes": 329,
+      "lemmaCount": 3694,
+      "license": "VerbNet-3.X-custom-license",
+      "sha256": "2c7c32785aa13238f9bc8ba11ccf040e6e89421f30c9e530d9b25eed07badc3b",
+      "source": "https://github.com/cu-clear/verbnet"
+    },
+    "wordnet": {
+      "license": "CC-BY-4.0+Princeton-WordNet",
+      "selectedSynsets": 5,
+      "sha256": "491a8d3e389f3fdddba475130d538bafad605e4bab1e3066ff850a32365dbdd2",
+      "source": "https://github.com/globalwordnet/english-wordnet"
+    }
+  },
+  "lexicalBundleUnchanged": true,
+  "runtimeDependenciesAdded": 0,
+  "noNewModelsOrWeights": true,
+  "externalAPIsAdded": 0,
+  "canonicalWriteAuthorized": false,
+  "rankingAuthorized": false,
+  "scientificAccuracyClaim": false,
+  "note": "Surface-scope diagnostics on authored samples, not standalone semantic comprehension or independent performance evaluation."
+}

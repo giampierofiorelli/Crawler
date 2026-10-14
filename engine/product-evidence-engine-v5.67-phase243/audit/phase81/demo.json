@@ -1,0 +1,91 @@
+{
+  "specsOnly": {
+    "productId": "new_example",
+    "state": "specifications_only",
+    "discoveryRecord": "structured_specifications",
+    "queue": [
+      "discover_independent_reviews"
+    ],
+    "candidateForEvidenceReview": false,
+    "competitionAuthorized": false,
+    "inferredPerformanceFromSpecs": false,
+    "sourceIds": [
+      "spec"
+    ]
+  },
+  "independentReview": {
+    "productId": "new_example",
+    "state": "independent_review_found",
+    "discoveryRecord": "research_evidence_pending",
+    "queue": [
+      "verify_independent_methods_and_rights",
+      "discover_independent_reviews"
+    ],
+    "candidateForEvidenceReview": true,
+    "competitionAuthorized": false,
+    "inferredPerformanceFromSpecs": false,
+    "sourceIds": [
+      "spec",
+      "review"
+    ]
+  },
+  "independentOriginalTest": {
+    "productId": "new_example",
+    "state": "original_test_found",
+    "discoveryRecord": "research_evidence_pending",
+    "queue": [
+      "verify_independent_methods_and_rights",
+      "assess_original_tests"
+    ],
+    "candidateForEvidenceReview": true,
+    "competitionAuthorized": false,
+    "inferredPerformanceFromSpecs": false,
+    "sourceIds": [
+      "lab"
+    ]
+  },
+  "permanentRetirement": {
+    "decision": {
+      "modelState": "discontinued",
+      "eligibleForCurrentProductCompetition": false,
+      "productPage": "archive_greyed_out",
+      "banner": "discontinued_confirmed",
+      "needsVerification": false,
+      "sourceIds": [
+        "m_discontinue"
+      ],
+      "newModelNeedsIndependentTests": false,
+      "persistentState": {
+        "confirmedDiscontinued": true,
+        "retirementSourceIds": [
+          "m_discontinue"
+        ]
+      }
+    },
+    "page": {
+      "remainsAccessible": true,
+      "appearance": "greyed_out",
+      "showInCurrentComparisons": false,
+      "showInCurrentRecommendations": false,
+      "bannerText": "Fuori produzione: questo modello non partecipa più alle classifiche e alle raccomandazioni dei prodotti attuali.",
+      "allowHistoricalSpecsAndTests": true
+    },
+    "laterSnapshot": {
+      "modelState": "discontinued",
+      "eligibleForCurrentProductCompetition": false,
+      "productPage": "archive_greyed_out",
+      "banner": "discontinued_confirmed",
+      "needsVerification": false,
+      "sourceIds": [
+        "m_discontinue"
+      ],
+      "newModelNeedsIndependentTests": false,
+      "persistentState": {
+        "confirmedDiscontinued": true,
+        "retirementSourceIds": [
+          "m_discontinue"
+        ]
+      }
+    }
+  }
+}

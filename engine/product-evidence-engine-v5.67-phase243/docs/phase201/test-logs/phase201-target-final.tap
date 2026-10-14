@@ -1,0 +1,180 @@
+
+> product-evidence-engine@5.25.0 test:phase201
+> npm run build && node --test dist/tests/phase201_approved_origin_capture_bridge.test.js
+
+
+> product-evidence-engine@5.25.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: 201 staged scheme fixture source is quarantined, unhashed text is never returned
+ok 1 - 201 staged scheme fixture source is quarantined, unhashed text is never returned
+  ---
+  duration_ms: 19.385569
+  type: 'test'
+  ...
+# Subtest: 201 ordinary specialist article has distinct custody kind
+ok 2 - 201 ordinary specialist article has distinct custody kind
+  ---
+  duration_ms: 2.010517
+  type: 'test'
+  ...
+# Subtest: 201 cannot sign with injected mock even with valid key and signer
+ok 3 - 201 cannot sign with injected mock even with valid key and signer
+  ---
+  duration_ms: 1.649503
+  type: 'test'
+  ...
+# Subtest: 201 without mock requires controlled signer
+ok 4 - 201 without mock requires controlled signer
+  ---
+  duration_ms: 0.289308
+  type: 'test'
+  ...
+# Subtest: 201 registry programme mapping is required for scheme approval
+ok 5 - 201 registry programme mapping is required for scheme approval
+  ---
+  duration_ms: 0.642782
+  type: 'test'
+  ...
+# Subtest: 201 reject registry host substitution
+ok 6 - 201 reject registry host substitution
+  ---
+  duration_ms: 1.06054
+  type: 'test'
+  ...
+# Subtest: 201 reject stale or future registry configuration
+ok 7 - 201 reject stale or future registry configuration
+  ---
+  duration_ms: 1.117324
+  type: 'test'
+  ...
+# Subtest: 201 reject forged registry claim on expert article
+ok 8 - 201 reject forged registry claim on expert article
+  ---
+  duration_ms: 0.800796
+  type: 'test'
+  ...
+# Subtest: 201 original bytes must match full publisher document sha
+ok 9 - 201 original bytes must match full publisher document sha
+  ---
+  duration_ms: 1.164223
+  type: 'test'
+  ...
+# Subtest: 201 older approved bytes do not prove updated publisher revision
+ok 10 - 201 older approved bytes do not prove updated publisher revision
+  ---
+  duration_ms: 1.542203
+  type: 'test'
+  ...
+# Subtest: 201 must reject decoded text / raw buffer mismatches
+ok 11 - 201 must reject decoded text / raw buffer mismatches
+  ---
+  duration_ms: 0.686777
+  type: 'test'
+  ...
+# Subtest: 201 legacy transports without raw bytes cannot make capture receipts
+ok 12 - 201 legacy transports without raw bytes cannot make capture receipts
+  ---
+  duration_ms: 0.558256
+  type: 'test'
+  ...
+# Subtest: 201 ill-formed UTF8 source bytes are rejected even if decoded output looks ordinary
+ok 13 - 201 ill-formed UTF8 source bytes are rejected even if decoded output looks ordinary
+  ---
+  duration_ms: 1.462836
+  type: 'test'
+  ...
+# Subtest: 201 do not capture documents denied by robots
+ok 14 - 201 do not capture documents denied by robots
+  ---
+  duration_ms: 0.618466
+  type: 'test'
+  ...
+# Subtest: 201 cannot bypass expired rights
+ok 15 - 201 cannot bypass expired rights
+  ---
+  duration_ms: 0.339503
+  type: 'test'
+  ...
+# Subtest: 201 must reject source URLs different from reviewed dossier
+ok 16 - 201 must reject source URLs different from reviewed dossier
+  ---
+  duration_ms: 0.35167
+  type: 'test'
+  ...
+# Subtest: 201 wrong exact product variant refused
+ok 17 - 201 wrong exact product variant refused
+  ---
+  duration_ms: 0.633989
+  type: 'test'
+  ...
+# Subtest: 201 invalid evidence identity refused
+ok 18 - 201 invalid evidence identity refused
+  ---
+  duration_ms: 0.257271
+  type: 'test'
+  ...
+# Subtest: 201 unsupported PDF/binary not promoted by legacy html-only reader
+ok 19 - 201 unsupported PDF/binary not promoted by legacy html-only reader
+  ---
+  duration_ms: 0.800656
+  type: 'test'
+  ...
+# Subtest: 201 response redirect to third party cannot create origin receipt
+ok 20 - 201 response redirect to third party cannot create origin receipt
+  ---
+  duration_ms: 0.607189
+  type: 'test'
+  ...
+# Subtest: 201 persisted response may retain safe ETag, but never use as source proof
+ok 21 - 201 persisted response may retain safe ETag, but never use as source proof
+  ---
+  duration_ms: 0.67556
+  type: 'test'
+  ...
+# Subtest: 201 transient callback is invoked only on quarantined text, and byte copy is zeroed
+ok 22 - 201 transient callback is invoked only on quarantined text, and byte copy is zeroed
+  ---
+  duration_ms: 0.477977
+  type: 'test'
+  ...
+# Subtest: 201 transient capture exception cannot leak source content or produce success
+ok 23 - 201 transient capture exception cannot leak source content or produce success
+  ---
+  duration_ms: 0.329248
+  type: 'test'
+  ...
+# Subtest: 201 registry prefix cannot match sibling paths
+ok 24 - 201 registry prefix cannot match sibling paths
+  ---
+  duration_ms: 0.343118
+  type: 'test'
+  ...
+# Subtest: 201 invalid registry prefix traversal fails closed
+ok 25 - 201 invalid registry prefix traversal fails closed
+  ---
+  duration_ms: 0.456455
+  type: 'test'
+  ...
+# Subtest: 201 local injected transport cannot exploit downstream signed-custody callback
+ok 26 - 201 local injected transport cannot exploit downstream signed-custody callback
+  ---
+  duration_ms: 0.179776
+  type: 'test'
+  ...
+# Subtest: 201 stale controlled HTTPS clock refuses before network IO
+ok 27 - 201 stale controlled HTTPS clock refuses before network IO
+  ---
+  duration_ms: 0.778863
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 125.686424

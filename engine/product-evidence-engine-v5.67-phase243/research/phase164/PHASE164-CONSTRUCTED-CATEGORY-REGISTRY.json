@@ -1,0 +1,358 @@
+{
+  "fixture_only": true,
+  "notes": "These records use structurally valid synthetic review receipts, NOT verified experts or authentic sources. DO NOT use as production-reviewed product/category knowledge.",
+  "brains": [
+    {
+      "categoryId": "air_fryer",
+      "schemaVersion": 1,
+      "aliases": [
+        "air fryer",
+        "air fryers"
+      ],
+      "sources": [
+        {
+          "id": "fixture_source",
+          "url": "https://example.org/constructed-schema-fixture",
+          "title": "Constructed test-only fixture",
+          "originalDocumentId": "fixture_document",
+          "role": "original_expert_method"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "small_household",
+          "kind": "environment",
+          "label": "small_household",
+          "aliases": [
+            "for one person",
+            "for a single person",
+            "live alone",
+            "small household"
+          ],
+          "evidenceKeys": [
+            "test_small_household"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        },
+        {
+          "id": "quiet_operation",
+          "kind": "capability",
+          "label": "quiet_operation",
+          "aliases": [
+            "quiet",
+            "low noise",
+            "silent"
+          ],
+          "evidenceKeys": [
+            "test_quiet_operation"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        },
+        {
+          "id": "basket_size",
+          "kind": "capability",
+          "label": "basket_size",
+          "aliases": [
+            "small basket",
+            "compact basket"
+          ],
+          "evidenceKeys": [
+            "test_basket_size"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        }
+      ],
+      "quality": [],
+      "distinctions": []
+    },
+    {
+      "categoryId": "deep_fryer",
+      "schemaVersion": 1,
+      "aliases": [
+        "fryer",
+        "deep fryer",
+        "traditional fryer"
+      ],
+      "sources": [
+        {
+          "id": "fixture_source",
+          "url": "https://example.org/constructed-schema-fixture",
+          "title": "Constructed test-only fixture",
+          "originalDocumentId": "fixture_document",
+          "role": "original_expert_method"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "oil_capacity",
+          "kind": "capability",
+          "label": "oil_capacity",
+          "aliases": [
+            "oil capacity",
+            "large oil tank"
+          ],
+          "evidenceKeys": [
+            "test_oil_capacity"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        }
+      ],
+      "quality": [],
+      "distinctions": []
+    },
+    {
+      "categoryId": "coffee_machine",
+      "schemaVersion": 1,
+      "aliases": [
+        "coffee machine",
+        "espresso machine",
+        "coffee maker"
+      ],
+      "sources": [
+        {
+          "id": "fixture_source",
+          "url": "https://example.org/constructed-schema-fixture",
+          "title": "Constructed test-only fixture",
+          "originalDocumentId": "fixture_document",
+          "role": "original_expert_method"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "steam_wand",
+          "kind": "capability",
+          "label": "steam_wand",
+          "aliases": [
+            "steam wand"
+          ],
+          "evidenceKeys": [
+            "test_steam_wand"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        },
+        {
+          "id": "quiet_operation",
+          "kind": "capability",
+          "label": "quiet_operation",
+          "aliases": [
+            "quiet"
+          ],
+          "evidenceKeys": [
+            "test_quiet_operation"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        }
+      ],
+      "quality": [],
+      "distinctions": []
+    },
+    {
+      "categoryId": "refrigerator",
+      "schemaVersion": 1,
+      "aliases": [
+        "refrigerator",
+        "fridge",
+        "fridges"
+      ],
+      "sources": [
+        {
+          "id": "fixture_source",
+          "url": "https://example.org/constructed-schema-fixture",
+          "title": "Constructed test-only fixture",
+          "originalDocumentId": "fixture_document",
+          "role": "original_expert_method"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "quiet_operation",
+          "kind": "capability",
+          "label": "quiet_operation",
+          "aliases": [
+            "quiet",
+            "low noise"
+          ],
+          "evidenceKeys": [
+            "test_quiet_operation"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        },
+        {
+          "id": "energy",
+          "kind": "capability",
+          "label": "energy",
+          "aliases": [
+            "energy efficient"
+          ],
+          "evidenceKeys": [
+            "test_energy"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        }
+      ],
+      "quality": [],
+      "distinctions": []
+    },
+    {
+      "categoryId": "toaster",
+      "schemaVersion": 1,
+      "aliases": [
+        "toaster",
+        "toasters"
+      ],
+      "sources": [
+        {
+          "id": "fixture_source",
+          "url": "https://example.org/constructed-schema-fixture",
+          "title": "Constructed test-only fixture",
+          "originalDocumentId": "fixture_document",
+          "role": "original_expert_method"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "slots",
+          "kind": "capability",
+          "label": "slots",
+          "aliases": [
+            "four slots",
+            "two slots"
+          ],
+          "evidenceKeys": [
+            "test_slots"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        }
+      ],
+      "quality": [],
+      "distinctions": []
+    },
+    {
+      "categoryId": "steamer",
+      "schemaVersion": 1,
+      "aliases": [
+        "food steamer",
+        "electric steamer",
+        "steam cooker"
+      ],
+      "sources": [
+        {
+          "id": "fixture_source",
+          "url": "https://example.org/constructed-schema-fixture",
+          "title": "Constructed test-only fixture",
+          "originalDocumentId": "fixture_document",
+          "role": "original_expert_method"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "capacity",
+          "kind": "capability",
+          "label": "capacity",
+          "aliases": [
+            "large capacity"
+          ],
+          "evidenceKeys": [
+            "test_capacity"
+          ],
+          "state": "reviewed_definition",
+          "review": {
+            "reviewId": "fixture_review",
+            "reviewerId": "fixture_only_not_authenticated",
+            "sourceRefIds": [
+              "fixture_source"
+            ],
+            "reviewScope": "category_definition"
+          }
+        }
+      ],
+      "quality": [],
+      "distinctions": []
+    }
+  ],
+  "researchCatalog": [
+    {
+      "categoryId": "washing_machine",
+      "label": "washing machine",
+      "aliases": [
+        "washing machine",
+        "washer"
+      ],
+      "status": "research",
+      "registryVersion": null
+    }
+  ],
+  "catalogAsOf": "2026-10-12T00:00:00+01:00"
+}

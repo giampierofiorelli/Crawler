@@ -1,0 +1,207 @@
+{
+  "corpusId": "phase130_postfreeze_challenge",
+  "cases": 8,
+  "caveat": "Curated human-written restatements and synthetic adversarial decoys. No live raw-page crawl, blinded annotation or open-domain validation.",
+  "results": {
+    "baseline_phase129": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 6,
+      "precision": 0,
+      "recall": 0,
+      "exactCases": 1,
+      "caseCount": 8,
+      "cases": [
+        {
+          "id": "fan_eff",
+          "expected": [
+            "ceiling fan efficiency"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/ceiling_fans/key-product-criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "fan_airflow",
+          "expected": [
+            "minimum high speed airflow"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/ceiling_fans/key-product-criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_force",
+          "expected": [
+            "spray force"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.epa.gov/watersense/showerheads",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_coverage",
+          "expected": [
+            "spray coverage"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.epa.gov/watersense/showerheads",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_flow",
+          "expected": [
+            "maximum flow rate"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100VLRA.txt",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "negative_no_protocol",
+          "expected": [],
+          "predicted": [
+            "energy magic index"
+          ],
+          "correct": [],
+          "exact": false,
+          "source": "https://example.org/challenge-1",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "negative_context",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/challenge-2",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_pressure",
+          "expected": [
+            "pressure compensation"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.epa.gov/watersense/showerheads",
+          "sourceMode": "curated_official_source_summary"
+        }
+      ]
+    },
+    "native_phase130": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 4,
+      "precision": 1,
+      "recall": 0.3333333333333333,
+      "exactCases": 4,
+      "caseCount": 8,
+      "cases": [
+        {
+          "id": "fan_eff",
+          "expected": [
+            "ceiling fan efficiency"
+          ],
+          "predicted": [
+            "ceiling fan efficiency"
+          ],
+          "correct": [
+            "ceiling fan efficiency"
+          ],
+          "exact": true,
+          "source": "https://www.energystar.gov/products/ceiling_fans/key-product-criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "fan_airflow",
+          "expected": [
+            "minimum high speed airflow"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.energystar.gov/products/ceiling_fans/key-product-criteria",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_force",
+          "expected": [
+            "spray force"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.epa.gov/watersense/showerheads",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_coverage",
+          "expected": [
+            "spray coverage"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.epa.gov/watersense/showerheads",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_flow",
+          "expected": [
+            "maximum flow rate"
+          ],
+          "predicted": [
+            "maximum flow rate"
+          ],
+          "correct": [
+            "maximum flow rate"
+          ],
+          "exact": true,
+          "source": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100VLRA.txt",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "negative_no_protocol",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/challenge-1",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "negative_context",
+          "expected": [],
+          "predicted": [],
+          "correct": [],
+          "exact": true,
+          "source": "https://example.org/challenge-2",
+          "sourceMode": "curated_official_source_summary"
+        },
+        {
+          "id": "shower_pressure",
+          "expected": [
+            "pressure compensation"
+          ],
+          "predicted": [],
+          "correct": [],
+          "exact": false,
+          "source": "https://www.epa.gov/watersense/showerheads",
+          "sourceMode": "curated_official_source_summary"
+        }
+      ]
+    }
+  }
+}
