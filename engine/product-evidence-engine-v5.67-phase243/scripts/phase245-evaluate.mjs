@@ -77,6 +77,28 @@ function score(facts,g,mainName,{respectMethods}){
  return {scopedFacts:scoped.length,correct:tp,duplicatesOfCorrect:duplicates,falseAssociations:falseAssoc,falsePositives:fp,missed:missed.length,expected:g.expected.length,
   abstentionsRequired:abst.length,abstentionsCorrect:abst.filter(Boolean).length,fpList,assocList,missedList:missed};
 }
+/** Restriction audit (Phase249): every held-back fact in the gold's scope is judged on its own. 'recoverable' =
+ * a correct gold fact the promoted set missed; 'redundant' = correct but already found; 'falseAssociation' and
+ * 'falsePositive' = what releasing it would add as errors. Counts are per blocking flag (a fact can carry several). */
+const BLOCKING=/^(?:main_product_ambiguous|structured_data_disagrees_with_visible|text_group_without_spec_context|listing_states_discontinued|main_product_unnamed|comparison_region_without_product_key|missing_property_label|missing_product_header|missing_product_key|value_spans_multiple_properties|value_cell_is_header|multiple_values_for_one_label|value_per_variant|value_compound|conflicting_values|pointer_header_not_resolved)$/;
+function auditHeld(x,g,mainName){
+ const promoted=score(x.facts,g,mainName,{respectMethods:true});
+ const found=new Set(g.expected.map((e,i)=>i).filter(i=>!promoted.missedList.includes(`${g.expected[i].product} | ${g.expected[i].section??''} | ${g.expected[i].property}`)));
+ const out={};
+ for(const f of x.ambiguous){
+  const flags=[...new Set(f.flags.filter(fl=>BLOCKING.test(fl)))];if(f.product.ref==='unknown'&&!flags.length)flags.push('product_unknown');
+  // A held fact on an unknown product is judged as if attributed to the page product (what releasing it would do).
+  const asMain=f.product.ref==='unknown'?{...f,product:{ref:'main',name:mainName}}:f;
+  const s=score([asMain],g,mainName,{respectMethods:true});
+  let verdict='out_of_scope';
+  if(s.correct){const i=g.expected.findIndex(e=>`${e.product} | ${e.section??''} | ${e.property}`!==undefined&&pkey(e.property)===f.propertyKey&&valueMatches(asMain.value,e.value,f.rawValue));
+   verdict=found.has(i)?'redundant':'recoverable';}
+  else if(s.duplicatesOfCorrect)verdict='redundant';
+  else if(s.falseAssociations)verdict='falseAssociation';else if(s.falsePositives)verdict='falsePositive';
+  for(const fl of flags){out[fl]??={recoverable:0,redundant:0,falseAssociation:0,falsePositive:0,out_of_scope:0};out[fl][verdict]++;}
+ }
+ return out;
+}
 const rows=[];
 for(const [tag,g] of Object.entries(gold)){
  const file=`${args.pages}/${tag}.html`;
@@ -89,7 +111,8 @@ for(const [tag,g] of Object.entries(gold)){
  const newFacts=x.facts.map(f=>({...f}));
  rows.push({tag,sha256:sha,bytes:html.length,
   baseline:{...score(base,g,mainName,{respectMethods:false}),ms:+baseMs.toFixed(1)},
-  phase245:{...score(newFacts,g,mainName,{respectMethods:true}),ms:+newMs.toFixed(1),ambiguousKept:x.ambiguous.length}});
+  phase245:{...score(newFacts,g,mainName,{respectMethods:true}),ms:+newMs.toFixed(1),ambiguousKept:x.ambiguous.length},
+  ...(args['audit-held']?{held:auditHeld(x,g,mainName)}:{})});
 }
 const sum=(k,s)=>rows.filter(r=>!r.missingPage).reduce((a,r)=>a+r[k][s],0);
 const totals={};
@@ -103,6 +126,8 @@ for(const r of rows){if(r.missingPage){console.log(r.tag.padEnd(24),'| PAGE MISS
  const f=x=>`${String(x.correct).padStart(4)} ${String(x.falseAssociations).padStart(5)} ${String(x.falsePositives).padStart(2)} ${String(x.missed).padStart(4)} ${x.abstentionsCorrect}/${x.abstentionsRequired} ${String(Math.round(x.ms)).padStart(4)}`;
  console.log(r.tag.padEnd(24),'|',f(r.baseline),'           |',f(r.phase245));}
 console.log('TOTALS',JSON.stringify(totals));
+if(args['audit-held']){const agg={};for(const r of rows)if(r.held)for(const [fl,c] of Object.entries(r.held)){agg[fl]??={};for(const [k,v] of Object.entries(c))agg[fl][k]=(agg[fl][k]??0)+v;}
+ out.heldAudit=agg;if(args.out)writeFileSync(resolve(args.out),JSON.stringify(out,null,1)+'\n');console.log('HELD',JSON.stringify(agg));}
 if(args.verbose)for(const r of rows)if(!r.missingPage)for(const k of ['baseline','phase245']){const s=r[k];
  for(const x of s.fpList)console.log(`  [${r.tag}] ${k} FP: ${x}`);for(const x of s.assocList)console.log(`  [${r.tag}] ${k} ASSOC: ${x}`);
  for(const x of s.missedList)console.log(`  [${r.tag}] ${k} MISSED: ${x}`);}

@@ -22,7 +22,7 @@ import type {Fact241} from './phase241_unified_product_facts.js';
 import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 
 export type Method245='line_label_value'|'json_ld'|'microdata'|'definition_list'|'table_key_value'|'table_products_in_columns'|
- 'table_products_in_rows'|'repeated_label_value'|'list_item_label_value';
+ 'table_products_in_rows'|'repeated_label_value'|'list_item_label_value'|'page_meta';
 export interface Fact245 {
  property:string;propertyKey:string;
  /** Normalized value; the authored text is kept (bounded) in rawValue. */
@@ -79,7 +79,7 @@ const tokensOf=(n:Node245)=>{
  return out;
 };
 type Region='main'|'excluded'|'comparison';
-function classifyRegions(root:Node245){
+export function classifyRegions245(root:Node245){
  const region=new Map<Node245,{kind:Region;reason:string|null}>();
  let main=[...walk245(root)].find(n=>n.kind==='element'&&(n.tag==='main'||n.attrs.role==='main'))??null;
  // A <main> holding almost none of the page text (e.g. only a search widget) does not delimit content.
@@ -101,7 +101,9 @@ function classifyRegions(root:Node245){
    const container=n.tag==='html'||n.tag==='body'||n===main||(main?containsNode(n,main):false)||containsH1.has(n);
    // <header>/<footer>/<form> inside main content or an article belong to that content.
    if(BOILER_TAGS.has(n.tag)&&!(['form','header','footer'].includes(n.tag)&&(insideMain||insideArticle)))reason='boilerplate_tag:'+n.tag;
-   else if(n.attrs.role&&BOILER_ROLES.has(n.attrs.role))reason='boilerplate_role:'+n.attrs.role;
+   // A tab-list role on a wrapper that holds the tab panels themselves (seen on CMS product templates) does not
+   // make the panels boilerplate: only the tab buttons are navigation.
+   else if(n.attrs.role&&BOILER_ROLES.has(n.attrs.role)&&!(n.attrs.role==='tablist'&&[...walk245(n)].some(d=>d!==n&&d.attrs?.role==='tabpanel')))reason='boilerplate_role:'+n.attrs.role;
    else if(!container){for(const t of toks)if(BOILER_TOKENS.has(t)){reason='non_main_marker:'+t;break;}}
    if(!reason&&n.attrs.itemscope!==undefined&&n.attrs.itemprop&&/^(?:isRelatedTo|isSimilarTo|isAccessoryOrSparePartFor|itemListElement)$/i.test(n.attrs.itemprop))
     reason='related_product_microdata';
@@ -126,11 +128,15 @@ function isItemListing(n:Node245):boolean{
  const counts=new Map<string,number>();for(const k of kids)counts.set(sig(k),(counts.get(sig(k))??0)+1);
  const [best,count]=[...counts].sort((a,b)=>b[1]-a[1])[0];
  if(count<3)return false;
- let cards=0;
+ let cards=0,cardText=0;
  for(const k of kids){if(sig(k)!==best)continue;let link=false,img=false;
   for(const d of walk245(k)){if(d.tag==='a'&&d.attrs.href)link=true;if(d.tag==='img'||d.tag==='picture')img=true;}
-  if(link&&img)cards++;}
- return cards>=3;
+  // A card is small: whole page sections of a grid layout (each with some link and image) are not product cards.
+  // Specification structures (a table, a definition list, a list of five or more items) belong to product content, not to a teaser card.
+  const specs=[...walk245(k)].some(d=>d.tag==='table'||d.tag==='dl'||(d.tag==='ul'&&elementChildren245(d).filter(c=>c.tag==='li').length>=5));
+  if(link&&img&&!specs&&textOf245(k).length<=1200){cards++;cardText+=textOf245(k).length;}}
+ // ...and a listing consists mostly of cards: a page grid with a few teaser tiles beside the product section is not one.
+ return cards>=3&&cardText>=textOf245(n).length*0.6;
 }
 
 // ---------- section context ----------
@@ -289,6 +295,12 @@ function pairOf(x:Node245):{label:string;value:string;labelNode:Node245;valueNod
    if(b.kind==='text'&&INLINE.has(a.tag)&&!/[:：]\s*$/.test(ta))return null;
    return {label:ta,value:tb,labelNode:a,valueNode:b};
   }
+  // "<b>Total Depth:</b> <b>64 cm</b> (Important for under-desk placement.)": a closing bracketed note after the
+  // value belongs to it as a qualifier; it does not make the item a sentence.
+  if(items.length===3&&items[2].kind==='text'&&/^\s*\([^()]{2,60}\)\s*$/.test(items[2].text)&&items[0].kind==='element'&&!(items[0].tag==='a'||walk245Has(items[0],'a'))){
+   const ta=textOf245(items[0]),tb=items[1].kind==='text'?clean245(items[1].text):textOf245(items[1]);
+   if(/[:：]\s*$/.test(ta))return {label:ta,value:`${tb} ${clean245(items[2].text)}`,labelNode:items[0],valueNode:items[1]};
+  }
   if(items.length===1&&items[0].kind==='text'){
    const t=clean245(items[0].text);const m=/^([^:：]{1,60})[:：]\s*(.{1,160})$/.exec(t);
    if(m)return {label:m[1],value:m[2],labelNode:items[0],valueNode:items[0]};
@@ -315,6 +327,7 @@ const PRICE_LABEL=/\b(?:price|prices|cost|rrp|msrp|mrp|was|now|from|sale|offer|l
 /** Section words that mark a block of declared product attributes. */
 const SPEC_CONTEXT=/\b(?:spec|specs|specification|specifications|technical|tech|details|dimensions|characteristics|information|key facts|at a glance|product info|in the box|what'?s in the box)\b/i;
 /** "Boiler capacity 250 cc": an attribute phrase followed by one measurable value, without a colon. */
+const UNMARKED_LINE=/^(\p{L}[\p{L}\s'()/-]{1,40}?)\s+((?:[Aa]pprox\.?\s*|[Mm]ax\.?\s*)?\d[\d.,]*(?:\s*[-–]\s*\d[\d.,]*)?\s*[\p{L}°%"″/Ω]{0,10}(?:\s*\(\s*\d[\d.,]*\s*[\p{L}°%"″]{1,6}\s*\))?)$/u;
 const INLINE_ATTR=/^(\p{L}[\p{L}\s'()/-]{2,40}?)\s+(\d[\d.,]*\s*[\p{L}°%"″]{0,6}\.?)$/u;
 const BLOCK_TAGS=new Set(['div','p','ul','ol','li','table','section','article','dl','h1','h2','h3','h4','h5','h6']);
 const walk245Has=(n:Node245,tag:string)=>{for(const d of walk245(n))if(d!==n&&d.tag===tag)return true;return false;};
@@ -325,7 +338,9 @@ const linkOnlyValue=(v:Node245)=>{
  return linked>=total*0.9;
 };
 const labelLike=(t:string)=>{const s=t.replace(/[:：]\s*$/,'').trim();
- return s.length>=2&&s.length<=60&&s.split(/\s+/).length<=8&&/\p{L}/u.test(s)&&!/[.!?]$/.test(s)&&!/^\d[\d\s.,]*$/.test(s);};
+ // A bracketed unit/axis note ("Unit Size (W x H x D in mm)") is part of the label but not of its wording.
+ const words=s.replace(/\([^()]{1,30}\)|\[[^\[\]]{1,20}\]/g,' ').trim().split(/\s+/).length;
+ return s.length>=2&&s.length<=60&&words<=8&&/\p{L}/u.test(s)&&!/[.!?]$/.test(s)&&!/^\d[\d\s.,]*$/.test(s);};
 /** Repetition is judged on structure (tag + child tag sequence, two levels), not on class names, so
  * per-item modifier classes ("section-chip", "section-control") do not hide a repeated pattern. */
 const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative245(c)).slice(0,6)
@@ -333,13 +348,13 @@ const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative
 
 /** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
  * and re-derived per source revision. Bump on any behavioural change. */
-export const SPEC_EXTRACTOR_VERSION='spec-extractor-5';
+export const SPEC_EXTRACTOR_VERSION='spec-extractor-6';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
  if(typeof html!=='string'||html.length>PAGE_MAX_BYTES)throw Error('245_html_size');
  const documentSha256=createHash('sha256').update(html).digest('hex');
  const {root,nodeCount,truncated}=parseHtml245(html);
- const {region,excludedCount}=classifyRegions(root);
+ const {region,excludedCount}=classifyRegions245(root);
  const all=[...walk245(root)];
  const byId=new Map<string,Node245>();for(const n of all)if(n.kind==='element'&&n.attrs.id)byId.set(n.attrs.id,n);
  const abst:Record<string,number>={};const abstain=(r:string)=>{abst[r]=(abst[r]??0)+1;};
@@ -445,6 +460,16 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   if(m.offerPrice&&own.productRef==='main'&&!raws.some(r=>r.method==='json_ld'&&r.label==='Price'))
    raws.push({label:'Price',valueText:m.offerPrice.replace(/^(\S+) (.*)$/,'$2 $1'),method:'microdata',locator:locator245(m.node)+':offers',
     productRef:'main',productName:mainName,variant:null,section:null,region:'main',ambiguity:[]});
+ }
+
+ // ---- 2b. Open Graph product price meta ("product:price:amount" + currency): a declared offer price of the page
+ // product, read only when structured data gave none and the page product is resolved.
+ if(mainName&&!mainAmbiguous&&!raws.some(r=>r.label==='Price'&&(r.method==='json_ld'||r.method==='microdata'))){
+  const meta=(p:string)=>all.find(n=>n.tag==='meta'&&(n.attrs.property===p||n.attrs.name===p))?.attrs.content?.trim()??null;
+  const amount=meta('product:price:amount')??meta('og:price:amount');const cur=(meta('product:price:currency')??meta('og:price:currency'))?.toUpperCase()??null;
+  if(amount&&cur&&/^[A-Z]{3}$/.test(cur)&&/^\d+(?:\.\d{1,2})?$/.test(amount))
+   raws.push({label:'Price',valueText:`${amount} ${cur}`,method:'page_meta',locator:'meta:product:price',productRef:'main',productName:mainName,
+    variant:null,section:'page metadata',region:'main',ambiguity:[],preValue:{kind:'price',amount:+amount,currency:cur}});
  }
 
  // ---- 3. tables (grid)
@@ -648,8 +673,13 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    if(c.kind==='element'&&BLOCK_TAGS.has(c.tag)){lines.length=0;break;} // nested blocks: not a line-structured block
    const t=c.kind==='text'?c.text:textOf245(c);lines[lines.length-1].text+=(t??'')+' ';lines[lines.length-1].nodes.push(c);
   }
-  const pairs=lines.map(l=>{const t=clean245(l.text).replace(/^[•·▪◦*–—-]\s*/,'');
-   const m=/^([^:：]{1,60})[:：]\s*(.{1,160})$/.exec(t);return m&&labelLike(m[1])?{label:m[1],value:m[2],nodes:l.nodes}:null;}).filter(Boolean);
+  const marked=lines.map(l=>{const t=clean245(l.text).replace(/^[•·▪◦*–—-]\s*/,'');
+   const m=/^([^:：]{1,60})[:：]\s*(.{1,160})$/.exec(t);return m&&labelLike(m[1])?{label:m[1],value:m[2],nodes:l.nodes}:null;});
+  // Lines without a ":" ("Height 8.1 cm", "Impedance 32 ohms") are read only when the value is measurable and the
+  // block has at least two such lines: one word-then-number line can be prose, a run of them is a spec list.
+  const unmarked=lines.map((l,i)=>{if(marked[i])return null;const t=clean245(l.text).replace(/^[•·▪◦*–—-]\s*/,'');
+   const m=UNMARKED_LINE.exec(t);return m&&labelLike(m[1])&&MEASURABLE.has(normalizeValue245(m[2],m[1]).kind)?{label:m[1].trim(),value:m[2].trim(),nodes:l.nodes}:null;});
+  const pairs=[...marked.filter(Boolean),...(unmarked.filter(Boolean).length>=2?unmarked.filter(Boolean):[])];
   const kinds=pairs.map(x=>normalizeValue245(x!.value,x!.label).kind);
   if(!(pairs.length>=2||(pairs.length===1&&MEASURABLE.has(kinds[0]))))continue;
   const ref=mainRef();const sec=sectionOf(el,byId,null);
@@ -673,7 +703,10 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
  }
 
  // A listing whose own visible content says the product is discontinued: a declared price is not current.
- const mainText=(()=>{const m=all.find(n=>n.tag==='main'&&regionOf(n)!=='excluded')??all.find(n=>n.tag==='body');return m?textOf245(m).slice(0,4000):'';})();
+ // Only visible text of main-content regions counts: a script string or a related product's "Availability:
+ // Discontinued" says nothing about this listing.
+ const mainText=all.filter(n=>n.kind==='text'&&n.parent&&!['script','style','template','noscript'].includes(n.parent.tag)&&regionOf(n.parent)==='main')
+  .map(n=>n.text).join(' ').replace(/\s+/g,' ').slice(0,4000);
  const listingDiscontinued=/\bdiscontinued\b|\bno longer (?:available|sold|stocked|manufactured)\b/i.test(mainText);
  // ---- normalize, attribute, detect conflicts
  const facts:Fact245[]=[];const ambiguous:Fact245[]=[];
@@ -689,7 +722,7 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   const value=r.preValue??normalizeValue245(r.valueText,label);
   if(value.kind==='empty'){abstain('empty_value');continue;}
   if(value.kind==='price'&&value.amount===0){abstain('zero_price_placeholder');continue;}
-  if(r.method!=='json_ld'&&r.method!=='microdata'){
+  if(r.method!=='json_ld'&&r.method!=='microdata'&&r.method!=='page_meta'){
    const v=clean245(r.valueText);
    // "7" -> "8.5": a size-conversion row, not a property of the product.
    if(/^[\d.,/+½\s-]+$/.test(label)){abstain('numeric_label_not_property');continue;}
@@ -698,7 +731,7 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    if(LOGISTICS_LABEL.test(label)||(AVAILABILITY_VALUE.test(v)&&SIZE_TOKEN.test(label))){abstain('offer_logistics_not_property');continue;}
   }
   if(value.kind==='prose'){abstain('prose_value_not_kept');continue;}
-  if(value.kind==='price'&&r.method!=='json_ld'&&r.method!=='microdata'&&!PRICE_LABEL.test(label)){abstain('price_labelled_by_other_item');continue;}
+  if(value.kind==='price'&&r.method!=='json_ld'&&r.method!=='microdata'&&r.method!=='page_meta'&&!PRICE_LABEL.test(label)){abstain('price_labelled_by_other_item');continue;}
   const flags=[...r.ambiguity];
   if(!promotable245(value))flags.push('value_'+value.kind);
   if(value.kind==='price'&&listingDiscontinued)flags.push('listing_states_discontinued');

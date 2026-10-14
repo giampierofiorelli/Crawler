@@ -290,3 +290,55 @@ test('extractor-5: a generic "Specifications" heading is not the product name; J
  const b=extractSpecifications245('<html><head><script type="application/ld+json">{"@type":"Product","name":"Pursuit 2 Women&#39;s"}</script></head><body><main></main></body></html>','https://t.example/');
  assert.equal(b.mainProduct.name,"Pursuit 2 Women's");
 });
+
+// ---- spec-extractor-6: restriction audit (Phase249). Each test pins a relaxation AND the case it must still refuse.
+test('extractor-6: a tablist wrapper holding tab panels is content; a plain tab bar is still navigation',()=>{
+ const x=extractSpecifications245(page5(`<div role="tablist"><button>Specs</button><div role="tabpanel"><table><tr><th>Weight</th><td>264 g</td></tr><tr><th>Drop</th><td>4 mm</td></tr></table></div></div>
+  <div role="tablist"><table><tr><th>Colour</th><td>Red</td></tr><tr><th>Size</th><td>XL</td></tr></table></div>`),'https://s.example/p');
+ assert.deepEqual(x.facts.map(f=>f.property).sort(),['Drop','Weight']);
+});
+test('extractor-6: unit/axis notes do not count towards the label length; long labels are still refused',()=>{
+ const row=(l:string,v:string)=>`<div class="r"><span class="l">${l}</span><span class="v">${v}</span></div>`;
+ const x=extractSpecifications245(page5(`<div class="specs">${row('Unit Size (W x H x D in mm)','440 x 258 x 324')}${row('Box Weight','2 kg')}${row('This is a very long sentence that is not a label','5 kg')}</div>`),'https://s.example/p');
+ assert.deepEqual(x.facts.find(f=>f.property.startsWith('Unit Size'))!.value,{kind:'dimensions',numbers:[440,258,324],unit:'mm',axes:null,approximate:false});
+ assert.ok(!x.facts.some(f=>/very long/.test(f.property)));
+});
+test('extractor-6: unmarked "Label value" lines need a measurable value and at least two such lines',()=>{
+ const a=extractSpecifications245(page5(`<div>Technical Specifications<br>Driver Diameter 40 mm<br>Impedance 32 ohms<br>Type Closed-back dynamic<br>Weight 190 g (6.7 oz)</div>`),'https://s.example/p');
+ assert.deepEqual(a.facts.map(f=>f.property).sort(),['Driver Diameter','Impedance','Weight']);
+ assert.deepEqual(a.facts.find(f=>f.property==='Impedance')!.value,{kind:'quantity',number:32,unit:'Ω',approximate:false});
+ const b=extractSpecifications245(page5(`<div>We walked for 12 km<br>It was a lovely day out in the hills</div>`),'https://s.example/p');
+ assert.equal(b.facts.length,0);
+});
+test('extractor-6: a trailing bracketed note stays with its value; Open Graph price meta is read only for a resolved page product',()=>{
+ const x=extractSpecifications245(`<html><head><meta property="og:title" content="Chair C"><meta property="product:price:amount" content="66.92"><meta property="product:price:currency" content="GBP"></head><body><main><h1>Chair C</h1>
+  <ul><li><p><b>Total Depth:</b> <b>64 cm</b> (Important for under-desk placement.)</p></li><li><p><b>Seat Width:</b> <b>44 cm</b></p></li><li><p><b>Seat Depth:</b> <b>42 cm</b></p></li></ul></main></body></html>`,'https://s.example/c');
+ const d=x.facts.find(f=>f.property==='Total Depth')!.value as {number:number;qualifier?:string};
+ assert.equal(d.number,64);assert.match(d.qualifier!,/under-desk/);
+ assert.deepEqual(x.facts.find(f=>f.property==='Price')!.value,{kind:'price',amount:66.92,currency:'GBP'});
+ const two=extractSpecifications245(`<html><head><meta property="product:price:amount" content="10"><meta property="product:price:currency" content="GBP"></head><body><h1>A</h1><h1>B</h1></body></html>`,'https://s.example/x');
+ assert.ok(!two.facts.some(f=>f.property==='Price'));
+});
+test('extractor-6: a page grid with teaser tiles is not a listing; a real card grid still is; script text does not mark a listing discontinued',()=>{
+ const tile=(i:number)=>`<div class="tile"><a href="/p${i}"><img src="i${i}.jpg">Other product ${i}</a> £${i}9</div>`;
+ const section=`<div class="tile"><a href="/help"><img src="h.jpg"></a><ul>${['Capacity','Power','Levels','Control','Display'].map((l,i)=>`<li><span>${l}</span><span>${[ '20 L','800 W','5','Knobs','None'][i]}</span></li>`).join('')}</ul></div>`;
+ const a=extractSpecifications245(page5(`<div class="grid">${tile(1)}${tile(2)}${tile(3)}${section}</div>`),'https://s.example/p');
+ assert.ok(a.facts.some(f=>f.property==='Capacity'));
+ const b=extractSpecifications245(page5(`<div class="grid">${tile(1)}${tile(2)}${tile(3)}${tile(4)}</div><table><tr><th>Weight</th><td>1 kg</td></tr><tr><th>Width</th><td>2 cm</td></tr></table>`),'https://s.example/p');
+ assert.ok(!b.facts.some(f=>/Other product/.test(String(f.product.name))));
+ const ld='<script type="application/ld+json">{"@type":"Product","name":"Acme Trail 2","offers":{"price":"20","priceCurrency":"GBP"}}</script>';
+ const c=extractSpecifications245(page5(`<script>if(a==="discontinued")x.innerHTML="Discontinued"</script><p>In stock</p>`,ld),'https://s.example/p');
+ assert.ok(c.facts.some(f=>f.property==='Price'));
+ const d=extractSpecifications245(page5(`<p>This product is discontinued.</p>`,ld),'https://s.example/p');
+ assert.ok(d.ambiguous.some(f=>f.flags.includes('listing_states_discontinued')));
+});
+test('extractor-6: units and label hints recovered (ms, Ah, N·m, Ω, l/s, mA, [unit] labels, thousands separators)',()=>{
+ const n=(v:string,l='')=>normalizeValue245(v,l);
+ assert.deepEqual(n('5 ms'),{kind:'quantity',number:5,unit:'ms',approximate:false});
+ assert.equal((n('28','Max. Torque [Nm]') as {unit:string}).unit,'N·m');assert.equal((n('3 nm') as {unit:string}).unit,'nm');
+ assert.equal((n('75.5','Sound Power [dB(A)]') as {unit:string}).unit,'dB');
+ assert.deepEqual(n('0 - 650','No Load Speed [RPM]'),{kind:'range',min:0,max:650,unit:'rpm',approximate:false});
+ assert.equal((n('200mA') as {unit:string}).unit,'mA');assert.equal((n('20 l/s') as {unit:string}).unit,'l/s');
+ assert.deepEqual(n('1,000W'),{kind:'quantity',number:1000,unit:'W',approximate:false});
+ assert.equal(n('128, 256 GB').kind,'options');
+});

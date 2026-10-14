@@ -28,13 +28,14 @@ const UNIT_ALIASES:[RegExp,string][]=[
  [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:cc|cm3|cm³)$/i,'cm³'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
  [/^(?:gal|gallons?)$/i,'gal'],[/^(?:fl\.? ?oz)$/i,'fl oz'],[/^(?:mw)$/,'mW'],[/^(?:w|watts?)$/i,'W'],[/^(?:kw|kilowatts?)$/i,'kW'],
  [/^(?:wh)$/i,'Wh'],[/^(?:kwh)$/i,'kWh'],[/^(?:mah)$/i,'mAh'],[/^(?:v|volts?)$/i,'V'],[/^(?:mv)$/,'mV'],[/^(?:kv)$/i,'kV'],
- [/^(?:a|amps?|amperes?)$/i,'A'],[/^(?:ma)$/,'mA'],[/^(?:hz|hertz)$/i,'Hz'],[/^(?:khz)$/i,'kHz'],[/^(?:mhz)$/i,'MHz'],
+ [/^(?:a|amps?|amperes?)$/i,'A'],[/^(?:ma|mA)$/,'mA'],[/^(?:ah)$/i,'Ah'],[/^(?:nm)$/,'nm'],[/^(?:Nm|N\.m|N·m)$/,'N·m'],
+ [/^(?:ohms?|Ω|Ω)$/i,'Ω'],[/^(?:ms)$/,'ms'],[/^(?:l\/s)$/i,'l/s'],[/^(?:W\/m²|W\/m2)$/,'W/m²'],[/^(?:hz|hertz)$/i,'Hz'],[/^(?:khz)$/i,'kHz'],[/^(?:mhz)$/i,'MHz'],
  [/^(?:ghz)$/i,'GHz'],[/^(?:°c|℃|degc|deg c|c°)$/i,'°C'],[/^(?:°f|℉)$/i,'°F'],[/^(?:db|dba|db\(a\))$/i,'dB'],
  [/^(?:kb)$/i,'KB'],[/^(?:mb)$/i,'MB'],[/^(?:gb)$/i,'GB'],[/^(?:tb)$/i,'TB'],[/^(?:mbit|mbit\/s|mbps)$/i,'Mbit/s'],
  [/^(?:gbit|gbit\/s|gbps)$/i,'Gbit/s'],[/^(?:kb\/s|kbps)$/,'kB/s'],[/^(?:mb\/s|mbyte\/s)$/i,'MB/s'],[/^(?:gb\/s|gbyte\/s)$/i,'GB/s'],[/^(?:mp|megapixels?)$/i,'MP'],[/^(?:px|pixels?)$/i,'px'],[/^(?:%|percent)$/i,'%'],
  [/^(?:bar)$/i,'bar'],[/^(?:mbar)$/i,'mbar'],[/^(?:pa)$/i,'Pa'],[/^(?:kpa)$/i,'kPa'],[/^(?:psi)$/i,'psi'],
  [/^(?:rpm)$/i,'rpm'],[/^(?:km\/h|kph)$/i,'km/h'],[/^(?:mph)$/i,'mph'],[/^(?:s|sec|secs|seconds?)$/i,'s'],
- [/^(?:min|mins|minutes?)$/i,'min'],[/^(?:h|hr|hrs|hours?)$/i,'h'],[/^(?:nm)$/i,'nm'],[/^(?:lm|lumens?)$/i,'lm'],
+ [/^(?:min|mins|minutes?)$/i,'min'],[/^(?:h|hr|hrs|hours?)$/i,'h'],[/^(?:lm|lumens?)$/i,'lm'],
  [/^(?:l\/min)$/i,'l/min'],[/^(?:m³\/h|m3\/h)$/i,'m³/h'],[/^(?:pin|pins)$/i,'pin'],[/^(?:cores?)$/i,'core'],
  [/^(?:servings?)$/i,'serving'],[/^(?:pieces?|pcs?)$/i,'piece'],[/^(?:ppm)$/i,'ppm'],[/^(?:bpm)$/i,'bpm'],
 ];
@@ -57,7 +58,8 @@ const CURRENCY:Record<string,string>={'$':'USD','us$':'USD','usd':'USD','€':'E
  'jpy':'JPY','chf':'CHF','a$':'AUD','aud':'AUD','c$':'CAD','cad':'CAD','kr':'SEK','sek':'SEK','nok':'NOK','dkk':'DKK','pln':'PLN','zł':'PLN'};
 /** Unit or currency hinted by a property label, e.g. "Weight (kg)", "MSRP (US$)". */
 export function labelUnitHint245(label:string):{unit?:string;currency?:string}{
- const m=/\(([^()]{1,8})\)\s*:?\s*$/.exec(label);if(!m)return {};
+ // "Weight (kg)", "Max. Torque [Nm]", "Sound Power [dB(A)]", "Unit Size (W x H x D in mm)".
+ const m=/\(([^()]{1,8})\)\s*:?\s*$/.exec(label)??/\[([^\[\]]{1,8})\]\s*:?\s*$/.exec(label)??/\bin\s+([a-z"″]{1,4})\s*\)\s*:?\s*$/i.exec(label);if(!m)return {};
  const inner=m[1].trim().toLowerCase();
  if(CURRENCY[inner])return {currency:CURRENCY[inner]};
  const u=canonicalUnit245(m[1]);return u?{unit:u}:{};
@@ -137,8 +139,10 @@ export function normalizeValue245(raw:string,label=''):Value245{
   if(unit&&nums.every(n=>n!==null)&&!LENGTH_UNITS.has(unit))return {kind:'text',text:original};
   if(unit&&nums.every(n=>n!==null))return {kind:'dimensions',numbers:nums as number[],unit,axes:null,approximate};}
  // Option lists "128 GB, 256 GB or 512 GB", "1, 2, 4 or 8 GB", "256 or 512 MB".
+ // "1,000W" is one thousand watts (thousands separator), not the options 1 and 0.
+ const thousands=/^\d{1,3}(?:,\d{3})+(?:\.\d+)?\s*[a-zA-Z°%]{0,6}$/.test(t);
  m=/^((?:\d+(?:[.,]\d+)?\s*[a-zA-Z]{0,4}\s*(?:,|\bor\b|\/)\s*)+\d+(?:[.,]\d+)?)\s*([a-zA-Z]{1,4})?(?:\s+[A-Za-z][\w-]{1,12})?$/.exec(t);
- if(m&&/(?:,|\bor\b|\/)/.test(m[1])){
+ if(m&&!thousands&&/(?:,|\bor\b|\/)/.test(m[1])){
   const parts=m[1].split(/\s*(?:,|\bor\b|\/)\s*/).map(p=>/^(\d+(?:[.,]\d+)?)\s*([a-zA-Z]{0,4})$/.exec(p.trim()));
   const unit=m[2]?canonicalUnit245(m[2]):(parts.find(p=>p&&p[2])?canonicalUnit245(parts.find(p=>p&&p[2])![2]):null);
   if(unit&&parts.every(p=>p&&(!p[2]||canonicalUnit245(p[2])===unit))){
