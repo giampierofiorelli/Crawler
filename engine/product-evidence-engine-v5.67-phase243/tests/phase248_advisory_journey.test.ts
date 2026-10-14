@@ -60,3 +60,25 @@ test('cue words name a category weakly; a single shared word does not identify a
  assert.equal(runJourney248('Which running shoes are best?',s,CATEGORY_REGISTRY248).decision,'out_of_scope');
  s.close();
 });
+test('safety notices attach to candidates by exact identifier only; a brand-only overlap is a research task; the decision stays withheld',async()=>{
+ const {parseSafetyNotice248}=await import('../src/phase248_safety_notices.js');
+ const s=store();
+ const add=(name:string,sku:string|null,url:string,brand='Toastco')=>{
+  const html=`<!doctype html><html><head>${ld({'@context':'https://schema.org','@type':'Product',name,brand:{'@type':'Brand',name:brand},...(sku?{sku}:{})})}</head><body><main><h1>${name}</h1></main></body></html>`;
+  s.ingestObservation246({source:{sourceId:'src_shop',host:'shop.example',sourceType:'retailer',sourceTypeBasis:'operator_asserted'},url,
+   sha256:createHash('sha256').update(html).digest('hex'),bytes:html.length,httpStatus:200,fetchedAt:'2026-10-14T12:00:00.000Z',runId:'r',extractorVersion:'x',
+   extraction:extractSpecifications245(html,url),categoryHypotheses:['toasters']});};
+ add('Toastco Two Slice TC-200','TC-200','https://shop.example/a');add('Toastco Four Slice','TC-400X','https://shop.example/b');add('Toastco Classic Toaster',null,'https://shop.example/c');
+ const notice=parseSafetyNotice248({base_path:'/product-safety-alerts-reports-recalls/x',title:'Product Recall: Toastco Toaster',
+  details:{metadata:{product_alert_type:'product-recall',product_risk_level:'serious'},body:'<p>Product: Toastco Toaster</p><p>Hazard: The product presents a serious risk of fire.</p><table><tr><td>Type</td><td>Electrical appliances and equipment - Toaster</td></tr><tr><td>Brand</td><td>Toastco</td></tr><tr><td>Models</td><td>TC-200 and TC-250</td></tr></table>'}},
+  'https://www.gov.uk/product-safety-alerts-reports-recalls/x','2026-10-14T12:00:00Z',CATEGORY_REGISTRY248);
+ const j=runJourney248('My bread never browns evenly, which toaster?',s,CATEGORY_REGISTRY248,{safetyNotices:[notice]});
+ const sf=j.stages.evidence.safety!;
+ assert.equal(sf.noticesInCategory,1);assert.deepEqual(sf.byHazard,{fire:1});
+ assert.equal(sf.candidateMatches.length,1);assert.equal(sf.candidateMatches[0].identifier,'TC-200');
+ assert.equal(sf.brandOnlyCandidates,2); // TC-400X and the unidentified "Classic" are not linked by name
+ assert.ok(j.reasons.some(r=>/named by exact identifier/.test(r)));assert.ok(j.researchPlan.some(p=>/model identifiers needed/.test(p)));
+ assert.equal(j.decision,'withhold_insufficient_evidence');assert.equal(j.rankingAuthorized,false);
+ assert.equal(runJourney248('My bread never browns evenly, which toaster?',s,CATEGORY_REGISTRY248).stages.evidence.safety,null);
+ s.close();
+});

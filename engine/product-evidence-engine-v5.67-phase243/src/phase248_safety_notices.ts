@@ -12,7 +12,7 @@
 import {parseHtml245,walk245,textOf245,clean245,type Node245} from './phase245_html_dom.js';
 import type {CategoryEntry248} from './phase248_advisory_journey.js';
 
-export const SAFETY_NOTICE_PARSER248='opss-notice-1';
+export const SAFETY_NOTICE_PARSER248='opss-notice-2';
 export const OGL_ATTRIBUTION248='Contains public sector information licensed under the Open Government Licence v3.0.';
 export type HazardClass248='fire'|'electric_shock'|'burns'|'injury'|'choking'|'chemical'|'suffocation'|'entrapment'|'explosion'|'other';
 export interface ModelIdentifier248 {code:string;key:string;label:string;strength:'alphanumeric'|'numeric'}
@@ -36,8 +36,8 @@ const HAZARDS:[HazardClass248,RegExp][]=[
  ['chemical',/\bchemical\w*|\btoxic\b|\blead\b|\bphthalat\w*/i],['suffocation',/\bsuffocat\w*|\bstrangulat\w*/i],
  ['entrapment',/\bentrapment\b|\btrap\w*/i],['explosion',/\bexplo\w*/i],
 ];
-const ID_LABEL=/\b(?:models?|sku|product codes?|identifiers?|barcodes?|batch(?:es)?|ean|gtin|part numbers?|item numbers?|lot)\b/i;
-const NOT_CODE=/^(?:\d{1,2}(?:\.\d)?(?:l|ltr|w|v|kw|qt)|\d{4}|\d{1,2})$/i; // capacities, powers, years, small counts
+const ID_LABEL=/\b(?:models?|sku|product codes?|identifiers?|barcodes?|batch(?:es)?|ean|gtin|part numbers?|item numbers?|lot|asin|ref|reference)\b/i;
+const NOT_CODE=/^(?:\d{1,2}(?:\.\d)?(?:l|ltr|w|v|kw|qt)|(?:19|20)\d{2}|\d{1,2})$/i; // capacities, powers, years, small counts
 /** Model/SKU tokens: at least three characters and a digit; separators normalised for exact comparison only. */
 export function identifierKey248(code:string):string{return code.toUpperCase().replace(/[\s._/-]+/g,'');}
 function codesIn(text:string,label:string):ModelIdentifier248[]{
@@ -47,10 +47,15 @@ function codesIn(text:string,label:string):ModelIdentifier248[]{
   const strength=/[A-Z]/i.test(code)?'alphanumeric':'numeric';
   if(strength==='numeric'&&code.replace(/\D/g,'').length<3)continue;
   // Words such as "8L" or "2.2Ltr" in a model description are sizes, not codes.
-  if(/^\d+(?:\.\d+)?(?:l|ltr|litre|ml|w|v|mm|cm|kg|g|in|qt)$/i.test(code))continue;
+  if(/^\d+(?:\.\d+)?(?:l|ltr|litre|ml|w|v|mm|cm|kg|g|in|qt|amps?|a|mah|hz)$/i.test(code))continue;
+  // "110, 100 and 90cm models": numbers in a list closed by a length unit are sizes.
+  if(strength==='numeric'&&new RegExp(`\\b${code}\\b[\\d,\\s]*(?:and|or)?\\s*\\d*\\s?(?:cm|mm|in|inch|l|litre)\\b`,'i').test(text))continue;
   out.push({code,key:identifierKey248(code),label,strength});
  }
- return out;
+ // A model written as letters, a space and a number ("ERT 1500") in a model field is one code.
+ if(/\bmodel/i.test(label))for(const m of text.matchAll(/(?<![\p{L}\p{N}])([A-Z]{2,5}) (\d{3,6})(?![\p{L}\p{N}])/gu))
+  out.push({code:`${m[1]} ${m[2]}`,key:identifierKey248(m[1]+m[2]),label,strength:'alphanumeric'});
+ return out.filter(o=>!(o.strength==='numeric'&&out.some(x=>x.code.includes(' ')&&x.code.endsWith(' '+o.code))));
 }
 const slug=(s:unknown)=>typeof s==='string'?s:null;
 function sectionText(nodes:Node245[],heading:RegExp):string|null{
@@ -59,10 +64,14 @@ function sectionText(nodes:Node245[],heading:RegExp):string|null{
  return parts.join('\n')||null;
 }
 export function categoriesFor248(type:string|null,name:string|null,registry:readonly CategoryEntry248[]):string[]{
- const t=` ${`${type??''} ${name??''}`.toLowerCase().replace(/[^a-z0-9]+/g,' ')} `;
- const hits=registry.filter(r=>r.aliases.some(a=>t.includes(` ${a.toLowerCase().replace(/[^a-z0-9]+/g,' ')} `)));
- // "Toaster oven" names a toaster oven, not a toaster: a longer alias containing a shorter one wins.
- return hits.filter(h=>!hits.some(o=>o!==h&&o.aliases.some(a=>h.aliases.some(b=>a!==b&&a.includes(b)&&t.includes(` ${a} `))))).map(h=>h.id).sort();
+ // Plurals in regulator taxonomies ("Rice Cookers") name the same category.
+ const norm=(x:string|null)=>` ${(x??'').toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/(\w{3,})s\b/g,'$1')} `;
+ const hitsIn=(t:string)=>{const hits=registry.filter(r=>r.aliases.some(a=>t.includes(` ${a.toLowerCase().replace(/[^a-z0-9]+/g,' ')} `)));
+  // "Toaster oven" names a toaster oven, not a toaster: a longer alias containing a shorter one wins.
+  return hits.filter(h=>!hits.some(o=>o!==h&&o.aliases.some(a=>h.aliases.some(b=>a!==b&&a.includes(b)&&t.includes(` ${a} `))))).map(h=>h.id).sort();};
+ // The product line decides when it names a category; a regulator class such as "Rice Cookers/Steamers" can span two.
+ const byName=hitsIn(norm(name));
+ return byName.length?byName:hitsIn(norm(type));
 }
 export function parseSafetyNotice248(doc:GovUkContent248,url:string,retrievedAt:string,registry:readonly CategoryEntry248[]):SafetyNotice248{
  const md=(doc.details?.metadata??{}) as Record<string,unknown>;
@@ -79,7 +88,8 @@ export function parseSafetyNotice248(doc:GovUkContent248,url:string,retrievedAt:
  const hazardSummary=summary(/hazard/);
  const typeRow=[...rows].find(([k])=>/^(?:product )?type$/i.test(k))?.[1]??null;
  const type=typeRow?clean245(typeRow.replace(/^.*?\s[-–—]\s/,'')):null;
- const brand=[...rows].find(([k])=>/^brand$/i.test(k))?.[1]??null;
+ const brandRow=[...rows].find(([k])=>/^brand$/i.test(k))?.[1]??null;
+ const brand=brandRow&&!/^(?:unbranded|no brand|none|unknown|n\/a|generic)$/i.test(brandRow)?brandRow:null;
  const identifiers:ModelIdentifier248[]=[];
  for(const [k,v] of rows)if(ID_LABEL.test(k))identifiers.push(...codesIn(v,k));
  // A model code in the product line ("Elegant Life Air Fryer AF586S-T", "8L Air Fryer (Model: S-18)") is an identifier too.

@@ -8,6 +8,7 @@
  * Deterministic for the same text and store state. English-first.
  */
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
+import {type SafetyNotice248,matchNotice248,categorySafetyProfile248} from './phase248_safety_notices.js';
 import {relations247} from './phase247_category_relations.js';
 import {composeQuestion125,type CategorySchema125} from './phase125_compositional_dialogue_frame.js';
 
@@ -93,7 +94,10 @@ export interface Journey248 {
   requirements:{measuredBy:{conceptId:string;method:string;support:string;source:string|null}[];cautions:{attribute:string;conceptId:string;kind:string;support:string;note:string}[];
    unmeasuredConcepts:string[];categoryHasKnowledge:boolean};
   candidates:{active:number;withDeclaredAttributes:number;retainedDeclarations:number;budgetApplicable:boolean};
-  evidence:{evidenceSupportedRelations:number;independentResultsForNeed:number;methodReferences:number};
+  evidence:{evidenceSupportedRelations:number;independentResultsForNeed:number;methodReferences:number;
+   /** Independent regulatory safety findings (GOV.UK OPSS) supplied by the caller; null when none were supplied. */
+   safety:{noticesInCategory:number;byHazard:Record<string,number>;candidateMatches:{productId:string;identifier:string;url:string;noticeType:string}[];
+    brandOnlyCandidates:number;sources:string[];note:string}|null};
  };
  decision:Decision248;blockingStage:Stage248|null;reasons:string[];clarificationQuestions:string[];researchPlan:string[];
  rankingAuthorized:false;recommendation:null|{productIds:string[];basis:string};
@@ -101,7 +105,7 @@ export interface Journey248 {
 
 /** Runs the journey for one request. `registry` lists the categories PEE knows by name (with or without
  * category knowledge); concepts and relations come from the store. */
-export function runJourney248(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[]):Journey248{
+export function runJourney248(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],options:{safetyNotices?:readonly SafetyNotice248[]}={}):Journey248{
  if(typeof text!=='string'||text.length<3||text.length>2000)throw Error('248_invalid_request');
  const t=norm(text);
  // ---- category: explicit names (longest match), else inferred from need concepts of exactly one category
@@ -158,8 +162,29 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // Independent product results for the need: retained declarations from independent original-test sources
  // that are verified for a purpose. None exist until test results are acquired under reviewed rights.
  const independentResults=products.reduce((a,p)=>a+store.declarations246(p).filter(d=>d.evidenceRole==='test_publisher_declaration_unreviewed'&&d.state==='verified_for_purpose').length,0);
+ // Safety notices attach to candidates only through an exact identifier the candidate's own sources declared.
+ let safety:Journey248['stages']['evidence']['safety']=null;
+ if(categoryId&&options.safetyNotices){
+  const ns=options.safetyNotices.filter(n=>n.product.categoryIds.includes(categoryId));
+  const profile=categorySafetyProfile248(ns,categoryId);
+  const matches:{productId:string;identifier:string;url:string;noticeType:string}[]=[];let brandOnly=0;
+  for(const pid of products){
+   const p=store.product246(pid);if(!p)continue;
+   const ids=[...Object.entries(p.identifiers as Record<string,string>).filter(([k])=>k!=='_key'&&k!=='brand').map(([,v])=>String(v)),
+    ...(p.declaredModel?[p.declaredModel]:[]),...(p.name??'').split(/\s+/).filter(t=>/\d/.test(t)&&/[a-z]/i.test(t)&&t.length>=4&&!/^\d+(?:\.\d+)?(?:l|w|kg|g|ml|cm|mm)$/i.test(t))];
+   let brandHit=false;
+   for(const n of ns){const m=matchNotice248(n,{name:p.name??'',brand:p.brand,identifiers:ids},categoryId);
+    if(m.status==='exact_identifier')matches.push({productId:pid,identifier:m.identifier,url:n.source.url,noticeType:n.noticeType});
+    else if(m.status==='brand_and_category_only')brandHit=true;}
+   if(brandHit&&!matches.some(x=>x.productId===pid))brandOnly++;
+  }
+  safety={noticesInCategory:ns.length,byHazard:profile.byHazard,candidateMatches:matches,brandOnlyCandidates:brandOnly,sources:profile.sources.slice(0,10),
+   note:'regulator findings about identified products (OGL v3.0); counts are notices, not failure rates; never a ranking signal'};
+ }
  // ---- decision
  const reasons:string[]=[];const questions:string[]=[];const plan:string[]=[];
+ if(safety?.candidateMatches.length)reasons.push(`${new Set(safety.candidateMatches.map(m=>m.productId)).size} candidate(s) are named by exact identifier in a UK product safety notice`);
+ if(safety?.brandOnlyCandidates)plan.push(`check ${safety.brandOnlyCandidates} candidate(s) whose brand has a ${categoryId?.replace(/_/g,' ')} safety notice: model identifiers needed to tell whether it applies`);
  let decision:Decision248;let blocking:Stage248|null;
  const goalQuestion=(cat:string)=>{const goals=store.categoryItems246(cat).filter(i=>i.section==='user_goals'&&i.concept);
   return goals.length?`What matters most to you: ${goals.slice(0,4).map(g=>g.statement.replace(/\.$/,'').toLowerCase()).join('; or ')}?`:`What do you mainly want the ${cat.replace(/_/g,' ')} to do for you?`;};
@@ -194,7 +219,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   stages:{category:{categoryId,basis,candidates:explicit,namedUnknownTerm,excluded:excludedCategories},need:{concepts,budget,hazards},
    requirements:{measuredBy,cautions,unmeasuredConcepts:unmeasured,categoryHasKnowledge},
    candidates:{active:products.length,withDeclaredAttributes:withAttrs,retainedDeclarations:retained,budgetApplicable:retained>0},
-   evidence:{evidenceSupportedRelations:evidenceSupported,independentResultsForNeed:independentResults,methodReferences:measuredBy.filter(m=>m.support==='method_reference').length}},
+   evidence:{evidenceSupportedRelations:evidenceSupported,independentResultsForNeed:independentResults,methodReferences:measuredBy.filter(m=>m.support==='method_reference').length,safety}},
   decision,blockingStage:blocking,reasons,clarificationQuestions:questions,researchPlan:plan,rankingAuthorized:false,recommendation:null};
 }
 
