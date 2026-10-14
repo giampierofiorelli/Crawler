@@ -1,0 +1,1235 @@
+{
+ "schema": "pee246.recovery-inventory.v1",
+ "generatedAt": "2026-10-14T15:48:13.778Z",
+ "rules": [
+  "no network access was used",
+  "raw bytes count only when SHA-256 equals the recorded hash",
+  "gold annotations are evaluation artifacts, never product evidence",
+  "re-extraction uses the current extractor version, not the version that ran originally",
+  "robots/terms status at original fetch time is not re-verified here"
+ ],
+ "summary": {
+  "manifestPages": 24,
+  "rawBytesVerified": 24,
+  "rawBytesMissing": 0,
+  "distinctHosts": 18,
+  "recoveredMainProducts": 23,
+  "recoveredDeclarations": 1075,
+  "recoveredNamedTableProducts": 55,
+  "phase244Receipts": 6,
+  "phase244DiscoveryLeads": 60,
+  "phase244RecordedFacts": 40,
+  "goldFiles": 24,
+  "goldExpectedFacts": 185,
+  "categoriesTouched": [
+   "air_fryers",
+   "amplifiers",
+   "appliance_accessories",
+   "bookcases",
+   "coffee_machines",
+   "earbuds",
+   "football_footwear",
+   "headphones",
+   "hiking_boots",
+   "kettles",
+   "laptops",
+   "microcontroller_boards",
+   "motor_drivers",
+   "power_drills",
+   "single_board_computers",
+   "smartphones",
+   "solid_state_drives",
+   "waste_bins"
+  ]
+ },
+ "pages": [
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "arduino_uno",
+   "url": "https://docs.arduino.cc/hardware/uno-rev3/",
+   "host": "docs.arduino.cc",
+   "fetchedAt": "2026-10-14T14:12:08.424Z",
+   "recordedSha256": "0375f9adbff4a97e2c978008610c847c709dca99779a7e34914f6bad629dbac5",
+   "bytes": 413479,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "microcontroller_boards",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "UNO R3",
+    "mainProductSource": "h1",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 0,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 1
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "brabantia_bo36",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-36-litre/",
+   "host": "www.brabantia.com",
+   "fetchedAt": "2026-10-14T14:11:51.217Z",
+   "recordedSha256": "fe0af528afdcd92a215377bfb7037b82d8ad4fe9cc57a4d9905c883fdc440374",
+   "bytes": 226085,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "waste_bins",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Bo Pedal Bin, 36 litre",
+    "mainProductSource": "h1",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 0,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "brabantia_sortgo",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/sort-go/sort-go-2-x-16-litre/",
+   "host": "www.brabantia.com",
+   "fetchedAt": "2026-10-14T14:13:42.267Z",
+   "recordedSha256": "d8d4d3486ec2d8cba5b83114eabe2a0e122a989e33f10a1125eac6ab3cfbfb86",
+   "bytes": 200488,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "waste_bins",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Sort & Go, 2 x 16 litre",
+    "mainProductSource": "h1",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 0,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "ikea_billy",
+   "url": "https://www.ikea.com/gb/en/p/billy-bookcase-white-00263850/",
+   "host": "www.ikea.com",
+   "fetchedAt": "2026-10-14T14:12:13.891Z",
+   "recordedSha256": "5c7b281aa9644f6672535d340da3d53f8e0d5b3574b0485e253c5038460d7e63",
+   "bytes": 1173430,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "bookcases",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "BILLY Bookcase - white 80x28x202 cm",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "mpn",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 18,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 1
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "lakeland_airfryer8l",
+   "url": "https://www.lakeland.co.uk/products/lakeland-slimline-air-fryer-black-8l",
+   "host": "www.lakeland.co.uk",
+   "fetchedAt": "2026-10-14T14:13:27.354Z",
+   "recordedSha256": "7513a24dbb57665eb9fe8f21cc59f207f3d5af710c58d1ae03bb614bbab10185",
+   "bytes": 641412,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "air_fryers",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Lakeland Slimline Air Fryer Black 8L",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 1,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "lakeland_kettle",
+   "url": "https://www.lakeland.co.uk/products/la-cafetiere-700ml-stainless-steel-pour-over-kettle-lccofpotss",
+   "host": "www.lakeland.co.uk",
+   "fetchedAt": "2026-10-14T14:13:32.651Z",
+   "recordedSha256": "6e3ae4d21bbf44d725aa668e0ecfef67e77ed903d51b259e0313b600ed8ed188",
+   "bytes": 639136,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "kettles",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "La Cafetière 700ml Stainless Steel Pour Over Kettle LCCOFPOTSS",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 1,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "prodirect_hypervenom",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-hypervenom-phantom-fg-firm-ground-soccer-cleats-neo-lime-black-72110",
+   "host": "www.prodirectsport.com",
+   "fetchedAt": "2026-10-14 (Phase244 session, via engine transport)",
+   "recordedSha256": "1723e0e0acbccd46c88fdf620b38697945471922e5f75aad0e7eee6250a8d3a7",
+   "bytes": 1477476,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "football_footwear",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Nike Hypervenom Phantom FG - Neo Lime/Black",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "productGroupID",
+     "brand"
+    ],
+    "variants": 15,
+    "promotedDeclarations": 3,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 3
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "psref_x1",
+   "url": "https://psref.lenovo.com/Product/ThinkPad/ThinkPad_X1_Carbon_Gen_12",
+   "host": "psref.lenovo.com",
+   "fetchedAt": "2026-10-14T14:12:38.811Z",
+   "recordedSha256": "4b2e65b35b8ce61a651ea396fa4b692ebe7e2ae569b37e835565ab15903f9598",
+   "bytes": 6566,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "laptops",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": null,
+    "mainProductSource": null,
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 0,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "switchback_keen",
+   "url": "https://www.switchbacktravel.com/footwear/keen-durand-hiking-boot-review",
+   "host": "www.switchbacktravel.com",
+   "fetchedAt": "2026-10-14 (Phase244 session, via engine transport)",
+   "recordedSha256": "9468bfc11b960fe0a4014e6d776b2b9d2672e84c0d83b9a9bc6c662cb28669d7",
+   "bytes": 145931,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "hiking_boots",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Switchback Travel | Keen Durand Mid WP Review",
+    "mainProductSource": "og_title",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 18,
+    "namedProducts": 3,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 1
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "switchback_oboz",
+   "url": "https://www.switchbacktravel.com/footwear/oboz-bridger-hiking-boot-review",
+   "host": "www.switchbacktravel.com",
+   "fetchedAt": "2026-10-14 (Phase244 session, via engine transport)",
+   "recordedSha256": "c08bdba203253f04d8438e700c09bfab2b3d99dade2e3aebeb657c2648b8aa9b",
+   "bytes": 158975,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "hiking_boots",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Switchback Travel | Oboz Bridger Mid Waterproof Hiking Boot Review",
+    "mainProductSource": "og_title",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 20,
+    "namedProducts": 4,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "wiki_iphone15",
+   "url": "https://en.wikipedia.org/wiki/IPhone_15",
+   "host": "en.wikipedia.org",
+   "fetchedAt": "2026-10-14T14:11:59.324Z",
+   "recordedSha256": "ec2b25df1af173c912e982637e6c27e6e0384c04b3945de00f6719f787aa54fe",
+   "bytes": 595708,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "smartphones",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "iPhone 15",
+    "mainProductSource": "h1",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 275,
+    "namedProducts": 1,
+    "heldBackAmbiguous": 18,
+    "abstentionReasons": 7
+   }
+  },
+  {
+   "set": "dev",
+   "role": "development_page",
+   "tag": "wiki_raspberrypi",
+   "url": "https://en.wikipedia.org/wiki/Raspberry_Pi",
+   "host": "en.wikipedia.org",
+   "fetchedAt": "2026-10-14T14:13:36.979Z",
+   "recordedSha256": "840b382f285b199bcc1b5333ef1037136820b065172adb427e67a7105ae449eb",
+   "bytes": 1347777,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "single_board_computers",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Raspberry Pi",
+    "mainProductSource": "h1",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 619,
+    "namedProducts": 42,
+    "heldBackAmbiguous": 63,
+    "abstentionReasons": 4
+   }
+  },
+  {
+   "set": "unseen1",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "apple_airpodspro_specs",
+   "url": "https://www.apple.com/airpods-pro/specs/",
+   "host": "www.apple.com",
+   "fetchedAt": "2026-10-14T14:39:07.342Z",
+   "recordedSha256": "7ba35a93871fe6be4cd46e345669931410293a1946eaf8f0304a0e66e086f874",
+   "bytes": 177065,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "earbuds",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "AirPods Pro 3",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 1,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 9,
+    "abstentionReasons": 3
+   }
+  },
+  {
+   "set": "unseen1",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "bosch_coolingset",
+   "url": "https://www.bosch-home.co.uk/en/product/fridges-freezers/fridge-freezer-accessories/cooling-sets/00085716",
+   "host": "www.bosch-home.co.uk",
+   "fetchedAt": "2026-10-14T14:39:39.479Z",
+   "recordedSha256": "18a0414c2c92396180b875bc4966cd3c5ddc403fac80c4418f82e50c69be244b",
+   "bytes": 694188,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "appliance_accessories",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "00085716 Freezer ice pack",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "mpn",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 3,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 1
+   }
+  },
+  {
+   "set": "unseen1",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "bosch_mum8meat",
+   "url": "https://www.bosch-home.co.uk/en/product/kitchen-machines/kitchen-machine-accessories/hand-blenders/kitchenmachinesaccessoriesfoodmixermum8meatpreparation/00016229",
+   "host": "www.bosch-home.co.uk",
+   "fetchedAt": "2026-10-14T14:38:58.291Z",
+   "recordedSha256": "5d58660c9da26f45c8ce874222a020f5a9c5915d4c0f463b2b422bb4b2b61db7",
+   "bytes": 685801,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "appliance_accessories",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "00016229 Chopping and mixing knife 4-wing blade, 51mm, stainless steel MUZ6MS4",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "mpn",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 3,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 1
+   }
+  },
+  {
+   "set": "unseen1",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "pimoroni_pybadge",
+   "url": "https://shop.pimoroni.com/products/adafruit-pybadge-for-makecode-arcade-circuitpython-or-arduino",
+   "host": "shop.pimoroni.com",
+   "fetchedAt": "2026-10-14T14:39:03.078Z",
+   "recordedSha256": "438edbf609cba20a79ad4f7b47110f50bf96414647a51abdd7679fcebe43d109",
+   "bytes": 320994,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "microcontroller_boards",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Adafruit PyBadge for MakeCode Arcade, CircuitPython or Arduino",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "mpn",
+     "gtin13",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 3,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "unseen1",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "rtings_athanc70",
+   "url": "https://www.rtings.com/headphones/reviews/audio-technica/ath-anc70",
+   "host": "www.rtings.com",
+   "fetchedAt": "2026-10-14T14:39:34.441Z",
+   "recordedSha256": "fa19f2c18a84bdfbf5065eda41acdf6b2daf36fd0c046f39f720ed0c19a8ef25",
+   "bytes": 258331,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "headphones",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Audio-Technica ATH-ANC70 Review",
+    "mainProductSource": "og_title",
+    "identifierKinds": [],
+    "variants": 0,
+    "promotedDeclarations": 0,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "unseen1",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "scan_kioxia1tb",
+   "url": "https://www.scan.co.uk/products/1tb-kioxia-exceria-g3-ssd-m2-2280-pcie-50-x4-nvme-10000mb-s-read-8900mb-s-write-1300k-1450k-iops",
+   "host": "www.scan.co.uk",
+   "fetchedAt": "2026-10-14T14:40:22.385Z",
+   "recordedSha256": "abdfe87761c3591a837a2f72dfe356221d16b652c409fde0ec90f7c62a578a34",
+   "bytes": 118223,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "solid_state_drives",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Kioxia Exceria G3 1TB M.2 (2280) PCIe Gen 5 NVMe SSD / Solid State Drive",
+    "mainProductSource": "microdata",
+    "identifierKinds": [
+     "sku",
+     "mpn"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 32,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 3
+   }
+  },
+  {
+   "set": "unseen2",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "johnlewis_1",
+   "url": "https://www.johnlewis.com/delonghi-rivelia-start-automatic-bean-to-cup-coffee-machine/p115732396",
+   "host": "www.johnlewis.com",
+   "fetchedAt": "2026-10-14T14:50:01.745Z",
+   "recordedSha256": "a26c032891b8121b11394b31d010d0070b7a0147c411fe8177bbe9918644460d",
+   "bytes": 435800,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "coffee_machines",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "productGroupID",
+     "model",
+     "brand"
+    ],
+    "variants": 3,
+    "promotedDeclarations": 22,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 1,
+    "abstentionReasons": 3
+   }
+  },
+  {
+   "set": "unseen2",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "pololu_2135",
+   "url": "https://www.pololu.com/product/2135",
+   "host": "www.pololu.com",
+   "fetchedAt": "2026-10-14T14:49:43.431Z",
+   "recordedSha256": "2375982dfe32ea3d30a89664b79a91a236a43a58be67beb8b4c199bc437f481b",
+   "bytes": 75321,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "motor_drivers",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "DRV8835 Dual Motor Driver Carrier",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 8,
+    "namedProducts": 5,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 5
+   }
+  },
+  {
+   "set": "unseen2",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "pololu_2135_specs",
+   "url": "https://www.pololu.com/product/2135/specs",
+   "host": "www.pololu.com",
+   "fetchedAt": "2026-10-14T14:50:43.563Z",
+   "recordedSha256": "aa851774479a8839428c4a11f0e02ae60ff18eafe9d77d85f65da07be8f97ba5",
+   "bytes": 56761,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "motor_drivers",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "DRV8835 Dual Motor Driver Carrier",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 16,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 1,
+    "abstentionReasons": 4
+   }
+  },
+  {
+   "set": "unseen2",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "richer_audiolab9000a",
+   "url": "https://www.richersounds.com/audiolab-9000a-silver/",
+   "host": "www.richersounds.com",
+   "fetchedAt": "2026-10-14T14:49:36.033Z",
+   "recordedSha256": "d060a163ee86a4271c8b0c852b45d7c7fd202e86b8f1ea1dfad988fb5e67b0b2",
+   "bytes": 2297536,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "amplifiers",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Audiolab 9000A (Silver)",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 18,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 1,
+    "abstentionReasons": 1
+   }
+  },
+  {
+   "set": "unseen2",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "sparkfun_redboard",
+   "url": "https://www.sparkfun.com/sparkfun-redboard-qwiic.html",
+   "host": "www.sparkfun.com",
+   "fetchedAt": "2026-10-14T14:49:48.491Z",
+   "recordedSha256": "0250753d623a5d2390cee4d060366388c126831bf92a90647f800d42fd6fb58b",
+   "bytes": 589736,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "microcontroller_boards",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "SparkFun RedBoard Qwiic",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "mpn"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 1,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  },
+  {
+   "set": "unseen2",
+   "role": "previously_used_holdout_now_diagnostic",
+   "tag": "wickes_dhr242",
+   "url": "https://www.wickes.co.uk/Makita-DHR242Z-18V-Li-Ion-Brushless-Cordless-SDS%2B-Rotary-Hammer-Drill---Bare/p/104199",
+   "host": "www.wickes.co.uk",
+   "fetchedAt": "2026-10-14T14:49:30.733Z",
+   "recordedSha256": "3ba22e9b03c46378c6204242b58f96f133e166d40930fe469287cdc5e5286b07",
+   "bytes": 444519,
+   "rawBytesRecovered": true,
+   "rawBytesStatus": "sha256_verified",
+   "categoryHypothesis": "power_drills",
+   "categoryBasis": "operator_assigned_hypothesis",
+   "reextraction": {
+    "extractor": "phase245@ee2336f",
+    "mainProduct": "Makita DHR242Z 18V Li-Ion Brushless Cordless SDS+ Rotary Hammer Drill - Bare",
+    "mainProductSource": "json_ld",
+    "identifierKinds": [
+     "sku",
+     "brand"
+    ],
+    "variants": 0,
+    "promotedDeclarations": 13,
+    "namedProducts": 0,
+    "heldBackAmbiguous": 0,
+    "abstentionReasons": 0
+   }
+  }
+ ],
+ "phase244": [
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-36-litre/",
+   "observedAt": "2026-10-14T13:43:02.060Z",
+   "responseSha256": "fe0af528afdcd92a215377bfb7037b82d8ad4fe9cc57a4d9905c883fdc440374",
+   "byteExact": true,
+   "status": "no_structured_identity",
+   "productLeads": 0,
+   "recordedFacts241": 0,
+   "rawBytesRecovered": false,
+   "note": "receipt only: Phase244 receipts store hashes and derived facts, not page bytes"
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-11-23-litre/",
+   "observedAt": "2026-10-14T13:43:02.060Z",
+   "responseSha256": "ebfd266751c4a5ad23053ab7199c0b002c1ec5a098d5be5898df007b6ca9f8d6",
+   "byteExact": true,
+   "status": "no_structured_identity",
+   "productLeads": 0,
+   "recordedFacts241": 0,
+   "rawBytesRecovered": false,
+   "note": "receipt only: Phase244 receipts store hashes and derived facts, not page bytes"
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-36-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-11-23-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-3-x-11-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/bo-touch-bin/bo-touch-bin-60-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/bo-touch-bin/bo-touch-bin-2-x-30-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/bo-touch-bin/bo-touch-bin-36-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/bo-touch-bin/bo-touch-bin-11-23-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/bo-touch-bin/bo-touch-bin-3-x-11-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-60-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/bo-pedal-bin-2-x-30-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/wall-mounted-bin/slide-bin/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/bo-pedal-bin/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/pedal-bin-40-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/pedal-bin-30-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/pedal-bin-20-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/pedal-bin-12-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/pedal-bin-5-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/pedal-bins/pedal-bin-3-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/bo-touch-bin/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-bins.json",
+   "url": "https://www.brabantia.com/int_en/collecting-waste/waste-bins-paper-bins/touch-bin/touch-bin-60-litre/",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-hypervenom-phantom-fg-firm-ground-soccer-cleats-neo-lime-black-72110",
+   "observedAt": "2026-10-14T13:42:54.039Z",
+   "responseSha256": "cde75af27ea11dbb886b186dd6fa72324041f6e3de9ac0c09422adce2151ec47",
+   "byteExact": true,
+   "status": "metadata_observed",
+   "productLeads": 1,
+   "recordedFacts241": 1,
+   "rawBytesRecovered": false,
+   "note": "receipt only: Phase244 receipts store hashes and derived facts, not page bytes"
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/puma-football-boots-puma-v1-06-i-fg-firm-ground-soccer-cleats-puma-red-white-black-67835",
+   "observedAt": "2026-10-14T13:42:54.039Z",
+   "responseSha256": "0f9b978c6a5a4ba59afe11f997da376f608f207539bcc49c8c340ce089c94e44",
+   "byteExact": true,
+   "status": "metadata_observed",
+   "productLeads": 1,
+   "recordedFacts241": 1,
+   "rawBytesRecovered": false,
+   "note": "receipt only: Phase244 receipts store hashes and derived facts, not page bytes"
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-hypervenom-phantom-fg-firm-ground-soccer-cleats-neo-lime-black-72110",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/puma-football-boots-puma-v1-06-i-fg-firm-ground-soccer-cleats-puma-red-white-black-67835",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-f50-adizero-trx-fg-leather-firm-ground-soccer-cleats-white-lime-onix-46595",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-f50-adizero-trx-fg-leather-firm-ground-soccer-cleats-electricity-infrared-purple-34158",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-magista-obra-fg-firm-ground-soccer-cleats-black-white-volt-hyper-punch-80922",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-11-pro-sl-firm-ground-soccer-cleats-core-black-white-semi-solar-yellow-b35954-94231",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/puma-football-boots-puma-evopower-12-l-fg-firm-ground-soccer-cleats-metallic-white-metallic-white-fluorescent-flash-10321003-96004",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-adipure-iv-trx-fg-firm-ground-soccer-cleats-white-black-matte-gold-34197",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-ctr360-maestri-iii-fg-firm-ground-soccer-cleats-fresh-mint-black-neo-lime-60313",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-adipure-iv-trx-fg-firm-ground-soccer-cleats-black-metallic-silver-37699",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-nitrocharge-1-0-fg-reflective-limited-edition-firm-ground-soccer-cleats-black-reflective-white-72361",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-mercurial-vapor-ix-fg-firm-ground-soccer-cleats-fireberry-electric-green-red-plum-56727",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/puma-football-boots-puma-powercat-112-sl-fg-firm-ground-soccer-cleats-black-white-team-yellow-51162",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/puma-football-boots-puma-evospeed-13-colette-fg-firm-ground-soccer-cleats-colette-blue-white-fiery-red-88697",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-mercurial-vapor-ix-cr-fg-firm-ground-soccer-cleats-white-volt-total-crimson-60270",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-ctr360-maestri-iii-fg-firm-ground-soccer-cleats-dark-charcoal-white-black-62255",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/puma-football-boots-puma-powercat-110-jb-final-firm-ground-world-cup-limited-edition-soccer-cleats-gold-black-green-17680",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-tiempo-legend-iv-elite-fg-firm-ground-soccer-cleats-white-white-black-46227",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/adidas-football-boots-adidas-adizero-f50-trx-fg-lea-firm-ground-soccer-cleats-vivid-yellow-black-green-zest-53707",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-football.json",
+   "url": "https://www.prodirectsport.com/products/nike-football-boots-nike-mercurial-vapor-x-sg-pro-laser-orange-white-black-firm-ground-soccer-cleats-648555-800-89776",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/keen-durand-hiking-boot-review",
+   "observedAt": "2026-10-14T13:42:51.484Z",
+   "responseSha256": "dca96950d90d0ca7dc8c5738935b76e9cbe7a33ddd9d4e832d25bc43393b25f8",
+   "byteExact": true,
+   "status": "metadata_observed",
+   "productLeads": 0,
+   "recordedFacts241": 18,
+   "rawBytesRecovered": false,
+   "note": "receipt only: Phase244 receipts store hashes and derived facts, not page bytes"
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/oboz-bridger-hiking-boot-review",
+   "observedAt": "2026-10-14T13:42:51.484Z",
+   "responseSha256": "1035b521015469bbc72888b643cf3c6da492cfb0c526e8ee45c3cce4ed06bfc5",
+   "byteExact": true,
+   "status": "metadata_observed",
+   "productLeads": 0,
+   "recordedFacts241": 20,
+   "rawBytesRecovered": false,
+   "note": "receipt only: Phase244 receipts store hashes and derived facts, not page bytes"
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/keen-durand-hiking-boot-review",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/oboz-bridger-hiking-boot-review",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-hiking-boot-brands",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-womens-hiking-boots",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-waterproof-hiking-boots",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-hiking-boots",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/hiking-boot-tips",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-hiking-socks",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-winter-boots",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-hiking-shoes",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/arcteryx-norvan-hiking-shoe-review",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/hiking-shoes-vs-trail-runners",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/waterproof-hiking-shoe-buyers-guide",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/winter-boot-buyers-guide",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/salomon-hiking-shoe-buyers-guide",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-womens-winter-boots",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-hiking-sandals",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-womens-hiking-shoes",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/best-waterproof-hiking-shoes",
+   "discoveryOnly": true
+  },
+  {
+   "file": "PHASE244-LIVE-hiking.json",
+   "url": "https://www.switchbacktravel.com/footwear/kamik-nation-plus-boot-review",
+   "discoveryOnly": true
+  }
+ ],
+ "gold": [
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "switchback_keen",
+   "expected": 15,
+   "mustAbstain": 2,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "switchback_oboz",
+   "expected": 20,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "ikea_billy",
+   "expected": 18,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "brabantia_bo36",
+   "expected": 0,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "brabantia_sortgo",
+   "expected": 0,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "lakeland_airfryer8l",
+   "expected": 1,
+   "mustAbstain": 1,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "lakeland_kettle",
+   "expected": 1,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "prodirect_hypervenom",
+   "expected": 3,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "arduino_uno",
+   "expected": 0,
+   "mustAbstain": 1,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "psref_x1",
+   "expected": 0,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "wiki_iphone15",
+   "expected": 16,
+   "mustAbstain": 3,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-dev/dev-gold.json",
+   "tag": "wiki_raspberrypi",
+   "expected": 18,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen/unseen-gold.json",
+   "tag": "apple_airpodspro_specs",
+   "expected": 1,
+   "mustAbstain": 5,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen/unseen-gold.json",
+   "tag": "bosch_coolingset",
+   "expected": 2,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen/unseen-gold.json",
+   "tag": "bosch_mum8meat",
+   "expected": 2,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen/unseen-gold.json",
+   "tag": "pimoroni_pybadge",
+   "expected": 3,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen/unseen-gold.json",
+   "tag": "rtings_athanc70",
+   "expected": 0,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen/unseen-gold.json",
+   "tag": "scan_kioxia1tb",
+   "expected": 23,
+   "mustAbstain": 1,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen2/unseen2-gold.json",
+   "tag": "pololu_2135",
+   "expected": 1,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen2/unseen2-gold.json",
+   "tag": "pololu_2135_specs",
+   "expected": 12,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen2/unseen2-gold.json",
+   "tag": "wickes_dhr242",
+   "expected": 13,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen2/unseen2-gold.json",
+   "tag": "richer_audiolab9000a",
+   "expected": 16,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen2/unseen2-gold.json",
+   "tag": "sparkfun_redboard",
+   "expected": 2,
+   "mustAbstain": 0,
+   "classification": "evaluation_annotation_not_product_evidence"
+  },
+  {
+   "file": "gold-unseen2/unseen2-gold.json",
+   "tag": "johnlewis_1",
+   "expected": 18,
+   "mustAbstain": 1,
+   "classification": "evaluation_annotation_not_product_evidence"
+  }
+ ]
+}

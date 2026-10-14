@@ -1,0 +1,270 @@
+{
+ "schema": "pee246.heldout-adjudication.v1",
+ "strictSource": "heldout-strict-firstrun.json (unchanged)",
+ "strictTotals": {
+  "expected": 29,
+  "correct": 3,
+  "falseAssociations": 0,
+  "falsePositives": 5,
+  "missed": 26,
+  "abstentionsRequired": 0,
+  "abstentionsCorrect": 0,
+  "ms": 326.9,
+  "precision": 0.375,
+  "recall": 0.103
+ },
+ "decisions": [
+  {
+   "tag": "ho_cm_origin_lelit",
+   "item": "Interface = Machine ready and/or warming-up LED",
+   "strict": "false_positive",
+   "adjudicated": "correct_gold_omission",
+   "reason": "the Interface card holds a single value; the gold wrongly grouped it with multi-line cards"
+  },
+  {
+   "tag": "ho_cm_origin_lelit",
+   "item": "Origin x Dor & Tan Coffee Cup = £25",
+   "strict": "false_positive",
+   "adjudicated": "false_association",
+   "reason": "related/upsell product price attributed to the main product"
+  },
+  {
+   "tag": "ho_cm_origin_lelit",
+   "item": "Home Brewing Guide = £2.95",
+   "strict": "false_positive",
+   "adjudicated": "false_association",
+   "reason": "related/upsell product price attributed to the main product"
+  },
+  {
+   "tag": "ho_cm_origin_lelit",
+   "item": "Voted Europes Best x 2 = ...",
+   "strict": "false_positive",
+   "adjudicated": "false_positive",
+   "reason": "retailer marketing badge, not a product specification"
+  },
+  {
+   "tag": "ho_af_lakeland_dual8",
+   "item": "Price = £59.99",
+   "strict": "false_positive",
+   "adjudicated": "false_positive_stale_structured_data",
+   "reason": "price exists only in structured data on a page whose visible content says Unavailable/Discontinued; must not be presented as a current price"
+  }
+ ],
+ "adjudicatedTotals": {
+  "correct": 4,
+  "falseAssociations": 2,
+  "falsePositives": 2,
+  "expected": 30,
+  "precision": 0.5,
+  "recall": 0.133
+ },
+ "heldBackNotPromoted": {
+  "count": 15,
+  "matchingGoldValue": 9,
+  "items": [
+   {
+    "tag": "ho_af_dualit_55",
+    "property": "Power",
+    "heldBackValue": {
+     "kind": "quantity",
+     "number": 1700,
+     "unit": "W",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_af_dualit_55",
+    "property": "Dimensions",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "32.6(D) x 37.9(W) x 31.4(H) cm"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": false
+   },
+   {
+    "tag": "ho_af_dualit_55",
+    "property": "Weight",
+    "heldBackValue": {
+     "kind": "quantity",
+     "number": 5.1,
+     "unit": "kg",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_af_dualit_55",
+    "property": "Material",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "ABS"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_cm_dualit_espressivo",
+    "property": "Weight",
+    "heldBackValue": {
+     "kind": "quantity",
+     "number": 9.98,
+     "unit": "kg",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_t_dualit_studio2",
+    "property": "Power",
+    "heldBackValue": {
+     "kind": "range",
+     "min": 1000,
+     "max": 1200,
+     "unit": "W",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": false
+   },
+   {
+    "tag": "ho_t_dualit_studio2",
+    "property": "Weight",
+    "heldBackValue": {
+     "kind": "quantity",
+     "number": 1.497,
+     "unit": "kg",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Capacity",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "6 Slices"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": false
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Power",
+    "heldBackValue": {
+     "kind": "quantity",
+     "number": 3,
+     "unit": "kW",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Weight",
+    "heldBackValue": {
+     "kind": "quantity",
+     "number": 5.1,
+     "unit": "kg",
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Dimensions",
+    "heldBackValue": {
+     "kind": "dimensions",
+     "numbers": [
+      46,
+      21,
+      22
+     ],
+     "unit": "cm",
+     "axes": null,
+     "approximate": false
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": false
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Slot Dimensions",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "28(W) x 140(H) x 120(L) mm (front to back)"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": false
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Output per hour",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "240 slices"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": false
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Materials",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "Cast aluminium ends, stainless steel body"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   },
+   {
+    "tag": "ho_t_dualit_classic6",
+    "property": "Elements",
+    "heldBackValue": {
+     "kind": "text",
+     "text": "Award-winning, patented ProHeat elements"
+    },
+    "flags": [
+     "main_product_ambiguous"
+    ],
+    "valueMatchesGold": true
+   }
+  ],
+  "note": "held-back values are NOT counted as correct in either view; they show recall lost to safe abstention (mostly duplicate JSON-LD Product blocks making the main product ambiguous)"
+ }
+}
