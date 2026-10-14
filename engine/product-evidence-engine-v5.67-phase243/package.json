@@ -294,6 +294,11 @@
     "test:phase247": "npm run build && node --test dist/tests/phase247_*.test.js dist/tests/phase246_knowledge_store.test.js dist/tests/phase245_spec_extraction.test.js",
     "audit:phase247-prioritization": "npm run build && node scripts/phase247-prioritization-audit.mjs",
     "eval:phase245": "npm run build && node scripts/phase245-evaluate.mjs",
+    "test:phase248": "npm run build && node --test dist/tests/phase248_*.test.js dist/tests/phase245_spec_extraction.test.js dist/tests/phase246_knowledge_store.test.js",
+    "eval:phase248-journey": "npm run build && node scripts/phase248-journey-eval.mjs",
+    "eval:phase248-extraction": "npm run build && node scripts/phase248-evaluate-sampled.mjs",
+    "eval:phase248-notices": "npm run build && node scripts/phase248-evaluate-notices.mjs",
+    "safety:phase248": "node scripts/phase248-safety-notices.mjs",
     "demo:phase242": "npm run build && node scripts/phase242-evaluate-bridges.mjs",
     "demo:phase241": "npm run build && node scripts/phase241-evaluate-unified.mjs"
   },

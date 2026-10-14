@@ -165,7 +165,8 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // Safety notices attach to candidates only through an exact identifier the candidate's own sources declared.
  let safety:Journey248['stages']['evidence']['safety']=null;
  if(categoryId&&options.safetyNotices){
-  const ns=options.safetyNotices.filter(n=>n.product.categoryIds.includes(categoryId));
+  // The same notice can arrive from several searches: one notice per source URL.
+  const ns=[...new Map(options.safetyNotices.filter(n=>n.product.categoryIds.includes(categoryId)).map(n=>[n.source.url,n])).values()];
   const profile=categorySafetyProfile248(ns,categoryId);
   const matches:{productId:string;identifier:string;url:string;noticeType:string}[]=[];let brandOnly=0;
   for(const pid of products){
