@@ -15,7 +15,7 @@
  * promoted. All output is an unverified source declaration: rankingAuthorized=false, no page text kept.
  */
 import {createHash} from 'node:crypto';
-import {type Node245,parseHtml245,walk245,textOf245,elementChildren245,locator245,clean245,isDecorative245} from './phase245_html_dom.js';
+import {type Node245,parseHtml245,walk245,textOf245,elementChildren245,locator245,clean245,isDecorative245,decodeEntities245} from './phase245_html_dom.js';
 import {buildTableGrid245,interpretTableGrid245} from './phase245_table_grid.js';
 import {normalizeValue245,promotable245,canonicalUnit245,type Value245} from './phase245_value_normalizer.js';
 import type {Fact241} from './phase241_unified_product_facts.js';
@@ -299,6 +299,14 @@ function pairOf(x:Node245):{label:string;value:string;labelNode:Node245;valueNod
 }
 const containsUsed=(n:Node245,used:Set<Node245>)=>{for(const d of walk245(n))if(used.has(d))return true;return false;};
 const insideLink=(n:Node245)=>{let x:Node245|null=n;while(x){if(x.tag==='a'&&x.attrs.href!==undefined)return true;x=x.parent;}return false;};
+const POINTER=/\b(?:this model|this item|this product|current model|current product|you are here)\b/i;
+/** Rows that describe the offer, shop or page rather than the product. */
+const ACTION_VALUE=/^(?:download|downloads|view|click here|more info|learn more|see more|read more|details|pdf|open)$/i;
+const CONTACT_LABEL=/^(?:web|website|www|telephone|tel|phone|e-?mail|fax|address|contact)$/i;
+const CONTACT_VALUE=/^(?:[\w.+-]+@[\w-]+\.[\w.]+|(?:https?:\/\/|www\.)\S+)$/i;
+const LOGISTICS_LABEL=/\b(?:delivery|dispatch|pcs|in stock|stock level)\b/i;
+const AVAILABILITY_VALUE=/^(?:estimated delivery\b.*|in stock|out of stock|available to order|not available|sold out|pre-?order|available|unavailable|low stock|only \d+ left)$/i;
+const SIZE_TOKEN=/^(?:x{0,3}[sml]|x{1,3}l|\d+(?:\.\d+)?|one size|os|sm|md|lg)$/i;
 const MEASURABLE=new Set(['quantity','dimensions','range','price','options']);
 const INLINE=new Set(['b','strong','em','i','span','a','u','mark','small','label']);
 /** Labels under which a price can be a property of the page's product. A price under any other label
@@ -325,7 +333,7 @@ const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative
 
 /** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
  * and re-derived per source revision. Bump on any behavioural change. */
-export const SPEC_EXTRACTOR_VERSION='spec-extractor-4';
+export const SPEC_EXTRACTOR_VERSION='spec-extractor-5';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
  if(typeof html!=='string'||html.length>PAGE_MAX_BYTES)throw Error('245_html_size');
@@ -353,11 +361,13 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
  const clusters=clusterEntities(ldProducts,base);
  const micro=microdataProducts(root,region);
  const microNames=[...new Set(micro.map(m=>m.name).filter(Boolean) as string[])];
- const h1s=all.filter(n=>n.tag==='h1'&&regionOf(n)!=='excluded').map(n=>textOf245(n)).filter(Boolean);
+ // A page heading such as "All Specifications" titles a tab, not the product.
+ const GENERIC_HEADING=/^(?:(?:all|full|technical|tech|product|detailed)\s+)?(?:spec(?:ification)?s?|specifications? & features|overview|details|features|product (?:details|information)|tech specs)$/i;
+ const h1s=all.filter(n=>n.tag==='h1'&&regionOf(n)!=='excluded').map(n=>textOf245(n)).filter(t=>t&&!GENERIC_HEADING.test(t.trim()));
  const og=all.find(n=>n.tag==='meta'&&n.attrs.property==='og:title')?.attrs.content??null;
  const h1Keys=new Set(h1s.map(productKey));
  const clusterUrls=(c:Obj[])=>new Set(c.flatMap(o=>[urlKey(o.url,base),urlKey(o['@id'],base),...asList(o.offers).filter(isObj).map(f=>urlKey(f.url,base))]).filter(Boolean) as string[]);
- const clusterNames=(c:Obj[])=>[...new Set(c.map(o=>str(o.name)).filter(Boolean) as string[])];
+ const clusterNames=(c:Obj[])=>[...new Set(c.map(o=>{const n=str(o.name);return n?clean245(decodeEntities245(n)):null;}).filter(Boolean) as string[])];
  // Several entities: the one bound to the page URL, else the one whose name is the page heading, is the subject.
  let mainCluster:Obj[]|null=clusters.length===1?clusters[0]:null;
  let mainBasis:string|null=clusters.length===1?'single_entity':null;
@@ -465,6 +475,15 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    let ref:{productRef:'main'|'named'|'unknown';productName:string|null;amb:string[]};
    if(it.mode==='key_value')ref=mainRef();
    else if(r.product&&mainName&&productKey(r.product)===productKey(mainName))ref={productRef:'main',productName:mainName,amb:[]};
+   else if(r.product&&POINTER.test(r.product)){
+    // "KB904L This model": the page itself points at its own product. Accepted as the main product only when
+    // the remaining model code is a token of the page's product name; otherwise the column has no usable key.
+    const rest=clean245(r.product.replace(POINTER,' '));
+    const codes=rest.split(/\s+/).filter(t=>/\d/.test(t)&&/[a-z]/i.test(t)&&t.length>=3);
+    const mainTokens=new Set((mainName??'').toLowerCase().split(/[^\p{L}\p{N}-]+/u));
+    ref=!mainAmbiguous&&mainName&&codes.length&&codes.every(t=>mainTokens.has(t.toLowerCase()))?{productRef:'main',productName:mainName,amb:[]}:
+     {productRef:'unknown',productName:null,amb:['pointer_header_not_resolved']};
+   }
    else ref={productRef:r.product?'named':'unknown',productName:r.product,amb:[]};
    const method:Method245=it.mode==='key_value'?'table_key_value':it.mode==='products_in_columns'?'table_products_in_columns':'table_products_in_rows';
    raws.push({label,valueText:r.valueText,method,locator:`${g.locator}@r${r.row}c${r.col}${r.rowspan>1||r.colspan>1?`+${r.rowspan}x${r.colspan}`:''}`,
@@ -669,6 +688,15 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   if(pk.length>=4&&key245(r.valueText).startsWith(pk+' ')&&r.method!=='json_ld'&&r.method!=='microdata'){abstain('value_restates_label');continue;}
   const value=r.preValue??normalizeValue245(r.valueText,label);
   if(value.kind==='empty'){abstain('empty_value');continue;}
+  if(value.kind==='price'&&value.amount===0){abstain('zero_price_placeholder');continue;}
+  if(r.method!=='json_ld'&&r.method!=='microdata'){
+   const v=clean245(r.valueText);
+   // "7" -> "8.5": a size-conversion row, not a property of the product.
+   if(/^[\d.,/+½\s-]+$/.test(label)){abstain('numeric_label_not_property');continue;}
+   if(ACTION_VALUE.test(v)){abstain('action_text_not_value');continue;}
+   if(CONTACT_LABEL.test(label)||CONTACT_VALUE.test(v)){abstain('contact_details_not_property');continue;}
+   if(LOGISTICS_LABEL.test(label)||(AVAILABILITY_VALUE.test(v)&&SIZE_TOKEN.test(label))){abstain('offer_logistics_not_property');continue;}
+  }
   if(value.kind==='prose'){abstain('prose_value_not_kept');continue;}
   if(value.kind==='price'&&r.method!=='json_ld'&&r.method!=='microdata'&&!PRICE_LABEL.test(label)){abstain('price_labelled_by_other_item');continue;}
   const flags=[...r.ambiguity];
@@ -682,6 +710,11 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    product:{ref:r.productRef,name:r.productName},variant:r.variant,section,component:section&&PACKAGING.test(section)?'packaging':null,
    method:r.method,locator:r.locator,flags,status:'unverified_source_declaration',producer:'unknown',scientificTestEvidence:false,rankingAuthorized:false});
  }
+ // A group heading cell read together with its first row ("Software" = "Eye-CareU Yes" next to
+ // "Eye-CareU" = "Yes") duplicates that row under a wrong label: dropped.
+ {const joined=new Set(candidates.map(c=>JSON.stringify([c.product.ref,c.product.name,key245(c.property+' '+c.rawValue)])));
+  for(let i=candidates.length-1;i>=0;i--){const c=candidates[i];
+   if(c.value.kind==='text'&&joined.has(JSON.stringify([c.product.ref,c.product.name,key245(c.rawValue)]))){candidates.splice(i,1);abstain('group_heading_joined_with_row');}}}
  // Blocking reasons: everything else is a non-blocking note.
  const BLOCKING=/^(?:main_product_ambiguous|structured_data_disagrees_with_visible|text_group_without_spec_context|listing_states_discontinued|main_product_unnamed|comparison_region_without_product_key|missing_property_label|missing_product_header|missing_product_key|value_spans_multiple_properties|value_cell_is_header|multiple_values_for_one_label|value_per_variant|value_compound|conflicting_values)$/;
  const valueKey=(v:Value245)=>JSON.stringify(v);

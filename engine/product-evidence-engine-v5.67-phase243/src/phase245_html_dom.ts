@@ -28,7 +28,8 @@ const IMPLIED:Record<string,{closes:string[];boundary:string[]}>={
 const NAMED:Record<string,string>={amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' ',times:'×',deg:'°',
  ndash:'–',mdash:'—',minus:'−',frac12:'½',frac14:'¼',frac34:'¾',sup2:'²',sup3:'³',micro:'µ',euro:'€',pound:'£',
  yen:'¥',cent:'¢',reg:'®',trade:'™',copy:'©',hellip:'…',rsquo:'’',lsquo:'‘',rdquo:'”',ldquo:'“',plusmn:'±',
- le:'≤',ge:'≥',prime:'′',Prime:'″',middot:'·',bull:'•',thinsp:' ',ensp:' ',emsp:' ',shy:''};
+ le:'≤',ge:'≥',prime:'′',Prime:'″',middot:'·',bull:'•',thinsp:' ',ensp:' ',emsp:' ',shy:'',
+ rarr:'→',larr:'←',uarr:'↑',darr:'↓',harr:'↔',raquo:'»',laquo:'«',rsaquo:'›',lsaquo:'‹',sbquo:'‚',bdquo:'„',dagger:'†'};
 export function decodeEntities245(s:string):string{
  if(!s.includes('&'))return s;
  return s.replace(/&(#x[0-9a-f]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,10});?/gi,(m,k:string)=>{

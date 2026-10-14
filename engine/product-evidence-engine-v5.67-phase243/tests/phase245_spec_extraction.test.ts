@@ -247,3 +247,46 @@ test('<main> holding almost no text (a search widget) does not hide the product 
  assert.deepEqual(fact(x.facts,'product weight')[0]?.value,{kind:'quantity',number:29.3,unit:'g',approximate:false,alternative:{number:1,unit:'oz'}});
  assert.equal(x.mainProduct.name,'Badge B');
 });
+
+// ---- spec-extractor-5: failure classes found by the Phase248 held-out precision audit (synthetic pages)
+const page5=(body:string,ld='')=>`<html><head><title>T</title>${ld}</head><body><main><h1>Acme Trail 2</h1>${body}</main></body></html>`;
+test('extractor-5: size charts and configuration rows are not products; numeric labels are not properties',()=>{
+ const x=extractSpecifications245(page5(`<table><thead><tr><th>US</th><th>EU</th><th>UK</th></tr></thead><tr><td>7</td><td>40</td><td>6</td></tr><tr><td>8</td><td>41</td><td>7</td></tr></table>
+  <table><thead><tr><td>Situation</td><td>Seat Height</td><td>Back Height</td></tr></thead><tr><td>Shock absorber at the bottom</td><td>45 cm</td><td>80 cm</td></tr><tr><td>Shock absorber at the top</td><td>55 cm</td><td>90 cm</td></tr></table>
+  <table><tr><td>7</td><td>8.5</td></tr><tr><td>7.5</td><td>9</td></tr></table>
+  <table><tr><th>Weight</th><td>264 g</td></tr><tr><th>Drop</th><td>0 mm</td></tr></table>`),'https://shop.example/p');
+ assert.equal(x.facts.filter(f=>f.product.ref==='named').length,0);
+ assert.deepEqual(x.facts.map(f=>f.property).sort(),['Drop','Weight']);
+ assert.ok(x.abstentions.numeric_label_not_property>=2&&x.abstentions.table_row_key_header_not_product_identity===2);
+});
+test('extractor-5: shop, contact, download and stock rows are not product properties; a zero price is a placeholder',()=>{
+ const ld='<script type="application/ld+json">{"@type":"Product","name":"Acme Trail 2","offers":{"price":"0","priceCurrency":"USD"}}</script>';
+ const x=extractSpecifications245(page5(`<table><tr><th>Weight</th><td>264 g</td></tr><tr><th>Data Sheet</th><td><span>DOWNLOAD</span></td></tr>
+  <tr><th>Telephone</th><td>06 - 319 77 00</td></tr><tr><th>Web</th><td>www.shop.example</td></tr><tr><th>Delivery To Ireland</th><td>7-10 days</td></tr>
+  <tr><th>Store Vaasa: 0 pcs</th><td>Estimated delivery: none</td></tr><tr><th>XL</th><td>Not available</td></tr><tr><th>Microphone type</th><td>Not available</td></tr></table>`,ld),'https://shop.example/p');
+ assert.deepEqual(x.facts.map(f=>f.property).sort(),['Microphone type','Weight']);
+ assert.equal(x.abstentions.zero_price_placeholder,1);
+});
+test('extractor-5: a group heading joined with its first row is dropped; counts of items are not dimensions',()=>{
+ const x=extractSpecifications245(page5(`<table><tr><th>Software</th><th>Eye-CareU</th><td>Yes</td></tr><tr><th>Audio</th><th>Headphone Jack</th><td>Yes</td></tr></table>
+  <table><tr><th>Power</th><td>1 x 36 V</td></tr><tr><th>Built-in Speaker</th><td>2Wx2</td></tr><tr><th>Size</th><td>348*140*45mm</td></tr></table>`),'https://shop.example/p');
+ assert.ok(!x.facts.some(f=>f.property==='Software'||f.property==='Audio'));
+ assert.deepEqual(x.facts.find(f=>f.property==='Power')!.value,{kind:'text',text:'1 x 36 V'});
+ assert.equal(normalizeValue245('2Wx2').kind,'text');
+ assert.equal(x.facts.find(f=>f.property==='Size')!.value.kind,'dimensions');
+});
+test('extractor-5: comparison headers drop call-to-action text; "This model" resolves to the page product only by its model code',()=>{
+ const html=`<html><head><script type="application/ld+json">{"@type":"Product","name":"HAVIT Keyboard KB904L Magnetic"}</script></head><body><main><h1>HAVIT Keyboard KB904L Magnetic</h1>
+  <table><thead><tr><th></th><th>KB904L <span>This model</span></th><th>KB892L <span>View details &rarr;</span></th><th>KB777 <span>This model</span></th></tr></thead>
+  <tr><th>Weight</th><td>768 g</td><td>629 g</td><td>500 g</td></tr><tr><th>Key count</th><td>85</td><td>87</td><td>80</td></tr></table></main></body></html>`;
+ const x=extractSpecifications245(html,'https://havit.example/kb904l');
+ assert.equal(x.facts.find(f=>f.property==='Weight'&&f.product.ref==='main')!.rawValue,'768 g');
+ assert.deepEqual([...new Set(x.facts.filter(f=>f.product.ref==='named').map(f=>f.product.name))],['KB892L']);
+ assert.ok(x.ambiguous.some(f=>f.flags.includes('pointer_header_not_resolved')&&f.rawValue==='500 g'));
+});
+test('extractor-5: a generic "Specifications" heading is not the product name; JSON-LD names are entity-decoded',()=>{
+ const a=extractSpecifications245('<html><head><meta property="og:title" content="GW2791 Monitor"></head><body><main><h1>All Specifications</h1><table><tr><th>Weight</th><td>4 kg</td></tr></table></main></body></html>','https://b.example/');
+ assert.equal(a.mainProduct.name,'GW2791 Monitor');
+ const b=extractSpecifications245('<html><head><script type="application/ld+json">{"@type":"Product","name":"Pursuit 2 Women&#39;s"}</script></head><body><main></main></body></html>','https://t.example/');
+ assert.equal(b.mainProduct.name,"Pursuit 2 Women's");
+});

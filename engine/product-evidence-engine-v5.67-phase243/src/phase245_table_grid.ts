@@ -111,8 +111,13 @@ function leadText(x:GridCell245):string{
   for(const c of n.children)walk(c);
  };
  walk(x.node);
- const t=parts.join('').replace(/\s+/g,' ').trim();
- return t||x.text;
+ const t=stripCallToAction245(parts.join('').replace(/\s+/g,' ').trim());
+ return t||stripCallToAction245(x.text);
+}
+/** Trailing call-to-action text in a product header ("KB892L View details →") is not part of the name. */
+export function stripCallToAction245(t:string):string{
+ return t.replace(/\s*(?:view|see|more|show)?\s*(?:details|more|product|specs)?\s*(?:→|›|»|>)\s*$/i,'')
+  .replace(/\s+(?:view details|see details|learn more|shop now|buy now|read more|read review|more info)\s*$/i,'').trim();
 }
 
 /** Interpret a grid. Products are never invented: they come from header or key-column text. */
@@ -239,6 +244,11 @@ export function interpretTableGrid245(g:TableGrid245):TableInterpretation245{
   if(keys.every(Boolean)&&new Set(keys).size===keys.length){keyCols=k;break;}
  }
  if(!keyCols)return {mode:'unsupported',readings:[],reasons:['no_unique_product_key_column']};
+ // A key column headed by a size system ("US", "EU", "Size") is a size chart, and one headed by a situation,
+ // position or setting describes configurations of one product: neither names products.
+ const keyHeader=headerRows?(cell(headerRows-1,0)?.text??'').trim():'';
+ if(/^(?:us|uk|eu|eur|fr|it|jp|au|cm|mondo|sizes?|size chart|(?:men'?s|women'?s|kids'?)(?: size)?|situation|position|setting|settings|mode|condition|state|scenario|configuration|adjustment|step|stage|level|use case)$/i.test(keyHeader))
+  return {mode:'unsupported',readings:[],reasons:['row_key_header_not_product_identity']};
  const propCols=[...Array(g.cols).keys()].filter(c=>c>=keyCols);
  const quantCols=propCols.filter(c=>bodyRows.some(r=>{const x=cell(r,c);return !!x&&quantitative(x.text);})).length;
  if(quantCols===0||quantCols*3<propCols.length)return {mode:'unsupported',readings:[],reasons:['too_few_quantitative_columns_for_product_rows']};

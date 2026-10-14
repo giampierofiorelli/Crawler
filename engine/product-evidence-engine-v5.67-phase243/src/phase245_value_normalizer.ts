@@ -38,6 +38,7 @@ const UNIT_ALIASES:[RegExp,string][]=[
  [/^(?:l\/min)$/i,'l/min'],[/^(?:m³\/h|m3\/h)$/i,'m³/h'],[/^(?:pin|pins)$/i,'pin'],[/^(?:cores?)$/i,'core'],
  [/^(?:servings?)$/i,'serving'],[/^(?:pieces?|pcs?)$/i,'piece'],[/^(?:ppm)$/i,'ppm'],[/^(?:bpm)$/i,'bpm'],
 ];
+const LENGTH_UNITS=new Set(['mm','cm','m','km','in','ft','px']);
 export function canonicalUnit245(raw:string):string|null{
  const u=raw.trim().replace(/\.$/,'');if(!u||u.length>12)return null;
  for(const [re,c] of UNIT_ALIASES)if(re.test(u))return c;
@@ -132,6 +133,8 @@ export function normalizeValue245(raw:string,label=''):Value245{
  m=new RegExp(`^${NUM}\\s*([a-z"″]{1,3})?\\s*[x×*]\\s*${NUM}\\s*([a-z"″]{1,3})?(?:\\s*[x×*]\\s*${NUM})?\\s*([a-z"″]{1,3})?$`,'i').exec(t);
  if(m){const unit=[m[6],m[4],m[2]].map(u=>u?canonicalUnit245(u):null).find(Boolean)??hint.unit??null;
   const nums=[m[1],m[3],m[5]].filter(Boolean).map(x=>parseNumber245(x!));
+  // Only lengths make dimensions: "1 x 36 V", "2W x 2" are a count of items, kept as declared text.
+  if(unit&&nums.every(n=>n!==null)&&!LENGTH_UNITS.has(unit))return {kind:'text',text:original};
   if(unit&&nums.every(n=>n!==null))return {kind:'dimensions',numbers:nums as number[],unit,axes:null,approximate};}
  // Option lists "128 GB, 256 GB or 512 GB", "1, 2, 4 or 8 GB", "256 or 512 MB".
  m=/^((?:\d+(?:[.,]\d+)?\s*[a-zA-Z]{0,4}\s*(?:,|\bor\b|\/)\s*)+\d+(?:[.,]\d+)?)\s*([a-zA-Z]{1,4})?(?:\s+[A-Za-z][\w-]{1,12})?$/.exec(t);
