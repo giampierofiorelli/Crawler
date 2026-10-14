@@ -1,0 +1,17 @@
+{
+ "schema":"pee247.heldout-adjudication.v1",
+ "rule":"Strict first-run result files are never edited. This file records reviewer decisions on individual strict errors.",
+ "heldout_247_1":{"strictFile":"heldout/results-strict-firstrun-spec-extractor-2.json","strict":{"correct":42,"expected":65,"falseAssociations":0,"falsePositives":3},
+  "decisions":[
+   {"page":"h_did_rh24570","item":"Warranty = 1 year (gold: 'Main Warranty' = '1 Year')","strict":"false_positive + miss","adjudicated":"correct_value_label_segmented_differently","reason":"same declared value; the page shows the label in a 'Warranty' group heading"},
+   {"page":"h_did_rh24570","item":"weight = 1 kg (structured data)","strict":"false_positive","adjudicated":"false_positive","reason":"structured data contradicts the visible 'Weight (kg) 2.1'; spec-extractor-3 now holds such disagreements back"},
+   {"page":"h_balance_bambino","item":"Capacity = 'Water tank 1.9L (64 fl.oz)' as text","strict":"false_positive + miss","adjudicated":"normalization_error","reason":"spec-extractor-3 reads described quantities"}],
+  "adjudicated":{"correct":43,"expected":65,"falseAssociations":0,"falsePositives":2,"precision":0.956,"recall":0.662}},
+ "heldout_247_2":{"strictFile":"heldout2/results-strict-firstrun-spec-extractor-3.json","strict":{"correct":49,"expected":61,"falseAssociations":0,"falsePositives":2},
+  "decisions":[
+   {"page":"k_easyeq_waring","item":"Power Supply = 13 A (qualifier 'plug fitted'); gold text '13 amp plug fitted'","strict":"false_positive + miss","adjudicated":"correct_value_structured_reading","reason":"same declaration read as a quantity with qualifier"},
+   {"page":"k_sm_camel","item":"What's in the box = 'Warranty card Manual Instruction'","strict":"false_positive","adjudicated":"false_positive","reason":"two list items concatenated into one text value"},
+   {"page":"k_easyeq_waring","item":"11 comparison-table values of two other products","strict":"missed","adjudicated":"missed_identity_error","reason":"columns keyed by price/'This item' header cells; fixed in spec-extractor-4 (development-only, not held-out validated)"},
+   {"page":"k_easyeq_waring","item":"gold omission noticed later: compare-table Material 'Stainless Steel' for the main product","strict":"not scored","adjudicated":"gold_omission","reason":"annotator assigned it only to another column"}],
+  "adjudicated":{"correct":50,"expected":61,"falseAssociations":0,"falsePositives":1,"precision":0.98,"recall":0.82}}
+}
