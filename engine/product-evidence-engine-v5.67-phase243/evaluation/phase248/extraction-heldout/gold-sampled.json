@@ -1,0 +1,1794 @@
+{
+ "schema": "pee248.sampled-gold.v1",
+ "design": "Written from visible page text before running the frozen extractor. Recall is measured on these pre-registered attributes (sampled across each spec block, not the full block). Precision is measured separately by auditing every promoted fact against the page after the single run. pageType 'listing' = no single page product: any fact attributed to a main product is an identity error. forbiddenProducts = strings that must never become product identities.",
+ "pages": {
+  "x_numatic": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       320,
+       340,
+       320
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Filter Type",
+     {
+      "kind": "text",
+      "text": "Tritex"
+     }
+    ],
+    [
+     "Suction",
+     {
+      "kind": "quantity",
+      "number": 1200,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Airflow",
+     {
+      "kind": "quantity",
+      "number": 20,
+      "unit": "l/s"
+     }
+    ],
+    [
+     "Capacity",
+     {
+      "kind": "quantity",
+      "number": 6,
+      "unit": "l"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Runtime"
+   ]
+  },
+  "x_vax": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 149.99,
+      "currency": "GBP"
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_benq": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Screen Size",
+     {
+      "kind": "quantity",
+      "number": 27,
+      "unit": "in"
+     }
+    ],
+    [
+     "Panel Type",
+     {
+      "kind": "text",
+      "text": "IPS"
+     }
+    ],
+    [
+     "Brightness (typ.)",
+     {
+      "kind": "quantity",
+      "number": 250,
+      "unit": "nits"
+     }
+    ],
+    [
+     "Response Times (GtG)",
+     {
+      "kind": "quantity",
+      "number": 5,
+      "unit": "ms"
+     }
+    ],
+    [
+     "Refresh Rate (Hz)",
+     {
+      "kind": "quantity",
+      "number": 100,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Native Contrast",
+     {
+      "kind": "text",
+      "text": "1300:1"
+     }
+    ],
+    [
+     "Aspect Ratio",
+     {
+      "kind": "text",
+      "text": "16:9"
+     }
+    ],
+    [
+     "Power Consumption (normal)",
+     {
+      "kind": "quantity",
+      "number": 20,
+      "unit": "W"
+     }
+    ],
+    [
+     "Dimensions (HxWxD) (mm)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       451,
+       615,
+       182
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Net Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 4.13,
+      "unit": "kg"
+     }
+    ],
+    [
+     "VESA Wall Mount",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       100,
+       100
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Flicker-free Technology",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_fleetfeet": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 160,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Heel-to-Toe Drop",
+     {
+      "kind": "quantity",
+      "number": 9,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Drop",
+     {
+      "kind": "quantity",
+      "number": 9,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Category",
+     {
+      "kind": "text",
+      "text": "Trail"
+     }
+    ],
+    [
+     "Use",
+     {
+      "kind": "text",
+      "text": "Moderate to easy trails"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Stack Height"
+   ]
+  },
+  "x_v12": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 113,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Fabric",
+     {
+      "kind": "text",
+      "text": "Ripstop Nylon"
+     }
+    ],
+    [
+     "Lug Depth",
+     {
+      "kind": "quantity",
+      "number": 4,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Stack Height",
+     {
+      "kind": "quantity",
+      "number": 27,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Drop",
+     {
+      "kind": "quantity",
+      "number": 6,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Width",
+     {
+      "kind": "text",
+      "text": "Regular or Regular+"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Weight"
+   ]
+  },
+  "x_bplight": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 216,
+      "currency": "AUD"
+     }
+    ],
+    [
+     "Best Use",
+     {
+      "kind": "text",
+      "text": "Trail Running, Hiking"
+     }
+    ],
+    [
+     "Stack Height",
+     {
+      "kind": "quantity",
+      "number": 28,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Heel to Toe Drop",
+     {
+      "kind": "quantity",
+      "number": 0,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 264,
+      "unit": "g"
+     }
+    ],
+    [
+     "Gaiter Compatible",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Rock Plate",
+     {
+      "kind": "boolean",
+      "value": false
+     }
+    ],
+    [
+     "Cushion",
+     {
+      "kind": "text",
+      "text": "Medium"
+     }
+    ],
+    [
+     "Support",
+     {
+      "kind": "text",
+      "text": "Neutral"
+     }
+    ],
+    [
+     "Performance",
+     {
+      "kind": "text",
+      "text": "Balanced"
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_eastside": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 105,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Stack height",
+     {
+      "kind": "quantity",
+      "number": 28,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Heel to toe drop",
+     {
+      "kind": "quantity",
+      "number": 0,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 8.6,
+      "unit": "oz"
+     }
+    ],
+    [
+     "Gaiter compatible",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Rock plate",
+     {
+      "kind": "boolean",
+      "value": false
+     }
+    ],
+    [
+     "Cushion",
+     {
+      "kind": "text",
+      "text": "Medium"
+     }
+    ],
+    [
+     "Performance",
+     {
+      "kind": "text",
+      "text": "Balanced"
+     }
+    ],
+    [
+     "Support",
+     {
+      "kind": "text",
+      "text": "Neutral"
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_altitude": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Capacity",
+     {
+      "kind": "number",
+      "number": 2
+     }
+    ],
+    [
+     "Total Weight",
+     {
+      "kind": "quantity",
+      "number": 5,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Fly",
+     {
+      "kind": "text",
+      "text": "75D 1200 mm PU"
+     }
+    ],
+    [
+     "Canopy",
+     {
+      "kind": "text",
+      "text": "40D mesh"
+     }
+    ],
+    [
+     "Floor",
+     {
+      "kind": "text",
+      "text": "70D nylon taffeta, 3000 mm color PU"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Vestibule Area"
+   ]
+  },
+  "x_magnadyne": {
+   "pageType": "listing",
+   "expected": [],
+   "mustAbstain": [],
+   "note": "product URL redirected (same site) to the shop homepage"
+  },
+  "x_bdie": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Battery Capacity [Ah]",
+     {
+      "kind": "quantity",
+      "number": 1.5,
+      "unit": "Ah"
+     }
+    ],
+    [
+     "Battery Chemistry",
+     {
+      "kind": "text",
+      "text": "Lithium Ion"
+     }
+    ],
+    [
+     "Chuck Size [mm]",
+     {
+      "kind": "quantity",
+      "number": 10,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Chuck Type",
+     {
+      "kind": "text",
+      "text": "Two Sleeve"
+     }
+    ],
+    [
+     "Has Reverse?",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Max. Torque [Nm]",
+     {
+      "kind": "quantity",
+      "number": 28,
+      "unit": "Nm"
+     }
+    ],
+    [
+     "No Load Speed [RPM]",
+     {
+      "kind": "range",
+      "min": 0,
+      "max": 650,
+      "unit": "rpm"
+     }
+    ],
+    [
+     "Number of Clutch Positions",
+     {
+      "kind": "number",
+      "number": 11
+     }
+    ],
+    [
+     "Sound Power [dB(A)]",
+     {
+      "kind": "quantity",
+      "number": 75.5,
+      "unit": "dB"
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_palmera": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Backrest Height (from seat)",
+     {
+      "kind": "quantity",
+      "number": 38,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Seat Width",
+     {
+      "kind": "quantity",
+      "number": 44,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Seat Depth",
+     {
+      "kind": "quantity",
+      "number": 42,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Total Depth",
+     {
+      "kind": "quantity",
+      "number": 64,
+      "unit": "cm"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Price"
+   ],
+   "forbiddenProducts": [
+    "Shock Absorber at the Bottom (Minimum)",
+    "Shock Absorber at the Top (Maximum)"
+   ],
+   "note": "min/max seat-height table rows are adjustment positions, not products; price shown as 0 TL"
+  },
+  "x_ocado": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 22,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Brand",
+     {
+      "kind": "text",
+      "text": "M&S"
+     }
+    ],
+    [
+     "Height",
+     {
+      "kind": "quantity",
+      "number": 8.1,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Width",
+     {
+      "kind": "quantity",
+      "number": 28.5,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Length",
+     {
+      "kind": "quantity",
+      "number": 47.4,
+      "unit": "cm"
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_smartuk": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 66.92,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Brand",
+     {
+      "kind": "text",
+      "text": "De Buyer"
+     }
+    ],
+    [
+     "Material",
+     {
+      "kind": "text",
+      "text": "Aluminium"
+     }
+    ],
+    [
+     "Main Colour",
+     {
+      "kind": "text",
+      "text": "Silver"
+     }
+    ],
+    [
+     "Non Stick",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Ovenproof?",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Dishwasher Safe?",
+     {
+      "kind": "boolean",
+      "value": false
+     }
+    ],
+    [
+     "Height (mm)",
+     {
+      "kind": "quantity",
+      "number": 38,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Product Weight",
+     {
+      "kind": "quantity",
+      "number": 1.31,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 1.42,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       38,
+       280
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Freezer Safe",
+     {
+      "kind": "boolean",
+      "value": false
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "related products carry their own prices (e.g. \u00a328.97); the page declares two different weights under different labels"
+  },
+  "x_sharp": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Capacity",
+     {
+      "kind": "quantity",
+      "number": 20,
+      "unit": "l"
+     }
+    ],
+    [
+     "Microwave Power",
+     {
+      "kind": "quantity",
+      "number": 800,
+      "unit": "W"
+     }
+    ],
+    [
+     "Microwave Power Levels",
+     {
+      "kind": "number",
+      "number": 11
+     }
+    ],
+    [
+     "Control Type",
+     {
+      "kind": "text",
+      "text": "Fully Digital"
+     }
+    ],
+    [
+     "Cavity Type",
+     {
+      "kind": "text",
+      "text": "Turntable"
+     }
+    ],
+    [
+     "Cabinet Colour",
+     {
+      "kind": "text",
+      "text": "Black"
+     }
+    ],
+    [
+     "Unit Size (W x H x D in mm)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       440,
+       258,
+       324
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Unit Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 11.3,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Power Consumption (W)",
+     {
+      "kind": "quantity",
+      "number": 1270,
+      "unit": "W"
+     }
+    ],
+    [
+     "Gross Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 12.8,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Box Size (W x H x D in mm)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       488,
+       291,
+       380
+      ],
+      "unit": "mm"
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_midea": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Capacity",
+     {
+      "kind": "quantity",
+      "number": 20,
+      "unit": "l"
+     }
+    ],
+    [
+     "Installation type",
+     {
+      "kind": "text",
+      "text": "Built-in"
+     }
+    ],
+    [
+     "Microwave power",
+     {
+      "kind": "quantity",
+      "number": 800,
+      "unit": "W"
+     }
+    ],
+    [
+     "Grill power",
+     {
+      "kind": "quantity",
+      "number": 1000,
+      "unit": "W"
+     }
+    ],
+    [
+     "Control",
+     {
+      "kind": "text",
+      "text": "Mechanical knobs"
+     }
+    ],
+    [
+     "Power levels",
+     {
+      "kind": "number",
+      "number": 5
+     }
+    ],
+    [
+     "Turntable diameter",
+     {
+      "kind": "quantity",
+      "number": 245,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Convection power",
+     {
+      "kind": "boolean",
+      "value": false
+     }
+    ]
+   ],
+   "mustAbstain": []
+  },
+  "x_havit": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Product Size",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       348,
+       140,
+       45
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Product Weight",
+     {
+      "kind": "quantity",
+      "number": 768,
+      "unit": "g"
+     }
+    ],
+    [
+     "Light Type",
+     {
+      "kind": "text",
+      "text": "RGB"
+     }
+    ],
+    [
+     "Interface Type",
+     {
+      "kind": "text",
+      "text": "USB"
+     }
+    ],
+    [
+     "Key Number",
+     {
+      "kind": "number",
+      "number": 85
+     }
+    ],
+    [
+     "Cable Length",
+     {
+      "kind": "quantity",
+      "number": 1.8,
+      "unit": "m"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenMainValues": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 629,
+      "unit": "g"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 786,
+      "unit": "g"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 858,
+      "unit": "g"
+     }
+    ]
+   ],
+   "note": "comparison table with three other models"
+  },
+  "x_wcsl": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Dimension",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       442,
+       127.8,
+       40.3
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Weight (Keyboard)",
+     {
+      "kind": "quantity",
+      "number": 910,
+      "unit": "g"
+     }
+    ],
+    [
+     "Top Plate Material",
+     {
+      "kind": "text",
+      "text": "Aluminium"
+     }
+    ],
+    [
+     "Wrist Rest",
+     {
+      "kind": "text",
+      "text": "Included"
+     }
+    ],
+    [
+     "Weight (Wrist Rest)",
+     {
+      "kind": "quantity",
+      "number": 307,
+      "unit": "g"
+     }
+    ],
+    [
+     "Mechanical Key Switches",
+     {
+      "kind": "text",
+      "text": "Hot-swappable Gateron Linear Red"
+     }
+    ],
+    [
+     "N-key Rollover",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Anti-Ghosting",
+     {
+      "kind": "boolean",
+      "value": true
+     }
+    ],
+    [
+     "Profile",
+     {
+      "kind": "text",
+      "text": "OEM"
+     }
+    ],
+    [
+     "Warranty",
+     {
+      "kind": "text",
+      "text": "2 Years"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Model Number",
+    "UPC",
+    "EAN"
+   ],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 1049,
+      "currency": "HKD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 359,
+      "currency": "HKD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 319,
+      "currency": "HKD"
+     }
+    ]
+   ],
+   "note": "Chinese/English page; add-on products priced HK$1,049/359/319; identifiers differ per colour"
+  },
+  "x_ribble": {
+   "pageType": "listing",
+   "expected": [],
+   "mustAbstain": [],
+   "note": "URL resolved to a hybrid-bike category listing"
+  },
+  "x_99bikes": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Brand",
+     {
+      "kind": "text",
+      "text": "Merida"
+     }
+    ],
+    [
+     "Year Model",
+     {
+      "kind": "number",
+      "number": 2026
+     }
+    ],
+    [
+     "Frame Material",
+     {
+      "kind": "text",
+      "text": "Alloy"
+     }
+    ],
+    [
+     "Wheel Size",
+     {
+      "kind": "text",
+      "text": "700c"
+     }
+    ],
+    [
+     "Brake Type",
+     {
+      "kind": "text",
+      "text": "Hydraulic Disc Brake"
+     }
+    ],
+    [
+     "Gears",
+     {
+      "kind": "text",
+      "text": "2 x 10"
+     }
+    ],
+    [
+     "Bottom Bracket",
+     {
+      "kind": "text",
+      "text": "Shimano MT501"
+     }
+    ],
+    [
+     "Pedals",
+     {
+      "kind": "text",
+      "text": "VP VPE-889P"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 9.9,
+      "currency": "AUD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 19,
+      "currency": "AUD"
+     }
+    ]
+   ],
+   "note": "$9.90/$19.00 are delivery charges"
+  },
+  "x_stoneaudio": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 59,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Type",
+     {
+      "kind": "text",
+      "text": "Closed-back dynamic"
+     }
+    ],
+    [
+     "Driver Diameter",
+     {
+      "kind": "quantity",
+      "number": 40,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Frequency Response",
+     {
+      "kind": "range",
+      "min": 5,
+      "max": 32000,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Impedance",
+     {
+      "kind": "quantity",
+      "number": 32,
+      "unit": "ohms"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 190,
+      "unit": "g"
+     }
+    ],
+    [
+     "Charging Time",
+     {
+      "kind": "quantity",
+      "number": 4,
+      "unit": "h"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Battery Life"
+   ]
+  },
+  "x_multitronic": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Wireless range",
+     {
+      "kind": "quantity",
+      "number": 100,
+      "unit": "m"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 270,
+      "unit": "g"
+     }
+    ],
+    [
+     "Headphone frequency",
+     {
+      "kind": "range",
+      "min": 20,
+      "max": 20000,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Driver unit",
+     {
+      "kind": "quantity",
+      "number": 4,
+      "unit": "cm"
+     }
+    ],
+    [
+     "Magnet type",
+     {
+      "kind": "text",
+      "text": "Neodymium"
+     }
+    ],
+    [
+     "Battery recharge time",
+     {
+      "kind": "quantity",
+      "number": 16,
+      "unit": "h"
+     }
+    ],
+    [
+     "Continuous audio playback time",
+     {
+      "kind": "quantity",
+      "number": 13,
+      "unit": "h"
+     }
+    ],
+    [
+     "Receiver dimensions (WxDxH)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       108,
+       108,
+       128
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Receiver weight",
+     {
+      "kind": "quantity",
+      "number": 137,
+      "unit": "g"
+     }
+    ],
+    [
+     "Product colour",
+     {
+      "kind": "text",
+      "text": "Black"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "end-of-life product; no price"
+  },
+  "x_woot": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 11.29,
+      "unit": "oz"
+     }
+    ],
+    [
+     "Driver Unit",
+     {
+      "kind": "quantity",
+      "number": 1.57,
+      "unit": "in"
+     }
+    ],
+    [
+     "Diaphragm",
+     {
+      "kind": "text",
+      "text": "LUMIRROR"
+     }
+    ],
+    [
+     "Frequency Response (Hz)",
+     {
+      "kind": "range",
+      "min": 10,
+      "max": 22000,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Magnet",
+     {
+      "kind": "text",
+      "text": "Neodymium"
+     }
+    ],
+    [
+     "Impedance (Ohm)",
+     {
+      "kind": "quantity",
+      "number": 32,
+      "unit": "ohm"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 19.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 12.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 31.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "note": "best-seller carousel prices belong to other products"
+  },
+  "x_benq2780": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Panel Type",
+     {
+      "kind": "text",
+      "text": "IPS"
+     }
+    ],
+    [
+     "Refresh Rate (Hz)",
+     {
+      "kind": "quantity",
+      "number": 60,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Native Contrast",
+     {
+      "kind": "text",
+      "text": "1000:1"
+     }
+    ],
+    [
+     "Color Gamut",
+     {
+      "kind": "text",
+      "text": "72% NTSC"
+     }
+    ],
+    [
+     "Built-in Speaker",
+     {
+      "kind": "text",
+      "text": "2Wx2"
+     }
+    ],
+    [
+     "Power Consumption (normal)",
+     {
+      "kind": "quantity",
+      "number": 32,
+      "unit": "W"
+     }
+    ],
+    [
+     "Dimensions (HxWxD) (mm)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       463,
+       612,
+       183
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Net Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 4.85,
+      "unit": "kg"
+     }
+    ],
+    [
+     "VGA",
+     {
+      "kind": "number",
+      "number": 1
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "same site template as x_benq"
+  },
+  "x_benqbl": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Refresh Rate (Hz)",
+     {
+      "kind": "quantity",
+      "number": 100,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Native Contrast",
+     {
+      "kind": "text",
+      "text": "1300:1"
+     }
+    ],
+    [
+     "Power Consumption (normal)",
+     {
+      "kind": "quantity",
+      "number": 25,
+      "unit": "W"
+     }
+    ],
+    [
+     "Power Consumption (max)",
+     {
+      "kind": "quantity",
+      "number": 35,
+      "unit": "W"
+     }
+    ],
+    [
+     "Dimensions (HxWxD) (mm)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       449,
+       612,
+       182
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Net Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 5.0,
+      "unit": "kg"
+     }
+    ],
+    [
+     "HDMI (v1.4)",
+     {
+      "kind": "number",
+      "number": 2
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "same site template as x_benq"
+  },
+  "x_sharpmg": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Capacity",
+     {
+      "kind": "quantity",
+      "number": 20,
+      "unit": "l"
+     }
+    ],
+    [
+     "Grill Power",
+     {
+      "kind": "quantity",
+      "number": 1000,
+      "unit": "W"
+     }
+    ],
+    [
+     "Microwave Power Levels",
+     {
+      "kind": "number",
+      "number": 11
+     }
+    ],
+    [
+     "Unit Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 11.9,
+      "unit": "kg"
+     }
+    ],
+    [
+     "Grill power (W)",
+     {
+      "kind": "quantity",
+      "number": 1000,
+      "unit": "W"
+     }
+    ],
+    [
+     "Gross Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 13.1,
+      "unit": "kg"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "same site template as x_sharp"
+  },
+  "x_sharpqs": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Microwave Power Levels",
+     {
+      "kind": "number",
+      "number": 10
+     }
+    ],
+    [
+     "Control Type",
+     {
+      "kind": "text",
+      "text": "Semi-digital"
+     }
+    ],
+    [
+     "Cavity Type",
+     {
+      "kind": "text",
+      "text": "Flatbed"
+     }
+    ],
+    [
+     "Cavity Lighting",
+     {
+      "kind": "text",
+      "text": "LED"
+     }
+    ],
+    [
+     "Unit Size (W x H x D in mm)",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       457,
+       272,
+       379
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Standby Power Consumption (W)",
+     {
+      "kind": "quantity",
+      "number": 0.66,
+      "unit": "W"
+     }
+    ],
+    [
+     "Off Mode Power Consumption (W)",
+     {
+      "kind": "quantity",
+      "number": 0.45,
+      "unit": "W"
+     }
+    ],
+    [
+     "Gross Weight (kg)",
+     {
+      "kind": "quantity",
+      "number": 13.9,
+      "unit": "kg"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "same site template as x_sharp"
+  },
+  "x_havit892": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Size",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       364,
+       135,
+       40
+      ],
+      "unit": "mm"
+     }
+    ],
+    [
+     "Product Weight",
+     {
+      "kind": "quantity",
+      "number": 629,
+      "unit": "g"
+     }
+    ],
+    [
+     "Light Type",
+     {
+      "kind": "text",
+      "text": "blended light"
+     }
+    ],
+    [
+     "Key Number",
+     {
+      "kind": "number",
+      "number": 87
+     }
+    ],
+    [
+     "Operating Current",
+     {
+      "kind": "quantity",
+      "number": 200,
+      "unit": "mA"
+     }
+    ],
+    [
+     "Cable Length",
+     {
+      "kind": "quantity",
+      "number": 1.8,
+      "unit": "m"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "note": "same site template as x_havit"
+  },
+  "x_99bikes100": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Brand",
+     {
+      "kind": "text",
+      "text": "Merida"
+     }
+    ],
+    [
+     "Frame Material",
+     {
+      "kind": "text",
+      "text": "Alloy"
+     }
+    ],
+    [
+     "Gears",
+     {
+      "kind": "text",
+      "text": "2 x 9"
+     }
+    ],
+    [
+     "Brake Type",
+     {
+      "kind": "text",
+      "text": "Hydraulic Disc Brake"
+     }
+    ],
+    [
+     "Colour",
+     {
+      "kind": "text",
+      "text": "Grey"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Recommend Rider Heights",
+    "Size SKUs"
+   ],
+   "note": "same site template as x_99bikes; per-size values"
+  }
+ }
+}
