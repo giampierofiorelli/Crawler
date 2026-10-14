@@ -1,0 +1,38 @@
+{
+ "status": "PROPOSED — NOT APPROVED. Inert until the owner reviews the licence and fills reviewedBy/reviewedAt/validUntil/robotsCheckedAt/termsCheckedAt. The engine's policy gate (approvedMetadataDiscovery75) rejects it as written.",
+ "proposedBy": "assistant (Phase248)",
+ "proposedAt": "2026-10-14",
+ "whyThisSource": "Independent regulatory findings (Office for Product Safety and Standards and Trading Standards) about identified products: hazards, non-compliance and corrective measures. Independent of manufacturers; not performance evidence.",
+ "licenceFacts": {
+  "licence": "Open Government Licence v3.0",
+  "licenceUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "govukStatement": "GOV.UK content is published under the OGL v3.0 except where otherwise stated (https://www.gov.uk/help/terms-conditions).",
+  "permits": "copy, publish, distribute, transmit, adapt, and exploit commercially and non-commercially, with attribution",
+  "requiredAttribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
+  "exclusionsToRespect": ["personal data", "logos and crests", "third-party rights: product images and attached PDF reports are not fetched or stored", "anything stated as not OGL on the page"],
+  "toVerifyByOwner": ["that each notice page carries no 'otherwise stated' exception", "that the OGL covers the content API JSON as it covers the HTML page", "commercial use for PEE's intended deployment"]
+ },
+ "policy": {
+  "sourceId": "gov-uk-opss-product-safety",
+  "host": "www.gov.uk",
+  "basis": "verified_open_licence",
+  "rightsDocumentId": "OGL-3.0",
+  "rightsDocumentUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "reviewedBy": null,
+  "reviewedAt": null,
+  "validUntil": null,
+  "permittedOperations": ["metadata_discovery", "page_retrieval", "local_analysis", "fact_storage", "public_citation", "derived_publication"],
+  "robots": "allowed",
+  "robotsCheckedAt": null,
+  "websiteTerms": "unknown",
+  "termsCheckedAt": null,
+  "commercialUseReviewed": false
+ },
+ "scope": {
+  "paths": ["/api/search.json?filter_format=product_safety_alert_report_recall", "/api/content/product-safety-alerts-reports-recalls/*"],
+  "excluded": ["attachments (product images, PDF reports)", "/search/all* (robots-disallowed)"],
+  "rate": "one request at a time, at least 1 s apart, budgeted per run; stop on 403/429",
+  "retained": "parsed notice fields (title, dates, notice type, risk level, measures, product type/brand/identifiers, hazard summary and classes, regulations, PSD numbers, notifier) with source URL and attribution; no HTML bodies"
+ },
+ "evidenceSemantics": "A notice attaches to a product only on an exact identifier match (numeric-only codes also need the same brand). Category hazard profiles count notices, not failure rates. Notices never authorise rankings."
+}
