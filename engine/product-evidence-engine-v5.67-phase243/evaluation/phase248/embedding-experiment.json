@@ -1,0 +1,190 @@
+{
+ "model": "Xenova/all-MiniLM-L6-v2 q8",
+ "modelLoadMs": 165,
+ "msPerEmbedding": 4.9,
+ "thresholdChosenOnDev": {
+  "th": 0.71,
+  "f1": 0.884,
+  "recall": 0.826,
+  "precision": 0.95,
+  "tp": 19,
+  "fp": 1,
+  "exp": 23
+ },
+ "heldout2": {
+  "lexicalOnly": {
+   "recall": 0.385,
+   "precision": 1,
+   "tp": 5,
+   "fp": 0,
+   "exp": 13
+  },
+  "embeddingOnly": {
+   "recall": 0.154,
+   "precision": 1,
+   "tp": 2,
+   "fp": 0,
+   "exp": 13
+  },
+  "union": {
+   "recall": 0.462,
+   "precision": 1,
+   "tp": 6,
+   "fp": 0,
+   "exp": 13
+  }
+ },
+ "dev": {
+  "lexicalOnly": {
+   "recall": 0.739,
+   "precision": 1,
+   "tp": 17,
+   "fp": 0,
+   "exp": 23
+  },
+  "union": {
+   "recall": 0.826,
+   "precision": 0.95,
+   "tp": 19,
+   "fp": 1,
+   "exp": 23
+  }
+ },
+ "heldout2Detail": [
+  {
+   "id": "k01",
+   "expected": [
+    "cook_single_portion",
+    "crisp_texture"
+   ],
+   "lex": [
+    "crisp_texture"
+   ],
+   "emb": []
+  },
+  {
+   "id": "k02",
+   "expected": [
+    "cooking_evenness"
+   ],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k03",
+   "expected": [
+    "small_kitchen"
+   ],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k04",
+   "expected": [
+    "cleaning_effort"
+   ],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k05",
+   "expected": [
+    "espresso_quality"
+   ],
+   "lex": [
+    "espresso_quality"
+   ],
+   "emb": [
+    "espresso_quality:0.75"
+   ]
+  },
+  {
+   "id": "k06",
+   "expected": [
+    "low_maintenance"
+   ],
+   "lex": [
+    "low_maintenance"
+   ],
+   "emb": []
+  },
+  {
+   "id": "k07",
+   "expected": [
+    "ongoing_costs"
+   ],
+   "lex": [
+    "ongoing_costs"
+   ],
+   "emb": []
+  },
+  {
+   "id": "k08",
+   "expected": [
+    "shot_consistency"
+   ],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k09",
+   "expected": [
+    "even_browning"
+   ],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k10",
+   "expected": [
+    "thick_bread_fit"
+   ],
+   "lex": [],
+   "emb": [
+    "thick_bread_fit:0.76"
+   ]
+  },
+  {
+   "id": "k11",
+   "expected": [
+    "hot_exterior"
+   ],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k12",
+   "expected": [
+    "crisp_texture"
+   ],
+   "lex": [
+    "crisp_texture"
+   ],
+   "emb": []
+  },
+  {
+   "id": "k13",
+   "expected": [],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k14",
+   "expected": [],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k15",
+   "expected": [],
+   "lex": [],
+   "emb": []
+  },
+  {
+   "id": "k16",
+   "expected": [],
+   "lex": [],
+   "emb": []
+  }
+ ]
+}
