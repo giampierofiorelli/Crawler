@@ -1,0 +1,1228 @@
+TAP version 13
+# Subtest: recognizes an inferred code switch without claiming language identity verified
+ok 1 - recognizes an inferred code switch without claiming language identity verified
+  ---
+  duration_ms: 1.787169
+  type: 'test'
+  ...
+# Subtest: does not persist transcript, words, phrases, or human reference
+ok 2 - does not persist transcript, words, phrases, or human reference
+  ---
+  duration_ms: 9.683511
+  type: 'test'
+  ...
+# Subtest: provisional exact match produces diagnostic WER/CER zero but never scientific accuracy
+ok 3 - provisional exact match produces diagnostic WER/CER zero but never scientific accuracy
+  ---
+  duration_ms: 0.367315
+  type: 'test'
+  ...
+# Subtest: substitution alters WER and CER
+ok 4 - substitution alters WER and CER
+  ---
+  duration_ms: 0.330449
+  type: 'test'
+  ...
+# Subtest: boundary differences are measured only for matching segment IDs
+ok 5 - boundary differences are measured only for matching segment IDs
+  ---
+  duration_ms: 0.3107
+  type: 'test'
+  ...
+# Subtest: missing reference does not manufacture accuracy
+ok 6 - missing reference does not manufacture accuracy
+  ---
+  duration_ms: 0.27159
+  type: 'test'
+  ...
+# Subtest: language agreement exists only for matched annotation language labels
+ok 7 - language agreement exists only for matched annotation language labels
+  ---
+  duration_ms: 0.360715
+  type: 'test'
+  ...
+# Subtest: single global language must not imply per-segment detection
+ok 8 - single global language must not imply per-segment detection
+  ---
+  duration_ms: 0.154223
+  type: 'test'
+  ...
+# Subtest: malformed or unverified runtime rejected
+ok 9 - malformed or unverified runtime rejected
+  ---
+  duration_ms: 2.211659
+  type: 'test'
+  ...
+# Subtest: invalid source and model hashes rejected
+ok 10 - invalid source and model hashes rejected
+  ---
+  duration_ms: 0.391141
+  type: 'test'
+  ...
+# Subtest: word timing outside segment rejected
+ok 11 - word timing outside segment rejected
+  ---
+  duration_ms: 0.183507
+  type: 'test'
+  ...
+# Subtest: word timestamp reversed rejected
+ok 12 - word timestamp reversed rejected
+  ---
+  duration_ms: 5.466074
+  type: 'test'
+  ...
+# Subtest: segment beyond video rejected
+ok 13 - segment beyond video rejected
+  ---
+  duration_ms: 0.170477
+  type: 'test'
+  ...
+# Subtest: duplicate IDs rejected
+ok 14 - duplicate IDs rejected
+  ---
+  duration_ms: 0.110457
+  type: 'test'
+  ...
+# Subtest: unrealistic length rejected
+ok 15 - unrealistic length rejected
+  ---
+  duration_ms: 0.087572
+  type: 'test'
+  ...
+# Subtest: reference without human review status rejected
+ok 16 - reference without human review status rejected
+  ---
+  duration_ms: 0.099991
+  type: 'test'
+  ...
+# Subtest: Japanese word error rate is diagnostic and CER remains available
+ok 17 - Japanese word error rate is diagnostic and CER remains available
+  ---
+  duration_ms: 0.404521
+  type: 'test'
+  ...
+# Subtest: language unknown is not coerced into English
+ok 18 - language unknown is not coerced into English
+  ---
+  duration_ms: 0.15265
+  type: 'test'
+  ...
+# Subtest: a content-free clip remains explicitly unvalidated
+ok 19 - a content-free clip remains explicitly unvalidated
+  ---
+  duration_ms: 0.087332
+  type: 'test'
+  ...
+# Subtest: whisper.cpp offsets are milliseconds, shifted once to absolute video seconds
+ok 20 - whisper.cpp offsets are milliseconds, shifted once to absolute video seconds
+  ---
+  duration_ms: 1.42335
+  type: 'test'
+  ...
+# Subtest: multilingual result uses window inference not certified word language
+ok 21 - multilingual result uses window inference not certified word language
+  ---
+  duration_ms: 5.551363
+  type: 'test'
+  ...
+# Subtest: transcript and local model label are not retained in the evaluation
+ok 22 - transcript and local model label are not retained in the evaluation
+  ---
+  duration_ms: 0.279041
+  type: 'test'
+  ...
+# Subtest: wrong time units fail closed, preventing millisecond/second confusion
+ok 23 - wrong time units fail closed, preventing millisecond/second confusion
+  ---
+  duration_ms: 0.447085
+  type: 'test'
+  ...
+# Subtest: translation rather than transcription is rejected
+ok 24 - translation rather than transcription is rejected
+  ---
+  duration_ms: 0.272001
+  type: 'test'
+  ...
+# Subtest: English-only weights are refused for multilingual pilot
+ok 25 - English-only weights are refused for multilingual pilot
+  ---
+  duration_ms: 0.18511
+  type: 'test'
+  ...
+# Subtest: missing genuine CLI fields rejected
+ok 26 - missing genuine CLI fields rejected
+  ---
+  duration_ms: 0.169496
+  type: 'test'
+  ...
+# Subtest: different variants and evidence are not inferred from transcript content
+ok 27 - different variants and evidence are not inferred from transcript content
+  ---
+  duration_ms: 0.24522
+  type: 'test'
+  ...
+# Subtest: no language is not silently translated to English
+ok 28 - no language is not silently translated to English
+  ---
+  duration_ms: 0.499875
+  type: 'test'
+  ...
+# Subtest: source and model hashes must both be SHA256
+ok 29 - source and model hashes must both be SHA256
+  ---
+  duration_ms: 0.405052
+  type: 'test'
+  ...
+# Subtest: clipping beyond video duration or allotted window rejected
+ok 30 - clipping beyond video duration or allotted window rejected
+  ---
+  duration_ms: 0.18531
+  type: 'test'
+  ...
+# Subtest: one valid window alone never proves rapid code switching
+ok 31 - one valid window alone never proves rapid code switching
+  ---
+  duration_ms: 0.214854
+  type: 'test'
+  ...
+# Subtest: false cross-engine compute types rejected
+ok 32 - false cross-engine compute types rejected
+  ---
+  duration_ms: 0.210577
+  type: 'test'
+  ...
+# Subtest: numeric and malformed text entries rejected
+ok 33 - numeric and malformed text entries rejected
+  ---
+  duration_ms: 0.333173
+  type: 'test'
+  ...
+# Subtest: matching pinned multilingual header is research-only and not certified
+ok 34 - matching pinned multilingual header is research-only and not certified
+  ---
+  duration_ms: 2.23131
+  type: 'test'
+  ...
+# Subtest: hash mismatch rejects local model
+ok 35 - hash mismatch rejects local model
+  ---
+  duration_ms: 0.473324
+  type: 'test'
+  ...
+# Subtest: english-only vocab is rejected for multilingual tasks
+ok 36 - english-only vocab is rejected for multilingual tasks
+  ---
+  duration_ms: 0.142796
+  type: 'test'
+  ...
+# Subtest: unsupported  ggml magic rejected
+ok 37 - unsupported  ggml magic rejected
+  ---
+  duration_ms: 0.109856
+  type: 'test'
+  ...
+# Subtest: model too small or gigantic refused
+ok 38 - model too small or gigantic refused
+  ---
+  duration_ms: 0.254574
+  type: 'test'
+  ...
+# Subtest: english-only filename refused
+ok 39 - english-only filename refused
+  ---
+  duration_ms: 0.115764
+  type: 'test'
+  ...
+# Subtest: model pin cannot claim official attestation by changing provenance
+ok 40 - model pin cannot claim official attestation by changing provenance
+  ---
+  duration_ms: 0.144187
+  type: 'test'
+  ...
+# Subtest: external links must be secure and available as audited pointers not certificates
+ok 41 - external links must be secure and available as audited pointers not certificates
+  ---
+  duration_ms: 0.295596
+  type: 'test'
+  ...
+# Subtest: n_vocab upper bound limited to actual whisper.cpp multilingual schema
+ok 42 - n_vocab upper bound limited to actual whisper.cpp multilingual schema
+  ---
+  duration_ms: 0.336267
+  type: 'test'
+  ...
+# Subtest: matching user-pinned digest proves only relative integrity
+ok 43 - matching user-pinned digest proves only relative integrity
+  ---
+  duration_ms: 0.322057
+  type: 'test'
+  ...
+# Subtest: without human reference a numeric match is never claimed
+ok 44 - without human reference a numeric match is never claimed
+  ---
+  duration_ms: 28.102162
+  type: 'test'
+  ...
+# Subtest: identifies a unit-bearing temperature error
+ok 45 - identifies a unit-bearing temperature error
+  ---
+  duration_ms: 2.976894
+  type: 'test'
+  ...
+# Subtest: missing measurement is not compensated by overall transcript fluency
+ok 46 - missing measurement is not compensated by overall transcript fluency
+  ---
+  duration_ms: 0.258391
+  type: 'test'
+  ...
+# Subtest: duplicate counts matter and are not merged
+ok 47 - duplicate counts matter and are not merged
+  ---
+  duration_ms: 0.262076
+  type: 'test'
+  ...
+# Subtest: different units remain different claims
+ok 48 - different units remain different claims
+  ---
+  duration_ms: 0.296818
+  type: 'test'
+  ...
+# Subtest: commercial text, interpretations and numerals never persist
+ok 49 - commercial text, interpretations and numerals never persist
+  ---
+  duration_ms: 0.263448
+  type: 'test'
+  ...
+# Subtest: two language-labelled reference segments reveal switching, but do not certify language ID
+ok 50 - two language-labelled reference segments reveal switching, but do not certify language ID
+  ---
+  duration_ms: 0.33149
+  type: 'test'
+  ...
+# Subtest: negative sentiment without numeric claim remains useful but unverified
+ok 51 - negative sentiment without numeric claim remains useful but unverified
+  ---
+  duration_ms: 5.505653
+  type: 'test'
+  ...
+# Subtest: invalid transcript fails through Phase212 authoritative validator
+ok 52 - invalid transcript fails through Phase212 authoritative validator
+  ---
+  duration_ms: 0.54973
+  type: 'test'
+  ...
+# Subtest: punctuation and spacing around Celsius are normalized
+ok 53 - punctuation and spacing around Celsius are normalized
+  ---
+  duration_ms: 0.473034
+  type: 'test'
+  ...
+# Subtest: decimals with dot and comma are kept separate rather than guessed equivalent
+ok 54 - decimals with dot and comma are kept separate rather than guessed equivalent
+  ---
+  duration_ms: 0.208725
+  type: 'test'
+  ...
+# Subtest: no gold reference means no justified accuracy even with zero differences
+ok 55 - no gold reference means no justified accuracy even with zero differences
+  ---
+  duration_ms: 0.109545
+  type: 'test'
+  ...
+# Subtest: matching quantities do not produce spurious flags
+ok 56 - matching quantities do not produce spurious flags
+  ---
+  duration_ms: 2.457671
+  type: 'test'
+  ...
+# Subtest: real-style bits vs hits is flagged without correcting either
+ok 57 - real-style bits vs hits is flagged without correcting either
+  ---
+  duration_ms: 1.301165
+  type: 'test'
+  ...
+# Subtest: numeric differences are routed to review, not treated as errors against truth
+ok 58 - numeric differences are routed to review, not treated as errors against truth
+  ---
+  duration_ms: 0.346793
+  type: 'test'
+  ...
+# Subtest: variants and models must be identical across decodes
+ok 59 - variants and models must be identical across decodes
+  ---
+  duration_ms: 0.54965
+  type: 'test'
+  ...
+# Subtest: gaps and malformed windows rejected
+ok 60 - gaps and malformed windows rejected
+  ---
+  duration_ms: 0.266873
+  type: 'test'
+  ...
+# Subtest: no transcript text, exact numbers, or speaker claims retained
+ok 61 - no transcript text, exact numbers, or speaker claims retained
+  ---
+  duration_ms: 0.314836
+  type: 'test'
+  ...
+# Subtest: repeated language is an observation, never proof of code switching
+ok 62 - repeated language is an observation, never proof of code switching
+  ---
+  duration_ms: 0.281655
+  type: 'test'
+  ...
+# Subtest: unreviewed phrases stay unvalidated even when windows agree
+ok 63 - unreviewed phrases stay unvalidated even when windows agree
+  ---
+  duration_ms: 0.190127
+  type: 'test'
+  ...
+# Subtest: missing transcript coverage is visible, not treated as agreement
+ok 64 - missing transcript coverage is visible, not treated as agreement
+  ---
+  duration_ms: 0.318641
+  type: 'test'
+  ...
+# Subtest: real-style brightness requires suspicion, never a silent word correction
+ok 65 - real-style brightness requires suspicion, never a silent word correction
+  ---
+  duration_ms: 8.10595
+  type: 'test'
+  ...
+# Subtest: refresh rate correctly compares manufacturer claim, still no independent test
+ok 66 - refresh rate correctly compares manufacturer claim, still no independent test
+  ---
+  duration_ms: 6.552074
+  type: 'test'
+  ...
+# Subtest: market unknown with differing weights remains unresolved
+ok 67 - market unknown with differing weights remains unresolved
+  ---
+  duration_ms: 13.701609
+  type: 'test'
+  ...
+# Subtest: market bound produces exact result without transferring a different region
+ok 68 - market bound produces exact result without transferring a different region
+  ---
+  duration_ms: 1.133882
+  type: 'test'
+  ...
+# Subtest: incomplete market pair cannot be silently blended
+ok 69 - incomplete market pair cannot be silently blended
+  ---
+  duration_ms: 4.451181
+  type: 'test'
+  ...
+# Subtest: conflicting official observations in same market are not cherry picked
+ok 70 - conflicting official observations in same market are not cherry picked
+  ---
+  duration_ms: 1.293924
+  type: 'test'
+  ...
+# Subtest: reviewer instrumental measurement not validated by a matching manufacturer value
+ok 71 - reviewer instrumental measurement not validated by a matching manufacturer value
+  ---
+  duration_ms: 0.591844
+  type: 'test'
+  ...
+# Subtest: condition mismatch prevents misleading confirmation of peak HDR versus outdoor
+ok 72 - condition mismatch prevents misleading confirmation of peak HDR versus outdoor
+  ---
+  duration_ms: 0.245291
+  type: 'test'
+  ...
+# Subtest: variant mismatch prevents confirmation
+ok 73 - variant mismatch prevents confirmation
+  ---
+  duration_ms: 0.347435
+  type: 'test'
+  ...
+# Subtest: unknown unit with mismatching value is not silently repaired
+ok 74 - unknown unit with mismatching value is not silently repaired
+  ---
+  duration_ms: 0.372583
+  type: 'test'
+  ...
+# Subtest: reject invented ASR quotes not present in segment
+ok 75 - reject invented ASR quotes not present in segment
+  ---
+  duration_ms: 5.159711
+  type: 'test'
+  ...
+# Subtest: reject fabricated numeric quantity not present in segment
+ok 76 - reject fabricated numeric quantity not present in segment
+  ---
+  duration_ms: 0.962754
+  type: 'test'
+  ...
+# Subtest: reject source shift to other uploaded video
+ok 77 - reject source shift to other uploaded video
+  ---
+  duration_ms: 0.161043
+  type: 'test'
+  ...
+# Subtest: reject flags from another model
+ok 78 - reject flags from another model
+  ---
+  duration_ms: 0.179721
+  type: 'test'
+  ...
+# Subtest: reject non-HTTPS and credentialed spec urls
+ok 79 - reject non-HTTPS and credentialed spec urls
+  ---
+  duration_ms: 0.213652
+  type: 'test'
+  ...
+# Subtest: reject overstated authenticated source hashes in unreviewed facts
+ok 80 - reject overstated authenticated source hashes in unreviewed facts
+  ---
+  duration_ms: 0.121173
+  type: 'test'
+  ...
+# Subtest: no transcript, publisher page content, or secret review note retained
+ok 81 - no transcript, publisher page content, or secret review note retained
+  ---
+  duration_ms: 0.672746
+  type: 'test'
+  ...
+# Subtest: output deterministic regardless of original input order
+ok 82 - output deterministic regardless of original input order
+  ---
+  duration_ms: 0.332642
+  type: 'test'
+  ...
+# Subtest: not every frame temporal proximity is actual validation
+ok 83 - not every frame temporal proximity is actual validation
+  ---
+  duration_ms: 0.150787
+  type: 'test'
+  ...
+# Subtest: an empty candidate collection is explicitly non-admissible
+ok 84 - an empty candidate collection is explicitly non-admissible
+  ---
+  duration_ms: 0.107412
+  type: 'test'
+  ...
+# Subtest: actual phase216 real-video result links to synthetic primary-document fixture, never publishes
+ok 85 - actual phase216 real-video result links to synthetic primary-document fixture, never publishes
+  ---
+  duration_ms: 13.178329
+  type: 'test'
+  ...
+# Subtest: no expected hash is first observation, not verified origin
+ok 86 - no expected hash is first observation, not verified origin
+  ---
+  duration_ms: 1.111819
+  type: 'test'
+  ...
+# Subtest: changed complete byte version needs review even if phrase remains unchanged
+ok 87 - changed complete byte version needs review even if phrase remains unchanged
+  ---
+  duration_ms: 20.447896
+  type: 'test'
+  ...
+# Subtest: changed content eliminates exact phrase, no silent numerical match
+ok 88 - changed content eliminates exact phrase, no silent numerical match
+  ---
+  duration_ms: 1.337079
+  type: 'test'
+  ...
+# Subtest: repeated exact fragments are ambiguous
+ok 89 - repeated exact fragments are ambiguous
+  ---
+  duration_ms: 1.074622
+  type: 'test'
+  ...
+# Subtest: review not performed remains explicit and cannot pass anchor gate
+ok 90 - review not performed remains explicit and cannot pass anchor gate
+  ---
+  duration_ms: 0.6424
+  type: 'test'
+  ...
+# Subtest: both same-page facts can be collected, preserving one document version
+ok 91 - both same-page facts can be collected, preserving one document version
+  ---
+  duration_ms: 9.349437
+  type: 'test'
+  ...
+# Subtest: cross-region page or fact cannot be attached to another variant
+ok 92 - cross-region page or fact cannot be attached to another variant
+  ---
+  duration_ms: 0.850715
+  type: 'test'
+  ...
+# Subtest: scope different condition cannot be substituted
+ok 93 - scope different condition cannot be substituted
+  ---
+  duration_ms: 0.649291
+  type: 'test'
+  ...
+# Subtest: fact not present in phase216 compared evidence cannot be smuggled
+ok 94 - fact not present in phase216 compared evidence cannot be smuggled
+  ---
+  duration_ms: 0.683592
+  type: 'test'
+  ...
+# Subtest: anchor must contain exactly annotated numeric value and unit
+ok 95 - anchor must contain exactly annotated numeric value and unit
+  ---
+  duration_ms: 0.577933
+  type: 'test'
+  ...
+# Subtest: different candidate URL is invalid despite same source hostname
+ok 96 - different candidate URL is invalid despite same source hostname
+  ---
+  duration_ms: 0.290158
+  type: 'test'
+  ...
+# Subtest: different product variant cannot borrow matching numerical text
+ok 97 - different product variant cannot borrow matching numerical text
+  ---
+  duration_ms: 0.222576
+  type: 'test'
+  ...
+# Subtest: rights denied stops before any page bytes can be processed
+ok 98 - rights denied stops before any page bytes can be processed
+  ---
+  duration_ms: 0.479734
+  type: 'test'
+  ...
+# Subtest: robots disallow stops page content retrieval
+ok 99 - robots disallow stops page content retrieval
+  ---
+  duration_ms: 0.461587
+  type: 'test'
+  ...
+# Subtest: unavailable original bytes or missing binary capture cannot become evidence
+ok 100 - unavailable original bytes or missing binary capture cannot become evidence
+  ---
+  duration_ms: 0.603381
+  type: 'test'
+  ...
+# Subtest: same content from two captures of one source does not create independent measurements
+ok 101 - same content from two captures of one source does not create independent measurements
+  ---
+  duration_ms: 0.70201
+  type: 'test'
+  ...
+# Subtest: contradictory byte snapshots for one URL hold entire claim
+ok 102 - contradictory byte snapshots for one URL hold entire claim
+  ---
+  duration_ms: 0.833408
+  type: 'test'
+  ...
+# Subtest: no source capture cannot be confused with invalid product quality
+ok 103 - no source capture cannot be confused with invalid product quality
+  ---
+  duration_ms: 0.130898
+  type: 'test'
+  ...
+# Subtest: tampered claims with fake authority must be rejected
+ok 104 - tampered claims with fake authority must be rejected
+  ---
+  duration_ms: 0.190848
+  type: 'test'
+  ...
+# Subtest: duplicate same factId with contradictory values is never selected by list order
+ok 105 - duplicate same factId with contradictory values is never selected by list order
+  ---
+  duration_ms: 0.330109
+  type: 'test'
+  ...
+# Subtest: literal iframe and VideoObject reveal existing YouTube ID and a distinct unverified media URL
+ok 106 - literal iframe and VideoObject reveal existing YouTube ID and a distinct unverified media URL
+  ---
+  duration_ms: 24.254749
+  type: 'test'
+  ...
+# Subtest: capture uses existing Phase69 reader and full actual fixture byte hash without page body retention
+ok 107 - capture uses existing Phase69 reader and full actual fixture byte hash without page body retention
+  ---
+  duration_ms: 38.613605
+  type: 'test'
+  ...
+# Subtest: same video discovered from existing YouTube job and a webpage is one candidate with distinct provenance
+ok 108 - same video discovered from existing YouTube job and a webpage is one candidate with distinct provenance
+  ---
+  duration_ms: 8.698655
+  type: 'test'
+  ...
+# Subtest: no Youtube metadata is required when discovering via page embed
+ok 109 - no Youtube metadata is required when discovering via page embed
+  ---
+  duration_ms: 1.299151
+  type: 'test'
+  ...
+# Subtest: a capture without rights/terms remains blocked and does not load publisher HTML
+ok 110 - a capture without rights/terms remains blocked and does not load publisher HTML
+  ---
+  duration_ms: 1.953369
+  type: 'test'
+  ...
+# Subtest: robots disallow aborts after first robots call, no article visit
+ok 111 - robots disallow aborts after first robots call, no article visit
+  ---
+  duration_ms: 0.700858
+  type: 'test'
+  ...
+# Subtest: missing complete original response bytes blocks and never falls back to excerpt text
+ok 112 - missing complete original response bytes blocks and never falls back to excerpt text
+  ---
+  duration_ms: 0.511032
+  type: 'test'
+  ...
+# Subtest: changed publisher document version is labeled but is not claimed material change
+ok 113 - changed publisher document version is labeled but is not claimed material change
+  ---
+  duration_ms: 0.770664
+  type: 'test'
+  ...
+# Subtest: two revisions of same URL cannot be treated as two independent videos
+ok 114 - two revisions of same URL cannot be treated as two independent videos
+  ---
+  duration_ms: 6.049354
+  type: 'test'
+  ...
+# Subtest: discovery reconciliation rejects a provider result with inconsistent canonical video ID
+ok 115 - discovery reconciliation rejects a provider result with inconsistent canonical video ID
+  ---
+  duration_ms: 0.941762
+  type: 'test'
+  ...
+# Subtest: quoted URLs in scripts, comments and template are not interpreted as iframe embeds
+ok 116 - quoted URLs in scripts, comments and template are not interpreted as iframe embeds
+  ---
+  duration_ms: 1.960941
+  type: 'test'
+  ...
+# Subtest: JSON-LD @graph, alternate type array and multiple original-video identities stay distinct
+ok 117 - JSON-LD @graph, alternate type array and multiple original-video identities stay distinct
+  ---
+  duration_ms: 0.317429
+  type: 'test'
+  ...
+# Subtest: reject redirect-like, credentialed, local, insecure and playlist-only video URLs
+ok 118 - reject redirect-like, credentialed, local, insecure and playlist-only video URLs
+  ---
+  duration_ms: 0.339613
+  type: 'test'
+  ...
+# Subtest: a real web page can host a direct movie URL without supplying video identity or byte proof
+ok 119 - a real web page can host a direct movie URL without supplying video identity or byte proof
+  ---
+  duration_ms: 0.157598
+  type: 'test'
+  ...
+# Subtest: malformed JSON-LD and unsafely long page are rejected or ignored, never parsed as video proof
+ok 120 - malformed JSON-LD and unsafely long page are rejected or ignored, never parsed as video proof
+  ---
+  duration_ms: 0.696642
+  type: 'test'
+  ...
+# Subtest: duplicate iframe references do not count as separate video events
+ok 121 - duplicate iframe references do not count as separate video events
+  ---
+  duration_ms: 0.206913
+  type: 'test'
+  ...
+# Subtest: conflicting channels for one same YouTube ID are not reconciled by arbitrary order
+ok 122 - conflicting channels for one same YouTube ID are not reconciled by arbitrary order
+  ---
+  duration_ms: 0.213032
+  type: 'test'
+  ...
+# Subtest: fixture status cannot be relabeled publisher authenticated through caller fields
+ok 123 - fixture status cannot be relabeled publisher authenticated through caller fields
+  ---
+  duration_ms: 0.971637
+  type: 'test'
+  ...
+# Subtest: source scope cannot silently switch candidate or policy
+ok 124 - source scope cannot silently switch candidate or policy
+  ---
+  duration_ms: 0.589961
+  type: 'test'
+  ...
+# Subtest: HTML comment containing JSON-LD must not create a false discovered video
+ok 125 - HTML comment containing JSON-LD must not create a false discovered video
+  ---
+  duration_ms: 0.128825
+  type: 'test'
+  ...
+# Subtest: legitimate discovery-page query remains attributable without pretending media authorization
+ok 126 - legitimate discovery-page query remains attributable without pretending media authorization
+  ---
+  duration_ms: 5.103687
+  type: 'test'
+  ...
+# Subtest: maker press announcement suggests official specs rather than product performance
+ok 127 - maker press announcement suggests official specs rather than product performance
+  ---
+  duration_ms: 3.082505
+  type: 'test'
+  ...
+# Subtest: press reprint linked to reviewed original does not create another news event
+ok 128 - press reprint linked to reviewed original does not create another news event
+  ---
+  duration_ms: 0.487466
+  type: 'test'
+  ...
+# Subtest: unverified origin reprint never inherits verified original release identity
+ok 129 - unverified origin reprint never inherits verified original release identity
+  ---
+  duration_ms: 0.420455
+  type: 'test'
+  ...
+# Subtest: editorial news without product test protocol is discovery only
+ok 130 - editorial news without product test protocol is discovery only
+  ---
+  duration_ms: 0.399172
+  type: 'test'
+  ...
+# Subtest: a professional review with reviewed independence and original identity queues later appraisal
+ok 131 - a professional review with reviewed independence and original identity queues later appraisal
+  ---
+  duration_ms: 5.615089
+  type: 'test'
+  ...
+# Subtest: media claims about a reviewed method trigger investigation but no lab proof
+ok 132 - media claims about a reviewed method trigger investigation but no lab proof
+  ---
+  duration_ms: 0.336749
+  type: 'test'
+  ...
+# Subtest: paid editorials do not become professional independent reviews
+ok 133 - paid editorials do not become professional independent reviews
+  ---
+  duration_ms: 4.502238
+  type: 'test'
+  ...
+# Subtest: media repetition of PR is not considered independent when not reviewed
+ok 134 - media repetition of PR is not considered independent when not reviewed
+  ---
+  duration_ms: 0.3908
+  type: 'test'
+  ...
+# Subtest: safety alert is escalated for primary notice verification, not a recall verdict
+ok 135 - safety alert is escalated for primary notice verification, not a recall verdict
+  ---
+  duration_ms: 2.909072
+  type: 'test'
+  ...
+# Subtest: news of discontinuation requires primary manufacturer verification
+ok 136 - news of discontinuation requires primary manufacturer verification
+  ---
+  duration_ms: 0.577061
+  type: 'test'
+  ...
+# Subtest: manufacturer-supplied release reprinted by a nonmanufacturer requires manufacturer origin check
+ok 137 - manufacturer-supplied release reprinted by a nonmanufacturer requires manufacturer origin check
+  ---
+  duration_ms: 0.260633
+  type: 'test'
+  ...
+# Subtest: uncleared access never enters watch queue or implies content extraction
+ok 138 - uncleared access never enters watch queue or implies content extraction
+  ---
+  duration_ms: 0.242706
+  type: 'test'
+  ...
+# Subtest: not exact product variant still requires identity work, no official specs yet
+ok 139 - not exact product variant still requires identity work, no official specs yet
+  ---
+  duration_ms: 0.154223
+  type: 'test'
+  ...
+# Subtest: not verified publisher never passes phase82 publisher truth gate
+ok 140 - not verified publisher never passes phase82 publisher truth gate
+  ---
+  duration_ms: 0.135475
+  type: 'test'
+  ...
+# Subtest: malicious and local source URLs are rejected
+ok 141 - malicious and local source URLs are rejected
+  ---
+  duration_ms: 0.541368
+  type: 'test'
+  ...
+# Subtest: a claimed permission without a record is rejected
+ok 142 - a claimed permission without a record is rejected
+  ---
+  duration_ms: 4.263348
+  type: 'test'
+  ...
+# Subtest: full editorial bodies and scientific evidence are never returned
+ok 143 - full editorial bodies and scientific evidence are never returned
+  ---
+  duration_ms: 0.15898
+  type: 'test'
+  ...
+# Subtest: Trustpilot feedback with unreviewed access is held, not scraped or scored
+ok 144 - Trustpilot feedback with unreviewed access is held, not scraped or scored
+  ---
+  duration_ms: 0.391031
+  type: 'test'
+  ...
+# Subtest: Trustpilot feedback with no licence cannot be presumed lawful because public
+ok 145 - Trustpilot feedback with no licence cannot be presumed lawful because public
+  ---
+  duration_ms: 0.232491
+  type: 'test'
+  ...
+# Subtest: maker warranty and repairs are company experience and never technical lab evidence
+ok 146 - maker warranty and repairs are company experience and never technical lab evidence
+  ---
+  duration_ms: 0.158579
+  type: 'test'
+  ...
+# Subtest: third-party courier and retailer complaints do not damage manufacturer support counts
+ok 147 - third-party courier and retailer complaints do not damage manufacturer support counts
+  ---
+  duration_ms: 0.156096
+  type: 'test'
+  ...
+# Subtest: manufacturer direct-shop delivery is useful commerce experience but not product performance
+ok 148 - manufacturer direct-shop delivery is useful commerce experience but not product performance
+  ---
+  duration_ms: 0.187243
+  type: 'test'
+  ...
+# Subtest: product failure without known model cannot be attributed to specific product
+ok 149 - product failure without known model cannot be attributed to specific product
+  ---
+  duration_ms: 0.188945
+  type: 'test'
+  ...
+# Subtest: specific product failure is only a lead even when model is named
+ok 150 - specific product failure is only a lead even when model is named
+  ---
+  duration_ms: 0.191249
+  type: 'test'
+  ...
+# Subtest: reviews with unknown responsibility are not attributed to manufacturer
+ok 151 - reviews with unknown responsibility are not attributed to manufacturer
+  ---
+  duration_ms: 0.163066
+  type: 'test'
+  ...
+# Subtest: same review id cannot be double counted across reposting
+ok 152 - same review id cannot be double counted across reposting
+  ---
+  duration_ms: 0.217428
+  type: 'test'
+  ...
+# Subtest: conflicting metadata with identical review ID is rejected
+ok 153 - conflicting metadata with identical review ID is rejected
+  ---
+  duration_ms: 1.005959
+  type: 'test'
+  ...
+# Subtest: cross-manufacturer fields are rejected
+ok 154 - cross-manufacturer fields are rejected
+  ---
+  duration_ms: 0.227423
+  type: 'test'
+  ...
+# Subtest: unreviewed company feedback cannot leak raw text
+ok 155 - unreviewed company feedback cannot leak raw text
+  ---
+  duration_ms: 0.142285
+  type: 'test'
+  ...
+# Subtest: manufacturer newsroom and editorial RSS reuse the pre-existing Phase82 watch plan
+ok 156 - manufacturer newsroom and editorial RSS reuse the pre-existing Phase82 watch plan
+  ---
+  duration_ms: 2.811775
+  type: 'test'
+  ...
+# Subtest: blocked RSS source is not scheduled despite being called a press release feed
+ok 157 - blocked RSS source is not scheduled despite being called a press release feed
+  ---
+  duration_ms: 0.314074
+  type: 'test'
+  ...
+# Subtest: watch adapter blocks irrelevant source channels rather than creating new monitoring infrastructure
+ok 158 - watch adapter blocks irrelevant source channels rather than creating new monitoring infrastructure
+  ---
+  duration_ms: 0.193102
+  type: 'test'
+  ...
+# Subtest: synthetic English paraphrases normalize to identical bounded intent
+ok 159 - synthetic English paraphrases normalize to identical bounded intent
+  ---
+  duration_ms: 9.799107
+  type: 'test'
+  ...
+# Subtest: missing essential or unclear surface requests one clarification, no web access
+ok 160 - missing essential or unclear surface requests one clarification, no web access
+  ---
+  duration_ms: 69.096819
+  type: 'test'
+  ...
+# Subtest: synthetic transport executes Phase82 -> Phase75 sitemap -> provenance URL receipts; no ranking
+ok 161 - synthetic transport executes Phase82 -> Phase75 sitemap -> provenance URL receipts; no ranking
+  ---
+  duration_ms: 17.85453
+  type: 'test'
+  ...
+# Subtest: same recent successful snapshot is reused without extra requests or pretending facts exist
+ok 162 - same recent successful snapshot is reused without extra requests or pretending facts exist
+  ---
+  duration_ms: 4.028833
+  type: 'test'
+  ...
+# Subtest: rights not cleared means no I/O, even with due watch metadata
+ok 163 - rights not cleared means no I/O, even with due watch metadata
+  ---
+  duration_ms: 1.460345
+  type: 'test'
+  ...
+# Subtest: simulated rights are not usable to inject a fixture transport into live mode
+ok 164 - simulated rights are not usable to inject a fixture transport into live mode
+  ---
+  duration_ms: 0.611673
+  type: 'test'
+  ...
+# Subtest: recycling bins go through same configurable engine without matching an unrelated source
+ok 165 - recycling bins go through same configurable engine without matching an unrelated source
+  ---
+  duration_ms: 1.702752
+  type: 'test'
+  ...
+# Subtest: disabled authorization invalidates reuse of cached URL leads
+ok 166 - disabled authorization invalidates reuse of cached URL leads
+  ---
+  duration_ms: 4.229917
+  type: 'test'
+  ...
+# Subtest: failed permission does not trigger repeated immediate attempts while Phase82 backoff applies
+ok 167 - failed permission does not trigger repeated immediate attempts while Phase82 backoff applies
+  ---
+  duration_ms: 26.72594
+  type: 'test'
+  ...
+# Subtest: unsupported RSS execution is explicitly blocked, never disguised as a sitemap fetch
+ok 168 - unsupported RSS execution is explicitly blocked, never disguised as a sitemap fetch
+  ---
+  duration_ms: 0.995043
+  type: 'test'
+  ...
+# Subtest: tampered cached URL cannot inject cross-host candidate
+ok 169 - tampered cached URL cannot inject cross-host candidate
+  ---
+  duration_ms: 15.167402
+  type: 'test'
+  ...
+# Subtest: mocked local semantic suggestion is grounded, quarantined and creates a schema gap
+ok 170 - mocked local semantic suggestion is grounded, quarantined and creates a schema gap
+  ---
+  duration_ms: 50.583429
+  type: 'test'
+  ...
+# Subtest: invented quantified evaluation has no proof and is excluded
+ok 171 - invented quantified evaluation has no proof and is excluded
+  ---
+  duration_ms: 1.15259
+  type: 'test'
+  ...
+# Subtest: a hallucinated quote is excluded and never appears in output
+ok 172 - a hallucinated quote is excluded and never appears in output
+  ---
+  duration_ms: 1.631023
+  type: 'test'
+  ...
+# Subtest: unreviewed terms block request before adapter or page fetch
+ok 173 - unreviewed terms block request before adapter or page fetch
+  ---
+  duration_ms: 0.369188
+  type: 'test'
+  ...
+# Subtest: semantic category interpreter does not need a production field to store a quarantined gap
+ok 174 - semantic category interpreter does not need a production field to store a quarantined gap
+  ---
+  duration_ms: 1.242686
+  type: 'test'
+  ...
+# Subtest: existing field cannot be redefined by a local model suggestion
+ok 175 - existing field cannot be redefined by a local model suggestion
+  ---
+  duration_ms: 1.020651
+  type: 'test'
+  ...
+# Subtest: a single source cannot manufacture multiple independent observations of identical context
+ok 176 - a single source cannot manufacture multiple independent observations of identical context
+  ---
+  duration_ms: 7.481086
+  type: 'test'
+  ...
+# Subtest: a proposed number must match a literal number, not a substring of 14
+ok 177 - a proposed number must match a literal number, not a substring of 14
+  ---
+  duration_ms: 1.514336
+  type: 'test'
+  ...
+# Subtest: malformed model ontology proposal is rejected without unhandled exceptions
+ok 178 - malformed model ontology proposal is rejected without unhandled exceptions
+  ---
+  duration_ms: 0.95359
+  type: 'test'
+  ...
+# Subtest: strict parser yields original numeric facts without interpolation, advice or raw text
+ok 179 - strict parser yields original numeric facts without interpolation, advice or raw text
+  ---
+  duration_ms: 5.944976
+  type: 'test'
+  ...
+# Subtest: end-to-end: authorized transient bytes to quarantined adaptive schema gap
+ok 180 - end-to-end: authorized transient bytes to quarantined adaptive schema gap
+  ---
+  duration_ms: 27.150446
+  type: 'test'
+  ...
+# Subtest: same source becomes quarantined typed observations when a reviewed field already exists
+ok 181 - same source becomes quarantined typed observations when a reviewed field already exists
+  ---
+  duration_ms: 33.795049
+  type: 'test'
+  ...
+# Subtest: robots disallow prevents article fetch and source analysis
+ok 182 - robots disallow prevents article fetch and source analysis
+  ---
+  duration_ms: 0.594437
+  type: 'test'
+  ...
+# Subtest: insufficient rights or external model transfer request cannot be inferred as authorized
+ok 183 - insufficient rights or external model transfer request cannot be inferred as authorized
+  ---
+  duration_ms: 0.350379
+  type: 'test'
+  ...
+# Subtest: unattested method/profile mismatches never touch network
+ok 184 - unattested method/profile mismatches never touch network
+  ---
+  duration_ms: 0.158409
+  type: 'test'
+  ...
+# Subtest: unparseable, HTML-looking, extra-column and non-monotonic data remain blocked
+ok 185 - unparseable, HTML-looking, extra-column and non-monotonic data remain blocked
+  ---
+  duration_ms: 1.523981
+  type: 'test'
+  ...
+# Subtest: missing original-test lineage fails before any download
+ok 186 - missing original-test lineage fails before any download
+  ---
+  duration_ms: 0.27143
+  type: 'test'
+  ...
+# Subtest: incremental approved cache skips web if reviewed snapshot is fresh
+ok 187 - incremental approved cache skips web if reviewed snapshot is fresh
+  ---
+  duration_ms: 0.619014
+  type: 'test'
+  ...
+# Subtest: sampling large datasets is bounded and cannot become a full curve
+ok 188 - sampling large datasets is bounded and cannot become a full curve
+  ---
+  duration_ms: 1.037636
+  type: 'test'
+  ...
+# Subtest: same field name with changed protocol/context meaning is blocked
+ok 189 - same field name with changed protocol/context meaning is blocked
+  ---
+  duration_ms: 2.610823
+  type: 'test'
+  ...
+# Subtest: prioritizes eligible tasks with bounded, explicitly non-probabilistic ordinal priority
+ok 190 - prioritizes eligible tasks with bounded, explicitly non-probabilistic ordinal priority
+  ---
+  duration_ms: 9.177708
+  type: 'test'
+  ...
+# Subtest: pending work never resubmitted, cooldown rights do not grant web permission
+ok 191 - pending work never resubmitted, cooldown rights do not grant web permission
+  ---
+  duration_ms: 0.413875
+  type: 'test'
+  ...
+# Subtest: invalid gap and unbounded task budget fail closed
+ok 192 - invalid gap and unbounded task budget fail closed
+  ---
+  duration_ms: 0.339904
+  type: 'test'
+  ...
+# Subtest: priority filter cannot bypass dependency receipts
+ok 193 - priority filter cannot bypass dependency receipts
+  ---
+  duration_ms: 0.514707
+  type: 'test'
+  ...
+# Subtest: journal persists only metadata, resumes across instances, deduplicates run ID
+ok 194 - journal persists only metadata, resumes across instances, deduplicates run ID
+  ---
+  duration_ms: 100.258977
+  type: 'test'
+  ...
+# Subtest: journal tampering is detected, not replaced with an empty store
+ok 195 - journal tampering is detected, not replaced with an empty store
+  ---
+  duration_ms: 6.283158
+  type: 'test'
+  ...
+# Subtest: runtime stores a run but second call does not re-execute pending capability
+ok 196 - runtime stores a run but second call does not re-execute pending capability
+  ---
+  duration_ms: 18.853778
+  type: 'test'
+  ...
+# Subtest: scoped public sitemap discovers candidate URLs but never auto-fetches product pages
+ok 197 - scoped public sitemap discovers candidate URLs but never auto-fetches product pages
+  ---
+  duration_ms: 2.059429
+  type: 'test'
+  ...
+# Subtest: documented rights URL may be on a different HTTPS publisher domain
+ok 198 - documented rights URL may be on a different HTTPS publisher domain
+  ---
+  duration_ms: 0.742712
+  type: 'test'
+  ...
+# Subtest: metadata discovery is blocked without independent rights review
+ok 199 - metadata discovery is blocked without independent rights review
+  ---
+  duration_ms: 0.412072
+  type: 'test'
+  ...
+# Subtest: malformed sitemap has no partial URL leakage
+ok 200 - malformed sitemap has no partial URL leakage
+  ---
+  duration_ms: 0.447536
+  type: 'test'
+  ...
+# Subtest: real loopback HTTP request to locally configured Ollama-compatible endpoint without remote APIs
+ok 201 - real loopback HTTP request to locally configured Ollama-compatible endpoint without remote APIs
+  ---
+  duration_ms: 48.118001
+  type: 'test'
+  ...
+# Subtest: local inference refuses unbounded page text and invalid configuration
+ok 202 - local inference refuses unbounded page text and invalid configuration
+  ---
+  duration_ms: 0.43732
+  type: 'test'
+  ...
+# Subtest: local model accepts anchored numeric candidate but rejects an invented number
+ok 203 - local model accepts anchored numeric candidate but rejects an invented number
+  ---
+  duration_ms: 3.232761
+  type: 'test'
+  ...
+1..203
+# tests 203
+# suites 0
+# pass 203
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1476.753359

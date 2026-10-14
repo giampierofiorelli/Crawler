@@ -1,0 +1,15 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {qualifyLocalWhisperModel214, type ModelManifest214, type ModelObservation214} from '../src/phase214_asr_model_integrity.js';
+const h='a'.repeat(64);
+const m=():ModelManifest214=>({schema:'pee214.local-model-pin.v1',modelId:'ggml-base.bin',expectedSha256:h,modelFormat:'whisper-ggml',multilingualRequired:true,provenance:'analyst_supplied_pin',sourceUrl:'https://huggingface.co/ggerganov/whisper.cpp',licenseUrl:'https://github.com/ggml-org/whisper.cpp/blob/master/LICENSE'});
+const o=():ModelObservation214=>({observedSha256:h,byteLength:148_000_000,magicHex:'6c6d6767',vocabSize:51865});
+test('matching pinned multilingual header is research-only and not certified',()=>{const q=qualifyLocalWhisperModel214(m(),o());assert.equal(q.pinMatched,true);assert.equal(q.trainedWeightsValidated,false);assert.equal(q.upstreamAuthenticated,false);assert.equal(q.asrInferenceExecuted,false);assert.equal(q.publicRankingAuthorized,false);});
+test('hash mismatch rejects local model',()=>assert.throws(()=>qualifyLocalWhisperModel214(m(),{...o(),observedSha256:'b'.repeat(64)}),/pin_mismatch/));
+test('english-only vocab is rejected for multilingual tasks',()=>assert.throws(()=>qualifyLocalWhisperModel214(m(),{...o(),vocabSize:51864}),/header_or_size/));
+test('unsupported  ggml magic rejected',()=>assert.throws(()=>qualifyLocalWhisperModel214(m(),{...o(),magicHex:'47475546'}),/header_or_size/));
+test('model too small or gigantic refused',()=>{for(const byteLength of [200,25_000_000-1,5_000_000_001])assert.throws(()=>qualifyLocalWhisperModel214(m(),{...o(),byteLength}),/header_or_size/)});
+test('english-only filename refused',()=>assert.throws(()=>qualifyLocalWhisperModel214({...m(),modelId:'ggml-base.en.bin'},o()),/manifest/));
+test('model pin cannot claim official attestation by changing provenance',()=>assert.throws(()=>qualifyLocalWhisperModel214({...m(),provenance:'publisher_signed' as any},o()),/manifest/));
+test('external links must be secure and available as audited pointers not certificates',()=>assert.throws(()=>qualifyLocalWhisperModel214({...m(),sourceUrl:'http://localhost/test'},o()),/manifest/));
+test('n_vocab upper bound limited to actual whisper.cpp multilingual schema',()=>assert.throws(()=>qualifyLocalWhisperModel214(m(),{...o(),vocabSize:999999}),/header_or_size/));
+test('matching user-pinned digest proves only relative integrity',()=>assert.equal(qualifyLocalWhisperModel214(m(),o()).approval,'local_research_only'));

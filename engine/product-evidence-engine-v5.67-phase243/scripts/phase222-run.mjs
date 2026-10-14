@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+/** Production CLI does not accept mock transports or synthetic permissions. */
+import {readFileSync,writeFileSync,renameSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {runAutonomousDiscovery220} from '../dist/src/phase220_autonomous_discovery_worker.js';
+import {observeDiscoveredPages222} from '../dist/src/phase222_transient_public_page_observer.js';
+const usage='Usage: node scripts/phase222-run.mjs --request "English product need" --registry registry.json --state state.json [--output run.json]';
+const argv=process.argv.slice(2),flags={};
+for(let i=0;i<argv.length;i+=2){if(!['--request','--registry','--state','--output'].includes(argv[i])||!argv[i+1]){
+ console.error(usage);process.exit(2);}flags[argv[i].slice(2)]=argv[i+1];}
+if(!flags.request||!flags.registry||!flags.state){console.error(usage);process.exit(2);}
+const parse=p=>JSON.parse(readFileSync(resolve(p),'utf8'));
+const save=(path,data)=>{const full=resolve(path),tmp=full+'.tmp.'+process.pid;
+ writeFileSync(tmp,JSON.stringify(data,null,2)+'\n',{flag:'wx',mode:0o600});renameSync(tmp,full);};
+let checkpoint;try{checkpoint=parse(flags.state);}catch(e){if(e.code!=='ENOENT')throw e;}
+try{
+ const registry=parse(flags.registry),now=new Date().toISOString();
+ const discovery=await runAutonomousDiscovery220({question:flags.request,registry,checkpoint,asOf:now,mode:'live'});
+ const observations=await observeDiscoveredPages222({run:discovery,registry,observedAt:now,mode:'live'});
+ save(flags.state,discovery.checkpoint);
+ const {checkpoint:_,...sourceDiscovery}=discovery;
+ const result={schema:'pee222.cli.v1',sourceDiscovery,observations,verifiedProductCount:0,
+  rankAuthorized:false,readSourceTextSaved:false};
+ if(flags.output)save(flags.output,result);
+ console.log(JSON.stringify(result,null,2));
+}catch(e){console.error(JSON.stringify({error:String(e)}));process.exitCode=1;}

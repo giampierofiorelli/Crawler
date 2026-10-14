@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>La tua ricerca · Product Evidence Engine</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#17212d;background:#f8fafc}*{box-sizing:border-box}body{margin:0;padding:36px 18px}main{max-width:660px;margin:auto;background:#fff;border:1px solid #dce3ea;border-radius:20px;padding:28px;box-shadow:0 8px 28px #1020300a}h1{font-size:1.45rem;margin:0 0 8px}p{line-height:1.55;color:#465768}ol{padding:0;list-style:none}li{padding:13px 0;border-bottom:1px solid #edf1f4;display:flex;align-items:center;gap:12px}i{border:2px solid #a5afba;border-radius:50%;width:19px;height:19px;display:inline-block;flex-shrink:0}.verified i{background:#31785a;border-color:#31785a}.working i{border-color:#2265a8;background:#fff}button{background:#18385f;color:white;border:0;border-radius:9px;padding:11px 16px;font-size:1rem;cursor:pointer}small{color:#53677c;line-height:1.5}#summary{font-weight:650;color:#173655}#timing{font-weight:600}#error{color:#9d3030}footer{margin-top:20px}</style>
+</head>
+<body><main>
+<h1>La tua ricerca</h1>
+<p id="summary" aria-live="polite">Per visualizzare la ricerca, apri il collegamento riservato che hai ricevuto.</p>
+<p>Queste fasi mostrano verifiche effettive. Non indicano una percentuale di tempo rimanente.</p>
+<ol id="stages"></ol>
+<p id="options" aria-live="polite"></p><p id="thanks"></p><p id="timing"></p><p id="error" role="alert"></p>
+<button id="refresh" type="button">Aggiorna lo stato</button>
+<footer><small>Puoi chiudere la pagina e tornare con lo stesso collegamento riservato. Non condividerlo: contiene una credenziale di accesso. Le notifiche automatiche non sono ancora disponibili.</small></footer>
+</main>
+<script>
+'use strict';
+const names={goal_review:'Esigenza e vincoli',solution_family_mapping:'Possibili soluzioni',source_permissions:'Controllo delle fonti',candidate_discovery:'Ricerca dei prodotti',method_and_safety_review:'Metodi e sicurezza',candidate_evidence:'Analisi delle evidenze',comparative_quality_review:'Revisione del confronto'};
+const hash=new URLSearchParams(location.hash.replace(/^#/,''));
+const request=hash.get('id')||'',token=hash.get('key')||'';
+const summary=document.getElementById('summary'),list=document.getElementById('stages');
+const timing=document.getElementById('timing'),err=document.getElementById('error');
+const options=document.getElementById('options'),thanks=document.getElementById('thanks');
+const statusWords={queued:'Ricerca registrata. Le attività non sono ancora iniziate.',working:'La ricerca sta avanzando.',blocked:'La ricerca è ferma: mancano informazioni o capacità di verifica.',awaiting_independent_review:'Le fasi di raccolta sono terminate. Il risultato attende la revisione.',ready:'La valutazione verificata è disponibile.'};
+async function update(){
+ err.textContent='';
+ if(!/^req_[a-f0-9]{32}$/.test(request)||!/^[a-f0-9]{64}$/.test(token)){
+  err.textContent='Il collegamento di ricerca è incompleto.';return;}
+ try{
+  const r=await fetch('/v2/decision-research/'+encodeURIComponent(request),{
+   headers:{Authorization:'Bearer '+token},cache:'no-store'});
+  if(!r.ok)throw Error('Non riusciamo a verificare questo collegamento.');
+  const data=await r.json();
+  const customer=data.customerUpdate;
+  summary.textContent=customer?customer.title+' · '+customer.body:(statusWords[data.status]||'Stato da verificare');
+  thanks.textContent=customer?.thanks||'';
+  // The server only publishes reviewed option IDs; an actual product display
+  // must resolve them through an authorized catalogue before rendering cards.
+  options.textContent=customer?.optionCards?.productIds?.length?
+   'Sono disponibili '+customer.optionCards.productIds.length+
+   ' opzioni già verificate. Non costituiscono una classifica definitiva.':'';
+  list.replaceChildren();for(const stage of data.steps||[]){
+   const li=document.createElement('li');li.className=stage.state;
+   const marker=document.createElement('i');marker.setAttribute('aria-hidden','true');
+   const label=document.createElement('span');const word={not_started:'Da iniziare',working:'In lavorazione',verified:'Verificata',blocked:'In attesa di informazioni'}[stage.state]||'';
+   label.textContent=(names[stage.step]||stage.step)+' · '+word;
+   li.append(marker,label);list.append(li);
+  }
+  timing.textContent=data.nextScheduledCheckAt?'Prossimo controllo programmato: '+new Date(data.nextScheduledCheckAt).toLocaleString('it-IT')+'. Non è la data promessa di completamento.':'Non è ancora disponibile una data attendibile per il prossimo controllo. Puoi ricontrollare questo collegamento più tardi.';
+ }catch(e){err.textContent=e instanceof Error?e.message:'Errore temporaneo durante il controllo.';}
+}
+document.getElementById('refresh').addEventListener('click',update);
+update();
+</script>
+</body></html>

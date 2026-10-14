@@ -1,0 +1,156 @@
+{
+  "warning": "ALL publisher identifiers, rights assertions, products, URLs and response bytes in this fixture are constructed and NOT real-world evidence",
+  "provenance": "synthetic_fixture",
+  "firstRun": {
+    "schema": "pee220.run.1",
+    "mode": "synthetic_fixture",
+    "requestSha256": "bbe490bdbcc70745f1c9b6f895376d7be84133568f240c7ac2e5a345155cff45",
+    "intent": {
+      "status": "bounded_category_hypothesis",
+      "categoryId": "football_footwear",
+      "slotValues": {
+        "playing_surface": "artificial_grass"
+      },
+      "clarification": null,
+      "key": "1b1672a02ce2acd8cbfa1759e43b2d02b7f652ff099fc88f20bb188b9f8b5f99",
+      "confirmedByUser": false
+    },
+    "localIntake": {
+      "suggestionCount": 0,
+      "unresolvedIssues": 1
+    },
+    "decision": "candidate_discovery_attempted",
+    "networkRequests": [
+      "https://brand-fixture.co.uk/robots.txt",
+      "https://brand-fixture.co.uk/sitemap.xml"
+    ],
+    "plannedSourceIds": [
+      "fixture_newsroom"
+    ],
+    "sourceOutcomes": [
+      {
+        "sourceId": "fixture_newsroom",
+        "status": "candidate_urls_found",
+        "urlCount": 1,
+        "sitemapSha256": "96c73f73d0f942ea8470157d35e7d68f6fc75df01917a9a8bbac9db284d21cfa",
+        "byteExact": true,
+        "reasonCodes": []
+      }
+    ],
+    "candidates": [
+      {
+        "sourceId": "fixture_newsroom",
+        "url": "https://brand-fixture.co.uk/products/synthetic-boot",
+        "verification": "unverified_url_only"
+      }
+    ],
+    "limitations": [
+      "Discovery URLs do not establish product existence, exact variant, test originality or performance.",
+      "Phase193 screening/Phases196-219 evidence admission and independent ranking remain separate gates."
+    ],
+    "rankingAuthorized": false,
+    "independentEvidenceVerified": false,
+    "checkpoint": {
+      "schema": "pee220.checkpoint.1",
+      "observations": [
+        {
+          "categoryId": "football_footwear",
+          "sourceId": "fixture_newsroom",
+          "checkedAt": "2026-10-13T17:00:00.000Z",
+          "status": "candidate_urls_found",
+          "urls": [
+            "https://brand-fixture.co.uk/products/synthetic-boot"
+          ],
+          "sitemapSha256": "96c73f73d0f942ea8470157d35e7d68f6fc75df01917a9a8bbac9db284d21cfa",
+          "byteExact": true
+        }
+      ],
+      "watchSources": [
+        {
+          "id": "fixture_newsroom",
+          "categoryId": "football_footwear",
+          "host": "brand-fixture.co.uk",
+          "channel": "manufacturer_newsroom",
+          "mechanism": "sitemap_delta",
+          "tier": "core",
+          "rightsClearedForMetadata": true,
+          "nextCheckAt": "2026-10-14T17:00:00.000Z",
+          "lastCheckAt": "2026-10-13T17:00:00.000Z",
+          "quietChecks": 0,
+          "errors": 0
+        }
+      ],
+      "evidenceReceipts": [],
+      "rankingAuthorized": false
+    }
+  },
+  "secondRun": {
+    "schema": "pee220.run.1",
+    "mode": "synthetic_fixture",
+    "requestSha256": "69f58b2e22607a0a78ad060a2746ed9d0c88012fd49d7ae727e9e07bb7e7781a",
+    "intent": {
+      "status": "bounded_category_hypothesis",
+      "categoryId": "football_footwear",
+      "slotValues": {
+        "playing_surface": "artificial_grass"
+      },
+      "clarification": null,
+      "key": "1b1672a02ce2acd8cbfa1759e43b2d02b7f652ff099fc88f20bb188b9f8b5f99",
+      "confirmedByUser": false
+    },
+    "localIntake": {
+      "suggestionCount": 0,
+      "unresolvedIssues": 1
+    },
+    "decision": "cached_candidates_pending_identity_and_evidence",
+    "networkRequests": [],
+    "plannedSourceIds": [],
+    "sourceOutcomes": [],
+    "candidates": [
+      {
+        "sourceId": "fixture_newsroom",
+        "url": "https://brand-fixture.co.uk/products/synthetic-boot",
+        "verification": "unverified_url_only"
+      }
+    ],
+    "limitations": [
+      "Discovery URLs do not establish product existence, exact variant, test originality or performance.",
+      "Phase193 screening/Phases196-219 evidence admission and independent ranking remain separate gates."
+    ],
+    "rankingAuthorized": false,
+    "independentEvidenceVerified": false,
+    "checkpoint": {
+      "schema": "pee220.checkpoint.1",
+      "observations": [
+        {
+          "categoryId": "football_footwear",
+          "sourceId": "fixture_newsroom",
+          "checkedAt": "2026-10-13T17:00:00.000Z",
+          "status": "candidate_urls_found",
+          "urls": [
+            "https://brand-fixture.co.uk/products/synthetic-boot"
+          ],
+          "sitemapSha256": "96c73f73d0f942ea8470157d35e7d68f6fc75df01917a9a8bbac9db284d21cfa",
+          "byteExact": true
+        }
+      ],
+      "watchSources": [
+        {
+          "id": "fixture_newsroom",
+          "categoryId": "football_footwear",
+          "host": "brand-fixture.co.uk",
+          "channel": "manufacturer_newsroom",
+          "mechanism": "sitemap_delta",
+          "tier": "core",
+          "rightsClearedForMetadata": true,
+          "nextCheckAt": "2026-10-14T17:00:00.000Z",
+          "lastCheckAt": "2026-10-13T17:00:00.000Z",
+          "quietChecks": 0,
+          "errors": 0
+        }
+      ],
+      "evidenceReceipts": [],
+      "rankingAuthorized": false
+    }
+  }
+}

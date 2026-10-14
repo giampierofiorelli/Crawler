@@ -1,0 +1,922 @@
+TAP version 13
+# Subtest: new category queues an actionable job; no invented recommendations
+ok 1 - new category queues an actionable job; no invented recommendations
+  ---
+  duration_ms: 51.064409
+  type: 'test'
+  ...
+# Subtest: category with two aliases requires clarification, not a phantom work item
+ok 2 - category with two aliases requires clarification, not a phantom work item
+  ---
+  duration_ms: 11.792846
+  type: 'test'
+  ...
+# Subtest: same category/use-case deduplicates with independent bearer tokens; different use-cases differ
+ok 3 - same category/use-case deduplicates with independent bearer tokens; different use-cases differ
+  ---
+  duration_ms: 8.886217
+  type: 'test'
+  ...
+# Subtest: no worker reports capacity honestly; later installed capability resumes
+ok 4 - no worker reports capacity honestly; later installed capability resumes
+  ---
+  duration_ms: 93.002596
+  type: 'test'
+  ...
+# Subtest: unknown category executes research-only with independent review gate
+ok 5 - unknown category executes research-only with independent review gate
+  ---
+  duration_ms: 27.301114
+  type: 'test'
+  ...
+# Subtest: an unsupported research response cannot become approved automatically
+ok 6 - an unsupported research response cannot become approved automatically
+  ---
+  duration_ms: 56.245042
+  type: 'test'
+  ...
+# Subtest: leases prevent duplicate claims, expired workers cannot overwrite new attempt
+ok 7 - leases prevent duplicate claims, expired workers cannot overwrite new attempt
+  ---
+  duration_ms: 34.548547
+  type: 'test'
+  ...
+# Subtest: persistent storage reloads and detects tampering
+ok 8 - persistent storage reloads and detects tampering
+  ---
+  duration_ms: 5.958187
+  type: 'test'
+  ...
+# Subtest: HTTP supports asynchronous submit/status, no source or result leakage, and bearer auth
+ok 9 - HTTP supports asynchronous submit/status, no source or result leakage, and bearer auth
+  ---
+  duration_ms: 87.128846
+  type: 'test'
+  ...
+# Subtest: unknown product and unknown category are distinct; product requires its own worker
+ok 10 - unknown product and unknown category are distinct; product requires its own worker
+  ---
+  duration_ms: 94.637038
+  type: 'test'
+  ...
+# Subtest: loopback research HTTP requires permitted intake, preserves private progress and rejects raw text
+ok 11 - loopback research HTTP requires permitted intake, preserves private progress and rejects raw text
+  ---
+  duration_ms: 204.032561
+  type: 'test'
+  ...
+# Subtest: new problem is not invented category, can span multiple reviewed solution families
+ok 12 - new problem is not invented category, can span multiple reviewed solution families
+  ---
+  duration_ms: 8.387174
+  type: 'test'
+  ...
+# Subtest: new demand with zero categories triggers solution research, not an unknown-category publication
+ok 13 - new demand with zero categories triggers solution research, not an unknown-category publication
+  ---
+  duration_ms: 0.287194
+  type: 'test'
+  ...
+# Subtest: different constraints lead to different research scopes and dedupe is insensitive to order
+ok 14 - different constraints lead to different research scopes and dedupe is insensitive to order
+  ---
+  duration_ms: 1.996194
+  type: 'test'
+  ...
+# Subtest: specific model is a different request type, requires exact product id
+ok 15 - specific model is a different request type, requires exact product id
+  ---
+  duration_ms: 0.19878
+  type: 'test'
+  ...
+# Subtest: no fixed top-N, yet minimum comparable alternatives and audited search scope
+ok 16 - no fixed top-N, yet minimum comparable alternatives and audited search scope
+  ---
+  duration_ms: 0.442267
+  type: 'test'
+  ...
+# Subtest: insufficient sources or variants never masquerade as full recommendation
+ok 17 - insufficient sources or variants never masquerade as full recommendation
+  ---
+  duration_ms: 0.226452
+  type: 'test'
+  ...
+# Subtest: an unverified exclusion or an untested desired outcome invalidates a product
+ok 18 - an unverified exclusion or an untested desired outcome invalidates a product
+  ---
+  duration_ms: 0.239061
+  type: 'test'
+  ...
+# Subtest: new product announcement alone does not reorder; relevant original test starts targeted comparison
+ok 19 - new product announcement alone does not reorder; relevant original test starts targeted comparison
+  ---
+  duration_ms: 21.801404
+  type: 'test'
+  ...
+# Subtest: progress is a verifiable sequence and never invented percent or ETA
+ok 20 - progress is a verifiable sequence and never invented percent or ETA
+  ---
+  duration_ms: 73.849189
+  type: 'test'
+  ...
+# Subtest: blocked research resumes after verified capacity/source change; no false waiting spinner
+ok 21 - blocked research resumes after verified capacity/source change; no false waiting spinner
+  ---
+  duration_ms: 55.125202
+  type: 'test'
+  ...
+# Subtest: check back time appears only after a backend-confirmed schedule
+ok 22 - check back time appears only after a backend-confirmed schedule
+  ---
+  duration_ms: 30.102303
+  type: 'test'
+  ...
+# Subtest: only verified milestones plus independent publication permit ready
+ok 23 - only verified milestones plus independent publication permit ready
+  ---
+  duration_ms: 139.031466
+  type: 'test'
+  ...
+# Subtest: identical scopes share research but have separate private access tokens
+ok 24 - identical scopes share research but have separate private access tokens
+  ---
+  duration_ms: 37.865189
+  type: 'test'
+  ...
+# Subtest: ledger corruption fails closed
+ok 25 - ledger corruption fails closed
+  ---
+  duration_ms: 17.957335
+  type: 'test'
+  ...
+# Subtest: authenticated HTTP status shows truthful copy and reviewed unranked cards without leaking private demand
+ok 26 - authenticated HTTP status shows truthful copy and reviewed unranked cards without leaking private demand
+  ---
+  duration_ms: 189.285262
+  type: 'test'
+  ...
+# Subtest: no certified backend evidence => no option cards or market completeness claim
+ok 27 - no certified backend evidence => no option cards or market completeness claim
+  ---
+  duration_ms: 26.852646
+  type: 'test'
+  ...
+# Subtest: mismatched trusted assessment silently fails closed rather than claim research on another demand
+ok 28 - mismatched trusted assessment silently fails closed rather than claim research on another demand
+  ---
+  duration_ms: 46.491295
+  type: 'test'
+  ...
+# Subtest: one verified match after documented exclusions can be a narrow result without declaring sole product on market
+ok 29 - one verified match after documented exclusions can be a narrow result without declaring sole product on market
+  ---
+  duration_ms: 2.766357
+  type: 'test'
+  ...
+# Subtest: same three catalogued products with missing discovery are NOT evidence of a narrow market
+ok 30 - same three catalogued products with missing discovery are NOT evidence of a narrow market
+  ---
+  duration_ms: 0.338522
+  type: 'test'
+  ...
+# Subtest: unexamined known candidates block coverage even with signed-looking boundary identifier
+ok 31 - unexamined known candidates block coverage even with signed-looking boundary identifier
+  ---
+  duration_ms: 20.353123
+  type: 'test'
+  ...
+# Subtest: not tested is never evidence of exclusion
+ok 32 - not tested is never evidence of exclusion
+  ---
+  duration_ms: 0.814861
+  type: 'test'
+  ...
+# Subtest: one candidate in the catalog does not imply narrow market without audited discovery
+ok 33 - one candidate in the catalog does not imply narrow market without audited discovery
+  ---
+  duration_ms: 0.229988
+  type: 'test'
+  ...
+# Subtest: even 30 catalogued products do not prove search adequacy
+ok 34 - even 30 catalogued products do not prove search adequacy
+  ---
+  duration_ms: 0.328156
+  type: 'test'
+  ...
+# Subtest: closed reviewed search with no eligible product produces no unsupported recommendation
+ok 35 - closed reviewed search with no eligible product produces no unsupported recommendation
+  ---
+  duration_ms: 0.277869
+  type: 'test'
+  ...
+# Subtest: multiple individually approved cards are unranked, approval cannot name unverified products
+ok 36 - multiple individually approved cards are unranked, approval cannot name unverified products
+  ---
+  duration_ms: 0.643372
+  type: 'test'
+  ...
+# Subtest: cross-demand audit and editorial approvals are rejected
+ok 37 - cross-demand audit and editorial approvals are rejected
+  ---
+  duration_ms: 0.384891
+  type: 'test'
+  ...
+# Subtest: one source mirrored through two discovery paths is not independent
+ok 38 - one source mirrored through two discovery paths is not independent
+  ---
+  duration_ms: 0.380344
+  type: 'test'
+  ...
+# Subtest: outstanding alternatives, discovery in progress, and unchecked solution family block closure
+ok 39 - outstanding alternatives, discovery in progress, and unchecked solution family block closure
+  ---
+  duration_ms: 11.770653
+  type: 'test'
+  ...
+# Subtest: honest messages distinguish queued, working, paused, reviewing, and ready
+ok 40 - honest messages distinguish queued, working, paused, reviewing, and ready
+  ---
+  duration_ms: 0.553386
+  type: 'test'
+  ...
+# Subtest: approval alone never displays cards when queued, paused, or final result exists
+ok 41 - approval alone never displays cards when queued, paused, or final result exists
+  ---
+  duration_ms: 0.359373
+  type: 'test'
+  ...
+# Subtest: ONE after verified filters and independent challenge is a legitimate narrow selection
+ok 42 - ONE after verified filters and independent challenge is a legitimate narrow selection
+  ---
+  duration_ms: 3.833829
+  type: 'test'
+  ...
+# Subtest: ONE in catalog without independently bounded discovery must prompt more discovery
+ok 43 - ONE in catalog without independently bounded discovery must prompt more discovery
+  ---
+  duration_ms: 0.473085
+  type: 'test'
+  ...
+# Subtest: THREE left after confirmed hard filters is valid when search is audited
+ok 44 - THREE left after confirmed hard filters is valid when search is audited
+  ---
+  duration_ms: 1.319612
+  type: 'test'
+  ...
+# Subtest: 100 verified fits can be research-bounded; do not demand fixed top N
+ok 45 - 100 verified fits can be research-bounded; do not demand fixed top N
+  ---
+  duration_ms: 1.763222
+  type: 'test'
+  ...
+# Subtest: 100 items with missing product checks are NOT adequate even if 3 known items fit
+ok 46 - 100 items with missing product checks are NOT adequate even if 3 known items fit
+  ---
+  duration_ms: 1.035674
+  type: 'test'
+  ...
+# Subtest: same number of products, independent discovery missing: more research
+ok 47 - same number of products, independent discovery missing: more research
+  ---
+  duration_ms: 0.287764
+  type: 'test'
+  ...
+# Subtest: independent challenge must be independent of initial sources
+ok 48 - independent challenge must be independent of initial sources
+  ---
+  duration_ms: 0.31824
+  type: 'test'
+  ...
+# Subtest: a challenge discovering a plausible entrant reopens the search despite complete original portfolio
+ok 49 - a challenge discovering a plausible entrant reopens the search despite complete original portfolio
+  ---
+  duration_ms: 0.326353
+  type: 'test'
+  ...
+# Subtest: challenge still pending is not a completed independent check
+ok 50 - challenge still pending is not a completed independent check
+  ---
+  duration_ms: 0.517822
+  type: 'test'
+  ...
+# Subtest: new risk, conflicting test, freshness or material uncertainty causes targeted research
+ok 51 - new risk, conflicting test, freshness or material uncertainty causes targeted research
+  ---
+  duration_ms: 0.570471
+  type: 'test'
+  ...
+# Subtest: unconfirmed meaning of filters must never close the search
+ok 52 - unconfirmed meaning of filters must never close the search
+  ---
+  duration_ms: 0.689261
+  type: 'test'
+  ...
+# Subtest: zero verified products may be a bounded, truthful negative, without asking to relax hard limits automatically
+ok 53 - zero verified products may be a bounded, truthful negative, without asking to relax hard limits automatically
+  ---
+  duration_ms: 0.23844
+  type: 'test'
+  ...
+# Subtest: unseen viable alternative must not be interpreted as a narrow market
+ok 54 - unseen viable alternative must not be interpreted as a narrow market
+  ---
+  duration_ms: 0.209747
+  type: 'test'
+  ...
+# Subtest: mislabelled untested product as verified fit is rejected
+ok 55 - mislabelled untested product as verified fit is rejected
+  ---
+  duration_ms: 0.997416
+  type: 'test'
+  ...
+# Subtest: an exclusion without real user filter evidence cannot narrow the field
+ok 56 - an exclusion without real user filter evidence cannot narrow the field
+  ---
+  duration_ms: 0.252501
+  type: 'test'
+  ...
+# Subtest: cross-demand request is never permitted to reuse another filter audit
+ok 57 - cross-demand request is never permitted to reuse another filter audit
+  ---
+  duration_ms: 0.163707
+  type: 'test'
+  ...
+# Subtest: hard-filter evidence shows why a narrow selection arose, not simply number in database
+ok 58 - hard-filter evidence shows why a narrow selection arose, not simply number in database
+  ---
+  duration_ms: 0.190387
+  type: 'test'
+  ...
+# Subtest: 500 candidates at legacy portfolio boundary can be handled without a forced quota
+ok 59 - 500 candidates at legacy portfolio boundary can be handled without a forced quota
+  ---
+  duration_ms: 7.23892
+  type: 'test'
+  ...
+# Subtest: populates high-potential candidates first; leaves long tail as discoverable stubs
+ok 60 - populates high-potential candidates first; leaves long tail as discoverable stubs
+  ---
+  duration_ms: 1.92063
+  type: 'test'
+  ...
+# Subtest: syndicated and repeated original-list items do not inflate signals
+ok 61 - syndicated and repeated original-list items do not inflate signals
+  ---
+  duration_ms: 0.213352
+  type: 'test'
+  ...
+# Subtest: commercial and unverified editorial appearances do not imply independently recommended product
+ok 62 - commercial and unverified editorial appearances do not imply independently recommended product
+  ---
+  duration_ms: 0.180042
+  type: 'test'
+  ...
+# Subtest: need-specific niche brings a long-tail candidate to top without proving it wins
+ok 63 - need-specific niche brings a long-tail candidate to top without proving it wins
+  ---
+  duration_ms: 0.172351
+  type: 'test'
+  ...
+# Subtest: new product with verified spec difference may be prioritized but has no independent-performance claim
+ok 64 - new product with verified spec difference may be prioritized but has no independent-performance claim
+  ---
+  duration_ms: 0.266542
+  type: 'test'
+  ...
+# Subtest: no candidate count is a stopping criterion; budget can pause without coverage certification
+ok 65 - no candidate count is a stopping criterion; budget can pause without coverage certification
+  ---
+  duration_ms: 24.318836
+  type: 'test'
+  ...
+# Subtest: a reviewed missing solution family blocks saturation pause
+ok 66 - a reviewed missing solution family blocks saturation pause
+  ---
+  duration_ms: 0.488748
+  type: 'test'
+  ...
+# Subtest: pause seed when no priority backlog and independent discovery found nothing new, retain deferred stub
+ok 67 - pause seed when no priority backlog and independent discovery found nothing new, retain deferred stub
+  ---
+  duration_ms: 0.209266
+  type: 'test'
+  ...
+# Subtest: never auto-enrich discontinued model
+ok 68 - never auto-enrich discontinued model
+  ---
+  duration_ms: 0.386534
+  type: 'test'
+  ...
+# Subtest: reject cross-market records or invalid inputs
+ok 69 - reject cross-market records or invalid inputs
+  ---
+  duration_ms: 0.531703
+  type: 'test'
+  ...
+# Subtest: stock events are not manufacturing lifecycle evidence and are rejected
+ok 70 - stock events are not manufacturing lifecycle evidence and are rejected
+  ---
+  duration_ms: 0.303619
+  type: 'test'
+  ...
+# Subtest: verified manufacturer discontinuation preserves product archive and suppresses current competition
+ok 71 - verified manufacturer discontinuation preserves product archive and suppresses current competition
+  ---
+  duration_ms: 0.158269
+  type: 'test'
+  ...
+# Subtest: authoritative current and discontinued conflict requires investigation, does not silently archive
+ok 72 - authoritative current and discontinued conflict requires investigation, does not silently archive
+  ---
+  duration_ms: 0.115625
+  type: 'test'
+  ...
+# Subtest: launch announcement is not independent test evidence
+ok 73 - launch announcement is not independent test evidence
+  ---
+  duration_ms: 0.077187
+  type: 'test'
+  ...
+# Subtest: unconfirmed identities enter cheap verification rather than expensive full enrichment
+ok 74 - unconfirmed identities enter cheap verification rather than expensive full enrichment
+  ---
+  duration_ms: 0.158991
+  type: 'test'
+  ...
+# Subtest: verified manufacturing end is sticky even if later snapshot omits evidence
+ok 75 - verified manufacturing end is sticky even if later snapshot omits evidence
+  ---
+  duration_ms: 1.442418
+  type: 'test'
+  ...
+# Subtest: an official globally scoped retirement excludes the model in every market
+ok 76 - an official globally scoped retirement excludes the model in every market
+  ---
+  duration_ms: 0.247864
+  type: 'test'
+  ...
+# Subtest: a current listing conflicts with retired tombstone but never restores competition
+ok 77 - a current listing conflicts with retired tombstone but never restores competition
+  ---
+  duration_ms: 0.142145
+  type: 'test'
+  ...
+# Subtest: out-of-stock inputs are rejected instead of being interpreted as discontinued
+ok 78 - out-of-stock inputs are rejected instead of being interpreted as discontinued
+  ---
+  duration_ms: 0.28529
+  type: 'test'
+  ...
+# Subtest: retired page persists, is visibly grey, has text label and no current competition
+ok 79 - retired page persists, is visibly grey, has text label and no current competition
+  ---
+  duration_ms: 0.335106
+  type: 'test'
+  ...
+# Subtest: new product with manufacturer specifications only has no inferred performance
+ok 80 - new product with manufacturer specifications only has no inferred performance
+  ---
+  duration_ms: 0.98032
+  type: 'test'
+  ...
+# Subtest: new product with independent review is queued for appraisal not automatically ranked
+ok 81 - new product with independent review is queued for appraisal not automatically ranked
+  ---
+  duration_ms: 0.153371
+  type: 'test'
+  ...
+# Subtest: new product with original independent test requires method/rights checking
+ok 82 - new product with original independent test requires method/rights checking
+  ---
+  duration_ms: 0.175806
+  type: 'test'
+  ...
+# Subtest: unverified or non-lawful review does not lift specs-only intake
+ok 83 - unverified or non-lawful review does not lift specs-only intake
+  ---
+  duration_ms: 0.388656
+  type: 'test'
+  ...
+# Subtest: discontinued model is always archived regardless of compelling old tests
+ok 84 - discontinued model is always archived regardless of compelling old tests
+  ---
+  duration_ms: 0.398532
+  type: 'test'
+  ...
+# Subtest: current-product shortlist excludes retired and unknown lifecycle statuses
+ok 85 - current-product shortlist excludes retired and unknown lifecycle statuses
+  ---
+  duration_ms: 0.316628
+  type: 'test'
+  ...
+# Subtest: price-free ranking cannot include archived or unverified lifecycle variants
+ok 86 - price-free ranking cannot include archived or unverified lifecycle variants
+  ---
+  duration_ms: 0.474196
+  type: 'test'
+  ...
+# Subtest: source rights control: no monitoring call scheduled without reviewed metadata rights
+ok 87 - source rights control: no monitoring call scheduled without reviewed metadata rights
+  ---
+  duration_ms: 2.274705
+  type: 'test'
+  ...
+# Subtest: due dates and host budgets restrict requests
+ok 88 - due dates and host budgets restrict requests
+  ---
+  duration_ms: 0.498523
+  type: 'test'
+  ...
+# Subtest: exploration reserve prevents established brands from monopolising discovery
+ok 89 - exploration reserve prevents established brands from monopolising discovery
+  ---
+  duration_ms: 7.865426
+  type: 'test'
+  ...
+# Subtest: quiet feed gets longer intervals and a new item resets them
+ok 90 - quiet feed gets longer intervals and a new item resets them
+  ---
+  duration_ms: 0.477321
+  type: 'test'
+  ...
+# Subtest: rate limits slow polling instead of retrying aggressively
+ok 91 - rate limits slow polling instead of retrying aggressively
+  ---
+  duration_ms: 0.188304
+  type: 'test'
+  ...
+# Subtest: metadata-only run never claims it read product pages
+ok 92 - metadata-only run never claims it read product pages
+  ---
+  duration_ms: 0.160252
+  type: 'test'
+  ...
+# Subtest: manufacturer press announcement means specs intake, not ranking
+ok 93 - manufacturer press announcement means specs intake, not ranking
+  ---
+  duration_ms: 0.421687
+  type: 'test'
+  ...
+# Subtest: independent test triggers appraisal, not a recommendation
+ok 94 - independent test triggers appraisal, not a recommendation
+  ---
+  duration_ms: 0.139751
+  type: 'test'
+  ...
+# Subtest: reprints of a press release do not multiply independent original works
+ok 95 - reprints of a press release do not multiply independent original works
+  ---
+  duration_ms: 0.340754
+  type: 'test'
+  ...
+# Subtest: community mention creates discovery stub and no verified performance
+ok 96 - community mention creates discovery stub and no verified performance
+  ---
+  duration_ms: 0.333764
+  type: 'test'
+  ...
+# Subtest: unconfirmed model identity goes for identity verification first
+ok 97 - unconfirmed model identity goes for identity verification first
+  ---
+  duration_ms: 0.792887
+  type: 'test'
+  ...
+# Subtest: unauthorized or unauthenticated signal is rejected
+ok 98 - unauthorized or unauthenticated signal is rejected
+  ---
+  duration_ms: 0.136746
+  type: 'test'
+  ...
+# Subtest: retirement signal requires verified separate lifecycle process
+ok 99 - retirement signal requires verified separate lifecycle process
+  ---
+  duration_ms: 0.114262
+  type: 'test'
+  ...
+# Subtest: discontinued models cannot reenter even if new sources appear
+ok 100 - discontinued models cannot reenter even if new sources appear
+  ---
+  duration_ms: 0.143807
+  type: 'test'
+  ...
+# Subtest: unknown category starts category research instead of false classification
+ok 101 - unknown category starts category research instead of false classification
+  ---
+  duration_ms: 0.091678
+  type: 'test'
+  ...
+# Subtest: CRLF in HTTP validators is rejected
+ok 102 - CRLF in HTTP validators is rejected
+  ---
+  duration_ms: 0.23871
+  type: 'test'
+  ...
+# Subtest: invalid rate budgets are rejected
+ok 103 - invalid rate budgets are rejected
+  ---
+  duration_ms: 0.09311
+  type: 'test'
+  ...
+# Subtest: reusable reviewed recipe extracts typed product specification, never product score
+ok 104 - reusable reviewed recipe extracts typed product specification, never product score
+  ---
+  duration_ms: 8.781751
+  type: 'test'
+  ...
+# Subtest: different model on same manufacturer template uses same declarative recipe
+ok 105 - different model on same manufacturer template uses same declarative recipe
+  ---
+  duration_ms: 0.557402
+  type: 'test'
+  ...
+# Subtest: same value on wrong model cannot contaminate variant
+ok 106 - same value on wrong model cannot contaminate variant
+  ---
+  duration_ms: 1.343579
+  type: 'test'
+  ...
+# Subtest: new fields and missing values do not invent numbers
+ok 107 - new fields and missing values do not invent numbers
+  ---
+  duration_ms: 0.386113
+  type: 'test'
+  ...
+# Subtest: duplicate property names are ambiguous and fail closed
+ok 108 - duplicate property names are ambiguous and fail closed
+  ---
+  duration_ms: 0.426153
+  type: 'test'
+  ...
+# Subtest: two Product objects on one page cannot mix variants
+ok 109 - two Product objects on one page cannot mix variants
+  ---
+  duration_ms: 8.439703
+  type: 'test'
+  ...
+# Subtest: unit mismatch is not converted or silently accepted
+ok 110 - unit mismatch is not converted or silently accepted
+  ---
+  duration_ms: 0.440475
+  type: 'test'
+  ...
+# Subtest: missing explicit source unit does not license assumed measurement units
+ok 111 - missing explicit source unit does not license assumed measurement units
+  ---
+  duration_ms: 0.33761
+  type: 'test'
+  ...
+# Subtest: incorrect source host or outside recipe path is rejected
+ok 112 - incorrect source host or outside recipe path is rejected
+  ---
+  duration_ms: 0.449349
+  type: 'test'
+  ...
+# Subtest: script prompt injection is data, not a new instruction or field
+ok 113 - script prompt injection is data, not a new instruction or field
+  ---
+  duration_ms: 0.621248
+  type: 'test'
+  ...
+# Subtest: content without properly parsed JSON-LD does not trigger misleading extraction
+ok 114 - content without properly parsed JSON-LD does not trigger misleading extraction
+  ---
+  duration_ms: 0.293022
+  type: 'test'
+  ...
+# Subtest: template with guessed field names or changed meaning is rejected
+ok 115 - template with guessed field names or changed meaning is rejected
+  ---
+  duration_ms: 0.151679
+  type: 'test'
+  ...
+# Subtest: AI-proposed recipe must match two independently labeled distinct products before human review
+ok 116 - AI-proposed recipe must match two independently labeled distinct products before human review
+  ---
+  duration_ms: 0.710463
+  type: 'test'
+  ...
+# Subtest: unreviewed AI recipe is blocked at adapter boundary
+ok 117 - unreviewed AI recipe is blocked at adapter boundary
+  ---
+  duration_ms: 0.279702
+  type: 'test'
+  ...
+# Subtest: reviewed source recipe integrates with Phase 72 rights gate, matrix and quarantine
+ok 118 - reviewed source recipe integrates with Phase 72 rights gate, matrix and quarantine
+  ---
+  duration_ms: 50.573304
+  type: 'test'
+  ...
+# Subtest: reviewed recipe store persists configurations and rejects unreviewed/duplicate/tampered data
+ok 119 - reviewed recipe store persists configurations and rejects unreviewed/duplicate/tampered data
+  ---
+  duration_ms: 94.498869
+  type: 'test'
+  ...
+# Subtest: AI proposes a declarative recipe, but it remains unreviewed despite exact labels
+ok 120 - AI proposes a declarative recipe, but it remains unreviewed despite exact labels
+  ---
+  duration_ms: 10.58956
+  type: 'test'
+  ...
+# Subtest: different identifiers for the same model are not mistaken for independent products
+ok 121 - different identifiers for the same model are not mistaken for independent products
+  ---
+  duration_ms: 0.223007
+  type: 'test'
+  ...
+# Subtest: unknown invented field is rejected before qualification
+ok 122 - unknown invented field is rejected before qualification
+  ---
+  duration_ms: 0.846949
+  type: 'test'
+  ...
+# Subtest: an unauthorized page blocks all inference
+ok 123 - an unauthorized page blocks all inference
+  ---
+  duration_ms: 0.359824
+  type: 'test'
+  ...
+# Subtest: one sample outside source or wrong kind blocks before network
+ok 124 - one sample outside source or wrong kind blocks before network
+  ---
+  duration_ms: 0.193402
+  type: 'test'
+  ...
+# Subtest: AI cannot mark its own recipe reviewed or override policy
+ok 125 - AI cannot mark its own recipe reviewed or override policy
+  ---
+  duration_ms: 1.516239
+  type: 'test'
+  ...
+# Subtest: incorrect expected assessor label prevents human-review-ready result
+ok 126 - incorrect expected assessor label prevents human-review-ready result
+  ---
+  duration_ms: 1.002924
+  type: 'test'
+  ...
+# Subtest: no single independently labelled product is accepted
+ok 127 - no single independently labelled product is accepted
+  ---
+  duration_ms: 0.167913
+  type: 'test'
+  ...
+# Subtest: model cannot relabel manufacturer technical specification as independent test
+ok 128 - model cannot relabel manufacturer technical specification as independent test
+  ---
+  duration_ms: 1.039269
+  type: 'test'
+  ...
+# Subtest: reused proposal without human review cannot be persisted as approved recipe
+ok 129 - reused proposal without human review cannot be persisted as approved recipe
+  ---
+  duration_ms: 7.533495
+  type: 'test'
+  ...
+# Subtest: different model product label is rejected even if property name matches
+ok 130 - different model product label is rejected even if property name matches
+  ---
+  duration_ms: 0.636501
+  type: 'test'
+  ...
+# Subtest: changed unit cannot be normalized or assumed by the model
+ok 131 - changed unit cannot be normalized or assumed by the model
+  ---
+  duration_ms: 0.630111
+  type: 'test'
+  ...
+# Subtest: duplicate Product nodes on a source are not eligible for automatic proposal
+ok 132 - duplicate Product nodes on a source are not eligible for automatic proposal
+  ---
+  duration_ms: 0.42366
+  type: 'test'
+  ...
+# Subtest: bad registry context rejects the AI mapping rather than creating it
+ok 133 - bad registry context rejects the AI mapping rather than creating it
+  ---
+  duration_ms: 0.461927
+  type: 'test'
+  ...
+# Subtest: model failure does not leak raw output or source body to caller
+ok 134 - model failure does not leak raw output or source body to caller
+  ---
+  duration_ms: 0.613827
+  type: 'test'
+  ...
+# Subtest: Ollama adapter supports mock local loopback JSON response, without network API dependency
+ok 135 - Ollama adapter supports mock local loopback JSON response, without network API dependency
+  ---
+  duration_ms: 12.030946
+  type: 'test'
+  ...
+# Subtest: Ollama adapter rejects unsafe model names and broken local response
+ok 136 - Ollama adapter rejects unsafe model names and broken local response
+  ---
+  duration_ms: 5.031397
+  type: 'test'
+  ...
+# Subtest: phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+ok 137 - phase85 one-authority file stores both JSON-LD-compatible and reviewed HTML without HTML content
+  ---
+  duration_ms: 12.47682
+  type: 'test'
+  ...
+# Subtest: real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+ok 138 - real phases 68/69/70 execute bounded manufacturer HTML intake and never rank
+  ---
+  duration_ms: 1527.807371
+  type: 'test'
+  ...
+# Subtest: rights denied upstream before network I/O and no bypass
+ok 139 - rights denied upstream before network I/O and no bypass
+  ---
+  duration_ms: 10.551678
+  type: 'test'
+  ...
+# Subtest: wrong exact product and changed table structure do not contaminate evidence
+ok 140 - wrong exact product and changed table structure do not contaminate evidence
+  ---
+  duration_ms: 2958.300185
+  type: 'test'
+  ...
+# Subtest: changes in mainline approved registry block before source retrieval
+ok 141 - changes in mainline approved registry block before source retrieval
+  ---
+  duration_ms: 6.506212
+  type: 'test'
+  ...
+# Subtest: phase89 advisory record sees successes and distinguishes structural changes
+ok 142 - phase89 advisory record sees successes and distinguishes structural changes
+  ---
+  duration_ms: 5672.156732
+  type: 'test'
+  ...
+# Subtest: legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+ok 143 - legacy JSON-LD recipe and Phase87 HTML recipe persist in the same authoritative file
+  ---
+  duration_ms: 6.443566
+  type: 'test'
+  ...
+# Subtest: two distinct broken products create a manual requalification advisory, never invoke an LLM
+ok 144 - two distinct broken products create a manual requalification advisory, never invoke an LLM
+  ---
+  duration_ms: 4993.877419
+  type: 'test'
+  ...
+# Subtest: root-signed role and scope policy validates and fails on tampering, wrong root and expiration
+ok 145 - root-signed role and scope policy validates and fails on tampering, wrong root and expiration
+  ---
+  duration_ms: 9.66938
+  type: 'test'
+  ...
+# Subtest: an older still-signed approval policy is rejected when the deployment pins a newer digest
+ok 146 - an older still-signed approval policy is rejected when the deployment pins a newer digest
+  ---
+  duration_ms: 6.881841
+  type: 'test'
+  ...
+# Subtest: reviewer-grant policy allows signed suspension with matching host/category/path
+ok 147 - reviewer-grant policy allows signed suspension with matching host/category/path
+  ---
+  duration_ms: 82.754515
+  type: 'test'
+  ...
+# Subtest: revoked and scope-ineligible reviewer cannot suspend; old catalog remains active
+ok 148 - revoked and scope-ineligible reviewer cannot suspend; old catalog remains active
+  ---
+  duration_ms: 18.221494
+  type: 'test'
+  ...
+# Subtest: strict monitor requirement blocks acquisition before HTTP when absent
+ok 149 - strict monitor requirement blocks acquisition before HTTP when absent
+  ---
+  duration_ms: 7.633756
+  type: 'test'
+  ...
+# Subtest: strict monitor with persistent SQLite ledger can quarantine exact declared values
+ok 150 - strict monitor with persistent SQLite ledger can quarantine exact declared values
+  ---
+  duration_ms: 4784.675798
+  type: 'test'
+  ...
+# Subtest: catalog change while source is being fetched blocks quarantining those bytes
+ok 151 - catalog change while source is being fetched blocks quarantining those bytes
+  ---
+  duration_ms: 768.243642
+  type: 'test'
+  ...
+# Subtest: permissioned-pilot harness counts both correct and blocked reference fields in denominator
+ok 152 - permissioned-pilot harness counts both correct and blocked reference fields in denominator
+  ---
+  duration_ms: 6779.565623
+  type: 'test'
+  ...
+1..152
+# tests 152
+# suites 0
+# pass 152
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16504.964053

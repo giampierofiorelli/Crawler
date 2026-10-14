@@ -1,0 +1,1708 @@
+TAP version 13
+# Subtest: preserves overall-best intent, does not maximize hygiene by default
+ok 1 - preserves overall-best intent, does not maximize hygiene by default
+  ---
+  duration_ms: 33.135158
+  type: 'test'
+  ...
+# Subtest: routine wet cleaning can be hygiene supporting without lab disinfection
+ok 2 - routine wet cleaning can be hygiene supporting without lab disinfection
+  ---
+  duration_ms: 28.547282
+  type: 'test'
+  ...
+# Subtest: during-run pad rinsing is separately represented from post-cycle wash
+ok 3 - during-run pad rinsing is separately represented from post-cycle wash
+  ---
+  duration_ms: 0.555859
+  type: 'test'
+  ...
+# Subtest: a robot with only post-cycle wash has no during-run contamination mitigation attributed
+ok 4 - a robot with only post-cycle wash has no during-run contamination mitigation attributed
+  ---
+  duration_ms: 0.391311
+  type: 'test'
+  ...
+# Subtest: hot dock water cannot prove floor disinfection
+ok 5 - hot dock water cannot prove floor disinfection
+  ---
+  duration_ms: 0.399673
+  type: 'test'
+  ...
+# Subtest: heated water ON floor is separate from dock
+ok 6 - heated water ON floor is separate from dock
+  ---
+  duration_ms: 0.234163
+  type: 'test'
+  ...
+# Subtest: manufacturer declarations are not independent floor results
+ok 7 - manufacturer declarations are not independent floor results
+  ---
+  duration_ms: 4.872095
+  type: 'test'
+  ...
+# Subtest: independent bacteria floor assay supports bacteria only
+ok 8 - independent bacteria floor assay supports bacteria only
+  ---
+  duration_ms: 0.436909
+  type: 'test'
+  ...
+# Subtest: floor bacteria and virus assay record provenance independently
+ok 9 - floor bacteria and virus assay record provenance independently
+  ---
+  duration_ms: 0.701259
+  type: 'test'
+  ...
+# Subtest: a mop-pad microbiology result is not a FLOOR microbiology result
+ok 10 - a mop-pad microbiology result is not a FLOOR microbiology result
+  ---
+  duration_ms: 0.574107
+  type: 'test'
+  ...
+# Subtest: independent observations of spreading soil and pet waste are risks
+ok 11 - independent observations of spreading soil and pet waste are risks
+  ---
+  duration_ms: 0.299492
+  type: 'test'
+  ...
+# Subtest: missing test does not mean fail, and no products excluded
+ok 12 - missing test does not mean fail, and no products excluded
+  ---
+  duration_ms: 0.166762
+  type: 'test'
+  ...
+# Subtest: does not use feature counting to generate numerical ranking
+ok 13 - does not use feature counting to generate numerical ranking
+  ---
+  duration_ms: 0.214975
+  type: 'test'
+  ...
+# Subtest: source and candidate order cannot mutate canonical knowledge or model outputs
+ok 14 - source and candidate order cannot mutate canonical knowledge or model outputs
+  ---
+  duration_ms: 0.53633
+  type: 'test'
+  ...
+# Subtest: distinct questions do not change canonical product evidence, but request projection differs
+ok 15 - distinct questions do not change canonical product evidence, but request projection differs
+  ---
+  duration_ms: 6.902319
+  type: 'test'
+  ...
+# Subtest: syndicated reprint of same original test does not count as new independent study
+ok 16 - syndicated reprint of same original test does not count as new independent study
+  ---
+  duration_ms: 0.26484
+  type: 'test'
+  ...
+# Subtest: contradictory independent reports are flagged, not averaged
+ok 17 - contradictory independent reports are flagged, not averaged
+  ---
+  duration_ms: 5.520623
+  type: 'test'
+  ...
+# Subtest: rejects dock observation mislabeled as floor
+ok 18 - rejects dock observation mislabeled as floor
+  ---
+  duration_ms: 0.564282
+  type: 'test'
+  ...
+# Subtest: rejects unsupported implied pathogen reduction from non-assay step
+ok 19 - rejects unsupported implied pathogen reduction from non-assay step
+  ---
+  duration_ms: 0.217889
+  type: 'test'
+  ...
+# Subtest: rejects manufacturer microbiology promoted to independent floor assay
+ok 20 - rejects manufacturer microbiology promoted to independent floor assay
+  ---
+  duration_ms: 0.176827
+  type: 'test'
+  ...
+# Subtest: rejects missing assay measurement, even from independent reviewed source
+ok 21 - rejects missing assay measurement, even from independent reviewed source
+  ---
+  duration_ms: 0.173612
+  type: 'test'
+  ...
+# Subtest: temperature must be actual independent dock measurement, not promotional figure
+ok 22 - temperature must be actual independent dock measurement, not promotional figure
+  ---
+  duration_ms: 0.184228
+  type: 'test'
+  ...
+# Subtest: does not answer unsupported category requests
+ok 23 - does not answer unsupported category requests
+  ---
+  duration_ms: 0.13974
+  type: 'test'
+  ...
+# Subtest: an explicit disinfectant request is not silently reduced to routine floor cleaning
+ok 24 - an explicit disinfectant request is not silently reduced to routine floor cleaning
+  ---
+  duration_ms: 0.289868
+  type: 'test'
+  ...
+# Subtest: legacy Phase114 supported mechanism maps but weaker claims are quarantined
+ok 25 - legacy Phase114 supported mechanism maps but weaker claims are quarantined
+  ---
+  duration_ms: 0.469358
+  type: 'test'
+  ...
+# Subtest: reviewer warning is not upgraded to an observed cross-contamination event
+ok 26 - reviewer warning is not upgraded to an observed cross-contamination event
+  ---
+  duration_ms: 0.208344
+  type: 'test'
+  ...
+# Subtest: model is extensible to three product categories
+ok 27 - model is extensible to three product categories
+  ---
+  duration_ms: 24.707395
+  type: 'test'
+  ...
+# Subtest: category duplication is rejected
+ok 28 - category duplication is rejected
+  ---
+  duration_ms: 0.657352
+  type: 'test'
+  ...
+# Subtest: unsupported mechanism relation is rejected
+ok 29 - unsupported mechanism relation is rejected
+  ---
+  duration_ms: 0.214524
+  type: 'test'
+  ...
+# Subtest: rinsing roller is continuous, dock return is periodic, not equivalent
+ok 30 - rinsing roller is continuous, dock return is periodic, not equivalent
+  ---
+  duration_ms: 35.663744
+  type: 'test'
+  ...
+# Subtest: continuous roller generates hypothesis, never microbiology assay
+ok 31 - continuous roller generates hypothesis, never microbiology assay
+  ---
+  duration_ms: 0.80853
+  type: 'test'
+  ...
+# Subtest: periodic dock visit can support process but does not imply continuous rinsing
+ok 32 - periodic dock visit can support process but does not imply continuous rinsing
+  ---
+  duration_ms: 0.414456
+  type: 'test'
+  ...
+# Subtest: wash after run is not inferred as pre-wash
+ok 33 - wash after run is not inferred as pre-wash
+  ---
+  duration_ms: 0.419052
+  type: 'test'
+  ...
+# Subtest: dirty-water tank is unknown unless supported for that exact product
+ok 34 - dirty-water tank is unknown unless supported for that exact product
+  ---
+  duration_ms: 0.503299
+  type: 'test'
+  ...
+# Subtest: manufacturer-only mechanism is retained but does not trigger independent hypothesis
+ok 35 - manufacturer-only mechanism is retained but does not trigger independent hypothesis
+  ---
+  duration_ms: 0.787128
+  type: 'test'
+  ...
+# Subtest: negative independent observation does not become unknown or positive
+ok 36 - negative independent observation does not become unknown or positive
+  ---
+  duration_ms: 0.743111
+  type: 'test'
+  ...
+# Subtest: different original tests with contradictory claims under SAME context are conflicting
+ok 37 - different original tests with contradictory claims under SAME context are conflicting
+  ---
+  duration_ms: 0.412352
+  type: 'test'
+  ...
+# Subtest: contextual variation across modes is not falsely recorded as experiment conflict
+ok 38 - contextual variation across modes is not falsely recorded as experiment conflict
+  ---
+  duration_ms: 0.66918
+  type: 'test'
+  ...
+# Subtest: direct measured endpoint is required for a performance result
+ok 39 - direct measured endpoint is required for a performance result
+  ---
+  duration_ms: 0.368236
+  type: 'test'
+  ...
+# Subtest: independent adjective cannot be promoted to numerical measurement
+ok 40 - independent adjective cannot be promoted to numerical measurement
+  ---
+  duration_ms: 0.263938
+  type: 'test'
+  ...
+# Subtest: manufacturer cannot claim an independent measured result
+ok 41 - manufacturer cannot claim an independent measured result
+  ---
+  duration_ms: 0.424701
+  type: 'test'
+  ...
+# Subtest: measured endpoint cannot be fabricated by attaching number to feature
+ok 42 - measured endpoint cannot be fabricated by attaching number to feature
+  ---
+  duration_ms: 1.123977
+  type: 'test'
+  ...
+# Subtest: source product variant and target cannot be switched
+ok 43 - source product variant and target cannot be switched
+  ---
+  duration_ms: 0.380955
+  type: 'test'
+  ...
+# Subtest: same original test syndication cannot multiply evidence
+ok 44 - same original test syndication cannot multiply evidence
+  ---
+  duration_ms: 0.340865
+  type: 'test'
+  ...
+# Subtest: same original test incompatible metadata fails closed
+ok 45 - same original test incompatible metadata fails closed
+  ---
+  duration_ms: 0.186782
+  type: 'test'
+  ...
+# Subtest: missing evidence is unknown not failure, and no feature-count ranking
+ok 46 - missing evidence is unknown not failure, and no feature-count ranking
+  ---
+  duration_ms: 0.250608
+  type: 'test'
+  ...
+# Subtest: input order and observation order cannot change canonical response
+ok 47 - input order and observation order cannot change canonical response
+  ---
+  duration_ms: 0.766787
+  type: 'test'
+  ...
+# Subtest: query absent from category evaluator ensures query neutral results
+ok 48 - query absent from category evaluator ensures query neutral results
+  ---
+  duration_ms: 32.205604
+  type: 'test'
+  ...
+# Subtest: Phase115 adapter refuses to assume cadence from generic during-run rinsing
+ok 49 - Phase115 adapter refuses to assume cadence from generic during-run rinsing
+  ---
+  duration_ms: 0.378651
+  type: 'test'
+  ...
+# Subtest: Phase115 adapter maps known after-run wash conservatively
+ok 50 - Phase115 adapter maps known after-run wash conservatively
+  ---
+  duration_ms: 0.282897
+  type: 'test'
+  ...
+# Subtest: dishwasher template never infers sanitization from heated rinse feature
+ok 51 - dishwasher template never infers sanitization from heated rinse feature
+  ---
+  duration_ms: 0.227854
+  type: 'test'
+  ...
+# Subtest: headphone template never equates ANC hardware to measured noise cancellation
+ok 52 - headphone template never equates ANC hardware to measured noise cancellation
+  ---
+  duration_ms: 0.232721
+  type: 'test'
+  ...
+# Subtest: periodic dock cycle can preserve manufacturer-declared configurable time
+ok 53 - periodic dock cycle can preserve manufacturer-declared configurable time
+  ---
+  duration_ms: 0.31834
+  type: 'test'
+  ...
+# Subtest: dock-return interval is not inferred for every floor size
+ok 54 - dock-return interval is not inferred for every floor size
+  ---
+  duration_ms: 0.178149
+  type: 'test'
+  ...
+# Subtest: continuous roller activation is distinguishable from time-triggered return
+ok 55 - continuous roller activation is distinguishable from time-triggered return
+  ---
+  duration_ms: 0.205811
+  type: 'test'
+  ...
+# Subtest: invalid duration or area configuration cannot become a supported observation
+ok 56 - invalid duration or area configuration cannot become a supported observation
+  ---
+  duration_ms: 0.235655
+  type: 'test'
+  ...
+# Subtest: microbiology results require named microorganism and retain its scope
+ok 57 - microbiology results require named microorganism and retain its scope
+  ---
+  duration_ms: 0.27795
+  type: 'test'
+  ...
+# Subtest: template audit identifies goals without tests rather than claiming category completeness
+ok 58 - template audit identifies goals without tests rather than claiming category completeness
+  ---
+  duration_ms: 0.232191
+  type: 'test'
+  ...
+# Subtest: generic engine accepts a novel future category without robot-specific code
+ok 59 - generic engine accepts a novel future category without robot-specific code
+  ---
+  duration_ms: 0.231339
+  type: 'test'
+  ...
+# Subtest: generic stain request does not silently mean single-pass or fastest
+ok 60 - generic stain request does not silently mean single-pass or fastest
+  ---
+  duration_ms: 1.28518
+  type: 'test'
+  ...
+# Subtest: time, pass count and single pass are distinct explicit objectives
+ok 61 - time, pass count and single pass are distinct explicit objectives
+  ---
+  duration_ms: 0.306964
+  type: 'test'
+  ...
+# Subtest: generic ranking uses same end-of-test endpoint not fastest initial pass
+ok 62 - generic ranking uses same end-of-test endpoint not fastest initial pass
+  ---
+  duration_ms: 20.604633
+  type: 'test'
+  ...
+# Subtest: terminal results after unequal numbers of passes cannot be ranked as one fixed endpoint
+ok 63 - terminal results after unequal numbers of passes cannot be ranked as one fixed endpoint
+  ---
+  duration_ms: 0.438041
+  type: 'test'
+  ...
+# Subtest: publication score combining pass speed never replaces actual final residue
+ok 64 - publication score combining pass speed never replaces actual final residue
+  ---
+  duration_ms: 0.922112
+  type: 'test'
+  ...
+# Subtest: when missing product evidence, no full-list winner is claimed
+ok 65 - when missing product evidence, no full-list winner is claimed
+  ---
+  duration_ms: 1.721458
+  type: 'test'
+  ...
+# Subtest: different laboratory or protocol not silently mixed
+ok 66 - different laboratory or protocol not silently mixed
+  ---
+  duration_ms: 0.254123
+  type: 'test'
+  ...
+# Subtest: lack of measured endpoint does not infer raking from roller feature or manufacturer specification
+ok 67 - lack of measured endpoint does not infer raking from roller feature or manufacturer specification
+  ---
+  duration_ms: 24.049193
+  type: 'test'
+  ...
+# Subtest: time comparison uses explicitly defined same removal threshold, not final-stain score
+ok 68 - time comparison uses explicitly defined same removal threshold, not final-stain score
+  ---
+  duration_ms: 0.48374
+  type: 'test'
+  ...
+# Subtest: time comparison cannot mix different removal thresholds
+ok 69 - time comparison cannot mix different removal thresholds
+  ---
+  duration_ms: 0.564902
+  type: 'test'
+  ...
+# Subtest: pass efficiency comparison demands direct count and shared threshold
+ok 70 - pass efficiency comparison demands direct count and shared threshold
+  ---
+  duration_ms: 0.346303
+  type: 'test'
+  ...
+# Subtest: unmeasured subjective adjective cannot turn into scientific percent
+ok 71 - unmeasured subjective adjective cannot turn into scientific percent
+  ---
+  duration_ms: 0.499624
+  type: 'test'
+  ...
+# Subtest: same request and facts are stable under product and evidence reorder
+ok 72 - same request and facts are stable under product and evidence reorder
+  ---
+  duration_ms: 0.232401
+  type: 'test'
+  ...
+# Subtest: two contradictory records for one product require reconciliation
+ok 73 - two contradictory records for one product require reconciliation
+  ---
+  duration_ms: 0.190498
+  type: 'test'
+  ...
+# Subtest: generic verified effectiveness is not overridden by a superior one-pass result
+ok 74 - generic verified effectiveness is not overridden by a superior one-pass result
+  ---
+  duration_ms: 3.488146
+  type: 'test'
+  ...
+# Subtest: changing the explicit goal lens permits distinct one-pass selection
+ok 75 - changing the explicit goal lens permits distinct one-pass selection
+  ---
+  duration_ms: 1.708099
+  type: 'test'
+  ...
+# Subtest: a time-efficiency lens requires a common explicit cleanliness target
+ok 76 - a time-efficiency lens requires a common explicit cleanliness target
+  ---
+  duration_ms: 7.102181
+  type: 'test'
+  ...
+# Subtest: unverified natural-language interpretation cannot be silently accepted
+ok 77 - unverified natural-language interpretation cannot be silently accepted
+  ---
+  duration_ms: 0.194954
+  type: 'test'
+  ...
+# Subtest: contract cannot silently switch goal or make manufacturer mechanism equivalent to performance
+ok 78 - contract cannot silently switch goal or make manufacturer mechanism equivalent to performance
+  ---
+  duration_ms: 0.270368
+  type: 'test'
+  ...
+# Subtest: different protocols, revisions, substrates and horizons never auto-bridge
+ok 79 - different protocols, revisions, substrates and horizons never auto-bridge
+  ---
+  duration_ms: 0.984235
+  type: 'test'
+  ...
+# Subtest: missing evidence is not treated as low performance; no false full-list winner
+ok 80 - missing evidence is not treated as low performance; no false full-list winner
+  ---
+  duration_ms: 0.205901
+  type: 'test'
+  ...
+# Subtest: manufacturer claim and descriptive review cannot satisfy measured endpoint
+ok 81 - manufacturer claim and descriptive review cannot satisfy measured endpoint
+  ---
+  duration_ms: 0.359122
+  type: 'test'
+  ...
+# Subtest: unreviewed measured number is also excluded
+ok 82 - unreviewed measured number is also excluded
+  ---
+  duration_ms: 0.347945
+  type: 'test'
+  ...
+# Subtest: same original experiment syndication does not add votes
+ok 83 - same original experiment syndication does not add votes
+  ---
+  duration_ms: 0.473995
+  type: 'test'
+  ...
+# Subtest: contradiction within an original experiment blocks ranking
+ok 84 - contradiction within an original experiment blocks ranking
+  ---
+  duration_ms: 0.275596
+  type: 'test'
+  ...
+# Subtest: more than one distinct original test needs approved synthesis, never arithmetic averaging
+ok 85 - more than one distinct original test needs approved synthesis, never arithmetic averaging
+  ---
+  duration_ms: 0.186321
+  type: 'test'
+  ...
+# Subtest: overlapping uncertainty is not a proven winner or equivalent outcome
+ok 86 - overlapping uncertainty is not a proven winner or equivalent outcome
+  ---
+  duration_ms: 0.18546
+  type: 'test'
+  ...
+# Subtest: nonoverlapping fully stated uncertainty preserves descriptive ordering
+ok 87 - nonoverlapping fully stated uncertainty preserves descriptive ordering
+  ---
+  duration_ms: 0.168404
+  type: 'test'
+  ...
+# Subtest: no assumption about uncertainty when only one product has an interval
+ok 88 - no assumption about uncertainty when only one product has an interval
+  ---
+  duration_ms: 0.168765
+  type: 'test'
+  ...
+# Subtest: same intent, same complete evidence gives exact output across candidate and source reordering
+ok 89 - same intent, same complete evidence gives exact output across candidate and source reordering
+  ---
+  duration_ms: 2.580515
+  type: 'test'
+  ...
+# Subtest: same canonical evidence fingerprint cannot depend on which measured lens is displayed
+ok 90 - same canonical evidence fingerprint cannot depend on which measured lens is displayed
+  ---
+  duration_ms: 0.451161
+  type: 'test'
+  ...
+# Subtest: dishwasher goal endpoint uses same comparator without robot-specific logic
+ok 91 - dishwasher goal endpoint uses same comparator without robot-specific logic
+  ---
+  duration_ms: 0.213893
+  type: 'test'
+  ...
+# Subtest: headphone measured ANC is supported, ANC hardware is not an independent result
+ok 92 - headphone measured ANC is supported, ANC hardware is not an independent result
+  ---
+  duration_ms: 0.17231
+  type: 'test'
+  ...
+# Subtest: source bridge explicitly refuses missing protocol metadata and mechanism features
+ok 93 - source bridge explicitly refuses missing protocol metadata and mechanism features
+  ---
+  duration_ms: 0.22493
+  type: 'test'
+  ...
+# Subtest: invalid uncertainty, protocol, URL and evidence revision fail closed
+ok 94 - invalid uncertainty, protocol, URL and evidence revision fail closed
+  ---
+  duration_ms: 1.273823
+  type: 'test'
+  ...
+# Subtest: snapshot digest is independent of object insertion order or query-level scope prose
+ok 95 - snapshot digest is independent of object insertion order or query-level scope prose
+  ---
+  duration_ms: 0.405011
+  type: 'test'
+  ...
+# Subtest: same original independent finding with contradictory unreviewed copy blocks ranking
+ok 96 - same original independent finding with contradictory unreviewed copy blocks ranking
+  ---
+  duration_ms: 0.180603
+  type: 'test'
+  ...
+# Subtest: side effect outcome is compared only under its own directly measured goal
+ok 97 - side effect outcome is compared only under its own directly measured goal
+  ---
+  duration_ms: 0.255646
+  type: 'test'
+  ...
+# Subtest: reviewed original URLs are well formed and observations have source provenance
+ok 98 - reviewed original URLs are well formed and observations have source provenance
+  ---
+  duration_ms: 1.533845
+  type: 'test'
+  ...
+# Subtest: a verified stair-ascent intention has four booth-demonstrated candidates, not a commercial ranking
+ok 99 - a verified stair-ascent intention has four booth-demonstrated candidates, not a commercial ranking
+  ---
+  duration_ms: 53.377213
+  type: 'test'
+  ...
+# Subtest: when stair tread vacuuming is requested, only Rover has independently witnessed demonstration
+ok 100 - when stair tread vacuuming is requested, only Rover has independently witnessed demonstration
+  ---
+  duration_ms: 0.502518
+  type: 'test'
+  ...
+# Subtest: MarsWalker explicitly does not clean the stair treads
+ok 101 - MarsWalker explicitly does not clean the stair treads
+  ---
+  duration_ms: 0.382628
+  type: 'test'
+  ...
+# Subtest: Dreame and MOVA exhibit transport but no verified tread-vacuuming
+ok 102 - Dreame and MOVA exhibit transport but no verified tread-vacuuming
+  ---
+  duration_ms: 0.440205
+  type: 'test'
+  ...
+# Subtest: MIGO manufacturer marketing is not independently demonstrated
+ok 103 - MIGO manufacturer marketing is not independently demonstrated
+  ---
+  duration_ms: 16.183249
+  type: 'test'
+  ...
+# Subtest: MIGO refunded campaign cannot be treated as available retail product
+ok 104 - MIGO refunded campaign cannot be treated as available retail product
+  ---
+  duration_ms: 2.293812
+  type: 'test'
+  ...
+# Subtest: retail only plus real staircase yields no VERIFIED current match
+ok 105 - retail only plus real staircase yields no VERIFIED current match
+  ---
+  duration_ms: 0.649811
+  type: 'test'
+  ...
+# Subtest: Saros 20 actual retail listing does not imply full stairs
+ok 106 - Saros 20 actual retail listing does not imply full stairs
+  ---
+  duration_ms: 0.861721
+  type: 'test'
+  ...
+# Subtest: 8.8cm is two-part geometry, not a single 8.8cm step
+ok 107 - 8.8cm is two-part geometry, not a single 8.8cm step
+  ---
+  duration_ms: 8.292087
+  type: 'test'
+  ...
+# Subtest: known two-part maximum has bounds, not independent field result
+ok 108 - known two-part maximum has bounds, not independent field result
+  ---
+  duration_ms: 9.981868
+  type: 'test'
+  ...
+# Subtest: demo source does not make domestic reliability valid
+ok 109 - demo source does not make domestic reliability valid
+  ---
+  duration_ms: 0.675059
+  type: 'test'
+  ...
+# Subtest: no original quantified stair tread cleaning exists in these sources
+ok 110 - no original quantified stair tread cleaning exists in these sources
+  ---
+  duration_ms: 0.540216
+  type: 'test'
+  ...
+# Subtest: no independent in-home autonomous transfer is established
+ok 111 - no independent in-home autonomous transfer is established
+  ---
+  duration_ms: 0.59574
+  type: 'test'
+  ...
+# Subtest: stair descent is separately proven for Rover, Eufy, Dreame but not MOVA from this source set
+ok 112 - stair descent is separately proven for Rover, Eufy, Dreame but not MOVA from this source set
+  ---
+  duration_ms: 0.594738
+  type: 'test'
+  ...
+# Subtest: even asking only for threshold does not confer staircase capability
+ok 113 - even asking only for threshold does not confer staircase capability
+  ---
+  duration_ms: 11.621913
+  type: 'test'
+  ...
+# Subtest: source fingerprint is unchanged by query lens
+ok 114 - source fingerprint is unchanged by query lens
+  ---
+  duration_ms: 0.923775
+  type: 'test'
+  ...
+# Subtest: source fingerprint and output invariant to input ordering
+ok 115 - source fingerprint and output invariant to input ordering
+  ---
+  duration_ms: 1.367204
+  type: 'test'
+  ...
+# Subtest: duplicated observations do not make a product stronger
+ok 116 - duplicated observations do not make a product stronger
+  ---
+  duration_ms: 6.335553
+  type: 'test'
+  ...
+# Subtest: cannot impersonate independent review with manufacturer source
+ok 117 - cannot impersonate independent review with manufacturer source
+  ---
+  duration_ms: 0.552383
+  type: 'test'
+  ...
+# Subtest: publisher interview prediction cannot masquerade as manufacturer source
+ok 118 - publisher interview prediction cannot masquerade as manufacturer source
+  ---
+  duration_ms: 0.215025
+  type: 'test'
+  ...
+# Subtest: a source citing an unavailable robot does not support retail sale
+ok 119 - a source citing an unavailable robot does not support retail sale
+  ---
+  duration_ms: 0.20559
+  type: 'test'
+  ...
+# Subtest: cannot relabel combined threshold as single threshold
+ok 120 - cannot relabel combined threshold as single threshold
+  ---
+  duration_ms: 0.221053
+  type: 'test'
+  ...
+# Subtest: a fabricated geometry total gets rejected
+ok 121 - a fabricated geometry total gets rejected
+  ---
+  duration_ms: 0.285891
+  type: 'test'
+  ...
+# Subtest: unsupported manufacturer inferred finding must not be marked independent lab measurement
+ok 122 - unsupported manufacturer inferred finding must not be marked independent lab measurement
+  ---
+  duration_ms: 0.194854
+  type: 'test'
+  ...
+# Subtest: a trade-show setup cannot be misrepresented as demonstrated autonomous household transfer
+ok 123 - a trade-show setup cannot be misrepresented as demonstrated autonomous household transfer
+  ---
+  duration_ms: 0.179101
+  type: 'test'
+  ...
+# Subtest: unknown sources and duplicate product identities rejected
+ok 124 - unknown sources and duplicate product identities rejected
+  ---
+  duration_ms: 0.263658
+  type: 'test'
+  ...
+# Subtest: unreviewed query string cannot be given human verified status by this comparison
+ok 125 - unreviewed query string cannot be given human verified status by this comparison
+  ---
+  duration_ms: 25.18037
+  type: 'test'
+  ...
+# Subtest: conflicting source claims create a conflict instead of a win
+ok 126 - conflicting source claims create a conflict instead of a win
+  ---
+  duration_ms: 0.752606
+  type: 'test'
+  ...
+# Subtest: real independent Saros 20 result is preserved as 57 mm one-step test, not manufacturer 8.8 cm two-part claim
+ok 127 - real independent Saros 20 result is preserved as 57 mm one-step test, not manufacturer 8.8 cm two-part claim
+  ---
+  duration_ms: 3.241393
+  type: 'test'
+  ...
+# Subtest: a purported independent measured record without a source-declared protocol must fail
+ok 128 - a purported independent measured record without a source-declared protocol must fail
+  ---
+  duration_ms: 0.270809
+  type: 'test'
+  ...
+# Subtest: a manufacturer specification cannot be relabelled as independent result
+ok 129 - a manufacturer specification cannot be relabelled as independent result
+  ---
+  duration_ms: 0.224489
+  type: 'test'
+  ...
+# Subtest: purchased Dreame X50 Ultra independent original 36mm success does not become 60mm single step
+ok 130 - purchased Dreame X50 Ultra independent original 36mm success does not become 60mm single step
+  ---
+  duration_ms: 0.981351
+  type: 'test'
+  ...
+# Subtest: MOVA 8cm claim retains two-part 4.5+3.5 geometry at a 7cm test gap
+ok 131 - MOVA 8cm claim retains two-part 4.5+3.5 geometry at a 7cm test gap
+  ---
+  duration_ms: 0.555548
+  type: 'test'
+  ...
+# Subtest: two-part composite source without published parts retains unknown component heights
+ok 132 - two-part composite source without published parts retains unknown component heights
+  ---
+  duration_ms: 0.489559
+  type: 'test'
+  ...
+# Subtest: best robot with unknown task asks one task question and shows separate cohorts
+ok 133 - best robot with unknown task asks one task question and shows separate cohorts
+  ---
+  duration_ms: 38.188195
+  type: 'test'
+  ...
+# Subtest: best value with unknown task also cannot invent combined product preference
+ok 134 - best value with unknown task also cannot invent combined product preference
+  ---
+  duration_ms: 0.776952
+  type: 'test'
+  ...
+# Subtest: vacuum focus allows competent hybrid unless it is explicitly forbidden
+ok 135 - vacuum focus allows competent hybrid unless it is explicitly forbidden
+  ---
+  duration_ms: 0.650993
+  type: 'test'
+  ...
+# Subtest: mop focus allows hybrid; a mop-only machine is eligible
+ok 136 - mop focus allows hybrid; a mop-only machine is eligible
+  ---
+  duration_ms: 3.198498
+  type: 'test'
+  ...
+# Subtest: two functions require evidence for both, not marketing class name
+ok 137 - two functions require evidence for both, not marketing class name
+  ---
+  duration_ms: 0.451602
+  type: 'test'
+  ...
+# Subtest: future and prototype machines do not join shopping ranking
+ok 138 - future and prototype machines do not join shopping ranking
+  ---
+  duration_ms: 0.293613
+  type: 'test'
+  ...
+# Subtest: advertised-only function stays unverified
+ok 139 - advertised-only function stays unverified
+  ---
+  duration_ms: 0.279432
+  type: 'test'
+  ...
+# Subtest: manufacturer performance assertion cannot make another product dominated
+ok 140 - manufacturer performance assertion cannot make another product dominated
+  ---
+  duration_ms: 0.233663
+  type: 'test'
+  ...
+# Subtest: best performance can record matching-protocol strict dominance only
+ok 141 - best performance can record matching-protocol strict dominance only
+  ---
+  duration_ms: 0.404621
+  type: 'test'
+  ...
+# Subtest: cheaper machine dominates in value only if not worse on matched outcomes
+ok 142 - cheaper machine dominates in value only if not worse on matched outcomes
+  ---
+  duration_ms: 3.894698
+  type: 'test'
+  ...
+# Subtest: cheaper but worse performance is a real tradeoff, not an automatic value winner
+ok 143 - cheaper but worse performance is a real tradeoff, not an automatic value winner
+  ---
+  duration_ms: 0.33095
+  type: 'test'
+  ...
+# Subtest: a price missing in value mode is an evidence gap, not bad value
+ok 144 - a price missing in value mode is an evidence gap, not bad value
+  ---
+  duration_ms: 0.162856
+  type: 'test'
+  ...
+# Subtest: different price observation date disqualifies a same-day value comparison
+ok 145 - different price observation date disqualifies a same-day value comparison
+  ---
+  duration_ms: 0.131598
+  type: 'test'
+  ...
+# Subtest: protocol versions cannot be silently combined for dominance
+ok 146 - protocol versions cannot be silently combined for dominance
+  ---
+  duration_ms: 0.169146
+  type: 'test'
+  ...
+# Subtest: same candidate set and revised evidence invariant under input reordering
+ok 147 - same candidate set and revised evidence invariant under input reordering
+  ---
+  duration_ms: 0.370319
+  type: 'test'
+  ...
+# Subtest: absolute missing source metadata rejected
+ok 148 - absolute missing source metadata rejected
+  ---
+  duration_ms: 0.257148
+  type: 'test'
+  ...
+# Subtest: incompatible currency or market rejected
+ok 149 - incompatible currency or market rejected
+  ---
+  duration_ms: 0.148934
+  type: 'test'
+  ...
+# Subtest: unknown hardware cannot satisfy an explicit hardware exclusion
+ok 150 - unknown hardware cannot satisfy an explicit hardware exclusion
+  ---
+  duration_ms: 6.731161
+  type: 'test'
+  ...
+# Subtest: user confirmation reference and contradicted exclusion policy required
+ok 151 - user confirmation reference and contradicted exclusion policy required
+  ---
+  duration_ms: 0.156657
+  type: 'test'
+  ...
+# Subtest: uncertain bounds can prevent a claimed quality dominance
+ok 152 - uncertain bounds can prevent a claimed quality dominance
+  ---
+  duration_ms: 0.228805
+  type: 'test'
+  ...
+# Subtest: a missing mop measurement prevents full combined quality dominance
+ok 153 - a missing mop measurement prevents full combined quality dominance
+  ---
+  duration_ms: 0.235986
+  type: 'test'
+  ...
+# Subtest: explicit hardware exclusions must not conflict with the requested task
+ok 154 - explicit hardware exclusions must not conflict with the requested task
+  ---
+  duration_ms: 0.698625
+  type: 'test'
+  ...
+# Subtest: explicit general request does not force clarification or invent 2in1 preference
+ok 155 - explicit general request does not force clarification or invent 2in1 preference
+  ---
+  duration_ms: 25.562687
+  type: 'test'
+  ...
+# Subtest: general best value has best performance secondary
+ok 156 - general best value has best performance secondary
+  ---
+  duration_ms: 25.135893
+  type: 'test'
+  ...
+# Subtest: personal task restricts to requested scope without made-up preferences
+ok 157 - personal task restricts to requested scope without made-up preferences
+  ---
+  duration_ms: 0.643171
+  type: 'test'
+  ...
+# Subtest: personal undecided asks targeted question while preserving provisional scope views
+ok 158 - personal undecided asks targeted question while preserving provisional scope views
+  ---
+  duration_ms: 1.225009
+  type: 'test'
+  ...
+# Subtest: non-combined cleaners remain valid within their specialist lane
+ok 159 - non-combined cleaners remain valid within their specialist lane
+  ---
+  duration_ms: 8.357926
+  type: 'test'
+  ...
+# Subtest: combined devices remain eligible for single tasks
+ok 160 - combined devices remain eligible for single tasks
+  ---
+  duration_ms: 4.944043
+  type: 'test'
+  ...
+# Subtest: cheap model below minimum cannot win value merely for low price
+ok 161 - cheap model below minimum cannot win value merely for low price
+  ---
+  duration_ms: 1.169936
+  type: 'test'
+  ...
+# Subtest: missing price affects value lens only, not measured quality
+ok 162 - missing price affects value lens only, not measured quality
+  ---
+  duration_ms: 1.494626
+  type: 'test'
+  ...
+# Subtest: future announcements not currently eligible even if benchmark numbers supplied
+ok 163 - future announcements not currently eligible even if benchmark numbers supplied
+  ---
+  duration_ms: 2.579143
+  type: 'test'
+  ...
+# Subtest: mandatory outcome missing is insufficient evidence rather than product failure
+ok 164 - mandatory outcome missing is insufficient evidence rather than product failure
+  ---
+  duration_ms: 1.240903
+  type: 'test'
+  ...
+# Subtest: nonmandatory flashy features never confer performance points or eligibility
+ok 165 - nonmandatory flashy features never confer performance points or eligibility
+  ---
+  duration_ms: 13.573789
+  type: 'test'
+  ...
+# Subtest: thresholds and requirements cannot be omitted as a covert value trick
+ok 166 - thresholds and requirements cannot be omitted as a covert value trick
+  ---
+  duration_ms: 0.652414
+  type: 'test'
+  ...
+# Subtest: combined baseline must cover aspirating and mopping endpoints
+ok 167 - combined baseline must cover aspirating and mopping endpoints
+  ---
+  duration_ms: 0.2717
+  type: 'test'
+  ...
+# Subtest: expert baseline requires verifiable URLs and nonempty revision
+ok 168 - expert baseline requires verifiable URLs and nonempty revision
+  ---
+  duration_ms: 0.601488
+  type: 'test'
+  ...
+# Subtest: one criterion cannot appear twice in the same policy
+ok 169 - one criterion cannot appear twice in the same policy
+  ---
+  duration_ms: 0.177638
+  type: 'test'
+  ...
+# Subtest: no silent true absence: unspecified or undocumented outcomes withheld
+ok 170 - no silent true absence: unspecified or undocumented outcomes withheld
+  ---
+  duration_ms: 1.274824
+  type: 'test'
+  ...
+# Subtest: known explicit exclusions stay hard in both general and personal mode
+ok 171 - known explicit exclusions stay hard in both general and personal mode
+  ---
+  duration_ms: 9.088769
+  type: 'test'
+  ...
+# Subtest: source neutral ordering: input product permutation does not alter results or snapshot key
+ok 172 - source neutral ordering: input product permutation does not alter results or snapshot key
+  ---
+  duration_ms: 3.61069
+  type: 'test'
+  ...
+# Subtest: same verified intent different language provenance yields identical outcome
+ok 173 - same verified intent different language provenance yields identical outcome
+  ---
+  duration_ms: 3.651482
+  type: 'test'
+  ...
+# Subtest: no full winner claims permitted from partial review data
+ok 174 - no full winner claims permitted from partial review data
+  ---
+  duration_ms: 1.263016
+  type: 'test'
+  ...
+# Subtest: missing user evidence frame rejected
+ok 175 - missing user evidence frame rejected
+  ---
+  duration_ms: 0.129736
+  type: 'test'
+  ...
+# Subtest: general with expressly specified cleaning scope stays in that lane
+ok 176 - general with expressly specified cleaning scope stays in that lane
+  ---
+  duration_ms: 0.425362
+  type: 'test'
+  ...
+# Subtest: general no-mop constraint does not illicitly rank mopping panels
+ok 177 - general no-mop constraint does not illicitly rank mopping panels
+  ---
+  duration_ms: 0.302276
+  type: 'test'
+  ...
+# Subtest: self-contradictory scope and hardware requirement fails closed
+ok 178 - self-contradictory scope and hardware requirement fails closed
+  ---
+  duration_ms: 1.542168
+  type: 'test'
+  ...
+# Subtest: autonomy is its own lens, retaining both performance and value alternatives
+ok 179 - autonomy is its own lens, retaining both performance and value alternatives
+  ---
+  duration_ms: 55.839636
+  type: 'test'
+  ...
+# Subtest: reviewed quality floor prevents empty-but-ineffective robot from winning
+ok 180 - reviewed quality floor prevents empty-but-ineffective robot from winning
+  ---
+  duration_ms: 24.642273
+  type: 'test'
+  ...
+# Subtest: observed interventions and maintenance produce strict comparable dominance
+ok 181 - observed interventions and maintenance produce strict comparable dominance
+  ---
+  duration_ms: 1.803062
+  type: 'test'
+  ...
+# Subtest: different automation tradeoffs have no fabricated numeric tie-breaker
+ok 182 - different automation tradeoffs have no fabricated numeric tie-breaker
+  ---
+  duration_ms: 0.840699
+  type: 'test'
+  ...
+# Subtest: no full autonomy winner claim even when partial dominance exists
+ok 183 - no full autonomy winner claim even when partial dominance exists
+  ---
+  duration_ms: 1.150887
+  type: 'test'
+  ...
+# Subtest: unevaluated product remains missing evidence rather than bad autonomy
+ok 184 - unevaluated product remains missing evidence rather than bad autonomy
+  ---
+  duration_ms: 4.883042
+  type: 'test'
+  ...
+# Subtest: a manufacturer claim cannot replace observed minutes or intervention rates
+ok 185 - a manufacturer claim cannot replace observed minutes or intervention rates
+  ---
+  duration_ms: 0.845796
+  type: 'test'
+  ...
+# Subtest: feature-rich metadata does not change ranking
+ok 186 - feature-rich metadata does not change ranking
+  ---
+  duration_ms: 6.555806
+  type: 'test'
+  ...
+# Subtest: missing routine maintenance is unknown, never assumed zero
+ok 187 - missing routine maintenance is unknown, never assumed zero
+  ---
+  duration_ms: 0.760347
+  type: 'test'
+  ...
+# Subtest: short expo demo cannot prove low-intervention 30-day autonomy
+ok 188 - short expo demo cannot prove low-intervention 30-day autonomy
+  ---
+  duration_ms: 0.78162
+  type: 'test'
+  ...
+# Subtest: different protocol revision not harmonized from same-looking units
+ok 189 - different protocol revision not harmonized from same-looking units
+  ---
+  duration_ms: 2.095483
+  type: 'test'
+  ...
+# Subtest: different home conditions cannot silently be pooled
+ok 190 - different home conditions cannot silently be pooled
+  ---
+  duration_ms: 0.803253
+  type: 'test'
+  ...
+# Subtest: different cleaning tasks cannot silently be compared
+ok 191 - different cleaning tasks cannot silently be compared
+  ---
+  duration_ms: 0.770734
+  type: 'test'
+  ...
+# Subtest: mismatched SKU evidence binding is explicitly blocked
+ok 192 - mismatched SKU evidence binding is explicitly blocked
+  ---
+  duration_ms: 0.903815
+  type: 'test'
+  ...
+# Subtest: unadjudicated source identity is blocked
+ok 193 - unadjudicated source identity is blocked
+  ---
+  duration_ms: 0.43027
+  type: 'test'
+  ...
+# Subtest: unknown source outside reviewed policy cannot be treated as independent evidence
+ok 194 - unknown source outside reviewed policy cannot be treated as independent evidence
+  ---
+  duration_ms: 0.4371
+  type: 'test'
+  ...
+# Subtest: duplicate observations are ambiguous, not cherry-picked
+ok 195 - duplicate observations are ambiguous, not cherry-picked
+  ---
+  duration_ms: 0.648279
+  type: 'test'
+  ...
+# Subtest: overlapping uncertainty intervals block dominance
+ok 196 - overlapping uncertainty intervals block dominance
+  ---
+  duration_ms: 0.653296
+  type: 'test'
+  ...
+# Subtest: identical observed outcomes produce unresolved indistinguishability, not a forced winner
+ok 197 - identical observed outcomes produce unresolved indistinguishability, not a forced winner
+  ---
+  duration_ms: 0.407665
+  type: 'test'
+  ...
+# Subtest: different input order does not change comparison or hash
+ok 198 - different input order does not change comparison or hash
+  ---
+  duration_ms: 1.108543
+  type: 'test'
+  ...
+# Subtest: equivalent human-verified general and personal intents do not rewrite observed evidence
+ok 199 - equivalent human-verified general and personal intents do not rewrite observed evidence
+  ---
+  duration_ms: 1.110256
+  type: 'test'
+  ...
+# Subtest: qualitative obstacle avoidance result cannot substitute numeric rescue observations
+ok 200 - qualitative obstacle avoidance result cannot substitute numeric rescue observations
+  ---
+  duration_ms: 0.479724
+  type: 'test'
+  ...
+# Subtest: negative workload and impossible completion rates are rejected
+ok 201 - negative workload and impossible completion rates are rejected
+  ---
+  duration_ms: 1.76858
+  type: 'test'
+  ...
+# Subtest: meaningless 0-day sample is rejected by research policy horizon
+ok 202 - meaningless 0-day sample is rejected by research policy horizon
+  ---
+  duration_ms: 0.394385
+  type: 'test'
+  ...
+# Subtest: no disguised cheap-quality score when task quality fails
+ok 203 - no disguised cheap-quality score when task quality fails
+  ---
+  duration_ms: 0.618524
+  type: 'test'
+  ...
+# Subtest: policy cannot omit routine or unplanned maintenance just to crown a favorite
+ok 204 - policy cannot omit routine or unplanned maintenance just to crown a favorite
+  ---
+  duration_ms: 0.484692
+  type: 'test'
+  ...
+# Subtest: policy must identify its use context, original source and version
+ok 205 - policy must identify its use context, original source and version
+  ---
+  duration_ms: 0.569881
+  type: 'test'
+  ...
+# Subtest: comparison requires reviewed phase120 frame not a fabricated winner claim
+ok 206 - comparison requires reviewed phase120 frame not a fabricated winner claim
+  ---
+  duration_ms: 4.950072
+  type: 'test'
+  ...
+# Subtest: duplicate autonomous records for the same exact variant and lane fail closed
+ok 207 - duplicate autonomous records for the same exact variant and lane fail closed
+  ---
+  duration_ms: 0.378712
+  type: 'test'
+  ...
+# Subtest: invalid metric name or manipulated direction cannot create a winner
+ok 208 - invalid metric name or manipulated direction cannot create a winner
+  ---
+  duration_ms: 0.370269
+  type: 'test'
+  ...
+# Subtest: optional preparation work can be made mandatory only through explicit revised policy
+ok 209 - optional preparation work can be made mandatory only through explicit revised policy
+  ---
+  duration_ms: 0.501107
+  type: 'test'
+  ...
+# Subtest: unmatched variant id must not enter reviewed comparison
+ok 210 - unmatched variant id must not enter reviewed comparison
+  ---
+  duration_ms: 0.40369
+  type: 'test'
+  ...
+# Subtest: different observation exposure does not create a made-up comparable rate
+ok 211 - different observation exposure does not create a made-up comparable rate
+  ---
+  duration_ms: 0.491572
+  type: 'test'
+  ...
+# Subtest: record feature count can change input hash without altering inferred pair ranking
+ok 212 - record feature count can change input hash without altering inferred pair ranking
+  ---
+  duration_ms: 3.772043
+  type: 'test'
+  ...
+# Subtest: none of the original phase120 source facts or lens order is mutated
+ok 213 - none of the original phase120 source facts or lens order is mutated
+  ---
+  duration_ms: 0.582679
+  type: 'test'
+  ...
+# Subtest: an unfiltered general best-autonomy question preserves separate vacuum mop and combined lanes
+ok 214 - an unfiltered general best-autonomy question preserves separate vacuum mop and combined lanes
+  ---
+  duration_ms: 0.700628
+  type: 'test'
+  ...
+# Subtest: local native retriever finds expert-method candidate before unrelated text
+ok 215 - local native retriever finds expert-method candidate before unrelated text
+  ---
+  duration_ms: 12.756196
+  type: 'test'
+  ...
+# Subtest: rights-unreviewed content never enters local fulltext index
+ok 216 - rights-unreviewed content never enters local fulltext index
+  ---
+  duration_ms: 0.514126
+  type: 'test'
+  ...
+# Subtest: no passages means no hallucinated retrieval hits
+ok 217 - no passages means no hallucinated retrieval hits
+  ---
+  duration_ms: 0.305541
+  type: 'test'
+  ...
+# Subtest: retrieval results are deterministic under document permutation
+ok 218 - retrieval results are deterministic under document permutation
+  ---
+  duration_ms: 2.73581
+  type: 'test'
+  ...
+# Subtest: duplicate passage ids and untrusted malformed records are rejected
+ok 219 - duplicate passage ids and untrusted malformed records are rejected
+  ---
+  duration_ms: 0.473675
+  type: 'test'
+  ...
+# Subtest: unprepared autonomy query preserves missing category absent confirmed context
+ok 220 - unprepared autonomy query preserves missing category absent confirmed context
+  ---
+  duration_ms: 2.203086
+  type: 'test'
+  ...
+# Subtest: verified conversation category disambiguates robot without inventing user preferences
+ok 221 - verified conversation category disambiguates robot without inventing user preferences
+  ---
+  duration_ms: 0.526044
+  type: 'test'
+  ...
+# Subtest: Italian paraphrases yield same evidence obligations under same verified context
+ok 222 - Italian paraphrases yield same evidence obligations under same verified context
+  ---
+  duration_ms: 2.379852
+  type: 'test'
+  ...
+# Subtest: English autonomy intent has equivalent research obligations
+ok 223 - English autonomy intent has equivalent research obligations
+  ---
+  duration_ms: 0.478112
+  type: 'test'
+  ...
+# Subtest: the interpreter makes no phantom category assumption from standalone robot
+ok 224 - the interpreter makes no phantom category assumption from standalone robot
+  ---
+  duration_ms: 0.416398
+  type: 'test'
+  ...
+# Subtest: explicit category is recognized without conversation
+ok 225 - explicit category is recognized without conversation
+  ---
+  duration_ms: 0.956714
+  type: 'test'
+  ...
+# Subtest: value request does not silently collapse to generic best or require personal scope
+ok 226 - value request does not silently collapse to generic best or require personal scope
+  ---
+  duration_ms: 0.382827
+  type: 'test'
+  ...
+# Subtest: personal needs do not rewrite ontology or imply price preference
+ok 227 - personal needs do not rewrite ontology or imply price preference
+  ---
+  duration_ms: 0.256427
+  type: 'test'
+  ...
+# Subtest: negated features are not treated as positive scope requirements
+ok 228 - negated features are not treated as positive scope requirements
+  ---
+  duration_ms: 0.576941
+  type: 'test'
+  ...
+# Subtest: unsupported novel objective must not be guessed as a quality criterion
+ok 229 - unsupported novel objective must not be guessed as a quality criterion
+  ---
+  duration_ms: 0.499384
+  type: 'test'
+  ...
+# Subtest: autonomy evidence gap is not silently replaced by advertised dock features
+ok 230 - autonomy evidence gap is not silently replaced by advertised dock features
+  ---
+  duration_ms: 0.288115
+  type: 'test'
+  ...
+# Subtest: policy and protocol statuses cannot be faked by a coverage metric flag
+ok 231 - policy and protocol statuses cannot be faked by a coverage metric flag
+  ---
+  duration_ms: 0.274624
+  type: 'test'
+  ...
+# Subtest: full caller-reported coverage still cannot grant ranking or market exhaustion
+ok 232 - full caller-reported coverage still cannot grant ranking or market exhaustion
+  ---
+  duration_ms: 0.18544
+  type: 'test'
+  ...
+# Subtest: unknown cost is not silently converted to zero
+ok 233 - unknown cost is not silently converted to zero
+  ---
+  duration_ms: 0.19199
+  type: 'test'
+  ...
+# Subtest: invalid coverage is rejected instead of used as evidence
+ok 234 - invalid coverage is rejected instead of used as evidence
+  ---
+  duration_ms: 0.493004
+  type: 'test'
+  ...
+# Subtest: same query and evidence state yields deterministic plans
+ok 235 - same query and evidence state yields deterministic plans
+  ---
+  duration_ms: 0.427105
+  type: 'test'
+  ...
+# Subtest: best robot for autonomy is autonomy first, not two incompatible objectives
+ok 236 - best robot for autonomy is autonomy first, not two incompatible objectives
+  ---
+  duration_ms: 0.24558
+  type: 'test'
+  ...
+# Subtest: best robots requiring least intervention is one autonomy objective
+ok 237 - best robots requiring least intervention is one autonomy objective
+  ---
+  duration_ms: 4.344999
+  type: 'test'
+  ...
+# Subtest: two explicitly enumerated requests cannot collapse into value only
+ok 238 - two explicitly enumerated requests cannot collapse into value only
+  ---
+  duration_ms: 0.259812
+  type: 'test'
+  ...
+# Subtest: known local sources can provide candidates for an unresolved novel goal
+ok 239 - known local sources can provide candidates for an unresolved novel goal
+  ---
+  duration_ms: 40.80972
+  type: 'test'
+  ...
+# Subtest: local hits do not constitute verified evidence even when all keywords match
+ok 240 - local hits do not constitute verified evidence even when all keywords match
+  ---
+  duration_ms: 2.262497
+  type: 'test'
+  ...
+# Subtest: empty local corpus leads to new source acquisition, not fabricated facts
+ok 241 - empty local corpus leads to new source acquisition, not fabricated facts
+  ---
+  duration_ms: 1.701509
+  type: 'test'
+  ...
+# Subtest: negated unknown requests do not cause speculative discovery
+ok 242 - negated unknown requests do not cause speculative discovery
+  ---
+  duration_ms: 5.853569
+  type: 'test'
+  ...
+# Subtest: retrieval is deterministic and rights-unreviewed passages excluded
+ok 243 - retrieval is deterministic and rights-unreviewed passages excluded
+  ---
+  duration_ms: 1.666727
+  type: 'test'
+  ...
+# Subtest: untrusted malformed passage records are rejected by existing local index
+ok 244 - untrusted malformed passage records are rejected by existing local index
+  ---
+  duration_ms: 2.485963
+  type: 'test'
+  ...
+# Subtest: training is entirely local and deterministic for the same frozen samples
+ok 245 - training is entirely local and deterministic for the same frozen samples
+  ---
+  duration_ms: 1416.033262
+  type: 'test'
+  ...
+# Subtest: model training and evaluation samples are disjoint
+ok 246 - model training and evaluation samples are disjoint
+  ---
+  duration_ms: 0.276908
+  type: 'test'
+  ...
+# Subtest: model reports similarity and margin, never manufactured confidence
+ok 247 - model reports similarity and margin, never manufactured confidence
+  ---
+  duration_ms: 14.543491
+  type: 'test'
+  ...
+# Subtest: no floor robot category is guessed for generic robots without context
+ok 248 - no floor robot category is guessed for generic robots without context
+  ---
+  duration_ms: 1.336938
+  type: 'test'
+  ...
+# Subtest: explicit robot cleaner category may ground scope without conversation history
+ok 249 - explicit robot cleaner category may ground scope without conversation history
+  ---
+  duration_ms: 1.168765
+  type: 'test'
+  ...
+# Subtest: negation is a constraint review even when classifier would recognize a goal
+ok 250 - negation is a constraint review even when classifier would recognize a goal
+  ---
+  duration_ms: 2.064968
+  type: 'test'
+  ...
+# Subtest: multiple independent requested rankings are not silently merged
+ok 251 - multiple independent requested rankings are not silently merged
+  ---
+  duration_ms: 1.86739
+  type: 'test'
+  ...
+# Subtest: other-domain questions do not become product recommendations
+ok 252 - other-domain questions do not become product recommendations
+  ---
+  duration_ms: 8.669401
+  type: 'test'
+  ...
+# Subtest: novel capability has only an evidence-research proposal, no inferred mechanism
+ok 253 - novel capability has only an evidence-research proposal, no inferred mechanism
+  ---
+  duration_ms: 1.396218
+  type: 'test'
+  ...
+# Subtest: unknown request may investigate what user means rather than invent winner
+ok 254 - unknown request may investigate what user means rather than invent winner
+  ---
+  duration_ms: 7.53041
+  type: 'test'
+  ...
+# Subtest: the best-value branch inherits cost and price evidence obligations
+ok 255 - the best-value branch inherits cost and price evidence obligations
+  ---
+  duration_ms: 1.338871
+  type: 'test'
+  ...
+# Subtest: research hints do not imply source acquisition or evidence verification
+ok 256 - research hints do not imply source acquisition or evidence verification
+  ---
+  duration_ms: 1.404761
+  type: 'test'
+  ...
+# Subtest: no training duplicate by normalized string
+ok 257 - no training duplicate by normalized string
+  ---
+  duration_ms: 3.67567
+  type: 'test'
+  ...
+# Subtest: training rejects class scarcity
+ok 258 - training rejects class scarcity
+  ---
+  duration_ms: 0.469108
+  type: 'test'
+  ...
+# Subtest: calibration must not contain training examples
+ok 259 - calibration must not contain training examples
+  ---
+  duration_ms: 26.701749
+  type: 'test'
+  ...
+# Subtest: question length and coverage are validated
+ok 260 - question length and coverage are validated
+  ---
+  duration_ms: 0.227744
+  type: 'test'
+  ...
+# Subtest: same normalized reformulation is stable and lacks any public ranking
+ok 261 - same normalized reformulation is stable and lacks any public ranking
+  ---
+  duration_ms: 1.511342
+  type: 'test'
+  ...
+# Subtest: verified conversation context resolves elliptical references without guessing new domain
+ok 262 - verified conversation context resolves elliptical references without guessing new domain
+  ---
+  duration_ms: 0.851916
+  type: 'test'
+  ...
+# Subtest: an explicit different known category blocks floor-cleaner context inference
+ok 263 - an explicit different known category blocks floor-cleaner context inference
+  ---
+  duration_ms: 0.797885
+  type: 'test'
+  ...
+# Subtest: capability query never turns raw query words into a verified cleaning result
+ok 264 - capability query never turns raw query words into a verified cleaning result
+  ---
+  duration_ms: 0.775842
+  type: 'test'
+  ...
+# Subtest: ranking remains blocked even when caller reports all known metric bits
+ok 265 - ranking remains blocked even when caller reports all known metric bits
+  ---
+  duration_ms: 19.706236
+  type: 'test'
+  ...
+# Subtest: preserves bounded Phase122 alternative when native learner abstains
+ok 266 - preserves bounded Phase122 alternative when native learner abstains
+  ---
+  duration_ms: 1.275386
+  type: 'test'
+  ...
+# Subtest: a rule-based alternative cannot silently override a contradictory learned intent
+ok 267 - a rule-based alternative cannot silently override a contradictory learned intent
+  ---
+  duration_ms: 0.993731
+  type: 'test'
+  ...
+# Subtest: truly empty corpus: autonomous attempt returns missing-source step and cannot rank
+ok 268 - truly empty corpus: autonomous attempt returns missing-source step and cannot rank
+  ---
+  duration_ms: 32.119218
+  type: 'test'
+  ...
+# Subtest: source-less autonomy question inherits validated legacy research obligations only as hypotheses
+ok 269 - source-less autonomy question inherits validated legacy research obligations only as hypotheses
+  ---
+  duration_ms: 2.017787
+  type: 'test'
+  ...
+# Subtest: real editorial notes enable candidate retrieval, not capability certification
+ok 270 - real editorial notes enable candidate retrieval, not capability certification
+  ---
+  duration_ms: 16.943594
+  type: 'test'
+  ...
+# Subtest: reordering local passages changes neither state nor retrieved evidence
+ok 271 - reordering local passages changes neither state nor retrieved evidence
+  ---
+  duration_ms: 10.679756
+  type: 'test'
+  ...
+# Subtest: even exact manually attested source match does not authenticate a webpage
+ok 272 - even exact manually attested source match does not authenticate a webpage
+  ---
+  duration_ms: 0.247363
+  type: 'test'
+  ...
+# Subtest: misattributed product is quarantined (phase118 observed vulnerability)
+ok 273 - misattributed product is quarantined (phase118 observed vulnerability)
+  ---
+  duration_ms: 0.16528
+  type: 'test'
+  ...
+# Subtest: tampered text fails digest pinning
+ok 274 - tampered text fails digest pinning
+  ---
+  duration_ms: 0.115314
+  type: 'test'
+  ...
+# Subtest: url and publisher swapping fails source binding
+ok 275 - url and publisher swapping fails source binding
+  ---
+  duration_ms: 0.217618
+  type: 'test'
+  ...
+# Subtest: duplicate anchors cannot count as a unique verification
+ok 276 - duplicate anchors cannot count as a unique verification
+  ---
+  duration_ms: 0.291751
+  type: 'test'
+  ...
+# Subtest: rights unreviewed prohibits source passage attestation
+ok 277 - rights unreviewed prohibits source passage attestation
+  ---
+  duration_ms: 6.863754
+  type: 'test'
+  ...
+# Subtest: negation forces review before automatic research
+ok 278 - negation forces review before automatic research
+  ---
+  duration_ms: 1.259722
+  type: 'test'
+  ...
+# Subtest: unknown product category cannot inherit floor robot assumptions
+ok 279 - unknown product category cannot inherit floor robot assumptions
+  ---
+  duration_ms: 1.327865
+  type: 'test'
+  ...
+# Subtest: authentic question fixture is sourced, unique and not leaked into model training
+ok 280 - authentic question fixture is sourced, unique and not leaked into model training
+  ---
+  duration_ms: 0.254484
+  type: 'test'
+  ...
+# Subtest: empty approval registry cannot initiate web discovery or attest evidence
+ok 281 - empty approval registry cannot initiate web discovery or attest evidence
+  ---
+  duration_ms: 5.610402
+  type: 'test'
+  ...
+# Subtest: an approved fixture can invoke first-party source discovery without promoting URLs to evidence
+ok 282 - an approved fixture can invoke first-party source discovery without promoting URLs to evidence
+  ---
+  duration_ms: 15.551111
+  type: 'test'
+  ...
+# Subtest: unreviewed rights or expired robots record blocks even mocked sitemap discovery
+ok 283 - unreviewed rights or expired robots record blocks even mocked sitemap discovery
+  ---
+  duration_ms: 2.200563
+  type: 'test'
+  ...
+1..283
+# tests 283
+# suites 0
+# pass 283
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3843.846488

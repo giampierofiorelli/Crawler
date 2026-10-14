@@ -1,0 +1,1000 @@
+TAP version 13
+# Subtest: recovers explicit model reference across paragraph despite an intervening programme
+ok 1 - recovers explicit model reference across paragraph despite an intervening programme
+  ---
+  duration_ms: 30.044966
+  type: 'test'
+  ...
+# Subtest: recovers player forward through several sentences, without equating disc transport
+ok 2 - recovers player forward through several sentences, without equating disc transport
+  ---
+  duration_ms: 16.809982
+  type: 'test'
+  ...
+# Subtest: recovers textual coffee-product reference but segregates manufacturer channel
+ok 3 - recovers textual coffee-product reference but segregates manufacturer channel
+  ---
+  duration_ms: 2.275937
+  type: 'test'
+  ...
+# Subtest: retains abstention when two products compete
+ok 4 - retains abstention when two products compete
+  ---
+  duration_ms: 52.975871
+  type: 'test'
+  ...
+# Subtest: retains variant ambiguity
+ok 5 - retains variant ambiguity
+  ---
+  duration_ms: 6.794781
+  type: 'test'
+  ...
+# Subtest: bare it remains unresolved when components might be referents
+ok 6 - bare it remains unresolved when components might be referents
+  ---
+  duration_ms: 1.443029
+  type: 'test'
+  ...
+# Subtest: basket and sensor do not permit pronoun attribution
+ok 7 - basket and sensor do not permit pronoun attribution
+  ---
+  duration_ms: 4.718274
+  type: 'test'
+  ...
+# Subtest: comparison target after this TV is not assumed to be the described TV
+ok 8 - comparison target after this TV is not assumed to be the described TV
+  ---
+  duration_ms: 0.447455
+  type: 'test'
+  ...
+# Subtest: comparison target after this player is blocked
+ok 9 - comparison target after this player is blocked
+  ---
+  duration_ms: 1.14568
+  type: 'test'
+  ...
+# Subtest: other player contrast between mention and named anchor blocks
+ok 10 - other player contrast between mention and named anchor blocks
+  ---
+  duration_ms: 4.248505
+  type: 'test'
+  ...
+# Subtest: forward mention cannot blindly ignore prior named product
+ok 11 - forward mention cannot blindly ignore prior named product
+  ---
+  duration_ms: 2.392082
+  type: 'test'
+  ...
+# Subtest: future competing names block a sole-target assumption
+ok 12 - future competing names block a sole-target assumption
+  ---
+  duration_ms: 0.481487
+  type: 'test'
+  ...
+# Subtest: the same named model written twice is textual, not verified physical identity
+ok 13 - the same named model written twice is textual, not verified physical identity
+  ---
+  duration_ms: 0.817464
+  type: 'test'
+  ...
+# Subtest: forward search never crosses into later paragraph
+ok 14 - forward search never crosses into later paragraph
+  ---
+  duration_ms: 0.308856
+  type: 'test'
+  ...
+# Subtest: forward search respects distance budget and does not silently attach
+ok 15 - forward search respects distance budget and does not silently attach
+  ---
+  duration_ms: 5.645794
+  type: 'test'
+  ...
+# Subtest: pronoun is not upgraded even with one nearby model
+ok 16 - pronoun is not upgraded even with one nearby model
+  ---
+  duration_ms: 18.111257
+  type: 'test'
+  ...
+# Subtest: recognition is independent of repeated execution
+ok 17 - recognition is independent of repeated execution
+  ---
+  duration_ms: 2.591433
+  type: 'test'
+  ...
+# Subtest: all outputs preserve source hash and source references
+ok 18 - all outputs preserve source hash and source references
+  ---
+  duration_ms: 0.365692
+  type: 'test'
+  ...
+# Subtest: reject forged source digest
+ok 19 - reject forged source digest
+  ---
+  duration_ms: 0.361606
+  type: 'test'
+  ...
+# Subtest: reject invalid candidate budgets
+ok 20 - reject invalid candidate budgets
+  ---
+  duration_ms: 0.203267
+  type: 'test'
+  ...
+# Subtest: source original phase149 graph is not mutated by recovery
+ok 21 - source original phase149 graph is not mutated by recovery
+  ---
+  duration_ms: 0.664884
+  type: 'test'
+  ...
+# Subtest: out-of-domain generic mention still needs a named source
+ok 22 - out-of-domain generic mention still needs a named source
+  ---
+  duration_ms: 0.312863
+  type: 'test'
+  ...
+# Subtest: unsupported bare demonstrative does not become product identity
+ok 23 - unsupported bare demonstrative does not become product identity
+  ---
+  duration_ms: 6.0662
+  type: 'test'
+  ...
+# Subtest: unindexed spaced model code blocks unsafe forward link
+ok 24 - unindexed spaced model code blocks unsafe forward link
+  ---
+  duration_ms: 0.657894
+  type: 'test'
+  ...
+# Subtest: catch Sony BRAVIA 9 II unindexed competitor of LG C6 2026
+ok 25 - catch Sony BRAVIA 9 II unindexed competitor of LG C6 2026
+  ---
+  duration_ms: 54.04794
+  type: 'test'
+  ...
+# Subtest: a suffix to the already indexed model is not a separate competing product
+ok 26 - a suffix to the already indexed model is not a separate competing product
+  ---
+  duration_ms: 14.33152
+  type: 'test'
+  ...
+# Subtest: catch unindexed Marantz CD 70 as possible competitor
+ok 27 - catch unindexed Marantz CD 70 as possible competitor
+  ---
+  duration_ms: 0.881861
+  type: 'test'
+  ...
+# Subtest: simple direct model mention retains original tentative reference only
+ok 28 - simple direct model mention retains original tentative reference only
+  ---
+  duration_ms: 9.908992
+  type: 'test'
+  ...
+# Subtest: numbered series can flag a separately named lineup
+ok 29 - numbered series can flag a separately named lineup
+  ---
+  duration_ms: 1.35763
+  type: 'test'
+  ...
+# Subtest: review mode HDR 1000 is not mistaken for a commercial product
+ok 30 - review mode HDR 1000 is not mistaken for a commercial product
+  ---
+  duration_ms: 0.845847
+  type: 'test'
+  ...
+# Subtest: Heavy Duty cycle does not become a product
+ok 31 - Heavy Duty cycle does not become a product
+  ---
+  duration_ms: 0.396959
+  type: 'test'
+  ...
+# Subtest: measurements like 60 dB are not products
+ok 32 - measurements like 60 dB are not products
+  ---
+  duration_ms: 45.59716
+  type: 'test'
+  ...
+# Subtest: another model in an unrelated paragraph does not block the local link
+ok 33 - another model in an unrelated paragraph does not block the local link
+  ---
+  duration_ms: 2.03996
+  type: 'test'
+  ...
+# Subtest: non-technical product name without digits remains a declared blind spot
+ok 34 - non-technical product name without digits remains a declared blind spot
+  ---
+  duration_ms: 4.899778
+  type: 'test'
+  ...
+# Subtest: existing abstentions are never upgraded to candidate decisions
+ok 35 - existing abstentions are never upgraded to candidate decisions
+  ---
+  duration_ms: 0.503179
+  type: 'test'
+  ...
+# Subtest: local model competition triggers abstention in longer multi-paragraph constructed text
+ok 36 - local model competition triggers abstention in longer multi-paragraph constructed text
+  ---
+  duration_ms: 1.036404
+  type: 'test'
+  ...
+# Subtest: cannot promote a source mention to an authenticated commercial identity
+ok 37 - cannot promote a source mention to an authenticated commercial identity
+  ---
+  duration_ms: 0.464731
+  type: 'test'
+  ...
+# Subtest: source spans remain byte-exact character offsets and hashes
+ok 38 - source spans remain byte-exact character offsets and hashes
+  ---
+  duration_ms: 0.460616
+  type: 'test'
+  ...
+# Subtest: tampered document digest rejected by original source gate
+ok 39 - tampered document digest rejected by original source gate
+  ---
+  duration_ms: 0.314825
+  type: 'test'
+  ...
+# Subtest: scanner rejects swapped baseline document identity
+ok 40 - scanner rejects swapped baseline document identity
+  ---
+  duration_ms: 0.236738
+  type: 'test'
+  ...
+# Subtest: invalid cap rejected
+ok 41 - invalid cap rejected
+  ---
+  duration_ms: 8.305321
+  type: 'test'
+  ...
+# Subtest: zero auto-trust for reviewed page alias
+ok 42 - zero auto-trust for reviewed page alias
+  ---
+  duration_ms: 1.593055
+  type: 'test'
+  ...
+# Subtest: repeat runs identical
+ok 43 - repeat runs identical
+  ---
+  duration_ms: 0.919679
+  type: 'test'
+  ...
+# Subtest: immutable upstream decisions and graph retained
+ok 44 - immutable upstream decisions and graph retained
+  ---
+  duration_ms: 0.758175
+  type: 'test'
+  ...
+# Subtest: truncation never silently accepted as complete
+ok 45 - truncation never silently accepted as complete
+  ---
+  duration_ms: 39.658507
+  type: 'test'
+  ...
+# Subtest: a false positive is still a possible pattern, never an authenticated model
+ok 46 - a false positive is still a possible pattern, never an authenticated model
+  ---
+  duration_ms: 0.345552
+  type: 'test'
+  ...
+# Subtest: multiple unresolved pronouns remain unresolved
+ok 47 - multiple unresolved pronouns remain unresolved
+  ---
+  duration_ms: 32.636069
+  type: 'test'
+  ...
+# Subtest: original text category choice does not change deterministic output
+ok 48 - original text category choice does not change deterministic output
+  ---
+  duration_ms: 0.690703
+  type: 'test'
+  ...
+# Subtest: all-word extended air fryer name absent from Phase152 scanner is recovered
+ok 49 - all-word extended air fryer name absent from Phase152 scanner is recovered
+  ---
+  duration_ms: 56.125522
+  type: 'test'
+  ...
+# Subtest: complex multi-token Lenovo product with intermediate letters and digits
+ok 50 - complex multi-token Lenovo product with intermediate letters and digits
+  ---
+  duration_ms: 11.447756
+  type: 'test'
+  ...
+# Subtest: multiword Ninja all-word name
+ok 51 - multiword Ninja all-word name
+  ---
+  duration_ms: 0.647177
+  type: 'test'
+  ...
+# Subtest: all-word series supported by page-title correspondence
+ok 52 - all-word series supported by page-title correspondence
+  ---
+  duration_ms: 2.263068
+  type: 'test'
+  ...
+# Subtest: family name and suffix variant appear as separate hypotheses
+ok 53 - family name and suffix variant appear as separate hypotheses
+  ---
+  duration_ms: 5.978928
+  type: 'test'
+  ...
+# Subtest: family vs SKU markers do not conflate Philips models
+ok 54 - family vs SKU markers do not conflate Philips models
+  ---
+  duration_ms: 1.800509
+  type: 'test'
+  ...
+# Subtest: discourse shorthand recorded as unresolved without validation
+ok 55 - discourse shorthand recorded as unresolved without validation
+  ---
+  duration_ms: 21.063735
+  type: 'test'
+  ...
+# Subtest: numeric measurement with rpm is not a shorthand product
+ok 56 - numeric measurement with rpm is not a shorthand product
+  ---
+  duration_ms: 52.573503
+  type: 'test'
+  ...
+# Subtest: number in a document without model context is not a product
+ok 57 - number in a document without model context is not a product
+  ---
+  duration_ms: 0.861071
+  type: 'test'
+  ...
+# Subtest: mode, tests, and measurements are filtered
+ok 58 - mode, tests, and measurements are filtered
+  ---
+  duration_ms: 10.621087
+  type: 'test'
+  ...
+# Subtest: title metadata alone does not invent a source span
+ok 59 - title metadata alone does not invent a source span
+  ---
+  duration_ms: 1.336178
+  type: 'test'
+  ...
+# Subtest: page title is only correspondence, never verified product identity
+ok 60 - page title is only correspondence, never verified product identity
+  ---
+  duration_ms: 0.326673
+  type: 'test'
+  ...
+# Subtest: caller-supplied aliases are untrusted and never authorize ranking
+ok 61 - caller-supplied aliases are untrusted and never authorize ranking
+  ---
+  duration_ms: 5.559205
+  type: 'test'
+  ...
+# Subtest: partial aliases do not match inside other words
+ok 62 - partial aliases do not match inside other words
+  ---
+  duration_ms: 0.256417
+  type: 'test'
+  ...
+# Subtest: identical repeated names are grouped as written surfaces only
+ok 63 - identical repeated names are grouped as written surfaces only
+  ---
+  duration_ms: 4.751795
+  type: 'test'
+  ...
+# Subtest: variant relation warns and never merges same-brand different models
+ok 64 - variant relation warns and never merges same-brand different models
+  ---
+  duration_ms: 0.754659
+  type: 'test'
+  ...
+# Subtest: distinct competitor names never merged because manufacturer matches
+ok 65 - distinct competitor names never merged because manufacturer matches
+  ---
+  duration_ms: 23.45772
+  type: 'test'
+  ...
+# Subtest: detection returns original exact UTF-16 offsets and SHA256 hashes
+ok 66 - detection returns original exact UTF-16 offsets and SHA256 hashes
+  ---
+  duration_ms: 0.672215
+  type: 'test'
+  ...
+# Subtest: phase152 baseline remains embedded intact
+ok 67 - phase152 baseline remains embedded intact
+  ---
+  duration_ms: 30.131317
+  type: 'test'
+  ...
+# Subtest: phase153 can only veto tentative links and never upgrade abstentions
+ok 68 - phase153 can only veto tentative links and never upgrade abstentions
+  ---
+  duration_ms: 0.998167
+  type: 'test'
+  ...
+# Subtest: unseen unstructured competing commercial name vetoes a candidate
+ok 69 - unseen unstructured competing commercial name vetoes a candidate
+  ---
+  duration_ms: 4.595649
+  type: 'test'
+  ...
+# Subtest: same name in another paragraph cannot veto unconnected paragraph candidate
+ok 70 - same name in another paragraph cannot veto unconnected paragraph candidate
+  ---
+  duration_ms: 0.677804
+  type: 'test'
+  ...
+# Subtest: missing competitor inventory is not treated as product absence
+ok 71 - missing competitor inventory is not treated as product absence
+  ---
+  duration_ms: 0.246592
+  type: 'test'
+  ...
+# Subtest: deliberately tiny candidate cap causes explicit truncation
+ok 72 - deliberately tiny candidate cap causes explicit truncation
+  ---
+  duration_ms: 0.308596
+  type: 'test'
+  ...
+# Subtest: bad maximum mention cap rejected
+ok 73 - bad maximum mention cap rejected
+  ---
+  duration_ms: 0.21868
+  type: 'test'
+  ...
+# Subtest: bad source digest rejected before candidate extraction
+ok 74 - bad source digest rejected before candidate extraction
+  ---
+  duration_ms: 3.095534
+  type: 'test'
+  ...
+# Subtest: two runs with same source, metadata and aliases are deterministic
+ok 75 - two runs with same source, metadata and aliases are deterministic
+  ---
+  duration_ms: 3.655129
+  type: 'test'
+  ...
+# Subtest: title changes cannot alter scientific approval gates
+ok 76 - title changes cannot alter scientific approval gates
+  ---
+  duration_ms: 4.01294
+  type: 'test'
+  ...
+# Subtest: language remains English-focused, not a multilingual identity claim
+ok 77 - language remains English-focused, not a multilingual identity claim
+  ---
+  duration_ms: 0.312502
+  type: 'test'
+  ...
+# Subtest: technique named something like Digital Power is not assumed to be a product
+ok 78 - technique named something like Digital Power is not assumed to be a product
+  ---
+  duration_ms: 3.88746
+  type: 'test'
+  ...
+# Subtest: do not assume unmentioned model from title alone
+ok 79 - do not assume unmentioned model from title alone
+  ---
+  duration_ms: 0.241094
+  type: 'test'
+  ...
+# Subtest: apostrophe-bearing commercial name is a source hypothesis, not a verified manufacturer
+ok 80 - apostrophe-bearing commercial name is a source hypothesis, not a verified manufacturer
+  ---
+  duration_ms: 0.350339
+  type: 'test'
+  ...
+# Subtest: curly apostrophe is preserved verbatim in manufacturer-shaped phrase
+ok 81 - curly apostrophe is preserved verbatim in manufacturer-shaped phrase
+  ---
+  duration_ms: 2.392733
+  type: 'test'
+  ...
+# Subtest: standalone numbered product descriptor stays an unresolved shorthand
+ok 82 - standalone numbered product descriptor stays an unresolved shorthand
+  ---
+  duration_ms: 0.219831
+  type: 'test'
+  ...
+# Subtest: unseen class with numbered family and long SKU is merely a possible surface
+ok 83 - unseen class with numbered family and long SKU is merely a possible surface
+  ---
+  duration_ms: 0.319222
+  type: 'test'
+  ...
+# Subtest: bounded proposal lattice fails visibly closed under excessive distinct names
+ok 84 - bounded proposal lattice fails visibly closed under excessive distinct names
+  ---
+  duration_ms: 76.505966
+  type: 'test'
+  ...
+# Subtest: Snorkel upstream LFAnalysis fixture: coverage, overlap, conflict, polarities and per-LF statistics
+ok 85 - Snorkel upstream LFAnalysis fixture: coverage, overlap, conflict, polarities and per-LF statistics
+  ---
+  duration_ms: 1.850885
+  type: 'test'
+  ...
+# Subtest: Snorkel fixture: genuine supplied gold yields empirical per-LF accuracy; no gold null
+ok 86 - Snorkel fixture: genuine supplied gold yields empirical per-LF accuracy; no gold null
+  ---
+  duration_ms: 0.257048
+  type: 'test'
+  ...
+# Subtest: empty rows, all-abstain, invalid input
+ok 87 - empty rows, all-abstain, invalid input
+  ---
+  duration_ms: 0.366774
+  type: 'test'
+  ...
+# Subtest: medSpaCy-like ConText scope: terminator stops an untested target from crossing contrast
+ok 88 - medSpaCy-like ConText scope: terminator stops an untested target from crossing contrast
+  ---
+  duration_ms: 14.067421
+  type: 'test'
+  ...
+# Subtest: direction BACKWARD and bidirectional windows (medSpaCy semantics)
+ok 89 - direction BACKWARD and bidirectional windows (medSpaCy semantics)
+  ---
+  duration_ms: 0.657322
+  type: 'test'
+  ...
+# Subtest: PSEUDO suppresses overlapping modifiers and longer trigger wins
+ok 90 - PSEUDO suppresses overlapping modifiers and longer trigger wins
+  ---
+  duration_ms: 9.658814
+  type: 'test'
+  ...
+# Subtest: context rule supports allow/exclude target types, maxTargets and maxScopeTokens
+ok 91 - context rule supports allow/exclude target types, maxTargets and maxScopeTokens
+  ---
+  duration_ms: 0.369308
+  type: 'test'
+  ...
+# Subtest: context match budget is bounded and flags incomplete evidence
+ok 92 - context match budget is bounded and flags incomplete evidence
+  ---
+  duration_ms: 0.411752
+  type: 'test'
+  ...
+# Subtest: integrated Phase154 entrypoint actually invokes all three engines without authorizing identity or ranking
+ok 93 - integrated Phase154 entrypoint actually invokes all three engines without authorizing identity or ranking
+  ---
+  duration_ms: 29.649479
+  type: 'test'
+  ...
+# Subtest: original UTF16 substring offsets are maintained with non-ASCII text
+ok 94 - original UTF16 substring offsets are maintained with non-ASCII text
+  ---
+  duration_ms: 0.963075
+  type: 'test'
+  ...
+# Subtest: review-derived excluded product is not confused with the following product
+ok 95 - review-derived excluded product is not confused with the following product
+  ---
+  duration_ms: 28.901219
+  type: 'test'
+  ...
+# Subtest: past-tense NOT TESTED rule scopes backward to reviewed product, not next sentence
+ok 96 - past-tense NOT TESTED rule scopes backward to reviewed product, not next sentence
+  ---
+  duration_ms: 0.776983
+  type: 'test'
+  ...
+# Subtest: orchestrates source title, original inventory, contextual scopes and vote diagnostics
+ok 97 - orchestrates source title, original inventory, contextual scopes and vote diagnostics
+  ---
+  duration_ms: 89.501172
+  type: 'test'
+  ...
+# Subtest: heading separated by newline cannot become a commercial name
+ok 98 - heading separated by newline cannot become a commercial name
+  ---
+  duration_ms: 6.775431
+  type: 'test'
+  ...
+# Subtest: variant codes remain different from full reviewed model identity
+ok 99 - variant codes remain different from full reviewed model identity
+  ---
+  duration_ms: 2.449799
+  type: 'test'
+  ...
+# Subtest: source offsets and SHA match source text
+ok 100 - source offsets and SHA match source text
+  ---
+  duration_ms: 1.333554
+  type: 'test'
+  ...
+# Subtest: measurements never become approved records and do not attach to compared product
+ok 101 - measurements never become approved records and do not attach to compared product
+  ---
+  duration_ms: 5.673607
+  type: 'test'
+  ...
+# Subtest: source absent means source cannot be reconstructed from title
+ok 102 - source absent means source cannot be reconstructed from title
+  ---
+  duration_ms: 1.133933
+  type: 'test'
+  ...
+# Subtest: no model leaks from title to unrelated body
+ok 103 - no model leaks from title to unrelated body
+  ---
+  duration_ms: 0.510401
+  type: 'test'
+  ...
+# Subtest: context prevents not-tested modifier flowing into next model after contrast
+ok 104 - context prevents not-tested modifier flowing into next model after contrast
+  ---
+  duration_ms: 0.743452
+  type: 'test'
+  ...
+# Subtest: generic negation of dispenser does not negate fridge identity
+ok 105 - generic negation of dispenser does not negate fridge identity
+  ---
+  duration_ms: 4.304339
+  type: 'test'
+  ...
+# Subtest: different category keeps non-fridge names separate
+ok 106 - different category keeps non-fridge names separate
+  ---
+  duration_ms: 5.122094
+  type: 'test'
+  ...
+# Subtest: malformed SHA and huge text are rejected before processing
+ok 107 - malformed SHA and huge text are rejected before processing
+  ---
+  duration_ms: 0.439323
+  type: 'test'
+  ...
+# Subtest: one source same text yields deterministic ledgers and no external mutable state
+ok 108 - one source same text yields deterministic ledgers and no external mutable state
+  ---
+  duration_ms: 2.644273
+  type: 'test'
+  ...
+# Subtest: advertised volume is not silently treated as a laboratory measurement
+ok 109 - advertised volume is not silently treated as a laboratory measurement
+  ---
+  duration_ms: 20.491902
+  type: 'test'
+  ...
+# Subtest: brand with ampersand is retained as full model surface
+ok 110 - brand with ampersand is retained as full model surface
+  ---
+  duration_ms: 0.454526
+  type: 'test'
+  ...
+# Subtest: integration spans >one word window with absolute offsets
+ok 111 - integration spans >one word window with absolute offsets
+  ---
+  duration_ms: 72.771703
+  type: 'test'
+  ...
+# Subtest: context graph still respects contrast across several windows
+ok 112 - context graph still respects contrast across several windows
+  ---
+  duration_ms: 11.059109
+  type: 'test'
+  ...
+# Subtest: all four upstream-derived layers coordinate without database/ranking authorisation
+ok 113 - all four upstream-derived layers coordinate without database/ranking authorisation
+  ---
+  duration_ms: 8.69592
+  type: 'test'
+  ...
+# Subtest: no hallucinated reviewed model from title when absent in source
+ok 114 - no hallucinated reviewed model from title when absent in source
+  ---
+  duration_ms: 0.465083
+  type: 'test'
+  ...
+# Subtest: full input digest protected; deterministic replays
+ok 115 - full input digest protected; deterministic replays
+  ---
+  duration_ms: 30.858625
+  type: 'test'
+  ...
+# Subtest: non-fridge product is supported and comparisons stay hypotheses
+ok 116 - non-fridge product is supported and comparisons stay hypotheses
+  ---
+  duration_ms: 0.654188
+  type: 'test'
+  ...
+# Subtest: product title correspondence accepts long all-word commercial models
+ok 117 - product title correspondence accepts long all-word commercial models
+  ---
+  duration_ms: 0.582169
+  type: 'test'
+  ...
+# Subtest: brand with apostrophe/case differences remains title-correspondence only
+ok 118 - brand with apostrophe/case differences remains title-correspondence only
+  ---
+  duration_ms: 10.586445
+  type: 'test'
+  ...
+# Subtest: GLiNER2 weighted interval resolves globally rather than by greedy top score
+ok 119 - GLiNER2 weighted interval resolves globally rather than by greedy top score
+  ---
+  duration_ms: 3.191088
+  type: 'test'
+  ...
+# Subtest: GLiNER2 overlap policies preserve nested and reject crossings
+ok 120 - GLiNER2 overlap policies preserve nested and reject crossings
+  ---
+  duration_ms: 0.477321
+  type: 'test'
+  ...
+# Subtest: GLiNER2 exact boundaries collapse duplicates deterministically
+ok 121 - GLiNER2 exact boundaries collapse duplicates deterministically
+  ---
+  duration_ms: 0.393374
+  type: 'test'
+  ...
+# Subtest: GLiNER2 word windows remap every token to unchanged original offsets
+ok 122 - GLiNER2 word windows remap every token to unchanged original offsets
+  ---
+  duration_ms: 0.684464
+  type: 'test'
+  ...
+# Subtest: GLiNER2 rejects invalid windows and invalid spans instead of silent truncation
+ok 123 - GLiNER2 rejects invalid windows and invalid spans instead of silent truncation
+  ---
+  duration_ms: 0.644724
+  type: 'test'
+  ...
+# Subtest: DeepKE vertices group identical written surfaces but never establish identity
+ok 124 - DeepKE vertices group identical written surfaces but never establish identity
+  ---
+  duration_ms: 33.984255
+  type: 'test'
+  ...
+# Subtest: DeepKE refuses invalid offsets and silently neither invents endpoints nor triples
+ok 125 - DeepKE refuses invalid offsets and silently neither invents endpoints nor triples
+  ---
+  duration_ms: 0.275316
+  type: 'test'
+  ...
+# Subtest: JSON-LD graph with verified location paths but unverified source claims
+ok 126 - JSON-LD graph with verified location paths but unverified source claims
+  ---
+  duration_ms: 7.135835
+  type: 'test'
+  ...
+# Subtest: ProductGroup remains distinct from Product variant
+ok 127 - ProductGroup remains distinct from Product variant
+  ---
+  duration_ms: 1.109986
+  type: 'test'
+  ...
+# Subtest: microdata property arrays and schema URL names
+ok 128 - microdata property arrays and schema URL names
+  ---
+  duration_ms: 0.379544
+  type: 'test'
+  ...
+# Subtest: does not mistake Offer and Review ratings for products
+ok 129 - does not mistake Offer and Review ratings for products
+  ---
+  duration_ms: 0.217969
+  type: 'test'
+  ...
+# Subtest: rejects digest mismatch
+ok 130 - rejects digest mismatch
+  ---
+  duration_ms: 0.559264
+  type: 'test'
+  ...
+# Subtest: protects against huge or malformed input
+ok 131 - protects against huge or malformed input
+  ---
+  duration_ms: 0.539996
+  type: 'test'
+  ...
+# Subtest: end-to-end opt-in path keeps structured values separate from measured observations
+ok 132 - end-to-end opt-in path keeps structured values separate from measured observations
+  ---
+  duration_ms: 48.296025
+  type: 'test'
+  ...
+# Subtest: without weights model does not silently claim inference
+ok 133 - without weights model does not silently claim inference
+  ---
+  duration_ms: 82.66478
+  type: 'test'
+  ...
+# Subtest: aligns valid local spans but cannot accept canonical entity identity
+ok 134 - aligns valid local spans but cannot accept canonical entity identity
+  ---
+  duration_ms: 5.78162
+  type: 'test'
+  ...
+# Subtest: wrong source digest never merged
+ok 135 - wrong source digest never merged
+  ---
+  duration_ms: 1.182055
+  type: 'test'
+  ...
+# Subtest: hallucinated and illegal offsets are skipped instead of accepted
+ok 136 - hallucinated and illegal offsets are skipped instead of accepted
+  ---
+  duration_ms: 1.394856
+  type: 'test'
+  ...
+# Subtest: untrusted, unauthorised model outputs are rejected
+ok 137 - untrusted, unauthorised model outputs are rejected
+  ---
+  duration_ms: 2.161624
+  type: 'test'
+  ...
+# Subtest: structured product claims remain separate from observations
+ok 138 - structured product claims remain separate from observations
+  ---
+  duration_ms: 3.254373
+  type: 'test'
+  ...
+# Subtest: determinism and digest integrity
+ok 139 - determinism and digest integrity
+  ---
+  duration_ms: 3.008953
+  type: 'test'
+  ...
+# Subtest: authentic Colab fridge JSON aligns 7 spans to exact source offsets and runs heuristic coordination
+ok 140 - authentic Colab fridge JSON aligns 7 spans to exact source offsets and runs heuristic coordination
+  ---
+  duration_ms: 84.693414
+  type: 'test'
+  ...
+# Subtest: comparison-only Breville is NOT automatically a contradictory test statement
+ok 141 - comparison-only Breville is NOT automatically a contradictory test statement
+  ---
+  duration_ms: 13.411661
+  type: 'test'
+  ...
+# Subtest: report SHA preserves original file; same input always deterministic
+ok 142 - report SHA preserves original file; same input always deterministic
+  ---
+  duration_ms: 16.59708
+  type: 'test'
+  ...
+# Subtest: refuses edited user text even with the same report and correct input digest
+ok 143 - refuses edited user text even with the same report and correct input digest
+  ---
+  duration_ms: 0.578664
+  type: 'test'
+  ...
+# Subtest: refuses source document with bogus declared digest
+ok 144 - refuses source document with bogus declared digest
+  ---
+  duration_ms: 0.161564
+  type: 'test'
+  ...
+# Subtest: rejects false offsets and fabricated predicted surfaces
+ok 145 - rejects false offsets and fabricated predicted surfaces
+  ---
+  duration_ms: 0.303789
+  type: 'test'
+  ...
+# Subtest: rejects invalid confidence, including >1 and NaN
+ok 146 - rejects invalid confidence, including >1 and NaN
+  ---
+  duration_ms: 0.421567
+  type: 'test'
+  ...
+# Subtest: refuses invented model ID, external execution being disguised as PEE or attestation changes
+ok 147 - refuses invented model ID, external execution being disguised as PEE or attestation changes
+  ---
+  duration_ms: 0.800749
+  type: 'test'
+  ...
+# Subtest: rejects unsupported classes, missing classes, and candidate budgets
+ok 148 - rejects unsupported classes, missing classes, and candidate budgets
+  ---
+  duration_ms: 0.627748
+  type: 'test'
+  ...
+# Subtest: rejects declared offset errors and duplicate spans
+ok 149 - rejects declared offset errors and duplicate spans
+  ---
+  duration_ms: 4.812357
+  type: 'test'
+  ...
+# Subtest: a truly conflicting test/non-test claim is retained rather than resolved
+ok 150 - a truly conflicting test/non-test claim is retained rather than resolved
+  ---
+  duration_ms: 19.7032
+  type: 'test'
+  ...
+# Subtest: short published-excerpt report is accepted only with source metadata, never source authentication
+ok 151 - short published-excerpt report is accepted only with source metadata, never source authentication
+  ---
+  duration_ms: 4.09932
+  type: 'test'
+  ...
+# Subtest: batch native-only on two English inputs is deterministic and always quarantines evidence authority
+ok 152 - batch native-only on two English inputs is deterministic and always quarantines evidence authority
+  ---
+  duration_ms: 37.141963
+  type: 'test'
+  ...
+# Subtest: real externally executed two cases are coordinated in one batch
+ok 153 - real externally executed two cases are coordinated in one batch
+  ---
+  duration_ms: 31.021161
+  type: 'test'
+  ...
+# Subtest: a bad neural offset quarantines its source without preventing another case from completing
+ok 154 - a bad neural offset quarantines its source without preventing another case from completing
+  ---
+  duration_ms: 4.552013
+  type: 'test'
+  ...
+# Subtest: rejects duplicate ids, wrong source digest, publisher full review without rights, fake gold
+ok 155 - rejects duplicate ids, wrong source digest, publisher full review without rights, fake gold
+  ---
+  duration_ms: 2.4573
+  type: 'test'
+  ...
+# Subtest: batch hard budget of 100 and extra neural ids rejected
+ok 156 - batch hard budget of 100 and extra neural ids rejected
+  ---
+  duration_ms: 0.66206
+  type: 'test'
+  ...
+# Subtest: full review contract requires exact source URL, title, and digest before neural spans are accepted
+ok 157 - full review contract requires exact source URL, title, and digest before neural spans are accepted
+  ---
+  duration_ms: 29.054181
+  type: 'test'
+  ...
+# Subtest: adapted ExtractGPT error buckets distinguish missed, false, correct and wrong attribute values
+ok 158 - adapted ExtractGPT error buckets distinguish missed, false, correct and wrong attribute values
+  ---
+  duration_ms: 0.580286
+  type: 'test'
+  ...
+# Subtest: phase161 local-worker neural report passes through PEE with no evidence authority
+ok 159 - phase161 local-worker neural report passes through PEE with no evidence authority
+  ---
+  duration_ms: 55.815864
+  type: 'test'
+  ...
+# Subtest: phase161 CLI verifies source and operator audit and refuses altered contents
+ok 160 - phase161 CLI verifies source and operator audit and refuses altered contents
+  ---
+  duration_ms: 1005.198912
+  type: 'test'
+  ...
+# Subtest: relation proposals are source aligned and typed, but remain unverified
+ok 161 - relation proposals are source aligned and typed, but remain unverified
+  ---
+  duration_ms: 183.593508
+  type: 'test'
+  ...
+# Subtest: wrongly typed endpoints are retained only as unverified, nonmatching hypotheses
+ok 162 - wrongly typed endpoints are retained only as unverified, nonmatching hypotheses
+  ---
+  duration_ms: 1.306483
+  type: 'test'
+  ...
+# Subtest: source tampering, unsupported relation type and unauthorized approval flags quarantine only the document
+ok 163 - source tampering, unsupported relation type and unauthorized approval flags quarantine only the document
+  ---
+  duration_ms: 58.204211
+  type: 'test'
+  ...
+# Subtest: unattested Colab relationship proposals cannot be imported as worker results
+ok 164 - unattested Colab relationship proposals cannot be imported as worker results
+  ---
+  duration_ms: 6.393565
+  type: 'test'
+  ...
+# Subtest: old two-case genuine Colab report remains backward compatible
+ok 165 - old two-case genuine Colab report remains backward compatible
+  ---
+  duration_ms: 7.43733
+  type: 'test'
+  ...
+1..165
+# tests 165
+# suites 0
+# pass 165
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2685.573874

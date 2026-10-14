@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: opt-in is required and primary ranking never changes
+ok 1 - opt-in is required and primary ranking never changes
+  ---
+  duration_ms: 13.556032
+  type: 'test'
+  ...
+# Subtest: hard budget cannot be relaxed
+ok 2 - hard budget cannot be relaxed
+  ---
+  duration_ms: 0.335699
+  type: 'test'
+  ...
+# Subtest: soft budget surfaces justified near-miss and keeps it outside primary
+ok 3 - soft budget surfaces justified near-miss and keeps it outside primary
+  ---
+  duration_ms: 0.399065
+  type: 'test'
+  ...
+# Subtest: small benefit and expensive alternatives are rejected
+ok 4 - small benefit and expensive alternatives are rejected
+  ---
+  duration_ms: 0.367277
+  type: 'test'
+  ...
+# Subtest: cheaper near-equivalent option is also surfaced
+ok 5 - cheaper near-equivalent option is also surfaced
+  ---
+  duration_ms: 0.30315
+  type: 'test'
+  ...
+# Subtest: flexible width allows only small overage, while price stays strict
+ok 6 - flexible width allows only small overage, while price stays strict
+  ---
+  duration_ms: 6.63492
+  type: 'test'
+  ...
+# Subtest: size not marked flexible is never relaxed
+ok 7 - size not marked flexible is never relaxed
+  ---
+  duration_ms: 0.50171
+  type: 'test'
+  ...
+# Subtest: no cross-market transfer, hard feature relaxation, or unlicensed evidence
+ok 8 - no cross-market transfer, hard feature relaxation, or unlicensed evidence
+  ---
+  duration_ms: 0.655353
+  type: 'test'
+  ...
+# Subtest: no complete baseline prevents superiority claim
+ok 9 - no complete baseline prevents superiority claim
+  ---
+  duration_ms: 0.739952
+  type: 'test'
+  ...
+# Subtest: invalid thresholds and unknown size keys fail closed
+ok 10 - invalid thresholds and unknown size keys fail closed
+  ---
+  duration_ms: 0.823588
+  type: 'test'
+  ...
+# Subtest: out-of-filter evidence must be complete and authorized
+ok 11 - out-of-filter evidence must be complete and authorized
+  ---
+  duration_ms: 0.34302
+  type: 'test'
+  ...
+# Subtest: new independently evidenced product yields permission-gated retrieval plan without ranking
+ok 12 - new independently evidenced product yields permission-gated retrieval plan without ranking
+  ---
+  duration_ms: 19.229009
+  type: 'test'
+  ...
+# Subtest: no rights document, expired or stale robots => never retrieve
+ok 13 - no rights document, expired or stale robots => never retrieve
+  ---
+  duration_ms: 3.03446
+  type: 'test'
+  ...
+# Subtest: robot approval alone with no commercial rights is insufficient
+ok 14 - robot approval alone with no commercial rights is insufficient
+  ---
+  duration_ms: 0.274556
+  type: 'test'
+  ...
+# Subtest: stored source no revision and recent check is reused without fetching
+ok 15 - stored source no revision and recent check is reused without fetching
+  ---
+  duration_ms: 0.374107
+  type: 'test'
+  ...
+# Subtest: new update or due refresh plans retrieval
+ok 16 - new update or due refresh plans retrieval
+  ---
+  duration_ms: 0.405615
+  type: 'test'
+  ...
+# Subtest: second report on one original test is not independent evidence
+ok 17 - second report on one original test is not independent evidence
+  ---
+  duration_ms: 0.360056
+  type: 'test'
+  ...
+# Subtest: different variants, syndicated reports and Amazon get no retrieval
+ok 18 - different variants, syndicated reports and Amazon get no retrieval
+  ---
+  duration_ms: 0.203729
+  type: 'test'
+  ...
+# Subtest: unknown source, host mismatch and duplicate grants block all extraction
+ok 19 - unknown source, host mismatch and duplicate grants block all extraction
+  ---
+  duration_ms: 0.192692
+  type: 'test'
+  ...
+# Subtest: transient analysis emits only hashes and original URL; never exposes text as ranking
+ok 20 - transient analysis emits only hashes and original URL; never exposes text as ranking
+  ---
+  duration_ms: 1.096503
+  type: 'test'
+  ...
+# Subtest: unanchored, redirected or storage unlicensed analysis is blocked
+ok 21 - unanchored, redirected or storage unlicensed analysis is blocked
+  ---
+  duration_ms: 0.619669
+  type: 'test'
+  ...
+# Subtest: a blocked publisher must not prevent a properly authorized original-source copy from being examined
+ok 22 - a blocked publisher must not prevent a properly authorized original-source copy from being examined
+  ---
+  duration_ms: 0.249368
+  type: 'test'
+  ...
+# Subtest: ambiguous existing stored records fail closed
+ok 23 - ambiguous existing stored records fail closed
+  ---
+  duration_ms: 0.177239
+  type: 'test'
+  ...
+# Subtest: unverified identical original test identifiers are not enough to suppress a distinct original source
+ok 24 - unverified identical original test identifiers are not enough to suppress a distinct original source
+  ---
+  duration_ms: 0.24436
+  type: 'test'
+  ...
+# Subtest: unreviewed cached analysis cannot be silently reused as approved evidence
+ok 25 - unreviewed cached analysis cannot be silently reused as approved evidence
+  ---
+  duration_ms: 0.162346
+  type: 'test'
+  ...
+# Subtest: an original editorial hands-on assessment is eligible for targeted research, without being a lab measurement
+ok 26 - an original editorial hands-on assessment is eligible for targeted research, without being a lab measurement
+  ---
+  duration_ms: 0.133372
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 153.843403

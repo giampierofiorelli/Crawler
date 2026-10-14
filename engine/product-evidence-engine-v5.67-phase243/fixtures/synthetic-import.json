@@ -1,0 +1,13 @@
+{
+  "dataset_label": "SYNTHETIC-UK-VACUUMS",
+  "fixture_kind": "synthetic",
+  "families": [{"id":"syn-a","brand":"Example","model_name":"Vacuum A"}],
+  "variants": [{"id":"syn-a-uk","family_id":"syn-a","market":"UK","sku":"SYN-A-UK","identity_status":"verified"}],
+  "publishers": [{"id":"synthetic-lab","name":"SYNTHETIC TEST LAB"}],
+  "sessions": [{"id":"syn-test-1","publisher_id":"synthetic-lab","tested_variant_id":"syn-a-uk","tested_model_as_reported":"SYN-A-UK","identity_status":"verified","protocol_id":"SYN-V1","conditions":{"mode":"synthetic"}}],
+  "measurements": [{"id":"syn-m1","session_id":"syn-test-1","dimension":"carpet","metric":"synthetic_score","numeric_value":9,"unit":"synthetic_0_10","status":"admitted"}],
+  "applicability": [{"id":"syn-app1","measurement_id":"syn-m1","variant_id":"syn-a-uk","decision":"verified","rationale":"Exact synthetic fixture identity","reviewer":"fixture-author","reviewed_at":"2026-10-10T10:00:00Z"}],
+  "rights": [{"id":"syn-grant","publisher_id":"synthetic-lab","status":"authorized","allowed_uses":["commercial_scoring"],"evidence_uri":"https://example.org/synthetic-fixture-license","recorded_by":"fixture-author"}],
+  "measurement_rights": [{"measurement_id":"syn-m1","grant_id":"syn-grant"}],
+  "articles": [{"id":"syn-article-1","publisher_id":"synthetic-lab","original_test_session_id":"syn-test-1","url":"https://example.org/synthetic-fixture"}]
+}

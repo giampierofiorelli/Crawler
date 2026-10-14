@@ -1,0 +1,1476 @@
+TAP version 13
+# (node:4088) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: independent comparison from reviewed memory without article or LLM
+ok 1 - independent comparison from reviewed memory without article or LLM
+  ---
+  duration_ms: 54.432476
+  type: 'test'
+  ...
+# Subtest: retains all products and makes no unjustified cross-component ordering
+ok 2 - retains all products and makes no unjustified cross-component ordering
+  ---
+  duration_ms: 1.302927
+  type: 'test'
+  ...
+# Subtest: transitive ordering is not silently inferred from different reviewer tests
+ok 3 - transitive ordering is not silently inferred from different reviewer tests
+  ---
+  duration_ms: 0.981212
+  type: 'test'
+  ...
+# Subtest: syndicated and duplicated reports of same original test count only once
+ok 4 - syndicated and duplicated reports of same original test count only once
+  ---
+  duration_ms: 5.391158
+  type: 'test'
+  ...
+# Subtest: contradictory independent tests block claim of superiority
+ok 5 - contradictory independent tests block claim of superiority
+  ---
+  duration_ms: 1.121112
+  type: 'test'
+  ...
+# Subtest: contradictory claims within same underlying test cannot be voted away
+ok 6 - contradictory claims within same underlying test cannot be voted away
+  ---
+  duration_ms: 0.770693
+  type: 'test'
+  ...
+# Subtest: ties cannot be collapsed with directional advantages
+ok 7 - ties cannot be collapsed with directional advantages
+  ---
+  duration_ms: 5.3597
+  type: 'test'
+  ...
+# Subtest: persisted database can be queried again without source files
+ok 8 - persisted database can be queried again without source files
+  ---
+  duration_ms: 16.586848
+  type: 'test'
+  ...
+# Subtest: withdrawing a claim leaves revision audit marker but not active preference
+ok 9 - withdrawing a claim leaves revision audit marker but not active preference
+  ---
+  duration_ms: 1.432772
+  type: 'test'
+  ...
+# Subtest: checksum detects silent in-memory snapshot changes
+ok 10 - checksum detects silent in-memory snapshot changes
+  ---
+  duration_ms: 1.869201
+  type: 'test'
+  ...
+# Subtest: category and testing context are isolated
+ok 11 - category and testing context are isolated
+  ---
+  duration_ms: 6.722648
+  type: 'test'
+  ...
+# Subtest: already calibrated levels retain scale meaning, ordinary adjectives do not become scores
+ok 12 - already calibrated levels retain scale meaning, ordinary adjectives do not become scores
+  ---
+  duration_ms: 1.27875
+  type: 'test'
+  ...
+# Subtest: conflicting levels across tests are unresolved, never averaged
+ok 13 - conflicting levels across tests are unresolved, never averaged
+  ---
+  duration_ms: 0.944315
+  type: 'test'
+  ...
+# Subtest: reviewed ordinal ranges cannot be silently collapsed to a point
+ok 14 - reviewed ordinal ranges cannot be silently collapsed to a point
+  ---
+  duration_ms: 1.685965
+  type: 'test'
+  ...
+# Subtest: raw measurements are described with exact unit and protocol, not scores
+ok 15 - raw measurements are described with exact unit and protocol, not scores
+  ---
+  duration_ms: 6.530488
+  type: 'test'
+  ...
+# Subtest: the source text never leaks into memory via extraneous fields
+ok 16 - the source text never leaks into memory via extraneous fields
+  ---
+  duration_ms: 1.707397
+  type: 'test'
+  ...
+# (node:4090) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: no claims means no recorded evidence, not neutral consensus
+ok 17 - no claims means no recorded evidence, not neutral consensus
+  ---
+  duration_ms: 29.249011
+  type: 'test'
+  ...
+# Subtest: a single calibrated reviewer never implies unanimity
+ok 18 - a single calibrated reviewer never implies unanimity
+  ---
+  duration_ms: 1.836242
+  type: 'test'
+  ...
+# Subtest: two original tests can describe concordance without an accuracy probability
+ok 19 - two original tests can describe concordance without an accuracy probability
+  ---
+  duration_ms: 1.208374
+  type: 'test'
+  ...
+# Subtest: same original test republished twice stays single observation
+ok 20 - same original test republished twice stays single observation
+  ---
+  duration_ms: 1.520394
+  type: 'test'
+  ...
+# Subtest: different levels from separate tests remain disputed
+ok 21 - different levels from separate tests remain disputed
+  ---
+  duration_ms: 7.722587
+  type: 'test'
+  ...
+# Subtest: levels on different scales cannot be compared
+ok 22 - levels on different scales cannot be compared
+  ---
+  duration_ms: 1.064937
+  type: 'test'
+  ...
+# Subtest: conflicts within original test flagged before any independent agreement
+ok 23 - conflicts within original test flagged before any independent agreement
+  ---
+  duration_ms: 0.739296
+  type: 'test'
+  ...
+# Subtest: interval prevents false unanimity
+ok 24 - interval prevents false unanimity
+  ---
+  duration_ms: 0.619716
+  type: 'test'
+  ...
+# Subtest: descriptors do not turn into a source-independent scalar
+ok 25 - descriptors do not turn into a source-independent scalar
+  ---
+  duration_ms: 0.928161
+  type: 'test'
+  ...
+# Subtest: numerical result preserved with protocol and no invented comparability
+ok 26 - numerical result preserved with protocol and no invented comparability
+  ---
+  duration_ms: 25.622658
+  type: 'test'
+  ...
+# Subtest: pairwise comparative tests are visible but do not become absolute quality scores
+ok 27 - pairwise comparative tests are visible but do not become absolute quality scores
+  ---
+  duration_ms: 2.456578
+  type: 'test'
+  ...
+# Subtest: profile shows coverage separately from agreement and protects contexts
+ok 28 - profile shows coverage separately from agreement and protects contexts
+  ---
+  duration_ms: 5.562416
+  type: 'test'
+  ...
+# Subtest: same frame twice cannot artificially grow coverage
+ok 29 - same frame twice cannot artificially grow coverage
+  ---
+  duration_ms: 1.120462
+  type: 'test'
+  ...
+# Subtest: cross-category frame and unknown variant refused
+ok 30 - cross-category frame and unknown variant refused
+  ---
+  duration_ms: 0.695119
+  type: 'test'
+  ...
+# (node:4093) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: unobserved entity has a targeted evidence task, never a negative rating
+ok 31 - unobserved entity has a targeted evidence task, never a negative rating
+  ---
+  duration_ms: 23.534075
+  type: 'test'
+  ...
+# Subtest: same frame reread is idempotent; entity does not call LLM or duplicate events
+ok 32 - same frame reread is idempotent; entity does not call LLM or duplicate events
+  ---
+  duration_ms: 6.080528
+  type: 'test'
+  ...
+# Subtest: new evidence changes belief provisional → convergent → disputed
+ok 33 - new evidence changes belief provisional → convergent → disputed
+  ---
+  duration_ms: 2.684612
+  type: 'test'
+  ...
+# Subtest: withdrawn claim is removed from derived support; no fabricated certainty
+ok 34 - withdrawn claim is removed from derived support; no fabricated certainty
+  ---
+  duration_ms: 22.655319
+  type: 'test'
+  ...
+# Subtest: two publications from one original experiment never fabricate consensus
+ok 35 - two publications from one original experiment never fabricate consensus
+  ---
+  duration_ms: 1.971867
+  type: 'test'
+  ...
+# Subtest: change affecting unrelated product does not rewrite other entity reasoning
+ok 36 - change affecting unrelated product does not rewrite other entity reasoning
+  ---
+  duration_ms: 1.352742
+  type: 'test'
+  ...
+# Subtest: pairwise evidence touches both variants and creates a dependency
+ok 37 - pairwise evidence touches both variants and creates a dependency
+  ---
+  duration_ms: 1.287504
+  type: 'test'
+  ...
+# Subtest: descriptor stays uncalibrated; no adjective-to-decibel conversion
+ok 38 - descriptor stays uncalibrated; no adjective-to-decibel conversion
+  ---
+  duration_ms: 1.356838
+  type: 'test'
+  ...
+# Subtest: persisted entity knowledge and append-only history survive restart
+ok 39 - persisted entity knowledge and append-only history survive restart
+  ---
+  duration_ms: 4.890783
+  type: 'test'
+  ...
+# Subtest: invalid snapshot fingerprint and unknown variant rejected without updating history
+ok 40 - invalid snapshot fingerprint and unknown variant rejected without updating history
+  ---
+  duration_ms: 1.290147
+  type: 'test'
+  ...
+# Subtest: time reversal rejected transactionally
+ok 41 - time reversal rejected transactionally
+  ---
+  duration_ms: 0.962693
+  type: 'test'
+  ...
+# Subtest: history logs reason changes with independent claim support and remains append-only
+ok 42 - history logs reason changes with independent claim support and remains append-only
+  ---
+  duration_ms: 7.098906
+  type: 'test'
+  ...
+# Subtest: SQLite blocks an ordinary attempt to change past reasoning
+ok 43 - SQLite blocks an ordinary attempt to change past reasoning
+  ---
+  duration_ms: 1.630281
+  type: 'test'
+  ...
+# Subtest: aggregate product mind groups contextual cells and tasks without any score
+ok 44 - aggregate product mind groups contextual cells and tasks without any score
+  ---
+  duration_ms: 1.701709
+  type: 'test'
+  ...
+# (node:4226) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an original test changes only dependent comparison and explanation, not unrelated nodes
+ok 45 - an original test changes only dependent comparison and explanation, not unrelated nodes
+  ---
+  duration_ms: 57.125861
+  type: 'test'
+  ...
+# Subtest: replay is idempotent, cursor survives repeat and no false journal events
+ok 46 - replay is idempotent, cursor survives repeat and no false journal events
+  ---
+  duration_ms: 2.698363
+  type: 'test'
+  ...
+# Subtest: added, withdrawn and conflicting claims all invalidate prior computations
+ok 47 - added, withdrawn and conflicting claims all invalidate prior computations
+  ---
+  duration_ms: 43.123896
+  type: 'test'
+  ...
+# Subtest: an unprocessed source revision blocks acknowledgement even if caller provides a digest
+ok 48 - an unprocessed source revision blocks acknowledgement even if caller provides a digest
+  ---
+  duration_ms: 4.510188
+  type: 'test'
+  ...
+# Subtest: derived nodes must be recalculated in dependency order, no publication approval
+ok 49 - derived nodes must be recalculated in dependency order, no publication approval
+  ---
+  duration_ms: 5.663379
+  type: 'test'
+  ...
+# Subtest: multiple event page replay resumes exactly and downstream invalidation is coalesced
+ok 50 - multiple event page replay resumes exactly and downstream invalidation is coalesced
+  ---
+  duration_ms: 2.429958
+  type: 'test'
+  ...
+# Subtest: durable graph survives restart; authoritative evidence stays in phase101
+ok 51 - durable graph survives restart; authoritative evidence stays in phase101
+  ---
+  duration_ms: 10.311855
+  type: 'test'
+  ...
+# Subtest: checkpoint mismatches and missing upstream journal events fail closed
+ok 52 - checkpoint mismatches and missing upstream journal events fail closed
+  ---
+  duration_ms: 8.853484
+  type: 'test'
+  ...
+# Subtest: rejects graph cycles, unknown dependencies, cross category and duplicate inputs
+ok 53 - rejects graph cycles, unknown dependencies, cross category and duplicate inputs
+  ---
+  duration_ms: 5.481134
+  type: 'test'
+  ...
+# Subtest: journal contains globally ordered events from multiple entities, not per-entity gaps
+ok 54 - journal contains globally ordered events from multiple entities, not per-entity gaps
+  ---
+  duration_ms: 2.858214
+  type: 'test'
+  ...
+# Subtest: append-only causal invalidation history refuses SQL rewrite
+ok 55 - append-only causal invalidation history refuses SQL rewrite
+  ---
+  duration_ms: 6.999346
+  type: 'test'
+  ...
+# Subtest: no text, price, review excerpts, arbitrary rating or generated recommendation in projection data
+ok 56 - no text, price, review excerpts, arbitrary rating or generated recommendation in projection data
+  ---
+  duration_ms: 1.49083
+  type: 'test'
+  ...
+# (node:4227) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: direct original test comparison is recomputed and stored, text-free and without LLM
+ok 57 - direct original test comparison is recomputed and stored, text-free and without LLM
+  ---
+  duration_ms: 139.128074
+  type: 'test'
+  ...
+# Subtest: dependent explanation recomputes in order, linked by upstream result hash
+ok 58 - dependent explanation recomputes in order, linked by upstream result hash
+  ---
+  duration_ms: 36.516001
+  type: 'test'
+  ...
+# Subtest: new disagreement invalidates direct pair and explanation and recomputes only affected projections
+ok 59 - new disagreement invalidates direct pair and explanation and recomputes only affected projections
+  ---
+  duration_ms: 137.915043
+  type: 'test'
+  ...
+# Subtest: withdrawal recovers supported comparison without erasing revision history
+ok 60 - withdrawal recovers supported comparison without erasing revision history
+  ---
+  duration_ms: 72.751178
+  type: 'test'
+  ...
+# Subtest: unrelated source record cannot be treated as conflicting direct pair
+ok 61 - unrelated source record cannot be treated as conflicting direct pair
+  ---
+  duration_ms: 46.852864
+  type: 'test'
+  ...
+# Subtest: a newly stored interpretation blocks serving even before entity journal sync
+ok 62 - a newly stored interpretation blocks serving even before entity journal sync
+  ---
+  duration_ms: 57.722042
+  type: 'test'
+  ...
+# Subtest: an already consumed journal cannot be faked into a publishable ranking
+ok 63 - an already consumed journal cannot be faked into a publishable ranking
+  ---
+  duration_ms: 22.956563
+  type: 'test'
+  ...
+# Subtest: legacy checksum-only result is not treated as verified research output
+ok 64 - legacy checksum-only result is not treated as verified research output
+  ---
+  duration_ms: 25.45881
+  type: 'test'
+  ...
+# Subtest: unsupported personalized tradeoff remains a review-gated, dirty projection
+ok 65 - unsupported personalized tradeoff remains a review-gated, dirty projection
+  ---
+  duration_ms: 14.134657
+  type: 'test'
+  ...
+# Subtest: unknown or non-allowlisted algorithm is not executed
+ok 66 - unknown or non-allowlisted algorithm is not executed
+  ---
+  duration_ms: 10.656015
+  type: 'test'
+  ...
+# Subtest: research results survive process restart and retain reproducible source-free provenance
+ok 67 - research results survive process restart and retain reproducible source-free provenance
+  ---
+  duration_ms: 93.73946
+  type: 'test'
+  ...
+# Subtest: tampered cache is rejected even if graph state says computed
+ok 68 - tampered cache is rejected even if graph state says computed
+  ---
+  duration_ms: 32.517505
+  type: 'test'
+  ...
+# Subtest: graph rejects forged child digest during dependency commit
+ok 69 - graph rejects forged child digest during dependency commit
+  ---
+  duration_ms: 41.425368
+  type: 'test'
+  ...
+# Subtest: fresh research comparison survives evidence added for completely unrelated product
+ok 70 - fresh research comparison survives evidence added for completely unrelated product
+  ---
+  duration_ms: 23.619344
+  type: 'test'
+  ...
+# Subtest: an unprocessed Phase104 event fails a read closed and does not serve stale comparison
+ok 71 - an unprocessed Phase104 event fails a read closed and does not serve stale comparison
+  ---
+  duration_ms: 29.575237
+  type: 'test'
+  ...
+# Subtest: mid-computation evidence changes cannot yield a fresh research result
+ok 72 - mid-computation evidence changes cannot yield a fresh research result
+  ---
+  duration_ms: 13.146321
+  type: 'test'
+  ...
+# (node:4246) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: persisted interpretations feed Phase98 and Phase100; negative performance reduces ranking but is compensated
+ok 73 - persisted interpretations feed Phase98 and Phase100; negative performance reduces ranking but is compensated
+  ---
+  duration_ms: 178.545143
+  type: 'test'
+  ...
+# Subtest: confirmed full-swing preference drives robust ordinal result without arbitrary word scores
+ok 74 - confirmed full-swing preference drives robust ordinal result without arbitrary word scores
+  ---
+  duration_ms: 35.569492
+  type: 'test'
+  ...
+# Subtest: missing evidence remains unknown, not a zero or silent product exclusion
+ok 75 - missing evidence remains unknown, not a zero or silent product exclusion
+  ---
+  duration_ms: 21.18548
+  type: 'test'
+  ...
+# Subtest: unadjudicated multiple calibrated claims cannot enter compensatory ranking
+ok 76 - unadjudicated multiple calibrated claims cannot enter compensatory ranking
+  ---
+  duration_ms: 67.961217
+  type: 'test'
+  ...
+# Subtest: new evidence on relevant product invalidates cached preference BEFORE graph replay
+ok 77 - new evidence on relevant product invalidates cached preference BEFORE graph replay
+  ---
+  duration_ms: 76.396921
+  type: 'test'
+  ...
+# Subtest: unrelated product evidence does not invalidate cached preference
+ok 78 - unrelated product evidence does not invalidate cached preference
+  ---
+  duration_ms: 28.182441
+  type: 'test'
+  ...
+# Subtest: withdrawal and revised approved memory yields new preference without rereading review text
+ok 79 - withdrawal and revised approved memory yields new preference without rereading review text
+  ---
+  duration_ms: 82.874399
+  type: 'test'
+  ...
+# Subtest: immutable user profile binding rejects changed weights, references, or frame calibration
+ok 80 - immutable user profile binding rejects changed weights, references, or frame calibration
+  ---
+  duration_ms: 2.143496
+  type: 'test'
+  ...
+# Subtest: confirmed non-negotiable failure is separated from ordinary compensable defects
+ok 81 - confirmed non-negotiable failure is separated from ordinary compensable defects
+  ---
+  duration_ms: 33.562854
+  type: 'test'
+  ...
+# Subtest: cache integrity and stable profile survive restart across three source databases
+ok 82 - cache integrity and stable profile survive restart across three source databases
+  ---
+  duration_ms: 66.858393
+  type: 'test'
+  ...
+# Subtest: conflicting user swing preferences are detected, not averaged
+ok 83 - conflicting user swing preferences are detected, not averaged
+  ---
+  duration_ms: 15.748489
+  type: 'test'
+  ...
+# Subtest: unsupported additive scales are rejected rather than treated as calibrated
+ok 84 - unsupported additive scales are rejected rather than treated as calibrated
+  ---
+  duration_ms: 3.791495
+  type: 'test'
+  ...
+# Subtest: mid-computation source revision never becomes a fresh cached ranking
+ok 85 - mid-computation source revision never becomes a fresh cached ranking
+  ---
+  duration_ms: 22.68287
+  type: 'test'
+  ...
+# Subtest: phase107 cache can never be published as approved consumer recommendation
+ok 86 - phase107 cache can never be published as approved consumer recommendation
+  ---
+  duration_ms: 60.407482
+  type: 'test'
+  ...
+# Subtest: a fabricated hard veto with no matching active original test is rejected
+ok 87 - a fabricated hard veto with no matching active original test is rejected
+  ---
+  duration_ms: 4.611372
+  type: 'test'
+  ...
+# (node:4393) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: two radically different user intents cannot alter common product evidence
+ok 88 - two radically different user intents cannot alter common product evidence
+  ---
+  duration_ms: 61.464911
+  type: 'test'
+  ...
+# Subtest: query-triggered gap is a research task, not a negative claim or product exclusion
+ok 89 - query-triggered gap is a research task, not a negative claim or product exclusion
+  ---
+  duration_ms: 1.315706
+  type: 'test'
+  ...
+# Subtest: independent criterion adoption applies to whole category, not first queried model
+ok 90 - independent criterion adoption applies to whole category, not first queried model
+  ---
+  duration_ms: 1.405051
+  type: 'test'
+  ...
+# Subtest: bacterial evidence never becomes virus evidence merely because user asks about viruses
+ok 91 - bacterial evidence never becomes virus evidence merely because user asks about viruses
+  ---
+  duration_ms: 6.453031
+  type: 'test'
+  ...
+# Subtest: research prompts with user preferences cannot be inserted as global protocol
+ok 92 - research prompts with user preferences cannot be inserted as global protocol
+  ---
+  duration_ms: 1.270167
+  type: 'test'
+  ...
+# Subtest: approved category protocols and research prompts cannot overwrite their established meaning
+ok 93 - approved category protocols and research prompts cannot overwrite their established meaning
+  ---
+  duration_ms: 10.386308
+  type: 'test'
+  ...
+# Subtest: research queue persistence is separate from persistent canonical evidence
+ok 94 - research queue persistence is separate from persistent canonical evidence
+  ---
+  duration_ms: 15.264341
+  type: 'test'
+  ...
+# Subtest: read model result is a copy and cannot modify the authoritative claim
+ok 95 - read model result is a copy and cannot modify the authoritative claim
+  ---
+  duration_ms: 1.437359
+  type: 'test'
+  ...
+# Subtest: an independently reviewed new finding updates canonical knowledge for all future users
+ok 96 - an independently reviewed new finding updates canonical knowledge for all future users
+  ---
+  duration_ms: 9.959204
+  type: 'test'
+  ...
+# Subtest: different users receive different conditional rankings while authoritative fact hashes remain identical
+ok 97 - different users receive different conditional rankings while authoritative fact hashes remain identical
+  ---
+  duration_ms: 60.682781
+  type: 'test'
+  ...
+# Subtest: query-specific projection cannot rewrite user weight into product memory
+ok 98 - query-specific projection cannot rewrite user weight into product memory
+  ---
+  duration_ms: 17.072741
+  type: 'test'
+  ...
+# Subtest: source-independent intake refuses to convert request intent directly into global product knowledge
+ok 99 - source-independent intake refuses to convert request intent directly into global product knowledge
+  ---
+  duration_ms: 1.141894
+  type: 'test'
+  ...
+# Subtest: source-derived finding can be approved once and reused regardless of who found the gap
+ok 100 - source-derived finding can be approved once and reused regardless of who found the gap
+  ---
+  duration_ms: 3.361494
+  type: 'test'
+  ...
+# Subtest: research queue refuses to store raw user prompts or direct identifiers
+ok 101 - research queue refuses to store raw user prompts or direct identifiers
+  ---
+  duration_ms: 0.554297
+  type: 'test'
+  ...
+# Subtest: pairwise expert observations cover BOTH compared variants without inventing a ranking
+ok 102 - pairwise expert observations cover BOTH compared variants without inventing a ranking
+  ---
+  duration_ms: 0.880328
+  type: 'test'
+  ...
+# Subtest: first-query order cannot change canonical facts, revisions, or adopted category protocol
+ok 103 - first-query order cannot change canonical facts, revisions, or adopted category protocol
+  ---
+  duration_ms: 1.833988
+  type: 'test'
+  ...
+# Subtest: changing research gaps never changes evidence or falsely records negative findings
+ok 104 - changing research gaps never changes evidence or falsely records negative findings
+  ---
+  duration_ms: 0.754889
+  type: 'test'
+  ...
+# Subtest: withdrawn original pairwise finding no longer counts for either variant
+ok 105 - withdrawn original pairwise finding no longer counts for either variant
+  ---
+  duration_ms: 0.771855
+  type: 'test'
+  ...
+# (node:4580) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: records every declared content surface with exact revision/locator hashes but no review body
+ok 106 - records every declared content surface with exact revision/locator hashes but no review body
+  ---
+  duration_ms: 7.552474
+  type: 'test'
+  ...
+# Subtest: new unexpected aspect is stored independently of the question that found the product
+ok 107 - new unexpected aspect is stored independently of the question that found the product
+  ---
+  duration_ms: 2.994652
+  type: 'test'
+  ...
+# Subtest: a later user request is read-only and can find atom that was not a known criterion
+ok 108 - a later user request is read-only and can find atom that was not a known criterion
+  ---
+  duration_ms: 1.627738
+  type: 'test'
+  ...
+# Subtest: cannot seal when one declared section has not been examined
+ok 109 - cannot seal when one declared section has not been examined
+  ---
+  duration_ms: 1.374765
+  type: 'test'
+  ...
+# Subtest: inaccessible figures or tables prevent complete coverage
+ok 110 - inaccessible figures or tables prevent complete coverage
+  ---
+  duration_ms: 1.239772
+  type: 'test'
+  ...
+# Subtest: cannot mark relevant fact segment empty after recording an atom
+ok 111 - cannot mark relevant fact segment empty after recording an atom
+  ---
+  duration_ms: 0.580496
+  type: 'test'
+  ...
+# Subtest: partial extraction of multi-atom segment blocks audit until all captured
+ok 112 - partial extraction of multi-atom segment blocks audit until all captured
+  ---
+  duration_ms: 0.747849
+  type: 'test'
+  ...
+# Subtest: provisional claim prevents sealing and cannot be disguised by audit
+ok 113 - provisional claim prevents sealing and cannot be disguised by audit
+  ---
+  duration_ms: 1.508849
+  type: 'test'
+  ...
+# Subtest: request IDs or quoted prose cannot be inserted into coded assertion records
+ok 114 - request IDs or quoted prose cannot be inserted into coded assertion records
+  ---
+  duration_ms: 0.830124
+  type: 'test'
+  ...
+# Subtest: same original test can have multiple reports while retaining distinct report IDs
+ok 115 - same original test can have multiple reports while retaining distinct report IDs
+  ---
+  duration_ms: 4.994952
+  type: 'test'
+  ...
+# Subtest: publication/variant relation captures both products without duplicating original study
+ok 116 - publication/variant relation captures both products without duplicating original study
+  ---
+  duration_ms: 0.766807
+  type: 'test'
+  ...
+# Subtest: unverified inferences cannot be promoted even after inventory is sealed
+ok 117 - unverified inferences cannot be promoted even after inventory is sealed
+  ---
+  duration_ms: 1.083236
+  type: 'test'
+  ...
+# Subtest: evidence not promotable until source-wide review is sealed
+ok 118 - evidence not promotable until source-wide review is sealed
+  ---
+  duration_ms: 0.850384
+  type: 'test'
+  ...
+# Subtest: arbitrary criterion replacement forbidden at promotion even if request asks for it
+ok 119 - arbitrary criterion replacement forbidden at promotion even if request asks for it
+  ---
+  duration_ms: 1.529389
+  type: 'test'
+  ...
+# Subtest: approved category mapping is immutable without new review
+ok 120 - approved category mapping is immutable without new review
+  ---
+  duration_ms: 0.446975
+  type: 'test'
+  ...
+# Subtest: registered inventories and sealed observations cannot be silently altered
+ok 121 - registered inventories and sealed observations cannot be silently altered
+  ---
+  duration_ms: 1.557191
+  type: 'test'
+  ...
+# Subtest: SQLite persistence survives reopen without original source text
+ok 122 - SQLite persistence survives reopen without original source text
+  ---
+  duration_ms: 3.639956
+  type: 'test'
+  ...
+# Subtest: ephemeral whole-review parser inventory records only hashes, never source prose
+ok 123 - ephemeral whole-review parser inventory records only hashes, never source prose
+  ---
+  duration_ms: 0.586436
+  type: 'test'
+  ...
+# Subtest: typed numeric observation stores real measured value and protocol, rejects fabricated text
+ok 124 - typed numeric observation stores real measured value and protocol, rejects fabricated text
+  ---
+  duration_ms: 1.129305
+  type: 'test'
+  ...
+# Subtest: an observation appended after audit invalidates the seal until new reviewed version
+ok 125 - an observation appended after audit invalidates the seal until new reviewed version
+  ---
+  duration_ms: 1.206562
+  type: 'test'
+  ...
+# (node:4605) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: two passes extract an unexpectedly negative claim missed on first pass
+ok 126 - two passes extract an unexpectedly negative claim missed on first pass
+  ---
+  duration_ms: 11.845186
+  type: 'test'
+  ...
+# Subtest: provenance uses source offsets, hashes, no long review text or search query
+ok 127 - provenance uses source offsets, hashes, no long review text or search query
+  ---
+  duration_ms: 0.86755
+  type: 'test'
+  ...
+# Subtest: runtime rejects hidden user query or intent metadata
+ok 128 - runtime rejects hidden user query or intent metadata
+  ---
+  duration_ms: 0.46409
+  type: 'test'
+  ...
+# Subtest: rejects request-based reinterpretation as a canonical boolean fact
+ok 129 - rejects request-based reinterpretation as a canonical boolean fact
+  ---
+  duration_ms: 0.548138
+  type: 'test'
+  ...
+# Subtest: invalid source span is quarantined rather than creating a fact
+ok 130 - invalid source span is quarantined rather than creating a fact
+  ---
+  duration_ms: 0.357239
+  type: 'test'
+  ...
+# Subtest: fabricated measurement whose number is missing from evidence is rejected
+ok 131 - fabricated measurement whose number is missing from evidence is rejected
+  ---
+  duration_ms: 0.275526
+  type: 'test'
+  ...
+# Subtest: numeric check does not assert calibrated unit or protocol correctness
+ok 132 - numeric check does not assert calibrated unit or protocol correctness
+  ---
+  duration_ms: 5.220764
+  type: 'test'
+  ...
+# Subtest: missing review of one accessible segment cannot be treated as complete
+ok 133 - missing review of one accessible segment cannot be treated as complete
+  ---
+  duration_ms: 0.265621
+  type: 'test'
+  ...
+# Subtest: nontext visual representation partial blocks review even if caption exists
+ok 134 - nontext visual representation partial blocks review even if caption exists
+  ---
+  duration_ms: 0.489139
+  type: 'test'
+  ...
+# Subtest: unavailable figure prevents sealing, even if a model claims it was empty
+ok 135 - unavailable figure prevents sealing, even if a model claims it was empty
+  ---
+  duration_ms: 0.564793
+  type: 'test'
+  ...
+# Subtest: model cannot claim nonexistent segment is empty
+ok 136 - model cannot claim nonexistent segment is empty
+  ---
+  duration_ms: 0.274745
+  type: 'test'
+  ...
+# Subtest: deduplicates exact identical observations proposed on two model passes
+ok 137 - deduplicates exact identical observations proposed on two model passes
+  ---
+  duration_ms: 0.274394
+  type: 'test'
+  ...
+# Subtest: model says there are no claims but it still requires explicit independent review
+ok 138 - model says there are no claims but it still requires explicit independent review
+  ---
+  duration_ms: 22.826873
+  type: 'test'
+  ...
+# Subtest: authenticated human approval bridges the source-wide packet to phase109 authoritative memory
+ok 139 - authenticated human approval bridges the source-wide packet to phase109 authoritative memory
+  ---
+  duration_ms: 7.537812
+  type: 'test'
+  ...
+# Subtest: review refuses to ignore a candidate just because it was not in the query
+ok 140 - review refuses to ignore a candidate just because it was not in the query
+  ---
+  duration_ms: 0.986229
+  type: 'test'
+  ...
+# Subtest: rejected claim cannot be relabeled as empty without independent resolution
+ok 141 - rejected claim cannot be relabeled as empty without independent resolution
+  ---
+  duration_ms: 0.724384
+  type: 'test'
+  ...
+# Subtest: unresolved source or invalid candidate blocks all promotion
+ok 142 - unresolved source or invalid candidate blocks all promotion
+  ---
+  duration_ms: 0.586826
+  type: 'test'
+  ...
+# Subtest: SQLite retains reviewed atomic observations, not review paragraphs after close/reopen
+ok 143 - SQLite retains reviewed atomic observations, not review paragraphs after close/reopen
+  ---
+  duration_ms: 16.039159
+  type: 'test'
+  ...
+# Subtest: uses a local-only inference endpoint and rejects remote inference
+ok 144 - uses a local-only inference endpoint and rejects remote inference
+  ---
+  duration_ms: 0.475438
+  type: 'test'
+  ...
+# Subtest: held-out validation reports real false negatives and stratifies by source surface
+ok 145 - held-out validation reports real false negatives and stratifies by source surface
+  ---
+  duration_ms: 0.283458
+  type: 'test'
+  ...
+# Subtest: literal evidence anchor determines correct indices, and anchor is discarded
+ok 146 - literal evidence anchor determines correct indices, and anchor is discarded
+  ---
+  duration_ms: 0.438161
+  type: 'test'
+  ...
+# Subtest: fabricated literal anchor cannot become a semantic observation
+ok 147 - fabricated literal anchor cannot become a semantic observation
+  ---
+  duration_ms: 0.249607
+  type: 'test'
+  ...
+# Subtest: oversized content is flagged, never silently truncated or sealed
+ok 148 - oversized content is flagged, never silently truncated or sealed
+  ---
+  duration_ms: 7.144819
+  type: 'test'
+  ...
+# Subtest: local model errors quarantine review instead of auto accepting an empty block
+ok 149 - local model errors quarantine review instead of auto accepting an empty block
+  ---
+  duration_ms: 0.328006
+  type: 'test'
+  ...
+# (node:4611) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: long passages split into multiple bounded windows without losing any characters
+ok 150 - long passages split into multiple bounded windows without losing any characters
+  ---
+  duration_ms: 10.780448
+  type: 'test'
+  ...
+# Subtest: preserves explicit source methodology segments along with windowed text
+ok 151 - preserves explicit source methodology segments along with windowed text
+  ---
+  duration_ms: 0.482919
+  type: 'test'
+  ...
+# Subtest: unavailable figures stay inaccessible, never become empty favorable evidence
+ok 152 - unavailable figures stay inaccessible, never become empty favorable evidence
+  ---
+  duration_ms: 0.284079
+  type: 'test'
+  ...
+# Subtest: no query or preferences can sneak into the canonical source plan
+ok 153 - no query or preferences can sneak into the canonical source plan
+  ---
+  duration_ms: 0.342428
+  type: 'test'
+  ...
+# Subtest: rejects unsafe window size/overlap rather than truncating a long source
+ok 154 - rejects unsafe window size/overlap rather than truncating a long source
+  ---
+  duration_ms: 0.163236
+  type: 'test'
+  ...
+# Subtest: preserves source utf16 surrogate pairs at window boundaries
+ok 155 - preserves source utf16 surrogate pairs at window boundaries
+  ---
+  duration_ms: 2.297849
+  type: 'test'
+  ...
+# Subtest: scope audit records reference to later method negation without promoting interpretation
+ok 156 - scope audit records reference to later method negation without promoting interpretation
+  ---
+  duration_ms: 0.467265
+  type: 'test'
+  ...
+# Subtest: scope proposals cannot invent a source quote outside the document
+ok 157 - scope proposals cannot invent a source quote outside the document
+  ---
+  duration_ms: 0.29776
+  type: 'test'
+  ...
+# Subtest: scope proposal must refer to an existing observation
+ok 158 - scope proposal must refer to an existing observation
+  ---
+  duration_ms: 0.4172
+  type: 'test'
+  ...
+# Subtest: source scope audit fails when the original inventory changes
+ok 159 - source scope audit fails when the original inventory changes
+  ---
+  duration_ms: 0.425312
+  type: 'test'
+  ...
+# Subtest: no detected context issues never implies independently proven comprehension
+ok 160 - no detected context issues never implies independently proven comprehension
+  ---
+  duration_ms: 0.270819
+  type: 'test'
+  ...
+# Subtest: quietest is a relative preference, not a hard exclusion
+ok 161 - quietest is a relative preference, not a hard exclusion
+  ---
+  duration_ms: 0.304971
+  type: 'test'
+  ...
+# Subtest: material ambiguity changing recommended winner asks one relevant question
+ok 162 - material ambiguity changing recommended winner asks one relevant question
+  ---
+  duration_ms: 0.782411
+  type: 'test'
+  ...
+# Subtest: different absolute capabilities require clarification even if winner unchanged
+ok 163 - different absolute capabilities require clarification even if winner unchanged
+  ---
+  duration_ms: 0.116766
+  type: 'test'
+  ...
+# Subtest: different eligibility sets are material regardless of same top product
+ok 164 - different eligibility sets are material regardless of same top product
+  ---
+  duration_ms: 0.096736
+  type: 'test'
+  ...
+# Subtest: when all plausible interpretations have the same grounded result no redundant question
+ok 165 - when all plausible interpretations have the same grounded result no redundant question
+  ---
+  duration_ms: 0.210097
+  type: 'test'
+  ...
+# Subtest: evidence missing is not an ambiguous preference and cannot prove virus removal
+ok 166 - evidence missing is not an ambiguous preference and cannot prove virus removal
+  ---
+  duration_ms: 0.624713
+  type: 'test'
+  ...
+# Subtest: without alternatives checked must run interpretive pass before ranking
+ok 167 - without alternatives checked must run interpretive pass before ranking
+  ---
+  duration_ms: 0.094763
+  type: 'test'
+  ...
+# Subtest: materially different readings without a prepared user question cannot silently rank
+ok 168 - materially different readings without a prepared user question cannot silently rank
+  ---
+  duration_ms: 0.111659
+  type: 'test'
+  ...
+# Subtest: invalid user interpretation cannot silently remove impossible best product
+ok 169 - invalid user interpretation cannot silently remove impossible best product
+  ---
+  duration_ms: 0.881922
+  type: 'test'
+  ...
+# Subtest: ranking decisions never contain reviewed observations or source prose
+ok 170 - ranking decisions never contain reviewed observations or source prose
+  ---
+  duration_ms: 3.790273
+  type: 'test'
+  ...
+# Subtest: changing source text with same inventory identity invalidates scope provenance
+ok 171 - changing source text with same inventory identity invalidates scope provenance
+  ---
+  duration_ms: 0.347314
+  type: 'test'
+  ...
+# Subtest: end-to-end windowed extraction returns separate provisional claims for overlap review
+ok 172 - end-to-end windowed extraction returns separate provisional claims for overlap review
+  ---
+  duration_ms: 4.248154
+  type: 'test'
+  ...
+# Subtest: nested user query or unexpected block metadata never enters canonical extraction
+ok 173 - nested user query or unexpected block metadata never enters canonical extraction
+  ---
+  duration_ms: 0.144869
+  type: 'test'
+  ...
+# Subtest: unusually long intact source section can be partitioned, not silently truncated
+ok 174 - unusually long intact source section can be partitioned, not silently truncated
+  ---
+  duration_ms: 13.090536
+  type: 'test'
+  ...
+# Subtest: Italian and English paraphrases give the identical canonical intent fingerprint
+ok 175 - Italian and English paraphrases give the identical canonical intent fingerprint
+  ---
+  duration_ms: 2.030215
+  type: 'test'
+  ...
+# Subtest: real source values from four original professional reviews sort consistently for bare floor
+ok 176 - real source values from four original professional reviews sort consistently for bare floor
+  ---
+  duration_ms: 8.752707
+  type: 'test'
+  ...
+# Subtest: paraphrases of the same intent give identical rank, ties and provenance
+ok 177 - paraphrases of the same intent give identical rank, ties and provenance
+  ---
+  duration_ms: 25.511812
+  type: 'test'
+  ...
+# Subtest: same reviewed data, reordered candidate rows and evidence rows cannot change results or fingerprint
+ok 178 - same reviewed data, reordered candidate rows and evidence rows cannot change results or fingerprint
+  ---
+  duration_ms: 0.382778
+  type: 'test'
+  ...
+# Subtest: carpet is a material context difference and inverts V11/V15 relative order
+ok 179 - carpet is a material context difference and inverts V11/V15 relative order
+  ---
+  duration_ms: 0.419574
+  type: 'test'
+  ...
+# Subtest: carpet paraphrases still remain invariant
+ok 180 - carpet paraphrases still remain invariant
+  ---
+  duration_ms: 0.174634
+  type: 'test'
+  ...
+# Subtest: query lacking test surface abstains rather than silently choosing bare floor
+ok 181 - query lacking test surface abstains rather than silently choosing bare floor
+  ---
+  duration_ms: 0.313183
+  type: 'test'
+  ...
+# Subtest: query with conflicting surfaces abstains
+ok 182 - query with conflicting surfaces abstains
+  ---
+  duration_ms: 0.129796
+  type: 'test'
+  ...
+# Subtest: unknown additional constraint cannot silently disappear from the request
+ok 183 - unknown additional constraint cannot silently disappear from the request
+  ---
+  duration_ms: 0.299062
+  type: 'test'
+  ...
+# Subtest: potentially absolute silence is not parsed as an ordinary relative preference
+ok 184 - potentially absolute silence is not parsed as an ordinary relative preference
+  ---
+  duration_ms: 0.330469
+  type: 'test'
+  ...
+# Subtest: no arbitrary category is inferred from a generic quiet request
+ok 185 - no arbitrary category is inferred from a generic quiet request
+  ---
+  duration_ms: 0.147913
+  type: 'test'
+  ...
+# Subtest: unverified frame cannot be used, even if everything else is valid
+ok 186 - unverified frame cannot be used, even if everything else is valid
+  ---
+  duration_ms: 0.329858
+  type: 'test'
+  ...
+# Subtest: personal profiles are part of meaning even when measurements are identical
+ok 187 - personal profiles are part of meaning even when measurements are identical
+  ---
+  duration_ms: 0.207544
+  type: 'test'
+  ...
+# Subtest: hard requirements may never be silently treated as already passed
+ok 188 - hard requirements may never be silently treated as already passed
+  ---
+  duration_ms: 0.115454
+  type: 'test'
+  ...
+# Subtest: missing measurements stay visible as unranked, not auto-excluded
+ok 189 - missing measurements stay visible as unranked, not auto-excluded
+  ---
+  duration_ms: 0.401867
+  type: 'test'
+  ...
+# Subtest: multiple original tests without approved synthesis are not averaged
+ok 190 - multiple original tests without approved synthesis are not averaged
+  ---
+  duration_ms: 0.181364
+  type: 'test'
+  ...
+# Subtest: published comparison re-reporting same original test does not increase weight
+ok 191 - published comparison re-reporting same original test does not increase weight
+  ---
+  duration_ms: 0.159471
+  type: 'test'
+  ...
+# Subtest: conflicting values as same original test are rejected rather than double counted
+ok 192 - conflicting values as same original test are rejected rather than double counted
+  ---
+  duration_ms: 0.133291
+  type: 'test'
+  ...
+# Subtest: tie groups do not invent superiority through stable alphabetical order
+ok 193 - tie groups do not invent superiority through stable alphabetical order
+  ---
+  duration_ms: 0.639956
+  type: 'test'
+  ...
+# Subtest: changed evidence snapshot is not treated as query instability
+ok 194 - changed evidence snapshot is not treated as query instability
+  ---
+  duration_ms: 0.185851
+  type: 'test'
+  ...
+# Subtest: numeric dBA values do not masquerade as overall product quality or public recommendation
+ok 195 - numeric dBA values do not masquerade as overall product quality or public recommendation
+  ---
+  duration_ms: 0.154263
+  type: 'test'
+  ...
+# Subtest: cross-methodology readings fail closed; v1.3 cannot be treated as v1.4 automatically
+ok 196 - cross-methodology readings fail closed; v1.3 cannot be treated as v1.4 automatically
+  ---
+  duration_ms: 0.147542
+  type: 'test'
+  ...
+# Subtest: a grounded proposal remains pending independent confirmation, never auto ranking
+ok 197 - a grounded proposal remains pending independent confirmation, never auto ranking
+  ---
+  duration_ms: 20.130306
+  type: 'test'
+  ...
+# Subtest: another language produces compatible proposed slots without proving general NLP
+ok 198 - another language produces compatible proposed slots without proving general NLP
+  ---
+  duration_ms: 0.583891
+  type: 'test'
+  ...
+# Subtest: missing evidence anchor for a category cannot be auto accepted
+ok 199 - missing evidence anchor for a category cannot be auto accepted
+  ---
+  duration_ms: 0.462739
+  type: 'test'
+  ...
+# Subtest: invented source quote fails exact anchor
+ok 200 - invented source quote fails exact anchor
+  ---
+  duration_ms: 0.257579
+  type: 'test'
+  ...
+# Subtest: wrong character index fails even with a correct quote
+ok 201 - wrong character index fails even with a correct quote
+  ---
+  duration_ms: 0.166532
+  type: 'test'
+  ...
+# Subtest: unexpected JSON keys fail closed
+ok 202 - unexpected JSON keys fail closed
+  ---
+  duration_ms: 0.433906
+  type: 'test'
+  ...
+# Subtest: invalid numeric offsets fail closed
+ok 203 - invalid numeric offsets fail closed
+  ---
+  duration_ms: 0.208225
+  type: 'test'
+  ...
+# Subtest: oversized model response fails closed
+ok 204 - oversized model response fails closed
+  ---
+  duration_ms: 0.101193
+  type: 'test'
+  ...
+# Subtest: invalid JSON produces an abstention, not automatic parsing
+ok 205 - invalid JSON produces an abstention, not automatic parsing
+  ---
+  duration_ms: 8.090326
+  type: 'test'
+  ...
+# Subtest: local model timeout/transport error produces abstention
+ok 206 - local model timeout/transport error produces abstention
+  ---
+  duration_ms: 0.591123
+  type: 'test'
+  ...
+# Subtest: single category/goal but unknown surface asks instead of defaulting
+ok 207 - single category/goal but unknown surface asks instead of defaulting
+  ---
+  duration_ms: 0.333854
+  type: 'test'
+  ...
+# Subtest: conflicting surface stays unresolved even if model returns a plausible goal
+ok 208 - conflicting surface stays unresolved even if model returns a plausible goal
+  ---
+  duration_ms: 0.313804
+  type: 'test'
+  ...
+# Subtest: unexpected cordless requirement omitted by model triggers safety abstention
+ok 209 - unexpected cordless requirement omitted by model triggers safety abstention
+  ---
+  duration_ms: 0.2255
+  type: 'test'
+  ...
+# Subtest: mentioned cordless captured but requires separate eligibility review
+ok 210 - mentioned cordless captured but requires separate eligibility review
+  ---
+  duration_ms: 0.17212
+  type: 'test'
+  ...
+# Subtest: numerical budget not silently erased
+ok 211 - numerical budget not silently erased
+  ---
+  duration_ms: 0.208995
+  type: 'test'
+  ...
+# Subtest: negative constraints get scope review even with identical positive slots
+ok 212 - negative constraints get scope review even with identical positive slots
+  ---
+  duration_ms: 0.155705
+  type: 'test'
+  ...
+# Subtest: absolute must condition cannot be mistaken for a soft preference
+ok 213 - absolute must condition cannot be mistaken for a soft preference
+  ---
+  duration_ms: 0.101623
+  type: 'test'
+  ...
+# Subtest: dishwasher bacteria and viruses are distinct goals and never noise-rankable
+ok 214 - dishwasher bacteria and viruses are distinct goals and never noise-rankable
+  ---
+  duration_ms: 0.161353
+  type: 'test'
+  ...
+# Subtest: failure to mention virus when present is a critical omission
+ok 215 - failure to mention virus when present is a critical omission
+  ---
+  duration_ms: 0.135014
+  type: 'test'
+  ...
+# Subtest: different contexts reverse evidence-based ranking, so clarification matters
+ok 216 - different contexts reverse evidence-based ranking, so clarification matters
+  ---
+  duration_ms: 47.495166
+  type: 'test'
+  ...
+# Subtest: same order across contexts does not presume a user specified a surface
+ok 217 - same order across contexts does not presume a user specified a surface
+  ---
+  duration_ms: 0.598164
+  type: 'test'
+  ...
+# Subtest: model output cannot be fed to rankSameIntent112 without verified frame
+ok 218 - model output cannot be fed to rankSameIntent112 without verified frame
+  ---
+  duration_ms: 0.211499
+  type: 'test'
+  ...
+# Subtest: independent frames produce identical rankings for same context and snapshot
+ok 219 - independent frames produce identical rankings for same context and snapshot
+  ---
+  duration_ms: 0.297459
+  type: 'test'
+  ...
+# Subtest: independent frames do not merge different surface contexts
+ok 220 - independent frames do not merge different surface contexts
+  ---
+  duration_ms: 0.239161
+  type: 'test'
+  ...
+# Subtest: evidence revision mismatch prevents declaring invariant ranking
+ok 221 - evidence revision mismatch prevents declaring invariant ranking
+  ---
+  duration_ms: 0.169997
+  type: 'test'
+  ...
+# Subtest: developer-authored benchmark cannot report empirical accuracy
+ok 222 - developer-authored benchmark cannot report empirical accuracy
+  ---
+  duration_ms: 0.309568
+  type: 'test'
+  ...
+# Subtest: a benchmark cannot pretend one adjudicator is two
+ok 223 - a benchmark cannot pretend one adjudicator is two
+  ---
+  duration_ms: 0.110086
+  type: 'test'
+  ...
+# Subtest: externally labeled benchmark shows metrics only with two separate adjudicator IDs
+ok 224 - externally labeled benchmark shows metrics only with two separate adjudicator IDs
+  ---
+  duration_ms: 0.141183
+  type: 'test'
+  ...
+# Subtest: remote Ollama endpoint is always rejected
+ok 225 - remote Ollama endpoint is always rejected
+  ---
+  duration_ms: 0.210258
+  type: 'test'
+  ...
+# Subtest: local Ollama adapter sends enforced JSON schema and temperature zero
+ok 226 - local Ollama adapter sends enforced JSON schema and temperature zero
+  ---
+  duration_ms: 0.677684
+  type: 'test'
+  ...
+# Subtest: Ollama HTTP failure abstains without cloud fallback
+ok 227 - Ollama HTTP failure abstains without cloud fallback
+  ---
+  duration_ms: 8.52368
+  type: 'test'
+  ...
+# Subtest: overall quality WITH hygiene, not hygiene as sole optimization goal
+ok 228 - overall quality WITH hygiene, not hygiene as sole optimization goal
+  ---
+  duration_ms: 2.056656
+  type: 'test'
+  ...
+# Subtest: different actual objective maximizing hygiene is not conflated
+ok 229 - different actual objective maximizing hygiene is not conflated
+  ---
+  duration_ms: 9.442388
+  type: 'test'
+  ...
+# Subtest: paraphrase preserves primary objective in bounded grammar
+ok 230 - paraphrase preserves primary objective in bounded grammar
+  ---
+  duration_ms: 0.356558
+  type: 'test'
+  ...
+# Subtest: hygiene meaning is unresolved without microbial target
+ok 231 - hygiene meaning is unresolved without microbial target
+  ---
+  duration_ms: 0.138839
+  type: 'test'
+  ...
+# Subtest: manufacturer claim not mistaken for independently validated germ reduction
+ok 232 - manufacturer claim not mistaken for independently validated germ reduction
+  ---
+  duration_ms: 19.409999
+  type: 'test'
+  ...
+# Subtest: independent mop washing or pad rinsing not presented as floor disinfection
+ok 233 - independent mop washing or pad rinsing not presented as floor disinfection
+  ---
+  duration_ms: 0.307985
+  type: 'test'
+  ...
+# Subtest: ranking must abstain without validated MCDA and assay
+ok 234 - ranking must abstain without validated MCDA and assay
+  ---
+  duration_ms: 0.169055
+  type: 'test'
+  ...
+# Subtest: candidate order cannot change knowledge audit
+ok 235 - candidate order cannot change knowledge audit
+  ---
+  duration_ms: 0.470711
+  type: 'test'
+  ...
+# Subtest: two different requests never mutate the product evidence inputs
+ok 236 - two different requests never mutate the product evidence inputs
+  ---
+  duration_ms: 0.44399
+  type: 'test'
+  ...
+# Subtest: strict floor microbial claim needs actual microbe-targeted original assay
+ok 237 - strict floor microbial claim needs actual microbe-targeted original assay
+  ---
+  duration_ms: 1.014853
+  type: 'test'
+  ...
+# Subtest: verified bacteria floor assay is not a verified virus floor assay
+ok 238 - verified bacteria floor assay is not a verified virus floor assay
+  ---
+  duration_ms: 0.455828
+  type: 'test'
+  ...
+# Subtest: cannot recast promotional observation as independent
+ok 239 - cannot recast promotional observation as independent
+  ---
+  duration_ms: 0.140432
+  type: 'test'
+  ...
+# Subtest: cannot include duplicate exact variant
+ok 240 - cannot include duplicate exact variant
+  ---
+  duration_ms: 0.116015
+  type: 'test'
+  ...
+# Subtest: does not infer non-tested product as failing mandatory feature
+ok 241 - does not infer non-tested product as failing mandatory feature
+  ---
+  duration_ms: 0.105048
+  type: 'test'
+  ...
+1..241
+# tests 241
+# suites 0
+# pass 241
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1927.044765

@@ -1,0 +1,20 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {auditTranscriptRisks214} from '../src/phase214_transcription_risk_audit.js';
+import type {Transcript212,ProvisionalReference212} from '../src/phase212_local_asr_evaluation.js';
+const sha='e'.repeat(64);
+const transcript=(text='The heat is 41 °C and power 60 W'):Transcript212=>({schema:'pee212.local-asr.v1',uploadSha256:sha,durationSeconds:12,
+ runtime:{engine:'whispercpp_local',engineVersion:'1.9.5',modelSha256:'f'.repeat(64),modelLabel:'ggml-base.bin',inferenceMode:'local_cpu',languageStrategy:'multilingual_windows',noRemoteInference:true,inputShaVerified:true,engineRan:true},
+ segments:[{id:'s1',startSecond:0,endSecond:5,text,language:'en',languageBasis:'window_inference',words:[]}]});
+const reference=(text='The heat is 41 °C and power 60 W'):ProvisionalReference212=>({status:'analyst_transcription_unverified',segments:[{id:'r1',startSecond:0,endSecond:5,text,language:'en'}]});
+test('without human reference a numeric match is never claimed',()=>{const r=auditTranscriptRisks214(transcript(),null);assert.equal(r.numericCandidatesInHypothesis,2);assert.equal(r.numericEvaluation,'not_possible_without_reference');assert.equal(r.scientificAccuracyClaimAuthorized,false);});
+test('identifies a unit-bearing temperature error',()=>{const r=auditTranscriptRisks214(transcript('It was 47 °C'),reference('It was 41 °C'));assert.equal(r.numericUnmatchedInHypothesis,1);assert.equal(r.numericUnmatchedInReference,1);assert.equal(r.productEvidenceAdmissionAuthorized,false);});
+test('missing measurement is not compensated by overall transcript fluency',()=>{const r=auditTranscriptRisks214(transcript('The heat is 41 °C'),reference());assert.equal(r.numericUnmatchedInReference,1);});
+test('duplicate counts matter and are not merged',()=>{const r=auditTranscriptRisks214(transcript('41 °C'),reference('41 °C, then 41 °C'));assert.equal(r.numericUnmatchedInReference,1);});
+test('different units remain different claims',()=>{const r=auditTranscriptRisks214(transcript('60 W'),reference('60 V'));assert.equal(r.numericUnmatchedInReference,1);});
+test('commercial text, interpretations and numerals never persist',()=>{const r=auditTranscriptRisks214(transcript('Buy 42 mAh BrandnameX'),reference('It has 41 mAh BrandnameY'));const x=JSON.stringify(r);for(const q of ['BrandnameX','BrandnameY','42 mAh','41 mAh'])assert.equal(x.includes(q),false);});
+test('two language-labelled reference segments reveal switching, but do not certify language ID',()=>{const t=transcript('41 °C');const r:ProvisionalReference212={status:'analyst_transcription_unverified',segments:[{id:'r1',startSecond:0,endSecond:3,text:'41 °C',language:'it'},{id:'r2',startSecond:3,endSecond:5,text:'40 °C',language:'ja'}]};const a=auditTranscriptRisks214(t,r);assert.equal(a.referenceLanguageTransitions,1);assert.equal(a.languageSwitchWordAccuracy,null);assert.equal(a.originalAudioAuthenticated,false);});
+test('negative sentiment without numeric claim remains useful but unverified',()=>{const a=auditTranscriptRisks214(transcript('I dislike the flavour'),reference('I dislike the flavour'));assert.equal(a.numericCandidatesInHypothesis,0);assert.equal(a.claimVerification,'not_performed');});
+test('invalid transcript fails through Phase212 authoritative validator',()=>{const bad=transcript();bad.runtime.inputShaVerified=false;assert.throws(()=>auditTranscriptRisks214(bad,null),/phase212_input/);});
+test('punctuation and spacing around Celsius are normalized',()=>{const a=auditTranscriptRisks214(transcript('41 ° C'),reference('41°C'));assert.equal(a.numericUnmatchedInReference,0);});
+test('decimals with dot and comma are kept separate rather than guessed equivalent',()=>{const a=auditTranscriptRisks214(transcript('1,5 kWh'),reference('1.5 kWh'));assert.equal(a.numericUnmatchedInReference,1);});
+test('no gold reference means no justified accuracy even with zero differences',()=>{const a=auditTranscriptRisks214(transcript('60 W'),null);assert.equal(a.comparedTo,'none');assert.equal(a.languageSwitchWordAccuracy,null);});

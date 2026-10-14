@@ -1,0 +1,20 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {assessCrossDecode215} from '../src/phase215_asr_crossdecode_review.js';
+import type {Transcript212} from '../src/phase212_local_asr_evaluation.js';
+const sha='a'.repeat(64),model='b'.repeat(64);
+function clip(strategy:'global_language'|'multilingual_windows',parts:string[]):Transcript212{
+ return {schema:'pee212.local-asr.v1',uploadSha256:sha,durationSeconds:30,runtime:{engine:'whispercpp_local',engineVersion:'1.9.5',modelSha256:model,
+ modelLabel:'ggml-base.bin',inferenceMode:'local_cpu',languageStrategy:strategy,noRemoteInference:true,inputShaVerified:true,engineRan:true},
+ segments:parts.map((text,i)=>({id:'s'+i,startSecond:i*15,endSecond:(i+1)*15,text,language:'en',languageBasis:strategy==='global_language'?'global_only':'window_inference',words:[]}))};
+}
+test('matching quantities do not produce spurious flags',()=>{const a=clip('global_language',['16 grams heavier','120 hertz']);const b=clip('multilingual_windows',['16 grams heavier','120 Hz']);const out=assessCrossDecode215(a,b,[0,15]);assert.equal(out.alerts.length,0);assert.equal(out.wordErrorRate,null);assert.equal(out.conclusion,'diagnostic_disagreement_only');});
+test('real-style bits vs hits is flagged without correcting either',()=>{const a=clip('global_language',['camera plateau','The display reaching 3000 bits and 120 hertz']);const b=clip('multilingual_windows',['camera plateau','the display reaching 3,000 hits and 120 Hz']);const x=assessCrossDecode215(a,b,[0,15]);assert.deepEqual(x.alerts[0].alerts,['context_sensitive_unit','unit_disagreement']);assert.equal(JSON.stringify(x).includes('bits'),false);assert.equal(JSON.stringify(x).includes('3000'),false);});
+test('numeric differences are routed to review, not treated as errors against truth',()=>{const a=clip('global_language',['41 °C','same']);const b=clip('multilingual_windows',['47 °C','same']);const x=assessCrossDecode215(a,b,[0,15]);assert.deepEqual(x.alerts[0].alerts,['quantity_disagreement']);assert.equal(x.productEvidenceAdmissionAuthorized,false);});
+test('variants and models must be identical across decodes',()=>{const a=clip('global_language',['hello','world']);const b=clip('multilingual_windows',['hello','world']);b.runtime.modelSha256='c'.repeat(64);assert.throws(()=>assessCrossDecode215(a,b,[0,15]),/mismatched/);});
+test('gaps and malformed windows rejected',()=>{const a=clip('global_language',['one','two']);const b=clip('multilingual_windows',['one','two']);for(const wins of [[],[15],[0,0],[0,-2],[0,31],[0,NaN]])assert.throws(()=>assessCrossDecode215(a,b,wins));});
+test('no transcript text, exact numbers, or speaker claims retained',()=>{const a=clip('global_language',['The display 3000 bits','a reviewer says private facts']);const b=clip('multilingual_windows',['The display 3000 hits','a reviewer says private facts']);const out=JSON.stringify(assessCrossDecode215(a,b,[0,15]));assert.ok(!out.includes('reviewer')&&!out.includes('private facts')&&!out.includes('3000'));});
+test('repeated language is an observation, never proof of code switching',()=>{const a=clip('global_language',['uno','one']);const b=clip('multilingual_windows',['uno','one']);b.segments[0].language='it';const x=assessCrossDecode215(a,b,[0,15]);assert.deepEqual(x.repeatedLanguageObservation,['en','it']);assert.equal(x.languageChangeAccuracy,null);});
+test('unreviewed phrases stay unvalidated even when windows agree',()=>{const a=clip('global_language',['fantastic processor','fantastic video']);const b=clip('multilingual_windows',['fantastic processor','fantastic video']);const x=assessCrossDecode215(a,b,[0,15]);assert.equal(x.alerts.length,0);assert.equal(x.productEvidenceAdmissionAuthorized,false);});
+
+test('missing transcript coverage is visible, not treated as agreement',()=>{const a=clip('global_language',['hello','world']);const b=clip('multilingual_windows',['hello','']);const x=assessCrossDecode215(a,b,[0,15]);assert.ok(x.alerts.some(f=>f.alerts.includes('transcript_presence_mismatch')));assert.equal(x.noAlertsIsNotAccuracy,true);});
