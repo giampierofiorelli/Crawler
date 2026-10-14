@@ -193,6 +193,8 @@ export function planBudgetedCategoryWave243(ctx:WaveContext243,all:readonly Cand
   if(c.product.verifiedDiscontinued){triage='verified_discontinued';reasons.push('reviewed_lifecycle_not_current');}
   else if(!c.product.officialProductIdentityConfirmed||!c.product.marketListingConfirmed){
    triage='identity_unknown';action='verify_identity';priority+=50;reasons.push('identity_or_market_unverified');
+   // A reviewed original-test strength already attached to this record makes resolving its identity more valuable.
+   if(positive){priority+=30;reasons.push('reviewed_original_test_positive_lead');}
   }else if(c.researchState==='deep_reviewed'){
    triage='already_deep_reviewed';reasons.push('reuse_previously_reviewed_research');
   }else if(c.researchState==='suspended'&&!needsRevisit){
@@ -237,8 +239,18 @@ export function planBudgetedCategoryWave243(ctx:WaveContext243,all:readonly Cand
  });
  // Reserve initial slots for non-mainstream producers when the budget can fund them.
  // Each selected action is still priced. The reserve is not a brand blacklist or fixed discovery allocation.
- const possible=records.filter(r=>r.action!==null).sort((a,b)=>
+ const ranked=records.filter(r=>r.action!==null).sort((a,b)=>
   b.priority-a.priority||a.c.product.id.localeCompare(b.c.product.id));
+ // Among equal priorities, alternate between families (round-robin in first-seen order) so one prolific
+ // producer or site cannot fill a wave by tie-break alone. Priority order is never overridden.
+ const possible:typeof ranked=[];
+ for(let i=0;i<ranked.length;){
+  let j=i;while(j<ranked.length&&ranked[j].priority===ranked[i].priority)j++;
+  const byFam=new Map<string,typeof ranked>();for(const r of ranked.slice(i,j))byFam.set(r.c.product.familyId,[...(byFam.get(r.c.product.familyId)??[]),r]);
+  const queues=[...byFam.values()];
+  for(let k=0;possible.length<j;k++)for(const q of queues)if(q[k])possible.push(q[k]);
+  i=j;
+ }
  const affordableMinimum=Math.min(...Object.values(ctx.policy.unitCost));
  const maxSlots=Math.floor(ctx.policy.effortBudget/affordableMinimum);
  const reserve=maxSlots>0?Math.ceil(maxSlots*ctx.policy.reservedTailActionPercent/100):0;
