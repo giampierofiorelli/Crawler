@@ -597,10 +597,12 @@ export class KnowledgeStore246 {
    technicalHypotheses:items.filter(i=>i.section===s&&i.knowledgeClass==='technical_hypothesis'),
    reviewedGeneralKnowledge:items.filter(i=>i.section===s&&i.knowledgeClass==='reviewed_general_knowledge'),
    evidenceSupportedFindings:items.filter(i=>i.section===s&&i.knowledgeClass==='evidence_supported_finding')}]));
-  const body={categoryId,items:items.map(i=>[i.itemId,i.knowledgeClass,i.state,i.review?.reviewId??null])};
+  // Relations (schema v3) are part of the versioned profile: a new or re-graded relation is a new version.
+  const relations=(this.db.prepare('SELECT relation_id,support FROM category_relations WHERE category_id=? ORDER BY relation_id').all(categoryId) as {relation_id:string;support:string}[]).map(r=>[r.relation_id,r.support]);
+  const body={categoryId,items:items.map(i=>[i.itemId,i.knowledgeClass,i.state,i.review?.reviewId??null]),...(relations.length?{relations}:{})};
   const version=(this.db.prepare('SELECT MAX(version) AS v FROM category_versions WHERE category_id=?').get(categoryId) as {v:number|null}).v??0;
   return {schema:'pee246.category-profile.v1',categoryId,version,profileSha256:sha(canon(body)),sections,
-   counts:{items:items.length,reviewed:items.filter(i=>i.state==='reviewed').length,hypotheses:items.filter(i=>i.knowledgeClass==='technical_hypothesis').length,
+   counts:{relations:relations.length,items:items.length,reviewed:items.filter(i=>i.state==='reviewed').length,hypotheses:items.filter(i=>i.knowledgeClass==='technical_hypothesis').length,
     patterns:items.filter(i=>i.knowledgeClass==='observed_pattern').length},
    products:this.products246({category:categoryId}).length,gaps:this.gaps246({scope:'category',refId:categoryId}).length,
    rankingAuthorized:false as const,performanceEstablished:false as const};
