@@ -6,10 +6,11 @@
  * This does NOT confer permission for commercial bulk text/data mining.
  */
 import {createHash} from 'node:crypto';
-import {RESEARCH_AGENT,restrictedHttpsTransport,robotsDecision,type SourceTransport} from './approved_web_reader.js';
+import {RESEARCH_AGENT,restrictedHttpsTransport,robotsDecision,type SourceTransport,PAGE_MAX_BYTES} from './approved_web_reader.js';
 import {safeMetadataUrl75} from './phase75_source_discovery.js';
 import {extractTransientClaims224,type TransientClaims224} from './phase224_transient_structured_claims.js';
 import {probeTransientTestContent225,type TestProbe225} from './phase225_transient_test_probe.js';
+import {htmlToIR241,type Value241} from './phase241_unified_product_facts.js';
 import type {Run220,Registry220} from './phase220_autonomous_discovery_worker.js';
 
 export type Restriction222='not_reviewed'|'no_known_restriction'|'explicitly_prohibited'|'login_required';
@@ -26,6 +27,10 @@ export interface PageReceipt222 {
  structuredDeclarations224:TransientClaims224;
  /** Phase225 research-only transient test and methodology candidates. */
  transientTestProbe225:TestProbe225;
+ /** Phase241 property/value declarations (spec rows, schema.org PropertyValue, comparison matrices).
+  * Short derived values with locators only; product names are publisher-declared and unverified. */
+ productFacts241:{factCount:number;facts:readonly {product:string|null;property:string;value:Value241;
+  method:string;locator:string}[]};
  identityNextAction:'verify_exact_variant'|'inspect_original_publication'|'find_other_source'|'blocked';
  scientificEvidenceAdmitted:false;rankingAuthorized:false;
  noArticleTextStored:true;
@@ -59,8 +64,10 @@ function brandName(x:unknown):string|null{
 export function extractDeclaredPageIdentity222(body:string):Pick<PageReceipt222,'declaredTypes'|'productLeads'|'publicationLeads'> {
  const result:{declaredTypes:string[];productLeads:PageReceipt222['productLeads'][number][];
   publicationLeads:PageReceipt222['publicationLeads'][number][]}={declaredTypes:[],productLeads:[],publicationLeads:[]};
- if(body.length>850_000||!/<html\b/i.test(body))return result;
- const texts=[...body.matchAll(/<script\b([^>]{0,700})>([\s\S]*?)<\/script\s*>/gi)].slice(0,35);
+ if(body.length>PAGE_MAX_BYTES||!/<html\b/i.test(body))return result;
+ // Bound the JSON-LD blocks, not all scripts: retail pages often carry dozens of scripts before metadata.
+ const texts=[...body.matchAll(/<script\b([^>]{0,700})>([\s\S]*?)<\/script\s*>/gi)]
+  .filter(m=>/\btype\s*=\s*(["'])application\/ld\+json\1/i.test(m[1])).slice(0,35);
  let visited=0;
  const read=(v:unknown,depth:number):void=>{
   if(++visited>100||depth>6||!v||typeof v!=='object')return;
@@ -68,10 +75,12 @@ export function extractDeclaredPageIdentity222(body:string):Pick<PageReceipt222,
   const o=v as Record<string,unknown>;
   const names=typeName(o['@type']);
   for(const type of names)if(!result.declaredTypes.includes(type))result.declaredTypes.push(type);
-  if(names.includes('Product')||names.includes('ProductModel')){
+  // A ProductGroup is one product with size/colour variants (common on retail pages); it is read as
+  // a single lead, and its hasVariant entries are not expanded into one lead per size.
+  if(names.includes('Product')||names.includes('ProductModel')||names.includes('ProductGroup')){
    const name=smallString(o.name,180);
    if(name&&result.productLeads.length<8)result.productLeads.push({name,brand:brandName(o.brand),
-    model:smallString(o.model),sku:smallString(o.sku)});
+    model:smallString(o.model),sku:smallString(o.sku)??smallString(o.productGroupID)});
   }
   const publicationType=names.find(n=>['Article','NewsArticle','Review','TechArticle','BlogPosting','Report'].includes(n));
   if(publicationType&&result.publicationLeads.length<8){
@@ -134,7 +143,8 @@ export async function observeDiscoveredPages222(input:{
    status:'blocked',reasonCodes:[],responseSha256:null,byteExact:false,declaredTypes:[],
    productLeads:[],publicationLeads:[],
    structuredDeclarations224:extractTransientClaims224('',url.href),
-   transientTestProbe225:probeTransientTestContent225('',url.href),identityNextAction:'blocked',
+   transientTestProbe225:probeTransientTestContent225('',url.href),productFacts241:{factCount:0,facts:[]},
+   identityNextAction:'blocked',
    scientificEvidenceAdmitted:false,rankingAuthorized:false,noArticleTextStored:true};
   receipts.push(entry);
   // Existing registry prohibitions take precedence over optional caller hints.
@@ -163,11 +173,11 @@ export async function observeDiscoveredPages222(input:{
   if(!allowed)continue;
   try{
    net.push(url.href);
-   const page=await transport.get(url.href,RESEARCH_AGENT,850000);
+   const page=await transport.get(url.href,RESEARCH_AGENT,PAGE_MAX_BYTES);
    if(page.status!==200||page.finalUrl!==url.href||!/^text\/html(?:\s*;|\s*$)/i.test(page.contentType)){
     entry.reasonCodes.push('page_status_url_or_type_rejected');continue;
    }
-   if(page.body.length>850000){entry.reasonCodes.push('page_body_oversize');continue;}
+   if(page.body.length>PAGE_MAX_BYTES){entry.reasonCodes.push('page_body_oversize');continue;}
    // Local transient parse. Neither page.body nor page.rawBytes enters a receipt.
    const declared=extractDeclaredPageIdentity222(page.body);
    entry.declaredTypes=declared.declaredTypes;
@@ -179,9 +189,18 @@ export async function observeDiscoveredPages222(input:{
    entry.responseSha256=exact?sha(page.rawBytes!):null;
    entry.transientTestProbe225=probeTransientTestContent225(page.body,url.href,{
     documentSha256:entry.responseSha256,productLeads:declared.productLeads});
-   const populated=declared.productLeads.length>0||declared.publicationLeads.length>0;
+   try{
+    const facts=htmlToIR241(page.body,lead.sourceId).facts;
+    // Page-level metadata facts (JSON-LD) belong to the page's single declared product, if exactly one.
+    const pageProduct=declared.productLeads.length===1?declared.productLeads[0].name:null;
+    entry.productFacts241={factCount:facts.length,facts:facts.slice(0,120).map(f=>({
+     product:f.context.variant??(f.provenance.locator.startsWith('jsonld:')?pageProduct:null),
+     property:f.property,value:f.value,method:f.provenance.method,locator:f.provenance.locator}))};
+   }catch{entry.reasonCodes.push('product_facts_241_skipped');}
+   const factProducts=entry.productFacts241.facts.some(f=>f.product!==null);
+   const populated=declared.productLeads.length>0||declared.publicationLeads.length>0||entry.productFacts241.factCount>0;
    entry.status=populated?'metadata_observed':'no_structured_identity';
-   entry.identityNextAction=declared.productLeads.length?'verify_exact_variant':
+   entry.identityNextAction=declared.productLeads.length||factProducts?'verify_exact_variant':
     declared.publicationLeads.length?'inspect_original_publication':'find_other_source';
    entry.reasonCodes.push(populated?'publisher_metadata_unverified':'no_supported_structured_metadata');
   }catch{entry.reasonCodes.push('page_network_or_parse_failed');}
@@ -196,5 +215,6 @@ export async function observeDiscoveredPages222(input:{
    'Page HTML is processed in volatile memory and omitted from outputs; no page body or article excerpts are persisted.',
    'Phase224 JSON-LD attributes are unverified publisher claims; they do not prove exact variant, market, independent measurement or suitability.',
    'Phase225 detects only first-person publisher measurement leads; original tests, protocols, reviewers and exact variants remain unauthenticated.',
+   'Phase241 product facts are unverified source declarations; comparison-matrix column names are not verified product identities.',
    'No network search index, live site acquisition, scientific evidence admission or ranking is demonstrated by fixture tests.']};
 }

@@ -2,6 +2,7 @@
  * Runs on already fetched transient HTML; no network / storage / evidence admission.
  * A table cell is NOT an independently authenticated performance measurement.
  * Reject complex/malformed tables rather than guess associations. */
+import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 import {createHash} from 'node:crypto';
 import type {TestCandidate225} from './phase225_transient_test_probe.js';
 import {safeMetadataUrl75} from './phase75_source_discovery.js';
@@ -45,7 +46,7 @@ export function probeTransientTestTables226(html:string,sourceUrl:string,opts:{d
   skippedAmbiguousTables:0,truncated:false,sourceBodiesStored:false,scientificEvidenceAdmitted:false,rankingAuthorized:false};
  let trustedSyntax=false;
  try{const u=new URL(sourceUrl);trustedSyntax=safeMetadataUrl75(sourceUrl,u.hostname);}catch{}
- if(html.length>850000||html.length<20||!/<html\b/i.test(html)||!trustedSyntax)return out;
+ if(html.length>PAGE_MAX_BYTES||html.length<20||!/<html\b/i.test(html)||!trustedSyntax)return out;
  const stripped=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<(script|style|svg|template|noscript|iframe)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,'');
  const tables=[...stripped.matchAll(/<table\b[^>]{0,500}>([\s\S]{0,60000}?)<\/table\s*>/gi)];
  if(tables.length>12)out.truncated=true;

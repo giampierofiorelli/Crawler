@@ -12,6 +12,8 @@ import type {WebCandidate,WebSourcePolicy,EvidenceAcquisitionPlan,EvidenceQueueI
 import {quarantineRetrievedEvidence,planWebEvidenceAcquisition} from './web_evidence_acquisition.js';
 
 export const RESEARCH_AGENT='ProductEvidenceResearchBot';
+/** Upper bound for one transiently read HTML page. Current retail/editorial pages are often 1-2MB. */
+export const PAGE_MAX_BYTES=3_000_000;
 export interface SourceResponse {
   status:number;
   finalUrl:string;
@@ -97,14 +99,15 @@ function connectTunnel(proxy:URL,hostname:string):Promise<Socket>{
 export const restrictedHttpsTransport:SourceTransport={
  async get(raw,agent,maxBytes){
   const url=secureUrl(raw);
-  if(maxBytes<1||maxBytes>12_000_000)throw Error('Invalid byte cap');
+  // 40MB matches the largest caller bound (Phase228 PDF manuals); each caller passes its own smaller cap.
+  if(maxBytes<1||maxBytes>40_000_000)throw Error('Invalid byte cap');
   const answers=await lookup(url.hostname,{family:4,all:true,verbatim:true});
   if(answers.length===0||answers.some(a=>!publicIPv4(a.address)))throw Error('No safe public IPv4 address');
   const pinned=answers[0].address;
   const proxy=configuredProxy(url.hostname);
   const tunnel=proxy?await connectTunnel(proxy,url.hostname):null;
   return new Promise((resolve,reject)=>{
-   const req=request(url,{method:'GET',headers:{'User-Agent':agent,'Accept':'text/plain,text/html;q=0.9,application/pdf;q=0.8,application/vnd.openxmlformats-officedocument.wordprocessingml.document;q=0.8','Accept-Encoding':'identity'},
+   const req=request(url,{method:'GET',headers:{'User-Agent':agent,'Accept':'text/html,application/xhtml+xml,text/plain;q=0.9,application/pdf;q=0.8,application/vnd.openxmlformats-officedocument.wordprocessingml.document;q=0.8','Accept-Encoding':'identity'},
     timeout:8000,rejectUnauthorized:true,
     ...(tunnel
      // TLS inside the CONNECT tunnel; SNI and certificate checks use the origin hostname, not the proxy.
@@ -155,7 +158,9 @@ export function robotsDecision(body:string,pathname:string,agent=RESEARCH_AGENT)
   }else if(key==='allow'||key==='disallow'){
    if(!current||!current.agents.length)continue;
    rulesStarted=true;
-   if(value&&(!value.startsWith('/')||/\s/.test(value)))return 'unknown';
+   // RFC 9309 path patterns start with '/'; a leading '*' (e.g. "Disallow: */embed/") is the
+   // widely used wildcard form. Anything else is still treated as unparseable and fails closed.
+   if(value&&(!/^[/*]/.test(value)||/\s/.test(value)))return 'unknown';
    if(value)current.rules.push({kind:key,pattern:value});
   }
  }
@@ -165,9 +170,11 @@ export function robotsDecision(body:string,pathname:string,agent=RESEARCH_AGENT)
  if(!matched.length)return 'unknown';
  const candidates=matched.flatMap(g=>g.rules).flatMap(rule=>{
   const raw=rule.pattern;
-  const escaped=raw.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*');
+  // '$' is only special at the end of a pattern (end-of-URL anchor); elsewhere it is literal.
+  const anchored=raw.endsWith('$'),body=anchored?raw.slice(0,-1):raw;
+  const escaped=body.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*');
   try {
-   const regex=new RegExp('^'+escaped.replace(/\$$/,'$'));
+   const regex=new RegExp('^'+escaped+(anchored?'$':''));
    return regex.test(pathname)?[{...rule,length:raw.replace(/[\*$]/g,'').length}]:[];
   }catch{return [];}
  });

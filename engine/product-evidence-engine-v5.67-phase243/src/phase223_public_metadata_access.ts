@@ -33,7 +33,8 @@ export function publicRobotsDecision223(response:SourceResponse,url:string):'all
  // conservative unknown. Any actual matching group continues to fail closed.
  const groups=[...body.matchAll(/^\s*user-agent\s*:\s*([^\r\n#]+)(?:#.*)?$/gim)]
   .map(x=>x[1].trim().toLowerCase());
- if(!groups.length)return 'unknown';
+ // No group at all (empty or comment-only file): RFC 9309 places no restriction on any crawler.
+ if(!groups.length)return 'allow';
  if(groups.some(x=>x==='*'||(x.length>=2&&RESEARCH_AGENT.toLowerCase().includes(x))))return 'unknown';
  return 'allow';
 }

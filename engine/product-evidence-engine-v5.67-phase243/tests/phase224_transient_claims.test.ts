@@ -1,3 +1,4 @@
+import {PAGE_MAX_BYTES} from '../src/approved_web_reader.js';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {extractTransientClaims224} from '../src/phase224_transient_structured_claims.js';
@@ -55,7 +56,7 @@ test('Reject malicious source URL and bounded input; never trust arbitrary local
  assert.equal(extractTransientClaims224(html(product(12)),'file:///tmp/fake').claims.length,0);
  assert.equal(extractTransientClaims224(html(product(12)),'http://example.org/p').claims.length,0);
  assert.equal(extractTransientClaims224(html(product(12)),urlA+'x'.repeat(900000)).claims.length,0);
- assert.equal(extractTransientClaims224('<html>'+('A'.repeat(850001))+'</html>',urlA).claims.length,0);
+ assert.equal(extractTransientClaims224('<html>'+('A'.repeat(PAGE_MAX_BYTES+1))+'</html>',urlA).claims.length,0);
 });
 test('Deduplicate identical declarations and mark contradictory values on same page',()=>{
  const x=extractTransientClaims224(html(product(12,[field('Stack height','12','mm'),field('Stack height',15,'mm')])),urlA);

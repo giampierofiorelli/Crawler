@@ -44,21 +44,45 @@ export function approvedMetadataDiscovery75(p:WebSourcePolicy|undefined,asOf:str
 /** Exact-host conservative discovery URL checks; no wildcard third-party links. */
 export function safeMetadataUrl75(url:string,host:string):boolean{return isSafeUrl(url,host);}
 
-/** Deliberately a conservative sitemap URL extractor, not a general XML parser. */
-function parseLocs(xml:string):string[]{
- if(xml.length>800_000||/<!DOCTYPE|<!ENTITY|<script/i.test(xml))throw Error('Unsafe sitemap syntax');
+const stem75=(w:string)=>w.length>3&&w.endsWith('s')&&!w.endsWith('ss')?w.slice(0,-1):w;
+const tokens75=(text:string)=>new Set(text.toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>=3).map(stem75));
+/** Visit-order prioritization only: URLs whose path shares more words with the request/category
+ * terms come first; among equals, deeper (more specific, e.g. item rather than listing) paths come
+ * first, then publisher order. This is NOT relevance proof or a product ranking. */
+export function orderByRequestTerms75(urls:readonly string[],terms:readonly string[]|undefined):string[]{
+ const wanted=tokens75((terms??[]).join(' '));
+ if(!wanted.size)return [...urls];
+ return urls.map((url,i)=>{let path='';try{path=decodeURIComponent(new URL(url).pathname);}catch{}
+   const have=tokens75(path);
+   return {url,i,score:[...wanted].filter(w=>have.has(w)).length,depth:path.split('/').filter(Boolean).length};})
+  .sort((a,b)=>b.score-a.score||b.depth-a.depth||a.i-b.i).map(x=>x.url);
+}
+/** sitemaps.org protocol limits: 50,000 URLs and 50MB per file; the byte cap keeps a stricter 10MB. */
+export const SITEMAP_MAX_BYTES75=10_000_000;
+const SITEMAP_MAX_LOCS=50_000,SITEMAP_INDEX_MAX_CHILDREN=5;
+/** Deliberately a conservative sitemap URL extractor, not a general XML parser.
+ * Only the protocol's own <loc> elements (same namespace prefix as the root element) are read:
+ * extension elements such as <image:loc> or <video:loc> describe media, not pages. */
+function parseSitemap(xml:string):{kind:'urlset'|'sitemapindex';locs:string[]}{
+ if(xml.length>SITEMAP_MAX_BYTES75||/<!DOCTYPE|<!ENTITY|<script/i.test(xml))throw Error('Unsafe sitemap syntax');
+ const root=/<(?:([a-z][\w-]*):)?(urlset|sitemapindex)[\s>]/i.exec(xml);
+ if(!root)throw Error('Not a sitemap');
+ const prefix=root[1]?root[1]+':':'';
+ const esc=prefix.replace(/[.*+?^${}()|[\]\\-]/g,'\\$&');
  const urls:string[]=[];
- for(const m of xml.matchAll(/<(?:[a-z\w-]+:)?loc\s*>([^<]{1,1500})<\/(?:[a-z\w-]+:)?loc\s*>/gi)){
-  const raw=m[1].trim();
-  if(raw.includes('&')||raw.includes('\\')||raw.includes('%00'))continue;
+ for(const m of xml.matchAll(new RegExp(`<${esc}loc\\s*>([^<]{1,1500})</${esc}loc\\s*>`,'gi'))){
+  const raw=m[1].trim().replace(/&amp;/g,'&');
+  if(/&(?!amp;)[a-z#]/i.test(m[1])||raw.includes('\\')||raw.includes('%00'))continue;
   urls.push(raw);
-  if(urls.length>1000)throw Error('Unbounded sitemap');
+  if(urls.length>SITEMAP_MAX_LOCS)throw Error('Unbounded sitemap');
  }
- return urls;
+ return {kind:root[2].toLowerCase() as 'urlset'|'sitemapindex',locs:urls};
 }
 export async function discoverFromApprovedSitemap(input:{policy:WebSourcePolicy;asOf:string;
  sitemapPath?:string;maxCandidates?:number;transport?:SourceTransport;requirePathPrefix?:string;
- accessMode?:'legacy_reviewed'|'public_metadata';}):Promise<DiscoveryResult>{
+ accessMode?:'legacy_reviewed'|'public_metadata';
+ /** Optional request/category words used only to choose which in-scope URLs to keep first. */
+ relevanceTerms?:readonly string[];}):Promise<DiscoveryResult>{
  const result:DiscoveryResult={status:'blocked',urls:[],reasons:[],webCalls:0,noArticleTextRetained:true,publicationReady:false};
  const p=input.policy;const max=input.maxCandidates??40;
  if(!Number.isInteger(max)||max<1||max>100||
@@ -78,18 +102,47 @@ export async function discoverFromApprovedSitemap(input:{policy:WebSourcePolicy;
     robots.status!==200||robots.finalUrl!==`https://${p.host}/robots.txt`||
     !/^text\/plain(?:\s*;|\s*$)/i.test(robots.contentType)||
     robotsDecision(robots.body,path)!=='allow')throw Error('robots_sitemap_not_allowed');
-  result.webCalls++;
-  const sm=await transport.get(`https://${p.host}${path}`,RESEARCH_AGENT,800000);
-  if(sm.status!==200||sm.finalUrl!==`https://${p.host}${path}`||
-    !/(?:application|text)\/(?:xml|x-xml|plain)(?:\s*;|\s*$)/i.test(sm.contentType))
-    throw Error('sitemap_response_rejected');
+  const robotsAllow=(u:URL)=>(input.accessMode==='public_metadata'?publicRobotsDecision223(robots,u.toString()):
+   robotsDecision(robots.body,u.pathname+u.search))==='allow';
+  const fetchSitemap=async(url:string)=>{
+   result.webCalls++;
+   const sm=await transport.get(url,RESEARCH_AGENT,SITEMAP_MAX_BYTES75);
+   if(sm.status!==200||sm.finalUrl!==url||
+     !/(?:application|text)\/(?:xml|x-xml|plain)(?:\s*;|\s*$)/i.test(sm.contentType))
+     throw Error('sitemap_response_rejected');
+   return parseSitemap(sm.body);
+  };
+  // Sitemaps whose URL mentions the scope's path words are read first; order is otherwise kept.
+  const words=prefix.split(/[^a-z0-9]+/i).filter(w=>w.length>=2).map(w=>w.toLowerCase());
+  const byScope=(urls:readonly string[])=>urls.filter(u=>isSafeUrl(u,p.host)&&robotsAllow(new URL(u)))
+   .map((u,i)=>({u,i,score:words.filter(w=>u.toLowerCase().includes(w)).length}))
+   .sort((a,b)=>b.score-a.score||a.i-b.i).map(x=>x.u);
+  let top:ReturnType<typeof parseSitemap>;
+  try{top=await fetchSitemap(`https://${p.host}${path}`);}
+  catch(e){
+   // The configured path is missing: fall back to sitemaps the host itself declares in robots.txt
+   // (RFC 9309 "Sitemap:" lines), same host only, at most three attempts.
+   const declared=byScope([...robots.body.matchAll(/^\s*sitemap\s*:\s*(\S+)\s*$/gim)].map(m=>m[1])).slice(0,3);
+   let found:ReturnType<typeof parseSitemap>|null=null;
+   for(const url of declared){try{found=await fetchSitemap(url);break;}catch{}}
+   if(!found)throw e;
+   top=found;result.reasons.push('sitemap_from_robots_declaration');
+  }
+  let pageLocs=top.kind==='urlset'?top.locs:[];
+  if(top.kind==='sitemapindex'){
+   // One level of a sitemap index, same host only, robots-checked, bounded number of children.
+   const children=byScope(top.locs).slice(0,SITEMAP_INDEX_MAX_CHILDREN);
+   pageLocs=[];
+   for(const child of children){
+    try{const c=await fetchSitemap(child);if(c.kind==='urlset')pageLocs.push(...c.locs);}
+    catch{result.reasons.push('sitemap_child_rejected');}
+   }
+  }
   const seen=new Set<string>();
-  for(const url of parseLocs(sm.body)){
+  for(const url of orderByRequestTerms75(pageLocs,input.relevanceTerms)){
    if(!isSafeUrl(url,p.host))continue;
    const u=new URL(url);
-   if(!u.pathname.startsWith(prefix)||
-     (input.accessMode==='public_metadata'?publicRobotsDecision223(robots,u.toString()):
-      robotsDecision(robots.body,u.pathname+u.search))!=='allow')continue;
+   if(!u.pathname.startsWith(prefix)||!robotsAllow(u))continue;
    if(seen.has(u.toString()))continue;
    seen.add(u.toString());
    result.urls.push({url:u.toString(),sourceId:p.sourceId,discoveryChannel:'authorized_sitemap',

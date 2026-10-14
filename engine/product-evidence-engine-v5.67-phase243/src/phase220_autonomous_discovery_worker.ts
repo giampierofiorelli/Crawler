@@ -181,6 +181,10 @@ export async function runAutonomousDiscovery220(args:{question:string;asOf:strin
   selectedIds.push(...watchPlan.selectedSourceIds);
   if(sources.length===0)notes.push('No operator-registered sources for this category. No general web index is connected.');
   if(watchPlan.blockedSourceIds.length)notes.push('Source watch metadata permission is not cleared.');
+  // Words that steer which in-scope URLs are read first: category names plus recognised need values.
+  const category=args.registry.vocabulary.find(v=>v.categoryId===intent.categoryId)!;
+  const relevanceTerms=[category.displayName,...category.aliases,...category.essentialSlots.flatMap(slot=>
+   slot.values.filter(v=>intent.slotValues[slot.id]===v.id).flatMap(v=>v.aliases))];
   for(const sourceId of selectedIds){
    const s=sources.find(s=>s.watch.id===sourceId)!;
    const policy=args.registry.policies.find(p=>p.sourceId===sourceId&&p.host===s.watch.host);
@@ -207,11 +211,11 @@ export async function runAutonomousDiscovery220(args:{question:string;asOf:strin
    // Deliberately no auto-generation of permission objects from available URLs.
    const response=policy&&s.watch.mechanism==='sitemap_delta'?await discoverFromApprovedSitemap({policy,asOf:args.asOf,
     sitemapPath:s.sitemapPath,requirePathPrefix:s.pathPrefix,
-    maxCandidates:perSource,transport,accessMode:s.discoveryAccess}):null;
+    maxCandidates:perSource,transport,accessMode:s.discoveryAccess,relevanceTerms}):null;
    const feedResponse=policy&&(s.watch.mechanism==='rss'||s.watch.mechanism==='atom')&&s.feedPath?
     await discoverFromApprovedFeed221({policy,asOf:args.asOf,
      feedKind:s.watch.mechanism,feedPath:s.feedPath,requirePathPrefix:s.pathPrefix,
-     maxCandidates:perSource,transport,accessMode:s.discoveryAccess}):null;
+     maxCandidates:perSource,transport,accessMode:s.discoveryAccess,relevanceTerms}):null;
    const status=response?.status??feedResponse?.status??'blocked';
    const urls=response?.urls.map(u=>u.url)??feedResponse?.urls??[];
    const oldHash=s.watch.mechanism==='sitemap_delta'?previous?.sitemapSha256:previous?.feedSha256;
@@ -271,6 +275,9 @@ export async function runAutonomousDiscovery220(args:{question:string;asOf:strin
  return {schema:'pee220.run.1',mode,requestSha256:sha(args.question),intent,
   localIntake:{suggestionCount:intake.suggestions.length,unresolvedIssues:intake.unresolvedIssues.length},
   decision,networkRequests,plannedSourceIds:selectedIds,
-  sourceOutcomes:outcomes,candidates:[...unique.values()].sort((a,b)=>a.url.localeCompare(b.url)||a.sourceId.localeCompare(b.sourceId)),
+  sourceOutcomes:outcomes,
+  // Deterministic discovery order (request-term priority, then publisher order) is kept, so the
+  // page observer reads the most request-related leads first instead of alphabetical ones.
+  candidates:[...unique.values()],
   limitations:notes,rankingAuthorized:false,independentEvidenceVerified:false,checkpoint};
 }

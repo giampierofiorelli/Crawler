@@ -5,6 +5,7 @@
  * Architectural reference: DoclingDocument and schema.org PropertyValue.
  */
 import {createHash} from 'node:crypto';
+import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 import type {ParsedDocument228,DocClaim228} from './phase228_document_observer.js';
 
 export type SourceFormat241='pdf'|'docx'|'html';
@@ -74,8 +75,10 @@ export interface HtmlRecord241 {label:string;valueText:string;locator:string;kin
 const noTags=(s:string)=>clean(s.replace(/<[^>]*>/g,' ').replace(/&(?:nbsp|#160);/gi,' ')
  .replace(/&amp;/gi,'&').replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&quot;/gi,'"'));
 const unsafeCell=(x:string)=>/\b(?:rowspan|colspan|headers)\s*=|<\s*(?:table|script|img|svg)\b/i.test(x);
+/** Same bound as the Phase222 page reader; typical review and retail pages exceed 200KB. */
+export const HTML_MAX_241=PAGE_MAX_BYTES;
 export function explicitHtmlRecords241(html:string):HtmlRecord241[] {
- if(typeof html!=='string'||html.length>200_000)throw Error('241_html_size');
+ if(typeof html!=='string'||html.length>HTML_MAX_241)throw Error('241_html_size');
  const out:HtmlRecord241[]=[];let ordinal=0;
  const bare=html.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi,'');
  for(const dl of bare.matchAll(/<dl\b[^>]*>([\s\S]*?)<\/dl\s*>/gi)){
@@ -132,13 +135,32 @@ function jsonLdPropertyFacts241(html:string,sourceId:string):Fact241[] {
   collect(raw);
   const products=objects.filter(x=>{
    const t=(x as Record<string,unknown>)['@type'];
-   return (Array.isArray(t)?t:[t]).some(y=>typeof y==='string'&&/(?:^|[/#])Product$/.test(y));
+   return (Array.isArray(t)?t:[t]).some(y=>typeof y==='string'&&/(?:^|[/#])Product(?:Group)?$/.test(y));
   }) as Record<string,unknown>[];
   allProducts.push(...products);
  }
  // A page with several Product nodes has no verified variant-to-property link.
  if(allProducts.length!==1)return [];
  const prod=allProducts[0];
+ // Declared offer price: one value, or the min-max range across a ProductGroup's variants.
+ {
+  const offerList=(x:unknown)=>(Array.isArray(x)?x:x?[x]:[]).filter(o=>o&&typeof o==='object') as Record<string,unknown>[];
+  const variants=(Array.isArray(prod.hasVariant)?prod.hasVariant:[]).slice(0,60).filter(v=>v&&typeof v==='object') as Record<string,unknown>[];
+  const offers=[...offerList(prod.offers),...variants.flatMap(v=>offerList(v.offers))].slice(0,120);
+  const prices=offers.flatMap(o=>{
+   const n=typeof o.price==='number'?o.price:typeof o.price==='string'&&/^\d{1,7}(?:\.\d{1,2})?$/.test(o.price)?Number(o.price):NaN;
+   const cur=typeof o.priceCurrency==='string'&&/^[A-Z]{3}$/.test(o.priceCurrency)?o.priceCurrency.toLowerCase():null;
+   return Number.isFinite(n)&&n>=0&&n<=1e7&&cur?[{n,cur}]:[];});
+  if(prices.length&&prices.every(p=>p.cur===prices[0].cur)){
+   const min=Math.min(...prices.map(p=>p.n)),max=Math.max(...prices.map(p=>p.n));
+   facts.push({property:'Price',propertyKey:'price',
+    value:min===max?{type:'scalar',number:min,unit:prices[0].cur}:{type:'range',min,max,unit:prices[0].cur},role:'unresolved',
+    context:{component:null,condition:null,variant:null,market:null,rowHeading:null},
+    provenance:{format:'html',sourceId,documentSha256:digest(html),locator:'jsonld:offers',
+     producer:'independent_unknown',method:'schema_org_offer_price'},
+    status:'unverified_source_declaration',identity:'unresolved',scientificTestEvidence:false,rankingAuthorized:false});
+  }
+ }
  {
   const props=[prod.specification,prod.additionalProperty].flatMap(v=>Array.isArray(v)?v:v?[v]:[]);
   for(const obj of props.slice(0,60)){
@@ -166,6 +188,75 @@ function jsonLdPropertyFacts241(html:string,sourceId:string):Fact241[] {
  }
  return facts;
 }
+/** First text fragment of a cell: a product name before any trailing link such as "Read review". */
+const firstFragment=(cell:string)=>cell.split(/<[^>]*>/).map(x=>noTags(x)).find(Boolean)??'';
+/** Two common catalogue forms the generic quantity parser cannot read: a currency-prefixed price
+ * ("$180", "€ 1.299,00" is left as text when ambiguous) and imperial compound weights ("2 lb. 12 oz."). */
+function matrixQuantity(v:string):Value241|null{
+ const price=/^([$€£])\s?([0-9]{1,6}(?:\.[0-9]{2})?)$/.exec(v.replace(/,(?=[0-9]{3}\b)/g,''));
+ if(price)return {type:'scalar',number:Number(price[2]),unit:({'$':'usd','€':'eur','£':'gbp'} as Record<string,string>)[price[1]]};
+ const w=/^(?:([0-9]{1,3}(?:\.[0-9]+)?)\s*lbs?\.?)?\s*(?:([0-9]{1,3}(?:\.[0-9]+)?)\s*oz\.?)?$/i.exec(v);
+ if(w&&(w[1]||w[2])){const grams=(Number(w[1]??0)*16+Number(w[2]??0))*28.349523125;
+  return {type:'scalar',number:Math.round(grams),unit:'g'};}
+ return null;
+}
+/** Short declared value only: sentence-like editorial text (opinions, quotes) is never kept. */
+const shortDeclaredText=(v:string)=>v.length<=40&&v.split(' ').length<=6&&!/[.!?]$/.test(v)&&/\S/.test(v);
+/** Product comparison matrices: one product per column, one property per row, e.g.
+ *     |            | Model A | Model B |
+ *     | Weight:    | 1.2 kg  | 1.4 kg  |
+ * Accepted only in a strict shape (empty top-left header cell, >=2 product columns, every row
+ * the same width, no row/col spans). The column heading is a publisher-declared, UNVERIFIED
+ * product identity; the producer of the values is unknown (may be a reviewer, may be copied
+ * from a manufacturer). Opinion rows are dropped by shortDeclaredText. */
+export function comparisonMatrixFacts241(html:string,sourceId:string):Fact241[]{
+ if(typeof html!=='string'||html.length>HTML_MAX_241)throw Error('241_html_size');
+ const bare=html.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi,'');
+ const facts:Fact241[]=[];let tableNo=0;
+ for(const table of bare.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table\s*>/gi)){
+  tableNo++;
+  if(/\b(?:rowspan|colspan)\s*=/.test(table[1])||/<table\b/i.test(table[1]))continue;
+  const rows=[...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr\s*>/gi)]
+   .map(tr=>[...tr[1].matchAll(/<(th|td)\b([^>]*)>([\s\S]*?)<\/\1\s*>/gi)].map(c=>c[3]));
+  if(rows.length<3||rows.length>60)continue;
+  const width=rows[0].length;
+  if(width<3||width>12||rows.some(r=>r.length!==width))continue;
+  const corner=noTags(rows[0][0]);
+  const cellValue=(text:string)=>matrixQuantity(text)??htmlQuantifiedValue(text)??(shortDeclaredText(text)?{type:'text' as const,value:text}:null);
+  const push=(product:string,label:string,text:string,r:number,c:number,keyHeading:string|null)=>{
+   const value=cellValue(text);if(!value)return;
+   facts.push({property:label,propertyKey:key(label),value,role:'unresolved',
+    context:{component:null,condition:null,variant:product,market:null,rowHeading:keyHeading??label},
+    provenance:{format:'html',sourceId,documentSha256:digest(html),locator:`table:${tableNo}:row:${r}:col:${c}`,
+     producer:'independent_unknown',method:keyHeading?'html_comparison_matrix_rows':'html_comparison_matrix'},
+    status:'unverified_source_declaration',identity:'document_declared_unverified',
+    scientificTestEvidence:false,rankingAuthorized:false});
+  };
+  if(corner===''){
+   // Products are columns, properties are rows.
+   const products=rows[0].slice(1).map(firstFragment);
+   if(products.some(p=>!p||p.length>80)||new Set(products.map(key)).size!==products.length)continue;
+   for(let r=1;r<rows.length;r++){
+    const label=noTags(rows[r][0]).replace(/\s*:$/,'');
+    if(!label||label.length>60||!key(label))continue;
+    for(let c=1;c<width;c++)push(products[c-1],label,noTags(rows[r][c]),r,c,null);
+   }
+  }else{
+   // Products are rows under a short key heading ("Model", "Shoe"), properties are columns.
+   // Only accepted when at least a third of the property columns carry quantities, so text tables are skipped.
+   const labels=rows[0].slice(1).map(x=>noTags(x).replace(/\s*:$/,''));
+   const products=rows.slice(1).map(r=>firstFragment(r[0]));
+   if(corner.length>20||labels.some(l=>!l||l.length>60||!key(l))||
+    products.some(p=>!p||p.length>80)||new Set(products.map(key)).size!==products.length)continue;
+   const quantitative=labels.filter((_,i)=>rows.slice(1).some(r=>{const t=noTags(r[i+1]);
+    return !!(matrixQuantity(t)??htmlQuantifiedValue(t));})).length;
+   if(quantitative===0||quantitative*3<labels.length)continue;
+   for(let r=1;r<rows.length;r++)for(let c=1;c<width;c++)push(products[r-1],labels[c-1],noTags(rows[r][c]),r,c,corner);
+  }
+  if(facts.length>=200)return facts.slice(0,200);
+ }
+ return facts;
+}
 export function htmlToIR241(html:string,sourceId:string):EvidenceIR241 {
  if(!sourceId.trim())throw Error('241_invalid_source');
  const records=explicitHtmlRecords241(html);const facts:Fact241[]=jsonLdPropertyFacts241(html,sourceId);
@@ -175,7 +266,9 @@ export function htmlToIR241(html:string,sourceId:string):EvidenceIR241 {
    provenance:{format:'html',sourceId,documentSha256:digest(html),locator:r.locator,producer:'manufacturer',method:'explicit_html_label_value'},
    status:'unverified_source_declaration',identity:'unresolved',scientificTestEvidence:false,rankingAuthorized:false});
  }
- return {schema:'pee241.unified-facts.v1',format:'html',facts,unresolvedCount:records.length-facts.length,
+ const tabular=facts.length;
+ facts.push(...comparisonMatrixFacts241(html,sourceId));
+ return {schema:'pee241.unified-facts.v1',format:'html',facts,unresolvedCount:records.length-tabular,
   rawSourceStored:false,rankingAuthorized:false,identityVerified:false};
 }
 

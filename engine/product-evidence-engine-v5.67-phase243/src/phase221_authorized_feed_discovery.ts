@@ -5,7 +5,7 @@
  * licensing grant, author identity, or a verified claim.
  */
 import {RESEARCH_AGENT,robotsDecision,restrictedHttpsTransport,type SourceTransport} from './approved_web_reader.js';
-import {approvedMetadataDiscovery75,safeMetadataUrl75} from './phase75_source_discovery.js';
+import {approvedMetadataDiscovery75,safeMetadataUrl75,orderByRequestTerms75} from './phase75_source_discovery.js';
 import type {WebSourcePolicy} from './web_evidence_acquisition.js';
 import {publicMetadataDiscoveryGate223,publicRobotsDecision223} from './phase223_public_metadata_access.js';
 
@@ -48,7 +48,8 @@ function extractFeedLinks(xml:string,kind:'rss'|'atom'):string[]{
 }
 export async function discoverFromApprovedFeed221(input:{policy:WebSourcePolicy;asOf:string;
  feedKind:'rss'|'atom';feedPath:string;requirePathPrefix:string;maxCandidates:number;
- transport?:SourceTransport;accessMode?:'legacy_reviewed'|'public_metadata';}):Promise<FeedDiscovery221>{
+ transport?:SourceTransport;accessMode?:'legacy_reviewed'|'public_metadata';
+ relevanceTerms?:readonly string[];}):Promise<FeedDiscovery221>{
  const r:FeedDiscovery221={status:'blocked',urls:[],webCalls:0,reasons:[],feedKind:input.feedKind,
   noArticleTextRetained:true,rankingAuthorized:false};
  const p=input.policy;
@@ -73,7 +74,7 @@ export async function discoverFromApprovedFeed221(input:{policy:WebSourcePolicy;
    throw Error('invalid_feed_response');
   const links=extractFeedLinks(feed.body,input.feedKind);
   const urls:string[]=[];const seen=new Set<string>();
-  for(const link of links){
+  for(const link of orderByRequestTerms75(links,input.relevanceTerms)){
    if(!safeMetadataUrl75(link,p.host))continue;
    const u=new URL(link);
    if(!u.pathname.startsWith(input.requirePathPrefix)||

@@ -1,0 +1,239 @@
+{
+ "schema": "pee220.registry.1",
+ "vocabulary": [
+  {
+   "categoryId": "football_footwear",
+   "displayName": "Football boots / soccer cleats",
+   "aliases": [
+    "football boots",
+    "football shoes",
+    "soccer cleats",
+    "soccer boots",
+    "football cleats",
+    "footy boots"
+   ],
+   "essentialSlots": [
+    {
+     "id": "playing_surface",
+     "question": "What kind of pitch will you play on: natural grass, artificial grass (AG), artificial turf (TF), soft ground, or indoor court?",
+     "ambiguousTerms": [
+      "artificial grass",
+      "synthetic pitch",
+      "3g pitch"
+     ],
+     "values": [
+      {
+       "id": "firm_ground",
+       "aliases": [
+        "firm ground",
+        "fg pitches",
+        "fg boots"
+       ]
+      },
+      {
+       "id": "artificial_grass",
+       "aliases": [
+        "ag pitches",
+        "ag boots",
+        "artificial grass ag",
+        "ag studs"
+       ]
+      },
+      {
+       "id": "turf",
+       "aliases": [
+        "turf tf",
+        "tf pitches",
+        "turf shoes",
+        "astroturf"
+       ]
+      },
+      {
+       "id": "soft_ground",
+       "aliases": [
+        "soft ground",
+        "sg pitches",
+        "sg studs"
+       ]
+      },
+      {
+       "id": "indoor",
+       "aliases": [
+        "indoor court",
+        "indoor football",
+        "indoor soccer"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "categoryId": "recycling_bins",
+   "displayName": "Waste sorting / recycling bins",
+   "aliases": [
+    "recycling bin",
+    "recycling bins",
+    "waste sorting bin",
+    "waste sorting bins",
+    "sorting rubbish",
+    "separating waste",
+    "separate my waste"
+   ],
+   "essentialSlots": [
+    {
+     "id": "waste_streams",
+     "question": "Which waste streams must be separated (for example paper, plastic, food waste, general waste), and what local collection rules apply?",
+     "values": [
+      {
+       "id": "paper_plastic",
+       "aliases": [
+        "paper and plastic",
+        "plastic and paper"
+       ]
+      },
+      {
+       "id": "paper_plastic_food",
+       "aliases": [
+        "paper plastic and food",
+        "paper and plastic and food",
+        "food paper and plastic",
+        "food plastic and paper"
+       ]
+      },
+      {
+       "id": "food_general",
+       "aliases": [
+        "food and general waste",
+        "food waste and general waste"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "categoryId": "hiking_boots",
+   "displayName": "Hiking boots",
+   "aliases": [
+    "hiking boots",
+    "hiking boot",
+    "walking boots"
+   ],
+   "essentialSlots": []
+  }
+ ],
+ "sources": [
+  {
+   "watch": {
+    "id": "switchback_footwear",
+    "categoryId": "hiking_boots",
+    "host": "www.switchbacktravel.com",
+    "channel": "specialist_editorial",
+    "mechanism": "sitemap_delta",
+    "tier": "core",
+    "rightsClearedForMetadata": true,
+    "nextCheckAt": "2026-10-14T00:00:00.000Z",
+    "lastCheckAt": null,
+    "quietChecks": 0,
+    "errors": 0
+   },
+   "sitemapPath": "/sitemap.xml",
+   "pathPrefix": "/footwear/",
+   "discoveryAccess": "public_metadata"
+  },
+  {
+   "watch": {
+    "id": "prodirect_products",
+    "categoryId": "football_footwear",
+    "host": "www.prodirectsport.com",
+    "channel": "retailer_new_models",
+    "mechanism": "sitemap_delta",
+    "tier": "core",
+    "rightsClearedForMetadata": true,
+    "nextCheckAt": "2026-10-14T00:00:00.000Z",
+    "lastCheckAt": null,
+    "quietChecks": 0,
+    "errors": 0
+   },
+   "sitemapPath": "/sitemap.xml",
+   "pathPrefix": "/products/",
+   "discoveryAccess": "public_metadata"
+  },
+  {
+   "watch": {
+    "id": "brabantia_waste",
+    "categoryId": "recycling_bins",
+    "host": "www.brabantia.com",
+    "channel": "manufacturer_product_index",
+    "mechanism": "sitemap_delta",
+    "tier": "core",
+    "rightsClearedForMetadata": true,
+    "nextCheckAt": "2026-10-14T00:00:00.000Z",
+    "lastCheckAt": null,
+    "quietChecks": 0,
+    "errors": 0
+   },
+   "sitemapPath": "/sitemap.xml",
+   "pathPrefix": "/int_en/collecting-waste/",
+   "discoveryAccess": "public_metadata"
+  }
+ ],
+ "policies": [
+  {
+   "sourceId": "switchback_footwear",
+   "host": "www.switchbacktravel.com",
+   "basis": "unknown",
+   "rightsDocumentId": null,
+   "rightsDocumentUrl": null,
+   "reviewedBy": null,
+   "reviewedAt": null,
+   "validUntil": null,
+   "permittedOperations": [
+    "metadata_discovery"
+   ],
+   "robots": "unknown",
+   "robotsCheckedAt": null,
+   "websiteTerms": "unknown",
+   "termsCheckedAt": null,
+   "commercialUseReviewed": false
+  },
+  {
+   "sourceId": "prodirect_products",
+   "host": "www.prodirectsport.com",
+   "basis": "unknown",
+   "rightsDocumentId": null,
+   "rightsDocumentUrl": null,
+   "reviewedBy": null,
+   "reviewedAt": null,
+   "validUntil": null,
+   "permittedOperations": [
+    "metadata_discovery"
+   ],
+   "robots": "unknown",
+   "robotsCheckedAt": null,
+   "websiteTerms": "unknown",
+   "termsCheckedAt": null,
+   "commercialUseReviewed": false
+  },
+  {
+   "sourceId": "brabantia_waste",
+   "host": "www.brabantia.com",
+   "basis": "unknown",
+   "rightsDocumentId": null,
+   "rightsDocumentUrl": null,
+   "reviewedBy": null,
+   "reviewedAt": null,
+   "validUntil": null,
+   "permittedOperations": [
+    "metadata_discovery"
+   ],
+   "robots": "unknown",
+   "robotsCheckedAt": null,
+   "websiteTerms": "unknown",
+   "termsCheckedAt": null,
+   "commercialUseReviewed": false
+  }
+ ],
+ "_comment": "TEST-ONLY registry used for the Phase244 live navigation check. It is NOT a rights review: policies have basis \"unknown\" and no rights document; rightsClearedForMetadata=true is only set so the Phase82 scheduler selects the source. Do not use for production or recommendations."
+}

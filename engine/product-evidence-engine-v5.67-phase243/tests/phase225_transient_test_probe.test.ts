@@ -1,3 +1,4 @@
+import {PAGE_MAX_BYTES} from '../src/approved_web_reader.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
@@ -58,8 +59,8 @@ test('same content yields deterministic candidate IDs; distinct URL changes prov
 test('bad URLs, bodies outside budget, and no article body retention',()=>{
  assert.equal(probeTransientTestContent225(bin,'http://example.org/path').candidates.length,0);
  assert.equal(probeTransientTestContent225(bin,'file:///etc/passwd').candidates.length,0);
- assert.equal(probeTransientTestContent225('x'.repeat(850001),url).candidates.length,0);
- assert.equal(probeTransientTestContent225('<html>'+('x'.repeat(850001))+'</html>',url).candidates.length,0);
+ assert.equal(probeTransientTestContent225('x'.repeat(PAGE_MAX_BYTES+1),url).candidates.length,0);
+ assert.equal(probeTransientTestContent225('<html>'+('x'.repeat(PAGE_MAX_BYTES+1))+'</html>',url).candidates.length,0);
 });
 test('excerpt quoted by seller cannot masquerade as independent test',()=>{
  const x=probeTransientTestContent225(wrap('<p>According to the manufacturer, we measured 34 L in our test using a meter.</p>'),url);

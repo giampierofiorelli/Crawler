@@ -2,6 +2,7 @@
  * retrieved HTML. No second network request; no article body, sentence or quote
  * is persisted. Source claims, even first-person methodology, are NOT an
  * authenticated independent test. English-first. */
+import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 import {createHash} from 'node:crypto';
 import {analyzeEnglishReview155} from './phase155_review_orchestrator.js';
 import {safeMetadataUrl75} from './phase75_source_discovery.js';
@@ -59,7 +60,7 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
   sourceBodyRetained:false,sourcePassagesRetained:false,independenceAuthenticated:false,
   protocolAuthenticated:false,rankingAuthorized:false});
  const out=empty();
- if(!urlOk(sourceUrl)||typeof html!=='string'||html.length>850000||!/<html\b/i.test(html)||
+ if(!urlOk(sourceUrl)||typeof html!=='string'||html.length>PAGE_MAX_BYTES||!/<html\b/i.test(html)||
    (opts.documentSha256!==undefined&&opts.documentSha256!==null&&!/^[a-f0-9]{64}$/.test(opts.documentSha256)))return out;
  // Intentionally restrict to semantic paragraphs/list cells and headings.
  // This is NOT a general HTML or JavaScript renderer.

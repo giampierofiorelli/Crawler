@@ -3,6 +3,7 @@
  * exact-market/variant authentication, or a recommendation/ranking module.
  * Publisher HTML exists only in the caller's stack; return no text passages.
  */
+import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 import {createHash} from 'node:crypto';
 const hash=(value:string)=>createHash('sha256').update(value).digest('hex');
 const compact=(value:unknown,max:number):string|null=>{
@@ -55,7 +56,7 @@ export function extractTransientClaims224(html:string,sourceUrl:string):Transien
  const out=empty();
  let url:URL;
  try{url=new URL(sourceUrl);}catch{return out;}
- if(url.protocol!=='https:'||url.username||url.password||url.port||sourceUrl.length>2048||html.length>850000||!/<html\b/i.test(html))return out;
+ if(url.protocol!=='https:'||url.username||url.password||url.port||sourceUrl.length>2048||html.length>PAGE_MAX_BYTES||!/<html\b/i.test(html))return out;
  const found:DeclaredAtomicClaim224[]=[];const seen=new Set<string>();
  const weak=new Set<string>();let count=0,truncated=false;
  const pushProduct=(obj:Record<string,unknown>)=>{
@@ -97,7 +98,9 @@ export function extractTransientClaims224(html:string,sourceUrl:string):Transien
    if(obj[k])scan(obj[k],depth+1,localContext);
   }
  };
- const scripts=[...html.matchAll(/<script\b([^>]{0,700})>([\s\S]*?)<\/script\s*>/gi)].slice(0,35);
+ // Bound the JSON-LD blocks, not all scripts: retail pages often carry dozens of scripts before metadata.
+ const scripts=[...html.matchAll(/<script\b([^>]{0,700})>([\s\S]*?)<\/script\s*>/gi)]
+  .filter(m=>/\btype\s*=\s*(["'])application\/ld\+json\1/i.test(m[1])).slice(0,35);
  for(const [,attrs,raw] of scripts){
   if(!/\btype\s*=\s*(["'])application\/ld\+json\1/i.test(attrs)||raw.length>150000)continue;
   try{scan(JSON.parse(raw),0,false);}catch{ /* ignore invalid/untrusted publisher syntax */ }
