@@ -342,3 +342,33 @@ test('extractor-6: units and label hints recovered (ms, Ah, N·m, Ω, l/s, mA, [
  assert.deepEqual(n('1,000W'),{kind:'quantity',number:1000,unit:'W',approximate:false});
  assert.equal(n('128, 256 GB').kind,'options');
 });
+
+// ---- spec-extractor-7: causes found on the untouched Phase249 set (synthetic pages)
+test('extractor-7: an identical h1 rendered twice names one product; two different h1s stay ambiguous',()=>{
+ const a=extractSpecifications245(`<html><body><h1>Blower X</h1><h1>Blower X</h1><table><tr><th>Weight</th><td>9.5 lbs.</td></tr><tr><th>Air Volume</th><td>350 CFM</td></tr></table></body></html>`,'https://w.example/x');
+ assert.equal(a.mainProduct.name,'Blower X');assert.equal(a.mainProduct.ambiguous,false);
+ assert.deepEqual(a.facts.find(f=>f.property==='Weight')!.value,{kind:'quantity',number:9.5,unit:'lb',approximate:false});
+ const b=extractSpecifications245(`<html><body><h1>Blower X</h1><h1>Blower Y</h1><table><tr><th>Weight</th><td>9 kg</td></tr><tr><th>Width</th><td>3 cm</td></tr></table></body></html>`,'https://w.example/x');
+ assert.equal(b.mainProduct.ambiguous,true);assert.equal(b.facts.length,0);
+});
+test('extractor-7: a specification drawer is content; a newsletter modal is still excluded',()=>{
+ const x=extractSpecifications245(page5(`<div class="sheet-modal"><div class="specifications"><dl><dt>weight (in kg)</dt><dd>11.5 kg</dd><dt>main material</dt><dd>polyester</dd></dl></div></div>
+  <div class="modal newsletter"><dl><dt>Discount</dt><dd>10 %</dd><dt>Code</dt><dd>WELCOME</dd></dl></div>`),'https://d.example/p');
+ assert.deepEqual(x.facts.map(f=>f.property).sort(),['main material','weight (in kg)']);
+});
+test('extractor-7: "<strong>Label</strong>: value" runs are read when two or more; feature prose is not',()=>{
+ const x=extractSpecifications245(page5(`<p><strong>Glass Lid</strong><span>: Monitor food without lifting the lid and releasing heat to keep it warm.</span></p>
+  <p><strong>Dimensions</strong><span>: L31 x H30 x W22.2 cm<br></span><strong>Weight</strong><span>: 2.2kg</span><span><br></span><strong>Wattage</strong><span>: 0.16kw</span></p>`),'https://m.example/p');
+ assert.deepEqual(x.facts.map(f=>f.property).sort(),['Dimensions','Wattage','Weight']);
+ assert.deepEqual(x.facts.find(f=>f.property==='Wattage')!.value,{kind:'quantity',number:0.16,unit:'kW',approximate:false});
+});
+test('extractor-7: decimal comma, cm3, HP, footnote markers and bracketed dimension conversions',()=>{
+ const n=(v:string)=>normalizeValue245(v);
+ assert.deepEqual(n('9,5 kg'),{kind:'quantity',number:9.5,unit:'kg',approximate:false});
+ assert.equal((n('31.8 cm3') as {unit:string}).unit,'cm³');assert.equal((n('1.90 HP') as {unit:string}).unit,'hp');
+ assert.deepEqual(n('4.5 kg 1)'),{kind:'quantity',number:4.5,unit:'kg',approximate:false});
+ assert.equal((n('264 g (Size 9)') as {qualifier:string}).qualifier,'(Size 9)');
+ assert.deepEqual(n('223 x 180 x 407 mm (8.8 x 7.8 x 16.0 in)'),{kind:'dimensions',numbers:[223,180,407],unit:'mm',axes:null,approximate:false});
+ assert.equal((n('12.8 x 12.8 x 1.1 in. / 325x325x25,6mm') as {unit:string}).unit,'in');
+ assert.equal(n('128, 256 GB').kind,'options');
+});

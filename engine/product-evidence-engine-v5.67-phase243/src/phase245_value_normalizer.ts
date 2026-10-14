@@ -25,7 +25,7 @@ const UNIT_ALIASES:[RegExp,string][]=[
  [/^(?:km|kilomet(?:er|re)s?)$/i,'km'],[/^(?:in|inch|inches|"|″|'')$/i,'in'],[/^(?:ft|feet|foot|'|′)$/i,'ft'],
  // "g" is grams only in lower case: "20G" on a spec sheet is g-force (acceleration), not mass.
  [/^(?:mg)$/i,'mg'],[/^(?:g|gr|GR|grams?|grammes?|Grams?)$/,'g'],[/^(?:kg|kgs|kilo(?:gram)?s?)$/i,'kg'],[/^(?:lb|lbs|pounds?)$/i,'lb'],
- [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:cc|cm3|cm³)$/i,'cm³'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
+ [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:cc|cm3|cm³|ccm)$/i,'cm³'],[/^(?:m3|m³)$/i,'m³'],[/^(?:m²|sqm|sq m|sq\.? ?m)$/i,'m²'],[/^(?:hp|bhp)$/i,'hp'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
  [/^(?:gal|gallons?)$/i,'gal'],[/^(?:fl\.? ?oz)$/i,'fl oz'],[/^(?:mw)$/,'mW'],[/^(?:w|watts?)$/i,'W'],[/^(?:kw|kilowatts?)$/i,'kW'],
  [/^(?:wh)$/i,'Wh'],[/^(?:kwh)$/i,'kWh'],[/^(?:mah)$/i,'mAh'],[/^(?:v|volts?)$/i,'V'],[/^(?:mv)$/,'mV'],[/^(?:kv)$/i,'kV'],
  [/^(?:a|amps?|amperes?)$/i,'A'],[/^(?:ma|mA)$/,'mA'],[/^(?:ah)$/i,'Ah'],[/^(?:nm)$/,'nm'],[/^(?:Nm|N\.m|N·m)$/,'N·m'],
@@ -70,6 +70,12 @@ export function normalizeValue245(raw:string,label=''):Value245{
  let t=raw.replace(/\s+/g,' ').trim();const original=t;
  if(!t||/^[-–—]+$/.test(t))return {kind:'empty'};
  if(t.length>160)return {kind:'prose'};
+ // A trailing footnote marker ("4.5 kg 1)", "1200 W*", "35 dB¹") refers to a note, not to the value.
+ // A closing ")" that has no opening "(" is a footnote reference; "264 g (Size 9)" keeps its bracket.
+ if((t.match(/\(/g)?.length??0)<(t.match(/\)/g)?.length??0))t=t.replace(/\s+\d\)$/,'').trim();
+ t=t.replace(/\s*(?:\*{1,3}|[¹²³†‡])$/u,'').trim();
+ // "31.8 cm3" -> cm³ (a digit inside the unit), "1.1 in." -> in (abbreviation dot).
+ t=t.replace(/(\d\s*(?:c|m|d)?m)([23])\b/gi,(_m,u,d)=>u+(d==='3'?'³':'²')).replace(/\b(in|ft|lb|lbs|oz|yd)\.$/i,'$1');
  // "29.3g / 1.0oz", "85.7mm x 54.6mm x 10.0mm / 3.4\" x 2.1\" x 0.4\"": the same value in two unit
  // systems. The first form is read; the second must parse to the same kind, else it is not a conversion.
  const conv=/^(.+?)\s+\/\s+(.+)$/.exec(t);
@@ -81,6 +87,10 @@ export function normalizeValue245(raw:string,label=''):Value245{
    return a;
   }
  }
+ // Dimensions followed by the same dimensions in another unit in brackets: the first form is read.
+ const dimConv=/^(.*\d.*?)\s*\(\s*([\d.,\s]+(?:[x×*]\s*[\d.,½¼¾\s]+){1,2}\s*[a-z"″]{1,6}\.?)\s*\)$/i.exec(t);
+ if(dimConv){const a=normalizeValue245(dimConv[1],label),b=normalizeValue245(dimConv[2].replace(/\.$/,''),label);
+  if(a.kind==='dimensions'&&b.kind==='dimensions'&&a.numbers.length===b.numbers.length&&a.unit!==b.unit)return a;}
  // Axis order given once after the numbers: "21.8 cm x 13.5 cm (length x height)", "... mm (WxHxD)".
  const axisNote=/^(.*\d.*?)\s*\(\s*((?:width|height|depth|length|w|h|d|l)(?:\s*[x×]\s*(?:width|height|depth|length|w|h|d|l)){1,3})\s*\)$/i.exec(t);
  if(axisNote){const inner=normalizeValue245(axisNote[1],label);const ax=axisNote[2].split(/\s*[x×]\s*/).map(a=>a[0].toUpperCase());
@@ -140,7 +150,9 @@ export function normalizeValue245(raw:string,label=''):Value245{
   if(unit&&nums.every(n=>n!==null))return {kind:'dimensions',numbers:nums as number[],unit,axes:null,approximate};}
  // Option lists "128 GB, 256 GB or 512 GB", "1, 2, 4 or 8 GB", "256 or 512 MB".
  // "1,000W" is one thousand watts (thousands separator), not the options 1 and 0.
- const thousands=/^\d{1,3}(?:,\d{3})+(?:\.\d+)?\s*[a-zA-Z°%]{0,6}$/.test(t);
+ const thousands=/^\d{1,3}(?:,\d{3})+(?:\.\d+)?\s*[a-zA-Z°%]{0,6}$/.test(t)||
+  // "9,5 kg": a decimal comma (one comma, one or two digits after it, no space), not the options 9 and 5.
+  /^\d+,\d{1,2}\s*[a-zA-Z°%]{1,6}$/.test(t);
  m=/^((?:\d+(?:[.,]\d+)?\s*[a-zA-Z]{0,4}\s*(?:,|\bor\b|\/)\s*)+\d+(?:[.,]\d+)?)\s*([a-zA-Z]{1,4})?(?:\s+[A-Za-z][\w-]{1,12})?$/.exec(t);
  if(m&&!thousands&&/(?:,|\bor\b|\/)/.test(m[1])){
   const parts=m[1].split(/\s*(?:,|\bor\b|\/)\s*/).map(p=>/^(\d+(?:[.,]\d+)?)\s*([a-zA-Z]{0,4})$/.exec(p.trim()));

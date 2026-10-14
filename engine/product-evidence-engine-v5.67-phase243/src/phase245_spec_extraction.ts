@@ -70,6 +70,10 @@ const BOILER_TOKENS=new Set(['related','recommend','recommended','recommendation
  'pagination','pager','paging','pages','filter','filters','facets','sort','sorting','toolbar','swatch','swatches',
  'popover','tooltip','finance','financing','credit','instalment','instalments','installment','installments']);
 const COMPARE_TOKENS=new Set(['compare','comparison','comparisons']);
+const DRAWER_TOKENS=new Set(['modal','popup','popover','drawer','sheet']);
+const SPEC_TOKENS=/^(?:spec|specs|specification|specifications|techspecs|technical|characteristics|productspecs)$/;
+const specDrawer=(n:Node245):boolean=>{let found=false;for(const d of walk245(n)){if(d.kind!=='element')continue;
+ if([...tokensOf(d)].some(t=>SPEC_TOKENS.test(t))&&[...walk245(d)].some(x=>x.tag==='dl'||x.tag==='table'||x.tag==='ul')){found=true;break;}}return found;};
 const tokensOf=(n:Node245)=>{
  const raw=`${n.attrs.class??''} ${n.attrs.id??''} ${n.attrs['data-testid']??''} ${n.attrs['aria-label']??''}`;
  const out=new Set<string>();
@@ -104,7 +108,11 @@ export function classifyRegions245(root:Node245){
    // A tab-list role on a wrapper that holds the tab panels themselves (seen on CMS product templates) does not
    // make the panels boilerplate: only the tab buttons are navigation.
    else if(n.attrs.role&&BOILER_ROLES.has(n.attrs.role)&&!(n.attrs.role==='tablist'&&[...walk245(n)].some(d=>d!==n&&d.attrs?.role==='tabpanel')))reason='boilerplate_role:'+n.attrs.role;
-   else if(!container){for(const t of toks)if(BOILER_TOKENS.has(t)){reason='non_main_marker:'+t;break;}}
+   else if(!container){for(const t of toks)if(BOILER_TOKENS.has(t)){
+    // A drawer or modal that holds the product's specification sheet ("sheet-modal" > "specifications") is
+    // product content; cookie, newsletter or cart modals carry no specification wording.
+    if(DRAWER_TOKENS.has(t)&&specDrawer(n))continue;
+    reason='non_main_marker:'+t;break;}}
    if(!reason&&n.attrs.itemscope!==undefined&&n.attrs.itemprop&&/^(?:isRelatedTo|isSimilarTo|isAccessoryOrSparePartFor|itemListElement)$/i.test(n.attrs.itemprop))
     reason='related_product_microdata';
    if(!reason&&!container&&isItemListing(n))reason='item_listing';
@@ -348,7 +356,7 @@ const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative
 
 /** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
  * and re-derived per source revision. Bump on any behavioural change. */
-export const SPEC_EXTRACTOR_VERSION='spec-extractor-6';
+export const SPEC_EXTRACTOR_VERSION='spec-extractor-7';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
  if(typeof html!=='string'||html.length>PAGE_MAX_BYTES)throw Error('245_html_size');
@@ -378,7 +386,8 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
  const microNames=[...new Set(micro.map(m=>m.name).filter(Boolean) as string[])];
  // A page heading such as "All Specifications" titles a tab, not the product.
  const GENERIC_HEADING=/^(?:(?:all|full|technical|tech|product|detailed)\s+)?(?:spec(?:ification)?s?|specifications? & features|overview|details|features|product (?:details|information)|tech specs)$/i;
- const h1s=all.filter(n=>n.tag==='h1'&&regionOf(n)!=='excluded').map(n=>textOf245(n)).filter(t=>t&&!GENERIC_HEADING.test(t.trim()));
+ // The same heading rendered twice (desktop and mobile copies) is one heading, not two products.
+ const h1s=[...new Map(all.filter(n=>n.tag==='h1'&&regionOf(n)!=='excluded').map(n=>textOf245(n)).filter(t=>t&&!GENERIC_HEADING.test(t.trim())).map(t=>[productKey(t),t])).values()];
  const og=all.find(n=>n.tag==='meta'&&n.attrs.property==='og:title')?.attrs.content??null;
  const h1Keys=new Set(h1s.map(productKey));
  const clusterUrls=(c:Obj[])=>new Set(c.flatMap(o=>[urlKey(o.url,base),urlKey(o['@id'],base),...asList(o.offers).filter(isObj).map(f=>urlKey(f.url,base))]).filter(Boolean) as string[]);
@@ -688,6 +697,26 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    raws.push({label:x!.label,valueText:x!.value,method:'line_label_value',locator:locator245(el)+`:line${i}`,productRef:ref.productRef,
     productName:ref.productName,variant:null,section:sec,region:regionOf(el),ambiguity:[...ref.amb]});
   });
+  used.add(el);
+ }
+
+ // ---- 5d. "<strong>Label</strong>: value" runs inside one block (rich text with the line breaks nested in spans):
+ // each emphasised label is followed by a sibling whose text starts with ":". Two or more such pairs make a list.
+ for(const el of all){
+  if(el.kind!=='element'||!['p','div','td','li'].includes(el.tag)||regionOf(el)==='excluded'||insideLink(el)||used.has(el))continue;
+  const kids=el.children.filter(c=>c.kind==='element'||!!c.text.trim());
+  const pairs:{label:string;value:string;node:Node245}[]=[];
+  for(let i=0;i<kids.length-1;i++){
+   const k=kids[i];if(k.kind!=='element'||!['strong','b'].includes(k.tag)||walk245Has(k,'a'))continue;
+   const next=kids[i+1];const vt=(next.kind==='text'?next.text:textOf245(next)).replace(/\s+/g,' ').trim();
+   const m=/^[:：]\s*(.{1,160})$/.exec(vt);const label=textOf245(k).trim();
+   if(m&&labelLike(label)&&!/[:：]\s*$/.test(label))pairs.push({label,value:m[1].trim(),node:k});
+  }
+  const kept=pairs.filter(x=>normalizeValue245(x.value,x.label).kind!=='prose');
+  if(kept.length<2)continue;
+  const ref=mainRef();const sec=sectionOf(el,byId,null);
+  for(const x of kept)raws.push({label:x.label,valueText:x.value,method:'line_label_value',locator:locator245(x.node),productRef:ref.productRef,
+   productName:ref.productName,variant:null,section:sec,region:regionOf(el),ambiguity:[...ref.amb]});
   used.add(el);
  }
 
