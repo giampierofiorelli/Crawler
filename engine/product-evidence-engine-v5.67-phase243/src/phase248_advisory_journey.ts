@@ -11,7 +11,9 @@ import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
 import {composeQuestion125,type CategorySchema125} from './phase125_compositional_dialogue_frame.js';
 
-export interface CategoryEntry248 {id:string;aliases:readonly string[];}
+export interface CategoryEntry248 {id:string;aliases:readonly string[];
+ /** Weaker single-word cues naming the category's typical product or use ("espresso", "crumpets"). */
+ cues?:readonly string[];}
 export type Decision248='recommend'|'withhold_insufficient_evidence'|'unsupported_category'|'clarify'|'out_of_scope';
 export type Stage248='category'|'need'|'requirements'|'candidates'|'evidence'|'decision';
 
@@ -39,6 +41,35 @@ function findLoose(t:string,alias:string):{start:number;end:number}[]{
    const last=Math.max(...want.map(x=>i+span.indexOf(x)));out.push({start:offs[i],end:offs[last]+words[last].length});i=last;}}}
  return out;
 }
+/** Words that name products or categories, not needs: excluded from need scoring. */
+const PRODUCT_WORDS=new Set(['machine','maker','fryer','air','airfryer','toaster','oven','coffee','espresso','kettle','blender','appliance','gadget','one','product','buy','best','good','want','need','which','what','home','use','make','thing','things','cook','food']);
+/** Concepts described by the request: IDF-weighted overlap between the request's content words and each
+ * concept's own descriptions (its aliases and the statements of items carrying it), within one category.
+ * Requires two distinct overlapping need words, or one alias word that is rare in the category. */
+export const DESCRIBED_THRESHOLD248=2.2;
+function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string[],registry:readonly CategoryEntry248[]){
+ const out:{key:string;alias:string;start:number;end:number}[]=[];
+ const catWords=new Set(registry.flatMap(r=>[...r.aliases,...(r.cues??[])]).flatMap(a=>norm(a).split(' ')).map(stem));
+ const reqTokens=new Set(t.split(' ').filter(w=>w&&!STOP.has(w)).map(stem).filter(w=>w.length>=3&&!PRODUCT_WORDS.has(w)&&!catWords.has(w)));
+ for(const c of cats){
+  const items=store.categoryItems246(c).filter(i=>i.concept);
+  const docs=new Map<string,{alias:Set<string>;text:Set<string>;kind:string}>();
+  for(const i of items){const d=docs.get(i.concept!.id)??{alias:new Set(),text:new Set(),kind:i.concept!.kind};
+   for(const a of i.concept!.aliases)for(const w of norm(a).split(' '))if(w&&!STOP.has(w))d.alias.add(stem(w));
+   for(const w of norm(i.statement).split(' '))if(w&&!STOP.has(w))d.text.add(stem(w));
+   docs.set(i.concept!.id,d);}
+  const N=docs.size;const df=new Map<string,number>();
+  for(const d of docs.values())for(const w of new Set([...d.alias,...d.text]))df.set(w,(df.get(w)??0)+1);
+  const idf=(w:string)=>Math.log((N+1)/((df.get(w)??0)+0.5));
+  for(const [id,d] of docs){
+   const hit=[...reqTokens].filter(w=>d.alias.has(w)||d.text.has(w));
+   const score=hit.reduce((a,w)=>a+idf(w)*(d.alias.has(w)?1.5:1),0);
+   const aliasHit=hit.some(w=>d.alias.has(w));
+   if(hit.length>=2&&aliasHit&&score>=DESCRIBED_THRESHOLD248)out.push({key:`${c}|${id}|${d.kind}`,alias:'~'+hit.join('+'),start:-1,end:-1});
+  }
+ }
+ return out;
+}
 /** Longest-match resolution: a match contained in a longer match of another entry is dropped
  * ("toaster" inside "toaster oven"). */
 function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly string[]}[],loose=false){
@@ -57,7 +88,7 @@ function namedProductTerm(t:string):string|null{
 export interface Journey248 {
  schema:'pee248.journey.v1';text:string;
  stages:{
-  category:{categoryId:string|null;basis:'explicit_alias'|'need_inferred'|'ambiguous'|'unresolved';candidates:string[];namedUnknownTerm:string|null};
+  category:{categoryId:string|null;basis:'explicit_alias'|'cue_inferred'|'need_inferred'|'ambiguous'|'unresolved';candidates:string[];namedUnknownTerm:string|null;excluded:string[]};
   need:{concepts:{id:string;categoryId:string;matched:string;kind:string|null}[];budget:{currency:string;min:number|null;max:number|null}|null;hazards:string[]};
   requirements:{measuredBy:{conceptId:string;method:string;support:string;source:string|null}[];cautions:{attribute:string;conceptId:string;kind:string;support:string;note:string}[];
    unmeasuredConcepts:string[];categoryHasKnowledge:boolean};
@@ -74,17 +105,29 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  if(typeof text!=='string'||text.length<3||text.length>2000)throw Error('248_invalid_request');
  const t=norm(text);
  // ---- category: explicit names (longest match), else inferred from need concepts of exactly one category
- const named=longestMatches(t,registry.map(r=>({key:r.id,aliases:r.aliases})));
- const explicit=[...new Set(named.map(h=>h.key))].sort();
+ // A category named under negation ("without a deep fat fryer", "rather not use a deep fryer") is excluded, not chosen.
+ const negated=(start:number)=>/(?:^| )(?:without|not|no|instead of|rather than|other than|avoid|avoiding|don't want|do not want|rather not use|not using|never)(?: \S+){0,2} ?$/.test(t.slice(0,start).trimEnd()+' ');
+ const allNamed=longestMatches(t,registry.map(r=>({key:r.id,aliases:r.aliases})));
+ // "...don't want a toaster whose sides get hot": a negated name followed by a qualifying clause is a constraint on
+ // that category, not its exclusion.
+ const qualified=(end:number)=>/^ (?:whose|that|which|with|where)\b/.test(t.slice(end));
+ const isExcluded=(h:{start:number;end:number})=>negated(h.start)&&!qualified(h.end);
+ const named=allNamed.filter(h=>!isExcluded(h));
+ const excludedCategories=[...new Set(allNamed.filter(isExcluded).map(h=>h.key))].sort();
+ const explicit=[...new Set(named.map(h=>h.key))].filter(c=>!excludedCategories.includes(c)||named.some(h=>h.key===c)).sort();
+ const cueHits=longestMatches(t,registry.filter(r=>r.cues?.length).map(r=>({key:r.id,aliases:r.cues!}))).filter(h=>!negated(h.start));
+ const cueCats=[...new Set(cueHits.map(h=>h.key))].filter(c=>!excludedCategories.includes(c)).sort();
  const knowledgeCats=registry.filter(r=>store.categoryItems246(r.id).length>0).map(r=>r.id);
  const conceptEntries=knowledgeCats.flatMap(c=>{const seen=new Set<string>();
   return store.categoryItems246(c).filter(i=>i.concept&&!seen.has(i.concept.id)&&!!seen.add(i.concept.id))
    .map(i=>({key:`${c}|${i.concept!.id}|${i.concept!.kind}`,aliases:i.concept!.aliases}));});
- const conceptHits=longestMatches(t,conceptEntries,true);
+ const conceptHits=[...longestMatches(t,conceptEntries,true),...describedConcepts(t,store,knowledgeCats,registry)];
  let categoryId:string|null=null;let basis:Journey248['stages']['category']['basis']='unresolved';
  if(explicit.length===1){categoryId=explicit[0];basis='explicit_alias';}
  else if(explicit.length>1)basis='ambiguous';
- else{const cats=[...new Set(conceptHits.map(h=>h.key.split('|')[0]))];
+ else if(cueCats.length===1){categoryId=cueCats[0];basis='cue_inferred';}
+ else if(cueCats.length>1)basis='ambiguous';
+ else{const cats=[...new Set(conceptHits.map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c));
   if(cats.length===1){categoryId=cats[0];basis='need_inferred';}else if(cats.length>1)basis='ambiguous';}
  const namedUnknownTerm=basis==='unresolved'?namedProductTerm(t):null;
  // ---- need: concepts of the resolved category; budget and hazards from Phase125
@@ -148,7 +191,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   }
  }
  return {schema:'pee248.journey.v1',text,
-  stages:{category:{categoryId,basis,candidates:explicit,namedUnknownTerm},need:{concepts,budget,hazards},
+  stages:{category:{categoryId,basis,candidates:explicit,namedUnknownTerm,excluded:excludedCategories},need:{concepts,budget,hazards},
    requirements:{measuredBy,cautions,unmeasuredConcepts:unmeasured,categoryHasKnowledge},
    candidates:{active:products.length,withDeclaredAttributes:withAttrs,retainedDeclarations:retained,budgetApplicable:retained>0},
    evidence:{evidenceSupportedRelations:evidenceSupported,independentResultsForNeed:independentResults,methodReferences:measuredBy.filter(m=>m.support==='method_reference').length}},

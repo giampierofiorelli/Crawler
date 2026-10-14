@@ -11,7 +11,7 @@ const store=()=>{const s=new KnowledgeStore246(join(dir,'s'+Math.random().toStri
 const ld=(o:unknown)=>`<script type="application/ld+json">${JSON.stringify(o)}</script>`;
 test('a need-only request infers the category from the need and withholds a recommendation without independent evidence',()=>{
  const s=store();
- const j=runJourney248('My toast always browns evenly on one side only, what should I buy?',s,CATEGORY_REGISTRY248);
+ const j=runJourney248('My bread never browns evenly in the morning, what should I buy?',s,CATEGORY_REGISTRY248);
  assert.equal(j.stages.category.categoryId,'toasters');assert.equal(j.stages.category.basis,'need_inferred');
  assert.ok(j.stages.need.concepts.some(c=>c.id==='even_browning'));
  assert.equal(j.decision,'withhold_insufficient_evidence');assert.equal(j.blockingStage,'evidence');
@@ -45,3 +45,18 @@ test('a budget is understood but reported as unusable while no prices are retain
  s.close();
 });
 test.after(()=>rmSync(dir,{recursive:true,force:true}));
+test('negation: an excluded category is never chosen; a negated name with a qualifying clause is a constraint, not an exclusion',()=>{
+ const s=store();
+ const a=runJourney248('I want even toast without a toaster oven',s,CATEGORY_REGISTRY248);
+ assert.equal(a.stages.category.categoryId,'toasters');assert.deepEqual(a.stages.category.excluded,['toaster_ovens']);
+ const b=runJourney248("I don't want a toaster whose sides get hot",s,CATEGORY_REGISTRY248);
+ assert.equal(b.stages.category.categoryId,'toasters');assert.deepEqual(b.stages.category.excluded,[]);
+ s.close();
+});
+test('cue words name a category weakly; a single shared word does not identify a need',()=>{
+ const s=store();
+ const j=runJourney248('Best way to toast crumpets?',s,CATEGORY_REGISTRY248);
+ assert.equal(j.stages.category.basis,'cue_inferred');assert.equal(j.stages.category.categoryId,'toasters');
+ assert.equal(runJourney248('Which running shoes are best?',s,CATEGORY_REGISTRY248).decision,'out_of_scope');
+ s.close();
+});
