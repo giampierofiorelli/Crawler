@@ -1,0 +1,310 @@
+{
+ "schema": "pee245.evaluation.v1",
+ "gold": "/tmp/claude-0/-home-user-Crawler/bd9afe5f-596c-54bb-82da-d49f2aed691c/scratchpad/hg2.json",
+ "generatedAt": "2026-10-14T16:25:05.476Z",
+ "totals": {
+  "baseline": {
+   "expected": 61,
+   "correct": 3,
+   "falseAssociations": 0,
+   "falsePositives": 3,
+   "missed": 58,
+   "abstentionsRequired": 0,
+   "abstentionsCorrect": 0,
+   "ms": 75.8,
+   "precision": 0.5,
+   "recall": 0.049
+  },
+  "phase245": {
+   "expected": 61,
+   "correct": 45,
+   "falseAssociations": 1,
+   "falsePositives": 6,
+   "missed": 16,
+   "abstentionsRequired": 0,
+   "abstentionsCorrect": 0,
+   "ms": 293.6,
+   "precision": 0.865,
+   "recall": 0.738
+  }
+ },
+ "pages": [
+  {
+   "tag": "k_xmart_sona",
+   "sha256": "ec6ecf59fe67896ec7aeed46a0229e1c5cfae335bb1e6f511e6c9facba43a4fe",
+   "bytes": 459800,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 10,
+    "expected": 10,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Sona Kettle 1.7 L 2200W With Heat Indicator | Price = {\"kind\":\"quantity\",\"number\":18,\"unit\":\"jod\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Filter",
+     "main |  | Certification",
+     "main |  | Material",
+     "main |  | Color Options",
+     "main |  | Power Requirements",
+     "main |  | Capacity",
+     "main |  | Safety Features",
+     "main |  | Heat Indicator",
+     "main |  | Controller"
+    ],
+    "ms": 13
+   },
+   "phase245": {
+    "scopedFacts": 10,
+    "correct": 10,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 10,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 82,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "k_sm_camel",
+   "sha256": "ca9baa545cdff90417491f6dd3d846bcbd558b563975cf1ef99c59fc8d13e42a",
+   "bytes": 303470,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 9,
+    "expected": 9,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "CRC-D181 CAMEL 1.8L RICE COOKER | Price = {\"kind\":\"quantity\",\"number\":1260,\"unit\":\"php\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price",
+     "main |  | Power",
+     "main |  | Color",
+     "main |  | Parts",
+     "main |  | Labor",
+     "main |  | Net Weight",
+     "main |  | Gross Weight (packed)",
+     "main |  | Net Dimensions (WxHxD)",
+     "main |  | Gross Dimensions (WxHxD)"
+    ],
+    "ms": 3
+   },
+   "phase245": {
+    "scopedFacts": 9,
+    "correct": 8,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 1,
+    "expected": 9,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "CRC-D181 CAMEL 1.8L RICE COOKER | What's in the box = {\"kind\":\"text\",\"text\":\"Warranty card Manual Instruction\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Color"
+    ],
+    "ms": 28.5,
+    "ambiguousKept": 3
+   }
+  },
+  {
+   "tag": "k_philips_hr3760",
+   "sha256": "edb1d237dd9a035c409615095edb31d52b04b8b47d95733e3ad437348aa039e8",
+   "bytes": 481476,
+   "baseline": {
+    "scopedFacts": 1,
+    "correct": 0,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 1,
+    "missed": 1,
+    "expected": 1,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "7000 Series High speed blender | Price = {\"kind\":\"quantity\",\"number\":229,\"unit\":\"sgd\"}"
+    ],
+    "assocList": [],
+    "missedList": [
+     "main |  | Price"
+    ],
+    "ms": 3.8
+   },
+   "phase245": {
+    "scopedFacts": 1,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 1,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 17.6,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "k_wilfa_xplode",
+   "sha256": "417a7c8509ea9a3f7788208392e6bcf533b6900eda715d422b73726ca788e6fa",
+   "bytes": 2596059,
+   "baseline": {
+    "scopedFacts": 2,
+    "correct": 1,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 14,
+    "expected": 15,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Cable Storage",
+     "main |  | Cleaning Program",
+     "main |  | Color",
+     "main |  | Digital / Mechanical Control Panel",
+     "main |  | Jug Material",
+     "main |  | Material",
+     "main |  | Power (W)",
+     "main |  | Programs",
+     "main |  | Pulse Function",
+     "main |  | Removable Blades",
+     "main |  | RPM",
+     "main |  | Signal Light",
+     "main |  | Sound Level (dB)",
+     "main |  | Washable"
+    ],
+    "ms": 30.3
+   },
+   "phase245": {
+    "scopedFacts": 17,
+    "correct": 15,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 0,
+    "expected": 15,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [],
+    "ms": 124.5,
+    "ambiguousKept": 0
+   }
+  },
+  {
+   "tag": "k_easyeq_waring",
+   "sha256": "0ab4220c91669fedcb9d260e44ec887286015c39a5680aeff96e02206a0ff674",
+   "bytes": 270957,
+   "baseline": {
+    "scopedFacts": 3,
+    "correct": 2,
+    "duplicatesOfCorrect": 0,
+    "falseAssociations": 0,
+    "falsePositives": 0,
+    "missed": 24,
+    "expected": 26,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [],
+    "assocList": [],
+    "missedList": [
+     "main |  | Brand",
+     "main |  | Power Supply",
+     "main |  | Dimensions",
+     "main |  | Weight",
+     "main |  | Speed",
+     "main |  | Functions",
+     "main |  | Special Feature",
+     "main |  | Material",
+     "main |  | External Size (mm)",
+     "main |  | Weight (kg)",
+     "main |  | Colour",
+     "main |  | Plug Fitted",
+     "main |  | Dimensions(mm)",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Weight (kg)",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Colour",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Plug Fitted",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Material",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Dimensions(mm)",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Weight (kg)",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Colour",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Voltage",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Plug Fitted",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | External Size (mm)",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Dimensions(mm)"
+    ],
+    "ms": 25.7
+   },
+   "phase245": {
+    "scopedFacts": 20,
+    "correct": 11,
+    "duplicatesOfCorrect": 1,
+    "falseAssociations": 1,
+    "falsePositives": 5,
+    "missed": 15,
+    "expected": 26,
+    "abstentionsRequired": 0,
+    "abstentionsCorrect": 0,
+    "fpList": [
+     "Commercial Blender 2L 1500W - Waring CB137 | Power Supply = {\"kind\":\"quantity\",\"number\":13,\"unit\":\"A\",\"approximate\":false,\"qualifier\":\"plug fitted\"}",
+     "Commercial Blender 2L 1500W - Waring CB137 | Dimensions = {\"kind\":\"text\",\"text\":\"539(H) x 228(W) x 241(D) mm\"}",
+     "Commercial Blender 2L 1500W - Waring CB137 | External Size (mm) = {\"kind\":\"text\",\"text\":\"539(H) x 228(W) x 241(D)mm\"}",
+     "Commercial Blender 2L 1500W - Waring CB137 | Power Supply = {\"kind\":\"quantity\",\"number\":13,\"unit\":\"A\",\"approximate\":false,\"qualifier\":\"plug fitted\"}",
+     "Commercial Blender 2L 1500W - Waring CB137 | Dimensions (mm) = {\"kind\":\"text\",\"text\":\"539.000000 (H) x 228.000000 (W) x 241.000000 (D)\"}"
+    ],
+    "assocList": [
+     "Commercial Blender 2L 1500W - Waring CB137 | structured data | Material"
+    ],
+    "missedList": [
+     "main |  | Power Supply",
+     "main |  | Dimensions",
+     "main |  | External Size (mm)",
+     "main |  | Dimensions(mm)",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Weight (kg)",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Colour",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Plug Fitted",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Material",
+     "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987 |  | Dimensions(mm)",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Weight (kg)",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Colour",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Voltage",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Plug Fitted",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | External Size (mm)",
+     "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765 |  | Dimensions(mm)"
+    ],
+    "ms": 41,
+    "ambiguousKept": 4
+   }
+  }
+ ]
+}
