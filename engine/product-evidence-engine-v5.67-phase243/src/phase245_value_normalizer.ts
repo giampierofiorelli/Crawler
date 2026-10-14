@@ -1,0 +1,147 @@
+/** Phase245: conservative normalization of declared specification values.
+ * The original text is always kept. A value is only turned into numbers when its form is
+ * unambiguous; several quantities for different things ("600 mm sides / 900 mm back"), one cell
+ * carrying values for several variants, and prose are reported as such, never collapsed.
+ */
+export type Value245=
+ {kind:'quantity';number:number;unit:string;approximate:boolean;alternative?:{number:number;unit:string};
+  /** "max. 30 kg" -> bound 'max'; trailing words such as "LPDDR5" are kept as a qualifier. */
+  bound?:'max'|'min';qualifier?:string}|
+ {kind:'range';min:number;max:number;unit:string;approximate:boolean}|
+ {kind:'price';amount:number;maxAmount?:number;currency:string}|
+ {kind:'dimensions';numbers:number[];unit:string;axes:string[]|null;approximate:boolean}|
+ {kind:'options';numbers:number[];unit:string}|
+ {kind:'number';number:number}|
+ {kind:'text';text:string}|
+ {kind:'boolean';value:boolean;qualifier:string|null}|
+ {kind:'per_variant';segments:number}|
+ {kind:'compound'}|
+ {kind:'prose'}|
+ {kind:'empty'};
+/** Canonical unit symbols (case-insensitive aliases). Units are kept as authored, not converted,
+ * except imperial compound weights which are only meaningful once combined. */
+const UNIT_ALIASES:[RegExp,string][]=[
+ [/^(?:mm|millimet(?:er|re)s?)$/i,'mm'],[/^(?:cm|centimet(?:er|re)s?)$/i,'cm'],[/^(?:m|met(?:er|re)s?)$/i,'m'],
+ [/^(?:km|kilomet(?:er|re)s?)$/i,'km'],[/^(?:in|inch|inches|"|″|'')$/i,'in'],[/^(?:ft|feet|foot|'|′)$/i,'ft'],
+ [/^(?:mg)$/i,'mg'],[/^(?:g|gr|grams?|grammes?)$/i,'g'],[/^(?:kg|kgs|kilo(?:gram)?s?)$/i,'kg'],[/^(?:lb|lbs|pounds?)$/i,'lb'],
+ [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
+ [/^(?:gal|gallons?)$/i,'gal'],[/^(?:fl\.? ?oz)$/i,'fl oz'],[/^(?:mw)$/,'mW'],[/^(?:w|watts?)$/i,'W'],[/^(?:kw|kilowatts?)$/i,'kW'],
+ [/^(?:wh)$/i,'Wh'],[/^(?:kwh)$/i,'kWh'],[/^(?:mah)$/i,'mAh'],[/^(?:v|volts?)$/i,'V'],[/^(?:mv)$/,'mV'],[/^(?:kv)$/i,'kV'],
+ [/^(?:a|amps?|amperes?)$/i,'A'],[/^(?:ma)$/,'mA'],[/^(?:hz|hertz)$/i,'Hz'],[/^(?:khz)$/i,'kHz'],[/^(?:mhz)$/i,'MHz'],
+ [/^(?:ghz)$/i,'GHz'],[/^(?:°c|℃|degc|deg c|c°)$/i,'°C'],[/^(?:°f|℉)$/i,'°F'],[/^(?:db|dba|db\(a\))$/i,'dB'],
+ [/^(?:kb)$/i,'KB'],[/^(?:mb)$/i,'MB'],[/^(?:gb)$/i,'GB'],[/^(?:tb)$/i,'TB'],[/^(?:mbit|mbit\/s|mbps)$/i,'Mbit/s'],
+ [/^(?:gbit|gbit\/s|gbps)$/i,'Gbit/s'],[/^(?:mp|megapixels?)$/i,'MP'],[/^(?:px|pixels?)$/i,'px'],[/^(?:%|percent)$/i,'%'],
+ [/^(?:bar)$/i,'bar'],[/^(?:mbar)$/i,'mbar'],[/^(?:pa)$/i,'Pa'],[/^(?:kpa)$/i,'kPa'],[/^(?:psi)$/i,'psi'],
+ [/^(?:rpm)$/i,'rpm'],[/^(?:km\/h|kph)$/i,'km/h'],[/^(?:mph)$/i,'mph'],[/^(?:s|sec|secs|seconds?)$/i,'s'],
+ [/^(?:min|mins|minutes?)$/i,'min'],[/^(?:h|hr|hrs|hours?)$/i,'h'],[/^(?:nm)$/i,'nm'],[/^(?:lm|lumens?)$/i,'lm'],
+ [/^(?:l\/min)$/i,'l/min'],[/^(?:m³\/h|m3\/h)$/i,'m³/h'],[/^(?:pin|pins)$/i,'pin'],[/^(?:cores?)$/i,'core'],
+ [/^(?:servings?)$/i,'serving'],[/^(?:pieces?|pcs?)$/i,'piece'],[/^(?:ppm)$/i,'ppm'],[/^(?:bpm)$/i,'bpm'],
+];
+export function canonicalUnit245(raw:string):string|null{
+ const u=raw.trim().replace(/\.$/,'');if(!u||u.length>12)return null;
+ for(const [re,c] of UNIT_ALIASES)if(re.test(u))return c;
+ return null;
+}
+const NUM='(\\d{1,3}(?:,\\d{3})+(?:\\.\\d+)?|\\d+(?:[.,]\\d+)?)';
+/** "1,234.5" -> 1234.5; "12,5" -> 12.5 (single comma with 1-2 decimals, no dot); else plain. */
+export function parseNumber245(s:string):number|null{
+ let t=s.trim();
+ if(/^\d{1,3}(?:,\d{3})+(?:\.\d+)?$/.test(t))t=t.replace(/,/g,'');
+ else if(/^\d+,\d{1,2}$/.test(t))t=t.replace(',','.');
+ else if(/,/.test(t))return null;
+ const n=Number(t);return Number.isFinite(n)&&Math.abs(n)<=1e9?n:null;
+}
+const CURRENCY:Record<string,string>={'$':'USD','us$':'USD','usd':'USD','€':'EUR','eur':'EUR','£':'GBP','gbp':'GBP','¥':'JPY',
+ 'jpy':'JPY','chf':'CHF','a$':'AUD','aud':'AUD','c$':'CAD','cad':'CAD','kr':'SEK','sek':'SEK','nok':'NOK','dkk':'DKK','pln':'PLN','zł':'PLN'};
+/** Unit or currency hinted by a property label, e.g. "Weight (kg)", "MSRP (US$)". */
+export function labelUnitHint245(label:string):{unit?:string;currency?:string}{
+ const m=/\(([^()]{1,8})\)\s*:?\s*$/.exec(label);if(!m)return {};
+ const inner=m[1].trim().toLowerCase();
+ if(CURRENCY[inner])return {currency:CURRENCY[inner]};
+ const u=canonicalUnit245(m[1]);return u?{unit:u}:{};
+}
+const SENTENCE=(t:string)=>{const w=t.split(/\s+/).length;return w>=14||(w>=5&&/[.!?]$/.test(t)&&!/\b(?:oz|lb|lbs|in|ft|approx|no|max|min)\.$/i.test(t));};
+
+export function normalizeValue245(raw:string,label=''):Value245{
+ let t=raw.replace(/\s+/g,' ').trim();const original=t;
+ if(!t||/^[-–—]+$/.test(t))return {kind:'empty'};
+ if(t.length>160)return {kind:'prose'};
+ let approximate=false;let bound:'max'|'min'|undefined;
+ const ap=/^(?:approx\.?|approximately|ca\.?|circa|about|~|≈)\s*/i.exec(t);if(ap){approximate=true;t=t.slice(ap[0].length);}
+ const bd=/^(?:(max\.?|maximum|up to|≤)|(min\.?|minimum|at least|≥))\s*/i.exec(t);if(bd){bound=bd[1]?'max':'min';t=t.slice(bd[0].length);}
+ const hint=labelUnitHint245(label);
+ // Axis-labelled dimensions: "H: 147.6 mm W: 71.6 mm D: 7.8 mm", "W 40 x D 30 x H 65 cm".
+ const axisRe=new RegExp(`\\b(width|height|depth|length|w|h|d|l)\\s*[:=]?\\s*${NUM}\\s*([a-z"″]{1,3})?(?:\\s*\\([^)]*\\))?`,'gi');
+ const axes=[...t.matchAll(axisRe)];
+ if(axes.length>=2&&axes.map(a=>a[0]).join('').replace(/[\sx×*,;/]/gi,'').length>=t.replace(/[\sx×*,;/]|\([^)]*\)/gi,'').length-2){
+  const units=axes.map(a=>a[3]?canonicalUnit245(a[3]):null);const unit=units.find(Boolean)??hint.unit??null;
+  const nums=axes.map(a=>parseNumber245(a[2]));
+  const axisLetters=axes.map(a=>a[1][0].toUpperCase());
+  // One object has each axis once: repeated axes mean several objects/variants in one cell.
+  if(unit&&nums.every(n=>n!==null)&&units.every(u=>u===null||u===unit)&&new Set(axisLetters).size===axisLetters.length&&axes.length<=4)
+   return {kind:'dimensions',numbers:nums as number[],unit,axes:axes.map(a=>a[1][0].toUpperCase()),approximate};
+ }
+ // Per-variant values packed in one cell: "15: 171 g … 15 Plus: 201 g".
+ const segs=[...t.matchAll(/(?:^|\s)([A-Za-z0-9][\w +.-]{0,24}?)\s?:\s*[-+]?\d/g)].filter(m=>!canonicalUnit245(m[1].trim().split(' ').pop()!));
+ if(segs.length>=2)return {kind:'per_variant',segments:segs.length};
+ // A base value followed by a labelled alternative: "Jan 2021 W: Jun 2022", "US$4 W: US$6".
+ const alt=/^(.*\d.*?)\s([A-Za-z][\w+.-]{0,12}):\s+(.*\d.*)$/.exec(t);
+ if(alt)return {kind:'per_variant',segments:2}; // abstaining is the safe side even if the label looks like a unit
+ // Booleans.
+ const yn=/^(yes|no|y|n|true|false|included|not included)\b\s*(?:\((.{1,40})\))?$/i.exec(t);
+ if(yn&&/^(yes|no|true|false|included|not included)$/i.test(yn[1]))
+  return {kind:'boolean',value:/^(yes|true|included)$/i.test(yn[1]),qualifier:yn[2]??null};
+ // Prices.
+ const cur='(US\\$|A\\$|C\\$|\\$|€|£|¥|USD|EUR|GBP|CHF|AUD|CAD|SEK|NOK|DKK|PLN)';
+ let m=new RegExp(`^${cur}\\s?${NUM}(?:\\s?[-–]\\s?${cur}?\\s?${NUM})?$`,'i').exec(t);
+ if(m){const a=parseNumber245(m[2]),b=m[4]?parseNumber245(m[4]):null;const c=CURRENCY[m[1].toLowerCase()];
+  if(a!==null&&c&&(b===null||b>a))return b!==null?{kind:'price',amount:a,maxAmount:b,currency:c}:{kind:'price',amount:a,currency:c};}
+ m=new RegExp(`^${NUM}\\s?(€|£|EUR|USD|GBP|CHF|SEK|NOK|DKK|PLN|zł|kr)$`,'i').exec(t);
+ if(m){const a=parseNumber245(m[1]);const c=CURRENCY[m[2].toLowerCase()];if(a!==null&&c)return {kind:'price',amount:a,currency:c};}
+ // Imperial compound weight "2 lb. 12 oz." (only meaningful combined).
+ m=/^(\d{1,3}(?:\.\d+)?)\s*lbs?\.?\s*(\d{1,3}(?:\.\d+)?)\s*oz\.?$/i.exec(t);
+ if(m)return {kind:'quantity',number:Math.round((Number(m[1])*16+Number(m[2]))*28.349523125),unit:'g',approximate};
+ // Unlabelled dimensions "80 x 28 x 202 cm" / "80x28x202cm".
+ m=new RegExp(`^${NUM}\\s*([a-z"″]{1,3})?\\s*[x×*]\\s*${NUM}\\s*([a-z"″]{1,3})?(?:\\s*[x×*]\\s*${NUM})?\\s*([a-z"″]{1,3})?$`,'i').exec(t);
+ if(m){const unit=[m[6],m[4],m[2]].map(u=>u?canonicalUnit245(u):null).find(Boolean)??hint.unit??null;
+  const nums=[m[1],m[3],m[5]].filter(Boolean).map(x=>parseNumber245(x!));
+  if(unit&&nums.every(n=>n!==null))return {kind:'dimensions',numbers:nums as number[],unit,axes:null,approximate};}
+ // Option lists "128 GB, 256 GB or 512 GB", "1, 2, 4 or 8 GB", "256 or 512 MB".
+ m=/^((?:\d+(?:[.,]\d+)?\s*[a-zA-Z]{0,4}\s*(?:,|\bor\b|\/)\s*)+\d+(?:[.,]\d+)?)\s*([a-zA-Z]{1,4})?(?:\s+[A-Za-z][\w-]{1,12})?$/.exec(t);
+ if(m&&/(?:,|\bor\b|\/)/.test(m[1])){
+  const parts=m[1].split(/\s*(?:,|\bor\b|\/)\s*/).map(p=>/^(\d+(?:[.,]\d+)?)\s*([a-zA-Z]{0,4})$/.exec(p.trim()));
+  const unit=m[2]?canonicalUnit245(m[2]):(parts.find(p=>p&&p[2])?canonicalUnit245(parts.find(p=>p&&p[2])![2]):null);
+  if(unit&&parts.every(p=>p&&(!p[2]||canonicalUnit245(p[2])===unit))){
+   const nums=parts.map(p=>parseNumber245(p![1]));if(nums.every(n=>n!==null))return {kind:'options',numbers:nums as number[],unit};}
+ }
+ // Range "25–37 mbar", "80°C to 200°C", "35–85" (+ unit hint).
+ m=new RegExp(`^${NUM}\\s*([^\\d\\s–-]{0,6})\\s*(?:-|–|—|to)\\s*${NUM}\\s*([^\\d\\s]{0,8})$`,'i').exec(t);
+ if(m){const u1=m[2]?canonicalUnit245(m[2]):null,u2=m[4]?canonicalUnit245(m[4]):null;
+  const a=parseNumber245(m[1]),b=parseNumber245(m[3]);
+  if(a!==null&&b!==null&&b>a&&(!m[2]||u1)&&(!m[4]||u2)&&(!u1||!u2||u1===u2)){
+   if(hint.currency&&!u1&&!u2)return {kind:'price',amount:a,maxAmount:b,currency:hint.currency};
+   const unit=u2??u1??hint.unit;if(unit)return {kind:'range',min:a,max:b,unit,approximate};}
+ }
+ // Single quantity, optionally followed by a converted alternative in brackets: "147.6 mm (5.81 in)".
+ m=new RegExp(`^${NUM}\\s*-?\\s*([^\\d\\s(]{1,10}(?:\\s?(?:oz|\\(a\\)))?)(?:\\s*\\(\\s*${NUM}\\s*([^\\d\\s)]{1,10})\\s*\\))?((?:\\s+[A-Za-z][\\w+-]{0,14}){0,2})$`,'i').exec(t);
+ if(m){const unit=canonicalUnit245(m[2]);const n=parseNumber245(m[1]);
+  if(unit&&n!==null){const alt=m[3]&&m[4]?{number:parseNumber245(m[3])!,unit:canonicalUnit245(m[4])??m[4]}:undefined;
+   const q:Value245={kind:'quantity',number:n,unit,approximate};
+   if(alt&&alt.number!==null)q.alternative=alt;if(bound)q.bound=bound;if(m[5]?.trim())q.qualifier=m[5].trim();
+   return q;}}
+ // Bare number, with a unit or currency from the label when present.
+ m=new RegExp(`^${NUM}$`).exec(t);
+ if(m){const n=parseNumber245(m[1]);if(n!==null){
+  if(hint.currency)return {kind:'price',amount:n,currency:hint.currency};
+  if(hint.unit)return {kind:'quantity',number:n,unit:hint.unit,approximate};
+  return {kind:'number',number:n};}}
+ // Several quantities with words between them: different things, not one value.
+ const qty=[...t.matchAll(new RegExp(`${NUM}\\s?([a-zA-Z°"″%]{1,5})\\b`,'g'))].filter(x=>canonicalUnit245(x[2]));
+ if(qty.length>=2)return {kind:'compound'};
+ if(SENTENCE(original))return {kind:'prose'};
+ // Short declared text ("Gore-Tex", "Nubuck leather, mesh", "Apple A16 Bionic"), kept as authored.
+ if(original.length<=60&&original.split(' ').length<=9&&!/[.!?]$/.test(original))return {kind:'text',text:original};
+ return {kind:'prose'};
+}
+/** Whether a normalized value can stand as one declared fact. */
+export const promotable245=(v:Value245)=>!['per_variant','compound','prose','empty'].includes(v.kind);

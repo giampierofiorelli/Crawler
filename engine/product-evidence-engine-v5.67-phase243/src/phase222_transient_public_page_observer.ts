@@ -11,6 +11,7 @@ import {safeMetadataUrl75} from './phase75_source_discovery.js';
 import {extractTransientClaims224,type TransientClaims224} from './phase224_transient_structured_claims.js';
 import {probeTransientTestContent225,type TestProbe225} from './phase225_transient_test_probe.js';
 import {htmlToIR241,type Value241} from './phase241_unified_product_facts.js';
+import {extractSpecifications245,type Fact245,type SpecExtraction245} from './phase245_spec_extraction.js';
 import type {Run220,Registry220} from './phase220_autonomous_discovery_worker.js';
 
 export type Restriction222='not_reviewed'|'no_known_restriction'|'explicitly_prohibited'|'login_required';
@@ -31,6 +32,11 @@ export interface PageReceipt222 {
   * Short derived values with locators only; product names are publisher-declared and unverified. */
  productFacts241:{factCount:number;facts:readonly {product:string|null;property:string;value:Value241;
   method:string;locator:string}[]};
+ /** Phase245 generic specification extraction: promoted facts (product/variant/section attributed) and
+  * the count of declarations held back as ambiguous, with abstention reasons. Unverified declarations. */
+ specifications245:{mainProduct:SpecExtraction245['mainProduct']|null;factCount:number;ambiguousCount:number;
+  facts:readonly Pick<Fact245,'product'|'variant'|'section'|'component'|'property'|'value'|'rawValue'|'method'|'locator'|'flags'>[];
+  abstentions:Readonly<Record<string,number>>};
  identityNextAction:'verify_exact_variant'|'inspect_original_publication'|'find_other_source'|'blocked';
  scientificEvidenceAdmitted:false;rankingAuthorized:false;
  noArticleTextStored:true;
@@ -144,6 +150,7 @@ export async function observeDiscoveredPages222(input:{
    productLeads:[],publicationLeads:[],
    structuredDeclarations224:extractTransientClaims224('',url.href),
    transientTestProbe225:probeTransientTestContent225('',url.href),productFacts241:{factCount:0,facts:[]},
+   specifications245:{mainProduct:null,factCount:0,ambiguousCount:0,facts:[],abstentions:{}},
    identityNextAction:'blocked',
    scientificEvidenceAdmitted:false,rankingAuthorized:false,noArticleTextStored:true};
   receipts.push(entry);
@@ -197,8 +204,16 @@ export async function observeDiscoveredPages222(input:{
      product:f.context.variant??(f.provenance.locator.startsWith('jsonld:')?pageProduct:null),
      property:f.property,value:f.value,method:f.provenance.method,locator:f.provenance.locator}))};
    }catch{entry.reasonCodes.push('product_facts_241_skipped');}
-   const factProducts=entry.productFacts241.facts.some(f=>f.product!==null);
-   const populated=declared.productLeads.length>0||declared.publicationLeads.length>0||entry.productFacts241.factCount>0;
+   try{
+    const spec=extractSpecifications245(page.body,url.href);
+    entry.specifications245={mainProduct:spec.mainProduct,factCount:spec.facts.length,ambiguousCount:spec.ambiguous.length,
+     facts:spec.facts.slice(0,150).map(f=>({product:f.product,variant:f.variant,section:f.section,component:f.component,
+      property:f.property,value:f.value,rawValue:f.rawValue,method:f.method,locator:f.locator.slice(-160),flags:f.flags})),
+     abstentions:spec.abstentions};
+   }catch{entry.reasonCodes.push('specifications_245_skipped');}
+   const factProducts=entry.productFacts241.facts.some(f=>f.product!==null)||entry.specifications245.facts.some(f=>f.product.ref!=='unknown');
+   const populated=declared.productLeads.length>0||declared.publicationLeads.length>0||entry.productFacts241.factCount>0||
+    entry.specifications245.factCount>0;
    entry.status=populated?'metadata_observed':'no_structured_identity';
    entry.identityNextAction=declared.productLeads.length||factProducts?'verify_exact_variant':
     declared.publicationLeads.length?'inspect_original_publication':'find_other_source';
@@ -216,5 +231,6 @@ export async function observeDiscoveredPages222(input:{
    'Phase224 JSON-LD attributes are unverified publisher claims; they do not prove exact variant, market, independent measurement or suitability.',
    'Phase225 detects only first-person publisher measurement leads; original tests, protocols, reviewers and exact variants remain unauthenticated.',
    'Phase241 product facts are unverified source declarations; comparison-matrix column names are not verified product identities.',
+   'Phase245 specifications are unverified source declarations attributed by page structure; table product names and variants are publisher text, not verified identities.',
    'No network search index, live site acquisition, scientific evidence admission or ranking is demonstrated by fixture tests.']};
 }
