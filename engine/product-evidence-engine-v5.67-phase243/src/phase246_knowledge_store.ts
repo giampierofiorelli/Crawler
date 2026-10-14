@@ -36,10 +36,10 @@ import type {StudyStream179} from './phase179_category_learning.js';
 import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from './phase193_screening_memory.js';
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
 
-export const STORE_SCHEMA_VERSION246=2;
+export const STORE_SCHEMA_VERSION246=3;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
-export const IDENTITY_RULES246='identity-3';
+export const IDENTITY_RULES246='identity-4';
 export type SourceType246='manufacturer'|'retailer'|'independent_original_test'|'editorial'|'community'|
  'promotional_announcement'|'reference_encyclopedia'|'unknown';
 export type RetentionClass246='facts_retained'|'local_pending_rights_review'|'metadata_only'|'blocked';
@@ -169,6 +169,13 @@ const MIGRATIONS:string[]=[
  // v2: alias keys, so an identity found later under a stronger identifier resolves to the same product.
  `CREATE TABLE product_keys (key TEXT PRIMARY KEY, product_id TEXT NOT NULL REFERENCES products(product_id));
   INSERT OR IGNORE INTO product_keys SELECT json_extract(identifiers_json,'$._key'),product_id FROM products WHERE json_extract(identifiers_json,'$._key') IS NOT NULL;`,
+ // v3: which attributes a page declares (labels only, never values: page-structure metadata kept under every
+ // non-blocked retention class), and typed, source-graded relations between category items.
+ `CREATE TABLE revision_properties (revision_id TEXT NOT NULL REFERENCES revisions(revision_id), product_id TEXT NOT NULL,
+   property_key TEXT NOT NULL, property_label TEXT NOT NULL, PRIMARY KEY(revision_id,product_id,property_key));
+  CREATE TABLE category_relations (relation_id TEXT PRIMARY KEY, category_id TEXT NOT NULL, from_ref TEXT NOT NULL, to_ref TEXT NOT NULL,
+   kind TEXT NOT NULL, support TEXT NOT NULL, qualification TEXT NOT NULL, source_revision_ids_json TEXT NOT NULL,
+   review_json TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);`,
 ];
 
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;
@@ -215,7 +222,7 @@ export class KnowledgeStore246 {
  schemaVersion():number{return (this.db.prepare('PRAGMA user_version').get() as {user_version:number}).user_version;}
  close():void{this.db.close();}
  private tx<T>(f:()=>T):T{this.db.exec('BEGIN IMMEDIATE');try{const r=f();this.db.exec('COMMIT');return r;}catch(e){this.db.exec('ROLLBACK');throw e;}}
- private event(kind:string,payload:unknown,at=new Date().toISOString()):void{
+ event(kind:string,payload:unknown,at=new Date().toISOString()):void{
   const prev=(this.db.prepare('SELECT event_sha256 FROM events ORDER BY seq DESC LIMIT 1').get() as {event_sha256:string}|undefined)?.event_sha256??'0'.repeat(64);
   const body=canon({at,kind,payload,prev});
   this.db.prepare('INSERT INTO events(at,kind,payload_json,previous_sha256,event_sha256) VALUES (?,?,?,?,?)')
@@ -298,6 +305,7 @@ export class KnowledgeStore246 {
     // Product links of this revision are derived: recomputed under the new rules (products themselves are kept).
     priorLinks=(this.db.prepare('SELECT DISTINCT product_id FROM product_sources WHERE revision_id=?').all(revisionId) as {product_id:string}[]).map(r=>r.product_id);
     this.db.prepare('DELETE FROM product_sources WHERE revision_id=?').run(revisionId);
+    this.db.prepare('DELETE FROM revision_properties WHERE revision_id=?').run(revisionId);
     const old=this.db.prepare("SELECT declaration_id FROM declarations WHERE revision_id=? AND state='extracted_unverified'").all(revisionId) as {declaration_id:string}[];
     this.db.prepare("UPDATE declarations SET state='superseded_by_extractor' WHERE revision_id=? AND state='extracted_unverified'").run(revisionId);
     for(const n of this.invalidate(['rev:'+revisionId,...old.map(d=>'decl:'+d.declaration_id)],'extraction_rules_changed'))stale.add(n);
@@ -385,6 +393,9 @@ export class KnowledgeStore246 {
    const role=declarationRole246(o.source.sourceType);
    // Products named in comparison tables are identity metadata (state 'discovered'), kept under every non-blocked class.
    for(const f of facts)if(f.product.ref==='named')ownerOf(f);
+   // Attribute vocabulary (labels only) for every attributed declaration, whatever the retention class.
+   for(const f of facts){const pid=f.product.ref==='main'?mainId:f.product.ref==='named'&&f.product.name?named.get(f.product.name)??null:null;
+    if(pid)this.db.prepare('INSERT OR IGNORE INTO revision_properties VALUES (?,?,?,?)').run(revisionId,pid,f.propertyKey,f.property.slice(0,80));}
    if(keep)for(const f of facts){
     const pid=ownerOf(f);if(!pid)continue;
     const vid=f.variant&&mainId===pid?variantIds.find(v=>(this.db.prepare('SELECT name FROM variants WHERE variant_id=?').get(v) as {name:string}).name===f.variant)??null:null;
@@ -617,7 +628,7 @@ export class KnowledgeStore246 {
   this.db.prepare("UPDATE derived_nodes SET state='fresh',result_sha256=?,computed_at=?,stale_reason=NULL WHERE node_id=?").run(resultSha256,new Date().toISOString(),nodeId);
  }
  /** Marks every node reachable from the changed keys as stale (transitively); returns their ids. */
- private invalidate(keys:readonly string[],reason:string):string[]{
+ invalidate(keys:readonly string[],reason:string):string[]{
   const seen=new Set<string>();const queue=[...keys];
   while(queue.length){
    const k=queue.shift()!;
@@ -690,7 +701,7 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
    if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained');
    tables[t]=rows;
@@ -727,7 +738,8 @@ export class KnowledgeStore246 {
  }
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
-  category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq'};
+  category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */

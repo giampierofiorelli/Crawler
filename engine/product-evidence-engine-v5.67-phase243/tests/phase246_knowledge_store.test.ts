@@ -234,7 +234,7 @@ test('10. a clean new process reloads from durable storage, export/import and ba
   {encoding:'utf8',env:{...process.env,PEE_ALLOW_TMP_STORE:'1'}});
   assert.equal(o.status,0,o.stderr);return JSON.parse(o.stdout.trim().split('\n').pop()!);};
  for(const p of [path,bak]){const c=child(p);
-  assert.equal(c.name,'Fryer A');assert.equal(c.decl,2);assert.equal(c.versions,1);assert.ok(c.journal.ok);assert.equal(c.stats.schemaVersion,2);}
+  assert.equal(c.name,'Fryer A');assert.equal(c.decl,2);assert.equal(c.versions,1);assert.ok(c.journal.ok);assert.equal(c.stats.schemaVersion,3);}
  const imported=join(dir,'imported'+n+'.sqlite');
  const t=KnowledgeStore246.import246(exp,imported);
  assert.equal(t.product246(r.productIds[0])!.name,'Fryer A');assert.equal(t.declarations246(r.productIds[0]).length,2);
@@ -252,7 +252,7 @@ test('10b. safe schema handling: refuses ephemeral /tmp by default and stores ne
  try{assert.throws(()=>new KnowledgeStore246('/tmp/pee246-should-not-exist.sqlite'),/246_refusing_ephemeral_tmp_store/);}
  finally{process.env.PEE_ALLOW_TMP_STORE=prev;}
  assert.ok(!existsSync('/tmp/pee246-should-not-exist.sqlite'));
- const path=dbPath();const s=new KnowledgeStore246(path);assert.equal(s.schemaVersion(),2);
+ const path=dbPath();const s=new KnowledgeStore246(path);assert.equal(s.schemaVersion(),3);
  s.db.exec('PRAGMA user_version=99');s.close();
  assert.throws(()=>new KnowledgeStore246(path),/246_store_newer_than_software/);
  const j=new KnowledgeStore246(dbPath());j.recordAccess246('robots.example','robots_disallowed');

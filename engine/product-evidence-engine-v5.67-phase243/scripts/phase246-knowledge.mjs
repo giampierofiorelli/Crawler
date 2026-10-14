@@ -7,6 +7,8 @@
  *   ingest-recovered --raw DIRS  ingest Phase245 manifest pages whose raw bytes are present AND hash-verified
  *   ingest-observations --file F ingest a JSON list of observations produced by a live run (see phase246-live-wave.mjs)
  *   add-method-refs --file F    add professional test-method pointers (paraphrase + observed revision)
+ *   seed-relations --category C  add the initial graded relations (hypotheses + cited method references)
+ *   category-graph --category C  relations, declared-attribute vocabulary, Phase116 audit, research priorities
  *   profile --category C [--commit REASON]   print (and optionally version) a category profile
  *   export --out FILE [--include-pending-rights]
  *   import --from FILE --db NEW  rebuild a store from an export into a new database file
@@ -26,6 +28,8 @@ import {createHash} from 'node:crypto';
 import {join,resolve} from 'node:path';
 import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,defaultKnowledgeDir246} from '../dist/src/phase246_knowledge_store.js';
 import {seedCategoryHypotheses246,CATEGORY_ALIASES246} from '../dist/src/phase246_category_seeds.js';
+import {seedRelations247} from '../dist/src/phase247_relation_seeds.js';
+import {relations247,attributeVocabulary247,compileTo116,researchPriorities247} from '../dist/src/phase247_category_relations.js';
 import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../dist/src/phase245_spec_extraction.js';
 
 const [cmd,...rest]=process.argv.slice(2);
@@ -108,6 +112,10 @@ try{
   case 'revisit-plan':{const p=store.revisitPlan246({asOf:flags['as-of']??new Date().toISOString(),extractorVersion:SPEC_EXTRACTOR_VERSION,baseIntervalDays:flags.days?Number(flags.days):undefined});
    out(flags.full?p:{...p,plan:p.plan.filter(x=>x.action!=='skip').slice(0,100)});break;}
   case 'rights-worksheet':out(store.rightsWorksheet246());break;
+  case 'seed-relations':out({category:flags.category,...seedRelations247(store,flags.category)});break;
+  case 'category-graph':{const c=flags.category;const comp=compileTo116(store,c);
+   out({categoryId:c,relations:relations247(store,c),vocabulary:attributeVocabulary247(store,c),phase116Audit:comp.audit,phase116Reason:comp.reason,
+    priorities:researchPriorities247(store,c)});break;}
   case 'reconcile':out({identityGapsResolved:store.reconcileIdentityGaps246()});break;
   case 'purge':out({expired:store.purgeExpired246()});break;
   default:console.error('unknown command; see header of scripts/phase246-knowledge.mjs');process.exitCode=2;
