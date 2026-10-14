@@ -4,18 +4,74 @@
  "criteria": "A fact is correct when (1) its label/value pairing is faithful to the page, (2) it is a property of a product (not a retailer, store, document link or availability row), (3) it is attributed to the right product or variant under a usable product identity, and (4) its normalized value preserves the raw meaning (qualifiers, multipliers). Values faithfully copied from a page that are themselves inconsistent (e.g. a '1.8' under 'Capacity (ml)') count as correct declarations.",
  "promotedFacts": 568,
  "errors": {
-  "configuration_or_size_row_used_as_product": {"count": 49, "tags": {"x_bplight": 45, "x_palmera": 4}, "indices": "70-114, 170-173", "note": "Size-chart rows (US size -> EU/UK/CM) and seat-height configurations became named products."},
-  "comparison_table_product_name_polluted": {"count": 28, "tags": {"x_havit": 16, "x_havit892": 12}, "indices": "238-253, 519-530", "note": "Values sit on the right model, but product names include link text ('View details →', HTML entity left encoded) or 'This model' instead of resolving to the page product."},
-  "non_product_row": {"count": 23, "tags": {"x_numatic": 4, "x_bplight": 8, "x_smartuk": 1, "x_multitronic": 8, "x_99bikes100": 2}, "indices": "8-11, 115-122, 199, 319-321, 350-354, 559-560", "note": "Document DOWNLOAD links, size-conversion rows on the main product, delivery time, retailer contact details, store stock rows and size availability."},
-  "group_heading_concatenated_with_row": {"count": 7, "tags": {"x_benq": 3, "x_benq2780": 2, "x_benqbl": 2}, "indices": "13, 32, 49, 361, 399, 412, 449", "note": "A section heading cell plus its first row became a duplicate property ('Software = Eye-CareU Yes')."},
-  "normalization_lost_meaning": {"count": 6, "tags": {"x_numatic": 2, "x_benq2780": 1, "x_benqbl": 1, "x_99bikes": 1, "x_99bikes100": 1}, "indices": "2, 6, 381, 432, 292, 541", "note": "'1 x 36 V', '1 x 250 W', '2Wx2' parsed as dimensions; 'under 100mm' became exactly 100 mm."},
-  "placeholder_price_zero": {"count": 2, "tags": {"x_havit": 1, "x_havit892": 1}, "indices": "254, 531", "note": "Structured data declares price 0; a zero price is a placeholder, not an offer."}
+  "configuration_or_size_row_used_as_product": {
+   "count": 49,
+   "tags": {
+    "x_bplight": 45,
+    "x_palmera": 4
+   },
+   "indices": "70-114, 170-173",
+   "note": "Size-chart rows (US size -> EU/UK/CM) and seat-height configurations became named products."
+  },
+  "comparison_table_product_name_polluted": {
+   "count": 28,
+   "tags": {
+    "x_havit": 16,
+    "x_havit892": 12
+   },
+   "indices": "238-253, 519-530",
+   "note": "Values sit on the right model, but product names include link text ('View details →', HTML entity left encoded) or 'This model' instead of resolving to the page product."
+  },
+  "non_product_row": {
+   "count": 23,
+   "tags": {
+    "x_numatic": 4,
+    "x_bplight": 8,
+    "x_smartuk": 1,
+    "x_multitronic": 8,
+    "x_99bikes100": 2
+   },
+   "indices": "8-11, 115-122, 199, 319-321, 350-354, 559-560",
+   "note": "Document DOWNLOAD links, size-conversion rows on the main product, delivery time, retailer contact details, store stock rows and size availability."
+  },
+  "group_heading_concatenated_with_row": {
+   "count": 7,
+   "tags": {
+    "x_benq": 3,
+    "x_benq2780": 2,
+    "x_benqbl": 2
+   },
+   "indices": "13, 32, 49, 361, 399, 412, 449",
+   "note": "A section heading cell plus its first row became a duplicate property ('Software = Eye-CareU Yes')."
+  },
+  "normalization_lost_meaning": {
+   "count": 4,
+   "tags": {
+    "x_numatic": 2,
+    "x_benq2780": 1,
+    "x_benqbl": 1
+   },
+   "indices": "2, 6, 381, 432",
+   "note": "'1 x 36 V', '1 x 250 W', '2Wx2' parsed as dimensions with an electrical unit."
+  },
+  "placeholder_price_zero": {
+   "count": 2,
+   "tags": {
+    "x_havit": 1,
+    "x_havit892": 1
+   },
+   "indices": "254, 531",
+   "note": "Structured data declares price 0; a zero price is a placeholder, not an offer."
+  }
  },
- "totalErrors": 115,
- "strictPrecision": 0.798,
- "precisionIgnoringPollutedComparisonNames": 0.847,
+ "totalErrors": 113,
+ "strictPrecision": 0.801,
+ "precisionIgnoringPollutedComparisonNames": 0.85,
  "notes": [
   "Six pages (x_benq2780, x_benqbl, x_sharpmg, x_sharpqs, x_havit892, x_99bikes100) share templates with sibling pages, so errors are correlated; by distinct template the dominant failure classes are: size/configuration tables as products (2 sites), comparison-table naming (1 site), non-product rows (5 sites).",
   "Abstention violations (x_altitude vestibule, x_wcsl model number/UPC/EAN) are faithful strings that carry two variants' values on the main product; they are counted by the evaluator, not as precision errors here."
+ ],
+ "corrections": [
+  "Facts 292 and 541 ('under 100mm') were first marked as losing the qualifier; the stored value keeps qualifier \"under\" (the audit printer did not display qualifiers). Re-adjudicated as correct. Counts updated accordingly."
  ]
 }
