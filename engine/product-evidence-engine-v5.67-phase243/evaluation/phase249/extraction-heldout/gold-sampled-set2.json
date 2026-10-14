@@ -1,0 +1,806 @@
+{
+ "schema": "pee249.sampled-gold.v1",
+ "design": "Second untouched Phase249 set (supplementary): 19 pages from 11 hosts never fetched in any earlier phase (pizza ovens, air fryers, outdoor, audio, sports watches, clippers, blenders, knives, first-aid kits). Written after spec-extractor-7 was frozen (c5afcf9) and before any extractor ran on these pages. Below the 30-page / 20-host target: discovery through robots-allowed sitemaps yielded fewer usable hosts within budget (5 hosts refused or redirected).",
+ "pages": {
+  "z_gozney1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 319.99,
+      "currency": "GBP"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 599.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 34.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 19.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 49.99,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 25,
+      "currency": "GBP"
+     }
+    ]
+   ]
+  },
+  "z_cosori1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Rated Power",
+     {
+      "kind": "quantity",
+      "number": 1750,
+      "unit": "W"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       11.7,
+       12.9,
+       13.8
+      ],
+      "unit": "in"
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 13.7,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Model Number",
+     {
+      "kind": "text",
+      "text": "CAF-P583S-KUS"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 129,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Time Range",
+     {
+      "kind": "range",
+      "min": 1,
+      "max": 60,
+      "unit": "min"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 249,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 119.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 159.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 99.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 169.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 69.99,
+      "currency": "USD"
+     }
+    ]
+   ]
+  },
+  "z_alpkit1": {
+   "pageType": "product",
+   "expected": [],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "product content is not in the served HTML"
+  },
+  "z_soundcore1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 169.99,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_soundcore2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 499,
+      "currency": "USD"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_bose1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 299.95,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Battery Life",
+     {
+      "kind": "quantity",
+      "number": 24,
+      "unit": "h"
+     }
+    ],
+    [
+     "Battery Charge Time",
+     {
+      "kind": "quantity",
+      "number": 3,
+      "unit": "h"
+     }
+    ],
+    [
+     "Bluetooth Range",
+     {
+      "kind": "quantity",
+      "number": 9,
+      "unit": "m"
+     }
+    ],
+    [
+     "Microphones",
+     {
+      "kind": "text",
+      "text": "Six Microphones"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_bose2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 189.95,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Battery Life",
+     {
+      "kind": "quantity",
+      "number": 24,
+      "unit": "h"
+     }
+    ],
+    [
+     "Battery Charge Time",
+     {
+      "kind": "quantity",
+      "number": 2.5,
+      "unit": "h"
+     }
+    ],
+    [
+     "Product Material",
+     {
+      "kind": "text",
+      "text": "Metal, Plastic, Leather (Protein)"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 24.95,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 12.95,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 17.95,
+      "currency": "GBP"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 7.95,
+      "currency": "GBP"
+     }
+    ]
+   ]
+  },
+  "z_polar1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Width",
+     {
+      "kind": "quantity",
+      "number": 37,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Height",
+     {
+      "kind": "quantity",
+      "number": 43,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Thickness",
+     {
+      "kind": "quantity",
+      "number": 12,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Total weight",
+     {
+      "kind": "quantity",
+      "number": 51,
+      "unit": "g"
+     }
+    ],
+    [
+     "Display type",
+     {
+      "kind": "text",
+      "text": "LCD"
+     }
+    ],
+    [
+     "Memory",
+     {
+      "kind": "quantity",
+      "number": 1,
+      "unit": "MB"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_wahl1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Cutting length",
+     {
+      "kind": "quantity",
+      "number": 1.8,
+      "unit": "mm"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Price"
+   ],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "the page states the product is discontinued; its price is not a current offer"
+  },
+  "z_wahl2": {
+   "pageType": "product",
+   "expected": [],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [],
+   "note": "no label/value data in the served HTML"
+  },
+  "z_nutri1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 4.7,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       12.01,
+       7.72,
+       15.94
+      ],
+      "unit": "in"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 29.5,
+      "unit": "in"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": [
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 19.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 11.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 14.99,
+      "currency": "USD"
+     }
+    ],
+    [
+     "Price",
+     {
+      "kind": "price",
+      "amount": 9.99,
+      "currency": "USD"
+     }
+    ]
+   ]
+  },
+  "z_nutri2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 6.04,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       11.61,
+       6.85,
+       12.28
+      ],
+      "unit": "in"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 29.5,
+      "unit": "in"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_nutri3": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 4.7,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       12.01,
+       7.72,
+       15.94
+      ],
+      "unit": "in"
+     }
+    ],
+    [
+     "Cord Length",
+     {
+      "kind": "quantity",
+      "number": 29.5,
+      "unit": "in"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_zwilling1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Net weight",
+     {
+      "kind": "quantity",
+      "number": 11.19,
+      "unit": "lb"
+     }
+    ],
+    [
+     "Number of parts",
+     {
+      "kind": "number",
+      "number": 15
+     }
+    ],
+    [
+     "Country of origin",
+     {
+      "kind": "text",
+      "text": "Germany"
+     }
+    ],
+    [
+     "Color",
+     {
+      "kind": "text",
+      "text": "Natural"
+     }
+    ],
+    [
+     "Manufacturing method",
+     {
+      "kind": "text",
+      "text": "stamped"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_at1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Type",
+     {
+      "kind": "text",
+      "text": "Open air dynamic"
+     }
+    ],
+    [
+     "Driver Diameter",
+     {
+      "kind": "quantity",
+      "number": 53,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Frequency Response",
+     {
+      "kind": "range",
+      "min": 20,
+      "max": 40000,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Impedance",
+     {
+      "kind": "quantity",
+      "number": 52,
+      "unit": "Ω"
+     }
+    ],
+    [
+     "Charging Time",
+     {
+      "kind": "quantity",
+      "number": 3.5,
+      "unit": "h"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_at2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Type",
+     {
+      "kind": "text",
+      "text": "Dynamic"
+     }
+    ],
+    [
+     "Driver Diameter",
+     {
+      "kind": "quantity",
+      "number": 5.8,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Frequency Response",
+     {
+      "kind": "range",
+      "min": 20,
+      "max": 20000,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Impedance",
+     {
+      "kind": "quantity",
+      "number": 16,
+      "unit": "Ω"
+     }
+    ],
+    [
+     "Battery Life",
+     {
+      "kind": "quantity",
+      "number": 6.5,
+      "unit": "h"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_at3": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Type",
+     {
+      "kind": "text",
+      "text": "Dynamic"
+     }
+    ],
+    [
+     "Driver Diameter",
+     {
+      "kind": "quantity",
+      "number": 9,
+      "unit": "mm"
+     }
+    ],
+    [
+     "Frequency Response",
+     {
+      "kind": "range",
+      "min": 5,
+      "max": 20000,
+      "unit": "Hz"
+     }
+    ],
+    [
+     "Impedance",
+     {
+      "kind": "quantity",
+      "number": 20,
+      "unit": "Ω"
+     }
+    ]
+   ],
+   "mustAbstain": [
+    "Charging Time"
+   ],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_life1": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Items",
+     {
+      "kind": "number",
+      "number": 32
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 135,
+      "unit": "g"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       150,
+       120,
+       45
+      ],
+      "unit": "mm"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  },
+  "z_life2": {
+   "pageType": "product",
+   "expected": [
+    [
+     "Items",
+     {
+      "kind": "number",
+      "number": 42
+     }
+    ],
+    [
+     "Weight",
+     {
+      "kind": "quantity",
+      "number": 156,
+      "unit": "g"
+     }
+    ],
+    [
+     "Dimensions",
+     {
+      "kind": "dimensions",
+      "numbers": [
+       160,
+       140,
+       50
+      ],
+      "unit": "mm"
+     }
+    ]
+   ],
+   "mustAbstain": [],
+   "forbiddenProducts": [],
+   "forbiddenMainValues": []
+  }
+ }
+}
