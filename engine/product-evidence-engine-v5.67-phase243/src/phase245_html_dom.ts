@@ -37,7 +37,22 @@ export function decodeEntities245(s:string):string{
   return NAMED[k]??NAMED[k.toLowerCase()]??m;
  });
 }
-const MAX_NODES=250_000,MAX_DEPTH=400;
+const MAX_NODES=250_000,MAX_DEPTH=400,MAX_TAG=2_000_000;
+/** Returns [whole, slash, name, attributeText, selfClose] like the former regex, plus the end offset. */
+function scanTag(html:string,start:number):{0:string;1:string;2:string;3:string;4:string;end:number}|null{
+ const head=/^<(\/?)([a-zA-Z][a-zA-Z0-9:-]*)/.exec(html.slice(start,start+256));
+ if(!head)return null;
+ let j=start+head[0].length;const limit=Math.min(html.length,start+MAX_TAG);let quote='';
+ for(;j<limit;j++){const c=html[j];
+  if(quote){if(c===quote)quote='';continue;}
+  if(c==='"'||c==="'"){if(/[=\s]/.test(html[j-1]??'')||/=\s*$/.test(html.slice(Math.max(start,j-8),j)))quote=c;continue;}
+  if(c==='>')break;
+  if(c==='<'&&j>start+head[0].length&&!quote)return null; // a stray "<": not a well-formed tag
+ }
+ if(j>=limit)return null;
+ const inner=html.slice(start+head[0].length,j);const selfClose=/\/\s*$/.test(inner)?'/':'';
+ return {0:html.slice(start,j+1),1:head[1],2:head[2],3:selfClose?inner.replace(/\/\s*$/,''):inner,4:selfClose,end:j+1};
+}
 /** Parse HTML into a bounded tree. Throws only on unsupported input type; oversize input is truncated
  * at the node budget (the result notes this with `truncated`). */
 export function parseHtml245(html:string):{root:Node245;nodeCount:number;truncated:boolean}{
@@ -69,9 +84,11 @@ export function parseHtml245(html:string):{root:Node245;nodeCount:number;truncat
   i=lt;
   if(html.startsWith('<!--',i)){const e=html.indexOf('-->',i+4);i=e<0?n:e+3;continue;}
   if(html[i+1]==='!'||html[i+1]==='?'){const e=html.indexOf('>',i);i=e<0?n:e+1;continue;}
-  const m=/^<(\/?)([a-zA-Z][a-zA-Z0-9:-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*(\/?)>/.exec(html.slice(i,i+4096));
+  // Tag scan that respects quoted attribute values of any length (framework pages put large JSON
+  // in attributes); a regex over a fixed window would turn such tags into text.
+  const m=scanTag(html,i);
   if(!m){addText('<');i++;continue;}
-  i+=m[0].length;
+  i=m.end;
   const tag=m[2].toLowerCase();
   if(m[1]){ // end tag
    if(tag==='p'||tag==='li'||tag==='dt'||tag==='dd'||tag==='td'||tag==='th'||tag==='tr'||tag==='option'){

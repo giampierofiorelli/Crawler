@@ -21,7 +21,7 @@ import type {Fact241} from './phase241_unified_product_facts.js';
 import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 
 export type Method245='json_ld'|'microdata'|'definition_list'|'table_key_value'|'table_products_in_columns'|
- 'table_products_in_rows'|'repeated_label_value';
+ 'table_products_in_rows'|'repeated_label_value'|'list_item_label_value';
 export interface Fact245 {
  property:string;propertyKey:string;
  /** Normalized value; the authored text is kept (bounded) in rawValue. */
@@ -61,7 +61,8 @@ const BOILER_TOKENS=new Set(['related','recommend','recommended','recommendation
  'megamenu','navbar','navigation','nav','footer','cookie','cookies','consent','newsletter','subscribe','signup','advert','advertisement',
  'ad','ads','adslot','sponsored','sponsor','promo','promotion','promotions','social','share','sharing','reviews','ratings','testimonial',
  'testimonials','comments','comment','navbox','sidebar','minicart','cart','basket','wishlist','modal','popup','toast','skip','banner',
- 'pagination','pager','paging','pages','filter','filters','facets','sort','sorting','toolbar','swatch','swatches']);
+ 'pagination','pager','paging','pages','filter','filters','facets','sort','sorting','toolbar','swatch','swatches',
+ 'popover','tooltip','finance','financing','credit','instalment','instalments','installment','installments']);
 const COMPARE_TOKENS=new Set(['compare','comparison','comparisons']);
 const tokensOf=(n:Node245)=>{
  const raw=`${n.attrs.class??''} ${n.attrs.id??''} ${n.attrs['data-testid']??''} ${n.attrs['aria-label']??''}`;
@@ -74,7 +75,10 @@ const tokensOf=(n:Node245)=>{
 type Region='main'|'excluded'|'comparison';
 function classifyRegions(root:Node245){
  const region=new Map<Node245,{kind:Region;reason:string|null}>();
- const main=[...walk245(root)].find(n=>n.kind==='element'&&(n.tag==='main'||n.attrs.role==='main'));
+ let main=[...walk245(root)].find(n=>n.kind==='element'&&(n.tag==='main'||n.attrs.role==='main'))??null;
+ // A <main> holding almost none of the page text (e.g. only a search widget) does not delimit content.
+ const body=[...walk245(root)].find(n=>n.tag==='body');
+ if(main&&body){const m=textOf245(main).length,b=textOf245(body).length;if(m<1500&&m<b*0.2)main=null;}
  const containsH1=new Set<Node245>();
  for(const n of walk245(root))if(n.tag==='h1'){let x=n.parent;while(x){containsH1.add(x);x=x.parent;}}
  let excludedCount=0;
@@ -251,6 +255,9 @@ function pairOf(x:Node245):{label:string;value:string;labelNode:Node245;valueNod
    const [a,b]=items;const ta=a.kind==='text'?clean245(a.text):textOf245(a),tb=b.kind==='text'?clean245(b.text):textOf245(b);
    // A label carries no value markup; links/controls as labels are navigation, not specifications.
    if(a.kind==='element'&&(a.tag==='a'||walk245Has(a,'a')))return null;
+   // An emphasised lead phrase followed by running text ("<b>5 x NeoPixels</b> for badge dazzle") is a
+   // feature bullet: an inline label must be explicitly closed with ":" to count as a label.
+   if(b.kind==='text'&&INLINE.has(a.tag)&&!/[:：]\s*$/.test(ta))return null;
    return {label:ta,value:tb,labelNode:a,valueNode:b};
   }
   if(items.length===1&&items[0].kind==='text'){
@@ -263,6 +270,8 @@ function pairOf(x:Node245):{label:string;value:string;labelNode:Node245;valueNod
 }
 const containsUsed=(n:Node245,used:Set<Node245>)=>{for(const d of walk245(n))if(used.has(d))return true;return false;};
 const insideLink=(n:Node245)=>{let x:Node245|null=n;while(x){if(x.tag==='a'&&x.attrs.href!==undefined)return true;x=x.parent;}return false;};
+const MEASURABLE=new Set(['quantity','dimensions','range','price','options']);
+const INLINE=new Set(['b','strong','em','i','span','a','u','mark','small','label']);
 const walk245Has=(n:Node245,tag:string)=>{for(const d of walk245(n))if(d!==n&&d.tag===tag)return true;return false;};
 /** A value that is entirely a link (download, document, other page) references content elsewhere. */
 const linkOnlyValue=(v:Node245)=>{
@@ -272,7 +281,10 @@ const linkOnlyValue=(v:Node245)=>{
 };
 const labelLike=(t:string)=>{const s=t.replace(/[:：]\s*$/,'').trim();
  return s.length>=2&&s.length<=60&&s.split(/\s+/).length<=8&&/\p{L}/u.test(s)&&!/[.!?]$/.test(s)&&!/^\d[\d\s.,]*$/.test(s);};
-const shape=(x:Node245)=>x.tag+'|'+[...tokensOf(x)].filter(t=>t.length>2&&!/^(?:active|selected|first|last|odd|even|open|closed|expanded)$/.test(t)).sort().join(',');
+/** Repetition is judged on structure (tag + child tag sequence, two levels), not on class names, so
+ * per-item modifier classes ("section-chip", "section-control") do not hide a repeated pattern. */
+const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative245(c)).slice(0,6)
+ .map(c=>c.tag+'('+elementChildren245(c).slice(0,4).map(g=>g.tag).join(',')+')').join(',')+')';
 
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
@@ -374,7 +386,7 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    const label=r.propertyPath.length?r.propertyPath[r.propertyPath.length-1]:'';
    const section=r.propertyPath.length>1?r.propertyPath.slice(0,-1).join(' › '):sec;
    let ref:{productRef:'main'|'named'|'unknown';productName:string|null;amb:string[]};
-   if(it.mode==='key_value')ref=regionOf(t)==='comparison'?{productRef:'unknown',productName:null,amb:['comparison_region_without_product_key']}:mainRef();
+   if(it.mode==='key_value')ref=mainRef();
    else if(r.product&&mainName&&productKey(r.product)===productKey(mainName))ref={productRef:'main',productName:mainName,amb:[]};
    else ref={productRef:r.product?'named':'unknown',productName:r.product,amb:[]};
    const method:Method245=it.mode==='key_value'?'table_key_value':it.mode==='products_in_columns'?'table_products_in_columns':'table_products_in_rows';
@@ -397,7 +409,7 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    if(!dds.length)continue;
    const label=textOf245(items[i]);
    used.add(items[i]);dds.forEach(d=>used.add(d));
-   const ref=regionOf(dl)==='comparison'?{productRef:'unknown' as const,productName:null,amb:['comparison_region_without_product_key']}:mainRef();
+   const ref=mainRef();
    raws.push({label,valueText:dds.map(d=>textOf245(d)).join(' / '),method:'definition_list',locator:locator245(items[i]),
     productRef:ref.productRef,productName:ref.productName,variant:null,section:sectionOf(dl,byId,null),region:regionOf(dl),
     ambiguity:[...ref.amb,...(dds.length>1?['multiple_values_for_one_label']:[])]});
@@ -420,17 +432,33 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   for(const [,group] of shapes){
    if(group.length<2||group.length<kids.length*0.6)continue;
    const pairs=group.map(pairOf);
-   const good=pairs.filter(x=>x&&labelLike(x.label)&&x.value&&!used.has(x.labelNode)&&!linkOnlyValue(x.valueNode)&&!containsUsed(x.valueNode,used));
-   if(good.length<2||good.length<group.length*0.6)continue;
-   // Labels that never end with ":" and values that are mostly long text are headings/teasers, not specs.
-   const valuesProse=good.filter(x=>normalizeValue245(x!.value).kind==='prose').length;
-   if(valuesProse>good.length/2){abstain('repeated_title_and_prose_not_specifications');emitted=true;break;}
-   for(const x of good){
-    used.add(x!.labelNode);used.add(x!.valueNode);
-    const ref=regionOf(p)==='comparison'?{productRef:'unknown' as const,productName:null,amb:['comparison_region_without_product_key']}:mainRef();
-    raws.push({label:x!.label,valueText:x!.value,method:'repeated_label_value',locator:locator245(x!.labelNode.kind==='text'?x!.labelNode.parent!:x!.labelNode),
-     productRef:ref.productRef,productName:ref.productName,variant:null,section:sectionOf(p,byId,null),region:regionOf(p),ambiguity:[...ref.amb]});
+   const good=pairs.filter(x=>x&&labelLike(x.label)&&x.value&&!used.has(x.labelNode)&&!linkOnlyValue(x.valueNode)&&
+    !containsUsed(x.valueNode,used)&&!insideLink(x.labelNode)&&!insideLink(x.valueNode));
+   const ref=mainRef();
+   if(good.length<2||good.length<group.length*0.6){
+    // Mixed lists (prose bullets with a few "Label: value" items): only explicitly ":"-marked items
+    // whose value is measurable are read.
+    for(const x of good){
+     if(!(x!.labelNode===x!.valueNode||/[:：]\s*$/.test(x!.label)))continue;
+     if(!MEASURABLE.has(normalizeValue245(x!.value,x!.label).kind))continue;
+     used.add(x!.labelNode);used.add(x!.valueNode);
+     raws.push({label:x!.label,valueText:x!.value,method:'list_item_label_value',locator:locator245(x!.labelNode.kind==='text'?x!.labelNode.parent!:x!.labelNode),
+      productRef:ref.productRef,productName:ref.productName,variant:null,section:sectionOf(p,byId,null),region:regionOf(p),ambiguity:[...ref.amb]});
+    }
+    continue;
    }
+   // Title + paragraph cards are not specifications: prose values are dropped item by item.
+   let prose=0;
+   for(const x of good){
+    if(normalizeValue245(x!.value,x!.label).kind==='prose'){prose++;continue;}
+    used.add(x!.labelNode);used.add(x!.valueNode);
+    // One label over a list of several items is several values, not one.
+    const listItems=x!.valueNode.kind==='element'?[...walk245(x!.valueNode)].filter(d=>d.tag==='li').length:0;
+    raws.push({label:x!.label,valueText:x!.value,method:'repeated_label_value',locator:locator245(x!.labelNode.kind==='text'?x!.labelNode.parent!:x!.labelNode),
+     productRef:ref.productRef,productName:ref.productName,variant:null,section:sectionOf(p,byId,null),region:regionOf(p),
+     ambiguity:[...ref.amb,...(listItems>=2?['multiple_values_for_one_label']:[])]});
+   }
+   if(prose)abstain('title_and_prose_items_not_specifications');
    emitted=true;break;
   }
   if(emitted)continue;
@@ -442,13 +470,24 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
    if(sa!==sb&&kids.every((k,i)=>exact(k)===(i%2?sb:sa))){
     const pairs=[];for(let i=0;i<kids.length;i+=2)pairs.push({label:textOf245(kids[i]),value:textOf245(kids[i+1]),labelNode:kids[i],valueNode:kids[i+1]});
     if(pairs.every(x=>labelLike(x.label)&&x.value)){
-     const ref=regionOf(p)==='comparison'?{productRef:'unknown' as const,productName:null,amb:['comparison_region_without_product_key']}:mainRef();
+     const ref=mainRef();
      for(const x of pairs){used.add(x.labelNode);used.add(x.valueNode);
       raws.push({label:x.label,valueText:x.value,method:'repeated_label_value',locator:locator245(x.labelNode),productRef:ref.productRef,
        productName:ref.productName,variant:null,section:sectionOf(p,byId,null),region:regionOf(p),ambiguity:[...ref.amb]});}
     }
    }
   }
+ }
+
+ // ---- 6. single "Label: value" list items among prose bullets, accepted only for measurable values
+ for(const li of all){
+  if(li.tag!=='li'||used.has(li)||regionOf(li)==='excluded'||insideLink(li))continue;
+  const pr=pairOf(li);if(!pr||!labelLike(pr.label)||used.has(pr.labelNode)||containsUsed(pr.valueNode,used))continue;
+  if(!/[:：]\s*$/.test(pr.label)&&pr.labelNode!==pr.valueNode)continue; // label must be explicitly marked with ":"
+  const v=normalizeValue245(pr.value,pr.label);if(!MEASURABLE.has(v.kind))continue;
+  used.add(li);const ref=mainRef();
+  raws.push({label:pr.label,valueText:pr.value,method:'list_item_label_value',locator:locator245(li),productRef:ref.productRef,
+   productName:ref.productName,variant:null,section:sectionOf(li,byId,null),region:regionOf(li),ambiguity:[...ref.amb]});
  }
 
  // ---- normalize, attribute, detect conflicts
@@ -459,12 +498,16 @@ export function extractSpecifications245(html:string,sourceUrl:string):SpecExtra
   if(!pk||pk.length>60){abstain('label_missing_or_too_long');continue;}
   // A value repeating its own label is a duplicated heading (e.g. visible + screen-reader copy).
   if(key245(r.valueText)===pk){abstain('value_repeats_label');continue;}
+  // "Live Translation" -> "Live Translation for communicating across languages": a description that
+  // restates its heading, not a value for it.
+  if(pk.length>=4&&key245(r.valueText).startsWith(pk+' ')&&r.method!=='json_ld'&&r.method!=='microdata'){abstain('value_restates_label');continue;}
   const value=r.preValue??normalizeValue245(r.valueText,label);
   if(value.kind==='empty'){abstain('empty_value');continue;}
   if(value.kind==='prose'){abstain('prose_value_not_kept');continue;}
   const flags=[...r.ambiguity];
   if(!promotable245(value))flags.push('value_'+value.kind);
   if(r.productRef==='main'&&multiVariant&&!r.variant&&r.method!=='json_ld')flags.push('variant_scope_unverified');
+  if(r.region==='comparison')flags.push('in_comparison_marked_region');
   // A section equal to the property or to the product title adds nothing.
   const section=r.section&&key245(r.section)!==pk&&!(mainName&&productKey(r.section)===productKey(mainName))?r.section:null;
   candidates.push({property:label,propertyKey:pk,value,rawValue:value.kind==='per_variant'||value.kind==='compound'?r.valueText.slice(0,120):r.valueText.slice(0,120),

@@ -23,14 +23,15 @@ export type Value245=
 const UNIT_ALIASES:[RegExp,string][]=[
  [/^(?:mm|millimet(?:er|re)s?)$/i,'mm'],[/^(?:cm|centimet(?:er|re)s?)$/i,'cm'],[/^(?:m|met(?:er|re)s?)$/i,'m'],
  [/^(?:km|kilomet(?:er|re)s?)$/i,'km'],[/^(?:in|inch|inches|"|″|'')$/i,'in'],[/^(?:ft|feet|foot|'|′)$/i,'ft'],
- [/^(?:mg)$/i,'mg'],[/^(?:g|gr|grams?|grammes?)$/i,'g'],[/^(?:kg|kgs|kilo(?:gram)?s?)$/i,'kg'],[/^(?:lb|lbs|pounds?)$/i,'lb'],
+ // "g" is grams only in lower case: "20G" on a spec sheet is g-force (acceleration), not mass.
+ [/^(?:mg)$/i,'mg'],[/^(?:g|gr|GR|grams?|grammes?|Grams?)$/,'g'],[/^(?:kg|kgs|kilo(?:gram)?s?)$/i,'kg'],[/^(?:lb|lbs|pounds?)$/i,'lb'],
  [/^(?:oz|ounces?)$/i,'oz'],[/^(?:ml|millilit(?:er|re)s?)$/i,'ml'],[/^(?:cl)$/i,'cl'],[/^(?:l|ltr|lit(?:er|re)s?)$/i,'l'],
  [/^(?:gal|gallons?)$/i,'gal'],[/^(?:fl\.? ?oz)$/i,'fl oz'],[/^(?:mw)$/,'mW'],[/^(?:w|watts?)$/i,'W'],[/^(?:kw|kilowatts?)$/i,'kW'],
  [/^(?:wh)$/i,'Wh'],[/^(?:kwh)$/i,'kWh'],[/^(?:mah)$/i,'mAh'],[/^(?:v|volts?)$/i,'V'],[/^(?:mv)$/,'mV'],[/^(?:kv)$/i,'kV'],
  [/^(?:a|amps?|amperes?)$/i,'A'],[/^(?:ma)$/,'mA'],[/^(?:hz|hertz)$/i,'Hz'],[/^(?:khz)$/i,'kHz'],[/^(?:mhz)$/i,'MHz'],
  [/^(?:ghz)$/i,'GHz'],[/^(?:°c|℃|degc|deg c|c°)$/i,'°C'],[/^(?:°f|℉)$/i,'°F'],[/^(?:db|dba|db\(a\))$/i,'dB'],
  [/^(?:kb)$/i,'KB'],[/^(?:mb)$/i,'MB'],[/^(?:gb)$/i,'GB'],[/^(?:tb)$/i,'TB'],[/^(?:mbit|mbit\/s|mbps)$/i,'Mbit/s'],
- [/^(?:gbit|gbit\/s|gbps)$/i,'Gbit/s'],[/^(?:mp|megapixels?)$/i,'MP'],[/^(?:px|pixels?)$/i,'px'],[/^(?:%|percent)$/i,'%'],
+ [/^(?:gbit|gbit\/s|gbps)$/i,'Gbit/s'],[/^(?:kb\/s|kbps)$/,'kB/s'],[/^(?:mb\/s|mbyte\/s)$/i,'MB/s'],[/^(?:gb\/s|gbyte\/s)$/i,'GB/s'],[/^(?:mp|megapixels?)$/i,'MP'],[/^(?:px|pixels?)$/i,'px'],[/^(?:%|percent)$/i,'%'],
  [/^(?:bar)$/i,'bar'],[/^(?:mbar)$/i,'mbar'],[/^(?:pa)$/i,'Pa'],[/^(?:kpa)$/i,'kPa'],[/^(?:psi)$/i,'psi'],
  [/^(?:rpm)$/i,'rpm'],[/^(?:km\/h|kph)$/i,'km/h'],[/^(?:mph)$/i,'mph'],[/^(?:s|sec|secs|seconds?)$/i,'s'],
  [/^(?:min|mins|minutes?)$/i,'min'],[/^(?:h|hr|hrs|hours?)$/i,'h'],[/^(?:nm)$/i,'nm'],[/^(?:lm|lumens?)$/i,'lm'],
@@ -66,6 +67,21 @@ export function normalizeValue245(raw:string,label=''):Value245{
  let t=raw.replace(/\s+/g,' ').trim();const original=t;
  if(!t||/^[-–—]+$/.test(t))return {kind:'empty'};
  if(t.length>160)return {kind:'prose'};
+ // "29.3g / 1.0oz", "85.7mm x 54.6mm x 10.0mm / 3.4\" x 2.1\" x 0.4\"": the same value in two unit
+ // systems. The first form is read; the second must parse to the same kind, else it is not a conversion.
+ const conv=/^(.+?)\s+\/\s+(.+)$/.exec(t);
+ if(conv&&/\d/.test(conv[1])&&/\d/.test(conv[2])){
+  const a=normalizeValue245(conv[1],label),b=normalizeValue245(conv[2],label);
+  if(a.kind===b.kind&&(a.kind==='quantity'||a.kind==='dimensions')&&(a as {unit:string}).unit!==(b as {unit:string}).unit&&
+   (a.kind!=='dimensions'||(a as {numbers:number[]}).numbers.length===(b as {numbers:number[]}).numbers.length)){
+   if(a.kind==='quantity'&&b.kind==='quantity')return {...a,alternative:{number:b.number,unit:b.unit}};
+   return a;
+  }
+ }
+ // Axis order given once after the numbers: "21.8 cm x 13.5 cm (length x height)", "... mm (WxHxD)".
+ const axisNote=/^(.*\d.*?)\s*\(\s*((?:width|height|depth|length|w|h|d|l)(?:\s*[x×]\s*(?:width|height|depth|length|w|h|d|l)){1,3})\s*\)$/i.exec(t);
+ if(axisNote){const inner=normalizeValue245(axisNote[1],label);const ax=axisNote[2].split(/\s*[x×]\s*/).map(a=>a[0].toUpperCase());
+  if(inner.kind==='dimensions'&&inner.numbers.length===ax.length&&new Set(ax).size===ax.length)return {...inner,axes:ax};}
  let approximate=false;let bound:'max'|'min'|undefined;
  const ap=/^(?:approx\.?|approximately|ca\.?|circa|about|~|≈)\s*/i.exec(t);if(ap){approximate=true;t=t.slice(ap[0].length);}
  const bd=/^(?:(max\.?|maximum|up to|≤)|(min\.?|minimum|at least|≥))\s*/i.exec(t);if(bd){bound=bd[1]?'max':'min';t=t.slice(bd[0].length);}

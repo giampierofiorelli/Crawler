@@ -156,7 +156,7 @@ test('abstention: prose, per-variant cells, several quantities and feature cards
  assert.deepEqual(x.facts.map(f=>f.propertyKey),['display']);
  assert.ok(x.ambiguous.some(f=>f.propertyKey==='weight'&&f.flags.includes('value_per_variant')));
  assert.ok(x.ambiguous.some(f=>f.propertyKey==='safety distance'&&f.flags.includes('value_compound')));
- assert.equal(x.abstentions.repeated_title_and_prose_not_specifications,1);
+ assert.equal(x.abstentions.title_and_prose_items_not_specifications,1);
 });
 test('value normalization keeps units, ranges, options, bounds, prices and dimensions',()=>{
  assert.deepEqual(normalizeValue245('2 lb. 12 oz.'),{kind:'quantity',number:1247,unit:'g',approximate:false});

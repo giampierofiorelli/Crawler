@@ -55,11 +55,14 @@ function score(facts,g,mainName,{respectMethods}){
  const ownerOk=(f,e)=>e.product==='main'?f.product.ref==='main':norm(f.product.name)===norm(e.product);
  const sectionOk=(f,e)=>!e.section||norm(f.section)===norm(e.section);
  const scoped=facts.filter(inScope);
- const matched=new Set();let tp=0,falseAssoc=0,fp=0;const fpList=[],assocList=[];
+ const matched=new Set();let tp=0,falseAssoc=0,fp=0,duplicates=0;const fpList=[],assocList=[];
  for(const f of scoped){
   const hit=g.expected.findIndex((e,i)=>!matched.has(i)&&pkey(e.property)===f.propertyKey&&ownerOk(f,e)&&sectionOk(f,e)&&
    (e.variant??null)===(f.variant??null)&&valueMatches(f.value,e.value));
   if(hit>=0){matched.add(hit);tp++;continue;}
+  // The same correct declaration repeated elsewhere on the page is a duplicate, not a false positive.
+  const dup=g.expected.findIndex((e,i)=>matched.has(i)&&pkey(e.property)===f.propertyKey&&ownerOk(f,e)&&valueMatches(f.value,e.value));
+  if(dup>=0){duplicates++;continue;}
   const forb=g.forbidden.find(x=>ownerOk(f,x)&&(x.propertyAny||pkey(x.property)===f.propertyKey&&(!x.value||valueMatches(f.value,x.value))&&(!x.section||norm(f.section)===norm(x.section))));
   const wrongOwner=g.expected.some(e=>pkey(e.property)===f.propertyKey&&valueMatches(f.value,e.value)&&(!ownerOk(f,e)||!sectionOk(f,e)));
   if(forb||wrongOwner){falseAssoc++;assocList.push(`${f.product.name??f.product.ref} | ${f.section??''} | ${f.property}`);continue;}
@@ -70,7 +73,7 @@ function score(facts,g,mainName,{respectMethods}){
  // Required abstentions are judged within the gold's method scope (e.g. an infobox cell), like other scoring.
  const abst=(g.mustAbstain??[]).map(a=>!facts.some(f=>(!respectMethods||!g.scopeMethods||g.scopeMethods.includes(f.method))&&
   pkey(a.property)===f.propertyKey&&ownerOk(f,a)));
- return {scopedFacts:scoped.length,correct:tp,falseAssociations:falseAssoc,falsePositives:fp,missed:missed.length,expected:g.expected.length,
+ return {scopedFacts:scoped.length,correct:tp,duplicatesOfCorrect:duplicates,falseAssociations:falseAssoc,falsePositives:fp,missed:missed.length,expected:g.expected.length,
   abstentionsRequired:abst.length,abstentionsCorrect:abst.filter(Boolean).length,fpList,assocList,missedList:missed};
 }
 const rows=[];
