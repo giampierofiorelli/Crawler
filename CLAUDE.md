@@ -22,13 +22,19 @@ implementing, evaluating or reporting any PEE work. It holds:
 - **Claude is the sole development agent.** ChatGPT or Codex reviewers, AI bridges and extra AI services are
   deferred.
 - **Infrastructure:**
-  - one repository;
+  - one code repository, plus the private data repository `pee-knowledge`;
   - no paid services;
   - no heavy dependencies;
   - English first.
-- **Knowledge:** private SQLite in `$PEE_KNOWLEDGE_DIR`, never in Git.
-  - Cloud sessions start empty: restore it from the owner's backup zip.
-  - Hand the owner a new backup when the store changes.
+- **Knowledge store (database):** private SQLite in `$PEE_KNOWLEDGE_DIR`.
+  - Its persistent copy lives in the **private** repository `giampierofiorelli/pee-knowledge`, at
+    `snapshot/pee246.sqlite`. It is never committed to this public repository.
+  - At session start, the hook `.claude/hooks/pee-knowledge-session-start.sh` clones the private repository to
+    `/home/user/pee-knowledge` and restores the store automatically.
+  - If the hook reports that the repository is not attached, attach it (`add_repo`, push access), clone it there,
+    and run `node scripts/knowledge-snapshot.mjs load`.
+  - After changing the store, run `node scripts/knowledge-snapshot.mjs save`. Then commit and push
+    `/home/user/pee-knowledge` on branch `main`.
 - **Confidential evaluation inputs:** in `$PEE_PRIVATE_EVAL_DIR`.
 - **Access rules:**
   - Never bypass robots rules, 403/429 responses or access controls.

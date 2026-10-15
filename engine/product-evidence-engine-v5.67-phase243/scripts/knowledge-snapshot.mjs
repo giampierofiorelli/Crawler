@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-/** Knowledge snapshot in Git (owner decision 2026-10-15: the knowledge store lives in the repository, in plain form).
- * Each cloud container is new, so the operational store ($PEE_KNOWLEDGE_DIR) is restored from the committed snapshot
- * at session start, and the snapshot is refreshed and committed whenever a session changes the store.
+/** Knowledge snapshot in the PRIVATE repository giampierofiorelli/pee-knowledge (owner decision 2026-10-15).
+ * Each cloud container is new, so the operational store ($PEE_KNOWLEDGE_DIR) is restored from the snapshot at session
+ * start, and the snapshot is refreshed, committed and pushed to pee-knowledge whenever a session changes the store.
+ * Snapshot directory: $PEE_SNAPSHOT_DIR, else <clone of pee-knowledge next to Crawler>/snapshot
+ * (/home/user/pee-knowledge/snapshot in cloud sessions). Never put the snapshot in the public Crawler repository.
  *
  *  node scripts/knowledge-snapshot.mjs load [--force 1]   restore snapshot → $PEE_KNOWLEDGE_DIR (no build needed;
  *                                                          skipped when a live store exists unless --force)
@@ -17,7 +19,7 @@ import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const ROOT=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-const SNAP=join(ROOT,'knowledge-snapshot');
+const SNAP=process.env.PEE_SNAPSHOT_DIR??resolve(ROOT,'..','..','..','pee-knowledge','snapshot');
 const SNAP_DB=join(SNAP,'pee246.sqlite'),SNAP_MANIFEST=SNAP_DB+'.manifest.json',SNAP_NOTICES=join(SNAP,'safety-notices');
 const LIVE_DIR=process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local','share','product-evidence-engine','knowledge');
 const LIVE_DB=join(LIVE_DIR,'pee246.sqlite'),LIVE_NOTICES=join(LIVE_DIR,'safety-notices');
@@ -27,7 +29,8 @@ const sha=f=>createHash('sha256').update(readFileSync(f)).digest('hex');
 const out=x=>console.log(JSON.stringify(x));
 
 if(cmd==='load'){
- if(!existsSync(SNAP_DB)){out({loaded:false,reason:'no_snapshot'});process.exit(0);}
+ if(!existsSync(SNAP_DB)){out({loaded:false,reason:'no_snapshot',expected:SNAP_DB,
+  fix:'attach and clone the private repository giampierofiorelli/pee-knowledge to /home/user/pee-knowledge, then run this load again'});process.exit(0);}
  if(existsSync(LIVE_DB)&&!F.force){out({loaded:false,reason:'live_store_present',live:LIVE_DB});process.exit(0);}
  const m=JSON.parse(readFileSync(SNAP_MANIFEST,'utf8'));
  if(sha(SNAP_DB)!==m.sha256){out({loaded:false,reason:'snapshot_hash_mismatch'});process.exit(1);}
@@ -50,9 +53,9 @@ if(cmd==='load'){
  if(existsSync(LIVE_NOTICES)){rmSync(SNAP_NOTICES,{recursive:true,force:true});cpSync(LIVE_NOTICES,SNAP_NOTICES,{recursive:true});}
  rmSync(tmp,{recursive:true,force:true});
  if(sha(SNAP_DB)!==r.manifest.sha256)throw Error('snapshot_hash_mismatch_after_copy');
- out({saved:true,snapshot:SNAP_DB,sha256:r.manifest.sha256,counts:r.manifest.counts,next:'git add knowledge-snapshot && git commit'});
+ out({saved:true,snapshot:SNAP_DB,sha256:r.manifest.sha256,counts:r.manifest.counts,next:`git -C ${resolve(SNAP,'..')} add -A && git -C ${resolve(SNAP,'..')} commit -m "knowledge snapshot" && git -C ${resolve(SNAP,'..')} push origin main`});
 }else if(cmd==='status'){
  const m=existsSync(SNAP_MANIFEST)?JSON.parse(readFileSync(SNAP_MANIFEST,'utf8')):null;
  out({snapshot:m?{sha256:m.sha256,counts:m.counts,verifiedAt:m.verifiedAt}:null,live:existsSync(LIVE_DB)?LIVE_DB:null,
-  note:'after changing the live store, run save and commit knowledge-snapshot/'});
+  snapshotDir:SNAP,note:'after changing the live store, run save, then commit and push pee-knowledge'});
 }else{console.error('usage: knowledge-snapshot.mjs load|save|status');process.exit(2);}

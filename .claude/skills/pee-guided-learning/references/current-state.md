@@ -203,17 +203,24 @@ npm run audit:phase249-public                # public evaluation exposure audit 
 
 The coding container is ephemeral. Durable hosting needs a persistent volume, plus backups on a second medium.
 
-**New cloud sessions start with an empty store.**
+**Persistent copy: the private repository `giampierofiorelli/pee-knowledge`.** This is an owner decision of
+2026-10-15. Each cloud container starts empty, so the store is restored from that repository.
 
-- The store is not in Git, by design, and each cloud container is new.
-- The owner keeps a verified backup zip outside the repository. The latest is `PEE-knowledge-backup-2026-10-15.zip`
-  (Phase249 final state: 2,385 declarations, 35 OPSS notices).
-- **At the start of a session that needs the store:**
-  1. Ask for the zip, or use it if it was uploaded.
-  2. Run `verify-backup`.
-  3. Run `restore`.
-  4. Copy `safety-notices/` into `$PEE_KNOWLEDGE_DIR`.
-- **At the end of any session that changes the store:**
-  1. Run `backup-rotate`.
-  2. Hand the owner a new zip.
-- Never commit the store or the zip.
+- **Snapshot:** `snapshot/pee246.sqlite`, plus its manifest (SHA-256, counts, integrity and journal checks) and
+  `snapshot/safety-notices/`. First snapshot: commit `048d473`, the Phase249 final state.
+- **Session start:** the SessionStart hook (`.claude/hooks/pee-knowledge-session-start.sh`, registered in
+  `.claude/settings.json`) does the following:
+  1. clones or pulls the repository into `/home/user/pee-knowledge`;
+  2. runs `scripts/knowledge-snapshot.mjs load`, which verifies the SHA-256 and copies the snapshot into
+     `$PEE_KNOWLEDGE_DIR`, but only if no live store exists.
+- **If the hook reports the repository is not attached:**
+  1. attach it with `add_repo`, push access;
+  2. clone it to `/home/user/pee-knowledge`;
+  3. run `load`.
+- **After any change to the store:**
+  1. run `node scripts/knowledge-snapshot.mjs save` (build first);
+  2. commit `/home/user/pee-knowledge`;
+  3. push branch `main`.
+- **Rules:**
+  - Never copy the store or snapshot into the public Crawler repository.
+  - The live store still refuses to open inside a Git work tree; only the snapshot copy sits in `pee-knowledge`.

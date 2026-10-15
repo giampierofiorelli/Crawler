@@ -58,8 +58,11 @@ Never claim to have read a file you have not opened. In reports, say which secti
 
 **Infrastructure**
 
-- **One repository:** `giampierofiorelli/Crawler`.
-- **Private, durable SQLite outside Git** (`$PEE_KNOWLEDGE_DIR`), with verified backup and restore.
+- **One code repository:** `giampierofiorelli/Crawler`, which is public.
+- **Private SQLite store** in `$PEE_KNOWLEDGE_DIR`, with verified backup and restore.
+  - Its persistent snapshot lives only in the **private** repository `giampierofiorelli/pee-knowledge`.
+  - It is restored automatically at session start.
+  - After changes: `save`, then commit and push. Details in `current-state.md`.
 - **No new repositories.**
 - **No paid licences or services.**
 - **No heavyweight models or frameworks** without measured justification and owner authorisation.

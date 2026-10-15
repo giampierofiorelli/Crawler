@@ -26,7 +26,8 @@ The decisions:
 1. **Purpose.** PEE is an independent product research and buying adviser. It is judged by useful, accurate,
    evidence-calibrated advice on real needs, not by phase counts, test counts or row counts.
 2. **Audit of over-restrictions.** This has permanent high priority. Justified safeguards stay.
-3. **One repository.** Private persistent knowledge lives in SQLite outside Git, with verified backup and restore.
+3. **One code repository.** Private persistent knowledge lives in SQLite, with verified backup and restore. Its
+   snapshot lives in the private data repository `giampierofiorelli/pee-knowledge` (S12).
 4. **Retention.** A proportionate source-class retention policy for private factual observations replaces the
    blanket per-source gate. There is no blanket licence to copy restricted material. No legal review is claimed.
 5. **Public evaluation data.** It is audited. Confidential material goes outside Git. History is not rewritten.
@@ -59,6 +60,8 @@ The decisions:
 | S9 | 2026-10-14 | Research v9 §2.1: Phase248 need recall 0.385 and "all in-scope recommendations withheld" | Phase249: real set 2 first run, need recall 0.625 and precision 0.625; positive `requirements_shortlist` path; signed ranking path tested synthetically | Need recall is still the main weakness. Positive ranked recommendations still require comparable independent measurements. |
 | S10 | 2026-10-15 | Draft skill v1 (`../history/draft-v1-SKILL.md`): reference hierarchy without a current-state map; no reuse map; description limited to "learning, semantics, or generalization" | This installed skill | The installed SKILL.md adds automatic-invocation triggers covering all PEE development work, `current-state.md` (reuse map, commands) and this log. The method, boundaries, workflow, T1–T4 and examples are carried over in substance. |
 | S11 | 2026-10-15 | Draft README-INSTALL links to claude.ai upload and API skill docs | Installation as a Claude Code project skill at `.claude/skills/pee-guided-learning/` (repository root) | Same skill format (SKILL.md frontmatter plus references). Claude Code loads it automatically from the repository. |
+| S12 | 2026-10-15 | Owner decision 3 and research v9 §9.1 ("exactly one repository"); `current-state.md` interim note (store restored from an owner-held backup zip) | Owner decision 2026-10-15: a second, **private** repository `giampierofiorelli/pee-knowledge` holds the knowledge-store snapshot | Source code stays in the single public repository. The data snapshot lives only in the private repository and is restored automatically at session start. The SQLite store and the retention policy (`publicExport:false`) are unchanged. |
+| S13 | 2026-10-15 | Owner proposal of the same day: commit the store in plain form to the public Crawler repository | Not carried out. The session's safety system blocked publishing third-party data; the owner chose the private repository (S12) instead | Never commit the store or its values to the public repository. |
 
 ## Still open (owner decisions, not Claude's)
 
@@ -66,4 +69,5 @@ The decisions:
 - Any paid evidence licence. This needs a documented business case first.
 - Reactivating any deferred external-AI collaboration (S1, S2).
 - A legal review of the retention policy's open points.
-- A production hosting and persistent volume for `$PEE_KNOWLEDGE_DIR`.
+- A production hosting and persistent volume for `$PEE_KNOWLEDGE_DIR`. Until then, the private repository is the
+  durable copy (S12).
