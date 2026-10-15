@@ -1,0 +1,151 @@
+/** Phase249 — evidence-calibrated advice decisions after the user has confirmed requirements.
+ *
+ * Three kinds of answer, each with the evidence it needs:
+ *  1. ranked_recommendation — an ORDER of products by quality. Only from a signed, offline-reviewed Phase180
+ *     release built on original professional test results. Unchanged gate; this module never builds an order.
+ *  2. requirements_shortlist — products that MEET the user's confirmed factual constraints (capacity, size, weight,
+ *     power, budget), established from cited source declarations (manufacturer or retailer specifications). It is
+ *     unordered and says so: declarations are appropriate evidence that a product has a capacity or a size, never
+ *     evidence that it performs well. Products whose declarations are missing or conflicting are reported as
+ *     unknown, never silently excluded; products that fail are reported with the failing declaration.
+ *  3. abstention — clarify (nothing confirmed), withhold (evidence insufficient), or a justified negative answer
+ *     (no candidate meets the requirements).
+ * Performance needs (crispness, evenness, noise in use) are never answered from declarations: when confirmed, a
+ * shortlist is marked performance_unverified and the ranking stays withheld.
+ */
+import type {Value245} from './phase245_value_normalizer.js';
+import type {DecisionSnapshot177,Criterion177} from './phase177_decision_snapshot.js';
+import {reviewedFirstAnswer180,type SignedRelease180,type TrustedRankingAuthority180,type FirstAnswer180} from './phase180_reviewed_first_answer.js';
+
+export type Dimension249='volume'|'length'|'mass'|'power'|'price';
+export interface SpecCriterion249 {label:string;property:RegExp;exclude?:RegExp;dimension:Dimension249;bound:'min'|'max'}
+/** Confirmed criteria that are factual constraints checkable against declarations. Keys are stable decision keys. */
+export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
+ capacity_min:{label:'capacity at least',property:/\b(?:capacity|volume)\b/i,exclude:/\b(?:battery|bin|tank|container|bag|collection|water|dust)\b/i,dimension:'volume',bound:'min'},
+ width_max:{label:'width at most',property:/\bwidth\b/i,dimension:'length',bound:'max'},
+ height_max:{label:'height at most',property:/\bheight\b/i,exclude:/\b(?:cut|seat|back)\b/i,dimension:'length',bound:'max'},
+ depth_max:{label:'depth at most',property:/\bdepth\b/i,dimension:'length',bound:'max'},
+ weight_max:{label:'weight at most',property:/\bweight\b/i,exclude:/\b(?:gross|shipping|box|package|packaging)\b/i,dimension:'mass',bound:'max'},
+ power_min:{label:'power at least',property:/\b(?:power|wattage|rated power)\b/i,exclude:/\b(?:consumption|standby|supply|cord|levels?|source)\b/i,dimension:'power',bound:'min'},
+ budget_max:{label:'price at most',property:/^price$/i,dimension:'price',bound:'max'},
+};
+const FACTOR:Record<Exclude<Dimension249,'price'>,Record<string,number>>={
+ volume:{l:1,ml:0.001,cl:0.01,'cm³':0.001,qt:0.946353,gal:3.78541,'fl oz':0.0295735},
+ length:{mm:1,cm:10,m:1000,in:25.4,ft:304.8},
+ mass:{g:1,kg:1000,lb:453.592,oz:28.3495,mg:0.001},
+ power:{W:1,kW:1000,mW:0.001},
+};
+/** A declared value in the criterion's unit, or null when it cannot be compared (other unit family, text, range). */
+export function comparable249(v:Value245|null,dimension:Dimension249,unit:string):number|null{
+ if(!v)return null;
+ // Criterion units are lowercase decision keys ("gbp", "w", "l"); declared units keep their symbols.
+ if(dimension==='price')return v.kind==='price'&&v.currency===unit.toUpperCase()&&v.maxAmount===undefined?v.amount:null;
+ if(v.kind!=='quantity'||v.bound||v.approximate)return null;
+ const f=FACTOR[dimension];const factor=(u:string)=>f[u]??f[Object.keys(f).find(k=>k.toLowerCase()===u.toLowerCase())??''];
+ const a=factor(v.unit),b=factor(unit);
+ return a!==undefined&&b!==undefined?v.number*a/b:null;
+}
+export interface CandidateDeclaration249 {declarationId:string;property:string;value:Value245|null;rawValue:string;evidenceRole:string;sourceUrl:string|null;variantId:string|null}
+export interface Candidate249 {productId:string;name:string;declarations:readonly CandidateDeclaration249[]}
+export interface CriterionCheck249 {key:string;outcome:'meets'|'fails'|'unknown';reason:string;evidence:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}[]}
+export interface ProductCheck249 {productId:string;name:string;outcome:'meets_all'|'fails'|'unknown';checks:CriterionCheck249[]}
+export interface Advice249 {
+ schema:'pee249.advice.v1';
+ decision:'ranked_recommendation'|'requirements_shortlist'|'requirements_shortlist_performance_unverified'|'no_candidate_meets_requirements'|'withhold_insufficient_evidence'|'clarify';
+ rankingAuthorized:boolean;ordered:boolean;
+ shortlist:{productId:string;name:string;evidence:CriterionCheck249['evidence']}[];
+ ranked:FirstAnswer180['ranked'];
+ checks:ProductCheck249[];
+ unverifiedNeeds:string[];
+ statements:string[];cautions:string[];researchPlan:string[];
+}
+function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):CriterionCheck249{
+ if(c.value.kind!=='quantity')return {key:c.key,outcome:'unknown',reason:'criterion is not a quantity',evidence:[]};
+ const unit=c.value.unit,limit=c.value.value;
+ // Declarations of the base product (variant-specific values are not applied to the whole product).
+ const rel=p.declarations.filter(d=>!d.variantId&&spec.property.test(d.property)&&!(spec.exclude?.test(d.property)));
+ const vals=rel.map(d=>({d,n:comparable249(d.value,spec.dimension,unit)})).filter(x=>x.n!==null) as {d:CandidateDeclaration249;n:number}[];
+ if(!vals.length)return {key:c.key,outcome:'unknown',reason:rel.length?'declared, but not in a comparable unit':'no declaration for this requirement',evidence:rel.map(ev)};
+ const lo=Math.min(...vals.map(x=>x.n)),hi=Math.max(...vals.map(x=>x.n));
+ // Sources disagreeing by more than 2 % are a conflict to resolve, not a pass or a fail.
+ if(hi-lo>Math.max(Math.abs(hi),Math.abs(lo))*0.02)return {key:c.key,outcome:'unknown',reason:`sources disagree (${round(lo)}–${round(hi)} ${unit})`,evidence:vals.map(x=>ev(x.d))};
+ const ok=spec.bound==='min'?lo>=limit:hi<=limit;
+ return {key:c.key,outcome:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
+}
+const round=(n:number)=>Math.round(n*100)/100;
+const ev=(d:CandidateDeclaration249)=>({declarationId:d.declarationId,rawValue:d.rawValue,sourceUrl:d.sourceUrl,evidenceRole:d.evidenceRole});
+
+export function decideAdvice249(input:{snapshot:DecisionSnapshot177;candidates:readonly Candidate249[];
+ signedRelease?:SignedRelease180|null;authority?:TrustedRankingAuthority180|null}):Advice249{
+ const {snapshot,candidates}=input;
+ const base:Omit<Advice249,'decision'>={schema:'pee249.advice.v1',rankingAuthorized:false,ordered:false,shortlist:[],ranked:[],checks:[],unverifiedNeeds:[],statements:[],cautions:[],researchPlan:[]};
+ const confirmed=snapshot.criteria.filter(c=>c.status==='confirmed');
+ if(!snapshot.scope.category||!confirmed.length)return {...base,decision:'clarify',statements:['Confirm the product type and at least one requirement before PEE can advise.']};
+ // 1. A reviewed, signed release can authorise a quality order (Phase180 performs every check).
+ if(input.signedRelease&&input.authority){
+  const fa=reviewedFirstAnswer180(snapshot,input.signedRelease,input.authority);
+  if(fa.status==='ranking_ready')return {...base,decision:'ranked_recommendation',rankingAuthorized:true,ordered:true,ranked:fa.ranked,
+   statements:[...fa.firstLayer],cautions:[...fa.visibleCautions]};
+  base.cautions.push(...fa.visibleCautions);
+ }
+ const spec=confirmed.filter(c=>SPEC_CRITERIA249[c.key]);
+ const perf=confirmed.filter(c=>!SPEC_CRITERIA249[c.key]);
+ base.unverifiedNeeds=perf.map(c=>c.label);
+ if(!spec.length)return {...base,decision:'withhold_insufficient_evidence',
+  statements:['Your confirmed needs concern performance; PEE has no reviewed independent test evidence to compare products on them.'],
+  researchPlan:perf.map(c=>`obtain comparable independent measurements for: ${c.label}`)};
+ const checks:ProductCheck249[]=candidates.map(p=>{
+  const cs=spec.map(c=>checkCriterion(c,SPEC_CRITERIA249[c.key],p));
+  // Only hard requirements exclude; a failed preference is reported but does not remove the product.
+  const hardFail=cs.some((x,i)=>x.outcome==='fails'&&spec[i].priority==='hard');
+  const anyUnknown=cs.some(x=>x.outcome==='unknown');
+  const outcome:ProductCheck249['outcome']=hardFail?'fails':anyUnknown?'unknown':cs.every(x=>x.outcome==='meets')?'meets_all':'fails';
+  return {productId:p.productId,name:p.name,outcome,checks:cs};
+ }).sort((a,b)=>a.name.localeCompare(b.name)||a.productId.localeCompare(b.productId));
+ const meets=checks.filter(c=>c.outcome==='meets_all'),unknown=checks.filter(c=>c.outcome==='unknown'),fails=checks.filter(c=>c.outcome==='fails');
+ const cautions=[...base.cautions,'Requirement checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.',
+  ...(unknown.length?[`${unknown.length} candidate(s) could not be checked (missing, incomparable or conflicting declarations); they are listed, not dropped.`]:[]),
+  'Coverage is limited to products PEE has observed; it is not the whole market.'];
+ const plan=unknown.flatMap(u=>u.checks.filter(c=>c.outcome==='unknown').map(c=>`${u.name}: ${c.reason} (${c.key})`)).slice(0,20);
+ if(meets.length){
+  const shortlist=meets.map(m=>({productId:m.productId,name:m.name,evidence:m.checks.flatMap(c=>c.evidence)}));
+  const decision=perf.length?'requirements_shortlist_performance_unverified':'requirements_shortlist';
+  return {...base,decision,shortlist,checks,cautions,researchPlan:[...plan,...perf.map(c=>`obtain comparable independent measurements for: ${c.label}`)],
+   statements:[`${meets.length} of ${checks.length} known product(s) meet every confirmed requirement according to their declared specifications (listed alphabetically, not ranked).`,
+    ...(perf.length?[`Performance needs (${perf.map(c=>c.label).join(', ')}) are not verified: no independent test evidence is available, so no order is given.`]:[])]};
+ }
+ if(!unknown.length&&fails.length)return {...base,decision:'no_candidate_meets_requirements',checks,cautions,
+  statements:[`None of the ${checks.length} known product(s) meets every hard requirement according to their declared specifications.`],
+  researchPlan:['discover further candidates in this category','consider relaxing a requirement']};
+ return {...base,decision:'withhold_insufficient_evidence',checks,cautions,researchPlan:plan,
+  statements:['The declared specifications available are not enough to tell which products meet your requirements.']};
+}
+
+/** Candidates of one category from the knowledge store, with each retained declaration's source URL. */
+export function candidatesFromStore249(store:{products246(f:{category?:string}):string[];product246(id:string):{name:string|null}|null;
+ declarations246(id:string):{declarationId:string;revisionId:string;variantId:string|null;property:string;value:Value245|null;rawValue:string;evidenceRole:string}[];
+ db:{prepare(sql:string):{get(...a:unknown[]):unknown}}},categoryId:string):Candidate249[]{
+ return store.products246({category:categoryId}).map(pid=>{
+  const p=store.product246(pid);
+  const declarations:CandidateDeclaration249[]=store.declarations246(pid).map(d=>({declarationId:d.declarationId,property:d.property,value:d.value,
+   rawValue:d.rawValue,evidenceRole:d.evidenceRole,variantId:d.variantId,
+   sourceUrl:(store.db.prepare('SELECT url FROM revisions WHERE revision_id=?').get(d.revisionId) as {url:string}|undefined)?.url??null}));
+  const fromName=capacityFromName249(p?.name??null);
+  // A capacity stated only in the product's own name ("... Air Fryer 7.6L") is the source's declaration too; it is used
+  // only when no capacity declaration exists, and is labelled so the citation shows where it came from.
+  if(fromName&&!declarations.some(d=>/\b(?:capacity|volume)\b/i.test(d.property))){
+   const src=(store.db.prepare("SELECT r.url FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product' ORDER BY r.fetched_at DESC LIMIT 1").get(pid) as {url:string}|undefined)?.url??null;
+   declarations.push({declarationId:'name:'+pid,property:'Capacity (stated in product name)',value:fromName,rawValue:p!.name!,evidenceRole:'product_name_declaration',sourceUrl:src,variantId:null});
+  }
+  return {productId:pid,name:p?.name??pid,declarations};
+ });
+}
+
+/** Exactly one volume token in a product name ("8L", "7.6 L", "1.7 litre", "6.8-Quart") gives a declared capacity. */
+export function capacityFromName249(name:string|null):Value245|null{
+ if(!name)return null;
+ const m=[...name.matchAll(/(?<![\w.])(\d{1,2}(?:\.\d{1,2})?)\s?-?\s?(l|ltr|litres?|liters?|quarts?|qt)(?![a-z])/gi)];
+ if(m.length!==1)return null;
+ const u=/^q/i.test(m[0][2])?'qt':'l';
+ return {kind:'quantity',number:Number(m[0][1]),unit:u,approximate:false};
+}
