@@ -13,6 +13,8 @@ import {relations247} from './phase247_category_relations.js';
 import {composeQuestion125,type CategorySchema125} from './phase125_compositional_dialogue_frame.js';
 
 export interface CategoryEntry248 {id:string;aliases:readonly string[];
+ /** Phrases in which an alias denotes a part or accessory, not this category ("milk steamer", "steamer basket"). */
+ partPhrases?:readonly string[];
  /** Weaker single-word cues naming the category's typical product or use ("espresso", "crumpets"). */
  cues?:readonly string[];}
 export type Decision248='recommend'|'withhold_insufficient_evidence'|'unsupported_category'|'clarify'|'out_of_scope';
@@ -28,7 +30,13 @@ function find(t:string,alias:string):{start:number;end:number}[]{
  while((m=re.exec(t))){const start=m.index+(m[0].startsWith(' ')?1:0);out.push({start,end:start+m[1].length});}
  return out;
 }
-const STOP=new Set(['a','an','the','to','of','for','and','or','with','in','on','my','me','i','it','is','be','that','this','very','so','too','just','into','out','come','comes','get','gets']);
+const STOP=new Set(['a','an','the','to','of','for','and','or','with','in','on','my','me','i','it','is','be','that','this','very','so','too','just','into','out','come','comes','get','gets',
+ // Phase249: function words that real, longer requests contain and that must never count as need evidence.
+ 'are','was','were','been','being','am','do','does','did','done','have','has','had','having','will','would','could','should','can','may','might','must',
+ 'not','no','nor','but','if','then','than','as','at','by','from','up','down','over','under','about','above','before','again','also','any','all',
+ 'some','such','each','every','other','own','same','both','few','more','most','much','many','only','there','here','when','where','why','how','who','whom',
+ 'whose','which','what','these','those','they','them','their','we','us','our','you','your','he','she','his','her','its','term','terms',
+ 'really','actually','quite','still','yet','ever','now','currently','recently','etc','lots','bit','kind','sort']);
 /** Light English stemmer for matching only (easiest->easi, browns->brown, evenly->even, crispy->crisp). */
 const stem=(w:string)=>w.replace(/'s$/,'').replace(/(?:iest|ier)$/,'y').replace(/(?:ness|ingly|edly|ing|ed|est|er|ly|y|es|s)$/,'')||w;
 /** Order-free match of an alias's content words within a short window (paraphrase tolerance for needs). */
@@ -66,7 +74,8 @@ function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string
    const hit=[...reqTokens].filter(w=>d.alias.has(w)||d.text.has(w));
    const score=hit.reduce((a,w)=>a+idf(w)*(d.alias.has(w)?1.5:1),0);
    const aliasHit=hit.some(w=>d.alias.has(w));
-   if(hit.length>=2&&aliasHit&&score>=DESCRIBED_THRESHOLD248)out.push({key:`${c}|${id}|${d.kind}`,alias:'~'+hit.join('+'),start:-1,end:-1});
+   // Long requests (real questions with background) produce chance co-occurrences: they need three overlapping words.
+   if(hit.length>=(reqTokens.size>20?3:2)&&aliasHit&&score>=DESCRIBED_THRESHOLD248)out.push({key:`${c}|${id}|${d.kind}`,alias:'~'+hit.join('+'),start:-1,end:-1});
   }
  }
  return out;
@@ -78,12 +87,18 @@ function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly str
  for(const e of entries)for(const al of e.aliases)for(const p of (loose?findLoose:find)(t,al))hits.push({key:e.key,alias:al,...p});
  return hits.filter(h=>!hits.some(o=>o!==h&&o.key!==h.key&&o.start<=h.start&&o.end>=h.end&&(o.end-o.start)>(h.end-h.start)));
 }
-const GENERIC=/^(?:something|anything|one|an? appliance|appliances?|products?|things?|gadgets?|a gadget|a product|stuff|kit|equipment|it|this|that|the kitchen|kitchen)$/;
+const GENERIC=/^(?:something|anything|one|ones|new one|an? appliance|appliances?|products?|things?|gadgets?|a gadget|a product|stuff|kit|equipment|it|this|that|the kitchen|kitchen|type|kind|model|brand|options?|features?|machines?|devices?|units?)$/;
 /** A product term the user names but the registry does not know ("laptop", "running shoes"). */
-function namedProductTerm(t:string):string|null{
- const m=/\b(?:best|recommend|which|what|choose|buy|need|want|suggest)\s+(?:is the best |s the best |a good |the best |a |an |the |me a |me an |me |some )?([a-z][a-z' ]{1,30}?)(?= for| to| that| which| with| under| from| is| are| please|$| and| or|\?)/.exec(t);
- if(!m)return null;const term=m[1].trim().replace(/^(?:good|new|cheap|decent|great) /,'');
- return GENERIC.test(term)||/^(?:to|is|are|should|do|i|my|you|it)\b/.test(term)?null:term;
+function namedProductTerm(t:string,buyingOnly=false):string|null{
+ // buyingOnly: only buying constructions ("which X to buy", "buy a X"); "want/need X" often introduces a need
+ // ("want chips that come out crispy"), so it is used only when nothing else resolved the request.
+ const verbs=buyingOnly?'best|recommend|which|choose|buy|suggest':'best|recommend|which|what|choose|buy|need|want|suggest';
+ const re=new RegExp(`\\b(?:${verbs})\\s+(?:is the best |s the best |a good |the best |a |an |the |me a |me an |me |some )?([a-z][a-z' ]{1,30}?)(?= for| to| that| which| with| under| from| is| are| should| do| would| can| but| please|$| and| or|\\?)`,'g');
+ for(const m of t.matchAll(re)){
+  const term=m[1].trim().replace(/^(?:good|new|cheap|decent|great|sturdy) /,'');
+  if(!GENERIC.test(term)&&!/^(?:to|is|are|should|do|i|my|you|it)\b/.test(term))return term;
+ }
+ return null;
 }
 
 export interface Journey248 {
@@ -116,7 +131,15 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // that category, not its exclusion.
  const qualified=(end:number)=>/^ (?:whose|that|which|with|where)\b/.test(t.slice(end));
  const isExcluded=(h:{start:number;end:number})=>negated(h.start)&&!qualified(h.end);
- const named=allNamed.filter(h=>!isExcluded(h));
+ // Phase249: an alias inside an accessory or part phrase ("milk steamer", "steamer basket") does not name the category;
+ // nor does a feature named with "with/without/has a ..." when another category is named explicitly.
+ const partOf=(h:{key:string;start:number;end:number})=>(registry.find(r=>r.id===h.key)?.partPhrases??[]).some(pp=>find(t,pp).some(p=>p.start<=h.start&&p.end>=h.end));
+ const named0=allNamed.filter(h=>!isExcluded(h)&&!partOf(h));
+ const featureOf=(h:{key:string;start:number})=>/(?:^| )(?:with|without|has|have|having|plus|including)(?: a| an| the)?(?: milk| built in| integrated)? ?$/.test(t.slice(0,h.start).trimEnd()+' ');
+ const named1=new Set(named0.map(h=>h.key)).size>1?named0.filter(h=>!(featureOf(h)&&named0.some(o=>o.key!==h.key&&!featureOf(o)))):named0;
+ // "replace it with a toaster oven", "switch to an air fryer": the replacement target is the category sought.
+ const targetOf=(h:{start:number})=>/(?:replac\S* (?:\S+ ){0,3}with|switch(?:ing)? to|upgrad\S* to|swap\S* (?:\S+ ){0,3}for|instead get|thinking of getting)(?: a| an| the)? ?$/.test(t.slice(0,h.start).trimEnd()+' ');
+ const named=new Set(named1.map(h=>h.key)).size>1&&named1.some(targetOf)?named1.filter(h=>named1.filter(targetOf).some(x=>x.key===h.key)):named1;
  const excludedCategories=[...new Set(allNamed.filter(isExcluded).map(h=>h.key))].sort();
  const explicit=[...new Set(named.map(h=>h.key))].filter(c=>!excludedCategories.includes(c)||named.some(h=>h.key===c)).sort();
  const cueHits=longestMatches(t,registry.filter(r=>r.cues?.length).map(r=>({key:r.id,aliases:r.cues!}))).filter(h=>!negated(h.start));
@@ -125,7 +148,10 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const conceptEntries=knowledgeCats.flatMap(c=>{const seen=new Set<string>();
   return store.categoryItems246(c).filter(i=>i.concept&&!seen.has(i.concept.id)&&!!seen.add(i.concept.id))
    .map(i=>({key:`${c}|${i.concept!.id}|${i.concept!.kind}`,aliases:i.concept!.aliases}));});
- const conceptHits=[...longestMatches(t,conceptEntries,true),...describedConcepts(t,store,knowledgeCats,registry)];
+ // A need phrase that runs into a product noun describes the product being named ("a good manual espresso machine"),
+ // not a stated need ("I want good espresso").
+ const modifiesProduct=(h:{end:number})=>h.end>=0&&/^ (?:\S+ )?(?:machines?|makers?|fryers?|toasters?|ovens?|kettles?|blenders?|models?)\b/.test(t.slice(h.end));
+ const conceptHits=[...longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h)),...describedConcepts(t,store,knowledgeCats,registry)];
  let categoryId:string|null=null;let basis:Journey248['stages']['category']['basis']='unresolved';
  if(explicit.length===1){categoryId=explicit[0];basis='explicit_alias';}
  else if(explicit.length>1)basis='ambiguous';
@@ -133,7 +159,12 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  else if(cueCats.length>1)basis='ambiguous';
  else{const cats=[...new Set(conceptHits.map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c));
   if(cats.length===1){categoryId=cats[0];basis='need_inferred';}else if(cats.length>1)basis='ambiguous';}
- const namedUnknownTerm=basis==='unresolved'?namedProductTerm(t):null;
+ // Phase249: a request naming a product PEE does not know ("which non-stick pan to buy") is about that product; need words
+ // ("cook for one", "flavour") must not pull it into another category.
+ const termAny=namedProductTerm(t,true);
+ const termKnown=!!termAny&&registry.some(r=>[...r.aliases,...(r.cues??[])].some(a=>find(norm(termAny),a).length));
+ if(basis==='need_inferred'&&termAny&&!termKnown){categoryId=null;basis='unresolved';}
+ const namedUnknownTerm=basis==='unresolved'?termAny??namedProductTerm(t):null;
  // ---- need: concepts of the resolved category; budget and hazards from Phase125
  const concepts=categoryId?[...new Map(conceptHits.filter(h=>h.key.startsWith(categoryId+'|')).map(h=>{const [c,id,kind]=h.key.split('|');
   return [id,{id,categoryId:c,matched:h.alias,kind:kind||null}];})).values()].sort((a,b)=>a.id.localeCompare(b.id)):[];

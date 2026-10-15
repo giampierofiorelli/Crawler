@@ -1,0 +1,1146 @@
+{
+ "schema": "pee248.journey-eval.v1",
+ "bench": "evaluation/phase248/journey-heldout.json",
+ "split": "heldout",
+ "generatedAt": "2026-10-15T00:53:28.322Z",
+ "msTotal": 95.2,
+ "score": {
+  "cases": 16,
+  "categoryAccuracy": 1,
+  "decisionAccuracy": 1,
+  "conceptRecall": 0.5,
+  "conceptPrecision": 1,
+  "budgetAccuracy": 1,
+  "unsafeRankings": 0,
+  "blocking": {
+   "evidence": 6,
+   "need": 4,
+   "category": 4,
+   "requirements": 2
+  },
+  "rows": [
+   {
+    "id": "h01",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 1,
+    "conceptExpected": 2,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "air_fryers",
+    "gotConcepts": [
+     "crisp_texture"
+    ],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "evidence",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h02",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 1,
+    "conceptExpected": 2,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "air_fryers",
+    "gotConcepts": [
+     "small_kitchen"
+    ],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "evidence",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h03",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 1,
+    "conceptExpected": 1,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "air_fryers",
+    "gotConcepts": [
+     "cooking_evenness"
+    ],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "evidence",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h04",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 2,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "coffee_machines",
+    "gotConcepts": [],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "need",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h05",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 1,
+    "conceptExpected": 1,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "coffee_machines",
+    "gotConcepts": [
+     "ongoing_costs"
+    ],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "evidence",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h06",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 1,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "coffee_machines",
+    "gotConcepts": [],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "need",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h07",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 1,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "toasters",
+    "gotConcepts": [],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "need",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h08",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 1,
+    "conceptExpected": 1,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "toasters",
+    "gotConcepts": [
+     "thick_bread_fit"
+    ],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "evidence",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h09",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 1,
+    "conceptExpected": 1,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "toasters",
+    "gotConcepts": [
+     "hot_exterior"
+    ],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "evidence",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h10",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": null,
+    "gotConcepts": [],
+    "gotDecision": "clarify",
+    "blockingStage": "category",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h11",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": null,
+    "gotConcepts": [],
+    "gotDecision": "clarify",
+    "blockingStage": "category",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h12",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "kettles",
+    "gotConcepts": [],
+    "gotDecision": "unsupported_category",
+    "blockingStage": "requirements",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h13",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "blenders",
+    "gotConcepts": [],
+    "gotDecision": "unsupported_category",
+    "blockingStage": "requirements",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h14",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": null,
+    "gotConcepts": [],
+    "gotDecision": "out_of_scope",
+    "blockingStage": "category",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h15",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "ambiguous",
+    "gotConcepts": [],
+    "gotDecision": "clarify",
+    "blockingStage": "category",
+    "rankingAuthorized": false
+   },
+   {
+    "id": "h16",
+    "categoryOk": true,
+    "decisionOk": true,
+    "conceptTp": 0,
+    "conceptExpected": 0,
+    "conceptFp": 0,
+    "budgetOk": true,
+    "gotCategory": "coffee_machines",
+    "gotConcepts": [],
+    "gotDecision": "withhold_insufficient_evidence",
+    "blockingStage": "need",
+    "rankingAuthorized": false
+   }
+  ]
+ },
+ "journeys": {
+  "h01": {
+   "schema": "pee248.journey.v1",
+   "text": "I'm on my own most evenings and want chips that come out properly crispy without a deep fat fryer.",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "need_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": [
+      "deep_fryers"
+     ]
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "crisp_texture",
+       "categoryId": "air_fryers",
+       "matched": "crispy",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [
+      {
+       "attribute": "power",
+       "conceptId": "crisp_texture",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "Rated watts alone do not establish crisping; airflow and load matter"
+      }
+     ],
+     "unmeasuredConcepts": [
+      "crisp_texture"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: crisp_texture"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h02": {
+   "schema": "pee248.journey.v1",
+   "text": "Our kitchen is tiny but we often cook two things at once for dinner. Is a two-drawer air fryer sensible?",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "small_kitchen",
+       "categoryId": "air_fryers",
+       "matched": "~kitchen+tin",
+       "kind": "environment"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "small_kitchen"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: small_kitchen"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h03": {
+   "schema": "pee248.journey.v1",
+   "text": "Which air fryer gives the most even results across the whole basket?",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "cooking_evenness",
+       "categoryId": "air_fryers",
+       "matched": "~even+acros",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "cooking_evenness",
+       "method": "CHOICE (AU) assesses air fryers with four standard foods (frozen crumbed chicken, frozen chips with a fixed mass by basket size, marinated wings, pork belly) and judges look, taste and evenness of bro",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/benchtop-cooking/articles/how-we-test-air-fryers"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "capacity",
+       "conceptId": "cooking_evenness",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "Declared drawer volume does not establish usable single-layer crisping area or evenness"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) assesses air fryers with four standard foods (frozen crumbed chicken, frozen c"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h04": {
+   "schema": "pee248.journey.v1",
+   "text": "I want a proper espresso every morning but I hate cleaning things.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h05": {
+   "schema": "pee248.journey.v1",
+   "text": "What should I watch out for with running costs on a coffee machine?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "ongoing_costs",
+       "categoryId": "coffee_machines",
+       "matched": "~runn+cost",
+       "kind": "environment"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "ongoing_costs"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: ongoing_costs"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h06": {
+   "schema": "pee248.journey.v1",
+   "text": "I need a coffee maker that gives the same result every time, my old one was all over the place.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h07": {
+   "schema": "pee248.journey.v1",
+   "text": "My toast always comes out pale on one side and burnt on the other. What toaster fixes that?",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: brown bread evenly on both sides and across each slice; or get the same result for different bread thicknesses and repeated rounds?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h08": {
+   "schema": "pee248.journey.v1",
+   "text": "We buy thick sourdough loaves; most toasters won't fit the slices.",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "thick_bread_fit",
+       "categoryId": "toasters",
+       "matched": "~thick+fit+slic",
+       "kind": "capability"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [
+      {
+       "attribute": "slot dimensions",
+       "conceptId": "thick_bread_fit",
+       "kind": "may_support",
+       "support": "hypothesis",
+       "note": "Slot width/depth bound which bread fits; centring guides may matter for evenness"
+      }
+     ],
+     "unmeasuredConcepts": [
+      "thick_bread_fit"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: thick_bread_fit"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h09": {
+   "schema": "pee248.journey.v1",
+   "text": "I have small kids, so I don't want a toaster whose sides get dangerously hot.",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "hot_exterior",
+       "categoryId": "toasters",
+       "matched": "~sid+hot",
+       "kind": "failure"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "hot_exterior"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: hot_exterior"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h10": {
+   "schema": "pee248.journey.v1",
+   "text": "Can you recommend something for the kitchen?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h11": {
+   "schema": "pee248.journey.v1",
+   "text": "I want something to make my mornings easier.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h12": {
+   "schema": "pee248.journey.v1",
+   "text": "Which kettle boils fastest and is quiet?",
+   "stages": {
+    "category": {
+     "categoryId": "kettles",
+     "basis": "explicit_alias",
+     "candidates": [
+      "kettles"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 2,
+     "withDeclaredAttributes": 2,
+     "retainedDeclarations": 11,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for kettles: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model kettles: user goals, mechanisms, measurable outcomes and professional test methods",
+    "2 product identities already known for kettles"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h13": {
+   "schema": "pee248.journey.v1",
+   "text": "I'd like a blender strong enough for frozen fruit smoothies.",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h14": {
+   "schema": "pee248.journey.v1",
+   "text": "What's the best laptop for a university student?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "laptop",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"laptop\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"laptop\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h15": {
+   "schema": "pee248.journey.v1",
+   "text": "Air fryer or toaster oven for reheating pizza?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [
+      "air_fryers",
+      "toaster_ovens"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between air fryers and toaster ovens, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "h16": {
+   "schema": "pee248.journey.v1",
+   "text": "Is a cheap coffee machine under £100 worth it, or should I spend more?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "GBP",
+      "min": null,
+      "max": 100
+     },
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  }
+ }
+}
