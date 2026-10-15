@@ -46,7 +46,10 @@ export function comparable249(v:Value245|null,dimension:Dimension249,unit:string
  return a!==undefined&&b!==undefined?v.number*a/b:null;
 }
 export interface CandidateDeclaration249 {declarationId:string;property:string;value:Value245|null;rawValue:string;evidenceRole:string;sourceUrl:string|null;variantId:string|null}
-export interface Candidate249 {productId:string;name:string;declarations:readonly CandidateDeclaration249[]}
+export interface Candidate249 {productId:string;name:string;declarations:readonly CandidateDeclaration249[];
+ /** Phase251: set when the product's identity rests on its name alone but its declarations come from pages of
+  * different models; such a product is never reported as meeting requirements until its identity is reviewed. */
+ identityWarning?:string|null}
 export interface CriterionCheck249 {key:string;outcome:'meets'|'fails'|'unknown';reason:string;evidence:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}[]}
 export interface ProductCheck249 {productId:string;name:string;outcome:'meets_all'|'fails'|'unknown';checks:CriterionCheck249[]}
 export interface Advice249 {
@@ -99,7 +102,8 @@ export function decideAdvice249(input:{snapshot:DecisionSnapshot177;candidates:r
   // Only hard requirements exclude; a failed preference is reported but does not remove the product.
   const hardFail=cs.some((x,i)=>x.outcome==='fails'&&spec[i].priority==='hard');
   const anyUnknown=cs.some(x=>x.outcome==='unknown');
-  const outcome:ProductCheck249['outcome']=hardFail?'fails':anyUnknown?'unknown':cs.every(x=>x.outcome==='meets')?'meets_all':'fails';
+  let outcome:ProductCheck249['outcome']=hardFail?'fails':anyUnknown?'unknown':cs.every(x=>x.outcome==='meets')?'meets_all':'fails';
+  if(p.identityWarning&&outcome!=='fails'){outcome='unknown';cs.push({key:'identity',outcome:'unknown',reason:p.identityWarning,evidence:[]});}
   return {productId:p.productId,name:p.name,outcome,checks:cs};
  }).sort((a,b)=>a.name.localeCompare(b.name)||a.productId.localeCompare(b.productId));
  const meets=checks.filter(c=>c.outcome==='meets_all'),unknown=checks.filter(c=>c.outcome==='unknown'),fails=checks.filter(c=>c.outcome==='fails');
@@ -137,7 +141,12 @@ export function candidatesFromStore249(store:{products246(f:{category?:string}):
    const src=(store.db.prepare("SELECT r.url FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product' ORDER BY r.fetched_at DESC LIMIT 1").get(pid) as {url:string}|undefined)?.url??null;
    declarations.push({declarationId:'name:'+pid,property:'Capacity (stated in product name)',value:fromName,rawValue:p!.name!,evidenceRole:'product_name_declaration',sourceUrl:src,variantId:null});
   }
-  return {productId:pid,name:p?.name??pid,declarations};
+  // Phase251: a name-only identity key ("20 Litre Microwave Oven" on one host) can cover several models' pages.
+  const basis=(store.db.prepare('SELECT key_basis FROM products WHERE product_id=?').get(pid) as {key_basis:string}|undefined)?.key_basis;
+  const pages=[...new Set(declarations.map(d=>d.sourceUrl).filter((u):u is string=>!!u))];
+  const lastSegs=new Set(pages.map(u=>{try{return new URL(u).pathname.split('/').filter(Boolean).pop()??'';}catch{return u;}}).filter(x=>/\d/.test(x)));
+  const identityWarning=basis==='host_name'&&lastSegs.size>1?`identity rests on the product name, but its declarations come from ${lastSegs.size} model pages (${[...lastSegs].join(', ')}): identity needs review`:null;
+  return {productId:pid,name:p?.name??pid,declarations,identityWarning};
  });
 }
 

@@ -597,6 +597,19 @@ export class KnowledgeStore246 {
    this.invalidate(['category:'+it.category_id,'catitem:'+itemId],'category_item_reviewed');
   });
  }
+ /** Phase251: adds a category hypothesis to ONE product, with its evidence journaled (basis, citing revisions). It never
+  * touches identity, never merges products and applies to that product's variants by construction. */
+ assignProductCategory251(productId:string,categoryId:string,evidence:{basis:string[];revisionIds:string[];detail:string},at=new Date().toISOString()):boolean{
+  if(!ident(categoryId)||!evidence.basis.length||!shortText(evidence.detail,300))throw Error('251_invalid_category_assignment');
+  const row=this.db.prepare('SELECT category_hypotheses_json FROM products WHERE product_id=?').get(productId) as {category_hypotheses_json:string}|undefined;
+  if(!row)throw Error('251_unknown_product');
+  for(const r of evidence.revisionIds)if(!this.db.prepare('SELECT 1 FROM revisions WHERE revision_id=?').get(r))throw Error('246_unknown_source_revision');
+  const cats:string[]=JSON.parse(row.category_hypotheses_json);if(cats.includes(categoryId))return false;
+  this.tx(()=>{this.db.prepare('UPDATE products SET category_hypotheses_json=? WHERE product_id=?').run(canon([...cats,categoryId].sort()),productId);
+   this.event('product_category_assigned',{productId,categoryId,basis:evidence.basis,revisionIds:evidence.revisionIds,detail:evidence.detail},at);
+   this.invalidate(['category:'+categoryId,'category_observations:'+categoryId],'product_category_assigned');});
+  return true;
+ }
  /** Phase251: retires a category item (it stays in the table, journaled, and stops being returned). Used to withdraw
   * an item that should not be category knowledge, e.g. a persistence test item. Nothing is deleted. */
  retireCategoryItem246(itemId:string,reason:string,at=new Date().toISOString()):boolean{
