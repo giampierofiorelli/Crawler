@@ -597,6 +597,16 @@ export class KnowledgeStore246 {
    this.invalidate(['category:'+it.category_id,'catitem:'+itemId],'category_item_reviewed');
   });
  }
+ /** Phase251: retires a category item (it stays in the table, journaled, and stops being returned). Used to withdraw
+  * an item that should not be category knowledge, e.g. a persistence test item. Nothing is deleted. */
+ retireCategoryItem246(itemId:string,reason:string,at=new Date().toISOString()):boolean{
+  if(!/^cat_[0-9a-f]{20}$/.test(itemId)||!/^[a-z0-9_]{3,60}$/.test(reason))throw Error('251_invalid_retirement');
+  const it=this.db.prepare('SELECT category_id,superseded_by FROM category_items WHERE item_id=?').get(itemId) as {category_id:string;superseded_by:string|null}|undefined;
+  if(!it)throw Error('251_unknown_item');if(it.superseded_by)return false;
+  this.tx(()=>{this.db.prepare('UPDATE category_items SET superseded_by=?,updated_at=? WHERE item_id=?').run('retired:'+reason,at,itemId);
+   this.event('category_item_retired',{itemId,categoryId:it.category_id,reason},at);this.invalidate(['category:'+it.category_id,'catitem:'+itemId],'category_item_retired');});
+  return true;
+ }
  /** Adds request vocabulary to every item carrying a concept (vocabulary only; class, state and review unchanged). */
  addConceptAliases246(categoryId:string,conceptId:string,aliases:readonly string[],at=new Date().toISOString()):number{
   const rows=this.db.prepare('SELECT item_id,aliases_json FROM category_items WHERE category_id=? AND concept_id=?').all(categoryId,conceptId) as {item_id:string;aliases_json:string}[];

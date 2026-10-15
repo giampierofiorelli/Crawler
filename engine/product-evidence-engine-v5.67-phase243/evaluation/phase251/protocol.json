@@ -1,0 +1,37 @@
+{
+ "schema": "pee251.protocol.v1",
+ "registered": "2026-10-15, before any set 4 candidate was collected or read. Code under test frozen at the commit that adds this file (journey and lessons unchanged since a0a0eb1).",
+ "question": "On genuinely new real buying questions, does category teaching (D = generic repairs + ADOPTED_LESSONS250) improve decision quality over the generic repairs alone (R) and over Phase249 (A)?",
+ "arms": {
+  "A": "Phase249 journey round 3: worktree at e8c9d36, scripts/phase248-journey-eval.mjs, CATEGORY_REGISTRY248",
+  "R": "current code, no lessons (scripts/phase250-journey-arms.mjs --arm R)",
+  "D": "current code + ADOPTED_LESSONS250 (scripts/phase250-journey-arms.mjs --arm D)"
+ },
+ "stores": "Every arm runs on its own copy of the same base snapshot: pee-knowledge commit f9f20cc (Phase249 products, 2,385 declarations; no Phase250 lessons). D applies its lessons to its copy. Products and declarations are therefore identical across arms.",
+ "collection": {
+  "source": "Stack Exchange API only (api.stackexchange.com, via the container proxy); site pages are never fetched (robots.txt Disallow: /). Evaluation use, CC BY-SA attribution per case.",
+  "sites_and_quotas": {"cooking": 20, "coffee": 12, "diy": 10, "hardwarerecs": 10, "bicycles": 8},
+  "queries": "per site, search/advanced sort=relevance pagesize=50 for each of: 'buy', 'recommend', 'which should I', 'looking for', 'worth'",
+  "excluded_ids": "every question id in Phase248-250 benchmarks and in the Phase250 candidate pools (already seen by the author)",
+  "eligibility_title_regex": "\\b(buy|buying|purchas|recommend|which|looking for|choos|worth|should i (?:get|buy)|best|what (?:kind|type|size|features)|alternative|vs\\.?|versus|or a |upgrade|replac|need a|good)",
+  "order": "eligible candidates of a site are ordered by sha256('<site>:<question_id>') ascending; the first ones passing screening fill the quota",
+  "screening": "a candidate is excluded only for: no licence field; not a question about choosing, buying or replacing a product (e.g. recipe, technique, repair of an owned item, where-to-buy a consumable); non-English; duplicate of an included question. Every exclusion is recorded with its reason. Inclusion is never decided by whether a curriculum covers the product."
+ },
+ "gold": {
+  "labels": "evaluation/phase250/need-catalogue.json (unchanged). expectedCategory: catalogue id | other:<name> | null (no purchase decision) | ambiguous (several products, none chosen). expectedConcepts: catalogue needs of that category. unlistedNeeds: other needs (catalogue categories only). expectedBudget when the user states an anchored limit with an explicit currency. expectedBehaviour: advise | out_of_scope | clarify. candidates: for clarify, the categories in play. tags: accessory, rejected_product, owned_product, multiple_products, implicit_need, negation, physical_constraint, long_request.",
+  "author": "Claude, from the excerpt text only, before any arm runs. T2: not author-independent, not adjudicated."
+ },
+ "scoring": {
+  "decision_quality": {
+   "advise": "correct if the arm's category equals the gold category; harmful if it chooses another definite category; unhelpful abstention if null or ambiguous",
+   "out_of_scope": "correct if the arm chooses no category (null); unhelpful if ambiguous; harmful if it chooses a definite category",
+   "clarify": "correct if ambiguous or no category with a clarify decision; premature if it chooses one of the gold candidates; harmful if it chooses a category outside them"
+  },
+  "needs": "tp/fp/missed per catalogue need id over all cases; recall over listed needs and over listed+unlisted; precision; false needs on out_of_scope cases reported separately",
+  "budget": "an expected budget must be found exactly (currency and max); a budget found where none is expected is an error",
+  "paired": "per case, D vs R and R vs A: wins, losses and ties on decision quality (correct > unhelpful > premature > harmful) and on needs (tp minus fp)",
+  "primary": "decision quality (correct and harmful counts) and need precision/recall; no significance claims at this sample size",
+  "cost": "API requests, runtime per arm"
+ },
+ "after_first_run": "set 4 is spent for tuning; subsequent changes are reported as development"
+}

@@ -8,6 +8,7 @@
  *   ingest-observations --file F ingest a JSON list of observations produced by a live run (see phase246-live-wave.mjs)
  *   add-method-refs --file F    add professional test-method pointers (paraphrase + observed revision)
  *   apply-lessons                adopted Phase250 category lessons (hypothesis items and concept aliases; idempotent)
+  *   retire-item --item ID --reason R   retire a category item (journaled; never deleted)
  *   seed-relations --category C  add the initial graded relations (hypotheses + cited method references)
  *   category-graph --category C  relations, declared-attribute vocabulary, Phase116 audit, research priorities
  *   profile --category C [--commit REASON]   print (and optionally version) a category profile
@@ -136,6 +137,7 @@ try{
   case 'seed-vocabulary':{let n=0;for(const [c,m] of Object.entries(CONCEPT_VOCABULARY248))for(const [id,al] of Object.entries(m))n+=store.addConceptAliases246(c,id,al);out({itemsUpdated:n});break;}
   // Phase250: the adopted category lessons (need hypotheses, everyday vocabulary, mechanism and method statements).
   case 'apply-lessons':out(applyLessons250(store,ADOPTED_LESSONS250));break;
+  case 'retire-item':out({retired:store.retireCategoryItem246(flags.item,flags.reason)});break;
   case 'seed-relations':out({category:flags.category,...seedRelations247(store,flags.category)});break;
   case 'category-graph':{const c=flags.category;const comp=compileTo116(store,c);
    out({categoryId:c,relations:relations247(store,c),vocabulary:attributeVocabulary247(store,c),phase116Audit:comp.audit,phase116Reason:comp.reason,
