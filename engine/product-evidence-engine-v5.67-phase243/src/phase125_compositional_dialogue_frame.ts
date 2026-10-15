@@ -94,13 +94,16 @@ function roleFor(t:string,aspect:SchemaAspect125,idx:number,lastOtherAspectEnd:n
 const CUR_SYM:Record<string,string>={'$':'USD','€':'EUR','£':'GBP'};
 const CUR_WORD:Record<string,string>={dollar:'USD',dollars:'USD',usd:'USD',euro:'EUR',euros:'EUR',eur:'EUR',pound:'GBP',pounds:'GBP',gbp:'GBP',quid:'GBP'};
 function monetaryBudget(raw:string):Composition125['userBudget']{
- const t=raw.toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ');
+ // Phase251: "between £200 and £350" is a range.
+ const t=raw.toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ').replace(/\bbetween ([$€£])\s?(\d{2,6}) (?:and|to) [$€£]?\s?(\d{2,6})\b/g,'$1$2-$3');
  const num='(\\d{2,6}(?:[.,]\\d{2})?)';const sym='([$€£])';const word='(dollars?|usd|euros?|eur|pounds?|gbp|quid)';
  // amount forms: $500 | 500$ | 500 euros | usd 500 ; optional range "$400-500" / "400 to 500 euros"
  const re=new RegExp(`${sym}\\s?${num}(?:\\s?(?:-|–|to)\\s?[$€£]?\\s?${num})?|${num}(?:\\s?(?:-|–|to)\\s?${num})?\\s?${sym}|${num}(?:\\s?(?:-|–|to)\\s?${num})?\\s?${word}\\b|\\b${word}\\s?${num}`,'g');
  const BEFORE=/(?:\b(?:under|below|up to|upto|max|maximum|less than|no more than|not more than|at most|within|sotto|fino a|meno di|massimo|budget(?: is| of| around| about| at| was)?|spend(?: up to)?|cap(?:ped)? at)|(?:not|n't|never) (?:\w+ ){0,2}(?:go|spend|pay) (?:over|above|more than)|<|≤)\s*$/;
  const AFTER=/^\s*(?:tops\b|max\b|maximum\b|or less\b|or under\b|or below\b|at most\b|at the most\b|or so\b)/;
- const found:{currency:string;min:number|null;max:number;anchored:boolean;start:number;end:number}[]=[];
+ // Phase251: anchors that state the user's own limit, as opposed to comparatives that can describe a price tier.
+ const STRONG=/(?:\bbudget\b[^.?!]{0,25}|\b(?:spend|afford|pay|maximum|max|at most|cap(?:ped)? at)\b[^.?!]{0,12}|(?:not|n't|never) (?:\w+ ){0,2}(?:go|spend|pay) (?:over|above|more than) |<\s*|≤\s*)$/;
+ const found:{currency:string;min:number|null;max:number;anchored:boolean;strong:boolean;start:number;end:number}[]=[];
  for(const m of t.matchAll(re)){
   const g=m.slice(1);const n=(s:string|undefined)=>s===undefined?undefined:Number(s.replace(',','.'));
   let currency:string,a:number|undefined,b:number|undefined;
@@ -113,12 +116,14 @@ function monetaryBudget(raw:string):Composition125['userBudget']{
   const before=t.slice(Math.max(0,start-40),start),after=t.slice(end,end+20);
   // A budget word anywhere just before a range ("Budget $400-500") or the amount anchors it.
   const anchored=BEFORE.test(before)||AFTER.test(after)||/\bbudget\b[^.?!]{0,25}$/.test(before);
-  found.push({currency,min:b!==undefined?a:null,max:b!==undefined?b:a,anchored,start,end});
+  found.push({currency,min:b!==undefined?a:null,max:b!==undefined?b:a,anchored,strong:STRONG.test(before)||AFTER.test(after),start,end});
  }
  // An amount joined to an anchored one by "and/or" shares its anchor ("budget $600 and £400" is a conflict).
  for(let i=1;i<found.length;i++)if(!found[i].anchored&&found[i-1].anchored&&/^\s*(?:and|or|,)\s*$/.test(t.slice(found[i-1].end,found[i].start)))found[i].anchored=true;
  const lim=found.filter(f=>f.anchored);
  if(!lim.length)return null;
+ // Three or more prices with only comparative anchors describe price tiers ("pans below $60, $60 to $130, over $130").
+ if(found.length>=3&&!lim.some(f=>f.strong))return null;
  const key=(f:typeof lim[number])=>`${f.currency}|${f.min}|${f.max}`;
  if(new Set(lim.map(key)).size!==1)return null;
  const e=lim[0];if(e.min!==null&&e.min>e.max)return null;

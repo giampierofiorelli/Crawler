@@ -20,7 +20,9 @@ export interface NeedLesson250 {id:string;kind:ConceptKind128;statement:string;a
 export interface CategoryLesson250 {
  categoryId:string;
  /** Registry additions for a category PEE does not name yet, or extra names for one it does. */
- registry?:{aliases?:string[];cues?:string[];partPhrases?:string[];aliasContext?:Record<string,string[]>};
+ registry?:{aliases?:string[];cues?:string[];partPhrases?:string[];aliasContext?:Record<string,string[]>;
+  /** Phase251: cues withdrawn because they name a domain shared by several products, not this category. */
+  dropCues?:string[]};
  needs:NeedLesson250[];
  /** At most one mechanism and one measurement-method statement per category (hypotheses, no concept). */
  mechanism?:string;measurement?:string;
@@ -181,6 +183,10 @@ export const ADOPTED_LESSONS250:readonly CategoryLesson250[]=[
  {categoryId:'coffee_grinders',registry:{aliasContext:Object.fromEntries(['grinder','hand grinder','manual grinder','electric grinder','blade grinder'].map(a=>[a,['coffee','espresso','beans','brew','pour over','french press','aeropress','moka']]))},needs:[]},
  {categoryId:'toaster_ovens',registry:{aliases:['otg','oven toaster griller']},needs:[]},
  {categoryId:'steam_cookers',registry:{partPhrases:['bamboo steamer']},needs:[]},
+ // Phase251 (development, after the set 4 first run): "coffee" names beans and the drink, shared by grinders, roasters,
+ // manual brewers and their accessories; as a cue it sent a roaster, an Aeropress filter and a French press to coffee
+ // machines (set 4: 3 harmful decisions; set 3: 2 wrong attributions). Machine names and espresso-drink cues remain.
+ {categoryId:'coffee_machines',registry:{dropCues:['coffee']},needs:[]},
 ];
 
 /** Phrases, counterexamples, needs and categories a curriculum uses, against LESSON_BUDGET250. */
@@ -208,6 +214,7 @@ export function registryWithLessons250(base:readonly CategoryEntry248[],lessons:
   const add=(a:readonly string[]|undefined,b:readonly string[]|undefined)=>[...new Set([...(a??[]),...(b??[])])];
   e.aliases=add(e.aliases,l.registry?.aliases);
   if(l.registry?.cues?.length)e.cues=add(e.cues,l.registry.cues);
+  if(l.registry?.dropCues?.length&&e.cues)e.cues=e.cues.filter(c=>!l.registry!.dropCues!.includes(c));
   if(l.registry?.partPhrases?.length)e.partPhrases=add(e.partPhrases,l.registry.partPhrases);
   const ce={...(e.needCounterexamples??{})} as Record<string,readonly string[]>;
   for(const n of l.needs)if(n.counterexamples?.length)ce[n.id]=add(ce[n.id],n.counterexamples);
