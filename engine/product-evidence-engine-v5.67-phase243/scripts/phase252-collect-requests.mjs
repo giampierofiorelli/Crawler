@@ -15,7 +15,22 @@ const ent=s=>s.replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&lt;/g,'<')
 const plain=html=>ent(html.replace(/<pre[\s\S]*?<\/pre>/gi,' ').replace(/<code>[\s\S]*?<\/code>/gi,' ').replace(/<[^>]+>/g,' ')).replace(/\s+/g,' ').trim();
 const cut=(s,n=1500)=>s.length<=n?s:s.slice(0,s.lastIndexOf(' ',n)).trim();
 const log=[];const strata={};const taken=new Set();let stopped=null;
-outer:for(const [stratum,queries] of Object.entries(P.collection.strata)){
+const item=(stratum,site,it,q,salt)=>{const title=ent(it.title);return {stratum,site:`${site}.stackexchange.com`,questionId:it.question_id,title,text:cut(`${title}. ${plain(it.body??'')}`),link:it.link,
+ author:it.owner?.display_name?ent(it.owner.display_name):null,license:it.content_license??null,created:it.creation_date,query:q,order:createHash('sha256').update(`${salt}:${it.question_id}`).digest('hex')};};
+if(F.frame==='5b'){// amendment_5b: tagged=equipment, by votes; the set 5 pool ids are added to --exclude by the caller
+ const pool=new Map();
+ for(const [site,pages] of [['cooking',4],['coffee',2]])for(let page=1;page<=pages;page++){
+  const u=new URL('https://api.stackexchange.com/2.3/questions');
+  for(const [k,v] of Object.entries({order:'desc',sort:'votes',site,tagged:'equipment',pagesize:'100',page:String(page),filter:'withbody'}))u.searchParams.set(k,v);
+  const r=await fetch(u,{headers:{'accept-encoding':'gzip'}});
+  if(r.status===403||r.status===429){log.push({site,page,status:r.status});stopped='HTTP '+r.status;break;}
+  const j=await r.json();log.push({site,page,status:r.status,items:(j.items??[]).length,quotaRemaining:j.quota_remaining});
+  for(const it of j.items??[])if(!exclude.has(String(it.question_id))&&!pool.has(it.question_id)&&ELIGIBLE.test(ent(it.title)))pool.set(it.question_id,item('_5b',site,it,'tagged:equipment','252b'));
+  await new Promise(res=>setTimeout(res,1100));
+ }
+ strata._5b=[...pool.values()].sort((a,b)=>a.order.localeCompare(b.order));
+}
+else outer:for(const [stratum,queries] of Object.entries(P.collection.strata)){
  const seen=new Map();
  for(const [site,q] of queries){
   if(log.length>=MAX_REQUESTS){stopped='api_budget';break outer;}

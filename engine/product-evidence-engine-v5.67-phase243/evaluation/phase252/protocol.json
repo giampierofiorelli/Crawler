@@ -56,5 +56,14 @@
   "uncertainty": "Wilson 95% intervals on correct rates; paired counts; no significance claims",
   "budget_and_cost": "budget exactness; API requests; runtime per arm"
  },
- "after_first_run": "first-run results are committed unchanged; after examination set 5 is spent and every later change is development"
+ "amendment_5b": {
+  "registered": "2026-10-15, after screening set 5 (whose category-term frame yielded about 10 in-scope cases: most hits were technique, use or repair questions) and BEFORE any 5b candidate was collected or read. Code still frozen at d41b3b2. Set 5 is reported on its own with its shortfall; 5b is reported separately and pooled, always labelled.",
+  "why": "the shortfall comes from the sampling frame (term search ranks usage questions), not from any arm output; no arm had run. The new frame is chosen for yield of purchase questions, not for wording.",
+  "source": "Stack Exchange API /questions with tagged=equipment, sort=votes, order=desc, pagesize=100, filter=withbody: cooking pages 1-4, coffee pages 1-2 (6 requests)",
+  "excluded_ids": "phase252-excluded-ids.txt plus every set 5 pool id",
+  "eligibility": "the same title regex",
+  "order": "sha256('252b:<question_id>') ascending over the whole 5b pool",
+  "roles_and_quotas": "same roles and screening; IN_SCOPE or CLARIFY at most 3 per catalogue category in 5b; CONFUSING_CONTROL at most 6; OUT_OF_SCOPE_CONTROL at most 8. Reading stops when the pool is exhausted."
+ },
+ "after_first_run":"first-run results are committed unchanged; after examination set 5 is spent and every later change is development"
 }
