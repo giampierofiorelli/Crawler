@@ -9,7 +9,10 @@ import {CATEGORY_REGISTRY248} from '../dist/src/phase248_category_registry.js';
 const F=Object.fromEntries(process.argv.slice(2).reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/,''),arr[i+1]]],[]));
 const bench=JSON.parse(readFileSync(resolve(F.bench),'utf8'));
 const store=new KnowledgeStore246(resolve(F.db??join(defaultKnowledgeDir246(),'pee246.sqlite')));
-const safetyNotices=F.safety?F.safety.split(',').flatMap(f=>JSON.parse(readFileSync(resolve(f),'utf8')).notices):undefined;
+const fromFiles=F.safety?F.safety.split(',').flatMap(f=>JSON.parse(readFileSync(resolve(f),'utf8')).notices):[];
+// --safety-store 1: notices persisted under the active OGL policy ($PEE_KNOWLEDGE_DIR/safety-notices/opss-notices.json).
+const fromStore=F['safety-store']?Object.values(JSON.parse(readFileSync(join(defaultKnowledgeDir246(),'safety-notices','opss-notices.json'),'utf8')).notices):[];
+const safetyNotices=fromFiles.length||fromStore.length?[...fromFiles,...fromStore]:undefined;
 const opts=safetyNotices?{safetyNotices}:{};
 const texts=Object.fromEntries(bench.cases.map(c=>[c.id,c.text]));
 const t0=performance.now();

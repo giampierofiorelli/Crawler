@@ -8,8 +8,10 @@
  *  node scripts/phase248-safety-notices.mjs fetch --category air_fryers --max 20 --out FILE [--raw DIR] [--pause-ms 1000]
  *  node scripts/phase248-safety-notices.mjs parse --raw DIR --out FILE        (re-parse saved content API JSON offline)
  *  node scripts/phase248-safety-notices.mjs profile --in FILE --category C    (category hazard profile)
+ *  fetch ... --persist 1 [--policy FILE]: keep parsed notices in $PEE_KNOWLEDGE_DIR/safety-notices/ under the active
+ *  OGL policy (evaluation/phase249/opss-policy-active.json); refused unless the policy gate passes with this run's robots check.
  */
-import {readFileSync,writeFileSync,mkdirSync,readdirSync} from 'node:fs';
+import {readFileSync,writeFileSync,mkdirSync,readdirSync,existsSync,renameSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {restrictedHttpsTransport as T,RESEARCH_AGENT,robotsDecision} from '../dist/src/approved_web_reader.js';
 import {parseSafetyNotice248,categorySafetyProfile248,SAFETY_NOTICE_PARSER248} from '../dist/src/phase248_safety_notices.js';
@@ -20,7 +22,7 @@ const F=Object.fromEntries(rest.reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/
 const HOST='https://www.gov.uk';
 const FORMAT='product_safety_alert_report_recall';
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
-let used=0;const budget=Number(F.budget??60);
+let used=0;const budget=Number(F.budget??60);let robotsAt=null,robotsOk=false;
 async function get(url){
  if(used>=budget)throw Error('budget_exhausted');used++;
  const r=await T.get(url,RESEARCH_AGENT,3_000_000);await pause(Number(F['pause-ms']??1000));
@@ -29,7 +31,7 @@ async function get(url){
 }
 async function fetchCategory(){
  const cat=CATEGORY_REGISTRY248.find(c=>c.id===F.category);if(!cat)throw Error('unknown category');
- const robots=await get(`${HOST}/robots.txt`);
+ const robots=await get(`${HOST}/robots.txt`);robotsAt=new Date().toISOString();robotsOk=robots.status===200&&robotsDecision(robots.body,'/api/content/product-safety-alerts-reports-recalls/x')==='allow';
  const allowed=p=>robots.status===200?robotsDecision(robots.body,p):'unknown';
  const max=Number(F.max??20);const links=new Map();
  for(const alias of cat.aliases){
@@ -52,7 +54,24 @@ async function fetchCategory(){
 if(cmd==='fetch'){
  const notices=await fetchCategory();
  writeFileSync(resolve(F.out),JSON.stringify({schema:'pee248.safety-notices.v1',parser:SAFETY_NOTICE_PARSER248,category:F.category,requests:used,notices},null,1)+'\n');
- console.log(JSON.stringify({category:F.category,requests:used,notices:notices.length,inCategory:notices.filter(n=>n.product.categoryIds.includes(F.category)).length}));
+ let persisted=null;
+ if(F.persist){
+  // Phase249: persistence only under the active, verified OGL policy, with this run's robots check as robotsCheckedAt.
+  const {approvedMetadataDiscovery75}=await import('../dist/src/phase75_source_discovery.js');
+  const {defaultKnowledgeDir246}=await import('../dist/src/phase246_knowledge_store.js');
+  const active=JSON.parse(readFileSync(resolve(F.policy??'evaluation/phase249/opss-policy-active.json'),'utf8'));
+  const policy={...active.policy,robotsCheckedAt:robotsOk?robotsAt:null};
+  if(!robotsOk||!approvedMetadataDiscovery75(policy,new Date().toISOString())||!policy.permittedOperations.includes('fact_storage'))
+   persisted={stored:0,reason:'policy_gate_refused'};
+  else{
+   const dir=join(defaultKnowledgeDir246(),'safety-notices');mkdirSync(dir,{recursive:true});const f=join(dir,'opss-notices.json');
+   const prev=existsSync(f)?JSON.parse(readFileSync(f,'utf8')):{schema:'pee249.opss-store.v1',notices:{}};
+   for(const n of notices){const old=prev.notices[n.source.url];if(!old||String(old.updatedAt??'')<=String(n.updatedAt??''))prev.notices[n.source.url]=n;}
+   prev.policySourceId=policy.sourceId;prev.attribution='Contains public sector information licensed under the Open Government Licence v3.0.';prev.updatedAt=new Date().toISOString();
+   writeFileSync(f+'.tmp',JSON.stringify(prev));renameSync(f+'.tmp',f);persisted={stored:notices.length,total:Object.keys(prev.notices).length,file:f};
+  }
+ }
+ console.log(JSON.stringify({category:F.category,requests:used,notices:notices.length,inCategory:notices.filter(n=>n.product.categoryIds.includes(F.category)).length,persisted}));
 }else if(cmd==='parse'){
  const at='offline';const notices=readdirSync(F.raw).filter(f=>f.endsWith('.json')).sort().map(f=>{const d=JSON.parse(readFileSync(join(F.raw,f),'utf8'));
   return {file:f,...parseSafetyNotice248(d,HOST+(d.base_path??''),at,CATEGORY_REGISTRY248)};});

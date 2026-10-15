@@ -1,0 +1,35 @@
+{
+ "status": "ACTIVE (narrow scope). Owner authorisation recorded below; the conditions were verified by the assistant on 2026-10-14/15 from primary sources. No human legal review was performed and none is claimed.",
+ "ownerAuthorisation": "Owner instruction of 2026-10-14: 'I approve proceeding with the proposed GOV.UK OPSS Open Government Licence source policy, CONDITIONAL on independently verifying' licence applicability, attribution, exceptions and third-party rights, access and usage restrictions, and commercial reuse.",
+ "verification": {
+  "licenceApplicability": "Every product-safety notice page tested carries the GOV.UK footer 'All content is available under the Open Government Licence v3.0, except where otherwise stated'. https://www.gov.uk/help/reuse-govuk-content states that content published on GOV.UK may be reused under the OGL and lists the Content API as a way to reuse it. GOV.UK terms (https://www.gov.uk/help/terms-conditions) say most content is Crown copyright under the OGL and that non-OGL content is usually credited.",
+  "otherwiseStated": "30 notice bodies fetched through the Content API (6 development, 24 held-out) were scanned for copyright, credit, 'reproduced' or licence statements: none found.",
+  "attribution": "Required statement: 'Contains public sector information licensed under the Open Government Licence v3.0.' It is carried on every parsed notice (source.attribution) and must accompany any display or export.",
+  "exemptionsAndThirdPartyRights": "The OGL excludes personal data, logos and crests, third-party rights the provider cannot license, and other IP such as trade marks. Product images and PDF reports are delivered as attachments and are never fetched or stored. Brand names are kept only as factual identifiers. Seller or retailer names that appear in product lines are business names; any individual's name is not retained.",
+  "accessConditions": "GOV.UK allows scraping that respects robots.txt and rate limits. robots.txt disallows only /search/all*. The Content API (supported) and the Search API (documented, unsupported, may change) are used one request at a time, at least 1 s apart, and stop on 403/429.",
+  "commercialReuse": "The OGL v3.0 grants a worldwide, royalty-free, perpetual, non-exclusive licence to exploit the information commercially and non-commercially, conditional on attribution.",
+  "nonEndorsement": "PEE must not suggest official status or endorsement by OPSS/GOV.UK."
+ },
+ "policy": {
+  "sourceId": "gov-uk-opss-product-safety",
+  "host": "www.gov.uk",
+  "basis": "verified_open_licence",
+  "rightsDocumentId": "OGL-3.0",
+  "rightsDocumentUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "reviewedBy": "owner-authorised-2026-10-14_assistant-verified",
+  "reviewedAt": "2026-10-15T00:00:00Z",
+  "validUntil": "2027-04-15T00:00:00Z",
+  "permittedOperations": ["metadata_discovery", "page_retrieval", "local_analysis", "fact_storage", "public_citation", "derived_publication"],
+  "robots": "allowed",
+  "robotsCheckedAt": "SET_AT_RUN_TIME",
+  "websiteTerms": "reviewed_permitted",
+  "termsCheckedAt": "2026-10-15T00:00:00Z",
+  "commercialUseReviewed": true
+ },
+ "scope": {
+  "paths": ["/api/search.json?filter_format=product_safety_alert_report_recall", "/api/content/product-safety-alerts-reports-recalls/*"],
+  "retained": "parsed notice fields only (no HTML bodies, no attachments)",
+  "reverify": "before validUntil, or whenever GOV.UK terms or the OGL statement change; robotsCheckedAt is refreshed by every run"
+ },
+ "evidenceSemantics": "Supplementary regulatory safety evidence about identified products; never performance testing, never a ranking signal."
+}

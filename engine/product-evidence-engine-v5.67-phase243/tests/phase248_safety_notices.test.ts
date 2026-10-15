@@ -48,3 +48,13 @@ test('safety profile: counts notices by hazard and type without implying failure
  assert.equal(p.counterfeit,1);assert.equal(p.seriousOrHigh,2);assert.equal(p.rankingAuthorized,false);
  assert.equal(categorySafetyProfile248([a],'toasters').notices,0);
 });
+test('active OPSS policy: passes the source-policy gate only with a fresh robots check and before expiry; never claims a human legal review',async()=>{
+ const {readFileSync}=await import('node:fs');const {approvedMetadataDiscovery75}=await import('../src/phase75_source_discovery.js');
+ const a=JSON.parse(readFileSync(new URL('../../evaluation/phase249/opss-policy-active.json',import.meta.url),'utf8'));
+ const at='2026-10-15T12:00:00Z';
+ assert.equal(approvedMetadataDiscovery75({...a.policy,robotsCheckedAt:'2026-10-15T11:00:00Z'},at),true);
+ assert.equal(approvedMetadataDiscovery75({...a.policy,robotsCheckedAt:null},at),false);
+ assert.equal(approvedMetadataDiscovery75({...a.policy,robotsCheckedAt:'2026-10-13T11:00:00Z'},at),false);
+ assert.equal(approvedMetadataDiscovery75({...a.policy,robotsCheckedAt:'2027-04-16T11:00:00Z'},'2027-04-16T12:00:00Z'),false);
+ assert.match(a.status,/No human legal review/);
+});
