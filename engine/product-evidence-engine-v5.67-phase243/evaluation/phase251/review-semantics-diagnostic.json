@@ -1,0 +1,122 @@
+{
+ "schema": "pee251.review-semantics-diagnostic.v1",
+ "tier": "T1 synthetic contrast statements (research v9 Addendum IV §2.1 probes); scripted provider, not a model",
+ "totals": {
+  "statements": 12,
+  "correctAccepted": 12,
+  "mutationsRejected": 2,
+  "nativeAtomsWithoutModel": 0,
+  "phase113NegationFlagged": true,
+  "phase113Status": "abstain"
+ },
+ "cases": [
+  {
+   "id": "qualified_criticism",
+   "phenomenon": "negation / qualified praise and criticism",
+   "mutation": "criticism read as praise",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "negated_comparison",
+   "phenomenon": "negation",
+   "mutation": "negation dropped: read as louder",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "condition",
+   "phenomenon": "condition of use",
+   "mutation": "condition dropped (universal six hours)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "surface_scope",
+   "phenomenon": "condition of use",
+   "mutation": "surface-specific criticism generalised as praise",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "variant_attribution",
+   "phenomenon": "product and variant attribution",
+   "mutation": "old product's leak attributed to this product",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "comparison_direction",
+   "phenomenon": "comparison direction",
+   "mutation": "comparison direction reversed",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "attributed_claim",
+   "phenomenon": "reviewer observation versus unverified claim",
+   "mutation": "manufacturer claim promoted to a direct test",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "hedged_recall",
+   "phenomenon": "reviewer observation versus unverified claim",
+   "mutation": "unverified recall stated as an observed fact",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "temporal_revision",
+   "phenomenon": "qualified praise and criticism",
+   "mutation": "initial expectation taken as the result",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "implicit_aspect",
+   "phenomenon": "implicit aspects",
+   "mutation": "implicit durability aspect mapped to the wrong aspect",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "wrong_number",
+   "phenomenon": "measurement fidelity",
+   "mutation": "number not in the text",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": true,
+   "rejectionReason": "initial:s1:claim_0:unanchored_numeric_value"
+  },
+  {
+   "id": "ungrounded_span",
+   "phenomenon": "grounding",
+   "mutation": "claim not present in the text",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "mutationRejected": true,
+   "rejectionReason": "initial:s1:claim_0:ambiguous_or_missing_anchor"
+  }
+ ]
+}
