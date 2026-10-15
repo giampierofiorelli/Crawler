@@ -1,0 +1,481 @@
+{
+ "schema": "pee248.journey-benchmark.v1",
+ "split": "real_requests_heldout",
+ "written": "Gold annotations by the assistant, written before running the journey on these texts (2026-10-15). Request texts are real, independently authored questions from Stack Exchange (title plus the opening of the body), selected for buying or choice intent; they are not synthetic.",
+ "attribution": "Each text is an excerpt of a Stack Exchange post by the named author, licensed under the CC BY-SA version stated per case; the excerpts in this file are shared under the same licences. Retrieved through the Stack Exchange API.",
+ "cases": [
+  {
+   "id": "r01",
+   "text": "What to look for in an air fryer I'm looking to get an air fryer to make stuff that is usually deep-fried, like falafel, chicken nuggets or spring rolls, hopefully with less oily taste and without having to buy and dispose of considerable amounts of oil. Prices vary wildly, here 's one for 42 USD and here 's one for 174 USD. Both have about 1400 W and about 4 liters capacity. Is the",
+   "expectedCategory": "air_fryers",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 123546,
+    "link": "https://cooking.stackexchange.com/questions/123546/what-to-look-for-in-an-air-fryer",
+    "author": "AndreKR",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r02",
+   "text": "Is there a difference between a Convection Oven and an Air Fryer? I'm in the market for a new range. As the subject line asks, “Is there a difference between a Convection Oven and an Air Fryer?” I ask because I can't tell the difference. They both seem the same to me. They are both dry heat circulated by a fan . I'm looking at ranges that say they are air-fryers, at a cost over ordinary convection ranges. I have a",
+   "expectedCategory": "air_fryers",
+   "expectedConcepts": [
+    "forced_hot_air_convection"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 120390,
+    "link": "https://cooking.stackexchange.com/questions/120390/is-there-a-difference-between-a-convection-oven-and-an-air-fryer",
+    "author": "Paulb",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r03",
+   "text": "Super-heated steamer vs. air fryer for replacing deep frying I am considering a replacement for deep frying. I have deep fried small fish into crispy protein sticks and chicken in a typical pot. I heard a tip that professional deep fryers do not heat the bottom of the oil containers to avoid charring the bottom residue, prolonging the usability of the oil while making it also healthier. Thus, I was considering to buy",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "clarify",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 128813,
+    "link": "https://cooking.stackexchange.com/questions/128813/super-heated-steamer-vs-air-fryer-for-replacing-deep-frying",
+    "author": "Imsa",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r04",
+   "text": "Blender Buying - Square vs. Round Container After looking at this blender question , I had a follow-up question. I've seen both square and round containers/lids for blenders. Is either better? I tend to see square blenders at smoothie shops - leading me to assume square ones are better. By better I mean, you don't have to do as much scraping and maybe they have more settings and automated features. I",
+   "expectedCategory": "blenders",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 5174,
+    "link": "https://cooking.stackexchange.com/questions/5174/blender-buying-square-vs-round-container",
+    "author": "Chad",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r05",
+   "text": "Blender vs food processor vs juicer When should a blender be used instead of a food processor or instead of a juicer? I'm planning on investing in one of them. I would use if for making smoothies and beverages. I've got a Magic Bullet which I put frozen berries in, but find the consistency is too thick to drink.",
+   "expectedCategory": "blenders",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 34378,
+    "link": "https://cooking.stackexchange.com/questions/34378/blender-vs-food-processor-vs-juicer",
+    "author": "Celeritas",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r06",
+   "text": "Buying a \"blender\" that can purée a potato My wife had a \"smoothie\" made by a co-worker that is based on green apples and raw red potatos. Our smoothie maker can't do that and leaves unchopped bits and a gritty feel. Her friend uses a Vitamix blender, and looking up the model number not only induced sticker shock, but reviews raised concerns with the item leaving bits of teflon in the food etc. And",
+   "expectedCategory": "blenders",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 66188,
+    "link": "https://cooking.stackexchange.com/questions/66188/buying-a-blender-that-can-pur%c3%a9e-a-potato",
+    "author": "JDługosz",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r07",
+   "text": "What to look for when purchasing a blender? I currently don't have a blender after purchasing my own home and am looking to get one for making smoothies primarily, but also for pureeing for soups, etc. I had a smoothie maker that I won as a prize; it was very obviously a cheap unit. It barely handled frozen fruit and yogurt. Ice cream and frozen fruit burned up the motor. I am aware of the extreme",
+   "expectedCategory": "blenders",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 4278,
+    "link": "https://cooking.stackexchange.com/questions/4278/what-to-look-for-when-purchasing-a-blender",
+    "author": "JYelton",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r08",
+   "text": "Microwave rice cooker vs low-end electric rice cookers So, at my parents home we had a two part microwave rice cooker which created relatively dry rice in my experience (though I only used it myself a couple of time), but I actually like it better than traditionally boiled rice on a stove (which in my experience turns out quite wet-ish no matter how you make it). Now, I am not a huge fan of rice either way, so",
+   "expectedCategory": "rice_cookers",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 55277,
+    "link": "https://cooking.stackexchange.com/questions/55277/microwave-rice-cooker-vs-low-end-electric-rice-cookers",
+    "author": "David Mulder",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r09",
+   "text": "Pressure cooker rice quality vs high-end rice cooker I'm considering buying a proper rice cooker, as we've eaten most of the non-stick coating of the cheap one. The forums rave about induction heating, Zojirushi, Tiger, Toshiba RC-18NMF with its cast-iron pot, Buffalo with their stainless steel pots. And now there is also the Tefal RK704 with its ceramic pot to consider... Occasionally it comes up that folks",
+   "expectedCategory": "rice_cookers",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 52003,
+    "link": "https://cooking.stackexchange.com/questions/52003/pressure-cooker-rice-quality-vs-high-end-rice-cooker",
+    "author": "Evgeni Sergeev",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r10",
+   "text": "Why would I buy a rice cooker? A friend of mine I'm getting an apartment with next year said that we should invest in a rice cooker. I'm fairly adept in the kitchen and don't come from a family that uses a rice cooker so I would default to cooking rice in a pot. He seemed to think that he would buy a rice cooker only for the convenience of cooking rice without worrying about it. Is",
+   "expectedCategory": "rice_cookers",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 55241,
+    "link": "https://cooking.stackexchange.com/questions/55241/why-would-i-buy-a-rice-cooker",
+    "author": "Throsby",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r11",
+   "text": "Rice Cooker Technology Best Suited for White Basmati Rice? This is my staple food and unfortunately my 25 year old National rice cooker just died. The crop of new models are bewilderingly complex--most troubling is that few seem to have a \"Non-Sticky\" or \"Long Grain\" option (which my old National did and which worked great). I'm really just looking for set and forget convenience and decent quality rice and would",
+   "expectedCategory": "rice_cookers",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 90594,
+    "link": "https://cooking.stackexchange.com/questions/90594/rice-cooker-technology-best-suited-for-white-basmati-rice",
+    "author": "Jimmy Bernstein",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r12",
+   "text": "What should I look for in an electric steamer for use to make tamales I don't know a whole lot about what makes an electric steamer a good steamer. I'm looking for recommendations for one where I'm hoping to make tamales with. The plan is to make large batches so capacity is definitely a concern. Would the multi-level steamers work? Any specific recommendations would be great. Any suggestions on what features to look for",
+   "expectedCategory": "steam_cookers",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 17449,
+    "link": "https://cooking.stackexchange.com/questions/17449/what-should-i-look-for-in-an-electric-steamer-for-use-to-make-tamales",
+    "author": "MacAnthony",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r13",
+   "text": "Recommend decent, sturdy steamer basket? I've gone through a couple of cheap metal collapsible steamer baskets in the last year and am looking for something that will last longer. Do you have one that you like? I've seen the silicon ones but have read that it may alter the taste of the vegetables. What is your experience?",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 19143,
+    "link": "https://cooking.stackexchange.com/questions/19143/recommend-decent-sturdy-steamer-basket",
+    "author": "Linda",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r14",
+   "text": "What is the best drip coffee maker to buy? I am looking at the Technivorm models. I currently have a Bunn but having trouble getting the right grind to make it give me taste I want. Mind you, I bought it 1992!",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 5144,
+    "link": "https://coffee.stackexchange.com/questions/5144/what-is-the-best-drip-coffee-maker-to-buy",
+    "author": "Daniel P Burns",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r15",
+   "text": "Which creates the strongest (and/or better quality) coffee? Espresso Maker vs. French Press For a year I used an Espresso maker to make my morning cup of jo. Recently my maker broke and I decided to try out a french press. I originally though that the espresso maker would be stronger because it forced steam through the granules, but now am starting to lean towards a french press as long as I let it sit in the water for longer than around 5",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 3491,
+    "link": "https://coffee.stackexchange.com/questions/3491/which-creates-the-strongest-and-or-better-quality-coffee-espresso-maker-vs-f",
+    "author": "Sethmr",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r16",
+   "text": "Actual Cezve: advice for buying I'd like to buy 200-300ml Cezve . I'm not sure what features are important, such as what material it's made of, handle design, pot shape, etc. What are the important features to look for when purchasing a cezve, as far as function or usability is concerned?",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 2327,
+    "link": "https://coffee.stackexchange.com/questions/2327/actual-cezve-advice-for-buying",
+    "author": "Ilan",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r17",
+   "text": "Which non-stick pan to buy? Recently, I found a small but deep scratch on my pan. I can see the metalic color on the scratch. I am not sure how much serious it is. Now, I want to buy a new one. I see different prices with different qualities and I have no idea what to buy. I live alone and I cook for one person but sometimes for several meals (3 meals). Some people suggest me to buy a",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 59897,
+    "link": "https://cooking.stackexchange.com/questions/59897/which-non-stick-pan-to-buy",
+    "author": "oruma",
+    "license": null
+   }
+  },
+  {
+   "id": "r18",
+   "text": "Which measuring scale should I buy? I am trying to buy a measuring scale so that I can stop using cups and start measuring by weight. I’m personally not sure which to buy. Here are two options: Can some experienced bakers out there tell me which would be more convenient (in terms of time, dirty dishes, durability etc.)? If you prefer neither, is there one that you really do prefer? Note: I’m",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 112917,
+    "link": "https://cooking.stackexchange.com/questions/112917/which-measuring-scale-should-i-buy",
+    "author": "Alpha",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r19",
+   "text": "Should I buy steel or ceramic knives? I am soon to be moving to a house with a very nice kitchen, and so the time has come for me to buy myself a proper set of knives. I have been looking around at the various types available. There seem to be cheaper steel knives with plastic or wooden handles (e.g. from normal homeware stores), pro-range solid steel knives (e.g. Global) and also ceramic",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 20900,
+    "link": "https://cooking.stackexchange.com/questions/20900/should-i-buy-steel-or-ceramic-knives",
+    "author": "Mark Hatton",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r20",
+   "text": "Gas or charcoal grille which one to buy I need a grille for doing mainly chicken, there is an inkling to buy a gas grille but I heard charcoal grilles are better for flavour, I like the convenience of gas, but flavour is compelling, is this true?",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 9251,
+    "link": "https://cooking.stackexchange.com/questions/9251/gas-or-charcoal-grille-which-one-to-buy",
+    "author": "Simmerdown",
+    "license": "CC BY-SA 2.5"
+   }
+  },
+  {
+   "id": "r21",
+   "text": "How Much Should I Spend When Investing In An At-Home Espresso Machine? I remember discussing the merits of different espresso machines a while back at my local coffee shop with a seasoned barista. His advice was that anything priced below $1000 would produce sub-par espresso. Is this a good rule of thumb? In other words... What is the minimum amount of money one should spend when investing in a at-home espresso machine? For",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 2766,
+    "link": "https://coffee.stackexchange.com/questions/2766/how-much-should-i-spend-when-investing-in-an-at-home-espresso-machine",
+    "author": "N. York",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r22",
+   "text": "what is a good semi-automatic espresso machine for home? I used to own a coffee shop, and was a good barista for my shop and I really miss a nice cup of latte or mocha, would love to have a nice espresso machine at home that is semi-automatic with a steamer and takes coffee beans. I prefer if it is on a low budget, la marzocco if possible, a cheap one that could be refurbished.",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 5106,
+    "link": "https://coffee.stackexchange.com/questions/5106/what-is-a-good-semi-automatic-espresso-machine-for-home",
+    "author": "Yaman",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r23",
+   "text": "How is Budan espresso machine? I am a home brewer looking for a good manual espresso machine. I was quite inclined to a Breville one, but it exceeds my budget. That's when I came upon a Budan espresso machine . The design and build of this machine looks great, and it has a better steam wand than my previous Delonghi C3240 (which had a plastic one). I want to get reviews from the people",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 6235,
+    "link": "https://coffee.stackexchange.com/questions/6235/how-is-budan-espresso-machine",
+    "author": "Shruti Jain",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r24",
+   "text": "What are important factors to consider for a bean-to-cup machine? I'm advocating for my office to purchase a bean-to-cup coffee machine to replace an auto-drip machine. What factors should I consider before suggesting a particular bean-to-cup machine? I'd be happy to hear anything from general warnings to full-fledged product recommendations. My primary hope is for this to be as pleasant and pain-free as possible, both",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 2729,
+    "link": "https://coffee.stackexchange.com/questions/2729/what-are-important-factors-to-consider-for-a-bean-to-cup-machine",
+    "author": "hoc_age",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r25",
+   "text": "Bean-to-cup coffee machines without milk steamer I want to make high quality espressos at home with a machine like this, but I don't like milk. Therefore, if there is a machine like this without the milk steamer, it would be preferred. Do you know of any machines like this? Would it be cheaper to just get a machine with the steamer? The primary reason I would go without the steamer is to minimize price",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 3984,
+    "link": "https://coffee.stackexchange.com/questions/3984/bean-to-cup-coffee-machines-without-milk-steamer",
+    "author": "Max_Planck",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r26",
+   "text": "Toaster oven features - convection/rotisserie I need some help in buying a toaster oven: My needs are primarily to roast/grill vegetables, occasional baking (bread, brownies, muffins). I am vegetarian and this is for a 2 person home. I'd like it to compact, simple to clean, and built to last. (I can live without more advanced features if this means it will be more reliable.) Is it helpful to have a",
+   "expectedCategory": "toaster_ovens",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 24296,
+    "link": "https://cooking.stackexchange.com/questions/24296/toaster-oven-features-convection-rotisserie",
+    "author": "user6120",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r27",
+   "text": "Compact steel toaster ovens without glass? Are there any compact, counter-top, steel toaster ovens that do not have glass windows? The closest I've been able to find are Wisco's pizza ovens, but I would like something smaller (sandwich/pannini size). Is there a name for such ovens? (They use them at Taco Bell for making small quesadillas or toasting tacos.)",
+   "expectedCategory": "toaster_ovens",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 88610,
+    "link": "https://cooking.stackexchange.com/questions/88610/compact-steel-toaster-ovens-without-glass",
+    "author": "Geremia",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r28",
+   "text": "Replacing toaster oven with convection oven or convection microwave? I am getting new counter tops and want to move the toaster oven off the counter. Would an oven with a convection function be an equivalent replacement for the toaster convection oven? Alternately, would a convection microwave be a good replacement for the toaster oven? Do these devices serve similar purposes?",
+   "expectedCategory": "toaster_ovens",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 68397,
+    "link": "https://cooking.stackexchange.com/questions/68397/replacing-toaster-oven-with-convection-oven-or-convection-microwave",
+    "author": "Jewell  ",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "r29",
+   "text": "How do I find a toaster that doesn't \"leak\" crumbs from the bottom? Every toaster I've owned seems to \"leak\" crumbs from the bottom, requiring constant clean up. You could put it into a tray of some sort but unless you 3D-print one, its hard to find a tray that exactly fits it. Is there a magic keyword of some sort that would let me find a toaster that doesn't have any holes at the bottom?",
+   "expectedCategory": "toasters",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 116157,
+    "link": "https://cooking.stackexchange.com/questions/116157/how-do-i-find-a-toaster-that-doesnt-leak-crumbs-from-the-bottom",
+    "author": "MilkLife",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "r30",
+   "text": "What features do I want in a Toaster Oven? Our Toaster isn't doing well, planning to replace it with a toaster oven to get some more versatility on the counter top. What features are good? I've looked and there are ones ranging from simple $25 models to $250 with a laundry list of features. Just wonder what's useful and what's not, hope to find a good one that's $120 or less really, but I'm willing",
+   "expectedCategory": "toaster_ovens",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 11574,
+    "link": "https://cooking.stackexchange.com/questions/11574/what-features-do-i-want-in-a-toaster-oven",
+    "author": "Neth",
+    "license": "CC BY-SA 2.5"
+   }
+  },
+  {
+   "id": "r31",
+   "text": "What's the difference between a deep fryer and a chip pan? As described in the Wikipedia article , a chip pan is a pan that contains oil for frying. The oil is heated to a high temperature, and then usually a metal basket is lowered into the pan for frying of things, such as chips. The article contains this sentence: Chip pans are commonly used in the United Kingdom and Republic of Ireland, although are slowly",
+   "expectedCategory": "deep_fryers",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 99611,
+    "link": "https://cooking.stackexchange.com/questions/99611/whats-the-difference-between-a-deep-fryer-and-a-chip-pan",
+    "author": "Zebrafish",
+    "license": "CC BY-SA 4.0"
+   }
+  }
+ ]
+}
