@@ -33,8 +33,11 @@ implementing, evaluating or reporting any PEE work. It holds:
     `/home/user/pee-knowledge` and restores the store automatically.
   - If the hook reports that the repository is not attached, attach it (`add_repo`, push access), clone it there,
     and run `node scripts/knowledge-snapshot.mjs load`.
-  - After changing the store, run `node scripts/knowledge-snapshot.mjs save`. Then commit and push
-    `/home/user/pee-knowledge` on branch `main`.
+  - After changing the store, run `node scripts/knowledge-snapshot.mjs sync`. It saves a verified snapshot, then
+    commits and pushes `/home/user/pee-knowledge` on branch `main`.
+    - The Stop and SessionEnd hooks also run it.
+    - It never overwrites a newer remote snapshot.
+    - `verify` checks what a new session would restore.
 - **Confidential evaluation inputs:** in `$PEE_PRIVATE_EVAL_DIR`.
 - **Access rules:**
   - Never bypass robots rules, 403/429 responses or access controls.

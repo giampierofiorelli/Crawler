@@ -11,6 +11,73 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0. Phase250 update (2026-10-15) — read this first
+
+**Phase250 is complete and pushed.** It supersedes the Phase249 figures below where they differ. Report:
+`engine/product-evidence-engine-v5.67-phase243/docs/phase250/PHASE250-TECHNICAL-REPORT.md`.
+
+**Persistence**
+- The snapshot is written **only** into the private `giampierofiorelli/pee-knowledge`. `save` and `sync` refuse the
+  public repository or a foreign origin.
+- `sync` compares content and refuses to overwrite a newer remote snapshot.
+- `verify` checks `origin/main` exactly as a new session restores it.
+- The Stop and SessionEnd hooks run `sync`.
+- The snapshot after Phase250 is `d704bd8`: 100 category items, 2,385 declarations.
+
+**Needs and categories**
+
+Real request set 3: 73 Stack Exchange questions, T2, Claude-authored gold.
+
+First run:
+
+| Arm | Needs found (of 24) | Need precision | Wrong category attributions (of 73) |
+|---|---|---|---|
+| Phase249 journey (A) | 0 | — | 15 |
+| Generic repairs only (R) | 0 | — | 13 |
+| Fixed curriculum (B) | 8 | 0.471 | 12 |
+| Adaptive lessons (C) | 7 | 0.438 | 12 |
+
+- Budgets: 71/73 for A, 73/73 with the repairs.
+- Adopted configuration `ADOPTED_LESSONS250`: C plus B without manual brewers, plus development fixes.
+  - On spent set 3 (development only): 10/24 needs, precision 0.667, 4 wrong attributions.
+  - It has **no** first run yet.
+
+**Category knowledge.** Four kinds, counted separately:
+- observed attributes: 196;
+- hypothesis items: 48 → 89; need concepts 7 → 43; 11 categories;
+- method items: 6 → 10;
+- **independently supported relations: 0**.
+
+**Do retained declarations feed category knowledge?** No: 0 items or relations cite them. 1,020 of 2,385 sit on
+uncategorised products. They feed **factual requirement checks**: a recognised need becomes `factualRequirements`,
+then `decideAdvice249`.
+
+**Evaluation sets.** Real request **set 3 is now spent**. The next measurement needs a new untouched set 4.
+
+**Stack Exchange access.** The sites' robots.txt now disallows all crawlers (`Content-signal: search=no, ai-train=no`).
+Use only `api.stackexchange.com`. Run Node with `NODE_USE_ENV_PROXY=1`: built-in `fetch` otherwise bypasses the
+container proxy and gets a 403 that is not Stack Exchange's.
+
+**New modules and scripts**
+- `src/phase250_category_lessons.ts` (`CURRICULUM_B250`, `ADAPTIVE_C250`, `ADOPTED_LESSONS250`, `applyLessons250`,
+  `registryWithLessons250`, `NEED_CRITERIA250`).
+- `CATEGORY_REGISTRY250` in `phase248_category_registry.ts`.
+- `evaluation/phase250/need-catalogue.json`: the shared need label space.
+- Scripts:
+  - `scripts/phase250-journey-arms.mjs` (arms R/B/C/D on store copies);
+  - `phase250-score.mjs`;
+  - `phase250-collect-requests.mjs`;
+  - `phase250-category-knowledge-audit.mjs`.
+- Commands: `phase246-knowledge.mjs apply-lessons`, `knowledge-snapshot.mjs sync|verify`.
+
+**Open problems after Phase250**, ranked:
+1. A first run of the adopted configuration on new set 4.
+2. Needs outside any curriculum: all-needs recall is about 0.2.
+3. No T3 need reference.
+4. Categories for the 1,020 uncategorised declarations.
+5. A review-semantics probe with contrast pairs on Phase110/113.
+6. Independent comparable measurements.
+
 ## Contents
 
 1. Verified Phase249 outcome
@@ -163,7 +230,7 @@ them.
 | Category relations | `phase247_category_relations.ts`, `phase247_relation_seeds.ts` | Support classes: hypothesis, method reference and evidence-supported relation. |
 | Older category cognition | `phase116_category_function_model.ts`, `phase128_category_cognition_dialogue_bridge.ts`, `phase179_category_learning.ts`, `phase101_interpretation_memory.ts` to `phase105_incremental_reasoning_graph.ts` | Audit these before adding any category-learning layer. |
 | Language understanding | `phase110_local_semantic_extractor.ts`, `phase113_local_intent_interpreter.ts`, `phase125_compositional_dialogue_frame.ts` | Review interpretation and intent. Check these before replacing anything. |
-| Requests to needs to decision | `phase248_advisory_journey.ts` (round 3), `phase248_category_registry.ts`, `phase248_concept_vocabulary.ts`, `phase249_decision.ts` (`decideAdvice249`, `SPEC_CRITERIA249`, `comparable249`) | Need recall is the main gap. |
+| Requests to needs to decision | `phase248_advisory_journey.ts` (round 3 + Phase250 repairs, `factualRequirements`), `phase248_category_registry.ts` (`CATEGORY_REGISTRY250`), `phase248_concept_vocabulary.ts`, `phase250_category_lessons.ts`, `phase249_decision.ts` (`decideAdvice249`, `SPEC_CRITERIA249`, `comparable249`) | Teach categories with lessons, not looser matching. Needs outside the curricula are the main gap. |
 | Ranking contract | `phase180_reviewed_first_answer.ts`, `phase177_decision_snapshot.ts` | Signed releases only. Forged releases are refused. |
 | Rights and retention | `phase249_retention_policy.ts` (`FACTUAL_CLASS_POLICY249`, `detectReservations249`, `classDecision249`, `privateEvaluationDir249`) | Policy document: `docs/phase249/RETENTION-POLICY.md`. |
 | Safety notices | `phase248_safety_notices.ts`, `scripts/phase248-safety-notices.mjs` (`--persist`) | OGL policy gate, with a fresh robots check on each run. |

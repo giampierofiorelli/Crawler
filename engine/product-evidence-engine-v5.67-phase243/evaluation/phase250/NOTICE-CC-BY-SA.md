@@ -1,7 +1,8 @@
 # Third-party text in this directory
 
 The request texts in `journey-real-requests-set3.json`, and in the result files whose names start with
-`journey-real-requests-set3`, are excerpts of questions posted on Stack Exchange (cooking.stackexchange.com and
+`journey-real-requests-set3`, and the files under `development/` (which also repeat Phase248-249 request texts
+covered by `../phase249/NOTICE-CC-BY-SA.md`), are excerpts of questions posted on Stack Exchange (cooking.stackexchange.com and
 coffee.stackexchange.com). They were obtained through the official Stack Exchange API, not by crawling the sites, whose
 robots.txt disallows crawlers. They are shared under the Creative Commons BY-SA licence version given for each case
 (CC BY-SA 2.5, 3.0 or 4.0). Each case names its author and links the original question. They are used as evaluation
