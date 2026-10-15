@@ -23,6 +23,7 @@
  * public redistribution of retained values; values beyond the per-host cap.
  */
 import type {Value245} from './phase245_value_normalizer.js';
+import {existsSync} from 'node:fs';import {homedir as homedirOf} from 'node:os';
 
 export type SourceClass249='manufacturer'|'retailer'|'independent_original_test'|'editorial'|'community'|
  'promotional_announcement'|'reference_encyclopedia'|'unknown';
@@ -95,4 +96,14 @@ export function classDecision249(policy:SourceClassPolicy249,sourceClass:SourceC
   return {retain:false,reason:'machine_readable_reservation'};
  if(!productAlreadyCounted&&hostProducts>=rule.maxProductsPerHost)return {retain:false,reason:'insubstantial_part_cap_reached'};
  return {retain:true,rule};
+}
+
+/** Location for confidential evaluation material (raw pages, adjudication inputs with third-party values):
+ * $PEE_PRIVATE_EVAL_DIR, else ~/.local/share/product-evidence-engine/private-eval. Never inside a Git working tree;
+ * only metrics, manifests (URL + SHA-256) and reproducibility instructions are published. */
+export function privateEvaluationDir249(env:Record<string,string|undefined>=process.env,home=homedirOf()):string{
+ const d=env.PEE_PRIVATE_EVAL_DIR??`${home}/.local/share/product-evidence-engine/private-eval`;
+ let x=d.replace(/\/+$/,'');
+ for(let i=0;i<64&&x;i++){if(existsSync(`${x}/.git`))throw Error('249_private_eval_dir_inside_git_worktree');const up=x.replace(/\/[^/]*$/,'');if(up===x)break;x=up;}
+ return d;
 }

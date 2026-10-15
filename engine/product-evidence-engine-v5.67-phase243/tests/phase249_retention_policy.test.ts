@@ -79,3 +79,10 @@ test('private store: refused inside a Git working tree; rotated backups are veri
  assert.throws(()=>restoreStore249(b3.path,target),/249_backup_hash_mismatch/);
  s.close();
 });
+test('private evaluation directory: configurable, refused inside a Git working tree',async()=>{
+ const {privateEvaluationDir249}=await import('../src/phase249_retention_policy.js');const {mkdirSync}=await import('node:fs');
+ assert.equal(privateEvaluationDir249({PEE_PRIVATE_EVAL_DIR:join(dir,'pe')}),join(dir,'pe'));
+ assert.match(privateEvaluationDir249({},'/home/x'),/\/home\/x\/\.local\/share\/product-evidence-engine\/private-eval$/);
+ mkdirSync(join(dir,'r2','.git'),{recursive:true});
+ assert.throws(()=>privateEvaluationDir249({PEE_PRIVATE_EVAL_DIR:join(dir,'r2','eval')}),/249_private_eval_dir_inside_git_worktree/);
+});

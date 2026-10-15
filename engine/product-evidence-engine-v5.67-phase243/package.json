@@ -299,6 +299,9 @@
     "eval:phase248-extraction": "npm run build && node scripts/phase248-evaluate-sampled.mjs",
     "eval:phase248-notices": "npm run build && node scripts/phase248-evaluate-notices.mjs",
     "safety:phase248": "node scripts/phase248-safety-notices.mjs",
+    "test:phase249": "npm run build && node --test dist/tests/phase249_*.test.js dist/tests/phase248_*.test.js dist/tests/phase245_spec_extraction.test.js dist/tests/phase246_knowledge_store.test.js",
+    "advise:phase249": "node scripts/phase249-advise.mjs",
+    "audit:phase249-public": "node scripts/phase249-public-audit.mjs evaluation",
     "demo:phase242": "npm run build && node scripts/phase242-evaluate-bridges.mjs",
     "demo:phase241": "npm run build && node scripts/phase241-evaluate-unified.mjs"
   },
