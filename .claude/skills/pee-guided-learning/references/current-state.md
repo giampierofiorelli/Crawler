@@ -11,7 +11,71 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
-## 0. Phase250 update (2026-10-15) — read this first
+## 00. Phase251 update (2026-10-15) — read this first; it supersedes §0 where they differ
+
+**Phase251 is complete.** Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase251/PHASE251-TECHNICAL-REPORT.md`.
+
+**First run on untouched set 4** (50 Stack Exchange questions; T2; 5 advise cases):
+
+| Arm | Correct (of 50) | Harmful | Advise correct (of 5) | Needs |
+|---|---|---|---|---|
+| A, Phase249 | 40 | 9 | 1 | 0/4 |
+| R, repairs only | 44 | 5 | 1 | 0/4 |
+| D, repairs + ADOPTED_LESSONS250 | 46 | 3 | 4 | 3/4 |
+
+- Repairs and lessons each help.
+- **Set 4 is now spent.**
+
+**Current code D′** (development: `dropCues` "coffee", budget tiers and ranges, complements in short queries):
+- set 4: 48/50 correct, 0 harmful;
+- set 3: 2/73 wrong attributions;
+- **no untouched first run yet**.
+
+**Category assignment** (`src/phase251_category_assignment.ts`, store method `assignProductCategory251`):
+- 57/57 correct, 0 wrong (development gold);
+- 842 of the 1,020 uncategorised declarations now categorised;
+- applied to the live store and synced (`pee-knowledge` `7efa0c3`).
+
+**Useful observational knowledge.** Categories with checkable factual criteria went from 5 to 13; observed attributes
+are counted on 2+ products from 2+ hosts. No relation is supported: 0.
+
+**Identity defect.** Phase246's host+name key merged two Sharp microwave models into one product.
+`candidatesFromStore249` / `decideAdvice249` now flag such products as unknown. Splitting them needs the pages
+re-fetched.
+
+**T3 data.**
+- QueryNER (CC BY 4.0): product-type versus modifier only. Not-product wrong attributions 4/4 → 1/4 after the
+  development fix.
+- ESCI: not read (large parquet).
+- WDC PAVE: licence not found.
+- No human need benchmark exists.
+
+**Review semantics.** The deployed runtime caught 2 of 12 meaning mutations (numbers and grounding only) and gives 0
+interpretations without a model.
+
+**New scripts:**
+- `phase251-collect-requests`;
+- `phase251-score`;
+- `phase251-category-assignment`;
+- `phase251-observational-knowledge`;
+- `phase251-queryner-eval`;
+- `phase251-review-semantics-diagnostic`.
+
+**New CLI command:** `phase246-knowledge.mjs retire-item`.
+
+**Tests:** 4,385 pass.
+
+**ECC plugin.** It is installed; its GateGuard hook asks for facts before the first edit of a file and before the first
+Bash command. Answer briefly and retry.
+
+**Next, ranked:**
+1. Set 5, appliance-heavy and pre-registered, first-running D′.
+2. Registry lessons for the 8 newly checkable store categories.
+3. Phase110 deterministic coherence checks.
+4. A lightweight ESCI reader.
+5. Re-fetch to split the merged identity, and audit `host_name` identities.
+
+## 0. Phase250 update (2026-10-15)
 
 **Phase250 is complete and pushed.** It supersedes the Phase249 figures below where they differ. Report:
 `engine/product-evidence-engine-v5.67-phase243/docs/phase250/PHASE250-TECHNICAL-REPORT.md`.
