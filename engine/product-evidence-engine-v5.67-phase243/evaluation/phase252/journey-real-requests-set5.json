@@ -1,0 +1,735 @@
+{
+ "schema": "pee248.journey-bench.v1",
+ "split": "real_requests_heldout5",
+ "written": "2026-10-15, before any arm ran on these cases (T2 gold by Claude from the excerpt text only)",
+ "attribution": "Each text is an excerpt of a Stack Exchange post by the named author, licensed under the CC BY-SA version stated per case; the excerpts in this file are shared under the same licences.",
+ "shortfall": "target 25 in-scope need-bearing cases and 10 controls; obtained 10 in-scope need-bearing (11 in-scope including clarify) and 19 controls. Set 5 frame: 10 in-scope; coffee_grinders stratum had 0 eligible candidates; toasters, toaster_ovens, deep_fryers, slow_cookers, milk_frothers and air_fryers strata had no in-scope candidate. 5b frame: 1 in-scope. Pools exhausted; no re-query.",
+ "cases": [
+  {
+   "id": "v01",
+   "text": "Pour over coffee : what is needed for a good pitcher replacement?. My pourover coffee pitcher just broke. Its the second time it does this this year, so i guess the maker of this pourover kit is making flimsy glass for their pitchers. So is there a good replacement for those kinds of pitchers? What is important in a replacement? Does the mouth of the pitcher need to contain the whole filter? Do the sides really need to follow the filter? Here is how the filter looks like",
+   "expectedCategory": "other:pour-over pitcher",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "owned_product",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5",
+   "stratum": "coffee_machines",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 112890,
+    "link": "https://cooking.stackexchange.com/questions/112890/pour-over-coffee-what-is-needed-for-a-good-pitcher-replacement",
+    "author": "Fredy31",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v02",
+   "text": "Which brewing method extracts more flavors from the coffee bean?. Which method extracts more flavors from the bean: espresso, french press/cafetiere, or another method? And, if I want to try different beans from different countries etc, is a french press/cafetiere the best coffee maker for this?, since a bean of any place or any roast can be brewed in it?",
+   "expectedCategory": "ambiguous",
+   "expectedConcepts": [],
+   "unlistedNeeds": [
+    "extracts the most flavour",
+    "suits trying many different beans and roasts"
+   ],
+   "expectedBehaviour": "clarify",
+   "candidates": [
+    "coffee_machines",
+    "manual_coffee_brewers"
+   ],
+   "tags": [
+    "multiple_products"
+   ],
+   "role": "CLARIFY",
+   "frame": "5",
+   "stratum": "coffee_machines",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 24177,
+    "link": "https://cooking.stackexchange.com/questions/24177/which-brewing-method-extracts-more-flavors-from-the-coffee-bean",
+    "author": "rich",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v03",
+   "text": "freddo espresso pods vs espresso pods. I'd like to consider myself a newbie at...coffee...consumption and I wanted to buy an espresso machine for myself and right now I'm between, a nespresso machine and a dolce gusto machine and the only thing that is holding me back is that, I can find freddo espresso pods for the dolce gusto machine but not for the nespresso one. Now, I know that freddo means cold , but I don't know if there is a point in having different pods for freddo espresso and \"normal\" espresso. That being said, does anyone know, in they're experience, if there is a difference between the two types of pods?",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [],
+   "unlistedNeeds": [
+    "iced (freddo) pods available for the system"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "implicit_need"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "coffee_machines",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 5277,
+    "link": "https://coffee.stackexchange.com/questions/5277/freddo-espresso-pods-vs-espresso-pods",
+    "author": "Ka_Papa",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v04",
+   "text": "Are there general recommendations for mugs?. Is there a general consensus on what some of the best mugs out there are in terms of keeping (drip/pour-over) coffee warm, style, and flavor? Ceramic? Double-walled glass?",
+   "expectedCategory": "other:coffee mug",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5",
+   "stratum": "manual_coffee_brewers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 4308,
+    "link": "https://coffee.stackexchange.com/questions/4308/are-there-general-recommendations-for-mugs",
+    "author": "rougon",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v05",
+   "text": "Best filter to use for cold brew?. What's the best filter material to use for DIY set up for cold brew coffee? When I used a pour over funnel with a standard paper filter it seems to get clogged up faster than when hot brewing.",
+   "expectedCategory": "other:cold brew filter",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5",
+   "stratum": "manual_coffee_brewers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 2140,
+    "link": "https://coffee.stackexchange.com/questions/2140/best-filter-to-use-for-cold-brew",
+    "author": "Alastair Montgomery",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v06",
+   "text": "French press vs simple filter, is French press equipment really necessary?. French press coffee is basically when you pour almost boiling water onto ground beans and then filter them (by pressing the filter handle). So I wonder why use that contraption at all? Simply pour the hot water over the beans and then pour them in a glass over a filter. Is there something I am missing that makes that contraption necessary?",
+   "expectedCategory": "manual_coffee_brewers",
+   "expectedConcepts": [],
+   "unlistedNeeds": [
+    "adds something over a plain filter (whether the device is necessary)"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "implicit_need"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "manual_coffee_brewers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 3798,
+    "link": "https://coffee.stackexchange.com/questions/3798/french-press-vs-simple-filter-is-french-press-equipment-really-necessary",
+    "author": "mathgenius",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v07",
+   "text": "How to tell which induction cookware is most efficient in conducting heat?. As above. I am looking for a durable water kettle (preferably stainless steel 304) that is super efficient in conducting heat when on induction cooker. How do I tell which brand/model will conduct heat the fastest without doing the actual test?",
+   "expectedCategory": "kettles",
+   "expectedConcepts": [
+    "durability",
+    "fast_boil"
+   ],
+   "unlistedNeeds": [
+    "stainless steel 304",
+    "works on an induction hob"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "physical_constraint"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "kettles",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 85282,
+    "link": "https://cooking.stackexchange.com/questions/85282/how-to-tell-which-induction-cookware-is-most-efficient-in-conducting-heat",
+    "author": "Automator_Junkie",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v08",
+   "text": "What kind of tray can i use to put a microave ON?. I just got a new kitchen and I want to protect the worktop and keep it clean. what kind of trays can i use to put a microwave or an air fryer on? Something with handles that i can use to carry the microave if it needs moved. all i get on amazon and google is trays to put IN the microwave.",
+   "expectedCategory": "other:appliance tray",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5",
+   "stratum": "air_fryers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 130376,
+    "link": "https://cooking.stackexchange.com/questions/130376/what-kind-of-tray-can-i-use-to-put-a-microave-on",
+    "author": "knightblazer85",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v09",
+   "text": "Baking sheet in air fryer, and alternatives. I want to bake cookies in the air fryer but unfortunately I have no baking sheet. I am thinking maybe to use parchment paper or aluminium foil above the air fryer base. However, it seems a lot of experiences that people have with aluminium foil in air fryer seems negative. But I really do wonder, do I actually even need a baking sheet for air fryer? If yes, what would be some alternatives? The air fryer I am using: Ninja Air Fryer Max XL 1750W 5.2L",
+   "expectedCategory": "other:air fryer baking sheet",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "owned_product",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5",
+   "stratum": "air_fryers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 125406,
+    "link": "https://cooking.stackexchange.com/questions/125406/baking-sheet-in-air-fryer-and-alternatives",
+    "author": "Brian",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v10",
+   "text": "Replacement for the ring seal or gasket in a blender. I have a Moulinex blender and the seal ring or gasket is torn. I have searched everywhere to get a replacement. is there a replacement or is Oster the only seal rings I can get. Is there a DIY solution. Thanks",
+   "expectedCategory": "other:blender gasket",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "owned_product",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5",
+   "stratum": "blenders",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 51966,
+    "link": "https://cooking.stackexchange.com/questions/51966/replacement-for-the-ring-seal-or-gasket-in-a-blender",
+    "author": "E white",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v11",
+   "text": "Ought food processor blades be sharpened or replaced?. My grandparents are deliberating if they need a food processor, and if using knives is easier. They They can pay any amount ≤ $999 CAD. Consider only Consumer Reports's top 3 food processors. I'm hoping someone here with one can testify from personal experience. How long do the blades last, if they food-process raw hard unpiercable vegetables like 1 winter squash daily? Can the blades be sharpened? r/cooking contends yes. Even if they can, is it cheaper to sharpen or replace the blades?",
+   "expectedCategory": "food_processors",
+   "expectedConcepts": [
+    "chopping_slicing",
+    "durability"
+   ],
+   "unlistedNeeds": [
+    "blades can be sharpened or cheaply replaced",
+    "easier than using knives"
+   ],
+   "expectedBehaviour": "advise",
+   "expectedBudget": {
+    "currency": "CAD",
+    "min": null,
+    "max": 999
+   },
+   "tags": [
+    "implicit_need"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "food_processors",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 103139,
+    "link": "https://cooking.stackexchange.com/questions/103139/ought-food-processor-blades-be-sharpened-or-replaced",
+    "author": "user24882",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v12",
+   "text": "What features are important in a hand mixer?. I've always used the cheapest hand mixers (around 10 Euro). But I damaged a beater of my current one when I tried to make whipped canache - it was obviously too hard. So I plan to get a new one. Strangely, on paper there isn't much difference between 10 Euro models and 50 Euro models. They all come with foam beaters, dough hooks and 5 speeds. What are important things to look for in a good mixer? Can I use the watt numbers to make a meaningful comparison between models by different manufacturers? How important are they? I know that the watt numbers are supposed to indicate motor power. But I don't know if they have a meaning in the world of hand mixers, or if they have fallen prey to senseless inflation, the way loudspeaker watt number have. And if they are still meaningful, what is their relative importance as compared to other features? I don't have a food processor or stand mixer, so the hand held mixer should be capable of doing a lot.",
+   "expectedCategory": "other:hand mixer",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "owned_product",
+    "out_of_scope_control",
+    "long_request"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5",
+   "stratum": "stand_mixers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 15863,
+    "link": "https://cooking.stackexchange.com/questions/15863/what-features-are-important-in-a-hand-mixer",
+    "author": "rumtscho",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v13",
+   "text": "stand mixer - reasons to go with a higher wattage vs lower wattage mixer. Not sure if it's ok to mention specific brands or not, so I won't. But I'd like to pick up a stand mixer and the two models i'm considering have either a 325 or 575 watt motor and 5 or 6qts respectively. I've never been a big baker but I want to start baking, as well as making pasta. I'm assuming the only reason to get the more powerful motor is it would have an easier time mixing up a bigger/heavier/denser batch of dough vs the smaller motor? On the flip side, i'm guessing the bigger capacity model would be less efficient at mixing up a smaller batch? How big of a batch of pasta dough (in terms of number of portions) would each one be likely to handle? Or what about baking bread? How many average sized loafs would each one be likely to handle at one time? I'm leaning towards the smaller one because I don't think i'll be making huge batches of anything, and i like the way the bowl loads in the smaller vs the larger (tilt vs lift). The price difference between the two isn't huge, so I'm mainly just interested in picking the one that I'll get the best use of. thanks",
+   "expectedCategory": "stand_mixers",
+   "expectedConcepts": [
+    "batch_capacity",
+    "dough_kneading"
+   ],
+   "unlistedNeeds": [
+    "bowl loading style (tilt-head versus bowl-lift)",
+    "works well on small batches"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "long_request"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "stand_mixers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 65029,
+    "link": "https://cooking.stackexchange.com/questions/65029/stand-mixer-reasons-to-go-with-a-higher-wattage-vs-lower-wattage-mixer",
+    "author": "merk",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v14",
+   "text": "Multi cooker - with pressure cooker versus without. I crock a lot. My small pot is getting old and it feels like the controller switch is getting weak. My large crock has a crack but it does not leak (yet). With the new programmable can start in the AM and set it to go to warm at 2 PM. Can sear, do rice, stay on warm for 24 hours, .... Also a lot more money. Can get a multi cooker with pressure for instant meals. I don't pressure cook and have don't find myself in need of fast meals. If I had a multi cooker with pressure I might come to find fast as the best thing since sliced bread. Not yet convinced a 7 minute stew will equal a 7 hour stew. Finally to the question. Are there any slow cooker regrets to a cooker that will do slow and fast (pressure)? I know it will be brand dependent. I am considering the Instant Pot (pressure) versus the Kitchen Aid (no pressure). It is minor, but for me the opaque bulky lid is a regret. If that is the only regret I will get the pressure multi cooker. Wow, multi-cooker is not a tag.",
+   "expectedCategory": "ambiguous",
+   "expectedConcepts": [],
+   "unlistedNeeds": [
+    "programmable start and keep-warm",
+    "can sear and cook rice",
+    "lid not bulky or opaque"
+   ],
+   "expectedBehaviour": "clarify",
+   "candidates": [
+    "slow_cookers",
+    "pressure_cookers"
+   ],
+   "tags": [
+    "owned_product",
+    "multiple_products",
+    "long_request"
+   ],
+   "role": "CLARIFY",
+   "frame": "5",
+   "stratum": "pressure_cookers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 87270,
+    "link": "https://cooking.stackexchange.com/questions/87270/multi-cooker-with-pressure-cooker-versus-without",
+    "author": "paparazzo",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v15",
+   "text": "Pressure Cooker vs. Slow Cooker for Moist Meat. This question: Why does meat in the crockpot always end up dry? discusses challenges and potential solutions to getting moist meat while cooking with a slow cooker. If I were to switch to a pressure cooker, would that be another method to keep meat moister? Or, if I'm not following the suggestions in the above post (in particular, using the right kind of meat), would a pressure cooker not really help me much?",
+   "expectedCategory": "pressure_cookers",
+   "expectedConcepts": [],
+   "unlistedNeeds": [
+    "keeps meat moist"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "owned_product"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "pressure_cookers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 80749,
+    "link": "https://cooking.stackexchange.com/questions/80749/pressure-cooker-vs-slow-cooker-for-moist-meat",
+    "author": "Michael Ohlrogge",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v16",
+   "text": "Do you need a rice cooker to cook sticky rice?. I know that cooking sticky rice uses a steamer setup. But do you need a rice cooker to cook sticky rice property, or can it be done using regular kitchen tools, e.g. pots and pans?",
+   "expectedCategory": "rice_cookers",
+   "expectedConcepts": [
+    "rice_quality"
+   ],
+   "unlistedNeeds": [
+    "whether needed at all versus pots and pans"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "implicit_need"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "rice_cookers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 42723,
+    "link": "https://cooking.stackexchange.com/questions/42723/do-you-need-a-rice-cooker-to-cook-sticky-rice",
+    "author": "Jason",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v17",
+   "text": "Bamboo Steamer VS Normal Steamer. I have heard that using a Bamboo Steamer provides/preserves the nutrients/elements that are good for, or at least more so than a normal plastic/metal steamer. Is this true? Or only for certain types of food/dishes? Or perhaps not at all? Also, does either of these produce a higher quality result (in taste or texture) than the other? Bamboo Steamer : VS Normal Steamer :",
+   "expectedCategory": "steam_cookers",
+   "expectedConcepts": [],
+   "unlistedNeeds": [
+    "preserves nutrients",
+    "better taste or texture"
+   ],
+   "expectedBehaviour": "advise",
+   "tags": [
+    "multiple_products"
+   ],
+   "role": "IN_SCOPE",
+   "frame": "5",
+   "stratum": "steam_cookers",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 46090,
+    "link": "https://cooking.stackexchange.com/questions/46090/bamboo-steamer-vs-normal-steamer",
+    "author": "EternalWulf",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v18",
+   "text": "What is the difference between fondue and cheese sauce? And do both need to be kept warm to be remain melted?. I like KFC style cheese sauce that is (optionally) served with breaded chicken. And now, at Christmas, I found that a kitchen appliance labeled \"raclette and fondue\" is at discount. But I made mistakes before and I bought things I do not need because I was not informed. Is a fondue appliance necessary to keep cheese sauce melted? Or will the cheese sauce remain spreadable even if left to become cold? In other terms, can I make cheese sauce with a regular pan and serve it hours later, or do I need something to keep it warm?",
+   "expectedCategory": "other:fondue appliance",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5",
+   "stratum": "_open",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 119245,
+    "link": "https://cooking.stackexchange.com/questions/119245/what-is-the-difference-between-fondue-and-cheese-sauce-and-do-both-need-to-be-k",
+    "author": "Ziad El Hachem",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v19",
+   "text": "Which appliance to use for masala chai?. Many regions have special devices or at least custom namings to brew tea and similar beverages: Teapot in Western countries Caydalnik in Turkey Samovar in Russia Samavar in Kashmir Is there any special appliance, either a corresponding naming of such for brewing masala chai?",
+   "expectedCategory": "other:chai brewing appliance",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5",
+   "stratum": "_open",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 103844,
+    "link": "https://cooking.stackexchange.com/questions/103844/which-appliance-to-use-for-masala-chai",
+    "author": "J. Doe",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v20",
+   "text": "What is the best material for a cooking spoon?. We use standard wooden spoons, but they soon pick up stains from the various dishes. What are the pros and cons of the various woods, e.g. olive, Cilio Toscana Olivewood, beechwood, maple, bamboo, etc? Is there a 'best', or is it just a matter of style or personal preference?",
+   "expectedCategory": "other:cooking spoon",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 17308,
+    "link": "https://cooking.stackexchange.com/questions/17308/what-is-the-best-material-for-a-cooking-spoon",
+    "author": "David Sykes",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v21",
+   "text": "Cutting boards: What are some general tips on purchasing and using a cutting board?. I have heard various debates on the merits of wood versus synthetic cutting boards, and their affect on food safety, knife edges, and ease of cleaning and storage. What are the pros and cons of the following and why? Wood versus plastic or other materials Affect on food safety and cleanliness Cost to purchase Affect on knife edge and ease of use",
+   "expectedCategory": "other:cutting board",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 183,
+    "link": "https://cooking.stackexchange.com/questions/183/cutting-boards-what-are-some-general-tips-on-purchasing-and-using-a-cutting-boa",
+    "author": "JYelton",
+    "license": "CC BY-SA 2.5"
+   }
+  },
+  {
+   "id": "v22",
+   "text": "Do I need a bread maker?. I'd like to try my hand at baking my own bread. Do I need a bread maker to get decent bread? Are there any advantages to using a bread maker vs. my normal oven?",
+   "expectedCategory": "other:bread maker",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 5406,
+    "link": "https://cooking.stackexchange.com/questions/5406/do-i-need-a-bread-maker",
+    "author": "David Fullerton",
+    "license": "CC BY-SA 2.5"
+   }
+  },
+  {
+   "id": "v23",
+   "text": "Extrusion pasta maker versus roller: which one makes the best pasta?. Roller pasta makers require you to work the dough by hand and then run it through the roller multiple times. Some extrusion pasta makers don't even require mixing the ingredients before placing them in the machine. I have a hard time believing that the extrusion models can produce the same quality pasta because the dough is not kneaded or sent through the roller. What is the difference between the noodles produced by each method?",
+   "expectedCategory": "other:pasta maker",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "multiple_products",
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 47162,
+    "link": "https://cooking.stackexchange.com/questions/47162/extrusion-pasta-maker-versus-roller-which-one-makes-the-best-pasta",
+    "author": "Reed G. Law",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v24",
+   "text": "Trade-offs of round vs square food storage containers (Cambro, Carlisle). What are the trade-offs between using round vs square food storage containers? I'm looking to buy a supply of several sizes of commercial-grade (eg Cambro or Carlisle) food storage containers. I'm debating if I should go all-round, all-square, or a mix of the both. Round Food Storage Containers Square Food Storage Containers For example, if the material is the same thickness, then I'd guess that round food storage containers would objectively take up more space yet be more durable (due to physics). But are there any other less-obvious trade-offs? In practice, what are the pros & cons of using round or square food storage containers in the kitchen?",
+   "expectedCategory": "other:food storage containers",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 126544,
+    "link": "https://cooking.stackexchange.com/questions/126544/trade-offs-of-round-vs-square-food-storage-containers-cambro-carlisle",
+    "author": "Michael Altfield",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v25",
+   "text": "What kind of wok should I get?. I saw the question on the site about preparing a wok, but I'm curious what kind I should get. I have heard of stainless steel, carbon steel, aluminum, etc. Also, there's a non-stick variety. I'm new to stir fry and will be cooking on an electric ceramic stovetop.",
+   "expectedCategory": "other:wok",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 1204,
+    "link": "https://cooking.stackexchange.com/questions/1204/what-kind-of-wok-should-i-get",
+    "author": "mouche",
+    "license": "CC BY-SA 2.5"
+   }
+  },
+  {
+   "id": "v26",
+   "text": "Large scale cold brewing - Mesh bag technique - What size mesh is best?. I'm looking to upscale our production of cold brew to batches with a 1000L yield, using a ratio of 1:12.5 to make a ready-to-drink coffee for bottling. Currently we run batches of ~40L through a large stainless 40-micron mesh conical filter with good results, however this won't scale so easily as the mesh is really expensive. I'm thinking that making large batches by steeping coffee in big mesh tea bags will be the easiest upgrade. I'm also assuming that a secondary filtration will be necessary, but that's a separate question. What sort of mesh sizes and materials are best for balancing yield with how fine the filtration is? Thanks!",
+   "expectedCategory": "other:cold brew mesh bag",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control",
+    "long_request"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 2781,
+    "link": "https://coffee.stackexchange.com/questions/2781/large-scale-cold-brewing-mesh-bag-technique-what-size-mesh-is-best",
+    "author": "Tod",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v27",
+   "text": "What's The Difference Between Paper and Long-Lasting Filters. Lots of people use lots of filters for drip- or filter-brewed coffee. Some use paper and others use these durable filters. The performance to me is the same but many people argue that. They do have their pros and cons as said this website . So paper filters are easy to use and bad for the environment and long lasting filters last longer and are more environmental friendly... The site has somewhat decent amount of information, but not a lot of information. What are the significant differences between long-lasting filters and paper filters for drip or filter coffee?",
+   "expectedCategory": "other:coffee filter",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 1571,
+    "link": "https://coffee.stackexchange.com/questions/1571/whats-the-difference-between-paper-and-long-lasting-filters",
+    "author": "Anthony Pham",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "v28",
+   "text": "What type of frying pan does not warp?. I have a glass smooth-top stove. Every large frying pan that I have bought so far has almost immediately warped so that the bottom is no longer flat. They all end up concave -- like a wok but less pronounced -- so that they perch with a small spot in the center of the pan touching the burner surface. My lazy side prefers non-stick, dishwashable pans, but all ideas are appreciated.",
+   "expectedCategory": "other:frying pan",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "out_of_scope_control"
+   ],
+   "role": "OUT_OF_SCOPE_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 10408,
+    "link": "https://cooking.stackexchange.com/questions/10408/what-type-of-frying-pan-does-not-warp",
+    "author": "Henry",
+    "license": "CC BY-SA 2.5"
+   }
+  },
+  {
+   "id": "v29",
+   "text": "Please Help find Moka Pot Gasket Replacement. I have a vintage Carlo Giannini Moka Pot. A family member mistakenly threw away the original rubber gasket. I'm not sure how to determine the number of cups in the moka pot. Can someone please help me find a replacement gasket so I can start having proper coffee again.",
+   "expectedCategory": "other:moka pot gasket",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "out_of_scope",
+   "tags": [
+    "accessory",
+    "owned_product",
+    "confusing_control"
+   ],
+   "role": "CONFUSING_CONTROL",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 4908,
+    "link": "https://coffee.stackexchange.com/questions/4908/please-help-find-moka-pot-gasket-replacement",
+    "author": "NEIL",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "v30",
+   "text": "What kinds of pressure cookers are there, and what are they good for?. I have never owned a pressure cooker, nor been in a kitchen which has one. But they have been a topic around the site and the blog lately, so I got curious. When I took a look, I noticed that they looked differently. I am not yet in the market for one, but I would like to know more about them. What different types are there? What are the advantages and disadvantages of each type? Beyond type, what other attributes make a pressure cooker a good cooker?",
+   "expectedCategory": "pressure_cookers",
+   "expectedConcepts": [],
+   "unlistedNeeds": [],
+   "expectedBehaviour": "advise",
+   "tags": [],
+   "role": "IN_SCOPE",
+   "frame": "5b",
+   "stratum": "_5b",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 25356,
+    "link": "https://cooking.stackexchange.com/questions/25356/what-kinds-of-pressure-cookers-are-there-and-what-are-they-good-for",
+    "author": "rumtscho",
+    "license": "CC BY-SA 3.0"
+   }
+  }
+ ]
+}
