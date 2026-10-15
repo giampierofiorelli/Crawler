@@ -6,6 +6,7 @@
  *   R  = Phase250 generic repairs only (no lessons)
  *   B  = repairs + fixed curriculum CURRICULUM_B250
  *   C  = repairs + adaptive lessons ADAPTIVE_C250
+ *   D  = repairs + the adopted lessons ADOPTED_LESSONS250 (development configuration chosen after the set 3 first run)
  * Usage: node scripts/phase250-journey-arms.mjs --bench FILE --arm R|B|C --out FILE [--snapshot FILE]
  */
 import {readFileSync,writeFileSync,copyFileSync,mkdirSync,rmSync,existsSync} from 'node:fs';
@@ -13,10 +14,10 @@ import {resolve,join,dirname} from 'node:path';import {homedir} from 'node:os';i
 import {KnowledgeStore246} from '../dist/src/phase246_knowledge_store.js';
 import {runJourney248} from '../dist/src/phase248_advisory_journey.js';
 import {CATEGORY_REGISTRY248} from '../dist/src/phase248_category_registry.js';
-import {CURRICULUM_B250,ADAPTIVE_C250,applyLessons250,registryWithLessons250,lessonBudget250} from '../dist/src/phase250_category_lessons.js';
+import {CURRICULUM_B250,ADAPTIVE_C250,ADOPTED_LESSONS250,applyLessons250,registryWithLessons250,lessonBudget250} from '../dist/src/phase250_category_lessons.js';
 const F=Object.fromEntries(process.argv.slice(2).reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/,''),arr[i+1]]],[]));
-const arm=F.arm;const lessons=arm==='B'?CURRICULUM_B250:arm==='C'?ADAPTIVE_C250:arm==='R'?[]:null;
-if(!lessons||!F.bench||!F.out)throw Error('usage: --bench FILE --arm R|B|C --out FILE');
+const arm=F.arm;const lessons=arm==='B'?CURRICULUM_B250:arm==='C'?ADAPTIVE_C250:arm==='D'?ADOPTED_LESSONS250:arm==='R'?[]:null;
+if(!lessons||!F.bench||!F.out)throw Error('usage: --bench FILE --arm R|B|C|D --out FILE');
 const live=process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local','share','product-evidence-engine','knowledge');
 const snap=resolve(F.snapshot??join(dirname(new URL(import.meta.url).pathname),'..','..','..','..','pee-knowledge','snapshot','pee246.sqlite'));
 const dir=join(live,'..','arms250');mkdirSync(dir,{recursive:true});

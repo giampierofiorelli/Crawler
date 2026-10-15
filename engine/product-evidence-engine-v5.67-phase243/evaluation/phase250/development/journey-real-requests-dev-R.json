@@ -1,0 +1,1738 @@
+{
+ "schema": "pee250.arm-run.v1",
+ "arm": "R",
+ "bench": "evaluation/phase249/journey-real-requests.json",
+ "split": "real_requests_heldout",
+ "generatedAt": "2026-10-15T02:16:27.906Z",
+ "snapshotSha256": "7b5375e87010fc6fe2d780bc85aa7a2e74664af757bf98385638661251fb41c3",
+ "budget": {
+  "categories": 0,
+  "needs": 0,
+  "phrases": 0,
+  "counterexamples": 0,
+  "within": true
+ },
+ "applied": {
+  "itemsAdded": 0,
+  "aliasUpdates": 0
+ },
+ "registryCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters",
+  "toaster_ovens",
+  "kettles",
+  "blenders",
+  "deep_fryers",
+  "rice_cookers",
+  "steam_cookers"
+ ],
+ "knowledgeCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters"
+ ],
+ "msTotal": 335.2,
+ "journeys": {
+  "r01": {
+   "schema": "pee248.journey.v1",
+   "text": "What to look for in an air fryer I'm looking to get an air fryer to make stuff that is usually deep-fried, like falafel, chicken nuggets or spring rolls, hopefully with less oily taste and without having to buy and dispose of considerable amounts of oil. Prices vary wildly, here 's one for 42 USD and here 's one for 174 USD. Both have about 1400 W and about 4 liters capacity. Is the",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation",
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get crisp exterior texture on chips and breaded foods with little added oil; or cook two different foods at once with different settings and finish them together; or cook small portions for one person without heating a full oven?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r02": {
+   "schema": "pee248.journey.v1",
+   "text": "Is there a difference between a Convection Oven and an Air Fryer? I'm in the market for a new range. As the subject line asks, “Is there a difference between a Convection Oven and an Air Fryer?” I ask because I can't tell the difference. They both seem the same to me. They are both dry heat circulated by a fan . I'm looking at ranges that say they are air-fryers, at a cost over ordinary convection ranges. I have a",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get crisp exterior texture on chips and breaded foods with little added oil; or cook two different foods at once with different settings and finish them together; or cook small portions for one person without heating a full oven?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r03": {
+   "schema": "pee248.journey.v1",
+   "text": "Super-heated steamer vs. air fryer for replacing deep frying I am considering a replacement for deep frying. I have deep fried small fish into crispy protein sticks and chicken in a typical pot. I heard a tip that professional deep fryers do not heat the bottom of the oil containers to avoid charring the bottom residue, prolonging the usability of the oil while making it also healthier. Thus, I was considering to buy",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [
+      "air_fryers",
+      "deep_fryers",
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between air fryers and deep fryers and steam cookers, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r04": {
+   "schema": "pee248.journey.v1",
+   "text": "Blender Buying - Square vs. Round Container After looking at this blender question , I had a follow-up question. I've seen both square and round containers/lids for blenders. Is either better? I tend to see square blenders at smoothie shops - leading me to assume square ones are better. By better I mean, you don't have to do as much scraping and maybe they have more settings and automated features. I",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r05": {
+   "schema": "pee248.journey.v1",
+   "text": "Blender vs food processor vs juicer When should a blender be used instead of a food processor or instead of a juicer? I'm planning on investing in one of them. I would use if for making smoothies and beverages. I've got a Magic Bullet which I put frozen berries in, but find the consistency is too thick to drink.",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r06": {
+   "schema": "pee248.journey.v1",
+   "text": "Buying a \"blender\" that can purée a potato My wife had a \"smoothie\" made by a co-worker that is based on green apples and raw red potatos. Our smoothie maker can't do that and leaves unchopped bits and a gritty feel. Her friend uses a Vitamix blender, and looking up the model number not only induced sticker shock, but reviews raised concerns with the item leaving bits of teflon in the food etc. And",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review",
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r07": {
+   "schema": "pee248.journey.v1",
+   "text": "What to look for when purchasing a blender? I currently don't have a blender after purchasing my own home and am looking to get one for making smoothies primarily, but also for pureeing for soups, etc. I had a smoothie maker that I won as a prize; it was very obviously a cheap unit. It barely handled frozen fruit and yogurt. Ice cream and frozen fruit burned up the motor. I am aware of the extreme",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r08": {
+   "schema": "pee248.journey.v1",
+   "text": "Microwave rice cooker vs low-end electric rice cookers So, at my parents home we had a two part microwave rice cooker which created relatively dry rice in my experience (though I only used it myself a couple of time), but I actually like it better than traditionally boiled rice on a stove (which in my experience turns out quite wet-ish no matter how you make it). Now, I am not a huge fan of rice either way, so",
+   "stages": {
+    "category": {
+     "categoryId": "rice_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "rice_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 1,
+     "withDeclaredAttributes": 1,
+     "retainedDeclarations": 9,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for rice_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model rice_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "1 product identities already known for rice_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r09": {
+   "schema": "pee248.journey.v1",
+   "text": "Pressure cooker rice quality vs high-end rice cooker I'm considering buying a proper rice cooker, as we've eaten most of the non-stick coating of the cheap one. The forums rave about induction heating, Zojirushi, Tiger, Toshiba RC-18NMF with its cast-iron pot, Buffalo with their stainless steel pots. And now there is also the Tefal RK704 with its ceramic pot to consider... Occasionally it comes up that folks",
+   "stages": {
+    "category": {
+     "categoryId": "rice_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "rice_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 1,
+     "withDeclaredAttributes": 1,
+     "retainedDeclarations": 9,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for rice_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model rice_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "1 product identities already known for rice_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r10": {
+   "schema": "pee248.journey.v1",
+   "text": "Why would I buy a rice cooker? A friend of mine I'm getting an apartment with next year said that we should invest in a rice cooker. I'm fairly adept in the kitchen and don't come from a family that uses a rice cooker so I would default to cooking rice in a pot. He seemed to think that he would buy a rice cooker only for the convenience of cooking rice without worrying about it. Is",
+   "stages": {
+    "category": {
+     "categoryId": "rice_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "rice_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation",
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 1,
+     "withDeclaredAttributes": 1,
+     "retainedDeclarations": 9,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for rice_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model rice_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "1 product identities already known for rice_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r11": {
+   "schema": "pee248.journey.v1",
+   "text": "Rice Cooker Technology Best Suited for White Basmati Rice? This is my staple food and unfortunately my 25 year old National rice cooker just died. The crop of new models are bewilderingly complex--most troubling is that few seem to have a \"Non-Sticky\" or \"Long Grain\" option (which my old National did and which worked great). I'm really just looking for set and forget convenience and decent quality rice and would",
+   "stages": {
+    "category": {
+     "categoryId": "rice_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "rice_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 1,
+     "withDeclaredAttributes": 1,
+     "retainedDeclarations": 9,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for rice_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model rice_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "1 product identities already known for rice_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r12": {
+   "schema": "pee248.journey.v1",
+   "text": "What should I look for in an electric steamer for use to make tamales I don't know a whole lot about what makes an electric steamer a good steamer. I'm looking for recommendations for one where I'm hoping to make tamales with. The plan is to make large batches so capacity is definitely a concern. Would the multi-level steamers work? Any specific recommendations would be great. Any suggestions on what features to look for",
+   "stages": {
+    "category": {
+     "categoryId": "steam_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 3,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 27,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for steam_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model steam_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "3 product identities already known for steam_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r13": {
+   "schema": "pee248.journey.v1",
+   "text": "Recommend decent, sturdy steamer basket? I've gone through a couple of cheap metal collapsible steamer baskets in the last year and am looking for something that will last longer. Do you have one that you like? I've seen the silicon ones but have read that it may alter the taste of the vegetables. What is your experience?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "sturdy steamer basket",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"sturdy steamer basket\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"sturdy steamer basket\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r14": {
+   "schema": "pee248.journey.v1",
+   "text": "What is the best drip coffee maker to buy? I am looking at the Technivorm models. I currently have a Bunn but having trouble getting the right grind to make it give me taste I want. Mind you, I bought it 1992!",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r15": {
+   "schema": "pee248.journey.v1",
+   "text": "Which creates the strongest (and/or better quality) coffee? Espresso Maker vs. French Press For a year I used an Espresso maker to make my morning cup of jo. Recently my maker broke and I decided to try out a french press. I originally though that the espresso maker would be stronger because it forced steam through the granules, but now am starting to lean towards a french press as long as I let it sit in the water for longer than around 5",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r16": {
+   "schema": "pee248.journey.v1",
+   "text": "Actual Cezve: advice for buying I'd like to buy 200-300ml Cezve . I'm not sure what features are important, such as what material it's made of, handle design, pot shape, etc. What are the important features to look for when purchasing a cezve, as far as function or usability is concerned?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r17": {
+   "schema": "pee248.journey.v1",
+   "text": "Which non-stick pan to buy? Recently, I found a small but deep scratch on my pan. I can see the metalic color on the scratch. I am not sure how much serious it is. Now, I want to buy a new one. I see different prices with different qualities and I have no idea what to buy. I live alone and I cook for one person but sometimes for several meals (3 meals). Some people suggest me to buy a",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "non stick pan",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"non stick pan\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"non stick pan\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r18": {
+   "schema": "pee248.journey.v1",
+   "text": "Which measuring scale should I buy? I am trying to buy a measuring scale so that I can stop using cups and start measuring by weight. I’m personally not sure which to buy. Here are two options: Can some experienced bakers out there tell me which would be more convenient (in terms of time, dirty dishes, durability etc.)? If you prefer neither, is there one that you really do prefer? Note: I’m",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "measuring scale",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"measuring scale\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"measuring scale\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r19": {
+   "schema": "pee248.journey.v1",
+   "text": "Should I buy steel or ceramic knives? I am soon to be moving to a house with a very nice kitchen, and so the time has come for me to buy myself a proper set of knives. I have been looking around at the various types available. There seem to be cheaper steel knives with plastic or wooden handles (e.g. from normal homeware stores), pro-range solid steel knives (e.g. Global) and also ceramic",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "steel",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"steel\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"steel\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r20": {
+   "schema": "pee248.journey.v1",
+   "text": "Gas or charcoal grille which one to buy I need a grille for doing mainly chicken, there is an inkling to buy a gas grille but I heard charcoal grilles are better for flavour, I like the convenience of gas, but flavour is compelling, is this true?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "gas grille",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unresolved_comparative_referent"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"gas grille\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"gas grille\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r21": {
+   "schema": "pee248.journey.v1",
+   "text": "How Much Should I Spend When Investing In An At-Home Espresso Machine? I remember discussing the merits of different espresso machines a while back at my local coffee shop with a seasoned barista. His advice was that anything priced below $1000 would produce sub-par espresso. Is this a good rule of thumb? In other words... What is the minimum amount of money one should spend when investing in a at-home espresso machine? For",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "good espresso",
+       "kind": "outcome"
+      }
+     ],
+     "budget": {
+      "currency": "USD",
+      "min": null,
+      "max": 1000
+     },
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "budget",
+       "criterion": "budget_max",
+       "stated": {
+        "value": 1000,
+        "unit": "USD"
+       }
+      }
+     ]
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r22": {
+   "schema": "pee248.journey.v1",
+   "text": "what is a good semi-automatic espresso machine for home? I used to own a coffee shop, and was a good barista for my shop and I really miss a nice cup of latte or mocha, would love to have a nice espresso machine at home that is semi-automatic with a steamer and takes coffee beans. I prefer if it is on a low budget, la marzocco if possible, a cheap one that could be refurbished.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r23": {
+   "schema": "pee248.journey.v1",
+   "text": "How is Budan espresso machine? I am a home brewer looking for a good manual espresso machine. I was quite inclined to a Breville one, but it exceeds my budget. That's when I came upon a Budan espresso machine . The design and build of this machine looks great, and it has a better steam wand than my previous Delonghi C3240 (which had a plastic one). I want to get reviews from the people",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r24": {
+   "schema": "pee248.journey.v1",
+   "text": "What are important factors to consider for a bean-to-cup machine? I'm advocating for my office to purchase a bean-to-cup coffee machine to replace an auto-drip machine. What factors should I consider before suggesting a particular bean-to-cup machine? I'd be happy to hear anything from general warnings to full-fledged product recommendations. My primary hope is for this to be as pleasant and pain-free as possible, both",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r25": {
+   "schema": "pee248.journey.v1",
+   "text": "Bean-to-cup coffee machines without milk steamer I want to make high quality espressos at home with a machine like this, but I don't like milk. Therefore, if there is a machine like this without the milk steamer, it would be preferred. Do you know of any machines like this? Would it be cheaper to just get a machine with the steamer? The primary reason I would go without the steamer is to minimize price",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": [
+      "steam_cookers"
+     ]
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "espresso quality",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r26": {
+   "schema": "pee248.journey.v1",
+   "text": "Toaster oven features - convection/rotisserie I need some help in buying a toaster oven: My needs are primarily to roast/grill vegetables, occasional baking (bread, brownies, muffins). I am vegetarian and this is for a 2 person home. I'd like it to compact, simple to clean, and built to last. (I can live without more advanced features if this means it will be more reliable.) Is it helpful to have a",
+   "stages": {
+    "category": {
+     "categoryId": "toaster_ovens",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toaster_ovens"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for toaster_ovens: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model toaster_ovens: user goals, mechanisms, measurable outcomes and professional test methods"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r27": {
+   "schema": "pee248.journey.v1",
+   "text": "Compact steel toaster ovens without glass? Are there any compact, counter-top, steel toaster ovens that do not have glass windows? The closest I've been able to find are Wisco's pizza ovens, but I would like something smaller (sandwich/pannini size). Is there a name for such ovens? (They use them at Taco Bell for making small quesadillas or toasting tacos.)",
+   "stages": {
+    "category": {
+     "categoryId": "toaster_ovens",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toaster_ovens"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for toaster_ovens: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model toaster_ovens: user goals, mechanisms, measurable outcomes and professional test methods"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r28": {
+   "schema": "pee248.journey.v1",
+   "text": "Replacing toaster oven with convection oven or convection microwave? I am getting new counter tops and want to move the toaster oven off the counter. Would an oven with a convection function be an equivalent replacement for the toaster convection oven? Alternately, would a convection microwave be a good replacement for the toaster oven? Do these devices serve similar purposes?",
+   "stages": {
+    "category": {
+     "categoryId": "toaster_ovens",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toaster_ovens"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for toaster_ovens: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model toaster_ovens: user goals, mechanisms, measurable outcomes and professional test methods"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r29": {
+   "schema": "pee248.journey.v1",
+   "text": "How do I find a toaster that doesn't \"leak\" crumbs from the bottom? Every toaster I've owned seems to \"leak\" crumbs from the bottom, requiring constant clean up. You could put it into a tray of some sort but unless you 3D-print one, its hard to find a tray that exactly fits it. Is there a magic keyword of some sort that would let me find a toaster that doesn't have any holes at the bottom?",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: brown bread evenly on both sides and across each slice; or get the same result for different bread thicknesses and repeated rounds?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r30": {
+   "schema": "pee248.journey.v1",
+   "text": "What features do I want in a Toaster Oven? Our Toaster isn't doing well, planning to replace it with a toaster oven to get some more versatility on the counter top. What features are good? I've looked and there are ones ranging from simple $25 models to $250 with a laundry list of features. Just wonder what's useful and what's not, hope to find a good one that's $120 or less really, but I'm willing",
+   "stages": {
+    "category": {
+     "categoryId": "toaster_ovens",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toaster_ovens"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "USD",
+      "min": null,
+      "max": 120
+     },
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": [
+      {
+       "conceptId": "budget",
+       "criterion": "budget_max",
+       "stated": {
+        "value": 120,
+        "unit": "USD"
+       }
+      }
+     ]
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for toaster_ovens: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model toaster_ovens: user goals, mechanisms, measurable outcomes and professional test methods"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "r31": {
+   "schema": "pee248.journey.v1",
+   "text": "What's the difference between a deep fryer and a chip pan? As described in the Wikipedia article , a chip pan is a pan that contains oil for frying. The oil is heated to a high temperature, and then usually a metal basket is lowered into the pan for frying of things, such as chips. The article contains this sentence: Chip pans are commonly used in the United Kingdom and Republic of Ireland, although are slowly",
+   "stages": {
+    "category": {
+     "categoryId": "deep_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "deep_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 2,
+     "withDeclaredAttributes": 2,
+     "retainedDeclarations": 32,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for deep_fryers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model deep_fryers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "2 product identities already known for deep_fryers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  }
+ }
+}

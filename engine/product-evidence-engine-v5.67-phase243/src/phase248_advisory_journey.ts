@@ -20,7 +20,11 @@ export interface CategoryEntry248 {id:string;aliases:readonly string[];
  /** Phase250: counterexamples per need concept: phrases in which a matching word does not express that need
   * ("pressure cooker" is not brew pressure; "hard to find" is not hard water). A match inside such a phrase, or a
   * paraphrase match in a text containing one, is dropped. */
- needCounterexamples?:Readonly<Record<string,readonly string[]>>;}
+ needCounterexamples?:Readonly<Record<string,readonly string[]>>;
+ /** Phase250: aliases that name this category only when one of the context words also occurs ("grinder" with "coffee"). */
+ aliasContext?:Readonly<Record<string,readonly string[]>>;
+ /** Phase250: needs a declared specification can check, mapped to SPEC_CRITERIA249 decision keys. */
+ needCriteria?:Readonly<Record<string,readonly string[]>>;}
 export type Decision248='recommend'|'withhold_insufficient_evidence'|'unsupported_category'|'clarify'|'out_of_scope';
 export type Stage248='category'|'need'|'requirements'|'candidates'|'evidence'|'decision';
 
@@ -56,6 +60,8 @@ function findLoose(t:string,alias:string):{start:number;end:number}[]{
 }
 /** Phase250: needs any product category can serve (the generic needs of evaluation/phase250/need-catalogue.json). They
  * are recognised as needs but never, alone, identify the product category. */
+/** Phase250: requests longer than this many words (real questions with background) get stricter need handling. */
+export const LONG_REQUEST_WORDS250=40;
 export const GENERIC_NEEDS250:ReadonlySet<string>=new Set(['small_kitchen','cleaning_effort','low_noise','low_maintenance','ease_of_use',
  'durability','occasional_use','batch_capacity','portability','versatility']);
 /** Words that name products or categories, not needs: excluded from need scoring. */
@@ -66,6 +72,9 @@ const PRODUCT_WORDS=new Set(['machine','maker','fryer','air','airfryer','toaster
 export const DESCRIBED_THRESHOLD248=2.2;
 function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string[],registry:readonly CategoryEntry248[]){
  const out:{key:string;alias:string;start:number;end:number}[]=[];
+ // Phase250 (development, after set 3): on long requests the paraphrase overlap mostly fired by chance (real sets and
+ // set 3 together: 2-6 correct against 8-12 false needs per arm), so long requests use explicit need phrases only.
+ const longRequest=t.split(' ').length>LONG_REQUEST_WORDS250;
  const catWords=new Set(registry.flatMap(r=>[...r.aliases,...(r.cues??[])]).flatMap(a=>norm(a).split(' ')).map(stem));
  // Phase250: product words are excluded by their surface form (singular or plural). They were compared after
  // stemming, so "machines", "makers", "toasters" and "blenders" (stems machin, mak, toast, blend) slipped through
@@ -87,7 +96,7 @@ function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string
    const score=hit.reduce((a,w)=>a+idf(w)*(d.alias.has(w)?1.5:1),0);
    const aliasHit=hit.some(w=>d.alias.has(w));
    // Long requests (real questions with background) produce chance co-occurrences: they need three overlapping words.
-   if(hit.length>=(reqTokens.size>20?3:2)&&aliasHit&&score>=DESCRIBED_THRESHOLD248)out.push({key:`${c}|${id}|${d.kind}`,alias:'~'+hit.join('+'),start:-1,end:-1});
+   if(!longRequest&&hit.length>=(reqTokens.size>20?3:2)&&aliasHit&&score>=DESCRIBED_THRESHOLD248)out.push({key:`${c}|${id}|${d.kind}`,alias:'~'+hit.join('+'),start:-1,end:-1});
   }
  }
  return out;
@@ -127,7 +136,11 @@ export interface Journey248 {
   category:{categoryId:string|null;basis:'explicit_alias'|'cue_inferred'|'need_inferred'|'ambiguous'|'unresolved';candidates:string[];namedUnknownTerm:string|null;excluded:string[]};
   need:{concepts:{id:string;categoryId:string;matched:string;kind:string|null}[];budget:{currency:string;min:number|null;max:number|null}|null;hazards:string[]};
   requirements:{measuredBy:{conceptId:string;method:string;support:string;source:string|null}[];cautions:{attribute:string;conceptId:string;kind:string;support:string;note:string}[];
-   unmeasuredConcepts:string[];categoryHasKnowledge:boolean};
+   unmeasuredConcepts:string[];categoryHasKnowledge:boolean;
+   /** Phase250: recognised needs that a declared specification can check (decision keys of SPEC_CRITERIA249), to be
+    * confirmed by the user before Phase249's decideAdvice249 builds a cited, unordered shortlist; a stated budget is
+    * carried as budget_max. Checking a declaration establishes a fact (a capacity, a width), never performance. */
+   factualRequirements:{conceptId:string;criterion:string;stated:{value:number;unit:string}|null}[]};
   candidates:{active:number;withDeclaredAttributes:number;retainedDeclarations:number;budgetApplicable:boolean};
   evidence:{evidenceSupportedRelations:number;independentResultsForNeed:number;methodReferences:number;
    /** Independent regulatory safety findings (GOV.UK OPSS) supplied by the caller; null when none were supplied. */
@@ -153,8 +166,18 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const isExcluded=(h:{start:number;end:number})=>negated(h.start)&&!qualified(h.end);
  // Phase249: an alias inside an accessory or part phrase ("milk steamer", "steamer basket") does not name the category;
  // nor does a feature named with "with/without/has a ..." when another category is named explicitly.
- const partOf=(h:{key:string;start:number;end:number})=>(registry.find(r=>r.id===h.key)?.partPhrases??[]).some(pp=>find(t,pp).some(p=>p.start<=h.start&&p.end>=h.end));
- const named0=allNamed.filter(h=>!isExcluded(h)&&!partOf(h));
+ const partOf=(h:{key:string;start:number;end:number})=>(registry.find(r=>r.id===h.key)?.partPhrases??[]).some(pp=>find(t,pp).some(p=>p.start<=h.start&&p.end>=h.end))
+  ||accessoryOf(h)
+  // An alias that needs context ("grinder" names a coffee grinder only where coffee is the subject).
+  ||(()=>{const e=registry.find(r=>r.id===h.key);const al=t.slice(h.start,h.end).replace(/e?s$/,'');const need=e?.aliasContext?.[al];
+   return !!need&&!need.some(w=>find(t,w).length);})();
+ // Phase250 (development): an accessory or spare part of a named product ("a filter for my espresso machine",
+ // "stand mixer attachments") is not that product; applies to names and to weaker cues.
+ function accessoryOf(h:{start:number;end:number}){return /(?:^| )(?:filters?|baskets?|gaskets?|beaters?|attachments?|parts|portafilters?|carafes?|lids?|seals?|replacements?) for (?:my|our|his|her|their|the|a|an|this)(?: \S+)? ?$/.test(t.slice(Math.max(0,h.start-60),h.start).trimEnd()+' ')
+  ||/^(?: \S+)? (?:attachments?|beaters?|spare parts|parts|filters?|gaskets?|portafilters?|carafes?|replacement parts)\b/.test(t.slice(h.end));}
+ // "I could buy an electrical blender, but ...": a product considered and set aside is not the one being chosen.
+ const rejected=(h:{start:number;end:number})=>/(?:^| )(?:could|might) (?:buy|use|get)(?: a| an| the)?(?: \S+)? ?$/.test(t.slice(Math.max(0,h.start-50),h.start).trimEnd()+' ')&&/^(?: \S+){0,6} but\b/.test(t.slice(h.end,h.end+60));
+ const named0=allNamed.filter(h=>!isExcluded(h)&&!partOf(h)&&!rejected(h));
  const featureOf=(h:{key:string;start:number})=>/(?:^| )(?:with|without|has|have|having|plus|including)(?: a| an| the)?(?: milk| built in| integrated)? ?$/.test(t.slice(0,h.start).trimEnd()+' ');
  const named1=new Set(named0.map(h=>h.key)).size>1?named0.filter(h=>!(featureOf(h)&&named0.some(o=>o.key!==h.key&&!featureOf(o)))):named0;
  // "replace it with a toaster oven", "switch to an air fryer": the replacement target is the category sought.
@@ -173,7 +196,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const named=new Set(named3.map(h=>h.key)).size>1&&buyKeys.size===1?named3.filter(h=>buyKeys.has(h.key)):named3;
  const excludedCategories=[...new Set(allNamed.filter(isExcluded).map(h=>h.key))].sort();
  const explicit=[...new Set(named.map(h=>h.key))].filter(c=>!excludedCategories.includes(c)||named.some(h=>h.key===c)).sort();
- const cueHits=longestMatches(t,registry.filter(r=>r.cues?.length).map(r=>({key:r.id,aliases:r.cues!}))).filter(h=>!negated(h.start));
+ const cueHits=longestMatches(t,registry.filter(r=>r.cues?.length).map(r=>({key:r.id,aliases:r.cues!}))).filter(h=>!negated(h.start)&&!accessoryOf(h));
  const cueCats=[...new Set(cueHits.map(h=>h.key))].filter(c=>!excludedCategories.includes(c)).sort();
  const knowledgeCats=registry.filter(r=>store.categoryItems246(r.id).length>0).map(r=>r.id);
  const conceptEntries=knowledgeCats.flatMap(c=>{const seen=new Set<string>();
@@ -196,7 +219,11 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   // which product the user means; only needs specific to one category can infer it.
   const sharedNeed=(id:string)=>GENERIC_NEEDS250.has(id)||new Set(conceptEntries.filter(e=>e.key.split('|')[1]===id).map(e=>e.key.split('|')[0])).size>1;
   const cats=[...new Set(conceptHits.filter(h=>!sharedNeed(h.key.split('|')[1])).map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c));
-  if(cats.length===1){categoryId=cats[0];basis='need_inferred';}else if(cats.length>1)basis='ambiguous';}
+  // Phase250 (development): in a long request one need phrase ("living alone", "non-stick wearing off") is too weak
+  // to decide the product; two distinct needs of the same category are required there.
+  const distinct=(c:string)=>new Set(conceptHits.filter(h=>h.key.startsWith(c+'|')&&!sharedNeed(h.key.split('|')[1])).map(h=>h.key.split('|')[1])).size;
+  const strong=t.split(' ').length<=LONG_REQUEST_WORDS250||(cats.length===1&&distinct(cats[0])>=2);
+  if(cats.length===1&&strong){categoryId=cats[0];basis='need_inferred';}else if(cats.length>1)basis='ambiguous';}
  // Phase249: a request naming a product PEE does not know ("which non-stick pan to buy") is about that product; need words
  // ("cook for one", "flavour") must not pull it into another category.
  const termAny=namedProductTermIn(text,true);
@@ -222,6 +249,10 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const cautions=rels.filter(r=>r.from.startsWith('attr:')&&wanted.has(conceptOfRef(r.to)??'')).map(r=>({attribute:r.from.slice(5),conceptId:conceptOfRef(r.to)!,
   kind:r.kind,support:r.support,note:r.qualification}));
  const unmeasured=[...wanted].filter(c=>!measuredBy.some(m=>m.conceptId===c)).sort();
+ const entry=registry.find(e=>e.id===categoryId);
+ const factualRequirements:Journey248['stages']['requirements']['factualRequirements']=[
+  ...concepts.flatMap(c=>(entry?.needCriteria?.[c.id]??[]).map(k=>({conceptId:c.id,criterion:k,stated:null}))),
+  ...(budget?.max!=null?[{conceptId:'budget',criterion:'budget_max',stated:{value:budget.max,unit:budget.currency}}]:[])];
  const categoryHasKnowledge=!!categoryId&&items.length>0;
  // ---- candidates and evidence
  const products=categoryId?store.products246({category:categoryId}):[];
@@ -271,6 +302,11 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   if(products.length)plan.push(`${products.length} product identities already known for ${categoryId}`);}
  else{
   if(!concepts.length){questions.push(goalQuestion(categoryId));reasons.push('need not specific enough to select category requirements');}
+  const QUESTION:Record<string,string>={capacity_min:'What capacity do you need at least (litres, cups or slices)?',
+   width_max:'How much space do you have for it (maximum width, depth and height)?'};
+  for(const k of new Set(factualRequirements.filter(f=>!f.stated).map(f=>f.criterion==='depth_max'||f.criterion==='height_max'?'width_max':f.criterion)))
+   if(QUESTION[k])questions.push(QUESTION[k]);
+  if(factualRequirements.length)plan.push(`once confirmed, check ${[...new Set(factualRequirements.map(f=>f.criterion))].join(', ')} against cited declarations (requirements shortlist, unordered)`);
   if(unmeasured.length)plan.push(`find an original test method for: ${unmeasured.join(', ')}`);
   for(const m of measuredBy)if(m.support==='method_reference')plan.push(`obtain independent results measured by: ${m.method.slice(0,90)}`);
   if(budget&&!retained)reasons.push('budget cannot be applied: no prices are retained (rights not established)');
@@ -287,7 +323,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  }
  return {schema:'pee248.journey.v1',text,
   stages:{category:{categoryId,basis,candidates:explicit,namedUnknownTerm,excluded:excludedCategories},need:{concepts,budget,hazards},
-   requirements:{measuredBy,cautions,unmeasuredConcepts:unmeasured,categoryHasKnowledge},
+   requirements:{measuredBy,cautions,unmeasuredConcepts:unmeasured,categoryHasKnowledge,factualRequirements},
    candidates:{active:products.length,withDeclaredAttributes:withAttrs,retainedDeclarations:retained,budgetApplicable:retained>0},
    evidence:{evidenceSupportedRelations:evidenceSupported,independentResultsForNeed:independentResults,methodReferences:measuredBy.filter(m=>m.support==='method_reference').length,safety}},
   decision,blockingStage:blocking,reasons,clarificationQuestions:questions,researchPlan:plan,rankingAuthorized:false,recommendation:null};

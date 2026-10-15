@@ -7,6 +7,7 @@
  *   ingest-recovered --raw DIRS  ingest Phase245 manifest pages whose raw bytes are present AND hash-verified
  *   ingest-observations --file F ingest a JSON list of observations produced by a live run (see phase246-live-wave.mjs)
  *   add-method-refs --file F    add professional test-method pointers (paraphrase + observed revision)
+ *   apply-lessons                adopted Phase250 category lessons (hypothesis items and concept aliases; idempotent)
  *   seed-relations --category C  add the initial graded relations (hypotheses + cited method references)
  *   category-graph --category C  relations, declared-attribute vocabulary, Phase116 audit, research priorities
  *   profile --category C [--commit REASON]   print (and optionally version) a category profile
@@ -35,6 +36,7 @@ import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,defaultKnowledgeDir246,verif
 import {seedCategoryHypotheses246,CATEGORY_ALIASES246} from '../dist/src/phase246_category_seeds.js';
 import {seedRelations247} from '../dist/src/phase247_relation_seeds.js';
 import {CONCEPT_VOCABULARY248} from '../dist/src/phase248_concept_vocabulary.js';
+import {ADOPTED_LESSONS250,applyLessons250} from '../dist/src/phase250_category_lessons.js';
 import {relations247,attributeVocabulary247,compileTo116,researchPriorities247} from '../dist/src/phase247_category_relations.js';
 import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../dist/src/phase245_spec_extraction.js';
 
@@ -132,6 +134,8 @@ try{
    out(flags.full?p:{...p,plan:p.plan.filter(x=>x.action!=='skip').slice(0,100)});break;}
   case 'rights-worksheet':out(store.rightsWorksheet246());break;
   case 'seed-vocabulary':{let n=0;for(const [c,m] of Object.entries(CONCEPT_VOCABULARY248))for(const [id,al] of Object.entries(m))n+=store.addConceptAliases246(c,id,al);out({itemsUpdated:n});break;}
+  // Phase250: the adopted category lessons (need hypotheses, everyday vocabulary, mechanism and method statements).
+  case 'apply-lessons':out(applyLessons250(store,ADOPTED_LESSONS250));break;
   case 'seed-relations':out({category:flags.category,...seedRelations247(store,flags.category)});break;
   case 'category-graph':{const c=flags.category;const comp=compileTo116(store,c);
    out({categoryId:c,relations:relations247(store,c),vocabulary:attributeVocabulary247(store,c),phase116Audit:comp.audit,phase116Reason:comp.reason,

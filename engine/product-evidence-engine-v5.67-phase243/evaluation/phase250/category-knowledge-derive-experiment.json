@@ -1,0 +1,644 @@
+{
+ "schema": "pee250.category-knowledge-audit.v1",
+ "db": "/root/.local/share/product-evidence-engine/arms250/audit.sqlite",
+ "derivedNow": {
+  "air_fryers": 2,
+  "amplifiers": 0,
+  "appliance_accessories": 2,
+  "blenders": 11,
+  "bookcases": 0,
+  "coffee_machines": 9,
+  "deep_fryers": 3,
+  "earbuds": 0,
+  "football_footwear": 0,
+  "hiking_boots": 8,
+  "kettles": 1,
+  "microcontroller_boards": 1,
+  "motor_drivers": 1,
+  "power_drills": 0,
+  "rice_cookers": 0,
+  "single_board_computers": 36,
+  "smartphones": 113,
+  "solid_state_drives": 0,
+  "steam_cookers": 2,
+  "toasters": 7,
+  "waste_bins": 0
+ },
+ "categories": {
+  "air_fryers": {
+   "products": 4,
+   "retainedDeclarations": 25,
+   "observed": {
+    "declaredAttributes": 2,
+    "observedPatternItems": 2
+   },
+   "hypotheses": {
+    "items": 19,
+    "relations": 5,
+    "needConcepts": 3
+   },
+   "methods": {
+    "items": 2,
+    "relations": 1
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "amplifiers": {
+   "products": 1,
+   "retainedDeclarations": 18,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "appliance_accessories": {
+   "products": 2,
+   "retainedDeclarations": 6,
+   "observed": {
+    "declaredAttributes": 2,
+    "observedPatternItems": 2
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "blenders": {
+   "products": 5,
+   "retainedDeclarations": 61,
+   "observed": {
+    "declaredAttributes": 11,
+    "observedPatternItems": 11
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": [
+     {
+      "need": "small_kitchen",
+      "attribute": "Dimensions(mm)",
+      "products": 3
+     },
+     {
+      "need": "batch_capacity",
+      "attribute": "Capacity",
+      "products": 2
+     },
+     {
+      "need": "small_kitchen",
+      "attribute": "External Size (mm)",
+      "products": 2
+     }
+    ]
+   }
+  },
+  "bookcases": {
+   "products": 1,
+   "retainedDeclarations": 18,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "coffee_machines": {
+   "products": 9,
+   "retainedDeclarations": 74,
+   "observed": {
+    "declaredAttributes": 9,
+    "observedPatternItems": 9
+   },
+   "hypotheses": {
+    "items": 15,
+    "relations": 5,
+    "needConcepts": 2
+   },
+   "methods": {
+    "items": 2,
+    "relations": 2
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": [
+     {
+      "need": "small_kitchen",
+      "attribute": "Dimensions",
+      "products": 5
+     },
+     {
+      "need": "batch_capacity",
+      "attribute": "Water Tank Capacity",
+      "products": 5
+     },
+     {
+      "need": "batch_capacity",
+      "attribute": "Capacity",
+      "products": 2
+     },
+     {
+      "need": "small_kitchen",
+      "attribute": "Dimensions (WxDxH)",
+      "products": 2
+     }
+    ]
+   }
+  },
+  "deep_fryers": {
+   "products": 2,
+   "retainedDeclarations": 32,
+   "observed": {
+    "declaredAttributes": 3,
+    "observedPatternItems": 3
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "earbuds": {
+   "products": 1,
+   "retainedDeclarations": 1,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "football_footwear": {
+   "products": 1,
+   "retainedDeclarations": 6,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "hiking_boots": {
+   "products": 8,
+   "retainedDeclarations": 58,
+   "observed": {
+    "declaredAttributes": 8,
+    "observedPatternItems": 8
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "kettles": {
+   "products": 2,
+   "retainedDeclarations": 11,
+   "observed": {
+    "declaredAttributes": 1,
+    "observedPatternItems": 1
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "microcontroller_boards": {
+   "products": 3,
+   "retainedDeclarations": 4,
+   "observed": {
+    "declaredAttributes": 1,
+    "observedPatternItems": 1
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "motor_drivers": {
+   "products": 6,
+   "retainedDeclarations": 24,
+   "observed": {
+    "declaredAttributes": 1,
+    "observedPatternItems": 1
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "power_drills": {
+   "products": 1,
+   "retainedDeclarations": 13,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "rice_cookers": {
+   "products": 1,
+   "retainedDeclarations": 9,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "single_board_computers": {
+   "products": 40,
+   "retainedDeclarations": 637,
+   "observed": {
+    "declaredAttributes": 36,
+    "observedPatternItems": 36
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "smartphones": {
+   "products": 2,
+   "retainedDeclarations": 275,
+   "observed": {
+    "declaredAttributes": 113,
+    "observedPatternItems": 113
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "solid_state_drives": {
+   "products": 1,
+   "retainedDeclarations": 30,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "steam_cookers": {
+   "products": 3,
+   "retainedDeclarations": 27,
+   "observed": {
+    "declaredAttributes": 2,
+    "observedPatternItems": 2
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  },
+  "toasters": {
+   "products": 6,
+   "retainedDeclarations": 36,
+   "observed": {
+    "declaredAttributes": 7,
+    "observedPatternItems": 7
+   },
+   "hypotheses": {
+    "items": 14,
+    "relations": 3,
+    "needConcepts": 2
+   },
+   "methods": {
+    "items": 2,
+    "relations": 2
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": [
+     {
+      "need": "thick_bread_fit",
+      "attribute": "Slot Dimensions",
+      "products": 4
+     },
+     {
+      "need": "batch_capacity",
+      "attribute": "Capacity",
+      "products": 3
+     }
+    ]
+   }
+  },
+  "waste_bins": {
+   "products": 2,
+   "retainedDeclarations": 0,
+   "observed": {
+    "declaredAttributes": 0,
+    "observedPatternItems": 0
+   },
+   "hypotheses": {
+    "items": 0,
+    "relations": 0,
+    "needConcepts": 0
+   },
+   "methods": {
+    "items": 0,
+    "relations": 0
+   },
+   "supported": {
+    "reviewedRelations": 0,
+    "evidenceSupportedRelations": 0,
+    "reviewedItems": 0
+   },
+   "declarationsReachKnowledge": {
+    "itemsCitingDeclarationRevisions": 0,
+    "relationsCitingDeclarationRevisions": 0,
+    "candidateNeedAttributeLinks": []
+   }
+  }
+ }
+}

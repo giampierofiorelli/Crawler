@@ -1,0 +1,1344 @@
+{
+ "schema": "pee250.arm-run.v1",
+ "arm": "R",
+ "bench": "evaluation/phase249/journey-real-requests-set2.json",
+ "split": "real_requests_heldout2",
+ "generatedAt": "2026-10-15T02:16:29.661Z",
+ "snapshotSha256": "7b5375e87010fc6fe2d780bc85aa7a2e74664af757bf98385638661251fb41c3",
+ "budget": {
+  "categories": 0,
+  "needs": 0,
+  "phrases": 0,
+  "counterexamples": 0,
+  "within": true
+ },
+ "applied": {
+  "itemsAdded": 0,
+  "aliasUpdates": 0
+ },
+ "registryCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters",
+  "toaster_ovens",
+  "kettles",
+  "blenders",
+  "deep_fryers",
+  "rice_cookers",
+  "steam_cookers"
+ ],
+ "knowledgeCategories": [
+  "coffee_machines"
+ ],
+ "msTotal": 360.5,
+ "journeys": {
+  "s01": {
+   "schema": "pee248.journey.v1",
+   "text": "Are there any variable temperature electric kettle which boil water before letting temperature drop to the desired temperature? I am a green tea enthusiast so I'm looking for a variable temperature electric kettle but since the water in my home is not very clean I don't want to buy one which just heats the water to a given temperature without boiling it first. Are there any electric kettles which can bring water to a boiling temperature and let it cool until, say 80 degrees Celsius",
+   "stages": {
+    "category": {
+     "categoryId": "kettles",
+     "basis": "explicit_alias",
+     "candidates": [
+      "kettles"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 2,
+     "withDeclaredAttributes": 2,
+     "retainedDeclarations": 11,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for kettles: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model kettles: user goals, mechanisms, measurable outcomes and professional test methods",
+    "2 product identities already known for kettles"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s02": {
+   "schema": "pee248.journey.v1",
+   "text": "Are electric kettles a good choice for tea? From my experience, electric kettles stop only when the water is at a rolling boil, which is bad because: The water loses oxygen when at a rolling boil If you make teas other than black or herbals (like white, oolong or green) you may bruise the leaves with boiling water So are electric kettles recommended for tea making?",
+   "stages": {
+    "category": {
+     "categoryId": "kettles",
+     "basis": "explicit_alias",
+     "candidates": [
+      "kettles"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 2,
+     "withDeclaredAttributes": 2,
+     "retainedDeclarations": 11,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for kettles: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model kettles: user goals, mechanisms, measurable outcomes and professional test methods",
+    "2 product identities already known for kettles"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s03": {
+   "schema": "pee248.journey.v1",
+   "text": "What do I need to know about coffee machines and grinders to get started making good coffee at home? How to make a strong mug of instant Coffee? \"Crema\" is a light-colored foam layer which builds on top of espresso, and many people like it. Espresso is also stronger than normal coffee. For both, you need an espresso machine and real coffee beans. Different coffee brewing methods produce different types of coffee. Espresso is the hardest to make at home.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s04": {
+   "schema": "pee248.journey.v1",
+   "text": "What are the differences between coffee made with a French press or an espresso machine? I've liked coffee for years and I'm thinking on buying an espresso machine. Before that, I want to know why the coffee seems more tasty when it is done that way than with a French press or a drip coffee maker, and what are the pros and cons of an espresso machine.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "tasting coffee",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s05": {
+   "schema": "pee248.journey.v1",
+   "text": "Can bean-to-cup machine make quality espresso/cappuccino? I want to buy myself a coffee machine so I can get nice and tasty coffee throughout the day. Basically my goals are Don't really want to invest half the day in front of my machine, experimenting with all sort of weirdness Do want excellent and nice looking coffee. Do want to have milk foam. Don't want to go over 500 euros. I'm OK with a cup of coffee taking",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "tasting coffee",
+       "kind": "outcome"
+      }
+     ],
+     "budget": {
+      "currency": "EUR",
+      "min": null,
+      "max": 500
+     },
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "budget",
+       "criterion": "budget_max",
+       "stated": {
+        "value": 500,
+        "unit": "EUR"
+       }
+      }
+     ]
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s06": {
+   "schema": "pee248.journey.v1",
+   "text": "What difference does the bar pressure makes in espresso coffee machines? I read somewhere that 15 bar is enough and any pressure higher than that doesn't make any difference. The standard pressure is 15 bar for home machines and 9 bar for professional machines! If so, why are there machines with higher pressure (16, 19, 20, 21 bar) and why do these machines cost more money? If professional coffee is made with 9 bar, then why do",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s07": {
+   "schema": "pee248.journey.v1",
+   "text": "What benefits does a Moccamaster offer compared to a generic coffee maker? I am currently using a moka pot and a Hario hand grinder to make my morning brew. I try to buy freshly roasted ground beans but sometimes I still end up buying some bags from the supermarket. I drink about 2-3 cups of coffee a day at most, my partner drinks probably 5-6 but some of that is instant coffee. I truly hate the flavour of instant coffee but using",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "flavour",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s08": {
+   "schema": "pee248.journey.v1",
+   "text": "What's a good small hand / electric grinder available on the market? Just transitioned from a coffee shop to an office job, and got a bag of wonderful Counter Culture coffee beans. New workplace only buys pre-ground coffee and runs it through a Mr. Coffee drip machine. Boo! I want to buy an Aeropress and start grinding my own coffee beans. I think the fresh coffee will win people over and we can start getting some serious",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s09": {
+   "schema": "pee248.journey.v1",
+   "text": "Lower-end Manual Espresso Has anyone used one of the < $500 manual espresso machines like a ROK or Flair? I've read the specs (up to 10 bars for ROK, around 15 Flair) and seen some positive reviews but I'm curious about the quality of the cup. And, ultimately, wondering if it's worth it or THAT much better than the strong coffee I get from my Aeropress.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "USD",
+      "min": null,
+      "max": 500
+     },
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "budget",
+       "criterion": "budget_max",
+       "stated": {
+        "value": 500,
+        "unit": "USD"
+       }
+      }
+     ]
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s10": {
+   "schema": "pee248.journey.v1",
+   "text": "Capsule coffee machine for home for one person: is it worth it to go for an expensive one? I'm choosing capsule coffee machine for home. There is a lot of options with different prices. I would like to know if it's worth it to go for a more expensive one ? Will coffee taste better ? What else should I pay attention to ? I'll have one-two coffee per day and don't mind if the machine is loud or slow.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "coffee taste",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s11": {
+   "schema": "pee248.journey.v1",
+   "text": "What's the simplest/cheapest coffee maker that can make a good latte automatically? I would like to buy a machine that can make me a cup of good latte/cappuccino in the morning. There are dozens of options on the market: from capsule-based machines to huge expensive pro coffee makers, so it's very hard to choose. What is the simplest/cheapest machine (in terms of long-term costs) that can make a good latte automatically? By 'automatically'",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s12": {
+   "schema": "pee248.journey.v1",
+   "text": "Looking for a good pod coffee maker I'm an occasional avid coffee drinker. That is, I don't drink much (at most 1 cup a day, sometimes a few days with 0 cups) but when I do I want it to be (really) good. I just want a good cup of regular coffee, and possibly a latte every now and then. I don't care too much for an espresso. Up until now I've used the freeze dried stuff and sometimes one of",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s13": {
+   "schema": "pee248.journey.v1",
+   "text": "Choosing a blender that can puree hard fruit (like coconut) I'm thinking about buying a blender since my food processor doesn't do a great job at pureeing tomatoes or blending my homemade almond milk. I'm considering buying a blender that can also puree fresh coconut if I can find one withing my budget. I'd like to spend 70€ tops. In my country (Portugal) I can find blenders with 1000W and 1200W within this price",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "EUR",
+      "min": null,
+      "max": 70
+     },
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": [
+      {
+       "conceptId": "budget",
+       "criterion": "budget_max",
+       "stated": {
+        "value": 70,
+        "unit": "EUR"
+       }
+      }
+     ]
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s14": {
+   "schema": "pee248.journey.v1",
+   "text": "Does power give a like-for-like comparison between different brands of stand mixer? I've noticed that the KitchenAid stand mixers (which are supposed to be one of the best, if not the best, brand out there) have significantly lower power rating than their counterparts from other brands. For example the popular KitchenAid Classic has a power rating of 250W and the KitchenAid Artisan has a power rating of 300W. Even the top-of-the-range",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "if not the best brand out there",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "negated_goal_requires_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"if not the best brand out there\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"if not the best brand out there\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s15": {
+   "schema": "pee248.journey.v1",
+   "text": "What are the main differences between a stand mixer, a countertop blender and a food processor? I'm looking to replace my countertop blender. Since my kitchen space is rather limited, I was doing some research to see if there are any \"multipurpose\" devices. I found out that there are also stand mixers and food processors and many of the tasks they can be used for overlap. I've never used a food processor or a stand mixer before. So my question is:",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s16": {
+   "schema": "pee248.journey.v1",
+   "text": "Requirements for a stand mixer able to handle bringing together really thick noodle dough? Like 40% or even 35% hydration? My mom had an ancient 375 watt Kitchenaid, but it broke (it had already worn down and broken a few times even before I tried noodle dough in it!) Now she's got an even weaker 275 watt one, which she bought used and accidentally got broken, but she wants to fix it up (mix-and-match parts or something). I'm thinking I should just get a new one, but I'm",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "she bought used",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"she bought used\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"she bought used\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s17": {
+   "schema": "pee248.journey.v1",
+   "text": "High pressure cooker classic vs electric multipurpose I was looking to buy a pressure cooker and I see that besides the classic ones with the valve that you put on the kitchen stove there are some that are electric and also multifunctional i.e. pressure cooker, slow cooker etc. My question is in terms of safety is there any difference between the classic and the electric multicooker with setting for high",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "pressure cooker",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"pressure cooker\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"pressure cooker\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s18": {
+   "schema": "pee248.journey.v1",
+   "text": "How to choose a pressure cooker specifically for legumes/beans and which setting is appropriate? I am interested in buying a pressure cooker. I have only 2 requirements: The only food I want to use it for is legumes/beans (mentioning it case it matters in any way). Take little space I have been checking some electric ones, but from their programs mentioned I don't see anything mentioned about legumes. Models I checked are e.g. Turbo Cuisine CY7548",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "pressure cooker specifically",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"pressure cooker specifically\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"pressure cooker specifically\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s19": {
+   "schema": "pee248.journey.v1",
+   "text": "Ideal pressure cooker size for cooking a pound (454g) of beans I'm shopping for a pressure cooker. Could anyone advise me on what size of pressure cooker is sufficient for cooking a pound of beans? I don't want to buy one that is too small and overcrowd it.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "pressure cooker",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"pressure cooker\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"pressure cooker\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s20": {
+   "schema": "pee248.journey.v1",
+   "text": "Pressure Cooker suitable for traditional Indian dishes, available in Europe I would like to try recipes from Urvashi Pitre 's Indian Instant Pot Cookbook: Traditional Indian Dishes Made Easy and Fast . However, buying the original Instant Pot pressure cooker does not seem to be straightforward or convenient for customers in Europe (outside Britain). Has anybody tried these recipes with a pressure cooker that is more readily",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "the",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"the\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"the\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s21": {
+   "schema": "pee248.journey.v1",
+   "text": "Is there a multipurpose cooking appliance that can be used to make natto? I want to try making some of my own natto, since it is a bit pricey getting it from the store. Looking at online recipes (such as this and this ) it appears that at one point it is necessary to maintain the mix at slightly over body temperature (100-115 F) for about 24 hours. I'm not sure if I have the equipment for this at home. My oven's dial goes from",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "s22": {
+   "schema": "pee248.journey.v1",
+   "text": "Is a blade grinder or burr grinder best for grinding coffee? I have recently received some vouchers and have gotten into coffee recently. I what to start buying my own beans and grinding them rather than just buying instant coffee or even already ground coffee, as I'm told beans newly ground beans that have also been recently roasted are way way better tasting and are what you should do if you're getting serious",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  }
+ }
+}

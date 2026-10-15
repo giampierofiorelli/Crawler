@@ -1,0 +1,1091 @@
+{
+ "schema": "pee250.arm-run.v1",
+ "arm": "D",
+ "bench": "evaluation/phase248/journey-heldout2.json",
+ "split": "heldout2",
+ "generatedAt": "2026-10-15T02:16:27.379Z",
+ "snapshotSha256": "7b5375e87010fc6fe2d780bc85aa7a2e74664af757bf98385638661251fb41c3",
+ "budget": {
+  "categories": 22,
+  "needs": 64,
+  "phrases": 344,
+  "counterexamples": 23,
+  "within": false
+ },
+ "applied": {
+  "itemsAdded": 45,
+  "aliasUpdates": 28
+ },
+ "registryCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters",
+  "toaster_ovens",
+  "kettles",
+  "blenders",
+  "deep_fryers",
+  "rice_cookers",
+  "steam_cookers",
+  "coffee_grinders",
+  "pressure_cookers",
+  "food_processors",
+  "stand_mixers"
+ ],
+ "knowledgeCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters"
+ ],
+ "msTotal": 202.2,
+ "journeys": {
+  "k01": {
+   "schema": "pee248.journey.v1",
+   "text": "Cooking dinner for just myself, I'd like fries with a real crunch but no vat of oil.",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "need_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "cook_single_portion",
+       "categoryId": "air_fryers",
+       "matched": "just myself",
+       "kind": "task"
+      },
+      {
+       "id": "crisp_texture",
+       "categoryId": "air_fryers",
+       "matched": "~crunch+oil",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [
+      {
+       "attribute": "power",
+       "conceptId": "crisp_texture",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "Rated watts alone do not establish crisping; airflow and load matter"
+      },
+      {
+       "attribute": "capacity",
+       "conceptId": "cook_single_portion",
+       "kind": "may_support",
+       "support": "hypothesis",
+       "note": "Capacity bounds batch size; small portions may not need large drawers"
+      }
+     ],
+     "unmeasuredConcepts": [
+      "cook_single_portion",
+      "crisp_texture"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: cook_single_portion, crisp_texture"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k02": {
+   "schema": "pee248.journey.v1",
+   "text": "Which airfryer cooks food uniformly so nothing is half raw?",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "cooking_evenness",
+       "categoryId": "air_fryers",
+       "matched": "~uniform+half+raw",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "cooking_evenness",
+       "method": "CHOICE (AU) assesses air fryers with four standard foods (frozen crumbed chicken, frozen chips with a fixed mass by basket size, marinated wings, pork belly) and judges look, taste and evenness of bro",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/benchtop-cooking/articles/how-we-test-air-fryers"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "capacity",
+       "conceptId": "cooking_evenness",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "Declared drawer volume does not establish usable single-layer crisping area or evenness"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) assesses air fryers with four standard foods (frozen crumbed chicken, frozen c"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k03": {
+   "schema": "pee248.journey.v1",
+   "text": "I don't have much room on my worktop for another gadget, is an air fryer realistic?",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "small_kitchen",
+       "categoryId": "air_fryers",
+       "matched": "~room+worktop",
+       "kind": "environment"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "small_kitchen"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "small_kitchen",
+       "criterion": "width_max",
+       "stated": null
+      },
+      {
+       "conceptId": "small_kitchen",
+       "criterion": "depth_max",
+       "stated": null
+      },
+      {
+       "conceptId": "small_kitchen",
+       "criterion": "height_max",
+       "stated": null
+      }
+     ]
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "How much space do you have for it (maximum width, depth and height)?"
+   ],
+   "researchPlan": [
+    "once confirmed, check width_max, depth_max, height_max against cited declarations (requirements shortlist, unordered)",
+    "find an original test method for: small_kitchen"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k04": {
+   "schema": "pee248.journey.v1",
+   "text": "Scrubbing greasy baskets is my least favourite job; which air fryer is simplest to wash?",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "cleaning_effort",
+       "categoryId": "air_fryers",
+       "matched": "~scrubb+greas+wash",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "cleaning_effort"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: cleaning_effort"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k05": {
+   "schema": "pee248.journey.v1",
+   "text": "I want café-quality espresso at home.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "espresso_quality",
+       "categoryId": "coffee_machines",
+       "matched": "espresso quality",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "espresso_quality",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "bar pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      },
+      {
+       "attribute": "pump pressure",
+       "conceptId": "espresso_quality",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "A declared pump bar rating describes the pump, not pressure at the coffee puck"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k06": {
+   "schema": "pee248.journey.v1",
+   "text": "Which espresso machine needs the least looking after?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "low_maintenance",
+       "categoryId": "coffee_machines",
+       "matched": "~look+aft",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "low_maintenance"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: low_maintenance"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k07": {
+   "schema": "pee248.journey.v1",
+   "text": "How much will capsules or beans cost me per year with a coffee machine?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "ongoing_costs",
+       "categoryId": "coffee_machines",
+       "matched": "~capsul+cost",
+       "kind": "environment"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "ongoing_costs"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: ongoing_costs"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k08": {
+   "schema": "pee248.journey.v1",
+   "text": "My shots vary a lot from one cup to the next. Which machine is more stable?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "need_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "shot_consistency",
+       "categoryId": "coffee_machines",
+       "matched": "~var+lot+stable",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "shot_consistency",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k09": {
+   "schema": "pee248.journey.v1",
+   "text": "I'm tired of toast with stripes and dark patches.",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "even_browning",
+       "categoryId": "toasters",
+       "matched": "~strip+dark+patch",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "even_browning",
+       "method": "CHOICE (AU) sets each toaster to a reference shade using a photo chart, then runs four toasting cycles with standard white bread to assess evenness and cycle-to-cycle repeatability; it also measures k",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/toasters-grills-and-sandwich-presses/articles/how-we-test-toasters"
+      }
+     ],
+     "cautions": [
+      {
+       "attribute": "power",
+       "conceptId": "even_browning",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "Rated power does not establish evenness of browning"
+      }
+     ],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) sets each toaster to a reference shade using a photo chart, then runs four toa"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k10": {
+   "schema": "pee248.journey.v1",
+   "text": "Toaster for crumpets and chunky homemade bread?",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "thick_bread_fit",
+       "categoryId": "toasters",
+       "matched": "~chunk+homemade+bread",
+       "kind": "capability"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [
+      {
+       "attribute": "slot dimensions",
+       "conceptId": "thick_bread_fit",
+       "kind": "may_support",
+       "support": "hypothesis",
+       "note": "Slot width/depth bound which bread fits; centring guides may matter for evenness"
+      }
+     ],
+     "unmeasuredConcepts": [
+      "thick_bread_fit"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: thick_bread_fit"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k11": {
+   "schema": "pee248.journey.v1",
+   "text": "Our toaster gets so hot outside that I worry about burns.",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "hot_exterior",
+       "categoryId": "toasters",
+       "matched": "~hot+outside+burn",
+       "kind": "failure"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "hot_exterior"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: hot_exterior"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k12": {
+   "schema": "pee248.journey.v1",
+   "text": "I'd rather not use a deep fryer; what's a healthier way to get crispy chicken?",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "need_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": [
+      "deep_fryers"
+     ]
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "crisp_texture",
+       "categoryId": "air_fryers",
+       "matched": "crispy",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [
+      {
+       "attribute": "power",
+       "conceptId": "crisp_texture",
+       "kind": "not_sufficient_for",
+       "support": "hypothesis",
+       "note": "Rated watts alone do not establish crisping; airflow and load matter"
+      }
+     ],
+     "unmeasuredConcepts": [
+      "crisp_texture"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: crisp_texture"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k13": {
+   "schema": "pee248.journey.v1",
+   "text": "Which steamer is best for vegetables?",
+   "stages": {
+    "category": {
+     "categoryId": "steam_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 3,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 27,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for steam_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model steam_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "3 product identities already known for steam_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k14": {
+   "schema": "pee248.journey.v1",
+   "text": "Which headphones cancel noise best on planes?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "headphones",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"headphones\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"headphones\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k15": {
+   "schema": "pee248.journey.v1",
+   "text": "I need a gift idea for my mum's new house.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "gift idea",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"gift idea\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"gift idea\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "k16": {
+   "schema": "pee248.journey.v1",
+   "text": "Bean-to-cup or pod machine for a busy office of ten people?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "batch_capacity",
+       "categoryId": "coffee_machines",
+       "matched": "~office+people",
+       "kind": "environment"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "batch_capacity"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "batch_capacity",
+       "criterion": "capacity_min",
+       "stated": null
+      }
+     ]
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What capacity do you need at least (litres, cups or slices)?"
+   ],
+   "researchPlan": [
+    "once confirmed, check capacity_min against cited declarations (requirements shortlist, unordered)",
+    "find an original test method for: batch_capacity"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  }
+ }
+}

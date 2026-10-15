@@ -1,0 +1,691 @@
+{
+ "schema": "pee250.score.v1",
+ "bench": "evaluation/phase248/journey-heldout2.json",
+ "split": "heldout2",
+ "scoredAt": "2026-10-15T02:16:27.435Z",
+ "arms": {
+  "R": {
+   "cases": 16,
+   "category": {
+    "correct": 15,
+    "of": 16,
+    "wrongAttributions": 0,
+    "justifiedAbstentions": 0,
+    "correctOrJustified": 15
+   },
+   "needs": {
+    "tp": 5,
+    "listedExpected": 13,
+    "unlisted": 0,
+    "fp": 0,
+    "recallListed": 0.385,
+    "recallAll": 0.385,
+    "precision": 1
+   },
+   "budget": {
+    "correct": 16,
+    "of": 16
+   },
+   "advicePath": 12,
+   "unsafeRankings": 0,
+   "rows": [
+    {
+     "id": "k01",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 2,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "crisp_texture"
+     ],
+     "missedNeeds": [
+      "cook_single_portion"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k02",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "cooking_evenness"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k03",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "small_kitchen"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k04",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "cleaning_effort"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k05",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "espresso_quality"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k06",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "low_maintenance"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k07",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "ongoing_costs"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k08",
+     "expCategory": "coffee_machines",
+     "gotCategory": null,
+     "categoryOk": false,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "shot_consistency"
+     ],
+     "budgetOk": true,
+     "decision": "clarify",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k09",
+     "expCategory": "toasters",
+     "gotCategory": "toasters",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "even_browning"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k10",
+     "expCategory": "toasters",
+     "gotCategory": "toasters",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "thick_bread_fit"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k11",
+     "expCategory": "toasters",
+     "gotCategory": "toasters",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [
+      "hot_exterior"
+     ],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k12",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "crisp_texture"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k13",
+     "expCategory": "steam_cookers",
+     "gotCategory": "steam_cookers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "unsupported_category",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k14",
+     "expCategory": null,
+     "gotCategory": null,
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "out_of_scope",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k15",
+     "expCategory": null,
+     "gotCategory": null,
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "out_of_scope",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k16",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    }
+   ]
+  },
+  "D": {
+   "cases": 16,
+   "category": {
+    "correct": 16,
+    "of": 16,
+    "wrongAttributions": 0,
+    "justifiedAbstentions": 0,
+    "correctOrJustified": 16
+   },
+   "needs": {
+    "tp": 13,
+    "listedExpected": 13,
+    "unlisted": 0,
+    "fp": 1,
+    "recallListed": 1,
+    "recallAll": 1,
+    "precision": 0.929
+   },
+   "budget": {
+    "correct": 16,
+    "of": 16
+   },
+   "advicePath": 13,
+   "unsafeRankings": 0,
+   "rows": [
+    {
+     "id": "k01",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 2,
+     "needExpected": 2,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "cook_single_portion",
+      "crisp_texture"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k02",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "cooking_evenness"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k03",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "small_kitchen"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k04",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "cleaning_effort"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k05",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "espresso_quality"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k06",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "low_maintenance"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k07",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "ongoing_costs"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k08",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "shot_consistency"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k09",
+     "expCategory": "toasters",
+     "gotCategory": "toasters",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "even_browning"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k10",
+     "expCategory": "toasters",
+     "gotCategory": "toasters",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "thick_bread_fit"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k11",
+     "expCategory": "toasters",
+     "gotCategory": "toasters",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "hot_exterior"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k12",
+     "expCategory": "air_fryers",
+     "gotCategory": "air_fryers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [
+      "crisp_texture"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k13",
+     "expCategory": "steam_cookers",
+     "gotCategory": "steam_cookers",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "unsupported_category",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k14",
+     "expCategory": null,
+     "gotCategory": null,
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "out_of_scope",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k15",
+     "expCategory": null,
+     "gotCategory": null,
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "gotNeeds": [],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "out_of_scope",
+     "advicePath": false,
+     "rankingAuthorized": false
+    },
+    {
+     "id": "k16",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "categoryOk": true,
+     "wrongCategory": false,
+     "justifiedAbstention": false,
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "gotNeeds": [
+      "batch_capacity"
+     ],
+     "missedNeeds": [],
+     "budgetOk": true,
+     "decision": "withhold_insufficient_evidence",
+     "advicePath": true,
+     "rankingAuthorized": false
+    }
+   ]
+  }
+ }
+}

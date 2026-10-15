@@ -20,7 +20,7 @@ export interface NeedLesson250 {id:string;kind:ConceptKind128;statement:string;a
 export interface CategoryLesson250 {
  categoryId:string;
  /** Registry additions for a category PEE does not name yet, or extra names for one it does. */
- registry?:{aliases?:string[];cues?:string[];partPhrases?:string[]};
+ registry?:{aliases?:string[];cues?:string[];partPhrases?:string[];aliasContext?:Record<string,string[]>};
  needs:NeedLesson250[];
  /** At most one mechanism and one measurement-method statement per category (hypotheses, no concept). */
  mechanism?:string;measurement?:string;
@@ -169,6 +169,20 @@ export const ADAPTIVE_C250:readonly CategoryLesson250[]=[
  ]},
 ];
 
+/** Lessons PEE now uses (Phase250 decision, development configuration): the first run on untouched set 3 gave B and C
+ * comparable gains (need recall 8/24 and 7/24 against 0/24; 12 wrong category attributions each against A's 15),
+ * so both are kept, except B's manual_coffee_brewers lesson, whose names made five coffee and grinder requests
+ * ambiguous. Bare "grinder" names a coffee grinder only in a coffee context (set 3: spice, peanut-butter and allspice
+ * grinders were attributed to coffee grinders). This union was not run first on untouched material: the next phase
+ * must measure it on a new set. */
+export const ADOPTED_LESSONS250:readonly CategoryLesson250[]=[
+ ...ADAPTIVE_C250,
+ ...CURRICULUM_B250.filter(l=>l.categoryId!=='manual_coffee_brewers'),
+ {categoryId:'coffee_grinders',registry:{aliasContext:Object.fromEntries(['grinder','hand grinder','manual grinder','electric grinder','blade grinder'].map(a=>[a,['coffee','espresso','beans','brew','pour over','french press','aeropress','moka']]))},needs:[]},
+ {categoryId:'toaster_ovens',registry:{aliases:['otg','oven toaster griller']},needs:[]},
+ {categoryId:'steam_cookers',registry:{partPhrases:['bamboo steamer']},needs:[]},
+];
+
 /** Phrases, counterexamples, needs and categories a curriculum uses, against LESSON_BUDGET250. */
 export function lessonBudget250(lessons:readonly CategoryLesson250[]){
  const phrases=lessons.reduce((a,l)=>a+(l.registry?.aliases?.length??0)+(l.registry?.cues?.length??0)+l.needs.reduce((b,n)=>b+n.aliases.length,0),0);
@@ -179,12 +193,15 @@ export function lessonBudget250(lessons:readonly CategoryLesson250[]){
  return {...used,within};
 }
 
+/** Needs that a declared specification can check, by SPEC_CRITERIA249 decision key (any category). The need says
+ * what the user wants; the user still confirms the value before a shortlist is built. */
+export const NEED_CRITERIA250:Readonly<Record<string,readonly string[]>>={batch_capacity:['capacity_min'],small_kitchen:['width_max','depth_max','height_max']};
 /** Registry for the journey: the base registry extended by the lessons (new categories appended; names, cues, part
  * phrases and need counterexamples merged). The base array is not modified. */
 export function registryWithLessons250(base:readonly CategoryEntry248[],lessons:readonly CategoryLesson250[]):CategoryEntry248[]{
- type Mut={id:string;aliases:string[];cues?:string[];partPhrases?:string[];needCounterexamples?:Record<string,readonly string[]>};
+ type Mut={id:string;aliases:string[];cues?:string[];partPhrases?:string[];needCounterexamples?:Record<string,readonly string[]>;aliasContext?:Record<string,readonly string[]>};
  const out:Mut[]=base.map(e=>({id:e.id,aliases:[...e.aliases],...(e.cues?{cues:[...e.cues]}:{}),...(e.partPhrases?{partPhrases:[...e.partPhrases]}:{}),
-  ...(e.needCounterexamples?{needCounterexamples:{...e.needCounterexamples}}:{})}));
+  ...(e.needCounterexamples?{needCounterexamples:{...e.needCounterexamples}}:{}),...(e.aliasContext?{aliasContext:{...e.aliasContext}}:{})}));
  for(const l of lessons){
   let e:Mut|undefined=out.find(x=>x.id===l.categoryId);
   if(!e){if(!l.registry?.aliases?.length)throw Error('250_new_category_needs_aliases');e={id:l.categoryId,aliases:[]};out.push(e);}
@@ -195,7 +212,9 @@ export function registryWithLessons250(base:readonly CategoryEntry248[],lessons:
   const ce={...(e.needCounterexamples??{})} as Record<string,readonly string[]>;
   for(const n of l.needs)if(n.counterexamples?.length)ce[n.id]=add(ce[n.id],n.counterexamples);
   if(Object.keys(ce).length)e.needCounterexamples=ce;
+  if(l.registry?.aliasContext)e.aliasContext={...(e.aliasContext??{}),...l.registry.aliasContext};
  }
+ for(const e of out)(e as Mut&{needCriteria?:Readonly<Record<string,readonly string[]>>}).needCriteria=NEED_CRITERIA250;
  return out;
 }
 
