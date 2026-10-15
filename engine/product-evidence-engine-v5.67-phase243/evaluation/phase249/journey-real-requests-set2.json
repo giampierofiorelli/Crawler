@@ -1,0 +1,366 @@
+{
+ "schema": "pee248.journey-benchmark.v1",
+ "split": "real_requests_heldout2",
+ "written": "Second untouched real-request set: gold by the assistant, written after journey round 3 was frozen (7594458) and before running it on these texts (2026-10-15). Questions come from new searches; none appeared in set 1 candidates.",
+ "attribution": "Each text is an excerpt of a Stack Exchange post by the named author, licensed under the CC BY-SA version stated per case; the excerpts in this file are shared under the same licences.",
+ "cases": [
+  {
+   "id": "s01",
+   "text": "Are there any variable temperature electric kettle which boil water before letting temperature drop to the desired temperature? I am a green tea enthusiast so I'm looking for a variable temperature electric kettle but since the water in my home is not very clean I don't want to buy one which just heats the water to a given temperature without boiling it first. Are there any electric kettles which can bring water to a boiling temperature and let it cool until, say 80 degrees Celsius",
+   "expectedCategory": "kettles",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 100973,
+    "link": "https://cooking.stackexchange.com/questions/100973/are-there-any-variable-temperature-electric-kettle-which-boil-water-before-letti",
+    "author": "teathusiast",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s02",
+   "text": "Are electric kettles a good choice for tea? From my experience, electric kettles stop only when the water is at a rolling boil, which is bad because: The water loses oxygen when at a rolling boil If you make teas other than black or herbals (like white, oolong or green) you may bruise the leaves with boiling water So are electric kettles recommended for tea making?",
+   "expectedCategory": "kettles",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 90386,
+    "link": "https://cooking.stackexchange.com/questions/90386/are-electric-kettles-a-good-choice-for-tea",
+    "author": "Bar Akiva",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s03",
+   "text": "What do I need to know about coffee machines and grinders to get started making good coffee at home? How to make a strong mug of instant Coffee? \"Crema\" is a light-colored foam layer which builds on top of espresso, and many people like it. Espresso is also stronger than normal coffee. For both, you need an espresso machine and real coffee beans. Different coffee brewing methods produce different types of coffee. Espresso is the hardest to make at home.",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 42425,
+    "link": "https://cooking.stackexchange.com/questions/42425/what-do-i-need-to-know-about-coffee-machines-and-grinders-to-get-started-making",
+    "author": "Aquarius_Girl",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s04",
+   "text": "What are the differences between coffee made with a French press or an espresso machine? I've liked coffee for years and I'm thinking on buying an espresso machine. Before that, I want to know why the coffee seems more tasty when it is done that way than with a French press or a drip coffee maker, and what are the pros and cons of an espresso machine.",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 9329,
+    "link": "https://cooking.stackexchange.com/questions/9329/what-are-the-differences-between-coffee-made-with-a-french-press-or-an-espresso",
+    "author": "Tomas",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s05",
+   "text": "Can bean-to-cup machine make quality espresso/cappuccino? I want to buy myself a coffee machine so I can get nice and tasty coffee throughout the day. Basically my goals are Don't really want to invest half the day in front of my machine, experimenting with all sort of weirdness Do want excellent and nice looking coffee. Do want to have milk foam. Don't want to go over 500 euros. I'm OK with a cup of coffee taking",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "expectedBudget": {
+    "currency": "EUR",
+    "max": 500
+   },
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 15600,
+    "link": "https://cooking.stackexchange.com/questions/15600/can-bean-to-cup-machine-make-quality-espresso-cappuccino",
+    "author": "Johannes Schaub - litb",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s06",
+   "text": "What difference does the bar pressure makes in espresso coffee machines? I read somewhere that 15 bar is enough and any pressure higher than that doesn't make any difference. The standard pressure is 15 bar for home machines and 9 bar for professional machines! If so, why are there machines with higher pressure (16, 19, 20, 21 bar) and why do these machines cost more money? If professional coffee is made with 9 bar, then why do",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "extraction_parameters"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 28489,
+    "link": "https://cooking.stackexchange.com/questions/28489/what-difference-does-the-bar-pressure-makes-in-espresso-coffee-machines",
+    "author": "Rafael Piccolo",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s07",
+   "text": "What benefits does a Moccamaster offer compared to a generic coffee maker? I am currently using a moka pot and a Hario hand grinder to make my morning brew. I try to buy freshly roasted ground beans but sometimes I still end up buying some bags from the supermarket. I drink about 2-3 cups of coffee a day at most, my partner drinks probably 5-6 but some of that is instant coffee. I truly hate the flavour of instant coffee but using",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 5578,
+    "link": "https://coffee.stackexchange.com/questions/5578/what-benefits-does-a-moccamaster-offer-compared-to-a-generic-coffee-maker",
+    "author": "sk5647",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s08",
+   "text": "What's a good small hand / electric grinder available on the market? Just transitioned from a coffee shop to an office job, and got a bag of wonderful Counter Culture coffee beans. New workplace only buys pre-ground coffee and runs it through a Mr. Coffee drip machine. Boo! I want to buy an Aeropress and start grinding my own coffee beans. I think the fresh coffee will win people over and we can start getting some serious",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 3816,
+    "link": "https://coffee.stackexchange.com/questions/3816/whats-a-good-small-hand-electric-grinder-available-on-the-market",
+    "author": "Jason Toby",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s09",
+   "text": "Lower-end Manual Espresso Has anyone used one of the < $500 manual espresso machines like a ROK or Flair? I've read the specs (up to 10 bars for ROK, around 15 Flair) and seen some positive reviews but I'm curious about the quality of the cup. And, ultimately, wondering if it's worth it or THAT much better than the strong coffee I get from my Aeropress.",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "expectedBudget": {
+    "currency": "USD",
+    "max": 500
+   },
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 4395,
+    "link": "https://coffee.stackexchange.com/questions/4395/lower-end-manual-espresso",
+    "author": "rougon",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s10",
+   "text": "Capsule coffee machine for home for one person: is it worth it to go for an expensive one? I'm choosing capsule coffee machine for home. There is a lot of options with different prices. I would like to know if it's worth it to go for a more expensive one ? Will coffee taste better ? What else should I pay attention to ? I'll have one-two coffee per day and don't mind if the machine is loud or slow.",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "espresso_quality"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 4958,
+    "link": "https://coffee.stackexchange.com/questions/4958/capsule-coffee-machine-for-home-for-one-person-is-it-worth-it-to-go-for-an-expe",
+    "author": "bsk",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s11",
+   "text": "What's the simplest/cheapest coffee maker that can make a good latte automatically? I would like to buy a machine that can make me a cup of good latte/cappuccino in the morning. There are dozens of options on the market: from capsule-based machines to huge expensive pro coffee makers, so it's very hard to choose. What is the simplest/cheapest machine (in terms of long-term costs) that can make a good latte automatically? By 'automatically'",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [
+    "ongoing_costs"
+   ],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 3265,
+    "link": "https://coffee.stackexchange.com/questions/3265/whats-the-simplest-cheapest-coffee-maker-that-can-make-a-good-latte-automatical",
+    "author": "MilkLife",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s12",
+   "text": "Looking for a good pod coffee maker I'm an occasional avid coffee drinker. That is, I don't drink much (at most 1 cup a day, sometimes a few days with 0 cups) but when I do I want it to be (really) good. I just want a good cup of regular coffee, and possibly a latte every now and then. I don't care too much for an espresso. Up until now I've used the freeze dried stuff and sometimes one of",
+   "expectedCategory": "coffee_machines",
+   "expectedConcepts": [],
+   "expectedDecision": "withhold_insufficient_evidence",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 5343,
+    "link": "https://coffee.stackexchange.com/questions/5343/looking-for-a-good-pod-coffee-maker",
+    "author": "JensB",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s13",
+   "text": "Choosing a blender that can puree hard fruit (like coconut) I'm thinking about buying a blender since my food processor doesn't do a great job at pureeing tomatoes or blending my homemade almond milk. I'm considering buying a blender that can also puree fresh coconut if I can find one withing my budget. I'd like to spend 70€ tops. In my country (Portugal) I can find blenders with 1000W and 1200W within this price",
+   "expectedCategory": "blenders",
+   "expectedConcepts": [],
+   "expectedDecision": "unsupported_category",
+   "expectedBudget": {
+    "currency": "EUR",
+    "max": 70
+   },
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 110424,
+    "link": "https://cooking.stackexchange.com/questions/110424/choosing-a-blender-that-can-puree-hard-fruit-like-coconut",
+    "author": "Melissa Cristóvão",
+    "license": null
+   }
+  },
+  {
+   "id": "s14",
+   "text": "Does power give a like-for-like comparison between different brands of stand mixer? I've noticed that the KitchenAid stand mixers (which are supposed to be one of the best, if not the best, brand out there) have significantly lower power rating than their counterparts from other brands. For example the popular KitchenAid Classic has a power rating of 250W and the KitchenAid Artisan has a power rating of 300W. Even the top-of-the-range",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 94737,
+    "link": "https://cooking.stackexchange.com/questions/94737/does-power-give-a-like-for-like-comparison-between-different-brands-of-stand-mix",
+    "author": "Kidburla",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s15",
+   "text": "What are the main differences between a stand mixer, a countertop blender and a food processor? I'm looking to replace my countertop blender. Since my kitchen space is rather limited, I was doing some research to see if there are any \"multipurpose\" devices. I found out that there are also stand mixers and food processors and many of the tasks they can be used for overlap. I've never used a food processor or a stand mixer before. So my question is:",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "clarify",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 86201,
+    "link": "https://cooking.stackexchange.com/questions/86201/what-are-the-main-differences-between-a-stand-mixer-a-countertop-blender-and-a",
+    "author": "Huy",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s16",
+   "text": "Requirements for a stand mixer able to handle bringing together really thick noodle dough? Like 40% or even 35% hydration? My mom had an ancient 375 watt Kitchenaid, but it broke (it had already worn down and broken a few times even before I tried noodle dough in it!) Now she's got an even weaker 275 watt one, which she bought used and accidentally got broken, but she wants to fix it up (mix-and-match parts or something). I'm thinking I should just get a new one, but I'm",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 128935,
+    "link": "https://cooking.stackexchange.com/questions/128935/requirements-for-a-stand-mixer-able-to-handle-bringing-together-really-thick-noo",
+    "author": "dwawlyn",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s17",
+   "text": "High pressure cooker classic vs electric multipurpose I was looking to buy a pressure cooker and I see that besides the classic ones with the valve that you put on the kitchen stove there are some that are electric and also multifunctional i.e. pressure cooker, slow cooker etc. My question is in terms of safety is there any difference between the classic and the electric multicooker with setting for high",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 127757,
+    "link": "https://cooking.stackexchange.com/questions/127757/high-pressure-cooker-classic-vs-electric-multipurpose",
+    "author": "Jim",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s18",
+   "text": "How to choose a pressure cooker specifically for legumes/beans and which setting is appropriate? I am interested in buying a pressure cooker. I have only 2 requirements: The only food I want to use it for is legumes/beans (mentioning it case it matters in any way). Take little space I have been checking some electric ones, but from their programs mentioned I don't see anything mentioned about legumes. Models I checked are e.g. Turbo Cuisine CY7548",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 127869,
+    "link": "https://cooking.stackexchange.com/questions/127869/how-to-choose-a-pressure-cooker-specifically-for-legumes-beans-and-which-setting",
+    "author": "Jim",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s19",
+   "text": "Ideal pressure cooker size for cooking a pound (454g) of beans I'm shopping for a pressure cooker. Could anyone advise me on what size of pressure cooker is sufficient for cooking a pound of beans? I don't want to buy one that is too small and overcrowd it.",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 20106,
+    "link": "https://cooking.stackexchange.com/questions/20106/ideal-pressure-cooker-size-for-cooking-a-pound-454g-of-beans",
+    "author": "JRLHam",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s20",
+   "text": "Pressure Cooker suitable for traditional Indian dishes, available in Europe I would like to try recipes from Urvashi Pitre 's Indian Instant Pot Cookbook: Traditional Indian Dishes Made Easy and Fast . However, buying the original Instant Pot pressure cooker does not seem to be straightforward or convenient for customers in Europe (outside Britain). Has anybody tried these recipes with a pressure cooker that is more readily",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 87134,
+    "link": "https://cooking.stackexchange.com/questions/87134/pressure-cooker-suitable-for-traditional-indian-dishes-available-in-europe",
+    "author": "Drux",
+    "license": "CC BY-SA 3.0"
+   }
+  },
+  {
+   "id": "s21",
+   "text": "Is there a multipurpose cooking appliance that can be used to make natto? I want to try making some of my own natto, since it is a bit pricey getting it from the store. Looking at online recipes (such as this and this ) it appears that at one point it is necessary to maintain the mix at slightly over body temperature (100-115 F) for about 24 hours. I'm not sure if I have the equipment for this at home. My oven's dial goes from",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "clarify",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "cooking.stackexchange.com",
+    "questionId": 95395,
+    "link": "https://cooking.stackexchange.com/questions/95395/is-there-a-multipurpose-cooking-appliance-that-can-be-used-to-make-natto",
+    "author": "Larry",
+    "license": "CC BY-SA 4.0"
+   }
+  },
+  {
+   "id": "s22",
+   "text": "Is a blade grinder or burr grinder best for grinding coffee? I have recently received some vouchers and have gotten into coffee recently. I what to start buying my own beans and grinding them rather than just buying instant coffee or even already ground coffee, as I'm told beans newly ground beans that have also been recently roasted are way way better tasting and are what you should do if you're getting serious",
+   "expectedCategory": null,
+   "expectedConcepts": [],
+   "expectedDecision": "out_of_scope",
+   "provenance": {
+    "kind": "independently_authored_real_user_request",
+    "site": "coffee.stackexchange.com",
+    "questionId": 3288,
+    "link": "https://coffee.stackexchange.com/questions/3288/is-a-blade-grinder-or-burr-grinder-best-for-grinding-coffee",
+    "author": "leeroy",
+    "license": null
+   }
+  }
+ ]
+}
