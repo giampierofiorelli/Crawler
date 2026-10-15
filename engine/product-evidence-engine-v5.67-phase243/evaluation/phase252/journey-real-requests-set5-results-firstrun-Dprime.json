@@ -1,0 +1,1646 @@
+{
+ "schema": "pee250.arm-run.v1",
+ "arm": "D",
+ "bench": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/evaluation/phase252/journey-real-requests-set5.json",
+ "split": "real_requests_heldout5",
+ "generatedAt": "2026-10-15T07:39:27.672Z",
+ "snapshotSha256": "0d4e7abf8f0398829fb62602bbb816d8b8442d85805b54ec0f2db87710b3c5f9",
+ "budget": {
+  "categories": 23,
+  "needs": 64,
+  "phrases": 344,
+  "counterexamples": 23,
+  "within": false
+ },
+ "applied": {
+  "itemsAdded": 45,
+  "aliasUpdates": 28
+ },
+ "registryCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters",
+  "toaster_ovens",
+  "kettles",
+  "blenders",
+  "deep_fryers",
+  "rice_cookers",
+  "steam_cookers",
+  "coffee_grinders",
+  "pressure_cookers",
+  "food_processors",
+  "stand_mixers"
+ ],
+ "knowledgeCategories": [
+  "air_fryers",
+  "blenders",
+  "coffee_machines",
+  "food_processors",
+  "kettles",
+  "pressure_cookers",
+  "rice_cookers",
+  "stand_mixers"
+ ],
+ "msTotal": 1014.3,
+ "journeys": {
+  "v01": {
+   "schema": "pee248.journey.v1",
+   "text": "Pour over coffee : what is needed for a good pitcher replacement?. My pourover coffee pitcher just broke. Its the second time it does this this year, so i guess the maker of this pourover kit is making flimsy glass for their pitchers. So is there a good replacement for those kinds of pitchers? What is important in a replacement? Does the mouth of the pitcher need to contain the whole filter? Do the sides really need to follow the filter? Here is how the filter looks like",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v02": {
+   "schema": "pee248.journey.v1",
+   "text": "Which brewing method extracts more flavors from the coffee bean?. Which method extracts more flavors from the bean: espresso, french press/cafetiere, or another method? And, if I want to try different beans from different countries etc, is a french press/cafetiere the best coffee maker for this?, since a bean of any place or any roast can be brewed in it?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: make coffee with little effort, skill or attention; or make milk-based drinks such as cappuccino and latte with frothed or steamed milk; or make enough coffee for several people or an office; or get reliable, repeatable coffee with low routine maintenance?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v03": {
+   "schema": "pee248.journey.v1",
+   "text": "freddo espresso pods vs espresso pods. I'd like to consider myself a newbie at...coffee...consumption and I wanted to buy an espresso machine for myself and right now I'm between, a nespresso machine and a dolce gusto machine and the only thing that is holding me back is that, I can find freddo espresso pods for the dolce gusto machine but not for the nespresso one. Now, I know that freddo means cold , but I don't know if there is a point in having different pods for freddo espresso and \"normal\" espresso. That being said, does anyone know, in they're experience, if there is a difference between the two types of pods?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: make coffee with little effort, skill or attention; or make milk-based drinks such as cappuccino and latte with frothed or steamed milk; or make enough coffee for several people or an office; or get reliable, repeatable coffee with low routine maintenance?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v04": {
+   "schema": "pee248.journey.v1",
+   "text": "Are there general recommendations for mugs?. Is there a general consensus on what some of the best mugs out there are in terms of keeping (drip/pour-over) coffee warm, style, and flavor? Ceramic? Double-walled glass?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between kettles and rice cookers, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v05": {
+   "schema": "pee248.journey.v1",
+   "text": "Best filter to use for cold brew?. What's the best filter material to use for DIY set up for cold brew coffee? When I used a pour over funnel with a standard paper filter it seems to get clogged up faster than when hot brewing.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "filter",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"filter\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"filter\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v06": {
+   "schema": "pee248.journey.v1",
+   "text": "French press vs simple filter, is French press equipment really necessary?. French press coffee is basically when you pour almost boiling water onto ground beans and then filter them (by pressing the filter handle). So I wonder why use that contraption at all? Simply pour the hot water over the beans and then pour them in a glass over a filter. Is there something I am missing that makes that contraption necessary?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v07": {
+   "schema": "pee248.journey.v1",
+   "text": "How to tell which induction cookware is most efficient in conducting heat?. As above. I am looking for a durable water kettle (preferably stainless steel 304) that is super efficient in conducting heat when on induction cooker. How do I tell which brand/model will conduct heat the fastest without doing the actual test?",
+   "stages": {
+    "category": {
+     "categoryId": "kettles",
+     "basis": "explicit_alias",
+     "candidates": [
+      "kettles"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 2,
+     "withDeclaredAttributes": 2,
+     "retainedDeclarations": 11,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: boil water quickly; or heat water to a chosen temperature or keep it warm; or boil quietly; or limescale and water-quality problems?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v08": {
+   "schema": "pee248.journey.v1",
+   "text": "What kind of tray can i use to put a microave ON?. I just got a new kitchen and I want to protect the worktop and keep it clean. what kind of trays can i use to put a microwave or an air fryer on? Something with handles that i can use to carry the microave if it needs moved. all i get on amazon and google is trays to put IN the microwave.",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "small_kitchen",
+       "categoryId": "air_fryers",
+       "matched": "worktop",
+       "kind": "environment"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "small_kitchen"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "small_kitchen",
+       "criterion": "width_max",
+       "stated": null
+      },
+      {
+       "conceptId": "small_kitchen",
+       "criterion": "depth_max",
+       "stated": null
+      },
+      {
+       "conceptId": "small_kitchen",
+       "criterion": "height_max",
+       "stated": null
+      }
+     ]
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "How much space do you have for it (maximum width, depth and height)?"
+   ],
+   "researchPlan": [
+    "once confirmed, check width_max, depth_max, height_max against cited declarations (requirements shortlist, unordered)",
+    "find an original test method for: small_kitchen"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v09": {
+   "schema": "pee248.journey.v1",
+   "text": "Baking sheet in air fryer, and alternatives. I want to bake cookies in the air fryer but unfortunately I have no baking sheet. I am thinking maybe to use parchment paper or aluminium foil above the air fryer base. However, it seems a lot of experiences that people have with aluminium foil in air fryer seems negative. But I really do wonder, do I actually even need a baking sheet for air fryer? If yes, what would be some alternatives? The air fryer I am using: Ninja Air Fryer Max XL 1750W 5.2L",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "air_fryers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get crisp exterior texture on chips and breaded foods with little added oil; or cook two different foods at once with different settings and finish them together; or cook small portions for one person without heating a full oven; or cook enough food for a family at once?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v10": {
+   "schema": "pee248.journey.v1",
+   "text": "Replacement for the ring seal or gasket in a blender. I have a Moulinex blender and the seal ring or gasket is torn. I have searched everywhere to get a replacement. is there a replacement or is Oster the only seal rings I can get. Is there a DIY solution. Thanks",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: blend hard ingredients: ice, nuts, hard fruit; or easy to clean; or produce smooth purees, smoothies and nut milks; or blend quietly?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v11": {
+   "schema": "pee248.journey.v1",
+   "text": "Ought food processor blades be sharpened or replaced?. My grandparents are deliberating if they need a food processor, and if using knives is easier. They They can pay any amount ≤ $999 CAD. Consider only Consumer Reports's top 3 food processors. I'm hoping someone here with one can testify from personal experience. How long do the blades last, if they food-process raw hard unpiercable vegetables like 1 winter squash daily? Can the blades be sharpened? r/cooking contends yes. Even if they can, is it cheaper to sharpen or replace the blades?",
+   "stages": {
+    "category": {
+     "categoryId": "food_processors",
+     "basis": "explicit_alias",
+     "candidates": [
+      "food_processors"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "USD",
+      "min": null,
+      "max": 999
+     },
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": [
+      {
+       "conceptId": "budget",
+       "criterion": "budget_max",
+       "stated": {
+        "value": 999,
+        "unit": "USD"
+       }
+      }
+     ]
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "budget cannot be applied: no prices are retained (rights not established)",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: fit limited space; or knead or mix dough; or chop, slice, grate and shred; or replace several kitchen tools?"
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "discover more food_processors candidates (only 0 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v12": {
+   "schema": "pee248.journey.v1",
+   "text": "What features are important in a hand mixer?. I've always used the cheapest hand mixers (around 10 Euro). But I damaged a beater of my current one when I tried to make whipped canache - it was obviously too hard. So I plan to get a new one. Strangely, on paper there isn't much difference between 10 Euro models and 50 Euro models. They all come with foam beaters, dough hooks and 5 speeds. What are important things to look for in a good mixer? Can I use the watt numbers to make a meaningful comparison between models by different manufacturers? How important are they? I know that the watt numbers are supposed to indicate motor power. But I don't know if they have a meaning in the world of hand mixers, or if they have fallen prey to senseless inflation, the way loudspeaker watt number have. And if they are still meaningful, what is their relative importance as compared to other features? I don't have a food processor or stand mixer, so the hand held mixer should be capable of doing a lot.",
+   "stages": {
+    "category": {
+     "categoryId": "stand_mixers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "stand_mixers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "dough_kneading",
+       "categoryId": "stand_mixers",
+       "matched": "dough",
+       "kind": "task"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "dough_kneading"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: dough_kneading",
+    "discover more stand_mixers candidates (only 0 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v13": {
+   "schema": "pee248.journey.v1",
+   "text": "stand mixer - reasons to go with a higher wattage vs lower wattage mixer. Not sure if it's ok to mention specific brands or not, so I won't. But I'd like to pick up a stand mixer and the two models i'm considering have either a 325 or 575 watt motor and 5 or 6qts respectively. I've never been a big baker but I want to start baking, as well as making pasta. I'm assuming the only reason to get the more powerful motor is it would have an easier time mixing up a bigger/heavier/denser batch of dough vs the smaller motor? On the flip side, i'm guessing the bigger capacity model would be less efficient at mixing up a smaller batch? How big of a batch of pasta dough (in terms of number of portions) would each one be likely to handle? Or what about baking bread? How many average sized loafs would each one be likely to handle at one time? I'm leaning towards the smaller one because I don't think i'll be making huge batches of anything, and i like the way the bowl loads in the smaller vs the larger (tilt vs lift). The price difference between the two isn't huge, so I'm mainly just interested in picking the one that I'll get the best use of. thanks",
+   "stages": {
+    "category": {
+     "categoryId": "stand_mixers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "stand_mixers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "dough_kneading",
+       "categoryId": "stand_mixers",
+       "matched": "dough",
+       "kind": "task"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "dough_kneading"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: dough_kneading",
+    "discover more stand_mixers candidates (only 0 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v14": {
+   "schema": "pee248.journey.v1",
+   "text": "Multi cooker - with pressure cooker versus without. I crock a lot. My small pot is getting old and it feels like the controller switch is getting weak. My large crock has a crack but it does not leak (yet). With the new programmable can start in the AM and set it to go to warm at 2 PM. Can sear, do rice, stay on warm for 24 hours, .... Also a lot more money. Can get a multi cooker with pressure for instant meals. I don't pressure cook and have don't find myself in need of fast meals. If I had a multi cooker with pressure I might come to find fast as the best thing since sliced bread. Not yet convinced a 7 minute stew will equal a 7 hour stew. Finally to the question. Are there any slow cooker regrets to a cooker that will do slow and fast (pressure)? I know it will be brand dependent. I am considering the Instant Pot (pressure) versus the Kitchen Aid (no pressure). It is minor, but for me the opaque bulky lid is a regret. If that is the only regret I will get the pressure multi cooker. Wow, multi-cooker is not a tag.",
+   "stages": {
+    "category": {
+     "categoryId": "pressure_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "pressure_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "versatility",
+       "categoryId": "pressure_cookers",
+       "matched": "slow cook",
+       "kind": "capability"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "negation_modality_needs_review",
+      "unbound_negation",
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "versatility"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: versatility",
+    "discover more pressure_cookers candidates (only 0 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v15": {
+   "schema": "pee248.journey.v1",
+   "text": "Pressure Cooker vs. Slow Cooker for Moist Meat. This question: Why does meat in the crockpot always end up dry? discusses challenges and potential solutions to getting moist meat while cooking with a slow cooker. If I were to switch to a pressure cooker, would that be another method to keep meat moister? Or, if I'm not following the suggestions in the above post (in particular, using the right kind of meat), would a pressure cooker not really help me much?",
+   "stages": {
+    "category": {
+     "categoryId": "pressure_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "pressure_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "versatility",
+       "categoryId": "pressure_cookers",
+       "matched": "slow cook",
+       "kind": "capability"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "versatility"
+     ],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: versatility",
+    "discover more pressure_cookers candidates (only 0 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v16": {
+   "schema": "pee248.journey.v1",
+   "text": "Do you need a rice cooker to cook sticky rice?. I know that cooking sticky rice uses a steamer setup. But do you need a rice cooker to cook sticky rice property, or can it be done using regular kitchen tools, e.g. pots and pans?",
+   "stages": {
+    "category": {
+     "categoryId": "rice_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "rice_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 1,
+     "withDeclaredAttributes": 1,
+     "retainedDeclarations": 9,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: cook rice and other grains well; or keep food warm after cooking; or cook enough rice for the household?"
+   ],
+   "researchPlan": [
+    "discover more rice_cookers candidates (only 1 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v17": {
+   "schema": "pee248.journey.v1",
+   "text": "Bamboo Steamer VS Normal Steamer. I have heard that using a Bamboo Steamer provides/preserves the nutrients/elements that are good for, or at least more so than a normal plastic/metal steamer. Is this true? Or only for certain types of food/dishes? Or perhaps not at all? Also, does either of these produce a higher quality result (in taste or texture) than the other? Bamboo Steamer : VS Normal Steamer :",
+   "stages": {
+    "category": {
+     "categoryId": "steam_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 3,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 27,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for steam_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model steam_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "3 product identities already known for steam_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v18": {
+   "schema": "pee248.journey.v1",
+   "text": "What is the difference between fondue and cheese sauce? And do both need to be kept warm to be remain melted?. I like KFC style cheese sauce that is (optionally) served with breaded chicken. And now, at Christmas, I found that a kitchen appliance labeled \"raclette and fondue\" is at discount. But I made mistakes before and I bought things I do not need because I was not informed. Is a fondue appliance necessary to keep cheese sauce melted? Or will the cheese sauce remain spreadable even if left to become cold? In other terms, can I make cheese sauce with a regular pan and serve it hours later, or do I need something to keep it warm?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between kettles and rice cookers, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v19": {
+   "schema": "pee248.journey.v1",
+   "text": "Which appliance to use for masala chai?. Many regions have special devices or at least custom namings to brew tea and similar beverages: Teapot in Western countries Caydalnik in Turkey Samovar in Russia Samavar in Kashmir Is there any special appliance, either a corresponding naming of such for brewing masala chai?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v20": {
+   "schema": "pee248.journey.v1",
+   "text": "What is the best material for a cooking spoon?. We use standard wooden spoons, but they soon pick up stains from the various dishes. What are the pros and cons of the various woods, e.g. olive, Cilio Toscana Olivewood, beechwood, maple, bamboo, etc? Is there a 'best', or is it just a matter of style or personal preference?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "material",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"material\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"material\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v21": {
+   "schema": "pee248.journey.v1",
+   "text": "Cutting boards: What are some general tips on purchasing and using a cutting board?. I have heard various debates on the merits of wood versus synthetic cutting boards, and their affect on food safety, knife edges, and ease of cleaning and storage. What are the pros and cons of the following and why? Wood versus plastic or other materials Affect on food safety and cleanliness Cost to purchase Affect on knife edge and ease of use",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v22": {
+   "schema": "pee248.journey.v1",
+   "text": "Do I need a bread maker?. I'd like to try my hand at baking my own bread. Do I need a bread maker to get decent bread? Are there any advantages to using a bread maker vs. my normal oven?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "bread maker",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"bread maker\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"bread maker\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v23": {
+   "schema": "pee248.journey.v1",
+   "text": "Extrusion pasta maker versus roller: which one makes the best pasta?. Roller pasta makers require you to work the dough by hand and then run it through the roller multiple times. Some extrusion pasta makers don't even require mixing the ingredients before placing them in the machine. I have a hard time believing that the extrusion models can produce the same quality pasta because the dough is not kneaded or sent through the roller. What is the difference between the noodles produced by each method?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "one makes the best pasta",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unresolved_comparative_referent"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"one makes the best pasta\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"one makes the best pasta\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v24": {
+   "schema": "pee248.journey.v1",
+   "text": "Trade-offs of round vs square food storage containers (Cambro, Carlisle). What are the trade-offs between using round vs square food storage containers? I'm looking to buy a supply of several sizes of commercial-grade (eg Cambro or Carlisle) food storage containers. I'm debating if I should go all-round, all-square, or a mix of the both. Round Food Storage Containers Square Food Storage Containers For example, if the material is the same thickness, then I'd guess that round food storage containers would objectively take up more space yet be more durable (due to physics). But are there any other less-obvious trade-offs? In practice, what are the pros & cons of using round or square food storage containers in the kitchen?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v25": {
+   "schema": "pee248.journey.v1",
+   "text": "What kind of wok should I get?. I saw the question on the site about preparing a wok, but I'm curious what kind I should get. I have heard of stainless steel, carbon steel, aluminum, etc. Also, there's a non-stick variety. I'm new to stir fry and will be cooking on an electric ceramic stovetop.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "kind of wok",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"kind of wok\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"kind of wok\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v26": {
+   "schema": "pee248.journey.v1",
+   "text": "Large scale cold brewing - Mesh bag technique - What size mesh is best?. I'm looking to upscale our production of cold brew to batches with a 1000L yield, using a ratio of 1:12.5 to make a ready-to-drink coffee for bottling. Currently we run batches of ~40L through a large stainless 40-micron mesh conical filter with good results, however this won't scale so easily as the mesh is really expensive. I'm thinking that making large batches by steeping coffee in big mesh tea bags will be the easiest upgrade. I'm also assuming that a secondary filtration will be necessary, but that's a separate question. What sort of mesh sizes and materials are best for balancing yield with how fine the filtration is? Thanks!",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "for balancing yield",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"for balancing yield\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"for balancing yield\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v27": {
+   "schema": "pee248.journey.v1",
+   "text": "What's The Difference Between Paper and Long-Lasting Filters. Lots of people use lots of filters for drip- or filter-brewed coffee. Some use paper and others use these durable filters. The performance to me is the same but many people argue that. They do have their pros and cons as said this website . So paper filters are easy to use and bad for the environment and long lasting filters last longer and are more environmental friendly... The site has somewhat decent amount of information, but not a lot of information. What are the significant differences between long-lasting filters and paper filters for drip or filter coffee?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v28": {
+   "schema": "pee248.journey.v1",
+   "text": "What type of frying pan does not warp?. I have a glass smooth-top stove. Every large frying pan that I have bought so far has almost immediately warped so that the bottom is no longer flat. They all end up concave -- like a wok but less pronounced -- so that they perch with a small spot in the center of the pan touching the burner surface. My lazy side prefers non-stick, dishwashable pans, but all ideas are appreciated.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "type of frying pan",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"type of frying pan\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"type of frying pan\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v29": {
+   "schema": "pee248.journey.v1",
+   "text": "Please Help find Moka Pot Gasket Replacement. I have a vintage Carlo Giannini Moka Pot. A family member mistakenly threw away the original rubber gasket. I'm not sure how to determine the number of cups in the moka pot. Can someone please help me find a replacement gasket so I can start having proper coffee again.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "v30": {
+   "schema": "pee248.journey.v1",
+   "text": "What kinds of pressure cookers are there, and what are they good for?. I have never owned a pressure cooker, nor been in a kitchen which has one. But they have been a topic around the site and the blog lately, so I got curious. When I took a look, I noticed that they looked differently. I am not yet in the market for one, but I would like to know more about them. What different types are there? What are the advantages and disadvantages of each type? Beyond type, what other attributes make a pressure cooker a good cooker?",
+   "stages": {
+    "category": {
+     "categoryId": "pressure_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "pressure_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": [
+      "pressure_cookers"
+     ]
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true,
+     "factualRequirements": []
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: simple to operate; or offer several cooking modes: slow cook, rice, saute; or cook beans and stews faster; or a pot size suited to the quantity cooked?"
+   ],
+   "researchPlan": [
+    "discover more pressure_cookers candidates (only 0 identified)"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  }
+ }
+}

@@ -1,0 +1,2383 @@
+{
+ "schema": "pee251.score.v1",
+ "bench": "evaluation/phase252/journey-real-requests-set5.json",
+ "split": "real_requests_heldout5",
+ "scoredAt": "2026-10-15T07:39:33.044Z",
+ "arms": {
+  "A": {
+   "cases": 30,
+   "decision": {
+    "correct": 11,
+    "unhelpful": 5,
+    "premature": 1,
+    "harmful": 13,
+    "advise": {
+     "cases": 9,
+     "correct": 3
+    },
+    "outOfScope": {
+     "cases": 19,
+     "correct": 8,
+     "harmful": 11
+    }
+   },
+   "needs": {
+    "tp": 0,
+    "listedExpected": 7,
+    "unlisted": 17,
+    "fp": 5,
+    "falseNeedsOnOutOfScope": 4,
+    "recallListed": 0,
+    "recallAll": 0,
+    "precision": 0
+   },
+   "budget": {
+    "correct": 29,
+    "of": 30,
+    "expected": 1
+   },
+   "unsafeRankings": 0,
+   "msTotal": 437.7,
+   "byTag": {
+    "accessory": {
+     "cases": 7,
+     "correct": 0,
+     "harmful": 7
+    },
+    "owned_product": {
+     "cases": 7,
+     "correct": 1,
+     "harmful": 5
+    },
+    "confusing_control": {
+     "cases": 8,
+     "correct": 0,
+     "harmful": 8
+    },
+    "multiple_products": {
+     "cases": 4,
+     "correct": 1,
+     "harmful": 2
+    },
+    "implicit_need": {
+     "cases": 4,
+     "correct": 1,
+     "harmful": 1
+    },
+    "physical_constraint": {
+     "cases": 1,
+     "correct": 1,
+     "harmful": 0
+    },
+    "out_of_scope_control": {
+     "cases": 11,
+     "correct": 8,
+     "harmful": 3
+    },
+    "long_request": {
+     "cases": 4,
+     "correct": 1,
+     "harmful": 2
+    }
+   },
+   "rows": [
+    {
+     "id": "v01",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pour-over pitcher",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v02",
+     "behaviour": "clarify",
+     "expCategory": "ambiguous",
+     "gotCategory": "coffee_machines",
+     "basis": "explicit_alias",
+     "quality": "premature",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v03",
+     "behaviour": "advise",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v04",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee mug",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v05",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cold brew filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v06",
+     "behaviour": "advise",
+     "expCategory": "manual_coffee_brewers",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v07",
+     "behaviour": "advise",
+     "expCategory": "kettles",
+     "gotCategory": "kettles",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v08",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:appliance tray",
+     "gotCategory": "air_fryers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "small_kitchen"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v09",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:air fryer baking sheet",
+     "gotCategory": "air_fryers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v10",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:blender gasket",
+     "gotCategory": "blenders",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v11",
+     "behaviour": "advise",
+     "expCategory": "food_processors",
+     "gotCategory": "ambiguous",
+     "basis": "ambiguous",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v12",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:hand mixer",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "out_of_scope_control",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v13",
+     "behaviour": "advise",
+     "expCategory": "stand_mixers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v14",
+     "behaviour": "clarify",
+     "expCategory": "ambiguous",
+     "gotCategory": "air_fryers",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 3,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "cook_single_portion"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v15",
+     "behaviour": "advise",
+     "expCategory": "pressure_cookers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v16",
+     "behaviour": "advise",
+     "expCategory": "rice_cookers",
+     "gotCategory": "ambiguous",
+     "basis": "ambiguous",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v17",
+     "behaviour": "advise",
+     "expCategory": "steam_cookers",
+     "gotCategory": "steam_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v18",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:fondue appliance",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v19",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:chai brewing appliance",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v20",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cooking spoon",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v21",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cutting board",
+     "gotCategory": "air_fryers",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "cleaning_effort"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v22",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bread maker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v23",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pasta maker",
+     "gotCategory": "air_fryers",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "cooking_evenness"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v24",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:food storage containers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v25",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:wok",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v26",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cold brew mesh bag",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v27",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v28",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v29",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:moka pot gasket",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "espresso_quality"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v30",
+     "behaviour": "advise",
+     "expCategory": "pressure_cookers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    }
+   ],
+   "uncertainty": {
+    "correctRate": [
+     0.219,
+     0.545
+    ],
+    "adviseCorrectRate": [
+     0.121,
+     0.646
+    ],
+    "harmfulRate": [
+     0.274,
+     0.608
+    ]
+   },
+   "adviceVsAbstention": {
+    "positiveAdvice": 3,
+    "justifiedAbstention": 8,
+    "unjustifiedAbstention": 5,
+    "nonAdviseCases": 21
+   },
+   "confusion": {
+    "confusingControls": 8,
+    "harmful": 8,
+    "accessoryTagged": 7,
+    "accessoryHarmful": 7
+   }
+  },
+  "R": {
+   "cases": 30,
+   "decision": {
+    "correct": 14,
+    "unhelpful": 4,
+    "premature": 1,
+    "harmful": 11,
+    "advise": {
+     "cases": 9,
+     "correct": 4
+    },
+    "outOfScope": {
+     "cases": 19,
+     "correct": 10,
+     "harmful": 9
+    }
+   },
+   "needs": {
+    "tp": 0,
+    "listedExpected": 7,
+    "unlisted": 17,
+    "fp": 1,
+    "falseNeedsOnOutOfScope": 1,
+    "recallListed": 0,
+    "recallAll": 0,
+    "precision": 0
+   },
+   "budget": {
+    "correct": 29,
+    "of": 30,
+    "expected": 1
+   },
+   "unsafeRankings": 0,
+   "msTotal": 411.2,
+   "byTag": {
+    "accessory": {
+     "cases": 7,
+     "correct": 0,
+     "harmful": 7
+    },
+    "owned_product": {
+     "cases": 7,
+     "correct": 1,
+     "harmful": 5
+    },
+    "confusing_control": {
+     "cases": 8,
+     "correct": 0,
+     "harmful": 8
+    },
+    "multiple_products": {
+     "cases": 4,
+     "correct": 2,
+     "harmful": 1
+    },
+    "implicit_need": {
+     "cases": 4,
+     "correct": 2,
+     "harmful": 1
+    },
+    "physical_constraint": {
+     "cases": 1,
+     "correct": 1,
+     "harmful": 0
+    },
+    "out_of_scope_control": {
+     "cases": 11,
+     "correct": 10,
+     "harmful": 1
+    },
+    "long_request": {
+     "cases": 4,
+     "correct": 1,
+     "harmful": 2
+    }
+   },
+   "rows": [
+    {
+     "id": "v01",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pour-over pitcher",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v02",
+     "behaviour": "clarify",
+     "expCategory": "ambiguous",
+     "gotCategory": "coffee_machines",
+     "basis": "explicit_alias",
+     "quality": "premature",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v03",
+     "behaviour": "advise",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v04",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee mug",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v05",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cold brew filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v06",
+     "behaviour": "advise",
+     "expCategory": "manual_coffee_brewers",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v07",
+     "behaviour": "advise",
+     "expCategory": "kettles",
+     "gotCategory": "kettles",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v08",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:appliance tray",
+     "gotCategory": "air_fryers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v09",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:air fryer baking sheet",
+     "gotCategory": "air_fryers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v10",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:blender gasket",
+     "gotCategory": "blenders",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v11",
+     "behaviour": "advise",
+     "expCategory": "food_processors",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": "USD -999",
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v12",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:hand mixer",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "out_of_scope_control",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v13",
+     "behaviour": "advise",
+     "expCategory": "stand_mixers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v14",
+     "behaviour": "clarify",
+     "expCategory": "ambiguous",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "harmful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 3,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v15",
+     "behaviour": "advise",
+     "expCategory": "pressure_cookers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v16",
+     "behaviour": "advise",
+     "expCategory": "rice_cookers",
+     "gotCategory": "rice_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v17",
+     "behaviour": "advise",
+     "expCategory": "steam_cookers",
+     "gotCategory": "steam_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v18",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:fondue appliance",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v19",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:chai brewing appliance",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v20",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cooking spoon",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v21",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cutting board",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v22",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bread maker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v23",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pasta maker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v24",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:food storage containers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v25",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:wok",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v26",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cold brew mesh bag",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v27",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v28",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v29",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:moka pot gasket",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "espresso_quality"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v30",
+     "behaviour": "advise",
+     "expCategory": "pressure_cookers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    }
+   ],
+   "uncertainty": {
+    "correctRate": [
+     0.302,
+     0.639
+    ],
+    "adviseCorrectRate": [
+     0.189,
+     0.733
+    ],
+    "harmfulRate": [
+     0.219,
+     0.545
+    ]
+   },
+   "adviceVsAbstention": {
+    "positiveAdvice": 4,
+    "justifiedAbstention": 10,
+    "unjustifiedAbstention": 4,
+    "nonAdviseCases": 21
+   },
+   "confusion": {
+    "confusingControls": 8,
+    "harmful": 8,
+    "accessoryTagged": 7,
+    "accessoryHarmful": 7
+   }
+  },
+  "D'": {
+   "cases": 30,
+   "decision": {
+    "correct": 21,
+    "unhelpful": 3,
+    "premature": 2,
+    "harmful": 4,
+    "advise": {
+     "cases": 9,
+     "correct": 8
+    },
+    "outOfScope": {
+     "cases": 19,
+     "correct": 13,
+     "harmful": 4
+    }
+   },
+   "needs": {
+    "tp": 1,
+    "listedExpected": 7,
+    "unlisted": 17,
+    "fp": 4,
+    "falseNeedsOnOutOfScope": 2,
+    "recallListed": 0.143,
+    "recallAll": 0.042,
+    "precision": 0.2
+   },
+   "budget": {
+    "correct": 29,
+    "of": 30,
+    "expected": 1
+   },
+   "unsafeRankings": 0,
+   "msTotal": 1014.3,
+   "byTag": {
+    "accessory": {
+     "cases": 7,
+     "correct": 4,
+     "harmful": 3
+    },
+    "owned_product": {
+     "cases": 7,
+     "correct": 3,
+     "harmful": 3
+    },
+    "confusing_control": {
+     "cases": 8,
+     "correct": 4,
+     "harmful": 3
+    },
+    "multiple_products": {
+     "cases": 4,
+     "correct": 2,
+     "harmful": 0
+    },
+    "implicit_need": {
+     "cases": 4,
+     "correct": 3,
+     "harmful": 0
+    },
+    "physical_constraint": {
+     "cases": 1,
+     "correct": 1,
+     "harmful": 0
+    },
+    "out_of_scope_control": {
+     "cases": 11,
+     "correct": 9,
+     "harmful": 1
+    },
+    "long_request": {
+     "cases": 4,
+     "correct": 2,
+     "harmful": 1
+    }
+   },
+   "rows": [
+    {
+     "id": "v01",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pour-over pitcher",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v02",
+     "behaviour": "clarify",
+     "expCategory": "ambiguous",
+     "gotCategory": "coffee_machines",
+     "basis": "explicit_alias",
+     "quality": "premature",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v03",
+     "behaviour": "advise",
+     "expCategory": "coffee_machines",
+     "gotCategory": "coffee_machines",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v04",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee mug",
+     "gotCategory": "ambiguous",
+     "basis": "ambiguous",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v05",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cold brew filter",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v06",
+     "behaviour": "advise",
+     "expCategory": "manual_coffee_brewers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v07",
+     "behaviour": "advise",
+     "expCategory": "kettles",
+     "gotCategory": "kettles",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v08",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:appliance tray",
+     "gotCategory": "air_fryers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "small_kitchen"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v09",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:air fryer baking sheet",
+     "gotCategory": "air_fryers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v10",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:blender gasket",
+     "gotCategory": "blenders",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v11",
+     "behaviour": "advise",
+     "expCategory": "food_processors",
+     "gotCategory": "food_processors",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": "USD -999",
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v12",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:hand mixer",
+     "gotCategory": "stand_mixers",
+     "basis": "explicit_alias",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "dough_kneading"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "out_of_scope_control",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v13",
+     "behaviour": "advise",
+     "expCategory": "stand_mixers",
+     "gotCategory": "stand_mixers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 1,
+     "needExpected": 2,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "dough_kneading"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v14",
+     "behaviour": "clarify",
+     "expCategory": "ambiguous",
+     "gotCategory": "pressure_cookers",
+     "basis": "explicit_alias",
+     "quality": "premature",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 3,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "versatility"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v15",
+     "behaviour": "advise",
+     "expCategory": "pressure_cookers",
+     "gotCategory": "pressure_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 1,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "versatility"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v16",
+     "behaviour": "advise",
+     "expCategory": "rice_cookers",
+     "gotCategory": "rice_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v17",
+     "behaviour": "advise",
+     "expCategory": "steam_cookers",
+     "gotCategory": "steam_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 2,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v18",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:fondue appliance",
+     "gotCategory": "ambiguous",
+     "basis": "ambiguous",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v19",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:chai brewing appliance",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v20",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cooking spoon",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v21",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cutting board",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v22",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bread maker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v23",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pasta maker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v24",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:food storage containers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v25",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:wok",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v26",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cold brew mesh bag",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v27",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee filter",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v28",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "out_of_scope_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v29",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:moka pot gasket",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "confusing_control"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "v30",
+     "behaviour": "advise",
+     "expCategory": "pressure_cookers",
+     "gotCategory": "pressure_cookers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    }
+   ],
+   "uncertainty": {
+    "correctRate": [
+     0.521,
+     0.833
+    ],
+    "adviseCorrectRate": [
+     0.565,
+     0.98
+    ],
+    "harmfulRate": [
+     0.053,
+     0.297
+    ]
+   },
+   "adviceVsAbstention": {
+    "positiveAdvice": 8,
+    "justifiedAbstention": 13,
+    "unjustifiedAbstention": 1,
+    "nonAdviseCases": 21
+   },
+   "confusion": {
+    "confusingControls": 8,
+    "harmful": 3,
+    "accessoryTagged": 7,
+    "accessoryHarmful": 3
+   }
+  }
+ },
+ "paired": {
+  "D'-R": {
+   "decision": {
+    "better": 12,
+    "worse": 2,
+    "same": 16,
+    "changedCases": [
+     "v01:harmful->correct",
+     "v04:harmful->unhelpful",
+     "v05:harmful->correct",
+     "v06:harmful->unhelpful",
+     "v11:unhelpful->correct",
+     "v12:correct->harmful",
+     "v13:unhelpful->correct",
+     "v14:harmful->premature",
+     "v15:unhelpful->correct",
+     "v18:correct->unhelpful",
+     "v26:harmful->correct",
+     "v27:harmful->correct",
+     "v29:harmful->correct",
+     "v30:unhelpful->correct"
+    ]
+   },
+   "needs": {
+    "better": 2,
+    "worse": 4,
+    "same": 24
+   },
+   "attribution": {
+    "falseNeedsNewInFirst": [
+     "v08:small_kitchen",
+     "v12:dough_kneading",
+     "v14:versatility",
+     "v15:versatility"
+    ],
+    "harmfulNewInFirst": [
+     "v12:stand_mixers"
+    ]
+   }
+  },
+  "R-A": {
+   "decision": {
+    "better": 3,
+    "worse": 0,
+    "same": 27,
+    "changedCases": [
+     "v16:unhelpful->correct",
+     "v21:harmful->correct",
+     "v23:harmful->correct"
+    ]
+   },
+   "needs": {
+    "better": 4,
+    "worse": 0,
+    "same": 26
+   },
+   "attribution": {
+    "falseNeedsNewInFirst": [],
+    "harmfulNewInFirst": []
+   }
+  },
+  "D'-A": {
+   "decision": {
+    "better": 15,
+    "worse": 2,
+    "same": 13,
+    "changedCases": [
+     "v01:harmful->correct",
+     "v04:harmful->unhelpful",
+     "v05:harmful->correct",
+     "v06:harmful->unhelpful",
+     "v11:unhelpful->correct",
+     "v12:correct->harmful",
+     "v13:unhelpful->correct",
+     "v14:harmful->premature",
+     "v15:unhelpful->correct",
+     "v16:unhelpful->correct",
+     "v18:correct->unhelpful",
+     "v21:harmful->correct",
+     "v23:harmful->correct",
+     "v26:harmful->correct",
+     "v27:harmful->correct",
+     "v29:harmful->correct",
+     "v30:unhelpful->correct"
+    ]
+   },
+   "needs": {
+    "better": 4,
+    "worse": 2,
+    "same": 24
+   },
+   "attribution": {
+    "falseNeedsNewInFirst": [
+     "v12:dough_kneading",
+     "v14:versatility",
+     "v15:versatility"
+    ],
+    "harmfulNewInFirst": [
+     "v12:stand_mixers"
+    ]
+   }
+  }
+ }
+}
