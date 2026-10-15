@@ -23,8 +23,8 @@
  */
 import {DatabaseSync} from 'node:sqlite';
 import {createHash} from 'node:crypto';
-import {mkdirSync,existsSync,writeFileSync,readFileSync,renameSync,rmSync} from 'node:fs';
-import {dirname,join} from 'node:path';
+import {mkdirSync,existsSync,writeFileSync,readFileSync,renameSync,rmSync,readdirSync,copyFileSync,statSync} from 'node:fs';
+import {dirname,join,resolve as resolvePath} from 'node:path';
 import {homedir} from 'node:os';
 import type {WebSourcePolicy} from './web_evidence_acquisition.js';
 import {approvedMetadataDiscovery75} from './phase75_source_discovery.js';
@@ -35,6 +35,7 @@ import {validateBrain128,compileCategoryKnowledge128,type CategoryBrain128,type 
 import type {StudyStream179} from './phase179_category_learning.js';
 import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from './phase193_screening_memory.js';
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
+import {classDecision249,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
 
 export const STORE_SCHEMA_VERSION246=3;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
@@ -42,7 +43,11 @@ export const STORE_SCHEMA_VERSION246=3;
 export const IDENTITY_RULES246='identity-4';
 export type SourceType246='manufacturer'|'retailer'|'independent_original_test'|'editorial'|'community'|
  'promotional_announcement'|'reference_encyclopedia'|'unknown';
-export type RetentionClass246='facts_retained'|'local_pending_rights_review'|'metadata_only'|'blocked';
+/** facts_retained_class_policy (Phase249): individual factual declarations kept privately under a documented
+ * source-class policy (no per-source grant); never published, capped per host, reservations honoured. */
+export type RetentionClass246='facts_retained'|'facts_retained_class_policy'|'local_pending_rights_review'|'metadata_only'|'blocked';
+/** Retention classes whose declaration values are kept in the private store. */
+export const VALUE_RETAINING246:readonly RetentionClass246[]=['facts_retained','facts_retained_class_policy','local_pending_rights_review'];
 export type IdentityState246='discovered'|'extracted_unverified'|'reviewed'|'unsupported_after_rederivation'|'merged';
 export type DeclarationState246='extracted_unverified'|'reviewed'|'verified_for_purpose'|'superseded_by_revision'|'superseded_by_extractor'|'expired_pending_rights';
 export type KnowledgeClass246='observed_pattern'|'technical_hypothesis'|'reviewed_general_knowledge'|'evidence_supported_finding';
@@ -60,6 +65,8 @@ export interface StoragePolicy246 {
  localPendingRightsCache:{enabled:boolean;expiresAfterDays:number};
  /** Whether category-level aggregate patterns may be derived from declarations that are not retained. */
  deriveAggregatesFromUnretainedDeclarations:boolean;
+ /** Phase249 source-class policy for factual observations (private, capped). Absent = per-source grants only. */
+ classPolicy?:SourceClassPolicy249|null;
 }
 export const DEFAULT_STORAGE_POLICY246:StoragePolicy246={policyVersion:'pee246-default-deny',
  localPendingRightsCache:{enabled:false,expiresAfterDays:30},deriveAggregatesFromUnretainedDeclarations:false};
@@ -114,6 +121,14 @@ export function retentionFor246(policy:WebSourcePolicy|undefined,storage:Storage
  if(policy.basis==='refused'||policy.websiteTerms==='reviewed_prohibited'||policy.robots==='disallowed')return 'blocked';
  if(approvedMetadataDiscovery75(policy,asOf)&&policy.permittedOperations.includes('fact_storage'))return 'facts_retained';
  return storage.localPendingRightsCache.enabled?'local_pending_rights_review':'metadata_only';
+}
+/** Retention with the Phase249 class policy: a per-source decision (grant, refusal, prohibited terms, robots) always
+ * wins; otherwise the class policy applies, subject to per-observation checks at ingest (reservations, host cap). */
+function retentionWithClassPolicy(policy:WebSourcePolicy|undefined,storage:StoragePolicy246,asOf:string):RetentionClass246{
+ const base=retentionFor246(policy,storage,asOf);
+ if(base!=='metadata_only'&&base!=='local_pending_rights_review')return base;
+ if(policy&&(policy.basis==='refused'||policy.websiteTerms==='reviewed_prohibited'||policy.robots==='disallowed'))return base;
+ return storage.classPolicy?'facts_retained_class_policy':base;
 }
 /** The evidentiary role of a declaration is fixed by its source type; none is an independent test result. */
 export function declarationRole246(t:SourceType246):string{
@@ -185,6 +200,8 @@ export interface ObservationInput246 {
  extractorVersion:string;extraction:SpecExtraction245|null;categoryHypotheses:readonly string[];
  /** Optional Phase193 ledger to link screening decisions for this revision. */
  screening?:{ledger:ScreeningLedger193;market:string;policyVersion:string};
+ /** Phase249: machine-readable reservations seen for this page (robots Content-Signal, TDM reservation, noai). */
+ reservations?:Reservations249;
 }
 export interface IngestResult246 {revisionId:string;newRevision:boolean;rederived?:boolean;retention:RetentionClass246;
  productIds:string[];variantIds:string[];declarationsSeen:number;declarationsRetained:number;
@@ -201,6 +218,9 @@ export class KnowledgeStore246 {
  constructor(path:string,storage:StoragePolicy246=DEFAULT_STORAGE_POLICY246){
   if(path!==':memory:'){
    if(path.startsWith('/tmp/')&&!process.env.PEE_ALLOW_TMP_STORE)throw Error('246_refusing_ephemeral_tmp_store');
+   // Phase249: the operational store holds private retained values; it must live outside any Git working tree
+   // so it cannot be committed by accident (PEE_ALLOW_STORE_IN_REPO=1 for deliberate local experiments only).
+   if(insideGitWorkTree249(path)&&!process.env.PEE_ALLOW_STORE_IN_REPO)throw Error('249_refusing_store_inside_git_worktree');
    mkdirSync(dirname(path),{recursive:true});
   }
   this.path=path;this.storage=storage;
@@ -239,7 +259,7 @@ export class KnowledgeStore246 {
  // ---------------- sources, access and suspension ----------------
  registerSource(s:SourceInput246,asOf=new Date().toISOString()):RetentionClass246{
   if(!s||!/^[a-z0-9][a-z0-9_.:-]{0,120}$/i.test(s.sourceId)||!/^[a-z0-9.-]+$/.test(s.host))throw Error('246_invalid_source');
-  const retention=retentionFor246(s.policy,this.storage,asOf);
+  const retention=retentionWithClassPolicy(s.policy,this.storage,asOf);
   const digest=s.policy?sha(canon(s.policy)):null;
   const old=this.db.prepare('SELECT host,policy_digest,retention FROM sources WHERE source_id=?').get(s.sourceId) as {host:string;policy_digest:string|null;retention:string}|undefined;
   if(old&&old.host!==s.host)throw Error('246_source_identity_collision');
@@ -388,7 +408,18 @@ export class KnowledgeStore246 {
     return null;
    };
    let retained=0;
-   const keep=retention==='facts_retained'||retention==='local_pending_rights_review';
+   // Phase249 class policy: per-observation checks (reservations, per-host cap) decide this revision's retention.
+   let effective:RetentionClass246=retention;let kinds:readonly string[]|null=null;
+   if(retention==='facts_retained_class_policy'&&this.storage.classPolicy){
+    const counted=(this.db.prepare(`SELECT DISTINCT d.product_id FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
+     WHERE s.host=? AND d.retention='facts_retained_class_policy' AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor')`).all(host) as {product_id:string}[]).map(r=>r.product_id);
+    const d=classDecision249(this.storage.classPolicy,o.source.sourceType,o.reservations,counted.length,!!mainId&&counted.includes(mainId));
+    if(d.retain)kinds=d.rule.valueKinds;
+    else{effective='metadata_only';this.addGap('source',revisionId,d.reason,`class policy ${this.storage.classPolicy.policyId}: ${d.reason}`.slice(0,300),
+     d.reason==='insubstantial_part_cap_reached'?'per_source_rights_review_to_exceed_cap':'respect_reservation_metadata_only',o.fetchedAt);}
+    this.db.prepare('UPDATE revisions SET retention=? WHERE revision_id=?').run(effective,revisionId);
+   }
+   const keep=VALUE_RETAINING246.includes(effective);
    const expires=retention==='local_pending_rights_review'?new Date(Date.parse(o.fetchedAt)+this.storage.localPendingRightsCache.expiresAfterDays*86400000).toISOString():null;
    const role=declarationRole246(o.source.sourceType);
    // Products named in comparison tables are identity metadata (state 'discovered'), kept under every non-blocked class.
@@ -398,6 +429,7 @@ export class KnowledgeStore246 {
     if(pid)this.db.prepare('INSERT OR IGNORE INTO revision_properties VALUES (?,?,?,?)').run(revisionId,pid,f.propertyKey,f.property.slice(0,80));}
    if(keep)for(const f of facts){
     const pid=ownerOf(f);if(!pid)continue;
+    if(kinds&&!kinds.includes(f.value.kind))continue;
     const vid=f.variant&&mainId===pid?variantIds.find(v=>(this.db.prepare('SELECT name FROM variants WHERE variant_id=?').get(v) as {name:string}).name===f.variant)??null:null;
     const did='dcl_'+sha(canon([revisionId,pid,vid,f.variant,f.section,f.propertyKey,f.value])).slice(0,24);
     // A declaration re-derived unchanged under new rules is revived rather than duplicated.
@@ -406,7 +438,7 @@ export class KnowledgeStore246 {
      ON CONFLICT(declaration_id) DO UPDATE SET state='extracted_unverified',retention=excluded.retention,expires_at=excluded.expires_at,
       method=excluded.method,locator=excluded.locator,flags_json=excluded.flags_json WHERE declarations.state='superseded_by_extractor'`)
      .run(did,revisionId,pid,vid,f.property,f.propertyKey,canon(f.value),f.rawValue.slice(0,120),f.section,f.component,f.method,f.locator.slice(-200),
-      canon(f.flags),role,retention,'extracted_unverified',expires);
+      canon(f.flags),role,effective,'extracted_unverified',expires);
     if(Number(res.changes))retained++;
    }
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
@@ -418,6 +450,7 @@ export class KnowledgeStore246 {
    if(mainId)this.resolveGaps246(revisionId,'no_product_declared',o.fetchedAt);
    if(x&&x.mainProduct.ambiguous)this.addGap('source',revisionId,'main_product_ambiguous',
     `page declares ${x.mainProduct.declaredProductCount} products; identity not assigned, ${x.ambiguous.length} values held back`,'resolve_main_product_identity',o.fetchedAt);
+   if(keep&&retained){for(const ref of [revisionId,mainId,...productIds].filter(Boolean) as string[])this.resolveGaps246(ref,'declarations_not_retained_rights',o.fetchedAt);}
    if(!keep&&facts.length)this.addGap('product',mainId??revisionId,'declarations_not_retained_rights',
     `${facts.length} declarations observed; retention needs fact_storage permission or an operator storage decision`,'review_source_rights_then_reobserve',o.fetchedAt);
    if(verdict&&verdict!=='reuse_screening_decision')this.addGap('product',mainId??revisionId,'screening_required',
@@ -482,7 +515,7 @@ export class KnowledgeStore246 {
   if(!ident(purpose))throw Error('246_invalid_purpose');
   const r=this.db.prepare('SELECT retention,state,verified_purposes_json FROM declarations WHERE declaration_id=?').get(declarationId) as {retention:string;state:string;verified_purposes_json:string}|undefined;
   if(!r)throw Error('246_unknown_declaration');
-  if(r.retention!=='facts_retained')throw Error('246_rights_insufficient_for_promotion');
+  if(r.retention!=='facts_retained'&&r.retention!=='facts_retained_class_policy')throw Error('246_rights_insufficient_for_promotion');
   if(r.state==='superseded_by_revision'||r.state==='expired_pending_rights')throw Error('246_declaration_not_current');
   if(!verify||!verify(receipt))throw Error('246_review_not_verified');
   const purposes=[...new Set([...JSON.parse(r.verified_purposes_json),purpose])].sort();
@@ -510,6 +543,13 @@ export class KnowledgeStore246 {
   const rows=this.db.prepare(`SELECT g.ref_id,g.kind FROM research_gaps g WHERE g.kind IN ('main_product_ambiguous','no_product_declared') AND g.resolved_at IS NULL AND EXISTS
    (SELECT 1 FROM product_sources ps WHERE ps.revision_id=g.ref_id AND ps.role='main_product')`).all() as {ref_id:string;kind:string}[];
   return rows.reduce((a,r)=>a+this.resolveGaps246(r.ref_id,r.kind,at),0);
+ }
+ /** Phase249: closes 'declarations_not_retained_rights' gaps of products and revisions that now hold retained values
+ * (after a retention policy change re-derived them). */
+ reconcileRetentionGaps249(at=new Date().toISOString()):number{
+  const refs=(this.db.prepare(`SELECT DISTINCT product_id ref FROM declarations WHERE state='extracted_unverified' AND retention IN ('facts_retained','facts_retained_class_policy','local_pending_rights_review')
+   UNION SELECT DISTINCT revision_id FROM declarations WHERE state='extracted_unverified'`).all() as {ref:string}[]).map(r=>r.ref);
+  let n=0;for(const r of refs)n+=this.resolveGaps246(r,'declarations_not_retained_rights',at);return n;
  }
  gaps246(filter:{scope?:string;refId?:string}={}){
   return (this.db.prepare('SELECT * FROM research_gaps WHERE resolved_at IS NULL ORDER BY gap_id').all() as Record<string,string>[])
@@ -715,7 +755,7 @@ export class KnowledgeStore246 {
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
    'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
-   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained');
+   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
   }
   const body={schema:'pee246.knowledge-export.v1',storeSchemaVersion:this.schemaVersion(),storagePolicy:this.storage,
@@ -767,7 +807,7 @@ export class KnowledgeStore246 {
   const files:Record<string,{rows:number;sha256:string}>={};
   for(const [t,key] of Object.entries(KnowledgeStore246.TABLE_KEYS)){
    let rows=this.db.prepare(`SELECT * FROM ${t} ORDER BY ${key}`).all() as Record<string,unknown>[];
-   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained');
+   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    if(t==='declarations'&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);
@@ -812,7 +852,7 @@ export class KnowledgeStore246 {
    const interval=gaps.length?Math.max(3,Math.min(base,Math.min(...gaps)/2)):base;
    const age=(asOf-Date.parse(r.last_seen))/86400000;
    const identityGap=!!this.db.prepare("SELECT 1 FROM research_gaps WHERE resolved_at IS NULL AND ref_id=? AND kind='main_product_ambiguous'").get(r.revision_id);
-   const valuesKeepable=r.retention==='facts_retained'||r.retention==='local_pending_rights_review';
+   const valuesKeepable=VALUE_RETAINING246.includes(r.retention as RetentionClass246);
    const rulesChanged=r.extractor_version!==opts.extractorVersion+'+'+IDENTITY_RULES246;
    let action:string,reason:string;
    if(this.hostSuspended246(r.host,opts.asOf)){action='skip';reason='host_suspended';}
@@ -846,15 +886,72 @@ export class KnowledgeStore246 {
   mkdirSync(dirname(destPath),{recursive:true});
   this.db.exec(`VACUUM INTO '${destPath.replace(/'/g,"''")}'`);
  }
+ /** Phase249: timestamped, verified backup in `dir`, keeping the newest `keep` backups. Each backup gets a manifest
+  * (SHA-256, schema version, counts, journal check) so a restore can be checked before use. */
+ backupRotate249(dir:string,keep=7,at=new Date().toISOString()):{path:string;manifest:BackupManifest249;removed:string[]}{
+  if(!Number.isInteger(keep)||keep<1)throw Error('249_invalid_keep');
+  mkdirSync(dir,{recursive:true});
+  const path=join(dir,`pee-knowledge-${at.replace(/[:.]/g,'-')}.sqlite`);
+  this.backup246(path);
+  const manifest=verifyStoreFile249(path);
+  if(!manifest.integrityOk||!manifest.journalOk){rmSync(path,{force:true});throw Error('249_backup_failed_verification');}
+  writeFileSync(path+'.manifest.json',JSON.stringify(manifest,null,1)+'\n');
+  const all=readdirSync(dir).filter(f=>/^pee-knowledge-.*\.sqlite$/.test(f)).sort();
+  const removed=all.slice(0,Math.max(0,all.length-keep)).map(f=>join(dir,f));
+  for(const f of removed){rmSync(f,{force:true});rmSync(f+'.manifest.json',{force:true});}
+  this.event('backup_written',{path,sha256:manifest.sha256,removed:removed.length},at);
+  return {path,manifest,removed};
+ }
  stats246(){
   const c=(sql:string)=>(this.db.prepare(sql).get() as {n:number}).n;
   return {schemaVersion:this.schemaVersion(),sources:c('SELECT COUNT(*) n FROM sources'),revisions:c('SELECT COUNT(*) n FROM revisions'),
    sightings:c('SELECT COUNT(*) n FROM sightings'),products:c('SELECT COUNT(*) n FROM products'),variants:c('SELECT COUNT(*) n FROM variants'),
    declarations:c('SELECT COUNT(*) n FROM declarations'),declarationsRetained:c("SELECT COUNT(*) n FROM declarations WHERE retention='facts_retained'"),
+   declarationsRetainedClassPolicy:c("SELECT COUNT(*) n FROM declarations WHERE retention='facts_retained_class_policy' AND state NOT IN ('superseded_by_revision','superseded_by_extractor')"),
    declarationsPendingRights:c("SELECT COUNT(*) n FROM declarations WHERE retention='local_pending_rights_review' AND state!='expired_pending_rights'"),
    declarationsObservedNotRetained:c('SELECT COALESCE(SUM(declarations_seen-declarations_retained),0) n FROM revisions'),
    categoryItems:c('SELECT COUNT(*) n FROM category_items'),categoryVersions:c('SELECT COUNT(*) n FROM category_versions'),
    staleDerived:c("SELECT COUNT(*) n FROM derived_nodes WHERE state='stale'"),openGaps:c('SELECT COUNT(*) n FROM research_gaps WHERE resolved_at IS NULL'),
    events:c('SELECT COUNT(*) n FROM events'),suspendedHosts:c('SELECT COUNT(*) n FROM host_access WHERE suspended_until IS NOT NULL')};
  }
+}
+
+/** Phase249 storage helpers. */
+export function insideGitWorkTree249(path:string):boolean{
+ let d=dirname(resolvePath(path));
+ for(let i=0;i<64;i++){if(existsSync(join(d,'.git')))return true;const up=dirname(d);if(up===d)return false;d=up;}
+ return false;
+}
+export interface BackupManifest249 {file:string;sha256:string;bytes:number;schemaVersion:number|null;integrityOk:boolean;journalOk:boolean;
+ counts:Record<string,number>;verifiedAt:string}
+/** Opens a store file read-only and checks SQLite integrity, the hash-chained event journal and basic counts. */
+export function verifyStoreFile249(path:string):BackupManifest249{
+ const bytes=readFileSync(path);const db=new DatabaseSync(path,{readOnly:true});
+ try{
+  const integrity=(db.prepare('PRAGMA integrity_check').get() as {integrity_check:string}).integrity_check==='ok';
+  const version=(db.prepare('PRAGMA user_version').get() as {user_version:number}).user_version;
+  const count=(t:string)=>{try{return (db.prepare(`SELECT COUNT(*) n FROM ${t}`).get() as {n:number}).n;}catch{return -1;}};
+  const counts=Object.fromEntries(['sources','revisions','products','declarations','category_items','events'].map(t=>[t,count(t)]));
+  // The hash-chained journal is re-verified on the read-only connection (the file is never modified).
+  const rows=db.prepare('SELECT * FROM events ORDER BY seq').all() as {at:string;kind:string;payload_json:string;previous_sha256:string;event_sha256:string}[];
+  let prev='0'.repeat(64),journalOk=true;
+  for(const r of rows){if(r.previous_sha256!==prev||sha(canon({at:r.at,kind:r.kind,payload:JSON.parse(r.payload_json),prev}))!==r.event_sha256){journalOk=false;break;}prev=r.event_sha256;}
+  db.close();
+  return {file:path,sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,schemaVersion:version,
+   integrityOk:integrity,journalOk,counts,verifiedAt:new Date().toISOString()};
+ }catch(e){try{db.close();}catch{/* already closed */}throw e;}
+}
+/** Restores a verified backup over `target`, keeping the replaced file as `<target>.replaced-<time>`. */
+export function restoreStore249(backup:string,target:string,at=new Date().toISOString()):{restored:string;keptPrevious:string|null;manifest:BackupManifest249}{
+ const m=verifyStoreFile249(backup);
+ if(!m.integrityOk||!m.journalOk)throw Error('249_backup_not_restorable');
+ const mf=backup+'.manifest.json';
+ if(existsSync(mf)){const rec=JSON.parse(readFileSync(mf,'utf8')) as BackupManifest249;if(rec.sha256!==m.sha256)throw Error('249_backup_hash_mismatch');}
+ mkdirSync(dirname(target),{recursive:true});
+ let kept:string|null=null;
+ if(existsSync(target)){kept=`${target}.replaced-${at.replace(/[:.]/g,'-')}`;renameSync(target,kept);
+  for(const x of ['-wal','-shm'])if(existsSync(target+x))renameSync(target+x,kept+x);}
+ copyFileSync(backup,target);
+ if(statSync(target).size!==m.bytes)throw Error('249_restore_size_mismatch');
+ return {restored:target,keptPrevious:kept,manifest:m};
 }

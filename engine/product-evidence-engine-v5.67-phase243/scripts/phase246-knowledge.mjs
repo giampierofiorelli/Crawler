@@ -13,6 +13,10 @@
  *   export --out FILE [--include-pending-rights]
  *   import --from FILE --db NEW  rebuild a store from an export into a new database file
  *   backup --out FILE            consistent SQLite copy (VACUUM INTO)
+ *   backup-rotate [--dir D] [--keep N]  timestamped, verified backups (integrity + journal + manifest), newest N kept
+ *   verify-backup --file F       integrity, journal chain and counts of a backup (read-only)
+ *   restore --from F             restore a verified backup over --db (the replaced file is kept alongside)
+ *   reconcile-gaps               close research gaps resolved by later observations or policy changes
  *   export-shards --out DIR --audience public|private   deterministic NDJSON shards + manifest; public = publication rules
  *   import-shards --from DIR --db NEW
  *   revisit-plan [--as-of ISO] [--days N] [--full]   which current revisions are worth fetching again, and why
@@ -21,12 +25,13 @@
  *   purge                        expire local pending-rights declarations past their expiry
  *
  * Default DB: $PEE_KNOWLEDGE_DIR/pee246.sqlite, else ~/.local/share/product-evidence-engine/knowledge/pee246.sqlite.
- * The storage policy is default-deny unless --storage-policy FILE is given (operator decision, not a rights grant).
+ * Storage policy: 'class' (default; Phase249 source-class policy for private factual observations), 'deny' (Phase246
+ * default-deny) or a FILE (operator decision). None of these is a rights grant for publication.
  */
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {join,resolve} from 'node:path';
-import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,defaultKnowledgeDir246} from '../dist/src/phase246_knowledge_store.js';
+import {join,resolve,dirname} from 'node:path';
+import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,defaultKnowledgeDir246,verifyStoreFile249,restoreStore249} from '../dist/src/phase246_knowledge_store.js';
 import {seedCategoryHypotheses246,CATEGORY_ALIASES246} from '../dist/src/phase246_category_seeds.js';
 import {seedRelations247} from '../dist/src/phase247_relation_seeds.js';
 import {CONCEPT_VOCABULARY248} from '../dist/src/phase248_concept_vocabulary.js';
@@ -37,7 +42,13 @@ const [cmd,...rest]=process.argv.slice(2);
 const flags={};for(let i=0;i<rest.length;i++){if(rest[i].startsWith('--')){const k=rest[i].slice(2);const v=rest[i+1]&&!rest[i+1].startsWith('--')?rest[++i]:true;flags[k]=v;}}
 const root=resolve(new URL('..',import.meta.url).pathname);
 const dbPath=resolve(flags.db??join(defaultKnowledgeDir246(),'pee246.sqlite'));
-const storage=flags['storage-policy']?JSON.parse(readFileSync(flags['storage-policy'],'utf8')):DEFAULT_STORAGE_POLICY246;
+// Phase249: the operational default is the documented source-class policy for factual observations (private,
+// capped per host, reservations honoured). '--storage-policy deny' restores the Phase246 default-deny policy;
+// '--storage-policy FILE' loads an operator policy.
+const {FACTUAL_CLASS_POLICY249}=await import('../dist/src/phase249_retention_policy.js');
+const CLASS_DEFAULT={...DEFAULT_STORAGE_POLICY246,policyVersion:'pee249-class-policy',classPolicy:FACTUAL_CLASS_POLICY249};
+const sp=flags['storage-policy']??process.env.PEE_STORAGE_POLICY??'class';
+const storage=sp==='class'?CLASS_DEFAULT:sp==='deny'?DEFAULT_STORAGE_POLICY246:JSON.parse(readFileSync(sp,'utf8'));
 const sha=b=>createHash('sha256').update(b).digest('hex');
 // Operator-reviewed rights policies (WebSourcePolicy per host). Absent by default: nothing is self-granted.
 const rights=flags.rights?JSON.parse(readFileSync(resolve(flags.rights),'utf8')):{};
@@ -63,6 +74,10 @@ if(cmd==='import'){
 const store=new KnowledgeStore246(dbPath,storage);
 try{
  switch(cmd){
+  case 'backup-rotate':{const r=store.backupRotate249(resolve(flags.dir??join(dirname(dbPath),'backups')),Number(flags.keep??7));out(r);break;}
+  case 'verify-backup':{out(verifyStoreFile249(resolve(flags.file)));break;}
+  case 'restore':{store.close();out(restoreStore249(resolve(flags.from),dbPath));process.exit(0);}
+  case 'reconcile-gaps':out({identity:store.reconcileIdentityGaps246(),retention:store.reconcileRetentionGaps249()});break;
   case 'status':out({db:dbPath,storagePolicy:storage.policyVersion,stats:store.stats246(),journal:store.verifyJournal(),stale:store.staleNodes246().slice(0,50),
    suspendedHosts:store.db.prepare('SELECT host,suspended_until,reason FROM host_access WHERE suspended_until IS NOT NULL').all()});break;
   case 'seed':{const ids=seedCategoryHypotheses246(store,flags.category);out({category:flags.category,items:ids.length});break;}

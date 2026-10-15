@@ -180,6 +180,7 @@ switch(cmd){
   break;}
  case 'observations':{
   const {extractSpecifications245,SPEC_EXTRACTOR_VERSION}=await import('../dist/src/phase245_spec_extraction.js');
+  const {detectReservations249}=await import('../dist/src/phase249_retention_policy.js');
   const out=[];
   for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
   for(const p of S.pages){
@@ -187,9 +188,12 @@ switch(cmd){
    const b=readFileSync(f);if(sha(b)!==p.sha256)continue; // never trust bytes that do not match the receipt
    const host=new URL(p.finalUrl??p.url).host;const t0=Date.now();
    const x=extractSpecifications245(b.toString('utf8'),p.finalUrl??p.url);
+   // Phase249: machine-readable reservations (robots Content-Signal, TDM reservation, noai) travel with the observation.
+   const robotsBody=S.robots[host]?.status===200?S.robots[host].body??null:null;
+   const reservations=detectReservations249(robotsBody,b.toString('utf8'));
    out.push({observation:{source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:p.sourceType,sourceTypeBasis:'operator_asserted'},
     url:p.finalUrl??p.url,sha256:p.sha256,bytes:p.bytes,httpStatus:p.httpStatus,fetchedAt:p.fetchedAt,runId:(F.run??'phase246_wave1')+'_'+p.role,
-    extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category?[p.category]:[]},
+    extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category&&p.category!=='mixed'?[p.category]:[],reservations},
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
   }
