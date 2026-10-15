@@ -1,0 +1,3544 @@
+{
+ "schema": "pee251.score.v1",
+ "bench": "evaluation/phase251/journey-real-requests-set4.json",
+ "split": "real_requests_heldout4",
+ "scoredAt": "2026-10-15T02:32:39.777Z",
+ "arms": {
+  "A": {
+   "cases": 50,
+   "decision": {
+    "correct": 40,
+    "unhelpful": 1,
+    "premature": 0,
+    "harmful": 9,
+    "advise": {
+     "cases": 5,
+     "correct": 1
+    },
+    "outOfScope": {
+     "cases": 45,
+     "correct": 39,
+     "harmful": 6
+    }
+   },
+   "needs": {
+    "tp": 0,
+    "listedExpected": 4,
+    "unlisted": 6,
+    "fp": 6,
+    "falseNeedsOnOutOfScope": 5,
+    "recallListed": 0,
+    "recallAll": 0,
+    "precision": 0
+   },
+   "budget": {
+    "correct": 47,
+    "of": 50,
+    "expected": 3
+   },
+   "unsafeRankings": 0,
+   "msTotal": 568.5,
+   "byTag": {
+    "owned_product": {
+     "cases": 12,
+     "correct": 8,
+     "harmful": 4
+    },
+    "multiple_products": {
+     "cases": 7,
+     "correct": 6,
+     "harmful": 0
+    },
+    "long_request": {
+     "cases": 43,
+     "correct": 33,
+     "harmful": 9
+    },
+    "implicit_need": {
+     "cases": 2,
+     "correct": 1,
+     "harmful": 1
+    },
+    "physical_constraint": {
+     "cases": 11,
+     "correct": 9,
+     "harmful": 2
+    },
+    "accessory": {
+     "cases": 7,
+     "correct": 5,
+     "harmful": 2
+    },
+    "negation": {
+     "cases": 1,
+     "correct": 1,
+     "harmful": 0
+    }
+   },
+   "rows": [
+    {
+     "id": "u01",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:knife sharpener",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u02",
+     "behaviour": "advise",
+     "expCategory": "coffee_grinders",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "ongoing_costs"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u03",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cooking video",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u04",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:food container",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u05",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:clay pipe decoration",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u06",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:microwave grill rack",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u07",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:meal planning software",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u08",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:kitchen knife",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u09",
+     "behaviour": "advise",
+     "expCategory": "blenders",
+     "gotCategory": "blenders",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "implicit_need",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u10",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee roaster",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u11",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u12",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u13",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:souffle dish",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u14",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:butter dish",
+     "gotCategory": "air_fryers",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "small_kitchen"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u15",
+     "behaviour": "advise",
+     "expCategory": "stand_mixers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u16",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:molcajete or paella pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u17",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pastry bars",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u18",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": "air_fryers",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "crisp_texture"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u19",
+     "behaviour": "advise",
+     "expCategory": "coffee_grinders",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u20",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:aeropress metal filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u21",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:espresso filter basket",
+     "gotCategory": "coffee_machines",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 2,
+     "falseNeedsOutOfScope": 2,
+     "gotNeeds": [
+      "extraction_parameters",
+      "shot_consistency"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u22",
+     "behaviour": "advise",
+     "expCategory": "manual_coffee_brewers",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 3,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u23",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:faucet handle",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u24",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:soffit vent",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u25",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:circuit breaker",
+     "gotCategory": "toasters",
+     "basis": "need_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 1,
+     "gotNeeds": [
+      "hot_exterior"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u26",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:door or room divider",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u27",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:circuit breakers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u28",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:outdoor faucet",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u29",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:countertop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u30",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:soap dispenser",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u31",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:insulation",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u32",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:curtains",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u33",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:desktop computer",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u34",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:scanner",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u35",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:kvm switch",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u36",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:computer server",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u37",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:storage card or ssd",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u38",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:processor",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u39",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:home server",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u40",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:raid enclosure",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "negation",
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u41",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:laptop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u42",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:gaming laptop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u43",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:heart rate monitor",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u44",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle fork",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u45",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle shifters",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u46",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle tyres",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u47",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:handlebar tape",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u48",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:reflective tape",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u49",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle sprocket",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u50",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle parts",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    }
+   ]
+  },
+  "R": {
+   "cases": 50,
+   "decision": {
+    "correct": 44,
+    "unhelpful": 1,
+    "premature": 0,
+    "harmful": 5,
+    "advise": {
+     "cases": 5,
+     "correct": 1
+    },
+    "outOfScope": {
+     "cases": 45,
+     "correct": 43,
+     "harmful": 2
+    }
+   },
+   "needs": {
+    "tp": 0,
+    "listedExpected": 4,
+    "unlisted": 6,
+    "fp": 0,
+    "falseNeedsOnOutOfScope": 0,
+    "recallListed": 0,
+    "recallAll": 0,
+    "precision": null
+   },
+   "budget": {
+    "correct": 48,
+    "of": 50,
+    "expected": 3
+   },
+   "unsafeRankings": 0,
+   "msTotal": 597.6,
+   "byTag": {
+    "owned_product": {
+     "cases": 12,
+     "correct": 9,
+     "harmful": 3
+    },
+    "multiple_products": {
+     "cases": 7,
+     "correct": 6,
+     "harmful": 0
+    },
+    "long_request": {
+     "cases": 43,
+     "correct": 37,
+     "harmful": 5
+    },
+    "implicit_need": {
+     "cases": 2,
+     "correct": 1,
+     "harmful": 1
+    },
+    "physical_constraint": {
+     "cases": 11,
+     "correct": 11,
+     "harmful": 0
+    },
+    "accessory": {
+     "cases": 7,
+     "correct": 6,
+     "harmful": 1
+    },
+    "negation": {
+     "cases": 1,
+     "correct": 1,
+     "harmful": 0
+    }
+   },
+   "rows": [
+    {
+     "id": "u01",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:knife sharpener",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u02",
+     "behaviour": "advise",
+     "expCategory": "coffee_grinders",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u03",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cooking video",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u04",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:food container",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u05",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:clay pipe decoration",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u06",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:microwave grill rack",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u07",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:meal planning software",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u08",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:kitchen knife",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u09",
+     "behaviour": "advise",
+     "expCategory": "blenders",
+     "gotCategory": "blenders",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "unsupported_category",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "implicit_need",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u10",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee roaster",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u11",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": "USD -60",
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u12",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u13",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:souffle dish",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u14",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:butter dish",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u15",
+     "behaviour": "advise",
+     "expCategory": "stand_mixers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "unhelpful",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u16",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:molcajete or paella pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u17",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pastry bars",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u18",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u19",
+     "behaviour": "advise",
+     "expCategory": "coffee_grinders",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u20",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:aeropress metal filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u21",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:espresso filter basket",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u22",
+     "behaviour": "advise",
+     "expCategory": "manual_coffee_brewers",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 3,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u23",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:faucet handle",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u24",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:soffit vent",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u25",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:circuit breaker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u26",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:door or room divider",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u27",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:circuit breakers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u28",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:outdoor faucet",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u29",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:countertop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u30",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:soap dispenser",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u31",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:insulation",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u32",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:curtains",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u33",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:desktop computer",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u34",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:scanner",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u35",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:kvm switch",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u36",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:computer server",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": "USD 10000-15000",
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u37",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:storage card or ssd",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u38",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:processor",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u39",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:home server",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u40",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:raid enclosure",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "negation",
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u41",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:laptop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u42",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:gaming laptop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u43",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:heart rate monitor",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": "USD -50",
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u44",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle fork",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u45",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle shifters",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u46",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle tyres",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u47",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:handlebar tape",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u48",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:reflective tape",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u49",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle sprocket",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u50",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle parts",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    }
+   ]
+  },
+  "D": {
+   "cases": 50,
+   "decision": {
+    "correct": 46,
+    "unhelpful": 1,
+    "premature": 0,
+    "harmful": 3,
+    "advise": {
+     "cases": 5,
+     "correct": 4
+    },
+    "outOfScope": {
+     "cases": 45,
+     "correct": 42,
+     "harmful": 2
+    }
+   },
+   "needs": {
+    "tp": 3,
+    "listedExpected": 4,
+    "unlisted": 6,
+    "fp": 1,
+    "falseNeedsOnOutOfScope": 0,
+    "recallListed": 0.75,
+    "recallAll": 0.3,
+    "precision": 0.75
+   },
+   "budget": {
+    "correct": 48,
+    "of": 50,
+    "expected": 3
+   },
+   "unsafeRankings": 0,
+   "msTotal": 1586.1,
+   "byTag": {
+    "owned_product": {
+     "cases": 12,
+     "correct": 9,
+     "harmful": 2
+    },
+    "multiple_products": {
+     "cases": 7,
+     "correct": 7,
+     "harmful": 0
+    },
+    "long_request": {
+     "cases": 43,
+     "correct": 39,
+     "harmful": 3
+    },
+    "implicit_need": {
+     "cases": 2,
+     "correct": 2,
+     "harmful": 0
+    },
+    "physical_constraint": {
+     "cases": 11,
+     "correct": 11,
+     "harmful": 0
+    },
+    "accessory": {
+     "cases": 7,
+     "correct": 5,
+     "harmful": 1
+    },
+    "negation": {
+     "cases": 1,
+     "correct": 1,
+     "harmful": 0
+    }
+   },
+   "rows": [
+    {
+     "id": "u01",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:knife sharpener",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u02",
+     "behaviour": "advise",
+     "expCategory": "coffee_grinders",
+     "gotCategory": "coffee_grinders",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "implicit_need",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u03",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:cooking video",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u04",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:food container",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u05",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:clay pipe decoration",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u06",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:microwave grill rack",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u07",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:meal planning software",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u08",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:kitchen knife",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u09",
+     "behaviour": "advise",
+     "expCategory": "blenders",
+     "gotCategory": "blenders",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "smooth_texture"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "implicit_need",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u10",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:coffee roaster",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u11",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": "USD -60",
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u12",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u13",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:souffle dish",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u14",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:butter dish",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u15",
+     "behaviour": "advise",
+     "expCategory": "stand_mixers",
+     "gotCategory": "stand_mixers",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "dough_kneading"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u16",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:molcajete or paella pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u17",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:pastry bars",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u18",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:frying pan",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u19",
+     "behaviour": "advise",
+     "expCategory": "coffee_grinders",
+     "gotCategory": "coffee_grinders",
+     "basis": "explicit_alias",
+     "quality": "correct",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 1,
+     "needExpected": 1,
+     "needUnlisted": 1,
+     "needFp": 1,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [
+      "grind_consistency",
+      "grind_range"
+     ],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u20",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:aeropress metal filter",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u21",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:espresso filter basket",
+     "gotCategory": "ambiguous",
+     "basis": "ambiguous",
+     "quality": "unhelpful",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u22",
+     "behaviour": "advise",
+     "expCategory": "manual_coffee_brewers",
+     "gotCategory": "coffee_machines",
+     "basis": "cue_inferred",
+     "quality": "harmful",
+     "decision": "withhold_insufficient_evidence",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 3,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u23",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:faucet handle",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u24",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:soffit vent",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u25",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:circuit breaker",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u26",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:door or room divider",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u27",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:circuit breakers",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u28",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:outdoor faucet",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u29",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:countertop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u30",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:soap dispenser",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u31",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:insulation",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u32",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:curtains",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u33",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:desktop computer",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u34",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:scanner",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u35",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:kvm switch",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u36",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:computer server",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": "USD 10000-15000",
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u37",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:storage card or ssd",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u38",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:processor",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": false,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u39",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:home server",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u40",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:raid enclosure",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "negation",
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u41",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:laptop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u42",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:gaming laptop",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "multiple_products",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u43",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:heart rate monitor",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": "USD -50",
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u44",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle fork",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u45",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle shifters",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "clarify",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u46",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle tyres",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "physical_constraint",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u47",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:handlebar tape",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u48",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:reflective tape",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u49",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle sprocket",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "accessory",
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    },
+    {
+     "id": "u50",
+     "behaviour": "out_of_scope",
+     "expCategory": "other:bicycle parts",
+     "gotCategory": null,
+     "basis": "unresolved",
+     "quality": "correct",
+     "decision": "out_of_scope",
+     "needTp": 0,
+     "needExpected": 0,
+     "needUnlisted": 0,
+     "needFp": 0,
+     "falseNeedsOutOfScope": 0,
+     "gotNeeds": [],
+     "budgetOk": true,
+     "budgetFound": null,
+     "tags": [
+      "owned_product",
+      "long_request"
+     ],
+     "rankingAuthorized": false
+    }
+   ]
+  }
+ },
+ "paired": {
+  "R-A": {
+   "decision": {
+    "better": 4,
+    "worse": 0,
+    "same": 46,
+    "changedCases": [
+     "u14:harmful->correct",
+     "u18:harmful->correct",
+     "u21:harmful->correct",
+     "u25:harmful->correct"
+    ]
+   },
+   "needs": {
+    "better": 5,
+    "worse": 0,
+    "same": 45
+   }
+  },
+  "D-R": {
+   "decision": {
+    "better": 3,
+    "worse": 1,
+    "same": 46,
+    "changedCases": [
+     "u02:harmful->correct",
+     "u15:unhelpful->correct",
+     "u19:harmful->correct",
+     "u21:correct->unhelpful"
+    ]
+   },
+   "needs": {
+    "better": 2,
+    "worse": 0,
+    "same": 48
+   }
+  },
+  "D-A": {
+   "decision": {
+    "better": 7,
+    "worse": 0,
+    "same": 43,
+    "changedCases": [
+     "u02:harmful->correct",
+     "u14:harmful->correct",
+     "u15:unhelpful->correct",
+     "u18:harmful->correct",
+     "u19:harmful->correct",
+     "u21:harmful->unhelpful",
+     "u25:harmful->correct"
+    ]
+   },
+   "needs": {
+    "better": 7,
+    "worse": 0,
+    "same": 43
+   }
+  }
+ }
+}
