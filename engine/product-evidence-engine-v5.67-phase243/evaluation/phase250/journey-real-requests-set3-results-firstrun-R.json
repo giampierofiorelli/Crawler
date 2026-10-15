@@ -1,0 +1,3693 @@
+{
+ "schema": "pee250.arm-run.v1",
+ "arm": "R",
+ "bench": "evaluation/phase250/journey-real-requests-set3.json",
+ "split": "real_requests_heldout3",
+ "generatedAt": "2026-10-15T02:08:59.583Z",
+ "snapshotSha256": "7b5375e87010fc6fe2d780bc85aa7a2e74664af757bf98385638661251fb41c3",
+ "budget": {
+  "categories": 0,
+  "needs": 0,
+  "phrases": 0,
+  "counterexamples": 0,
+  "within": true
+ },
+ "applied": {
+  "itemsAdded": 0,
+  "aliasUpdates": 0
+ },
+ "registryCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters",
+  "toaster_ovens",
+  "kettles",
+  "blenders",
+  "deep_fryers",
+  "rice_cookers",
+  "steam_cookers"
+ ],
+ "knowledgeCategories": [
+  "air_fryers",
+  "coffee_machines",
+  "toasters"
+ ],
+ "msTotal": 844.2,
+ "journeys": {
+  "t01": {
+   "schema": "pee248.journey.v1",
+   "text": "Which type of coffee grinder is the quietest? Perhaps my question should be \"What is the best type of grinder to use at my desk if I work in a cubicle and use a French Press?\". I have tried finding decibel measurements on Amazon's website, but most of the coffee grinders listed don't specify them.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t02": {
+   "schema": "pee248.journey.v1",
+   "text": "Coffee Grinder vs. Spice Grinder - What's the difference? What is the difference between a typical spice grinder and a specialized coffee grinder? Is there something that specifically affects the quality of the coffee? To clarify further, I am talking about the electric grinders with a blade, something like this:",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t03": {
+   "schema": "pee248.journey.v1",
+   "text": "Filter coffee machine vs boiling on the stove I just saw you can buy a coffee machine that uses a rather simple filter method to brew coffee. Exhibit A I wondered what is the difference between that machine and brewing coffee in a pot on the stove. Unfortunately I'm not well-versed enough in English coffee terms to get meaningful Internet search results.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t04": {
+   "schema": "pee248.journey.v1",
+   "text": "What kind of coffee machine can process powdered coffee? I have a drink I like to make using powdered coffee, a coffee grind finer than espresso. but when I try to make it in an espresso machine, the powder expands, and only the first few drips come out. (its delicious) Then the espresso machine will nearly explode, as the heat builds, and the pressure cannot escape. what is out there for high pressure espresso machines? I would also like to make a gaurana drink in a similar fashion, but I think it would be the same issue, with tiny particles expanding when wet, and clogging the holes in the press. To be perfectly clear, I mean very fine ground coffee, which is in a powder, and not freeze",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t05": {
+   "schema": "pee248.journey.v1",
+   "text": "Best Grinder for DeLonghi Dedica EC685 What is the best grinder to use with a DeLonghi Dedica EC685? I’m aware that the portafilter uses pressurized baskets, so tamping and grind size is not as critical as on more professional espresso machines. But as a consumer machine that allows you the flexibility of using your own coffee grounds, a decent grinder that executes a grind size this Dedica EC685 can use would be ideal. What grinder (whether burr/blade) is a good grinder that allows the optimum grind size for the pressurized baskets on the Dedica EC685, as well as offering you enough range to grind coarser for pour overs, drips & french presses? Would you recommend something like the KRUPS",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t06": {
+   "schema": "pee248.journey.v1",
+   "text": "What measurement should I take to buy an atmospheric filter for my espresso machine? I want to buy an atmospheric filter for my espresso machine, but I don't know what part of the filter I should measure. Should I be measuring the radius from the internal part of the border of the filter or the external part of the ring/border? Sorry, I tried to express myself as well as I could but I am not familiar with some coffee terminology in English.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t07": {
+   "schema": "pee248.journey.v1",
+   "text": "Is coffee grinder adjustability worth the higher price? There are a number of bean grinders out there and some include a feature to set grinding grain (steps between coarse and fine) while others have no such setting and make a finer grind bb grinding longer. The second type is much cheaper. Is the inclusion of these fancier settings in a coffee grinder (which usually bumps up the price) worth it, as far as getting the right grind level?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t08": {
+   "schema": "pee248.journey.v1",
+   "text": "Blade grinder vs. single mug? For \"utility\" coffee drinking, I temporarily need to grind coffee with something as inexpensive as possible, and would prefer something with a motor. My understanding is that fresh beans ground with a blade grinder at brewing time will still be significantly better than old ground coffee. So I'm looking at inexpensive blade grinders, and have a question about blade design. On some models, the blades sit fairly high off the base of the grinding cup (these are sold as coffee grinders, not general purpose grinders). They are advertised as handling enough beans for 10-12 cups. With that amount of coffee, the grounds will push each other around and mix in the cup.",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "extraction_parameters",
+       "categoryId": "coffee_machines",
+       "matched": "~grind+brew+time",
+       "kind": "mechanism"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "extraction_parameters"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: extraction_parameters"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t09": {
+   "schema": "pee248.journey.v1",
+   "text": "recommendations for pour-over grinder improvement I have been using the old Hario Skerton (not pro) ceramic hand grinder for pour over coffee. I'm not sure of terminology so let me explain what I mean - I use a ceramic cone and filter papers I get from the supermarket, add the ground coffee, and pour recently boiled water over it. Would getting a Fellow Ode 2 improve my coffee? What about a hand grinder like the Kingridner V6? I like my coffee to some body, lots of aroma from the extracted oils, and don't like it to be too \"tea-like\" in consistency. You may say that what I should do is get an espresso machine but it will take me a long time to save up for that - so the question is ... is an",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "shot_consistency",
+       "categoryId": "coffee_machines",
+       "matched": "consistency",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "shot_consistency",
+       "method": "CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfeel, aftertaste), ease of use, milk frothing and temperature consistency over four consecutive coffees after a t",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/coffee-machines/articles/how-we-test-coffee-machines"
+      }
+     ],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) rates espresso machines on blind expert taste (crema, aroma, flavour, mouthfee"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t10": {
+   "schema": "pee248.journey.v1",
+   "text": "Recommendation for drip coffee maker (auto drip) w/out plastic Can anyone recommend a drip coffee maker that doesn’t have plastic components? Or at least no plastic that comes in contact with the coffee or hot water? Looking for something made from primarily glass and stainless steel. Looking for something for home use, such as one of these - https://sca.coffee/certified-home-brewer/ - but would like to have a system where the hot water/coffee does not come in contact with plastic components. Thanks!",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "scale_buildup",
+       "categoryId": "coffee_machines",
+       "matched": "~wat+brew+system",
+       "kind": "failure"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "scale_buildup"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: scale_buildup"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t11": {
+   "schema": "pee248.journey.v1",
+   "text": "Cast Iron vs Steel 1. What is the advantage of a steel skillet over a cast iron one? I currently use cast iron for most everything and am curious what I might be missing. 2. If there's an advantage to getting a steel skillet as well, what would be recommended? 3. Is a steel skillet good for cooking omelettes? Here's my current cast iron skillet arsenal, measured inside bottom: Wagner Size #3 - about 5 inches Wagner Size #6 - about 7 inches ( the most used pan in my kitchen) Lodge - about 8 inches I also have two 8 inch nonstick skillets previously used for sauteeing and eggs... and they are losing the nonstick surface. I've killed 6 nonstick pans in 5 years, and I'm done with them. I'm",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "would be recommended",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"would be recommended\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"would be recommended\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t12": {
+   "schema": "pee248.journey.v1",
+   "text": "Why buy a more expensive kitchen scale It seems about time for me to give in to peer pressure and get a kitchen scale like everyone else. It seems like they would give my cooking more consistency if nothing else. I've payed attention to scales as I've been in various stores. Their prices seem to range widely- from $20 at Harbor Freight to a couple hundred at Bed Bath and Beyond. My question is two-fold: What processes benefit most from the use of a scale? How much should I expect to pay for a decent scale? Is it worth saving up to get the top of the line or will the bottom of the line work just fine?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unparsed_or_conflicting_budget"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between coffee machines and toasters, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t13": {
+   "schema": "pee248.journey.v1",
+   "text": "Good (cheaper) alternative to Vitamix Blender I've just got back from a department store where they happened to be doing a demonstration of the Vitamix TNC Blender . Obviously, now I want one. Is anyone able to recommend a good alternative, thats not quite as pricey (this thing was £430 / €500). Basically, the features I'm interested would be: Ability to heat for soups, etc. Ability to blend ice. Really, really fast. Durable Is there anything out there that can compete? Or are the vitamix blenders pretty unique in that respect? Cheers guys, Alex",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unparsed_or_conflicting_budget"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t14": {
+   "schema": "pee248.journey.v1",
+   "text": "Blowtorch - hardware store vs kitchen store. Is there a difference? When looking for a blowtorch for the kitchen, you can buy some reasonably expensive tools. When looking for a blowtorch for plumbing, you can buy some reasonably cheap tools. The price is different. The look is different. The principle is the same. I guess the gas is the same. Why pay more? Is there a health issue? Is the kitchen blowtorch more precise?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "blowtorch",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"blowtorch\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"blowtorch\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t15": {
+   "schema": "pee248.journey.v1",
+   "text": "Looking for a rice cooker, steamer, deep fryer, slow cooker combo that can cook rice and steam at the same time I know this is slightly crazy, but I am a minimalist. I try to get by on as little \"stuff\" as possible. Basically I want a rice cooker that can steam my vegetables and chicken for a meal all at the same time, and it would be nice if the same appliance could be a deep fryer the few times I need one or a slow cooker. Anything like this?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [
+      "deep_fryers",
+      "rice_cookers",
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between deep fryers and rice cookers and steam cookers, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t16": {
+   "schema": "pee248.journey.v1",
+   "text": "Are any retail vacuum-sealing systems worth the expense? Living alone means that my leftovers tend to go a pretty long way, and I don't end up using raw ingredients as quickly as the supermarkets expect me to. For a while I've been considering investing in a vacuum-sealing system to avoid having to throw out so much food, for the sake of both finances and convenience. Unfortunately, I don't know anyone who owns one, so it's hard to get good advice. Most of the advice I got was \"read some reviews.\" Well, I read the reviews, and did the best I could to exclude the obvious PR blitzes from my sample, and it turned out that the reviews weren't very good. For any of the products that I see sold",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between air fryers and coffee machines, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t17": {
+   "schema": "pee248.journey.v1",
+   "text": "Which torch to buy for finishing sous vide meat? Butane or propane? I have started cooking sous vide and am thinking of buying a torch to finish off the meat. I have seen stores selling little butane torches for creme brulees, but some have claimed they are not hot enough and I should use propane. On the other hand, some have claimed that propane leaves a flavour in the meat that should be avoided. Anyone tried both? Anyone uses the little butane torches? What kind of flavour does the propane impart?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "torch",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"torch\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"torch\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t18": {
+   "schema": "pee248.journey.v1",
+   "text": "What to look for when choosing a dutch oven? I've never had nor used a dutch oven, but I have a pile of recipes I want to try that require one. Are these all pretty similar? Or are there things I should look for in a good dutch oven? Or will it depend on what I plan to make? (just soups & stews so far) (might be this should be CW, but I don't have the option here yet)",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t19": {
+   "schema": "pee248.journey.v1",
+   "text": "Le Creuset vs. Lodge Enamel My wife and I both love to cook and I'm looking to buy a nice, 6 qt, enameled dutch oven. Le Creuset is the first that comes to mind, but I've been doing some research and have since learned that the Lodge Enamel product line often comes up as a close competitor in quality (not aesthetics). Would you guys recommend purchasing a Lodge enamel dutch oven?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t20": {
+   "schema": "pee248.journey.v1",
+   "text": "Cast Aluminum Vs Cast iron Dutch Oven I have seen a lot of meat roasting recipes that require using Dutch ovens, most of the cooks doing the presentations have enameled cast iron Dutch ovens. When I looked into what a Dutch oven is I noticed some internet sites are suggesting that there are cast aluminium Dutch Ovens as well, They are popular in the Caribbean and are sometimes called Dutch Pots. I have seen the question: What to look for when choosing a dutch oven? , with an answer suggesting two material options. Plain (seasoned) cast iron or enameled cast iron. Cast aluminium was not mentioned at all. I would like someone to talk about cast aluminium Dutch pots a little because pots made",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "dutch oven",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"dutch oven\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"dutch oven\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t21": {
+   "schema": "pee248.journey.v1",
+   "text": "What to look for when buying a rice cooker? I think I can best explain the question by using a computer analogy. When buying a laptop there are specific qualities that a person looks for like Processor speed Screen size Amount of memory What are the qualities to look for with a rice cooker?",
+   "stages": {
+    "category": {
+     "categoryId": "rice_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "rice_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 1,
+     "withDeclaredAttributes": 1,
+     "retainedDeclarations": 9,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for rice_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model rice_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "1 product identities already known for rice_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t22": {
+   "schema": "pee248.journey.v1",
+   "text": "What features should I consider when getting an ice cream or gelato machine? Obviously, there's the amount that it can make in one batch, and there seem to be three basic types (ones you freeze the bowl ahead of time; ones you pack it with salt and ice, and ones that refrigerates themselves). ... and I know I'm looking for one that I don't have to hand-crank ... (I did more than enough of that as a kid) ... but beyond that, are there any features I should be looking for when buying a machine? If it makes a difference ... I'd mostly be making sorbet with it, as I don't handle dairy well, but I might make ice cream or gelato to share with other people.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "when buying a machine",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"when buying a machine\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"when buying a machine\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t23": {
+   "schema": "pee248.journey.v1",
+   "text": "What qualities should one look for when choosing Egg cooking gear? Stainless Steel seems to be all the rage in cooking stores these days, yet frying eggs on one leads to an extremely messy cleanup situation, assuming you can get it out without breaking it. Scrambling eggs works fine but the cleanup is brutal, even with loads of butter. My goal is to cook/fry eggs in a pan, Teflon seems the obvious choice; but it quickly starts to flake off making the food uneatable. What type of pan and associated tools (spoon, spatula, etc) should I look for? I’d also like to avoid using loads of butter, PAM, and oils, seeing as eggs have enough fat and cholesterol already.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "qualities",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"qualities\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"qualities\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t24": {
+   "schema": "pee248.journey.v1",
+   "text": "What to look for when buying muffin tins? Because honestly, I wouldn't be nearly so in love with my dutch oven without the advice I got on this site. And I really believe in getting one good lifetime tool, rather than a bunch of cheap ones. I'm kind of creeped out by Teflon , and will probably skip coatings. I've read here that baking with the silicone cup-type things isn't necessarily any better than a metal pan. Are there any metal types or finishes that give better baking results?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "muffin tins",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review",
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"muffin tins\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"muffin tins\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t25": {
+   "schema": "pee248.journey.v1",
+   "text": "What factors should I consider when buying kitchen tongs? I consider kitchen tongs one of the most essential kitchen tools but due to a lot of moving around recently I no longer have a pair. Rather than just picking up a cheap pair at the corner store I figured I would ask the experts and get something worth holding onto this time. I'd like to know more about the following: What material is best and why? I'm familiar with metal tongs but would there be any advantages to other materials such as wood? I have some non-stick pans. If you recommend metal tongs, are there any available that have some kind of plastic on the tips or some other coating that would not damage the teflon? Cleaning",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "and why",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"and why\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"and why\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t26": {
+   "schema": "pee248.journey.v1",
+   "text": "How to choose a premium dual fuel range (Viking, Wolf, Aga, and the like...) All, We're considering buying a high quality range. We have arrested our choice on 36\" dual fuel ranges (gas top, electric oven, preferably convection). Some of those have fairly typical and unique characteristics (e.g., Aga multiple small ovens). Others are more easily compared (e.g., Viking and Wolf have similar product offerings). What are the key things to consider before buying a range? Are there good online resources to understand the quality of those premium brands, especially some frank assessment of Wolf and Viking? Also interested in personal experiences - customer or repairpeople reviews and assessments.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "premium dual fuel range",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"premium dual fuel range\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"premium dual fuel range\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t27": {
+   "schema": "pee248.journey.v1",
+   "text": "What features should a food processor have in order to make nut butters? I'm looking for a food processor that I can make nut butters (peanut & almond) in. No reviews on Amazon show any promising information about being able to blend nuts to a buttery texture and the ones I've bought so far have just ground them up into dust. Are some food processors better than others for making nut butters? If so, what makes them better? How can I choose the best one for this task?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "food processor",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"food processor\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"food processor\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t28": {
+   "schema": "pee248.journey.v1",
+   "text": "What features should I look for in a hand grinder (for peanut butter)? I want to make my own peanut butter. I've read of various grinders--both hand-operated and electric. I'm most interested in finding a durable hand-operated peanut butter grinder. I know there are many spice grinders that can be used for peanut butter, but I don't want to skimp and get something that will break if I use it primarily for making peanut butter. What should I look for? How do I know if a grinder will survive a large number of peanut-butter batches?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t29": {
+   "schema": "pee248.journey.v1",
+   "text": "Should I buy a mechanical chopper? A popular example of this device is the heavily-advertised Slap Chop tool. Is there any advantage to buying one of these? Do they tend to be as effective as advertised, and if so, what features should I look for, and how long can I expect it to last?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "mechanical chopper",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"mechanical chopper\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"mechanical chopper\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t30": {
+   "schema": "pee248.journey.v1",
+   "text": "Temperature probe recommendations? I am looking for a temperature probe. Specifically the kind you put in meat before putting it in the oven and the display is outside of the oven. I've purchased three in as many months and each one has died or started reading incorrectly. What should I look for in terms of a temperature probe that will last?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "temperature probe",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"temperature probe\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"temperature probe\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t31": {
+   "schema": "pee248.journey.v1",
+   "text": "Buying my first set of pots and pans I have NO idea what I'm doing :). I'm looking to buy some pots/pans for my appartment (just moved out). Considering these: http://www.amazon.com/Cuisinart-MCP-12-MultiClad-Stainless-12-Piece/dp/B0007KQZWU/ref=lh_ni_t I want to spend under $250 and this seems like a good value for my money. Wanted to check with some experts before I take the plunge. I'd ideally like to be able to washing machine whatever I buy... Thanks!",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "pots pans",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "USD",
+      "min": null,
+      "max": 250
+     },
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"pots pans\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"pots pans\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t32": {
+   "schema": "pee248.journey.v1",
+   "text": "What oven should I buy, which is appropriate for baking? Three months ago I moved to a new apartment. In my old apartment with my old oven, my baked goods turned out pretty well. However, since I moved, my baked goods vary from almost-good to throw-it-in-the-garbage instantly. First I thought I had to get used to the new oven, so I made adjustments to the temperature and so on. Still I just get very sad every time. The oven is over 30 years old, so I think I have to conclude; I need a new one. I looked around on the internet for a while, and I did not really get an idea of how to choose one. A couple of things are important to me: It must be appropriate for making pastry It will be used a",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "which",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"which\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"which\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t33": {
+   "schema": "pee248.journey.v1",
+   "text": "How to choose an upright, self-defrosting freezer? All, we're in the market for a freezer. It will be in our (converted) garage, and due to our space constraints we want a self-defrosting upright freezer. I found some useful-ish articles such as: - http://housewares.about.com/od/refrigeratorsfreezers/a/chestvsupfreezr.htm - http://www.consumerreports.org/cro/freezers/buying-guide.htm Intended use is to store leftovers (mostly from stewy dishes), broth, ice-cream and cuts of meat (we might want to buy a 1/4 or 1/2 steer or hog, butchered and packaged). Currently we do not use our sub-fridge freezer for much in terms of veggies or fruits. We might want to get and ice-cream maker and store the",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "upright self defrosting freezer",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"upright self defrosting freezer\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"upright self defrosting freezer\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t34": {
+   "schema": "pee248.journey.v1",
+   "text": "What's the best material for a durable muffin pan I make two or three dozen muffins a day for various customers. I don't like to use disposable cups, so I grease the pan each time. No matter what I do, after a certain time, my muffin pans end up giving a subtle metal taste to my muffins. I was wondering what would be the most appropriate material for a muffin mold to avoid this situation. I'd be ready to pay the price for a pan that would last significantly longer... Bug which one should I choose?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "material",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unresolved_comparative_referent"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"material\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"material\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t35": {
+   "schema": "pee248.journey.v1",
+   "text": "What should I look for when buying a pasta roller? I'm looking to buy a pasta roller but I have no experience with them at all. What things should I look for to make sure I get a good one? Can they be made of different materials? Are there left-handed and right-handed models? Do some have different available thickness settings or a different gearing ratio on the crank? Is price a useful indicator of quality? What things should I look for to make sure I don't get a bad one? Are there features that turn out to be very bad, such as a motor driven roller? Are there indicators of bad quality , such as gaps between parts that should touch? Do they come with any optional extras or attachments and",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "pasta roller",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"pasta roller\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"pasta roller\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t36": {
+   "schema": "pee248.journey.v1",
+   "text": "How to choose good quality Chinese slicer knives? Chinese slicer knives look like cleavers, but are very thin and meant to chop foods that are reasonably soft, e.g. not bone. I've heard that Chan Chi Kee (CCK) is the best, but it's very difficult to compare since it is very difficult to find good Chinese knives to begin with, and then it's even more difficult to try them out at a store. In addition to CCK, I've also heard of Shuanghuan. Both of these brands are from Hong Kong. Can any professional cooks elaborate on their use and benefits? What are the advantages of each of these brands? Are there other good slicer knives I should consider?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "but it's very difficult",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"but it's very difficult\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"but it's very difficult\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t37": {
+   "schema": "pee248.journey.v1",
+   "text": "Help buying a copper pan I heard that the best frying pans for steak are copper. Most are way too expensive but these are cheap in comparison. For example, this is three times the price - both with a 2mm gauge, although the more expensive one is 2cm larger in diameter. Is there something I need to look for when buying copper pans?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "copper pan i heard",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"copper pan i heard\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"copper pan i heard\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t38": {
+   "schema": "pee248.journey.v1",
+   "text": "What features should I look for in a fireplace grill? I recently moved into a new apartment that is equipped with a wood burning fireplace. I am very excited about this, not only because burning wood on a cool day makes the world seem simpler and awesome, but also because I am interested in the potential culinary applications. First and foremost, I am interested in grilling. There seem to be a number of different ways to use an indoor fireplace as a grill. Given the limited space of my apartment-sized fireplace, what is the best solution to grill a steak, some veggies, or some hot dogs over my interior open flame? What features differentiate the various styles of these devices? Example",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "solution",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"solution\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"solution\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t39": {
+   "schema": "pee248.journey.v1",
+   "text": "What are the types and pros/cons of electric and manual spice and nut grinders available? What qualities should be looked for while purchasing them? Example spices/nuts that I'll be grinding: * Cumin seeds * Mustard seeds * Peanuts * Black pepper corns * Garlic buds and ginger * Cloves Questions: Which kind of grinders allow water in them for making a paste of the spices? Is there some maximum and minimum capacity for each of the type of grinders? What are the types of manual grinders which do not require too much amount of manual power/effort? Example: I think using mortar and pestle consumes huge effort. Which kind of grinders allow us to have a fine powder of spices rather than bits?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "kind of grinders allow us",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "logical_scope_needs_review"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"kind of grinders allow us\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"kind of grinders allow us\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t40": {
+   "schema": "pee248.journey.v1",
+   "text": "Food mills versus food strainer/sauce makers I'm looking for a new food mill, likely for everything from berry jam to apple butter to tomato sauce. There seem to be two primary choices. There are traditional food mills, with the rotating bent plate forcing the food through discs: and there are food strainers/sauce makers, with a spiral conveyor forcing the food through a frustum-shaped screen: Why might I choose one type over the other?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "food mill likely",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"food mill likely\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"food mill likely\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t41": {
+   "schema": "pee248.journey.v1",
+   "text": "choosing a saucepan material for creams and caramels I quite enjoy baking and i'm considering moving to making my own creams and caramels (and other sugar based work). Currently I have a bunch of old scratched up teflon pots that probably should be binned. For sugar based work, you generally have to work with high temperatures, so my teflon based pans are possibly unsuited for this. Is stainless steel the defacto material for this kind of work or should i be looking at anything else... perhaps the new ceramic coated non teflon based nonstick pans?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "moving",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"moving\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"moving\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t42": {
+   "schema": "pee248.journey.v1",
+   "text": "Which knife is best for somone just learning to cook? I'm just self-learning to cook and I'm looking for a chef's knife. I've read the many differences between a chef's knife and a santoku knife, but it's still not clear to me which one I should choose. The only difference I'm aware of between santoku and a chef's knife is that santoku has exactly the same functionality as a chef's knife if one does not carve meat. I definitely want to obtain proper/efficient knife skills (referring to the rock and chop that's often discussed), but at the same time, I want something that will be easy for me to use (I tend to cut using an up and down motion). I'm pretty sure I know what length and weight I",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "knife",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unresolved_comparative_referent"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"knife\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"knife\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t43": {
+   "schema": "pee248.journey.v1",
+   "text": "I want to invest in some hotel pans for home cooking, what size and quantities should I buy? When I watch cooking shows and observe equipment in restaurant kitchens, I see a lot of different size hotel pans. I see that various sizes can be used to hold sauces, hold mise en place, hold cooked product, etc. What would be a good set to invest in? What sizes and how many of each?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "size",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"size\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"size\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t44": {
+   "schema": "pee248.journey.v1",
+   "text": "I only want to buy two knives, which two types to get? I plan on cooking pretty simple foods and will need a knife for things like stir fry, the occasional meat dish, soups, casseroles, basically just standard fare. What brand and type will get me good value and all-purpose use?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "two knives",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"two knives\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"two knives\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t45": {
+   "schema": "pee248.journey.v1",
+   "text": "How can I be sure I'm buying the right KitchenAid beaters? My daughter has a KitchenAid Architect stand mixer. Through a series of moves, she's misplaced the wire whip and the dough hook and I'd like to get her replacements. Easier said than done! Stores don't seem to carry them. The KitchenAid website is useless. Amazon sells plenty - but they have descriptions like Tilt Head, Narrow Bowl Lift, or Wide Bowl Lift. I don't know which of these the Architect is. How can I figure out this terminology and get the right replacement beaters?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "right kitchenaid beaters",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unresolved_comparative_referent"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"right kitchenaid beaters\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"right kitchenaid beaters\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t46": {
+   "schema": "pee248.journey.v1",
+   "text": "Need help choosing burner for wok I'm going to get a hand-hammered, round-bottomed wok through the mail in the near future. Trouble is, I have a glass top stove inside, so that's entirely off limits—not to mention completely useless in terms of heat output even with a wok ring. Thanks to the great Alton Brown, I was introduced to the wonderful idea of using a turkey fryer burner for this task. As I searched around, none of the burners that I could find (and I searched well ) had the same wok-friendly design as the one AB used: https://i.sstatic.net/H78Kz.jpg Notice the lack of any horizontal bars. The two-ring design works perfectly for this purpose, allowing the wok to sit comfortably in",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between air fryers and toasters, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t47": {
+   "schema": "pee248.journey.v1",
+   "text": "Need to replace my \"Bean Pot\" what should I look for? I have this 5 quart, aluminum nonstick pot. It is my go-to pot for candy making (fudge, toffee and brittles), jams and jellies. It also gets used for stews and chili. The non-stick finish is wearing off so I'm looking to replace it. I really like the nonstick surface for candy and jam making, but don't like that it wears off. I'm considering an enameled cast iron Dutch oven as a replacement. Would enameled cast iron work well for candy making, jams and jellies, where controlling the temperature is very critical? (I'm sure there would be a learning curve). I know that one these will be considerably heavier, but also more durable. Or",
+   "stages": {
+    "category": {
+     "categoryId": "air_fryers",
+     "basis": "need_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "coating_wear",
+       "categoryId": "air_fryers",
+       "matched": "~non+stick+wear",
+       "kind": "failure"
+      }
+     ],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "coating_wear"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 4,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 25,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: coating_wear"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t48": {
+   "schema": "pee248.journey.v1",
+   "text": "How to choose a Bundt cake pan? I think one would just go to the supermarket and buy whatever, but since I don't want my cakes to be ruined, I would like to ask for some advice. I have never bought a Bundt cake pan myself, and don't know what kind of materials should I look for, what's the optimal diameter, and eventually if there are some \"non-sticking\" ones (or even dishwasher-resistant) that do their job. Please notice that I have an electrical oven.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "bundt cake pan",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"bundt cake pan\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"bundt cake pan\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t49": {
+   "schema": "pee248.journey.v1",
+   "text": "Should I buy a used flat griddle? Hi there I am opening a hot dog joint where we will also sell hamburgers and I am trying to decide whether I should buy a new or used grill. I spoke with a salesman at an equipment store and he told me if I buy a used grill it can be trouble if it has many scratches and deep nicks. He told me the food will not cook as well and also will get a different taste. The problem is when I went to look at used grills they mostly all have scratches and nicks all over the surface. Can someone help me out and let me know if what the salesman said has any merit?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "used flat griddle",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"used flat griddle\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"used flat griddle\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t50": {
+   "schema": "pee248.journey.v1",
+   "text": "Looking for a pliers-like tool for making crushed tomatoes I need a tool for crushing or mashing fresh tomatoes. I know I can use a grater but that takes too much table space for me to use and it's not comfortable enough - if you want to crush a tomato after you start eating, you need space for another plate to grate the tomato on top of it. You also have to stand up. I am looking for a tool similar with an egg slicer, where you can simply push one side on top of the other to crush the tomato. Or like a nut cracker, so I can crush the tomato while holding it on top of my plate. And I can sit down when doing it. Is there any instrument like that?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "pliers like",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"pliers like\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"pliers like\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t51": {
+   "schema": "pee248.journey.v1",
+   "text": "Looking for 10\" bamboo steamer that will last! I've owned quite a few different bamboo steamers. First one I bought many years ago and it lasted many years. Last few I have purchased did not. We're talking normal use, hand washing only. Seems like they are made ever more cheaply and none of them hold up well. Does anyone have any ideas on how I can ensure that the next one purchased will be durable and hold up well? Is there anything in particular I should be looking for/at?",
+   "stages": {
+    "category": {
+     "categoryId": "steam_cookers",
+     "basis": "explicit_alias",
+     "candidates": [
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 3,
+     "withDeclaredAttributes": 3,
+     "retainedDeclarations": 27,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for steam_cookers: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model steam_cookers: user goals, mechanisms, measurable outcomes and professional test methods",
+    "3 product identities already known for steam_cookers"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t52": {
+   "schema": "pee248.journey.v1",
+   "text": "What vessel should I choose for Lactofermentation? Do I have to use a mason jar to ferment veggies? Or would any jar do? In case of the latter, does it have to be air sealed?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "for lactofermentation",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"for lactofermentation\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"for lactofermentation\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t53": {
+   "schema": "pee248.journey.v1",
+   "text": "Smart idea to buy the woks that Chinese restaurant chefs use, for my home's electric induction cook top? I need a non stick wok for my Frigidaire electric induction cook top . What do you think of the the copycat technique? Why don't I just buy the type of wok used by Chinese restaurant chefs? But what type of wok do Chinese restaurants use? Carbon steel ? Cast iron ? How often do these chefs season their woks? But will this work for me at home? I've never seasoned a wok before! I'm afraid I can't maintain and preserve these woks like these Cantonese restaurant chefs can. What if I don't have enough time to season?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "woks",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"woks\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"woks\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t54": {
+   "schema": "pee248.journey.v1",
+   "text": "What mill would you recommend to grind allspice? I recently buy allspice berries thinking that IKEA grinders could grind it. However, the berry is just too large to this mill. What type of mill or grinding appliance should I be looking for when I need to grind allspice?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "allspice berries thinking",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"allspice berries thinking\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"allspice berries thinking\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t55": {
+   "schema": "pee248.journey.v1",
+   "text": "Looking for stovetop sandwich maker I'm looking to find a stovetop sandwich maker that seals the sides and bisects them into two triangles (possibly called \"jaffles\" 1 ). We used to have a countertop sandwich maker that looked quite a bit like the Cuisinart Sandwich Grill , but I'm unsure of what brand we had, as most all the models look pretty much like this: Regardless of the brand, there are a couple of issues with this design, and I'd like to avoid getting another one. Specifically: When oil/butter/cheese overflows, it's near impossible to get the grease out of the seams. This happens fairly regularly, as there's a very narrow window between \"unsatisfying lack of cheesy goodness\" and",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t56": {
+   "schema": "pee248.journey.v1",
+   "text": "What features should I look for when buying an espresso maker? I got a $30 espresso machine a year and half ago to see if we would actually use it much. It gets used several times a week (and we haven't bought anything from Starbucks in months), and the gasket in it's cap is leaking, so we're looking to buy a replacement. The price range is truly impressive, and I have no real understanding of what the difference between a $30 machine and a $500 machine. What are the features that I should look for that make one machine better than another?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unparsed_or_conflicting_budget"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t57": {
+   "schema": "pee248.journey.v1",
+   "text": "Best tool for quickly cutting vegetables into a salad? I like eating a salad for lunch, but would like to somehow optimize the time it takes to cut the vegetables. My salad usually contains tomatoes, cucumbers, bell pepper, carrot, etc. I could buy an electrical blender, but the end result is usually not as tasty since the vegetable parts are too small. Therefore I tried to look-up for some alternatives: Starfrit Chopper Prepworks Chopper Freshware Chopper Anyone have experience with such devices? Perhaps there's some great alternative that I haven't found yet?",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t58": {
+   "schema": "pee248.journey.v1",
+   "text": "What qualities do I need from an espresso machine or steam wand in order to produce good latte art? I'm learning to brew coffee, and one of my aspirations is to be able to brew a good, solid cup of latte, with the milk foamed just right all the way through. I'm getting there, but beyond that point, I want to be able to create latte art. In a few months, I'll have to buy my own machine to practice on. Our current machine (a small household unit with a copper boiler) has good pressure for foaming milk, but apparently that pressure isn't sufficient for being able to produce microfoam, which I understand is necessary for good latte art. When I shop for a new machine, what qualities do I need",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t59": {
+   "schema": "pee248.journey.v1",
+   "text": "Good quality espresso / cappuccino maker that doesn't leak or break within 18 months of use I have been buying de Longhi coffee machines for a while now and they seem to be getting worse. I started on a Delonghi EC152 which was low cost and pretty reliable. Then when my 2nd one died, I tried to order a replacement but it had been discontinued and so equivalent model was a EC146.B which was really poor. As luck would have it, or so I thought, I received another de Longhi as a present, an EC 270. But this leaks like crazy after only a few weeks. If you fiddle with the valve on the water vessel it stops leaking for a few hours. So I would like to buy a coffee maker which doesn't leak and which",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "low_maintenance",
+       "categoryId": "coffee_machines",
+       "matched": "~low+reliable+aft",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "low_maintenance"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: low_maintenance"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t60": {
+   "schema": "pee248.journey.v1",
+   "text": "Alternatives to Aeropress? New aspiring coffee nerd here. I'm looking to do a hand grinder + french press setup. Mostly for home use, but small enough for travel would be a wonderful bonus. Low budget (under $100 total) I've narrowed my grinder options to the Hario Skerton or Porlex Mini. For the press, I was thinking the $30 Aeropress kit. However, I figured I might as well ask this stackexchange for other options you would recommend, if any? I like to explore alternatives before purchasing. I apologize if this has already been asked, I did a few searches for \"aeropress alternatives\" and did not find anything. Cheers, Jason",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": {
+      "currency": "USD",
+      "min": null,
+      "max": 100
+     },
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t61": {
+   "schema": "pee248.journey.v1",
+   "text": "What is the best coffee brewing method to learn at home? What equipment shall i prepare? I have been watching youtube videos and all sort of guides and books. I have been watching pour-over method and wonder, does the equipment i have to buy to practice at home should be expensive? Im still in my 2nd year of college. What should i do to learn skills necessary to qualify to be a barista?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t62": {
+   "schema": "pee248.journey.v1",
+   "text": "Coffee machine for a small business We have gone through a couple different coffee machines, here at work, none of which are sufficient. We started with a normal brew machine (doesn't make enough) and worked our way up to a percolator (eventually broke down) and now we have decided that it might be worth an investment. What we want is a machine that we can simply plug a water line into, fill it with beans and press a button to brew either an individual cup or perhaps a pitcher we don't care just as long as its easy, quick and somewhat hands-off. The catch is we aren't looking for a thousand dollar machine, any ideas?",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "explicit_alias",
+     "candidates": [
+      "coffee_machines"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "scale_buildup",
+       "categoryId": "coffee_machines",
+       "matched": "~brew+wat+long",
+       "kind": "failure"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [
+      "scale_buildup"
+     ],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "find an original test method for: scale_buildup"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t63": {
+   "schema": "pee248.journey.v1",
+   "text": "Manual grinder that fits inside the Aeropress What is a good manual grinder that will fit inside of the Aeropress for travel purposes? I'm looking for something as good as my Commandante grinder . I'm happy with the Commandante, but if I'm ever upgrading the grinder in the future I'd like something that will fit inside the Aeropress.",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t64": {
+   "schema": "pee248.journey.v1",
+   "text": "What manual grinders are good I already have an old rok grinder and I want to upgrade it, but I am not sure what manual grinders are good. The characteristics that I am looking for are mainly: Consistency of grains and general durability. Most grinders has the handle at top and when grinding it causes inconsistency of grains. For example in all Hario grinders you will see some grain too fine and others too coarse, you can even move the bottom part of the mill sideways with your hand! One flaw of rock grinder is a part near the bottom made of plastic (at least in old models), its function is to move the grains while grinding. In my case it broke after a few weeks of use. The methods in which",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between coffee machines and toasters, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t65": {
+   "schema": "pee248.journey.v1",
+   "text": "ISO Automatic French Press (grind fresh coffee, boil water) My husband loves French Press coffee but mornings often get too busy to boil water, grind coffee, etc. I'd love to buy him an automatic machine but can't seem to find one that does French Press. I found the Bodum Bistro Electric French Press, but it doesn't appear to be manufactured anymore. Any suggestions? If this doesn't exist, what's the closest taste? Bonus if the machine offers dual hoppers (I prefer decaf).",
+   "stages": {
+    "category": {
+     "categoryId": "coffee_machines",
+     "basis": "cue_inferred",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 9,
+     "withDeclaredAttributes": 9,
+     "retainedDeclarations": 74,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "need",
+   "reasons": [
+    "need not specific enough to select category requirements",
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [
+    "What matters most to you: get reliable, repeatable coffee with low routine maintenance; or make espresso-based drinks with good taste and little effort?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t66": {
+   "schema": "pee248.journey.v1",
+   "text": "Are there significant differences between different brands/models of immersion blenders? I'm thinking of purchasing a new immersion blender as a gift for somebody that has a very old one which is quite literally being held together with duct tape. I own a Sunbeam model which I believe is rather cheap (it was actually a gift to me several years ago) and although I use it infrequently, I haven't had any major problems with it. My internet research on immersion blenders hasn't uncovered much other than a few unverified statements that molecular cooks prefer the Braun models for foams. No explanation of why, and I haven't even seen a Braun in any store here, but regardless, the intended",
+   "stages": {
+    "category": {
+     "categoryId": "blenders",
+     "basis": "explicit_alias",
+     "candidates": [
+      "blenders"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 5,
+     "withDeclaredAttributes": 5,
+     "retainedDeclarations": 61,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for blenders: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model blenders: user goals, mechanisms, measurable outcomes and professional test methods",
+    "5 product identities already known for blenders"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t67": {
+   "schema": "pee248.journey.v1",
+   "text": "What to look for in a Stand Mixer? I want to buy a stand mixer, a good one. Mainly for mixing dough, but also for mincing meat. I've seen that the KitchenAid has a mincing attachment. So, I've made a list of what to look for, and would like your input about what's missing. Steel bowl. Power, is that a factor? Pigtail, whisks. Possibility to attach a mincer. Bowl size (is bigger better?). Weight. As the table space is limited, it should be portable (for me at least). Optional: Ice cream bowl. Mount for: Slicer (meats, vegetables, etc.) Meat grinder Grater (cheese, etc.) Sausage stuffer Pasta maker Orbital movement. Apart from these elements, what am I forgetting? Apart from these uses, are",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "stand mixer a good one",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"stand mixer a good one\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"stand mixer a good one\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t68": {
+   "schema": "pee248.journey.v1",
+   "text": "Optimal cooking tool for long-duration steaming I'm a recent college graduate, and will begin working 40 hour weeks soon. I'm not good at cooking, and I prefer to cook all of my food (fish, chicken, turkey, vegetables) by steaming them in a small rice cooker. This currently works out great, and is quick and simple enough to clean up without a mess. However, I was wondering if it's possible to use one of these \"multi-cooker\" steamers, such as this Cusinart model for steaming and then slow cooking (i.e. \"keep warm\") chicken breasts for 4-5 hours while being away. I was thinking about coming home for lunch, starting the steamer, then letting it run for 4-5 hours until I get home from work. My",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "ambiguous",
+     "candidates": [
+      "rice_cookers",
+      "steam_cookers"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unbound_negation"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "several product categories fit the request"
+   ],
+   "clarificationQuestions": [
+    "Are you deciding between rice cookers and steam cookers, or is one of them already chosen?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t69": {
+   "schema": "pee248.journey.v1",
+   "text": "What is the adequate power for a non-commercial Planetary Mixer? I have a standard mixer that can be put on a stand and its motor has 400W of power. Since it struggles with some doughs and I don't really like its mixing I decided to buy a stand \"Planetary Mixer\" * (i.e. a non-commercial Stand Mixer with \"Planetary Mixing Action\"), however I am not sure what wattage I should look for. I certainly won't use it for commercial uses and can't figure out if, say, 800W would be too much. I also don't know if I can ask here about advice on the model of mixer? Since I am looking for one that has metal gearing and dishwasher safe beaters/parts but am finding it hard to find any information about",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": "stand planetary mixer",
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "out_of_scope",
+   "blockingStage": "category",
+   "reasons": [
+    "\"stand planetary mixer\" is not a product category PEE holds knowledge or products for"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "category onboarding needed before advising on \"stand planetary mixer\""
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t70": {
+   "schema": "pee248.journey.v1",
+   "text": "Slow cookers - capacity and mess I am thinking of buying a slow cooker because the communal kitchen is usually really nasty and I want to save time. I will use it for cooking up big amounts of meat (chicken fillet, minced meat mostly). The biggest I found has a capacity of 6.8 Liters. Would it be possible to cook 2 kg of chicken fillet in this at once, if not, how much? (I.e do I need to add water or can I use 6.8 Liters purely for food?) I can't leave it in the kitchen, so can I use it in my corridor room or how much odor / mess does a slow cooker usually create? Is everything sealed or is it like when cooking normally?",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t71": {
+   "schema": "pee248.journey.v1",
+   "text": "Is there a machine for thick shredded carrots for home use (not grated)? You can get shredded carrots at a salad bar, and I buy bags of pre-shredded carrots at the supermarket. I want to make these at home with a machine but haven't found one. When you use a food processor, the attachment is usual a grater, similar to a coarse box grater; this makes carrot shreds that are much thinner than the thicker ones you use on a salad (or maybe for use in Vietnamese pickles, banh mi, etc). I'm sure they use a machine to do this to make the bags available at the store, but I've only found commercial machines that can do it (example: https://www.chipsfryer.com/single-series/carrot-cutter-machine.html )",
+   "stages": {
+    "category": {
+     "categoryId": null,
+     "basis": "unresolved",
+     "candidates": [],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 0,
+     "withDeclaredAttributes": 0,
+     "retainedDeclarations": 0,
+     "budgetApplicable": false
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "clarify",
+   "blockingStage": "category",
+   "reasons": [
+    "no product category can be established from the request"
+   ],
+   "clarificationQuestions": [
+    "Which kind of product are you looking for, and what should it help you do?"
+   ],
+   "researchPlan": [],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t72": {
+   "schema": "pee248.journey.v1",
+   "text": "Do the conventional round ovens have any advantage over an OTG? The \"conventional round oven\" (can be used for baking, grilling and roasting, as per the claims on the packaging) I'm referring to: The typical Oven Toaster Griller (OTG) I'm referring to: My objective is to buy an oven with which I can bake: Bread Cakes Biscuit Samosa (for baking it internally after frying externally) Puffs ( vegetable pattie ) Chicken I have a vague memory of someone mentioning that the conventional round oven can bake cakes more uniformly than an OTG. Additionally, some OTG's have a temperature dial like this: This makes it really hard to figure out if I'm baking at the right temperature. Even a 10 degree",
+   "stages": {
+    "category": {
+     "categoryId": "toasters",
+     "basis": "explicit_alias",
+     "candidates": [
+      "toasters"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [
+      {
+       "id": "repeatable_results",
+       "categoryId": "toasters",
+       "matched": "~round+bread+aft",
+       "kind": "outcome"
+      }
+     ],
+     "budget": null,
+     "hazards": [
+      "unknown_capability_requires_research"
+     ]
+    },
+    "requirements": {
+     "measuredBy": [
+      {
+       "conceptId": "repeatable_results",
+       "method": "CHOICE (AU) sets each toaster to a reference shade using a photo chart, then runs four toasting cycles with standard white bread to assess evenness and cycle-to-cycle repeatability; it also measures k",
+       "support": "method_reference",
+       "source": "https://www.choice.com.au/home-and-living/kitchen/toasters-grills-and-sandwich-presses/articles/how-we-test-toasters"
+      }
+     ],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": true
+    },
+    "candidates": {
+     "active": 6,
+     "withDeclaredAttributes": 6,
+     "retainedDeclarations": 36,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 1,
+     "safety": null
+    }
+   },
+   "decision": "withhold_insufficient_evidence",
+   "blockingStage": "evidence",
+   "reasons": [
+    "no evidence-supported relation for the stated need",
+    "no independent test results for any candidate"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "obtain independent results measured by: CHOICE (AU) sets each toaster to a reference shade using a photo chart, then runs four toa"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  },
+  "t73": {
+   "schema": "pee248.journey.v1",
+   "text": "Heat liquids (water, milk) to specific temperature? I was wondering if there's a device (to buy, or make if it's a relatively simple DIY) that can heat liquids to specific temperatures. Baking breads and other things, often you need water/milk at a specific-ish temp. Currently I'm using a kettle or stovetop and then a thermometer to gauge where the temperature is. Often i overshoot so have to wait for cooling...so I was just wondering if that's the best/most practical way, or if there's some device/thing I can set a temp and then let it heat up the liquid for me. Edit: main temp range is 50°-90° or so Farenheit",
+   "stages": {
+    "category": {
+     "categoryId": "kettles",
+     "basis": "explicit_alias",
+     "candidates": [
+      "kettles"
+     ],
+     "namedUnknownTerm": null,
+     "excluded": []
+    },
+    "need": {
+     "concepts": [],
+     "budget": null,
+     "hazards": []
+    },
+    "requirements": {
+     "measuredBy": [],
+     "cautions": [],
+     "unmeasuredConcepts": [],
+     "categoryHasKnowledge": false
+    },
+    "candidates": {
+     "active": 2,
+     "withDeclaredAttributes": 2,
+     "retainedDeclarations": 11,
+     "budgetApplicable": true
+    },
+    "evidence": {
+     "evidenceSupportedRelations": 0,
+     "independentResultsForNeed": 0,
+     "methodReferences": 0,
+     "safety": null
+    }
+   },
+   "decision": "unsupported_category",
+   "blockingStage": "requirements",
+   "reasons": [
+    "no category knowledge for kettles: goals, mechanisms and test methods are not modelled"
+   ],
+   "clarificationQuestions": [],
+   "researchPlan": [
+    "model kettles: user goals, mechanisms, measurable outcomes and professional test methods",
+    "2 product identities already known for kettles"
+   ],
+   "rankingAuthorized": false,
+   "recommendation": null
+  }
+ }
+}
