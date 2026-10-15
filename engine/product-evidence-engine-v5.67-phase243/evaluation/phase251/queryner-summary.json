@@ -1,0 +1,72 @@
+{
+ "schema": "pee251.queryner-summary.v1",
+ "source": "bltlab/queryner (CC BY 4.0, https://huggingface.co/datasets/bltlab/queryner), train split 7,841 queries read via the datasets-server API; test split 993 queries (2 usable cases)",
+ "tier": "T3 for product-type versus modifier recognition only (human span labels); not a consumer-need benchmark",
+ "rules": "product case: alias inside a core_product_type span (raw, pre-run rule); exact-span: the human core_product_type span equals the alias (post-run correction: the raw rule counted toaster inside toaster oven and pepper/belt grinders as coffee-grinder cases)",
+ "firstRun": {
+  "R": {
+   "productRaw": {
+    "cases": 33,
+    "correct": 28
+   },
+   "productExactSpan": {
+    "cases": 23,
+    "correct": 23
+   },
+   "notProduct": {
+    "cases": 4,
+    "wrongAttributions": 4
+   }
+  },
+  "D": {
+   "productRaw": {
+    "cases": 44,
+    "correct": 31
+   },
+   "productExactSpan": {
+    "cases": 29,
+    "correct": 26
+   },
+   "notProduct": {
+    "cases": 4,
+    "wrongAttributions": 4
+   }
+  }
+ },
+ "development": {
+  "R": {
+   "productRaw": {
+    "cases": 33,
+    "correct": 28
+   },
+   "productExactSpan": {
+    "cases": 23,
+    "correct": 23
+   },
+   "notProduct": {
+    "cases": 4,
+    "wrongAttributions": 1
+   }
+  },
+  "D": {
+   "productRaw": {
+    "cases": 44,
+    "correct": 31
+   },
+   "productExactSpan": {
+    "cases": 29,
+    "correct": 26
+   },
+   "notProduct": {
+    "cases": 4,
+    "wrongAttributions": 1
+   }
+  }
+ },
+ "notProductExamples": [
+  "parchment paper for air fryer",
+  "10 inch liners for air fryers",
+  "toaster warming rack",
+  "microwave with convection oven grill and air fryer"
+ ]
+}

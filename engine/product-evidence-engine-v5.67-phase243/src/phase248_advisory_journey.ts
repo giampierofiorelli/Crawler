@@ -174,7 +174,14 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // Phase250 (development): an accessory or spare part of a named product ("a filter for my espresso machine",
  // "stand mixer attachments") is not that product; applies to names and to weaker cues.
  function accessoryOf(h:{start:number;end:number}){return /(?:^| )(?:filters?|baskets?|gaskets?|beaters?|attachments?|parts|portafilters?|carafes?|lids?|seals?|replacements?) for (?:my|our|his|her|their|the|a|an|this)(?: \S+)? ?$/.test(t.slice(Math.max(0,h.start-60),h.start).trimEnd()+' ')
-  ||/^(?: \S+)? (?:attachments?|beaters?|spare parts|parts|filters?|gaskets?|portafilters?|carafes?|replacement parts)\b/.test(t.slice(h.end));}
+  ||/^(?: \S+)? (?:attachments?|beaters?|spare parts|parts|filters?|gaskets?|portafilters?|carafes?|replacement parts|racks?|liners?|trays?|mats?|covers?|cases?|baskets?)\b/.test(t.slice(h.end))
+  // Phase251 (development; QueryNER human labels): "<thing> for (a|my|the) <product>" buys the thing, not the product
+  // ("parchment paper for air fryer", "liners for air fryers"), unless the words before "for" are a buying, searching,
+  // budget or space expression ("looking for an air fryer", "room for an air fryer", "best for ...").
+  // Short, query-like requests only: in sentences "X for Y" is usually a purpose or a problem ("a problem for coffee
+  // machines"), not a purchase (development: Phase248 dev d06).
+  ||(()=>{if(t.split(' ').length>8)return false;const m=/(?:^| )([a-z0-9']+) for(?: a| an| the| my| our| your| this)? ?$/.exec(t.slice(Math.max(0,h.start-60),h.start).trimEnd()+' ');
+   return !!m&&!/^(?:looking|shopping|searching|search|recommendations?|recommend|suggestions?|advice|budget|room|space|money|options?|ideas?|best|good|great|something|anything|one|need|want|buy|buying|go|went|opt|opted|settle|settled|ask|asking|hunt|hunting|market|paid|pay|used|use|reviews?|alternative|alternatives|replacement|substitute|time|ready|it|is|are|was|that|this)$/.test(m[1]);})();}
  // "I could buy an electrical blender, but ...": a product considered and set aside is not the one being chosen.
  const rejected=(h:{start:number;end:number})=>/(?:^| )(?:could|might) (?:buy|use|get)(?: a| an| the)?(?: \S+)? ?$/.test(t.slice(Math.max(0,h.start-50),h.start).trimEnd()+' ')&&/^(?: \S+){0,6} but\b/.test(t.slice(h.end,h.end+60));
  const named0=allNamed.filter(h=>!isExcluded(h)&&!partOf(h)&&!rejected(h));
