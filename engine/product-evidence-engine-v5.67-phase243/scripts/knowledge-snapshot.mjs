@@ -14,6 +14,8 @@
  *                                                          hooks, so a change never stays only in the ephemeral
  *                                                          container. Exit 2 when a change could not be pushed.
  *  node scripts/knowledge-snapshot.mjs status              compare live store and snapshot
+ *  node scripts/knowledge-snapshot.mjs verify              check the snapshot on origin/main exactly as a new session
+ *                                                          would restore it (hash, integrity, journal, counts)
  * The live store still refuses to open inside a Git work tree; only the verified snapshot copy is committed.
  */
 import {createHash} from 'node:crypto';
@@ -59,6 +61,7 @@ function dirHashes(dir){
 async function save(){
  const {KnowledgeStore246}=await import('../dist/src/phase246_knowledge_store.js');
  if(!existsSync(LIVE_DB))return {saved:false,reason:'no_live_store'};
+ assertPrivateTarget();
  const tmp=mkdtempSync(join(tmpdir(),'pee-snap-'));
  const store=new KnowledgeStore246(LIVE_DB);
  let r;try{r=store.backupRotate249(tmp,1);}finally{store.close();}
@@ -72,6 +75,20 @@ async function save(){
  return {saved:true,snapshot:SNAP_DB,sha256:r.manifest.sha256,counts:r.manifest.counts};
 }
 const git=(...a)=>execFileSync('git',['-C',REPO,...a],{encoding:'utf8',stdio:['ignore','pipe','pipe'],timeout:120000}).trim();
+/** The snapshot may only be written into the PRIVATE data repository: never into the public code repository (an earlier
+ * version wrote engine/knowledge-snapshot/ inside Crawler), never into an untracked directory. The origin must be
+ * giampierofiorelli/pee-knowledge; PEE_SNAPSHOT_TEST_REMOTE names an exact extra origin allowed for isolated tests. */
+function assertPrivateTarget(){
+ const top=d=>{try{return execFileSync('git',['-C',d,'rev-parse','--show-toplevel'],{encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim();}catch{return null;}};
+ const codeTop=top(ROOT);
+ // Checked on the snapshot directory's repository (REPO) without creating anything first.
+ const snapTop=existsSync(REPO)?top(REPO):null;
+ if(!snapTop)throw Error('snapshot_dir_not_in_a_git_repository: '+SNAP);
+ if(codeTop&&resolve(snapTop)===resolve(codeTop))throw Error('snapshot_dir_inside_public_code_repository: '+SNAP);
+ let origin='';try{origin=git('remote','get-url','origin');}catch{}
+ const ok=/[/:]giampierofiorelli\/pee-knowledge(?:\.git)?$/.test(origin)||(!!process.env.PEE_SNAPSHOT_TEST_REMOTE&&origin===process.env.PEE_SNAPSHOT_TEST_REMOTE);
+ if(!ok)throw Error('snapshot_repository_origin_not_private_pee_knowledge: '+origin);
+}
 const errText=e=>String(e?.stderr||e?.message||e).slice(0,300);
 const fail=(reason,extra={})=>{out({synced:false,reason,...extra,
  action:'the live store holds changes that are NOT saved in pee-knowledge: fix the cause, then run node scripts/knowledge-snapshot.mjs sync'});process.exit(2);};
@@ -93,6 +110,7 @@ if(cmd==='load'){
  out({...r,next:'node scripts/knowledge-snapshot.mjs sync (commits and pushes pee-knowledge)'});
 }else if(cmd==='sync'){
  if(!existsSync(LIVE_DB)){out({synced:true,reason:'no_live_store'});process.exit(0);}
+ try{assertPrivateTarget();}catch(e){fail('unsafe_snapshot_target',{error:errText(e)});}
  if(!existsSync(join(REPO,'.git')))fail('pee_knowledge_clone_missing',{expected:REPO});
  const changed=!existsSync(SNAP_DB)||fingerprint(LIVE_DB)!==fingerprint(SNAP_DB)||(existsSync(LIVE_NOTICES)&&dirHashes(LIVE_NOTICES)!==dirHashes(SNAP_NOTICES));
  try{git('fetch','-q','origin','main');}catch(e){fail('fetch_failed',{error:errText(e)});}
@@ -114,9 +132,27 @@ if(cmd==='load'){
  for(const wait of [0,2,4,8,16]){if(wait)execFileSync('sleep',[String(wait)]);try{git('push','-q','origin','HEAD:main');err=null;break;}catch(e){err=e;}}
  if(err)fail('push_failed',{error:errText(err)});
  out({synced:true,pushed:git('rev-parse','--short','HEAD'),counts:JSON.parse(readFileSync(SNAP_MANIFEST,'utf8')).counts});
+}else if(cmd==='verify'){
+ // What a new session would restore: the snapshot committed on origin/main, checked from the Git object itself
+ // (SHA-256 against its committed manifest, SQLite integrity, hash-chained journal), never from the working copy.
+ assertPrivateTarget();
+ git('fetch','-q','origin','main');
+ const commit=git('rev-parse','--short','origin/main');
+ const dir=mkdtempSync(join(LIVE_DIR,'..','verify-'));
+ try{
+  const f=join(dir,'pee246.sqlite');
+  writeFileSync(f,execFileSync('git',['-C',REPO,'show','origin/main:snapshot/pee246.sqlite'],{maxBuffer:1<<30}));
+  const m=JSON.parse(execFileSync('git',['-C',REPO,'show','origin/main:snapshot/pee246.sqlite.manifest.json'],{encoding:'utf8'}));
+  const {verifyStoreFile249}=await import('../dist/src/phase246_knowledge_store.js');
+  const v=verifyStoreFile249(f);
+  const ok=v.sha256===m.sha256&&v.integrityOk&&v.journalOk&&JSON.stringify(v.counts)===JSON.stringify(m.counts);
+  out({verified:ok,remoteCommit:commit,sha256:v.sha256,manifestSha256:m.sha256,integrityOk:v.integrityOk,journalOk:v.journalOk,counts:v.counts,
+   liveContentMatchesRemote:existsSync(LIVE_DB)?fingerprint(LIVE_DB)===fingerprint(f):null});
+  if(!ok)process.exitCode=1;
+ }finally{rmSync(dir,{recursive:true,force:true});}
 }else if(cmd==='status'){
  const m=existsSync(SNAP_MANIFEST)?JSON.parse(readFileSync(SNAP_MANIFEST,'utf8')):null;
  out({snapshot:m?{sha256:m.sha256,counts:m.counts,verifiedAt:m.verifiedAt}:null,live:existsSync(LIVE_DB)?LIVE_DB:null,
   contentInSync:existsSync(LIVE_DB)&&existsSync(SNAP_DB)?fingerprint(LIVE_DB)===fingerprint(SNAP_DB):null,
   snapshotDir:SNAP,note:'the Stop and SessionEnd hooks run sync automatically; run it by hand with node scripts/knowledge-snapshot.mjs sync'});
-}else{console.error('usage: knowledge-snapshot.mjs load|save|sync|status');process.exit(2);}
+}else{console.error('usage: knowledge-snapshot.mjs load|save|sync|verify|status');process.exit(2);}
