@@ -202,3 +202,18 @@ npm run audit:phase249-public                # public evaluation exposure audit 
 | Published | metrics, manifests (URL, SHA-256, fetch time) and gold limited to sampled facts. CC BY-SA excerpts carry attribution (`evaluation/phase249/NOTICE-CC-BY-SA.md`). |
 
 The coding container is ephemeral. Durable hosting needs a persistent volume, plus backups on a second medium.
+
+**New cloud sessions start with an empty store.**
+
+- The store is not in Git, by design, and each cloud container is new.
+- The owner keeps a verified backup zip outside the repository. The latest is `PEE-knowledge-backup-2026-10-15.zip`
+  (Phase249 final state: 2,385 declarations, 35 OPSS notices).
+- **At the start of a session that needs the store:**
+  1. Ask for the zip, or use it if it was uploaded.
+  2. Run `verify-backup`.
+  3. Run `restore`.
+  4. Copy `safety-notices/` into `$PEE_KNOWLEDGE_DIR`.
+- **At the end of any session that changes the store:**
+  1. Run `backup-rotate`.
+  2. Hand the owner a new zip.
+- Never commit the store or the zip.

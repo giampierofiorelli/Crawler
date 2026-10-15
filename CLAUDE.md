@@ -27,6 +27,8 @@ implementing, evaluating or reporting any PEE work. It holds:
   - no heavy dependencies;
   - English first.
 - **Knowledge:** private SQLite in `$PEE_KNOWLEDGE_DIR`, never in Git.
+  - Cloud sessions start empty: restore it from the owner's backup zip.
+  - Hand the owner a new backup when the store changes.
 - **Confidential evaluation inputs:** in `$PEE_PRIVATE_EVAL_DIR`.
 - **Access rules:**
   - Never bypass robots rules, 403/429 responses or access controls.
