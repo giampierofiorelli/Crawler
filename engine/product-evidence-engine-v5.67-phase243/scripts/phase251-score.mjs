@@ -35,11 +35,22 @@ for(const [arm,run] of Object.entries(runs)){
   budget:{correct:cnt(r=>r.budgetOk),of:n,expected:cnt(r=>!!bench.cases.find(c=>c.id===r.id).expectedBudget)},
   unsafeRankings:cnt(r=>r.rankingAuthorized),msTotal:run.msTotal??null,byTag,rows};
 }
+// Phase252 additions (registered in evaluation/phase252/protocol.json): Wilson 95% intervals, abstention split, confusion.
+const wilson=(k,n)=>{if(!n)return null;const z=1.96,p=k/n,d=1+z*z/n,c=(p+z*z/(2*n))/d,h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;return [+(c-h).toFixed(3),+(c+h).toFixed(3)];};
+for(const s of Object.values(out.arms)){const R=s.rows,c=f=>R.filter(f).length;
+ s.uncertainty={correctRate:wilson(s.decision.correct,s.cases),adviseCorrectRate:wilson(s.decision.advise.correct,s.decision.advise.cases),harmfulRate:wilson(s.decision.harmful,s.cases)};
+ s.adviceVsAbstention={positiveAdvice:s.decision.advise.correct,justifiedAbstention:c(r=>r.behaviour!=='advise'&&r.quality==='correct'),
+  unjustifiedAbstention:c(r=>r.behaviour==='advise'&&r.quality==='unhelpful'),nonAdviseCases:c(r=>r.behaviour!=='advise')};
+ s.confusion={confusingControls:c(r=>r.tags.includes('confusing_control')),harmful:c(r=>r.tags.includes('confusing_control')&&r.quality==='harmful'),
+  accessoryTagged:c(r=>r.tags.includes('accessory')),accessoryHarmful:c(r=>r.tags.includes('accessory')&&r.quality==='harmful')};}
 for(const pair of (F.pairs??'').split(',').filter(Boolean)){const [x,y]=pair.split(':');const X=out.arms[x].rows,Y=out.arms[y].rows;
+ const lessonFalseNeeds=X.flatMap((r,i)=>{const exp=new Set(bench.cases[i].expectedConcepts??[]),prev=new Set(Y[i].gotNeeds);return r.gotNeeds.filter(n=>!exp.has(n)&&!prev.has(n)).map(n=>`${r.id}:${n}`);});
+ const newHarmful=X.filter((r,i)=>r.quality==='harmful'&&Y[i].quality!=='harmful').map(r=>`${r.id}:${r.gotCategory}`);
  const d=X.map((r,i)=>RANK[r.quality]-RANK[Y[i].quality]),n=X.map((r,i)=>(r.needTp-r.needFp)-(Y[i].needTp-Y[i].needFp));
  out.paired[`${x}-${y}`]={decision:{better:d.filter(v=>v>0).length,worse:d.filter(v=>v<0).length,same:d.filter(v=>v===0).length,
    changedCases:X.map((r,i)=>d[i]?`${r.id}:${Y[i].quality}->${r.quality}`:null).filter(Boolean)},
-  needs:{better:n.filter(v=>v>0).length,worse:n.filter(v=>v<0).length,same:n.filter(v=>v===0).length}};}
+  needs:{better:n.filter(v=>v>0).length,worse:n.filter(v=>v<0).length,same:n.filter(v=>v===0).length},
+  attribution:{falseNeedsNewInFirst:lessonFalseNeeds,harmfulNewInFirst:newHarmful}};}
 if(F.out)writeFileSync(resolve(F.out),JSON.stringify(out,null,1)+'\n');
 for(const [a,s] of Object.entries(out.arms)){const {rows,byTag,...x}=s;console.log(a,JSON.stringify(x));}
 for(const [p,s] of Object.entries(out.paired))console.log(p,JSON.stringify(s));

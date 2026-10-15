@@ -1,0 +1,60 @@
+{
+ "schema": "pee252.protocol.v1",
+ "registered": "2026-10-15, before any set 5 candidate was collected or read. Code under test frozen at the commit that adds this file; the journey, lessons and registry are unchanged since b57fc21 (Phase251 final, D').",
+ "question": "On genuinely new real buying questions concentrated on the categories PEE has lessons for, does D' (Phase251 configuration: generic repairs + ADOPTED_LESSONS250 + Phase251 development repairs) improve decision quality and need understanding over the generic repairs alone (R) and over Phase249 (A)?",
+ "why_a_new_frame": "Set 4 (general buying queries) yielded only 5 advise cases of 50; its advise-case conclusions rest on n=5. Set 5 samples by category stratum so that in-scope, need-bearing questions dominate, while keeping negative controls.",
+ "arms": {
+  "A": "Phase249 journey round 3: git worktree at e8c9d36, scripts/phase248-journey-eval.mjs, CATEGORY_REGISTRY248",
+  "R": "current code (b57fc21 journey), no lessons: scripts/phase250-journey-arms.mjs --arm R",
+  "D'": "current code + ADOPTED_LESSONS250: scripts/phase250-journey-arms.mjs --arm D (D' = the Phase251 development state of arm D)"
+ },
+ "stores": "Every arm runs on its own copy of the same base snapshot, base-f9f20cc.sqlite (pee-knowledge f9f20cc; the Phase251 base), so products and declarations are identical across arms and comparable with set 4. D' applies its lessons to its copy. Lesson budget of D' is reported (LESSON_BUDGET250 caps).",
+ "collection": {
+  "source": "Stack Exchange API only (api.stackexchange.com via the container proxy; site pages are never fetched: robots.txt Disallow: /). Evaluation use, CC BY-SA attribution per case. Raw responses stay outside Git in private-eval/phase252.",
+  "api_budget": "at most 60 API requests for set 5 (quota_remaining was 135 at registration); collection stops on HTTP 403/429 and the shortfall is reported",
+  "strata": {
+   "coffee_machines": [["coffee","espresso machine"],["cooking","espresso machine"],["coffee","coffee maker"],["cooking","coffee maker"]],
+   "coffee_grinders": [["coffee","grinder"]],
+   "manual_coffee_brewers": [["coffee","french press"],["coffee","pour over"]],
+   "kettles": [["cooking","kettle"],["coffee","kettle"]],
+   "toasters": [["cooking","toaster"]],
+   "toaster_ovens": [["cooking","toaster oven"]],
+   "air_fryers": [["cooking","air fryer"]],
+   "deep_fryers": [["cooking","deep fryer"]],
+   "blenders": [["cooking","blender"]],
+   "food_processors": [["cooking","food processor"]],
+   "stand_mixers": [["cooking","stand mixer"]],
+   "pressure_cookers": [["cooking","pressure cooker"]],
+   "rice_cookers": [["cooking","rice cooker"]],
+   "slow_cookers": [["cooking","slow cooker"]],
+   "steam_cookers": [["cooking","steamer"]],
+   "milk_frothers": [["coffee","frother"],["cooking","milk frother"]],
+   "_open": [["cooking","appliance"],["cooking","gadget"]]
+  },
+  "query": "search/advanced, q=<term>, sort=relevance, order=desc, pagesize=50, filter=withbody; one page per (site, term)",
+  "excluded_ids": "every question id in Phase248-251 benchmarks and in the Phase250/251 candidate pools (private-eval/phase252-excluded-ids.txt, 1,371 ids)",
+  "eligibility_title_regex": "\\b(buy|buying|purchas|recommend|which|looking for|choos|worth|should i (?:get|buy)|best|what (?:kind|type|size|features)|alternative|vs\\.?|versus|or a |upgrade|replac|need a|good|difference)",
+  "order": "within a stratum, eligible candidates (union of its queries, de-duplicated; a question already in an earlier stratum in the listed order is skipped) are ordered by sha256('252:<question_id>') ascending",
+  "text": "title + '. ' + body as plain text (tags and code blocks removed, entities decoded, whitespace collapsed), cut at 1,500 characters on a word boundary",
+  "screening_and_roles": "candidates are read in stratum order. Exclusion only for: no licence; not about choosing, buying or replacing a product (recipe, technique, repair or use of an owned item, where-to-buy a consumable); non-English; duplicate. Every exclusion is recorded with its reason. An eligible candidate gets exactly one role: IN_SCOPE (choosing a product of a catalogue category), CLARIFY (choosing between products of two or more catalogue categories), CONFUSING_CONTROL (names a catalogue product, but the purchase is an accessory, part, consumable or a non-catalogue product), OUT_OF_SCOPE_CONTROL (a purchase of a non-catalogue product that names no catalogue product). Roles come from the text, never from what an arm outputs.",
+  "quotas": "per category stratum: the first 3 IN_SCOPE or CLARIFY cases; CONFUSING_CONTROL at most 2 per stratum and 12 in total; OUT_OF_SCOPE_CONTROL at most 8 in total. Inclusion is never decided by whether a lesson covers the wording.",
+  "insufficiency": "target: at least 25 in-scope need-bearing cases (IN_SCOPE or CLARIFY with at least one listed or unlisted need) and at least 10 negative controls. If the pools are exhausted below target, the shortfall is reported per stratum; no stratum is re-queried and no extra source is added after reading."
+ },
+ "gold": {
+  "labels": "evaluation/phase250/need-catalogue.json (unchanged). expectedCategory: catalogue id | other:<name> | null (no purchase decision) | ambiguous. expectedBehaviour: advise (IN_SCOPE) | clarify (CLARIFY; candidates listed) | out_of_scope (both control roles). expectedConcepts: listed catalogue needs; unlistedNeeds: needs not in the catalogue (described). expectedBudget only for an anchored limit with an explicit currency. tags as Phase251 plus confusing_control and out_of_scope_control.",
+  "need_definition": "something the user wants the product to do, suit or avoid (outcome, task, environment, constraint, failure to avoid), stated or clearly implied in the excerpt; price limits are budgets, not needs; a need is listed only if the catalogue defines it for the gold category (or as a generic need)",
+  "author": "Claude, from the excerpt text only, before any arm runs; gold committed before the first run. T2: not author-independent, not adjudicated."
+ },
+ "scoring": {
+  "script": "scripts/phase251-score.mjs as committed with this protocol (adds Wilson 95% intervals, lesson-attributable errors and accessory/product confusion; the Phase251 decision rules are unchanged)",
+  "decision_quality": "as Phase251: advise correct iff category equals gold, harmful iff another definite category, unhelpful iff none or ambiguous; out_of_scope correct iff no category, harmful iff a definite category; clarify correct iff ambiguous or a clarify decision, premature iff one of the candidates, harmful otherwise",
+  "positive_vs_abstention": "positive advice = correct advise cases; justified abstention = correct out_of_scope and clarify cases; unjustified abstention = unhelpful advise cases",
+  "needs": "tp/fp/missed per catalogue need; recall over listed and over listed+unlisted; precision; false needs on controls separately",
+  "lesson_attribution": "for D' vs R: false needs present in D' but not in R (incorrectly activated lessons); harmful categories chosen by D' where R was not harmful",
+  "confusion": "harmful decisions on CONFUSING_CONTROL cases (accessory/product confusion)",
+  "paired": "per case D' vs R, R vs A and D' vs A: better/worse/same on decision quality and on needs (tp minus fp)",
+  "uncertainty": "Wilson 95% intervals on correct rates; paired counts; no significance claims",
+  "budget_and_cost": "budget exactness; API requests; runtime per arm"
+ },
+ "after_first_run": "first-run results are committed unchanged; after examination set 5 is spent and every later change is development"
+}
