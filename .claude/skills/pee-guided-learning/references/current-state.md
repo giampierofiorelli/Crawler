@@ -217,10 +217,11 @@ The coding container is ephemeral. Durable hosting needs a persistent volume, pl
   1. attach it with `add_repo`, push access;
   2. clone it to `/home/user/pee-knowledge`;
   3. run `load`.
-- **After any change to the store:**
-  1. run `node scripts/knowledge-snapshot.mjs save` (build first);
-  2. commit `/home/user/pee-knowledge`;
-  3. push branch `main`.
+- **After any change to the store:** automatic since 2026-10-15 (owner authorisation). The Stop and SessionEnd hooks
+  (`.claude/hooks/pee-knowledge-sync.sh`) run `node scripts/knowledge-snapshot.mjs sync`. When the store's content
+  differs from the snapshot, it saves a verified snapshot, then commits and pushes `pee-knowledge` `main`. It refuses to
+  overwrite a newer remote snapshot, and a failure blocks the end of the turn. Run `sync` by hand after a large change
+  rather than waiting for the hook.
 - **Rules:**
   - Never copy the store or snapshot into the public Crawler repository.
   - The live store still refuses to open inside a Git work tree; only the snapshot copy sits in `pee-knowledge`.
