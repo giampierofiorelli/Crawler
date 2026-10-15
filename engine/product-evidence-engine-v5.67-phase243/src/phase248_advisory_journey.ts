@@ -16,7 +16,11 @@ export interface CategoryEntry248 {id:string;aliases:readonly string[];
  /** Phrases in which an alias denotes a part or accessory, not this category ("milk steamer", "steamer basket"). */
  partPhrases?:readonly string[];
  /** Weaker single-word cues naming the category's typical product or use ("espresso", "crumpets"). */
- cues?:readonly string[];}
+ cues?:readonly string[];
+ /** Phase250: counterexamples per need concept: phrases in which a matching word does not express that need
+  * ("pressure cooker" is not brew pressure; "hard to find" is not hard water). A match inside such a phrase, or a
+  * paraphrase match in a text containing one, is dropped. */
+ needCounterexamples?:Readonly<Record<string,readonly string[]>>;}
 export type Decision248='recommend'|'withhold_insufficient_evidence'|'unsupported_category'|'clarify'|'out_of_scope';
 export type Stage248='category'|'need'|'requirements'|'candidates'|'evidence'|'decision';
 
@@ -50,6 +54,10 @@ function findLoose(t:string,alias:string):{start:number;end:number}[]{
    const last=Math.max(...want.map(x=>i+span.indexOf(x)));out.push({start:offs[i],end:offs[last]+words[last].length});i=last;}}}
  return out;
 }
+/** Phase250: needs any product category can serve (the generic needs of evaluation/phase250/need-catalogue.json). They
+ * are recognised as needs but never, alone, identify the product category. */
+export const GENERIC_NEEDS250:ReadonlySet<string>=new Set(['small_kitchen','cleaning_effort','low_noise','low_maintenance','ease_of_use',
+ 'durability','occasional_use','batch_capacity','portability','versatility']);
 /** Words that name products or categories, not needs: excluded from need scoring. */
 const PRODUCT_WORDS=new Set(['machine','maker','fryer','air','airfryer','toaster','oven','coffee','espresso','kettle','blender','appliance','gadget','one','product','buy','best','good','want','need','which','what','home','use','make','thing','things','cook','food']);
 /** Concepts described by the request: IDF-weighted overlap between the request's content words and each
@@ -59,7 +67,11 @@ export const DESCRIBED_THRESHOLD248=2.2;
 function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string[],registry:readonly CategoryEntry248[]){
  const out:{key:string;alias:string;start:number;end:number}[]=[];
  const catWords=new Set(registry.flatMap(r=>[...r.aliases,...(r.cues??[])]).flatMap(a=>norm(a).split(' ')).map(stem));
- const reqTokens=new Set(t.split(' ').filter(w=>w&&!STOP.has(w)).map(stem).filter(w=>w.length>=3&&!PRODUCT_WORDS.has(w)&&!catWords.has(w)));
+ // Phase250: product words are excluded by their surface form (singular or plural). They were compared after
+ // stemming, so "machines", "makers", "toasters" and "blenders" (stems machin, mak, toast, blend) slipped through
+ // and produced chance need matches ("machin+hard+long" -> limescale).
+ const productWord=(w:string)=>PRODUCT_WORDS.has(w)||PRODUCT_WORDS.has(w.replace(/s$/,''))||PRODUCT_WORDS.has(w.replace(/es$/,''));
+ const reqTokens=new Set(t.split(' ').filter(w=>w&&!STOP.has(w)&&!productWord(w)).map(stem).filter(w=>w.length>=3&&!PRODUCT_WORDS.has(w)&&!catWords.has(w)));
  for(const c of cats){
   const items=store.categoryItems246(c).filter(i=>i.concept);
   const docs=new Map<string,{alias:Set<string>;text:Set<string>;kind:string}>();
@@ -89,10 +101,18 @@ function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly str
 }
 const GENERIC=/^(?:something|anything|one|ones|new one|an? appliance|appliances?|products?|things?|gadgets?|a gadget|a product|stuff|kit|equipment|it|this|that|the kitchen|kitchen|type|kind|model|brand|options?|features?|machines?|devices?|units?)$/;
 /** A product term the user names but the registry does not know ("laptop", "running shoes"). */
+/** Phase250: searched sentence by sentence. Normalisation removes punctuation, so in the whole text a named product
+ * ran into the next sentence ("shopping for a pressure cooker could anyone advise") and was never delimited. */
+function namedProductTermIn(text:string,buyingOnly=false):string|null{
+ for(const sentence of text.split(/[.?!;:\n()]+/)){const term=namedProductTerm(norm(sentence),buyingOnly);if(term)return term;}
+ return null;
+}
 function namedProductTerm(t:string,buyingOnly=false):string|null{
  // buyingOnly: only buying constructions ("which X to buy", "buy a X"); "want/need X" often introduces a need
  // ("want chips that come out crispy"), so it is used only when nothing else resolved the request.
- const verbs=buyingOnly?'best|recommend|which|choose|buy|suggest':'best|recommend|which|what|choose|buy|need|want|suggest';
+ // Phase250: buying constructions real requests use ("I'm shopping for a pressure cooker", "looking for a grinder").
+ const buying='best|recommend|which|choose|buy|buying|suggest|shopping for|looking for|in the market for|considering|thinking of getting|thinking about getting|planning to buy';
+ const verbs=buyingOnly?buying:buying+'|what|need|want';
  const re=new RegExp(`\\b(?:${verbs})\\s+(?:is the best |s the best |a good |the best |a |an |the |me a |me an |me |some )?([a-z][a-z' ]{1,30}?)(?= for| to| that| which| with| under| from| is| are| should| do| would| can| but| please|$| and| or|\\?)`,'g');
  for(const m of t.matchAll(re)){
   const term=m[1].trim().replace(/^(?:good|new|cheap|decent|great|sturdy) /,'');
@@ -139,7 +159,18 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const named1=new Set(named0.map(h=>h.key)).size>1?named0.filter(h=>!(featureOf(h)&&named0.some(o=>o.key!==h.key&&!featureOf(o)))):named0;
  // "replace it with a toaster oven", "switch to an air fryer": the replacement target is the category sought.
  const targetOf=(h:{start:number})=>/(?:replac\S* (?:\S+ ){0,3}with|switch(?:ing)? to|upgrad\S* to|swap\S* (?:\S+ ){0,3}for|instead get|thinking of getting)(?: a| an| the)? ?$/.test(t.slice(0,h.start).trimEnd()+' ');
- const named=new Set(named1.map(h=>h.key)).size>1&&named1.some(targetOf)?named1.filter(h=>named1.filter(targetOf).some(x=>x.key===h.key)):named1;
+ const named2=new Set(named1.map(h=>h.key)).size>1&&named1.some(targetOf)?named1.filter(h=>named1.filter(targetOf).some(x=>x.key===h.key)):named1;
+ // Phase250: when several categories are named, the one introduced by a buying construction is the one being chosen
+ // ("Has anyone used one of the < $500 manual espresso machines ... better than my Aeropress"), but only when exactly
+ // one category is introduced that way; otherwise the request stays ambiguous.
+ const buyTarget=(h:{start:number})=>/(?:^| )(?:buy|buying|get|getting|purchase|purchasing|shopping for|looking for|looking at|considering|in the market for|choose|choosing|recommend|recommendations? for|best|which|want|need|replace (?:\S+ ){0,3}with|one of the|invest\S* in)(?: a| an| the| new| good| decent| cheap| quality| some| any| these| those)*(?: (?!(?:from|my|our|your|his|her|their|to|of|with|in|on|at|for)\b)\S+){0,2} ?$/.test(t.slice(Math.max(0,h.start-80),h.start).trimEnd()+' ');
+ // A product the user already owns or uses ("my Aeropress", "I am currently using a moka pot") is context, not the
+ // choice, when another named category remains.
+ const owned=(h:{start:number})=>/(?:^| )(?:my|our|i (?:already )?(?:have|own|use)|i am (?:currently )?using|i'm (?:currently )?using|currently (?:using|use|have|own)|we (?:already )?(?:have|own|use))(?: a| an| the| old| current| cheap| little| trusty)*(?: \S+)?(?: and(?: a| an| the)?(?: \S+){0,3})? ?$/.test(t.slice(Math.max(0,h.start-80),h.start).trimEnd()+' ');
+ const keys2=new Set(named2.map(h=>h.key)),unowned=named2.filter(h=>!owned(h));
+ const named3=keys2.size>1&&unowned.length&&new Set(unowned.map(h=>h.key)).size<keys2.size?unowned:named2;
+ const buyKeys=new Set(named3.filter(buyTarget).map(h=>h.key));
+ const named=new Set(named3.map(h=>h.key)).size>1&&buyKeys.size===1?named3.filter(h=>buyKeys.has(h.key)):named3;
  const excludedCategories=[...new Set(allNamed.filter(isExcluded).map(h=>h.key))].sort();
  const explicit=[...new Set(named.map(h=>h.key))].filter(c=>!excludedCategories.includes(c)||named.some(h=>h.key===c)).sort();
  const cueHits=longestMatches(t,registry.filter(r=>r.cues?.length).map(r=>({key:r.id,aliases:r.cues!}))).filter(h=>!negated(h.start));
@@ -151,20 +182,27 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // A need phrase that runs into a product noun describes the product being named ("a good manual espresso machine"),
  // not a stated need ("I want good espresso").
  const modifiesProduct=(h:{end:number})=>h.end>=0&&/^ (?:\S+ )?(?:machines?|makers?|fryers?|toasters?|ovens?|kettles?|blenders?|models?)\b/.test(t.slice(h.end));
- const conceptHits=[...longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h)),...describedConcepts(t,store,knowledgeCats,registry)];
+ const counter=(h:{key:string;start:number;end:number})=>{const [c,id]=h.key.split('|');
+  const phrases=registry.find(r=>r.id===c)?.needCounterexamples?.[id]??[];
+  return phrases.some(pp=>find(t,pp).some(p=>h.start<0||(p.start<=h.end&&p.end>=h.start)));};
+ const conceptHits=[...longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h)),...describedConcepts(t,store,knowledgeCats,registry)].filter(h=>!counter(h));
  let categoryId:string|null=null;let basis:Journey248['stages']['category']['basis']='unresolved';
  if(explicit.length===1){categoryId=explicit[0];basis='explicit_alias';}
  else if(explicit.length>1)basis='ambiguous';
  else if(cueCats.length===1){categoryId=cueCats[0];basis='cue_inferred';}
  else if(cueCats.length>1)basis='ambiguous';
- else{const cats=[...new Set(conceptHits.map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c));
+ else{
+  // Phase250: a need shared by several categories ("long lasting", "multipurpose", "small kitchen") does not identify
+  // which product the user means; only needs specific to one category can infer it.
+  const sharedNeed=(id:string)=>GENERIC_NEEDS250.has(id)||new Set(conceptEntries.filter(e=>e.key.split('|')[1]===id).map(e=>e.key.split('|')[0])).size>1;
+  const cats=[...new Set(conceptHits.filter(h=>!sharedNeed(h.key.split('|')[1])).map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c));
   if(cats.length===1){categoryId=cats[0];basis='need_inferred';}else if(cats.length>1)basis='ambiguous';}
  // Phase249: a request naming a product PEE does not know ("which non-stick pan to buy") is about that product; need words
  // ("cook for one", "flavour") must not pull it into another category.
- const termAny=namedProductTerm(t,true);
+ const termAny=namedProductTermIn(text,true);
  const termKnown=!!termAny&&registry.some(r=>[...r.aliases,...(r.cues??[])].some(a=>find(norm(termAny),a).length));
  if(basis==='need_inferred'&&termAny&&!termKnown){categoryId=null;basis='unresolved';}
- const namedUnknownTerm=basis==='unresolved'?termAny??namedProductTerm(t):null;
+ const namedUnknownTerm=basis==='unresolved'?termAny??namedProductTermIn(text):null;
  // ---- need: concepts of the resolved category; budget and hazards from Phase125
  const concepts=categoryId?[...new Map(conceptHits.filter(h=>h.key.startsWith(categoryId+'|')).map(h=>{const [c,id,kind]=h.key.split('|');
   return [id,{id,categoryId:c,matched:h.alias,kind:kind||null}];})).values()].sort((a,b)=>a.id.localeCompare(b.id)):[];

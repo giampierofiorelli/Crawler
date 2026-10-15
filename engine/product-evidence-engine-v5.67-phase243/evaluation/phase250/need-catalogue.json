@@ -1,0 +1,91 @@
+{
+ "schema": "pee250.need-catalogue.v1",
+ "written": "2026-10-15, before arms B and C were written and before real request set 3 was collected. Assistant-authored from general category knowledge and the categories seen in spent development sets (Phase248 dev and held-out 1-2, Phase249 real sets 1-2). It is the shared label space for gold and for every arm: an arm may instantiate any subset of it. Not independently adjudicated.",
+ "rules": [
+  "A need is something the user wants the product to do, suit or avoid (an outcome, task, environment, constraint or failure to avoid), stated or clearly implied by the request. Price limits are scored separately as budget.",
+  "A need not in this catalogue is recorded in gold as unlisted, with a short description; it counts in the all-needs recall denominator.",
+  "Category ids name the product the user is choosing; other:<name> for products outside the list; null when no product purchase is being decided."
+ ],
+ "generic_needs": {
+  "small_kitchen": "limited counter, cupboard or room space",
+  "cleaning_effort": "easy to clean, few parts, dishwasher-safe",
+  "low_noise": "quiet operation",
+  "low_maintenance": "little routine upkeep (descaling, servicing, part replacement)",
+  "ease_of_use": "simple operation, little effort or skill, automation",
+  "durability": "lasts long, robust, reliable over years",
+  "occasional_use": "used rarely, so simplicity, storage or low cost matter more than performance",
+  "batch_capacity": "enough capacity for the number of people or the quantity made at once",
+  "portability": "easy to move, travel or camping use"
+ },
+ "categories": {
+  "coffee_machines": {"aliases_hint": "espresso machine, coffee maker, bean to cup, pod or capsule machine, drip or filter machine", "needs": {
+   "espresso_quality": "good-tasting coffee or espresso",
+   "milk_drinks": "milk-based drinks: cappuccino, latte, frothed or steamed milk",
+   "shot_consistency": "repeatable results from cup to cup",
+   "ongoing_costs": "running costs: capsules, beans, consumables",
+   "scale_buildup": "limescale and hard-water problems",
+   "low_maintenance": "generic", "ease_of_use": "generic", "batch_capacity": "generic (many cups, office use)", "small_kitchen": "generic", "cleaning_effort": "generic", "durability": "generic"}},
+  "coffee_grinders": {"aliases_hint": "coffee grinder, burr grinder, blade grinder, hand grinder", "needs": {
+   "grind_consistency": "even particle size",
+   "grind_range": "suits several brew methods, espresso to coarse",
+   "low_noise": "generic", "portability": "generic (hand grinder, travel)", "ease_of_use": "generic", "cleaning_effort": "generic", "durability": "generic"}},
+  "manual_coffee_brewers": {"aliases_hint": "french press, aeropress, pour-over, moka pot, cezve, percolator", "needs": {
+   "brew_strength": "strong or full-bodied coffee",
+   "espresso_quality": "good-tasting coffee", "batch_capacity": "generic", "portability": "generic", "cleaning_effort": "generic", "ease_of_use": "generic"}},
+  "kettles": {"aliases_hint": "kettle, electric kettle", "needs": {
+   "temperature_control": "variable or held water temperature",
+   "fast_boil": "boils quickly",
+   "scale_buildup": "limescale and water quality",
+   "batch_capacity": "generic", "low_noise": "generic", "durability": "generic"}},
+  "toasters": {"aliases_hint": "toaster", "needs": {
+   "even_browning": "evenly toasted slices",
+   "repeatable_results": "consistent toast over rounds",
+   "thick_bread_fit": "thick slices, bagels, wide slots",
+   "hot_exterior": "outside gets hot",
+   "batch_capacity": "generic (number of slices)", "durability": "generic"}},
+  "toaster_ovens": {"aliases_hint": "toaster oven, countertop oven, mini oven", "needs": {
+   "versatility": "several cooking tasks: bake, broil, roast, toast",
+   "even_heating": "even cooking across the cavity",
+   "batch_capacity": "generic (fits a pizza or a chicken)", "small_kitchen": "generic", "ease_of_use": "generic"}},
+  "air_fryers": {"aliases_hint": "air fryer", "needs": {
+   "cook_single_portion": "cooking for one person",
+   "crisp_texture": "crisp results",
+   "cook_two_foods_simultaneously": "two foods at once",
+   "cooking_evenness": "evenly cooked food",
+   "coating_wear": "non-stick coating wear",
+   "small_kitchen": "generic", "cleaning_effort": "generic", "batch_capacity": "generic (family size)"}},
+  "deep_fryers": {"aliases_hint": "deep fryer, deep fat fryer", "needs": {
+   "oil_temperature_control": "holds the oil at the right temperature",
+   "oil_management": "oil filtering, reuse and odour",
+   "batch_capacity": "generic", "cleaning_effort": "generic"}},
+  "blenders": {"aliases_hint": "blender, smoothie maker", "needs": {
+   "hard_ingredients": "crushes ice, nuts, hard fruit",
+   "smooth_texture": "smooth smoothies, purees, nut milk",
+   "low_noise": "generic", "cleaning_effort": "generic", "small_kitchen": "generic", "batch_capacity": "generic", "durability": "generic"}},
+  "food_processors": {"aliases_hint": "food processor", "needs": {
+   "chopping_slicing": "chopping, slicing, grating",
+   "dough_kneading": "kneading or mixing dough",
+   "versatility": "replaces several tools",
+   "small_kitchen": "generic", "cleaning_effort": "generic", "batch_capacity": "generic"}},
+  "stand_mixers": {"aliases_hint": "stand mixer, kitchen mixer", "needs": {
+   "dough_kneading": "heavy bread or pasta dough",
+   "versatility": "attachments for other tasks",
+   "batch_capacity": "generic", "durability": "generic (motor survives heavy use)", "small_kitchen": "generic"}},
+  "pressure_cookers": {"aliases_hint": "pressure cooker, multicooker, instant pot", "needs": {
+   "versatility": "several cooking modes: slow cook, rice, saute",
+   "fast_cooking": "shorter cooking times (beans, stews)",
+   "batch_capacity": "generic (pot size)", "ease_of_use": "generic", "durability": "generic"}},
+  "rice_cookers": {"aliases_hint": "rice cooker", "needs": {
+   "rice_quality": "well-cooked rice and other grains",
+   "keep_warm": "keeps food warm after cooking",
+   "batch_capacity": "generic", "cleaning_effort": "generic", "ease_of_use": "generic"}},
+  "slow_cookers": {"aliases_hint": "slow cooker, crock pot", "needs": {
+   "unattended_cooking": "safe cooking while away, timer or keep-warm",
+   "batch_capacity": "generic", "cleaning_effort": "generic"}},
+  "steam_cookers": {"aliases_hint": "steamer, steam cooker", "needs": {
+   "batch_capacity": "generic", "ease_of_use": "generic", "cleaning_effort": "generic"}},
+  "milk_frothers": {"aliases_hint": "milk frother, milk steamer", "needs": {
+   "milk_drinks": "frothed or steamed milk quality",
+   "ease_of_use": "generic", "cleaning_effort": "generic"}}
+ }
+}

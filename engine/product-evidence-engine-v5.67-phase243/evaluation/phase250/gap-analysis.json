@@ -1,0 +1,35 @@
+{
+ "schema": "pee250.gap-analysis.v1",
+ "written": "2026-10-15, after the Phase250 generic repairs (arm R) and after curriculum B was written; from R's failures on spent development sets only (Phase248 dev, held-out 1 and 2; Phase249 real sets 1 and 2). Drives arm C. Tier T1/T2-development: every set here has informed code before.",
+ "runs": "R on: phase248 journey-dev 16, journey-heldout 16, journey-heldout2 16, phase249 real set 1 31, real set 2 22",
+ "gaps": [
+  {"kind": "need stated as a problem, not a feature", "firstBrokenLink": "need", "cause": "misunderstood language (vocabulary lists desired outcomes, users describe what goes wrong)", "status": "verified on traces",
+   "examples": ["held-out h07: 'pale on one side and burnt on the other' (even_browning)", "held-out2 k09: 'toast with stripes and dark patches'", "held-out2 k02: 'so nothing is half raw' (cooking_evenness)", "held-out2 k08: 'my shots vary a lot' (shot_consistency)", "held-out2 k11: 'gets so hot outside that I worry about burns' (hot_exterior)", "held-out h04: 'I hate cleaning things' (low_maintenance)"],
+   "repair": "teach each need's problem vocabulary (failure states, complaints), not only its goal words; counterexamples where the same words mean something else"},
+  {"kind": "need stated through circumstances", "firstBrokenLink": "need", "cause": "misunderstood language", "status": "verified on traces",
+   "examples": ["held-out h01: 'I'm on my own most evenings' (cook_single_portion)", "held-out2 k01: 'cooking dinner for just myself'", "held-out2 k03: 'I don't have much room on my worktop' (small_kitchen)", "held-out2 k10: 'crumpets and chunky homemade bread' (thick_bread_fit)", "held-out h02: 'we often cook two things at once'"],
+   "repair": "circumstance vocabulary per need"},
+  {"kind": "coffee quality asked in other words", "firstBrokenLink": "need", "cause": "missing vocabulary", "status": "verified",
+   "examples": ["real set 1 r14: 'give me taste I want'", "real set 1 r15: 'strongest (and/or better quality) coffee'", "real set 2 s09: 'curious about the quality of the cup'", "real set 2 s03: 'making good coffee at home'", "real set 2 s11: 'simplest/cheapest ... in terms of long-term costs' (ongoing_costs)"],
+   "repair": "espresso_quality and ongoing_costs vocabulary; milk_drinks as a need (s05 'milk foam', s11 'good latte/cappuccino')"},
+  {"kind": "chance overlap with limescale", "firstBrokenLink": "need", "cause": "misunderstood language (paraphrase matcher)", "status": "verified",
+   "examples": ["s03 'hardest to make' + 'builds on top' -> scale_buildup", "s11 'very hard to choose' + 'long-term' -> scale_buildup"],
+   "repair": "counterexamples for scale_buildup ('hard to', 'hardest', 'builds on top', 'long term')"},
+  {"kind": "product the registry does not know, coffee cue wins", "firstBrokenLink": "category", "cause": "missing data (no grinder category); cue rule", "status": "verified",
+   "examples": ["s08 'a good small hand / electric grinder'", "s22 'blade grinder or burr grinder'"],
+   "repair": "coffee_grinders category with part phrases (built-in grinder, spice or meat grinder)"},
+  {"kind": "several products named, user compares", "firstBrokenLink": "category", "cause": "missing data (stand mixer, food processor unknown)", "status": "verified",
+   "examples": ["s15 'stand mixer, a countertop blender and a food processor'", "s14 'stand mixer' power comparison"],
+   "repair": "register stand_mixers and food_processors so a multi-product question is recognised as a choice between categories"},
+  {"kind": "pressure cooker read as coffee", "firstBrokenLink": "category", "cause": "misunderstood language (product name not delimited) — repaired generically in R; pressure_cookers category still unknown", "status": "verified",
+   "examples": ["s19", "s20"],
+   "repair": "R: buying constructions searched per sentence; C: pressure_cookers category with capacity and versatility needs, counterexample 'pressure cooker' for brew pressure"},
+  {"kind": "budget not parsed", "firstBrokenLink": "need (budget)", "cause": "misunderstood language", "status": "verified, repaired in R",
+   "examples": ["s05 'Don't want to go over 500 euros'", "s13 '70€ tops'"], "repair": "R: monetaryBudget anchors and currency forms"}
+ ],
+ "notRepaired": [
+  "real set 1 r21: the price in 'anything priced below $1000 would produce sub-par espresso' is read as the user's budget (R new false budget); a reported claim, not the user's limit",
+  "real set 1 r30: '$120 or less really' is parsed as a budget; gold has no budget for r30 although it reads as the user's limit (scored as a false budget under the strict Phase250 rule)",
+  "held-out2 k08: 'Which machine is more stable?' with only 'shots' naming coffee: category stays unresolved"
+ ]
+}

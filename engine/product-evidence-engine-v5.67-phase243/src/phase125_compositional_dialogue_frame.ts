@@ -86,15 +86,43 @@ function roleFor(t:string,aspect:SchemaAspect125,idx:number,lastOtherAspectEnd:n
   if(neg)return 'excluded';
   return aspect.kind==='task'?'required':'requested_capability';
 }
-function monetaryBudget(t:string):Composition125['userBudget']{
- if(!/\b(?:budget|under|below|up to|max|sotto|fino a|meno di|massimo)\b/i.test(t))return null;
- // Conservative monetary bound: currency must be explicit, not inferred from location.
- const entries=[...t.matchAll(/(?:\b(?:under|below|up to|max|sotto|fino a)\s*)?([$€£])\s*(\d{2,6})(?:\s*[-–]\s*(?:[$€£])?\s*(\d{2,6}))?/g)];
- if(entries.length!==1)return null;
- const e=entries[0];const currency=e[1]==='$'?'USD':e[1]==='€'?'EUR':'GBP';
- const min=e[3]?Number(e[2]):null, max=e[3]?Number(e[3]):Number(e[2]);
- if(e[3]&&min!==null&&min>max)return null;
- return {currency,min,max};
+/** Conservative monetary bound: the currency must be explicit (symbol or word, before or after the number), never
+ * inferred from location, and the amount must be anchored as a limit ("under $500", "< $500", "70€ tops",
+ * "don't want to go over 500 euros", "budget $400-500"). Unanchored prices ("the $999 model", "ranging from $25 to
+ * $250") are ignored; two different anchored limits are a conflict (null). Phase250 widened the accepted forms after
+ * real requests wrote budgets as "< $500", "70€ tops" and "over 500 euros". */
+const CUR_SYM:Record<string,string>={'$':'USD','€':'EUR','£':'GBP'};
+const CUR_WORD:Record<string,string>={dollar:'USD',dollars:'USD',usd:'USD',euro:'EUR',euros:'EUR',eur:'EUR',pound:'GBP',pounds:'GBP',gbp:'GBP',quid:'GBP'};
+function monetaryBudget(raw:string):Composition125['userBudget']{
+ const t=raw.toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ');
+ const num='(\\d{2,6}(?:[.,]\\d{2})?)';const sym='([$€£])';const word='(dollars?|usd|euros?|eur|pounds?|gbp|quid)';
+ // amount forms: $500 | 500$ | 500 euros | usd 500 ; optional range "$400-500" / "400 to 500 euros"
+ const re=new RegExp(`${sym}\\s?${num}(?:\\s?(?:-|–|to)\\s?[$€£]?\\s?${num})?|${num}(?:\\s?(?:-|–|to)\\s?${num})?\\s?${sym}|${num}(?:\\s?(?:-|–|to)\\s?${num})?\\s?${word}\\b|\\b${word}\\s?${num}`,'g');
+ const BEFORE=/(?:\b(?:under|below|up to|upto|max|maximum|less than|no more than|not more than|at most|within|sotto|fino a|meno di|massimo|budget(?: is| of| around| about| at| was)?|spend(?: up to)?|cap(?:ped)? at)|(?:not|n't|never) (?:\w+ ){0,2}(?:go|spend|pay) (?:over|above|more than)|<|≤)\s*$/;
+ const AFTER=/^\s*(?:tops\b|max\b|maximum\b|or less\b|or under\b|or below\b|at most\b|at the most\b|or so\b)/;
+ const found:{currency:string;min:number|null;max:number;anchored:boolean;start:number;end:number}[]=[];
+ for(const m of t.matchAll(re)){
+  const g=m.slice(1);const n=(s:string|undefined)=>s===undefined?undefined:Number(s.replace(',','.'));
+  let currency:string,a:number|undefined,b:number|undefined;
+  if(g[0]!==undefined){currency=CUR_SYM[g[0]];a=n(g[1]);b=n(g[2]);}
+  else if(g[5]!==undefined){currency=CUR_SYM[g[5]];a=n(g[3]);b=n(g[4]);}
+  else if(g[8]!==undefined){currency=CUR_WORD[g[8]];a=n(g[6]);b=n(g[7]);}
+  else{currency=CUR_WORD[g[9]];a=n(g[10]);}
+  if(a===undefined||!currency)continue;
+  const start=m.index!,end=start+m[0].length;
+  const before=t.slice(Math.max(0,start-40),start),after=t.slice(end,end+20);
+  // A budget word anywhere just before a range ("Budget $400-500") or the amount anchors it.
+  const anchored=BEFORE.test(before)||AFTER.test(after)||/\bbudget\b[^.?!]{0,25}$/.test(before);
+  found.push({currency,min:b!==undefined?a:null,max:b!==undefined?b:a,anchored,start,end});
+ }
+ // An amount joined to an anchored one by "and/or" shares its anchor ("budget $600 and £400" is a conflict).
+ for(let i=1;i<found.length;i++)if(!found[i].anchored&&found[i-1].anchored&&/^\s*(?:and|or|,)\s*$/.test(t.slice(found[i-1].end,found[i].start)))found[i].anchored=true;
+ const lim=found.filter(f=>f.anchored);
+ if(!lim.length)return null;
+ const key=(f:typeof lim[number])=>`${f.currency}|${f.min}|${f.max}`;
+ if(new Set(lim.map(key)).size!==1)return null;
+ const e=lim[0];if(e.min!==null&&e.min>e.max)return null;
+ return {currency:e.currency,min:e.min,max:e.max};
 }
 const needScopeReview=(t:string)=>matchAny(t,['not sure if','non so se','rather than','piuttosto che',
  'not only','non solo','except when','tranne quando']);
