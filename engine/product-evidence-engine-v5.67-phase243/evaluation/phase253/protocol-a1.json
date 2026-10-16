@@ -1,0 +1,21 @@
+{
+ "schema": "pee253.protocol.v1",
+ "amends": "evaluation/phase253/protocol.json",
+ "registered": "2026-10-16, after the first collection (15 API requests, 10 eligible candidates, 9 of them electrical DIY questions; only titles read for screening) and before any further collection, gold or run. Same code, arms, store, tiers, metrics and rules.",
+ "reason": "Quantity-worded searches found almost no new buying requests in the categories with checkable declarations. The remaining 5 requests of the budget search for buying questions by intent; the first pool is kept as pre-registered and excluded here.",
+ "collection": {
+  "source": "Stack Exchange API only, as protocol.json",
+  "max_requests": 5,
+  "strata": {
+   "air_fryers": [["cooking","which air fryer"]],
+   "coffee_machines": [["coffee","which espresso machine should"]],
+   "blenders": [["cooking","which blender"]],
+   "kettles": [["cooking","electric kettle buy"]],
+   "toasters": [["cooking","toaster buy"]]
+  },
+  "excluded_ids": "phase253-excluded-ids.txt plus every id of the first Phase253 pool",
+  "eligibility_title_regex": "\\b(buy|buying|purchas|recommend|which|looking for|choos|worth|should i (?:get|buy)|best|what (?:kind|type|size|features)|alternative|vs\\.?|versus|or a |upgrade|replac|need a|good|difference|enough|big|small|capacity|watt|litre|liter|quart)",
+  "order": "within a stratum, sha256('253a:<question_id>') ascending",
+  "selection": "every eligible candidate is kept, with the first pool, up to 30 cases in total; non-buying questions are negative controls"
+ }
+}
