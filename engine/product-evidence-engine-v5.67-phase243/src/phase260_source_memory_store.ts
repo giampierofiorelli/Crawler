@@ -301,25 +301,29 @@ function contributionPayload(store:KnowledgeStore246,x:Extract<Input260,{kind:'s
  * retry after an interruption); the same recordId with different content is refused.
  */
 export function recordSourceMemory260(store:KnowledgeStore246,x:Input260,opts:{verify?:ReviewVerifier260;/** test-only fault injection */_faultAfterJournal?:boolean}={}){
- requireSchema(store);requireJournal(store);
+ requireSchema(store);
  if(!x||!KINDS.has((x as {kind:string}).kind))fail('unknown_kind');
- if(storedHead(store)!==headOf(store))recoverSourceMemory260(store);
- const payload:Record<string,any>=x.kind==='source_annotation_recorded'?annotationPayload(store,x,opts.verify):x.kind==='screening_decision_recorded'?screeningPayload(store,x,opts.verify):
-  x.kind==='source_state_changed'?statePayload(store,x,opts.verify):contributionPayload(store,x,opts.verify);
- const prior=rowById(store,payload.recordId);
- if(prior){
-  // An identical retry is a no-op. For states and screenings the supersession pointer is computed (on a retry it
-  // would point at the record itself), so it is left out of the comparison.
-  const stored=memoryEvents(store).find(e=>e.seq===prior.event_seq)?.payload;
-  if(prior.kind===x.kind&&stored&&canon({...stored,supersedes:null})===canon({...payload,supersedes:null}))return {status:'already_recorded' as const,recordId:prior.record_id,eventSeq:prior.event_seq,basis:prior.basis};
-  fail('record_id_conflict: '+prior.record_id+' already holds different content');
- }
+ requireJournal(store);if(storedHead(store)!==headOf(store))recoverSourceMemory260(store);
+ // Validation, the idempotency check and the write share one IMMEDIATE transaction: a second writer waits for the write
+ // lock and then validates against the first writer's record, so two records can never supersede the same one.
  return withWriter(store,()=>{
+  if(storedHead(store)!==headOf(store))fail('concurrent_journal_change: retry');
+  const payload:Record<string,any>=x.kind==='source_annotation_recorded'?annotationPayload(store,x,opts.verify):x.kind==='screening_decision_recorded'?screeningPayload(store,x,opts.verify):
+   x.kind==='source_state_changed'?statePayload(store,x,opts.verify):contributionPayload(store,x,opts.verify);
+  const prior=rowById(store,payload.recordId);
+  if(prior){
+   // An identical retry is a no-op. For states and screenings the supersession pointer is computed (on a retry it
+   // would point at the record itself), so it is left out of the comparison.
+   const stored=memoryEvents(store).find(e=>e.seq===prior.event_seq)?.payload;
+   if(prior.kind===x.kind&&stored&&canon({...stored,supersedes:null})===canon({...payload,supersedes:null}))return {status:'already_recorded' as const,recordId:prior.record_id,eventSeq:prior.event_seq,basis:prior.basis};
+   fail('record_id_conflict: '+prior.record_id+' already holds different content');
+  }
   store.event(x.kind,payload,payload.at);
   const seq=(store.db.prepare('SELECT MAX(seq) m FROM events').get() as {m:number}).m;
   if(opts._faultAfterJournal)throw Error('phase260_test_fault_after_journal');
   const row=rowFor({seq,kind:x.kind,payload});
-  if(row.supersedes)store.db.prepare('UPDATE source_memory260 SET superseded_by=? WHERE record_id=? AND superseded_by IS NULL').run(row.record_id,row.supersedes);
+  if(row.supersedes&&store.db.prepare('UPDATE source_memory260 SET superseded_by=? WHERE record_id=? AND superseded_by IS NULL').run(row.record_id,row.supersedes).changes!==1)
+   fail('supersession_conflict: '+row.supersedes+' is no longer active');
   writeRow(store,row);
   store.db.prepare('INSERT OR REPLACE INTO store_meta VALUES (?,?)').run(HEAD,headOf(store));
   return {status:'recorded' as const,recordId:row.record_id,eventSeq:seq,basis:row.basis};

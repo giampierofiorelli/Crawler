@@ -245,3 +245,26 @@ test('interrupted writes leave nothing behind; retries are idempotent; recovery 
  assert.equal(rebuildSourceMemory260(imported).digest,expected);
  imported.close();f.s.close();
 });
+
+test('two connections to one store cannot both supersede the same record; the projection stays replayable',()=>{
+ const f=fixture();recordSourceMemory260(f.s,ann(f));
+ const other=new KnowledgeStore246(f.path);
+ recordSourceMemory260(other,ann(f,{recordId:'ann_lang_2',value:'en',supersedes:'ann_lang_1',at:at(2)}));
+ assert.throws(()=>recordSourceMemory260(f.s,ann(f,{recordId:'ann_lang_3',value:'fr',supersedes:'ann_lang_1',at:at(3)})),/supersedes must name the active annotation/);
+ assert.equal(checkSourceMemory260(f.s).projectionConsistent,true);assert.equal(checkSourceMemory260(other).projectionConsistent,true);
+ assert.equal(descriptorWithMemory260(f.s,f.revA,f.prodA).descriptor.language,'en');
+ other.close();f.s.close();
+});
+
+test('an invalid memory event appended outside the module fails closed: no replay, no new record',()=>{
+ const f=fixture();recordSourceMemory260(f.s,ann(f));
+ // Hash-chained correctly (store.event), but its meaning is invalid: a 404 retiring a source.
+ f.s.event('source_state_changed',{schema:'pee260.source-memory.v1',recordId:'st_bad',event:{sourceId:f.srcA,state:'retired',cause:{kind:'http_status',httpStatus:404},at:at(2)},
+  basis:'unverified_claim',review:null,supersedes:null,at:at(2)},at(2));
+ assert.equal(f.s.verifyJournal().ok,true,'the chain is intact; the meaning is not');
+ assert.throws(()=>replaySourceMemory260(f.s),/only an operator can retire/);
+ assert.throws(()=>recoverSourceMemory260(f.s),/only an operator can retire/);
+ assert.throws(()=>recordSourceMemory260(f.s,ann(f,{recordId:'ann_c',field:'publisherCountry',value:'GB'})),/only an operator can retire/);
+ assert.equal(descriptorWithMemory260(f.s,f.revA,f.prodA).descriptor.language,'en-GB','the existing projection is still readable');
+ f.s.close();
+});

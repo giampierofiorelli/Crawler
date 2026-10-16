@@ -79,6 +79,10 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
   - never feed a pipeline invented text to make it run;
   - persist only what the store does not already hold (derive, don't copy).
+- **Persist new facts as journal events with a rebuildable projection** (Phase260):
+  - validate inside the same write transaction as the append (validating first let two writers supersede one record);
+  - assert each fixture's precondition: a stale robots date made a fixture metadata-only, and a "nothing changed" check
+    passed vacuously.
 - **A lower rank is not an exclusion** (Phase258): candidates outside a job's scope (another product, no
   permission) must be removed, not just ordered later. Record language ability per task (detection, extraction,
   terminology, semantics, faithfulness, translation): accepting a language tag or Unicode is not understanding.

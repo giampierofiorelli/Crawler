@@ -11,6 +11,22 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000000000. Phase260 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase260/PHASE260-TECHNICAL-REPORT.md`; next brief
+`docs/phase260/CONTINUATION-PROMPT.md` (Phase261: connect jobs to existing discovery).
+
+- Store schema **v4**: `source_memory260` is a read-only projection of four new journal event kinds
+  (`source_annotation_recorded`, `screening_decision_recorded`, `source_state_changed`, `source_contribution_verified`).
+- Module `src/phase260_source_memory_store.ts`:
+  - write with `recordSourceMemory260` (validated inside one `BEGIN IMMEDIATE` transaction, idempotent);
+  - recover with `checkSourceMemory260`, `rebuildSourceMemory260` and `recoverSourceMemory260`;
+  - read with `descriptorWithMemory260`, `screeningLedger260`, `sourceStateLedger260` and `contributions260`.
+- Review claims need an operator verifier; there is no default. Records never copy canonical fields and never
+  authorise access, evidence or ranking.
+- The live store is migrated and has **0 memory records**. All 189 retained links give a descriptor identical to
+  Phase259's.
+
 ## 0000000000. Phase259 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase259/PHASE259-TECHNICAL-REPORT.md` (persistence
@@ -438,7 +454,7 @@ them.
 |---|---|---|
 | Page reading and spec extraction | `phase245_html_dom.ts`, `phase245_spec_extraction.ts`, `phase245_table_grid.ts`, `phase245_value_normalizer.ts` | spec-extractor-7. Freeze versions with worktrees for first runs. The evaluator resolves the extractor relative to its own path. |
 | Fetching under rules | `approved_web_reader.js` (`restrictedHttpsTransport`, `RESEARCH_AGENT`, `robotsDecision`), `phase75_source_discovery` (`approvedMetadataDiscovery75`) | Stop on 403 or 429; honour Crawl-delay. |
-| Knowledge store (product + category) | `phase246_knowledge_store.ts` (KnowledgeStore246, schema v3, journal, re-derivation, `backupRotate249`, `verifyStoreFile249`, `restoreStore249`, `reconcileRetentionGaps249`), `phase246_category_seeds.ts` | `node:sqlite`. Refuses to open inside a Git work tree. |
+| Knowledge store (product + category) | `phase246_knowledge_store.ts` (KnowledgeStore246, schema v4 since Phase260, journal, re-derivation, `backupRotate249`, `verifyStoreFile249`, `restoreStore249`, `reconcileRetentionGaps249`), `phase246_category_seeds.ts` | `node:sqlite`. Refuses to open inside a Git work tree. |
 | Category relations | `phase247_category_relations.ts`, `phase247_relation_seeds.ts` | Support classes: hypothesis, method reference and evidence-supported relation. |
 | Older category cognition | `phase116_category_function_model.ts`, `phase128_category_cognition_dialogue_bridge.ts`, `phase179_category_learning.ts`, `phase101_interpretation_memory.ts` to `phase105_incremental_reasoning_graph.ts` | Audit these before adding any category-learning layer. |
 | Language understanding | `phase110_local_semantic_extractor.ts`, `phase113_local_intent_interpreter.ts`, `phase125_compositional_dialogue_frame.ts` | Review interpretation and intent. Check these before replacing anything. |
