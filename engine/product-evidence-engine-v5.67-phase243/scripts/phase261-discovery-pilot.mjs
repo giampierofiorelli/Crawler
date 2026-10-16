@@ -60,7 +60,7 @@ for(const [i,j] of pilotJobs.entries()){
   evidence:{statementKinds:t.evidence.statementKinds,channels:t.evidence.channels},
   channels:{selected:d.channels.selected,wrongLane:d.channels.wrongLane},
   fixtureCandidates:d.candidates.map(c=>({path:own?new URL(c.url).pathname.replace(own,'<job-identifier>'):new URL(c.url).pathname,attribution:c.attribution,jobId:c.jobId===j.jobId,
-   source:c.registrySourceId,sourceIdentityRegistered:c.stages.sourceIdentityRegistered,genuineDiscovery:c.genuineDiscovery})),
+   source:c.registrySourceId,publisherRecognised:c.stages.publisherRecognised,genuineDiscovery:c.genuineDiscovery})),
   rejected:d.rejected.map(r=>({path:new URL(r.url).pathname,reason:r.reason})),
   outOfScopeDropped:paths.length-d.candidates.length-d.rejected.length,
   networkCalls:d.networkCalls,liveMode:live.status,liveNetworkCalls:live.networkCalls,checkpointObservations:d.observations.length});

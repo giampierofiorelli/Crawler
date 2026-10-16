@@ -111,7 +111,9 @@ export interface Candidate261 {
  url:string;jobId:string;targetId:string;registrySourceId:string;host:string;channel:WatchChannel;mechanism:WatchSource['mechanism'];
  origin:'offline_fixture';genuineDiscovery:false;attribution:Attribution261;
  /** The stages a lead must pass before it can matter; only discovery (and its gate) are true here. */
- stages:{candidateUrlDiscovered:true;sourceIdentityRegistered:boolean;metadataDiscoveryAllowed:true;pageRetrievalPermitted:false;
+ /** Phase263: a familiar host is not a registered document: publisherRecognised = the host is a canonical source;
+  * documentRegistered = this URL has a stored revision (always false for a candidate, which excludes stored URLs). */
+ stages:{candidateUrlDiscovered:true;publisherRecognised:boolean;documentRegistered:false;metadataDiscoveryAllowed:true;pageRetrievalPermitted:false;
   factualInformationRetained:false;independentEvidenceVerified:false;recommendationAuthorized:false};
 }
 export type Rejection261='already_observed'|'url_names_other_model'|'host_restricted'|'off_target_host';
@@ -209,7 +211,7 @@ export async function discoverForTarget261(a:{target:DiscoveryTarget261;registry
    const attribution=at;
    out.candidates.push({url,jobId:t.job.jobId,targetId:t.targetId,registrySourceId:id,host,channel:s.watch.channel,mechanism:s.watch.mechanism,
     origin:'offline_fixture',genuineDiscovery:false,attribution,
-    stages:{candidateUrlDiscovered:true,sourceIdentityRegistered:known.has(host),metadataDiscoveryAllowed:true,pageRetrievalPermitted:false,
+    stages:{candidateUrlDiscovered:true,publisherRecognised:known.has(host),documentRegistered:false,metadataDiscoveryAllowed:true,pageRetrievalPermitted:false,
      factualInformationRetained:false,independentEvidenceVerified:false,recommendationAuthorized:false}});
   }
  }

@@ -1,0 +1,667 @@
+{
+ "schema": "pee262.search-pilot.v1",
+ "runAt": "2026-10-16T13:27:13.196Z",
+ "input": "genuine Phase257 jobs; copy of pee-knowledge snapshot (outside Git); ONE controlled fixture search index; Phase223 synthetic_fixture mode",
+ "policy": {
+  "policyId": "pee_first_research_policy",
+  "revision": 1,
+  "market": "uk",
+  "allowSourceReads": false
+ },
+ "pilotJobs": {
+  "P1": {
+   "jobId": "research_e5629c2c60d35e0beacd9220820bce1b",
+   "criterion": "width_max",
+   "exactIdentifiers": 1
+  },
+  "P2": {
+   "jobId": "research_20f378b43def4d8f2cc7eec8942d4889",
+   "criterion": "capacity_min",
+   "exactIdentifiers": 0
+  }
+ },
+ "armG": {
+  "manufacturedQuestion": true,
+  "queriesIdenticalForBothJobs": true,
+  "status": "bounded_category_hypothesis"
+ },
+ "results": [
+  {
+   "arm": "G",
+   "job": "P1",
+   "queries": [
+    {
+     "query": "<id-or-name> independent product review tests",
+     "purpose": "performance_measurement",
+     "usesExactIdentifier": false
+    },
+    {
+     "query": "<id-or-name> manufacturer model specifications",
+     "purpose": "declared_specification",
+     "usesExactIdentifier": false
+    }
+   ],
+   "mentionsCriterionWord": false,
+   "candidates": [
+    {
+     "label": "P2.specialist_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "shared.roundup",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P1.independent_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "url_token_matches_known_identifier",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P1.syndicated_copy",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "url_token_matches_known_identifier",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P2.retailer_known_host",
+     "publisher": "known_source",
+     "publisherType": "manufacturer",
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    }
+   ],
+   "rejected": [
+    {
+     "label": "P2.other_model",
+     "reason": "url_names_other_model"
+    },
+    {
+     "label": "P1.other_model",
+     "reason": "url_names_other_model"
+    }
+   ],
+   "metrics": {
+    "candidates": 5,
+    "relevant": 2,
+    "newDomainCandidates": 4,
+    "newDomains": 4,
+    "wrongAttribution": 0,
+    "unresolvedIdentity": 3,
+    "alreadySeenExcluded": 0,
+    "otherModelRejected": 2,
+    "searchCalls": 2,
+    "requests": 3,
+    "liveNetworkCalls": 0
+   },
+   "status": "candidates_found",
+   "capabilityStates": {
+    "adapterExists": true,
+    "providerConfiguredAndPermitted": false,
+    "realDiscoveryDemonstrated": false,
+    "verifiedUsefulEvidence": false
+   }
+  },
+  {
+   "arm": "T",
+   "job": "P1",
+   "queries": [
+    {
+     "query": "<id-or-name> dimensions specifications",
+     "purpose": "declared_specification",
+     "usesExactIdentifier": true
+    },
+    {
+     "query": "<id-or-name> user manual",
+     "purpose": "manufacturer_documentation",
+     "usesExactIdentifier": true
+    }
+   ],
+   "mentionsCriterionWord": true,
+   "candidates": [
+    {
+     "label": "P1.manufacturer_doc_known_host",
+     "publisher": "known_source",
+     "publisherType": "manufacturer",
+     "role": "role_unknown",
+     "attribution": "url_token_matches_known_identifier",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P1.independent_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "url_token_matches_known_identifier",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P1.syndicated_copy",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "url_token_matches_known_identifier",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P2.retailer_known_host",
+     "publisher": "known_source",
+     "publisherType": "manufacturer",
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    }
+   ],
+   "rejected": [
+    {
+     "label": "P1.already_known_url",
+     "reason": "already_observed"
+    },
+    {
+     "label": "P2.other_model",
+     "reason": "url_names_other_model"
+    }
+   ],
+   "metrics": {
+    "candidates": 4,
+    "relevant": 3,
+    "newDomainCandidates": 2,
+    "newDomains": 2,
+    "wrongAttribution": 0,
+    "unresolvedIdentity": 1,
+    "alreadySeenExcluded": 1,
+    "otherModelRejected": 1,
+    "searchCalls": 2,
+    "requests": 3,
+    "liveNetworkCalls": 0
+   },
+   "status": "candidates_found",
+   "capabilityStates": {
+    "adapterExists": true,
+    "providerConfiguredAndPermitted": false,
+    "realDiscoveryDemonstrated": false,
+    "verifiedUsefulEvidence": false
+   }
+  },
+  {
+   "arm": "G",
+   "job": "P2",
+   "queries": [
+    {
+     "query": "<id-or-name> independent product review tests",
+     "purpose": "performance_measurement",
+     "usesExactIdentifier": false
+    },
+    {
+     "query": "<id-or-name> manufacturer model specifications",
+     "purpose": "declared_specification",
+     "usesExactIdentifier": false
+    }
+   ],
+   "mentionsCriterionWord": false,
+   "candidates": [
+    {
+     "label": "P2.specialist_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P2.other_model",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "shared.roundup",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P1.independent_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P1.other_model",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P1.syndicated_copy",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    },
+    {
+     "label": "P2.retailer_known_host",
+     "publisher": "known_source",
+     "publisherType": "manufacturer",
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "performance_measurement"
+    }
+   ],
+   "rejected": [],
+   "metrics": {
+    "candidates": 7,
+    "relevant": 2,
+    "newDomainCandidates": 6,
+    "newDomains": 4,
+    "wrongAttribution": 0,
+    "unresolvedIdentity": 7,
+    "alreadySeenExcluded": 0,
+    "otherModelRejected": 0,
+    "searchCalls": 2,
+    "requests": 3,
+    "liveNetworkCalls": 0
+   },
+   "status": "candidates_found",
+   "capabilityStates": {
+    "adapterExists": true,
+    "providerConfiguredAndPermitted": false,
+    "realDiscoveryDemonstrated": false,
+    "verifiedUsefulEvidence": false
+   }
+  },
+  {
+   "arm": "T",
+   "job": "P2",
+   "queries": [
+    {
+     "query": "<id-or-name> capacity specifications",
+     "purpose": "declared_specification",
+     "usesExactIdentifier": false
+    },
+    {
+     "query": "<id-or-name> user manual",
+     "purpose": "manufacturer_documentation",
+     "usesExactIdentifier": false
+    }
+   ],
+   "mentionsCriterionWord": true,
+   "candidates": [
+    {
+     "label": "P1.manufacturer_doc_known_host",
+     "publisher": "known_source",
+     "publisherType": "manufacturer",
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "manufacturer_documentation"
+    },
+    {
+     "label": "P2.specialist_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P2.other_model",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P1.independent_new_domain",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P1.other_model",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P1.syndicated_copy",
+     "publisher": "new_domain",
+     "publisherType": null,
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    },
+    {
+     "label": "P2.retailer_known_host",
+     "publisher": "known_source",
+     "publisherType": "manufacturer",
+     "role": "role_unknown",
+     "attribution": "product_unknown",
+     "purpose": "declared_specification"
+    }
+   ],
+   "rejected": [],
+   "metrics": {
+    "candidates": 7,
+    "relevant": 2,
+    "newDomainCandidates": 5,
+    "newDomains": 3,
+    "wrongAttribution": 0,
+    "unresolvedIdentity": 7,
+    "alreadySeenExcluded": 0,
+    "otherModelRejected": 0,
+    "searchCalls": 2,
+    "requests": 3,
+    "liveNetworkCalls": 0
+   },
+   "status": "candidates_found",
+   "capabilityStates": {
+    "adapterExists": true,
+    "providerConfiguredAndPermitted": false,
+    "realDiscoveryDemonstrated": false,
+    "verifiedUsefulEvidence": false
+   }
+  }
+ ],
+ "expectationCheck": {
+  "met": 12,
+  "of": 13,
+  "rows": [
+   {
+    "label": "P1.independent_new_domain",
+    "expect": "candidate",
+    "met": true,
+    "observed": {
+     "publisher": "new_domain",
+     "attribution": "url_token_matches_known_identifier"
+    }
+   },
+   {
+    "label": "P1.syndicated_copy",
+    "expect": "candidate",
+    "met": true,
+    "observed": {
+     "publisher": "new_domain",
+     "attribution": "url_token_matches_known_identifier"
+    }
+   },
+   {
+    "label": "P1.tracking_duplicate",
+    "expect": "merged_by_phase223",
+    "met": true,
+    "observed": "absent"
+   },
+   {
+    "label": "P1.already_known_url",
+    "expect": "rejected",
+    "met": true,
+    "observed": {
+     "rejected": "already_observed"
+    }
+   },
+   {
+    "label": "P1.manufacturer_doc_known_host",
+    "expect": "candidate",
+    "met": true,
+    "observed": {
+     "publisher": "known_source",
+     "attribution": "url_token_matches_known_identifier"
+    }
+   },
+   {
+    "label": "P1.other_model",
+    "expect": "rejected",
+    "met": false,
+    "observed": "absent"
+   },
+   {
+    "label": "P2.specialist_new_domain",
+    "expect": "candidate",
+    "met": true,
+    "observed": {
+     "publisher": "new_domain",
+     "attribution": "product_unknown"
+    }
+   },
+   {
+    "label": "P2.retailer_known_host",
+    "expect": "candidate",
+    "met": true,
+    "observed": {
+     "publisher": "known_source",
+     "attribution": "product_unknown"
+    }
+   },
+   {
+    "label": "P2.other_model",
+    "expect": "candidate_or_absent",
+    "met": true,
+    "observed": {
+     "publisher": "new_domain",
+     "attribution": "product_unknown"
+    }
+   },
+   {
+    "label": "shared.roundup",
+    "expect": "candidate_or_absent",
+    "met": true,
+    "observed": "absent"
+   },
+   {
+    "label": "shared.unsafe_http",
+    "expect": "dropped_by_phase223",
+    "met": true,
+    "observed": "absent"
+   },
+   {
+    "label": "shared.unsafe_private_ip",
+    "expect": "dropped_by_phase223",
+    "met": true,
+    "observed": "absent"
+   },
+   {
+    "label": "shared.malformed",
+    "expect": "dropped_by_phase223",
+    "met": true,
+    "observed": "absent"
+   }
+  ]
+ },
+ "live": {
+  "status": "blocked_live_reads_disabled",
+  "requests": 0
+ },
+ "historical": {
+  "counts": {
+   "absent_from_known_sources": 17,
+   "identity_prevents_attribution": 2
+  },
+  "pilot": [
+   {
+    "jobId": "research_20f378b43def4d8f2cc7eec8942d4889",
+    "categoryId": "air_fryers",
+    "criterion": "capacity_min",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true,
+    "evidence": {
+     "identityState": "extracted_unverified",
+     "revisions": 1,
+     "ownPageRevisions": 1,
+     "currentExtractorRevisions": 1,
+     "valueRetainingRevisions": 1,
+     "criterionDeclarations": 0,
+     "criterionLabelRevisions": 0
+    }
+   },
+   {
+    "jobId": "research_e5629c2c60d35e0beacd9220820bce1b",
+    "categoryId": "air_fryers",
+    "criterion": "width_max",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true,
+    "evidence": {
+     "identityState": "extracted_unverified",
+     "revisions": 1,
+     "ownPageRevisions": 1,
+     "currentExtractorRevisions": 1,
+     "valueRetainingRevisions": 1,
+     "criterionDeclarations": 0,
+     "criterionLabelRevisions": 0
+    }
+   }
+  ],
+  "all": [
+   {
+    "jobId": "research_20f378b43def4d8f2cc7eec8942d4889",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_581dc3d6cf040013f65fd4d25bfdf483",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_659071e50ff9a67e4ad7ae01eeaa6b1f",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_c6f0d4c315791516368aad84454fd894",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_e5629c2c60d35e0beacd9220820bce1b",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_0d89712f57f72bafad18d17d51501f51",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_53c177c207144bd191569d1648f9ccb5",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_678727c66d5800ce6aab060b9d9e4447",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_8425da057d09ee336e209a13d1ae0595",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_8e568cf7b3cb867821199603daa7b46f",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_aa903f34a1855d85cd6aeb8ff4de40f8",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_b47a165697d65968d04dbddf89dccee5",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_baf1bb338983ccad0992b65c7457544f",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_09761b428aa190665f19a016d28d0af7",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_0b5c5a09e49e8d725142b0c1f088e3e1",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_759e91c0527f25e536b3c21eff8fe156",
+    "class": "identity_prevents_attribution",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_9b351c9047545627170734ccc86532ab",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_e011436b40fa34b729b33310118f749e",
+    "class": "absent_from_known_sources",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   },
+   {
+    "jobId": "research_fc7f3b926d97e36580c4414bb8dfb648",
+    "class": "identity_prevents_attribution",
+    "reinspectionOpportunity": false,
+    "newDiscoveryNeeded": true
+   }
+  ]
+ },
+ "capabilityStates": {
+  "adapterExists": true,
+  "providerConfiguredAndPermitted": false,
+  "realDiscoveryDemonstrated": false,
+  "verifiedUsefulEvidence": false
+ },
+ "genuineNewDiscoveries": 0,
+ "liveNetworkCalls": 0,
+ "storeUnchanged": true
+}

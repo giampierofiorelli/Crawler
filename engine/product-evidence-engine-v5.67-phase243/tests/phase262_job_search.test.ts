@@ -78,10 +78,13 @@ test('search candidates: new domains found, known URLs and other models excluded
  assert.equal(r.status,'candidates_found');
  const by=Object.fromEntries(r.candidates.map(c=>[new URL(c.url).pathname,c]));
  const tested=by[`/reviews/vortex-${GTIN}-tested`];
- assert.equal(tested.publisher,'new_domain');assert.equal(tested.role,'role_unknown');assert.equal(tested.attribution,'url_token_matches_known_identifier');
- assert.equal(tested.stages.sourceIdentityRegistered,false);assert.equal(tested.genuineDiscovery,false);
+ assert.equal(tested.publisher.recognition,'unrecognised_domain');assert.equal(tested.documentRole,'role_unknown');assert.equal(tested.attribution,'url_token_matches_known_identifier');
+ assert.equal(tested.stages.publisherRecognised,false);assert.equal(tested.stages.documentRegistered,false);assert.equal(tested.genuineDiscovery,false);
  const manual=by[`/support/${GTIN}-manual`];
- assert.equal(manual.publisher,'known_source');assert.equal(manual.role,'manufacturer_specification','role from the canonical source type only');
+ // Phase263: a familiar manufacturer host does not make a new document a manufacturer specification.
+ assert.equal(manual.publisher.recognition,'recognised_publisher');assert.equal(manual.publisher.canonicalSourceType,'manufacturer');
+ assert.equal(manual.documentRole,'role_unknown','the document role is unknown until the document is reviewed');
+ assert.equal(manual.stages.publisherRecognised,true);assert.equal(manual.stages.documentRegistered,false);
  assert.equal(by['/best-air-fryers'].attribution,'product_unknown','a plausible page is not this product');
  const why=Object.fromEntries(r.rejected.map(x=>[new URL(x.url).pathname,x.reason]));
  assert.equal(why[`/p/fryer-${GTIN}`],'already_observed');assert.equal(why['/reviews/vortex-zx900-tested'],'url_names_other_model');

@@ -588,7 +588,20 @@ export class KnowledgeStore246 {
  reconcileRetentionGaps249(at=new Date().toISOString()):number{
   const refs=(this.db.prepare(`SELECT DISTINCT product_id ref FROM declarations WHERE state='extracted_unverified' AND retention IN ('facts_retained','facts_retained_class_policy','local_pending_rights_review')
    UNION SELECT DISTINCT revision_id FROM declarations WHERE state='extracted_unverified'`).all() as {ref:string}[]).map(r=>r.ref);
-  let n=0;for(const r of refs)n+=this.resolveGaps246(r,'declarations_not_retained_rights',at);return n;
+  let n=0;for(const r of refs)n+=this.resolveGaps246(r,'declarations_not_retained_rights',at);
+  // Phase263: a rights gap must not outlive its cause. When no current revision linked to the product (or the revision
+  // itself) is still held back by its retention class, the missing values are an extraction, identity or absence
+  // question, not a rights one: the gap is closed and the reason journaled. Gaps of still-restricted revisions stay open.
+  const open=this.db.prepare("SELECT DISTINCT ref_id FROM research_gaps WHERE kind='declarations_not_retained_rights' AND resolved_at IS NULL").all() as {ref_id:string}[];
+  for(const {ref_id} of open){
+   const linked=this.db.prepare(`SELECT r.retention FROM revisions r WHERE r.state='current' AND (r.revision_id=? OR r.revision_id IN (SELECT revision_id FROM product_sources WHERE product_id=?))`)
+    .all(ref_id,ref_id) as {retention:string}[];
+   if(linked.some(r=>!VALUE_RETAINING246.includes(r.retention as RetentionClass246)))continue;
+   const closed=Number(this.db.prepare("UPDATE research_gaps SET resolved_at=? WHERE ref_id=? AND kind='declarations_not_retained_rights' AND resolved_at IS NULL").run(at,ref_id).changes);
+   if(closed){n+=closed;this.event('gap_reclassified',{refId:ref_id,kind:'declarations_not_retained_rights',count:closed,
+    reason:linked.length?'all_current_linked_revisions_retain_values':'no_current_linked_revision'},at);}
+  }
+  return n;
  }
  gaps246(filter:{scope?:string;refId?:string}={}){
   return (this.db.prepare('SELECT * FROM research_gaps WHERE resolved_at IS NULL ORDER BY gap_id').all() as Record<string,string>[])

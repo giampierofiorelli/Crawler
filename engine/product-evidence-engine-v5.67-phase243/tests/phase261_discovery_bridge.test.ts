@@ -92,7 +92,7 @@ test('capability A offline: authorised channel to unverified candidates, with ex
  assert.deepEqual(got,{'/p/vortex-vx100-manual':'url_token_matches_known_identifier','/p/air-fryer-guide':'product_unknown'},'/blog/ is outside the source path scope');
  for(const c of d.candidates){
   assert.equal(c.jobId,t.job.jobId);assert.equal(c.registrySourceId,'maker_index');assert.equal(c.genuineDiscovery,false);assert.equal(c.origin,'offline_fixture');
-  assert.deepEqual(c.stages,{candidateUrlDiscovered:true,sourceIdentityRegistered:true,metadataDiscoveryAllowed:true,pageRetrievalPermitted:false,
+  assert.deepEqual(c.stages,{candidateUrlDiscovered:true,publisherRecognised:true,documentRegistered:false,metadataDiscoveryAllowed:true,pageRetrievalPermitted:false,
    factualInformationRetained:false,independentEvidenceVerified:false,recommendationAuthorized:false});
  }
  assert.deepEqual(d.networkCalls,{live:0,fixture:2});assert.deepEqual(calls,[`https://${HOST}/robots.txt`,`https://${HOST}/sitemap.xml`]);
@@ -122,7 +122,7 @@ test('a restricted host is not proposed; a product without identifiers stays unk
  // No store, no identifiers: nothing is rejected as another model and nothing is claimed as the product.
  const bare=discoveryTargetFromJob261(job('prd_without_ids','capacity_min'),{market:'uk'});
  const b=await discoverForTarget261({target:bare,registry:reg,researchPolicy,asOf:AT,mode:'offline_fixture',fixtureTransport:transport});
- assert.ok(b.candidates.length>=3&&b.candidates.every(c=>c.attribution==='product_unknown'&&c.stages.sourceIdentityRegistered===false));
+ assert.ok(b.candidates.length>=3&&b.candidates.every(c=>c.attribution==='product_unknown'&&c.stages.publisherRecognised===false));
  const a=assessDiscovery261({target:t,registry:registry([],[]),researchPolicy,store:s});
  assert.deepEqual(a.blockers,['no_operator_discovery_registry_source_for_category','known_product_hosts_have_no_retained_source_policy','live_reads_disabled_by_research_policy',
   'capability_b_new_publisher_discovery_absent']);

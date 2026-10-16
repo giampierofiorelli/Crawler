@@ -74,17 +74,26 @@ export function planJobSearch262(target:DiscoveryTarget261,ctx:{store?:Knowledge
   notYetExpressible:['evidence_challenging_an_existing_conclusion','test_conditions','assessor_expertise','cultural_tradition','non_english_query_terms']};
 }
 
+/** Phase263: the publisher (host) and the document are different things. A familiar host says nothing about what a new
+ * document on it is: the document's evidentiary role stays unknown until the document itself is reviewed, and the
+ * publisher's canonical type is reported only as context, with its basis. */
 export interface SearchCandidate262 {
  url:string;host:string;jobId:string;purpose:QueryPurpose262|null;
- /** "new_domain": the host is absent from every retained source and revision. */
- publisher:'new_domain'|'known_source';
- /** From the canonical source type of a known host only; a new domain's role is unknown until reviewed. */
- role:SourceRole258;attribution:Attribution261;origin:'synthetic_fixture'|'live';genuineDiscovery:false;
- stages:{candidateUrlDiscovered:true;sourceIdentityRegistered:boolean;metadataDiscoveryAllowed:false;pageRetrievalPermitted:false;
+ publisher:{recognition:'recognised_publisher'|'unrecognised_domain';canonicalSourceId:string|null;
+  /** Context only, never the document's role; 'heuristic_unverified' types were inferred (Phase253). */
+  canonicalSourceType:string|null;sourceTypeBasis:string|null};
+ documentRole:Extract<SourceRole258,'role_unknown'>;attribution:Attribution261;origin:'synthetic_fixture'|'live';genuineDiscovery:false;
+ /** Everything a later step needs to judge, verify or reuse this lead. */
+ lead:{channel:'general_search';provider:string;query:string|null;queryIndex:number|null;
+  requirement:{jobId:string;gapKind:string;criterion:string|null};
+  access:{pageRetrieval:'not_authorised';rights:'unreviewed';robots:'unknown'};
+  originality:'unknown';duplication:'none_detected_by_url';revision:{revisionId:null;contentSha256:null};
+  verificationRequired:readonly ('product_identity'|'document_role'|'originality'|'access_rights'|'method')[]};
+ stages:{candidateUrlDiscovered:true;publisherRecognised:boolean;documentRegistered:false;metadataDiscoveryAllowed:false;pageRetrievalPermitted:false;
   factualInformationRetained:false;independentEvidenceVerified:false;recommendationAuthorized:false};
 }
 export interface JobSearch262 {
- schema:'pee262.job-search.v1';jobId:string;targetId:string;mode:'synthetic_fixture'|'live';
+ schema:'pee262.job-search.v1';jobId:string;targetId:string;mode:'synthetic_fixture'|'live';provider:string;
  status:'candidates_found'|'nothing_found'|'blocked_live_reads_disabled'|'provider_not_usable';
  queries:JobSearchPlan262['queries'];reasonCodes:readonly string[];
  candidates:SearchCandidate262[];rejected:{url:string;reason:'already_observed'|'host_restricted'|'url_names_other_model'}[];
@@ -92,16 +101,22 @@ export interface JobSearch262 {
  capabilityStates:{adapterExists:true;providerConfiguredAndPermitted:false;realDiscoveryDemonstrated:false;verifiedUsefulEvidence:false};
  rankingAuthorized:false;evidenceAdmitted:false;sourcePermissionsGranted:false;
 }
-const ROLE_OF_TYPE:Record<string,SourceRole258>={manufacturer:'manufacturer_specification',retailer:'retailer_listing'};
+/** Phase263: the search provider is a parameter. Any provider returns leads for a provider-neutral plan; Phase223's
+ * SearXNG adapter (robots check, JSON parsing, URL safety) is the default. */
+export type SearchProvider262=(a:{plan:PlannedSearch223;mode:'synthetic_fixture';fixtureTransport:SourceTransport})=>
+ Promise<{candidates:readonly {url:string;queryIndex?:number}[];networkRequests:readonly string[];reasonCodes:readonly string[]}>;
+const searxng223=(config:SearchConfig223):SearchProvider262=>a=>searchWithPlan223({plan:a.plan,config,mode:a.mode,fixtureTransport:a.fixtureTransport});
 
-/** Runs a typed job search through Phase223. Live mode is refused while the operator research policy disables reads
- * (Phase257 always); a Phase223 configuration or a valid job id is never permission by itself. */
+/** Runs a typed job search. Live mode is refused while the operator research policy disables reads (Phase257 always);
+ * a provider configuration or a valid job id is never permission by itself. */
 export async function searchForTarget262(a:{target:DiscoveryTarget261;plan:JobSearchPlan262;config:SearchConfig223;researchPolicy:ResearchPolicy257;
- mode:'synthetic_fixture'|'live';fixtureTransport?:SourceTransport;store?:KnowledgeStore246|null}):Promise<JobSearch262>{
+ mode:'synthetic_fixture'|'live';fixtureTransport?:SourceTransport;store?:KnowledgeStore246|null;provider?:{id:string;run:SearchProvider262}}):Promise<JobSearch262>{
  const t=a.target;if(a.plan?.targetId!==t?.targetId)fail('plan_target_mismatch');
  if(a.researchPolicy?.market!==t.market)fail('market_mismatch');
  if(!a.researchPolicy.categories.includes(t.job.categoryId))fail('category_not_in_policy');
- const base:JobSearch262={schema:'pee262.job-search.v1',jobId:t.job.jobId,targetId:t.targetId,mode:a.mode,status:'nothing_found',queries:a.plan.queries,reasonCodes:[],
+ const provider=a.provider??{id:'searxng_phase223',run:searxng223(a.config)};
+ if(!/^[a-z][a-z0-9_]{1,60}$/.test(provider.id)||typeof provider.run!=='function')fail('invalid_provider');
+ const base:JobSearch262={schema:'pee262.job-search.v1',jobId:t.job.jobId,targetId:t.targetId,mode:a.mode,provider:provider.id,status:'nothing_found',queries:a.plan.queries,reasonCodes:[],
   candidates:[],rejected:[],cost:{requests:0,searchRequests:0,robotsRequests:0,liveNetworkCalls:0},
   capabilityStates:{adapterExists:true,providerConfiguredAndPermitted:false,realDiscoveryDemonstrated:false,verifiedUsefulEvidence:false},
   rankingAuthorized:false,evidenceAdmitted:false,sourcePermissionsGranted:false};
@@ -110,30 +125,37 @@ export async function searchForTarget262(a:{target:DiscoveryTarget261;plan:JobSe
   fail('live_mode_not_implemented');
  }
  if(a.mode!=='synthetic_fixture'||!a.fixtureTransport)fail('fixture_transport_required');
- const run=await searchWithPlan223({plan:a.plan.plan,config:a.config,mode:'synthetic_fixture',fixtureTransport:a.fixtureTransport});
- base.reasonCodes=run.reasonCodes;
- base.cost={requests:run.networkRequests.length,searchRequests:run.networkRequests.filter(u=>u.includes('/search?')).length,
+ const run=await provider.run({plan:a.plan.plan,mode:'synthetic_fixture',fixtureTransport:a.fixtureTransport!});
+ base.reasonCodes=[...run.reasonCodes];
+ base.cost={requests:run.networkRequests.length,searchRequests:run.networkRequests.filter(u=>!u.endsWith('/robots.txt')).length,
   robotsRequests:run.networkRequests.filter(u=>u.endsWith('/robots.txt')).length,liveNetworkCalls:0};
  if(run.reasonCodes.some(r=>/^search_(?:provider_disabled|service_access_not_reviewed|robots)/.test(r)))base.status='provider_not_usable';
- const observed=new Set<string>(),hosts=new Map<string,string>(),restricted=new Set<string>();
+ const observed=new Set<string>(),publishers=new Map<string,{source_id:string;source_type:string;source_type_basis:string}>(),restricted=new Set<string>();
  if(a.store){
-  for(const r of a.store.db.prepare('SELECT r.url,s.host,s.source_type FROM revisions r JOIN sources s USING(source_id)').all() as {url:string;host:string;source_type:string}[]){
-   try{observed.add(normalizeDiscoveryUrl192(r.url));}catch{observed.add(r.url);}
-   try{hosts.set(new URL(r.url).hostname,r.source_type);}catch{/* not a URL */}
-   hosts.set(r.host,r.source_type);}
-  for(const r of a.store.db.prepare('SELECT host,source_type FROM sources').all() as {host:string;source_type:string}[])hosts.set(r.host,r.source_type);
+  for(const r of a.store.db.prepare('SELECT url FROM revisions').all() as {url:string}[]){try{observed.add(normalizeDiscoveryUrl192(r.url));}catch{observed.add(r.url);}}
+  // A publisher is recognised only through a canonical source row for that host, not because a URL once mentioned it.
+  for(const r of a.store.db.prepare('SELECT source_id,host,source_type,source_type_basis FROM sources ORDER BY source_id').all() as {source_id:string;host:string;source_type:string;source_type_basis:string}[])
+   if(!publishers.has(r.host))publishers.set(r.host,r);
   for(const r of a.store.db.prepare('SELECT host FROM host_access WHERE restricted>0 OR suspended_until IS NOT NULL').all() as {host:string}[])restricted.add(r.host);
  }
  for(const lead of run.candidates){
-  const url=lead.url;const host=new URL(url).hostname;
+  const url=lead.url;let host='';try{host=new URL(url).hostname;}catch{continue;}
   let key=url;try{key=normalizeDiscoveryUrl192(url);}catch{/* keep */}
   if(observed.has(key)){base.rejected.push({url,reason:'already_observed'});continue;}
   if(restricted.has(host)){base.rejected.push({url,reason:'host_restricted'});continue;}
   const at=attributeUrl261(url,t);if(at==='url_names_other_model'){base.rejected.push({url,reason:'url_names_other_model'});continue;}
-  const known=hosts.has(host);
-  base.candidates.push({url,host,jobId:t.job.jobId,purpose:a.plan.queries[lead.queryIndex??-1]?.purpose??null,publisher:known?'known_source':'new_domain',
-   role:known?ROLE_OF_TYPE[hosts.get(host)!]??'role_unknown':'role_unknown',attribution:at,origin:'synthetic_fixture',genuineDiscovery:false,
-   stages:{candidateUrlDiscovered:true,sourceIdentityRegistered:known,metadataDiscoveryAllowed:false,pageRetrievalPermitted:false,factualInformationRetained:false,
+  const pub=publishers.get(host)??null;const q=lead.queryIndex!==undefined?a.plan.queries[lead.queryIndex]:undefined;
+  const verify:('product_identity'|'document_role'|'originality'|'access_rights'|'method')[]=['document_role','originality','access_rights'];
+  if(at!=='url_token_matches_known_identifier')verify.unshift('product_identity');
+  if(t.job.gapKind==='missing_test'||t.job.gapKind==='missing_criterion')verify.push('method');
+  base.candidates.push({url,host,jobId:t.job.jobId,purpose:q?.purpose??null,
+   publisher:{recognition:pub?'recognised_publisher':'unrecognised_domain',canonicalSourceId:pub?.source_id??null,canonicalSourceType:pub?.source_type??null,sourceTypeBasis:pub?.source_type_basis??null},
+   documentRole:'role_unknown',attribution:at,origin:'synthetic_fixture',genuineDiscovery:false,
+   lead:{channel:'general_search',provider:provider.id,query:q?.query??null,queryIndex:lead.queryIndex??null,
+    requirement:{jobId:t.job.jobId,gapKind:t.job.gapKind,criterion:t.job.criterion},
+    access:{pageRetrieval:'not_authorised',rights:'unreviewed',robots:'unknown'},originality:'unknown',duplication:'none_detected_by_url',
+    revision:{revisionId:null,contentSha256:null},verificationRequired:verify},
+   stages:{candidateUrlDiscovered:true,publisherRecognised:!!pub,documentRegistered:false,metadataDiscoveryAllowed:false,pageRetrievalPermitted:false,factualInformationRetained:false,
     independentEvidenceVerified:false,recommendationAuthorized:false}});
  }
  if(base.status!=='provider_not_usable')base.status=base.candidates.length?'candidates_found':'nothing_found';

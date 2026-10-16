@@ -72,13 +72,15 @@ async function arm(name,pilot,tag){
   plan:{key:G.key,status:G.status,queries:G.queries},queryWordsLanguage:'en',languageNeutralTerms:[],userTextSent:false,notYetExpressible:[]};
  const before=searchCalls;
  const r=await searchForTarget262({target:pilot.t,plan,config,researchPolicy:policy,mode:'synthetic_fixture',fixtureTransport:transport,store});
- const cands=r.candidates.map(c=>({label:labelOf(c.url),publisher:c.publisher,role:c.role,attribution:c.attribution,purpose:c.purpose}));
+ // Phase263 fields: publisher recognition and the document's own role are separate (role stays unknown until reviewed).
+ const cands=r.candidates.map(c=>({label:labelOf(c.url),publisher:c.publisher.recognition==='recognised_publisher'?'known_source':'new_domain',
+  publisherType:c.publisher.canonicalSourceType,role:c.documentRole,attribution:c.attribution,purpose:c.purpose}));
  const about=l=>expected.documents[l]?.aboutJob??null;
  return {arm:name,job:tag,queries:plan.queries.map(q=>({query:redact(q.query),purpose:q.purpose,usesExactIdentifier:q.usesExactIdentifier})),
   mentionsCriterionWord:plan.queries.some(q=>/\b(?:capacity|dimensions|weight|power|price)\b/.test(q.query)),
   candidates:cands,rejected:r.rejected.map(x=>({label:labelOf(x.url),reason:x.reason})),
   metrics:{candidates:cands.length,relevant:cands.filter(c=>about(c.label)===tag).length,newDomainCandidates:cands.filter(c=>c.publisher==='new_domain').length,
-   newDomains:[...new Set(r.candidates.filter(c=>c.publisher==='new_domain').map(c=>c.host))].length,
+   newDomains:[...new Set(r.candidates.filter(c=>c.publisher.recognition==='unrecognised_domain').map(c=>c.host))].length,
    wrongAttribution:cands.filter(c=>c.attribution==='url_token_matches_known_identifier'&&about(c.label)!==tag).length,
    unresolvedIdentity:cands.filter(c=>c.attribution==='product_unknown').length,
    alreadySeenExcluded:r.rejected.filter(x=>x.reason==='already_observed').length,otherModelRejected:r.rejected.filter(x=>x.reason==='url_names_other_model').length,

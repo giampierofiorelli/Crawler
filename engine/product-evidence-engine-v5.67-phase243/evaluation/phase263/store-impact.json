@@ -1,0 +1,93 @@
+{
+ "schema": "pee263.store-impact.v1",
+ "runAt": "2026-10-16T13:26:40.165Z",
+ "input": "copy of pee-knowledge snapshot (outside Git); live store not opened",
+ "retention": [
+  {
+   "sourceType": "editorial",
+   "retention": "facts_retained_class_policy",
+   "revisions": 3,
+   "observed": 58,
+   "retained": 58
+  },
+  {
+   "sourceType": "independent_original_test",
+   "retention": "facts_retained_class_policy",
+   "revisions": 1,
+   "observed": 0,
+   "retained": 0
+  },
+  {
+   "sourceType": "independent_original_test",
+   "retention": "metadata_only",
+   "revisions": 3,
+   "observed": 0,
+   "retained": 0
+  },
+  {
+   "sourceType": "manufacturer",
+   "retention": "facts_retained_class_policy",
+   "revisions": 59,
+   "observed": 339,
+   "retained": 339
+  },
+  {
+   "sourceType": "reference_encyclopedia",
+   "retention": "facts_retained_class_policy",
+   "revisions": 2,
+   "observed": 912,
+   "retained": 912
+  },
+  {
+   "sourceType": "retailer",
+   "retention": "facts_retained_class_policy",
+   "revisions": 24,
+   "observed": 297,
+   "retained": 297
+  },
+  {
+   "sourceType": "unknown",
+   "retention": "facts_retained_class_policy",
+   "revisions": 48,
+   "observed": 779,
+   "retained": 779
+  }
+ ],
+ "totals": {
+  "observed": 2385,
+  "retained": 2385
+ },
+ "rightsGaps": {
+  "openBefore": 3,
+  "closedByCorrectedReconciliation": 3,
+  "openAfter": 0,
+  "reasons": [
+   "no_current_linked_revision",
+   "no_current_linked_revision",
+   "all_current_linked_revisions_retain_values"
+  ]
+ },
+ "gates": {
+  "discovery": {
+   "requires_operator_registry_entry": 90
+  },
+  "access": {
+   "not_authorised_by_research_policy": 90
+  },
+  "temporaryInterpretation": {
+   "only_on_lawfully_accessed_bytes": 90
+  },
+  "structuredRetention": {
+   "class_policy_capped": 90
+  },
+  "originalAnalysis": {
+   "allowed_with_citation": 90
+  },
+  "publication": {
+   "not_permitted_private_only": 90
+  }
+ },
+ "sources": 90,
+ "journalOk": true,
+ "note": "Historical counts describe what was observed under past extractors; they are not proof of what original pages contained."
+}
