@@ -1,0 +1,40 @@
+{
+ "schema": "pee252.teaching-protocol.v1",
+ "registered": "2026-10-16, after the teaching material (L committed 76c6b2f before the research; G in the commit that adds this file) and BEFORE any Stage 4 request was collected or read. Code, teaching and scorer are frozen at the commit that adds this file.",
+ "question": "On untouched real requests about the two pilot categories, does research-guided teaching (G) beat vocabulary-based teaching (L) and the current system (BASE), especially on formulations that do not contain the category names, and does it add false needs or harmful decisions?",
+ "arms": {
+  "BASE": "current system: CATEGORY_REGISTRY250 + ADOPTED_LESSONS250, no pilot teaching (scripts/phase252-teaching-arms.mjs --arm BASE)",
+  "L": "BASE + LEXICAL_L252 (names and need phrases; written before the research)",
+  "G": "BASE + RESEARCH_GUIDED_G252 (same names, phrase count not above L per category: microwave_ovens 31, headphones 34; plus requirements, measures, declared-attribute relations, questions, contrasting phrases)"
+ },
+ "stores": "each arm on its own copy of the current verified snapshot (pee-knowledge 4c78d47: Phase251 category assignment and the Phase252 identity split), so declarations are identical across arms",
+ "name_control": "L and G share exactly the same category names. Results are reported separately for requests containing one of those names and for requests without them (formulations not present as aliases)",
+ "collection": {
+  "source": "Stack Exchange API only (site pages never fetched); evaluation use; CC BY-SA attribution per case",
+  "max_requests": 20,
+  "strata": {
+   "headphones": [["hardwarerecs","headphones"],["hardwarerecs","earbuds"],["hardwarerecs","headset"],["hardwarerecs","noise cancelling"],["avp","headphones"]],
+   "microwave_ovens": [["cooking","microwave"],["diy","microwave"],["cooking","reheat"]]
+  },
+  "excluded_ids": "every id excluded for set 5 plus every set 5 and 5b pool id",
+  "eligibility_title_regex": "\\b(buy|buying|purchas|recommend|which|looking for|choos|worth|should i (?:get|buy)|best|what (?:kind|type|size|features)|alternative|vs\\.?|versus|or a |upgrade|replac|need a|good|difference)",
+  "order": "within a stratum, sha256('252t:<question_id>') ascending; a question already in an earlier stratum is skipped",
+  "text": "as set 5 (title + body, plain text, at most 1,500 characters)",
+  "screening_and_roles": "as set 5: IN_SCOPE (choosing a product of the pilot category), CLARIFY, CONFUSING_CONTROL (names the product, purchase is an accessory, part or adjacent product such as an amplifier, DAC, ear pads or a microwave-safe container), OUT_OF_SCOPE_CONTROL; exclusions recorded with reasons",
+  "quotas": "per pilot category at most 20 IN_SCOPE or CLARIFY, 8 CONFUSING_CONTROL, 5 OUT_OF_SCOPE_CONTROL",
+  "insufficiency": "target at least 12 in-scope cases per pilot category; a shortfall is reported, no re-query"
+ },
+ "gold": {
+  "need_catalogue": "the union of the L and G need ids (both arms' ids are subsets): microwave_ovens: batch_capacity, small_kitchen, fast_heating, even_heating, ease_of_use, cleaning_effort, grill_browning, defrosting, radiation_safety; headphones: noise_cancelling, comfort, sound_quality, battery_life, wireless, durability, microphone_calls, portability, sport_fit, hearing_safety. Definitions as the statements in src/phase252_category_teaching.ts; other needs are unlisted.",
+  "explicit_vs_implicit": "explicitNeeds: stated in words that name the need itself (\"noise cancelling\", \"heats evenly\"); implicitNeeds: implied by a situation or problem (\"I commute on a loud train\", \"the middle stays frozen\")",
+  "requirements": "derived automatically from gold needs by the scorer rubric REQUIREMENT_OF (not labelled by hand)",
+  "author": "Claude, from the excerpt text only, before any arm runs; T2: not author-independent, not adjudicated"
+ },
+ "scoring": {
+  "script": "scripts/phase252-teaching-score.mjs as committed with this protocol",
+  "dimensions": ["category and decision quality (Phase251 rules)","explicit need recall","implicit need recall","incorrect inferred needs (count, precision, on controls)","technical requirements (rubric REQUIREMENT_OF: recall, false requirements)","applicability (rubric APPLICABILITY_NEEDS: a caution on the need)","declared specifications (products with a comparable declaration for each derived requirement)","missing evidence (rubric MISSING_EVIDENCE_NEEDS: flagged in the research plan)","correct and harmful decisions","cost (runtime, phrase budget, items and relations added)"],
+  "construction_caveat": "requirements, applicability and missing-evidence rubrics come from the Phase252 research; BASE and L cannot meet them by construction (they measure a capability G adds, not generalisation). Generalisation is judged on category, needs and decisions, in particular on requests without the category names.",
+  "uncertainty": "counts with denominators; paired better/worse/same; no significance claims"
+ },
+ "after_first_run": "first-run results committed unchanged; the Stage 4 set is then spent"
+}

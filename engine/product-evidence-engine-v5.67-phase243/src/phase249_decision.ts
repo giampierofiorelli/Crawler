@@ -18,7 +18,7 @@ import {urlModelToken252} from './phase246_knowledge_store.js';
 import type {DecisionSnapshot177,Criterion177} from './phase177_decision_snapshot.js';
 import {reviewedFirstAnswer180,type SignedRelease180,type TrustedRankingAuthority180,type FirstAnswer180} from './phase180_reviewed_first_answer.js';
 
-export type Dimension249='volume'|'length'|'mass'|'power'|'price';
+export type Dimension249='volume'|'length'|'mass'|'power'|'duration'|'price';
 export interface SpecCriterion249 {label:string;property:RegExp;exclude?:RegExp;dimension:Dimension249;bound:'min'|'max'}
 /** Confirmed criteria that are factual constraints checkable against declarations. Keys are stable decision keys. */
 export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
@@ -29,12 +29,15 @@ export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
  weight_max:{label:'weight at most',property:/\bweight\b/i,exclude:/\b(?:gross|shipping|box|package|packaging)\b/i,dimension:'mass',bound:'max'},
  power_min:{label:'power at least',property:/\b(?:power|wattage|rated power)\b/i,exclude:/\b(?:consumption|standby|supply|cord|levels?|source)\b/i,dimension:'power',bound:'min'},
  budget_max:{label:'price at most',property:/^price$/i,dimension:'price',bound:'max'},
+ // Phase252: declared playback time; makers usually declare it as "up to" under their own conditions (volume, ANC off).
+ battery_life_min:{label:'battery life at least',property:/\b(?:battery life|playback time|music playback|playtime)\b/i,exclude:/\b(?:charg\w*|standby|recharge|talk)\b/i,dimension:'duration',bound:'min'},
 };
 const FACTOR:Record<Exclude<Dimension249,'price'>,Record<string,number>>={
  volume:{l:1,ml:0.001,cl:0.01,'cm³':0.001,qt:0.946353,gal:3.78541,'fl oz':0.0295735},
  length:{mm:1,cm:10,m:1000,in:25.4,ft:304.8},
  mass:{g:1,kg:1000,lb:453.592,oz:28.3495,mg:0.001},
  power:{W:1,kW:1000,mW:0.001},
+ duration:{h:1,min:1/60,s:1/3600},
 };
 /** A declared value in the criterion's unit, or null when it cannot be compared (other unit family, text, range). */
 export function comparable249(v:Value245|null,dimension:Dimension249,unit:string):number|null{
@@ -69,7 +72,15 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  // Declarations of the base product (variant-specific values are not applied to the whole product).
  const rel=p.declarations.filter(d=>!d.variantId&&spec.property.test(d.property)&&!(spec.exclude?.test(d.property)));
  const vals=rel.map(d=>({d,n:comparable249(d.value,spec.dimension,unit)})).filter(x=>x.n!==null) as {d:CandidateDeclaration249;n:number}[];
- if(!vals.length)return {key:c.key,outcome:'unknown',reason:rel.length?'declared, but not in a comparable unit':'no declaration for this requirement',evidence:rel.map(ev)};
+ // Phase252: an "up to X" declaration is an upper bound under the maker's conditions. Below a required minimum it
+ // excludes the product; otherwise it shows nothing about the minimum the user needs.
+ if(!vals.length){
+  const ub=rel.filter(d=>d.value?.kind==='quantity'&&d.value.bound==='max').map(d=>({d,n:comparable249({...d.value,bound:undefined} as Value245,spec.dimension,unit)})).filter(x=>x.n!==null) as {d:CandidateDeclaration249;n:number}[];
+  if(ub.length&&spec.bound==='min'){const top=Math.max(...ub.map(x=>x.n));
+   return top<limit?{key:c.key,outcome:'fails',reason:`declared at most ${round(top)} ${unit} ("up to"); required ≥ ${limit} ${unit}`,evidence:ub.map(x=>ev(x.d))}
+    :{key:c.key,outcome:'unknown',reason:`declared "up to" ${round(top)} ${unit}: an upper bound under the maker's conditions, not the minimum you need`,evidence:ub.map(x=>ev(x.d))};}
+  return {key:c.key,outcome:'unknown',reason:rel.length?'declared, but not in a comparable unit':'no declaration for this requirement',evidence:rel.map(ev)};
+ }
  const lo=Math.min(...vals.map(x=>x.n)),hi=Math.max(...vals.map(x=>x.n));
  // Sources disagreeing by more than 2 % are a conflict to resolve, not a pass or a fail.
  if(hi-lo>Math.max(Math.abs(hi),Math.abs(lo))*0.02)return {key:c.key,outcome:'unknown',reason:`sources disagree (${round(lo)}–${round(hi)} ${unit})`,evidence:vals.map(x=>ev(x.d))};

@@ -24,7 +24,10 @@ export interface CategoryEntry248 {id:string;aliases:readonly string[];
  /** Phase250: aliases that name this category only when one of the context words also occurs ("grinder" with "coffee"). */
  aliasContext?:Readonly<Record<string,readonly string[]>>;
  /** Phase250: needs a declared specification can check, mapped to SPEC_CRITERIA249 decision keys. */
- needCriteria?:Readonly<Record<string,readonly string[]>>;}
+ needCriteria?:Readonly<Record<string,readonly string[]>>;
+ /** Phase252: the clarification a taught need raises when the user has not said what it requires ("How many hours of
+  * playback do you need between charges?"); asked only when that need is recognised. */
+ needQuestions?:Readonly<Record<string,string>>;}
 export type Decision248='recommend'|'withhold_insufficient_evidence'|'unsupported_category'|'clarify'|'out_of_scope';
 export type Stage248='category'|'need'|'requirements'|'candidates'|'evidence'|'decision';
 
@@ -311,11 +314,15 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   if(!concepts.length){questions.push(goalQuestion(categoryId));reasons.push('need not specific enough to select category requirements');}
   const QUESTION:Record<string,string>={capacity_min:'What capacity do you need at least (litres, cups or slices)?',
    width_max:'How much space do you have for it (maximum width, depth and height)?'};
+  const taught=concepts.map(c=>entry?.needQuestions?.[c.id]).filter((q):q is string=>!!q);
   for(const k of new Set(factualRequirements.filter(f=>!f.stated).map(f=>f.criterion==='depth_max'||f.criterion==='height_max'?'width_max':f.criterion)))
-   if(QUESTION[k])questions.push(QUESTION[k]);
+   if(QUESTION[k]&&!taught.length)questions.push(QUESTION[k]);
+  questions.push(...new Set(taught));
   if(factualRequirements.length)plan.push(`once confirmed, check ${[...new Set(factualRequirements.map(f=>f.criterion))].join(', ')} against cited declarations (requirements shortlist, unordered)`);
   if(unmeasured.length)plan.push(`find an original test method for: ${unmeasured.join(', ')}`);
   for(const m of measuredBy)if(m.support==='method_reference')plan.push(`obtain independent results measured by: ${m.method.slice(0,90)}`);
+  // Phase252: a taught (hypothesis-level) method says what would show the outcome; its results are still missing.
+   else if(m.support==='hypothesis')plan.push(`missing evidence for ${m.conceptId}: independent results of ${m.method.slice(0,90)}`);
   if(budget&&!retained)reasons.push('budget cannot be applied: no prices are retained (rights not established)');
   if(products.length<2)plan.push(`discover more ${categoryId} candidates (only ${products.length} identified)`);
   if(evidenceSupported>0&&independentResults>0&&products.length>=2&&concepts.length){

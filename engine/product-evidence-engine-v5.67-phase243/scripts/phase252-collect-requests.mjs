@@ -4,12 +4,13 @@
  * category stratum, excluded ids, the eligibility regex on titles, de-duplication across strata in listed order and a
  * deterministic sha256('252:<id>') order. Raw responses stay in the private evaluation directory (outside Git).
  * Run Node with NODE_USE_ENV_PROXY=1 so fetch uses the container proxy.
- * Usage: node scripts/phase252-collect-requests.mjs --exclude IDS_FILE --out PRIVATE_FILE
+ * Usage: node scripts/phase252-collect-requests.mjs --exclude IDS_FILE --out PRIVATE_FILE [--frame 5b] [--protocol FILE --salt S]
+ * (--protocol/--salt: the Stage 4 teaching evaluation, evaluation/phase252/teaching-protocol.json, salt 252t)
  */
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';import {dirname,resolve} from 'node:path';import {createHash} from 'node:crypto';
 const F=Object.fromEntries(process.argv.slice(2).reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/,''),arr[i+1]]],[]));
-const P=JSON.parse(readFileSync(new URL('../evaluation/phase252/protocol.json',import.meta.url),'utf8'));
-const ELIGIBLE=new RegExp(P.collection.eligibility_title_regex,'i');const MAX_REQUESTS=60;
+const P=JSON.parse(readFileSync(F.protocol?resolve(F.protocol):new URL('../evaluation/phase252/protocol.json',import.meta.url),'utf8'));
+const ELIGIBLE=new RegExp(P.collection.eligibility_title_regex,'i');const MAX_REQUESTS=P.collection.max_requests??60;const SALT=F.salt??'252';
 const exclude=new Set(readFileSync(resolve(F.exclude),'utf8').split(/\s+/).filter(Boolean));
 const ent=s=>s.replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#x27;/g,"'").replace(/&#[0-9]+;/g,' ').replace(/&nbsp;/g,' ').replace(/&[a-z]+;/g,m=>m==='&amp;'?'&':' ');
 const plain=html=>ent(html.replace(/<pre[\s\S]*?<\/pre>/gi,' ').replace(/<code>[\s\S]*?<\/code>/gi,' ').replace(/<[^>]+>/g,' ')).replace(/\s+/g,' ').trim();
@@ -44,7 +45,7 @@ else outer:for(const [stratum,queries] of Object.entries(P.collection.strata)){
    const title=ent(it.title);if(!ELIGIBLE.test(title))continue;
    seen.set(id,{stratum,site:`${site}.stackexchange.com`,questionId:it.question_id,title,text:cut(`${title}. ${plain(it.body??'')}`),link:it.link,
     author:it.owner?.display_name?ent(it.owner.display_name):null,license:it.content_license??null,created:it.creation_date,query:q,
-    order:createHash('sha256').update(`252:${id}`).digest('hex')});}
+    order:createHash('sha256').update(`${SALT}:${id}`).digest('hex')});}
   await new Promise(res=>setTimeout(res,1100));
  }
  for(const id of seen.keys())taken.add(id);
