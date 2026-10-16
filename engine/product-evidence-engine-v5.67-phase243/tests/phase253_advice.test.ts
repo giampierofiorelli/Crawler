@@ -12,6 +12,8 @@ import {extractConstraints253} from '../src/phase253_request_constraints.js';
 import {axisValue249} from '../src/phase249_decision.js';
 import {adviseFromRequest253} from '../src/phase253_request_advice.js';
 import {proposeSourceTypes253} from '../src/phase253_source_classification.js';
+import {validateTeachingPackage253,compileTeachingPackage253} from '../src/phase253_teaching_package.js';
+import {applyTeaching252} from '../src/phase252_category_teaching.js';
 import {validateAdviceGold253,scoreRow253,summarise253,type AdviceGold253} from '../src/phase253_advice_contract.js';
 // Phase253 T1 tests, written before the request-to-advice path was implemented. Pages, products, prices and requests
 // are synthetic fixtures, never real-world evidence.
@@ -141,4 +143,24 @@ test('width, height and depth are read from axis-labelled overall dimensions onl
 test('a bare range is a candidate to confirm; "between" states it',()=>{
  assert.equal(extractConstraints253('the wattage range 2000-2400W written on my kettle').constraints[0].status,'candidate');
  assert.equal(extractConstraints253('a blender between 1000 and 1500 W').constraints[0].status,'stated_in_request');
+});
+test('Stage 7: a teaching package is validated strictly, compiles to Phase252 teaching and enters the store only as hypotheses',()=>{
+ const pkg={schema:'pee253.teaching-package.v1',categoryId:'air_fryers',title:'Air fryers (synthetic test package)',preparedBy:'test fixture',preparedAt:'2026-10-16',status:'unverified_research_input',
+  sources:[{id:'src_a',url:'https://example.org/method',publisher:'Example lab',role:'standards_body',accessed:'2026-10-16'}],
+  names:{aliases:['air fryer'],partPhrases:['air fryer basket']},
+  needs:[{id:'batch_capacity',kind:'environment',statement:'Cook enough food for the household in one batch.',aliases:['whole family'],checkableCriteria:['capacity_min'],
+   question:'How many litres do you need at least?',outcome:{text:'Usable basket volume, measured with a filled basket.',sources:['src_a']},
+   proxies:[{attribute:'capacity',kind:'may_support',note:{text:'Declared capacity may include space food cannot use.'}}]}],
+  interpretation:[{text:'Declared capacity is a maker declaration, not a test.'}]};
+ const t=compileTeachingPackage253(validateTeachingPackage253(pkg));
+ assert.equal(t.needs[0].outcome?.basis,'source_backed_observation');assert.equal(t.needs[0].proxies?.[0].note.basis,'instructor_hypothesis');
+ assert.deepEqual(t.needs[0].requirement?.criteria,['capacity_min']);
+ assert.throws(()=>validateTeachingPackage253({...pkg,categoryId:'rice_cookers'}),/reserved and untaught/);
+ assert.throws(()=>validateTeachingPackage253({...pkg,rankings:[]}),/never product rankings/);
+ assert.throws(()=>validateTeachingPackage253({...pkg,interpretation:[{text:'The best air fryer is the Big Fryer 55.'}]}),/ranking language/);
+ assert.throws(()=>validateTeachingPackage253({...pkg,needs:[{...pkg.needs[0],checkableCriteria:['crispiness_min']}]}),/unknown checkable criterion/);
+ assert.throws(()=>validateTeachingPackage253({...pkg,status:'reviewed'}),/unverified_research_input/);
+ const s=fixture();applyTeaching252(s,[t],AT);
+ const items=s.categoryItems246('air_fryers');assert.ok(items.length>0&&items.every(i=>i.knowledgeClass!=='reviewed_general_knowledge'&&i.knowledgeClass!=='evidence_supported_finding'));
+ s.close();
 });
