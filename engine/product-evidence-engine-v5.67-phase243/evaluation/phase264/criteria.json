@@ -1,0 +1,31 @@
+{
+ "schema": "pee264.pilot-criteria.v1",
+ "sealedBefore": "the single live run of scripts/phase264-metadata-pilot.mjs",
+ "scope": "official-domain and document (URL) discovery from metadata only; not independent-test discovery, not evidence, not ranking",
+ "inputs": "brands of the products of the 19 genuine Phase257 jobs (evaluation/phase257/policy-demo.json); jobs whose product has no brand are reported as unresolved without any request",
+ "wikidataMatch": {
+  "unambiguous": "exactly one entity whose label or alias equals the brand (normalised) and whose P31 is a recognised organisation or brand class holds at least one current P856 (not deprecated, no end time P582)",
+  "ambiguous": "more than one such entity: no candidate domain is accepted",
+  "unresolved": "no exact match, no recognised organisation/brand type, or no current P856"
+ },
+ "candidateDomain": {"known": "host (with or without www.) equals a canonical source host in the private store", "new": "otherwise"},
+ "resources": {
+  "accessible": "robots.txt permits the sitemap path and at least one sitemap parsed (Phase75)",
+  "blocked": "robots denies, or the provider answered 401/403/429 or sent Retry-After",
+  "unavailable": "no parsable sitemap (404, wrong type, parse failure), a 5xx, a network error or the per-host budget ended"
+ },
+ "urlClasses": {
+  "exact_identifier": "the URL path carries one of the job product's exact identifiers (Phase261 rule)",
+  "attribution_unknown": "no exact identifier in the URL and no other model code",
+  "other_model_rejected": "the URL names a different model code",
+  "already_observed": "normalised URL equals a retained revision URL",
+  "duplicate": "the same normalised URL again for the same job",
+  "category_irrelevant": "a lead whose path carries no category term and no exact identifier"
+ },
+ "integrity": {
+  "maxRequests": 60, "minIntervalMs": 1000, "maxResponseBytes": 2000000,
+  "productPagesRetrieved": 0, "valuesRetained": 0, "sourcesRegistered": 0, "retriesAfterStop": 0,
+  "storeUnchanged": true
+ },
+ "success": "the run completes within every limit with zero integrity violations, whatever the yield; yield is reported, not tuned"
+}
