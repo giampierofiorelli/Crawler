@@ -134,6 +134,20 @@ function urlIdentifierParts(url:string):string[]{
  return [...parts,...parts.map(x=>validGtin246(x)).filter((x):x is string=>!!x)];
 }
 
+/** Exact identifiers only: a URL model code that differs from every known identifier names another model. A URL
+ * without a code, or a product without identifiers, leaves the product unknown. Nothing merges on names.
+ * Checkpoint B: an exact identifier may also be a numeric GTIN, which is not a model token; any path segment part equal
+ * to a known identifier is an exact match. A URL that ALSO names a different model code carries conflicting identifiers
+ * and stays unknown (neither matched nor rejected). Phase262 reuses this rule for general-search candidates. */
+export function attributeUrl261(url:string,t:DiscoveryTarget261):Attribution261|'url_names_other_model'{
+ if(!t.subject.productId)return 'not_product_scoped';
+ const token=urlModelToken252(url);const known=new Set(t.subject.knownIdentifiers);
+ const exact=urlIdentifierParts(url).some(x=>known.has(x));
+ const otherModel=!!token&&known.size>0&&!known.has(token);
+ if(otherModel&&!exact)return 'url_names_other_model';
+ return exact&&!otherModel?'url_token_matches_known_identifier':'product_unknown';
+}
+
 /** Capability A for one target. Live reads are refused unless the operator research policy allows them (Phase257:
  * never). Offline mode needs an explicit fixture transport and never falls back to the network transport. */
 export async function discoverForTarget261(a:{target:DiscoveryTarget261;registry:Registry220;researchPolicy:ResearchPolicy257;asOf:string;
@@ -191,20 +205,8 @@ export async function discoverForTarget261(a:{target:DiscoveryTarget261;registry
    let key=url;try{key=normalizeDiscoveryUrl192(url);}catch{/* keep the raw URL */}
    if(observed.has(key)){reject('already_observed');continue;}
    if(restricted.has(host)){reject('host_restricted');continue;}
-   // Exact identifiers only: a URL model code that differs from every known identifier names another model. A URL
-   // without a code, or a product without identifiers, leaves the product unknown. Nothing merges on names.
-   // Phase261 checkpoint B: an exact identifier may also be a numeric GTIN, which is not a model token; any path
-   // segment part equal to a known identifier is an exact match. A URL that ALSO names a different model code carries
-   // conflicting identifiers and stays unknown (neither matched nor rejected).
-   const token=urlModelToken252(url);let attribution:Attribution261='not_product_scoped';
-   if(t.subject.productId){
-    const known=new Set(t.subject.knownIdentifiers);
-    const parts=urlIdentifierParts(url);
-    const exact=parts.some(x=>known.has(x));
-    const otherModel=!!token&&known.size>0&&!known.has(token);
-    if(otherModel&&!exact){reject('url_names_other_model');continue;}
-    attribution=exact&&!otherModel?'url_token_matches_known_identifier':'product_unknown';
-   }
+   const at=attributeUrl261(url,t);if(at==='url_names_other_model'){reject('url_names_other_model');continue;}
+   const attribution=at;
    out.candidates.push({url,jobId:t.job.jobId,targetId:t.targetId,registrySourceId:id,host,channel:s.watch.channel,mechanism:s.watch.mechanism,
     origin:'offline_fixture',genuineDiscovery:false,attribution,
     stages:{candidateUrlDiscovered:true,sourceIdentityRegistered:known.has(host),metadataDiscoveryAllowed:true,pageRetrievalPermitted:false,

@@ -19,10 +19,15 @@ export interface SearchConfig223 {schema:'pee223.search-config.1';provider:'sear
  /** An operator has checked their right to use THIS search service/API;
   * not a licence to copy every page returned by it. */
  serviceAccessReviewed:boolean;
+ /** Phase262: search-result language filter sent to the provider ("en" when absent, as before; "all" for none).
+  * It filters what the provider returns; it says nothing about PEE's ability to understand those documents. */
+ language?:string;
 }
+/** Phase262: a bounded, already-planned query set (from planSearchQueries223 or a typed research-job planner). */
+export interface PlannedSearch223 {key:string|null;status:string;queries:string[]}
 export interface SearchRun223 {schema:'pee223.search.v1';mode:'live'|'synthetic_fixture';
  intentKey:string|null;intentStatus:string;queries:readonly string[];
- networkRequests:readonly string[];candidates:readonly {url:string;sourceId:string;verification:'unverified_url_only'}[];
+ networkRequests:readonly string[];candidates:readonly {url:string;sourceId:string;verification:'unverified_url_only';/** Phase262: index of the first query that returned it. */queryIndex?:number}[];
  responseDigests:readonly string[];reasonCodes:readonly string[];
  noSnippetsOrPageBodiesStored:true;rankingAuthorized:false;independentEvidenceVerified:false;
 }
@@ -42,14 +47,27 @@ export function planSearchQueries223(question:string,registry:Registry220):{key:
 }
 export async function searchCandidateUrls223(input:{question:string;registry:Registry220;config:SearchConfig223;
  mode?:'live'|'synthetic_fixture';fixtureTransport?:SourceTransport;}):Promise<SearchRun223>{
+ checkSearchInput223(input);
+ return searchWithPlan223({plan:planSearchQueries223(input.question,input.registry),config:input.config,mode:input.mode,fixtureTransport:input.fixtureTransport});
+}
+function checkSearchInput223(input:{config:SearchConfig223;mode?:'live'|'synthetic_fixture';fixtureTransport?:SourceTransport}):void{
  const mode=input.mode??'live';
  if((mode==='live'&&input.fixtureTransport)||(mode==='synthetic_fixture'&&!input.fixtureTransport))throw Error('phase223_transport_boundary');
  const cfg=input.config;
  if(cfg?.schema!=='pee223.search-config.1'||cfg.provider!=='searxng'||!isEndpoint(cfg.endpoint)||
   !Number.isInteger(cfg.maxQueries)||cfg.maxQueries<1||cfg.maxQueries>3||
   !Number.isInteger(cfg.maxResults)||cfg.maxResults<1||cfg.maxResults>30||
-  typeof cfg.enabled!=='boolean'||typeof cfg.serviceAccessReviewed!=='boolean')throw Error('phase223_bad_search_config');
- const plan=planSearchQueries223(input.question,input.registry);
+  typeof cfg.enabled!=='boolean'||typeof cfg.serviceAccessReviewed!=='boolean'||
+  (cfg.language!==undefined&&(typeof cfg.language!=='string'||!/^(?:all|[a-z]{2,3}(?:-[A-Z]{2})?)$/.test(cfg.language))))throw Error('phase223_bad_search_config');
+}
+/** Phase262: the same bounded search, robots check, JSON parsing and URL safety as searchCandidateUrls223, for a
+ * query set planned elsewhere (e.g. from a typed research job). Each lead records the first query that returned it. */
+export async function searchWithPlan223(input:{plan:PlannedSearch223;config:SearchConfig223;
+ mode?:'live'|'synthetic_fixture';fixtureTransport?:SourceTransport;}):Promise<SearchRun223>{
+ checkSearchInput223(input);
+ const mode=input.mode??'live';const cfg=input.config;const plan=input.plan;
+ if(!plan||!Array.isArray(plan.queries)||plan.queries.length>3||plan.queries.some(q=>typeof q!=='string'||norm(q)!==q||!q||q.length>200)||
+  (plan.key!==null&&typeof plan.key!=='string')||typeof plan.status!=='string')throw Error('phase223_bad_search_plan');
  const net:string[]=[],reasons:string[]=[],digests:string[]=[],leads:SearchRun223['candidates'][number][]=[];
  const output=(queries:string[]):SearchRun223=>({schema:'pee223.search.v1',mode,intentKey:plan.key,
   intentStatus:plan.status,queries,networkRequests:net,candidates:leads,
@@ -71,7 +89,7 @@ export async function searchCandidateUrls223(input:{question:string;registry:Reg
  const seen=new Set<string>();
  for(const query of queries){
   const u=new URL(endpoint);u.searchParams.set('q',query);u.searchParams.set('format','json');
-  u.searchParams.set('language','en');const url=u.toString();
+  u.searchParams.set('language',cfg.language??'en');const url=u.toString();
   if(url.length>800){reasons.push('search_query_too_long');continue;}
   try{
    net.push(url);const res=await transport.get(url,RESEARCH_AGENT,800000);
@@ -94,7 +112,7 @@ export async function searchCandidateUrls223(input:{question:string;registry:Reg
     parsed.searchParams.sort();const normalized=parsed.toString();
     if(seen.has(normalized))continue;
     seen.add(normalized);
-    leads.push({url:normalized,sourceId:'search_'+sha(parsed.hostname).slice(0,16),verification:'unverified_url_only'});
+    leads.push({url:normalized,sourceId:'search_'+sha(parsed.hostname).slice(0,16),verification:'unverified_url_only',queryIndex:queries.indexOf(query)});
     if(leads.length>=cfg.maxResults)break;
    }
   }catch{reasons.push('search_transport_or_json_error');}
