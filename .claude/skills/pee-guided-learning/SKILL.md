@@ -177,6 +177,27 @@ Never claim to have read a file you have not opened. In reports, say which secti
 - Preserve research and decisions.
 - Corrections add a dated note saying what is superseded and why. They never delete or silently rewrite.
 
+## 2a. Permanent engineering principles (owner instruction, 2026-10-16) — they govern every phase
+
+The organising question of all PEE work is: **what is the smallest complete, safe, scientifically defensible path PEE
+can execute today, and what is the next demonstrated obstacle to a trustworthy recommendation?**
+
+| # | Principle | How it is enforced |
+|---|---|---|
+| 1 | Product outcomes over component counts: a phase states the user-facing capability it improves and demonstrates it. | Every report has a before/after table on the operational path (`scripts/phase266-reality-baseline.mjs` and frozen requests). |
+| 2 | The consumer-request-to-decision path stays continuously testable. | `tests/vertical_path_fitness.test.ts` (fails when a connection is broken: fault injection included) and `tests/vertical_contract.test.ts`. |
+| 3 | Reuse before implementation: audit existing behaviour (grep the operation, read neighbouring reports) before adding a component. | Name the existing owner in the report; new modules need a stated reason why no existing one can own the responsibility. |
+| 4 | Investigate recurring failures: when a gap resembles an earlier one, find why the earlier fix did not protect the whole path. | `docs/architecture/vertical-contract.json` `openDebt` records the origin phase of each open gap. |
+| 5 | Evidence tiers are never conflated: synthetic tests, authentic source processing, authentic independent-test evaluation and full operational advisory evaluation are reported separately. | Report metrics tables carry a tier column; the contract's status classes. |
+| 6 | Autonomy with defensible safeguards: the system satisfies its own evidence requirements through verifiable procedures, never by inventing authority. | Ranking only from signed, verified catalogs (Phase181/180 gates); Phase265 rows can never rank (fitness test D). |
+| 7 | Demonstrated improvement: baseline, intended improvement, actual improvement, regressions, remaining blockers. | Frozen runs committed unchanged; re-runs under new labels; benchmark diffs. |
+| 8 | No silent loss of user intent: an unassessed objective stays explicit in the answer. | `Advice253.unassessedObjectives`; fitness test C. |
+| 9 | Security before publication: public/private policy is checked on commits, not only on the working tree. | `.githooks/pre-push` runs `scripts/pee-publication-check.mjs` (fails closed without the private store); `--tree` and `--history` audits. |
+| 10 | An incomplete vertical path is explicit technical debt, tracked until integrated, validated and operational — never re-announced as a new finding. | `vertical-contract.json` `openDebt`; the contract test requires every blocked or missing stage to be listed. |
+
+Before closing any phase: run the vertical fitness and contract tests, the publication check on the commits to be
+pushed, the full suite, and update the contract if a stage's connection or status changed.
+
 ## 3. Workflow for material PEE work
 
 1. **Verify reality.**

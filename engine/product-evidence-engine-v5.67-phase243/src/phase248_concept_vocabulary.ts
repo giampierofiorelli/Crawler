@@ -8,7 +8,8 @@ export const CONCEPT_VOCABULARY248:Record<string,Record<string,string[]>>={
   cleaning_effort:['easy to clean','cleaning','clean up'],
  },
  coffee_machines:{
-  espresso_quality:['tasting coffee','good tasting coffee','coffee taste','flavour','great coffee','proper coffee'],
+  // 2026-10-16: the words of a real objective ("the best-tasting traditional Italian espresso") were not recognised.
+  espresso_quality:['tasting coffee','good tasting coffee','coffee taste','flavour','great coffee','proper coffee','best-tasting','best tasting','tasting espresso','espresso taste','great espresso','good espresso'],
   low_maintenance:['maintenance','upkeep','easy to look after'],
   scale_buildup:['hard water','descaling','descale'],
  },

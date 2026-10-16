@@ -16,6 +16,8 @@ import {decideAdvice249,candidatesFromStore249,SPEC_CRITERIA249,type Candidate24
 import {createDecision177,applyDecisionAction177} from './phase177_decision_snapshot.js';
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
+import {dynamicKnowledgeAnswer181,type SignedCatalog181} from './phase181_dynamic_knowledge_ranking.js';
+import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 const ROLE_LABEL:Record<string,string>={manufacturer_declaration:'declared by the manufacturer',retailer_declaration:'declared by a retailer',
@@ -42,7 +44,7 @@ const observedAt=(store:KnowledgeStore246,declarationId:string):string|null=>(st
 /** Stage 4: a source type inferred from host and declared brand (Phase253) is cited as inferred, not as asserted. */
 const sourceBasis=(store:KnowledgeStore246,declarationId:string):string|null=>(store.db.prepare('SELECT s.source_type_basis b FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s USING(source_id) WHERE d.declaration_id=?').get(declarationId) as {b:string}|undefined)?.b??null;
 
-export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[]):Advice253{
+function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[]):Advice253{
  const j=runJourney248(text,store,registry);
  const ex=extractConstraints253(text);
  const category=j.stages.category.categoryId;
@@ -51,10 +53,12 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   'The list is unordered: meeting your stated limits is not a quality ranking.'];
  const out:Advice253={schema:'pee253.advice.v1',text,target:{kind:j.stages.target.kind,category:j.stages.target.category,other:j.stages.target.other,basis:j.stages.target.basis},
   category,constraints:[],unmappedConstraints:ex.unmapped,needs,unresolved:[],response:'clarification',ordered:false,rankingAuthorized:false,
-  shortlist:[],unknown:[],excluded:[],conflicts:[],questions:[],statements:[],limitations,researchPlan:[...j.researchPlan]};
+  shortlist:[],unknown:[],excluded:[],conflicts:[],questions:[],statements:[],limitations,researchPlan:[...j.researchPlan],unassessedObjectives:[]};
  const ri:AdviceResearchInputs253={targetKind:j.stages.target.kind,category,statedCriteria:[],pendingCriteria:[],performanceNeeds:[],unresolvedNeeds:[],productChecks:[],ineligible:[]};
  out.researchInputs=ri;
  ri.performanceNeeds=j.stages.need.concepts.filter(c=>!j.stages.requirements.factualRequirements.some(f=>f.conceptId===c.id)).map(c=>c.id);
+ ri.performanceNeedSpans=j.stages.need.concepts.filter(c=>ri.performanceNeeds.includes(c.id)).map(c=>({id:c.id,matched:c.matched}));
+ ri.categoryBasis=j.stages.category.basis;
  // 1. What is being bought.
  if(j.stages.target.kind==='other'){out.response='out_of_scope';
   out.statements.push(`You seem to be looking for ${j.stages.target.other}; the ${category??'product'} mentioned is context. PEE holds no knowledge or products for ${j.stages.target.other}.`);
@@ -125,5 +129,68 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  out.limitations.push(`Coverage is limited to the ${pool.length} ${category.replace(/_/g,' ')} PEE has observed; it is not the whole market.`);
  if(out.shortlist.length&&pending.length===0&&out.questions.length>2)out.questions.splice(2);
  out.researchPlan.push(...advice.researchPlan);
+ return out;
+}
+
+/** The authority under which a ranking may be produced: a reviewed, signed Phase181 catalog and the pinned public keys
+ * that verify it (never taken from the request). Without one, PEE answers with the specification path only. */
+export interface RankingContext253 {catalog:SignedCatalog181|null;authority:TrustedRankingAuthority180}
+/** Stated quality objectives ("best-tasting traditional Italian espresso", "quietest coffee machine"). */
+const OBJECTIVE253=/\b(best[- ]tasting|tastiest|good[- ]tasting|great[- ]tasting|best|quietest|most (?:reliable|durable|efficient|consistent|powerful)|top[- ]rated|highest[- ]quality)\b((?:\s+[A-Za-z][A-Za-z-]*){0,5})/gi;
+const OBJECTIVE_STOP=/^(?:for|under|over|with|that|which|i|you|we|in|on|at|to|and|or|than|below|around|within|my|can|is|are|of)$/i;
+function statedObjectives253(text:string):string[]{
+ const out:string[]=[];
+ for(const m of text.matchAll(OBJECTIVE253)){const words=(m[2]??'').trim().split(/\s+/).filter(Boolean);const kept:string[]=[];
+  for(const w of words){if(OBJECTIVE_STOP.test(w))break;kept.push(w);}
+  // "best way", "best type", "best option" ask for advice in general, not for a product outcome.
+  if(!kept.length||/^(?:way|ways|type|types|kind|kinds|option|options|choice|choices|thing|things|one|ones|idea|ideas|method|methods|place|time|approach|solution|advice|deal|deals|value|price|brand|brands)$/i.test(kept[0]))continue;
+  const phrase=[m[1],...kept].join(' ').toLowerCase();if(!out.includes(phrase))out.push(phrase);}
+ return out;
+}
+/** From an ordinary-English request to a justified answer (see the module comment). With a ranking context, stated
+ * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
+ * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
+ * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
+export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
+ const out=adviseCore253(text,store,registry);
+ const ri=out.researchInputs;const perf=ri?.performanceNeeds??[];const objectives=statedObjectives253(text);
+ const assessed=new Set<string>();
+ const rankable=!!opts.ranking&&!!out.category&&out.target.kind==='category'&&ri?.categoryBasis==='explicit_alias'&&perf.length>0&&
+  (out.response==='positive_shortlist'||(out.response==='clarification'&&(ri?.statedCriteria.length??0)===0));
+ if(rankable){
+  const r=opts.ranking!;const dims=new Map((r.catalog?.catalog.dimensions??[]).map(d=>[d.key,d]));
+  const covered=(ri!.performanceNeedSpans??[]).filter(n=>dims.has(n.id));
+  let snap=createDecision177('request_'+sha(text).slice(0,16));
+  snap=applyDecisionAction177(snap,{type:'set_scope',source:'user_request_statement',scope:{task:'product_selection',category:out.category!}}).snapshot;
+  for(const n of covered){const d=dims.get(n.id)!;
+   snap=applyDecisionAction177(snap,{type:'state_in_request',source:'user_request_statement',key:n.id,label:d.label,value:d.value as never,priority:'high',referenceHash:sha(n.matched)}).snapshot;}
+  const d=dynamicKnowledgeAnswer181({snapshot:snap,catalog:r.catalog,authority:r.authority});
+  // Only products that passed every stated factual check (or, with none stated, every eligible product) can be ranked.
+  const allowed=new Set((ri!.statedCriteria.length?out.shortlist.map(x=>x.productId):eligibleCandidates253(store,out.category!).filter(p=>p.eligible).map(p=>p.candidate.productId)));
+  const name=(id:string,fallback:string)=>(store.db.prepare('SELECT name FROM products WHERE product_id=?').get(id) as {name:string|null}|undefined)?.name??fallback;
+  const ranked=covered.length?d.ranked.filter(x=>allowed.has(x.variantId)):[];
+  if(d.status==='ranking_ready'&&ranked.length){
+   const rows=ranked.map((x,i)=>({productId:x.variantId,name:name(x.variantId,x.name),rank:0,scorePoints:x.scorePoints,originalTestIds:[...x.originalTestIds],sourceUrls:[...x.sourceUrls],i}));
+   rows.forEach((x,i)=>{x.rank=i>0&&x.scorePoints===rows[i-1].scorePoints?rows[i-1].rank:i+1;});
+   out.response='ranked_recommendation';out.ordered=true;out.rankingAuthorized=true;
+   out.ranked=rows.map(({i:_i,...x})=>x);
+   out.held=d.held.filter(h=>allowed.has(h.variantId)).map(h=>({productId:h.variantId,name:name(h.variantId,h.name),reason:h.reason}));
+   for(const n of covered)assessed.add(n.id);
+   out.statements.push(`Ranked by ${covered.map(n=>dims.get(n.id)!.label).join(', ')} from the reviewed, signed catalog ${d.knowledgeRevision} (scoring policy ${d.policyRevision}); equal scores share a rank.`);
+   out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
+   // The specification statements described an unordered list; the ranked criteria are no longer "not checked".
+   out.statements=out.statements.map(x=>x.replace(' (alphabetical, not ranked)','')).filter(x=>!/^Not checked: /.test(x)||!covered.some(n=>x.includes(n.id)));
+   out.limitations.push('Only the criteria named above are ranked, from reviewed original tests cited per product; the stated limits were checked against declared specifications.',...d.visibleCautions);
+  }else{
+   out.statements.push(covered.length?`No ranking: ${d.firstLayer[0]}`:'No ranking: no reviewed catalog dimension covers the stated objectives.');
+   out.researchPlan.push(...d.researchGaps.map(g=>`${g.kind}: ${g.reference} (${g.action})`));
+  }
+ }
+ // Principle 8: an objective the answer does not assess stays explicit.
+ const unassessedNeeds=perf.filter(id=>!assessed.has(id));
+ const toks=(x:string)=>x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+ out.unassessedObjectives=[...unassessedNeeds,...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
+ if(out.unassessedObjectives.length&&out.response!=='out_of_scope')
+  out.statements.push(`Not assessed: ${out.unassessedObjectives.map(o=>`"${o.replace(/_/g,' ')}"`).join(', ')}. PEE holds no reviewed evidence for ${out.unassessedObjectives.length>1?'these':'this'}, so this answer does not address ${out.unassessedObjectives.length>1?'them':'it'}.`);
  return out;
 }

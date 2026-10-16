@@ -11,6 +11,27 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000000000000000. Engineering correction and vertical integration (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase267/ENGINEERING-CORRECTION-REPORT.md`. The contract of
+the operational path is `docs/architecture/vertical-contract.json`.
+
+- **Connected:** `adviseFromRequest253(text, store, registry, {ranking:{catalog, authority}})` now reaches the
+  existing Phase181 engine for stated performance needs covered by a reviewed catalog dimension. The order is
+  restricted to products that passed every stated factual check. This is verified with a synthetic signed catalog
+  only.
+- **Production ranking stays disabled:** no signed catalog exists, and its producer and signing authority are an
+  owner decision.
+- **Principle 8:** `unassessedObjectives` and the "Not assessed: …" statement.
+- **Fitness tests:** `tests/vertical_path_fitness.test.ts` (A–G, with fault injection), `tests/vertical_contract.test.ts`
+  and `tests/publication_guard.test.ts`.
+- **Publication guard:** `scripts/pee-publication-check.mjs` (pre-push hook `.githooks/pre-push`, activated by the
+  session-start hook).
+  - The history audit found exposures beyond `f388d3a`, including older evaluation files still in the tree.
+  - Remediation (forward redaction, history rewrite, or making the repository private) awaits the owner.
+- **Vocabulary:** `espresso_quality` aliases added to `CONCEPT_VOCABULARY248`. The live store is not reseeded; it needs
+  `phase246-knowledge.mjs seed-vocabulary`, an operator step.
+
 ## 00000000000000000. End-to-end reality check (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase266/REALITY-CHECK-REPORT.md` (audit, not a phase).

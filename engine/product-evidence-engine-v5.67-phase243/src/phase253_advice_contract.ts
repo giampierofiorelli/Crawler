@@ -13,7 +13,7 @@
  */
 import {SPEC_CRITERIA249,comparable249,type Dimension249} from './phase249_decision.js';
 
-export const RESPONSES253=['positive_shortlist','clarification','justified_negative','justified_abstention','out_of_scope'] as const;
+export const RESPONSES253=['positive_shortlist','clarification','justified_negative','justified_abstention','out_of_scope','ranked_recommendation'] as const;
 export type Response253=typeof RESPONSES253[number];
 export type TargetKind253='category'|'other'|'none'|'ambiguous';
 export interface Constraint253 {criterion:string;value:number;unit:string;bound?:'min'|'max';span?:string;
@@ -25,7 +25,16 @@ export interface Advice253 {
  category:string|null;
  constraints:Constraint253[];unmappedConstraints:{span:string;reason:string}[];
  needs:string[];unresolved:string[];
- response:Response253;ordered:false;rankingAuthorized:false;
+ response:Response253;
+ /** True only for 'ranked_recommendation', produced by the existing Phase181 engine from a verified, signed, reviewed
+  * catalog supplied with the request (2026-10-16 vertical integration); a specification shortlist is never ordered. */
+ ordered:boolean;rankingAuthorized:boolean;
+ /** Order from Phase181 over the products that passed every stated factual check; ties share a rank. */
+ ranked?:{productId:string;name:string;rank:number;scorePoints:number;originalTestIds:string[];sourceUrls:string[]}[];
+ /** Candidates the ranking held back, with Phase181's reason. */
+ held?:{productId:string;name:string;reason:string}[];
+ /** Principle 8: objectives the user stated that this answer does not assess (never silently dropped). */
+ unassessedObjectives:string[];
  shortlist:{productId:string;name:string;evidence:CitedEvidence253[];cautions:string[]}[];
  unknown:{productId:string;name:string;reasons:string[]}[];
  excluded:{productId:string;name:string;reasons:string[]}[];
@@ -38,6 +47,8 @@ export interface Advice253 {
 export interface AdviceResearchInputs253 {
  targetKind:TargetKind253;category:string|null;statedCriteria:string[];pendingCriteria:string[];
  performanceNeeds:string[];unresolvedNeeds:string[];
+ /** 2026-10-16: the words that stated each performance need, and how the category was established (for the ranking step). */
+ performanceNeedSpans?:{id:string;matched:string}[];categoryBasis?:string;
  productChecks:{productId:string;outcome:'meets_all'|'fails'|'unknown';criteria:{key:string;outcome:'meets'|'fails'|'unknown';code:string}[]}[];
  ineligible:{productId:string;code:'product_line'}[];
 }
