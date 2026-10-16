@@ -1,0 +1,525 @@
+{
+ "schema": "pee259.real-source-run.v1",
+ "label": "baseline",
+ "codeHasRetainedAdapter": false,
+ "sample": {
+  "records": 6,
+  "representable": 4,
+  "errors": [
+   "unknown: roles",
+   "editorial: roles"
+  ],
+  "unknownHonest": 6,
+  "lostInformation": [
+   "revision(id,sha256,fetchedAt,state)",
+   "roleBasis(heuristic)",
+   "attributionBasis(named_in_table)",
+   "identityState(discovered)"
+  ],
+  "screeningDecisionsReusable": 0,
+  "sharedUrlRecords": 2
+ },
+ "phase196": {
+  "ran": true,
+  "sources": 6,
+  "lanes": {
+   "unscoped_review": 2,
+   "derived_followup": 4
+  },
+  "documentCandidates": 0,
+  "textRetained": 0,
+  "note": "no text is retained, so Phase195 lineage signals are empty or artificial"
+ },
+ "coverage": {
+  "jobs": 19,
+  "jobsWithAnySelection": 12,
+  "selectedTotal": 12,
+  "selectedAlreadyRetainedWithoutCriterion": 12,
+  "freshCandidates": 0,
+  "otherProductExcluded": 98,
+  "unrepresentableRecordsSeen": 23,
+  "ownTableOnly": 2,
+  "ownHostRestricted": 0
+ },
+ "restrictedHosts": 45,
+ "cases": [
+  {
+   "id": "e1",
+   "productId": "prd_ad1e8495d802bbef9564fc54",
+   "records": [
+    {
+     "sourceType": "manufacturer",
+     "roleBasis": "operator_asserted",
+     "attribution": "main_product",
+     "identityState": "extracted_unverified",
+     "declarations": 6,
+     "sharedUrlProducts": 1,
+     "representable": true,
+     "error": null,
+     "roles": [
+      "manufacturer_specification"
+     ],
+     "role196": "manufacturer_specification",
+     "lostInDescriptor": [
+      "revision(id,sha256,fetchedAt,state)"
+     ],
+     "screeningVerdictRetained": false,
+     "hostRestricted": false,
+     "unknownRecorded": {
+      "country": true,
+      "language": true,
+      "market": true,
+      "rights": true,
+      "robots": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "e2",
+   "productId": "prd_3d6a6281b4ea4b068504c4b9",
+   "records": [
+    {
+     "sourceType": "manufacturer",
+     "roleBasis": "heuristic_unverified",
+     "attribution": "main_product",
+     "identityState": "extracted_unverified",
+     "declarations": 2,
+     "sharedUrlProducts": 1,
+     "representable": true,
+     "error": null,
+     "roles": [
+      "manufacturer_specification"
+     ],
+     "role196": "manufacturer_specification",
+     "lostInDescriptor": [
+      "roleBasis(heuristic)",
+      "revision(id,sha256,fetchedAt,state)"
+     ],
+     "screeningVerdictRetained": false,
+     "hostRestricted": false,
+     "unknownRecorded": {
+      "country": true,
+      "language": true,
+      "market": true,
+      "rights": true,
+      "robots": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "e3",
+   "productId": "prd_11d73581a7430aa6a49b3e6e",
+   "records": [
+    {
+     "sourceType": "retailer",
+     "roleBasis": "operator_asserted",
+     "attribution": "main_product",
+     "identityState": "extracted_unverified",
+     "declarations": 4,
+     "sharedUrlProducts": 1,
+     "representable": true,
+     "error": null,
+     "roles": [
+      "retailer_listing"
+     ],
+     "role196": "manufacturer_specification",
+     "lostInDescriptor": [
+      "revision(id,sha256,fetchedAt,state)"
+     ],
+     "screeningVerdictRetained": false,
+     "hostRestricted": false,
+     "unknownRecorded": {
+      "country": true,
+      "language": true,
+      "market": true,
+      "rights": true,
+      "robots": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "e4",
+   "productId": "prd_c4b55ffd479598e230d0d946",
+   "records": [
+    {
+     "sourceType": "unknown",
+     "roleBasis": "operator_asserted",
+     "attribution": "main_product",
+     "identityState": "extracted_unverified",
+     "declarations": 1,
+     "sharedUrlProducts": 1,
+     "representable": false,
+     "error": "roles",
+     "roles": null,
+     "role196": null,
+     "lostInDescriptor": [
+      "revision(id,sha256,fetchedAt,state)"
+     ],
+     "screeningVerdictRetained": false,
+     "hostRestricted": false,
+     "unknownRecorded": {
+      "country": true,
+      "language": true,
+      "market": true,
+      "rights": true,
+      "robots": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "e5",
+   "productId": "prd_a9153c3ca30c41e991455b3a",
+   "records": [
+    {
+     "sourceType": "retailer",
+     "roleBasis": "operator_asserted",
+     "attribution": "named_in_table",
+     "identityState": "discovered",
+     "declarations": 7,
+     "sharedUrlProducts": 3,
+     "representable": true,
+     "error": null,
+     "roles": [
+      "retailer_listing"
+     ],
+     "role196": "manufacturer_specification",
+     "lostInDescriptor": [
+      "attributionBasis(named_in_table)",
+      "identityState(discovered)",
+      "revision(id,sha256,fetchedAt,state)"
+     ],
+     "screeningVerdictRetained": false,
+     "hostRestricted": false,
+     "unknownRecorded": {
+      "country": true,
+      "language": true,
+      "market": true,
+      "rights": true,
+      "robots": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "e6",
+   "productId": "prd_03d5041c671c4b5feaf7087b",
+   "records": [
+    {
+     "sourceType": "editorial",
+     "roleBasis": "operator_asserted",
+     "attribution": "main_product",
+     "identityState": "extracted_unverified",
+     "declarations": 2,
+     "sharedUrlProducts": 5,
+     "representable": false,
+     "error": "roles",
+     "roles": null,
+     "role196": null,
+     "lostInDescriptor": [
+      "revision(id,sha256,fetchedAt,state)"
+     ],
+     "screeningVerdictRetained": false,
+     "hostRestricted": false,
+     "unknownRecorded": {
+      "country": true,
+      "language": true,
+      "market": true,
+      "rights": true,
+      "robots": true
+     }
+    }
+   ]
+  }
+ ],
+ "jobs": [
+  {
+   "jobId": "research_20f378b43def4d8f2cc7eec8942d4889",
+   "productId": "prd_ad1e8495d802bbef9564fc54",
+   "criterion": "capacity_min",
+   "descriptors": 4,
+   "unrepresentable": 1,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_581dc3d6cf040013f65fd4d25bfdf483",
+   "productId": "prd_41185d853e4a0eed26933056",
+   "criterion": "width_max",
+   "descriptors": 4,
+   "unrepresentable": 1,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_659071e50ff9a67e4ad7ae01eeaa6b1f",
+   "productId": "prd_b77e23c14a673d7a257bd6c1",
+   "criterion": "budget_max",
+   "descriptors": 4,
+   "unrepresentable": 1,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 4,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_c6f0d4c315791516368aad84454fd894",
+   "productId": "prd_b77e23c14a673d7a257bd6c1",
+   "criterion": "width_max",
+   "descriptors": 4,
+   "unrepresentable": 1,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 4,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_e5629c2c60d35e0beacd9220820bce1b",
+   "productId": "prd_3d6a6281b4ea4b068504c4b9",
+   "criterion": "width_max",
+   "descriptors": 4,
+   "unrepresentable": 1,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_0d89712f57f72bafad18d17d51501f51",
+   "productId": "prd_da4477a15c09160dea80cef6",
+   "criterion": "weight_max",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_53c177c207144bd191569d1648f9ccb5",
+   "productId": "prd_fd3006bbcdff0028b89ad140",
+   "criterion": "power_min",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_678727c66d5800ce6aab060b9d9e4447",
+   "productId": "prd_da4477a15c09160dea80cef6",
+   "criterion": "power_min",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_8425da057d09ee336e209a13d1ae0595",
+   "productId": "prd_f4286fee702368428ab7a172",
+   "criterion": "power_min",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_8e568cf7b3cb867821199603daa7b46f",
+   "productId": "prd_11d73581a7430aa6a49b3e6e",
+   "criterion": "power_min",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_aa903f34a1855d85cd6aeb8ff4de40f8",
+   "productId": "prd_99da9273908a1ee0360e7f8a",
+   "criterion": "power_min",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_b47a165697d65968d04dbddf89dccee5",
+   "productId": "prd_11d73581a7430aa6a49b3e6e",
+   "criterion": "weight_max",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_baf1bb338983ccad0992b65c7457544f",
+   "productId": "prd_f4286fee702368428ab7a172",
+   "criterion": "weight_max",
+   "descriptors": 9,
+   "unrepresentable": 0,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 8,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_09761b428aa190665f19a016d28d0af7",
+   "productId": "prd_fae463907b2832521b9cbdb3",
+   "criterion": "power_min",
+   "descriptors": 5,
+   "unrepresentable": 3,
+   "selected": 1,
+   "selectedAlreadyRetainedWithoutCriterion": 1,
+   "freshCandidates": 0,
+   "otherProductExcluded": 2,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_0b5c5a09e49e8d725142b0c1f088e3e1",
+   "productId": "prd_c4b55ffd479598e230d0d946",
+   "criterion": "power_min",
+   "descriptors": 5,
+   "unrepresentable": 3,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_759e91c0527f25e536b3c21eff8fe156",
+   "productId": "prd_6f592010fad82b95dc71ec5e",
+   "criterion": "power_min",
+   "descriptors": 5,
+   "unrepresentable": 3,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 1,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_9b351c9047545627170734ccc86532ab",
+   "productId": "prd_b4026dd016da18351011962d",
+   "criterion": "power_min",
+   "descriptors": 5,
+   "unrepresentable": 3,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_e011436b40fa34b729b33310118f749e",
+   "productId": "prd_258ce8d764da74ae3f9eebd8",
+   "criterion": "power_min",
+   "descriptors": 5,
+   "unrepresentable": 3,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 0,
+   "ownHostRestricted": 0
+  },
+  {
+   "jobId": "research_fc7f3b926d97e36580c4414bb8dfb648",
+   "productId": "prd_a9153c3ca30c41e991455b3a",
+   "criterion": "power_min",
+   "descriptors": 5,
+   "unrepresentable": 3,
+   "selected": 0,
+   "selectedAlreadyRetainedWithoutCriterion": 0,
+   "freshCandidates": 0,
+   "otherProductExcluded": 3,
+   "accessExcluded": 0,
+   "retainedNotSuitedByRole": 0,
+   "ownRecordsTableOnly": 1,
+   "ownHostRestricted": 0
+  }
+ ]
+}
