@@ -1,0 +1,471 @@
+{
+ "schema": "pee269.teaching-run.v1",
+ "label": "baseline",
+ "at": "2026-10-16T19:33:18Z",
+ "setSha256": "dbdecbce468d0313fb17f32b6bc90741bf7111bca46369890017c5e84a85e362",
+ "storeCopyUnchanged": true,
+ "controlledCatalog": {
+  "validated": 3,
+  "dimension": [
+   "low_energy_use"
+  ]
+ },
+ "summary": {
+  "development": {
+   "1_outcomes": 0.452,
+   "2_criteria": 0,
+   "3_proxies": 0,
+   "4_conditions": 0,
+   "5_incomparable": 0,
+   "6_unassessed": 0,
+   "7_decision": 0.286,
+   "proxyAssessedFailures": [
+    "D1",
+    "D5",
+    "D6"
+   ]
+  },
+  "untouched": {
+   "1_outcomes": 0.583,
+   "2_criteria": 0,
+   "3_proxies": 0.2,
+   "4_conditions": 0,
+   "5_incomparable": null,
+   "6_unassessed": 0.25,
+   "7_decision": 0.167,
+   "proxyAssessedFailures": [
+    "U1",
+    "U3"
+   ]
+  }
+ },
+ "rows": [
+  {
+   "id": "D1",
+   "part": "development",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "decision": "ranking",
+    "needs": [
+     "cook_single_portion",
+     "crisp_texture",
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "cook_single_portion",
+     "crisp_texture",
+     "best cooking results"
+    ],
+    "measures": {},
+    "proxies": {
+     "crisp_texture": [
+      "attr:power"
+     ]
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {
+     "low_energy_use": [
+      "energy_empty_run"
+     ]
+    },
+    "response": "ranked_recommendation",
+    "ranked": 3
+   },
+   "score": {
+    "1_outcomes": 0.6666666666666666,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [
+     "low_energy_use"
+    ],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "D2",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "clarify",
+    "needs": [
+     "batch_capacity"
+    ],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "D3",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "research",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "out_of_scope",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D4",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "D5",
+   "part": "development",
+   "goldDecision": "no_purchase_check",
+   "observed": {
+    "decision": "ranking",
+    "needs": [
+     "low_energy_use"
+    ],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {
+     "low_energy_use": [
+      "energy_empty_run"
+     ]
+    },
+    "response": "ranked_recommendation",
+    "ranked": 3
+   },
+   "score": {
+    "1_outcomes": 0.5,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [
+     "low_energy_use"
+    ],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "D6",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "ranking",
+    "needs": [
+     "cook_single_portion",
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "cook_single_portion"
+    ],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {
+     "low_energy_use": [
+      "energy_empty_run"
+     ]
+    },
+    "response": "ranked_recommendation",
+    "ranked": 3
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": 0,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [
+     "low_energy_use"
+    ],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "D7",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "research",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "out_of_scope",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U1",
+   "part": "untouched",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "decision": "ranking",
+    "needs": [
+     "crisp_texture",
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "crisp_texture"
+    ],
+    "measures": {},
+    "proxies": {
+     "crisp_texture": [
+      "attr:power"
+     ]
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {
+     "low_energy_use": [
+      "energy_empty_run"
+     ]
+    },
+    "response": "ranked_recommendation",
+    "ranked": 3
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [
+     "low_energy_use"
+    ],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "U2",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "U3",
+   "part": "untouched",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "decision": "ranking",
+    "needs": [
+     "low_energy_use"
+    ],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {
+     "low_energy_use": [
+      "energy_empty_run"
+     ]
+    },
+    "response": "ranked_recommendation",
+    "ranked": 3
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [
+     "low_energy_use"
+    ],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "U4",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [
+     "best dual zone air fryer"
+    ],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": null,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "U5",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "decision": "research",
+    "needs": [
+     "cooking_evenness"
+    ],
+    "unassessed": [
+     "cooking_evenness"
+    ],
+    "measures": {},
+    "proxies": {
+     "cooking_evenness": [
+      "attr:capacity"
+     ]
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 0,
+    "3_proxies": 1,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U6",
+   "part": "untouched",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "decision": "research",
+    "needs": [
+     "cook_single_portion"
+    ],
+    "unassessed": [
+     "cook_single_portion"
+    ],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 0.5,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0.5,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  }
+ ]
+}

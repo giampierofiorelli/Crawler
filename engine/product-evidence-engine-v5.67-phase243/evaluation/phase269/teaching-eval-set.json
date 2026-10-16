@@ -1,0 +1,55 @@
+{
+ "schema": "pee269.teaching-eval-set.v1",
+ "frozenAt": "2026-10-16",
+ "frozenBefore": "reading the air-fryer research package beyond its table of contents, and any Phase269 change to concepts, relations, validation, scoring or the request path",
+ "context": "every request is run on a copy of the live store, with the Phase268 controlled catalog (proposed default policy, evaluation-only signer) supplied, so that misuse of the empty-run energy proxy is observable",
+ "vocabulary": {
+  "outcomes": "category concept ids (existing or to be taught): cook_single_portion, low_energy_use, cooking_results, crisp_texture, cooking_evenness, cleaning_effort, batch_capacity, cook_two_foods_simultaneously, oven_alternative",
+  "measures": "measurement ids that would establish an outcome: energy_per_cooking_task, cooking_outcome_assessment, cooking_evenness_test, usable_cooking_area, cleaning_effort_assessment, batch_cooking_test, two_zone_cooking_test",
+  "proxies": "inadequate proxies to reject for that outcome: energy_empty_run (fixed-duration empty-appliance energy), attr:capacity (declared volume), attr:power (rated watts), attr:dishwasher_safe",
+  "conditions": "test conditions an answer must require: same_food_load, completed_doneness, compartments_in_use",
+  "decisions": "clarify | research | partial_comparison | ranking | abstain | no_purchase_check"
+ },
+ "scoring": {
+  "1_outcomes": "share of gold outcomes among the recognised needs",
+  "2_criteria": "share of gold measures named as relevant for their outcome",
+  "3_proxies": "share of gold proxies explicitly rejected for their outcome",
+  "4_conditions": "share of gold conditions required",
+  "5_incomparable": "for requests with incomparableExpected: an incomparable result is flagged (1) or not (0)",
+  "6_unassessed": "share of gold outcomes without adequate evidence that are reported as unassessed; plus a hard failure if an outcome is reported as assessed only through a gold proxy",
+  "7_decision": "decision equals the gold decision (1) or not (0)",
+  "baselineDerivation": "when the answer has no goal assessment: decision from the response (ranked_recommendation=ranking, clarification with questions=clarify, otherwise research); proxies from the journey's not_sufficient_for attribute cautions; no measures, conditions or incomparability"
+ },
+ "development": [
+  {"id":"D1","text":"Which air fryer gives the best cooking results for one person while using relatively little electricity?","note":"the Phase268 frozen request (already used)",
+   "outcomes":["cook_single_portion","low_energy_use","cooking_results"],"measures":{"low_energy_use":["energy_per_cooking_task"],"cooking_results":["cooking_outcome_assessment"],"cook_single_portion":["usable_cooking_area"]},
+   "proxies":{"low_energy_use":["energy_empty_run"],"cook_single_portion":["attr:capacity"]},"conditions":["same_food_load","completed_doneness","compartments_in_use"],"decision":"partial_comparison"},
+  {"id":"D2","text":"We're a family of four and I'm fed up cooking chips in three batches. Which air fryer should we get?",
+   "outcomes":["batch_capacity"],"measures":{"batch_capacity":["batch_cooking_test"]},"proxies":{"batch_capacity":["attr:capacity"]},"conditions":["same_food_load"],"decision":"research"},
+  {"id":"D3","text":"I want the crispiest chips possible from an air fryer. What should I buy?",
+   "outcomes":["crisp_texture"],"measures":{"crisp_texture":["cooking_outcome_assessment"]},"proxies":{"crisp_texture":["attr:power"]},"conditions":["same_food_load","completed_doneness"],"decision":"research"},
+  {"id":"D4","text":"Which air fryer is the least hassle to clean after cooking?",
+   "outcomes":["cleaning_effort"],"measures":{"cleaning_effort":["cleaning_effort_assessment"]},"proxies":{"cleaning_effort":["attr:dishwasher_safe"]},"conditions":[],"decision":"research"},
+  {"id":"D5","text":"I already have a fan oven. Is an air fryer actually cheaper to run when cooking for two, or should I just keep using the oven?",
+   "outcomes":["low_energy_use","oven_alternative"],"measures":{"low_energy_use":["energy_per_cooking_task"]},"proxies":{"low_energy_use":["energy_empty_run","attr:power"]},"conditions":["same_food_load","completed_doneness"],"decision":"no_purchase_check"},
+  {"id":"D6","text":"I live alone and would only ever use one drawer of a dual air fryer. How much electricity would that use compared with a single-drawer model?",
+   "outcomes":["low_energy_use","cook_single_portion"],"measures":{"low_energy_use":["energy_per_cooking_task"]},"proxies":{"low_energy_use":["energy_empty_run"]},"conditions":["compartments_in_use","same_food_load"],"incomparableExpected":true,"decision":"research"},
+  {"id":"D7","text":"Which air fryer actually cooks chicken evenly all the way through? I don't trust the manufacturers' specs.",
+   "outcomes":["cooking_evenness"],"measures":{"cooking_evenness":["cooking_evenness_test"]},"proxies":{"cooking_evenness":["attr:capacity"]},"conditions":["same_food_load","completed_doneness"],"decision":"research"}
+ ],
+ "untouched": [
+  {"id":"U1","text":"Looking for an air fryer that's cheap to run but still makes proper crunchy roast potatoes for me and my partner.",
+   "outcomes":["low_energy_use","crisp_texture"],"measures":{"low_energy_use":["energy_per_cooking_task"],"crisp_texture":["cooking_outcome_assessment"]},"proxies":{"low_energy_use":["energy_empty_run"]},"conditions":["same_food_load","completed_doneness"],"decision":"partial_comparison"},
+  {"id":"U2","text":"Is a bigger air fryer better if I mostly cook for myself?",
+   "outcomes":["cook_single_portion"],"measures":{"cook_single_portion":["usable_cooking_area"]},"proxies":{"cook_single_portion":["attr:capacity"]},"conditions":[],"decision":"research"},
+  {"id":"U3","text":"Which air fryer has the lowest energy consumption according to independent tests?",
+   "outcomes":["low_energy_use"],"measures":{"low_energy_use":["energy_per_cooking_task"]},"proxies":{"low_energy_use":["energy_empty_run"]},"conditions":["same_food_load","compartments_in_use"],"decision":"partial_comparison"},
+  {"id":"U4","text":"Best dual zone air fryer for cooking two different things for dinner at the same time?",
+   "outcomes":["cook_two_foods_simultaneously"],"measures":{"cook_two_foods_simultaneously":["two_zone_cooking_test"]},"proxies":{},"conditions":["compartments_in_use"],"decision":"research"},
+  {"id":"U5","text":"I want an air fryer that browns food evenly without me having to shake the basket all the time.",
+   "outcomes":["cooking_evenness"],"measures":{"cooking_evenness":["cooking_evenness_test"]},"proxies":{"cooking_evenness":["attr:capacity"]},"conditions":["same_food_load"],"decision":"research"},
+  {"id":"U6","text":"Which air fryer will use the least power when I'm just reheating leftovers for one?",
+   "outcomes":["low_energy_use","cook_single_portion"],"measures":{"low_energy_use":["energy_per_cooking_task"]},"proxies":{"low_energy_use":["energy_empty_run","attr:power"]},"conditions":["same_food_load"],"decision":"partial_comparison"}
+ ],
+ "rule": "not edited after the baseline run; untouched requests are never used to choose or tune lessons or code; each run is committed unchanged under a new label"
+}
