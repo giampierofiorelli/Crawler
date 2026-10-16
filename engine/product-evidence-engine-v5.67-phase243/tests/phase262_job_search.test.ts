@@ -57,7 +57,7 @@ test('a genuine job yields bounded, deterministic queries from retained identity
  const t=discoveryTargetFromJob261(job(withId,'capacity_min'),{market:'uk',store:s});
  const p=planJobSearch262(t,{store:s});
  assert.deepEqual(p.queries.map(q=>q.purpose),['declared_specification','manufacturer_documentation']);
- assert.ok(p.queries.every(q=>q.query.includes('0'+GTIN)&&q.usesExactIdentifier),'the exact identifier is the subject');
+ assert.ok(p.queries.every(q=>q.query.includes(' '+GTIN+' ')&&!q.query.includes('0'+GTIN)&&q.usesExactIdentifier),'the exact identifier, in its declared form, is the subject');
  assert.ok(p.queries[0].query.includes('capacity'));assert.equal(p.userTextSent,false);
  assert.deepEqual(planJobSearch262(t,{store:s}),p,'deterministic');
  // No cross-site identifier: discovery stays possible, from brand and retained name, flagged as not exact.

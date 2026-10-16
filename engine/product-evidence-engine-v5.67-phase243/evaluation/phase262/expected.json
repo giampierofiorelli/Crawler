@@ -1,0 +1,29 @@
+{
+ "schema": "pee262.pilot-expectations.v1",
+ "sealedBefore": "first pilot run (scripts/phase262-search-pilot.mjs); labels only, no retained values",
+ "pilotJobs": {
+  "P1": "first genuine air_fryers Phase257 job whose product has a cross-site exact identifier (GTIN/model)",
+  "P2": "first genuine air_fryers Phase257 job whose product has no exact identifier but a retained brand and name"
+ },
+ "index": "one controlled fixture search index shared by both arms and both jobs; a document is returned for a query when they share at least 2 tokens, ordered by overlap then URL",
+ "arms": {
+  "G": "existing Phase223 path: planSearchQueries223 with a test-only air_fryers vocabulary and a MANUFACTURED question ('I need an air fryer')",
+  "T": "Phase262 typed path: planJobSearch262 from the genuine job, no question"
+ },
+ "documents": {
+  "P1.independent_new_domain":  {"aboutJob": "P1", "expect": "candidate", "publisher": "new_domain", "attribution": "url_token_matches_known_identifier"},
+  "P1.syndicated_copy":         {"aboutJob": "P1", "expect": "candidate", "publisher": "new_domain", "attribution": "url_token_matches_known_identifier", "note": "a syndicated copy is NOT detectable without retrieval; expected to appear as a separate candidate (known limitation)"},
+  "P1.tracking_duplicate":      {"aboutJob": "P1", "expect": "merged_by_phase223"},
+  "P1.already_known_url":       {"aboutJob": "P1", "expect": "rejected", "reason": "already_observed"},
+  "P1.manufacturer_doc_known_host": {"aboutJob": "P1", "expect": "candidate", "publisher": "known_source", "attribution": "url_token_matches_known_identifier"},
+  "P1.other_model":             {"aboutJob": null, "expect": "rejected", "reason": "url_names_other_model"},
+  "P2.specialist_new_domain":   {"aboutJob": "P2", "expect": "candidate", "publisher": "new_domain", "attribution": "product_unknown"},
+  "P2.retailer_known_host":     {"aboutJob": "P2", "expect": "candidate", "publisher": "known_source", "attribution": "product_unknown"},
+  "P2.other_model":             {"aboutJob": null, "expect": "candidate_or_absent", "attribution": "product_unknown", "note": "no identifier to reject against: must stay unknown, never attributed"},
+  "shared.roundup":             {"aboutJob": null, "expect": "candidate_or_absent", "attribution": "product_unknown"},
+  "shared.unsafe_http":         {"aboutJob": null, "expect": "dropped_by_phase223"},
+  "shared.unsafe_private_ip":   {"aboutJob": null, "expect": "dropped_by_phase223"},
+  "shared.malformed":           {"aboutJob": null, "expect": "dropped_by_phase223"}
+ },
+ "zeroTolerance": ["candidate attributed to a product it is not about", "live network calls", "fabricated permission or source registration", "evidence admitted", "store changed"]
+}

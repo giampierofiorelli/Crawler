@@ -51,7 +51,10 @@ export function planJobSearch262(target:DiscoveryTarget261,ctx:{store?:Knowledge
  let brand='',name='';
  if(j.productId&&ctx.store){const p=ctx.store.db.prepare('SELECT brand,name FROM products WHERE product_id=?').get(j.productId) as {brand:string|null;name:string|null}|undefined;
   brand=norm(p?.brand??'');name=norm(p?.name??'').split(' ').slice(0,8).join(' ');}
- const id=target.subject.knownIdentifiers[0]??null;
+ // Identifiers are compared in canonical form (a GTIN padded to 14 digits) but searched in declared form: a padded
+ // GTIN-14 is written without its padding zeros (keeping at least 12 digits), as pages and indexes carry it.
+ const raw=target.subject.knownIdentifiers[0]??null;
+ const id=raw&&/^\d{14}$/.test(raw)?raw.replace(/^0+/,'').padStart(12,'0'):raw;
  const exact=!!id;
  const subject=norm(exact?`${brand} ${id}`:(name?(name.startsWith(brand)?name:`${brand} ${name}`):`${brand} ${cat}`));
  const q:{query:string;purpose:QueryPurpose262;usesExactIdentifier:boolean}[]=[];
