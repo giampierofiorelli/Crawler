@@ -1,0 +1,1481 @@
+{
+ "schema": "pee254.research-needs-run.v1",
+ "gold": "evaluation/phase254/research-needs-gold.json",
+ "store": "copy of /home/user/pee-knowledge/snapshot/pee246.sqlite",
+ "measured": {
+  "cases": 14,
+  "expectedNeeds": 34,
+  "returnedNeeds": 35,
+  "correct": 32,
+  "falseNeeds": 1,
+  "missed": 0,
+  "wrongDestination": 2,
+  "researchForClarification": 0,
+  "clarificationForResearch": 0,
+  "attribution": {
+   "checked": 33,
+   "ok": 33
+  }
+ },
+ "collected": {
+  "summary": {
+   "research": 28,
+   "queuedWithinBudget": 20,
+   "omittedByBudget": 8,
+   "clarification": 2,
+   "reextraction": 1,
+   "notActionable": 2,
+   "duplicatesMerged": 2
+  },
+  "planningOnly": true,
+  "rankingAuthorized": false,
+  "evidenceAdmitted": false,
+  "sourcePermissionsGranted": false,
+  "phase182Eligible": 0,
+  "needs": [
+   {
+    "needId": "need_6b9c2256c735a1d925a75f81",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "air_fryers",
+    "productId": "prd_ad1e8495d802bbef9564fc54",
+    "criterion": "capacity_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 2,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_ad1e8495d802bbef9564fc54:capacity_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_3f1ceb596bc347182247f82c325e1574",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_ad1e8495d802bbef9564fc54:capacity_min",
+     "exactVariantId": "prd_ad1e8495d802bbef9564fc54",
+     "criterionId": "capacity_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_12cf7d016f055f157f79be77",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "blenders",
+    "productId": "prd_c499472bcad658a163aa69a0",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_c499472bcad658a163aa69a0:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_db095bf80846b2bd8c5729c88ebf7349",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_c499472bcad658a163aa69a0:power_min",
+     "exactVariantId": "prd_c499472bcad658a163aa69a0",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_13aea66561a4486c30814166",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "toasters",
+    "productId": "prd_b5c9c2377fcb7db5db318d75",
+    "criterion": "width_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_b5c9c2377fcb7db5db318d75:width_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_d746a13f8719f83ed5f0ca7c010e5cab",
+     "categoryId": "toasters",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_b5c9c2377fcb7db5db318d75:width_max",
+     "exactVariantId": "prd_b5c9c2377fcb7db5db318d75",
+     "criterionId": "width_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_16490706235c494f114da0af",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_11d73581a7430aa6a49b3e6e",
+    "criterion": "weight_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_11d73581a7430aa6a49b3e6e:weight_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_d9dc8c56a0ec05bb838c683628512fc5",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_11d73581a7430aa6a49b3e6e:weight_max",
+     "exactVariantId": "prd_11d73581a7430aa6a49b3e6e",
+     "criterionId": "weight_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_17f9e44ee662de6eb9ba7547",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "kettles",
+    "productId": "prd_c67eff51323436c7beff9977",
+    "criterion": "capacity_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_c67eff51323436c7beff9977:capacity_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_64d135144ae8df13d463aafad20c06d0",
+     "categoryId": "kettles",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_c67eff51323436c7beff9977:capacity_min",
+     "exactVariantId": "prd_c67eff51323436c7beff9977",
+     "criterionId": "capacity_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_187c2b54d7a1f249d1ad4c45",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_da4477a15c09160dea80cef6",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_da4477a15c09160dea80cef6:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_393fa2f0516573e9c615ad998f2cf6c1",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_da4477a15c09160dea80cef6:power_min",
+     "exactVariantId": "prd_da4477a15c09160dea80cef6",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_1f8a321785ffaf30f42f2ee6",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "blenders",
+    "productId": "prd_6f592010fad82b95dc71ec5e",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_6f592010fad82b95dc71ec5e:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_094c6891ec1178b4f744419bcb051ab5",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_6f592010fad82b95dc71ec5e:power_min",
+     "exactVariantId": "prd_6f592010fad82b95dc71ec5e",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_22f4fd48183d444b953ef865",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "air_fryers",
+    "productId": "prd_b77e23c14a673d7a257bd6c1",
+    "criterion": "width_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_b77e23c14a673d7a257bd6c1:width_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_cbb399d6b77dd251fec86ff00d858455",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_b77e23c14a673d7a257bd6c1:width_max",
+     "exactVariantId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterionId": "width_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_2c8f1ed280fc143901c385b4",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_11d73581a7430aa6a49b3e6e",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_11d73581a7430aa6a49b3e6e:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_727694cea37dfaf74b4227c2c70eba5e",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_11d73581a7430aa6a49b3e6e:power_min",
+     "exactVariantId": "prd_11d73581a7430aa6a49b3e6e",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_3bb1df7bcdf71461ec2d9c2e",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "toasters",
+    "productId": "prd_4b64c5d3a3dfb012e671393f",
+    "criterion": "width_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_4b64c5d3a3dfb012e671393f:width_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_30f991457d23905f90f4373e50712fa9",
+     "categoryId": "toasters",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_4b64c5d3a3dfb012e671393f:width_max",
+     "exactVariantId": "prd_4b64c5d3a3dfb012e671393f",
+     "criterionId": "width_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_4c0b585c79b9a440b739e968",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_f4286fee702368428ab7a172",
+    "criterion": "weight_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_f4286fee702368428ab7a172:weight_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_8c3b9a2b57e456b6b246ac55cec24cd0",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_f4286fee702368428ab7a172:weight_max",
+     "exactVariantId": "prd_f4286fee702368428ab7a172",
+     "criterionId": "weight_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_4e29b44cb24e983c2c982bc0",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "blenders",
+    "productId": "prd_258ce8d764da74ae3f9eebd8",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_258ce8d764da74ae3f9eebd8:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_a5f5d06d8f6fb1a32e60a71fbe12b40f",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_258ce8d764da74ae3f9eebd8:power_min",
+     "exactVariantId": "prd_258ce8d764da74ae3f9eebd8",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_637a16e435a90716f0ead11d",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_99da9273908a1ee0360e7f8a",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_99da9273908a1ee0360e7f8a:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_19a44ebd898df9167592c0ca6198baaf",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_99da9273908a1ee0360e7f8a:power_min",
+     "exactVariantId": "prd_99da9273908a1ee0360e7f8a",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_6d4e968094db3a4d3459fa12",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_da4477a15c09160dea80cef6",
+    "criterion": "weight_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_da4477a15c09160dea80cef6:weight_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_2bbd7847dfac22df812386cce5d2786b",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_da4477a15c09160dea80cef6:weight_max",
+     "exactVariantId": "prd_da4477a15c09160dea80cef6",
+     "criterionId": "weight_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_789e33ffe0abf072ba8be152",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "air_fryers",
+    "productId": "prd_41185d853e4a0eed26933056",
+    "criterion": "width_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_41185d853e4a0eed26933056:width_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_a5eab712cb707d57458a2ef1709bfc90",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_41185d853e4a0eed26933056:width_max",
+     "exactVariantId": "prd_41185d853e4a0eed26933056",
+     "criterionId": "width_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_7b59a83de8528017bb2fe61a",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "blenders",
+    "productId": "prd_c4b55ffd479598e230d0d946",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_c4b55ffd479598e230d0d946:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_f7e7e14cd6ae6fb0ffcc73464a77c630",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_c4b55ffd479598e230d0d946:power_min",
+     "exactVariantId": "prd_c4b55ffd479598e230d0d946",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_9f6df55018a6b6036e3aaf80",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "blenders",
+    "productId": "prd_b4026dd016da18351011962d",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_b4026dd016da18351011962d:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_84b138d3bbe8a093d4016cc3614b92f4",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_b4026dd016da18351011962d:power_min",
+     "exactVariantId": "prd_b4026dd016da18351011962d",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_a87fb816ccca59da1b8abd66",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "blenders",
+    "productId": "prd_fae463907b2832521b9cbdb3",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_fae463907b2832521b9cbdb3:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_d12bed88a0d8fd13a610211fd13f9dea",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_fae463907b2832521b9cbdb3:power_min",
+     "exactVariantId": "prd_fae463907b2832521b9cbdb3",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_ac17926bf9527a6257068a5f",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "toasters",
+    "productId": "prd_9918fd859ba878ff60fe9e03",
+    "criterion": "width_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_9918fd859ba878ff60fe9e03:width_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_9e049bb5139148ae3b072e04ef86be2a",
+     "categoryId": "toasters",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_9918fd859ba878ff60fe9e03:width_max",
+     "exactVariantId": "prd_9918fd859ba878ff60fe9e03",
+     "criterionId": "width_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_b5abb41e43437d91f6c876f4",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "pending_authorization",
+    "categoryId": "coffee_machines",
+    "productId": "prd_fd3006bbcdff0028b89ad140",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_fd3006bbcdff0028b89ad140:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_86f80c668df218aee9c97dfbd2d37bae",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_fd3006bbcdff0028b89ad140:power_min",
+     "exactVariantId": "prd_fd3006bbcdff0028b89ad140",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_c912c900878caf591d8a824b",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "air_fryers",
+    "productId": "prd_3d6a6281b4ea4b068504c4b9",
+    "criterion": "width_max",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_3d6a6281b4ea4b068504c4b9:width_max",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_4b3bf8e5135f505d7dd623c6247c36b1",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_3d6a6281b4ea4b068504c4b9:width_max",
+     "exactVariantId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterionId": "width_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_dd3090820f1645da8b917e9f",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "blenders",
+    "productId": "prd_a9153c3ca30c41e991455b3a",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_a9153c3ca30c41e991455b3a:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_994b592bd2035d85c2581ea0c5b6e791",
+     "categoryId": "blenders",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_a9153c3ca30c41e991455b3a:power_min",
+     "exactVariantId": "prd_a9153c3ca30c41e991455b3a",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_ef5b371578770491ea4a3ea4",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "coffee_machines",
+    "productId": "prd_f4286fee702368428ab7a172",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 1,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_f4286fee702368428ab7a172:power_min",
+     "action": "Find a declaration of this criterion for the exact product from a permitted source."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_b4e72bd0c75a1caae26be0cf907f1383",
+     "categoryId": "coffee_machines",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_f4286fee702368428ab7a172:power_min",
+     "exactVariantId": "prd_f4286fee702368428ab7a172",
+     "criterionId": "power_min",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_1d60cb2621ec7c40607dba05",
+    "kind": "missing_declaration",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "air_fryers",
+    "productId": "prd_b77e23c14a673d7a257bd6c1",
+    "criterion": "budget_max",
+    "volatile": true,
+    "priority": 1.5,
+    "requests": 2,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_b77e23c14a673d7a257bd6c1:budget_max",
+     "action": "Find a dated, market-bound price declaration for the exact product."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_e2502613ccb341eeccd8999111de3d65",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_b77e23c14a673d7a257bd6c1:budget_max",
+     "exactVariantId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterionId": "budget_max",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_429a8f733fce1fb01f091e00",
+    "kind": "missing_independent_test",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "air_fryers",
+    "productId": "prd_41185d853e4a0eed26933056",
+    "criterion": "crisp_texture",
+    "volatile": false,
+    "priority": 3,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_41185d853e4a0eed26933056:crisp_texture",
+     "action": "Find an independent original test of this exact product measuring this outcome; a declaration is not a test."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_e717a54d3fbf864b1e2c61cbc021b9ea",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_41185d853e4a0eed26933056:crisp_texture",
+     "exactVariantId": "prd_41185d853e4a0eed26933056",
+     "criterionId": "crisp_texture",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_83ab2c7b48b56e3ad8970f58",
+    "kind": "missing_independent_test",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "air_fryers",
+    "productId": "prd_b77e23c14a673d7a257bd6c1",
+    "criterion": "crisp_texture",
+    "volatile": false,
+    "priority": 3,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_b77e23c14a673d7a257bd6c1:crisp_texture",
+     "action": "Find an independent original test of this exact product measuring this outcome; a declaration is not a test."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_c657cbfb5de627c5136252d34e24c1de",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_b77e23c14a673d7a257bd6c1:crisp_texture",
+     "exactVariantId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterionId": "crisp_texture",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_b08f40dbdbbb7be13b60a28c",
+    "kind": "missing_independent_test",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "air_fryers",
+    "productId": "prd_3d6a6281b4ea4b068504c4b9",
+    "criterion": "crisp_texture",
+    "volatile": false,
+    "priority": 3,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_3d6a6281b4ea4b068504c4b9:crisp_texture",
+     "action": "Find an independent original test of this exact product measuring this outcome; a declaration is not a test."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_c3ea4dd6a919152b3015242b484f3d45",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_3d6a6281b4ea4b068504c4b9:crisp_texture",
+     "exactVariantId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterionId": "crisp_texture",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_cd16b976cacbce50e7e975eb",
+    "kind": "missing_independent_test",
+    "destination": "research",
+    "status": "omitted_by_budget",
+    "categoryId": "air_fryers",
+    "productId": "prd_d95891602cc4471b86eb6330",
+    "criterion": "crisp_texture",
+    "volatile": false,
+    "priority": 3,
+    "requests": 1,
+    "gap181": {
+     "kind": "missing_test",
+     "reference": "prd_d95891602cc4471b86eb6330:crisp_texture",
+     "action": "Find an independent original test of this exact product measuring this outcome; a declaration is not a test."
+    },
+    "phase182JobPreview": {
+     "jobId": "research_bdde014a383e654aa610b3103fce92f5",
+     "categoryId": "air_fryers",
+     "kind": "exact_variant_source_research",
+     "gapKind": "missing_test",
+     "reference": "prd_d95891602cc4471b86eb6330:crisp_texture",
+     "exactVariantId": "prd_d95891602cc4471b86eb6330",
+     "criterionId": "crisp_texture",
+     "priorityOrder": 1,
+     "authority": "research_only",
+     "status": "queued"
+    }
+   },
+   {
+    "needId": "need_43f96681beadd02ef244d566",
+    "kind": "not_actionable",
+    "destination": "not_actionable",
+    "status": "not_actionable",
+    "categoryId": "air_fryers",
+    "productId": "prd_3d6a6281b4ea4b068504c4b9",
+    "criterion": "budget_max",
+    "volatile": false,
+    "priority": 99,
+    "requests": 1,
+    "gap181": null,
+    "phase182JobPreview": null
+   },
+   {
+    "needId": "need_6c11f7d8f5445855dc57ce39",
+    "kind": "not_actionable",
+    "destination": "not_actionable",
+    "status": "not_actionable",
+    "categoryId": "coffee_machines",
+    "productId": "prd_fe8d9da4524f8a3fa40430d7",
+    "criterion": "budget_max",
+    "volatile": false,
+    "priority": 99,
+    "requests": 1,
+    "gap181": null,
+    "phase182JobPreview": null
+   },
+   {
+    "needId": "need_aa211cccc091db2955ababf9",
+    "kind": "retained_not_comparable",
+    "destination": "reextraction",
+    "status": "pending_reextraction",
+    "categoryId": "coffee_machines",
+    "productId": "prd_46dfba42c3774eb289c24272",
+    "criterion": "power_min",
+    "volatile": false,
+    "priority": 99,
+    "requests": 1,
+    "gap181": null,
+    "phase182JobPreview": null
+   },
+   {
+    "needId": "need_d5c129517fb817ccefc65bea",
+    "kind": "clarify_requirement",
+    "destination": "user_clarification",
+    "status": "awaiting_user",
+    "categoryId": "air_fryers",
+    "productId": null,
+    "criterion": "batch_capacity",
+    "volatile": false,
+    "priority": 99,
+    "requests": 1,
+    "gap181": null,
+    "phase182JobPreview": null
+   },
+   {
+    "needId": "need_462a845a16f50088f26c53ac",
+    "kind": "clarify_requirement",
+    "destination": "user_clarification",
+    "status": "awaiting_user",
+    "categoryId": "air_fryers",
+    "productId": null,
+    "criterion": "capacity_min",
+    "volatile": false,
+    "priority": 99,
+    "requests": 1,
+    "gap181": null,
+    "phase182JobPreview": null
+   }
+  ]
+ },
+ "rows": [
+  {
+   "id": "n01",
+   "response": "positive_shortlist",
+   "expected": 1,
+   "got": 1,
+   "correct": 1,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 1,
+   "attributionOk": 1,
+   "needs": [
+    {
+     "needId": "need_6b9c2256c735a1d925a75f81",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "criterion": "capacity_min",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n02",
+   "response": "positive_shortlist",
+   "expected": 2,
+   "got": 2,
+   "correct": 2,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 2,
+   "attributionOk": 2,
+   "needs": [
+    {
+     "needId": "need_43f96681beadd02ef244d566",
+     "kind": "not_actionable",
+     "destination": "not_actionable",
+     "status": "not_actionable",
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterion": "budget_max",
+     "phase182Kind": null
+    },
+    {
+     "needId": "need_1d60cb2621ec7c40607dba05",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "budget_max",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n03",
+   "response": "positive_shortlist",
+   "expected": 1,
+   "got": 1,
+   "correct": 1,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 1,
+   "attributionOk": 1,
+   "needs": [
+    {
+     "needId": "need_1d60cb2621ec7c40607dba05",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "budget_max",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n04",
+   "response": "positive_shortlist",
+   "expected": 3,
+   "got": 3,
+   "correct": 3,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 3,
+   "attributionOk": 3,
+   "needs": [
+    {
+     "needId": "need_c912c900878caf591d8a824b",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterion": "width_max",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_22f4fd48183d444b953ef865",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "width_max",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_789e33ffe0abf072ba8be152",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_41185d853e4a0eed26933056",
+     "criterion": "width_max",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n05",
+   "response": "positive_shortlist",
+   "expected": 1,
+   "got": 1,
+   "correct": 1,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 1,
+   "attributionOk": 1,
+   "needs": [
+    {
+     "needId": "need_6c11f7d8f5445855dc57ce39",
+     "kind": "not_actionable",
+     "destination": "not_actionable",
+     "status": "not_actionable",
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "criterion": "budget_max",
+     "phase182Kind": null
+    }
+   ]
+  },
+  {
+   "id": "n06",
+   "response": "positive_shortlist",
+   "expected": 3,
+   "got": 3,
+   "correct": 3,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 3,
+   "attributionOk": 3,
+   "needs": [
+    {
+     "needId": "need_6d4e968094db3a4d3459fa12",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "criterion": "weight_max",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_4c0b585c79b9a440b739e968",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_f4286fee702368428ab7a172",
+     "criterion": "weight_max",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_16490706235c494f114da0af",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "criterion": "weight_max",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n07",
+   "response": "positive_shortlist",
+   "expected": 6,
+   "got": 6,
+   "correct": 6,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 6,
+   "attributionOk": 6,
+   "needs": [
+    {
+     "needId": "need_637a16e435a90716f0ead11d",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_b5abb41e43437d91f6c876f4",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_187c2b54d7a1f249d1ad4c45",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_ef5b371578770491ea4a3ea4",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_f4286fee702368428ab7a172",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_aa211cccc091db2955ababf9",
+     "kind": "retained_not_comparable",
+     "destination": "reextraction",
+     "status": "pending_reextraction",
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "criterion": "power_min",
+     "phase182Kind": null
+    },
+    {
+     "needId": "need_2c8f1ed280fc143901c385b4",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n08",
+   "response": "positive_shortlist",
+   "expected": 3,
+   "got": 3,
+   "correct": 2,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [
+    {
+     "got": "research",
+     "expected": "reextraction",
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "criterion": "width_max"
+    }
+   ],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 3,
+   "attributionOk": 3,
+   "needs": [
+    {
+     "needId": "need_ac17926bf9527a6257068a5f",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "criterion": "width_max",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_3bb1df7bcdf71461ec2d9c2e",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "criterion": "width_max",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_13aea66561a4486c30814166",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "criterion": "width_max",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n09",
+   "response": "positive_shortlist",
+   "expected": 6,
+   "got": 7,
+   "correct": 6,
+   "falseNeeds": [
+    {
+     "kind": "missing_declaration",
+     "destination": "research",
+     "productId": "prd_c499472bcad658a163aa69a0",
+     "criterion": "power_min"
+    }
+   ],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 7,
+   "attributionOk": 7,
+   "needs": [
+    {
+     "needId": "need_a87fb816ccca59da1b8abd66",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_fae463907b2832521b9cbdb3",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_12cf7d016f055f157f79be77",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_c499472bcad658a163aa69a0",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_dd3090820f1645da8b917e9f",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_a9153c3ca30c41e991455b3a",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_1f8a321785ffaf30f42f2ee6",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_6f592010fad82b95dc71ec5e",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_7b59a83de8528017bb2fe61a",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_c4b55ffd479598e230d0d946",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_4e29b44cb24e983c2c982bc0",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_258ce8d764da74ae3f9eebd8",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_9f6df55018a6b6036e3aaf80",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_b4026dd016da18351011962d",
+     "criterion": "power_min",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n10",
+   "response": "positive_shortlist",
+   "expected": 1,
+   "got": 1,
+   "correct": 0,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [
+    {
+     "got": "research",
+     "expected": "reextraction",
+     "productId": "prd_c67eff51323436c7beff9977",
+     "criterion": "capacity_min"
+    }
+   ],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 1,
+   "attributionOk": 1,
+   "needs": [
+    {
+     "needId": "need_17f9e44ee662de6eb9ba7547",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_c67eff51323436c7beff9977",
+     "criterion": "capacity_min",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n11",
+   "response": "positive_shortlist",
+   "expected": 5,
+   "got": 5,
+   "correct": 5,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 5,
+   "attributionOk": 5,
+   "needs": [
+    {
+     "needId": "need_6b9c2256c735a1d925a75f81",
+     "kind": "missing_declaration",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "criterion": "capacity_min",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_b08f40dbdbbb7be13b60a28c",
+     "kind": "missing_independent_test",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterion": "crisp_texture",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_83ab2c7b48b56e3ad8970f58",
+     "kind": "missing_independent_test",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "crisp_texture",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_429a8f733fce1fb01f091e00",
+     "kind": "missing_independent_test",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_41185d853e4a0eed26933056",
+     "criterion": "crisp_texture",
+     "phase182Kind": "exact_variant_source_research"
+    },
+    {
+     "needId": "need_cd16b976cacbce50e7e975eb",
+     "kind": "missing_independent_test",
+     "destination": "research",
+     "status": "pending_authorization",
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "criterion": "crisp_texture",
+     "phase182Kind": "exact_variant_source_research"
+    }
+   ]
+  },
+  {
+   "id": "n12",
+   "response": "clarification",
+   "expected": 1,
+   "got": 1,
+   "correct": 1,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 0,
+   "attributionOk": 0,
+   "needs": [
+    {
+     "needId": "need_d5c129517fb817ccefc65bea",
+     "kind": "clarify_requirement",
+     "destination": "user_clarification",
+     "status": "awaiting_user",
+     "productId": null,
+     "criterion": "batch_capacity",
+     "phase182Kind": null
+    }
+   ]
+  },
+  {
+   "id": "n13",
+   "response": "clarification",
+   "expected": 1,
+   "got": 1,
+   "correct": 1,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 0,
+   "attributionOk": 0,
+   "needs": [
+    {
+     "needId": "need_462a845a16f50088f26c53ac",
+     "kind": "clarify_requirement",
+     "destination": "user_clarification",
+     "status": "awaiting_user",
+     "productId": null,
+     "criterion": "capacity_min",
+     "phase182Kind": null
+    }
+   ]
+  },
+  {
+   "id": "n14",
+   "response": "out_of_scope",
+   "expected": 0,
+   "got": 0,
+   "correct": 0,
+   "falseNeeds": [],
+   "missed": [],
+   "wrongDestination": [],
+   "researchForClarification": 0,
+   "clarificationForResearch": 0,
+   "attributionChecked": 0,
+   "attributionOk": 0,
+   "needs": []
+  }
+ ]
+}

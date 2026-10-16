@@ -15,7 +15,7 @@ import {runJourney248,type CategoryEntry248} from './phase248_advisory_journey.j
 import {decideAdvice249,candidatesFromStore249,SPEC_CRITERIA249,type Candidate249} from './phase249_decision.js';
 import {createDecision177,applyDecisionAction177} from './phase177_decision_snapshot.js';
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
-import type {Advice253,CitedEvidence253} from './phase253_advice_contract.js';
+import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 const ROLE_LABEL:Record<string,string>={manufacturer_declaration:'declared by the manufacturer',retailer_declaration:'declared by a retailer',
@@ -52,6 +52,9 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  const out:Advice253={schema:'pee253.advice.v1',text,target:{kind:j.stages.target.kind,category:j.stages.target.category,other:j.stages.target.other,basis:j.stages.target.basis},
   category,constraints:[],unmappedConstraints:ex.unmapped,needs,unresolved:[],response:'clarification',ordered:false,rankingAuthorized:false,
   shortlist:[],unknown:[],excluded:[],conflicts:[],questions:[],statements:[],limitations,researchPlan:[...j.researchPlan]};
+ const ri:AdviceResearchInputs253={targetKind:j.stages.target.kind,category,statedCriteria:[],pendingCriteria:[],performanceNeeds:[],unresolvedNeeds:[],productChecks:[],ineligible:[]};
+ out.researchInputs=ri;
+ ri.performanceNeeds=j.stages.need.concepts.filter(c=>!j.stages.requirements.factualRequirements.some(f=>f.conceptId===c.id)).map(c=>c.id);
  // 1. What is being bought.
  if(j.stages.target.kind==='other'){out.response='out_of_scope';
   out.statements.push(`You seem to be looking for ${j.stages.target.other}; the ${category??'product'} mentioned is context. PEE holds no knowledge or products for ${j.stages.target.other}.`);
@@ -64,6 +67,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  const applicable=ex.constraints.filter(c=>!!SPEC_CRITERIA249[c.criterion]);
  const stated=applicable.filter(c=>c.status==='stated_in_request');
  const pending=applicable.filter(c=>c.status==='candidate');
+ ri.statedCriteria=stated.map(c=>c.criterion);ri.pendingCriteria=pending.map(c=>c.criterion);
  out.constraints=applicable.map(c=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence}));
  for(const c of pending)out.questions.push(`Did you mean that it must have ${c.bound==='max'?'at most':'at least'} ${c.value} ${c.unit} (${c.property.replace('_',' ')})? You wrote "${c.span}".`);
  // Needs a declaration could check but whose value the user has not given: ask once, unless already stated.
@@ -72,6 +76,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  for(const f of j.stages.requirements.factualRequirements)if(f.conceptId!=='budget'&&!statedCriteria.has(f.criterion)&&!out.unresolved.includes(f.conceptId)){
   const sameNeed=j.stages.requirements.factualRequirements.filter(x=>x.conceptId===f.conceptId).map(x=>x.criterion);
   if(sameNeed.some(k=>statedCriteria.has(k)))continue;out.unresolved.push(f.conceptId);}
+ ri.unresolvedNeeds=[...out.unresolved];
  const NEED_QUESTION:Record<string,string>={batch_capacity:'What capacity do you need at least (litres, cups or slices)?',small_kitchen:'How much space do you have for it (maximum width, depth and height)?'};
  for(const n of out.unresolved){const q=entry?.needQuestions?.[n]??NEED_QUESTION[n];if(q&&!out.questions.includes(q))out.questions.push(q);}
  if(!stated.length){
@@ -88,11 +93,13 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   value:{kind:'quantity',value:c.value,unit:c.unit.toLowerCase()},priority:'hard',referenceHash:sha(c.span)}).snapshot;
  // 4. Eligible candidates, then the existing decision layer.
  const pool=eligibleCandidates253(store,category);
+ for(const p of pool.filter(x=>!x.eligible))ri.ineligible.push({productId:p.candidate.productId,code:'product_line'});
  for(const p of pool.filter(x=>!x.eligible))out.unknown.push({productId:p.candidate.productId,name:p.candidate.name,reasons:p.reasons});
  const eligible=pool.filter(p=>p.eligible);
  const advice=decideAdvice249({snapshot:snap,candidates:eligible.map(p=>p.candidate)});
  const cite=(productId:string,e:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}):CitedEvidence253=>({declarationId:e.declarationId,productId,rawValue:e.rawValue,sourceUrl:e.sourceUrl,
   sourceRole:(ROLE_LABEL[e.evidenceRole]??e.evidenceRole)+(!e.declarationId.startsWith('name:')&&sourceBasis(store,e.declarationId)==='heuristic_unverified'?' (source type inferred from its host and declared brand, not verified)':''),variantId:null,observedAt:e.declarationId.startsWith('name:')?null:observedAt(store,e.declarationId)});
+ for(const c of advice.checks)ri.productChecks.push({productId:c.productId,outcome:c.outcome,criteria:c.checks.map(k=>({key:k.key,outcome:k.outcome,code:k.code}))});
  for(const c of advice.checks){const p=eligible.find(x=>x.candidate.productId===c.productId)!;
   for(const k of c.checks)if(/^sources disagree/.test(k.reason))out.conflicts.push({productId:c.productId,criterion:k.key,reason:k.reason});
   if(c.outcome==='meets_all')out.shortlist.push({productId:c.productId,name:c.name,evidence:c.checks.flatMap(k=>k.evidence.map(e=>cite(c.productId,e))),

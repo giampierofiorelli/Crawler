@@ -56,7 +56,9 @@ export interface Candidate249 {productId:string;name:string;declarations:readonl
  /** Phase251: set when the product's identity rests on its name alone but its declarations come from pages of
   * different models; such a product is never reported as meeting requirements until its identity is reviewed. */
  identityWarning?:string|null}
-export interface CriterionCheck249 {key:string;outcome:'meets'|'fails'|'unknown';reason:string;evidence:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}[]}
+/** Phase254: machine-readable reason, so later stages never parse the human reason text. */
+export type CheckCode249='meets'|'fails'|'not_a_quantity'|'upper_bound_only'|'not_comparable'|'no_declaration'|'sources_disagree'|'identity_unreviewed';
+export interface CriterionCheck249 {key:string;outcome:'meets'|'fails'|'unknown';code:CheckCode249;reason:string;evidence:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}[]}
 export interface ProductCheck249 {productId:string;name:string;outcome:'meets_all'|'fails'|'unknown';checks:CriterionCheck249[]}
 export interface Advice249 {
  schema:'pee249.advice.v1';
@@ -69,7 +71,7 @@ export interface Advice249 {
  statements:string[];cautions:string[];researchPlan:string[];
 }
 function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):CriterionCheck249{
- if(c.value.kind!=='quantity')return {key:c.key,outcome:'unknown',reason:'criterion is not a quantity',evidence:[]};
+ if(c.value.kind!=='quantity')return {key:c.key,outcome:'unknown',code:'not_a_quantity',reason:'criterion is not a quantity',evidence:[]};
  const unit=c.value.unit,limit=c.value.value;
  // Declarations of the base product (variant-specific values are not applied to the whole product).
  const rel=p.declarations.filter(d=>!d.variantId&&spec.property.test(d.property)&&!(spec.exclude?.test(d.property)));
@@ -82,15 +84,15 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  if(!vals.length){
   const ub=rel.filter(d=>d.value?.kind==='quantity'&&d.value.bound==='max').map(d=>({d,n:comparable249({...d.value,bound:undefined} as Value245,spec.dimension,unit)})).filter(x=>x.n!==null) as {d:CandidateDeclaration249;n:number}[];
   if(ub.length&&spec.bound==='min'){const top=Math.max(...ub.map(x=>x.n));
-   return top<limit?{key:c.key,outcome:'fails',reason:`declared at most ${round(top)} ${unit} ("up to"); required ≥ ${limit} ${unit}`,evidence:ub.map(x=>ev(x.d))}
-    :{key:c.key,outcome:'unknown',reason:`declared "up to" ${round(top)} ${unit}: an upper bound under the maker's conditions, not the minimum you need`,evidence:ub.map(x=>ev(x.d))};}
-  return {key:c.key,outcome:'unknown',reason:rel.length?'declared, but not in a comparable unit':'no declaration for this requirement',evidence:rel.map(ev)};
+   return top<limit?{key:c.key,outcome:'fails',code:'fails',reason:`declared at most ${round(top)} ${unit} ("up to"); required ≥ ${limit} ${unit}`,evidence:ub.map(x=>ev(x.d))}
+    :{key:c.key,outcome:'unknown',code:'upper_bound_only',reason:`declared "up to" ${round(top)} ${unit}: an upper bound under the maker's conditions, not the minimum you need`,evidence:ub.map(x=>ev(x.d))};}
+  return {key:c.key,outcome:'unknown',code:rel.length?'not_comparable':'no_declaration',reason:rel.length?'declared, but not in a comparable unit':'no declaration for this requirement',evidence:rel.map(ev)};
  }
  const lo=Math.min(...vals.map(x=>x.n)),hi=Math.max(...vals.map(x=>x.n));
  // Sources disagreeing by more than 2 % are a conflict to resolve, not a pass or a fail.
- if(hi-lo>Math.max(Math.abs(hi),Math.abs(lo))*0.02)return {key:c.key,outcome:'unknown',reason:`sources disagree (${round(lo)}–${round(hi)} ${unit})`,evidence:vals.map(x=>ev(x.d))};
+ if(hi-lo>Math.max(Math.abs(hi),Math.abs(lo))*0.02)return {key:c.key,outcome:'unknown',code:'sources_disagree',reason:`sources disagree (${round(lo)}–${round(hi)} ${unit})`,evidence:vals.map(x=>ev(x.d))};
  const ok=spec.bound==='min'?lo>=limit:hi<=limit;
- return {key:c.key,outcome:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
+ return {key:c.key,outcome:ok?'meets':'fails',code:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
 }
 const OVERALL_DIMENSIONS=/\b(?:dimensions?|size|measurements)\b/i;
 const COMPONENT_DIMENSIONS=/\b(?:slot|slots|box|package|packaging|packed|shipping|carton|internal|interior|inner|cavity|drum|bowl|basket|jug|tank|plate|door|opening|cable|cord)\b/i;
@@ -131,7 +133,7 @@ export function decideAdvice249(input:{snapshot:DecisionSnapshot177;candidates:r
   const hardFail=cs.some((x,i)=>x.outcome==='fails'&&spec[i].priority==='hard');
   const anyUnknown=cs.some(x=>x.outcome==='unknown');
   let outcome:ProductCheck249['outcome']=hardFail?'fails':anyUnknown?'unknown':cs.every(x=>x.outcome==='meets')?'meets_all':'fails';
-  if(p.identityWarning&&outcome!=='fails'){outcome='unknown';cs.push({key:'identity',outcome:'unknown',reason:p.identityWarning,evidence:[]});}
+  if(p.identityWarning&&outcome!=='fails'){outcome='unknown';cs.push({key:'identity',outcome:'unknown',code:'identity_unreviewed',reason:p.identityWarning,evidence:[]});}
   return {productId:p.productId,name:p.name,outcome,checks:cs};
  }).sort((a,b)=>a.name.localeCompare(b.name)||a.productId.localeCompare(b.productId));
  const meets=checks.filter(c=>c.outcome==='meets_all'),unknown=checks.filter(c=>c.outcome==='unknown'),fails=checks.filter(c=>c.outcome==='fails');

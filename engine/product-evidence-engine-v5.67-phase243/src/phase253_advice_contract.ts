@@ -31,6 +31,15 @@ export interface Advice253 {
  excluded:{productId:string;name:string;reasons:string[]}[];
  conflicts:{productId:string;criterion:string;reason:string}[];
  questions:string[];statements:string[];limitations:string[];researchPlan:string[];
+ /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
+  * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
+ researchInputs?:AdviceResearchInputs253;
+}
+export interface AdviceResearchInputs253 {
+ targetKind:TargetKind253;category:string|null;statedCriteria:string[];pendingCriteria:string[];
+ performanceNeeds:string[];unresolvedNeeds:string[];
+ productChecks:{productId:string;outcome:'meets_all'|'fails'|'unknown';criteria:{key:string;outcome:'meets'|'fails'|'unknown';code:string}[]}[];
+ ineligible:{productId:string;code:'product_line'}[];
 }
 export interface AdviceGold253 {
  id:string;text:string;tier:'T1_synthetic'|'T2_real_request_developer_gold'|'T3_human_span_labels';

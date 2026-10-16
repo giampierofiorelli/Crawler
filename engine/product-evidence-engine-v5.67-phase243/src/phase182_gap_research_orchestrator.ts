@@ -31,6 +31,34 @@ export interface ResearchPlan182 {
  planningOnly:true;rankingAuthorized:false;hardExclusionsAuthorized:false;
 }
 const planContent=(p:Omit<ResearchPlan182,'planHash'>)=>JSON.stringify(p);
+/** Phase254: the per-gap bounds and job identity of planResearchGaps182, exported so a caller WITHOUT a signed
+ * Phase181 decision can preview the exact job a gap would become. A preview is not a plan and grants no authority:
+ * planResearchGaps182 remains the only way to obtain a ResearchPlan182, and it still requires the Phase181 decision. */
+export function researchJobFromGap182(categoryId:string,g:ResearchGap181):ResearchJob182{
+ if(!id(categoryId))throw Error('phase182_bad_plan_input');
+ if(!g||!gapTypes.includes(g.kind)||typeof g.reference!=='string'||g.reference.length>210||
+  typeof g.action!=='string'||g.action.length>1000)throw Error('phase182_untrusted_gap');
+ // Product identifiers and criteria are bounded *before* being handed to a worker.
+ let kind:ResearchKind182,variant:string|null=null,criterion:string|null=null;
+ if(g.kind==='missing_test'){
+  const sep=g.reference.lastIndexOf(':');
+  const variantPart=g.reference.slice(0,sep),criterionPart=g.reference.slice(sep+1);
+  if(sep<=0||!id(variantPart)||!id(criterionPart))throw Error('phase182_bad_variant_or_criterion');
+  variant=variantPart;criterion=criterionPart;kind='exact_variant_source_research';
+ }else if(g.kind==='missing_product'){
+  if(!id(g.reference))throw Error('phase182_bad_variant');variant=g.reference;kind='exact_variant_source_research';
+ }else if(['unconfirmed_need','scope_unconfirmed'].includes(g.kind)){
+  if(!id(g.reference))throw Error('phase182_bad_reference');kind='requirement_clarification';
+ }else if(g.kind==='need_review'){
+  if(!id(g.reference))throw Error('phase182_bad_reference');kind='independent_review';
+ }else {
+  if(!id(g.reference))throw Error('phase182_bad_reference');kind='category_research';
+ }
+ const spec=[categoryId,kind,g.kind,g.reference,variant,criterion];
+ return {jobId:`research_${sha(JSON.stringify(spec)).slice(0,32)}`,categoryId,kind,gapKind:g.kind,
+  reference:g.reference,exactVariantId:variant,criterionId:criterion,priorityOrder:priority[g.kind as ResearchGap181['kind']],
+  authority:'research_only',status:'queued'};
+}
 /** A gap is a RESEARCH hint, not a command allowing unsupervised browsing. */
 export function planResearchGaps182(args:{decision:DynamicDecision181;categoryId:string;categoryLabel:string;
  market:string;asOf:string;maxJobs?:number}):ResearchPlan182 {
@@ -41,31 +69,7 @@ export function planResearchGaps182(args:{decision:DynamicDecision181;categoryId
    typeof categoryLabel!=='string'||!(/^[a-zA-Z][a-zA-Z0-9 /-]{2,99}$/.test(categoryLabel))||
    !id(d.rankInputFingerprint)||!Array.isArray(d.researchGaps)||d.researchGaps.length>300||
    !Number.isSafeInteger(max)||max<1||max>100)throw Error('phase182_bad_plan_input');
- const jobs:ResearchJob182[]=[];
- for(const g of d.researchGaps){
-  if(!g||!gapTypes.includes(g.kind)||typeof g.reference!=='string'||g.reference.length>210||
-   typeof g.action!=='string'||g.action.length>1000)throw Error('phase182_untrusted_gap');
-  // Product identifiers and criteria are bounded *before* being handed to a worker.
-  let kind:ResearchKind182,variant:string|null=null,criterion:string|null=null;
-  if(g.kind==='missing_test'){
-   const sep=g.reference.lastIndexOf(':');
-   const variantPart=g.reference.slice(0,sep),criterionPart=g.reference.slice(sep+1);
-   if(sep<=0||!id(variantPart)||!id(criterionPart))throw Error('phase182_bad_variant_or_criterion');
-   variant=variantPart;criterion=criterionPart;kind='exact_variant_source_research';
-  }else if(g.kind==='missing_product'){
-   if(!id(g.reference))throw Error('phase182_bad_variant');variant=g.reference;kind='exact_variant_source_research';
-  }else if(['unconfirmed_need','scope_unconfirmed'].includes(g.kind)){
-   if(!id(g.reference))throw Error('phase182_bad_reference');kind='requirement_clarification';
-  }else if(g.kind==='need_review'){
-   if(!id(g.reference))throw Error('phase182_bad_reference');kind='independent_review';
-  }else {
-   if(!id(g.reference))throw Error('phase182_bad_reference');kind='category_research';
-  }
-  const spec=[categoryId,kind,g.kind,g.reference,variant,criterion];
-  jobs.push({jobId:`research_${sha(JSON.stringify(spec)).slice(0,32)}`,categoryId,kind,gapKind:g.kind,
-   reference:g.reference,exactVariantId:variant,criterionId:criterion,priorityOrder:priority[g.kind as ResearchGap181['kind']],
-   authority:'research_only',status:'queued'});
- }
+ const jobs:ResearchJob182[]=d.researchGaps.map(g=>researchJobFromGap182(categoryId,g));
  const sorted=[...new Map(jobs.map(x=>[x.jobId,x])).values()].sort((a,b)=>a.priorityOrder-b.priorityOrder||a.jobId.localeCompare(b.jobId,'en'));
  const base:Omit<ResearchPlan182,'planHash'>={phase:182,schema:'182.1',categoryId,categoryLabel,market,asOf,
   inputFingerprint:d.rankInputFingerprint,knowledgeRevision:d.knowledgeRevision,policyRevision:d.policyRevision,
