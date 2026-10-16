@@ -11,6 +11,29 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000000000000. Phase265 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase265/PHASE265-TECHNICAL-REPORT.md`; next brief
+`docs/phase265/CONTINUATION-PROMPT.md` (Phase266: teaching from the three research packages, measured before and
+after).
+
+- **Store schema v5** (the live store and the snapshot are still v4 and migrate on first open by the Phase265 code). `test_measurements265` holds publisher-reported test measurements (Phase225/226/227 leads). It
+  has a nullable product, provenance and qualifiers, and CHECK constraints: unreviewed, independence not established,
+  never evidence or ranking.
+  - **Written by:** `ingestObservation246({testLeads})` in the same transaction, under the Phase249 retention decision
+    and the per-host cap.
+  - **Read with:** `testMeasurements265()` and `testMeasurementConflicts265()`.
+  - **CLI:** `phase246-knowledge.mjs test-measurements`.
+  - **Builders:** `testLeadsFromHtml265` in `phase246-live-wave.mjs observations` and `ingest-recovered`.
+  - **Validated on synthetic fixtures only (T1):** 11 of 11 frozen scenarios (`evaluation/phase265/`); 0 measurements
+    in the real store (no real body to re-ingest).
+- **Phase264 gate:**
+  - sitemap requests only for sitemaps the gate itself established;
+  - domains only via `acceptBrandDomains` (from its own Wikidata responses);
+  - expiry is rechecked after the delay;
+  - the `fileUsageLedger264` budget is per policyId, across executions.
+- **Phase225:** a percent value followed by a space is now matched; it was silently lost before.
+
 ## 000000000000000. Phase264 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase264/PHASE264-TECHNICAL-REPORT.md`; next brief

@@ -79,6 +79,10 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
   - never feed a pipeline invented text to make it run;
   - persist only what the store does not already hold (derive, don't copy).
+- **Authorise the resource, not the label** (Phase265). The Phase264 gate trusted the caller's `sitemap_metadata`
+  label and any host passed to `allowDomain`, so a product page could have been fetched as "sitemap metadata". A gate
+  must derive what it permits (domains, sitemap URLs, budget usage across runs) from its own validated responses and
+  records.
 - **Rehearse a single live run offline first, and log provider instructions** (Phase264). A fixture rehearsal of
   the one-shot pilot found that the per-host budget also capped Wikidata (4 allowed against 7 needed) before any request
   was spent. The live run then stopped on a 429 whose Retry-After value had not been logged. Record every stop
