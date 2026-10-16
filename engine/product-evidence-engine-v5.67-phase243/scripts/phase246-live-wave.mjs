@@ -181,6 +181,8 @@ switch(cmd){
  case 'observations':{
   const {extractSpecifications245,SPEC_EXTRACTOR_VERSION}=await import('../dist/src/phase245_spec_extraction.js');
   const {detectReservations249}=await import('../dist/src/phase249_retention_policy.js');
+  // Phase265: the Phase225/226/227 test-result probe runs on the same transient bytes; only its leads travel on.
+  const {testLeadsFromHtml265}=await import('../dist/src/phase265_test_measurements.js');
   const out=[];
   for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
   for(const p of S.pages){
@@ -193,9 +195,11 @@ switch(cmd){
    const reservations=detectReservations249(robotsBody,b.toString('utf8'));
    out.push({observation:{source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:p.sourceType,sourceTypeBasis:'operator_asserted'},
     url:p.finalUrl??p.url,sha256:p.sha256,bytes:p.bytes,httpStatus:p.httpStatus,fetchedAt:p.fetchedAt,runId:(F.run??'phase246_wave1')+'_'+p.role,
-    extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category&&p.category!=='mixed'?[p.category]:[],reservations},
+    extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category&&p.category!=='mixed'?[p.category]:[],reservations,
+    testLeads:testLeadsFromHtml265(b.toString('utf8'),p.finalUrl??p.url,p.sha256,p.role==='method_reference'?null:x)},
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
+   out.at(-1).yield.testLeads=out.at(-1).observation.testLeads.probe.candidates.length;
   }
   writeFileSync(resolve(F.out),JSON.stringify(out));
   for(const o of out)if(o.yield)console.log(JSON.stringify(o.yield));

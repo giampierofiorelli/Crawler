@@ -50,7 +50,7 @@ const screen=(f:F,o:Partial<ScreeningDecision193>={},hash=PAGE_A):ScreeningDecis
  retainedCandidateVariantIds:[],...o});
 
 test('1-3. a permitted annotation persists, survives close and reopen, and is recovered without a rebuild',()=>{
- const f=fixture();assert.equal(f.s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(STORE_SCHEMA_VERSION246,4);
+ const f=fixture();assert.equal(f.s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(STORE_SCHEMA_VERSION246,5,'v5 (Phase265) adds test_measurements265 after this phase');
  assert.equal(descriptorWithMemory260(f.s,f.revA,f.prodA).descriptor.language,'und');
  const r=recordSourceMemory260(f.s,ann(f));assert.equal(r.status,'recorded');assert.equal(r.basis,'operator_annotation','no verifier: an operator claim, not a verified fact');
  f.s.close();
@@ -148,13 +148,13 @@ test('7. tampered history is detected; replay, recording and recovery refuse it'
 test('8. migration v3 -> v4 preserves every earlier record and the journal',()=>{
  const f=fixture();const path=f.path;
  // A Phase246 v3 store: the same records without the v4 objects.
- f.s.db.exec('DROP TABLE source_memory260; PRAGMA user_version=3;');
+ f.s.db.exec('DROP TABLE source_memory260; DROP TABLE test_measurements265; PRAGMA user_version=3;');
  const canon3=canonical(f.s),events3=f.s.verifyJournal();assert.ok(events3.ok);f.s.close();
  const s=new KnowledgeStore246(path);
- assert.equal(s.schemaVersion(),4);assert.equal(canonical(s),canon3,'canonical tables unchanged by the migration');
+ assert.equal(s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(canonical(s),canon3,'canonical tables unchanged by the migration');
  assert.deepEqual(s.verifyJournal(),events3,'the migration appends nothing to the journal');
  assert.deepEqual(checkSourceMemory260(s),{journalOk:true,projectionConsistent:true,records:0,head:'0:0'});
- s.close();const s2=new KnowledgeStore246(path);assert.equal(s2.schemaVersion(),4,'reopening is a no-op');s2.db.exec('PRAGMA user_version=5');s2.close();
+ s.close();const s2=new KnowledgeStore246(path);assert.equal(s2.schemaVersion(),STORE_SCHEMA_VERSION246,'reopening is a no-op');s2.db.exec(`PRAGMA user_version=${STORE_SCHEMA_VERSION246+1}`);s2.close();
  assert.throws(()=>new KnowledgeStore246(path),/246_store_newer_than_software/);
 });
 

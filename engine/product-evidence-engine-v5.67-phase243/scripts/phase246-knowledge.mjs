@@ -5,7 +5,9 @@
  *   status                      counts, schema version, journal check, stale artifacts, suspended hosts
  *   seed --category C           add assistant-authored (unreviewed) hypotheses for C (air_fryers|coffee_machines|toasters)
  *   ingest-recovered --raw DIRS  ingest Phase245 manifest pages whose raw bytes are present AND hash-verified
- *   ingest-observations --file F ingest a JSON list of observations produced by a live run (see phase246-live-wave.mjs)
+ *   ingest-observations --file F ingest a JSON list of observations produced by a live run (see phase246-live-wave.mjs);
+ *                               Phase265: their test-result leads are persisted as unreviewed test measurements
+ *   test-measurements [--product ID]   stored test measurements (unreviewed, never evidence) and per-product conflicts
  *   add-method-refs --file F    add professional test-method pointers (paraphrase + observed revision)
  *   apply-lessons                adopted Phase250 category lessons (hypothesis items and concept aliases; idempotent)
   *   retire-item --item ID --reason R   retire a category item (journaled; never deleted)
@@ -40,6 +42,7 @@ import {CONCEPT_VOCABULARY248} from '../dist/src/phase248_concept_vocabulary.js'
 import {ADOPTED_LESSONS250,applyLessons250} from '../dist/src/phase250_category_lessons.js';
 import {relations247,attributeVocabulary247,compileTo116,researchPriorities247} from '../dist/src/phase247_category_relations.js';
 import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../dist/src/phase245_spec_extraction.js';
+import {testLeadsFromHtml265} from '../dist/src/phase265_test_measurements.js';
 
 const [cmd,...rest]=process.argv.slice(2);
 const flags={};for(let i=0;i<rest.length;i++){if(rest[i].startsWith('--')){const k=rest[i].slice(2);const v=rest[i+1]&&!rest[i+1].startsWith('--')?rest[++i]:true;flags[k]=v;}}
@@ -90,13 +93,13 @@ try{
    for(const p of inv.pages){
     let bytes=null;for(const d of dirs){const f=join(d,p.tag+'.html');if(existsSync(f)){const b=readFileSync(f);if(sha(b)===p.recordedSha256){bytes=b;break;}}}
     if(!bytes||!p.url){res.push({tag:p.tag,ingested:false,reason:bytes?'no_url':'raw_bytes_not_verified'});continue;}
-    const host=new URL(p.url).host;
+    const host=new URL(p.url).host;const x=extractSpecifications245(bytes.toString('utf8'),p.url);
     const r=store.ingestObservation246({source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:SOURCE_TYPE_BY_HOST[host]??'unknown',
       sourceTypeBasis:'operator_asserted',policy:policyFor(host)},url:p.url,sha256:p.recordedSha256,bytes:p.bytes,httpStatus:200,fetchedAt:new Date(p.fetchedAt).toISOString(),
-     runId:'phase245_recovered_'+p.set,extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:extractSpecifications245(bytes.toString('utf8'),p.url),
-     categoryHypotheses:p.categoryHypothesis?[p.categoryHypothesis]:[]});
+     runId:'phase245_recovered_'+p.set,extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:x,
+     categoryHypotheses:p.categoryHypothesis?[p.categoryHypothesis]:[],testLeads:testLeadsFromHtml265(bytes.toString('utf8'),p.url,p.recordedSha256,x)});
     res.push({tag:p.tag,ingested:true,newRevision:r.newRevision,retention:r.retention,products:r.productIds.length,variants:r.variantIds.length,
-     declarationsSeen:r.declarationsSeen,declarationsRetained:r.declarationsRetained});
+     declarationsSeen:r.declarationsSeen,declarationsRetained:r.declarationsRetained,testMeasurements:r.testMeasurements??null});
    }
    out({db:dbPath,results:res,stats:store.stats246()});break;}
   case 'ingest-observations':{
@@ -106,7 +109,8 @@ try{
     if(!o.observation)continue;
     const x=o.observation;
     const r=store.ingestObservation246({...x,source:{...x.source,policy:policyFor(x.source.host)},extraction:x.extraction??null});
-    res.push({url:x.url,newRevision:r.newRevision,retention:r.retention,products:r.productIds.length,declarationsSeen:r.declarationsSeen,declarationsRetained:r.declarationsRetained});
+    res.push({url:x.url,newRevision:r.newRevision,retention:r.retention,products:r.productIds.length,declarationsSeen:r.declarationsSeen,declarationsRetained:r.declarationsRetained,
+     testMeasurements:r.testMeasurements??null});
    }
    out({results:res,stats:store.stats246()});break;}
   case 'profile':{
@@ -134,6 +138,8 @@ try{
   case 'revisit-plan':{const p=store.revisitPlan246({asOf:flags['as-of']??new Date().toISOString(),extractorVersion:SPEC_EXTRACTOR_VERSION,baseIntervalDays:flags.days?Number(flags.days):undefined});
    out(flags.full?p:{...p,plan:p.plan.filter(x=>x.action!=='skip').slice(0,100)});break;}
   case 'rights-worksheet':out(store.rightsWorksheet246());break;
+  case 'test-measurements':{const ms=store.testMeasurements265(flags.product?{productId:flags.product}:{});
+   out({measurements:ms,conflicts:flags.product?store.testMeasurementConflicts265(flags.product):null});break;}
   case 'seed-vocabulary':{let n=0;for(const [c,m] of Object.entries(CONCEPT_VOCABULARY248))for(const [id,al] of Object.entries(m))n+=store.addConceptAliases246(c,id,al);out({itemsUpdated:n});break;}
   // Phase250: the adopted category lessons (need hypotheses, everyday vocabulary, mechanism and method statements).
   case 'apply-lessons':out(applyLessons250(store,ADOPTED_LESSONS250));break;

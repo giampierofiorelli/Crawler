@@ -36,8 +36,9 @@ import type {StudyStream179} from './phase179_category_learning.js';
 import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from './phase193_screening_memory.js';
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
 import {classDecision249,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
+import {screenTestLead265,subjectAssociation265,reportedBy265,type TestLeadsInput265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=4;
+export const STORE_SCHEMA_VERSION246=5;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -217,6 +218,29 @@ const MIGRATIONS:string[]=[
    BEGIN SELECT RAISE(ABORT,'source_memory260_read_only_projection'); END;
   CREATE TRIGGER source_memory260_ro_delete BEFORE DELETE ON source_memory260 WHEN COALESCE((SELECT v FROM store_meta WHERE k='source_memory260_writer'),'0')<>'1'
    BEGIN SELECT RAISE(ABORT,'source_memory260_read_only_projection'); END;`,
+ // v5 (Phase265): publisher-reported test measurements (Phase225/226/227 leads), staged with provenance. product_id is
+ // nullable because a test subject may be legitimately unresolved; it is never forced onto a product. The CHECK
+ // columns state what a row never is: reviewed, independent, scientifically admitted or ranking input.
+ `CREATE TABLE test_measurements265 (measurement_id TEXT PRIMARY KEY, revision_id TEXT NOT NULL REFERENCES revisions(revision_id),
+   lead_id TEXT NOT NULL, extractor_version TEXT NOT NULL, block_sha256 TEXT NOT NULL, block_index INTEGER NOT NULL, value_offset INTEGER NOT NULL,
+   product_id TEXT REFERENCES products(product_id),
+   subject_association TEXT NOT NULL CHECK(subject_association IN ('page_main_product_unverified','table_row_model_matches_page_product_unverified','subject_unresolved')),
+   subject_assignment TEXT NOT NULL, value REAL, unit TEXT NOT NULL, dimension TEXT NOT NULL,
+   dimension_basis TEXT NOT NULL CHECK(dimension_basis IN ('publisher_table_header','not_established')),
+   target_scope TEXT NOT NULL CHECK(target_scope IN ('compartment_unspecified','whole_product_unspecified','not_established')),
+   condition TEXT, instrument TEXT, method_cue TEXT NOT NULL, evidence_role TEXT NOT NULL,
+   reported_by TEXT NOT NULL CHECK(reported_by IN ('manufacturer','test_publisher_operator_asserted','other_publisher')),
+   independence TEXT NOT NULL DEFAULT 'not_established' CHECK(independence='not_established'),
+   verification TEXT NOT NULL DEFAULT 'unreviewed' CHECK(verification='unreviewed'),
+   market TEXT NOT NULL DEFAULT 'unknown' CHECK(market='unknown'),
+   exact_variant_verified INTEGER NOT NULL DEFAULT 0 CHECK(exact_variant_verified=0),
+   retention TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('current','superseded_by_revision','superseded_by_extractor','expired_pending_rights')),
+   superseded_by_revision TEXT, expires_at TEXT, recorded_at TEXT NOT NULL,
+   scientific_evidence_admitted INTEGER NOT NULL DEFAULT 0 CHECK(scientific_evidence_admitted=0),
+   independent_test_evidence INTEGER NOT NULL DEFAULT 0 CHECK(independent_test_evidence=0),
+   ranking_authorized INTEGER NOT NULL DEFAULT 0 CHECK(ranking_authorized=0),
+   CHECK(value IS NOT NULL OR state='expired_pending_rights'), UNIQUE(revision_id,lead_id));
+  CREATE INDEX test_measurements265_product ON test_measurements265(product_id,dimension,unit);`,
 ];
 
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;
@@ -228,10 +252,16 @@ export interface ObservationInput246 {
  screening?:{ledger:ScreeningLedger193;market:string;policyVersion:string};
  /** Phase249: machine-readable reservations seen for this page (robots Content-Signal, TDM reservation, noai). */
  reservations?:Reservations249;
+ /** Phase265: Phase225/226/227 test-result leads from the same transient bytes (see phase265_test_measurements.ts). */
+ testLeads?:TestLeadsInput265|null;
 }
 export interface IngestResult246 {revisionId:string;newRevision:boolean;rederived?:boolean;retention:RetentionClass246;
  productIds:string[];variantIds:string[];declarationsSeen:number;declarationsRetained:number;
- supersededRevisionIds:string[];staleNodes:string[];screeningVerdict:string|null;}
+ supersededRevisionIds:string[];staleNodes:string[];screeningVerdict:string|null;
+ /** Phase265: what happened to the test-result leads offered with this observation. */
+ testMeasurements?:TestMeasurementOutcome265;}
+export interface TestMeasurementOutcome265 {offered:number;persisted:number;associated:number;unresolved:number;
+ alreadyStored:number;withheldRights:number;withheldReason:string|null;rejected:Record<string,number>;}
 export interface CategoryItemInput246 {categoryId:string;section:CategorySection246;statement:string;
  knowledgeClass:KnowledgeClass246;provenance:ItemProvenance246;sourceRevisionIds?:readonly string[];
  studyStream?:StudyStream179;concept?:{kind:ConceptKind128;id:string;aliases:readonly string[]};}
@@ -344,8 +374,18 @@ export class KnowledgeStore246 {
     if(!o.extraction||(prev.extractor_version===derivationVersion&&prev.retention===retention)){
      this.event('revision_seen_again',{revisionId},o.fetchedAt);
      const products=(this.db.prepare('SELECT DISTINCT product_id FROM product_sources WHERE revision_id=?').all(revisionId) as {product_id:string}[]).map(r=>r.product_id);
+     // Phase265: the same bytes may carry test leads not yet stored (first offered now, or under a new lead extractor).
+     let tm:TestMeasurementOutcome265|undefined;
+     if(o.testLeads){
+      const eff=(this.db.prepare('SELECT retention FROM revisions WHERE revision_id=?').get(revisionId) as {retention:RetentionClass246}).retention;
+      const main=(this.db.prepare("SELECT product_id FROM product_sources WHERE revision_id=? AND role='main_product'").get(revisionId) as {product_id:string}|undefined)?.product_id??null;
+      const kinds2=eff==='facts_retained_class_policy'&&this.storage.classPolicy?(this.storage.classPolicy.classes[o.source.sourceType]??this.storage.classPolicy.classes.unknown).valueKinds:null;
+      const keep2=VALUE_RETAINING246.includes(eff)&&(!kinds2||kinds2.includes('quantity'));
+      const exp2=eff==='local_pending_rights_review'?new Date(Date.parse(o.fetchedAt)+this.storage.localPendingRightsCache.expiresAfterDays*86400000).toISOString():null;
+      tm=this.applyTestLeads265(o,revisionId,main,keep2,eff,keep2?null:eff,exp2);
+     }
      return {revisionId,newRevision:false,retention,productIds:products,variantIds:[],declarationsSeen:0,declarationsRetained:0,
-      supersededRevisionIds:[],staleNodes:[],screeningVerdict:null};
+      supersededRevisionIds:[],staleNodes:[],screeningVerdict:null,...(tm?{testMeasurements:tm}:{})};
     }
     rederive=true;
     // Product links of this revision are derived: recomputed under the new rules (products themselves are kept).
@@ -364,6 +404,7 @@ export class KnowledgeStore246 {
     this.db.prepare("UPDATE revisions SET state='superseded',superseded_by=? WHERE revision_id=?").run(revisionId,p.revision_id);
     const decls=this.db.prepare("SELECT declaration_id FROM declarations WHERE revision_id=? AND state!='superseded_by_revision'").all(p.revision_id) as {declaration_id:string}[];
     this.db.prepare("UPDATE declarations SET state='superseded_by_revision' WHERE revision_id=?").run(p.revision_id);
+    this.db.prepare("UPDATE test_measurements265 SET state='superseded_by_revision',superseded_by_revision=? WHERE revision_id=? AND state='current'").run(revisionId,p.revision_id);
     superseded.push(p.revision_id);
     for(const n of this.invalidate(['rev:'+p.revision_id,...decls.map(d=>'decl:'+d.declaration_id)],'source_revision_changed'))stale.add(n);
    }
@@ -448,13 +489,15 @@ export class KnowledgeStore246 {
    };
    let retained=0;
    // Phase249 class policy: per-observation checks (reservations, per-host cap) decide this revision's retention.
-   let effective:RetentionClass246=retention;let kinds:readonly string[]|null=null;
+   let effective:RetentionClass246=retention;let kinds:readonly string[]|null=null;let classReason:string|null=null;
    if(retention==='facts_retained_class_policy'&&this.storage.classPolicy){
     const counted=(this.db.prepare(`SELECT DISTINCT d.product_id FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
-     WHERE s.host=? AND d.retention='facts_retained_class_policy' AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor')`).all(host) as {product_id:string}[]).map(r=>r.product_id);
+     WHERE s.host=? AND d.retention='facts_retained_class_policy' AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor')
+     UNION SELECT DISTINCT COALESCE(t.product_id,'rev:'||t.revision_id) FROM test_measurements265 t JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
+     WHERE s.host=? AND t.retention='facts_retained_class_policy' AND t.state='current'`).all(host,host) as {product_id:string}[]).map(r=>r.product_id);
     const d=classDecision249(this.storage.classPolicy,o.source.sourceType,o.reservations,counted.length,!!mainId&&counted.includes(mainId));
     if(d.retain)kinds=d.rule.valueKinds;
-    else{effective='metadata_only';this.addGap('source',revisionId,d.reason,`class policy ${this.storage.classPolicy.policyId}: ${d.reason}`.slice(0,300),
+    else{effective='metadata_only';classReason=d.reason;this.addGap('source',revisionId,d.reason,`class policy ${this.storage.classPolicy.policyId}: ${d.reason}`.slice(0,300),
      d.reason==='insubstantial_part_cap_reached'?'per_source_rights_review_to_exceed_cap':'respect_reservation_metadata_only',o.fetchedAt);}
     this.db.prepare('UPDATE revisions SET retention=? WHERE revision_id=?').run(effective,revisionId);
    }
@@ -481,6 +524,8 @@ export class KnowledgeStore246 {
     if(Number(res.changes))retained++;
    }
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
+   const tm=o.testLeads?this.applyTestLeads265(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective,
+    !keep?(classReason??effective):kinds&&!kinds.includes('quantity')?'value_kind_not_retained':null,expires):undefined;
    this.db.prepare('INSERT OR IGNORE INTO sightings VALUES (?,?,?)').run(revisionId,o.fetchedAt,o.runId);
    for(const pid of priorLinks)if(!this.db.prepare('SELECT 1 FROM product_sources WHERE product_id=?').get(pid)){
     this.db.prepare("UPDATE products SET identity_state='unsupported_after_rederivation' WHERE product_id=? AND identity_state NOT IN ('reviewed','merged')").run(pid);
@@ -498,14 +543,89 @@ export class KnowledgeStore246 {
    for(const c of o.categoryHypotheses)for(const n of this.invalidate(['category_observations:'+c],'new_observation'))stale.add(n);
    this.event('revision_ingested',{revisionId,url:o.url,sha256:o.sha256,retention,seen:facts.length,retained,superseded},o.fetchedAt);
    return {revisionId,newRevision:!rederive,rederived:rederive,retention,productIds,variantIds,declarationsSeen:facts.length,declarationsRetained:retained,
-    supersededRevisionIds:superseded,staleNodes:[...stale].sort(),screeningVerdict:verdict};
+    supersededRevisionIds:superseded,staleNodes:[...stale].sort(),screeningVerdict:verdict,...(tm?{testMeasurements:tm}:{})};
   });
+ }
+ /** Phase265: persist the screened test-result leads of one revision (inside the caller's ingest transaction). Values
+  * are kept only when this revision's retention keeps values; otherwise only counts are journaled and a gap records
+  * why. Re-offering the same leads is a no-op; a new lead extractor supersedes and re-derives this revision's rows. */
+ private applyTestLeads265(o:ObservationInput246,revisionId:string,mainId:string|null,keep:boolean,retention:RetentionClass246,
+  withheldReason:string|null,expires:string|null):TestMeasurementOutcome265{
+  const t=o.testLeads!;const out:TestMeasurementOutcome265={offered:0,persisted:0,associated:0,unresolved:0,alreadyStored:0,withheldRights:0,withheldReason:null,rejected:{}};
+  if(!t||typeof t.extractorVersion!=='string'||!shortText(t.extractorVersion,80)||t.probe?.schema!=='pee225.transient-test-probe.v1'||t.probe.sourceUrl!==o.url||
+   !Array.isArray(t.probe.candidates)||t.probe.sourceBodyRetained!==false||t.probe.sourcePassagesRetained!==false)throw Error('265_invalid_test_leads');
+  const cands=t.probe.candidates;out.offered=cands.length;
+  if(!cands.length)return out;
+  if(!keep){out.withheldRights=cands.length;out.withheldReason=withheldReason??retention;
+   this.addGap('source',revisionId,'test_measurements_not_retained_rights',`${cands.length} publisher-reported test measurement leads observed; values not retained (${out.withheldReason})`,
+    'review_source_rights_then_reobserve',o.fetchedAt);
+   this.event('test_measurements_withheld',{revisionId,offered:cands.length,reason:out.withheldReason},o.fetchedAt);return out;}
+  const existing=this.db.prepare("SELECT COUNT(*) AS n FROM test_measurements265 WHERE revision_id=? AND extractor_version=? AND state='current'").get(revisionId,t.extractorVersion) as {n:number};
+  const otherVersion=Number((this.db.prepare("UPDATE test_measurements265 SET state='superseded_by_extractor' WHERE revision_id=? AND extractor_version<>? AND state='current'").run(revisionId,t.extractorVersion)).changes);
+  const main=mainId?this.db.prepare('SELECT name,declared_model,identifiers_json FROM products WHERE product_id=?').get(mainId) as {name:string|null;declared_model:string|null;identifiers_json:string}:null;
+  const pageLead=o.extraction&&o.extraction.mainProduct.name&&!o.extraction.mainProduct.ambiguous&&mainId?
+   {name:o.extraction.mainProduct.name,model:o.extraction.mainProduct.identifiers.model??o.extraction.mainProduct.identifiers.mpn??null,sku:o.extraction.mainProduct.identifiers.sku??null}:
+   main&&main.name?{name:main.name,model:main.declared_model,sku:(JSON.parse(main.identifiers_json) as Record<string,string>).sku??null}:null;
+  const role=declarationRole246(o.source.sourceType);const by=reportedBy265(o.source.sourceType);
+  for(const c of cands){
+   const r=screenTestLead265(c,{url:o.url,sha256:o.sha256});
+   if(!r.ok){out.rejected[r.reason]=(out.rejected[r.reason]??0)+1;continue;}
+   const l=r.lead;const assoc=subjectAssociation265(l,pageLead);const pid=assoc==='subject_unresolved'?null:mainId;
+   const mid='tm_'+sha(revisionId+'|'+l.leadId).slice(0,24);
+   const res=this.db.prepare(`INSERT INTO test_measurements265(measurement_id,revision_id,lead_id,extractor_version,block_sha256,block_index,value_offset,product_id,
+     subject_association,subject_assignment,value,unit,dimension,dimension_basis,target_scope,condition,instrument,method_cue,evidence_role,reported_by,retention,state,expires_at,recorded_at)
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?,?)
+     ON CONFLICT(measurement_id) DO UPDATE SET state='current',extractor_version=excluded.extractor_version,product_id=excluded.product_id,
+      subject_association=excluded.subject_association,dimension=excluded.dimension,dimension_basis=excluded.dimension_basis,target_scope=excluded.target_scope,
+      retention=excluded.retention,expires_at=excluded.expires_at WHERE test_measurements265.state='superseded_by_extractor'`)
+    .run(mid,revisionId,l.leadId,t.extractorVersion,l.blockSha256,l.blockIndex,l.valueOffset,pid,assoc,l.subjectAssignment,l.value,l.unit,l.dimension,l.dimensionBasis,
+     l.targetScope,l.condition,l.instrument,l.methodCue,role,by,retention,expires,o.fetchedAt);
+   if(Number(res.changes)){out.persisted++;if(pid)out.associated++;else out.unresolved++;}else out.alreadyStored++;
+  }
+  if(out.persisted||otherVersion||Object.keys(out.rejected).length)this.event('test_measurements_ingested',{revisionId,extractorVersion:t.extractorVersion,offered:out.offered,
+   persisted:out.persisted,associated:out.associated,unresolved:out.unresolved,alreadyStored:out.alreadyStored,supersededByExtractor:otherVersion,
+   previouslyCurrent:existing.n,rejected:out.rejected},o.fetchedAt);
+  if(out.unresolved)this.addGap('source',revisionId,'test_measurement_subject_unresolved',`${out.unresolved} test measurements kept without a product: subject not identified on the page`,
+   'review_test_subject_identity',o.fetchedAt);
+  return out;
+ }
+ /** Phase265: stored test measurements with provenance (current only unless asked). Unreviewed and never evidence. */
+ testMeasurements265(f:{productId?:string|null;revisionId?:string;includeSuperseded?:boolean}={}){
+  const where:string[]=[];const args:string[]=[];
+  if(f.productId!==undefined){if(f.productId===null)where.push('t.product_id IS NULL');else{where.push('t.product_id=?');args.push(f.productId);}}
+  if(f.revisionId){where.push('t.revision_id=?');args.push(f.revisionId);}
+  if(!f.includeSuperseded)where.push("t.state='current'");
+  return (this.db.prepare(`SELECT t.*,r.url,r.sha256,r.fetched_at,s.host,s.source_type,s.source_type_basis FROM test_measurements265 t JOIN revisions r USING(revision_id)
+   JOIN sources s ON s.source_id=r.source_id ${where.length?'WHERE '+where.join(' AND '):''} ORDER BY t.measurement_id`).all(...args) as Record<string,unknown>[]).map(r=>({
+   measurementId:r.measurement_id as string,revisionId:r.revision_id as string,leadId:r.lead_id as string,extractorVersion:r.extractor_version as string,
+   source:{url:r.url as string,sha256:r.sha256 as string,fetchedAt:r.fetched_at as string,host:r.host as string,sourceType:r.source_type as string,sourceTypeBasis:r.source_type_basis as string},
+   locator:{blockSha256:r.block_sha256 as string,blockIndex:r.block_index as number,valueOffset:r.value_offset as number},
+   productId:(r.product_id as string|null)??null,subjectAssociation:r.subject_association as string,subjectAssignment:r.subject_assignment as string,
+   value:r.value as number|null,unit:r.unit as string,dimension:r.dimension as string,dimensionBasis:r.dimension_basis as string,targetScope:r.target_scope as string,
+   condition:(r.condition as string|null)??null,instrument:(r.instrument as string|null)??null,methodCue:r.method_cue as string,
+   evidenceRole:r.evidence_role as string,reportedBy:r.reported_by as string,independence:r.independence as string,verification:r.verification as string,
+   market:r.market as string,exactVariantVerified:r.exact_variant_verified===1,retention:r.retention as string,state:r.state as string,
+   supersededByRevision:(r.superseded_by_revision as string|null)??null,expiresAt:(r.expires_at as string|null)??null,recordedAt:r.recorded_at as string,
+   scientificEvidenceAdmitted:false as const,independentTestEvidence:false as const,rankingAuthorized:false as const}));
+ }
+ /** Phase265: current measurements of one product that report the same publisher-declared dimension, unit, condition
+  * and scope. Different values are a conflict; equal values from different revisions are repeated observations (which
+  * says nothing about independence). Measurements whose dimension is not established are never grouped. */
+ testMeasurementConflicts265(productId:string){
+  const g=new Map<string,ReturnType<KnowledgeStore246['testMeasurements265']>>();
+  for(const m of this.testMeasurements265({productId}))if(m.dimensionBasis==='publisher_table_header'){
+   const k=[m.dimension,m.unit,m.condition??'',m.targetScope].join('|');g.set(k,[...(g.get(k)??[]),m]);}
+  return [...g.entries()].filter(([,v])=>v.length>1).map(([k,v])=>{const values=[...new Set(v.map(m=>m.value))];
+   return {key:k,kind:values.length>1?'conflicting_values' as const:'repeated_observation' as const,values,
+    measurements:v.map(m=>({measurementId:m.measurementId,value:m.value,host:m.source.host,reportedBy:m.reportedBy,revisionId:m.revisionId}))};});
  }
  /** Removes expired local pending-rights declarations; metadata and receipts stay. */
  purgeExpired246(asOf=new Date().toISOString()):number{
   const n=Number(this.db.prepare("UPDATE declarations SET state='expired_pending_rights',value_json='null',raw_value='' WHERE retention='local_pending_rights_review' AND expires_at<=? AND state!='expired_pending_rights'").run(asOf).changes);
   if(n)this.event('pending_rights_declarations_expired',{count:n},asOf);
-  return n;
+  const m=Number(this.db.prepare("UPDATE test_measurements265 SET state='expired_pending_rights',value=NULL WHERE retention='local_pending_rights_review' AND expires_at<=? AND state!='expired_pending_rights'").run(asOf).changes);
+  if(m)this.event('pending_rights_test_measurements_expired',{count:m},asOf);
+  return n+m;
  }
 
  // ---------------- product knowledge reads and reviews ----------------
@@ -908,9 +1028,9 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
-   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
+   if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
   }
   const body={schema:'pee246.knowledge-export.v1',storeSchemaVersion:this.schemaVersion(),storagePolicy:this.storage,
@@ -946,7 +1066,7 @@ export class KnowledgeStore246 {
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
   category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
-  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id'};
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
@@ -962,8 +1082,8 @@ export class KnowledgeStore246 {
   const files:Record<string,{rows:number;sha256:string}>={};
   for(const [t,key] of Object.entries(KnowledgeStore246.TABLE_KEYS)){
    let rows=this.db.prepare(`SELECT * FROM ${t} ORDER BY ${key}`).all() as Record<string,unknown>[];
-   if(t==='declarations'&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
-   if(t==='declarations'&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
+   if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
+   if((t==='declarations'||t==='test_measurements265')&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);
    files[t+'.ndjson']={rows:rows.length,sha256:sha(body)};

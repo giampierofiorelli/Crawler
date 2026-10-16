@@ -118,3 +118,9 @@ test('audit rejects forged scientific admission, reviewer verification or scope 
  (clone2.receipts[0].transientTestProbe225.candidates[0] as {value:number}).value=100;
  assert.throws(()=>auditTestLeads225(clone2),/phase225_claim_promoted_or_scope_mismatch/);
 });
+
+test('Phase265: a percentage followed by a space is a candidate unit (it ended at a missing word boundary before)',()=>{
+ const x=probeTransientTestContent225(wrap('<p>We measured the remaining charge at 80 % using a digital timer after one hour.</p>'),url);
+ assert.deepEqual(x.candidates.map(c=>[c.value,c.unit]),[[80,'%']]);
+ assert.equal(probeTransientTestContent225(wrap('<p>We measured 12 mmHg using a gauge.</p>'),url).candidates.length,0,'a unit prefix of a longer token is still refused');
+});

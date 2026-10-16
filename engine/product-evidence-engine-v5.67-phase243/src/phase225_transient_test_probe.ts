@@ -17,7 +17,9 @@ const decode=(s:string)=>s.replace(/&#(x[0-9a-f]+|\d+);|&(amp|lt|gt|quot|apos|nb
 });
 const fragment=(v:string)=>decode(v.replace(/<[^>]{0,1800}>/g,' ').replace(/\s+/g,' ').trim());
 const urlOk=(v:string)=>{try{const u=new URL(v);return safeMetadataUrl75(v,u.hostname);}catch{return false;}};
-const candidateNumeric=/\b(\d{1,7}(?:\.\d{1,3})?)\s*(mm|cm|kg|g|litres?|liters?|l|db(?:a)?|%|minutes?|hours?|seconds?|ms|watts?|w|kwh|mah|°c)\b/gi;
+// Phase265: the unit ends at a non-alphanumeric character, not at a word boundary: "80 %" followed by a space has no
+// word boundary after '%' and was never matched.
+const candidateNumeric=/\b(\d{1,7}(?:\.\d{1,3})?)\s*(mm|cm|kg|g|litres?|liters?|l|db(?:a)?|%|minutes?|hours?|seconds?|ms|watts?|w|kwh|mah|°c)(?![a-z0-9])/gi;
 const negated= /\b(?:did not test|was not tested|have not tested|not measured|no measurements|not yet tested|planned to test|we will test|didn't test)\b/i;
 const secondary=/\b(?:manufacturer (?:claims|states|reports|says)|advertised|marketing (?:material|claims)|press release|according to the manufacturer|specification sheet|quoted by|other reviewers measured|competitor|rather than the tested)\b/i;
 const claimedMethod=/\b(?:we (?:tested|measured|recorded|timed|weighed)|our (?:test|tests|measurements|testing)|during (?:our )?testing|in (?:our|the) (?:lab|test)|test (?:method|protocol|procedure|results)|measured (?:using|with)|was (?:tested|measured) (?:with|using))\b/i;
