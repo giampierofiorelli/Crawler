@@ -1,0 +1,347 @@
+{
+ "schema": "pee258.pilot.v1",
+ "fixtures": "synthetic source metadata; product ids are retained records with unverified identity",
+ "markets": [
+  "de",
+  "fr",
+  "it",
+  "jp",
+  "uk",
+  "unknown",
+  "us"
+ ],
+ "languages": [
+  "de",
+  "de-DE",
+  "en",
+  "en-GB",
+  "en-US",
+  "fr",
+  "fr-FR",
+  "it-IT",
+  "ja",
+  "ja-JP",
+  "und"
+ ],
+ "measured": {
+  "roleClassification": {
+   "correct": 13,
+   "of": 13
+  },
+  "provenance": {
+   "withSourceIdUrlAndOrigin": 13,
+   "of": 13
+  },
+  "duplication": {
+   "derivativesCollapsed": [
+    "s_copy_us->s_lab_de"
+   ]
+  },
+  "geographicPreference": {
+   "selectionChangedBySwappingPublisherCountry": false,
+   "requesterCountryUsed": false
+  },
+  "languageMetadata": {
+   "allValidBcp47": true,
+   "undeterminedKeptAsUnd": 1,
+   "translationsCreated": 0
+  },
+  "identityAndAccess": {
+   "selectedWithUnverifiedIdentity": 8,
+   "selected": 8,
+   "notPermittedExcluded": true
+  },
+  "laneFitsGap": true,
+  "phase196Comparison": {
+   "lanes": {
+    "s_video_us": "new_source_probe",
+    "s_lab_de": "new_source_probe",
+    "s_review_fr": "new_source_probe",
+    "s_forum_fr": "unscoped_review",
+    "s_owner_und": "unscoped_review",
+    "s_barista_it": "unscoped_review",
+    "s_news_de": "unscoped_review",
+    "s_safety_gb": "unscoped_review",
+    "s_press_jp": "unscoped_review",
+    "s_rice_jp": "unscoped_review",
+    "s_maker_uk": "derived_followup",
+    "s_retailer_us": "derived_followup",
+    "s_copy_us": "derived_followup"
+   },
+   "distinctRoleSetsMergedWithinA196Lane": 8,
+   "unclassifiedIn196": [
+    "s_barista_it",
+    "s_rice_jp",
+    "s_safety_gb",
+    "s_news_de",
+    "s_press_jp",
+    "s_owner_und",
+    "s_forum_fr"
+   ]
+  }
+ },
+ "selections": [
+  {
+   "job": {
+    "productId": "prd_41185d853e4a0eed26933056",
+    "criterion": "capacity_min",
+    "gapKind": "missing_declaration"
+   },
+   "selected": [
+    {
+     "sourceId": "s_maker_uk",
+     "lane": "declaration",
+     "exactProduct": true,
+     "language": "en-GB",
+     "unfamiliar": true
+    },
+    {
+     "sourceId": "s_retailer_us",
+     "lane": "declaration",
+     "exactProduct": true,
+     "language": "en-US",
+     "unfamiliar": true
+    }
+   ],
+   "collapsed": [],
+   "excluded": [
+    {
+     "sourceId": "s_lab_de",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_review_fr",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_barista_it",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_rice_jp",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_safety_gb",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_news_de",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_copy_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_press_jp",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_forum_fr",
+     "reason": "access_not_permitted"
+    }
+   ],
+   "notSuited": 2
+  },
+  {
+   "job": {
+    "productId": "prd_da4477a15c09160dea80cef6",
+    "criterion": "extraction_temperature",
+    "gapKind": "missing_test"
+   },
+   "selected": [
+    {
+     "sourceId": "s_lab_de",
+     "lane": "measurement",
+     "exactProduct": true,
+     "language": "de-DE",
+     "unfamiliar": true
+    },
+    {
+     "sourceId": "s_review_fr",
+     "lane": "practical",
+     "exactProduct": true,
+     "language": "fr-FR",
+     "unfamiliar": true
+    },
+    {
+     "sourceId": "s_barista_it",
+     "lane": "interpretation",
+     "exactProduct": true,
+     "language": "it-IT",
+     "unfamiliar": true
+    },
+    {
+     "sourceId": "s_news_de",
+     "lane": "lead",
+     "exactProduct": true,
+     "language": "de",
+     "unfamiliar": true
+    }
+   ],
+   "collapsed": [
+    {
+     "sourceId": "s_copy_us",
+     "duplicateOf": "s_lab_de"
+    }
+   ],
+   "excluded": [
+    {
+     "sourceId": "s_maker_uk",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_retailer_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_rice_jp",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_video_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_safety_gb",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_press_jp",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_forum_fr",
+     "reason": "access_not_permitted"
+    }
+   ],
+   "notSuited": 0
+  },
+  {
+   "job": {
+    "productId": "prd_64fe1802534086b5110fcd7e",
+    "criterion": "texture_outcome",
+    "gapKind": "missing_test"
+   },
+   "selected": [
+    {
+     "sourceId": "s_rice_jp",
+     "lane": "interpretation",
+     "exactProduct": true,
+     "language": "ja",
+     "unfamiliar": true
+    },
+    {
+     "sourceId": "s_owner_und",
+     "lane": "lead",
+     "exactProduct": false,
+     "language": "und",
+     "unfamiliar": true
+    }
+   ],
+   "collapsed": [],
+   "excluded": [
+    {
+     "sourceId": "s_maker_uk",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_retailer_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_lab_de",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_review_fr",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_barista_it",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_video_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_safety_gb",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_news_de",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_copy_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_forum_fr",
+     "reason": "access_not_permitted"
+    }
+   ],
+   "notSuited": 1
+  },
+  {
+   "job": {
+    "productId": "prd_5061f6355633f0e3eb34069b",
+    "criterion": "capacity_min",
+    "gapKind": "declaration_conflict"
+   },
+   "selected": [],
+   "collapsed": [],
+   "excluded": [
+    {
+     "sourceId": "s_maker_uk",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_retailer_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_lab_de",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_review_fr",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_barista_it",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_rice_jp",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_video_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_news_de",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_copy_us",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_press_jp",
+     "reason": "other_product"
+    },
+    {
+     "sourceId": "s_forum_fr",
+     "reason": "access_not_permitted"
+    }
+   ],
+   "notSuited": 2
+  }
+ ],
+ "networkCalls": 0,
+ "storeAccess": false
+}

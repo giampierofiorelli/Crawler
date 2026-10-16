@@ -115,7 +115,8 @@ export function materialRoleFor196(d:SourceDescriptor258):MaterialRole196{
  if(r.has('derivative_publication')||d.originality==='derivative'||d.originality==='syndicated')return 'derived_citation';
  if(r.has('independent_measurement')&&k.has('instrumental_measurement')&&original&&d.method.described)return 'original_instrumental_claim';
  if((r.has('structured_professional_testing')||r.has('original_video_demonstration'))&&k.has('observed_practical_result')&&original&&d.method.described)return 'structured_practical_claim';
- if(r.has('manufacturer_specification')&&k.has('declared_specification'))return 'manufacturer_specification';
+ // Phase193/196 treat "manufacturer or retailer spec only" as one class: a declared specification, never a test.
+ if((r.has('manufacturer_specification')||r.has('retailer_listing'))&&k.has('declared_specification'))return 'manufacturer_specification';
  return 'unclassified';
 }
 /** A source term for a language-neutral concept: terminology data, never a translation and never reviewed by default. */
