@@ -1,0 +1,267 @@
+{
+ "schema": "pee254.research-needs-gold.v1",
+ "written": "2026-10-16, before the bridge was run on these requests",
+ "store": "pee-knowledge 38495fe",
+ "tier": "T1_synthetic (requests from the spent Phase253 T1 set; gold by the code author from the raw declaration listing; not held-out)",
+ "notes": [
+  "Products whose declarations already decide (meets or fails) raise no need.",
+  "A value a person can read in retained evidence (\"700ml\" in a name, a dimension text without unit, a declared range) is reextraction, not research.",
+  "Prices in another currency are not actionable (never converted).",
+  "Performance needs: one independent-test need per shortlisted product."
+ ],
+ "cases": [
+  {
+   "id": "n01",
+   "text": "I am looking for an air fryer of at least 5 litres",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "criterion": "capacity_min"
+    }
+   ]
+  },
+  {
+   "id": "n02",
+   "text": "I need an air fryer under £100",
+   "expect": [
+    {
+     "destination": "not_actionable",
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterion": "budget_max"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "budget_max"
+    }
+   ]
+  },
+  {
+   "id": "n03",
+   "text": "Looking for an air fryer with at least 7 litres capacity and under £120",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "budget_max"
+    }
+   ]
+  },
+  {
+   "id": "n04",
+   "text": "An air fryer no wider than 40 cm, please",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterion": "width_max"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "width_max"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_41185d853e4a0eed26933056",
+     "criterion": "width_max"
+    }
+   ]
+  },
+  {
+   "id": "n05",
+   "text": "Looking for a coffee machine under £150",
+   "expect": [
+    {
+     "destination": "not_actionable",
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "criterion": "budget_max"
+    }
+   ]
+  },
+  {
+   "id": "n06",
+   "text": "I need a coffee machine that weighs no more than 5 kg",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "criterion": "weight_max"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_f4286fee702368428ab7a172",
+     "criterion": "weight_max"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "criterion": "weight_max"
+    }
+   ]
+  },
+  {
+   "id": "n07",
+   "text": "I want a coffee machine with at least 1400 W",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_f4286fee702368428ab7a172",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "reextraction",
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "criterion": "power_min"
+    }
+   ]
+  },
+  {
+   "id": "n08",
+   "text": "I want a toaster no wider than 30 cm",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "criterion": "width_max"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "criterion": "width_max"
+    },
+    {
+     "destination": "reextraction",
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "criterion": "width_max"
+    }
+   ]
+  },
+  {
+   "id": "n09",
+   "text": "I need a blender with at least 1000 W",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_fae463907b2832521b9cbdb3",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_a9153c3ca30c41e991455b3a",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_6f592010fad82b95dc71ec5e",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_c4b55ffd479598e230d0d946",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_258ce8d764da74ae3f9eebd8",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_b4026dd016da18351011962d",
+     "criterion": "power_min"
+    }
+   ]
+  },
+  {
+   "id": "n10",
+   "text": "I need a kettle of at least 1.5 litres",
+   "expect": [
+    {
+     "destination": "reextraction",
+     "productId": "prd_c67eff51323436c7beff9977",
+     "criterion": "capacity_min"
+    }
+   ]
+  },
+  {
+   "id": "n11",
+   "text": "I want an air fryer of at least 5 litres that makes crispy chips",
+   "expect": [
+    {
+     "destination": "research",
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "criterion": "capacity_min"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "criterion": "crisp_texture"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "criterion": "crisp_texture"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_41185d853e4a0eed26933056",
+     "criterion": "crisp_texture"
+    },
+    {
+     "destination": "research",
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "criterion": "crisp_texture"
+    }
+   ]
+  },
+  {
+   "id": "n12",
+   "text": "A good air fryer for a family of four",
+   "expect": [
+    {
+     "destination": "user_clarification",
+     "productId": null,
+     "criterion": "batch_capacity"
+    }
+   ]
+  },
+  {
+   "id": "n13",
+   "text": "I need an air fryer, it does not need to be 5 litres",
+   "expect": [
+    {
+     "destination": "user_clarification",
+     "productId": null,
+     "criterion": "capacity_min"
+    }
+   ]
+  },
+  {
+   "id": "n14",
+   "text": "What kind of tray can I put my air fryer on?",
+   "expect": []
+  }
+ ]
+}
