@@ -11,6 +11,32 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000. Phase253 update (2026-10-16) — read this first; it supersedes §000 and earlier where they differ
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase253/PHASE253-TECHNICAL-REPORT.md`. Next brief:
+`docs/phase253/CONTINUATION-PROMPT.md`. Module inventory: `docs/phase253/MODULE-INVENTORY.md`. Store: pee-knowledge
+`38495fe` (189 products, 2,385 declarations, 1,373 events).
+
+- **Request → advice now works end to end:** `adviseFromRequest253` (`src/phase253_request_advice.ts`) reuses
+  `runJourney248`, `extractConstraints253`, Phase177 (`state_in_request`, provenance `user_request_statement`),
+  `eligibleCandidates253` and `decideAdvice249`. The output is `Advice253` (`ordered:false`, `rankingAuthorized:false`).
+- **First run (Phase253 advice set, 43 cases, pre-registered, gold sealed):** N against P: correct response 35 against
+  8; constraints 25/26 against 0/26; product checks 121/138 against 0/138; justified positives 14 of 17 against 0;
+  harmful 0 and 0.
+  - The positives are T1 (synthetic requests on real evidence, same author). Not held-out.
+  - The 16 new real requests (T2) contained no checkable limit; real limit-stating requests are scarce in the lawful
+    pool.
+- **Development after the first run** (spent cases): axis-labelled dimensions (`axisValue249`), purchase-target rules
+  and bare ranges as candidates bring T1 to 27/27 with harm 0.
+- **Coverage gap:** the operational registry lacks `headphones` and `microwave_ovens`, which the store holds (owner
+  decision).
+- **Disconnected:** only 11 of 245 modules execute on the advice path. The next link is research execution
+  (`phase182_gap_research_orchestrator`).
+- **Teaching packages:** the interface exists (`phase253_teaching_package.ts`); none has been processed. Reserved
+  untaught: `rice_cookers`, `pressure_cookers`, `food_processors`, `steam_cookers`.
+- **Public/private rule:** committed advice runs are public forms; full runs go to `$PEE_PRIVATE_EVAL_DIR/phase253`.
+- **Spent sets:** sets 1–5, the Phase252 teaching set and the Phase253 advice set.
+
 ## 000. Phase252 update (2026-10-16) — read this first; it supersedes §00 and §0 where they differ
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase252/PHASE252-TECHNICAL-REPORT.md`. Next brief:

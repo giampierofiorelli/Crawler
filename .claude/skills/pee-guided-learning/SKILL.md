@@ -72,6 +72,8 @@ Never claim to have read a file you have not opened. In reports, say which secti
 
 - Never bypass robots rules, 403/429 responses or access controls.
 - **A public URL is not storage permission**; never grant yourself rights.
+- **No retained declaration values in the public repository** (Phase253, S23). This includes evaluation outputs:
+  commit public forms (ids, names, statuses, reason types, source URLs) and keep full runs in `$PEE_PRIVATE_EVAL_DIR`.
 - Honour Content-Signal `ai-input=no`, TDM reservations and `noai` meta tags.
 - Never commit third-party HTML or full articles.
 - Confidential evaluation inputs go to `$PEE_PRIVATE_EVAL_DIR`, outside Git.
