@@ -1,0 +1,201 @@
+{
+ "schema": "pee265.persistence-scenarios.v1",
+ "frozenBefore": "the Phase265 persistence implementation and its first evaluation run",
+ "evidenceTier": "T1 synthetic fixtures only (fictional .test hosts, invented products); not genuine publisher content",
+ "path": "HTML -> scripts/phase246-live-wave.mjs observations (Phase245 + Phase225/226 probe) -> scripts/phase246-knowledge.mjs ingest-observations (Phase246 store, Phase249 class or deny policy) -> close -> reopen -> read",
+ "metrics": [
+  "extracted leads",
+  "persisted",
+  "associated with the page product",
+  "retained without product association",
+  "rejected by reason",
+  "withheld for rights by reason",
+  "duplicates on repeat",
+  "supersession",
+  "conflicts",
+  "equal after reopen",
+  "incorrect attribution",
+  "incorrect evidence promotion",
+  "prose fragments found in the store"
+ ],
+ "integrity": {
+  "incorrectAttribution": 0,
+  "incorrectPromotion": 0,
+  "proseFragmentsInStore": 0,
+  "rankingAuthorized": 0,
+  "independentTestEvidence": 0,
+  "scientificEvidenceAdmitted": 0
+ },
+ "scenarios": [
+  {
+   "id": "S1_prose_publisher",
+   "step": 1,
+   "db": "class",
+   "url": "https://lab-one.pee265-fixture.test/reviews/vx100",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><h2>How we tested</h2><p>We tested the VX100 in our lab for two weeks.</p><p>We measured the noise of the VX100 at 52 dB using a sound meter.</p></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "withheld": 0,
+    "rejected": {},
+    "dimension": [
+     "not_established"
+    ],
+    "reportedBy": "test_publisher_operator_asserted"
+   }
+  },
+  {
+   "id": "S2_table_publisher_other_row",
+   "step": 2,
+   "db": "class",
+   "url": "https://lab-one.pee265-fixture.test/tests/fryer-table",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><p>We measured both fryers ourselves; our tests used a digital scale and a sound meter.</p><table><caption>Our test measurements</caption><thead><tr><th scope=\"col\">Model</th><th scope=\"col\">Measured mass (g)</th><th scope=\"col\">Measured noise (dB)</th></tr></thead><tbody><tr><th scope=\"row\">VX100</th><td>4100</td><td>52</td></tr><tr><th scope=\"row\">ZX900</th><td>3900</td><td>50</td></tr></tbody></table></article></body></html>",
+   "expect": {
+    "leads": 2,
+    "persisted": 2,
+    "associated": 2,
+    "unresolved": 0,
+    "withheld": 0,
+    "rejected": {},
+    "dimension": [
+     "mass",
+     "noise"
+    ],
+    "reportedBy": "test_publisher_operator_asserted",
+    "note": "ZX900 row is not the page product: no lead, never attributed"
+   }
+  },
+  {
+   "id": "S3_repeat_S1",
+   "step": 3,
+   "db": "class",
+   "repeatOf": "S1_prose_publisher",
+   "expect": {
+    "newRows": 0,
+    "note": "same bytes, same extractor: idempotent"
+   }
+  },
+  {
+   "id": "S4_revision_of_S1",
+   "step": 4,
+   "db": "class",
+   "url": "https://lab-one.pee265-fixture.test/reviews/vx100",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><h2>How we tested</h2><p>We tested the VX100 in our lab for two weeks.</p><p>We measured the noise of the VX100 at 54 dB using a sound meter.</p></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "supersedes": "S1_prose_publisher"
+   }
+  },
+  {
+   "id": "S5_second_publisher_conflict",
+   "step": 5,
+   "db": "class",
+   "url": "https://lab-two.pee265-fixture.test/vx100-measured",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><p>We measured the fryer ourselves; our tests used a sound meter.</p><table><caption>Our test measurements</caption><thead><tr><th scope=\"col\">Model</th><th scope=\"col\">Measured noise (dB)</th></tr></thead><tbody><tr><th scope=\"row\">VX100</th><td>58</td></tr></tbody></table></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "conflict": "noise db: 52 (S2) vs 58 (S5) on the same product"
+   }
+  },
+  {
+   "id": "S6_ambiguous_page_subject",
+   "step": 6,
+   "db": "class",
+   "url": "https://lab-one.pee265-fixture.test/roundup/two-fryers",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker ZX900 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"ZX900\", \"mpn\": \"ZX900\"}</script></head><body><article><h2>Our tests</h2><p>We measured the noise at 49 dB using a sound meter while comparing the VX100 and ZX900.</p></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 0,
+    "unresolved": 1,
+    "note": "never attributed to VX100 or ZX900"
+   }
+  },
+  {
+   "id": "S7_manufacturer_test_result",
+   "step": 7,
+   "db": "class",
+   "url": "https://maker.pee265-fixture.test/vx100/performance",
+   "sourceType": "manufacturer",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><h2>Test results</h2><p>In our lab we measured the noise of the VX100 at 50 dB using a sound meter.</p></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "reportedBy": "manufacturer",
+    "evidenceRole": "manufacturer_declaration"
+   }
+  },
+  {
+   "id": "S8_ambiguous_unit_and_scope",
+   "step": 8,
+   "db": "class",
+   "url": "https://lab-one.pee265-fixture.test/tests/odd-units",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><p>We measured the display brightness at 80 % using a light meter.</p><p>We measured the fryer ourselves; our tests used a digital timer.</p><table><caption>Our test measurements</caption><thead><tr><th scope=\"col\">Model</th><th scope=\"col\">Measured time (W)</th></tr></thead><tbody><tr><th scope=\"row\">VX100</th><td>1500</td></tr></tbody></table></article></body></html>",
+   "expect": {
+    "leads": 2,
+    "persisted": 1,
+    "associated": 1,
+    "rejected": {
+     "unit_dimension_mismatch": 1
+    },
+    "dimension": [
+     "not_established"
+    ],
+    "note": "% kept with dimension not_established; a W value under a time header is withheld"
+   }
+  },
+  {
+   "id": "S9_machine_readable_reservation",
+   "step": 9,
+   "db": "class",
+   "url": "https://lab-two.pee265-fixture.test/reserved-review",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script><meta name=\"tdm-reservation\" content=\"1\"></head><body><article><h2>How we tested</h2><p>We measured the noise of the VX100 at 51 dB using a sound meter.</p></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 0,
+    "withheld": 1,
+    "reason": "machine_readable_reservation"
+   }
+  },
+  {
+   "id": "S10_default_deny_storage",
+   "step": 10,
+   "db": "deny",
+   "url": "https://lab-one.pee265-fixture.test/reviews/vx100-deny",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><h2>How we tested</h2><p>We measured the noise of the VX100 at 53 dB using a sound meter.</p></article></body></html>",
+   "expect": {
+    "leads": 1,
+    "persisted": 0,
+    "withheld": 1,
+    "reason": "metadata_only"
+   }
+  },
+  {
+   "id": "S11_claims_not_tests",
+   "step": 11,
+   "db": "class",
+   "url": "https://lab-one.pee265-fixture.test/news/claims",
+   "sourceType": "independent_original_test",
+   "html": "<html><head><title>Fixture</title><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"Sample Maker VX100 Air Fryer\", \"brand\": \"Sample Maker\", \"model\": \"VX100\", \"mpn\": \"VX100\"}</script></head><body><article><p>Manufacturer claims the VX100 runs at 45 dB.</p><p>We did not test the VX100 noise; 47 dB is not measured.</p></article></body></html>",
+   "expect": {
+    "leads": 0,
+    "persisted": 0
+   }
+  }
+ ]
+}
