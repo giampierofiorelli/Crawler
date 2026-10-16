@@ -10,7 +10,7 @@ import {validateMetadataPilotPolicy264,loadMetadataPilotPolicy264,MetadataPilotG
 const T0=Date.parse('2026-10-16T12:00:00.000Z');
 const policy=(o:Partial<MetadataPilotPolicy264>={}):MetadataPilotPolicy264=>({schema:'pee264.metadata-discovery-policy.v1',policyId:'pilot_test',revision:1,
  issuedAt:'2026-10-16T11:00:00.000Z',expiresAt:'2026-10-23T11:00:00.000Z',authorisation:'test fixture authorisation, not an owner decision',
- operations:['wikidata_entity_lookup','robots_fetch','sitemap_metadata'],jobIds:['research_'+'a'.repeat(32)],maxRequests:6,maxRequestsPerHost:3,minIntervalMs:1000,
+ operations:['wikidata_entity_lookup','robots_fetch','sitemap_metadata'],jobIds:['research_'+'a'.repeat(32)],maxRequests:6,maxRequestsPerHost:3,maxWikidataRequests:4,minIntervalMs:1000,
  maxResponseBytes:2_000_000,maxClockSkewSeconds:300,userAgent:'PEEMetadataPilot/264 (https://github.com/example/project; research bot) node/22',
  prohibited:{pageRetrieval:true,factRetention:true,sourceRegistration:true,evidenceAdmission:true,ranking:true},...o});
 function clock(){let t=T0;const waits:number[]=[];return {waits,advance:(ms:number)=>{t+=ms;},now:()=>new Date(t),sleep:async(ms:number)=>{waits.push(ms);t+=ms;}};}
@@ -56,6 +56,15 @@ test('the gate enforces scope, accepted domains, budgets, spacing and byte caps'
  await wd.get(wikidataEntitiesUrl264(['Q1']),'x',1);await wd.get(wikidataEntitiesUrl264(['Q2']),'x',1);
  await assert.rejects(wd.get(wikidataEntitiesUrl264(['Q3']),'x',1),/request_budget_exhausted/);
  assert.equal(g.totals().requests,6);
+ // The Wikidata API and each candidate domain have separate per-host budgets (found by the offline rehearsal:
+ // one search per brand plus the entity read exceeded a single per-host cap); the global budget still binds both.
+ const g2=new MetadataPilotGate264(policy({maxRequests:10,maxRequestsPerHost:1,maxWikidataRequests:2}),tr,clock());
+ const wd2=g2.transportFor('wikidata_entity_lookup');g2.allowDomain('maker.pee264-fixture.test');
+ await wd2.get(wikidataSearchUrl264('a'),'x',1);await wd2.get(wikidataSearchUrl264('b'),'x',1);
+ await assert.rejects(wd2.get(wikidataSearchUrl264('c'),'x',1),/host_budget_exhausted/);
+ await g2.transportFor('robots_fetch').get('https://maker.pee264-fixture.test/robots.txt','x',1);
+ await assert.rejects(g2.transportFor('sitemap_metadata').get('https://maker.pee264-fixture.test/sitemap.xml','x',1),/host_budget_exhausted/);
+ assert.throws(()=>validateMetadataPilotPolicy264(policy({maxWikidataRequests:21}),new Date(T0)),/maxWikidataRequests/);
 });
 
 test('provider instructions stop the pilot or the domain; the clock and expiry are checked on every request',async()=>{

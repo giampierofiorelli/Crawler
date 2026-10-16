@@ -38,12 +38,14 @@ export interface MetadataPilotPolicy264 {
  /** The owner's authorisation as recorded (no legal review implied). */
  authorisation:string;
  operations:Operation264[];jobIds:string[];
- maxRequests:number;maxRequestsPerHost:number;minIntervalMs:number;maxResponseBytes:number;maxClockSkewSeconds:number;
+ maxRequests:number;
+ /** maxRequestsPerHost bounds each candidate domain; the Wikidata API has its own budget (one search per brand plus the entity read). */
+ maxRequestsPerHost:number;maxWikidataRequests:number;minIntervalMs:number;maxResponseBytes:number;maxClockSkewSeconds:number;
  /** Wikimedia User-Agent policy: client name/version, contact, the word "bot". */
  userAgent:string;
  prohibited:{pageRetrieval:true;factRetention:true;sourceRegistration:true;evidenceAdmission:true;ranking:true};
 }
-const KEYS=['schema','policyId','revision','issuedAt','expiresAt','authorisation','operations','jobIds','maxRequests','maxRequestsPerHost','minIntervalMs',
+const KEYS=['schema','policyId','revision','issuedAt','expiresAt','authorisation','operations','jobIds','maxRequests','maxRequestsPerHost','maxWikidataRequests','minIntervalMs',
  'maxResponseBytes','maxClockSkewSeconds','userAgent','prohibited'];
 const DAY=86400000;
 export function validateMetadataPilotPolicy264(p0:unknown,now:Date):MetadataPilotPolicy264{
@@ -63,7 +65,7 @@ export function validateMetadataPilotPolicy264(p0:unknown,now:Date):MetadataPilo
  if(!Array.isArray(p.operations)||!p.operations.length||p.operations.some((o:string)=>!OPERATIONS.includes(o as Operation264))||new Set(p.operations).size!==p.operations.length)bad('operations');
  if(!Array.isArray(p.jobIds)||!p.jobIds.length||p.jobIds.length>50||p.jobIds.some((j:string)=>!/^research_[0-9a-f]{32}$/.test(j)))bad('jobIds');
  const int=(k:string,lo:number,hi:number)=>{if(!Number.isInteger(p[k])||p[k]<lo||p[k]>hi)bad(`${k} must be ${lo}..${hi}`);};
- int('maxRequests',1,60);int('maxRequestsPerHost',1,10);int('minIntervalMs',1000,60000);int('maxResponseBytes',1,2_000_000);int('maxClockSkewSeconds',1,600);
+ int('maxRequests',1,60);int('maxRequestsPerHost',1,10);int('maxWikidataRequests',1,20);int('minIntervalMs',1000,60000);int('maxResponseBytes',1,2_000_000);int('maxClockSkewSeconds',1,600);
  if(typeof p.userAgent!=='string'||p.userAgent.length>200||!/\bhttps:\/\/\S+/.test(p.userAgent)||!/bot/i.test(p.userAgent)||!/^[A-Za-z][\w.-]*\/[\w.-]+ /.test(p.userAgent))
   bad('userAgent must give name/version, a contact URL and the word bot (Wikimedia User-Agent policy)');
  const pr=p.prohibited;
@@ -109,7 +111,8 @@ export class MetadataPilotGate264 {
   const host=u!.hostname;
   if(this.haltedHosts.has(host))refuse('host_halted:'+this.haltedHosts.get(host));
   if(this.sent()>=this.policy.maxRequests)refuse('request_budget_exhausted');
-  if((this.perHost.get(host)??0)>=this.policy.maxRequestsPerHost)refuse('host_budget_exhausted');
+  const hostCap=op==='wikidata_entity_lookup'?this.policy.maxWikidataRequests:this.policy.maxRequestsPerHost;
+  if((this.perHost.get(host)??0)>=hostCap)refuse('host_budget_exhausted');
   const wait=this.last+this.policy.minIntervalMs-this.clock.now().getTime();if(this.last&&wait>0)await this.clock.sleep(wait);
   this.last=this.clock.now().getTime();this.perHost.set(host,(this.perHost.get(host)??0)+1);
   const entry:RequestLog264={seq:this.log.length+1,at:new Date(this.last).toISOString(),operation:op,host,path:u!.pathname,status:null,bytes:0,outcome:'pending'};
