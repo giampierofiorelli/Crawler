@@ -62,7 +62,8 @@ export function researchJobFromGap182(categoryId:string,g:ResearchGap181):Resear
 /** Phase257: what an exact-product source job looks for. A missing specification is a declaration search, never a
  * request for independent testing; only missing_test asks for independent empirical evidence. */
 export function researchQuestion182(gapKind:ResearchGap181['kind']):string{
- if(gapKind==='missing_declaration')return 'Original manufacturer or retailer declared specification for this product record and criterion';
+ // Wording must pass the source-plan guard (web_evidence_acquisition blocks commercial terms such as "retailer").
+ if(gapKind==='missing_declaration')return 'Original declared specification from the maker or seller of this product record, for this criterion';
  if(gapKind==='declaration_conflict')return 'Which declarations belong to which variant, revision or source for this product record and criterion';
  return 'Independent empirical research on this exact product and use case';
 }

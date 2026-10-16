@@ -11,7 +11,10 @@
  * exact variants. Every planned job therefore carries an identity annotation with exactVariantVerified:false.
  */
 import {createHash} from 'node:crypto';
-import {researchJobFromGap182,assembleResearchPlan182,type ResearchPlan182} from './phase182_gap_research_orchestrator.js';
+import {lstatSync,realpathSync,statSync,readFileSync} from 'node:fs';import {resolve,dirname} from 'node:path';
+import {researchJobFromGap182,assembleResearchPlan182,executeResearchGaps182,type ResearchPlan182,type ResearchRun182,type CuratedVariantSources182} from './phase182_gap_research_orchestrator.js';
+import type {WebSourcePolicy} from './web_evidence_acquisition.js';
+import {insideGitWorkTree249} from './phase246_knowledge_store.js';
 import {SPEC_CRITERIA249} from './phase249_decision.js';
 import type {ResearchNeeds254,ResearchNeed254} from './phase254_research_needs.js';
 
@@ -126,4 +129,50 @@ export function planResearchFromNeeds257(args:{needs:ResearchNeeds254;categoryId
    identity:{productId:n.productId!,keyBasis:n.identity?.keyBasis??null,identityState:n.identity?.identityState??null,exactVariantVerified:false},requests:n.requests.length};});
  return {schema:'pee257.research-planning.v1',plan,jobs,held,policy:{policyId:policy.policyId,revision:policy.revision,market:policy.market},
   planningOnly:true,executionAuthorized:false,rankingAuthorized:false,evidenceAdmitted:false,sourcePermissionsGranted:false};
+}
+
+// ---- Checkpoint B: the current protected policy, re-checked at execution ----------------------------------------
+/** Loads the operator policy from a protected local file: a regular file (not a symbolic link) at its canonical path,
+ * outside every Git work tree, not writable by group or others (nor its directory), owned by this user, small and
+ * strictly valid against the trusted clock. Anything else denies: there is no permissive default. */
+export function loadResearchPolicy257(path:string|undefined=process.env.PEE_RESEARCH_POLICY,now:Date=new Date()):ResearchPolicy257{
+ if(!path)throw Error('phase257_policy_missing: no policy path (PEE_RESEARCH_POLICY)');
+ const abs=resolve(path);let st;
+ try{st=lstatSync(abs);}catch{throw Error('phase257_policy_missing: '+abs);}
+ if(st.isSymbolicLink())throw Error('phase257_policy_path: a symbolic link is not accepted');
+ if(!st.isFile())throw Error('phase257_policy_path: not a regular file');
+ if(realpathSync(abs)!==abs)throw Error('phase257_policy_path: not the canonical path (a directory on the path is a link)');
+ if(insideGitWorkTree249(abs))throw Error('phase257_policy_path: inside a Git work tree');
+ if(st.mode&0o022)throw Error('phase257_policy_path: writable by group or others');
+ if(statSync(dirname(abs)).mode&0o022)throw Error('phase257_policy_path: directory writable by group or others');
+ if(typeof process.getuid==='function'&&st.uid!==process.getuid())throw Error('phase257_policy_path: not owned by this user');
+ if(st.size>65_536)throw Error('phase257_policy_path: too large');
+ let raw:unknown;try{raw=JSON.parse(readFileSync(abs,'utf8'));}catch{throw Error('phase257_invalid_policy: not JSON');}
+ return validateResearchPolicy257(raw,now);
+}
+export interface PolicyRun257 {run:ResearchRun182;policyRevision:string;executedAt:string;
+ /** Phase257: always true. Reads, workers and transports are never passed to Phase182. */
+ dryRunOnly:true;sourceReads:0;workerTasks:0;evidenceAdmitted:false;rankingAuthorized:false}
+/** Execution wrapper. Loads the CURRENT policy (never a policy object travelling with the plan), checks the plan
+ * against it with the trusted clock, then runs the unchanged executeResearchGaps182 with reads, workers and transport
+ * disabled whatever the caller passes. The plan hash is verified by Phase182 as integrity only. */
+export async function executeUnderPolicy257(args:{plan:ResearchPlan182;policyPath?:string;now?:()=>Date;
+ operatorSources?:readonly CuratedVariantSources182[];sourcePolicies?:readonly WebSourcePolicy[]}):Promise<PolicyRun257>{
+ const now=(args.now??(()=>new Date()))();
+ const policy=loadResearchPolicy257(args.policyPath??process.env.PEE_RESEARCH_POLICY,now);
+ const p=args.plan;
+ if(!p||p.phase!==182||p.planningOnly!==true||p.rankingAuthorized!==false||p.hardExclusionsAuthorized!==false)throw Error('phase257_plan_flags');
+ if(!policy.categories.includes(p.categoryId))throw Error('phase257_category_not_in_policy');
+ if(p.market!==policy.market)throw Error('phase257_market_mismatch');
+ if(p.policyRevision!==policyRevision257(policy))throw Error('phase257_policy_revision_mismatch');
+ if(!Array.isArray(p.jobs)||p.jobs.length>policy.maxJobsPerPlan)throw Error('phase257_too_many_jobs');
+ for(const j of p.jobs){
+  if(!(policy.needKinds as readonly string[]).includes(j.gapKind))throw Error('phase257_kind_not_in_policy');
+  let expected;try{expected=researchJobFromGap182(p.categoryId,{kind:j.gapKind,reference:j.reference,action:'check'});}catch{throw Error('phase257_job_not_phase182');}
+  if(JSON.stringify(expected)!==JSON.stringify(j))throw Error('phase257_job_not_phase182');
+ }
+ const run=await executeResearchGaps182({plan:p,categoryCatalog:[],workers:[],existingWorkerBudget:0,
+  operatorSources:args.operatorSources??[],sourcePolicies:args.sourcePolicies??[],maxSourceReads:0,allowSourceReads:false});
+ if(run.sourceRetrievalAttempts!==0)throw Error('phase257_invariant_broken: a source was read');
+ return {run,policyRevision:policyRevision257(policy),executedAt:now.toISOString(),dryRunOnly:true,sourceReads:0,workerTasks:0,evidenceAdmitted:false,rankingAuthorized:false};
 }

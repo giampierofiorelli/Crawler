@@ -17,6 +17,7 @@ test('missing_declaration and declaration_conflict are their own gap kinds; miss
 });
 test('execution words specification research as a declaration search, never as independent testing',()=>{
  for(const k of ['missing_declaration','declaration_conflict'] as const){const q=researchQuestion182(k);
-  assert.match(q,/declared specification|declarations/i);assert.doesNotMatch(q,/independent|empirical|test/i);}
+  assert.match(q,/declared specification|declarations/i);assert.doesNotMatch(q,/independent|empirical|test/i);
+  assert.doesNotMatch(q,/amazon|affiliate|retailer|merchant|commission|sponsor|price|deal/i,'must pass the source-plan guard');}
  assert.equal(researchQuestion182('missing_test'),'Independent empirical research on this exact product and use case','unchanged for independent tests');
 });
