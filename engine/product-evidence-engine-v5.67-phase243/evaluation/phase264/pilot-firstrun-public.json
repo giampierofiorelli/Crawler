@@ -1,0 +1,81 @@
+{
+ "schema": "pee264.pilot-firstrun-public.v1",
+ "note": "counts and reason codes only; URLs, brands, hosts and entity ids stay in the private report",
+ "run": {
+  "date": "2026-10-16",
+  "firstRun": true
+ },
+ "summary": {
+  "brands": {
+   "jobs": 19,
+   "jobsWithoutBrand": 5,
+   "distinctBrands": 6,
+   "unambiguous": 0,
+   "ambiguous": 0,
+   "unresolved": 6,
+   "reasonCounts": [
+    [
+     "lookup_not_completed",
+     6
+    ]
+   ]
+  },
+  "domains": {
+   "candidates": 0,
+   "known": 0,
+   "new": 0,
+   "accessible": 0,
+   "blocked": 0,
+   "unavailable": 0,
+   "multipleCurrentValues": 0,
+   "regional": 0,
+   "brandEntity": 0
+  },
+  "urls": {
+   "sitemapUrlsReturned": 0,
+   "leads": 0,
+   "exactIdentifier": 0,
+   "attributionUnknown": 0,
+   "categoryIrrelevant": 0,
+   "otherModelRejected": 0,
+   "alreadyObserved": 0,
+   "duplicate": 0,
+   "jobsWithExactIdentifierLead": 0
+  },
+  "network": {
+   "requests": 1,
+   "bytes": 1966,
+   "maxResponseBytesSeen": 1966,
+   "wikidataRequests": 1,
+   "robotsRequests": 0,
+   "sitemapRequests": 0,
+   "statusCounts": [
+    [
+     "429",
+     1
+    ]
+   ],
+   "rateLimitResponses": 1,
+   "serverErrors": 0,
+   "forbidden": 0,
+   "networkErrors": 0,
+   "gateRefusals": [],
+   "pilotHalted": "stop_429_retry_after",
+   "hostsHalted": [],
+   "scriptErrors": 1,
+   "minSpacingMs": null
+  },
+  "integrity": {
+   "withinRequestBudget": true,
+   "withinByteCap": true,
+   "productPagesRetrieved": 0,
+   "valuesRetained": 0,
+   "sourcesRegistered": 0,
+   "retriesAfterStop": 0,
+   "storeUnchanged": true,
+   "policyRevision": 2,
+   "policyExpiresAt": "2026-10-23T13:49:22.131Z",
+   "durationSeconds": 0
+  }
+ }
+}

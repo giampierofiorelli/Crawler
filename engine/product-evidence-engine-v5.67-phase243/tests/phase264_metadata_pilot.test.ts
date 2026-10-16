@@ -75,6 +75,7 @@ test('provider instructions stop the pilot or the domain; the clock and expiry a
  const g=new MetadataPilotGate264(policy({maxRequests:20}),tr,c);
  g.allowDomain('slow.pee264-fixture.test');g.allowDomain('fine.pee264-fixture.test');
  const r=await g.transportFor('robots_fetch').get('https://slow.pee264-fixture.test/robots.txt','x',1);assert.equal(r.status,503);
+ assert.equal(g.log.at(-1)!.retryAfter,'120','the provider\'s Retry-After instruction is recorded');
  await assert.rejects(g.transportFor('sitemap_metadata').get('https://slow.pee264-fixture.test/sitemap.xml','x',1),/host_halted/,'Retry-After stops that domain, no retry');
  await g.transportFor('robots_fetch').get('https://fine.pee264-fixture.test/robots.txt','x',1);
  await g.transportFor('wikidata_entity_lookup').get(wikidataSearchUrl264('lag'),'x',1);

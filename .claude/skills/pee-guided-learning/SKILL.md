@@ -79,6 +79,10 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
   - never feed a pipeline invented text to make it run;
   - persist only what the store does not already hold (derive, don't copy).
+- **Rehearse a single live run offline first, and log provider instructions** (Phase264). A fixture rehearsal of
+  the one-shot pilot found that the per-host budget also capped Wikidata (4 allowed against 7 needed) before any request
+  was spent. The live run then stopped on a 429 whose Retry-After value had not been logged. Record every stop
+  instruction's value.
 - **Measure the cause before relaxing a rule** (Phase263). Rights were suspected of discarding knowledge, but the store
   retained 2,385 of 2,385 observed facts. The loss was a missing pipeline connection (test leads never persisted)
   and misattributed rights gaps.

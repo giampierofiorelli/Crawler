@@ -76,7 +76,9 @@ export function validateMetadataPilotPolicy264(p0:unknown,now:Date):MetadataPilo
 export function loadMetadataPilotPolicy264(path:string,now:Date):MetadataPilotPolicy264{return validateMetadataPilotPolicy264(readProtectedPolicyFile257(path),now);}
 
 // ---- the gate --------------------------------------------------------------------------------------------------------
-export interface RequestLog264 {seq:number;at:string;operation:Operation264;host:string;path:string;status:number|null;bytes:number;outcome:string}
+export interface RequestLog264 {seq:number;at:string;operation:Operation264;host:string;path:string;status:number|null;bytes:number;outcome:string;
+ /** The provider's Retry-After instruction, recorded so a later, separately authorised run can honour it. */
+ retryAfter?:string|null}
 export class MetadataPilotGate264 {
  readonly log:RequestLog264[]=[];halted:string|null=null;
  private bytes=0;private last=0;private readonly perHost=new Map<string,number>();private readonly haltedHosts=new Map<string,string>();
@@ -122,7 +124,7 @@ export class MetadataPilotGate264 {
   catch(e){entry.outcome='network_error';
    if(op==='wikidata_entity_lookup')this.halted='wikidata_network_error';else this.haltedHosts.set(host,'network_error');
    throw Error('phase264_network_error: '+String((e as Error).message??e).slice(0,80));}
-  entry.status=res.status;entry.bytes=res.rawBytes?.length??Buffer.byteLength(res.body);this.bytes+=entry.bytes;
+  entry.status=res.status;if(res.retryAfter)entry.retryAfter=String(res.retryAfter).slice(0,64);entry.bytes=res.rawBytes?.length??Buffer.byteLength(res.body);this.bytes+=entry.bytes;
   // Trusted clock: the server's Date header must agree with the local clock that validated the policy.
   if(res.date){const skew=Math.abs(Date.parse(res.date)-this.clock.now().getTime())/1000;
    if(!Number.isFinite(skew)||skew>this.policy.maxClockSkewSeconds){entry.outcome='clock_untrusted';this.halted='clock_untrusted';fail('clock_untrusted');}}

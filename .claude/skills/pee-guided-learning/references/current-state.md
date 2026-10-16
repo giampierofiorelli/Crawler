@@ -11,6 +11,26 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000000000000. Phase264 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase264/PHASE264-TECHNICAL-REPORT.md`; next brief
+`docs/phase264/CONTINUATION-PROMPT.md` (Phase265: persist Phase225/226 test leads, then teaching).
+
+- **New:** `phase264_metadata_pilot.ts`. It provides:
+  - the operation-specific policy `pee264.metadata-discovery-policy.v1` (at most 7 days, strict fields, protected file
+    via the shared `readProtectedPolicyFile257`);
+  - `MetadataPilotGate264`, the only network path. It checks scope, expiry, the Date skew, global, Wikidata and
+    per-domain budgets, spacing and the byte cap, and stops on 403/429/5xx/Retry-After/maxlag;
+  - the Wikidata P856 assessment, which treats P856 as an unverified claim;
+  - sitemap leads through Phase75 and Phase261.
+- **Runner:** `scripts/phase264-metadata-pilot.mjs` (single run, plus an offline `--rehearse` mode).
+- **First genuine run:** 1 request; Wikidata returned 429 with Retry-After; pilot halted; 0 domains and 0 URLs; every
+  integrity limit held. The private report is in `privateEvaluationDir249()/phase264` and in pee-knowledge
+  `private-eval/phase264/`; public counts are in `evaluation/phase264/`.
+- **Policy** r2 expires on 2026-10-23. A copy is in pee-knowledge `policy/`. Do not re-run it without the owner's
+  explicit confirmation.
+- **Phase69:** `SourceResponse` now carries `date` and `retryAfter`.
+
 ## 00000000000000. Phase263 update (2026-10-16) — read first
 
 Reports: `engine/product-evidence-engine-v5.67-phase243/docs/phase263/PHASE263-ASSESSMENT.md` (legal and discovery
