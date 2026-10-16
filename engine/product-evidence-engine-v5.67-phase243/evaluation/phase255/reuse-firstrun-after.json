@@ -1,0 +1,420 @@
+{
+ "schema": "pee255.reuse-eval.v1",
+ "gold": "evaluation/phase255/reuse-gold.json",
+ "measured": {
+  "cases": 12,
+  "responseCorrect": 12,
+  "productStatusCorrect": 25,
+  "products": 25,
+  "checkableComparisonsCorrect": 13,
+  "checkableGold": 13,
+  "wrongInclusions": 0,
+  "wrongExclusions": 0,
+  "unknownWhereCheckable": 0,
+  "needDestinationCorrect": 12,
+  "unknownGoldProducts": 12,
+  "researchRequested": 9,
+  "unnecessaryResearch": 0
+ },
+ "rows": [
+  {
+   "id": "f01",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "power_min",
+     "gotCriterion": "power_min"
+    },
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "power_min",
+     "gotCriterion": "power_min"
+    }
+   ],
+   "needs": [
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "criterion": "power_min"
+    },
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "criterion": "power_min"
+    }
+   ]
+  },
+  {
+   "id": "f02",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "width_max",
+     "gotCriterion": "width_max"
+    },
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "width_max",
+     "gotCriterion": "width_max"
+    }
+   ],
+   "needs": [
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "criterion": "width_max"
+    },
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "criterion": "width_max"
+    }
+   ]
+  },
+  {
+   "id": "f03",
+   "goldResponse": "justified_abstention",
+   "gotResponse": "justified_abstention",
+   "products": [
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "source_reinspection",
+     "gotNeed": "source_reinspection",
+     "criterion": "capacity_min",
+     "gotCriterion": "capacity_min"
+    },
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "capacity_min",
+     "gotCriterion": "capacity_min"
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "capacity_min",
+     "gotCriterion": "capacity_min"
+    }
+   ],
+   "needs": [
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "criterion": "capacity_min"
+    },
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "criterion": "capacity_min"
+    },
+    {
+     "destination": "source_reinspection",
+     "kind": "retained_needs_source_reinspection",
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "criterion": "capacity_min"
+    }
+   ]
+  },
+  {
+   "id": "f04",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "gold": "exclude",
+     "got": "exclude",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    }
+   ],
+   "needs": []
+  },
+  {
+   "id": "f05",
+   "goldResponse": "justified_negative",
+   "gotResponse": "justified_negative",
+   "products": [
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "gold": "exclude",
+     "got": "exclude",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "gold": "exclude",
+     "got": "exclude",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    }
+   ],
+   "needs": []
+  },
+  {
+   "id": "f06",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    }
+   ],
+   "needs": []
+  },
+  {
+   "id": "f07",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    }
+   ],
+   "needs": []
+  },
+  {
+   "id": "f08",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    }
+   ],
+   "needs": []
+  },
+  {
+   "id": "f09",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_5061f6355633f0e3eb34069b",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_c67eff51323436c7beff9977",
+     "gold": "exclude",
+     "got": "exclude",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    }
+   ],
+   "needs": []
+  },
+  {
+   "id": "f10",
+   "goldResponse": "justified_abstention",
+   "gotResponse": "justified_abstention",
+   "products": [
+    {
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "not_actionable",
+     "gotNeed": "not_actionable",
+     "criterion": "budget_max",
+     "gotCriterion": "budget_max"
+    }
+   ],
+   "needs": [
+    {
+     "destination": "not_actionable",
+     "kind": "not_actionable",
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "criterion": "budget_max"
+    }
+   ]
+  },
+  {
+   "id": "f11",
+   "goldResponse": "positive_shortlist",
+   "gotResponse": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "gold": "include",
+     "got": "include",
+     "goldNeed": null,
+     "gotNeed": null,
+     "criterion": null,
+     "gotCriterion": null
+    },
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "weight_max",
+     "gotCriterion": "weight_max"
+    }
+   ],
+   "needs": [
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "criterion": "weight_max"
+    }
+   ]
+  },
+  {
+   "id": "f12",
+   "goldResponse": "justified_abstention",
+   "gotResponse": "justified_abstention",
+   "products": [
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "capacity_min",
+     "gotCriterion": "capacity_min"
+    },
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "source_reinspection",
+     "gotNeed": "source_reinspection",
+     "criterion": "capacity_min",
+     "gotCriterion": "capacity_min"
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "gold": "unknown",
+     "got": "unknown",
+     "goldNeed": "research",
+     "gotNeed": "research",
+     "criterion": "capacity_min",
+     "gotCriterion": "capacity_min"
+    }
+   ],
+   "needs": [
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "criterion": "capacity_min"
+    },
+    {
+     "destination": "research",
+     "kind": "missing_declaration",
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "criterion": "capacity_min"
+    },
+    {
+     "destination": "source_reinspection",
+     "kind": "retained_needs_source_reinspection",
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "criterion": "capacity_min"
+    }
+   ]
+  }
+ ]
+}

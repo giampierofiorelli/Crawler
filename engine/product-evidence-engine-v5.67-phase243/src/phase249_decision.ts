@@ -57,7 +57,9 @@ export interface Candidate249 {productId:string;name:string;declarations:readonl
   * different models; such a product is never reported as meeting requirements until its identity is reviewed. */
  identityWarning?:string|null}
 /** Phase254: machine-readable reason, so later stages never parse the human reason text. */
-export type CheckCode249='meets'|'fails'|'not_a_quantity'|'upper_bound_only'|'not_comparable'|'no_declaration'|'sources_disagree'|'identity_unreviewed';
+export type CheckCode249='meets'|'fails'|'not_a_quantity'|'upper_bound_only'|'not_comparable'|'no_declaration'|'sources_disagree'|'identity_unreviewed'|
+ /** Phase255: a value is retained but cannot be compared safely: no unit, unlabelled axes, or a range on both sides of the limit. */
+ 'unit_missing'|'axes_unlabelled'|'range_straddles';
 export interface CriterionCheck249 {key:string;outcome:'meets'|'fails'|'unknown';code:CheckCode249;reason:string;evidence:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}[]}
 export interface ProductCheck249 {productId:string;name:string;outcome:'meets_all'|'fails'|'unknown';checks:CriterionCheck249[]}
 export interface Advice249 {
@@ -86,6 +88,23 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
   if(ub.length&&spec.bound==='min'){const top=Math.max(...ub.map(x=>x.n));
    return top<limit?{key:c.key,outcome:'fails',code:'fails',reason:`declared at most ${round(top)} ${unit} ("up to"); required ≥ ${limit} ${unit}`,evidence:ub.map(x=>ev(x.d))}
     :{key:c.key,outcome:'unknown',code:'upper_bound_only',reason:`declared "up to" ${round(top)} ${unit}: an upper bound under the maker's conditions, not the minimum you need`,evidence:ub.map(x=>ev(x.d))};}
+  // Phase255: a declared range decides only when every declared value is on the same side of the limit.
+  const ranges=rel.filter(d=>d.value?.kind==='range').map(d=>{const v=d.value as Extract<Value245,{kind:'range'}>;
+   const q=(n:number)=>comparable249({kind:'quantity',number:n,unit:v.unit,approximate:false} as Value245,spec.dimension,unit);return {d,lo:v.approximate?null:q(v.min),hi:v.approximate?null:q(v.max)};})
+   .filter(x=>x.lo!==null&&x.hi!==null) as {d:CandidateDeclaration249;lo:number;hi:number}[];
+  if(ranges.length===1){const r=ranges[0];
+   const pass=spec.bound==='min'?r.lo>=limit:r.hi<=limit,fail=spec.bound==='min'?r.hi<limit:r.lo>limit;
+   return pass?{key:c.key,outcome:'meets',code:'meets',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:[ev(r.d)]}
+    :fail?{key:c.key,outcome:'fails',code:'fails',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:[ev(r.d)]}
+    :{key:c.key,outcome:'unknown',code:'range_straddles',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit} lies on both sides of the limit`,evidence:[ev(r.d)]};}
+  // A number without its unit is retained evidence, not an absence; the unit is never guessed.
+  const unitless=rel.filter(d=>d.value?.kind==='number');
+  if(unitless.length)return {key:c.key,outcome:'unknown',code:'unit_missing',reason:'declared without a unit; the unit is not assumed',evidence:unitless.map(ev)};
+  if(spec.axis){const overall=p.declarations.filter(d=>!d.variantId&&OVERALL_DIMENSIONS.test(d.property)&&!COMPONENT_DIMENSIONS.test(d.property));
+   const text=overall.filter(d=>d.value?.kind==='text'&&new RegExp(`\\(\\s*${spec.axis}\\s*\\)|\\b${spec.axis}\\s*[:=]?\\s*\\d`,'i').test(d.rawValue)&&!/\d\s*(?:mm|cm|m|in|inch|inches|")\b/i.test(d.rawValue));
+   if(text.length)return {key:c.key,outcome:'unknown',code:'unit_missing',reason:'overall dimensions are declared with axis labels but without a unit; the unit is not assumed',evidence:text.map(ev)};
+   const unlabelled=overall.filter(d=>d.value?.kind==='dimensions'&&!axisValue249(d,spec.axis!)&&(d.value as {numbers:number[]}).numbers.length>1);
+   if(unlabelled.length)return {key:c.key,outcome:'unknown',code:'axes_unlabelled',reason:'overall dimensions are declared without saying which number is the width, height or depth',evidence:unlabelled.map(ev)};}
   return {key:c.key,outcome:'unknown',code:rel.length?'not_comparable':'no_declaration',reason:rel.length?'declared, but not in a comparable unit':'no declaration for this requirement',evidence:rel.map(ev)};
  }
  const lo=Math.min(...vals.map(x=>x.n)),hi=Math.max(...vals.map(x=>x.n));
@@ -95,7 +114,7 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  return {key:c.key,outcome:ok?'meets':'fails',code:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
 }
 const OVERALL_DIMENSIONS=/\b(?:dimensions?|size|measurements)\b/i;
-const COMPONENT_DIMENSIONS=/\b(?:slot|slots|box|package|packaging|packed|shipping|carton|internal|interior|inner|cavity|drum|bowl|basket|jug|tank|plate|door|opening|cable|cord)\b/i;
+const COMPONENT_DIMENSIONS=/\b(?:gross|slot|slots|box|package|packaging|packed|shipping|carton|internal|interior|inner|cavity|drum|bowl|basket|jug|tank|plate|door|opening|cable|cord)\b/i;
 /** Phase253: one axis of an overall, axis-labelled dimensions declaration as a quantity, or null. */
 export function axisValue249(d:CandidateDeclaration249,axis:'W'|'H'|'D'):Value245|null{
  const v=d.value;if(!v||v.kind!=='dimensions'||v.approximate||!OVERALL_DIMENSIONS.test(d.property)||COMPONENT_DIMENSIONS.test(d.property))return null;
@@ -171,6 +190,12 @@ export function candidatesFromStore249(store:{products246(f:{category?:string}):
    const src=(store.db.prepare("SELECT r.url FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product' ORDER BY r.fetched_at DESC LIMIT 1").get(pid) as {url:string}|undefined)?.url??null;
    declarations.push({declarationId:'name:'+pid,property:'Capacity (stated in product name)',value:fromName,rawValue:p!.name!,evidenceRole:'product_name_declaration',sourceUrl:src,variantId:null});
   }
+  // Phase255: the same rule for a wattage in the name; any power declaration (even one that cannot be compared) wins.
+  const powerName=powerFromName249(p?.name??null);const pw=SPEC_CRITERIA249.power_min;
+  if(powerName&&!declarations.some(d=>pw.property.test(d.property)&&!pw.exclude?.test(d.property))){
+   const src=(store.db.prepare("SELECT r.url FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product' ORDER BY r.fetched_at DESC LIMIT 1").get(pid) as {url:string}|undefined)?.url??null;
+   declarations.push({declarationId:'name:power:'+pid,property:'Power (stated in product name)',value:powerName,rawValue:p!.name!,evidenceRole:'product_name_declaration',sourceUrl:src,variantId:null});
+  }
   // Phase251: a name-only identity key ("20 Litre Microwave Oven" on one host) can cover several models' pages.
   const basis=(store.db.prepare('SELECT key_basis FROM products WHERE product_id=?').get(pid) as {key_basis:string}|undefined)?.key_basis;
   // Phase252: only the product's own pages (role main_product) count; a comparison table on another model's page that
@@ -185,11 +210,24 @@ export function candidatesFromStore249(store:{products246(f:{category?:string}):
  });
 }
 
-/** Exactly one volume token in a product name ("8L", "7.6 L", "1.7 litre", "6.8-Quart") gives a declared capacity. */
+/** Exactly one volume token in a product name ("8L", "7.6 L", "1.7 litre", "6.8-Quart", Phase255: "700ml", "50cl")
+ * gives a declared capacity. Two tokens are ambiguous; a mass ("1KG") is not a volume. */
 export function capacityFromName249(name:string|null):Value245|null{
  if(!name)return null;
- const m=[...name.matchAll(/(?<![\w.])(\d{1,2}(?:\.\d{1,2})?)\s?-?\s?(l|ltr|litres?|liters?|quarts?|qt)(?![a-z])/gi)];
+ const m=[...name.matchAll(/(?<![\w.])(?:(\d{1,2}(?:\.\d{1,2})?)\s?-?\s?(l|ltr|litres?|liters?|quarts?|qt)|(\d{2,4})\s?(ml|millilit(?:re|er)s?)|(\d{1,3})\s?(cl))(?![a-z])/gi)];
  if(m.length!==1)return null;
- const u=/^q/i.test(m[0][2])?'qt':'l';
- return {kind:'quantity',number:Number(m[0][1]),unit:u,approximate:false};
+ const x=m[0];
+ if(x[1])return {kind:'quantity',number:Number(x[1]),unit:/^q/i.test(x[2])?'qt':'l',approximate:false};
+ return x[3]?{kind:'quantity',number:Number(x[3]),unit:'ml',approximate:false}:{kind:'quantity',number:Number(x[5]),unit:'cl',approximate:false};
+}
+/** Phase255: exactly one wattage token in a product name ("800W", "2.2kW") is the seller's declared rating. A range
+ * ("1000-1200W"), two tokens ("600W / 900W") or a bare model number ("Xplode 1500") gives nothing. It is a declared
+ * rating in the name, never a measured performance, and is used only when no power declaration exists. */
+export function powerFromName249(name:string|null):Value245|null{
+ if(!name)return null;
+ const m=[...name.matchAll(/(?<![\w.])(\d{2,5}|\d(?:\.\d{1,2})?)\s?(kw|w|watts?)(?![a-z])/gi)];
+ if(m.length!==1)return null;
+ const i=m[0].index!,before=name.slice(0,i),after=name.slice(i+m[0][0].length);
+ if(/\d\s*[-–]\s*$/.test(before)||/^\s*[-–\/]\s*\d/.test(after))return null;
+ return {kind:'quantity',number:Number(m[0][1]),unit:/^kw$/i.test(m[0][2])?'kW':'W',approximate:false};
 }

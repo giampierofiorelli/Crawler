@@ -21,10 +21,12 @@ import type {Advice253} from './phase253_advice_contract.js';
 import type {ResearchGap181} from './phase181_dynamic_knowledge_ranking.js';
 import {researchJobFromGap182,type ResearchJob182} from './phase182_gap_research_orchestrator.js';
 
-export type NeedKind254='missing_declaration'|'conflicting_declarations'|'missing_independent_test'|'identity_review'|
+export type NeedKind254='missing_declaration'|'conflicting_declarations'|'missing_independent_test'|'identity_review'|'retained_needs_source_reinspection'|
  'retained_not_comparable'|'clarify_requirement'|'clarify_purchase'|'not_actionable';
-export type Destination254='research'|'user_clarification'|'reextraction'|'not_actionable';
-export type NeedStatus254='pending_authorization'|'omitted_by_budget'|'awaiting_user'|'pending_reextraction'|'not_actionable';
+/** Phase255: source_reinspection = the value is retained but incomplete (no unit, unlabelled axes, a straddling range):
+ * re-reading the same permitted source page may settle it; it is neither new research nor a local re-parse. */
+export type Destination254='research'|'user_clarification'|'reextraction'|'source_reinspection'|'not_actionable';
+export type NeedStatus254='pending_authorization'|'omitted_by_budget'|'awaiting_user'|'pending_reextraction'|'pending_reinspection'|'not_actionable';
 export interface ResearchNeed254 {
  needId:string;kind:NeedKind254;destination:Destination254;status:NeedStatus254;reason:string;
  categoryId:string;criterion:string|null;productId:string|null;
@@ -38,7 +40,7 @@ export interface ResearchNeed254 {
 }
 export interface ResearchNeeds254 {
  schema:'pee254.research-needs.v1';needs:ResearchNeed254[];
- summary:{research:number;queuedWithinBudget:number;omittedByBudget:number;clarification:number;reextraction:number;notActionable:number;duplicatesMerged:number};
+ summary:{research:number;queuedWithinBudget:number;omittedByBudget:number;clarification:number;reextraction:number;sourceReinspection:number;notActionable:number;duplicatesMerged:number};
  planningOnly:true;rankingAuthorized:false;evidenceAdmitted:false;sourcePermissionsGranted:false;
 }
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
@@ -56,7 +58,7 @@ function need(store:KnowledgeStore246,request:string,x:{kind:NeedKind254;destina
  const needId='need_'+sha(JSON.stringify([x.kind,x.categoryId,x.productId,x.criterion,scope])).slice(0,24);
  let job:ResearchJob182|null=null;
  if(x.gap)job=researchJobFromGap182(x.categoryId,x.gap);
- const status:NeedStatus254=x.destination==='research'?'pending_authorization':x.destination==='user_clarification'?'awaiting_user':x.destination==='reextraction'?'pending_reextraction':'not_actionable';
+ const status:NeedStatus254=x.destination==='research'?'pending_authorization':x.destination==='user_clarification'?'awaiting_user':x.destination==='reextraction'?'pending_reextraction':x.destination==='source_reinspection'?'pending_reinspection':'not_actionable';
  return {needId,kind:x.kind,destination:x.destination,status,reason:x.reason,categoryId:x.categoryId,criterion:x.criterion,productId:x.productId,
   identity:x.productId?identityOf(store,x.productId):null,volatile:!!x.volatile,gap181:x.gap??null,
   phase182:{eligible:false,reason:x.destination==='research'?PHASE182_REASON:'not a research task',jobPreview:job},requests:[request],
@@ -83,6 +85,9 @@ export function researchNeedsFromAdvice254(advice:Advice253,store:KnowledgeStore
    else if(c.code==='no_declaration'||c.code==='upper_bound_only')N({kind:'missing_declaration',destination:'research',volatile:price,
     reason:c.code==='upper_bound_only'?'only an "up to" value is declared':'no declaration retained for this criterion',categoryId:cat,criterion:c.key,productId:p.productId,
     gap:gap(price?'Find a dated, market-bound price declaration for the exact product.':'Find a declaration of this criterion for the exact product from a permitted source.')});
+   else if(c.code==='unit_missing'||c.code==='axes_unlabelled'||c.code==='range_straddles')N({kind:'retained_needs_source_reinspection',destination:'source_reinspection',
+    reason:c.code==='unit_missing'?'retained without a unit; the unit is never assumed':c.code==='axes_unlabelled'?'retained dimensions do not say which number is which axis':'the declared range lies on both sides of the limit',
+    categoryId:cat,criterion:c.key,productId:p.productId});
    else if(c.code==='not_comparable'&&price)N({kind:'not_actionable',destination:'not_actionable',reason:'price declared in another currency: the product may not be sold in this market; prices are never converted',categoryId:cat,criterion:c.key,productId:p.productId});
    else if(c.code==='not_comparable')N({kind:'retained_not_comparable',destination:'reextraction',reason:'a retained declaration could not be compared (unparsed text, a declared range or another unit); revisit the retained evidence before any new research',categoryId:cat,criterion:c.key,productId:p.productId});
    else if(c.code==='identity_unreviewed')N({kind:'identity_review',destination:'research',reason:'the product identity rests on a name shared by pages of different models',categoryId:cat,criterion:null,productId:p.productId,
@@ -114,6 +119,6 @@ export function collectResearchNeeds254(advices:readonly Advice253[],store:Knowl
  const count=(d:Destination254)=>needs.filter(n=>n.destination===d).length;
  return {schema:'pee254.research-needs.v1',needs:order,
   summary:{research:research.length,queuedWithinBudget:Math.min(max,research.length),omittedByBudget:Math.max(0,research.length-max),
-   clarification:count('user_clarification'),reextraction:count('reextraction'),notActionable:count('not_actionable'),duplicatesMerged:raw-needs.length},
+   clarification:count('user_clarification'),reextraction:count('reextraction'),sourceReinspection:count('source_reinspection'),notActionable:count('not_actionable'),duplicatesMerged:raw-needs.length},
   planningOnly:true,rankingAuthorized:false,evidenceAdmitted:false,sourcePermissionsGranted:false};
 }

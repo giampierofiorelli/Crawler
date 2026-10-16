@@ -62,7 +62,11 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  if(!category){
   if(j.decision==='out_of_scope'){out.response='out_of_scope';out.statements.push(...j.reasons);return out;}
   out.response='clarification';out.questions.push(...j.clarificationQuestions);out.statements.push(...j.reasons);return out;}
- if(j.decision==='unsupported_category'){out.response='out_of_scope';out.statements.push(...j.reasons);return out;}
+ // Phase255: a category PEE has no category knowledge for (no modelled needs, mechanisms or tests) can still be checked
+ // against limits the user stated, from retained declarations; the answer says what is not understood.
+ const statedCheckable=ex.constraints.some(c=>!!SPEC_CRITERIA249[c.criterion]&&c.status==='stated_in_request');
+ if(j.decision==='unsupported_category'&&!statedCheckable){out.response='out_of_scope';out.statements.push(...j.reasons);return out;}
+ if(j.decision==='unsupported_category')out.limitations.push(`PEE has no category knowledge for ${category.replace(/_/g,' ')}: only the limits you stated are checked; other needs are not understood.`);
  // 2. Requirements the user stated (confirmed with their own provenance) and ones to confirm or ask about.
  const applicable=ex.constraints.filter(c=>!!SPEC_CRITERIA249[c.criterion]);
  const stated=applicable.filter(c=>c.status==='stated_in_request');
