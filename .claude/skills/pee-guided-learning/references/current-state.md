@@ -11,6 +11,19 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000000. Phase258 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase258/PHASE258-TECHNICAL-REPORT.md` (plus
+`REUSE-AUDIT.md`); next brief `docs/phase258/CONTINUATION-PROMPT.md`.
+
+- `src/phase258_source_contributions.ts`: source descriptor (12 roles, 8 statement kinds, publisher country, BCP 47
+  language with `und`, product market, Phase197 expertise basis, cultural tradition requiring specialist validation,
+  sponsorship, originality, access), mapped onto Phase196 by `materialRoleFor196`.
+- `src/phase258_source_memory.ts`: source states (append-only), contribution feedback (no scores) and dry-run
+  selection per Phase257 job.
+- Validated on synthetic fixtures only; nothing persisted.
+- Language capability (`LANGUAGE_CAPABILITIES258`): English-only semantics; no detection, no translation.
+
 ## 00000000. Phase257 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase257/PHASE257-TECHNICAL-REPORT.md`; next brief
