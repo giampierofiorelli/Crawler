@@ -42,7 +42,10 @@ export interface ProductKnowledgeCatalog181 {
  products:readonly ProductKnowledge181[];externalReviewReference:string;
 }
 export interface SignedCatalog181 {catalog:ProductKnowledgeCatalog181;keyId:string;signatureBase64:string;}
-export type ResearchGap181={kind:'new_category'|'missing_product'|'missing_criterion'|'missing_test'|'stale_knowledge'|'scope_unconfirmed'|'unconfirmed_need'|'no_catalog'|'need_review';reference:string;action:string};
+/** Phase257: 'missing_declaration' (an original maker or retailer specification of a criterion for a product) and
+ * 'declaration_conflict' (sources disagree for a product and criterion) are specification research; 'missing_test' stays
+ * independent performance measurement only. */
+export type ResearchGap181={kind:'new_category'|'missing_product'|'missing_criterion'|'missing_test'|'missing_declaration'|'declaration_conflict'|'stale_knowledge'|'scope_unconfirmed'|'unconfirmed_need'|'no_catalog'|'need_review';reference:string;action:string};
 export interface DynamicDecision181 {
  phase:181;language:'en';source:'signed_product_knowledge';status:'ranking_ready'|'research_required';
  firstLayer:readonly string[];visibleCautions:readonly string[];

@@ -16,8 +16,8 @@ const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 const id=(s:unknown):s is string=>typeof s==='string'&&/^[a-z][a-z0-9_.:-]{0,100}$/.test(s)&&!['__proto__','constructor','prototype'].includes(s);
 const stamp=(s:unknown):s is string=>typeof s==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,3})?Z$/.test(s)&&Number.isFinite(Date.parse(s));
 const uniq=<T>(items:readonly T[])=>[...new Set(items)];
-const gapTypes:readonly ResearchGap181['kind'][]=['new_category','missing_product','missing_criterion','missing_test','stale_knowledge','scope_unconfirmed','unconfirmed_need','no_catalog','need_review'];
-const priority:Record<ResearchGap181['kind'],number>={missing_criterion:0,missing_test:1,missing_product:2,stale_knowledge:3,new_category:4,no_catalog:5,need_review:6,unconfirmed_need:7,scope_unconfirmed:8};
+const gapTypes:readonly ResearchGap181['kind'][]=['new_category','missing_product','missing_criterion','missing_test','missing_declaration','declaration_conflict','stale_knowledge','scope_unconfirmed','unconfirmed_need','no_catalog','need_review'];
+const priority:Record<ResearchGap181['kind'],number>={missing_criterion:0,missing_test:1,declaration_conflict:1,missing_declaration:1,missing_product:2,stale_knowledge:3,new_category:4,no_catalog:5,need_review:6,unconfirmed_need:7,scope_unconfirmed:8};
 export type ResearchKind182='category_research'|'exact_variant_source_research'|'requirement_clarification'|'independent_review';
 export interface ResearchJob182 {
  jobId:string;categoryId:string;kind:ResearchKind182;gapKind:ResearchGap181['kind'];reference:string;
@@ -40,7 +40,7 @@ export function researchJobFromGap182(categoryId:string,g:ResearchGap181):Resear
   typeof g.action!=='string'||g.action.length>1000)throw Error('phase182_untrusted_gap');
  // Product identifiers and criteria are bounded *before* being handed to a worker.
  let kind:ResearchKind182,variant:string|null=null,criterion:string|null=null;
- if(g.kind==='missing_test'){
+ if(g.kind==='missing_test'||g.kind==='missing_declaration'||g.kind==='declaration_conflict'){
   const sep=g.reference.lastIndexOf(':');
   const variantPart=g.reference.slice(0,sep),criterionPart=g.reference.slice(sep+1);
   if(sep<=0||!id(variantPart)||!id(criterionPart))throw Error('phase182_bad_variant_or_criterion');
@@ -59,6 +59,13 @@ export function researchJobFromGap182(categoryId:string,g:ResearchGap181):Resear
   reference:g.reference,exactVariantId:variant,criterionId:criterion,priorityOrder:priority[g.kind as ResearchGap181['kind']],
   authority:'research_only',status:'queued'};
 }
+/** Phase257: what an exact-product source job looks for. A missing specification is a declaration search, never a
+ * request for independent testing; only missing_test asks for independent empirical evidence. */
+export function researchQuestion182(gapKind:ResearchGap181['kind']):string{
+ if(gapKind==='missing_declaration')return 'Original manufacturer or retailer declared specification for this product record and criterion';
+ if(gapKind==='declaration_conflict')return 'Which declarations belong to which variant, revision or source for this product record and criterion';
+ return 'Independent empirical research on this exact product and use case';
+}
 /** A gap is a RESEARCH hint, not a command allowing unsupervised browsing. */
 export function planResearchGaps182(args:{decision:DynamicDecision181;categoryId:string;categoryLabel:string;
  market:string;asOf:string;maxJobs?:number}):ResearchPlan182 {
@@ -70,10 +77,21 @@ export function planResearchGaps182(args:{decision:DynamicDecision181;categoryId
    !id(d.rankInputFingerprint)||!Array.isArray(d.researchGaps)||d.researchGaps.length>300||
    !Number.isSafeInteger(max)||max<1||max>100)throw Error('phase182_bad_plan_input');
  const jobs:ResearchJob182[]=d.researchGaps.map(g=>researchJobFromGap182(categoryId,g));
- const sorted=[...new Map(jobs.map(x=>[x.jobId,x])).values()].sort((a,b)=>a.priorityOrder-b.priorityOrder||a.jobId.localeCompare(b.jobId,'en'));
- const base:Omit<ResearchPlan182,'planHash'>={phase:182,schema:'182.1',categoryId,categoryLabel,market,asOf,
-  inputFingerprint:d.rankInputFingerprint,knowledgeRevision:d.knowledgeRevision,policyRevision:d.policyRevision,
-  jobs:sorted.slice(0,max),omittedByBudget:sorted.length-Math.min(sorted.length,max),planningOnly:true,
+ return assembleResearchPlan182({categoryId,categoryLabel,market,asOf,inputFingerprint:d.rankInputFingerprint,
+  knowledgeRevision:d.knowledgeRevision,policyRevision:d.policyRevision,jobs,maxJobs:max});
+}
+/** Phase257: the plan assembly of planResearchGaps182 (deduplication, stable order, budget, flags and hash), shared
+ * with planners that do not start from a Phase181 decision. The fields are validated with the same identifier rules
+ * executeResearchGaps182 applies. The hash is an integrity fingerprint, never a permission. */
+export function assembleResearchPlan182(a:{categoryId:string;categoryLabel:string;market:string;asOf:string;inputFingerprint:string;
+ knowledgeRevision:string|null;policyRevision:string|null;jobs:readonly ResearchJob182[];maxJobs:number}):ResearchPlan182{
+ if(!id(a.categoryId)||!id(a.market)||!stamp(a.asOf)||typeof a.categoryLabel!=='string'||!(/^[a-zA-Z][a-zA-Z0-9 /-]{2,99}$/.test(a.categoryLabel))||
+  !id(a.inputFingerprint)||![a.knowledgeRevision,a.policyRevision].every(x=>x===null||id(x))||!Number.isSafeInteger(a.maxJobs)||a.maxJobs<1||a.maxJobs>100||
+  a.jobs.some(j=>j.categoryId!==a.categoryId))throw Error('phase182_bad_plan_input');
+ const sorted=[...new Map(a.jobs.map(x=>[x.jobId,x])).values()].sort((x,y)=>x.priorityOrder-y.priorityOrder||x.jobId.localeCompare(y.jobId,'en'));
+ const base:Omit<ResearchPlan182,'planHash'>={phase:182,schema:'182.1',categoryId:a.categoryId,categoryLabel:a.categoryLabel,market:a.market,asOf:a.asOf,
+  inputFingerprint:a.inputFingerprint,knowledgeRevision:a.knowledgeRevision,policyRevision:a.policyRevision,
+  jobs:sorted.slice(0,a.maxJobs),omittedByBudget:sorted.length-Math.min(sorted.length,a.maxJobs),planningOnly:true,
   rankingAuthorized:false,hardExclusionsAuthorized:false};
  return {...base,planHash:sha(planContent(base))};
 }
@@ -164,7 +182,7 @@ export async function executeResearchGaps182(args:{plan:ResearchPlan182;
     notes.push('Need independently discovered exact-variant original source metadata.');
    }else{
     const researchPlan=planWebEvidenceAcquisition({exactVariantId:j.exactVariantId!,
-     userQuestion:'Independent empirical research on this exact product and use case',
+     userQuestion:researchQuestion182(j.gapKind),
      asOf:p.asOf,maxDaysSinceCheck:14,candidates:curated.candidates,policies:args.sourcePolicies,
      existing:curated.existing});
     for(const item of researchPlan.items){

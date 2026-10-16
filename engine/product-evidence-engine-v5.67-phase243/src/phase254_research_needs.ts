@@ -79,9 +79,10 @@ export function researchNeedsFromAdvice254(advice:Advice253,store:KnowledgeStore
   for(const c of p.criteria){
    if(c.outcome!=='unknown')continue;
    const ref=`${p.productId}:${c.key}`;const price=c.key==='budget_max';
-   const gap=(action:string):ResearchGap181=>({kind:'missing_test',reference:ref,action});
+   // Phase257: specification research has its own gap kinds; missing_test is for independent measurements only.
+   const gap=(action:string,kind:'missing_declaration'|'declaration_conflict'='missing_declaration'):ResearchGap181=>({kind,reference:ref,action});
    if(c.code==='sources_disagree')N({kind:'conflicting_declarations',destination:'research',reason:'sources disagree for this exact product; find which declaration belongs to which variant or source revision',categoryId:cat,criterion:c.key,productId:p.productId,
-    gap:gap('Re-check the exact product\'s own sources for this criterion; record which declaration applies to which variant.')});
+    gap:gap('Re-check the exact product\'s own sources for this criterion; record which declaration applies to which variant.','declaration_conflict')});
    else if(c.code==='no_declaration'||c.code==='upper_bound_only')N({kind:'missing_declaration',destination:'research',volatile:price,
     reason:c.code==='upper_bound_only'?'only an "up to" value is declared':'no declaration retained for this criterion',categoryId:cat,criterion:c.key,productId:p.productId,
     gap:gap(price?'Find a dated, market-bound price declaration for the exact product.':'Find a declaration of this criterion for the exact product from a permitted source.')});
