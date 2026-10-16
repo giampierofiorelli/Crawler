@@ -1,0 +1,276 @@
+{
+ "schema": "pee266.reality-check-run.v1",
+ "label": "baseline",
+ "firstRun": true,
+ "storeCopyUnchanged": true,
+ "note": "public form: names, statuses, PEE-authored questions; declared values and URLs are in the private full run",
+ "results": [
+  {
+   "id": "R1",
+   "kind": "explicit category + strict measurable requirements",
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "categoryBasis": "explicit_alias",
+   "journeyDecision": "withhold_insufficient_evidence",
+   "needs": [],
+   "unresolvedNeeds": [],
+   "constraints": [
+    {
+     "criterion": "height_max",
+     "value": 35,
+     "unit": "cm",
+     "bound": "max",
+     "status": "stated_in_request",
+     "span": "no taller than 35 cm"
+    },
+    {
+     "criterion": "budget_max",
+     "value": 250,
+     "unit": "gbp",
+     "bound": "max",
+     "status": "stated_in_request",
+     "span": "under"
+    }
+   ],
+   "unmappedConstraints": [],
+   "shortlist": [
+    "Espresso Coffee Machine",
+    "Pod Machine"
+   ],
+   "excluded": [
+    "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+    "Espressivo Pro Coffee Machine",
+    "Lelit Anna - Steel (15226431570299)",
+    "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+    "Sage Bambino Plus Espresso Machine"
+   ],
+   "unknown": [
+    "3 in 1 Coffee Machine",
+    "Espress-Auto Coffee and Tea Machine"
+   ],
+   "conflicts": 1,
+   "questions": [],
+   "statementKinds": [
+    "Requirements taken from your request: height ≤ # cm (\"no taller than # cm\"); budget ≤ # gbp (\"under\").",
+    "# of # known coffee machines meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": 5
+  },
+  {
+   "id": "R2",
+   "kind": "objective only, no category",
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "ambiguous",
+    "category": null,
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": null,
+   "categoryBasis": "ambiguous",
+   "journeyDecision": "clarify",
+   "needs": [],
+   "unresolvedNeeds": [],
+   "constraints": [],
+   "unmappedConstraints": [],
+   "shortlist": [],
+   "excluded": [],
+   "unknown": [],
+   "conflicts": 0,
+   "questions": [
+    "Are you deciding between air fryers and pressure cookers, or is one of them already chosen?"
+   ],
+   "statementKinds": [
+    "several product categories fit the request"
+   ],
+   "limitations": 2
+  },
+  {
+   "id": "R3",
+   "kind": "several products plausibly qualify",
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "categoryBasis": "explicit_alias",
+   "journeyDecision": "withhold_insufficient_evidence",
+   "needs": [],
+   "unresolvedNeeds": [],
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 1.5,
+     "unit": "l",
+     "bound": "min",
+     "status": "stated_in_request",
+     "span": "at least 1.5 litres"
+    }
+   ],
+   "unmappedConstraints": [],
+   "shortlist": [
+    "Sage Bambino Plus Espresso Machine"
+   ],
+   "excluded": [
+    "Lelit Anna - Steel (15226431570299)"
+   ],
+   "unknown": [
+    "3 in 1 Coffee Machine",
+    "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+    "Espress-Auto Coffee and Tea Machine",
+    "Espressivo Pro Coffee Machine",
+    "Espresso Coffee Machine",
+    "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+    "Pod Machine"
+   ],
+   "conflicts": 1,
+   "questions": [],
+   "statementKinds": [
+    "Requirements taken from your request: capacity ≥ # l (\"at least # litres\").",
+    "# of # known coffee machines meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": 3
+  },
+  {
+   "id": "R4",
+   "kind": "expert / culturally specialised assessment",
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "espresso machine makes the",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "categoryBasis": "unresolved",
+   "journeyDecision": "out_of_scope",
+   "needs": [],
+   "unresolvedNeeds": [],
+   "constraints": [],
+   "unmappedConstraints": [],
+   "shortlist": [],
+   "excluded": [],
+   "unknown": [],
+   "conflicts": 0,
+   "questions": [],
+   "statementKinds": [
+    "You seem to be looking for espresso machine makes the; the product mentioned is context. PEE holds no knowledge or products for espresso machine makes the."
+   ],
+   "limitations": 2
+  },
+  {
+   "id": "R5",
+   "kind": "evidence clearly insufficient",
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "coffee_machines",
+   "categoryBasis": "explicit_alias",
+   "journeyDecision": "withhold_insufficient_evidence",
+   "needs": [],
+   "unresolvedNeeds": [],
+   "constraints": [],
+   "unmappedConstraints": [],
+   "shortlist": [],
+   "excluded": [],
+   "unknown": [],
+   "conflicts": 0,
+   "questions": [
+    "What matters most to you: make coffee with little effort, skill or attention; or make milk-based drinks such as cappuccino and latte with frothed or steamed milk; or make enough coffee for several people or an office; or get reliable, repeatable coffee with low routine maintenance?"
+   ],
+   "statementKinds": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": 2
+  },
+  {
+   "id": "R6",
+   "kind": "incomparable evidence (currency)",
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "categoryBasis": "explicit_alias",
+   "journeyDecision": "withhold_insufficient_evidence",
+   "needs": [],
+   "unresolvedNeeds": [],
+   "constraints": [],
+   "unmappedConstraints": [],
+   "shortlist": [],
+   "excluded": [],
+   "unknown": [],
+   "conflicts": 0,
+   "questions": [
+    "What matters most to you: make coffee with little effort, skill or attention; or make milk-based drinks such as cappuccino and latte with frothed or steamed milk; or make enough coffee for several people or an office; or get reliable, repeatable coffee with low routine maintenance?"
+   ],
+   "statementKinds": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": 2
+  },
+  {
+   "id": "R7",
+   "kind": "explicit category, no limit, wants the best",
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "categoryBasis": "explicit_alias",
+   "journeyDecision": "withhold_insufficient_evidence",
+   "needs": [
+    "batch_capacity"
+   ],
+   "unresolvedNeeds": [
+    "batch_capacity"
+   ],
+   "constraints": [],
+   "unmappedConstraints": [],
+   "shortlist": [],
+   "excluded": [],
+   "unknown": [],
+   "conflicts": 0,
+   "questions": [
+    "What capacity do you need at least (litres, cups or slices)?"
+   ],
+   "statementKinds": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": 2
+  }
+ ]
+}
