@@ -79,6 +79,13 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
   - never feed a pipeline invented text to make it run;
   - persist only what the store does not already hold (derive, don't copy).
+- **Check rules against the real distribution of their inputs** (Phase261). A model-code rule missed the only exact
+  identifier two real products had: a numeric GTIN. 15 of 19 job products have no cross-host identifier at all.
+- **Keep discovery capabilities apart** (Phase261):
+  - finding new documents in known, authorised channels is not finding new sources;
+  - discovery yields leads, never identities, permissions or memory about unregistered sources.
+- **Recognise an idempotent retry before state-dependent validation** (Phase261). A retried superseding record was
+  refused, because its target was no longer active.
 - **Persist new facts as journal events with a rebuildable projection** (Phase260):
   - validate inside the same write transaction as the append (validating first let two writers supersede one record);
   - assert each fixture's precondition: a stale robots date made a fixture metadata-only, and a "nothing changed" check

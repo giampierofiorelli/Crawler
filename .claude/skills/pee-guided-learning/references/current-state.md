@@ -11,6 +11,25 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000000000. Phase261 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase261/PHASE261-TECHNICAL-REPORT.md`; next brief
+`docs/phase261/CONTINUATION-PROMPT.md` (Phase262: first genuine discovery pilot, gated on owner decisions).
+
+- `src/phase261_discovery_bridge.ts`:
+  - `discoveryTargetFromJob261` maps a genuine Phase182 job (id re-derived) to a typed target: evidence lane, Phase82
+    channels, exact identifiers, market from the policy, no language filter;
+  - `discoverForTarget261` reads through Phase82 → Phase75/221 (offline fixture only; live is refused under Phase257);
+  - `assessDiscovery261` lists the blockers.
+- It provides **capability A** (new documents from known, authorised channels). **Capability B** (new publishers or
+  domains) does not exist in PEE.
+- **All 19 jobs map; 0 can be served.** There is no operator `Registry220` for PEE categories, no known host has a
+  source policy, and reads are disabled. 15 of 19 products have no cross-host exact identifier.
+- **Not expressible yet:** requirement qualifiers (test conditions, assessor expertise, cultural tradition) in
+  `ResearchGap181`/`ResearchJob182`.
+- **No Phase82 channel types** for regulatory notices, video, news or cultural experts.
+- **Phase260 retries:** identical retries of superseding records are now idempotent.
+
 ## 00000000000. Phase260 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase260/PHASE260-TECHNICAL-REPORT.md`; next brief
