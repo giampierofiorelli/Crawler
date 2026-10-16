@@ -17,6 +17,7 @@
  * Ambiguity, several values, ended statements and regional qualifiers are reported, never resolved by guessing.
  */
 import {createHash} from 'node:crypto';
+import {existsSync,readFileSync,writeFileSync,renameSync} from 'node:fs';
 import {readProtectedPolicyFile257} from './phase257_research_planning.js';
 import {discoverFromApprovedSitemap} from './phase75_source_discovery.js';
 import {attributeUrl261,type DiscoveryTarget261,type Attribution261} from './phase261_discovery_bridge.js';
@@ -76,6 +77,21 @@ export function validateMetadataPilotPolicy264(p0:unknown,now:Date):MetadataPilo
 export function loadMetadataPilotPolicy264(path:string,now:Date):MetadataPilotPolicy264{return validateMetadataPilotPolicy264(readProtectedPolicyFile257(path),now);}
 
 // ---- the gate --------------------------------------------------------------------------------------------------------
+/** Request usage across every execution under one policy id (a revision cannot reset it). Recorded before each send. */
+export interface UsageLedger264 {prior():number;record(e:{at:string;operation:Operation264;host:string}):void}
+/** A protected JSON ledger file outside Git: {schema, policyId, requests:[{at,operation,host}]}. Fails closed on any
+ * mismatch or unreadable file; each record is written (temp file + rename) before the request is sent. */
+export function fileUsageLedger264(path:string,policyId:string,seed:{requests:number;reason:string}|null=null):UsageLedger264{
+ type L={schema:'pee265.metadata-usage-ledger.v1';policyId:string;seed:{requests:number;reason:string}|null;requests:{at:string;operation:Operation264;host:string}[]};
+ let l:L;
+ if(existsSync(path)){l=JSON.parse(readFileSync(path,'utf8'));
+  if(l?.schema!=='pee265.metadata-usage-ledger.v1'||l.policyId!==policyId||!Array.isArray(l.requests))fail('usage_ledger_mismatch');
+  if(seed&&(l.seed?.requests??0)<seed.requests)fail('usage_ledger_seed_lower_than_recorded_usage');}
+ else l={schema:'pee265.metadata-usage-ledger.v1',policyId,seed,requests:[]};
+ const write=()=>{const tmp=path+'.tmp';writeFileSync(tmp,JSON.stringify(l,null,1)+'\n',{mode:0o600});renameSync(tmp,path);};
+ write();
+ return {prior:()=>(l.seed?.requests??0)+l.requests.length,record:(e)=>{l.requests.push(e);write();}};
+}
 export interface RequestLog264 {seq:number;at:string;operation:Operation264;host:string;path:string;status:number|null;bytes:number;outcome:string;
  /** The provider's Retry-After instruction, recorded so a later, separately authorised run can honour it. */
  retryAfter?:string|null}
@@ -83,14 +99,35 @@ export class MetadataPilotGate264 {
  readonly log:RequestLog264[]=[];halted:string|null=null;
  private bytes=0;private last=0;private readonly perHost=new Map<string,number>();private readonly haltedHosts=new Map<string,string>();
  private readonly domains=new Set<string>();
+ /** Sitemap URLs established by the gate itself: /sitemap.xml of an accepted domain, same-host "Sitemap:" lines of
+  * that domain's robots.txt as received, and child sitemaps of a sitemap index as received. Nothing else. */
+ private readonly sitemaps=new Map<string,Set<string>>();
+ /** Wikidata responses as received by this gate; the only input to domain acceptance. */
+ private readonly searches=new Map<string,unknown>();private readonly entities:{entities:Record<string,unknown>}={entities:{}};
  constructor(readonly policy:MetadataPilotPolicy264,private readonly transport:SourceTransport,
-  private readonly clock:{now:()=>Date;sleep:(ms:number)=>Promise<void>}){
+  private readonly clock:{now:()=>Date;sleep:(ms:number)=>Promise<void>},private readonly ledger:UsageLedger264|null=null){
   validateMetadataPilotPolicy264(policy,clock.now());
  }
- /** A candidate official domain becomes reachable for robots and sitemap operations only once accepted. */
- allowDomain(host:string){if(!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(host))fail('bad_domain');this.domains.add(host);}
+ /** Accept a brand's candidate official domains. The assessment is recomputed from the Wikidata responses this gate
+  * itself received (search for exactly this brand, then entities); a caller cannot name a domain. Only an unambiguous
+  * assessment opens its current P856 hosts to robots and sitemap operations. */
+ acceptBrandDomains(brand:string):BrandAssessment264{
+  const search=this.searches.get(brand);
+  const a=assessBrand264(brand,search===undefined?[]:exactMatches264(brand,search),this.entities);
+  if(search===undefined)a.reasons.push('no_gate_observed_wikidata_search_for_brand');
+  if(a.status==='unambiguous')for(const d of a.candidateDomains){
+   if(!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(d.host))continue;
+   this.domains.add(d.host);this.establish(d.host,`https://${d.host}/sitemap.xml`);}
+  return a;
+ }
+ isAccepted(host:string){return this.domains.has(host);}
+ private establish(host:string,raw:string){
+  let u:URL;try{u=new URL(raw);}catch{return;}
+  if(u.protocol!=='https:'||u.hostname!==host||u.username||u.password||u.port||u.hash||u.pathname==='/robots.txt')return;
+  const set=this.sitemaps.get(host)??new Set<string>();if(set.size<50)set.add(u.toString());this.sitemaps.set(host,set);
+ }
  private sent(){return this.log.filter(l=>l.status!==null||l.outcome==='network_error').length;}
- totals(){return {requests:this.sent(),bytes:this.bytes,halted:this.halted,haltedHosts:Object.fromEntries(this.haltedHosts)};}
+ totals(){return {requests:this.sent(),priorRequests:this.ledger?.prior()??0,bytes:this.bytes,halted:this.halted,haltedHosts:Object.fromEntries(this.haltedHosts)};}
  /** The only way to reach the network in this pilot. */
  transportFor(op:Operation264):SourceTransport{return {get:(url,_agent,cap)=>this.request(op,url,cap)};}
  private async request(op:Operation264,raw:string,cap:number):Promise<SourceResponse>{
@@ -107,16 +144,21 @@ export class MetadataPilotGate264 {
    if(!['wbsearchentities','wbgetentities'].includes(action??'')||u!.searchParams.get('format')!=='json'||u!.searchParams.get('maxlag')!=='5')refuse('wikidata_call_not_authorised');
   }else{
    if(!this.domains.has(u!.hostname))refuse('domain_not_accepted');
-   if(op==='robots_fetch'&&u!.pathname!=='/robots.txt')refuse('robots_path_only');
-   if(op==='sitemap_metadata'&&u!.pathname==='/robots.txt')refuse('wrong_operation');
+   if(op==='robots_fetch'&&(u!.pathname!=='/robots.txt'||u!.search))refuse('robots_path_only');
+   // Phase265: a sitemap request must name a sitemap the gate itself established; the operation label is not proof.
+   if(op==='sitemap_metadata'&&!this.sitemaps.get(u!.hostname)?.has(u!.toString()))refuse('sitemap_url_not_established');
   }
   const host=u!.hostname;
   if(this.haltedHosts.has(host))refuse('host_halted:'+this.haltedHosts.get(host));
-  if(this.sent()>=this.policy.maxRequests)refuse('request_budget_exhausted');
+  if((this.ledger?this.ledger.prior():this.sent())>=this.policy.maxRequests)refuse('request_budget_exhausted');
   const hostCap=op==='wikidata_entity_lookup'?this.policy.maxWikidataRequests:this.policy.maxRequestsPerHost;
   if((this.perHost.get(host)??0)>=hostCap)refuse('host_budget_exhausted');
   const wait=this.last+this.policy.minIntervalMs-this.clock.now().getTime();if(this.last&&wait>0)await this.clock.sleep(wait);
+  // Phase265: expiry and halts are checked again immediately before sending, after any enforced delay.
+  if(this.halted)refuse('pilot_halted:'+this.halted);if(this.haltedHosts.has(host))refuse('host_halted:'+this.haltedHosts.get(host));
+  if(this.clock.now().getTime()>=Date.parse(this.policy.expiresAt))refuse('policy_expired');
   this.last=this.clock.now().getTime();this.perHost.set(host,(this.perHost.get(host)??0)+1);
+  this.ledger?.record({at:new Date(this.last).toISOString(),operation:op,host});
   const entry:RequestLog264={seq:this.log.length+1,at:new Date(this.last).toISOString(),operation:op,host,path:u!.pathname,status:null,bytes:0,outcome:'pending'};
   this.log.push(entry);
   let res:SourceResponse;
@@ -136,7 +178,16 @@ export class MetadataPilotGate264 {
    if(op==='wikidata_entity_lookup')this.halted=entry.outcome;else this.haltedHosts.set(host,entry.outcome);
    return res;
   }
-  entry.outcome='ok';return res;
+  entry.outcome='ok';
+  if(res.status===200){
+   if(op==='wikidata_entity_lookup'){try{const j=JSON.parse(res.body);const action=u!.searchParams.get('action');
+    if(action==='wbsearchentities')this.searches.set(u!.searchParams.get('search')??'',j);
+    else if(j?.entities&&typeof j.entities==='object')Object.assign(this.entities.entities,j.entities);}catch{/* not JSON: nothing accepted */}}
+   else if(op==='robots_fetch')for(const m of res.body.matchAll(/^\s*sitemap\s*:\s*(\S+)\s*$/gim))this.establish(host,m[1]);
+   else if(/<(?:[a-z][\w-]*:)?sitemapindex[\s>]/i.test(res.body.slice(0,4000)))
+    for(const m of res.body.matchAll(/<(?:[a-z][\w-]*:)?loc\s*>([^<]{1,1500})<\/(?:[a-z][\w-]*:)?loc\s*>/gi))this.establish(host,m[1].trim().replace(/&amp;/g,'&'));
+  }
+  return res;
  }
 }
 
@@ -195,7 +246,7 @@ export interface DomainResult264 {host:string;knownHost:boolean;status:'candidat
 /** Robots + sitemap metadata through Phase75, with an in-memory public-metadata record (never persisted, asserts no
  * licence) and the gate as the only transport. */
 export async function discoverDomain264(gate:MetadataPilotGate264,host:string,asOf:string,relevanceTerms:readonly string[],knownHosts:ReadonlySet<string>):Promise<DomainResult264>{
- gate.allowDomain(host);
+ if(!gate.isAccepted(host))return {host,knownHost:false,status:'blocked',reasons:['domain_not_accepted_by_gate'],urls:[]};
  const policy={sourceId:'pilot264_'+sha(host).slice(0,12),host,basis:'unknown',rightsDocumentId:null,rightsDocumentUrl:null,reviewedBy:null,reviewedAt:null,validUntil:null,
   permittedOperations:['metadata_discovery'],robots:'unknown',robotsCheckedAt:null,websiteTerms:'unknown',termsCheckedAt:null,commercialUseReviewed:false} as unknown as WebSourcePolicy;
  const transport:SourceTransport={get:(url,agent,cap)=>gate.transportFor(new URL(url).pathname==='/robots.txt'?'robots_fetch':'sitemap_metadata').get(url,agent,cap)};

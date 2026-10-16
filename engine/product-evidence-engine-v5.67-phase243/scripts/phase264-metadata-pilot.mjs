@@ -8,14 +8,14 @@
  * Output: the full report privately (privateEvaluationDir249()/phase264, mode 0600); counts only in the repository.
  * Usage: node scripts/phase264-metadata-pilot.mjs [--policy FILE]
  */
-import {writeFileSync,copyFileSync,mkdirSync,rmSync,readFileSync,existsSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';
+import {writeFileSync,copyFileSync,mkdirSync,rmSync,readFileSync,existsSync} from 'node:fs';import {join,dirname} from 'node:path';import {homedir} from 'node:os';
 import {setTimeout as sleep} from 'node:timers/promises';
 import {KnowledgeStore246} from '../dist/src/phase246_knowledge_store.js';
 import {privateEvaluationDir249} from '../dist/src/phase249_retention_policy.js';
 import {restrictedHttpsTransport} from '../dist/src/approved_web_reader.js';
 import {discoveryTargetFromJob261} from '../dist/src/phase261_discovery_bridge.js';
-import {loadMetadataPilotPolicy264,MetadataPilotGate264,wikidataSearchUrl264,wikidataEntitiesUrl264,exactMatches264,assessBrand264,
- discoverDomain264,classifyForJob264,storeContext264} from '../dist/src/phase264_metadata_pilot.js';
+import {loadMetadataPilotPolicy264,MetadataPilotGate264,wikidataSearchUrl264,wikidataEntitiesUrl264,exactMatches264,
+ discoverDomain264,classifyForJob264,storeContext264,fileUsageLedger264} from '../dist/src/phase264_metadata_pilot.js';
 
 const arg=n=>process.argv.includes(n)?process.argv[process.argv.indexOf(n)+1]:null;
 const policyPath=arg('--policy')??join(homedir(),'.local','share','product-evidence-engine','metadata-pilot','policy.json');
@@ -50,7 +50,11 @@ const fixture={async get(url){const u=new URL(url);const d=new Date().toUTCStrin
    P856:[{rank:'normal',mainsnak:{snaktype:'value',datavalue:{value:`https://www.brand${i}.pee264-rehearsal.test/`}}}]}}]))})};}
  if(u.pathname==='/robots.txt')return {status:200,finalUrl:url,contentType:'text/plain',date:d,body:'User-agent: *\nAllow: /\n'};
  return {status:200,finalUrl:url,contentType:'application/xml',date:d,body:`<urlset><url><loc>https://${u.hostname}/air-fryer/af100</loc></url><url><loc>https://${u.hostname}/about</loc></url></urlset>`};}};
-const gate=new MetadataPilotGate264(policy,rehearse?fixture:restrictedHttpsTransport,{now:()=>new Date(),sleep:ms=>sleep(ms)});
+// Phase265: usage across every execution of this policy id is kept in a protected ledger (a rehearsal uses its own).
+// The Phase264 first run (1 request) predates the ledger and is its seed.
+const ledger=fileUsageLedger264(rehearse?join(rehearse,'usage.json'):join(dirname(policyPath),`usage-${policy.policyId}.json`),policy.policyId,
+ rehearse?null:{requests:1,reason:'Phase264 first run 2026-10-16, before the ledger existed'});
+const gate=new MetadataPilotGate264(policy,rehearse?fixture:restrictedHttpsTransport,{now:()=>new Date(),sleep:ms=>sleep(ms)},ledger);
 const errors=[];
 const wd=gate.transportFor('wikidata_entity_lookup');
 const getJson=async url=>{const r=await wd.get(url,policy.userAgent,policy.maxResponseBytes);
@@ -63,7 +67,8 @@ const matches=new Map();
 for(const b of brands){if(gate.halted)break;try{matches.set(b,exactMatches264(b,await getJson(wikidataSearchUrl264(b))));}catch(e){errors.push({step:'wbsearchentities',brand:b,error:String(e.message).slice(0,120)});}}
 const allIds=[...new Set([...matches.values()].flat())];let entities={entities:{}};
 if(allIds.length&&!gate.halted){try{entities=await getJson(wikidataEntitiesUrl264(allIds.slice(0,50)));}catch(e){errors.push({step:'wbgetentities',error:String(e.message).slice(0,120)});}}
-const assessments=brands.map(b=>matches.has(b)?assessBrand264(b,matches.get(b),entities):{brand:b,status:'unresolved',reasons:['lookup_not_completed'],entities:[],candidateDomains:[]});
+// Phase265: the gate recomputes each assessment from the Wikidata responses it received and alone accepts domains.
+const assessments=brands.map(b=>matches.has(b)?gate.acceptBrandDomains(b):{brand:b,status:'unresolved',reasons:['lookup_not_completed'],entities:[],candidateDomains:[]});
 
 // 2. Candidate official domains of unambiguous brands: robots, then sitemap metadata (Phase75 through the gate).
 const asOf=new Date().toISOString().slice(0,10);
