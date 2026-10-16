@@ -1,0 +1,15 @@
+{
+ "schema": "pee269.untouched-extraction-rules.v1",
+ "frozenAt": "2026-10-16",
+ "frozenBefore": "fetching the documents and any further extraction change; extractor hashes in extractor-freeze-untouched.sha256 (Phase268 final extractor, commit 797d6f2)",
+ "selection": "documents chosen by web search before access, from publishers never used by PEE for test values: the CHOICE (AU) air fryer vs oven energy article and the Consumer NZ air fryer vs oven article; plus at most 2 further pages they link to that report original measurements",
+ "gold": "annotated by reading the transient bytes BEFORE the extractor is run on them; each tester-reported measurement with value, unit, measurand, subject (product or appliance class) and conditions",
+ "negativeControls": "every number in the documents that is a rated power, food quantity, recipe temperature or time setting, tariff or cost, publisher score, unrelated model mention or another product's value is a negative control: extracting it is a false positive",
+ "metrics": {
+  "precision": "extracted leads matching a gold measurement / all extracted leads",
+  "recall": "gold measurements extracted / gold measurements",
+  "attribution": "measured separately: for each matching lead, is the subject association correct (exact product, class-level, or correctly unresolved)",
+  "conditions": "share of matching leads whose condition codes agree with gold"
+ },
+ "rule": "first run committed unchanged; any later fix is reported as tuned on these documents"
+}
