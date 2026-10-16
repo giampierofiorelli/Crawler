@@ -1,0 +1,471 @@
+{
+ "schema": "pee265.persistence-eval.v1",
+ "firstRun": true,
+ "evidenceTier": "T1 synthetic fixtures only (fictional .test hosts, invented products); not genuine publisher content",
+ "path": "HTML -> scripts/phase246-live-wave.mjs observations (Phase245 + Phase225/226 probe) -> scripts/phase246-knowledge.mjs ingest-observations (Phase246 store, Phase249 class or deny policy) -> close -> reopen -> read",
+ "totals": {
+  "leadsExtracted": 12,
+  "persisted": 8,
+  "associatedWithPageProduct": 7,
+  "retainedWithoutProduct": 1,
+  "rejected": {
+   "unit_dimension_mismatch": 1
+  },
+  "withheldRights": {
+   "machine_readable_reservation": 1,
+   "metadata_only": 1
+  },
+  "duplicatesOnRepeat": 0,
+  "alreadyStoredOnRepeat": 1,
+  "supersededByRevision": 1,
+  "currentRows": 7,
+  "conflicts": [
+   {
+    "kind": "conflicting_values",
+    "key": "noise|db||whole_product_unspecified",
+    "values": [
+     58,
+     52
+    ],
+    "reporters": [
+     "test_publisher_operator_asserted",
+     "test_publisher_operator_asserted"
+    ]
+   }
+  ],
+  "equalAfterReopen": true,
+  "incorrectAttribution": 0,
+  "incorrectEvidencePromotion": 0,
+  "proseWindowsChecked": 428,
+  "proseFragmentsInStore": 0,
+  "checkConstraintRefusals": "5/5",
+  "decisionCandidatesUsingTestMeasurements": 0,
+  "journal": {
+   "class": {
+    "events": 21,
+    "ok": true
+   },
+   "deny": {
+    "events": 3,
+    "ok": true
+   },
+   "events": {
+    "class": [
+     {
+      "kind": "test_measurements_ingested",
+      "n": 7
+     },
+     {
+      "kind": "test_measurements_withheld",
+      "n": 1
+     }
+    ],
+    "deny": [
+     {
+      "kind": "test_measurements_withheld",
+      "n": 1
+     }
+    ]
+   }
+  }
+ },
+ "scenarios": [
+  {
+   "id": "S1_prose_publisher",
+   "expected": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "withheld": 0,
+    "rejected": {},
+    "dimension": [
+     "not_established"
+    ],
+    "reportedBy": "test_publisher_operator_asserted"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 52,
+      "unit": "db",
+      "dimension": "not_established",
+      "dimensionBasis": "not_established",
+      "targetScope": "not_established",
+      "condition": null,
+      "instrument": "sound meter",
+      "methodCue": "test_section_with_method_cue",
+      "subjectAssociation": "page_main_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "superseded_by_revision",
+      "supersededByRevision": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "S2_table_publisher_other_row",
+   "expected": {
+    "leads": 2,
+    "persisted": 2,
+    "associated": 2,
+    "unresolved": 0,
+    "withheld": 0,
+    "rejected": {},
+    "dimension": [
+     "mass",
+     "noise"
+    ],
+    "reportedBy": "test_publisher_operator_asserted",
+    "note": "ZX900 row is not the page product: no lead, never attributed"
+   },
+   "observed": {
+    "leadsExtracted": 2,
+    "persisted": 2,
+    "associated": 2,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 4100,
+      "unit": "g",
+      "dimension": "mass",
+      "dimensionBasis": "publisher_table_header",
+      "targetScope": "whole_product_unspecified",
+      "condition": null,
+      "instrument": null,
+      "methodCue": "bounded_table_result_with_local_method",
+      "subjectAssociation": "table_row_model_matches_page_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "current",
+      "supersededByRevision": false
+     },
+     {
+      "value": 52,
+      "unit": "db",
+      "dimension": "noise",
+      "dimensionBasis": "publisher_table_header",
+      "targetScope": "whole_product_unspecified",
+      "condition": null,
+      "instrument": null,
+      "methodCue": "bounded_table_result_with_local_method",
+      "subjectAssociation": "table_row_model_matches_page_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "current",
+      "supersededByRevision": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "S3_repeat_S1",
+   "expected": {
+    "newRows": 0,
+    "note": "same bytes, same extractor: idempotent"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 0,
+    "associated": 0,
+    "unresolved": 0,
+    "alreadyStored": 1,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": false,
+    "retention": "facts_retained_class_policy",
+    "rows": []
+   }
+  },
+  {
+   "id": "S4_revision_of_S1",
+   "expected": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "supersedes": "S1_prose_publisher"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 54,
+      "unit": "db",
+      "dimension": "not_established",
+      "dimensionBasis": "not_established",
+      "targetScope": "not_established",
+      "condition": null,
+      "instrument": "sound meter",
+      "methodCue": "test_section_with_method_cue",
+      "subjectAssociation": "page_main_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "current",
+      "supersededByRevision": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "S5_second_publisher_conflict",
+   "expected": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "conflict": "noise db: 52 (S2) vs 58 (S5) on the same product"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 58,
+      "unit": "db",
+      "dimension": "noise",
+      "dimensionBasis": "publisher_table_header",
+      "targetScope": "whole_product_unspecified",
+      "condition": null,
+      "instrument": null,
+      "methodCue": "bounded_table_result_with_local_method",
+      "subjectAssociation": "table_row_model_matches_page_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "current",
+      "supersededByRevision": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "S6_ambiguous_page_subject",
+   "expected": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 0,
+    "unresolved": 1,
+    "note": "never attributed to VX100 or ZX900"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 1,
+    "associated": 0,
+    "unresolved": 1,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 49,
+      "unit": "db",
+      "dimension": "not_established",
+      "dimensionBasis": "not_established",
+      "targetScope": "not_established",
+      "condition": null,
+      "instrument": "sound meter",
+      "methodCue": "test_section_with_method_cue",
+      "subjectAssociation": "subject_unresolved",
+      "productIsPageProduct": false,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "current",
+      "supersededByRevision": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "S7_manufacturer_test_result",
+   "expected": {
+    "leads": 1,
+    "persisted": 1,
+    "associated": 1,
+    "reportedBy": "manufacturer",
+    "evidenceRole": "manufacturer_declaration"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 50,
+      "unit": "db",
+      "dimension": "not_established",
+      "dimensionBasis": "not_established",
+      "targetScope": "not_established",
+      "condition": null,
+      "instrument": "sound meter",
+      "methodCue": "test_section_with_method_cue",
+      "subjectAssociation": "page_main_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "manufacturer",
+      "evidenceRole": "manufacturer_declaration",
+      "state": "current",
+      "supersededByRevision": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "S8_ambiguous_unit_and_scope",
+   "expected": {
+    "leads": 2,
+    "persisted": 1,
+    "associated": 1,
+    "rejected": {
+     "unit_dimension_mismatch": 1
+    },
+    "dimension": [
+     "not_established"
+    ],
+    "note": "% kept with dimension not_established; a W value under a time header is withheld"
+   },
+   "observed": {
+    "leadsExtracted": 2,
+    "persisted": 1,
+    "associated": 1,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {
+     "unit_dimension_mismatch": 1
+    },
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": [
+     {
+      "value": 80,
+      "unit": "%",
+      "dimension": "not_established",
+      "dimensionBasis": "not_established",
+      "targetScope": "not_established",
+      "condition": null,
+      "instrument": null,
+      "methodCue": "first_person_test_statement",
+      "subjectAssociation": "page_main_product_unverified",
+      "productIsPageProduct": true,
+      "reportedBy": "test_publisher_operator_asserted",
+      "evidenceRole": "test_publisher_declaration_unreviewed",
+      "state": "current",
+      "supersededByRevision": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "S9_machine_readable_reservation",
+   "expected": {
+    "leads": 1,
+    "persisted": 0,
+    "withheld": 1,
+    "reason": "machine_readable_reservation"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 0,
+    "associated": 0,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 1,
+    "withheldReason": "machine_readable_reservation",
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": []
+   }
+  },
+  {
+   "id": "S10_default_deny_storage",
+   "expected": {
+    "leads": 1,
+    "persisted": 0,
+    "withheld": 1,
+    "reason": "metadata_only"
+   },
+   "observed": {
+    "leadsExtracted": 1,
+    "persisted": 0,
+    "associated": 0,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 1,
+    "withheldReason": "metadata_only",
+    "rejected": {},
+    "newRevision": true,
+    "retention": "metadata_only",
+    "rows": []
+   }
+  },
+  {
+   "id": "S11_claims_not_tests",
+   "expected": {
+    "leads": 0,
+    "persisted": 0
+   },
+   "observed": {
+    "leadsExtracted": 0,
+    "persisted": 0,
+    "associated": 0,
+    "unresolved": 0,
+    "alreadyStored": 0,
+    "withheldRights": 0,
+    "withheldReason": null,
+    "rejected": {},
+    "newRevision": true,
+    "retention": "facts_retained_class_policy",
+    "rows": []
+   }
+  }
+ ]
+}
