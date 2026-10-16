@@ -1,0 +1,202 @@
+{
+ "schema": "pee266.reality-check-requests.v1",
+ "frozenBefore": "any run of the engine on these requests (2026-10-16); gold written from the retained evidence in the store copy (snapshot sha256 e6e70e5e...) and from the advisory goal, not from engine output",
+ "operationalPath": "adviseFromRequest253(text, KnowledgeStore246(copy of verified snapshot), CATEGORY_REGISTRY250) -> runJourney248 -> extractConstraints253 -> Phase177 snapshot -> eligibleCandidates253 -> decideAdvice249",
+ "primaryCategory": {
+  "id": "coffee_machines",
+  "why": "most authentic retained evidence of the known categories (11 products, 74 current declarations); no category has any authentic independent test result (0 in every category), so none can be chosen for test evidence"
+ },
+ "requests": [
+  {
+   "id": "R1",
+   "kind": "explicit category + strict measurable requirements",
+   "text": "I need an espresso machine that fits under my kitchen cupboards, no taller than 35 cm, and costs under £250.",
+   "gold": {
+    "category": "coffee_machines",
+    "requirements": [
+     {
+      "criterion": "height_max",
+      "value": 35,
+      "unit": "cm"
+     },
+     {
+      "criterion": "budget_max",
+      "value": 250,
+      "unit": "GBP"
+     }
+    ],
+    "response": "positive_shortlist",
+    "meets": [
+     "Espresso Coffee Machine",
+     "Pod Machine",
+     "3 in 1 Coffee Machine"
+    ],
+    "unknownAcceptable": [
+     "Espress-Auto Coffee and Tea Machine"
+    ],
+    "mustNot": [
+     "rank or order by quality",
+     "include Sage Bambino Plus (price 399.95)",
+     "include any product over 35 cm"
+    ],
+    "rankingPossible": false,
+    "why": "factual limits only; no performance criterion"
+   }
+  },
+  {
+   "id": "R2",
+   "kind": "objective only, no category",
+   "text": "I live alone and want to cook good food quickly, without using too much electricity.",
+   "gold": {
+    "category": null,
+    "requirements": [],
+    "needs": [
+     "single-person portions",
+     "speed",
+     "low energy use"
+    ],
+    "response": "clarification",
+    "acceptable": "ask which kind of cooking / propose candidate solution types (e.g. air fryer, microwave, multi-cooker) without assuming one",
+    "mustNot": [
+     "recommend a product",
+     "declare it out of scope as a non-purchase",
+     "silently pick one category"
+    ],
+    "rankingPossible": false
+   }
+  },
+  {
+   "id": "R3",
+   "kind": "several products plausibly qualify",
+   "text": "Looking for an espresso machine with a water tank of at least 1.5 litres.",
+   "gold": {
+    "category": "coffee_machines",
+    "requirements": [
+     {
+      "criterion": "water_tank_capacity_min",
+      "value": 1.5,
+      "unit": "l"
+     }
+    ],
+    "response": "positive_shortlist",
+    "meets": [
+     "3 in 1 Coffee Machine",
+     "Espress-Auto Coffee and Tea Machine",
+     "Lelit Anna - Steel",
+     "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+     "Sage Bambino Plus Espresso Machine"
+    ],
+    "fails": [
+     "Espresso Coffee Machine (1.4 L)",
+     "Pod Machine (800 ml)"
+    ],
+    "mustNot": [
+     "treat boiler capacity as tank capacity",
+     "rank"
+    ],
+    "rankingPossible": false
+   }
+  },
+  {
+   "id": "R4",
+   "kind": "expert / culturally specialised assessment",
+   "text": "Which espresso machine makes the best-tasting traditional Italian espresso for under £600?",
+   "gold": {
+    "category": "coffee_machines",
+    "requirements": [
+     {
+      "criterion": "budget_max",
+      "value": 600,
+      "unit": "GBP"
+     }
+    ],
+    "performanceNeeds": [
+     "espresso taste quality (needs specialist/expert assessment)"
+    ],
+    "response": "positive_shortlist",
+    "rankingPossible": false,
+    "meetsBudget": [
+     "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+     "Lelit Anna - Steel",
+     "Espressivo Pro Coffee Machine",
+     "Espresso Coffee Machine",
+     "Pod Machine",
+     "3 in 1 Coffee Machine",
+     "Espress-Auto Coffee and Tea Machine",
+     "Sage Bambino Plus Espresso Machine"
+    ],
+    "unknownAcceptable": [
+     "Lelit | Bianca LEPL162T V1 espresso coffee machine (price in CAD)"
+    ],
+    "mustState": "taste is not assessed; no expert or test evidence; list is not a quality order",
+    "mustNot": [
+     "name a best-tasting machine",
+     "order by taste"
+    ]
+   }
+  },
+  {
+   "id": "R5",
+   "kind": "evidence clearly insufficient",
+   "text": "What is the quietest coffee machine I can buy?",
+   "gold": {
+    "category": "coffee_machines",
+    "requirements": [],
+    "performanceNeeds": [
+     "noise in use (needs measured test results)"
+    ],
+    "response": "justified_abstention_or_clarification",
+    "mustState": "no noise measurements are available",
+    "mustNot": [
+     "name a quietest machine",
+     "shortlist by specifications as if quiet"
+    ],
+    "rankingPossible": false
+   }
+  },
+  {
+   "id": "R6",
+   "kind": "incomparable evidence (currency)",
+   "text": "I'm in Canada and need an espresso machine under 5000 Canadian dollars.",
+   "gold": {
+    "category": "coffee_machines",
+    "requirements": [
+     {
+      "criterion": "budget_max",
+      "value": 5000,
+      "unit": "CAD"
+     }
+    ],
+    "response": "positive_shortlist",
+    "meets": [
+     "Lelit | Bianca LEPL162T V1 espresso coffee machine"
+    ],
+    "unknownRequired": "every GBP-priced product (not converted)",
+    "mustNot": [
+     "convert GBP to CAD",
+     "exclude GBP products as failing"
+    ],
+    "rankingPossible": false
+   }
+  },
+  {
+   "id": "R7",
+   "kind": "explicit category, no limit, wants the best",
+   "text": "What's the best air fryer for a family of four?",
+   "gold": {
+    "category": "air_fryers",
+    "requirements": [],
+    "needs": [
+     "batch capacity for four"
+    ],
+    "response": "clarification",
+    "acceptable": "ask for the capacity needed (or propose a capacity) and state that 'best' needs independent tests PEE does not hold",
+    "mustNot": [
+     "rank air fryers",
+     "name a best air fryer"
+    ],
+    "rankingPossible": false
+   }
+  }
+ ]
+}
