@@ -37,7 +37,7 @@ import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from 
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
 import {classDecision249,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
 
-export const STORE_SCHEMA_VERSION246=3;
+export const STORE_SCHEMA_VERSION246=4;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -199,6 +199,24 @@ const MIGRATIONS:string[]=[
   CREATE TABLE category_relations (relation_id TEXT PRIMARY KEY, category_id TEXT NOT NULL, from_ref TEXT NOT NULL, to_ref TEXT NOT NULL,
    kind TEXT NOT NULL, support TEXT NOT NULL, qualification TEXT NOT NULL, source_revision_ids_json TEXT NOT NULL,
    review_json TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);`,
+ // v4 (Phase260): source memory. The authority is the hash-chained events journal; this table is only its projection,
+ // rebuilt deterministically by phase260_source_memory_store.ts. Triggers keep it read-only outside that module's own
+ // transaction, and the CHECK columns state what a memory record never is: evidence, an access permission or a ranking.
+ `CREATE TABLE source_memory260 (record_id TEXT PRIMARY KEY, kind TEXT NOT NULL, event_seq INTEGER NOT NULL,
+   source_id TEXT NOT NULL REFERENCES sources(source_id), revision_id TEXT REFERENCES revisions(revision_id),
+   product_id TEXT REFERENCES products(product_id), criterion TEXT, field TEXT, value_json TEXT NOT NULL,
+   basis TEXT NOT NULL CHECK(basis IN ('operator_annotation','verifier_accepted','unverified_claim')), review_id TEXT,
+   supersedes TEXT, superseded_by TEXT, recorded_at TEXT NOT NULL, payload_sha256 TEXT NOT NULL,
+   evidence_admitted INTEGER NOT NULL DEFAULT 0 CHECK(evidence_admitted=0),
+   access_authorized INTEGER NOT NULL DEFAULT 0 CHECK(access_authorized=0),
+   ranking_authorized INTEGER NOT NULL DEFAULT 0 CHECK(ranking_authorized=0));
+  CREATE INDEX source_memory260_source ON source_memory260(source_id,kind);
+  CREATE TRIGGER source_memory260_ro_insert BEFORE INSERT ON source_memory260 WHEN COALESCE((SELECT v FROM store_meta WHERE k='source_memory260_writer'),'0')<>'1'
+   BEGIN SELECT RAISE(ABORT,'source_memory260_read_only_projection'); END;
+  CREATE TRIGGER source_memory260_ro_update BEFORE UPDATE ON source_memory260 WHEN COALESCE((SELECT v FROM store_meta WHERE k='source_memory260_writer'),'0')<>'1'
+   BEGIN SELECT RAISE(ABORT,'source_memory260_read_only_projection'); END;
+  CREATE TRIGGER source_memory260_ro_delete BEFORE DELETE ON source_memory260 WHEN COALESCE((SELECT v FROM store_meta WHERE k='source_memory260_writer'),'0')<>'1'
+   BEGIN SELECT RAISE(ABORT,'source_memory260_read_only_projection'); END;`,
 ];
 
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;

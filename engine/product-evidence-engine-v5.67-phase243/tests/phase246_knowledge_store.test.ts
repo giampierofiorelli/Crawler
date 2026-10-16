@@ -3,7 +3,7 @@ import {mkdtempSync,existsSync,readFileSync,writeFileSync,rmSync} from 'node:fs'
 import {tmpdir} from 'node:os';import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
-import {KnowledgeStore246,validGtin246,productKey246,retentionFor246,DEFAULT_STORAGE_POLICY246,
+import {KnowledgeStore246,STORE_SCHEMA_VERSION246,validGtin246,productKey246,retentionFor246,DEFAULT_STORAGE_POLICY246,
  type ObservationInput246,type SourceInput246,type ReviewReceipt246,type StoragePolicy246} from '../src/phase246_knowledge_store.js';
 import {extractSpecifications245} from '../src/phase245_spec_extraction.js';
 import {planBudgetedCategoryWave243,type WaveContext243} from '../src/phase243_budgeted_category_search.js';
@@ -234,7 +234,7 @@ test('10. a clean new process reloads from durable storage, export/import and ba
   {encoding:'utf8',env:{...process.env,PEE_ALLOW_TMP_STORE:'1'}});
   assert.equal(o.status,0,o.stderr);return JSON.parse(o.stdout.trim().split('\n').pop()!);};
  for(const p of [path,bak]){const c=child(p);
-  assert.equal(c.name,'Fryer A');assert.equal(c.decl,2);assert.equal(c.versions,1);assert.ok(c.journal.ok);assert.equal(c.stats.schemaVersion,3);}
+  assert.equal(c.name,'Fryer A');assert.equal(c.decl,2);assert.equal(c.versions,1);assert.ok(c.journal.ok);assert.equal(c.stats.schemaVersion,STORE_SCHEMA_VERSION246);}
  const imported=join(dir,'imported'+n+'.sqlite');
  const t=KnowledgeStore246.import246(exp,imported);
  assert.equal(t.product246(r.productIds[0])!.name,'Fryer A');assert.equal(t.declarations246(r.productIds[0]).length,2);
@@ -252,7 +252,7 @@ test('10b. safe schema handling: refuses ephemeral /tmp by default and stores ne
  try{assert.throws(()=>new KnowledgeStore246('/tmp/pee246-should-not-exist.sqlite'),/246_refusing_ephemeral_tmp_store/);}
  finally{process.env.PEE_ALLOW_TMP_STORE=prev;}
  assert.ok(!existsSync('/tmp/pee246-should-not-exist.sqlite'));
- const path=dbPath();const s=new KnowledgeStore246(path);assert.equal(s.schemaVersion(),3);
+ const path=dbPath();const s=new KnowledgeStore246(path);assert.equal(s.schemaVersion(),STORE_SCHEMA_VERSION246);
  s.db.exec('PRAGMA user_version=99');s.close();
  assert.throws(()=>new KnowledgeStore246(path),/246_store_newer_than_software/);
  const j=new KnowledgeStore246(dbPath());j.recordAccess246('robots.example','robots_disallowed');
