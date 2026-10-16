@@ -1,0 +1,35 @@
+{
+ "schema": "pee259.expected.v1",
+ "written": "2026-10-16, from the retained metadata listing only, before any Phase259 run",
+ "store": "pee-knowledge 70ef51b (store content as 38495fe)",
+ "tier": "fresh for Phase258 code (developed on synthetic fixtures only); expectations by the code author, not held-out",
+ "rules": [
+  "Unknown stays unknown: publisher country, language, product market, rights, robots, originality, method are not retained for any source",
+  "Never infer country from a domain suffix, market from a currency, language from a host",
+  "A source type inferred by heuristic stays marked inferred; an unknown source type is not given a role",
+  "A product known only from a comparison table is attributed by table column, not by its own page",
+  "A retained revision that lacks the requested criterion is not a new useful candidate for that criterion"
+ ],
+ "cases": [
+  {"id": "e1", "productId": "prd_ad1e8495d802bbef9564fc54", "job": {"criterion": "capacity_min", "gapKind": "missing_declaration"},
+   "expect": {"representable": true, "role": "manufacturer_specification", "roleBasis": "operator_asserted", "attribution": "own_page",
+    "unknown": ["publisherCountry", "language", "productMarket", "rights", "robots", "originality"],
+    "selection": "own retained page already read without the criterion: not a fresh useful candidate"}},
+  {"id": "e2", "productId": "prd_3d6a6281b4ea4b068504c4b9", "job": {"criterion": "width_max", "gapKind": "missing_declaration"},
+   "expect": {"representable": true, "role": "manufacturer_specification", "roleBasis": "heuristic_unverified", "attribution": "own_page",
+    "selection": "own retained page already read without the criterion: not a fresh useful candidate"}},
+  {"id": "e3", "productId": "prd_11d73581a7430aa6a49b3e6e", "job": {"criterion": "power_min", "gapKind": "missing_declaration"},
+   "expect": {"representable": true, "role": "retailer_listing", "roleBasis": "operator_asserted", "attribution": "own_page",
+    "selection": "own retained page already read without the criterion: not a fresh useful candidate"}},
+  {"id": "e4", "productId": "prd_c4b55ffd479598e230d0d946", "job": {"criterion": "power_min", "gapKind": "missing_declaration"},
+   "expect": {"representable": true, "role": "unknown", "roleBasis": "operator_asserted", "attribution": "own_page",
+    "selection": "role unknown: never selected as a declaring source"}},
+  {"id": "e5", "productId": "prd_a9153c3ca30c41e991455b3a", "job": {"criterion": "power_min", "gapKind": "missing_declaration"},
+   "expect": {"representable": true, "role": "retailer_listing", "roleBasis": "operator_asserted", "attribution": "table_column", "identityState": "discovered",
+    "sharedUrlProducts": 3,
+    "selection": "table-only attribution: the page belongs to another model; not a fresh declaring source for this product"}},
+  {"id": "e6", "productId": "prd_03d5041c", "job": null,
+   "expect": {"representable": true, "role": "unknown_editorial", "roleBasis": "operator_asserted", "attribution": "own_page",
+    "note": "editorial: whether it tests, interprets or reports is not retained; it must not become independent_measurement or journalism by assumption"}}
+ ]
+}
