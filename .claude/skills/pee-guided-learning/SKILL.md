@@ -75,6 +75,10 @@ Never claim to have read a file you have not opened. In reports, say which secti
 - **Reuse retained evidence before asking for research** (Phase255). Tell apart an absent declaration, a retained
   value that is not comparable, and a retained but incomplete one (no unit, unlabelled axes, a range on both sides).
   Only the first is new research. Never assume a unit. A quantity in a product name never overrides a declaration.
+- **Put authorisation where the side effect happens** (Phase256, S26):
+  - a content hash is not authority;
+  - pure planning must not require ranking credentials;
+  - network reads, store writes and ranking each keep their own gate.
 - **Never construct a Phase181 decision or authority by hand** (Phase254, S24). `planResearchGaps182` checks the
   decision's shape, not its signature; per-product research gaps exist only from a signed, verified catalog.
   Without one, research needs stay `pending_authorization` (`phase254_research_needs.ts`).

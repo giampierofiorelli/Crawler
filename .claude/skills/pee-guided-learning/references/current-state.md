@@ -11,6 +11,13 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000. Phase256 decision (2026-10-16) — read first
+
+`engine/product-evidence-engine-v5.67-phase243/docs/phase256/PHASE256-ARCHITECTURE-DECISION.md` (design only, no code
+change). Next: Phase257 implements `loadResearchPolicy257`, `planResearchFromNeeds257` and `executeUnderPolicy257`
+plus the gap-kind semantics fix, with `allowSourceReads:false`. Owner decisions open: policy location and first
+policy.
+
 ## 000000. Phase255 update (2026-10-16) — read first; adds to §00000
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase255/PHASE255-TECHNICAL-REPORT.md`; next brief
