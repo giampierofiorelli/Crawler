@@ -14,6 +14,7 @@
  * shortlist is marked performance_unverified and the ranking stays withheld.
  */
 import type {Value245} from './phase245_value_normalizer.js';
+import {urlModelToken252} from './phase246_knowledge_store.js';
 import type {DecisionSnapshot177,Criterion177} from './phase177_decision_snapshot.js';
 import {reviewedFirstAnswer180,type SignedRelease180,type TrustedRankingAuthority180,type FirstAnswer180} from './phase180_reviewed_first_answer.js';
 
@@ -143,10 +144,15 @@ export function candidatesFromStore249(store:{products246(f:{category?:string}):
   }
   // Phase251: a name-only identity key ("20 Litre Microwave Oven" on one host) can cover several models' pages.
   const basis=(store.db.prepare('SELECT key_basis FROM products WHERE product_id=?').get(pid) as {key_basis:string}|undefined)?.key_basis;
-  const pages=[...new Set(declarations.map(d=>d.sourceUrl).filter((u):u is string=>!!u))];
-  const lastSegs=new Set(pages.map(u=>{try{return new URL(u).pathname.split('/').filter(Boolean).pop()??'';}catch{return u;}}).filter(x=>/\d/.test(x)));
-  const identityWarning=basis==='host_name'&&lastSegs.size>1?`identity rests on the product name, but its declarations come from ${lastSegs.size} model pages (${[...lastSegs].join(', ')}): identity needs review`:null;
-  return {productId:pid,name:p?.name??pid,declarations,identityWarning};
+  // Phase252: only the product's own pages (role main_product) count; a comparison table on another model's page that
+  // names this product is not a second model page (development: havitsmart KB901L was flagged falsely).
+  const own=((store.db.prepare("SELECT group_concat(r.url,char(10)) u FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product'").get(pid) as {u:string|null}|undefined)?.u??'').split('\n').filter(Boolean);
+  const models=new Set(own.map(urlModelToken252).filter((x):x is string=>!!x));
+  const identityWarning=basis==='host_name'&&models.size>1?`identity rests on the product name, but it covers ${models.size} model pages (${[...models].sort().join(', ')}): identity needs review`:null;
+  // Phase252: products split from one generic name ("20 Litre Microwave Oven") are told apart by their model code.
+  const model=(p as {declaredModel?:string|null}|null)?.declaredModel??null;
+  const name=p?.name&&model&&!p.name.toLowerCase().replace(/[^a-z0-9]/g,'').includes(model.toLowerCase().replace(/[^a-z0-9]/g,''))?`${p.name} (${model})`:p?.name??pid;
+  return {productId:pid,name,declarations,identityWarning};
  });
 }
 

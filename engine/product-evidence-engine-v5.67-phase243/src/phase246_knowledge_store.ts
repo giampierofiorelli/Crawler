@@ -104,6 +104,14 @@ export function productKey246(i:{host:string;name:string|null;brand?:string|null
  if(!i.name)throw Error('246_product_without_identity');
  return {key:`name:${i.host}:${slug(i.name)}`,basis:'host_name'};
 }
+/** Phase252: the single model-code token of a product page URL's last path segment ("/microwaves/qs204aeb/",
+ * "/henry-cordless-hvb160/"), or null when there is none or more than one. Used only to keep apart two pages that
+ * share a generic name; a URL token is never used to merge anything. */
+export function urlModelToken252(url:string):string|null{
+ let seg='';try{seg=new URL(url).pathname.split('/').filter(Boolean).pop()??'';}catch{return null;}
+ const t=[...new Set(seg.toLowerCase().split(/[-_.+]/).filter(x=>/^(?=[a-z0-9]*\d)(?=[a-z0-9]*[a-z])[a-z0-9]{4,}$/.test(x)))];
+ return t.length===1?t[0]:null;
+}
 /** Every exact-identifier key of one identity, strongest first. The host-scoped name is used only when no
  * identifier exists. Two records sharing any of these keys denote the same product. */
 export function productKeys246(i:Parameters<typeof productKey246>[0]):string[]{
@@ -358,9 +366,22 @@ export class KnowledgeStore246 {
    const upsertProduct=(name:string|null,ids:Record<string,string>,state:IdentityState246,role:string):string=>{
     const ki={host,name,brand:ids.brand??null,gtin:ids.gtin13??ids.gtin14??ids.gtin12??ids.gtin8??ids.gtin??null,
      mpn:ids.mpn??null,sku:ids.sku??null,productGroupId:ids.productGroupID??null};
-    const k=productKey246(ki);const keys=productKeys246(ki);
+    let k:{key:string;basis:string}=productKey246(ki);let keys=productKeys246(ki);
     // Resolve through alias keys first: the same product may have been recorded under a weaker identifier.
-    const hits=[...new Set(keys.map(key=>(this.db.prepare('SELECT product_id FROM product_keys WHERE key=?').get(key) as {product_id:string}|undefined)?.product_id).filter(Boolean) as string[])];
+    const lookup=(ks:string[])=>[...new Set(ks.map(key=>(this.db.prepare('SELECT product_id FROM product_keys WHERE key=?').get(key) as {product_id:string}|undefined)?.product_id).filter(Boolean) as string[])];
+    let hits=lookup(keys);
+    // Phase252: a generic page name ("20 Litre Microwave Oven") shared by two model pages of one host is not one
+    // product. When the name-only key hits a product whose own pages carry a different model code in their URL, this
+    // page's product is keyed by its own URL model code instead, and the collision is recorded as a gap.
+    const token=k.basis==='host_name'&&role==='main_product'?urlModelToken252(o.url):null;
+    if(token&&hits.length){
+     const other=(this.db.prepare("SELECT r.url FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product'").all(hits[0]) as {url:string}[])
+      .map(r=>urlModelToken252(r.url)).filter((x):x is string=>!!x);
+     if(other.length&&!other.includes(token)){
+      this.addGap('product',hits[0],'identity_name_shared_by_model_pages',`page ${o.url.slice(0,160)} has the same name but model code ${token}`,'review_identity_split',o.fetchedAt);
+      k={key:`model:${host}:${token}`,basis:'host_model'};keys=[k.key];hits=lookup(keys);
+     }
+    }
     if(hits.length>1)this.addGap('product',hits[0],'identity_keys_split_across_products',`exact identifiers of one page product point to ${hits.length} stored products: ${hits.join(',')}`.slice(0,300),'review_identity_merge',o.fetchedAt);
     const pid=hits[0]??'prd_'+sha(k.key).slice(0,24);
     const row=this.db.prepare('SELECT identity_state,category_hypotheses_json,identifiers_json FROM products WHERE product_id=?').get(pid) as
@@ -618,6 +639,58 @@ export class KnowledgeStore246 {
   if(!it)throw Error('251_unknown_item');if(it.superseded_by)return false;
   this.tx(()=>{this.db.prepare('UPDATE category_items SET superseded_by=?,updated_at=? WHERE item_id=?').run('retired:'+reason,at,itemId);
    this.event('category_item_retired',{itemId,categoryId:it.category_id,reason},at);this.invalidate(['category:'+it.category_id,'catitem:'+itemId],'category_item_retired');});
+  return true;
+ }
+ /** Phase252: splits a product whose name-only identity covers pages of different models. The declarations and
+  * source links of the named revisions (whole pages, never single values) move to a new product keyed by the moved
+  * page's model code; both records get their model code as declared_model and a model key, so re-ingesting either
+  * page resolves to its own product. Refused if a moved declaration belongs to a variant (no evidence-free moves
+  * between variants) or if the original would keep no page. Journaled with everything needed to reverse it. */
+ splitProductIdentity252(productId:string,move:{revisionIds:string[];movedModel:string;keptModel:string;reason:string;detail:string},at=new Date().toISOString()):string{
+  const p=this.db.prepare('SELECT * FROM products WHERE product_id=?').get(productId) as Record<string,string>|undefined;
+  if(!p)throw Error('252_unknown_product');
+  const code=/^[a-z0-9]{3,24}$/;if(!code.test(move.movedModel)||!code.test(move.keptModel)||move.movedModel===move.keptModel||!/^[a-z0-9_]{3,60}$/.test(move.reason)||!shortText(move.detail,300)||!move.revisionIds.length)throw Error('252_invalid_split');
+  const own=(this.db.prepare("SELECT revision_id FROM product_sources WHERE product_id=? AND role='main_product'").all(productId) as {revision_id:string}[]).map(r=>r.revision_id);
+  if(move.revisionIds.some(r=>!own.includes(r))||own.every(r=>move.revisionIds.includes(r)))throw Error('252_split_must_keep_and_move_own_pages');
+  const qs=move.revisionIds.map(()=>'?').join(',');
+  const decls=this.db.prepare(`SELECT declaration_id,variant_id FROM declarations WHERE product_id=? AND revision_id IN (${qs})`).all(productId,...move.revisionIds) as {declaration_id:string;variant_id:string|null}[];
+  if(decls.some(d=>d.variant_id))throw Error('252_split_would_move_variant_declarations');
+  const host=new URL((this.db.prepare('SELECT url FROM revisions WHERE revision_id=?').get(move.revisionIds[0]) as {url:string}).url).host;
+  const newKey=`model:${host}:${move.movedModel}`,keptKey=`model:${host}:${move.keptModel}`;
+  if(this.db.prepare('SELECT 1 FROM product_keys WHERE key=? OR key=?').get(newKey,keptKey))throw Error('252_model_key_exists');
+  const newId='prd_'+sha(newKey).slice(0,24);
+  const seen=this.db.prepare(`SELECT min(fetched_at) a,max(fetched_at) b FROM revisions WHERE revision_id IN (${qs})`).get(...move.revisionIds) as {a:string;b:string};
+  this.tx(()=>{
+   this.db.prepare('INSERT INTO products VALUES (?,?,?,?,?,?,?,?,?,?,?)').run(newId,'host_model',p.name,p.brand,move.movedModel.toUpperCase(),
+    canon({_key:newKey,splitFrom:productId}),p.identity_state,canon({split252:{from:productId,reason:move.reason,detail:move.detail,at}}),p.category_hypotheses_json,seen.a,seen.b);
+   this.db.prepare(`UPDATE declarations SET product_id=? WHERE product_id=? AND revision_id IN (${qs})`).run(newId,productId,...move.revisionIds);
+   this.db.prepare(`UPDATE product_sources SET product_id=? WHERE product_id=? AND revision_id IN (${qs})`).run(newId,productId,...move.revisionIds);
+   this.db.prepare('UPDATE products SET declared_model=?,identity_review_json=? WHERE product_id=?').run(move.keptModel.toUpperCase(),
+    canon({split252:{to:newId,reason:move.reason,detail:move.detail,at,previousDeclaredModel:p.declared_model??null}}),productId);
+   this.db.prepare('INSERT INTO product_keys VALUES (?,?)').run(newKey,newId);this.db.prepare('INSERT INTO product_keys VALUES (?,?)').run(keptKey,productId);
+   this.event('product_identity_split',{from:productId,to:newId,movedRevisionIds:move.revisionIds,movedDeclarationIds:decls.map(d=>d.declaration_id),
+    newKey,keptKey,movedModel:move.movedModel,keptModel:move.keptModel,previousDeclaredModel:p.declared_model??null,reason:move.reason,detail:move.detail},at);
+   this.invalidate(['product:'+productId,'product:'+newId,...decls.map(d=>'decl:'+d.declaration_id),...JSON.parse(p.category_hypotheses_json).map((c:string)=>'category_observations:'+c)],'product_identity_split');
+  });
+  return newId;
+ }
+ /** Phase252: reverses splitProductIdentity252 from its journal event (the split product is kept, marked merged). */
+ reverseProductSplit252(newProductId:string,reason:string,at=new Date().toISOString()):boolean{
+  if(!/^[a-z0-9_]{3,60}$/.test(reason))throw Error('252_invalid_reversal');
+  const ev=(this.db.prepare("SELECT payload_json FROM events WHERE kind='product_identity_split' ORDER BY seq DESC").all() as {payload_json:string}[])
+   .map(e=>JSON.parse(e.payload_json)).find(e=>e.to===newProductId);
+  if(!ev)throw Error('252_unknown_split');
+  if((this.db.prepare('SELECT identity_state FROM products WHERE product_id=?').get(newProductId) as {identity_state:string}).identity_state==='merged')return false;
+  const qs=ev.movedRevisionIds.map(()=>'?').join(',');
+  this.tx(()=>{
+   this.db.prepare(`UPDATE declarations SET product_id=? WHERE product_id=? AND revision_id IN (${qs})`).run(ev.from,newProductId,...ev.movedRevisionIds);
+   this.db.prepare(`UPDATE product_sources SET product_id=? WHERE product_id=? AND revision_id IN (${qs})`).run(ev.from,newProductId,...ev.movedRevisionIds);
+   this.db.prepare('DELETE FROM product_keys WHERE key IN (?,?)').run(ev.newKey,ev.keptKey);
+   this.db.prepare("UPDATE products SET identity_state='merged' WHERE product_id=?").run(newProductId);
+   this.db.prepare('UPDATE products SET declared_model=? WHERE product_id=?').run(ev.previousDeclaredModel,ev.from);
+   this.event('product_identity_split_reversed',{from:ev.from,to:newProductId,reason},at);
+   this.invalidate(['product:'+ev.from,'product:'+newProductId,...ev.movedDeclarationIds.map((d:string)=>'decl:'+d)],'product_identity_split_reversed');
+  });
   return true;
  }
  /** Adds request vocabulary to every item carrying a concept (vocabulary only; class, state and review unchanged). */
