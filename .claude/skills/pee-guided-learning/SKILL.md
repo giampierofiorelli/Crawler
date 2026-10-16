@@ -72,6 +72,9 @@ Never claim to have read a file you have not opened. In reports, say which secti
 
 - Never bypass robots rules, 403/429 responses or access controls.
 - **A public URL is not storage permission**; never grant yourself rights.
+- **Never construct a Phase181 decision or authority by hand** (Phase254, S24). `planResearchGaps182` checks the
+  decision's shape, not its signature; per-product research gaps exist only from a signed, verified catalog.
+  Without one, research needs stay `pending_authorization` (`phase254_research_needs.ts`).
 - **No retained declaration values in the public repository** (Phase253, S23). This includes evaluation outputs:
   commit public forms (ids, names, statuses, reason types, source URLs) and keep full runs in `$PEE_PRIVATE_EVAL_DIR`.
 - Honour Content-Signal `ai-input=no`, TDM reservations and `noai` meta tags.

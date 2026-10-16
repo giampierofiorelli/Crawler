@@ -11,6 +11,19 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000. Phase254 update (2026-10-16) — read first; adds to §0000
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase254/PHASE254-TECHNICAL-REPORT.md`; next brief
+`docs/phase254/CONTINUATION-PROMPT.md`. Store unchanged (pee-knowledge `38495fe`).
+
+- `collectResearchNeeds254` (`src/phase254_research_needs.ts`) turns `Advice253.researchInputs` into
+  `pee254.research-needs.v1`. Destinations: research, user clarification, reextraction, not actionable. Needs have
+  exact product and criterion, are merged across requests and bounded by a budget.
+- Research needs are `pending_authorization`: no signed Phase181 catalog exists (S24).
+- First run on real retained products (developer gold, spent T1 requests): 32/34 correct, 0 missed, 1 false,
+  2 wrong destination, attribution 33/33.
+- Known gap: values readable in product names or unit-less texts are coded `no_declaration`.
+
 ## 0000. Phase253 update (2026-10-16) — read this first; it supersedes §000 and earlier where they differ
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase253/PHASE253-TECHNICAL-REPORT.md`. Next brief:
