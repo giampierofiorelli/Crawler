@@ -75,6 +75,9 @@ Never claim to have read a file you have not opened. In reports, say which secti
 - **Reuse retained evidence before asking for research** (Phase255). Tell apart an absent declaration, a retained
   value that is not comparable, and a retained but incomplete one (no unit, unlabelled axes, a range on both sides).
   Only the first is new research. Never assume a unit. A quantity in a product name never overrides a declaration.
+- **Verify through the real downstream guards and logical state** (Phase257):
+  - test a new output through the existing validators it must pass (a research question was blocked by the source-plan guard);
+  - check store invariants by table content, not file bytes (opening SQLite in WAL mode rewrites the file).
 - **Put authorisation where the side effect happens** (Phase256, S26):
   - a content hash is not authority;
   - pure planning must not require ranking credentials;

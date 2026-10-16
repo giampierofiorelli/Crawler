@@ -11,6 +11,20 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000000. Phase257 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase257/PHASE257-TECHNICAL-REPORT.md`; next brief
+`docs/phase257/CONTINUATION-PROMPT.md`.
+
+- Research planning works under the operator policy: `src/phase257_research_planning.ts` and
+  `scripts/phase257-research-policy.mjs verify|restore|demo`.
+- The operational policy lives at `~/.local/share/product-evidence-engine/research-policy/research-policy.json`
+  (restore from `pee-knowledge/policy/`). It expires 2026-11-15.
+- Demo on real retained needs: 19 `missing_declaration` jobs, 0 reads, store unchanged.
+- Execution is a dry run only: reads, workers and transport are forced off.
+- Missing before real research: curated sources with cleared source policies, an owner decision on reads, a review
+  and admission path, identity review.
+
 ## 0000000. Phase256 decision (2026-10-16) — read first
 
 `engine/product-evidence-engine-v5.67-phase243/docs/phase256/PHASE256-ARCHITECTURE-DECISION.md` (design only, no code
