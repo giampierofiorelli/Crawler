@@ -1,0 +1,206 @@
+{
+ "schema": "pee252.review-semantics-eval.v1",
+ "tier": "T1 synthetic, developer-written before the checks; scripted provider, not a model; first run",
+ "scope": "faithfulness of an encoding to its span; not entailment, not truth",
+ "totals": {
+  "cases": 24,
+  "correctAccepted": 24,
+  "correctWronglyRejected": 0,
+  "wrongRejected": 23,
+  "wrongAccepted": 1
+ },
+ "cases": [
+  {
+   "id": "n01",
+   "phenomenon": "missing condition",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:condition_dropped:s1"
+  },
+  {
+   "id": "n02",
+   "phenomenon": "missing condition (temporal 'when', no condition)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  },
+  {
+   "id": "n03",
+   "phenomenon": "negation polarity",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  },
+  {
+   "id": "n04",
+   "phenomenon": "negation polarity (negated complaint)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  },
+  {
+   "id": "n05",
+   "phenomenon": "manufacturer claim promoted to test",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:attribution_promoted_to_observation:s1"
+  },
+  {
+   "id": "n06",
+   "phenomenon": "manufacturer claim (own measurement, correct as test)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "initial:s1:claim_0:unanchored_numeric_value"
+  },
+  {
+   "id": "n07",
+   "phenomenon": "speculation promoted to fact",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:speculation_promoted_to_observation:s1"
+  },
+  {
+   "id": "n08",
+   "phenomenon": "speculation (none; plain observation)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  },
+  {
+   "id": "n09",
+   "phenomenon": "previous product misattributed",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:previous_product_attributed_to_this:s1"
+  },
+  {
+   "id": "n10",
+   "phenomenon": "previous product (correct comparison with it)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:comparison_direction_contradicts_wording:s1"
+  },
+  {
+   "id": "n11",
+   "phenomenon": "comparison direction (negated comparative)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:comparison_direction_contradicts_wording:s1"
+  },
+  {
+   "id": "n12",
+   "phenomenon": "comparison direction (other product is the subject)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": false,
+   "rejectionReason": null
+  },
+  {
+   "id": "n13",
+   "phenomenon": "wrong variant",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:span_names_other_variant:s1"
+  },
+  {
+   "id": "n14",
+   "phenomenon": "speculation promoted to fact (reported by others)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:speculation_promoted_to_observation:s1"
+  },
+  {
+   "id": "n15",
+   "phenomenon": "missing condition",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:condition_dropped:s1"
+  },
+  {
+   "id": "n16",
+   "phenomenon": "missing condition (if)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:condition_dropped:s1"
+  },
+  {
+   "id": "n17",
+   "phenomenon": "negation polarity",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  },
+  {
+   "id": "n18",
+   "phenomenon": "negation polarity (negative-sounding verb, favorable)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  },
+  {
+   "id": "n19",
+   "phenomenon": "manufacturer claim promoted to test",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:attribution_promoted_to_observation:s1"
+  },
+  {
+   "id": "n20",
+   "phenomenon": "manufacturer claim beside a measurement",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:attribution_promoted_to_observation:s1"
+  },
+  {
+   "id": "n21",
+   "phenomenon": "speculation promoted to fact",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:speculation_promoted_to_observation:s1"
+  },
+  {
+   "id": "n22",
+   "phenomenon": "previous product (correct, about this one)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:previous_product_attributed_to_this:s1"
+  },
+  {
+   "id": "n23",
+   "phenomenon": "comparison direction (negated equality)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:comparison_direction_contradicts_wording:s1"
+  },
+  {
+   "id": "n24",
+   "phenomenon": "negation polarity (qualified praise)",
+   "correctAccepted": true,
+   "correctRejectionReason": null,
+   "wrongRejected": true,
+   "rejectionReason": "faithfulness_rejected:polarity_contradicts_wording:s1"
+  }
+ ]
+}

@@ -4,6 +4,7 @@
  * truth, human independent review, or actual local-model execution without a real provider.
  * The phase109 ledger remains the canonical authority. No candidate auto-promotes.
  */
+import {checkFaithfulness252,type FaithfulnessCode252,type CheckedAtom252} from './phase252_review_semantics.js';
 import {createHash} from 'node:crypto';
 import {SourceWideSemanticMemory109, makeEphemeralInventory109,
   type WholeReviewManifest109, type SemanticAtom109, type SegmentAudit109,
@@ -44,7 +45,9 @@ export interface ExtractionPacket110 {manifest:WholeReviewManifest109;modelNames
   proposed:Candidate110[];emptySuggested:string[];problems:string[];unresolvedSegments:string[];
   /** No stored source article/quote. Reviewer needs separately authorized ephemeral source. */
   extractionStatus:'needs_independent_adjudication';
-  validationScope:'offset_and_shape_only_not_semantic_entailment';}
+  validationScope:'offset_and_shape_only_not_semantic_entailment';
+  /** Phase252: bounded lexical faithfulness checks (not entailment, not truth); rejected candidates are not proposed. */
+  faithfulness?:{scope:'bounded_lexical_faithfulness_not_truth';checked:number;rejected:{atomId:string;segmentId:string;codes:FaithfulnessCode252[]}[]};}
 const keys=(o:Record<string,unknown>,expected:string[])=>Object.keys(o).sort().join('|')===expected.sort().join('|');
 const validIdList=(x:unknown):x is string[]=>Array.isArray(x)&&x.every(key)&&new Set(x).size===x.length;
 const VALID_POLICY=`Extract EVERY independent, product-related atomic claim from EACH provided segment, not a summary.
@@ -172,6 +175,7 @@ export async function extractReview110(input:SourceInput110,model:Model110):Prom
   const uniq=new Map<string,Candidate110>();
   const emptySuggested:string[]=[];
   const oversized:string[]=[];
+  let checked=0;const rejected:{atomId:string;segmentId:string;codes:FaithfulnessCode252[]}[]=[];
   for(const b of blocks){
     if(!b.accessible||b.representation!=='complete'||!b.content)continue;
     if(b.content.length>14000){oversized.push(b.segmentId);continue;}
@@ -192,6 +196,9 @@ export async function extractReview110(input:SourceInput110,model:Model110):Prom
     }
     for(const c of [...first.candidate,...second.candidate]){
       if(c.atom.segmentId!==b.segmentId){issues.push('cross_segment_claim:'+b.segmentId);continue;}
+      checked++;
+      const codes=checkFaithfulness252(b.content.slice(c.proof.start,c.proof.end),c.atom as unknown as CheckedAtom252,variants);
+      if(codes.length){issues.push(`faithfulness_rejected:${codes.join('+')}:${b.segmentId}`);rejected.push({atomId:c.atom.atomId,segmentId:b.segmentId,codes});continue;}
       uniq.set(c.atom.atomId,c);
     }
     if(first.empty.includes(b.segmentId)||second.empty.includes(b.segmentId))
@@ -205,7 +212,8 @@ export async function extractReview110(input:SourceInput110,model:Model110):Prom
   // Repetition by two model passes is NOT independent human/source corroboration.
   return {manifest,modelNames:[model.name,model.name],proposed:[...uniq.values()],emptySuggested:usableEmpty,
     problems:issues,unresolvedSegments,extractionStatus:'needs_independent_adjudication',
-    validationScope:'offset_and_shape_only_not_semantic_entailment'};
+    validationScope:'offset_and_shape_only_not_semantic_entailment',
+    faithfulness:{scope:'bounded_lexical_faithfulness_not_truth',checked,rejected}};
 }
 /** Optional local Ollama backend. Only loopback is allowed, no commercial API.
  * This adapter does not automatically ensure independent extraction or accuracy.
