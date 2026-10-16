@@ -1,0 +1,3164 @@
+{
+ "schema": "pee253.advice-run.v1",
+ "arm": "N",
+ "bench": "evaluation/phase253/advice-set.json",
+ "snapshotSha256": "15ec6ad75efcb49f6dc93b2c6da8a7dc98aeeafa3bc0c1ca1b68ae48a446294d",
+ "msTotal": 1204.7,
+ "advice": {
+  "r01": {
+   "schema": "pee253.advice.v1",
+   "text": "Recommendations: Food with Minimal Stovetop Time, No Oven Available. I'm not sure if this will still be too broad or vague, but here's my attempt at a rewrite. Please feel free to close it if it is still too broad/vague. Friends overseas have a very minimal kitchen, and where they are, electricity is expensive, and they have a minimal income. Here is what they have - one single electric burner, a smaller-than-normal dorm fridge (which eats up most of their electric bill, evidently), a very sketchy 80s or 90s microwave that they are reluctant to use because of radiation leakage, one very small pot with a lid, two chef's knives and a couple of bowls. They have access to vegetables, a little meat and a few spices and sauces (salt, pepper, ginger, garlic, onions), but that's more or less it. They do not have access or easy access to the following - gas-powered or coal-powered products or devices; equipment or devices that are considered safe by most standards at home (they tried to get a hot water heater for coffee and it blew up in a month); ovens; toaster ovens; convection ovens; toasters; waffle irons; grills; George Forman grills; blenders; food processors; salad spinners, zesters, and other things we take for granted. They also do not have access to processed foods like Oreos, soup mixes, canned broth, instant [fill-in-food-here] etc. Dairy and seafood are also out but those are due to allergies. They also do not have internet access, which is why I'm posting as I'm just",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "eats up most",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for eats up most; the product mentioned is context. PEE holds no knowledge or products for eats up most."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r02": {
+   "schema": "pee253.advice.v1",
+   "text": "When should I change / replace my water pipe?. I was wondering when should we change our indoor water pipe? Should we change every 5 years or every 10 years? This is because recently, I notice that the water quality is not getting that good (cause my electric kettle have turn quite \"rusty\" when boiling the water). By the way, I know that we can use water filtration system but was wondering if the pipe will accumulate unnecessary materials (be it bacteria or heavy metals) which stay inside the pipe.",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "stay",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for stay; the product mentioned is context. PEE holds no knowledge or products for stay."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "category onboarding needed before advising on \"stay\""
+   ]
+  },
+  "r03": {
+   "schema": "pee253.advice.v1",
+   "text": "Meaning of the applicance wattage range 2000-2400W that is written on a tally. Checking power consumption of a kettle with a wattmeter it shows constantly about 1970W (close to the lowest value of the wattage range on the ketler that is 2000W). What does mean upper up to 2400W wattage range provided on the kettle's tally? In which circumstances 2400W consumption can happen when boiling water? Update to answers: In dockerhab, when kettle is in use, I can see constantly ~2000W power consumption until the end when kettle powers off / water is boiled (values arrives via mqtt broker)",
+   "target": {
+    "kind": "category",
+    "category": "kettles",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "kettles",
+   "constraints": [
+    {
+     "criterion": "power_min",
+     "value": 2000,
+     "unit": "W",
+     "bound": "min",
+     "span": "2000-2400W",
+     "status": "candidate",
+     "confidence": "ambiguous"
+    }
+   ],
+   "unmappedConstraints": [
+    {
+     "span": "2000-2400W",
+     "reason": "the upper limit of the range has no checkable criterion"
+    },
+    {
+     "span": "1970W",
+     "reason": "unclear which property W refers to"
+    },
+    {
+     "span": "2000W",
+     "reason": "no checkable criterion for a unbounded power"
+    },
+    {
+     "span": "up to 2400W",
+     "reason": "no checkable criterion for a max power"
+    },
+    {
+     "span": "2400W",
+     "reason": "unclear which property W refers to"
+    },
+    {
+     "span": "2000W",
+     "reason": "no checkable criterion for a unbounded power"
+    }
+   ],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "Did you mean that it must have at least 2000 W (power)? You wrote \"2000-2400W\"."
+   ],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r04": {
+   "schema": "pee253.advice.v1",
+   "text": "Best way to create a simple and economic steam machine for steaming wood?. I want to build a simple steam machine for steaming wood to bend. To do this I must place the wood into a sealed PVC pipe and pump steam into it. The PVC pipe part is the easiest part. Producing steam in a simple and economic way is where I need help. I was thinking of simply using the element from an electric kettle, but these use quite a lot of electricity - the wood must be steamed for at least an hour. I also looked at a clothing steamer, but these seem too weak. 'Pumping' the steam into the PVC pipe is not a problem, as long as the pipe is higher than the steam source, so there is no need for forced induction. Has anyone built something like this before? Would anyone know a way of building a simple and cheap steam making machine?",
+   "target": {
+    "kind": "ambiguous",
+    "category": null,
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "Are you deciding between kettles and steam cookers, or is one of them already chosen?"
+   ],
+   "statements": [
+    "several product categories fit the request"
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r05": {
+   "schema": "pee253.advice.v1",
+   "text": "Alternative plugs for 110v. For about 50 years now, (U.K. 220v based), I've cut off cables from power tools, leaving a foot or so, and replacing the connector with a 'kettle' plug type (IEC C13 male). On larger equipment, there's room for a permanent male socket to be mounted on the chassis. Reason - don't have several cables trailing everywhere when using a few tools, just the one, which can be transferred from tool to tool, and when I've finished, there's only one long cable to wind away. There's also the safety factor, that I can quickly disconnect a tool if there's a problem (angle grinder, for example). I now use several 110v hand tools, with even larger plugs on the end of their cables. Is there an alternative (smaller than the yellow) plug/socket that will work the same? Don't think there's a special code for them. The IP rating isn't important as they're for use in the workshop, rather than the obvious intended outside). I certainly don't want to use the same kettle plug, as there would be a mix-up one day. I already use the kettle plug with a special keyway for those 220v tools which take more current than, say a drill. And use a heavier cable to supply them. So that option is covered (safely) with the present arrangement, which has never given me any problem over 50 years. And also get used on various amplifiers I use as a musician. They're with different mains plugs for different countries, obviating use of adaptors. EDIT: in response to several comments, I've",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "alternative plugs",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for alternative plugs; the product mentioned is context. PEE holds no knowledge or products for alternative plugs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "category onboarding needed before advising on \"alternative plugs\""
+   ]
+  },
+  "r06": {
+   "schema": "pee253.advice.v1",
+   "text": "What size breaker panels do I need for two small buildings?. I have 2 buildings I'm wanting to supply power to strictly as a service and not adding the service from another source. The first building is more like a tiny home wanting to install 14 outlets, 4 lights with switches, be able to run refrigerator, microwave, air fryer, toaster oven, and electric heater and window air conditioner when needed. The other building I'd like to have 8 outlets (which will power things like a heat press, sewing machine, or other such equipment), 2 lights with switches, and be able to power window air conditioner or electric heater. What size breaker boxes do I need on my service pole and in each building if both buildings need one?",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "size breaker panels",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for size breaker panels; the product mentioned is context. PEE holds no knowledge or products for size breaker panels."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r07": {
+   "schema": "pee253.advice.v1",
+   "text": "Is a 40 amp breaker enough for my stove?. The stove has five burners, convection, and air fryer. I currently have a 40 amp breaker for my 220 power outlet. Is this enough amps for 120/240 V;60 Hz 2N ~ 13 kW?",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "air_fryers",
+   "constraints": [],
+   "unmappedConstraints": [
+    {
+     "span": "13 kW",
+     "reason": "unclear which property kW refers to"
+    }
+   ],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "What matters most to you: get crisp exterior texture on chips and breaded foods with little added oil; or cook two different foods at once with different settings and finish them together; or cook small portions for one person without heating a full oven; or cook enough food for a family at once?"
+   ],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r08": {
+   "schema": "pee253.advice.v1",
+   "text": "Wall outlet receptacle amperage for 1500 watt electricle kettle. I live in NY. After running for few days, my wall outlet is not powering my electric kettle so I guess I need a new one. Following is the electrical info of my electric kettle: Voltage 120 Volts 1500 watt element for fast heating 60 Hz What amperage should my wall outlet receptacle be of? I see 15 amp and 20 amp options on Amazon.",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "wall outlet receptacle amperage",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [
+    {
+     "span": "1500 watt",
+     "reason": "unclear which property W refers to"
+    },
+    {
+     "span": "1500 watt",
+     "reason": "unclear which property W refers to"
+    }
+   ],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for wall outlet receptacle amperage; the product mentioned is context. PEE holds no knowledge or products for wall outlet receptacle amperage."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "category onboarding needed before advising on \"wall outlet receptacle amperage\""
+   ]
+  },
+  "r09": {
+   "schema": "pee253.advice.v1",
+   "text": "What type of fuse should I use for my GFCI kitchen receptacle?. I have a countertop 15 amp GFCI receptacle in my kitchen and I would like to replace the fuse for it. It's currently on a time-delay 30 amp fuse (it's a cartridge/capsule style fuse), which is too much, since the wire going to the receptacle is 12 gauge aluminum (which as far as I know is rated for max 15 amps). My question is, should I use a time-delay fuse or a fast acting fuse for this receptacle? I've read that time-delay fuses are for appliances which may have large electric motors, but I'm not sure what's considered large in this context. The outlet will connect things like a toaster, kettle, blender, slow cooker, microwave, etc. This receptacle is the only one on this circuit.",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "fuse",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for fuse; the product mentioned is context. PEE holds no knowledge or products for fuse."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r10": {
+   "schema": "pee253.advice.v1",
+   "text": "Using the outlet on an electrical stove for small appliances. The outlet that is on the front panel of my electric stove is three prong and I have been using it for my coffee maker. Now because I've been looking into the wiring codes regarding another issue, I see that coffee makers/toasters/kettles should be on a 20amp circuit with 12 gauge wiring. So, I'm wondering if this is safe practice to plug the coffee maker into that stove outlet. Basically I'm thinking why would they put an outlet on a stove if you can't use it for a small appliance... (It's also quite an old stove.) Also, is it safe to plug a kettle or toaster into an outlet that is wired with 14 gauge wire and a 15 amp circuit breaker? Thanks.",
+   "target": {
+    "kind": "ambiguous",
+    "category": null,
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "Are you deciding between coffee machines and kettles and toasters, or is one of them already chosen?"
+   ],
+   "statements": [
+    "several product categories fit the request"
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r11": {
+   "schema": "pee253.advice.v1",
+   "text": "What is the best type of machine for making smooth nut butter?. I want to make nut butter from soaked cashews or soaked pepitas. I am wondering what type of machine will get the smoothest product? I am currently using a food processor which is great for cashews but I'm wondering if I can do better. Other possibilities include a blender, nut butter machine, and some type of grinder (perhaps a wet grinder?).",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "blenders",
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [
+    "smooth_texture"
+   ],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "find an original test method for: smooth_texture"
+   ]
+  },
+  "r12": {
+   "schema": "pee253.advice.v1",
+   "text": "Can I replace matzo meal with flour in a popover recipe?. My favorite popover recipe includes matzo meal, which is easy to find during Passover. I run it through a blender to make it fine before mixing it with the other ingredients. Can I substitute regular wheat-based flour when matzo meal isn't available? If so, what type of flour would give the most similar taste and texture? Note that this is not a question about whether popovers made with regular flour would be kosher. This is purely a question about baking. Edit In response to comments, the complete ingredients are: 1.5 cup cake matzoh meal 1.5 cup water .5 cup oil 1 tsp salt 1 tbsp sugar 7 extra-large eggs The matzoh meal mixed with salt and sugar is stirred into boiling water/oil, after which the eggs are added. The popovers are cooked for 45-50 minutes at 400 degrees. I have tried other recipes that use ordinary flour but do not like them nearly as much. It sounds like none of the other options (using Wondra or grinding up matzoh) are easier than stockpiling matzoh meal or ordering it online.",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "flour",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for flour; the product mentioned is context. PEE holds no knowledge or products for flour."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "category onboarding needed before advising on \"flour\""
+   ]
+  },
+  "r13": {
+   "schema": "pee253.advice.v1",
+   "text": "Why would I add garlic to a recipe after onion with such a small time difference?. I have a recipe for Tomotillo & Green Chili soup that calls for one diced onion to be sautéed for 3 minutes prior to adding the four diced garlic cloves all of which is then cooked for an additional one minute. After this, the liquids and most of the other ingredients of the soup are added. (FWIW; I personally don't feel like this is long enough to cook either of these, but that's the recipe...) Is there difference in flavour development that I could expect by following the recipe as opposed to adding both the onion and the garlic at the same time? BTW, I can rule out texture as a reason for this as the whole lot is hit with an immersion blender after cooking.",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "blenders",
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "What matters most to you: blend hard ingredients: ice, nuts, hard fruit; or easy to clean; or produce smooth purees, smoothies and nut milks; or blend quietly?"
+   ],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "r14": {
+   "schema": "pee253.advice.v1",
+   "text": "Which alternative fats, not butter or avocado, are good to make chocolate frosting. This ( Allrecipes Chocolate Avocado Pudding ) is a great recipe for Chocolate Avocado pudding, which I use as a frosting for cakes. So, sticking away from normal basics for frostings such as butter, what could I substitute for the avocado in this recipe? Ingredients 2 large avocados - peeled, pitted, and cubed 1/2 cup unsweetened cocoa powder 1/2 cup brown sugar 1/3 cup coconut milk 2 teaspoons vanilla extract 1 pinch ground cinnamon Directions Blend avocados, cocoa powder, brown sugar, coconut milk, vanilla extract, and cinnamon in a blender until smooth. Refrigerate pudding until chilled, about 30 minutes.",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "alternative fats",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for alternative fats; the product mentioned is context. PEE holds no knowledge or products for alternative fats."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "category onboarding needed before advising on \"alternative fats\""
+   ]
+  },
+  "r15": {
+   "schema": "pee253.advice.v1",
+   "text": "Which kind of mortar and pestle replaces a blender?. I can't stand the noise, and even just the idea, of a blender in my kitchen. I want to keep things more natural (less plastic) and waste free (less products). So I was looking into getting a mortar and pestle instead. I stumbled onto a great looking olive wood one but after reading the answers to this question I'm not sure it's what I'm looking for. I did some more reserach about the different kinds but since I have no experience with any of them it just sounds like I would need a different one for every task. I can't imagine every chef as every kind. In the best of worlds I want to crush spices and herbs, make sauces, grind seeds and nuts, pound garlic and ginder, and maybe even make some soups. Which kind of mortar and pestle would be most versatile in this case?",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "blenders",
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [
+    "hard_ingredients"
+   ],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "find an original test method for: hard_ingredients"
+   ]
+  },
+  "r16": {
+   "schema": "pee253.advice.v1",
+   "text": "Which is a better option for making dosa batter. Indian mixie or US blender?. Moving to US next week planning to avoid the Mixie as it weighs almost 3 kgs . Which is the best option in blenders for making soft batter and chutney? I have got few recommendations like Osterizer not sure if this can make soft batter",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "blenders",
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "What matters most to you: blend hard ingredients: ice, nuts, hard fruit; or easy to clean; or produce smooth purees, smoothies and nut milks; or blend quietly?"
+   ],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "s01": {
+   "schema": "pee253.advice.v1",
+   "text": "I am looking for an air fryer of at least 5 litres",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 5,
+     "unit": "l",
+     "bound": "min",
+     "span": "at least 5 litres",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "evidence": [
+      {
+       "declarationId": "name:prd_3d6a6281b4ea4b068504c4b9",
+       "productId": "prd_3d6a6281b4ea4b068504c4b9",
+       "rawValue": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+       "sourceUrl": "https://cosori.com/products/dual-blaze-air-fryer",
+       "sourceRole": "stated in the product name",
+       "variantId": null,
+       "observedAt": null
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "evidence": [
+      {
+       "declarationId": "name:prd_b77e23c14a673d7a257bd6c1",
+       "productId": "prd_b77e23c14a673d7a257bd6c1",
+       "rawValue": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+       "sourceUrl": "https://www.lakeland.co.uk/products/lakeland-dual-basket-air-fryer-with-easy-view-windows-8l",
+       "sourceRole": "stated in the product name",
+       "variantId": null,
+       "observedAt": null
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "evidence": [
+      {
+       "declarationId": "name:prd_41185d853e4a0eed26933056",
+       "productId": "prd_41185d853e4a0eed26933056",
+       "rawValue": "Lakeland Slimline Air Fryer Black 8L",
+       "sourceUrl": "https://www.lakeland.co.uk/products/lakeland-slimline-air-fryer-black-8l",
+       "sourceRole": "stated in the product name",
+       "variantId": null,
+       "observedAt": null
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "evidence": [
+      {
+       "declarationId": "name:prd_d95891602cc4471b86eb6330",
+       "productId": "prd_d95891602cc4471b86eb6330",
+       "rawValue": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black",
+       "sourceUrl": "https://www.euronics.co.uk/catalogue/small-appliances/small-cooking-appliances/air-fryers/ninja-foodi-af300uk-76l-dual-zone-air-fryer-and-dehydrator-black/p/NINAF300UK",
+       "sourceRole": "stated in the product name",
+       "variantId": null,
+       "observedAt": null
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "reasons": [
+      "capacity_min: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: capacity ≥ 5 l (\"at least 5 litres\").",
+    "4 of 5 known air fryers meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Air Fryer: no declaration for this requirement (capacity_min)"
+   ]
+  },
+  "s02": {
+   "schema": "pee253.advice.v1",
+   "text": "I need an air fryer under £100",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 100,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £100",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "evidence": [
+      {
+       "declarationId": "dcl_fda7fa4e02224316e9291bb4",
+       "productId": "prd_41185d853e4a0eed26933056",
+       "rawValue": "89.99 GBP",
+       "sourceUrl": "https://www.lakeland.co.uk/products/lakeland-slimline-air-fryer-black-8l",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T14:13:27.354Z"
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "reasons": [
+      "budget_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "reasons": [
+      "declared 129.99 gbp; required ≤ 100 gbp"
+     ]
+    },
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "reasons": [
+      "declared 149 gbp; required ≤ 100 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 100 gbp (\"under £100\").",
+    "1 of 5 known air fryers meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "Dual Blaze® 6.8-Quart Smart Air Fryer: declared, but not in a comparable unit (budget_max)",
+    "Lakeland Dual Basket Air Fryer with Easy View Windows 8L: no declaration for this requirement (budget_max)"
+   ]
+  },
+  "s03": {
+   "schema": "pee253.advice.v1",
+   "text": "Looking for an air fryer with at least 7 litres capacity and under £120",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 7,
+     "unit": "l",
+     "bound": "min",
+     "span": "at least 7 litres",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    },
+    {
+     "criterion": "budget_max",
+     "value": 120,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £120",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "evidence": [
+      {
+       "declarationId": "dcl_fda7fa4e02224316e9291bb4",
+       "productId": "prd_41185d853e4a0eed26933056",
+       "rawValue": "89.99 GBP",
+       "sourceUrl": "https://www.lakeland.co.uk/products/lakeland-slimline-air-fryer-black-8l",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T14:13:27.354Z"
+      },
+      {
+       "declarationId": "name:prd_41185d853e4a0eed26933056",
+       "productId": "prd_41185d853e4a0eed26933056",
+       "rawValue": "Lakeland Slimline Air Fryer Black 8L",
+       "sourceUrl": "https://www.lakeland.co.uk/products/lakeland-slimline-air-fryer-black-8l",
+       "sourceRole": "stated in the product name",
+       "variantId": null,
+       "observedAt": null
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "reasons": [
+      "budget_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "reasons": [
+      "declared 129.99 gbp; required ≤ 120 gbp"
+     ]
+    },
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "reasons": [
+      "declared 6.44 l; required ≥ 7 l"
+     ]
+    },
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "reasons": [
+      "declared 149 gbp; required ≤ 120 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: capacity ≥ 7 l (\"at least 7 litres\"); budget ≤ 120 gbp (\"under £120\").",
+    "1 of 5 known air fryers meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "Lakeland Dual Basket Air Fryer with Easy View Windows 8L: no declaration for this requirement (budget_max)"
+   ]
+  },
+  "s04": {
+   "schema": "pee253.advice.v1",
+   "text": "I want an air fryer that weighs no more than 6 kg",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "weight_max",
+     "value": 6,
+     "unit": "kg",
+     "bound": "max",
+     "span": "no more than 6 kg",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "evidence": [
+      {
+       "declarationId": "dcl_27f7b52e04b15bd91863c080",
+       "productId": "prd_ad1e8495d802bbef9564fc54",
+       "rawValue": "5.1kg",
+       "sourceUrl": "https://www.dualit.com/products/5-5l-air-fryer",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:14.644Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "reasons": [
+      "weight_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "reasons": [
+      "weight_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "reasons": [
+      "declared 6.21 kg; required ≤ 6 kg"
+     ]
+    },
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "reasons": [
+      "declared 8.2 kg; required ≤ 6 kg"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: weight ≤ 6 kg (\"no more than 6 kg\").",
+    "1 of 5 known air fryers meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Lakeland Dual Basket Air Fryer with Easy View Windows 8L: no declaration for this requirement (weight_max)",
+    "Lakeland Slimline Air Fryer Black 8L: no declaration for this requirement (weight_max)"
+   ]
+  },
+  "s05": {
+   "schema": "pee253.advice.v1",
+   "text": "I need an air fryer of at least 12 litres",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 12,
+     "unit": "l",
+     "bound": "min",
+     "span": "at least 12 litres",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "justified_negative",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "reasons": [
+      "capacity_min: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "reasons": [
+      "declared 6.44 l; required ≥ 12 l"
+     ]
+    },
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "reasons": [
+      "declared 8 l; required ≥ 12 l"
+     ]
+    },
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "reasons": [
+      "declared 8 l; required ≥ 12 l"
+     ]
+    },
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "reasons": [
+      "declared 7.6 l; required ≥ 12 l"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: capacity ≥ 12 l (\"at least 12 litres\").",
+    "None of the 4 known air fryers that could be checked meets every stated requirement; 1 could not be checked."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Air Fryer: no declaration for this requirement (capacity_min)"
+   ]
+  },
+  "s06": {
+   "schema": "pee253.advice.v1",
+   "text": "An air fryer no wider than 40 cm, please",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "width_max",
+     "value": 40,
+     "unit": "cm",
+     "bound": "max",
+     "span": "no wider than 40 cm",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "evidence": [
+      {
+       "declarationId": "dcl_c220e9bb8ee000872fc85dce",
+       "productId": "prd_ad1e8495d802bbef9564fc54",
+       "rawValue": "32.6(D) x 37.9(W) x 31.4(H) cm",
+       "sourceUrl": "https://www.dualit.com/products/5-5l-air-fryer",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:14.644Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "reasons": [
+      "declared 41.5 cm; required ≤ 40 cm"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: width ≤ 40 cm (\"no wider than 40 cm\").",
+    "1 of 5 known air fryers meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Dual Blaze® 6.8-Quart Smart Air Fryer: no declaration for this requirement (width_max)",
+    "Lakeland Dual Basket Air Fryer with Easy View Windows 8L: no declaration for this requirement (width_max)",
+    "Lakeland Slimline Air Fryer Black 8L: no declaration for this requirement (width_max)"
+   ]
+  },
+  "s07": {
+   "schema": "pee253.advice.v1",
+   "text": "Looking for a coffee machine under £150",
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 150,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £150",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "name": "Espresso Coffee Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_6bd07a8b4a056d9b8091c7b1",
+       "productId": "prd_da4477a15c09160dea80cef6",
+       "rawValue": "99.99 GBP",
+       "sourceUrl": "https://www.dualit.com/products/espresso-coffee-machine",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:43.617Z"
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    },
+    {
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "name": "Pod Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_dcd35820f31d83970a1806ba",
+       "productId": "prd_46dfba42c3774eb289c24272",
+       "rawValue": "129.99 GBP",
+       "sourceUrl": "https://www.dualit.com/products/coffee-pod-machine",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:48.286Z"
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "name": "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "name": "3 in 1 Coffee Machine",
+     "reasons": [
+      "declared 199.99 gbp; required ≤ 150 gbp"
+     ]
+    },
+    {
+     "productId": "prd_489461a5a9578d692a7f0960",
+     "name": "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+     "reasons": [
+      "declared 599 gbp; required ≤ 150 gbp"
+     ]
+    },
+    {
+     "productId": "prd_e1431bc5d818cb3bb35d93c6",
+     "name": "Espress-Auto Coffee and Tea Machine",
+     "reasons": [
+      "declared 199.99 gbp; required ≤ 150 gbp"
+     ]
+    },
+    {
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "name": "Espressivo Pro Coffee Machine",
+     "reasons": [
+      "declared 549.99 gbp; required ≤ 150 gbp"
+     ]
+    },
+    {
+     "productId": "prd_f4286fee702368428ab7a172",
+     "name": "Lelit Anna - Steel (15226431570299)",
+     "reasons": [
+      "declared 509.95 gbp; required ≤ 150 gbp"
+     ]
+    },
+    {
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "name": "Sage Bambino Plus Espresso Machine",
+     "reasons": [
+      "declared 399.95 gbp; required ≤ 150 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 150 gbp (\"under £150\").",
+    "2 of 9 known coffee machines meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 9 coffee machines PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "Lelit | Bianca LEPL162T V1 espresso coffee machine: declared, but not in a comparable unit (budget_max)"
+   ]
+  },
+  "s08": {
+   "schema": "pee253.advice.v1",
+   "text": "I need a coffee machine that weighs no more than 5 kg",
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "constraints": [
+    {
+     "criterion": "weight_max",
+     "value": 5,
+     "unit": "kg",
+     "bound": "max",
+     "span": "no more than 5 kg",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "name": "Pod Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_5b55ed1bb57ae6181641598e",
+       "productId": "prd_46dfba42c3774eb289c24272",
+       "rawValue": "2.79 kg",
+       "sourceUrl": "https://www.dualit.com/products/coffee-pod-machine",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:48.286Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "name": "Espresso Coffee Machine",
+     "reasons": [
+      "weight_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_f4286fee702368428ab7a172",
+     "name": "Lelit Anna - Steel (15226431570299)",
+     "reasons": [
+      "weight_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "name": "Sage Bambino Plus Espresso Machine",
+     "reasons": [
+      "weight_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "name": "3 in 1 Coffee Machine",
+     "reasons": [
+      "declared 5.6 kg; required ≤ 5 kg"
+     ]
+    },
+    {
+     "productId": "prd_489461a5a9578d692a7f0960",
+     "name": "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+     "reasons": [
+      "declared 9.45 kg; required ≤ 5 kg"
+     ]
+    },
+    {
+     "productId": "prd_e1431bc5d818cb3bb35d93c6",
+     "name": "Espress-Auto Coffee and Tea Machine",
+     "reasons": [
+      "declared 7.1 kg; required ≤ 5 kg"
+     ]
+    },
+    {
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "name": "Espressivo Pro Coffee Machine",
+     "reasons": [
+      "declared 9.98 kg; required ≤ 5 kg"
+     ]
+    },
+    {
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "name": "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+     "reasons": [
+      "declared 26.5 kg; required ≤ 5 kg"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: weight ≤ 5 kg (\"no more than 5 kg\").",
+    "1 of 9 known coffee machines meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 9 coffee machines PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Espresso Coffee Machine: no declaration for this requirement (weight_max)",
+    "Lelit Anna - Steel (15226431570299): no declaration for this requirement (weight_max)",
+    "Sage Bambino Plus Espresso Machine: no declaration for this requirement (weight_max)"
+   ]
+  },
+  "s09": {
+   "schema": "pee253.advice.v1",
+   "text": "I want a coffee machine with at least 1400 W",
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "constraints": [
+    {
+     "criterion": "power_min",
+     "value": 1400,
+     "unit": "W",
+     "bound": "min",
+     "span": "at least 1400 W",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_489461a5a9578d692a7f0960",
+     "name": "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_d3dc3c9b6206c496e3846de2",
+       "productId": "prd_489461a5a9578d692a7f0960",
+       "rawValue": "1450.00W",
+       "sourceUrl": "https://www.johnlewis.com/delonghi-rivelia-start-automatic-bean-to-cup-coffee-machine/p115732396",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T14:50:01.745Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "name": "3 in 1 Coffee Machine",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "name": "Espressivo Pro Coffee Machine",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "name": "Espresso Coffee Machine",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_f4286fee702368428ab7a172",
+     "name": "Lelit Anna - Steel (15226431570299)",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "name": "Pod Machine",
+     "reasons": [
+      "power_min: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "name": "Sage Bambino Plus Espresso Machine",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_e1431bc5d818cb3bb35d93c6",
+     "name": "Espress-Auto Coffee and Tea Machine",
+     "reasons": [
+      "declared 1350 w; required ≥ 1400 w"
+     ]
+    },
+    {
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "name": "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+     "reasons": [
+      "declared 1360 w; required ≥ 1400 w"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: power ≥ 1400 W (\"at least 1400 W\").",
+    "1 of 9 known coffee machines meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "declared power may be rated input or output power; compared as each source declares it",
+    "Coverage is limited to the 9 coffee machines PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "3 in 1 Coffee Machine: no declaration for this requirement (power_min)",
+    "Espressivo Pro Coffee Machine: no declaration for this requirement (power_min)",
+    "Espresso Coffee Machine: no declaration for this requirement (power_min)",
+    "Lelit Anna - Steel (15226431570299): no declaration for this requirement (power_min)",
+    "Pod Machine: declared, but not in a comparable unit (power_min)",
+    "Sage Bambino Plus Espresso Machine: no declaration for this requirement (power_min)"
+   ]
+  },
+  "s10": {
+   "schema": "pee253.advice.v1",
+   "text": "I want an espresso machine under £50",
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 50,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £50",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "justified_negative",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [
+    {
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "name": "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "name": "3 in 1 Coffee Machine",
+     "reasons": [
+      "declared 199.99 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_489461a5a9578d692a7f0960",
+     "name": "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+     "reasons": [
+      "declared 599 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_e1431bc5d818cb3bb35d93c6",
+     "name": "Espress-Auto Coffee and Tea Machine",
+     "reasons": [
+      "declared 199.99 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "name": "Espressivo Pro Coffee Machine",
+     "reasons": [
+      "declared 549.99 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "name": "Espresso Coffee Machine",
+     "reasons": [
+      "declared 99.99 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_f4286fee702368428ab7a172",
+     "name": "Lelit Anna - Steel (15226431570299)",
+     "reasons": [
+      "declared 509.95 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "name": "Pod Machine",
+     "reasons": [
+      "declared 129.99 gbp; required ≤ 50 gbp"
+     ]
+    },
+    {
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "name": "Sage Bambino Plus Espresso Machine",
+     "reasons": [
+      "declared 399.95 gbp; required ≤ 50 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 50 gbp (\"under £50\").",
+    "None of the 8 known coffee machines that could be checked meets every stated requirement; 1 could not be checked."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 9 coffee machines PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "Lelit | Bianca LEPL162T V1 espresso coffee machine: declared, but not in a comparable unit (budget_max)"
+   ]
+  },
+  "s11": {
+   "schema": "pee253.advice.v1",
+   "text": "I need a coffee machine no wider than 25 cm for a narrow shelf",
+   "target": {
+    "kind": "category",
+    "category": "coffee_machines",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_machines",
+   "constraints": [
+    {
+     "criterion": "width_max",
+     "value": 25,
+     "unit": "cm",
+     "bound": "max",
+     "span": "no wider than 25 cm",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_99da9273908a1ee0360e7f8a",
+     "name": "3 in 1 Coffee Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_4492e41519f071269615e4fc",
+       "productId": "prd_99da9273908a1ee0360e7f8a",
+       "rawValue": "20.7(W) x 28.4(D) x 33(H) cm",
+       "sourceUrl": "https://www.dualit.com/products/coffee-machine",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:52.982Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_489461a5a9578d692a7f0960",
+     "name": "De'Longhi Rivelia Start Automatic Bean to Cup Coffee Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_2a766fbd8cd2c0e149ce1e8e",
+       "productId": "prd_489461a5a9578d692a7f0960",
+       "rawValue": "H385 x W245 x D430mm",
+       "sourceUrl": "https://www.johnlewis.com/delonghi-rivelia-start-automatic-bean-to-cup-coffee-machine/p115732396",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T14:50:01.745Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_da4477a15c09160dea80cef6",
+     "name": "Espresso Coffee Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_436f35038acbba0840f32828",
+       "productId": "prd_da4477a15c09160dea80cef6",
+       "rawValue": "15(W) x 24(D) x 28(H) cm",
+       "sourceUrl": "https://www.dualit.com/products/espresso-coffee-machine",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:43.617Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_f4286fee702368428ab7a172",
+     "name": "Lelit Anna - Steel (15226431570299)",
+     "evidence": [
+      {
+       "declarationId": "dcl_7ed1867d10f62f8bc322e3b0",
+       "productId": "prd_f4286fee702368428ab7a172",
+       "rawValue": "230 x 380 x 340mm",
+       "sourceUrl": "https://www.origincoffee.co.uk/products/lelit-anna-steel",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:41:51.889Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_46dfba42c3774eb289c24272",
+     "name": "Pod Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_da3f05568400295d859a9520",
+       "productId": "prd_46dfba42c3774eb289c24272",
+       "rawValue": "33.4(D) x 10(W) x 22.5(H) cm",
+       "sourceUrl": "https://www.dualit.com/products/coffee-pod-machine",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:48.286Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_11d73581a7430aa6a49b3e6e",
+     "name": "Sage Bambino Plus Espresso Machine",
+     "evidence": [
+      {
+       "declarationId": "dcl_53ea53b71baf4196791995e7",
+       "productId": "prd_11d73581a7430aa6a49b3e6e",
+       "rawValue": "19.5 x 32 x 31 cm",
+       "sourceUrl": "https://balancecoffee.co.uk/products/sage-bambino-plus-espresso-machine",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T16:14:45.226Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_e1431bc5d818cb3bb35d93c6",
+     "name": "Espress-Auto Coffee and Tea Machine",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_fd3006bbcdff0028b89ad140",
+     "name": "Espressivo Pro Coffee Machine",
+     "reasons": [
+      "declared 34.1 cm; required ≤ 25 cm"
+     ]
+    },
+    {
+     "productId": "prd_fe8d9da4524f8a3fa40430d7",
+     "name": "Lelit | Bianca LEPL162T V1 espresso coffee machine",
+     "reasons": [
+      "declared 29 cm; required ≤ 25 cm"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: width ≤ 25 cm (\"no wider than 25 cm\").",
+    "6 of 9 known coffee machines meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 9 coffee machines PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Espress-Auto Coffee and Tea Machine: no declaration for this requirement (width_max)"
+   ]
+  },
+  "s12": {
+   "schema": "pee253.advice.v1",
+   "text": "I need a blender with at least 1000 W",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "blenders",
+   "constraints": [
+    {
+     "criterion": "power_min",
+     "value": 1000,
+     "unit": "W",
+     "bound": "min",
+     "span": "at least 1000 W",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_46a69a5ceaf8f74819c61179",
+     "name": "Xplode 1500",
+     "evidence": [
+      {
+       "declarationId": "dcl_d66275ea25da7250f8ca0052",
+       "productId": "prd_46a69a5ceaf8f74819c61179",
+       "rawValue": "1500",
+       "sourceUrl": "https://wilfa.com/products/xplode-1500",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T16:23:18.179Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_fae463907b2832521b9cbdb3",
+     "name": "7000 Series High speed blender",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_c499472bcad658a163aa69a0",
+     "name": "Commercial Blender 2L 1500W - Waring CB137",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_a9153c3ca30c41e991455b3a",
+     "name": "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_6f592010fad82b95dc71ec5e",
+     "name": "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_c4b55ffd479598e230d0d946",
+     "name": "nutribullet",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_258ce8d764da74ae3f9eebd8",
+     "name": "nutribullet Pro 900",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_b4026dd016da18351011962d",
+     "name": "nutribullet x McLaren Pro",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: power ≥ 1000 W (\"at least 1000 W\").",
+    "1 of 8 known blenders meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "declared power may be rated input or output power; compared as each source declares it",
+    "Coverage is limited to the 8 blenders PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "7000 Series High speed blender: no declaration for this requirement (power_min)",
+    "Commercial Blender 2L 1500W - Waring CB137: no declaration for this requirement (power_min)",
+    "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765: no declaration for this requirement (power_min)",
+    "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987: no declaration for this requirement (power_min)",
+    "nutribullet: no declaration for this requirement (power_min)",
+    "nutribullet Pro 900: no declaration for this requirement (power_min)",
+    "nutribullet x McLaren Pro: no declaration for this requirement (power_min)"
+   ]
+  },
+  "s13": {
+   "schema": "pee253.advice.v1",
+   "text": "A blender of at least 1.5 litres under £100",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "category_stage"
+   },
+   "category": "blenders",
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 1.5,
+     "unit": "l",
+     "bound": "min",
+     "span": "at least 1.5 litres",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    },
+    {
+     "criterion": "budget_max",
+     "value": 100,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £100",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "justified_negative",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [
+    {
+     "productId": "prd_fae463907b2832521b9cbdb3",
+     "name": "7000 Series High speed blender",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit",
+      "capacity_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_6f592010fad82b95dc71ec5e",
+     "name": "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987",
+     "reasons": [
+      "budget_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_c4b55ffd479598e230d0d946",
+     "name": "nutribullet",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit",
+      "capacity_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_258ce8d764da74ae3f9eebd8",
+     "name": "nutribullet Pro 900",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit",
+      "capacity_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_b4026dd016da18351011962d",
+     "name": "nutribullet x McLaren Pro",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit",
+      "capacity_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_46a69a5ceaf8f74819c61179",
+     "name": "Xplode 1500",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_c499472bcad658a163aa69a0",
+     "name": "Commercial Blender 2L 1500W - Waring CB137",
+     "reasons": [
+      "declared 919.12 gbp; required ≤ 100 gbp"
+     ]
+    },
+    {
+     "productId": "prd_a9153c3ca30c41e991455b3a",
+     "name": "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765",
+     "reasons": [
+      "declared 1.25 l; required ≥ 1.5 l"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: capacity ≥ 1.5 l (\"at least 1.5 litres\"); budget ≤ 100 gbp (\"under £100\").",
+    "None of the 2 known blenders that could be checked meets every stated requirement; 6 could not be checked."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 8 blenders PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "7000 Series High speed blender: declared, but not in a comparable unit (budget_max)",
+    "7000 Series High speed blender: no declaration for this requirement (capacity_min)",
+    "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987: no declaration for this requirement (budget_max)",
+    "nutribullet: declared, but not in a comparable unit (budget_max)",
+    "nutribullet: no declaration for this requirement (capacity_min)",
+    "nutribullet Pro 900: declared, but not in a comparable unit (budget_max)",
+    "nutribullet Pro 900: no declaration for this requirement (capacity_min)",
+    "nutribullet x McLaren Pro: declared, but not in a comparable unit (budget_max)",
+    "nutribullet x McLaren Pro: no declaration for this requirement (capacity_min)",
+    "Xplode 1500: declared, but not in a comparable unit (budget_max)"
+   ]
+  },
+  "s14": {
+   "schema": "pee253.advice.v1",
+   "text": "I want a blender under $80",
+   "target": {
+    "kind": "category",
+    "category": "blenders",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "blenders",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 80,
+     "unit": "usd",
+     "bound": "max",
+     "span": "under $80",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_c4b55ffd479598e230d0d946",
+     "name": "nutribullet",
+     "evidence": [
+      {
+       "declarationId": "dcl_bb37ead83f9d3581813ff1ca",
+       "productId": "prd_c4b55ffd479598e230d0d946",
+       "rawValue": "69.99 USD",
+       "sourceUrl": "https://www.nutribullet.com/shop/blenders/nutribullet-600/",
+       "sourceRole": "declared by a source of unknown type",
+       "variantId": null,
+       "observedAt": "2026-10-14T21:29:49.628Z"
+      }
+     ],
+     "cautions": [
+      "some declarations come from a source whose type (maker or retailer) is not known",
+      "price as declared on the date shown; it may have changed"
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_fae463907b2832521b9cbdb3",
+     "name": "7000 Series High speed blender",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_c499472bcad658a163aa69a0",
+     "name": "Commercial Blender 2L 1500W - Waring CB137",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_a9153c3ca30c41e991455b3a",
+     "name": "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765",
+     "reasons": [
+      "budget_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_6f592010fad82b95dc71ec5e",
+     "name": "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987",
+     "reasons": [
+      "budget_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_46a69a5ceaf8f74819c61179",
+     "name": "Xplode 1500",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_258ce8d764da74ae3f9eebd8",
+     "name": "nutribullet Pro 900",
+     "reasons": [
+      "declared 99.99 usd; required ≤ 80 usd"
+     ]
+    },
+    {
+     "productId": "prd_b4026dd016da18351011962d",
+     "name": "nutribullet x McLaren Pro",
+     "reasons": [
+      "declared 99.99 usd; required ≤ 80 usd"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 80 usd (\"under $80\").",
+    "1 of 8 known blenders meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 8 blenders PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "7000 Series High speed blender: declared, but not in a comparable unit (budget_max)",
+    "Commercial Blender 2L 1500W - Waring CB137: declared, but not in a comparable unit (budget_max)",
+    "Commercial Milkshake Mixer 1.25L Capacity - Santos CK765: no declaration for this requirement (budget_max)",
+    "Commercial Milkshake Mixer 1.6L Capacity - Nisbets Essentials DN987: no declaration for this requirement (budget_max)",
+    "Xplode 1500: declared, but not in a comparable unit (budget_max)"
+   ]
+  },
+  "s15": {
+   "schema": "pee253.advice.v1",
+   "text": "I want a toaster under £100",
+   "target": {
+    "kind": "category",
+    "category": "toasters",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "toasters",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 100,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £100",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_8f760dc06c1563146af63225",
+     "name": "Domus 2 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_44284f05cd9d242cf060e4c5",
+       "productId": "prd_8f760dc06c1563146af63225",
+       "rawValue": "85.99 GBP",
+       "sourceUrl": "https://www.dualit.com/products/domus-2-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:43:16.522Z"
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    },
+    {
+     "productId": "prd_f4de0183f3ae29d04b27dc53",
+     "name": "Studio by DualitTM 2 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_55f42661863fba103a6e75b2",
+       "productId": "prd_f4de0183f3ae29d04b27dc53",
+       "rawValue": "64.99 GBP",
+       "sourceUrl": "https://www.dualit.com/products/studio-2-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:41:57.794Z"
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    }
+   ],
+   "unknown": [],
+   "excluded": [
+    {
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "name": "6 Slice Classic Toaster",
+     "reasons": [
+      "declared 299.99 gbp; required ≤ 100 gbp"
+     ]
+    },
+    {
+     "productId": "prd_d36e0dcbe52bded66e8f1d73",
+     "name": "Architect 4 Slice Toaster",
+     "reasons": [
+      "declared 139.99 gbp; required ≤ 100 gbp"
+     ]
+    },
+    {
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "name": "Double Contact Toaster - Brushed Stainless Steel",
+     "reasons": [
+      "declared 299.99 gbp; required ≤ 100 gbp"
+     ]
+    },
+    {
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "name": "Long Slot Lite Toaster",
+     "reasons": [
+      "declared 134.99 gbp; required ≤ 100 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 100 gbp (\"under £100\").",
+    "2 of 6 known toasters meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 6 toasters PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)"
+   ]
+  },
+  "s16": {
+   "schema": "pee253.advice.v1",
+   "text": "Looking for a toaster that weighs no more than 2.5 kg",
+   "target": {
+    "kind": "category",
+    "category": "toasters",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "toasters",
+   "constraints": [
+    {
+     "criterion": "weight_max",
+     "value": 2.5,
+     "unit": "kg",
+     "bound": "max",
+     "span": "no more than 2.5 kg",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_8f760dc06c1563146af63225",
+     "name": "Domus 2 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_ce969bcf2ac0b5ba99197fd0",
+       "productId": "prd_8f760dc06c1563146af63225",
+       "rawValue": "2.2 Kg",
+       "sourceUrl": "https://www.dualit.com/products/domus-2-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:43:16.522Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_f4de0183f3ae29d04b27dc53",
+     "name": "Studio by DualitTM 2 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_f09c33567ed0e70e54b1023b",
+       "productId": "prd_f4de0183f3ae29d04b27dc53",
+       "rawValue": "1.497 Kg",
+       "sourceUrl": "https://www.dualit.com/products/studio-2-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:41:57.794Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [],
+   "excluded": [
+    {
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "name": "6 Slice Classic Toaster",
+     "reasons": [
+      "declared 5.1 kg; required ≤ 2.5 kg"
+     ]
+    },
+    {
+     "productId": "prd_d36e0dcbe52bded66e8f1d73",
+     "name": "Architect 4 Slice Toaster",
+     "reasons": [
+      "declared 3.2 kg; required ≤ 2.5 kg"
+     ]
+    },
+    {
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "name": "Double Contact Toaster - Brushed Stainless Steel",
+     "reasons": [
+      "declared 6 kg; required ≤ 2.5 kg"
+     ]
+    },
+    {
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "name": "Long Slot Lite Toaster",
+     "reasons": [
+      "declared 2.68 kg; required ≤ 2.5 kg"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: weight ≤ 2.5 kg (\"no more than 2.5 kg\").",
+    "2 of 6 known toasters meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 6 toasters PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": []
+  },
+  "s17": {
+   "schema": "pee253.advice.v1",
+   "text": "I want a toaster no wider than 30 cm",
+   "target": {
+    "kind": "category",
+    "category": "toasters",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "toasters",
+   "constraints": [
+    {
+     "criterion": "width_max",
+     "value": 30,
+     "unit": "cm",
+     "bound": "max",
+     "span": "no wider than 30 cm",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_d36e0dcbe52bded66e8f1d73",
+     "name": "Architect 4 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_4b9df6e97562a3d25da37dd1",
+       "productId": "prd_d36e0dcbe52bded66e8f1d73",
+       "rawValue": "28 x 29 x 21 cm",
+       "sourceUrl": "https://www.dualit.com/products/architect-4-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:43:07.089Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_8f760dc06c1563146af63225",
+     "name": "Domus 2 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_edcc7035f23794a6325142fe",
+       "productId": "prd_8f760dc06c1563146af63225",
+       "rawValue": "18 (w) x 29(d) x 21(h) cm",
+       "sourceUrl": "https://www.dualit.com/products/domus-2-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:43:16.522Z"
+      }
+     ],
+     "cautions": []
+    },
+    {
+     "productId": "prd_f4de0183f3ae29d04b27dc53",
+     "name": "Studio by DualitTM 2 Slice Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_4cd7e25033bb8798d8174f46",
+       "productId": "prd_f4de0183f3ae29d04b27dc53",
+       "rawValue": "17.8 (w) x 27.3(d) x 19.7(h) cm",
+       "sourceUrl": "https://www.dualit.com/products/studio-2-slot-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:41:57.794Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "name": "6 Slice Classic Toaster",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "name": "Double Contact Toaster - Brushed Stainless Steel",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "name": "Long Slot Lite Toaster",
+     "reasons": [
+      "width_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: width ≤ 30 cm (\"no wider than 30 cm\").",
+    "3 of 6 known toasters meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 6 toasters PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "6 Slice Classic Toaster: no declaration for this requirement (width_max)",
+    "Double Contact Toaster - Brushed Stainless Steel: no declaration for this requirement (width_max)",
+    "Long Slot Lite Toaster: no declaration for this requirement (width_max)"
+   ]
+  },
+  "s18": {
+   "schema": "pee253.advice.v1",
+   "text": "A toaster with at least 2000 W",
+   "target": {
+    "kind": "category",
+    "category": "toasters",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "toasters",
+   "constraints": [
+    {
+     "criterion": "power_min",
+     "value": 2000,
+     "unit": "W",
+     "bound": "min",
+     "span": "at least 2000 W",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "name": "6 Slice Classic Toaster",
+     "evidence": [
+      {
+       "declarationId": "dcl_bc144e3dc1abeb4b640fb8bf",
+       "productId": "prd_9918fd859ba878ff60fe9e03",
+       "rawValue": "3kW",
+       "sourceUrl": "https://www.dualit.com/products/6-slice-classic-toaster",
+       "sourceRole": "declared by the manufacturer",
+       "variantId": null,
+       "observedAt": "2026-10-14T15:42:02.561Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_d36e0dcbe52bded66e8f1d73",
+     "name": "Architect 4 Slice Toaster",
+     "reasons": [
+      "power_min: no declaration for this requirement"
+     ]
+    },
+    {
+     "productId": "prd_8f760dc06c1563146af63225",
+     "name": "Domus 2 Slice Toaster",
+     "reasons": [
+      "power_min: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "name": "Long Slot Lite Toaster",
+     "reasons": [
+      "power_min: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_f4de0183f3ae29d04b27dc53",
+     "name": "Studio by DualitTM 2 Slice Toaster",
+     "reasons": [
+      "power_min: declared, but not in a comparable unit"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "name": "Double Contact Toaster - Brushed Stainless Steel",
+     "reasons": [
+      "declared 1600 w; required ≥ 2000 w"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: power ≥ 2000 W (\"at least 2000 W\").",
+    "1 of 6 known toasters meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "declared power may be rated input or output power; compared as each source declares it",
+    "Coverage is limited to the 6 toasters PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "Architect 4 Slice Toaster: no declaration for this requirement (power_min)",
+    "Domus 2 Slice Toaster: declared, but not in a comparable unit (power_min)",
+    "Long Slot Lite Toaster: declared, but not in a comparable unit (power_min)",
+    "Studio by DualitTM 2 Slice Toaster: declared, but not in a comparable unit (power_min)"
+   ]
+  },
+  "s19": {
+   "schema": "pee253.advice.v1",
+   "text": "I need a toaster under £40",
+   "target": {
+    "kind": "category",
+    "category": "toasters",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "toasters",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 40,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £40",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "justified_negative",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [
+    {
+     "productId": "prd_9918fd859ba878ff60fe9e03",
+     "name": "6 Slice Classic Toaster",
+     "reasons": [
+      "declared 299.99 gbp; required ≤ 40 gbp"
+     ]
+    },
+    {
+     "productId": "prd_d36e0dcbe52bded66e8f1d73",
+     "name": "Architect 4 Slice Toaster",
+     "reasons": [
+      "declared 139.99 gbp; required ≤ 40 gbp"
+     ]
+    },
+    {
+     "productId": "prd_8f760dc06c1563146af63225",
+     "name": "Domus 2 Slice Toaster",
+     "reasons": [
+      "declared 85.99 gbp; required ≤ 40 gbp"
+     ]
+    },
+    {
+     "productId": "prd_4b64c5d3a3dfb012e671393f",
+     "name": "Double Contact Toaster - Brushed Stainless Steel",
+     "reasons": [
+      "declared 299.99 gbp; required ≤ 40 gbp"
+     ]
+    },
+    {
+     "productId": "prd_b5c9c2377fcb7db5db318d75",
+     "name": "Long Slot Lite Toaster",
+     "reasons": [
+      "declared 134.99 gbp; required ≤ 40 gbp"
+     ]
+    },
+    {
+     "productId": "prd_f4de0183f3ae29d04b27dc53",
+     "name": "Studio by DualitTM 2 Slice Toaster",
+     "reasons": [
+      "declared 64.99 gbp; required ≤ 40 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 40 gbp (\"under £40\").",
+    "None of the 6 known toasters that could be checked meets every stated requirement; 0 could not be checked."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 6 toasters PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "discover further candidates in this category",
+    "consider relaxing a requirement"
+   ]
+  },
+  "s20": {
+   "schema": "pee253.advice.v1",
+   "text": "I need a kettle of at least 1.5 litres",
+   "target": {
+    "kind": "category",
+    "category": "kettles",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "kettles",
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 1.5,
+     "unit": "l",
+     "bound": "min",
+     "span": "at least 1.5 litres",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_5061f6355633f0e3eb34069b",
+     "name": "Sona Kettle 1.7 L 2200W With Heat Indicator",
+     "evidence": [
+      {
+       "declarationId": "dcl_e26a2a89e1b110474e6f8609",
+       "productId": "prd_5061f6355633f0e3eb34069b",
+       "rawValue": "1.7 L",
+       "sourceUrl": "https://www.xmart.jo/en/products/sona-kettle-1-7-l-2200w-with-heat-indicator",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T16:22:50.113Z"
+      }
+     ],
+     "cautions": []
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_c67eff51323436c7beff9977",
+     "name": "La Cafetière 700ml Stainless Steel Pour Over Kettle LCCOFPOTSS",
+     "reasons": [
+      "capacity_min: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: capacity ≥ 1.5 l (\"at least 1.5 litres\").",
+    "1 of 2 known kettles meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "Coverage is limited to the 2 kettles PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "La Cafetière 700ml Stainless Steel Pour Over Kettle LCCOFPOTSS: no declaration for this requirement (capacity_min)"
+   ]
+  },
+  "s21": {
+   "schema": "pee253.advice.v1",
+   "text": "A kettle under £30 please",
+   "target": {
+    "kind": "category",
+    "category": "kettles",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "kettles",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 30,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £30",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "justified_negative",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [
+    {
+     "productId": "prd_5061f6355633f0e3eb34069b",
+     "name": "Sona Kettle 1.7 L 2200W With Heat Indicator",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_c67eff51323436c7beff9977",
+     "name": "La Cafetière 700ml Stainless Steel Pour Over Kettle LCCOFPOTSS",
+     "reasons": [
+      "declared 39.99 gbp; required ≤ 30 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 30 gbp (\"under £30\").",
+    "None of the 1 known kettles that could be checked meets every stated requirement; 1 could not be checked."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 2 kettles PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "Sona Kettle 1.7 L 2200W With Heat Indicator: declared, but not in a comparable unit (budget_max)"
+   ]
+  },
+  "s22": {
+   "schema": "pee253.advice.v1",
+   "text": "What kind of tray can I put my air fryer on?",
+   "target": {
+    "kind": "other",
+    "category": null,
+    "other": "tray",
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "out_of_scope",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "You seem to be looking for tray; the product mentioned is context. PEE holds no knowledge or products for tray."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "category onboarding needed before advising on \"tray\""
+   ]
+  },
+  "s23": {
+   "schema": "pee253.advice.v1",
+   "text": "I already have a coffee machine, I want a coffee grinder with at least 300 W",
+   "target": {
+    "kind": "category",
+    "category": "coffee_grinders",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "coffee_grinders",
+   "constraints": [
+    {
+     "criterion": "power_min",
+     "value": 300,
+     "unit": "W",
+     "bound": "min",
+     "span": "at least 300 W",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "justified_abstention",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: power ≥ 300 W (\"at least 300 W\").",
+    "None of the 0 known coffee grinders could be checked against your requirements: the needed declarations are missing, incomparable or conflicting."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "declared power may be rated input or output power; compared as each source declares it",
+    "Coverage is limited to the 0 coffee grinders PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "discover more coffee_grinders candidates (only 0 identified)"
+   ]
+  },
+  "s24": {
+   "schema": "pee253.advice.v1",
+   "text": "A good air fryer for a family of four",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [
+    "batch_capacity"
+   ],
+   "unresolved": [
+    "batch_capacity"
+   ],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "What capacity do you need at least (litres, cups or slices)?"
+   ],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": [
+    "once confirmed, check capacity_min against cited declarations (requirements shortlist, unordered)",
+    "find an original test method for: batch_capacity"
+   ]
+  },
+  "s25": {
+   "schema": "pee253.advice.v1",
+   "text": "I don't want a toaster, I want an air fryer under £100",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "budget_max",
+     "value": 100,
+     "unit": "gbp",
+     "bound": "max",
+     "span": "under £100",
+     "status": "stated_in_request",
+     "confidence": "clear"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "positive_shortlist",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [
+    {
+     "productId": "prd_41185d853e4a0eed26933056",
+     "name": "Lakeland Slimline Air Fryer Black 8L",
+     "evidence": [
+      {
+       "declarationId": "dcl_fda7fa4e02224316e9291bb4",
+       "productId": "prd_41185d853e4a0eed26933056",
+       "rawValue": "89.99 GBP",
+       "sourceUrl": "https://www.lakeland.co.uk/products/lakeland-slimline-air-fryer-black-8l",
+       "sourceRole": "declared by a retailer",
+       "variantId": null,
+       "observedAt": "2026-10-14T14:13:27.354Z"
+      }
+     ],
+     "cautions": [
+      "price as declared on the date shown; it may have changed"
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "productId": "prd_3d6a6281b4ea4b068504c4b9",
+     "name": "Dual Blaze® 6.8-Quart Smart Air Fryer",
+     "reasons": [
+      "budget_max: declared, but not in a comparable unit"
+     ]
+    },
+    {
+     "productId": "prd_b77e23c14a673d7a257bd6c1",
+     "name": "Lakeland Dual Basket Air Fryer with Easy View Windows 8L",
+     "reasons": [
+      "budget_max: no declaration for this requirement"
+     ]
+    }
+   ],
+   "excluded": [
+    {
+     "productId": "prd_ad1e8495d802bbef9564fc54",
+     "name": "Air Fryer",
+     "reasons": [
+      "declared 129.99 gbp; required ≤ 100 gbp"
+     ]
+    },
+    {
+     "productId": "prd_d95891602cc4471b86eb6330",
+     "name": "Ninja Foodi AF300UK 7.6L Dual Zone Air Fryer and Dehydrator - Black (NINAF300UK)",
+     "reasons": [
+      "declared 149 gbp; required ≤ 100 gbp"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "questions": [],
+   "statements": [
+    "Requirements taken from your request: budget ≤ 100 gbp (\"under £100\").",
+    "1 of 5 known air fryers meet every stated requirement by their declared specifications (alphabetical, not ranked)."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking.",
+    "prices are checked only against retained price declarations in the same currency, which may be out of date",
+    "Coverage is limited to the 5 air fryers PEE has observed; it is not the whole market."
+   ],
+   "researchPlan": [
+    "once confirmed, check budget_max against cited declarations (requirements shortlist, unordered)",
+    "Dual Blaze® 6.8-Quart Smart Air Fryer: declared, but not in a comparable unit (budget_max)",
+    "Lakeland Dual Basket Air Fryer with Easy View Windows 8L: no declaration for this requirement (budget_max)"
+   ]
+  },
+  "s26": {
+   "schema": "pee253.advice.v1",
+   "text": "Should I get an air fryer or a toaster oven under £100?",
+   "target": {
+    "kind": "ambiguous",
+    "category": null,
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": null,
+   "constraints": [],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "Are you deciding between air fryers and toaster ovens, or is one of them already chosen?"
+   ],
+   "statements": [
+    "several product categories fit the request"
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  },
+  "s27": {
+   "schema": "pee253.advice.v1",
+   "text": "I need an air fryer, it does not need to be 5 litres",
+   "target": {
+    "kind": "category",
+    "category": "air_fryers",
+    "other": null,
+    "basis": "purchase_phrase_head"
+   },
+   "category": "air_fryers",
+   "constraints": [
+    {
+     "criterion": "capacity_min",
+     "value": 5,
+     "unit": "l",
+     "bound": "min",
+     "span": "5 litres",
+     "status": "candidate",
+     "confidence": "ambiguous"
+    }
+   ],
+   "unmappedConstraints": [],
+   "needs": [],
+   "unresolved": [],
+   "response": "clarification",
+   "ordered": false,
+   "rankingAuthorized": false,
+   "shortlist": [],
+   "unknown": [],
+   "excluded": [],
+   "conflicts": [],
+   "questions": [
+    "Did you mean that it must have at least 5 l (capacity)? You wrote \"5 litres\"."
+   ],
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs."
+   ],
+   "limitations": [
+    "Checks use specifications declared by manufacturers or retailers, cited per product; they are not independent performance tests.",
+    "The list is unordered: meeting your stated limits is not a quality ranking."
+   ],
+   "researchPlan": []
+  }
+ }
+}

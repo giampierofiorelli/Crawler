@@ -123,7 +123,7 @@ export interface PurchaseTarget253 {kind:'category'|'other'|'ambiguous'|'none';c
  basis:'purchase_phrase_head'|'category_stage';phrases:{phrase:string;head:string;category:string|null;linked?:boolean}[]}
 const ANCHOR253=/(?:^| )(?:looking for|look for|looking at|shopping for|searching for|in the market for|recommendations? for|recommend(?:ed)?|suggestions? for|suggest|need|needs|want|wanted|buy|buying|purchase|purchasing|get|getting|choose|choosing|which|what|best|good|cheap|decent|replace(?: \S+){0,5} with|replacement for|upgrade to|switch to|considering|thinking of getting|alternatives? to)(?= |$)/g;
 const SKIP253=/^(?:(?:kind|type|sort|size|brand|make|model|style|set|pair|couple|piece) of |(?:a|an|the|some|any|new|another|second|replacement|good|great|decent|cheap|budget|quality|best|nice|simple|small|large|big) )+/;
-const BOUNDARY253=new Set(['for','to','that','which','who','with','without','in','on','of','from','under','over','so','because','and','or','but','i','me','my','we','our','you','your','is','are','was','were','be','been','can','could','should','will','would','than','vs','versus','as','at','by','if','when','while','it','this','these','those','there','do','does','did','have','has','had','suitable','compatible','capable','ideal','similar','like','please','also','too','now','then','just','not','no','into','onto','inside','around','about','one','ones','where','how','what','why','whose','enough','big','bigger','small','smaller','large','larger','compact','quiet','cheap','cheaper','decent','powerful','reliable','durable','light','lighter','heavy','safe','fast','quick','affordable','expensive','sized','easy','better','best','good','great','nice','ideal','perfect']);
+const BOUNDARY253=new Set(['for','to','that','which','who','with','without','in','on','of','from','under','over','so','because','and','or','but','i','me','my','we','our','you','your','they','them','their','he','she','his','her','its','us','is','are','was','were','be','been','can','could','should','will','would','than','vs','versus','as','at','by','if','when','while','it','this','these','those','there','do','does','did','have','has','had','suitable','compatible','capable','ideal','similar','like','please','also','too','now','then','just','not','no','into','onto','inside','around','about','one','ones','where','how','what','why','whose','enough','big','bigger','small','smaller','large','larger','compact','quiet','cheap','cheaper','decent','powerful','reliable','durable','light','lighter','heavy','safe','fast','quick','affordable','expensive','sized','easy','better','best','good','great','nice','ideal','perfect']);
 const GENERIC_HEAD253=/^(?:way|ways|method|methods|technique|techniques|idea|ideas|option|options|one|ones|thing|things|something|anything|recommendation|recommendations|advice|model|models|brand|brands|type|types|kind|size|product|products|appliance|appliances|machine|machines|device|devices|feature|features|material|materials|place|time|help|info|information|budget|price|prices|deal|deals|setup|set|kit|stuff|equipment|gear|tips|tip|difference|differences|guide|review|reviews|answer|question|alternative|alternatives|replacement|upgrade|purchase)$/;
 export function purchaseTarget253(text:string,registry:readonly CategoryEntry248[],allowed?:ReadonlySet<string>):PurchaseTarget253{
  const phrases:{phrase:string;head:string;category:string|null;linked?:boolean}[]=[];
@@ -140,6 +140,8 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
   while((m=re.exec(seg))){
    if(/(?:^| )(?:don't|dont|do not|not|never|no|won't|wouldn't)(?: \S+)? ?$/.test(seg.slice(0,m.index)+' '))continue;
    // need / want / get name a purchase only with an article ("need an amp"), not an outcome ("want even toast", "get hot").
+   // which / what open a purchase question; inside a sentence they are usually relative ("materials which stay").
+   if(/^ ?(?:which|what)$/.test(m[0])&&!/(?:^|(?:^| )(?:of|about|on|know|sure|wondering|decide|deciding|unsure|advise|recommend|tell me))\s*$/.test(seg.slice(0,m.index)))continue;
    if(/^ ?(?:need|needs|want|wanted|get|getting)$/.test(m[0])&&!/^(?:a|an|the|some|any|one|another|second|new|two|2)\b/.test(seg.slice(m.index+m[0].length+1)))continue;
    starts.push(m.index+m[0].length+1);}
   // A title that opens with a noun phrase ("Baking sheet in air fryer") states what is being looked for.
@@ -151,6 +153,8 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
     rest=rest.replace(SKIP253,'');const toks=rest.split(' ');const np:string[]=[];let i=0;
     for(;i<toks.length&&np.length<6;i++){if(BOUNDARY253.has(toks[i]))break;np.push(toks[i]);}
     if(!np.length)break;
+    // A title led by a verb form ("Using the outlet ...") or by a relation noun ("Meaning of ...") names no purchase.
+    if(st===0&&k===0&&!starts.slice(0,-1).includes(0)&&(/ing$/.test(np[0])&&/^(?:the|a|an|this|that|these|those|some|any)$/.test(np[1]??'')||toks[i]==='of'))break;
     while(np.length>1&&/(?:ed|ing)$/.test(np[np.length-1])&&!categoryAt(np.join(' ')))np.pop();
     const phrase=np.join(' '),head=np[np.length-1];
     // Proper names and model codes ("Canon", "WF-1000XM3") name a product, not a type: they decide nothing here.
@@ -174,9 +178,11 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
  const t0=norm(text);const names=registry.map(r=>({key:r.id,aliases:r.aliases}));
  const nameHits=longestMatches(t0,names,false,true);
  // ... or the category is its complement nearby ("tray to put my air fryer on", "the cable ... to the headset").
+ // Phase253 development: a category named within the next 10 words of the text ("tray can I put my air fryer
+ // on", "mortar and pestle replaces a blender") is the purchase's complement, with or without a preposition.
  for(const p of phrases)if(!p.category&&!p.linked){const toks=t0.split(' ');
-  for(let i=0;i<toks.length&&!p.linked;i++)if(toks[i]===p.head){const win=toks.slice(i+1,i+11).join(' ');const prep=win.search(/(?:^| )(?:for|to|with|in|on|into|onto|from|of|that|which|inside|under)(?= )/);
-   if(prep>=0){const off=toks.slice(0,i+1).join(' ').length+1+prep;p.linked=nameHits.some(h=>h.start>=off&&h.start<=off+win.length-prep);}}}
+  for(let i=0;i<toks.length&&!p.linked;i++)if(toks[i]===p.head){const off=toks.slice(0,i+1).join(' ').length+1;const win=toks.slice(i+1,i+11).join(' ');
+   p.linked=nameHits.some(h=>h.start>=off&&h.start<off+win.length);}}
  const cats=[...new Set(phrases.filter(p=>p.category).map(p=>p.category!))];
  const others=phrases.filter(p=>!p.category);
  const anyName=longestMatches(norm(text),registry.map(r=>({key:r.id,aliases:r.aliases})),false,true).length>0;

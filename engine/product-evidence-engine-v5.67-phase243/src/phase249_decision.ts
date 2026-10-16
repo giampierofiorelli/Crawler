@@ -19,13 +19,15 @@ import type {DecisionSnapshot177,Criterion177} from './phase177_decision_snapsho
 import {reviewedFirstAnswer180,type SignedRelease180,type TrustedRankingAuthority180,type FirstAnswer180} from './phase180_reviewed_first_answer.js';
 
 export type Dimension249='volume'|'length'|'mass'|'power'|'duration'|'price';
-export interface SpecCriterion249 {label:string;property:RegExp;exclude?:RegExp;dimension:Dimension249;bound:'min'|'max'}
+export interface SpecCriterion249 {label:string;property:RegExp;exclude?:RegExp;dimension:Dimension249;bound:'min'|'max';
+ /** Phase253: the axis read from an axis-labelled overall dimensions declaration ("20.7(W) x 28.4(D) x 33(H) cm"). */
+ axis?:'W'|'H'|'D'}
 /** Confirmed criteria that are factual constraints checkable against declarations. Keys are stable decision keys. */
 export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
  capacity_min:{label:'capacity at least',property:/\b(?:capacity|volume)\b/i,exclude:/\b(?:battery|bin|tank|container|bag|collection|water|dust)\b/i,dimension:'volume',bound:'min'},
- width_max:{label:'width at most',property:/\bwidth\b/i,dimension:'length',bound:'max'},
- height_max:{label:'height at most',property:/\bheight\b/i,exclude:/\b(?:cut|seat|back)\b/i,dimension:'length',bound:'max'},
- depth_max:{label:'depth at most',property:/\bdepth\b/i,dimension:'length',bound:'max'},
+ width_max:{label:'width at most',property:/\bwidth\b/i,dimension:'length',bound:'max',axis:'W'},
+ height_max:{label:'height at most',property:/\bheight\b/i,exclude:/\b(?:cut|seat|back)\b/i,dimension:'length',bound:'max',axis:'H'},
+ depth_max:{label:'depth at most',property:/\bdepth\b/i,dimension:'length',bound:'max',axis:'D'},
  weight_max:{label:'weight at most',property:/\bweight\b/i,exclude:/\b(?:gross|shipping|box|package|packaging)\b/i,dimension:'mass',bound:'max'},
  power_min:{label:'power at least',property:/\b(?:power|wattage|rated power)\b/i,exclude:/\b(?:consumption|standby|supply|cord|levels?|source)\b/i,dimension:'power',bound:'min'},
  budget_max:{label:'price at most',property:/^price$/i,dimension:'price',bound:'max'},
@@ -71,6 +73,9 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  const unit=c.value.unit,limit=c.value.value;
  // Declarations of the base product (variant-specific values are not applied to the whole product).
  const rel=p.declarations.filter(d=>!d.variantId&&spec.property.test(d.property)&&!(spec.exclude?.test(d.property)));
+ // Phase253: the same axis of the product's overall dimensions, only when the axes are labelled in the value or in the
+ // property ("Dimensions (WxDxH)"). Unlabelled triples stay unknown; component dimensions (slot, box, bowl) are not the product's.
+ if(spec.axis)for(const d of p.declarations){const q=axisValue249(d,spec.axis);if(q&&!d.variantId)rel.push({...d,value:q});}
  const vals=rel.map(d=>({d,n:comparable249(d.value,spec.dimension,unit)})).filter(x=>x.n!==null) as {d:CandidateDeclaration249;n:number}[];
  // Phase252: an "up to X" declaration is an upper bound under the maker's conditions. Below a required minimum it
  // excludes the product; otherwise it shows nothing about the minimum the user needs.
@@ -86,6 +91,17 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  if(hi-lo>Math.max(Math.abs(hi),Math.abs(lo))*0.02)return {key:c.key,outcome:'unknown',reason:`sources disagree (${round(lo)}–${round(hi)} ${unit})`,evidence:vals.map(x=>ev(x.d))};
  const ok=spec.bound==='min'?lo>=limit:hi<=limit;
  return {key:c.key,outcome:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
+}
+const OVERALL_DIMENSIONS=/\b(?:dimensions?|size|measurements)\b/i;
+const COMPONENT_DIMENSIONS=/\b(?:slot|slots|box|package|packaging|packed|shipping|carton|internal|interior|inner|cavity|drum|bowl|basket|jug|tank|plate|door|opening|cable|cord)\b/i;
+/** Phase253: one axis of an overall, axis-labelled dimensions declaration as a quantity, or null. */
+export function axisValue249(d:CandidateDeclaration249,axis:'W'|'H'|'D'):Value245|null{
+ const v=d.value;if(!v||v.kind!=='dimensions'||v.approximate||!OVERALL_DIMENSIONS.test(d.property)||COMPONENT_DIMENSIONS.test(d.property))return null;
+ let axes=v.axes;
+ if(!axes){const m=d.property.match(/\b([whdl])\s*[x×*]\s*([whdl])(?:\s*[x×*]\s*([whdl]))?\b/i);
+  if(m)axes=[m[1],m[2],m[3]].filter(Boolean).map(a=>a.toUpperCase());}
+ if(!axes||axes.length!==v.numbers.length||new Set(axes).size!==axes.length)return null;
+ const i=axes.indexOf(axis);return i<0?null:{kind:'quantity',number:v.numbers[i],unit:v.unit,approximate:false} as Value245;
 }
 const round=(n:number)=>Math.round(n*100)/100;
 const ev=(d:CandidateDeclaration249)=>({declarationId:d.declarationId,rawValue:d.rawValue,sourceUrl:d.sourceUrl,evidenceRole:d.evidenceRole});

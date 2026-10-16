@@ -1,0 +1,2122 @@
+{
+ "schema": "pee253.advice-score.v1",
+ "bench": "evaluation/phase253/advice-set.json",
+ "scoredAt": "2026-10-16T02:27:13.428Z",
+ "arms": {
+  "N": {
+   "all": {
+    "cases": 43,
+    "m1_purchaseTarget": {
+     "correct": 32,
+     "of": 43
+    },
+    "m2_category": {
+     "correct": 38,
+     "of": 43
+    },
+    "m3_explicitConstraintsAndNeeds": {
+     "constraints": {
+      "tp": 25,
+      "fp": 2,
+      "gold": 26,
+      "recall": 0.962,
+      "precision": 0.926
+     },
+     "explicitNeeds": {
+      "tp": 1,
+      "of": 1
+     }
+    },
+    "m4_implicitAndUnresolved": {
+     "implicitNeeds": {
+      "tp": 0,
+      "of": 1
+     },
+     "falseNeeds": 2,
+     "unresolvedCases": 1,
+     "unresolvedAsked": 1
+    },
+    "m5_quantities": {
+     "goldQuantities": 26,
+     "correct": 25,
+     "rightPropertyWrongValueOrUnit": 0
+    },
+    "m6_productChecks": {
+     "total": 138,
+     "agree": 132,
+     "confusion": {
+      "include": {
+       "include": 30,
+       "exclude": 0,
+       "unknown": 2,
+       "absent": 0
+      },
+      "exclude": {
+       "include": 0,
+       "exclude": 57,
+       "unknown": 4,
+       "absent": 0
+      },
+      "unknown": {
+       "include": 0,
+       "exclude": 0,
+       "unknown": 45,
+       "absent": 0
+      }
+     }
+    },
+    "m7_shortlist": {
+     "included": 30,
+     "wrongInclusions": 0,
+     "missedInclusions": 2
+    },
+    "m8_unknownEvidence": {
+     "goldUnknown": 45,
+     "keptUnknown": 45,
+     "presentedAsMeeting": 0
+    },
+    "m9_provenance": {
+     "included": 30,
+     "withFullProvenance": 30
+    },
+    "m10_response": {
+     "correct": 37,
+     "of": 43,
+     "harmful": 0,
+     "byResponse": {
+      "positive_shortlist": {
+       "gold": 17,
+       "correct": 17,
+       "returned": 17
+      },
+      "clarification": {
+       "gold": 5,
+       "correct": 5,
+       "returned": 11
+      },
+      "justified_negative": {
+       "gold": 5,
+       "correct": 5,
+       "returned": 5
+      },
+      "justified_abstention": {
+       "gold": 1,
+       "correct": 1,
+       "returned": 1
+      },
+      "out_of_scope": {
+       "gold": 15,
+       "correct": 9,
+       "returned": 9
+      }
+     },
+     "questionsAsked": 9
+    }
+   },
+   "byTier": {
+    "T1_synthetic": {
+     "cases": 27,
+     "m1_purchaseTarget": {
+      "correct": 27,
+      "of": 27
+     },
+     "m2_category": {
+      "correct": 27,
+      "of": 27
+     },
+     "m3_explicitConstraintsAndNeeds": {
+      "constraints": {
+       "tp": 25,
+       "fp": 1,
+       "gold": 26,
+       "recall": 0.962,
+       "precision": 0.962
+      },
+      "explicitNeeds": {
+       "tp": 1,
+       "of": 1
+      }
+     },
+     "m4_implicitAndUnresolved": {
+      "implicitNeeds": {
+       "tp": 0,
+       "of": 0
+      },
+      "falseNeeds": 0,
+      "unresolvedCases": 1,
+      "unresolvedAsked": 1
+     },
+     "m5_quantities": {
+      "goldQuantities": 26,
+      "correct": 25,
+      "rightPropertyWrongValueOrUnit": 0
+     },
+     "m6_productChecks": {
+      "total": 138,
+      "agree": 132,
+      "confusion": {
+       "include": {
+        "include": 30,
+        "exclude": 0,
+        "unknown": 2,
+        "absent": 0
+       },
+       "exclude": {
+        "include": 0,
+        "exclude": 57,
+        "unknown": 4,
+        "absent": 0
+       },
+       "unknown": {
+        "include": 0,
+        "exclude": 0,
+        "unknown": 45,
+        "absent": 0
+       }
+      }
+     },
+     "m7_shortlist": {
+      "included": 30,
+      "wrongInclusions": 0,
+      "missedInclusions": 2
+     },
+     "m8_unknownEvidence": {
+      "goldUnknown": 45,
+      "keptUnknown": 45,
+      "presentedAsMeeting": 0
+     },
+     "m9_provenance": {
+      "included": 30,
+      "withFullProvenance": 30
+     },
+     "m10_response": {
+      "correct": 27,
+      "of": 27,
+      "harmful": 0,
+      "byResponse": {
+       "positive_shortlist": {
+        "gold": 17,
+        "correct": 17,
+        "returned": 17
+       },
+       "clarification": {
+        "gold": 3,
+        "correct": 3,
+        "returned": 3
+       },
+       "justified_negative": {
+        "gold": 5,
+        "correct": 5,
+        "returned": 5
+       },
+       "justified_abstention": {
+        "gold": 1,
+        "correct": 1,
+        "returned": 1
+       },
+       "out_of_scope": {
+        "gold": 1,
+        "correct": 1,
+        "returned": 1
+       }
+      },
+      "questionsAsked": 3
+     }
+    },
+    "T2_real_request_developer_gold": {
+     "cases": 16,
+     "m1_purchaseTarget": {
+      "correct": 5,
+      "of": 16
+     },
+     "m2_category": {
+      "correct": 11,
+      "of": 16
+     },
+     "m3_explicitConstraintsAndNeeds": {
+      "constraints": {
+       "tp": 0,
+       "fp": 1,
+       "gold": 0,
+       "recall": null,
+       "precision": 0
+      },
+      "explicitNeeds": {
+       "tp": 0,
+       "of": 0
+      }
+     },
+     "m4_implicitAndUnresolved": {
+      "implicitNeeds": {
+       "tp": 0,
+       "of": 1
+      },
+      "falseNeeds": 2,
+      "unresolvedCases": 0,
+      "unresolvedAsked": 0
+     },
+     "m5_quantities": {
+      "goldQuantities": 0,
+      "correct": 0,
+      "rightPropertyWrongValueOrUnit": 0
+     },
+     "m6_productChecks": {
+      "total": 0,
+      "agree": 0,
+      "confusion": {
+       "include": {
+        "include": 0,
+        "exclude": 0,
+        "unknown": 0,
+        "absent": 0
+       },
+       "exclude": {
+        "include": 0,
+        "exclude": 0,
+        "unknown": 0,
+        "absent": 0
+       },
+       "unknown": {
+        "include": 0,
+        "exclude": 0,
+        "unknown": 0,
+        "absent": 0
+       }
+      }
+     },
+     "m7_shortlist": {
+      "included": 0,
+      "wrongInclusions": 0,
+      "missedInclusions": 0
+     },
+     "m8_unknownEvidence": {
+      "goldUnknown": 0,
+      "keptUnknown": 0,
+      "presentedAsMeeting": 0
+     },
+     "m9_provenance": {
+      "included": 0,
+      "withFullProvenance": 0
+     },
+     "m10_response": {
+      "correct": 10,
+      "of": 16,
+      "harmful": 0,
+      "byResponse": {
+       "positive_shortlist": {
+        "gold": 0,
+        "correct": 0,
+        "returned": 0
+       },
+       "clarification": {
+        "gold": 2,
+        "correct": 2,
+        "returned": 8
+       },
+       "justified_negative": {
+        "gold": 0,
+        "correct": 0,
+        "returned": 0
+       },
+       "justified_abstention": {
+        "gold": 0,
+        "correct": 0,
+        "returned": 0
+       },
+       "out_of_scope": {
+        "gold": 14,
+        "correct": 8,
+        "returned": 8
+       }
+      },
+      "questionsAsked": 6
+     }
+    }
+   },
+   "rows": [
+    {
+     "id": "r01",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r02",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r03",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": false,
+     "constraintTp": 0,
+     "constraintFp": 1,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": false,
+     "gotResponse": "clarification",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "r04",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": false,
+     "gotResponse": "clarification",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "r05",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r06",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r07",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": false,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": false,
+     "gotResponse": "clarification",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "r08",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r09",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r10",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": false,
+     "gotResponse": "clarification",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "r11",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": false,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 1,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "clarification",
+     "goldResponse": "clarification",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r12",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r13",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": false,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": false,
+     "gotResponse": "clarification",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "r14",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r15",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": false,
+     "categoryOk": false,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 1,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": false,
+     "gotResponse": "clarification",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "r16",
+     "tier": "T2_real_request_developer_gold",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 1,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "clarification",
+     "goldResponse": "clarification",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "s01",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 4,
+     "included": 4,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s02",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s03",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 2,
+     "constraintFp": 0,
+     "constraintGold": 2,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s04",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s05",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "justified_negative",
+     "goldResponse": "justified_negative",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s06",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s07",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 2,
+     "included": 2,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s08",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s09",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s10",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "justified_negative",
+     "goldResponse": "justified_negative",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s11",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 6,
+     "included": 6,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s12",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "unknown"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [
+      "prd_c499472bcad658a163aa69a0"
+     ],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s13",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 2,
+     "constraintFp": 0,
+     "constraintGold": 2,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "justified_negative",
+     "goldResponse": "justified_negative",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s14",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s15",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 2,
+     "included": 2,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s16",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 2,
+     "included": 2,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s17",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "include",
+       "got": "unknown"
+      },
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [
+      "prd_b5c9c2377fcb7db5db318d75"
+     ],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 3,
+     "included": 3,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s18",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "unknown"
+      },
+      {
+       "gold": "exclude",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s19",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "justified_negative",
+     "goldResponse": "justified_negative",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s20",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s21",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "justified_negative",
+     "goldResponse": "justified_negative",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s22",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "out_of_scope",
+     "goldResponse": "out_of_scope",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s23",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "justified_abstention",
+     "goldResponse": "justified_abstention",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s24",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 1,
+     "explicitN": 1,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 1,
+     "unresolvedAsked": true,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "clarification",
+     "goldResponse": "clarification",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "s25",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 1,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [
+      {
+       "gold": "include",
+       "got": "include"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "exclude",
+       "got": "exclude"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      },
+      {
+       "gold": "unknown",
+       "got": "unknown"
+      }
+     ],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 1,
+     "included": 1,
+     "responseOk": true,
+     "gotResponse": "positive_shortlist",
+     "goldResponse": "positive_shortlist",
+     "harmful": false,
+     "questions": 0
+    },
+    {
+     "id": "s26",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 0,
+     "constraintGold": 1,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "clarification",
+     "goldResponse": "clarification",
+     "harmful": false,
+     "questions": 1
+    },
+    {
+     "id": "s27",
+     "tier": "T1_synthetic",
+     "targetOk": true,
+     "categoryOk": true,
+     "constraintTp": 0,
+     "constraintFp": 1,
+     "constraintGold": 0,
+     "quantityWrongValue": 0,
+     "explicitTp": 0,
+     "explicitN": 0,
+     "implicitTp": 0,
+     "implicitN": 0,
+     "falseNeeds": 0,
+     "unresolvedN": 0,
+     "unresolvedAsked": false,
+     "productChecks": [],
+     "wrongInclusions": [],
+     "missedInclusions": [],
+     "unknownAsIncluded": 0,
+     "includedWithFullProvenance": 0,
+     "included": 0,
+     "responseOk": true,
+     "gotResponse": "clarification",
+     "goldResponse": "clarification",
+     "harmful": false,
+     "questions": 1
+    }
+   ]
+  }
+ }
+}

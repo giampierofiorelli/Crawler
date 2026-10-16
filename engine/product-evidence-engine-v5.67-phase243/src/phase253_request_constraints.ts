@@ -56,6 +56,9 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   let bound:'min'|'max'|null=/(?:no|not) (?:less|fewer|smaller|lower|shorter) than\s*$/.test(before)?'min':/(?:no|not) (?:more|bigger|larger|wider|taller|higher|deeper|heavier|longer) than\s*$/.test(before)?'max'
    :MIN_BEFORE.test(before)||MIN_AFTER.test(after)||plus?'min':MAX_BEFORE.test(before)||MAX_AFTER.test(after)?'max':null;
   const range=lowNum!==null;
+  // A range states a requirement only with "between" or a bound word; a bare "2000-2400W" may describe a label or
+  // an owned product, so its inferred bound makes it a candidate to confirm, never a stated requirement.
+  const inferredBound=range&&bound===null&&m[1]===undefined;
   if(range&&bound===null)bound=dim==='volume'||dim==='power'||dim==='duration'?'min':'max';
   const space=SPACE.test(before)||/^\s*(?:\S+\s+){0,2}(?:space|opening|gap|cupboard|shelf|alcove|cabinet|recess)\b/.test(after);
   if(space&&bound===null)bound='max';
@@ -80,7 +83,7 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const eff=bound??(property==='capacity'?'min':null);
   const criterion=eff?CRITERION[`${property}:${eff}`]:undefined;
   if(!criterion){unmapped.push({span,reason:`no checkable criterion for a ${bound??'unbounded'} ${property}`});continue;}
-  const clear=!!bound&&!negated;
+  const clear=!!bound&&!negated&&!inferredBound;
   constraints.push({criterion,value,unit,bound:eff!,property,describes:space?'available_space':'product',span,start:spanStart,end:spanStart+span.length,
    status:clear?'stated_in_request':'candidate',confidence:clear?'clear':'ambiguous',
    note:property==='power'?'declared power may be rated input or output power; compared as each source declares it':space?'the product must fit inside the space you described; clearances are not added':null});

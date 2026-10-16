@@ -9,6 +9,7 @@ import {CATEGORY_REGISTRY250} from '../src/phase248_category_registry.js';
 import {runJourney248,purchaseTarget253} from '../src/phase248_advisory_journey.js';
 import {createDecision177,applyDecisionAction177,assertDecisionSnapshot177} from '../src/phase177_decision_snapshot.js';
 import {extractConstraints253} from '../src/phase253_request_constraints.js';
+import {axisValue249} from '../src/phase249_decision.js';
 import {adviseFromRequest253} from '../src/phase253_request_advice.js';
 import {proposeSourceTypes253} from '../src/phase253_source_classification.js';
 import {validateAdviceGold253,scoreRow253,summarise253,type AdviceGold253} from '../src/phase253_advice_contract.js';
@@ -127,4 +128,17 @@ test('Stage 4: unknown sources are typed only from retained evidence, journaled 
  assert.ok(a.shortlist.some(x=>x.evidence.some(e=>/inferred from its host/.test(e.sourceRole))));
  assert.equal(s.reverseSourceClassification253(id,'test_reversal'),true);assert.deepEqual(roles(),['unclassified_declaration']);
  assert.ok(s.verifyJournal().ok);s.close();
+});
+test('width, height and depth are read from axis-labelled overall dimensions only; unlabelled and component dimensions stay unknown',()=>{
+ const d=(property:string,value:unknown)=>({declarationId:'d',property,value,rawValue:'x',evidenceRole:'manufacturer_declaration',sourceUrl:null,variantId:null}) as never;
+ const dims=(numbers:number[],axes:string[]|null,unit='cm')=>({kind:'dimensions',numbers,unit,axes,approximate:false});
+ assert.deepEqual(axisValue249(d('Dimensions',dims([20.7,28.4,33],['W','D','H'])),'W'),{kind:'quantity',number:20.7,unit:'cm',approximate:false});
+ assert.equal((axisValue249(d('Dimensions (WxDxH)',dims([230,380,340],null,'mm')),'D') as {number:number}).number,380);
+ assert.equal(axisValue249(d('Dimensions',dims([46,21,22],null)),'W'),null,'unlabelled triple: axis order unknown');
+ assert.equal(axisValue249(d('Slot Dimensions',dims([28,140,120],['W','H','L'],'mm')),'W'),null,'a slot is not the product');
+ assert.equal(axisValue249(d('Box Size',dims([40,30,35],['W','H','D'])),'W'),null,'packaging is not the product');
+});
+test('a bare range is a candidate to confirm; "between" states it',()=>{
+ assert.equal(extractConstraints253('the wattage range 2000-2400W written on my kettle').constraints[0].status,'candidate');
+ assert.equal(extractConstraints253('a blender between 1000 and 1500 W').constraints[0].status,'stated_in_request');
 });
