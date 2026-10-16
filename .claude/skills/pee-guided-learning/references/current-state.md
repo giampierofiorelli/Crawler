@@ -11,6 +11,23 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000. Phase255 update (2026-10-16) — read first; adds to §00000
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase255/PHASE255-TECHNICAL-REPORT.md`; next brief
+`docs/phase255/CONTINUATION-PROMPT.md` (research-planning authority, design first). Store unchanged (`38495fe`).
+
+- `decideAdvice249` codes:
+  - new codes `unit_missing`, `axes_unlabelled`, `range_straddles`;
+  - ranges compared by direction;
+  - name volumes (ml, cl) and name wattages (`powerFromName249`) used only without a declaration;
+  - gross dimensions are packaging.
+- `adviseFromRequest253` checks stated limits in registry categories without category knowledge.
+- Phase254 destinations: research, user_clarification, reextraction, **source_reinspection**, not_actionable.
+- Fresh set (12, developer gold): responses 3 → 12, product statuses 3 → 25 of 25, unnecessary research 2 → 0,
+  0 wrong inclusions.
+- Phase253 set (development): checks 132 → 137 of 138, harm 0.
+- Open: `source_reinspection` has no executor, and research planning still lacks an authority.
+
 ## 00000. Phase254 update (2026-10-16) — read first; adds to §0000
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase254/PHASE254-TECHNICAL-REPORT.md`; next brief
