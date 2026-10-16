@@ -1,0 +1,223 @@
+{
+ "schema": "pee255.reuse-gold.v1",
+ "written": "2026-10-16, before any Phase255 code change; from the raw declaration listing of the snapshot",
+ "store": "pee-knowledge 38495fe",
+ "tier": "T1_synthetic requests on real retained evidence, fresh for Phase255 (categories and products not used in Phase254 cases, except the two kettles); developer gold, not held-out",
+ "controls": [
+  "Deep Fat Fryer 3000W declares Power 2600W: the name must not override the declaration (case 5)",
+  "Water capacity 1L of a steamer is a tank, not cooking capacity (case 12)",
+  "Gross (packed) dimensions are packaging (case 7)",
+  "Capacity = 6 without unit stays uncertain: source reinspection, never a guessed unit (cases 3, 12)",
+  "A price in another currency is not actionable (case 10)"
+ ],
+ "cases": [
+  {
+   "id": "f01",
+   "text": "I need a steamer with at least 700 W",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "status": "include"
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "power_min"
+    },
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "power_min"
+    }
+   ]
+  },
+  {
+   "id": "f02",
+   "text": "A steamer no wider than 35 cm",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "status": "include"
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "width_max"
+    },
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "width_max"
+    }
+   ]
+  },
+  {
+   "id": "f03",
+   "text": "I want a steamer of at least 5 litres",
+   "response": "justified_abstention",
+   "products": [
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "status": "unknown",
+     "need": "source_reinspection",
+     "criterion": "capacity_min"
+    },
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "capacity_min"
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "capacity_min"
+    }
+   ]
+  },
+  {
+   "id": "f04",
+   "text": "A deep fryer with at least 2000 W",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "status": "include"
+    },
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "status": "exclude"
+    }
+   ]
+  },
+  {
+   "id": "f05",
+   "text": "A deep fryer with at least 2800 W",
+   "response": "justified_negative",
+   "products": [
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "status": "exclude"
+    },
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "status": "exclude"
+    }
+   ]
+  },
+  {
+   "id": "f06",
+   "text": "A deep fryer no taller than 25 cm",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "status": "include"
+    },
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "status": "include"
+    }
+   ]
+  },
+  {
+   "id": "f07",
+   "text": "A rice cooker no wider than 33 cm",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "status": "include"
+    }
+   ]
+  },
+  {
+   "id": "f08",
+   "text": "A rice cooker of at least 1.5 litres",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "status": "include"
+    }
+   ]
+  },
+  {
+   "id": "f09",
+   "text": "I need a kettle of at least 1 litre",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_5061f6355633f0e3eb34069b",
+     "status": "include"
+    },
+    {
+     "productId": "prd_c67eff51323436c7beff9977",
+     "status": "exclude"
+    }
+   ]
+  },
+  {
+   "id": "f10",
+   "text": "A rice cooker under £50",
+   "response": "justified_abstention",
+   "products": [
+    {
+     "productId": "prd_64fe1802534086b5110fcd7e",
+     "status": "unknown",
+     "need": "not_actionable",
+     "criterion": "budget_max"
+    }
+   ]
+  },
+  {
+   "id": "f11",
+   "text": "A deep fryer that weighs no more than 3 kg",
+   "response": "positive_shortlist",
+   "products": [
+    {
+     "productId": "prd_973e5869aee5c4d1ee0f8345",
+     "status": "include"
+    },
+    {
+     "productId": "prd_0fe2e2dde042eaaa07b59832",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "weight_max"
+    }
+   ]
+  },
+  {
+   "id": "f12",
+   "text": "A steamer of at least 1 litre",
+   "response": "justified_abstention",
+   "products": [
+    {
+     "productId": "prd_f44dbf85ab36577d5aedc5ff",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "capacity_min"
+    },
+    {
+     "productId": "prd_95b6fc0f4b5cf960b34c4f26",
+     "status": "unknown",
+     "need": "source_reinspection",
+     "criterion": "capacity_min"
+    },
+    {
+     "productId": "prd_fd64e78309b96073b44df98c",
+     "status": "unknown",
+     "need": "research",
+     "criterion": "capacity_min"
+    }
+   ]
+  }
+ ]
+}
