@@ -268,3 +268,20 @@ test('an invalid memory event appended outside the module fails closed: no repla
  assert.equal(descriptorWithMemory260(f.s,f.revA,f.prodA).descriptor.language,'en-GB','the existing projection is still readable');
  f.s.close();
 });
+
+test('Phase261: an identical retry of a superseding annotation or contribution is a no-op, not a refusal or a duplicate',()=>{
+ const f=fixture();recordSourceMemory260(f.s,ann(f));
+ const sup=ann(f,{recordId:'ann_lang_2',value:'en',supersedes:'ann_lang_1',at:at(2)});
+ assert.equal(recordSourceMemory260(f.s,sup).status,'recorded');
+ const e1=f.s.verifyJournal().events;
+ assert.equal(recordSourceMemory260(f.s,sup).status,'already_recorded');
+ assert.throws(()=>recordSourceMemory260(f.s,{...sup,value:'fr'} as Input260),/record_id_conflict/,'same id, other content: refused');
+ recordSourceMemory260(f.s,{kind:'source_contribution_verified',feedback:feedback(f),review:claim('rv_fb'),supersedes:null},{verify});
+ const fb2:Input260={kind:'source_contribution_verified',feedback:feedback(f,{feedbackId:'fb_2',outcome:'revealed_error',reviewId:'rv_fb2'}),review:claim('rv_fb2'),supersedes:'fb_1'};
+ assert.equal(recordSourceMemory260(f.s,fb2,{verify}).status,'recorded');
+ const e2=f.s.verifyJournal().events;
+ assert.equal(recordSourceMemory260(f.s,fb2,{verify}).status,'already_recorded');
+ assert.equal(f.s.verifyJournal().events,e2,'no duplicate event');assert.equal(e2,e1+2);
+ assert.equal(checkSourceMemory260(f.s).projectionConsistent,true);
+ f.s.close();
+});

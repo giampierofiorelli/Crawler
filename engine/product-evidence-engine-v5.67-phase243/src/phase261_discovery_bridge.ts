@@ -29,7 +29,7 @@ import type {Registry220,Observation220} from './phase220_autonomous_discovery_w
 import type {SourceTransport} from './approved_web_reader.js';
 import type {ResearchPolicy257} from './phase257_research_planning.js';
 import {LANGUAGE_CAPABILITIES258,type SourceRole258,type StatementKind258} from './phase258_source_contributions.js';
-import {urlModelToken252,type KnowledgeStore246} from './phase246_knowledge_store.js';
+import {urlModelToken252,validGtin246,type KnowledgeStore246} from './phase246_knowledge_store.js';
 
 const sha=(s:string|Uint8Array)=>createHash('sha256').update(s).digest('hex');
 const fail=(m:string):never=>{throw Error('phase261_'+m);};
@@ -89,8 +89,10 @@ export function discoveryTargetFromJob261(job:JobRef261,ctx:{market:string;store
   if(!p)fail('unknown_product');
   identityState=p!.identity_state;
   const idj=JSON.parse(p!.identifiers_json) as Record<string,string>;
-  for(const v of [p!.declared_model,idj.mpn,idj.model,idj.gtin13,idj.gtin14,idj.gtin12,idj.gtin8,idj.gtin])
-   if(v&&String(v).trim().length>=3)ids.add(String(v).toLowerCase().replace(/[^a-z0-9]/g,''));
+  for(const v of [p!.declared_model,idj.mpn,idj.model])if(v&&String(v).trim().length>=3)ids.add(String(v).toLowerCase().replace(/[^a-z0-9]/g,''));
+  // GTINs are kept only when the check digit is valid, in their 14-digit form (validGtin246), so 12/13/14-digit
+  // spellings of one GTIN compare equal.
+  for(const v of [idj.gtin13,idj.gtin14,idj.gtin12,idj.gtin8,idj.gtin]){const g=v?validGtin246(String(v)):null;if(g)ids.add(g);}
   for(const r of ctx.store.db.prepare("SELECT r.url FROM product_sources ps JOIN revisions r USING(revision_id) WHERE ps.product_id=? AND ps.role='main_product'").all(job.productId) as {url:string}[]){
    const tok=urlModelToken252(r.url);if(tok)ids.add(tok);}
   if(p!.brand)terms.add(p!.brand);
@@ -123,6 +125,13 @@ export interface Discovery261 {
  networkCalls:{live:0;fixture:number};
  capabilityB:{newPublisherDiscovery:false;reason:'no_candidate_generation_mechanism_in_pee'};
  rankingAuthorized:false;evidenceAdmitted:false;sourcePermissionsGranted:false;
+}
+
+/** Lower-case parts of the URL's last path segment, plus the 14-digit form of any part that is a valid GTIN. */
+function urlIdentifierParts(url:string):string[]{
+ let seg='';try{seg=decodeURIComponent(new URL(url).pathname.split('/').filter(Boolean).pop()??'');}catch{return [];}
+ const parts=seg.toLowerCase().split(/[-_.+]/).filter(x=>x.length>=3);
+ return [...parts,...parts.map(x=>validGtin246(x)).filter((x):x is string=>!!x)];
 }
 
 /** Capability A for one target. Live reads are refused unless the operator research policy allows them (Phase257:
@@ -184,10 +193,17 @@ export async function discoverForTarget261(a:{target:DiscoveryTarget261;registry
    if(restricted.has(host)){reject('host_restricted');continue;}
    // Exact identifiers only: a URL model code that differs from every known identifier names another model. A URL
    // without a code, or a product without identifiers, leaves the product unknown. Nothing merges on names.
+   // Phase261 checkpoint B: an exact identifier may also be a numeric GTIN, which is not a model token; any path
+   // segment part equal to a known identifier is an exact match. A URL that ALSO names a different model code carries
+   // conflicting identifiers and stays unknown (neither matched nor rejected).
    const token=urlModelToken252(url);let attribution:Attribution261='not_product_scoped';
    if(t.subject.productId){
-    if(token&&t.subject.knownIdentifiers.length&&!t.subject.knownIdentifiers.includes(token)){reject('url_names_other_model');continue;}
-    attribution=token&&t.subject.knownIdentifiers.includes(token)?'url_token_matches_known_identifier':'product_unknown';
+    const known=new Set(t.subject.knownIdentifiers);
+    const parts=urlIdentifierParts(url);
+    const exact=parts.some(x=>known.has(x));
+    const otherModel=!!token&&known.size>0&&!known.has(token);
+    if(otherModel&&!exact){reject('url_names_other_model');continue;}
+    attribution=exact&&!otherModel?'url_token_matches_known_identifier':'product_unknown';
    }
    out.candidates.push({url,jobId:t.job.jobId,targetId:t.targetId,registrySourceId:id,host,channel:s.watch.channel,mechanism:s.watch.mechanism,
     origin:'offline_fixture',genuineDiscovery:false,attribution,

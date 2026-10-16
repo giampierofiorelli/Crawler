@@ -129,3 +129,24 @@ test('a restricted host is not proposed; a product without identifiers stays unk
  assert.equal(a.authorisedChannels,0);assert.equal(a.networkCalls,0);
  s.close();
 });
+
+test('checkpoint B regression: a URL carrying the product\'s exact GTIN matches; a GTIN beside another model code stays unknown',async()=>{
+ // Pilot first-run defect: both pilot products had only a GTIN, which is not a letters-and-digits model token.
+ const s=new KnowledgeStore246(dbPath());
+ const g='5012345678900';const url=`https://${HOST}/p/item-${g}`;
+ const html=`<!doctype html><html><head><script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Product',name:'Vortex Fryer',gtin13:g,
+  brand:{'@type':'Brand',name:'Vortex'},additionalProperty:[{'@type':'PropertyValue',name:'Power',value:1500,unitText:'W'}]})}</script></head><body><h1>Vortex Fryer</h1></body></html>`;
+ const r=s.ingestObservation246({source:{sourceId:'src_maker_fixture',host:HOST,sourceType:'manufacturer',sourceTypeBasis:'operator_asserted'},url,sha256:sha(html),bytes:html.length,
+  httpStatus:200,fetchedAt:AT,runId:'run_261',extractorVersion:'phase245@test',extraction:extractSpecifications245(html,url),categoryHypotheses:['air_fryers']});
+ const t=discoveryTargetFromJob261(job(r.productIds[0],'capacity_min'),{market:'uk',store:s});
+ assert.ok(t.subject.knownIdentifiers.includes('0'+g),'GTINs are compared in their 14-digit form');
+ const xml=`<?xml version="1.0"?><urlset>${[`/p/${g}-manual`,`/p/0${g}`,`/p/zx500-${g}`,'/p/zx500-guide'].map(p=>`<url><loc>https://${HOST}${p}</loc></url>`).join('')}</urlset>`;
+ const tr:SourceTransport={async get(u){return u.endsWith('/robots.txt')?{status:200,finalUrl:u,contentType:'text/plain',body:'User-agent: *\nAllow: /\n'}:{status:200,finalUrl:u,contentType:'application/xml',body:xml};}};
+ const d=await discoverForTarget261({target:t,registry:registry([watch('maker_index',HOST,'manufacturer_product_index')],[policy('maker_index',HOST)]),researchPolicy,asOf:AT,
+  mode:'offline_fixture',fixtureTransport:tr,store:s});
+ const got=Object.fromEntries(d.candidates.map(c=>[new URL(c.url).pathname,c.attribution]));
+ assert.equal(got[`/p/${g}-manual`],'url_token_matches_known_identifier');assert.equal(got[`/p/0${g}`],'url_token_matches_known_identifier');
+ assert.equal(got[`/p/zx500-${g}`],'product_unknown','conflicting identifiers: neither matched nor rejected');
+ assert.equal(d.rejected.find(x=>x.url.endsWith('/p/zx500-guide'))?.reason,'url_names_other_model');
+ s.close();
+});

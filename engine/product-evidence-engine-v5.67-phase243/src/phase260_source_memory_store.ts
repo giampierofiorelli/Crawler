@@ -295,6 +295,22 @@ function contributionPayload(store:KnowledgeStore246,x:Extract<Input260,{kind:'s
  return {schema:SCHEMA,recordId:f!.feedbackId,feedback:f!,basis:'verifier_accepted',review:claim,supersedes:x.supersedes,at:f!.at};
 }
 
+/** What the caller supplies for each kind (computed fields such as basis or a derived supersession are left out). */
+function suppliedContent(x:Input260):unknown{
+ if(x.kind==='source_annotation_recorded')return {sourceId:x.sourceId,revisionId:x.revisionId,productId:x.productId,criterion:x.criterion,field:x.field,value:x.value,
+  verified:x.basis==='independently_verified',review:x.review,supersedes:x.supersedes,at:x.at};
+ if(x.kind==='screening_decision_recorded')return {revisionId:x.revisionId,decision:x.decision};
+ if(x.kind==='source_state_changed')return {event:x.event,review:(x.event?.cause as {reviewId?:string|null})?.reviewId!=null?x.review:null};
+ return {feedback:x.feedback,review:x.review,supersedes:x.supersedes};
+}
+function storedContent(kind:Kind260,p:Record<string,any>):unknown{
+ if(kind==='source_annotation_recorded')return {sourceId:p.sourceId,revisionId:p.revisionId,productId:p.productId,criterion:p.criterion,field:p.field,value:p.value,
+  verified:p.basis==='verifier_accepted',review:p.review,supersedes:p.supersedes,at:p.at};
+ if(kind==='screening_decision_recorded')return {revisionId:p.revisionId,decision:p.decision};
+ if(kind==='source_state_changed')return {event:p.event,review:p.review};
+ return {feedback:p.feedback,review:p.review,supersedes:p.supersedes};
+}
+
 /**
  * Records one memory event: validates it against canonical tables and existing validators, then appends the journal
  * event and updates the projection in ONE transaction. Re-recording an identical record is a no-op (an idempotent
@@ -308,16 +324,19 @@ export function recordSourceMemory260(store:KnowledgeStore246,x:Input260,opts:{v
  // lock and then validates against the first writer's record, so two records can never supersede the same one.
  return withWriter(store,()=>{
   if(storedHead(store)!==headOf(store))fail('concurrent_journal_change: retry');
+  // Phase261: an identical retry is recognised BEFORE re-validation. Re-validating a record that superseded another
+  // would fail (its target is no longer active), so a retry is matched on the content the caller supplies; nothing is
+  // written and the stored record keeps the verifier decision taken when it was recorded.
+  const retryId=x.kind==='source_contribution_verified'?x.feedback?.feedbackId:x.recordId;
+  const existing=typeof retryId==='string'?rowById(store,retryId):undefined;
+  if(existing){
+   const stored=memoryEvents(store).find(e=>e.seq===existing.event_seq)?.payload;
+   if(existing.kind===x.kind&&stored&&canon(suppliedContent(x))===canon(storedContent(x.kind,stored)))
+    return {status:'already_recorded' as const,recordId:existing.record_id,eventSeq:existing.event_seq,basis:existing.basis};
+   fail('record_id_conflict: '+existing.record_id+' already holds different content');
+  }
   const payload:Record<string,any>=x.kind==='source_annotation_recorded'?annotationPayload(store,x,opts.verify):x.kind==='screening_decision_recorded'?screeningPayload(store,x,opts.verify):
    x.kind==='source_state_changed'?statePayload(store,x,opts.verify):contributionPayload(store,x,opts.verify);
-  const prior=rowById(store,payload.recordId);
-  if(prior){
-   // An identical retry is a no-op. For states and screenings the supersession pointer is computed (on a retry it
-   // would point at the record itself), so it is left out of the comparison.
-   const stored=memoryEvents(store).find(e=>e.seq===prior.event_seq)?.payload;
-   if(prior.kind===x.kind&&stored&&canon({...stored,supersedes:null})===canon({...payload,supersedes:null}))return {status:'already_recorded' as const,recordId:prior.record_id,eventSeq:prior.event_seq,basis:prior.basis};
-   fail('record_id_conflict: '+prior.record_id+' already holds different content');
-  }
   store.event(x.kind,payload,payload.at);
   const seq=(store.db.prepare('SELECT MAX(seq) m FROM events').get() as {m:number}).m;
   if(opts._faultAfterJournal)throw Error('phase260_test_fault_after_journal');
