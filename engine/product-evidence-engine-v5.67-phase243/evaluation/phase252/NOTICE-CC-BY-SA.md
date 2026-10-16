@@ -1,7 +1,7 @@
 # Third-party text in this directory
 
-The request texts in `journey-real-requests-set5.json` and `teaching-requests-set.json`, in the result files whose names start with
-`journey-real-requests-set4`, and in the files under `development/`, are excerpts of questions posted on Stack Exchange
+The request texts in `journey-real-requests-set5.json` and `teaching-requests-set.json`, in the result and score files whose names start with
+`journey-real-requests-set5` or `teaching-`, and in the files under `development/`, are excerpts of questions posted on Stack Exchange
 (cooking, coffee, diy, hardwarerecs and avp .stackexchange.com). They were obtained through the official Stack
 Exchange API, not by crawling the sites, whose robots.txt disallows crawlers. They are shared under the Creative Commons
 BY-SA licence version given for each case (CC BY-SA 2.5, 3.0 or 4.0). Each case names its author and links the original
