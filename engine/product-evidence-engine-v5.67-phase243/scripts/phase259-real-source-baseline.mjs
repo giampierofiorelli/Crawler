@@ -23,13 +23,14 @@ const resolveId=p=>db.prepare("SELECT product_id FROM products WHERE product_id 
 const restrictedHosts=new Set(db.prepare('SELECT host FROM host_access WHERE restricted>0 OR suspended_until IS NOT NULL').all().map(r=>r.host));
 const rows=pid=>db.prepare(`SELECT ps.role attribution,r.revision_id,r.url,r.sha256,r.fetched_at,r.state,r.superseded_by,r.screening_verdict,s.source_id,s.host,s.source_type,s.source_type_basis,s.policy_json,
  p.identity_state,(SELECT count(*) FROM declarations d WHERE d.revision_id=r.revision_id AND d.product_id=ps.product_id) nd,
+ (SELECT json_group_array(property) FROM declarations d WHERE d.revision_id=r.revision_id AND d.product_id=ps.product_id) props,
  (SELECT count(DISTINCT product_id) FROM product_sources x WHERE x.revision_id=r.revision_id) shared
  FROM product_sources ps JOIN revisions r USING(revision_id) JOIN sources s USING(source_id) JOIN products p USING(product_id) WHERE ps.product_id=?`).all(pid);
 // The mapping the Phase258 contract allows today: only what is retained.
 const ROLE={manufacturer:'manufacturer_specification',retailer:'retailer_listing'};
 const NEW=typeof C258.descriptorFromRetained259==='function';
 function candidate(pid,r){
- if(NEW)return C258.descriptorFromRetained259({productId:pid,...r,restricted:restrictedHosts.has(r.host)});
+ if(NEW)return C258.descriptorFromRetained259({productId:pid,...r,declaredProperties:JSON.parse(r.props??'[]'),restricted:restrictedHosts.has(r.host)});
  return {schema:'pee258.source-descriptor.v1',origin:'operator_metadata',descriptorId:('d_'+r.source_id+'_'+pid).toLowerCase().slice(0,100),sourceId:r.source_id.toLowerCase(),url:r.url,
   roles:ROLE[r.source_type]?[ROLE[r.source_type]]:[],statementKinds:r.nd>0?['declared_specification']:[],publisherCountry:'unknown',language:'und',productMarket:'unknown',
   product:{productId:pid,identityStatus:'unverified'},testingConditions:{declared:false,conditionIds:[]},method:{described:false,referenceId:null},specialist:null,culturalTradition:null,
@@ -65,6 +66,7 @@ const cov=jobs.map(j=>{const prods=db.prepare("SELECT product_id FROM products W
  return {jobId:j.jobId,productId:j.productId,criterion:j.criterion,descriptors:descs.length,unrepresentable,selected:s.selected.length,
   selectedAlreadyRetainedWithoutCriterion:alreadyRead.length,freshCandidates:s.selected.length-alreadyRead.length,
   otherProductExcluded:s.excluded.filter(x=>x.reason==='other_product').length,accessExcluded:s.excluded.filter(x=>x.reason!=='other_product').length,
+  excludedReasons:s.excluded.reduce((m,x)=>(m[x.reason]=(m[x.reason]??0)+1,m),{}),noFreshCandidates:s.noFreshCandidates??null,
   retainedNotSuitedByRole:s.notSuited.length,ownRecordsTableOnly:ownRows.filter(r=>r.attribution!=='main_product').length,ownHostRestricted:ownRows.filter(r=>restrictedHosts.has(r.host)).length};});
 const all=cases.flatMap(c=>c.records);const sum=f=>cov.reduce((s,x)=>s+f(x),0);
 const out={schema:'pee259.real-source-run.v1',label:F.label??'baseline',codeHasRetainedAdapter:NEW,
@@ -75,7 +77,8 @@ const out={schema:'pee259.real-source-run.v1',label:F.label??'baseline',codeHasR
  phase196:p196,
  coverage:{jobs:cov.length,jobsWithAnySelection:cov.filter(x=>x.selected>0).length,selectedTotal:sum(x=>x.selected),
   selectedAlreadyRetainedWithoutCriterion:sum(x=>x.selectedAlreadyRetainedWithoutCriterion),freshCandidates:sum(x=>x.freshCandidates),
-  otherProductExcluded:sum(x=>x.otherProductExcluded),unrepresentableRecordsSeen:sum(x=>x.unrepresentable),ownTableOnly:sum(x=>x.ownRecordsTableOnly),ownHostRestricted:sum(x=>x.ownHostRestricted)},
+  otherProductExcluded:sum(x=>x.otherProductExcluded),jobsNoFreshCandidates:cov.filter(x=>x.noFreshCandidates).length,
+  excludedReasons:cov.reduce((m,x)=>{for(const [k,v] of Object.entries(x.excludedReasons))m[k]=(m[k]??0)+v;return m;},{}),unrepresentableRecordsSeen:sum(x=>x.unrepresentable),ownTableOnly:sum(x=>x.ownRecordsTableOnly),ownHostRestricted:sum(x=>x.ownHostRestricted)},
  restrictedHosts:restrictedHosts.size,cases,jobs:cov};
 db.close();
 if(F.out)writeFileSync(resolve(F.out),JSON.stringify(out,null,1)+'\n');

@@ -137,10 +137,17 @@ export function selectSourcesForJob258(a:{job:{productId:string;criterion:string
   const st=currentSourceState258(a.states,d.sourceId);
   if(d.access.rights==='not_permitted'||d.access.robots==='disallowed'){excluded.push({sourceId:d.sourceId,reason:'access_not_permitted'});continue;}
   if(st==='retired'||st==='restricted'){excluded.push({sourceId:d.sourceId,reason:'state_'+st});continue;}
-  const u=new URL(d.url);const key=(u.host+u.pathname).toLowerCase().replace(/\/$/,'');
-  if(seenUrl.has(key)){collapsed.push({sourceId:d.sourceId,duplicateOf:seenUrl.get(key)!});continue;}seenUrl.set(key,d.sourceId);
   // Phase258 pilot defect: a source about another product cannot answer this product's gap (it was only ranked lower).
   if(d.product.productId!==null&&d.product.productId!==a.job.productId){excluded.push({sourceId:d.sourceId,reason:'other_product'});continue;}
+  // Phase259: scope by product before de-duplicating URLs (a shared table page must not fold one product's record into another's).
+  const u=new URL(d.url);const key=(u.host+u.pathname).toLowerCase().replace(/\/$/,'');
+  if(seenUrl.has(key)){collapsed.push({sourceId:d.sourceId,duplicateOf:seenUrl.get(key)!});continue;}seenUrl.set(key,d.sourceId);
+  // Phase259 (retained metadata): never send research back to a page already read, to a page about another model or to
+  // a host that refused access. A retained value for the criterion is already held, not a research target.
+  if(d.retained){
+   if(d.retained.hostAccess==='restricted'){excluded.push({sourceId:d.sourceId,reason:'host_restricted'});continue;}
+   if(d.retained.attribution==='table_column'){excluded.push({sourceId:d.sourceId,reason:'table_attribution_only'});continue;}
+   excluded.push({sourceId:d.sourceId,reason:d.retained.criteriaDeclared.includes(a.job.criterion)?'already_retained_with_criterion':'already_read_without_criterion'});continue;}
   const lane=laneOf(d,a.job.gapKind);if(!lane){notSuited.push(d.sourceId);continue;}
   // A source not attributed to any product may inform interpretation or lead to sources, never declare or measure.
   if(d.product.productId===null&&(lane==='declaration'||lane==='measurement'||lane==='practical')){notSuited.push(d.sourceId);continue;}
@@ -159,6 +166,8 @@ export function selectSourcesForJob258(a:{job:{productId:string;criterion:string
    exactProduct:p.d.product.productId===a.job.productId,identityStatus:p.d.product.identityStatus,language:p.d.language,publisherCountry:p.d.publisherCountry,
    productMarket:p.d.productMarket,sponsorship:p.d.sponsorship,unfamiliar:!familiar.has(p.d.sourceId),
    requiresReReview:a.states.reReviewRequired.includes(p.d.sourceId),limitations:[...p.d.limitations]})),
+  /** Phase259: true when nothing new remains to research for this job; new source discovery is needed. */
+  noFreshCandidates:picked.length===0,
   excluded,collapsed,notSuited,explorationSlotUsed,requesterCountryUsed:false as const,publisherCountryUsed:false as const,
   evidenceAdmitted:false as const,rankingAuthorized:false as const};
 }

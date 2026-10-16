@@ -14,12 +14,17 @@
  */
 import type {AssessorExpertise197} from './phase197_evidence_sufficiency.js';
 import type {MaterialRole196} from './phase196_source_intelligence.js';
+import {SPEC_CRITERIA249} from './phase249_decision.js';
 
 export const SOURCE_ROLES258=['manufacturer_specification','independent_measurement','structured_professional_testing','qualified_cultural_expertise',
  'original_video_demonstration','journalism','news_report','press_release','product_safety_information','derivative_publication',
- 'retailer_listing','user_experience_report'] as const;
+ 'retailer_listing','user_experience_report',
+ /** Phase259: the role is not known from retained metadata (unknown, editorial, reference or test-publisher types). */
+ 'role_unknown'] as const;
 export const STATEMENT_KINDS258=['declared_specification','instrumental_measurement','observed_practical_result','reported_experience',
- 'expert_interpretation','promotional_assertion','unverified_opinion','safety_notice'] as const;
+ 'expert_interpretation','promotional_assertion','unverified_opinion','safety_notice',
+ /** Phase259: no statement from this source is retained for this product. */
+ 'not_retained'] as const;
 export type SourceRole258=typeof SOURCE_ROLES258[number];
 export type StatementKind258=typeof STATEMENT_KINDS258[number];
 type Basis=AssessorExpertise197['expertise'];
@@ -48,13 +53,20 @@ export interface SourceDescriptor258 {
  /** The original short statement, verbatim and language-tagged, only where rights allow it. */
  statement:{text:string|null;language:string;provenance:{revisionHash:string|null;locator:string|null};interpretedConceptIds:string[]}|null;
  limitations:string[];
+ /** Phase259 (optional): what the private store retains about this source record, verbatim from Phase246. */
+ retained?:RetainedSource259;
 }
+export interface RetainedSource259 {revisionId:string;sha256:string;fetchedAt:string;revisionState:'current'|'superseded';sourceTypeRecorded:string;
+ roleBasis:'operator_asserted'|'heuristic_unverified';attribution:'own_page'|'table_column';identityState:string;
+ /** SPEC_CRITERIA249 keys this revision already declares for this product. */
+ criteriaDeclared:string[];hostAccess:'no_restriction_recorded'|'restricted'}
 const KEYS=['schema','origin','descriptorId','sourceId','url','roles','statementKinds','publisherCountry','language','productMarket','product',
  'testingConditions','method','specialist','culturalTradition','sponsorship','originality','derivedFrom','access','statement','limitations'];
+const OPTIONAL_KEYS=['retained'];
 const ID=/^[a-z][a-z0-9_.:-]{0,100}$/;
 const fail=(m:string):never=>{throw Error('phase258_invalid_descriptor: '+m);};
 const strict=(o:unknown,keys:string[],what:string)=>{if(!o||typeof o!=='object'||Array.isArray(o))fail(what+' not an object');
- for(const k of Object.keys(o as object))if(!keys.includes(k))fail(`unknown field ${what==='descriptor'?'':what+'.'}${k}`);
+ for(const k of Object.keys(o as object))if(!keys.includes(k)&&!(what==='descriptor'&&OPTIONAL_KEYS.includes(k)))fail(`unknown field ${what==='descriptor'?'':what+'.'}${k}`);
  for(const k of keys)if(!(k in (o as object)))fail(`missing field ${what}.${k}`);};
 const list=<T extends string>(v:unknown,allowed:readonly T[],what:string,nonEmpty=true):T[]=>{
  if(!Array.isArray(v)||(nonEmpty&&!v.length)||v.length>20||v.some(x=>!allowed.includes(x as T))||new Set(v).size!==v.length)fail(what);return v as T[];};
@@ -101,6 +113,12 @@ export function validateSourceDescriptor258(d0:unknown):SourceDescriptor258{
   if(d.statement.provenance.revisionHash!==null&&!/^[0-9a-f]{64}$/.test(d.statement.provenance.revisionHash))fail('statement.provenance.revisionHash');
   ids(d.statement.interpretedConceptIds,'statement.interpretedConceptIds');}
  if(!Array.isArray(d.limitations)||d.limitations.length>20||d.limitations.some(x=>typeof x!=='string'||!/^[a-z0-9_]{3,80}$/.test(x)))fail('limitations');
+ if(d.retained!==undefined){strict(d.retained,['revisionId','sha256','fetchedAt','revisionState','sourceTypeRecorded','roleBasis','attribution','identityState','criteriaDeclared','hostAccess'],'retained');
+  const r=d.retained;
+  if(!/^[a-z][a-z0-9_]{2,60}$/.test(r.revisionId)||!/^[0-9a-f]{64}$/.test(r.sha256)||!/^\d{4}-\d\d-\d\dT/.test(r.fetchedAt)||!['current','superseded'].includes(r.revisionState)||
+   !/^[a-z_]{3,40}$/.test(r.sourceTypeRecorded)||!['operator_asserted','heuristic_unverified'].includes(r.roleBasis)||!['own_page','table_column'].includes(r.attribution)||
+   !/^[a-z_]{3,40}$/.test(r.identityState)||!['no_restriction_recorded','restricted'].includes(r.hostAccess)||!Array.isArray(r.criteriaDeclared)||r.criteriaDeclared.some(k=>!SPEC_CRITERIA249[k]))fail('retained');
+  if(r.attribution==='table_column'&&d.product.identityStatus!=='unverified')fail('a table-column attribution cannot be a reviewed identity');}
  // Epistemic consistency.
  if(roles.includes('independent_measurement')){
   if(!kinds.includes('instrumental_measurement'))fail('an independent measurement role needs an instrumental measurement statement (an opinion is not a measurement)');
@@ -137,3 +155,21 @@ export const LANGUAGE_CAPABILITIES258={
  translation:'none',
  frontendLocalization:'partial_it_clarification_labels_phase127',
 } as const;
+
+/** Phase259: a descriptor from retained Phase246 metadata only. Country, language, market, rights, robots, originality
+ * and method are not retained, so they stay unknown; a source type that does not determine a role (unknown, editorial,
+ * reference, test publisher) gives role_unknown. Nothing is inferred from a host suffix or a currency. */
+const RETAINED_ROLE:Record<string,SourceRole258>={manufacturer:'manufacturer_specification',retailer:'retailer_listing'};
+export function descriptorFromRetained259(r:{productId:string;source_id:string;url:string;host:string;source_type:string;source_type_basis:string;attribution:string;
+ revision_id:string;sha256:string;fetched_at:string;state:string;identity_state:string;nd:number;declaredProperties?:readonly string[];restricted:boolean}):SourceDescriptor258{
+ const criteria=Object.entries(SPEC_CRITERIA249).filter(([,c])=>(r.declaredProperties??[]).some(p=>c.property.test(p)&&!c.exclude?.test(p))).map(([k])=>k).sort();
+ const sourceId=r.source_id.toLowerCase().replace(/[^a-z0-9_.:-]/g,'_');
+ return {schema:'pee258.source-descriptor.v1',origin:'operator_metadata',descriptorId:('d_'+sourceId+'_'+r.revision_id+'_'+r.productId).slice(0,100),sourceId,url:r.url,
+  roles:[RETAINED_ROLE[r.source_type]??'role_unknown'],statementKinds:r.nd>0?['declared_specification']:['not_retained'],
+  publisherCountry:'unknown',language:'und',productMarket:'unknown',product:{productId:r.productId,identityStatus:'unverified'},
+  testingConditions:{declared:false,conditionIds:[]},method:{described:false,referenceId:null},specialist:null,culturalTradition:null,
+  sponsorship:'unknown',originality:'unknown',derivedFrom:[],access:{rights:'unreviewed',robots:'unknown'},statement:null,limitations:['retained_metadata_only'],
+  retained:{revisionId:r.revision_id,sha256:r.sha256,fetchedAt:r.fetched_at,revisionState:r.state==='superseded'?'superseded':'current',sourceTypeRecorded:r.source_type,
+   roleBasis:r.source_type_basis==='heuristic_unverified'?'heuristic_unverified':'operator_asserted',attribution:r.attribution==='main_product'?'own_page':'table_column',
+   identityState:r.identity_state,criteriaDeclared:criteria,hostAccess:r.restricted?'restricted':'no_restriction_recorded'}};
+}
