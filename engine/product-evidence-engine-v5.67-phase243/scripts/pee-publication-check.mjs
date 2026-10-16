@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+/** Pre-publication check (principle 9): what commits ADD to the public repository is checked against the private
+ * store's retained declarations (src/publication_guard.ts). Fails closed when the private store is unavailable.
+ *  node scripts/pee-publication-check.mjs                 commits not yet on any origin branch (what a push would publish)
+ *  node scripts/pee-publication-check.mjs --range A..B    a commit range
+ *  node scripts/pee-publication-check.mjs --history       every commit reachable from any ref (audit)
+ *  node scripts/pee-publication-check.mjs --tree          the whole tree at HEAD (what is readable today)
+ *  [--store FILE]  default: the verified private snapshot, else the live store
+ * Exit 0 clean, 1 findings, 2 cannot check. The report never contains the values or lines it found.
+ */
+import {existsSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';import {execFileSync} from 'node:child_process';
+import {DatabaseSync} from 'node:sqlite';
+import {buildPublicationIndex,scanAddedLines,addedLinesFromDiff,privateArtifactFindings} from '../dist/src/publication_guard.js';
+const A=process.argv.slice(2);const arg=n=>A.includes(n)?A[A.indexOf(n)+1]:null;
+const candidates=[arg('--store'),'/home/user/pee-knowledge/snapshot/pee246.sqlite',
+ join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local','share','product-evidence-engine','knowledge'),'pee246.sqlite')].filter(Boolean);
+const store=candidates.find(f=>existsSync(f));
+if(!store){console.error('pee-publication-check: no private store available; cannot verify publication safety (fail closed)');process.exit(2);}
+const db=new DatabaseSync(store,{readOnly:true});
+const rows=db.prepare(`SELECT d.product_id AS productId,p.name AS productName,d.raw_value AS rawValue FROM declarations d JOIN products p USING(product_id)
+ WHERE p.name IS NOT NULL AND d.retention IN ('facts_retained','facts_retained_class_policy','local_pending_rights_review')`).all();
+db.close();
+const idx=buildPublicationIndex(rows);
+const git=a=>execFileSync('git',a,{encoding:'utf8',maxBuffer:1<<30});
+const rev=A.includes('--history')?['--all']:arg('--range')?[arg('--range')]:['HEAD','--not','--remotes=origin'];
+// --tree: everything currently published at HEAD, as if added at once (what anyone can read today).
+const diff=A.includes('--tree')?'commit '+git(['rev-parse','HEAD']).trim()+'\n'+git(['diff','--unified=0','--no-color','--no-renames',git(['hash-object','-t','tree','/dev/null']).trim(),'HEAD'])
+ :git(['log','-p','--unified=0','--no-color','--no-renames','--format=commit %H',...rev]);
+const {lines,files}=addedLinesFromDiff(diff);
+const findings=[...privateArtifactFindings(files),...scanAddedLines(lines,idx)];
+const commits=new Set(lines.map(l=>l.commit)).size;
+console.log(JSON.stringify({store:store.includes('pee-knowledge')?'private snapshot':'live store',retainedDeclarations:rows.length,commitsScanned:commits,addedLines:lines.length,
+ findings:findings.length,byCommit:Object.fromEntries([...new Set(findings.map(f=>f.commit))].map(c=>[c,findings.filter(f=>f.commit===c).length])),
+ detail:findings},null,1));
+process.exit(findings.length?1:0);

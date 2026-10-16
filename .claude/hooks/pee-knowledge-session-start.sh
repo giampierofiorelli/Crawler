@@ -4,6 +4,8 @@
 # Never fails the session: every step is best-effort and the result is reported.
 K=/home/user/pee-knowledge
 ENGINE="${CLAUDE_PROJECT_DIR:-/home/user/Crawler}/engine/product-evidence-engine-v5.67-phase243"
+# Principle 9: every push runs the publication guard (.githooks/pre-push).
+git -C "${CLAUDE_PROJECT_DIR:-/home/user/Crawler}" config core.hooksPath .githooks >/dev/null 2>&1 || true
 if [ -d "$K/.git" ]; then
   timeout 60 git -C "$K" pull -q --ff-only origin main >/dev/null 2>&1 || true
 else

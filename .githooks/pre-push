@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Principle 9 — publication guard. Refuses a push whose new commits add a retained declaration value bound to its
+# product, or a private store artefact (engine/.../scripts/pee-publication-check.mjs). Fails closed: without the private
+# store the push is refused. Activated by .claude/hooks/pee-knowledge-session-start.sh (core.hooksPath=.githooks).
+ENGINE="$(git rev-parse --show-toplevel)/engine/product-evidence-engine-v5.67-phase243"
+status=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+  [ -f "$ENGINE/dist/src/publication_guard.js" ] || (cd "$ENGINE" && npx tsc -p tsconfig.json >/dev/null 2>&1)
+  out=$(cd "$ENGINE" && if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then node --no-warnings scripts/pee-publication-check.mjs; else node --no-warnings scripts/pee-publication-check.mjs --range "$remote_sha..$local_sha"; fi)
+  rc=$?
+  if [ $rc -ne 0 ]; then
+    echo "pre-push: publication guard refused $local_ref (exit $rc). Findings (no values shown):" >&2
+    echo "$out" | head -60 >&2
+    status=1
+  fi
+done
+exit $status
