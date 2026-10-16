@@ -1,0 +1,451 @@
+{
+ "schema": "pee253.source-classification.v1",
+ "db": "$PEE_KNOWLEDGE_DIR/pee246.sqlite",
+ "applied": 20,
+ "counts": {
+  "manufacturer": 19,
+  "retailer": 1,
+  "one_brand_not_host": 9,
+  "no_brand_declared": 24
+ },
+ "declarationRolesAfter": {
+  "editorial_declaration": 40,
+  "manufacturer_declaration": 339,
+  "retailer_declaration": 294,
+  "secondary_reference_declaration": 912,
+  "unclassified_declaration": 800
+ },
+ "journalOk": true,
+ "proposals": [
+  {
+   "host": "99bikes.com.au",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "Merida"
+   ],
+   "detail": "one brand (Merida) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "alpkit.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Alpkit"
+   ],
+   "detail": "every brand declared on its own product pages (Alpkit) is the host's name (alpkit)"
+  },
+  {
+   "host": "cosori.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Cosori"
+   ],
+   "detail": "every brand declared on its own product pages (Cosori) is the host's name (cosori)"
+  },
+  {
+   "host": "eastsidesports.com",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "TOPO"
+   ],
+   "detail": "one brand (TOPO) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "ebac.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "havitsmart.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "HAVIT Business"
+   ],
+   "detail": "every brand declared on its own product pages (HAVIT Business) is the host's name (havitsmart)"
+  },
+  {
+   "host": "magnadyne.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "numatic.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "palmera.com.tr",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "v12outdoor.com",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "OMM"
+   ],
+   "detail": "one brand (OMM) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "vornado.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Vornado Air"
+   ],
+   "detail": "every brand declared on its own product pages (Vornado Air) is the host's name (vornado)"
+  },
+  {
+   "host": "www.altitude-sports.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.audio-technica.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.backpackinglight.com.au",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "Topo Athletic"
+   ],
+   "detail": "one brand (Topo Athletic) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "www.benq.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.blackanddecker.ie",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.bose.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Bose"
+   ],
+   "detail": "every brand declared on its own product pages (Bose) is the host's name (bose)"
+  },
+  {
+   "host": "www.decathlon.co.uk",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "QUECHUA"
+   ],
+   "detail": "one brand (QUECHUA) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "www.einhell.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Einhell Accessory"
+   ],
+   "detail": "every brand declared on its own product pages (Einhell Accessory) is the host's name (einhell)"
+  },
+  {
+   "host": "www.eufy.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "eufy"
+   ],
+   "detail": "every brand declared on its own product pages (eufy) is the host's name (eufy)"
+  },
+  {
+   "host": "www.fleetfeet.com",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "Craft"
+   ],
+   "detail": "one brand (Craft) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "www.gozney.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.greenworkstools.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Greenworks"
+   ],
+   "detail": "every brand declared on its own product pages (Greenworks) is the host's name (greenworkstools)"
+  },
+  {
+   "host": "www.halfords.com",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "Carrera"
+   ],
+   "detail": "one brand (Carrera) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "www.hurom.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.igenix.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Igenix"
+   ],
+   "detail": "every brand declared on its own product pages (Igenix) is the host's name (igenix)"
+  },
+  {
+   "host": "www.josephjoseph.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Joseph Joseph"
+   ],
+   "detail": "every brand declared on its own product pages (Joseph Joseph) is the host's name (josephjoseph)"
+  },
+  {
+   "host": "www.kitchenaid.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "KitchenAid"
+   ],
+   "detail": "every brand declared on its own product pages (KitchenAid) is the host's name (kitchenaid)"
+  },
+  {
+   "host": "www.lifesystems.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Lifesystems"
+   ],
+   "detail": "every brand declared on its own product pages (Lifesystems) is the host's name (lifesystems)"
+  },
+  {
+   "host": "www.meaco.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.midea.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.morphyrichards.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Morphy Richards-UK"
+   ],
+   "detail": "every brand declared on its own product pages (Morphy Richards-UK) is the host's name (morphyrichards)"
+  },
+  {
+   "host": "www.mountainwarehouse.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.multitronic.fi",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.nutribullet.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.ocado.com",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "M&S"
+   ],
+   "detail": "one brand (M&S) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "www.polar.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.ribblecycles.co.uk",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.ryobitools.eu",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.sharpconsumer.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.singer.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Singer"
+   ],
+   "detail": "every brand declared on its own product pages (Singer) is the host's name (singer)"
+  },
+  {
+   "host": "www.smartuk.net",
+   "to": null,
+   "rule": "one_brand_not_host",
+   "brands": [
+    "De Buyer"
+   ],
+   "detail": "one brand (De Buyer) that is not the host's name: own label, distributor or retailer cannot be told apart"
+  },
+  {
+   "host": "www.soundcore.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "soundcore"
+   ],
+   "detail": "every brand declared on its own product pages (soundcore) is the host's name (soundcore)"
+  },
+  {
+   "host": "www.stihl.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "STIHL"
+   ],
+   "detail": "every brand declared on its own product pages (STIHL) is the host's name (stihl)"
+  },
+  {
+   "host": "www.stoneaudio.co.uk",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.thegoodguys.com.au",
+   "to": "retailer",
+   "rule": "several_foreign_brands",
+   "brands": [
+    "Electrolux",
+    "Miele"
+   ],
+   "detail": "declares 2 brands (Electrolux, Miele), none of them the host's name"
+  },
+  {
+   "host": "www.vax.co.uk",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Vax"
+   ],
+   "detail": "every brand declared on its own product pages (Vax) is the host's name (vax)"
+  },
+  {
+   "host": "www.wahl.co.uk",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.wcslmall.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.withings.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "Withings"
+   ],
+   "detail": "every brand declared on its own product pages (Withings) is the host's name (withings)"
+  },
+  {
+   "host": "www.woot.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.worx.com",
+   "to": null,
+   "rule": "no_brand_declared",
+   "brands": [],
+   "detail": "no brand declared on its product pages"
+  },
+  {
+   "host": "www.zwilling.com",
+   "to": "manufacturer",
+   "rule": "brand_matches_host",
+   "brands": [
+    "ZWILLING"
+   ],
+   "detail": "every brand declared on its own product pages (ZWILLING) is the host's name (zwilling)"
+  }
+ ]
+}

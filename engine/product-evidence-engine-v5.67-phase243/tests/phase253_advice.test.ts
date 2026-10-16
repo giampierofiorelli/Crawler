@@ -10,6 +10,7 @@ import {runJourney248,purchaseTarget253} from '../src/phase248_advisory_journey.
 import {createDecision177,applyDecisionAction177,assertDecisionSnapshot177} from '../src/phase177_decision_snapshot.js';
 import {extractConstraints253} from '../src/phase253_request_constraints.js';
 import {adviseFromRequest253} from '../src/phase253_request_advice.js';
+import {proposeSourceTypes253} from '../src/phase253_source_classification.js';
 import {validateAdviceGold253,scoreRow253,summarise253,type AdviceGold253} from '../src/phase253_advice_contract.js';
 // Phase253 T1 tests, written before the request-to-advice path was implemented. Pages, products, prices and requests
 // are synthetic fixtures, never real-world evidence.
@@ -105,4 +106,25 @@ test('end to end: justified negative, justified abstention, budget only with usa
  const row=scoreRow253(g[0],A('I am looking for an air fryer of at least 5 litres'));
  assert.equal(row.harmful,false);assert.equal(row.responseOk,true);assert.equal(summarise253([row]).m6_productChecks.agree,4);
  s.close();
+});
+test('Stage 4: unknown sources are typed only from retained evidence, journaled and reversible; asserted types are never overwritten',()=>{
+ const s=new KnowledgeStore246(join(dir,'c'+Math.random().toString(36).slice(2)+'.sqlite'),CLASS);seedCategoryHypotheses246(s,'air_fryers',AT);
+ const pg=(name:string,brand:string)=>`<!doctype html><html><head><script type="application/ld+json">${JSON.stringify({'@type':'Product',name,brand:{'@type':'Brand',name:brand}})}</script></head><body><main><h1>${name}</h1><table><tr><th>Capacity</th><td>5 L</td></tr></table></main></body></html>`;
+ ingest(s,'www.fryco.co.uk','https://www.fryco.co.uk/p/a',pg('FryCo Max','FryCo'),'unknown');
+ ingest(s,'mall.example','https://mall.example/p/a',pg('FryCo Mini','FryCo'),'unknown');ingest(s,'mall.example','https://mall.example/p/b',pg('Heatco One','Heatco'),'unknown');
+ ingest(s,'store.example','https://store.example/p/a',pg('Heatco Two','Heatco'),'unknown');
+ ingest(s,'plain.example','https://plain.example/p/a',page('Nameless Fryer',[['Capacity','4 L']]),'unknown');
+ const P=Object.fromEntries(proposeSourceTypes253(s).map(p=>[p.host,p]));
+ assert.equal(P['www.fryco.co.uk'].to,'manufacturer');assert.equal(P['mall.example'].to,'retailer');
+ assert.equal(P['store.example'].to,null,'one foreign brand: own label, distributor or retailer cannot be told apart');
+ assert.equal(P['plain.example'].to,null,'no declared brand stays unknown');
+ const id=P['www.fryco.co.uk'].sourceId;
+ assert.equal(s.classifySourceType253(id,'manufacturer',{rule:P['www.fryco.co.uk'].rule,detail:P['www.fryco.co.uk'].detail}),true);
+ const roles=()=>s.db.prepare("SELECT DISTINCT d.evidence_role r FROM declarations d JOIN revisions v USING(revision_id) WHERE v.source_id=?").all(id).map((x:any)=>x.r);
+ assert.deepEqual(roles(),['manufacturer_declaration']);
+ assert.throws(()=>s.classifySourceType253(id,'retailer',{rule:'x_rule',detail:'d'}),/only_unknown/);
+ const a=adviseFromRequest253('I am looking for an air fryer of at least 5 litres',s,CATEGORY_REGISTRY250);
+ assert.ok(a.shortlist.some(x=>x.evidence.some(e=>/inferred from its host/.test(e.sourceRole))));
+ assert.equal(s.reverseSourceClassification253(id,'test_reversal'),true);assert.deepEqual(roles(),['unclassified_declaration']);
+ assert.ok(s.verifyJournal().ok);s.close();
 });

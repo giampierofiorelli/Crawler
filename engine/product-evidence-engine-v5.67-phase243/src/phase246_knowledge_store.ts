@@ -693,6 +693,34 @@ export class KnowledgeStore246 {
   });
   return true;
  }
+ /** Phase253: types a source registered as 'unknown' from journaled evidence (basis 'heuristic_unverified'), and
+  * re-derives the evidence role of that source's unclassified declarations. Only 'unknown' sources can be typed here:
+  * an operator-asserted type is never overwritten. No value, product or identity changes; reversible from the journal. */
+ classifySourceType253(sourceId:string,to:'manufacturer'|'retailer',evidence:{rule:string;detail:string},at=new Date().toISOString()):boolean{
+  if(!/^[a-z0-9_]{3,60}$/.test(evidence.rule)||!shortText(evidence.detail,300))throw Error('253_invalid_source_classification');
+  const s=this.db.prepare('SELECT source_type,source_type_basis FROM sources WHERE source_id=?').get(sourceId) as {source_type:string;source_type_basis:string}|undefined;
+  if(!s)throw Error('253_unknown_source');if(s.source_type===to&&s.source_type_basis==='heuristic_unverified')return false;
+  if(s.source_type!=='unknown')throw Error('253_only_unknown_sources_can_be_classified');
+  const decls=(this.db.prepare("SELECT d.declaration_id FROM declarations d JOIN revisions r USING(revision_id) WHERE r.source_id=? AND d.evidence_role='unclassified_declaration'").all(sourceId) as {declaration_id:string}[]).map(d=>d.declaration_id);
+  const role=declarationRole246(to);
+  this.tx(()=>{this.db.prepare("UPDATE sources SET source_type=?,source_type_basis='heuristic_unverified' WHERE source_id=?").run(to,sourceId);
+   const up=this.db.prepare('UPDATE declarations SET evidence_role=? WHERE declaration_id=?');for(const d of decls)up.run(role,d);
+   this.event('source_type_classified',{sourceId,from:s.source_type,fromBasis:s.source_type_basis,to,rule:evidence.rule,detail:evidence.detail,declarationIds:decls},at);
+   this.invalidate(['source:'+sourceId,...decls.map(d=>'decl:'+d)],'source_type_classified');});
+  return true;
+ }
+ /** Phase253: reverses classifySourceType253 from its journal event. */
+ reverseSourceClassification253(sourceId:string,reason:string,at=new Date().toISOString()):boolean{
+  if(!/^[a-z0-9_]{3,60}$/.test(reason))throw Error('253_invalid_reversal');
+  const ev=(this.db.prepare("SELECT payload_json FROM events WHERE kind='source_type_classified' ORDER BY seq DESC").all() as {payload_json:string}[]).map(e=>JSON.parse(e.payload_json)).find(e=>e.sourceId===sourceId);
+  if(!ev)throw Error('253_unknown_classification');
+  const s=this.db.prepare('SELECT source_type FROM sources WHERE source_id=?').get(sourceId) as {source_type:string};if(s.source_type===ev.from)return false;
+  this.tx(()=>{this.db.prepare('UPDATE sources SET source_type=?,source_type_basis=? WHERE source_id=?').run(ev.from,ev.fromBasis,sourceId);
+   const up=this.db.prepare('UPDATE declarations SET evidence_role=? WHERE declaration_id=?');for(const d of ev.declarationIds)up.run(declarationRole246(ev.from),d);
+   this.event('source_type_classification_reversed',{sourceId,to:ev.from,reason},at);
+   this.invalidate(['source:'+sourceId,...ev.declarationIds.map((d:string)=>'decl:'+d)],'source_type_classification_reversed');});
+  return true;
+ }
  /** Adds request vocabulary to every item carrying a concept (vocabulary only; class, state and review unchanged). */
  addConceptAliases246(categoryId:string,conceptId:string,aliases:readonly string[],at=new Date().toISOString()):number{
   const rows=this.db.prepare('SELECT item_id,aliases_json FROM category_items WHERE category_id=? AND concept_id=?').all(categoryId,conceptId) as {item_id:string;aliases_json:string}[];

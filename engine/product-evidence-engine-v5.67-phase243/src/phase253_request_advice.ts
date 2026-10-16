@@ -39,6 +39,8 @@ export function eligibleCandidates253(store:KnowledgeStore246,categoryId:string)
  });
 }
 const observedAt=(store:KnowledgeStore246,declarationId:string):string|null=>(store.db.prepare('SELECT r.fetched_at f FROM declarations d JOIN revisions r USING(revision_id) WHERE d.declaration_id=?').get(declarationId) as {f:string}|undefined)?.f??null;
+/** Stage 4: a source type inferred from host and declared brand (Phase253) is cited as inferred, not as asserted. */
+const sourceBasis=(store:KnowledgeStore246,declarationId:string):string|null=>(store.db.prepare('SELECT s.source_type_basis b FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s USING(source_id) WHERE d.declaration_id=?').get(declarationId) as {b:string}|undefined)?.b??null;
 
 export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[]):Advice253{
  const j=runJourney248(text,store,registry);
@@ -90,7 +92,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  const eligible=pool.filter(p=>p.eligible);
  const advice=decideAdvice249({snapshot:snap,candidates:eligible.map(p=>p.candidate)});
  const cite=(productId:string,e:{declarationId:string;rawValue:string;sourceUrl:string|null;evidenceRole:string}):CitedEvidence253=>({declarationId:e.declarationId,productId,rawValue:e.rawValue,sourceUrl:e.sourceUrl,
-  sourceRole:ROLE_LABEL[e.evidenceRole]??e.evidenceRole,variantId:null,observedAt:e.declarationId.startsWith('name:')?null:observedAt(store,e.declarationId)});
+  sourceRole:(ROLE_LABEL[e.evidenceRole]??e.evidenceRole)+(!e.declarationId.startsWith('name:')&&sourceBasis(store,e.declarationId)==='heuristic_unverified'?' (source type inferred from its host and declared brand, not verified)':''),variantId:null,observedAt:e.declarationId.startsWith('name:')?null:observedAt(store,e.declarationId)});
  for(const c of advice.checks){const p=eligible.find(x=>x.candidate.productId===c.productId)!;
   for(const k of c.checks)if(/^sources disagree/.test(k.reason))out.conflicts.push({productId:c.productId,criterion:k.key,reason:k.reason});
   if(c.outcome==='meets_all')out.shortlist.push({productId:c.productId,name:c.name,evidence:c.checks.flatMap(k=>k.evidence.map(e=>cite(c.productId,e))),
