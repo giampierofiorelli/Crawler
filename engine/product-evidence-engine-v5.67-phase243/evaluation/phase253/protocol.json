@@ -1,0 +1,35 @@
+{
+ "schema": "pee253.protocol.v1",
+ "registered": "2026-10-16, before any Phase253 evaluation case was collected, written or read, and before any run of the advice path on an evaluation case. Code under test: commit c46ce18 (Phase253 stages 0-5 and 4) plus the runner and scorer added with this file; frozen for the first run.",
+ "question": "Does connecting understanding to decideAdvice249 (arm N, adviseFromRequest253) give a person better final advice than the Phase252 path (arm P, runJourney248 alone): correct purchase target, explicit constraints taken from the request, justified positive shortlists, justified negatives and abstentions, and no harmful positive?",
+ "arms": {
+  "P": "Phase252 path: runJourney248 with CATEGORY_REGISTRY250; no constraints, no products. Response mapping fixed in scripts/phase253-advice-arms.mjs: clarify->clarification; out_of_scope|unsupported_category->out_of_scope; recommend|withhold_insufficient_evidence->justified_abstention.",
+  "N": "adviseFromRequest253 with CATEGORY_REGISTRY250."
+ },
+ "store": "Both arms run on their own copy of the same snapshot: pee-knowledge 38495fe (after the Stage 4 source typing). No lessons or teaching applied to the copies.",
+ "tiers": {
+  "T2_real_request_developer_gold": "New real requests (Stack Exchange API only, CC BY-SA attribution per case). Gold written by the developer from the request text before any run; product-level gold only where the gold response is positive_shortlist or justified_negative, written from a raw declaration listing (values as declared, not from decideAdvice249). Developer gold, same author as the code: not independent.",
+  "T1_synthetic": "24 synthetic requests on real retained evidence, written before the run, including negative controls (impossible limits, other purchase targets, rejected categories, inferred-only needs) and contradictory-evidence controls. Product gold from the raw declaration listing. Same author as the code: optimistic, never reported as held-out.",
+  "T3_control": "QueryNER test split (993 human-labelled product search queries, CC BY 4.0, already read in Phase251 for category labels; quantity labels never scored). Not an advice set: it controls false stated constraints. Any constraint N records as stated_in_request in a query without an explicit bound word is a false positive; reported as a count with the queries listed."
+ },
+ "collection": {
+  "source": "Stack Exchange API only (api.stackexchange.com via the container proxy; site pages are never fetched). Raw responses stay outside Git in private-eval/phase253.",
+  "max_requests": 20,
+  "strata": {
+   "air_fryers": [["cooking","air fryer litre"],["cooking","air fryer quart"],["cooking","air fryer capacity"]],
+   "coffee_machines": [["coffee","espresso machine budget"],["coffee","espresso machine under"],["coffee","espresso machine watts"]],
+   "blenders": [["cooking","blender watts"],["cooking","blender power"]],
+   "kettles": [["cooking","kettle litre"],["coffee","electric kettle capacity"]],
+   "toasters": [["cooking","toaster wide"],["cooking","toaster slots"]],
+   "_open_quantity": [["diy","air fryer"],["diy","kettle"],["lifehacks","blender"]]
+  },
+  "excluded_ids": "every id in private-eval/phase252t-excluded-ids.txt plus every id of the Phase252 teaching candidate pool",
+  "eligibility_title_regex": "\\b(buy|buying|purchas|recommend|which|looking for|choos|worth|should i (?:get|buy)|best|what (?:kind|type|size|features)|alternative|vs\\.?|versus|or a |upgrade|replac|need a|good|difference|enough|big|small|capacity|watt|litre|liter|quart)",
+  "order": "within a stratum, sha256('253:<question_id>') ascending; a question already in an earlier stratum is skipped",
+  "selection": "Up to 30 cases: the first eligible candidates per stratum in order, round-robin across strata. A candidate is kept whatever its role (buying request or not); non-buying questions are kept as negative controls with their own gold. Stops early on HTTP 403/429; the shortfall is reported.",
+  "text": "title + body, plain text, at most 1,500 characters (as set 5)"
+ },
+ "metrics": "the ten metrics of summarise253 (m1 purchase target ... m10 response type and harm), per arm and per tier; positives and abstentions reported separately (byResponse).",
+ "primary": "m10 harmful (a positive shortlist where the gold is not positive, or a wrongly included product) and m10 correct response, N vs P, on T2; then m3 constraints and m6/m7 product checks on T1+T2.",
+ "rules": "First-run results are committed unchanged before any change. Gold is sealed (committed) before the first run. Later changes are reported as development on spent cases. T1 is never reported as held-out. Categories outside CATEGORY_REGISTRY250 (headphones, microwave_ovens) are reported as a coverage gap, not repaired with vocabulary in this phase."
+}
