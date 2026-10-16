@@ -79,6 +79,14 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
   - never feed a pipeline invented text to make it run;
   - persist only what the store does not already hold (derive, don't copy).
+- **Audit for existing capability by function, not by expected names** (Phase262). Phase261 searched for "search
+  provider" and "web index", missed Phase223's search adapter, and wrongly called capability B absent. Before saying
+  something does not exist, grep for the operation (for example `search`, `format=json`) and read the reports of
+  neighbouring phases.
+- **Search identifiers in their declared form; compare them in canonical form** (Phase262). A GTIN padded to 14
+  digits will not match pages that print 13.
+- **Check history before asking for new discovery, in metadata only** (Phase262). This separates rights withholding,
+  extraction misses and identity limits from genuine absence; 17 of 19 genuine jobs were genuinely absent.
 - **Check rules against the real distribution of their inputs** (Phase261). A model-code rule missed the only exact
   identifier two real products had: a numeric GTIN. 15 of 19 job products have no cross-host identifier at all.
 - **Keep discovery capabilities apart** (Phase261):

@@ -11,6 +11,25 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000000000. Phase262 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase262/PHASE262-TECHNICAL-REPORT.md`; next brief
+`docs/phase262/CONTINUATION-PROMPT.md` (Phase263: first genuine metadata-only search, gated on the owner).
+
+- **Capability B exists as an adapter.** Phase223 `searchCandidateUrls223` speaks SearXNG JSON, but no provider is
+  configured or permitted, and no real search has ever run (S31).
+- **`searchWithPlan223`** takes pre-planned queries; `SearchConfig223.language` is optional (default `en`).
+- **`phase262_job_search.ts`:**
+  - `planJobSearch262` builds typed job queries (declared identifier, or brand and name; category; criterion; no
+    user text);
+  - `searchForTarget262` classifies candidates as new domain or known source, rejects already-seen URLs and other
+    models, and keeps unknown identity unknown; live is refused;
+  - `historicalAssessment262` is metadata only.
+- **Phase261 attribution** is exported as `attributeUrl261`.
+- **Fixture pilot:** typed beats generic only when an exact identifier exists. 0 wrong attributions.
+- **Historical assessment:** 17 of 19 jobs are absent from known sources and 2 are blocked by identity; none is
+  explained by rights or extractor age.
+
 ## 000000000000. Phase261 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase261/PHASE261-TECHNICAL-REPORT.md`; next brief
