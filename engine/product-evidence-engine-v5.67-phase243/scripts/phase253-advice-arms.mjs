@@ -6,13 +6,14 @@
  *    justified_abstention (no product was checked).
  *  N (new): adviseFromRequest253 (journey → constraints → Phase177 → eligibility → decideAdvice249).
  * Both use the operational registry CATEGORY_REGISTRY250. No teaching or lessons are applied to the copy.
- * Usage: node scripts/phase253-advice-arms.mjs --bench FILE --arm P|N --snapshot FILE --out FILE
+ * Usage: node scripts/phase253-advice-arms.mjs --bench FILE --arm P|N --snapshot FILE --out PUBLIC_FILE [--private-out FILE]
  */
 import {readFileSync,writeFileSync,copyFileSync,mkdirSync,rmSync} from 'node:fs';import {resolve,join} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
 import {KnowledgeStore246} from '../dist/src/phase246_knowledge_store.js';
 import {runJourney248} from '../dist/src/phase248_advisory_journey.js';
 import {CATEGORY_REGISTRY250} from '../dist/src/phase248_category_registry.js';
 import {adviseFromRequest253} from '../dist/src/phase253_request_advice.js';
+import {redactAdvice} from './phase253-redact-advice.mjs';
 const F=Object.fromEntries(process.argv.slice(2).reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/,''),arr[i+1]]],[]));
 if(!['P','N'].includes(F.arm)||!F.bench||!F.out||!F.snapshot)throw Error('usage: --bench FILE --arm P|N --snapshot FILE --out FILE');
 const dir=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local','share','product-evidence-engine','knowledge'),'..','arms253');mkdirSync(dir,{recursive:true});
@@ -27,5 +28,8 @@ const previous=text=>{const j=runJourney248(text,store,CATEGORY_REGISTRY250);
 const t0=performance.now();const advice={};
 for(const c of bench.cases)advice[c.id]=F.arm==='N'?adviseFromRequest253(c.text,store,CATEGORY_REGISTRY250):previous(c.text);
 store.close();
-writeFileSync(resolve(F.out),JSON.stringify({schema:'pee253.advice-run.v1',arm:F.arm,bench:F.bench,snapshotSha256:createHash('sha256').update(readFileSync(resolve(F.snapshot))).digest('hex'),
- msTotal:+(performance.now()-t0).toFixed(1),advice},null,1)+'\n');
+// --out is the public form (declared values removed); --private-out, outside Git, keeps the full advice.
+const run=a=>JSON.stringify({schema:'pee253.advice-run.v1',arm:F.arm,bench:F.bench,snapshotSha256:createHash('sha256').update(readFileSync(resolve(F.snapshot))).digest('hex'),
+ msTotal:+(performance.now()-t0).toFixed(1),...(a===advice?{}:{redaction:'declared values removed (pee249-factual-observations-v1); full run kept in private-eval'}),advice:a},null,1)+'\n';
+if(F['private-out'])writeFileSync(resolve(F['private-out']),run(advice));
+writeFileSync(resolve(F.out),run(Object.fromEntries(Object.entries(advice).map(([k,a])=>[k,redactAdvice(a)]))));
