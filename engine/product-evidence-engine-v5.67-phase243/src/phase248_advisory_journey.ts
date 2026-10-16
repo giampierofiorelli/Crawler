@@ -226,7 +226,10 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // markers only: "don't want cold spots" or "no more cold spots" still express a need.
  const indifferent=(h:{start:number;end:number})=>h.start>=0&&(/(?:^| )(?:not bothered (?:about|by|with)|(?:don't|dont|do not) (?:care|need|mind)(?: about| for)?|not (?:looking for|interested in|fussed about)|no need for)(?: \S+){0,4} ?$/.test(t.slice(Math.max(0,h.start-70),h.start).trimEnd()+' ')
   ||/^(?: \S+){0,2} (?:doesn't|doesnt|does not|don't|dont|do not) matter\b|^(?: \S+){0,2} (?:is|are) not (?:a )?(?:requirement|must|necessary|needed|important)\b|^(?: \S+){0,2} not (?:needed|required|necessary|important)\b/.test(t.slice(h.end,h.end+60)));
- const conceptHits=[...longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h)&&!indifferent(h)),...describedConcepts(t,store,knowledgeCats,registry)].filter(h=>!counter(h));
+ const exactHits=longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h));
+ // A paraphrase of a need the user has set aside everywhere it is named is set aside too.
+ const setAside=new Set(exactHits.filter(h=>h.start>=0).map(h=>h.key).filter(k=>exactHits.filter(h=>h.key===k&&h.start>=0).every(indifferent)));
+ const conceptHits=[...exactHits.filter(h=>!indifferent(h)&&!setAside.has(h.key)),...describedConcepts(t,store,knowledgeCats,registry).filter(h=>!setAside.has(h.key))].filter(h=>!counter(h));
  let categoryId:string|null=null;let basis:Journey248['stages']['category']['basis']='unresolved';
  if(explicit.length===1){categoryId=explicit[0];basis='explicit_alias';}
  else if(explicit.length>1)basis='ambiguous';
