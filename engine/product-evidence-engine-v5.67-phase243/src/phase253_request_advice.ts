@@ -176,11 +176,13 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
    out.ranked=rows.map(({i:_i,...x})=>x);
    out.held=d.held.filter(h=>allowed.has(h.variantId)).map(h=>({productId:h.variantId,name:name(h.variantId,h.name),reason:h.reason}));
    for(const n of covered)assessed.add(n.id);
-   out.statements.push(`Ranked by ${covered.map(n=>dims.get(n.id)!.label).join(', ')} from the reviewed, signed catalog ${d.knowledgeRevision} (scoring policy ${d.policyRevision}); equal scores share a rank.`);
+   out.statements.push(`Ranked by ${covered.map(n=>dims.get(n.id)!.label).join(', ')} from the signed catalog ${d.knowledgeRevision} (scoring policy ${d.policyRevision}); equal scores share a rank.`);
    out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
    // The specification statements described an unordered list; the ranked criteria are no longer "not checked".
    out.statements=out.statements.map(x=>x.replace(' (alphabetical, not ranked)','')).filter(x=>!/^Not checked: /.test(x)||!covered.some(n=>x.includes(n.id)));
-   out.limitations.push('Only the criteria named above are ranked, from reviewed original tests cited per product; the stated limits were checked against declared specifications.',...d.visibleCautions);
+   // Phase268: a signature authenticates the issuer, not a review; the catalog's own review status is always stated.
+   out.limitations.push('Only the criteria named above are ranked, from original tests cited per product; the stated limits were checked against declared specifications.',
+    `Catalog review status: ${r.catalog!.catalog.externalReviewReference.replace(/[_:]+/g,' ')}.`,...d.visibleCautions);
   }else{
    out.statements.push(covered.length?`No ranking: ${d.firstLayer[0]}`:'No ranking: no reviewed catalog dimension covers the stated objectives.');
    out.researchPlan.push(...d.researchGaps.map(g=>`${g.kind}: ${g.reference} (${g.action})`));

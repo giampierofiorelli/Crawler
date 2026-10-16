@@ -11,6 +11,25 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000000000000000. Phase268 real evidence and first authentic ranking (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase268/REAL-EVIDENCE-REPORT.md`.
+
+- **Live pilot:** `scripts/phase246-live-wave.mjs` under policy `pee268_test_evidence_pilot` (private repo `policy/`;
+  expires 2026-10-23); 25 of 50 requests used, 3 hosts. The script now honours `politenessMs`, `maxHosts`,
+  Retry-After, and stops on a redirect to the same URL.
+- **Store:** schema v6 (condition codes on `test_measurements265`). It holds 10 authentic test-measurement rows from 10
+  Expert Reviews air-fryer reviews (unreviewed), 9 new air-fryer products named by `testDocumentSubject268`, and the
+  `low_energy_use` concept.
+- **Extraction:** Phase225 probe v2 (`pee225-probe.v2`). Gold: 11 measurements; 8 extracted (tuned); held-out first run
+  0/1 (committed unchanged).
+- **Validation and scoring:** `src/phase268_evidence_validation.ts` (`validateTestMeasurements268`, `compileCatalog268`,
+  `points268`); policies `pee268-test-evidence-validation` and `pee268-energy-scoring` are PROPOSED, not authorised.
+- **Controlled evaluation:** `scripts/phase268-authentic-eval.mjs --label X` (refuses to overwrite). The frozen request
+  ranks 3 products by measured energy under the proposed default; cooking results stay unassessed.
+- **Owner decisions pending:** authorise or amend the two policies, and name a production signer. Also decide whether
+  structured specialist outcome classes may be retained (cooking results).
+
 ## 000000000000000000. Engineering correction and vertical integration (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase267/ENGINEERING-CORRECTION-REPORT.md`. The contract of

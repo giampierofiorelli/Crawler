@@ -187,6 +187,11 @@ export const ADOPTED_LESSONS250:readonly CategoryLesson250[]=[
  // manual brewers and their accessories; as a cue it sent a roaster, an Aeropress filter and a French press to coffee
  // machines (set 4: 3 harmful decisions; set 3: 2 wrong attributions). Machine names and espresso-drink cues remain.
  {categoryId:'coffee_machines',registry:{dropCues:['coffee']},needs:[]},
+ // Phase268 (frozen acceptance request, before the ranking change): "using relatively little electricity" named no
+ // concept, so the one objective with authentic measured evidence (Expert Reviews energy protocol) was never asked.
+ {categoryId:'air_fryers',needs:[H('low_energy_use','outcome','Use relatively little electricity per cooking session.',
+  ['little electricity','less electricity','low electricity','electricity use','energy use','energy efficient','energy-efficient','cheap to run',
+   'running cost','running costs','power hungry','power-hungry','low energy'])]},
 ];
 
 /** Phrases, counterexamples, needs and categories a curriculum uses, against LESSON_BUDGET250. */

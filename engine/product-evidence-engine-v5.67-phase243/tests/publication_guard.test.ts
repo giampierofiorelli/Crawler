@@ -9,6 +9,7 @@ const idx=buildPublicationIndex([
  {productId:'prd_zephyr',productName:'Zephyrline Brewmaster 9 Espresso Machine',rawValue:'1350 W'},
  {productId:'prd_generic',productName:'Espresso Coffee Machine',rawValue:'1.3L'},
  {productId:'prd_named',productName:'Kettlo 2 Litre Kettle',rawValue:'2200W'},
+ {productId:'prd_fryer',productName:'Glimmerfry Duo 5 Air Fryer',rawValue:'0.837 kwh'},
 ]);
 const scan=(...texts:string[])=>scanAddedLines(texts.map((text,i)=>({file:'evaluation/x/gold.json',line:10+i,text,commit:'c0ffee1'})),idx);
 
@@ -18,6 +19,7 @@ test('a retained value bound to its product is caught (unit, currency, two-decim
  assert.equal(scan('"Zephyrline Brewmaster 9","Power = 1350 W"').length,1);
  assert.equal(scan('"Espresso Coffee Machine (1.3 L)",').length,1,'a name made only of generic words is matched exactly');
  assert.equal(scan('{"product":"Zephyrline Brewmaster 9",','  "tank":"1.8L"}').length,1,'within the nearby-line window');
+ assert.equal(scan('"Glimmerfry Duo 5 used 0.837kWh in an hour"').length,1,'a retained test measurement (Phase268) is private too');
  const f=scan('"include Zephyrline Brewmaster (price 449.95)",')[0];
  assert.deepEqual([f.productId,f.rule,f.line],['prd_zephyr','product_bound_declared_value',10]);
  assert.ok(!JSON.stringify(f).includes('449.95'),'the finding never repeats the value');

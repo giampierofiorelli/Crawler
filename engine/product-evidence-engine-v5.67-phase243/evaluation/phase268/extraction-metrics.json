@@ -1,0 +1,65 @@
+{
+ "schema": "pee268.extraction-metrics.v1",
+ "gold": "private (privateEvaluationDir249()/phase268/gold.json, gold-heldout.json): 10 documents, 11 measurements reported by the tester (energy kWh x10, timed preheat x1); annotated by reading the transient bytes before the corresponding extractor run",
+ "runs": {
+  "firstrun_v1": {
+   "extractor": "pee225-probe.v1 (unchanged)",
+   "documents": 8,
+   "goldMeasurements": 10,
+   "extracted": 0,
+   "leadsOutsideGold": 0,
+   "tuned": false
+  },
+  "development_after_fixes": {
+   "extractor": "pee225-probe.v2 (tuned on these 8 documents)",
+   "documents": 8,
+   "goldMeasurements": 10,
+   "extracted": 7,
+   "leadsOutsideGold": 0,
+   "tuned": true
+  },
+  "heldout_firstrun_frozen": {
+   "extractor": "pee225-probe.v2 frozen (extractor-freeze.txt)",
+   "documents": 2,
+   "goldMeasurements": 1,
+   "extracted": 0,
+   "leadsOutsideGold": 2,
+   "tuned": false,
+   "note": "held-out: first run, unchanged"
+  },
+  "final_after_heldout_fix": {
+   "extractor": "pee225-probe.v2 final (tuned on all 10 documents; NOT held-out)",
+   "documents": 10,
+   "goldMeasurements": 11,
+   "extracted": 8,
+   "leadsOutsideGold": 2,
+   "tuned": true
+  }
+ },
+ "final": {
+  "conditionsCorrect": "8/8 extracted measurements carry the gold conditions (setpoint, duration, load, compartments) or correctly report them as unstated",
+  "attribution": {
+   "exactProduct": 7,
+   "unresolved": 1,
+   "incorrect": 0,
+   "unresolvedReason": "page has no product markup (NewsArticle only): subject_unresolved, never forced"
+  },
+  "retained": {
+   "rows": 10,
+   "of": "8 gold measurements + 2 cooking-time leads outside the gold scope",
+   "policy": "pee249-factual-observations-v1 independent_original_test"
+  },
+  "missed": [
+   {
+    "count": 2,
+    "reason": "result sentence without a first-person cue in a review without a stated protocol (conservative rule)"
+   },
+   {
+    "count": 1,
+    "reason": "number written as a word (two minutes)"
+   }
+  ],
+  "validatedProposedDefault": 3,
+  "rejectedProposedDefault": 7
+ }
+}

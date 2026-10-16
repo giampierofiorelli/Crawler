@@ -34,11 +34,13 @@ const now=()=>new Date().toISOString();
 let S=existsSync(statePath)?JSON.parse(readFileSync(statePath,'utf8')):null;
 const save=()=>writeFileSync(statePath,JSON.stringify(S,null,1));
 const POLITENESS_MS=4000;
+// Phase268: an owner budget may raise (never lower) the per-host delay and cap the number of distinct hosts.
+const politenessMs=()=>Math.max(POLITENESS_MS,Number(S?.budget?.politenessMs??0));
 
 if(cmd==='init'){
  if(S)throw Error('state exists; refusing to reset budgets');
  S={schema:'pee246.live-wave.v1',startedAt:now(),agent:RESEARCH_AGENT,budget:JSON.parse(F.budget),
-  requests:[],hosts:{},robots:{},leads:[],plans:[],pages:[],stopReasons:[]};
+  ...(F.policy?{policy:JSON.parse(readFileSync(resolve(F.policy),'utf8'))}:{}),requests:[],hosts:{},robots:{},leads:[],plans:[],pages:[],stopReasons:[]};
  save();console.log(JSON.stringify(S.budget));process.exit(0);
 }
 if(!S)throw Error('run init first');
@@ -49,13 +51,15 @@ function budgetBlock(host){
  const b=S.budget;
  if(S.requests.length>=b.maxRequests)return 'total_request_budget_exhausted';
  if(S.requests.filter(r=>r.host===host).length>=b.maxPerHost)return 'per_host_budget_exhausted';
+ if(b.maxHosts&&!S.requests.some(r=>r.host===host)&&new Set(S.requests.map(r=>r.host.replace(/^www\./,''))).size>=b.maxHosts)return 'distinct_host_budget_exhausted';
+ const ra=S.hosts[host]?.retryAfterUntil;if(ra&&Date.now()<Date.parse(ra))return 'retry_after_not_elapsed';
  if(elapsed()>=b.maxSeconds)return 'elapsed_time_budget_exhausted';
  if(bytesUsed()>=b.maxBytes)return 'byte_budget_exhausted';
  if(S.hosts[host]?.suspended)return 'host_suspended:'+S.hosts[host].suspended;
  return null;
 }
 async function polite(host){
- const last=S.hosts[host]?.lastAt?Date.parse(S.hosts[host].lastAt):0;const d=POLITENESS_MS-(Date.now()-last);
+ const last=S.hosts[host]?.lastAt?Date.parse(S.hosts[host].lastAt):0;const d=politenessMs()-(Date.now()-last);
  if(d>0)await new Promise(r=>setTimeout(r,d));
 }
 /** Same-site redirect policy: https only, same host or its www./bare twin, at most 3 hops. Each hop is a
@@ -69,6 +73,8 @@ async function requestFollowing(url,purpose,maxBytes=PAGE_MAX_BYTES){
   if(!loc)return {...x,finalUrl:cur,redirects:chain};
   let next;try{next=new URL(loc,cur);}catch{return {...x,finalUrl:cur,redirects:chain};}
   chain.push({from:cur,to:next.href,status:x.rec.redirectStatus});
+  // Phase268: a redirect to the same URL (typically a cookie or anti-bot step) is an access control; never repeated.
+  if(next.href===cur){S.stopReasons.push({at:now(),url:cur,reason:'self_redirect_not_repeated'});save();return {blocked:'self_redirect',finalUrl:cur,redirects:chain};}
   if(next.protocol!=='https:'||!sameSite(next.host,new URL(cur).host)){S.stopReasons.push({at:now(),url:cur,reason:'cross_site_redirect_not_followed:'+next.host});save();return {...x,finalUrl:cur,redirects:chain};}
   if(next.host!==new URL(cur).host){const d=await allowed(next.href);if(d!=='allow')return {...x,finalUrl:cur,redirects:chain,robots:d};}
   cur=next.href;
@@ -89,6 +95,9 @@ async function request(url,purpose,maxBytes=PAGE_MAX_BYTES){
  if(r&&r.status>=200&&r.status<300)h.ok++;
  else if(r&&(r.status===401||r.status===403||r.status===429)){h.restricted++;h.suspended=`http_${r.status}`;S.stopReasons.push({at:rec.at,url,reason:`host_suspended_after_http_${r.status}`});}
  else if(!redirect)h.errors++;
+ // Phase268: any Retry-After is honoured (suspension for 429; a dated wait otherwise); it is never shortened.
+ if(r?.retryAfter){h.retryAfter=r.retryAfter;const sec=/^\d+$/.test(r.retryAfter)?Number(r.retryAfter)*1000:Date.parse(r.retryAfter)-Date.now();
+  h.retryAfterUntil=new Date(Date.now()+(Number.isFinite(sec)&&sec>0?sec:3600_000)).toISOString();S.stopReasons.push({at:rec.at,url,reason:'retry_after:'+r.retryAfter});}
  if(h.errors>=3&&!h.suspended){h.suspended='repeated_errors';S.stopReasons.push({at:rec.at,url,reason:'host_suspended_after_repeated_errors'});}
  save();return {r,rec};
 }
@@ -182,14 +191,15 @@ switch(cmd){
   const {extractSpecifications245,SPEC_EXTRACTOR_VERSION}=await import('../dist/src/phase245_spec_extraction.js');
   const {detectReservations249}=await import('../dist/src/phase249_retention_policy.js');
   // Phase265: the Phase225/226/227 test-result probe runs on the same transient bytes; only its leads travel on.
-  const {testLeadsFromHtml265}=await import('../dist/src/phase265_test_measurements.js');
+  const {testLeadsFromHtml265,testDocumentSubject268}=await import('../dist/src/phase265_test_measurements.js');
   const out=[];
   for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
   for(const p of S.pages){
    if(p.outcome!=='fetched'||!rawDir)continue;const f=join(rawDir,p.tag+'.html');if(!existsSync(f))continue;
    const b=readFileSync(f);if(sha(b)!==p.sha256)continue; // never trust bytes that do not match the receipt
    const host=new URL(p.finalUrl??p.url).host;const t0=Date.now();
-   const x=extractSpecifications245(b.toString('utf8'),p.finalUrl??p.url);
+   // Phase268: a test document's product is the reviewed subject, not its headline.
+   const x=testDocumentSubject268(extractSpecifications245(b.toString('utf8'),p.finalUrl??p.url),p.sourceType);
    // Phase249: machine-readable reservations (robots Content-Signal, TDM reservation, noai) travel with the observation.
    const robotsBody=S.robots[host]?.status===200?S.robots[host].body??null:null;
    const reservations=detectReservations249(robotsBody,b.toString('utf8'));

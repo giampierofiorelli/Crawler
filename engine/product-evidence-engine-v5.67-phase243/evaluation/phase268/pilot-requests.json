@@ -1,0 +1,373 @@
+{
+ "schema": "pee268.pilot-requests.v1",
+ "policy": "pee268_test_evidence_pilot",
+ "agent": "ProductEvidenceResearchBot",
+ "budget": {
+  "maxHosts": 5,
+  "maxRequests": 50,
+  "maxPerHost": 12,
+  "politenessMs": 5000,
+  "maxSeconds": 5400,
+  "maxBytes": 40000000
+ },
+ "used": {
+  "requests": 25,
+  "hosts": 3,
+  "perHost": {
+   "www.techgearlab.com": 9,
+   "www.rtings.com": 4,
+   "www.expertreviews.co.uk": 12
+  }
+ },
+ "requests": [
+  {
+   "at": "2026-10-16T18:34:42.028Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/robots.txt",
+   "purpose": "robots",
+   "status": 200,
+   "redirect": null,
+   "bytes": 865
+  },
+  {
+   "at": "2026-10-16T18:34:42.308Z",
+   "host": "www.rtings.com",
+   "url": "https://www.rtings.com/robots.txt",
+   "purpose": "robots",
+   "status": 200,
+   "redirect": null,
+   "bytes": 159
+  },
+  {
+   "at": "2026-10-16T18:35:08.898Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/cosori-turboblaze",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:14.197Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/cosori-turboblaze",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:19.500Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/cosori-turboblaze",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:24.760Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/cosori-turboblaze",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:25.197Z",
+   "host": "www.rtings.com",
+   "url": "https://www.rtings.com/air-fryer/reviews/cosori/turboblaze",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 235536
+  },
+  {
+   "at": "2026-10-16T18:35:29.969Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/ninja-air-fryer",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:35.185Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/ninja-air-fryer",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:43.556Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/ninja-air-fryer",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:48.955Z",
+   "host": "www.techgearlab.com",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/ninja-air-fryer",
+   "purpose": "operational",
+   "status": 301,
+   "redirect": "to_same_url",
+   "bytes": 0
+  },
+  {
+   "at": "2026-10-16T18:35:49.385Z",
+   "host": "www.rtings.com",
+   "url": "https://www.rtings.com/air-fryer/reviews/ninja/af101",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 231075
+  },
+  {
+   "at": "2026-10-16T18:35:54.805Z",
+   "host": "www.rtings.com",
+   "url": "https://www.rtings.com/air-fryer/learn/how-we-test",
+   "purpose": "method_reference",
+   "status": 200,
+   "redirect": null,
+   "bytes": 313807
+  },
+  {
+   "at": "2026-10-16T18:37:31.118Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/robots.txt",
+   "purpose": "robots",
+   "status": 200,
+   "redirect": null,
+   "bytes": 839
+  },
+  {
+   "at": "2026-10-16T18:37:36.649Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/best-air-fryer",
+   "purpose": "listing",
+   "status": 200,
+   "redirect": null,
+   "bytes": 377504
+  },
+  {
+   "at": "2026-10-16T18:37:49.875Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/salter-crisp-and-go-air-fryer-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 384672
+  },
+  {
+   "at": "2026-10-16T18:37:56.606Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/cuisinart-compact-max-air-fryer-afs8oblu-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 391194
+  },
+  {
+   "at": "2026-10-16T18:38:02.036Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/ninja-air-fryer-max-pro-6-2l-af180uk-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 368202
+  },
+  {
+   "at": "2026-10-16T18:38:07.576Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/ninja-foodi-dual-zone-air-fryer-af300uk-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 306716
+  },
+  {
+   "at": "2026-10-16T18:38:13.052Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/cosori-turbo-tower-air-fryer-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 481967
+  },
+  {
+   "at": "2026-10-16T18:38:18.509Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/instant-vortex-plus-dual-drawer-air-fryer-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 318065
+  },
+  {
+   "at": "2026-10-16T18:38:24.051Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/philips-5000-series-air-fryer-and-steamer-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 370748
+  },
+  {
+   "at": "2026-10-16T18:38:29.389Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/typhur-dome-2-air-fryer-review",
+   "purpose": "operational",
+   "status": 200,
+   "redirect": null,
+   "bytes": 552102
+  },
+  {
+   "at": "2026-10-16T18:48:27.682Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/tower-xpress-pro-combo-10-in-1-air-fryer-review",
+   "purpose": "heldout_eval",
+   "status": 200,
+   "redirect": null,
+   "bytes": 310626
+  },
+  {
+   "at": "2026-10-16T18:48:33.215Z",
+   "host": "www.expertreviews.co.uk",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/ninja-doublestack-xl-air-fryer-review",
+   "purpose": "heldout_eval",
+   "status": 200,
+   "redirect": null,
+   "bytes": 326314
+  }
+ ],
+ "pages": [
+  {
+   "tag": "tgl_turboblaze",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/cosori-turboblaze",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "not_fetched_too_many_redirects",
+   "sha256": null
+  },
+  {
+   "tag": "rt_turboblaze",
+   "url": "https://www.rtings.com/air-fryer/reviews/cosori/turboblaze",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "b7ee4ae3f6a6497a2c6813c06493f1f83bdd4ef5d665aa80614436467a28d153"
+  },
+  {
+   "tag": "tgl_ninja",
+   "url": "https://www.techgearlab.com/reviews/kitchen/air-fryer/ninja-air-fryer",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "not_fetched_too_many_redirects",
+   "sha256": null
+  },
+  {
+   "tag": "rt_af101",
+   "url": "https://www.rtings.com/air-fryer/reviews/ninja/af101",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "e70ffacbb528c69e9f9b87db2f1c5b6ddd7b112c5ed85c7f93007c0c2a33d025"
+  },
+  {
+   "tag": "rt_method",
+   "url": "https://www.rtings.com/air-fryer/learn/how-we-test",
+   "role": "method_reference",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "1d2437fc62612b80ed4789530f53c87457ee0d4b23cb7fa2ff975167a6dbd6c7"
+  },
+  {
+   "tag": "er_salter_crispgo",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/salter-crisp-and-go-air-fryer-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "43eab31bb2b3a4cf50db290d3d8ced7edfc1f7369c16d76ae1ecf701d820be85"
+  },
+  {
+   "tag": "er_cuisinart_compactmax",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/cuisinart-compact-max-air-fryer-afs8oblu-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "4f40ee1f3d2680f2690f5c5887392b89db1e13199f41042a3eb2889cd2a557cb"
+  },
+  {
+   "tag": "er_ninja_af180",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/ninja-air-fryer-max-pro-6-2l-af180uk-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "3cf5837699872ed91fc6863a1559121f98e794be72982a081fa140378e351d0c"
+  },
+  {
+   "tag": "er_ninja_af300",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/ninja-foodi-dual-zone-air-fryer-af300uk-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "0e9053d9d574861607c2aa779cf13781059eb35a6601bf9ca2dbace8159215b1"
+  },
+  {
+   "tag": "er_cosori_turbotower",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/cosori-turbo-tower-air-fryer-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "94a0ba4802e6fd9c9630d76691db06555d52d184683cd315fd761914de798546"
+  },
+  {
+   "tag": "er_instant_vortexdual",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/instant-vortex-plus-dual-drawer-air-fryer-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "9afc521972f7c122035317a3de8e568e411b33d51a784ba5ad59dfcb58232203"
+  },
+  {
+   "tag": "er_philips_5000steam",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/philips-5000-series-air-fryer-and-steamer-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "be7f4a891d3730822125b3952ce4632c2d644e78d7d8859582a77e5cd5204aa4"
+  },
+  {
+   "tag": "er_typhur_dome2",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/typhur-dome-2-air-fryer-review",
+   "role": "operational",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "95763c89810c259fad06a6df640a94ff2d1cc9aa787a78db9824ef4913bc13fa"
+  },
+  {
+   "tag": "ho_tower_xpresscombo",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/tower-xpress-pro-combo-10-in-1-air-fryer-review",
+   "role": "heldout_eval",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "79df0781c9f0bb17b05eaf4310aa881bb169eb1f43a9adf17a4f71b800450992"
+  },
+  {
+   "tag": "ho_ninja_doublestack",
+   "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/ninja-doublestack-xl-air-fryer-review",
+   "role": "heldout_eval",
+   "sourceType": "independent_original_test",
+   "outcome": "fetched",
+   "sha256": "754cc4e6f2e86231e513851483a3ea74f91c36599f3396195aa10c145b402866"
+  }
+ ],
+ "stopReasons": [],
+ "note": "request log only: no page bytes, robots bodies or extracted values. Raw bytes stay in the private evaluation directory."
+}

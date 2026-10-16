@@ -28,7 +28,7 @@ const MAX_SHARE=3,WINDOW=3;
 const tokens=(s:string)=>s.normalize('NFKD').toLowerCase().replace(/[̀-ͯ]/g,'').split(/[^a-z0-9]+/).filter(Boolean);
 /** A value is its number with its unit ("1.4|l", "800|ml", "599|gbp"); prices also as "N|price" when written with two
  * decimals. A bare number (a count, a year, a hash fragment) never matches. */
-const UNIT:Readonly<Record<string,string>>={l:'l',ltr:'l',litre:'l',litres:'l',liter:'l',liters:'l',ml:'ml',cl:'cl',w:'w',watt:'w',watts:'w',kw:'kw',
+const UNIT:Readonly<Record<string,string>>={l:'l',ltr:'l',litre:'l',litres:'l',liter:'l',liters:'l',ml:'ml',cl:'cl',w:'w',watt:'w',watts:'w',kw:'kw',kwh:'kwh',
  kg:'kg',g:'g',grams:'g',gram:'g',lb:'lb',lbs:'lb',cm:'cm',mm:'mm',m:'m',in:'in',inch:'in',inches:'in',bar:'bar',db:'db',dba:'db',v:'v',mah:'mah',
  h:'h',hours:'h',hrs:'h',min:'min',mins:'min',minutes:'min',gbp:'gbp','£':'gbp',usd:'usd','$':'usd',eur:'eur','€':'eur',cad:'cad',aud:'aud',cc:'cc'};
 const CURRENCY=new Set(['gbp','usd','eur','cad','aud']);

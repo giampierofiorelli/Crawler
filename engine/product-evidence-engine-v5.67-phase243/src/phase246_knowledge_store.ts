@@ -38,7 +38,7 @@ import type {CandidateResearch243} from './phase243_budgeted_category_search.js'
 import {classDecision249,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
 import {screenTestLead265,subjectAssociation265,reportedBy265,type TestLeadsInput265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=5;
+export const STORE_SCHEMA_VERSION246=6;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -241,6 +241,11 @@ const MIGRATIONS:string[]=[
    ranking_authorized INTEGER NOT NULL DEFAULT 0 CHECK(ranking_authorized=0),
    CHECK(value IS NOT NULL OR state='expired_pending_rights'), UNIQUE(revision_id,lead_id));
   CREATE INDEX test_measurements265_product ON test_measurements265(product_id,dimension,unit);`,
+ // v6 (Phase268): the stated conditions of each measurement as PEE-authored codes (no text), so that comparability can be
+ // judged from the store without the page: the value's own codes, the document's own protocol codes, the setpoint.
+ `ALTER TABLE test_measurements265 ADD COLUMN condition_codes TEXT NOT NULL DEFAULT '[]';
+  ALTER TABLE test_measurements265 ADD COLUMN protocol_codes TEXT NOT NULL DEFAULT '[]';
+  ALTER TABLE test_measurements265 ADD COLUMN setpoint_c REAL;`,
 ];
 
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;
@@ -573,13 +578,15 @@ export class KnowledgeStore246 {
    const l=r.lead;const assoc=subjectAssociation265(l,pageLead);const pid=assoc==='subject_unresolved'?null:mainId;
    const mid='tm_'+sha(revisionId+'|'+l.leadId).slice(0,24);
    const res=this.db.prepare(`INSERT INTO test_measurements265(measurement_id,revision_id,lead_id,extractor_version,block_sha256,block_index,value_offset,product_id,
-     subject_association,subject_assignment,value,unit,dimension,dimension_basis,target_scope,condition,instrument,method_cue,evidence_role,reported_by,retention,state,expires_at,recorded_at)
-     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?,?)
+     subject_association,subject_assignment,value,unit,dimension,dimension_basis,target_scope,condition,instrument,method_cue,evidence_role,reported_by,retention,state,expires_at,recorded_at,
+     condition_codes,protocol_codes,setpoint_c)
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?,?,?,?,?)
      ON CONFLICT(measurement_id) DO UPDATE SET state='current',extractor_version=excluded.extractor_version,product_id=excluded.product_id,
       subject_association=excluded.subject_association,dimension=excluded.dimension,dimension_basis=excluded.dimension_basis,target_scope=excluded.target_scope,
-      retention=excluded.retention,expires_at=excluded.expires_at WHERE test_measurements265.state='superseded_by_extractor'`)
+      retention=excluded.retention,expires_at=excluded.expires_at,condition_codes=excluded.condition_codes,protocol_codes=excluded.protocol_codes,
+      setpoint_c=excluded.setpoint_c WHERE test_measurements265.state='superseded_by_extractor'`)
     .run(mid,revisionId,l.leadId,t.extractorVersion,l.blockSha256,l.blockIndex,l.valueOffset,pid,assoc,l.subjectAssignment,l.value,l.unit,l.dimension,l.dimensionBasis,
-     l.targetScope,l.condition,l.instrument,l.methodCue,role,by,retention,expires,o.fetchedAt);
+     l.targetScope,l.condition,l.instrument,l.methodCue,role,by,retention,expires,o.fetchedAt,JSON.stringify(l.conditionCodes),JSON.stringify(l.protocolCodes),l.setpointC);
    if(Number(res.changes)){out.persisted++;if(pid)out.associated++;else out.unresolved++;}else out.alreadyStored++;
   }
   if(out.persisted||otherVersion||Object.keys(out.rejected).length)this.event('test_measurements_ingested',{revisionId,extractorVersion:t.extractorVersion,offered:out.offered,
@@ -603,6 +610,8 @@ export class KnowledgeStore246 {
    productId:(r.product_id as string|null)??null,subjectAssociation:r.subject_association as string,subjectAssignment:r.subject_assignment as string,
    value:r.value as number|null,unit:r.unit as string,dimension:r.dimension as string,dimensionBasis:r.dimension_basis as string,targetScope:r.target_scope as string,
    condition:(r.condition as string|null)??null,instrument:(r.instrument as string|null)??null,methodCue:r.method_cue as string,
+   conditionCodes:JSON.parse((r.condition_codes as string|undefined)??'[]') as string[],protocolCodes:JSON.parse((r.protocol_codes as string|undefined)??'[]') as string[],
+   setpointC:(r.setpoint_c as number|null|undefined)??null,
    evidenceRole:r.evidence_role as string,reportedBy:r.reported_by as string,independence:r.independence as string,verification:r.verification as string,
    market:r.market as string,exactVariantVerified:r.exact_variant_verified===1,retention:r.retention as string,state:r.state as string,
    supersededByRevision:(r.superseded_by_revision as string|null)??null,expiresAt:(r.expires_at as string|null)??null,recordedAt:r.recorded_at as string,

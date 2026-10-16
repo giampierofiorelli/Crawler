@@ -19,6 +19,10 @@ if(!store){console.error('pee-publication-check: no private store available; can
 const db=new DatabaseSync(store,{readOnly:true});
 const rows=db.prepare(`SELECT d.product_id AS productId,p.name AS productName,d.raw_value AS rawValue FROM declarations d JOIN products p USING(product_id)
  WHERE p.name IS NOT NULL AND d.retention IN ('facts_retained','facts_retained_class_policy','local_pending_rights_review')`).all();
+// Phase268: retained test measurements bound to a product are private values too.
+const hasTm=db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='test_measurements265'").get();
+if(hasTm)rows.push(...db.prepare(`SELECT t.product_id AS productId,p.name AS productName,(t.value||' '||t.unit) AS rawValue FROM test_measurements265 t JOIN products p USING(product_id)
+ WHERE p.name IS NOT NULL AND t.value IS NOT NULL AND t.retention IN ('facts_retained','facts_retained_class_policy','local_pending_rights_review')`).all());
 db.close();
 const idx=buildPublicationIndex(rows);
 const git=a=>execFileSync('git',a,{encoding:'utf8',maxBuffer:1<<30});

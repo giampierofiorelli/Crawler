@@ -30,3 +30,14 @@ test('open debt stays tracked until a stage is genuinely connected',()=>{
  for(const id of notDone)assert.ok(C.openDebt.some((d:{stage?:string})=>d.stage===id),`${id} must be listed as open debt`);
  for(const s of C.surfaces.filter((x:{status:string})=>x.status==='disconnected'))assert.ok(C.openDebt.some((d:{surface?:string})=>d.surface===s.id),s.id);
 });
+
+test('principle 11: every stage records its authentic validation; synthetic-only work names what it waits for',()=>{
+ const R=C.authenticValidationRequirement;assert.ok(R&&/authentic external evidence/.test(R.rule));
+ assert.deepEqual(Object.keys(R.tiers),['T1_synthetic','T2_authentic_controlled','T3_operational']);
+ for(const s of C.stages){const a=s.authenticValidation;assert.ok(a,`${s.id} must record authentic validation`);
+  assert.ok(['done','pending'].includes(a.status),s.id);
+  if(a.status==='done'){assert.ok(Object.keys(R.tiers).includes(a.tier),s.id);assert.ok(a.run,`${s.id}: name the run`);}
+  else assert.ok(a.waitsFor,`${s.id}: name what authentic validation waits for`);
+  if(s.status==='authentic_verified')assert.equal(a.tier,'T3_operational',`${s.id}: authentic_verified means operational`);
+  if(s.status==='synthetic_verified')assert.notEqual(a.tier,'T3_operational',`${s.id}: synthetic_verified cannot claim an operational run`);}
+});

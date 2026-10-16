@@ -194,6 +194,7 @@ can execute today, and what is the next demonstrated obstacle to a trustworthy r
 | 8 | No silent loss of user intent: an unassessed objective stays explicit in the answer. | `Advice253.unassessedObjectives`; fitness test C. |
 | 9 | Security before publication: public/private policy is checked on commits, not only on the working tree. | `.githooks/pre-push` runs `scripts/pee-publication-check.mjs` (fails closed without the private store); `--tree` and `--history` audits. |
 | 10 | An incomplete vertical path is explicit technical debt, tracked until integrated, validated and operational — never re-announced as a new finding. | `vertical-contract.json` `openDebt`; the contract test requires every blocked or missing stage to be listed. |
+| 11 | Every major new capability must eventually be validated on authentic external evidence on the operational path (owner brief, 2026-10-16). Synthetic tests prove wiring, not reality. Tiers stay distinct: T1 synthetic, T2 authentic controlled (authentic evidence through real components on a store copy, proposed policy or evaluation-only authority), T3 operational. | `vertical-contract.json` `authenticValidationRequirement` and the per-stage `authenticValidation` record; `tests/vertical_contract.test.ts` refuses a stage without it, and an `authentic_verified` stage without a T3 run. |
 
 Before closing any phase: run the vertical fitness and contract tests, the publication check on the commits to be
 pushed, the full suite, and update the contract if a stage's connection or status changed.

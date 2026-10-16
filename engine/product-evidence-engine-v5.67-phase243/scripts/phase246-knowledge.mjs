@@ -42,7 +42,7 @@ import {CONCEPT_VOCABULARY248} from '../dist/src/phase248_concept_vocabulary.js'
 import {ADOPTED_LESSONS250,applyLessons250} from '../dist/src/phase250_category_lessons.js';
 import {relations247,attributeVocabulary247,compileTo116,researchPriorities247} from '../dist/src/phase247_category_relations.js';
 import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../dist/src/phase245_spec_extraction.js';
-import {testLeadsFromHtml265} from '../dist/src/phase265_test_measurements.js';
+import {testLeadsFromHtml265,testDocumentSubject268} from '../dist/src/phase265_test_measurements.js';
 
 const [cmd,...rest]=process.argv.slice(2);
 const flags={};for(let i=0;i<rest.length;i++){if(rest[i].startsWith('--')){const k=rest[i].slice(2);const v=rest[i+1]&&!rest[i+1].startsWith('--')?rest[++i]:true;flags[k]=v;}}
@@ -93,7 +93,7 @@ try{
    for(const p of inv.pages){
     let bytes=null;for(const d of dirs){const f=join(d,p.tag+'.html');if(existsSync(f)){const b=readFileSync(f);if(sha(b)===p.recordedSha256){bytes=b;break;}}}
     if(!bytes||!p.url){res.push({tag:p.tag,ingested:false,reason:bytes?'no_url':'raw_bytes_not_verified'});continue;}
-    const host=new URL(p.url).host;const x=extractSpecifications245(bytes.toString('utf8'),p.url);
+    const host=new URL(p.url).host;const x=testDocumentSubject268(extractSpecifications245(bytes.toString('utf8'),p.url),SOURCE_TYPE_BY_HOST[host]??'unknown');
     const r=store.ingestObservation246({source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:SOURCE_TYPE_BY_HOST[host]??'unknown',
       sourceTypeBasis:'operator_asserted',policy:policyFor(host)},url:p.url,sha256:p.recordedSha256,bytes:p.bytes,httpStatus:200,fetchedAt:new Date(p.fetchedAt).toISOString(),
      runId:'phase245_recovered_'+p.set,extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:x,

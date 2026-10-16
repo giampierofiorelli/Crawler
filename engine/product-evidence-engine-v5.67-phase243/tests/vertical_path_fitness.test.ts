@@ -73,7 +73,7 @@ test('A–C, G: the real request path reaches the authorised Phase181 ranking, k
  assert.ok(a.excluded.some(x=>x.productId===w.ids.C3));
  assert.ok(a.held!.some(h=>h.productId===w.ids.D4&&/no independently reviewed/.test(h.reason)),'D4 is in budget but unreviewed: held, not ranked');
  assert.deepEqual(a.unassessedObjectives,[],'the taste objective was assessed by the reviewed dimension');
- assert.ok(a.statements.some(x=>/Ranked by Traditional espresso taste \(specialist panel\) from the reviewed, signed catalog synthetic_panel_v1/.test(x)));
+ assert.ok(a.statements.some(x=>/Ranked by Traditional espresso taste \(specialist panel\) from the signed catalog synthetic_panel_v1/.test(x)));
  assert.ok(a.limitations.some(x=>/does not independently establish scientific quality/.test(x)),'a signature is not scientific validity');
  assert.deepEqual(verticalProbe(adviseFromRequest253),[],'the fitness probe passes on the intact path');
 });

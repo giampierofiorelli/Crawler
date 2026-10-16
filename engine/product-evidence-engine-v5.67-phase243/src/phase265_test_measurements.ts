@@ -16,13 +16,13 @@
  * the hash of the source block, offsets, the number, the unit, short regex-bounded condition/instrument tokens and
  * cue codes.
  */
-import type {TestCandidate225,TestProbe225} from './phase225_transient_test_probe.js';
+import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_transient_test_probe.js';
 import {probeTransientTestContent225} from './phase225_transient_test_probe.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
  * explicit header links). A change re-derives the measurements of a revision whose bytes are offered again. */
-export const TEST_LEAD_EXTRACTOR265='pee225-probe.v1+pee226-tables.v1+pee227-headers';
+export const TEST_LEAD_EXTRACTOR265='pee225-probe.v2+pee226-tables.v1+pee227-headers';
 export interface TestLeadsInput265 {extractorVersion:string;probe:TestProbe225}
 export type SourceKind265='manufacturer'|'retailer'|'independent_original_test'|'editorial'|'community'|
  'promotional_announcement'|'reference_encyclopedia'|'unknown';
@@ -33,6 +33,21 @@ export function pageProductLead265(x:SpecExtraction245|null):{name:string;model:
  if(!x||!x.mainProduct.name||x.mainProduct.ambiguous)return null;
  const ids=x.mainProduct.identifiers??{};
  return {name:x.mainProduct.name,model:ids.model??ids.mpn??null,sku:ids.sku??null};
+}
+/** Phase268: the tested product of a single-product test document. Test publishers mark up the review headline as the
+ * product name ("Typhur Dome 2 AF03 Air Fryer review: A design-led ..."); taken as is, the store would record the
+ * headline as a product identity. For an article page of a test publisher, the English convention "<product> review:
+ * <tagline>" names the subject; a single model-code token in it becomes the declared model. Nothing else changes, and a
+ * page that does not follow the convention keeps its extraction unchanged. */
+const MODEL_TOKEN=/^(?=[A-Z0-9/-]{4,16}$)[A-Z]{1,5}[A-Z0-9]*\d[A-Z0-9]*(?:\/[0-9A-Z]{1,4})?$/;
+export function testDocumentSubject268(x:SpecExtraction245|null,sourceType:SourceKind265|string):SpecExtraction245|null{
+ if(!x||sourceType!=='independent_original_test'||!x.mainProduct.name||x.mainProduct.ambiguous||x.mainProduct.pageSignals?.ogType!=='article')return x;
+ const m=/^(.{3,140}?)\s+review\s*(?:[:|–—-]\s|$)/i.exec(x.mainProduct.name.replace(/\u00a0/g,' '));
+ if(!m)return x;
+ const name=m[1].replace(/\s+/g,' ').trim();
+ const tokens=name.split(/[\s()]+/).filter(t=>MODEL_TOKEN.test(t));
+ const ids={...x.mainProduct.identifiers};if(tokens.length===1&&!ids.model)ids.model=tokens[0];
+ return {...x,mainProduct:{...x.mainProduct,name,identifiers:ids}};
 }
 /** Run the existing Phase225 probe (which runs Phase226/227) on transient bytes. Nothing of the body is returned. */
 export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null):TestLeadsInput265{
@@ -48,6 +63,8 @@ export const normalizeUnit265=(u:string):string|null=>UNITS[String(u).toLowerCas
 const DIMENSION_UNITS:Readonly<Record<string,readonly string[]>>={mass:['g','kg'],volume:['l'],noise:['db','dba'],
  duration:['ms','seconds','minutes','hours'],length:['mm','cm'],power:['w'],energy:['kwh']};
 const TOKEN=/^[a-z0-9 .°%]{1,40}$/;
+const CODES:readonly ConditionCode225[]=['setpoint_c','duration_1h','load_empty','from_cold','all_compartments','single_compartment','includes_preheat','power_meter','conditions_from_block'];
+const codesOk=(x:unknown)=>x===undefined||(Array.isArray(x)&&x.length<=CODES.length&&x.every(c=>CODES.includes(c)));
 const hex64=(s:unknown)=>typeof s==='string'&&/^[0-9a-f]{64}$/.test(s);
 
 /** Who reports the result. A manufacturer's result stays manufacturer-reported; a test publisher's type is an operator
@@ -61,6 +78,8 @@ export interface ScreenedLead265 {
  targetScope:'compartment_unspecified'|'whole_product_unspecified'|'not_established';
  condition:string|null;instrument:string|null;methodCue:TestCandidate225['methodCue'];
  subjectAssignment:TestCandidate225['subjectAssignment'];subject:TestCandidate225['subject'];
+ /** Phase268: PEE-authored condition codes of the value and of the document's own protocol; setpoint in °C. */
+ conditionCodes:readonly ConditionCode225[];protocolCodes:readonly ConditionCode225[];setpointC:number|null;
 }
 export type LeadRejection265='lead_not_from_this_revision'|'lead_claims_review_or_admission'|'malformed_lead'|'unit_not_recognised'|'unit_dimension_mismatch';
 /** Validate one Phase225 candidate for this revision. Every safety flag must still say "not reviewed / not admitted";
@@ -71,7 +90,8 @@ export function screenTestLead265(c:TestCandidate225,rev:{url:string;sha256:stri
  if(c.classification!=='publisher_reported_measurement_lead_only'||c.methodReviewed!==false||c.originalWorkReviewed!==false||c.reviewerIndependent!==false||
   c.exactVariantVerified!==false||c.market!=='unknown'||c.scientificEvidenceAdmitted!==false||c.rankingAuthorized!==false)return {ok:false,reason:'lead_claims_review_or_admission'};
  if(!hex64(c.id)||!hex64(c.blockSha256)||!Number.isInteger(c.blockIndex)||!Number.isInteger(c.valueOffset)||typeof c.value!=='number'||!Number.isFinite(c.value)||
-  c.value<0||c.value>1e7||!['first_person_test_statement','test_section_with_method_cue','bounded_table_result_with_local_method'].includes(c.methodCue)||
+  c.value<0||c.value>1e7||!['first_person_test_statement','test_section_with_method_cue','bounded_table_result_with_local_method','energy_result_with_document_protocol'].includes(c.methodCue)||
+  !codesOk(c.conditionCodes)||!codesOk(c.documentProtocolCodes)||(c.setpointC!==undefined&&c.setpointC!==null&&!(Number.isInteger(c.setpointC)&&c.setpointC>=20&&c.setpointC<=400))||
   !['page_context_unverified','multiple_models_unresolved','not_identified','table_row_declared_model_unverified'].includes(c.subjectAssignment)||
   (c.condition!==null&&!TOKEN.test(String(c.condition)))||(c.instrument!==null&&!TOKEN.test(String(c.instrument))))return {ok:false,reason:'malformed_lead'};
  const unit=normalizeUnit265(c.unit);if(!unit)return {ok:false,reason:'unit_not_recognised'};
@@ -80,7 +100,8 @@ export function screenTestLead265(c:TestCandidate225,rev:{url:string;sha256:stri
  return {ok:true,lead:{leadId:c.id,blockSha256:c.blockSha256,blockIndex:c.blockIndex,valueOffset:c.valueOffset,value:c.value,unit,
   dimension:declared??'not_established',dimensionBasis:declared?'publisher_table_header':'not_established',
   targetScope:c.publisherDeclaredTargetScope??'not_established',condition:c.condition,instrument:c.instrument,methodCue:c.methodCue,
-  subjectAssignment:c.subjectAssignment,subject:c.subject}};
+  subjectAssignment:c.subjectAssignment,subject:c.subject,conditionCodes:[...(c.conditionCodes??[])],protocolCodes:[...(c.documentProtocolCodes??[])],
+  setpointC:c.setpointC??null}};
 }
 /** A lead is associated with the page's main product only when its subject IS that product's recorded identity and the
  * probe assigned it from the page context or from a table row naming that model. Anything else stays unresolved. */
