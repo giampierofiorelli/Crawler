@@ -75,6 +75,10 @@ Never claim to have read a file you have not opened. In reports, say which secti
 - **Reuse retained evidence before asking for research** (Phase255). Tell apart an absent declaration, a retained
   value that is not comparable, and a retained but incomplete one (no unit, unlabelled axes, a range on both sides).
   Only the first is new research. Never assume a unit. A quantity in a product name never overrides a declaration.
+- **Validate new contracts on real retained data before persisting them** (Phase259):
+  - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
+  - never feed a pipeline invented text to make it run;
+  - persist only what the store does not already hold (derive, don't copy).
 - **A lower rank is not an exclusion** (Phase258): candidates outside a job's scope (another product, no
   permission) must be removed, not just ordered later. Record language ability per task (detection, extraction,
   terminology, semantics, faithfulness, translation): accepting a language tag or Unicode is not understanding.

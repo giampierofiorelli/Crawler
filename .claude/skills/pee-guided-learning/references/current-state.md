@@ -11,6 +11,18 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000000. Phase259 update (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase259/PHASE259-TECHNICAL-REPORT.md` (persistence
+requirements in it); next brief `docs/phase259/CONTINUATION-PROMPT.md`.
+
+- On real retained metadata, Phase258 represents 6/6 sample records via `descriptorFromRetained259`, with roles
+  `role_unknown` and `not_retained` and the optional `retained` block.
+- No source has a retained country, language, market, rights policy or screening decision.
+- Selection never re-proposes already-read pages, table attributions or restricted hosts. All 19 Phase257 jobs have
+  no fresh candidate: new source discovery is needed.
+- Nothing is persisted yet; Phase260 adds journal events plus a projection.
+
 ## 000000000. Phase258 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase258/PHASE258-TECHNICAL-REPORT.md` (plus
