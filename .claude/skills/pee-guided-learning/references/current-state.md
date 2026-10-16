@@ -11,6 +11,30 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000000000000000. End-to-end reality check (2026-10-16) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase266/REALITY-CHECK-REPORT.md` (audit, not a phase).
+
+- **Works:**
+  - request → unordered, cited factual shortlist from retained declarations (`adviseFromRequest253`);
+  - ranking engines (Phase180/181) correct and deterministic on controlled synthetic evidence.
+- **Does not work, or never tested:**
+  - 0 authentic independent test results in any category;
+  - test extraction never run on an authentic test document;
+  - `adviseFromRequest253` never calls Phase180/181; nothing produces a signed catalog or release;
+  - Phase265 measurements cannot reach the decision layer;
+  - a conflict fails a whole Phase181 catalog closed.
+- **Fixed:**
+  - water-tank requirement (`water_tank_capacity_min`; boilers excluded from capacity);
+  - an article ends the purchase noun phrase.
+
+  Measured on 7 frozen requests (`evaluation/phase266/`).
+- **Open, without network:**
+  - CAD budgets;
+  - taste and noise need vocabulary;
+  - component heights read as overall height;
+  - "X crushes ice" phrasing.
+
 ## 0000000000000000. Phase265 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase265/PHASE265-TECHNICAL-REPORT.md`; next brief

@@ -21,10 +21,17 @@ import {reviewedFirstAnswer180,type SignedRelease180,type TrustedRankingAuthorit
 export type Dimension249='volume'|'length'|'mass'|'power'|'duration'|'price';
 export interface SpecCriterion249 {label:string;property:RegExp;exclude?:RegExp;dimension:Dimension249;bound:'min'|'max';
  /** Phase253: the axis read from an axis-labelled overall dimensions declaration ("20.7(W) x 28.4(D) x 33(H) cm"). */
- axis?:'W'|'H'|'D'}
+ axis?:'W'|'H'|'D';
+ /** Reality check 2026-10-16: a generic property ("Capacity") whose declared value names the measured part ("Water tank
+  * 1.9L") counts for that part's criterion. */
+ alsoWhen?:{property:RegExp;rawValue:RegExp}}
 /** Confirmed criteria that are factual constraints checkable against declarations. Keys are stable decision keys. */
 export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
- capacity_min:{label:'capacity at least',property:/\b(?:capacity|volume)\b/i,exclude:/\b(?:battery|bin|tank|container|bag|collection|water|dust)\b/i,dimension:'volume',bound:'min'},
+ // A boiler is an internal heating vessel, not the product's capacity (reality check 2026-10-16: a coffee machine was
+ // excluded on its boiler volume).
+ capacity_min:{label:'capacity at least',property:/\b(?:capacity|volume)\b/i,exclude:/\b(?:battery|bin|tank|container|bag|collection|water|dust|boiler)\b/i,dimension:'volume',bound:'min'},
+ water_tank_capacity_min:{label:'water tank capacity at least',property:/\b(?:water )?(?:tank|reservoir)\b/i,exclude:/\b(?:drip|waste|milk|bean|steam)\b/i,dimension:'volume',bound:'min',
+  alsoWhen:{property:/^capacity$/i,rawValue:/\bwater tank\b/i}},
  width_max:{label:'width at most',property:/\bwidth\b/i,dimension:'length',bound:'max',axis:'W'},
  height_max:{label:'height at most',property:/\bheight\b/i,exclude:/\b(?:cut|seat|back)\b/i,dimension:'length',bound:'max',axis:'H'},
  depth_max:{label:'depth at most',property:/\bdepth\b/i,dimension:'length',bound:'max',axis:'D'},
@@ -76,7 +83,8 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  if(c.value.kind!=='quantity')return {key:c.key,outcome:'unknown',code:'not_a_quantity',reason:'criterion is not a quantity',evidence:[]};
  const unit=c.value.unit,limit=c.value.value;
  // Declarations of the base product (variant-specific values are not applied to the whole product).
- const rel=p.declarations.filter(d=>!d.variantId&&spec.property.test(d.property)&&!(spec.exclude?.test(d.property)));
+ const rel=p.declarations.filter(d=>!d.variantId&&((spec.property.test(d.property)&&!(spec.exclude?.test(d.property)))||
+  (!!spec.alsoWhen&&spec.alsoWhen.property.test(d.property)&&spec.alsoWhen.rawValue.test(d.rawValue))));
  // Phase253: the same axis of the product's overall dimensions, only when the axes are labelled in the value or in the
  // property ("Dimensions (WxDxH)"). Unlabelled triples stay unknown; component dimensions (slot, box, bowl) are not the product's.
  if(spec.axis)for(const d of p.declarations){const q=axisValue249(d,spec.axis);if(q&&!d.variantId)rel.push({...d,value:q});}

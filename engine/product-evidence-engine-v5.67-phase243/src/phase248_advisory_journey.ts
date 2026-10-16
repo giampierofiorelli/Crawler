@@ -151,7 +151,11 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
    const replaced=replacing?seg.slice(0,st).replace(/^.*?replace/,''):'';
    for(let k=0;k<3&&rest;k++){
     rest=rest.replace(SKIP253,'');const toks=rest.split(' ');const np:string[]=[];let i=0;
-    for(;i<toks.length&&np.length<6;i++){if(BOUNDARY253.has(toks[i]))break;np.push(toks[i]);}
+    for(;i<toks.length&&np.length<6;i++){if(BOUNDARY253.has(toks[i]))break;
+     // Reality check 2026-10-16: an article inside the phrase starts a new noun phrase, so the word before it is a verb
+     // or preposition, not part of the purchase ("which espresso machine makes the best ..." names an espresso machine).
+     if(np.length&&/^(?:a|an|the)$/.test(toks[i])){np.pop();break;}
+     np.push(toks[i]);}
     if(!np.length)break;
     // A title led by a verb form ("Using the outlet ...") or by a relation noun ("Meaning of ...") names no purchase.
     if(st===0&&k===0&&!starts.slice(0,-1).includes(0)&&(/ing$/.test(np[0])&&/^(?:the|a|an|this|that|these|those|some|any)$/.test(np[1]??'')||toks[i]==='of'))break;

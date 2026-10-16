@@ -16,7 +16,7 @@ import {composeQuestion125} from './phase125_compositional_dialogue_frame.js';
 import type {Constraint253} from './phase253_advice_contract.js';
 
 export interface RequestConstraint253 extends Constraint253 {
- bound:'min'|'max';property:'capacity'|'width'|'height'|'depth'|'weight'|'power'|'battery_life'|'price';
+ bound:'min'|'max';property:'capacity'|'water_tank'|'width'|'height'|'depth'|'weight'|'power'|'battery_life'|'price';
  describes:'product'|'available_space';span:string;start:number;end:number;
  status:'stated_in_request'|'candidate';confidence:'clear'|'ambiguous';note:string|null}
 export interface ConstraintExtraction253 {constraints:RequestConstraint253[];unmapped:{span:string;reason:string}[]}
@@ -37,7 +37,7 @@ const unitOf=(u:string):string|null=>{const x=u.toLowerCase();
  return canonicalUnit245(u);};
 const dimensionOf=(u:string):'volume'|'length'|'mass'|'power'|'duration'|null=>
  ['l','ml','qt'].includes(u)?'volume':['cm','mm','in','ft','m'].includes(u)?'length':['kg','g','lb','oz'].includes(u)?'mass':['W','kW'].includes(u)?'power':['h','min'].includes(u)?'duration':null;
-const CRITERION:Record<string,string>={'capacity:min':'capacity_min','width:max':'width_max','height:max':'height_max','depth:max':'depth_max','weight:max':'weight_max','power:min':'power_min','battery_life:min':'battery_life_min'};
+const CRITERION:Record<string,string>={'capacity:min':'capacity_min','water_tank:min':'water_tank_capacity_min','width:max':'width_max','height:max':'height_max','depth:max':'depth_max','weight:max':'weight_max','power:min':'power_min','battery_life:min':'battery_life_min'};
 
 export function extractConstraints253(text:string):ConstraintExtraction253{
  const lower=text.toLowerCase().replace(/[’‘]/g,"'");
@@ -64,7 +64,9 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   if(space&&bound===null)bound='max';
   const negated=NEGATION.test(before.replace(BOUND_NEGATIONS,' '));
   let property:RequestConstraint253['property']|null=null;
-  if(dim==='volume')property='capacity';
+  // Reality check 2026-10-16: a volume said of a water tank or reservoir is the tank's, not the product's capacity
+  // ("a water tank of at least 1.5 litres"); read as product capacity it was checked against boiler capacities.
+  if(dim==='volume')property=/\b(?:water tank|tank|reservoir)\b/.test(ctx)?'water_tank':'capacity';
   else if(dim==='length'){
    // The word right after the quantity names it ("57.5 cm wide and 36.5 cm high"); otherwise the clause around it.
    const pick=(x:string)=>/^\s*(?:\S+\s+)?(?:wide|width|across|broad|wider)\b/.test(x)?'width':/^\s*(?:\S+\s+)?(?:tall|high|height|taller|higher)\b/.test(x)?'height':/^\s*(?:\S+\s+)?(?:deep|depth|deeper)\b/.test(x)?'depth':null;
@@ -80,7 +82,7 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   if(!property){if(dim==='length'||dim==='power'||dim==='volume')unmapped.push({span:span0,reason:`unclear which property ${unit} refers to`});continue;}
   const value=parseNumber245(range?(bound==='max'?mainNum:lowNum!):mainNum);
   if(value===null)continue;
-  const eff=bound??(property==='capacity'?'min':null);
+  const eff=bound??(property==='capacity'||property==='water_tank'?'min':null);
   const criterion=eff?CRITERION[`${property}:${eff}`]:undefined;
   if(!criterion){unmapped.push({span,reason:`no checkable criterion for a ${bound??'unbounded'} ${property}`});continue;}
   const clear=!!bound&&!negated&&!inferredBound;
