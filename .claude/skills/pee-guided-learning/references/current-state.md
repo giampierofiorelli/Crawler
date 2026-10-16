@@ -11,7 +11,53 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
-## 00. Phase251 update (2026-10-15) — read this first; it supersedes §0 where they differ
+## 000. Phase252 update (2026-10-16) — read this first; it supersedes §00 and §0 where they differ
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase252/PHASE252-TECHNICAL-REPORT.md`. Next brief:
+`docs/phase252/CONTINUATION-PROMPT.md`. Store: pee-knowledge `4c78d47` (189 products, 2,385 declarations).
+
+- **D′ first run (set 5, 30 real requests, T2):**
+  - correct: A 11 / R 14 / D′ 21;
+  - harmful: 13 / 11 / 4;
+  - advise correct: 3 / 4 / 8 of 9;
+  - need recall still about 0 (D′ 1/7 listed).
+
+  Set 5 fell short of its target (11 in-scope). The lawful Stack Exchange pool of kitchen purchase questions is nearly
+  used up.
+- **ADOPTED_LESSONS250 exceeds LESSON_BUDGET250** (`within:false`), so D′ is not budget-equal to B and C.
+- **Identity:**
+  - Sharp MS02EB/QS204AEB split by `splitProductIdentity252` (journaled; reversible with `reverseProductSplit252`);
+  - the ingest guard keys a page by its URL model code when a generic name would merge different model pages;
+  - the identity warning counts only the product's own (`main_product`) pages;
+  - still open: 63 table-only products and 3 product-line records.
+- **Teaching (pilots microwave_ovens and headphones):**
+  - Module: `src/phase252_category_teaching.ts`, with arm L (lexical) and arm G (research-guided, sources with URLs,
+    typed statements).
+  - Compiled by `registryWithTeaching252` and `applyTeaching252` into the existing registry, store items and
+    hypothesis relations.
+  - NOT applied to the operational registry or store.
+  - First run on 28 untouched requests:
+    - decisions equal for L and G: 20 correct and 7 harmful each, all harmful on controls;
+    - explicit needs: L 28/44, G 20/44;
+    - only G gives requirements, applicability cautions and declared-spec checks.
+  - Generalisation without category names is unmeasured (1 case).
+- **Journey and decision additions:**
+  - `needQuestions` per taught need;
+  - "missing evidence for X" plan entries;
+  - indifference markers drop a need;
+  - plural category names match the singular;
+  - `battery_life_min`;
+  - the "up to" upper-bound rule.
+- **Review semantics:** `src/phase252_review_semantics.ts` adds 7 bounded lexical faithfulness checks inside
+  `extractReview110`. They are not entailment and not truth. Evidence is T1 only.
+- **Spent:** sets 1–5 and the Phase252 teaching set. The 24 review-semantics cases are now development.
+- **Reuse map additions:**
+  - identity split and guard: `phase246_knowledge_store.ts`;
+  - teaching: `phase252_category_teaching.ts`;
+  - faithfulness: `phase252_review_semantics.ts`;
+  - Stage 4 arms and scorer: `scripts/phase252-teaching-arms.mjs` and `scripts/phase252-teaching-score.mjs`.
+
+## 00. Phase251 update (2026-10-15)
 
 **Phase251 is complete.** Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase251/PHASE251-TECHNICAL-REPORT.md`.
 

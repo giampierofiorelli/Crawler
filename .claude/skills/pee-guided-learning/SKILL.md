@@ -145,6 +145,10 @@ Never claim to have read a file you have not opened. In reports, say which secti
 
    Lesson conclusions are hypotheses until evidence supports them. Never carry technical conclusions across
    unrelated categories.
+
+   Keep the words users literally write for a need. Research adds structure (requirements, measures, insufficient
+   proxies, clarifications), not better phrasing: in Phase252, situational phrases recalled 20/44 needs against 28/44
+   for literal words.
 5. **Spend research on decision value.** Pursue evidence that could change the advice. Budget the requests, collapse
    syndicated copies into one original source, and stop on decision value, not on a timeout.
 6. **Test honestly.**
@@ -155,6 +159,8 @@ Never claim to have read a file you have not opened. In reports, say which secti
    - Report gains and harms with denominators: new false positives, wrong attributions, unnecessary abstentions and
      cost.
    - Keep a change only if the evidence supports it. Otherwise revert it or label it a prototype.
+   - A rubric only one arm can satisfy measures a capability, not generalisation: report it apart from category,
+     need and decision quality.
 7. **Separate developer capability from runtime capability.** Claude understanding a review does not mean PEE's
    shipped TypeScript does. Measure the deployed path.
 8. **Version and report.** Commit reproducible evidence, run the full suite (`npm test`) and write the phase report.

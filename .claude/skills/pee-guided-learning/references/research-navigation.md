@@ -15,4 +15,10 @@ The **full** original research (not a summary) lives at [research-v9-full.md](re
 | 2252–2342 | Owner decision VIII: Claude-only now | Current operating restrictions and reuse of previous scientific ideas |
 | 2343–2440 | Owner correction IX: feasibility audit and independent-evaluation tiers | **Current correction** to v5's requests for independent validation |
 
+**Consultation record.**
+- Phase252 (proactive teaching) read lines 83–316, 464–707 and 800–1029 in full.
+- It did not re-read 1108–1453 or 1751–2008.
+- The external sources consulted for the pilot teaching are listed, with URLs, in
+  `engine/product-evidence-engine-v5.67-phase243/docs/phase252/TEACHING-PLAN.md`.
+
 **Research consultation protocol**: Start with relevant source sections above, skim related headings across the entire cumulative research, then read full cited passages, supporting source URLs and correction sections. Record what you consulted and what you did not. Do not imply that the index itself reproduces all the research. Any newly verified fact may correct an older claim only via a documented versioned correction.
