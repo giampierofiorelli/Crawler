@@ -6,6 +6,10 @@
 import {readFileSync,writeFileSync} from 'node:fs';import {resolve} from 'node:path';
 const F=Object.fromEntries(process.argv.slice(2).reduce((a,x,i,arr)=>i%2?a:[...a,[x.replace(/^--/,''),arr[i+1]]],[]));
 const bench=JSON.parse(readFileSync(resolve(F.bench),'utf8'));
+// Phase253: gold without the labels this scorer needs is refused (it used to default silently to "advise"; set 3, whose
+// Phase250 gold has no expectedBehaviour, was scored as "harmful 58/73"). Scoring definitions are unchanged.
+{const bad=bench.cases.filter(c=>!['advise','out_of_scope','clarify'].includes(c.expectedBehaviour)||!('expectedCategory' in c)||(c.expectedBehaviour==='clarify'&&!Array.isArray(c.candidates)));
+ if(bad.length){console.error(`invalid gold for phase251-score: ${bad.length} case(s) lack expectedBehaviour/expectedCategory/candidates: ${bad.slice(0,10).map(c=>c.id).join(', ')}`);process.exit(2);}}
 const runs=Object.fromEntries(F.runs.split(',').map(x=>{const [k,f]=x.split('=');return [k,JSON.parse(readFileSync(resolve(f),'utf8'))];}));
 const RANK={correct:3,unhelpful:2,premature:1,harmful:0};
 function rowFor(c,j){

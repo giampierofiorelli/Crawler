@@ -115,6 +115,81 @@ function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly str
  return hits.filter(h=>!hits.some(o=>o!==h&&o.key!==h.key&&o.start<=h.start&&o.end>=h.end&&(o.end-o.start)>(h.end-h.start)));
 }
 const GENERIC=/^(?:something|anything|one|ones|new one|an? appliance|appliances?|products?|things?|gadgets?|a gadget|a product|stuff|kit|equipment|it|this|that|the kitchen|kitchen|type|kind|model|brand|options?|features?|machines?|devices?|units?)$/;
+// ---- Phase253: purchase target. The product being bought is the head of the noun phrase that follows a buying
+// construction ("looking for X", "need X", "which X", "replace ... with X"), or that opens the title. A category name
+// elsewhere in the text (owned product, context, a part's host) is not the purchase. Generic heads ("one", "way") and
+// proper names or model codes ("Rebel T5i") decide nothing; then the category stage decides as before.
+export interface PurchaseTarget253 {kind:'category'|'other'|'ambiguous'|'none';category:string|null;other:string|null;
+ basis:'purchase_phrase_head'|'category_stage';phrases:{phrase:string;head:string;category:string|null;linked?:boolean}[]}
+const ANCHOR253=/(?:^| )(?:looking for|look for|looking at|shopping for|searching for|in the market for|recommendations? for|recommend(?:ed)?|suggestions? for|suggest|need|needs|want|wanted|buy|buying|purchase|purchasing|get|getting|choose|choosing|which|what|best|good|cheap|decent|replace(?: \S+){0,5} with|replacement for|upgrade to|switch to|considering|thinking of getting|alternatives? to)(?= |$)/g;
+const SKIP253=/^(?:(?:kind|type|sort|size|brand|make|model|style|set|pair|couple|piece) of |(?:a|an|the|some|any|new|another|second|replacement|good|great|decent|cheap|budget|quality|best|nice|simple|small|large|big) )+/;
+const BOUNDARY253=new Set(['for','to','that','which','who','with','without','in','on','of','from','under','over','so','because','and','or','but','i','me','my','we','our','you','your','is','are','was','were','be','been','can','could','should','will','would','than','vs','versus','as','at','by','if','when','while','it','this','these','those','there','do','does','did','have','has','had','suitable','compatible','capable','ideal','similar','like','please','also','too','now','then','just','not','no','into','onto','inside','around','about','one','ones','where','how','what','why','whose','enough','big','bigger','small','smaller','large','larger','compact','quiet','cheap','cheaper','decent','powerful','reliable','durable','light','lighter','heavy','safe','fast','quick','affordable','expensive','sized','easy','better','best','good','great','nice','ideal','perfect']);
+const GENERIC_HEAD253=/^(?:way|ways|method|methods|technique|techniques|idea|ideas|option|options|one|ones|thing|things|something|anything|recommendation|recommendations|advice|model|models|brand|brands|type|types|kind|size|product|products|appliance|appliances|machine|machines|device|devices|feature|features|material|materials|place|time|help|info|information|budget|price|prices|deal|deals|setup|set|kit|stuff|equipment|gear|tips|tip|difference|differences|guide|review|reviews|answer|question|alternative|alternatives|replacement|upgrade|purchase)$/;
+export function purchaseTarget253(text:string,registry:readonly CategoryEntry248[],allowed?:ReadonlySet<string>):PurchaseTarget253{
+ const phrases:{phrase:string;head:string;category:string|null;linked?:boolean}[]=[];
+ // Categories the category stage set aside (excluded, rejected, alias without its context) cannot be the purchase.
+ const blocked=(np:string)=>!!allowed&&longestMatches(np,registry.map(r=>({key:r.id,aliases:r.aliases})),false,true).some(h=>h.end===np.length&&!allowed.has(h.key));
+ const categoryAt=(np:string):string|null=>{const hits=longestMatches(np,registry.map(r=>({key:r.id,aliases:r.aliases})),false,true);
+  const end=hits.filter(h=>h.end===np.length&&!(registry.find(r=>r.id===h.key)?.partPhrases??[]).some(pp=>find(np,pp).some(p=>p.start<=h.start&&p.end>=h.end)));
+  const ok=end.filter(h=>!allowed||allowed.has(h.key));
+  return ok.length?ok.sort((a,b)=>(b.end-b.start)-(a.end-a.start))[0].key:null;};
+ const segments=text.split(/[.?!;:\n()\[\]]+|,| [-–—]+ /);
+ segments.forEach((raw,si)=>{const seg=norm(raw);if(!seg)return;
+  const starts:number[]=[];let m:RegExpExecArray|null;const re=new RegExp(ANCHOR253.source,'g');
+  // A negated buying construction ("I don't want a toaster") introduces no purchase.
+  while((m=re.exec(seg))){
+   if(/(?:^| )(?:don't|dont|do not|not|never|no|won't|wouldn't)(?: \S+)? ?$/.test(seg.slice(0,m.index)+' '))continue;
+   // need / want / get name a purchase only with an article ("need an amp"), not an outcome ("want even toast", "get hot").
+   if(/^ ?(?:need|needs|want|wanted|get|getting)$/.test(m[0])&&!/^(?:a|an|the|some|any|one|another|second|new|two|2)\b/.test(seg.slice(m.index+m[0].length+1)))continue;
+   starts.push(m.index+m[0].length+1);}
+  // A title that opens with a noun phrase ("Baking sheet in air fryer") states what is being looked for.
+  if(si===0&&!starts.includes(0)&&!new RegExp('^'+ANCHOR253.source.replace(/^\(\?:\^\| \)/,'')).test(seg)&&!/^(?:how|why|what|when|where|who|can|could|is|are|was|do|does|did|should|would|will|i|i'm|im|my|we|our|you|it|this|there|has|have|any|help|please)\b/.test(seg))starts.push(0);
+  for(const st of starts){let rest=seg.slice(Math.min(st,seg.length)).trim();
+   const replacing=st>0&&/(?:^| )replace(?: \S+){0,5} with $/.test(seg.slice(0,st));
+   const replaced=replacing?seg.slice(0,st).replace(/^.*?replace/,''):'';
+   for(let k=0;k<3&&rest;k++){
+    rest=rest.replace(SKIP253,'');const toks=rest.split(' ');const np:string[]=[];let i=0;
+    for(;i<toks.length&&np.length<6;i++){if(BOUNDARY253.has(toks[i]))break;np.push(toks[i]);}
+    if(!np.length)break;
+    while(np.length>1&&/(?:ed|ing)$/.test(np[np.length-1])&&!categoryAt(np.join(' ')))np.pop();
+    const phrase=np.join(' '),head=np[np.length-1];
+    // Proper names and model codes ("Canon", "WF-1000XM3") name a product, not a type: they decide nothing here.
+    const rawHead=raw.match(new RegExp(`(?:^|[^A-Za-z0-9])(${head.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})(?![A-Za-z0-9])`,'i'))?.[1]??head;
+    const rawNp=raw.match(new RegExp(np.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('[^A-Za-z0-9]+'),'i'))?.[0]??'';
+    const capitals=(rawNp.match(/(?:^|[^A-Za-z])[A-Z][a-z]/g)??[]).length;
+    const proper=/\d/.test(head)||capitals>=2||(/^[A-Z]/.test(rawHead)&&raw.trim().indexOf(rawHead)>0&&!/^[A-Z]/.test(raw.trim().split(/\s+/)[1]??''));
+    const cat=categoryAt(phrase);
+    if(cat)phrases.push({phrase,head,category:cat});
+    else if(blocked(phrase)){}
+    else if(!proper&&head.length>=3&&/^[a-z]+$/.test(head)&&!GENERIC_HEAD253.test(head)&&!GENERIC.test(phrase)){
+     // Linked to a category: it modifies the head ("headphone amp"), or it is what is being replaced.
+     const names=registry.map(r=>({key:r.id,aliases:r.aliases}));
+     const linked=longestMatches(phrase,names,false,true).length>0||(replacing&&longestMatches(replaced,names,false,true).length>0);
+     phrases.push({phrase,head,category:null,linked});}
+    // Coordinated alternatives ("an air fryer or a toaster oven") are further purchase phrases.
+    if(!['or','vs','versus','and'].includes(toks[i]??''))break;rest=toks.slice(i+1).join(' ');
+   }
+  }
+ });
+ const t0=norm(text);const names=registry.map(r=>({key:r.id,aliases:r.aliases}));
+ const nameHits=longestMatches(t0,names,false,true);
+ // ... or the category is its complement nearby ("tray to put my air fryer on", "the cable ... to the headset").
+ for(const p of phrases)if(!p.category&&!p.linked){const toks=t0.split(' ');
+  for(let i=0;i<toks.length&&!p.linked;i++)if(toks[i]===p.head){const win=toks.slice(i+1,i+11).join(' ');const prep=win.search(/(?:^| )(?:for|to|with|in|on|into|onto|from|of|that|which|inside|under)(?= )/);
+   if(prep>=0){const off=toks.slice(0,i+1).join(' ').length+1+prep;p.linked=nameHits.some(h=>h.start>=off&&h.start<=off+win.length-prep);}}}
+ const cats=[...new Set(phrases.filter(p=>p.category).map(p=>p.category!))];
+ const others=phrases.filter(p=>!p.category);
+ const anyName=longestMatches(norm(text),registry.map(r=>({key:r.id,aliases:r.aliases})),false,true).length>0;
+ if(cats.length===1)return {kind:'category',category:cats[0],other:null,basis:'purchase_phrase_head',phrases};
+ if(cats.length>1)return {kind:'ambiguous',category:null,other:null,basis:'purchase_phrase_head',phrases};
+ // A non-category purchase displaces a named category only when it is linked to it, or when the category is named
+ // neither in the first sentence nor in any purchase phrase (then it is only context).
+ const firstSentence=norm(text.split(/[.?!\n](?=\s|$)/)[0]??'');
+ const titleNames=longestMatches(firstSentence,names,false,true).length>0;
+ const decisive=others.filter(p=>p.linked||!titleNames);
+ if(decisive.length&&anyName)return {kind:'other',category:null,other:decisive[0].phrase.replace(/^(?:a|an|the|some) /,''),basis:'purchase_phrase_head',phrases};
+ return {kind:'none',category:null,other:null,basis:'purchase_phrase_head',phrases};
+}
 /** A product term the user names but the registry does not know ("laptop", "running shoes"). */
 /** Phase250: searched sentence by sentence. Normalisation removes punctuation, so in the whole text a named product
  * ran into the next sentence ("shopping for a pressure cooker could anyone advise") and was never delimited. */
@@ -139,6 +214,8 @@ function namedProductTerm(t:string,buyingOnly=false):string|null{
 export interface Journey248 {
  schema:'pee248.journey.v1';text:string;
  stages:{
+  /** Phase253: what the user is buying (the category stage below follows it). */
+  target:PurchaseTarget253;
   category:{categoryId:string|null;basis:'explicit_alias'|'cue_inferred'|'need_inferred'|'ambiguous'|'unresolved';candidates:string[];namedUnknownTerm:string|null;excluded:string[]};
   need:{concepts:{id:string;categoryId:string;matched:string;kind:string|null}[];budget:{currency:string;min:number|null;max:number|null}|null;hazards:string[]};
   requirements:{measuredBy:{conceptId:string;method:string;support:string;source:string|null}[];cautions:{attribute:string;conceptId:string;kind:string;support:string;note:string}[];
@@ -250,7 +327,15 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const termAny=namedProductTermIn(text,true);
  const termKnown=!!termAny&&registry.some(r=>[...r.aliases,...(r.cues??[])].some(a=>find(norm(termAny),a).length));
  if(basis==='need_inferred'&&termAny&&!termKnown){categoryId=null;basis='unresolved';}
- const namedUnknownTerm=basis==='unresolved'?termAny??namedProductTermIn(text):null;
+ // Phase253: the purchase phrase decides between several named categories, and a category named only as context
+ // (an accessory's host, an owned product, a physics term) is not the purchase.
+ const purchase=purchaseTarget253(text,registry,new Set(named0.map(h=>h.key)));let purchaseOther:string|null=null;
+ if(purchase.kind==='category'&&!excludedCategories.includes(purchase.category!)){categoryId=purchase.category;basis='explicit_alias';}
+ else if(purchase.kind==='other'&&categoryId&&basis==='explicit_alias'){purchaseOther=purchase.other;categoryId=null;basis='unresolved';}
+ else if(purchase.kind==='ambiguous'&&basis!=='ambiguous'){categoryId=null;basis='ambiguous';}
+ const target:PurchaseTarget253=purchase.kind==='none'||(purchase.kind==='category'&&purchase.category!==categoryId)
+  ?{...purchase,kind:categoryId?'category':basis==='ambiguous'?'ambiguous':'none',category:categoryId,basis:'category_stage'}:purchase;
+ const namedUnknownTerm=basis==='unresolved'?purchaseOther??termAny??namedProductTermIn(text):null;
  // ---- need: concepts of the resolved category; budget and hazards from Phase125
  const concepts=categoryId?[...new Map(conceptHits.filter(h=>h.key.startsWith(categoryId+'|')).map(h=>{const [c,id,kind]=h.key.split('|');
   return [id,{id,categoryId:c,matched:h.alias,kind:kind||null}];})).values()].sort((a,b)=>a.id.localeCompare(b.id)):[];
@@ -311,7 +396,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const goalQuestion=(cat:string)=>{const goals=store.categoryItems246(cat).filter(i=>i.section==='user_goals'&&i.concept);
   return goals.length?`What matters most to you: ${goals.slice(0,4).map(g=>g.statement.replace(/\.$/,'').toLowerCase()).join('; or ')}?`:`What do you mainly want the ${cat.replace(/_/g,' ')} to do for you?`;};
  if(basis==='ambiguous'){decision='clarify';blocking='category';
-  const opts=(explicit.length>1?explicit:[...new Set(conceptHits.map(h=>h.key.split('|')[0]))]).map(c=>c.replace(/_/g,' '));
+  const opts=(purchase.kind==='ambiguous'?[...new Set(purchase.phrases.filter(p=>p.category).map(p=>p.category!))]:explicit.length>1?explicit:[...new Set(conceptHits.map(h=>h.key.split('|')[0]))]).map(c=>c.replace(/_/g,' '));
   reasons.push('several product categories fit the request');questions.push(`Are you deciding between ${opts.join(' and ')}, or is one of them already chosen?`);}
  else if(!categoryId&&namedUnknownTerm){decision='out_of_scope';blocking='category';
   reasons.push(`"${namedUnknownTerm}" is not a product category PEE holds knowledge or products for`);plan.push(`category onboarding needed before advising on "${namedUnknownTerm}"`);}
@@ -347,7 +432,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   }
  }
  return {schema:'pee248.journey.v1',text,
-  stages:{category:{categoryId,basis,candidates:explicit,namedUnknownTerm,excluded:excludedCategories},need:{concepts,budget,hazards},
+  stages:{target,category:{categoryId,basis,candidates:explicit,namedUnknownTerm,excluded:excludedCategories},need:{concepts,budget,hazards},
    requirements:{measuredBy,cautions,unmeasuredConcepts:unmeasured,categoryHasKnowledge,factualRequirements},
    candidates:{active:products.length,withDeclaredAttributes:withAttrs,retainedDeclarations:retained,budgetApplicable:retained>0},
    evidence:{evidenceSupportedRelations:evidenceSupported,independentResultsForNeed:independentResults,methodReferences:measuredBy.filter(m=>m.support==='method_reference').length,safety}},

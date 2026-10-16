@@ -19,7 +19,7 @@ export type Task177='product_selection'|'solution_comparison'|'use_or_troublesho
 export interface Criterion177{
  key:string;label:string;value:CriterionValue177;status:CriterionStatus177;
  priority:CriterionPriority177;
- provenance:{source:'english_intake_candidate'|'user_web_control'|'user_explicit_confirmation';referenceHash:string|null};
+ provenance:{source:'english_intake_candidate'|'user_web_control'|'user_explicit_confirmation'|'user_request_statement';referenceHash:string|null};
  /** Confirmation is an explicit UI/user action; not the outcome of language inference. */
 }
 export interface ChoiceScope177 {task:Task177;category:string|null;}
@@ -34,12 +34,17 @@ export interface DecisionSnapshot177 {
  productEvidenceVerified:false;rankingAuthorized:false;exclusionsAuthorized:false;
 }
 export type DecisionAction177=
- {type:'set_scope';source:'user_web_control'|'user_explicit_confirmation';scope:ChoiceScope177}|
+ {type:'set_scope';source:'user_web_control'|'user_explicit_confirmation'|'user_request_statement';scope:ChoiceScope177}|
  {type:'propose_candidate';source:'english_intake_candidate';key:string;label:string;value:CriterionValue177;referenceHash:string}|
  {type:'set_criterion';source:'user_web_control'|'user_explicit_confirmation';key:string;label:string;value:CriterionValue177;priority:CriterionPriority177}|
  {type:'confirm_candidate';source:'user_web_control'|'user_explicit_confirmation';key:string;priority:CriterionPriority177}|
  {type:'set_priority';source:'user_web_control'|'user_explicit_confirmation';key:string;priority:CriterionPriority177}|
- {type:'mark_criterion';source:'user_web_control'|'user_explicit_confirmation';key:string;status:'denied'|'withdrawn'|'unknown'};
+ {type:'mark_criterion';source:'user_web_control'|'user_explicit_confirmation';key:string;status:'denied'|'withdrawn'|'unknown'}|
+ /** Phase253: a requirement the user stated verbatim in the request ("at least 5 litres"), parsed without ambiguity.
+  * It is confirmed with its own provenance and the sha256 of the verbatim span, so it stays distinguishable from both
+  * a UI confirmation and an NLP inference. It never overwrites a user-control decision and can be withdrawn by one.
+  * Inferred needs ("for a family") must still enter as propose_candidate. */
+ {type:'state_in_request';source:'user_request_statement';key:string;label:string;value:CriterionValue177;priority:CriterionPriority177;referenceHash:string};
 export interface DecisionRevision177 {
  previousHash:string;nextHash:string;revision:number;
  actionHash:string;rankInputsChanged:boolean;criteriaChanged:readonly string[];
@@ -84,10 +89,11 @@ export function assertDecisionSnapshot177(s:DecisionSnapshot177):void{
  const ids=new Set<string>();
  for(const c of s.criteria){
   if(!keyOk(c?.key)||ids.has(c.key)||!descriptionOk(c.label)||!statusOk(c.status)||!priorityOk(c.priority)||
-    !plain(c.provenance)||!['english_intake_candidate','user_web_control','user_explicit_confirmation'].includes(c.provenance.source)||
+    !plain(c.provenance)||!['english_intake_candidate','user_web_control','user_explicit_confirmation','user_request_statement'].includes(c.provenance.source)||
     (c.provenance.referenceHash!==null&&!/^[0-9a-f]{64}$/.test(c.provenance.referenceHash)))throw Error('phase177_invalid_snapshot_criterion');
   if(c.status==='candidate'&&c.provenance.source!=='english_intake_candidate')throw Error('phase177_invalid_candidate_provenance');
   if(c.status==='confirmed'&&c.provenance.source==='english_intake_candidate')throw Error('phase177_unconfirmed_nlp_promotion');
+  if(c.provenance.source==='user_request_statement'&&c.provenance.referenceHash===null)throw Error('phase177_request_statement_requires_span_hash');
   validatedValue(c.value);ids.add(c.key);
  }
  if(s.stateHash!==hash(statePayload(s))||s.rankInputFingerprint!==rankKey(s.scope,s.criteria))throw Error('phase177_snapshot_integrity_mismatch');
@@ -100,12 +106,13 @@ export function createDecision177(decisionId:string):DecisionSnapshot177{
 export function applyDecisionAction177(s:DecisionSnapshot177,action:DecisionAction177):{snapshot:DecisionSnapshot177;delta:DecisionRevision177}{
  assertDecisionSnapshot177(s);
  if(!plain(action)||typeof action.type!=='string')throw Error('phase177_invalid_action');
- if(!['set_scope','propose_candidate','set_criterion','confirm_candidate','set_priority','mark_criterion'].includes(action.type))throw Error('phase177_unknown_action');
+ if(!['set_scope','propose_candidate','set_criterion','confirm_candidate','set_priority','mark_criterion','state_in_request'].includes(action.type))throw Error('phase177_unknown_action');
  if(s.revision>=500)throw Error('phase177_revision_limit');
  const items=sorted(s.criteria),map=new Map(items.map(c=>[c.key,c]));
  let scope=s.scope;let changed:string[]=[];
  if(action.type==='set_scope'){
-  if(!['user_web_control','user_explicit_confirmation'].includes(action.source))throw Error('phase177_untrusted_scope_edit');
+  // Phase253: a product the user names in the request may set the scope of a fresh request snapshot.
+  if(!['user_web_control','user_explicit_confirmation','user_request_statement'].includes(action.source))throw Error('phase177_untrusted_scope_edit');
   scope=validatedScope(action.scope);
  }else{
   if(!keyOk(action.key))throw Error('phase177_invalid_criterion_key');
@@ -114,6 +121,12 @@ export function applyDecisionAction177(s:DecisionSnapshot177,action:DecisionActi
    if(action.source!=='english_intake_candidate'||!descriptionOk(action.label)||! /^[a-f0-9]{64}$/.test(action.referenceHash))throw Error('phase177_untrusted_suggestion');
    if(!old){map.set(action.key,{key:action.key,label:action.label,value:validatedValue(action.value),status:'candidate',priority:'normal',provenance:{source:action.source,referenceHash:action.referenceHash}});changed=[action.key];}
    // A new NLP suggestion can NEVER overwrite any existing user decision.
+  }else if(action.type==='state_in_request'){
+   if(action.source!=='user_request_statement'||!descriptionOk(action.label)||!priorityOk(action.priority)||!/^[a-f0-9]{64}$/.test(action.referenceHash))throw Error('phase177_invalid_request_statement');
+   // A request statement never overrides a decision made through user controls.
+   if(!old||old.provenance.source==='english_intake_candidate'||old.provenance.source==='user_request_statement'){
+    map.set(action.key,{key:action.key,label:action.label,value:validatedValue(action.value),status:'confirmed',priority:action.priority,
+     provenance:{source:'user_request_statement',referenceHash:action.referenceHash}});changed=[action.key];}
   }else{
    if(!['user_web_control','user_explicit_confirmation'].includes(action.source))throw Error('phase177_user_control_required');
    if(action.type==='set_criterion'){
