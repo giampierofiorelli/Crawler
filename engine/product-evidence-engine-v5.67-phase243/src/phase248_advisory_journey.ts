@@ -34,8 +34,11 @@ export type Stage248='category'|'need'|'requirements'|'candidates'|'evidence'|'d
 const norm=(s:string)=>s.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[’‘]/g,"'")
  .replace(/[^a-z0-9£$€' ]+/g,' ').replace(/\s+/g,' ').trim();
 /** Whole-word phrase positions of each alias in normalized text (plural 's'/'es' tolerated). */
-function find(t:string,alias:string):{start:number;end:number}[]{
- const a=norm(alias);if(!a)return [];
+function find(t:string,alias:string,singular=false):{start:number;end:number}[]{
+ const a0=norm(alias);if(!a0)return [];
+ // Phase252 (development): a plural category name also names the singular ("earbuds" / "earbud"); category names
+ // only, since for cues and need phrases the singular often means something else ("grounds" / "ground").
+ const a=singular&&/[^s]s$/.test(a0)&&a0.length>4?a0.slice(0,-1):a0;
  const re=new RegExp(`(?:^| )(${a.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}(?:e?s)?)(?= |$)`,'g');
  const out:{start:number;end:number}[]=[];let m:RegExpExecArray|null;
  while((m=re.exec(t))){const start=m.index+(m[0].startsWith(' ')?1:0);out.push({start,end:start+m[1].length});}
@@ -106,9 +109,9 @@ function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string
 }
 /** Longest-match resolution: a match contained in a longer match of another entry is dropped
  * ("toaster" inside "toaster oven"). */
-function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly string[]}[],loose=false){
+function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly string[]}[],loose=false,singular=false){
  const hits:{key:T;alias:string;start:number;end:number}[]=[];
- for(const e of entries)for(const al of e.aliases)for(const p of (loose?findLoose:find)(t,al))hits.push({key:e.key,alias:al,...p});
+ for(const e of entries)for(const al of e.aliases)for(const p of (loose?findLoose(t,al):find(t,al,singular)))hits.push({key:e.key,alias:al,...p});
  return hits.filter(h=>!hits.some(o=>o!==h&&o.key!==h.key&&o.start<=h.start&&o.end>=h.end&&(o.end-o.start)>(h.end-h.start)));
 }
 const GENERIC=/^(?:something|anything|one|ones|new one|an? appliance|appliances?|products?|things?|gadgets?|a gadget|a product|stuff|kit|equipment|it|this|that|the kitchen|kitchen|type|kind|model|brand|options?|features?|machines?|devices?|units?)$/;
@@ -162,7 +165,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // ---- category: explicit names (longest match), else inferred from need concepts of exactly one category
  // A category named under negation ("without a deep fat fryer", "rather not use a deep fryer") is excluded, not chosen.
  const negated=(start:number)=>/(?:^| )(?:without|not|no|instead of|rather than|other than|avoid|avoiding|don't want|do not want|rather not use|not using|never)(?: \S+){0,2} ?$/.test(t.slice(0,start).trimEnd()+' ');
- const allNamed=longestMatches(t,registry.map(r=>({key:r.id,aliases:r.aliases})));
+ const allNamed=longestMatches(t,registry.map(r=>({key:r.id,aliases:r.aliases})),false,true);
  // "...don't want a toaster whose sides get hot": a negated name followed by a qualifying clause is a constraint on
  // that category, not its exclusion.
  const qualified=(end:number)=>/^ (?:whose|that|which|with|where)\b/.test(t.slice(end));
@@ -218,7 +221,12 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const counter=(h:{key:string;start:number;end:number})=>{const [c,id]=h.key.split('|');
   const phrases=registry.find(r=>r.id===c)?.needCounterexamples?.[id]??[];
   return phrases.some(pp=>find(t,pp).some(p=>h.start<0||(p.start<=h.end&&p.end>=h.start)));};
- const conceptHits=[...longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h)),...describedConcepts(t,store,knowledgeCats,registry)].filter(h=>!counter(h));
+ // Phase252 (development): a need the user says they do not care about or do not need ("not bothered about
+ // noise-cancelling", "not looking for wireless or noise-cancelling", "ANC doesn't matter") is not a need. Indifference
+ // markers only: "don't want cold spots" or "no more cold spots" still express a need.
+ const indifferent=(h:{start:number;end:number})=>h.start>=0&&(/(?:^| )(?:not bothered (?:about|by|with)|(?:don't|dont|do not) (?:care|need|mind)(?: about| for)?|not (?:looking for|interested in|fussed about)|no need for)(?: \S+){0,4} ?$/.test(t.slice(Math.max(0,h.start-70),h.start).trimEnd()+' ')
+  ||/^(?: \S+){0,2} (?:doesn't|doesnt|does not|don't|dont|do not) matter\b|^(?: \S+){0,2} (?:is|are) not (?:a )?(?:requirement|must|necessary|needed|important)\b|^(?: \S+){0,2} not (?:needed|required|necessary|important)\b/.test(t.slice(h.end,h.end+60)));
+ const conceptHits=[...longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h)&&!indifferent(h)),...describedConcepts(t,store,knowledgeCats,registry)].filter(h=>!counter(h));
  let categoryId:string|null=null;let basis:Journey248['stages']['category']['basis']='unresolved';
  if(explicit.length===1){categoryId=explicit[0];basis='explicit_alias';}
  else if(explicit.length>1)basis='ambiguous';

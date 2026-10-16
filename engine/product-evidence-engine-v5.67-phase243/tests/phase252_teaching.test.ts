@@ -53,3 +53,13 @@ test('an "up to" battery declaration below the need excludes; above it, it stays
  const o=(id:string)=>a.checks.find(c=>c.productId===id)!.outcome;
  assert.equal(o('a'),'fails');assert.equal(o('b'),'unknown');assert.equal(o('c'),'meets_all');
 });
+test('development after the first run: indifference removes a need, a wanted absence keeps it; a singular names a plural category',()=>{
+ const s=store();applyTeaching252(s,RESEARCH_GUIDED_G252,AT);const reg=registryWithTeaching252(CATEGORY_REGISTRY250,RESEARCH_GUIDED_G252);
+ const ids=(q:string)=>runJourney248(q,s,reg).stages.need.concepts.map(c=>c.id);
+ assert.ok(!ids('Wired headphones, I am not bothered about noise cancelling').includes('noise_cancelling'));
+ assert.ok(!ids('headphones for the office, ANC doesn\'t matter to me').includes('noise_cancelling'));
+ assert.ok(ids('headphones with noise cancelling for my commute').includes('noise_cancelling'));
+ assert.ok(ids('a microwave without cold spots, I hate cold in the middle').includes('even_heating'));
+ assert.equal(runJourney248('which wireless earbud is best for the gym',s,reg).stages.category.categoryId,'headphones');
+ s.close();
+});
