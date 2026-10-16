@@ -79,6 +79,11 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - synthetic fixtures hid that unknown roles were unrepresentable and that selection re-proposed pages already read;
   - never feed a pipeline invented text to make it run;
   - persist only what the store does not already hold (derive, don't copy).
+- **Measure the cause before relaxing a rule** (Phase263). Rights were suspected of discarding knowledge, but the store
+  retained 2,385 of 2,385 observed facts. The loss was a missing pipeline connection (test leads never persisted)
+  and misattributed rights gaps.
+- **A host is not a document role** (Phase263). Report the publisher's known type as context only; a new document's
+  role stays unknown until the document is reviewed.
 - **Audit for existing capability by function, not by expected names** (Phase262). Phase261 searched for "search
   provider" and "web index", missed Phase223's search adapter, and wrongly called capability B absent. Before saying
   something does not exist, grep for the operation (for example `search`, `format=json`) and read the reports of

@@ -11,6 +11,24 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000000000000. Phase263 update (2026-10-16) — read first
+
+Reports: `engine/product-evidence-engine-v5.67-phase243/docs/phase263/PHASE263-ASSESSMENT.md` (legal and discovery
+analysis, decision table) and `PHASE263-TECHNICAL-REPORT.md`; next brief `docs/phase263/CONTINUATION-PROMPT.md`
+(Phase264: Wikidata + sitemap metadata pilot, gated on the owner's approval sentence).
+
+- **Retention is not the bottleneck:** 2,385 of 2,385 observed declarations are retained, and Phase249 holds up
+  against the primary texts.
+- **The pipeline loses test knowledge:** Phase225/226 test-result leads are never persisted; 4 test revisions gave 0
+  observations.
+- **Discovery leads are corrected:** a document's role is `role_unknown` (the publisher's type is context only);
+  `publisherRecognised` is kept apart from `documentRegistered`; leads carry full provenance; the provider is a
+  parameter (`searchForTarget262({provider})`).
+- **New:** `phase263_operation_gates.ts`, a read-only report of six separate operation gates; across 90 sources, the
+  binding gates are discovery (no registry) and access (reads disabled).
+- **`reconcileRetentionGaps249`** now closes rights gaps whose cause is gone (3 on the real copy; the live store is
+  not changed yet).
+
 ## 0000000000000. Phase262 update (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase262/PHASE262-TECHNICAL-REPORT.md`; next brief
