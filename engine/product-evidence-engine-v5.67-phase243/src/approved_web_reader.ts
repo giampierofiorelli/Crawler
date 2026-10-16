@@ -26,6 +26,9 @@ export interface SourceResponse {
   /** Present only for source metadata, not a claims verification signal. */
   etag?:string|null;
   lastModified?:string|null;
+  /** Phase264: the server's Date and Retry-After headers, for clock checks and provider back-off instructions. */
+  date?:string|null;
+  retryAfter?:string|null;
 }
 export interface SourceTransport { get(url:string,agent:string,maxBytes:number):Promise<SourceResponse>; }
 export interface TransientWebClaim {criterionId:string;valueText:string;anchorText:string;}
@@ -136,7 +139,8 @@ export const restrictedHttpsTransport:SourceTransport={
      });
      res.on('end',()=>{const rawBytes=Buffer.concat(chunks);resolve({status:res.statusCode??0,finalUrl:url.toString(),
       contentType:String(res.headers['content-type']??''),rawBytes,body:rawBytes.toString('utf8'),
-      etag:String(res.headers.etag??''),lastModified:String(res.headers['last-modified']??'')});});
+      etag:String(res.headers.etag??''),lastModified:String(res.headers['last-modified']??''),
+      date:typeof res.headers.date==='string'?res.headers.date:null,retryAfter:typeof res.headers['retry-after']==='string'?res.headers['retry-after']:null});});
      res.on('error',reject);
     });
    req.on('timeout',()=>req.destroy(Error('Timeout')));

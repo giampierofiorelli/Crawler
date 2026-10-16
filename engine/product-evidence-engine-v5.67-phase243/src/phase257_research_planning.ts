@@ -135,8 +135,10 @@ export function planResearchFromNeeds257(args:{needs:ResearchNeeds254;categoryId
 /** Loads the operator policy from a protected local file: a regular file (not a symbolic link) at its canonical path,
  * outside every Git work tree, not writable by group or others (nor its directory), owned by this user, small and
  * strictly valid against the trusted clock. Anything else denies: there is no permissive default. */
-export function loadResearchPolicy257(path:string|undefined=process.env.PEE_RESEARCH_POLICY,now:Date=new Date()):ResearchPolicy257{
- if(!path)throw Error('phase257_policy_missing: no policy path (PEE_RESEARCH_POLICY)');
+/** Phase264: the protected-file checks of the operator policy, shared by every operation-specific policy: an absolute
+ * canonical regular file, outside any Git work tree, not a link, owned by this user, not group/world-writable (nor
+ * its directory), at most 64 KiB, valid JSON. Returns the parsed JSON; meaning is validated by the caller. */
+export function readProtectedPolicyFile257(path:string):unknown{
  const abs=resolve(path);let st;
  try{st=lstatSync(abs);}catch{throw Error('phase257_policy_missing: '+abs);}
  if(st.isSymbolicLink())throw Error('phase257_policy_path: a symbolic link is not accepted');
@@ -147,7 +149,11 @@ export function loadResearchPolicy257(path:string|undefined=process.env.PEE_RESE
  if(statSync(dirname(abs)).mode&0o022)throw Error('phase257_policy_path: directory writable by group or others');
  if(typeof process.getuid==='function'&&st.uid!==process.getuid())throw Error('phase257_policy_path: not owned by this user');
  if(st.size>65_536)throw Error('phase257_policy_path: too large');
- let raw:unknown;try{raw=JSON.parse(readFileSync(abs,'utf8'));}catch{throw Error('phase257_invalid_policy: not JSON');}
+ try{return JSON.parse(readFileSync(abs,'utf8'));}catch{throw Error('phase257_invalid_policy: not JSON');}
+}
+export function loadResearchPolicy257(path:string|undefined=process.env.PEE_RESEARCH_POLICY,now:Date=new Date()):ResearchPolicy257{
+ if(!path)throw Error('phase257_policy_missing: no policy path (PEE_RESEARCH_POLICY)');
+ const raw=readProtectedPolicyFile257(path);
  return validateResearchPolicy257(raw,now);
 }
 export interface PolicyRun257 {run:ResearchRun182;policyRevision:string;executedAt:string;
