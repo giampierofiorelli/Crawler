@@ -1,0 +1,25 @@
+{
+ "schema": "pee252.teaching-pilot-selection.v1",
+ "declared": "2026-10-16, before any pilot was chosen, before any teaching material was written and before any Stage 4 request was read",
+ "criteria": [
+  "C1 new to the journey: not in CATEGORY_REGISTRY248/250 and no adopted lesson, so teaching happens upstream of any test",
+  "C2 factually evaluable now: evaluation/phase251/observational-knowledge-after.json shows at least 2 products from at least 2 hosts and at least 2 observed attributes",
+  "C3 an untouched real-request pool exists: a Stack Exchange site (official API only) holds at least 40 questions matching the category term (count read with filter=total, so no question text is seen before Stage 4 is registered)",
+  "C4 lawful public method sources exist: at least one standards, regulator or test-procedure page reachable without robots or access restrictions",
+  "C5 diversity: the two pilots differ in technology and domain (one household appliance, one non-appliance), to test whether the teaching method, not the material, transfers"
+ ],
+ "tie_break": "most products in the store, then most hosts",
+ "candidates_considered": "every non-registry category in observational-knowledge-after.json with at least 2 products",
+ "count_queries": {
+  "dehumidifiers": ["diy", "dehumidifier"],
+  "microwave_ovens": ["cooking", "microwave oven"],
+  "frying_pans": ["cooking", "frying pan"],
+  "headphones": ["hardwarerecs", "headphones"],
+  "running_shoes": ["fitness", "running shoes"],
+  "power_drills": ["diy", "drill"],
+  "vacuum_cleaners": ["diy", "vacuum cleaner"],
+  "fans": ["diy", "fan"],
+  "tents": ["outdoors", "tent"],
+  "keyboards": ["hardwarerecs", "keyboard"]
+ }
+}
