@@ -277,12 +277,13 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   out.statements=out.statements.filter(x=>!/^Ranked by /.test(x));out.statements.push('No ranking: the evidence does not assess every stated objective, so no overall order is given.');}
  if(g&&(g.decision==='partial_comparison'||g.decision==='no_purchase_check')&&out.response!=='out_of_scope')out.response=g.decision;
  // Principle 8: an objective the answer does not assess stays explicit.
- // Context needs (owned equipment, stated use) are not objectives to assess.
- const unassessedNeeds=perf.filter(id=>!assessed.has(id)&&!CONTEXT_NEEDS269.has(id));
+ const unassessedNeeds=perf.filter(id=>!assessed.has(id));
  const toks=(x:string)=>x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
  out.unassessedObjectives=[...unassessedNeeds,...out.unresolved.filter(n=>!unassessedNeeds.includes(n)),...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
- if(out.unassessedObjectives.length&&out.response!=='out_of_scope')
-  out.statements.push(`Not assessed: ${out.unassessedObjectives.map(o=>`"${o.replace(/_/g,' ')}"`).join(', ')}. PEE holds no reviewed evidence for ${out.unassessedObjectives.length>1?'these':'this'}, so this answer does not address ${out.unassessedObjectives.length>1?'them':'it'}.`);
+ // Phase271: context needs (owned equipment, constraints) stay in the structure but are not called objectives in the text.
+ const shown=out.unassessedObjectives.filter(o=>!CONTEXT_NEEDS269.has(o));
+ if(shown.length&&out.response!=='out_of_scope')
+  out.statements.push(`Not assessed: ${shown.map(o=>`"${o.replace(/_/g,' ')}"`).join(', ')}. PEE holds no reviewed evidence for ${shown.length>1?'these':'this'}, so this answer does not address ${shown.length>1?'them':'it'}.`);
  return out;
 }
 
