@@ -1,0 +1,53 @@
+{
+ "schema": "pee.step1c.source-selection.v1",
+ "frozenAt": "2026-10-17",
+ "protocol": "evaluation/step1c/protocol.json",
+ "method": "web-search titles and URLs only (5 searches); no page body read; search-summary exposure recorded per page",
+ "excludedForExposure": [
+  "tomsguide LG C6 vs Samsung S95H face-off and Samsung S95H review (numbers in summary)",
+  "housefresh Levoit Core 600S vs Blueair 211+ and Coway Mighty2 review (numbers)",
+  "techradar Sony Bravia 9 II vs Samsung R95H (numbers)",
+  "tomsguide Hisense U7SG vs TCL QM7L (a brightness level in summary)",
+  "tomsguide TCL QM8L vs QM7L (numbers: a page-specific search exposed them; no further page-specific searches were made)",
+  "tomsguide Ninja Crispi vs Cuisinart ClearView (summary indicates no measured comparison)"
+ ],
+ "priorUrlCheck": "none of the selected URLs occurs in any earlier wave receipt or evaluation file (3,191 earlier URLs checked)",
+ "selected": [
+  {
+   "tag": "s1c_tv_trd_affordable_oled3",
+   "category": "televisions",
+   "url": "https://www.techradar.com/televisions/i-tested-3-affordable-oled-tvs-from-lg-samsung-and-philips-side-by-side-heres-which-one-id-buy",
+   "priorExposure": "gist only (three named sets, each wins in different areas)"
+  },
+  {
+   "tag": "s1c_tv_trd_rgb_vs_miniled",
+   "category": "televisions",
+   "url": "https://www.techradar.com/televisions/i-tested-a-budget-rgb-tv-and-equivalent-mini-led-tv-side-by-side",
+   "priorExposure": "gist only (two named sets)"
+  },
+  {
+   "tag": "s1c_tv_trd_bravia7ii_r95h",
+   "category": "televisions",
+   "url": "https://www.techradar.com/televisions/sony-bravia-7-ii-vs-samsung-r95h-which-rgb-tv-wins-and-does-either-model-topple-oled-i-tested-them-side-by-side-to-find-out",
+   "priorExposure": "gist only (verdict, no numbers)"
+  },
+  {
+   "tag": "s1c_ap_hf_small",
+   "category": "air_purifiers",
+   "url": "https://housefresh.com/small-air-purifiers/",
+   "priorExposure": "gist only (top picks named, no numbers)"
+  },
+  {
+   "tag": "s1c_ap_hf_bedroom",
+   "category": "air_purifiers",
+   "url": "https://housefresh.com/bedroom-air-purifiers/",
+   "priorExposure": "title only"
+  }
+ ],
+ "hosts": [
+  "www.techradar.com",
+  "housefresh.com"
+ ],
+ "plannedRequests": "2 robots + 5 pages = 7 of 18",
+ "limits": "2 categories, 2 publishers (the protocol minimum); air-fryer and dishwasher comparison pages with measured rival results were not found without exposing their numbers"
+}
