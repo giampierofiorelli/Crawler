@@ -42,3 +42,13 @@ test('commit diffs are read as added lines per commit and file; private artefact
  assert.deepEqual(privateArtifactFindings(files).map(f=>f.file),['evaluation/private-eval/run-full.json']);
  assert.deepEqual(privateArtifactFindings([{file:'snapshot/pee246.sqlite'},{file:'docs/report.md'}]).map(f=>f.file),['snapshot/pee246.sqlite']);
 });
+
+test('Phase271: an acknowledgement covers exactly one finding and never an unrelated one or a store artefact',async()=>{
+ const {applyAcknowledgements}=await import('../src/publication_guard.js');
+ const f=(o:Partial<{commit:string;file:string;line:number;valueDigest:string;rule:'product_bound_declared_value'|'private_store_artifact'}>)=>({commit:'c1',file:'a.json',line:29,productId:'p',rule:'product_bound_declared_value' as const,valueDigest:'d1',...o});
+ const ack=[{commit:'c1',file:'a.json',line:29,valueDigest:'d1',reason:'a generic consumer question, reviewed: not a retained value'}];
+ assert.equal(applyAcknowledgements([f({})],ack).acknowledged,1);
+ for(const other of [f({line:30}),f({commit:'c2'}),f({file:'b.json'}),f({valueDigest:'d2'}),f({rule:'private_store_artifact',valueDigest:'d1'})])
+  assert.deepEqual(applyAcknowledgements([other],ack),{findings:[other],acknowledged:0},JSON.stringify(other));
+ assert.equal(applyAcknowledgements([f({})],[{...ack[0],reason:'ok'}]).acknowledged,0,'a reason is required');
+});

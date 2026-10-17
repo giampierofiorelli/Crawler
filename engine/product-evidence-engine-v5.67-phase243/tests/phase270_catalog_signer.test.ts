@@ -55,6 +55,9 @@ test('the signer refuses every input outside policy: revision, category, market,
  refuse('nothing validated',{...base,validation:{...base.validation,validated:[]}},'nothing_to_sign');
  refuse('production signing policy',base,'production_not_authorised',{...EVALUATION_SIGNING_POLICY270,environment:'production'});
  refuse('a key claiming evaluation without an eval_ id',base,'environment_mismatch',EVALUATION_SIGNING_POLICY270,{...key,keyId:'pee_prod_2026q4'});
+ // Phase271: a copied or forged handle carries no key: nothing can be signed with it, and no handle exposes a sign().
+ refuse('a copied handle',base,'unknown_key_handle',EVALUATION_SIGNING_POLICY270,{...key});
+ assert.equal((key as unknown as Record<string,unknown>).sign,undefined);
  refuse('a production key handle',base,'production_not_authorised',EVALUATION_SIGNING_POLICY270,{...key,environment:'production'});
 });
 

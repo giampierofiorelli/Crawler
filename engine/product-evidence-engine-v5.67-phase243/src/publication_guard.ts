@@ -104,3 +104,12 @@ export function addedLinesFromDiff(diff:string):{lines:AddedLine[];files:{file:s
  }
  return {lines,files};
 }
+
+/** Phase270/271: reviewed false positives are acknowledged one by one. An acknowledgement covers exactly one finding:
+ * the same commit, file, line and value digest, rule 'product_bound_declared_value', with a stated reason. It never
+ * covers another line, commit, value or a private store artefact. */
+export interface PublicationAcknowledgement {commit:string;file:string;line:number;valueDigest:string;reason:string}
+export function applyAcknowledgements(findings:readonly PublicationFinding[],acks:readonly PublicationAcknowledgement[]):{findings:PublicationFinding[];acknowledged:number}{
+ const ok=(f:PublicationFinding)=>f.rule==='product_bound_declared_value'&&acks.some(a=>a.commit===f.commit&&a.file===f.file&&a.line===f.line&&a.valueDigest===f.valueDigest&&typeof a.reason==='string'&&a.reason.length>20);
+ const kept=findings.filter(f=>!ok(f));return {findings:kept,acknowledged:findings.length-kept.length};
+}

@@ -20,9 +20,11 @@ import {verifySignedCatalog181,type SignedCatalog181} from './phase181_dynamic_k
 import {compileCatalog268,type ValidationRun268,type ScoringPolicy268,type ValidationPolicy268} from './phase268_evidence_validation.js';
 
 export type SigningEnvironment270='evaluation'|'production';
-export interface SigningKey270 {readonly keyId:string;readonly environment:SigningEnvironment270;readonly publicKeyPem:string;
- /** Signs bytes; the private key is not reachable from the handle. */
- sign(bytes:Buffer):Buffer;}
+/** Phase271 (owner review §12): a key handle carries NO signing capability. It names a key and its public half; the private
+ * key lives in a module-private registry reachable only by signCompiledCatalog270, which signs only a catalog it compiled
+ * itself and that passed every policy check. A copied or forged handle has no key and is refused. */
+export interface SigningKey270 {readonly keyId:string;readonly environment:SigningEnvironment270;readonly publicKeyPem:string}
+const PRIVATE_KEYS=new WeakMap<object,KeyObject>();
 export interface SigningPolicy270 {
  policyId:string;revision:number;environment:SigningEnvironment270;
  /** Exact Phase268 revisions the signer may compile under ('policyId:rN'). */
@@ -37,16 +39,15 @@ export const EVALUATION_SIGNING_POLICY270:SigningPolicy270={policyId:'pee270-cat
 export function evaluationSigningKey270(label='controlled_evaluation'):SigningKey270{
  if(!/^[a-z0-9_]{3,40}$/.test(label))throw Error('phase270_bad_key_label');
  const {privateKey,publicKey}=generateKeyPairSync('ed25519');const priv:KeyObject=privateKey;
- const handle:SigningKey270={keyId:'eval_'+label,environment:'evaluation',publicKeyPem:publicKey.export({type:'spki',format:'pem'}).toString(),
-  sign:(bytes:Buffer)=>edSign(null,bytes,priv)};
- // JSON.stringify(handle) carries no key material: the private key exists only in this closure.
- return Object.freeze(handle);
+ const handle:SigningKey270=Object.freeze({keyId:'eval_'+label,environment:'evaluation' as const,publicKeyPem:publicKey.export({type:'spki',format:'pem'}).toString()});
+ PRIVATE_KEYS.set(handle,priv);
+ return handle;
 }
 /** Production signing is not authorised for activation (owner brief 2026-10-17 §6). */
 export function productionSigningKey270():never{throw Error('phase270_production_signing_not_authorised');}
 
 export type SigningRefusal270='environment_mismatch'|'production_not_authorised'|'validation_revision_not_permitted'|'scoring_revision_not_permitted'|
- 'category_out_of_scope'|'market_out_of_scope'|'validity_interval_invalid'|'validity_exceeds_policy'|'compiled_catalog_fails_verification'|'nothing_to_sign';
+ 'category_out_of_scope'|'market_out_of_scope'|'validity_interval_invalid'|'validity_exceeds_policy'|'compiled_catalog_fails_verification'|'nothing_to_sign'|'unknown_key_handle';
 export interface SigningAudit270 {schema:'pee270.signing-audit.v1';signingPolicy:string;environment:SigningEnvironment270;keyId:string;
  validationRevision:string;scoringRevision:string;categoryId:string;market:string;reviewedAt:string;expiresAt:string;
  /** Digests of the exact inputs and of the signed bytes; never values, text or key material. */
@@ -58,6 +59,7 @@ export function signCompiledCatalog270(input:{validation:ValidationRun268;scorin
  policy:SigningPolicy270,key:SigningKey270):{ok:true;envelope:SignedCatalog181;audit:SigningAudit270}|{ok:false;reason:SigningRefusal270}{
  if(policy.environment==='production'||key.environment==='production')return {ok:false,reason:'production_not_authorised'};
  if(key.environment!==policy.environment||!key.keyId.startsWith('eval_'))return {ok:false,reason:'environment_mismatch'};
+ const priv=PRIVATE_KEYS.get(key);if(!priv)return {ok:false,reason:'unknown_key_handle'};
  const vRev=`${input.validationPolicy.policyId}:r${input.validationPolicy.revision}`,sRev=`${input.scoring.policyId}:r${input.scoring.revision}`;
  if(!policy.validationRevisions.includes(vRev))return {ok:false,reason:'validation_revision_not_permitted'};
  if(!policy.scoringRevisions.includes(sRev))return {ok:false,reason:'scoring_revision_not_permitted'};
@@ -72,7 +74,7 @@ export function signCompiledCatalog270(input:{validation:ValidationRun268;scorin
  const catalog=compileCatalog268(input.validation,input.scoring,{categoryId:input.categoryId,market:input.market,discoveredVariantIds:input.discoveredVariantIds,
   reviewedAt:input.reviewedAt,expiresAt:input.expiresAt,validationPolicy:input.validationPolicy});
  const bytes=Buffer.from(canonicalJson180(catalog));
- const envelope:SignedCatalog181={catalog,keyId:key.keyId,signatureBase64:key.sign(bytes).toString('base64')};
+ const envelope:SignedCatalog181={catalog,keyId:key.keyId,signatureBase64:edSign(null,bytes,priv).toString('base64')};
  // Self-check through the verification every consumer uses, at the start of the validity interval.
  const authority:TrustedRankingAuthority180={publicKeys:{[key.keyId]:key.publicKeyPem},asOf:input.reviewedAt,market:input.market};
  if(!verifySignedCatalog181(envelope,authority,{categoryId:input.categoryId}).ok)return {ok:false,reason:'compiled_catalog_fails_verification'};

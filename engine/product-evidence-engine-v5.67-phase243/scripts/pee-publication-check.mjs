@@ -10,7 +10,7 @@
  */
 import {existsSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';import {execFileSync} from 'node:child_process';
 import {DatabaseSync} from 'node:sqlite';
-import {buildPublicationIndex,scanAddedLines,addedLinesFromDiff,privateArtifactFindings} from '../dist/src/publication_guard.js';
+import {buildPublicationIndex,scanAddedLines,addedLinesFromDiff,privateArtifactFindings,applyAcknowledgements} from '../dist/src/publication_guard.js';
 const A=process.argv.slice(2);const arg=n=>A.includes(n)?A[A.indexOf(n)+1]:null;
 const candidates=[arg('--store'),'/home/user/pee-knowledge/snapshot/pee246.sqlite',
  join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local','share','product-evidence-engine','knowledge'),'pee246.sqlite')].filter(Boolean);
@@ -37,8 +37,7 @@ const raw=[...privateArtifactFindings(files),...scanAddedLines(lines,idx)];
 // and never a private store artefact.
 const ackFile=new URL('../docs/architecture/publication-acknowledgements.json',import.meta.url);
 const acks=existsSync(ackFile)?JSON.parse((await import('node:fs')).readFileSync(ackFile,'utf8')).acknowledged??[]:[];
-const acked=f=>f.rule==='product_bound_declared_value'&&acks.some(a=>a.commit===f.commit&&a.file===f.file&&a.line===f.line&&a.valueDigest===f.valueDigest&&typeof a.reason==='string'&&a.reason.length>20);
-const findings=raw.filter(f=>!acked(f));const acknowledged=raw.length-findings.length;
+const {findings,acknowledged}=applyAcknowledgements(raw,acks);
 const commits=new Set(lines.map(l=>l.commit)).size;
 console.log(JSON.stringify({store:store.includes('pee-knowledge')?'private snapshot':'live store',retainedDeclarations:rows.length,commitsScanned:commits,addedLines:lines.length,
  findings:findings.length,acknowledged,byCommit:Object.fromEntries([...new Set(findings.map(f=>f.commit))].map(c=>[c,findings.filter(f=>f.commit===c).length])),
