@@ -1,0 +1,659 @@
+{
+ "schema": "pee269.teaching-run.v1",
+ "label": "phase272-r2",
+ "at": "2026-10-17T11:27:31Z",
+ "setSha256": "dbdecbce468d0313fb17f32b6bc90741bf7111bca46369890017c5e84a85e362",
+ "storeCopyUnchanged": true,
+ "controlledCatalog": {
+  "revision": "r2",
+  "validated": 3,
+  "dimension": [
+   "energy_empty_run"
+  ]
+ },
+ "summary": {
+  "development": {
+   "0_category": null,
+   "1_outcomes": 1,
+   "2_criteria": 1,
+   "3_proxies": 1,
+   "4_conditions": 1,
+   "5_incomparable": 1,
+   "6_unassessed": 1,
+   "7_decision": 1,
+   "proxyAssessedFailures": []
+  },
+  "untouched": {
+   "0_category": null,
+   "1_outcomes": 1,
+   "2_criteria": 1,
+   "3_proxies": 1,
+   "4_conditions": 1,
+   "5_incomparable": null,
+   "6_unassessed": 1,
+   "7_decision": 1,
+   "proxyAssessedFailures": []
+  }
+ },
+ "rows": [
+  {
+   "id": "D1",
+   "part": "development",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "partial_comparison",
+    "needs": [
+     "cook_single_portion",
+     "cooking_results",
+     "crisp_texture",
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "cook_single_portion",
+     "cooking_results",
+     "crisp_texture",
+     "low_energy_use",
+     "best cooking results"
+    ],
+    "measures": {
+     "cook_single_portion": [
+      "usable_cooking_area"
+     ],
+     "cooking_results": [
+      "cooking_outcome_assessment"
+     ],
+     "crisp_texture": [
+      "cooking_outcome_assessment"
+     ],
+     "low_energy_use": [
+      "energy_per_cooking_task"
+     ]
+    },
+    "proxies": {
+     "cook_single_portion": [
+      "attr:capacity"
+     ],
+     "cooking_results": [
+      "energy_empty_run"
+     ],
+     "crisp_texture": [
+      "attr:power"
+     ],
+     "low_energy_use": [
+      "attr:power",
+      "energy_empty_run"
+     ]
+    },
+    "conditions": [
+     "completed_doneness",
+     "same_food_load",
+     "compartments_in_use"
+    ],
+    "incomparable": true,
+    "assessedVia": {},
+    "response": "partial_comparison",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D2",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "batch_capacity"
+    ],
+    "unassessed": [
+     "batch_capacity"
+    ],
+    "measures": {
+     "batch_capacity": [
+      "batch_cooking_test"
+     ]
+    },
+    "proxies": {
+     "batch_capacity": [
+      "attr:capacity"
+     ]
+    },
+    "conditions": [
+     "same_food_load"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D3",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "crisp_texture"
+    ],
+    "unassessed": [
+     "crisp_texture"
+    ],
+    "measures": {
+     "crisp_texture": [
+      "cooking_outcome_assessment"
+     ]
+    },
+    "proxies": {
+     "crisp_texture": [
+      "attr:power"
+     ]
+    },
+    "conditions": [
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D4",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "cleaning_effort"
+    ],
+    "unassessed": [
+     "cleaning_effort"
+    ],
+    "measures": {
+     "cleaning_effort": [
+      "cleaning_effort_assessment"
+     ]
+    },
+    "proxies": {
+     "cleaning_effort": [
+      "attr:dishwasher_safe"
+     ]
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D5",
+   "part": "development",
+   "goldDecision": "no_purchase_check",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "no_purchase_check",
+    "needs": [
+     "low_energy_use",
+     "oven_alternative"
+    ],
+    "unassessed": [
+     "low_energy_use",
+     "oven_alternative"
+    ],
+    "measures": {
+     "low_energy_use": [
+      "energy_per_cooking_task"
+     ],
+     "oven_alternative": []
+    },
+    "proxies": {
+     "low_energy_use": [
+      "attr:power",
+      "energy_empty_run"
+     ],
+     "oven_alternative": []
+    },
+    "conditions": [
+     "compartments_in_use",
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": true,
+    "assessedVia": {},
+    "response": "no_purchase_check",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D6",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "cook_single_portion",
+     "low_energy_use",
+     "single_compartment_use"
+    ],
+    "unassessed": [
+     "cook_single_portion",
+     "low_energy_use",
+     "single_compartment_use"
+    ],
+    "measures": {
+     "cook_single_portion": [
+      "usable_cooking_area"
+     ],
+     "low_energy_use": [
+      "energy_per_cooking_task"
+     ],
+     "single_compartment_use": []
+    },
+    "proxies": {
+     "cook_single_portion": [
+      "attr:capacity"
+     ],
+     "low_energy_use": [
+      "attr:power",
+      "energy_empty_run"
+     ],
+     "single_compartment_use": []
+    },
+    "conditions": [
+     "compartments_in_use",
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": true,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": 1,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "D7",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "cooking_evenness"
+    ],
+    "unassessed": [
+     "cooking_evenness"
+    ],
+    "measures": {
+     "cooking_evenness": [
+      "cooking_evenness_test"
+     ]
+    },
+    "proxies": {
+     "cooking_evenness": [
+      "attr:capacity"
+     ]
+    },
+    "conditions": [
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U1",
+   "part": "untouched",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "partial_comparison",
+    "needs": [
+     "crisp_texture",
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "crisp_texture",
+     "low_energy_use"
+    ],
+    "measures": {
+     "crisp_texture": [
+      "cooking_outcome_assessment"
+     ],
+     "low_energy_use": [
+      "energy_per_cooking_task"
+     ]
+    },
+    "proxies": {
+     "crisp_texture": [
+      "attr:power"
+     ],
+     "low_energy_use": [
+      "attr:power",
+      "energy_empty_run"
+     ]
+    },
+    "conditions": [
+     "completed_doneness",
+     "same_food_load",
+     "compartments_in_use"
+    ],
+    "incomparable": true,
+    "assessedVia": {},
+    "response": "partial_comparison",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U2",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "cook_single_portion"
+    ],
+    "unassessed": [
+     "cook_single_portion"
+    ],
+    "measures": {
+     "cook_single_portion": [
+      "usable_cooking_area"
+     ]
+    },
+    "proxies": {
+     "cook_single_portion": [
+      "attr:capacity"
+     ]
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U3",
+   "part": "untouched",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "partial_comparison",
+    "needs": [
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "low_energy_use"
+    ],
+    "measures": {
+     "low_energy_use": [
+      "energy_per_cooking_task"
+     ]
+    },
+    "proxies": {
+     "low_energy_use": [
+      "attr:power",
+      "energy_empty_run"
+     ]
+    },
+    "conditions": [
+     "compartments_in_use",
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": true,
+    "assessedVia": {},
+    "response": "partial_comparison",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U4",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "cook_two_foods_simultaneously"
+    ],
+    "unassessed": [
+     "cook_two_foods_simultaneously",
+     "best dual zone air fryer"
+    ],
+    "measures": {
+     "cook_two_foods_simultaneously": [
+      "two_zone_cooking_test"
+     ]
+    },
+    "proxies": {
+     "cook_two_foods_simultaneously": []
+    },
+    "conditions": [
+     "compartments_in_use"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": null,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U5",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "research",
+    "needs": [
+     "cooking_evenness"
+    ],
+    "unassessed": [
+     "cooking_evenness"
+    ],
+    "measures": {
+     "cooking_evenness": [
+      "cooking_evenness_test"
+     ]
+    },
+    "proxies": {
+     "cooking_evenness": [
+      "attr:capacity"
+     ]
+    },
+    "conditions": [
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "U6",
+   "part": "untouched",
+   "goldDecision": "partial_comparison",
+   "observed": {
+    "category": "air_fryers",
+    "decision": "partial_comparison",
+    "needs": [
+     "cook_single_portion",
+     "low_energy_use"
+    ],
+    "unassessed": [
+     "cook_single_portion",
+     "low_energy_use"
+    ],
+    "measures": {
+     "cook_single_portion": [
+      "usable_cooking_area"
+     ],
+     "low_energy_use": [
+      "energy_per_cooking_task"
+     ]
+    },
+    "proxies": {
+     "cook_single_portion": [
+      "attr:capacity"
+     ],
+     "low_energy_use": [
+      "attr:power",
+      "energy_empty_run"
+     ]
+    },
+    "conditions": [
+     "compartments_in_use",
+     "completed_doneness",
+     "same_food_load"
+    ],
+    "incomparable": true,
+    "assessedVia": {},
+    "response": "partial_comparison",
+    "ranked": 0
+   },
+   "score": {
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,481 @@
+{
+ "schema": "pee272.unknown-category-run.v1",
+ "label": "pilot",
+ "at": "2026-10-17T11:34:11.540Z",
+ "term": "tumble dryer",
+ "requestsSha256": "a56e03bae3c03acba1f15b3fc1c18381e54a718835b2a80d2b860623ef6e4bcd",
+ "gapBefore": [
+  {
+   "text": "Which tumble dryer is cheapest to run and still dries a family's washing properly?",
+   "response": "out_of_scope",
+   "category": null,
+   "statements": [
+    "\"tumble dryer\" is not a product category PEE holds knowledge or products for"
+   ],
+   "unassessed": [],
+   "needs": [],
+   "ranked": false,
+   "decision": null
+  },
+  {
+   "text": "I want a quiet tumble dryer because the utility room is next to the bedroom.",
+   "response": "clarification",
+   "category": null,
+   "statements": [
+    "several product categories fit the request"
+   ],
+   "unassessed": [],
+   "needs": [],
+   "ranked": false,
+   "decision": null
+  },
+  {
+   "text": "Is a heat pump tumble dryer worth it to reduce my bills?",
+   "response": "clarification",
+   "category": "dishwashers",
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs.",
+    "What would answer this: for energy per cycle and workload, eu label kwh per 100 eco cycles or quick vs eco programme comparison or wall plug kwh per programme or zeolite adsorption drying energy (energy boundary hot fill, method version and jurisdiction, programme identity).",
+    "Not assessed: \"energy per cycle and workload\". PEE holds no reviewed evidence for this, so this answer does not address it."
+   ],
+   "unassessed": [
+    "energy_per_cycle_and_workload"
+   ],
+   "needs": [
+    "energy_per_cycle_and_workload"
+   ],
+   "ranked": false,
+   "decision": "research"
+  }
+ ],
+ "reuseBefore": {
+  "response": "out_of_scope",
+  "category": null,
+  "statements": [
+   "\"tumble dryer\" is not a product category PEE holds knowledge or products for"
+  ],
+  "unassessed": [],
+  "needs": [],
+  "ranked": false,
+  "decision": null
+ },
+ "principles": [
+  {
+   "dimension": "duration",
+   "categories": [
+    "air_fryers",
+    "air_purifiers",
+    "coffee_machines",
+    "dishwashers",
+    "televisions"
+   ],
+   "measures": 16,
+   "conditions": 18,
+   "proxies": 20
+  },
+  {
+   "dimension": "energy",
+   "categories": [
+    "air_fryers",
+    "air_purifiers",
+    "dehumidifiers",
+    "dishwashers"
+   ],
+   "measures": 8,
+   "conditions": 8,
+   "proxies": 4
+  },
+  {
+   "dimension": "fraction",
+   "categories": [
+    "air_fryers",
+    "air_purifiers",
+    "dehumidifiers",
+    "dishwashers"
+   ],
+   "measures": 6,
+   "conditions": 8,
+   "proxies": 8
+  },
+  {
+   "dimension": "mass",
+   "categories": [
+    "air_fryers",
+    "air_purifiers",
+    "coffee_machines",
+    "dishwashers"
+   ],
+   "measures": 9,
+   "conditions": 12,
+   "proxies": 11
+  },
+  {
+   "dimension": "power",
+   "categories": [
+    "air_purifiers",
+    "dishwashers",
+    "televisions"
+   ],
+   "measures": 6,
+   "conditions": 8,
+   "proxies": 7
+  },
+  {
+   "dimension": "sound",
+   "categories": [
+    "air_purifiers",
+    "dishwashers",
+    "televisions"
+   ],
+   "measures": 5,
+   "conditions": 5,
+   "proxies": 6
+  },
+  {
+   "dimension": "temperature",
+   "categories": [
+    "air_fryers",
+    "coffee_machines",
+    "dehumidifiers",
+    "dishwashers",
+    "televisions"
+   ],
+   "measures": 8,
+   "conditions": 8,
+   "proxies": 6
+  },
+  {
+   "dimension": "volume",
+   "categories": [
+    "air_purifiers",
+    "dehumidifiers",
+    "dishwashers"
+   ],
+   "measures": 7,
+   "conditions": 7,
+   "proxies": 7
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "duration_outcome",
+   "status": "method_reference",
+   "transferredFrom": [
+    "air_fryers:cleaning_effort",
+    "dishwashers:energy_per_cycle_and_workload",
+    "dishwashers:drying_by_material"
+   ],
+   "requestPhrases": [
+    "wash",
+    "reduce my bills",
+    "dries properly"
+   ],
+   "confirmedBy": [
+    "m272_www_expertreviews_co_uk_1"
+   ]
+  },
+  {
+   "id": "energy_outcome",
+   "status": "instructor_hypothesis",
+   "transferredFrom": [
+    "air_fryers:low_energy_use",
+    "dishwashers:energy_per_cycle_and_workload"
+   ],
+   "requestPhrases": [
+    "cheap to run",
+    "reduce my bills"
+   ],
+   "confirmedBy": []
+  },
+  {
+   "id": "fraction_outcome",
+   "status": "method_reference",
+   "transferredFrom": [
+    "air_fryers:cleaning_effort",
+    "dishwashers:drying_by_material"
+   ],
+   "requestPhrases": [
+    "wash",
+    "dries properly"
+   ],
+   "confirmedBy": [
+    "m272_www_expertreviews_co_uk_1"
+   ]
+  },
+  {
+   "id": "sound_outcome",
+   "status": "method_reference",
+   "transferredFrom": [],
+   "requestPhrases": [
+    "quiet"
+   ],
+   "confirmedBy": [
+    "m272_www_trustedreviews_com_0",
+    "m272_www_expertreviews_co_uk_1"
+   ]
+  },
+  {
+   "id": "temperature_outcome",
+   "status": "instructor_hypothesis",
+   "transferredFrom": [],
+   "requestPhrases": [
+    "heat"
+   ],
+   "confirmedBy": []
+  }
+ ],
+ "leads": [
+  {
+   "dimension": "mass",
+   "unitsSeen": [
+    "kg"
+   ],
+   "source": "m272_www_trustedreviews_com_0",
+   "status": "exploratory_research_lead"
+  }
+ ],
+ "sources": [
+  {
+   "id": "m272_www_trustedreviews_com_0",
+   "url": "https://www.trustedreviews.com/info/how-we-test-tumble-dryers-4144064"
+  },
+  {
+   "id": "m272_www_expertreviews_co_uk_1",
+   "url": "https://www.expertreviews.co.uk/home-garden/large-appliances/best-tumble-dryer"
+  }
+ ],
+ "stageT": {
+  "outcomes": [
+   {
+    "id": "duration_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "wash",
+     "reduce my bills",
+     "dries properly",
+     "duration",
+     "minutes",
+     "programme",
+     "cycle",
+     "timed"
+    ]
+   },
+   {
+    "id": "energy_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "cheap to run",
+     "reduce my bills",
+     "energy",
+     "electricity",
+     "consumption",
+     "metered",
+     "meter"
+    ]
+   },
+   {
+    "id": "fraction_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "wash",
+     "dries properly",
+     "percentage",
+     "fraction",
+     "reduction",
+     "removal",
+     "efficiency"
+    ]
+   },
+   {
+    "id": "sound_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "quiet",
+     "noise",
+     "sound",
+     "acoustic",
+     "decibel",
+     "audible",
+     "weighted"
+    ]
+   },
+   {
+    "id": "temperature_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "heat",
+     "temperature",
+     "thermal"
+    ]
+   }
+  ],
+  "gaps": 1,
+  "applied": {
+   "items": 12,
+   "relations": 10
+  },
+  "plan": {
+   "digest": "f85877fc1c4c660da805149208ba554929cbc6afd6bb57fa09cad0aefbd4ad5b",
+   "units": [
+    "%",
+    "db",
+    "hours",
+    "kwh",
+    "minutes",
+    "seconds",
+    "wh",
+    "°c"
+   ],
+   "measurements": [
+    "duration_per_completed_task",
+    "energy_per_completed_task",
+    "fraction_per_completed_task",
+    "sound_per_completed_task",
+    "temperature_per_completed_task"
+   ],
+   "outcomes": [
+    "duration_outcome",
+    "energy_outcome",
+    "fraction_outcome",
+    "sound_outcome",
+    "temperature_outcome"
+   ]
+  },
+  "reuse": {
+   "response": "clarification",
+   "category": "tumble_dryers",
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs.",
+    "What would answer this: for energy outcome, energy per completed task (energy matched conditions); for sound outcome, sound per completed task (sound matched conditions).",
+    "Not assessed: \"energy outcome\", \"sound outcome\". PEE holds no reviewed evidence for these, so this answer does not address them."
+   ],
+   "unassessed": [
+    "energy_outcome",
+    "sound_outcome"
+   ],
+   "needs": [
+    "energy_outcome",
+    "sound_outcome"
+   ],
+   "ranked": false,
+   "decision": "research"
+  }
+ },
+ "stageL": {
+  "outcomes": [
+   {
+    "id": "duration_outcome",
+    "basis": "method_reference",
+    "aliases": [
+     "wash",
+     "reduce my bills",
+     "dries properly",
+     "duration",
+     "minutes",
+     "programme",
+     "cycle",
+     "timed"
+    ]
+   },
+   {
+    "id": "energy_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "cheap to run",
+     "reduce my bills",
+     "energy",
+     "electricity",
+     "consumption",
+     "metered",
+     "meter"
+    ]
+   },
+   {
+    "id": "fraction_outcome",
+    "basis": "method_reference",
+    "aliases": [
+     "wash",
+     "dries properly",
+     "percentage",
+     "fraction",
+     "reduction",
+     "removal",
+     "efficiency"
+    ]
+   },
+   {
+    "id": "sound_outcome",
+    "basis": "method_reference",
+    "aliases": [
+     "quiet",
+     "noise",
+     "sound",
+     "acoustic",
+     "decibel",
+     "audible",
+     "weighted"
+    ]
+   },
+   {
+    "id": "temperature_outcome",
+    "basis": "instructor_hypothesis",
+    "aliases": [
+     "heat",
+     "temperature",
+     "thermal"
+    ]
+   }
+  ],
+  "gaps": 2,
+  "applied": {
+   "items": 13,
+   "relations": 10
+  },
+  "plan": {
+   "digest": "0124f2129befc47bfdd87da433f254f7cedde74b537f6fb4c1b8a7ef3d9de0f8",
+   "units": [
+    "%",
+    "db",
+    "hours",
+    "kwh",
+    "minutes",
+    "seconds",
+    "wh",
+    "°c"
+   ],
+   "measurements": [
+    "duration_per_completed_task",
+    "energy_per_completed_task",
+    "fraction_per_completed_task",
+    "sound_per_completed_task",
+    "temperature_per_completed_task"
+   ],
+   "outcomes": [
+    "duration_outcome",
+    "energy_outcome",
+    "fraction_outcome",
+    "sound_outcome",
+    "temperature_outcome"
+   ]
+  },
+  "reuse": {
+   "response": "clarification",
+   "category": "tumble_dryers",
+   "statements": [
+    "No checkable requirement is stated yet, so no product can be checked against your needs.",
+    "What would answer this: for energy outcome, energy per completed task (energy matched conditions); for sound outcome, sound per completed task (sound matched conditions).",
+    "Not assessed: \"energy outcome\", \"sound outcome\". PEE holds no reviewed evidence for these, so this answer does not address them."
+   ],
+   "unassessed": [
+    "energy_outcome",
+    "sound_outcome"
+   ],
+   "needs": [
+    "energy_outcome",
+    "sound_outcome"
+   ],
+   "ranked": false,
+   "decision": "research"
+  }
+ }
+}

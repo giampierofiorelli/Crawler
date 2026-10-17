@@ -348,12 +348,22 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const termAny=namedProductTermIn(text,true);
  const termKnown=!!termAny&&registry.some(r=>[...r.aliases,...(r.cues??[])].some(a=>find(norm(termAny),a).length));
  if(basis==='need_inferred'&&termAny&&!termKnown){categoryId=null;basis='unresolved';}
+ // Phase272 (unknown-category pilot): need words shared with several known categories ("dries", "cheap to run") do not make
+ // a request naming an unknown product ("which tumble dryer ...") ambiguous between those categories: it names a category
+ // PEE has no knowledge of, which is a gap to state, not a choice to ask about. Only when no known category is named.
+
  // Phase253: the purchase phrase decides between several named categories, and a category named only as context
  // (an accessory's host, an owned product, a physics term) is not the purchase.
  const purchase=purchaseTarget253(text,registry,new Set(named0.map(h=>h.key)));let purchaseOther:string|null=null;
  if(purchase.kind==='category'&&!excludedCategories.includes(purchase.category!)){categoryId=purchase.category;basis='explicit_alias';}
  else if(purchase.kind==='other'&&categoryId&&basis==='explicit_alias'){purchaseOther=purchase.other;categoryId=null;basis='unresolved';}
  else if(purchase.kind==='ambiguous'&&basis!=='ambiguous'){categoryId=null;basis='ambiguous';}
+ // Phase272 (unknown-category pilot): need words shared with known categories ("dries", "reduce my bills") do not move a
+ // request naming an unknown product ("which tumble dryer ...") into one of those categories or make it ambiguous between
+ // them: it names a category PEE has no knowledge of, a gap to state. Only when no known category is named or cued, and the
+ // purchase phrase (or the Phase249 named term) is that unknown product.
+ const unknownPurchase=purchase.kind==='none'?purchase.phrases.find(p=>!p.category&&p.phrase.split(' ').length<=4)?.phrase??null:null;
+ if((basis==='ambiguous'||basis==='need_inferred')&&!explicit.length&&!cueCats.length&&(unknownPurchase||(termAny&&!termKnown))){categoryId=null;basis='unresolved';purchaseOther=purchaseOther??unknownPurchase;}
  const target:PurchaseTarget253=purchase.kind==='none'||(purchase.kind==='category'&&purchase.category!==categoryId)
   ?{...purchase,kind:categoryId?'category':basis==='ambiguous'?'ambiguous':'none',category:categoryId,basis:'category_stage'}:purchase;
  const namedUnknownTerm=basis==='unresolved'?purchaseOther??termAny??namedProductTermIn(text):null;
