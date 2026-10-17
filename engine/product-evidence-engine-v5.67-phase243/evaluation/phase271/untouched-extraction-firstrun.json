@@ -1,0 +1,173 @@
+{
+ "schema": "pee271.untouched-extraction-run-public.v1",
+ "label": "firstrun",
+ "at": "2026-10-17T06:18:16.248Z",
+ "goldSha256": "48bb136645a4713a35e1b4b65a65686bedb4fb2b122cba5d7f8be8c37fdddeb4",
+ "summary": {
+  "quantitative": {
+   "gold": 3,
+   "leads": 0,
+   "matched": 0,
+   "correct": 0,
+   "incorrect": 0,
+   "unresolved": 0,
+   "precision": null,
+   "recall": 0
+  },
+  "qualitative": {
+   "gold": 49,
+   "extracted": 18,
+   "matched": 9,
+   "correct": 6,
+   "incorrect": 2,
+   "unresolved": 1,
+   "precision": 0.5,
+   "recall": 0.184,
+   "subjectCorrectOfMatched": 0.667,
+   "incorrectExactOfMatched": 0.222
+  }
+ },
+ "documents": [
+  {
+   "tag": "t_best_small",
+   "quantitative": {
+    "gold": 0,
+    "leads": 0,
+    "matched": 0,
+    "subjects": []
+   },
+   "qualitative": {
+    "gold": 13,
+    "extracted": 0,
+    "matched": 0,
+    "subjects": [],
+    "falsePositives": []
+   }
+  },
+  {
+   "tag": "t_best",
+   "quantitative": {
+    "gold": 2,
+    "leads": 0,
+    "matched": 0,
+    "subjects": []
+   },
+   "qualitative": {
+    "gold": 13,
+    "extracted": 4,
+    "matched": 2,
+    "subjects": [
+     "incorrect_match",
+     "incorrect_match"
+    ],
+    "falsePositives": [
+     {
+      "dish": "vegetables",
+      "outcome": "crispness",
+      "direction": "positive"
+     },
+     {
+      "dish": "chips",
+      "outcome": "crispness",
+      "direction": "positive"
+     }
+    ]
+   }
+  },
+  {
+   "tag": "t_cosori_twinfry",
+   "quantitative": {
+    "gold": 1,
+    "leads": 0,
+    "matched": 0,
+    "subjects": []
+   },
+   "qualitative": {
+    "gold": 11,
+    "extracted": 6,
+    "matched": 5,
+    "subjects": [
+     "correct",
+     "correct",
+     "correct",
+     "correct",
+     "unresolved"
+    ],
+    "falsePositives": [
+     {
+      "dish": "chicken",
+      "outcome": "crispness",
+      "direction": "positive"
+     }
+    ]
+   }
+  },
+  {
+   "tag": "t_ninja_doublestack",
+   "quantitative": {
+    "gold": 0,
+    "leads": 0,
+    "matched": 0,
+    "subjects": []
+   },
+   "qualitative": {
+    "gold": 4,
+    "extracted": 3,
+    "matched": 0,
+    "subjects": [],
+    "falsePositives": [
+     {
+      "dish": "chips",
+      "outcome": "crispness",
+      "direction": "positive"
+     },
+     {
+      "dish": "chips",
+      "outcome": "crispness",
+      "direction": "positive"
+     },
+     {
+      "dish": "chips",
+      "outcome": "browning",
+      "direction": "positive"
+     }
+    ]
+   }
+  },
+  {
+   "tag": "t_philips_500",
+   "quantitative": {
+    "gold": 0,
+    "leads": 0,
+    "matched": 0,
+    "subjects": []
+   },
+   "qualitative": {
+    "gold": 8,
+    "extracted": 5,
+    "matched": 2,
+    "subjects": [
+     "correct",
+     "correct"
+    ],
+    "falsePositives": [
+     {
+      "dish": "pizza",
+      "outcome": "moisture",
+      "direction": "positive"
+     },
+     {
+      "dish": "chicken",
+      "outcome": "crispness",
+      "direction": "positive"
+     },
+     {
+      "dish": "chicken",
+      "outcome": "moisture",
+      "direction": "positive"
+     }
+    ]
+   }
+  }
+ ]
+}
