@@ -26,6 +26,8 @@ export interface ObservedState {
  response?:string|null;category?:string|null;
  /** Locator of the observed lead or finding (block hash and index in the reader's block list), when one was found. */
  blockSha256?:string|null;blockIndex?:number|null;
+ /** Step 1C: a documented multi-subject statement (one value for several named products). */
+ subjects?:string[]|null;
 }
 export interface ReferenceExpectation {
  /** found_with_accepted_subject: the value/finding must be found and bound to one of acceptedSubjects (or left unresolved
@@ -74,12 +76,13 @@ export function meetsReference(c:ExperienceCase,o:ObservedState):boolean{
 export type ReplayTransition='preserved_success'|'lost_success'|'corrected'|'persistent_failure'|'unreproducible'|'incomparable_state';
 /** Step 1B: what an observation says about attribution, kept apart from "meets the reference". An unresolved subject is
  * safer than a wrong one but is not a correct attribution. */
-export type AttributionClass='correct'|'accepted_variant'|'wrong_product'|'unresolved_preserved'|'missing'|'emitted'|'not_emitted'|'gap_stated'|'other_response';
+export type AttributionClass='correct'|'accepted_variant'|'wrong_product'|'unresolved_preserved'|'multi_subject'|'missing'|'emitted'|'not_emitted'|'gap_stated'|'other_response';
 export function attributionClass(c:ExperienceCase,o:ObservedState):AttributionClass{
  if(o.status==='emitted'||o.status==='not_emitted')return o.status;
  if(o.status==='responded')return meetsReference(c,o)?'gap_stated':'other_response';
  if(o.status!=='found')return 'missing';
  if(o.subjectOutcome==='correct')return 'correct';
+ if(o.subjects?.length)return 'multi_subject';
  if(!o.subject||o.subjectOutcome==='unresolved')return 'unresolved_preserved';
  return (c.reference.acceptedSubjects??[]).includes(o.subject)?'accepted_variant':'wrong_product';
 }

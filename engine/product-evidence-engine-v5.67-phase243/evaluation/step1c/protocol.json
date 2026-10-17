@@ -1,0 +1,54 @@
+{
+ "schema": "pee.step1c.protocol.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "any Step 1C HTTP request, any reading of a Step 1C evaluation page, and any gold annotation",
+ "question": "Can a general, deterministic attribution procedure use grammatical and structural evidence to reduce wrong-product assignments without unnecessarily losing correct findings?",
+ "authorisation": "owner Step 1C brief (2026-10-17): at most 18 HTTP requests, at most 5 hosts, at most 6 requests per host, within 7 days; robots checks and redirects count; limited to obtaining independent original comparative-review evidence for this experiment; does not extend, renew or reuse the Phase272 budget",
+ "arms": [
+  {"id": "A", "name": "Phase272 frozen guided extractor", "dist": "/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src", "commit": "c206c9a", "policy": null},
+  {"id": "B", "name": "current tuned attribution (body and table-header mentions + nearest-name clause rule)", "dist": "dist/src", "commit": "d852282 readers", "policy": null},
+  {"id": "C", "name": "constrained attribution candidate (src/experience_attribution_candidate.ts) over the current readers", "dist": "dist/src", "commit": "this freeze", "policy": "constrained_candidate_1c"},
+  {"id": "D", "name": "ablation: ambiguity-only withholding (Step 1B counterfactual: several products named before the value -> unresolved)", "dist": "dist/src", "commit": "d852282", "policy": "ambiguity_preserving"}
+ ],
+ "comparisons": [["A", "C"], ["B", "C"], ["D", "C"], ["A", "B"]],
+ "knowledgeState": {"snapshot": "pee-knowledge/snapshot/pee246.sqlite", "snapshotSha256": "b69a5f8ce4f8489f2159e4fabaca92534232b4bba2d19cf09567ad9aafff6d72", "governingState": "the compiled plan digest per category, which must equal evaluation/phase272/plans-frozen-known.json (the run refuses otherwise)"},
+ "codeFreeze": "evaluation/step1c/freeze.sha256 (candidate, scorer, evaluation and observer scripts, compiled modules, this protocol, and the reader files of the frozen and current builds); the run refuses if any listed file changed",
+ "sameInputs": "every arm reads the same page bytes (SHA-256 checked against the wave receipt), the same live-store plan (digest must equal evaluation/phase272/plans-frozen-known.json), once",
+ "candidatePrecedence": [
+  "R1 explicit local structure: comparison-table column; value in parentheses directly after a product (also a product named once with a model code, or a 'Product: value' label); value owned by an unnamed referent (its predecessor/rival ...) -> unresolved; possessive '<product>'s ... value'; '<product> and its ... value'",
+  "R1e multi-subject: 'both' with exactly two named products in the sentence -> multi-subject; 'both' in comparison wording without two named products -> unresolved with candidates; 'both' about non-products is ignored",
+  "R2 grammatical subject: the only product in the clause not in an object position (than, against, by, like, prepositions, coordination with an object), near the clause head; fronted values; an elided subject inherits the previous clause's subject",
+  "R3 no competing local evidence: a pronoun subject takes the previous sentence's subject in the same block; a non-comparative section heading naming one product; else the document main product only when the section heading names no product in a non-object position; a headline-like page name is not an identity",
+  "R4 otherwise unresolved, recording candidate subjects, the reason and the evidence that would resolve it"
+ ],
+ "sourceSelection": {
+  "method": "web-search result titles and URLs only, before any page body is read; each page's search-summary exposure is recorded; a page whose search summary shows any of its measured values is excluded",
+  "eligible": "a publicly accessible (no login, paywall, CAPTCHA) first-hand review or head-to-head comparison by an independent publisher that reports its own measured results for at least two named products of one taught category with a frozen plan digest (televisions, air purifiers, air fryers, dishwashers: evaluation/phase272/plans-frozen-known.json); robots.txt allows ProductEvidenceResearchBot or *; no ai-input=no, noai or TDM reservation",
+  "excluded": "any URL fetched in any earlier phase (all earlier wave receipts), any page examined for development or tuning, manufacturer and retailer pages, aggregators without their own tests",
+  "target": "4 to 6 pages, at least two categories and at least two publishers; stop when 6 eligible pages are fetched or the budget cannot reach another",
+  "shortfall": "fewer than 4 eligible pages: report the shortfall; previously used pages are never substituted as untouched"
+ },
+ "transport": "scripts/phase246-live-wave.mjs, one state file in the private evaluation directory (robots-checked restricted HTTPS transport, agent ProductEvidenceResearchBot, politeness >= 5 s per host); robots.txt and each redirect hop count; stop on robots disallow, 401/403/429, Retry-After, 3 errors on a host, cross-site or self redirect, paywall or login wall",
+ "retention": "page bytes only in the private evaluation directory outside Git (never in either repository); the plain-text annotator renderings likewise; the private repository keeps gold, runs and the request log, no page bytes",
+ "goldRules": {
+  "annotator": "a separate Claude agent with a fresh context, given only the plain-text renderings and these rules; it sees no extractor code, no extractor output, no experience case and no candidate rule; this is separation, not author independence",
+  "values": "every number the publisher reports as its OWN measured test result for a named product (prose, list, table cell, caption), with its unit as printed; includes results reported for compared rival products; excludes manufacturer specifications and claims, prices, ratings or scores, settings, loads, ranges, bounds, hypothetical figures and other publishers' numbers",
+  "subjectStatus": "exact (the page establishes one product); shared (the page states the same result for several named products: one item per product with a common group); undetermined (the page reports the value but does not establish whose it is; subject null)",
+  "variants": "acceptedVariants only where the page itself establishes that two names denote the same product (evidence recorded)",
+  "conditions": "the conditions the page states for the value (mode, window, setting, distance, programme), as short labels",
+  "freeze": "gold hash and counts are committed (evaluation/step1c/gold-freeze.json) before any arm runs; gold contents stay private"
+ },
+ "scoring": "src/experience_attribution_scoring.ts (frozen): per gold item correct | correct_multi | false_identity_match | unresolved | wrong_product | missing; for undetermined items correctly_unresolved | unsupported_assignment | missing; per lead lead_correct | lead_multi_correct | lead_multi_overreach | lead_wrong_product | lead_false_identity | lead_unsupported | lead_unresolved | lead_not_gold_value; identity = the Phase272 shared-token rule plus brand consistency; unresolved is never counted as correct; units canonicalised identically for gold and leads",
+ "states": {
+  "success": "correct, correct_multi, correctly_unresolved",
+  "failure": "wrong_product, false_identity_match, unsupported_assignment (confidently wrong); missing (not read)",
+  "unresolved": "unresolved: retained without a subject (safe, not correct)"
+ },
+ "decisionRule": {
+  "promising": "all of: (1) C has fewer confidently wrong items than both A and B; (2) C introduces no confidently wrong item that B did not have (newConfidentlyWrong B->C = 0); (3) C has at least as many successes as D (better than ambiguity-only withholding); (4) C keeps at least as many successes as B minus one",
+  "inconclusive": "fewer than 20 attributable gold items, or the C-vs-B difference in confidently wrong items is at most 1, or the criteria conflict",
+  "notPromising": "otherwise; a failed or inconclusive result is reported as such",
+  "noPostHocChange": "no rule, gold or scoring change after the first run counts as untouched; any later correction is a separately labelled development run"
+ },
+ "reporting": "per-document and per-arm counts with denominators; lead-level counts beside item-level counts; transitions between arms; the rules used by C; tiers kept apart (T1 synthetic, development pages, untouched first run, never production)"
+}
