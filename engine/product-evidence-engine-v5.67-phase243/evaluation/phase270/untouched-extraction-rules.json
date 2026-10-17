@@ -1,0 +1,10 @@
+{
+ "schema": "pee269.untouched-extraction-rules.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "fetching the documents and any Phase270 extraction change; extractor hashes in extractor-freeze-untouched.sha256 (Phase269 final extractor, commit 51c65bc; the quantitative probe is the Phase268 extractor plus the export-only textBlocks225 refactor)",
+ "selection": "Phase270 bounded pilot (owner brief §11): documents chosen by web search before access from three publishers never used by PEE (Which?, lovemoney, TechRadar) that report the author's own measurements of energy, time or cost per completed cooking task, or professional cooking-performance assessments",
+ "gold": "annotated by reading the transient bytes BEFORE either extractor is run on them: each tester-reported measurement with value, unit, measurand (energy, duration, cost kept distinct), subject (named product, appliance class or several appliances) and conditions; and each qualitative cooking outcome as Phase269 codes",
+ "negativeControls": "rated power, food quantity, recipe settings, tariffs, publisher scores, price, modelled or hypothetical calculations, and another product's value are negative controls: extracting them is a false positive",
+ "metrics": {"precision": "matching leads / all leads", "recall": "gold measurements extracted / gold measurements", "subjectAttribution": "separately: exact subject correct (product, class, several appliances, or correctly unresolved)", "falsePositiveCauses": "each false positive classified"},
+ "tuningRule": "Phase270 extraction changes are developed on the Phase268/269 documents only (CHOICE, Consumer NZ, Expert Reviews); the after-change run on these documents is the held-out measurement; the first run is committed unchanged"
+}
