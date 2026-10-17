@@ -1,0 +1,1003 @@
+{
+ "schema": "pee.experience-case-index.v1",
+ "set": "step1a-pilot",
+ "builtAt": "2026-10-17T12:18:39.638Z",
+ "frozenHistoricalBuild": "c206c9a",
+ "privateCasesSha256": "924654c0a2b27e1362776db350907e997f175440902cabc058431b8b34be591f",
+ "goldSha256": "3364031a889449ad0518a9bd7dc008ddcc3077300e13e3d70c71d1da8c5ab881",
+ "cases": [
+  {
+   "id": "EX-01",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_lg_b6",
+    "docSha256": "a32e73e0bb33ab91b87dfb2e3a8241fb079de14275b5f7690512a76101bdc9c5",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q10",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "d2ffb1fb4b5c87a66c9cecde8c5094f68ddb0f209f60207de385626f12ade2d6"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "a comparison sentence/table value of another model inherits the page product (no product named in its own clause by the frozen reader)",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "In a document naming several products, a value without its own named subject is unresolved, never the page product.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-05"
+    ]
+   },
+   "supports": [
+    "EX-03"
+   ],
+   "counterexamples": [
+    "EX-05"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-02",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "air_purifiers",
+   "source": {
+    "host": "housefresh.com",
+    "docTag": "u_ap_hf_xiaomi_4pro",
+    "docSha256": "eb262f6c48de20ddb9f88faa6f7c509aad91b3b9c3cccb9899abe164baf473a4",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "ap-q24",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "fe2c0ba2d06f736203117bf3b92ab7f41a6e3272b390b5b433f3d311ea314e2e"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "the clause-level attribution picked the nearest preceding model code, which names a different compared product",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Nearest-mention binding must not cross a comparison boundary; prefer unresolved over the nearest mention.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-04"
+    ]
+   },
+   "supports": [
+    "EX-01"
+   ],
+   "counterexamples": [
+    "EX-04"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-03",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "televisions",
+   "source": {
+    "host": "www.trustedreviews.com",
+    "docTag": "u_tv_tr_sony_bravia8ii",
+    "docSha256": "6228f45d4777986be02fab448bbfb1ce746512726325047f16731f9b2c874766",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q68",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "066ed900e5e5aa9721f6b0e0ef6807829c9270098146fb5979432df849b1bdc7"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "a rival product figure in comparison prose inherits the page product",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Same as EX-01 (comparison prose).",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-09"
+    ]
+   },
+   "supports": [
+    "EX-01"
+   ],
+   "counterexamples": [
+    "EX-09"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-04",
+   "kind": "quantitative_value",
+   "family": "S_attribution_success",
+   "category": "air_purifiers",
+   "source": {
+    "host": "housefresh.com",
+    "docTag": "u_ap_hf_xiaomi_4pro",
+    "docSha256": "eb262f6c48de20ddb9f88faa6f7c509aad91b3b9c3cccb9899abe164baf473a4",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "ap-q23",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "fe2c0ba2d06f736203117bf3b92ab7f41a6e3272b390b5b433f3d311ea314e2e"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "clause attribution bound another product correctly",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Counterexample: clause-level binding to another named product can be right; a fix must not force every value to the page product or to unresolved.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-05",
+   "kind": "quantitative_value",
+   "family": "S_attribution_success",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_lg_b6",
+    "docSha256": "a32e73e0bb33ab91b87dfb2e3a8241fb079de14275b5f7690512a76101bdc9c5",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q1",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "9a8cc346ccf29da34fbfa7a531a11df42fbed80261472197918c87801c4c9377"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products"
+   ],
+   "cause": {
+    "candidate": "the reviewed product value in a comparison document",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Counterexample: in comparison documents the reviewed product's own values are still bound correctly.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-06",
+   "kind": "quantitative_value",
+   "family": "F8_identity_variant",
+   "category": "televisions",
+   "source": {
+    "host": "www.trustedreviews.com",
+    "docTag": "u_tv_tr_samsung_qe65s85h",
+    "docSha256": "daec1b9c0f62971c4981069066560e838c3e96f4fd2aa8a3e5da87d3a7c877fd",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q59",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "71800093ef6308566bbbe0206beec18818e3b6a93f5e12e23fe6cae65d401158"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold_plus_developer_audit",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project; plus the Phase272 developer audit (REPORT.md §5): the two names denote the same product; the audit is not independent"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "series name in gold vs exact variant in the page product name; the frozen subject rule (token Jaccard) scores them as different",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "Identity comparison must distinguish \"same product, other name\" (series vs variant code) from \"other product\".",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [
+    "EX-07"
+   ],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run_with_developer_audit",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-07",
+   "kind": "quantitative_value",
+   "family": "F8_identity_variant",
+   "category": "dishwashers",
+   "source": {
+    "host": "www.trustedreviews.com",
+    "docTag": "u_dw_tr_candy_cf57cf0w",
+    "docSha256": "baa9cbda8855a336cac7b6c6ff6f1334f02f82579cdb474f9ac3c33a7a457f70",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "dw-q8",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "dd93a1e20d07ed23935426660ed629258921bbef9d6b0ac53cd5206ac1a1903a"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold_plus_developer_audit",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project; plus the Phase272 developer audit (REPORT.md §5): the two names denote the same product; the audit is not independent"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product",
+    "value_in_table_cell"
+   ],
+   "cause": {
+    "candidate": "model-code suffix (-80) present in gold, absent in the page product",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "Same as EX-06 (suffix variant).",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [
+    "EX-06"
+   ],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run_with_developer_audit",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-08",
+   "kind": "quantitative_value",
+   "family": "F1_identity_headline",
+   "category": "air_purifiers",
+   "source": {
+    "host": "www.techradar.com",
+    "docTag": "u_ap_trd_iqair_atemx",
+    "docSha256": "babf03d38237933b2b6eea1f1ba594a31303f33dfd0ac30d84d7b46f29e65580",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "ap-q62",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "a24c650cb97c423853785a3e201949f611f0c1f228e89dfe1dec130829699d27"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "headline_is_sentence",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "the page main product name is the article headline sentence, so every value is bound to a non-product string",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "A headline sentence is not a product identity; bind to the named product or leave unresolved.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-09",
+   "kind": "quantitative_value",
+   "family": "S_extraction_success",
+   "category": "televisions",
+   "source": {
+    "host": "www.trustedreviews.com",
+    "docTag": "u_tv_tr_sony_bravia8ii",
+    "docSha256": "6228f45d4777986be02fab448bbfb1ce746512726325047f16731f9b2c874766",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q73",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "ebf95de5611d8d8afe2803503e05561d0adbfdec0cbc22af0b71c7492d6b7261"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "found_by_baseline_reader"
+   ],
+   "cause": {
+    "candidate": "found by arm A and arm B",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Guard: a value the baseline reader already found must stay found.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-10",
+   "kind": "quantitative_value",
+   "family": "S_extraction_success",
+   "category": "air_fryers",
+   "source": {
+    "host": "www.trustedreviews.com",
+    "docTag": "u_af_tr_sharp_5_5l",
+    "docSha256": "786f01be267d8196364c0aa7a8a51c0e171e3cc57f0f2af1d753dcdca5afd73b",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "af-q10",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "8facdc07103286de038c7255b50205f71c83f9627859af57609946e9b99cd800"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products"
+   ],
+   "cause": {
+    "candidate": "observed cooking time found by guided reading",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Guard: guided reading of observed durations.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-11",
+   "kind": "quantitative_value",
+   "family": "F3_lost_under_guidance",
+   "category": "air_purifiers",
+   "source": {
+    "host": "housefresh.com",
+    "docTag": "u_ap_hf_xiaomi_4pro",
+    "docSha256": "eb262f6c48de20ddb9f88faa6f7c509aad91b3b9c3cccb9899abe164baf473a4",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "ap-q13",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "absent",
+    "subjectOutcome": null,
+    "response": null,
+    "blockSha256": null
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "found_only_by_exploratory_pass"
+   ],
+   "cause": {
+    "candidate": "found as a lead by the knowledge-free exploratory pass (arm E) but not admitted by the guided pass",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Guidance may add or veto with a stated reason; a value a generic pass locates must not vanish silently.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [
+    "EX-15"
+   ],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": false,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": "the committed run and a single-case re-observation on the frozen build disagree; the committed state is kept unchanged"
+   }
+  },
+  {
+   "id": "EX-12",
+   "kind": "false_positive_finding",
+   "family": "F2_qualitative_overreach",
+   "category": "air_purifiers",
+   "source": {
+    "host": "housefresh.com",
+    "docTag": "u_ap_hf_xiaomi_4pro",
+    "docSha256": "eb262f6c48de20ddb9f88faa6f7c509aad91b3b9c3cccb9899abe164baf473a4",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": null,
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "emitted",
+    "subjectOutcome": null,
+    "response": null,
+    "blockSha256": "139e696cec8e06bdaa1d28c2bb30e6ce1c899a9fdd5187c64b025c5716efbe30"
+   },
+   "reference": {
+    "expected": "absent",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project; \"absent\" relies on the gold being complete for this dimension and subject"
+   },
+   "features": [
+    "document_names_several_products"
+   ],
+   "cause": {
+    "candidate": "one evaluative word in a clause sharing one taught term became a finding (health outcome) without a tester finding",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "An evaluative finding needs an anchor, a stated subject and a test context in the same clause.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-14"
+    ]
+   },
+   "supports": [
+    "EX-13"
+   ],
+   "counterexamples": [
+    "EX-14"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "emitted",
+     "subjectOutcome": null
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-13",
+   "kind": "false_positive_finding",
+   "family": "F2_qualitative_overreach",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_lg_b6",
+    "docSha256": "a32e73e0bb33ab91b87dfb2e3a8241fb079de14275b5f7690512a76101bdc9c5",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": null,
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "emitted",
+    "subjectOutcome": null,
+    "response": null,
+    "blockSha256": "5ca5b5f4784a71d51ed270b21faee7c5724e9156837cbbccf219404710b021f5"
+   },
+   "reference": {
+    "expected": "absent",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project; \"absent\" relies on the gold being complete for this dimension and subject"
+   },
+   "features": [
+    "document_names_several_products"
+   ],
+   "cause": {
+    "candidate": "as EX-12 (accessibility outcome from a generic positive clause)",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Same as EX-12.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-16"
+    ]
+   },
+   "supports": [
+    "EX-12"
+   ],
+   "counterexamples": [
+    "EX-16"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "emitted",
+     "subjectOutcome": null
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-14",
+   "kind": "qualitative_finding",
+   "family": "S_extraction_success",
+   "category": "dishwashers",
+   "source": {
+    "host": "www.expertreviews.co.uk",
+    "docTag": "u_dw_er_bosch_smv68nd00g",
+    "docSha256": "23a47969846e1642c8ea82637468c2f27c1d60d1dceb96b1073769b20cf9527b",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "dw-o17",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "510b14cefd7bd3f5b70f3e792182163d407ad6bffaaf82f60b9e5dfb1b6c1b7e"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products"
+   ],
+   "cause": {
+    "candidate": "taught dimension found with the right subject",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Guard: guided qualitative reading of a taught outcome.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-15",
+   "kind": "qualitative_finding",
+   "family": "F3_lost_under_guidance",
+   "category": "air_fryers",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_af_tg_tfal_infrared",
+    "docSha256": "9ee6d5ea2b3e0256c5bfe9fc480d364b5c1e8591ddc2ba2dd9ed8c4b7d5fd168",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "af-o11",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "absent",
+    "subjectOutcome": null,
+    "response": null,
+    "blockSha256": null
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "found_only_by_exploratory_pass",
+    "untaught_dimension"
+   ],
+   "cause": {
+    "candidate": "untaught dimension: the guided pass links no taught outcome; only the exploratory pass records it, as a lead",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Untaught dimensions must surface (at least as leads attached to the case) rather than be dropped.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [
+    "EX-11"
+   ],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "absent",
+     "subjectOutcome": null
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-16",
+   "kind": "qualitative_finding",
+   "family": "S_extraction_success",
+   "category": "air_fryers",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_af_tg_ninja_crispi",
+    "docSha256": "1305b94529cc6370d4845217b647da0f6e5bce66050cb5b64728666974eee1c1",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "af-o1",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "f0138074cc8ca6e63c487a8346e154f8e263b063940b3090025aa3f32dfef87d"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "found_by_baseline_reader"
+   ],
+   "cause": {
+    "candidate": "found by arm A and arm B",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Guard: a baseline qualitative finding must stay found.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-17",
+   "kind": "request",
+   "family": "F5_category_recognition",
+   "category": "tumble_dryers",
+   "source": {
+    "host": null,
+    "docTag": null,
+    "docSha256": null,
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/unknown-category-pilot.json",
+    "goldId": null,
+    "historicalArm": "journey",
+    "historicalBuild": "20fa5ae"
+   },
+   "historical": {
+    "status": "responded",
+    "subjectOutcome": null,
+    "response": "clarification",
+    "blockSha256": null
+   },
+   "reference": {
+    "expected": "gap_stated",
+    "basis": "frozen_request_design",
+    "independence": "request authored by the developer before any tumble-dryer page was read (evaluation/phase272/unknown-category-requests.json); the expectation is the design intent, not an independent judgement"
+   },
+   "features": [
+    "no_question_word_anchor",
+    "request_names_unknown_product"
+   ],
+   "cause": {
+    "candidate": "purchase-phrase detection finds no phrase in \"I want a quiet tumble dryer…\", so shared need words decide",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "A product noun phrase the registry does not know is a gap to state, not a near match to accept.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-18"
+    ]
+   },
+   "supports": [],
+   "counterexamples": [
+    "EX-18"
+   ],
+   "maturity": "T2_frozen_request_set",
+   "historicalCheck": null
+  },
+  {
+   "id": "EX-18",
+   "kind": "request",
+   "family": "S_gap_recognition_success",
+   "category": "tumble_dryers",
+   "source": {
+    "host": null,
+    "docTag": null,
+    "docSha256": null,
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/unknown-category-pilot.json",
+    "goldId": null,
+    "historicalArm": "journey",
+    "historicalBuild": "20fa5ae"
+   },
+   "historical": {
+    "status": "responded",
+    "subjectOutcome": null,
+    "response": "out_of_scope",
+    "blockSha256": null
+   },
+   "reference": {
+    "expected": "gap_stated",
+    "basis": "frozen_request_design",
+    "independence": "request authored by the developer before any tumble-dryer page was read (evaluation/phase272/unknown-category-requests.json); the expectation is the design intent, not an independent judgement"
+   },
+   "features": [
+    "question_word_purchase_anchor",
+    "request_names_unknown_product"
+   ],
+   "cause": {
+    "candidate": "unknown product named after \"Which\"; gap stated",
+    "status": "not_applicable",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "Guard: a stated gap must stay stated.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_frozen_request_set",
+   "historicalCheck": null
+  }
+ ]
+}
