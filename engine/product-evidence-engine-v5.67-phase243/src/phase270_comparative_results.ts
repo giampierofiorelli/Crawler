@@ -99,6 +99,10 @@ function namedSubjects(blocks:readonly string[]):Map<ApplianceClass270,{name:str
  });
  return out;
 }
+/** Phase271: the document's own named test subjects by equipment class (shared with the qualitative reader). */
+export function documentSubjects271(html:string):Map<ApplianceClass270,{name:string;model:string|null}[]>{
+ return namedSubjects(textBlocks225(html,{splitLineBreaks:true,maxBlocks:1500}).blocks);
+}
 /** Appliance classes named in a text, in order (shared with the qualitative reader). */
 export const applianceMentions270=(text:string)=>[...text.matchAll(CLASS_RE)].map(m=>({cls:classOf(m[0]),at:m.index!,end:m.index!+m[0].length}));
 /** Phase271 (development: Which? "At only 6p, and baking in less time than the oven, the air fryer …"): a mention introduced
