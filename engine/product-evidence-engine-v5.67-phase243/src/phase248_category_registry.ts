@@ -12,6 +12,8 @@ export const CATEGORY_REGISTRY248:readonly CategoryEntry248[]=[
  // Phase271: packages 06 and 04, taught in src/phase271_category_teaching.ts.
  {id:'dishwashers',aliases:['dishwasher','dishwashers','dish washer']},
  {id:'air_purifiers',aliases:['air purifier','air purifiers','air cleaner']},
+ // Phase272: package 07, taught in src/phase272_category_teaching.ts (fourth category of the guided-extraction experiment).
+ {id:'televisions',aliases:['tv','tvs','television','televisions','telly','oled tv','smart tv']},
  {id:'dehumidifiers',aliases:['dehumidifier','dehumidifiers'],cues:['damp','condensation','humidity']},
  {id:'blenders',aliases:['blender','smoothie maker'],cues:['smoothies','smoothie']},
  {id:'deep_fryers',aliases:['deep fryer','deep fat fryer','chip pan']},

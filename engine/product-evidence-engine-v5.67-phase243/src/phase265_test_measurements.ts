@@ -18,7 +18,8 @@
  */
 import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_transient_test_probe.js';
 import {comparativeResults270,type ComparativeResult270,type ApplianceClass270} from './phase270_comparative_results.js';
-import {probeTransientTestContent225} from './phase225_transient_test_probe.js';
+import {probeTransientTestContent225,textBlocks225,type ProductMention272} from './phase225_transient_test_probe.js';
+import type {ExtractionPlan272} from './phase272_extraction_plan.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
@@ -57,21 +58,51 @@ export function testDocumentSubject268(x:SpecExtraction245|null,sourceType:Sourc
  const ids={...x.mainProduct.identifiers};if(tokens.length===1&&!ids.model)ids.model=tokens[0];
  return {...x,mainProduct:{...x.mainProduct,name,identifiers:ids}};
 }
-/** Run the existing Phase225 probe (which runs Phase226/227) on transient bytes. Nothing of the body is returned. */
-export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null,opts:{category?:string|null}={}):TestLeadsInput265{
- const lead=pageProductLead265(x);
+/** Phase272: the products a document names in its headline and headings ("LG C6", "Samsung S85F", "AirDoctor 3000"): a
+ * capitalised brand word followed by a model code containing a digit (years excluded). Used only by plan-guided reading,
+ * to attribute a value to the product its own clause names; never to merge products. */
+export function documentMentions272(html:string):ProductMention272[]{
+ const {blocks,tags=[]}=textBlocks225(html,{withTags:true,maxBlocks:1500});const out=new Map<string,ProductMention272>();
+ const NOT_BRAND=/^(?:The|A|An|I|We|My|Our|Best|Review|Tested|Vs|And|With|Top|New|Why|How|What|This|Is|It|In|On|For|Of|To|Series)$/;
+ blocks.forEach((b,i)=>{if(!/^h[1-3]$/.test(tags[i]??''))return;
+  for(const m of b.matchAll(/\b([A-Z][A-Za-z]+)\s+((?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{1,15})\b/g)){
+   if(NOT_BRAND.test(m[1])||/^(?:19|20)\d\d$/.test(m[2]))continue;const k=m[2];if(!out.has(k))out.set(k,{name:m[1]+' '+m[2],model:m[2]});}});
+ // A code printed once (a heading typo, a passing comparison) does not make a second product of the document.
+ const all=blocks.join('\n');
+ return [...out.values()].filter(m=>(all.match(new RegExp('\\b'+m.model.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','g'))??[]).length>=2);
+}
+/** Phase272 (plan only): the page subject when the headline is a sentence: the one product it names, none when it names
+ * several (each value then binds to its own clause), unchanged otherwise. */
+export function planPageSubject272<T extends {name:string;model:string|null}>(lead:T|null,mentions:readonly ProductMention272[]):T|{name:string;model:string;sku:null}|null{
+ if(!lead||!(/^['‘“"]|\b(?:I|we)\b|:/.test(lead.name)||lead.name.split(/\s+/).length>9)||!mentions.length)return lead;
+ const inName=mentions.filter(m=>new RegExp('\\b'+m.model+'\\b').test(lead.name));
+ return inName.length===1?{name:inName[0].name,model:inName[0].model,sku:null}:inName.length>1?null:lead;
+}
+/** Run the existing Phase225 probe (which runs Phase226/227) on transient bytes. Nothing of the body is returned.
+ * Phase272: `plan` (the category's extraction plan, compiled from the store before reading) and `exploratory` are passed
+ * to the same readers; without them the behaviour is exactly the Phase271 one. */
+export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null,opts:{category?:string|null;plan?:ExtractionPlan272;exploratory?:boolean}={}):TestLeadsInput265{
+ let lead=pageProductLead265(x);
+ const mentions=opts.plan?documentMentions272(html):[];
+ // Phase272 (plan only): a headline that is a sentence ("I tested the LG C6 and LG C5 side-by-side") is not a product name:
+ // one named product becomes the page subject, several leave each value to its own clause.
+ if(opts.plan)lead=planPageSubject272(lead,mentions) as typeof lead;
  const tested=({air_fryers:'air_fryer',ovens:'oven',microwaves:'microwave',slow_cookers:'slow_cooker',halogen_ovens:'halogen_oven'} as Record<string,ApplianceClass270>)[opts.category??''];
  const comparative=comparativeResults270(html,{testedClass:tested}).results;
- return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe:probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[]}),...(comparative.length?{comparative270:comparative}:{})};
+ return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe:probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[],
+  ...(opts.plan?{plan:opts.plan,mentions}:{}),...(opts.exploratory?{exploratory:true}:{})}),...(comparative.length?{comparative270:comparative}:{})};
 }
 
 const UNITS:Readonly<Record<string,string>>={mm:'mm',cm:'cm',kg:'kg',g:'g',l:'l',litre:'l',litres:'l',liter:'l',liters:'l',db:'db',dba:'dba',
  '%':'%',minute:'minutes',minutes:'minutes',hour:'hours',hours:'hours',second:'seconds',seconds:'seconds',ms:'ms',w:'w',watt:'w',watts:'w',
- kwh:'kwh',mah:'mah','°c':'°c'};
+ kwh:'kwh',mah:'mah','°c':'°c',
+ // Phase272: units of the generic physical lexicon (src/phase272_extraction_plan.ts) that plan-guided reading may report.
+ decibel:'db',decibels:'db','db(a)':'db',nits:'nits','cd/m2':'nits','cd/m²':'nits',cfm:'cfm','m3/h':'m3/h','m³/h':'m3/h',hz:'hz',wh:'wh',ml:'ml',mins:'minutes',min:'minutes',hrs:'hours'};
 export const normalizeUnit265=(u:string):string|null=>UNITS[String(u).toLowerCase()]??null;
 /** Units a publisher-declared dimension can be expressed in; anything else is a mismatch, never a conversion. */
 const DIMENSION_UNITS:Readonly<Record<string,readonly string[]>>={mass:['g','kg'],volume:['l'],noise:['db','dba'],
- duration:['ms','seconds','minutes','hours'],length:['mm','cm'],power:['w'],energy:['kwh']};
+ duration:['ms','seconds','minutes','hours'],length:['mm','cm'],power:['w'],energy:['kwh','wh'],
+ luminance:['nits'],airflow:['cfm','m3/h'],frequency:['hz']};
 const TOKEN=/^[a-z0-9 .°%]{1,40}$/;
 const CODES:readonly ConditionCode225[]=['setpoint_c','duration_1h','load_empty','from_cold','all_compartments','single_compartment','includes_preheat','power_meter','conditions_from_block'];
 const codesOk=(x:unknown)=>x===undefined||(Array.isArray(x)&&x.length<=CODES.length&&x.every(c=>CODES.includes(c)));
@@ -100,9 +131,9 @@ export function screenTestLead265(c:TestCandidate225,rev:{url:string;sha256:stri
  if(c.classification!=='publisher_reported_measurement_lead_only'||c.methodReviewed!==false||c.originalWorkReviewed!==false||c.reviewerIndependent!==false||
   c.exactVariantVerified!==false||c.market!=='unknown'||c.scientificEvidenceAdmitted!==false||c.rankingAuthorized!==false)return {ok:false,reason:'lead_claims_review_or_admission'};
  if(!hex64(c.id)||!hex64(c.blockSha256)||!Number.isInteger(c.blockIndex)||!Number.isInteger(c.valueOffset)||typeof c.value!=='number'||!Number.isFinite(c.value)||
-  c.value<0||c.value>1e7||!['first_person_test_statement','test_section_with_method_cue','bounded_table_result_with_local_method','energy_result_with_document_protocol'].includes(c.methodCue)||
+  c.value<0||c.value>1e7||!['first_person_test_statement','test_section_with_method_cue','bounded_table_result_with_local_method','energy_result_with_document_protocol','plan_guided_measurement_term'].includes(c.methodCue)||
   !codesOk(c.conditionCodes)||!codesOk(c.documentProtocolCodes)||(c.setpointC!==undefined&&c.setpointC!==null&&!(Number.isInteger(c.setpointC)&&c.setpointC>=20&&c.setpointC<=400))||
-  !['page_context_unverified','multiple_models_unresolved','not_identified','table_row_declared_model_unverified'].includes(c.subjectAssignment)||
+  !['page_context_unverified','multiple_models_unresolved','not_identified','table_row_declared_model_unverified','clause_named_model_unverified'].includes(c.subjectAssignment)||
   (c.condition!==null&&!TOKEN.test(String(c.condition)))||(c.instrument!==null&&!TOKEN.test(String(c.instrument))))return {ok:false,reason:'malformed_lead'};
  const unit=normalizeUnit265(c.unit);if(!unit)return {ok:false,reason:'unit_not_recognised'};
  const declared=c.publisherDeclaredDimension&&c.publisherDeclaredDimension!=='other'?c.publisherDeclaredDimension:null;

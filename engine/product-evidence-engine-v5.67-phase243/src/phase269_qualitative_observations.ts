@@ -12,11 +12,17 @@
 import {createHash} from 'node:crypto';
 import {textBlocks225} from './phase225_transient_test_probe.js';
 import {applianceMentions270,documentSubjects271,type ApplianceClass270} from './phase270_comparative_results.js';
+import {linkToOutcome272,polarity272,planWords272,TEST_CONTEXT272,DECLARATION_CUE272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 
 export type QualOutcome269='crispness'|'browning'|'evenness'|'doneness'|'moisture'|'noise';
 export interface QualitativeObservation269 {
- dish:string;outcome:QualOutcome269;direction:'positive'|'negative'|'mixed';strength:'explicit'|'hedged';
- settingAdjusted:boolean;comparative:boolean;basis:'first_person_cooking_test';blockSha256:string;blockIndex:number;
+ dish:string;
+ /** Phase272: 'taught_dimension' when a plan-guided clause names a taught outcome of the category (see dimension272). The
+  * store's Phase270 amendment keeps only the five cooking codes; any other observation is withheld at ingest. */
+ outcome:QualOutcome269|'taught_dimension';direction:'positive'|'negative'|'mixed';strength:'explicit'|'hedged';
+ settingAdjusted:boolean;comparative:boolean;basis:'first_person_cooking_test'|'first_hand_test_context';blockSha256:string;blockIndex:number;
+ /** Phase272: the taught outcome id the clause is about (plan-guided observations only). */
+ dimension272?:string;
  /** Phase270: the appliance the clause attributes the outcome to (null: the page's tested product, not stated). */
  appliance:ApplianceClass270|null;
  /** Phase270: the dish came from the section heading, not from the sentence. */
@@ -51,8 +57,46 @@ const METHOD=/\b(?:I (?:note|will|'ll)|I’ll|first thing I do|my go-to|go-to se
 const ADJUST=/\b(?:added (?:on )?another|raised|lowered|extended|an extra|another \d+ minutes)\b/;
 const COMPARE=/\b(?:better|worse) (?:\w+ ){0,3}than\b|\bthe (?:oven|air fryer) (?:\w+ )?had\b|\bmore (?:even|crisp)/;
 
-/** Observations in one transient page; the page must state its own cooking tests in the first person. */
-export function qualitativeObservations269(html:string):{observations:QualitativeObservation269[];blocksRead:number}{
+/** Phase272: an evaluative clause no taught outcome covers, in a first-hand test context: a RESEARCH LEAD (its first content
+ * words as a short regex-bounded term, no sentence), never an observation. */
+export interface QualitativeLead272 {term:string;direction:'positive'|'negative'|'mixed';blockSha256:string;blockIndex:number;
+ subject:{name:string;model:string|null}|null;status:'exploratory_research_lead'}
+const CONTRAST272=/,?\s+(?:but|while|whereas|although|though|however|yet)\s+|;\s*/i;
+const HEDGE272=/\b(?:mostly|slightly|a little|fairly|quite|somewhat|reasonably|relatively|generally|largely|a touch|a bit)\b/i;
+/** Phase272 guided + exploratory qualitative pass (generic: the plan supplies the outcomes, a generic evaluative lexicon the
+ * polarity). Reads prose and short cells in a document that reports first-hand testing; a clause contrasting two outcomes
+ * gives two observations; adjectives are never turned into scores. */
+function guidedQualitative272(html:string,plan:ExtractionPlan272|undefined,exploratory:boolean,mentions:readonly {name:string;model:string}[],
+ page:{name:string;model:string|null}|null):{observations:QualitativeObservation269[];leads:QualitativeLead272[]}{
+ const {blocks,tags=[]}=textBlocks225(html,{withTags:true,maxBlocks:1500});const obs:QualitativeObservation269[]=[];const leads:QualitativeLead272[]=[];
+ if(!blocks.some(b=>TEST_CONTEXT272.test(b)||FIRST_PERSON.test(b)))return {observations:obs,leads};
+ const seen=new Set<string>();let section:{name:string;model:string|null}|null=null;
+ const subjectOf=(text:string)=>{if(mentions.length<2)return null;const hit=mentions.filter(m=>new RegExp('\\b'+m.model.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b').test(text));return hit.length===1?{name:hit[0].name,model:hit[0].model}:null;};
+ blocks.forEach((block,bi)=>{const tag=tags[bi]??'';
+  // A heading naming one product opens its section; a comparative heading ("louder than X") opens none.
+  if(/^h[1-4]$/.test(tag)){const s1=/\b(?:than|vs\.?|versus|compared|like)\b/i.test(block)?null:subjectOf(block);section=s1??(mentions.length>1?null:section);return;}
+  if(block.length<25||block.length>1400||/^(?:by|share|sign up|subscribe|related|read more)\b/i.test(block))return;
+  for(const sent of block.split(/(?<=[.!?])\s+(?=[A-Z“"])/)){if(DECLARATION_CUE272.test(sent)&&!TEST_CONTEXT272.test(sent))continue;
+   for(const clause of sent.split(CONTRAST272)){if(clause.length<12)continue;
+    const dir=polarity272(clause);if(!dir)continue;const subject=subjectOf(clause)??section??page;
+    const dim=plan?linkToOutcome272(plan,clause):null;
+    if(dim){const key=[dim,dir,subject?.name??''].join('|');if(seen.has(key))continue;seen.add(key);
+     obs.push({dish:'general',outcome:'taught_dimension',dimension272:dim,direction:dir,strength:HEDGE272.test(clause)?'hedged':'explicit',settingAdjusted:false,comparative:/\b(?:than|compared)\b/i.test(clause),
+      basis:'first_hand_test_context',blockSha256:sha(block),blockIndex:bi,appliance:null,dishFromHeading:false,subject,form:tag==='td'?'table_cell':'prose',
+      independentFinding:false,laboratoryMeasurement:false,rankingInput:false});}
+    else if(exploratory){const term=planWords272(clause).slice(0,2).join(' ');if(!term)continue;const key=['x',term,dir,subject?.name??''].join('|');if(seen.has(key))continue;seen.add(key);
+     leads.push({term,direction:dir,blockSha256:sha(block),blockIndex:bi,subject,status:'exploratory_research_lead'});}
+   }}
+ });
+ return {observations:obs,leads};
+}
+/** Observations in one transient page; the page must state its own cooking tests in the first person.
+ * Phase272: with `plan` (compiled from the store before reading) the guided pass adds taught-dimension observations; with
+ * `exploratory` it returns research leads for evaluations no taught outcome covers. Without options: the Phase271 reader. */
+export function qualitativeObservations269(html:string,opts:{plan?:ExtractionPlan272;exploratory?:boolean;mentions?:readonly {name:string;model:string}[];
+ page?:{name:string;model:string|null}|null}={}):{observations:QualitativeObservation269[];blocksRead:number;leads272?:QualitativeLead272[]}{
+ if(opts.plan||opts.exploratory){const base=qualitativeObservations269(html);const g=guidedQualitative272(html,opts.plan,!!opts.exploratory,opts.mentions??[],opts.page??null);
+  return {observations:[...base.observations,...g.observations],blocksRead:base.blocksRead,...(opts.exploratory?{leads272:g.leads}:{})};}
  // Phase270: read past navigation-heavy page heads (the CHOICE page's article starts after block 500) and keep headings.
  const {blocks,tags=[]}=textBlocks225(html,{withTags:true,maxBlocks:1500});const out:QualitativeObservation269[]=[];const seen=new Set<string>();
  let headingDish:string|null=null;

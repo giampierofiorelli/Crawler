@@ -7,6 +7,8 @@ import {createHash} from 'node:crypto';
 import {analyzeEnglishReview155} from './phase155_review_orchestrator.js';
 import {safeMetadataUrl75} from './phase75_source_discovery.js';
 import {probeTransientTestTables226} from './phase226_transient_test_tables.js';
+import {unitAlternation272,canonicalUnit272,dimensionOfUnit272,DIMENSION_WORDS272,DECLARATION_CUE272,TEST_CONTEXT272,rangeOrBound272,
+ planWords272,EXPLORATORY_UNITS272,conditionTerms272,stem272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 const sha=(x:string)=>createHash('sha256').update(x).digest('hex');
 const safeText=(s:string,n:number)=>s.length>0&&s.length<=n&&!/[<>\x00-\x1f]/.test(s);
 // Phase268: "200&deg;C" decoded to "200 C" and lost every temperature; the common typographic entities are read.
@@ -74,6 +76,9 @@ export interface TestCandidate225 {
  /** Phase268: PEE-authored codes for the stated conditions of this value, the setpoint in °C, and the document's own
   * first-person protocol codes (when the document states one). Codes only; no text. */
  conditionCodes?:readonly ConditionCode225[];setpointC?:number|null;documentProtocolCodes?:readonly ConditionCode225[];
+ /** Phase272 (plan only): taught condition ids whose distinctive terms the value's own sentence uses. A CUE that the condition
+  * is stated, never proof that it is met; not retained by the store. */
+ planConditionIds272?:readonly string[];
  id:string;sourceUrl:string;documentSha256:string|null;
  /** Hash of the small source block, not a stored quote or article excerpt. */
  blockSha256:string;blockIndex:number;valueOffset:number;
@@ -81,9 +86,14 @@ export interface TestCandidate225 {
  /** Table-header interpretation only; not an independently verified measurand. */
  publisherDeclaredDimension?:'mass'|'volume'|'noise'|'duration'|'length'|'power'|'energy'|'other';
  publisherDeclaredTargetScope?:'compartment_unspecified'|'whole_product_unspecified';
- methodCue:'first_person_test_statement'|'test_section_with_method_cue'|'bounded_table_result_with_local_method'|'energy_result_with_document_protocol';
+ methodCue:'first_person_test_statement'|'test_section_with_method_cue'|'bounded_table_result_with_local_method'|'energy_result_with_document_protocol'|
+  /** Phase272: accepted because the category's extraction plan names this unit's dimension and a taught term in the value's
+   * own sentence (or its table label), in a document that reports first-hand testing. A plan is a reading prior, not evidence. */
+  'plan_guided_measurement_term';
  subject:{name:string;model:string|null;sku:string|null}|null;
- subjectAssignment:'page_context_unverified'|'multiple_models_unresolved'|'not_identified'|'table_row_declared_model_unverified';
+ subjectAssignment:'page_context_unverified'|'multiple_models_unresolved'|'not_identified'|'table_row_declared_model_unverified'|
+  /** Phase272 (plan only): the value's own clause names one of the document's products. */
+  'clause_named_model_unverified';
  classification:'publisher_reported_measurement_lead_only';
  methodReviewed:false;originalWorkReviewed:false;reviewerIndependent:false;
  exactVariantVerified:false;market:'unknown';scientificEvidenceAdmitted:false;rankingAuthorized:false;
@@ -96,10 +106,25 @@ export interface TestProbe225 {
  blockingReasons:readonly string[];truncated:boolean;
  sourceBodyRetained:false;sourcePassagesRetained:false;
  independenceAuthenticated:false;protocolAuthenticated:false;rankingAuthorized:false;
+ /** Phase272: digest of the extraction plan supplied before reading (absent: no plan). */
+ planDigest272?:string;
+ /** Phase272 exploratory pass: numbers with a generic unit and a generic reporting cue that no accepted candidate covers.
+  * RESEARCH LEADS ONLY: never candidates, never stored as measurements, never ranking input. */
+ exploratoryLeads272?:readonly {value:number;unit:string;blockIndex:number;blockSha256:string;subject:{name:string;model:string|null;sku:string|null}|null;status:'exploratory_research_lead'}[];
  }
+/** Phase272: a product the document names (brand + model code from its headline or headings); per-value attribution only. */
+export interface ProductMention272 {name:string;model:string}
+const HYPOTHETICAL272=/\b(?:would|if you|could|might|per year|a year|annual(?:ly)?|each year|over (?:a|the) year)\b/i;
+const REPORT_CUE272=/\b(?:measured|recorded|reached|peaked|clocked|took|needed|registered|used|consumed|pulls?|draws?|generates?|hit|ran at|came in at|our tests?|(?:we|i) found)\b/i;
 export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
   documentSha256?:string|null;
   productLeads?:readonly {name:string;model:string|null;sku:string|null}[];
+  /** Phase272: the category's extraction plan, supplied BEFORE reading (guided candidates); absent: the Phase268 reader. */
+  plan?:ExtractionPlan272;
+  /** Phase272: also run the generic exploratory pass (research leads for what no rule anticipated). */
+  exploratory?:boolean;
+  /** Phase272 (plan only): products the document names; a value whose own clause names one is attributed to it. */
+  mentions?:readonly ProductMention272[];
 }={}):TestProbe225 {
  const empty=():TestProbe225=>({schema:'pee225.transient-test-probe.v1',sourceUrl,candidates:[],
   methodBlocks:0,instrumentBlocks:0,existingPhase155MeasurementLeads:0,
@@ -123,6 +148,45 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
  // "If the air fryer has two drawers, I will run both": the protocol runs every compartment.
  if(protocolCodes&&protocolBlock&&/\b(?:run|running) both\b/i.test(protocolBlock))protocolCodes.push('all_compartments');
  const records:TestCandidate225[]=[];const seen=new Set<string>();
+ // Phase272: the plan widens the units read and admits a value whose sentence uses a taught term of that unit's dimension.
+ const plan=opts.plan;
+ // Both Phase272 passes read past the first 380 blocks (navigation-heavy pages put results after block 1000); the first 380
+ // blocks are the same list, so block indices stay comparable with the Phase268 reader's.
+ const deep=plan||opts.exploratory?textBlocks225(html,{maxBlocks:1500}).blocks:all;
+ const docTest=!!plan&&deep.some(b=>TEST_CONTEXT272.test(b)||claimedMethod.test(b));
+ const planRe=plan?new RegExp('(?<![\\d.,])(\\d{1,3}(?:,\\d{3})+(?:\\.\\d{1,3})?|\\d{1,7}(?:\\.\\d{1,3})?)\\s*('+unitAlternation272(plan.units)+')(?![a-z0-9])','gi'):null;
+ const planTaught=(dim:string)=>new Set(plan?.measurements.filter(m=>m.dimensions.includes(dim)).flatMap(m=>m.terms)??[]);
+ const clauseSubject=(sent:string,at:number)=>{const ms=opts.mentions??[];if(ms.length<2)return null;let best:{m:ProductMention272;i:number}|null=null;
+  for(const m of ms){const re=new RegExp('\\b'+m.model.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','g');for(const x of sent.slice(0,at).matchAll(re))if(!best||x.index!>best.i)best={m,i:x.index!};}
+  return best?{name:best.m.name,model:best.m.model,sku:null}:null;};
+ const guided=(line:string,i:number,prevLabel:string)=>{
+  if(!planRe||!docTest||negated.test(line)||secondary.test(line))return;
+  const sentences=line.split(/(?<=[.!?])\s+(?=[A-Z£])/);let off=0;
+  for(const sent of sentences){const base=off;off+=sent.length+1;
+   for(const m of sent.matchAll(planRe)){
+    const unit=canonicalUnit272(m[2]);if(!unit||!plan!.units.includes(unit))continue;const dim=dimensionOfUnit272(unit)!;
+    // The value's own sentence (or its table label) must use a taught term of this dimension, or a generic dimension word with
+    // a reporting verb; a hypothetical projection, a threshold, a duration of a condition or a declaration is not a result.
+    const ctx=planWords272(sent+' '+prevLabel);const taught=planTaught(dim);
+    if(!(ctx.some(w=>taught.has(w))||(ctx.some(w=>(DIMENSION_WORDS272[dim]??[]).includes(w))&&REPORT_CUE272.test(sent))))continue;
+    if(DECLARATION_CUE272.test(sent)||rangeOrBound272(sent,m.index!,m.index!+m[0].length))continue;
+    if(HYPOTHETICAL272.test(sent)||/^[\s-]*(?:limit|threshold|cap|target|mark)\b/i.test(sent.slice(m.index!+m[0].length).replace(/^-?\w*\s/,' '))&&/\b(?:below|above|under|our|the)\s*$/i.test(sent.slice(0,m.index!)))continue;
+    if(dim==='duration'&&/\b(?:for|after|left|over|every|each|within)\s*$/i.test(sent.slice(Math.max(0,m.index!-10),m.index!)))continue;
+    const planConds=plan!.measurements.filter(x=>x.dimensions.includes(dim)).flatMap(x=>x.conditions).filter(c=>c.terms.some(t=>ctx.includes(t))).map(c=>c.id);
+    const value=Number(m[1].replace(/,/g,''));if(!Number.isFinite(value)||value<0||value>1e7)continue;
+    if(/^(?:g|kg)$/.test(unit)&&/^\s*of\b/i.test(sent.slice(m.index!+m[0].length)))continue;
+    const subj=clauseSubject(sent,m.index!)??subject;const blockHash=sha(line);
+    const id=sha(JSON.stringify([sourceUrl,blockHash,base+m.index!,value,unit,subj]));
+    if(seen.has(id)||records.some(r=>r.blockIndex===i&&r.value===value&&canonicalUnit272(r.unit)===unit))continue;seen.add(id);
+    const cc=codesOf(sent,sent);
+    records.push({id,sourceUrl,documentSha256:opts.documentSha256??null,blockSha256:blockHash,blockIndex:i,valueOffset:base+m.index!,value,unit,
+     ...(planConds.length?{planConditionIds272:[...new Set(planConds)].sort()}:{}),
+     instrument:instrumentRe.exec(sent)?.[1]?.toLowerCase()??null,condition:conditionRe.exec(sent)?.[1]?.toLowerCase()??null,methodCue:'plan_guided_measurement_term',
+     conditionCodes:cc.codes,setpointC:cc.setpointC,documentProtocolCodes:[],subject:subj,
+     subjectAssignment:subj&&subj!==subject?'clause_named_model_unverified':scope,classification:'publisher_reported_measurement_lead_only',
+     methodReviewed:false,originalWorkReviewed:false,reviewerIndependent:false,exactVariantVerified:false,market:'unknown',scientificEvidenceAdmitted:false,rankingAuthorized:false});
+   }}
+ };
  for(let i=0;i<all.length;i++){
   const line=all[i];if(line.length>900)continue;
   if(headingCue.test(line)&&line.length<90)previousHeading=line;
@@ -177,6 +241,24 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
   }
   if(records.length>=20)break;
  }
+ // Phase272: guided pass over the same bounded blocks (the plan widens units and admits taught-term sentences; table cells
+ // are read with the block before them as their label).
+ if(plan)for(let i=0;i<deep.length&&records.length<40;i++){if(deep[i].length<=900)guided(deep[i],i,i>0&&deep[i-1].length<120?deep[i-1]:'');}
+ // Phase272 (plan only): a value printed directly before a taught condition term ("10% window") is a condition parameter,
+ // not a result; the plan removes such candidates whichever reader proposed them.
+ if(plan){const ct=conditionTerms272(plan);for(let k=records.length-1;k>=0;k--){const r=records[k];const line=deep[r.blockIndex]??'';
+  const rest=line.slice(r.valueOffset).replace(/^[\d.,]+\s*\S*?(?=\s|$)/,'').trim().split(/\s+/)[0]?.toLowerCase().replace(/[^a-z]/g,'')??'';
+  if(rest&&ct.has(stem272(rest)))records.splice(k,1);}}
+ // Phase272 exploratory pass: any generic unit with a generic reporting cue, not covered by an accepted candidate.
+ const exploratory:NonNullable<TestProbe225['exploratoryLeads272']>[number][]=[];
+ if(opts.exploratory){const exRe=new RegExp('(?<![\\d.,])(\\d{1,3}(?:,\\d{3})+(?:\\.\\d{1,3})?|\\d{1,7}(?:\\.\\d{1,3})?)\\s*('+unitAlternation272(EXPLORATORY_UNITS272)+')(?![a-z0-9])','gi');
+  const anyTest=deep.some(b=>TEST_CONTEXT272.test(b)||claimedMethod.test(b));
+  for(let i=0;i<deep.length&&exploratory.length<40;i++){const line=deep[i];if(line.length>900||negated.test(line)||secondary.test(line))continue;
+   for(const sent of line.split(/(?<=[.!?])\s+(?=[A-Z£])/)){if(!anyTest||!(REPORT_CUE272.test(sent)||(line.length<120&&/\d/.test(line)))||DECLARATION_CUE272.test(sent))continue;
+    for(const m of sent.matchAll(exRe)){const unit=canonicalUnit272(m[2]);if(!unit||rangeOrBound272(sent,m.index!,m.index!+m[0].length))continue;
+     const value=Number(m[1].replace(/,/g,''));if(!Number.isFinite(value))continue;
+     if(records.some(r=>r.blockIndex===i&&r.value===value&&(canonicalUnit272(r.unit)??r.unit)===unit)||exploratory.some(e=>e.blockIndex===i&&e.value===value&&e.unit===unit))continue;
+     exploratory.push({value,unit,blockIndex:i,blockSha256:sha(line),subject:(plan?clauseSubject(sent,m.index!):null)??subject,status:'exploratory_research_lead'});}}}}
  // Reuse the established Phase155 English reader as a *separate diagnostic*.
  // Its domain-specific inventory is incomplete and must never be promoted.
  let oldCount=0;
@@ -199,6 +281,7 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
  if(scope!=='page_context_unverified')reasons.push('test_subject_ambiguous_or_missing');
  if(out.truncated)reasons.push('bounded_test_content_coverage_incomplete');
  return {...out,candidates:records.sort((a,b)=>a.id.localeCompare(b.id)),methodBlocks,instrumentBlocks,
+  ...(plan?{planDigest272:plan.compiledFrom.digest}:{}),...(opts.exploratory?{exploratoryLeads272:exploratory}:{}),
   existingPhase155MeasurementLeads:oldCount,tableResults226:table.candidates.length,
   ambiguousTablesSkipped226:table.skippedAmbiguousTables,blockingReasons:reasons};
 }

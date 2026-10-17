@@ -1,0 +1,17 @@
+/** Phase272 — operational teaching of televisions (package 07 v1.0.0) through the Phase252/269 mechanism, so that the
+ * Phase272 extraction experiment covers a fourth, scientifically different category (optical measurements and visual
+ * judgements). GENERATED from the private Stage-A inventory (pee-knowledge/research-inventory/phase271/televisions.json) by
+ * scripts/phase271-generate-teaching.py scripts/phase272-teaching-config.json src/phase272_category_teaching.ts
+ * scripts/phase272-teaching-header.ts.txt; paraphrased statements, never package text. Each lesson keeps the package's own
+ * status label and reference ids; nothing here was re-verified by PEE. Aliases are the package's own consumer phrases (at
+ * most four per outcome) and were generated BEFORE any Phase272 television page was read.
+ */
+import type {CategoryTeaching252,TeachingSource252,Taught252,TaughtNeed252} from './phase252_category_teaching.js';
+import type {NeedLesson250} from './phase250_category_lessons.js';
+import type {ConceptKind128} from './phase128_category_cognition_dialogue_bridge.js';
+const S=(text:string,basis:Taught252['basis'],...sources:string[]):Taught252=>({text,basis,sources});
+const N=(id:string,kind:ConceptKind128,statement:string,aliases:string[]):NeedLesson250=>({id,kind,statement,aliases});
+const TN=(n:NeedLesson250,x:Omit<TaughtNeed252,keyof NeedLesson250>):TaughtNeed252=>({...n,...x});
+export const SOURCES272:readonly TeachingSource252[]=[
+ {id:'tv_pkg',url:'owner-research:televisions/v1.0.0',publisher:'owner research package 07: PEE televisions v1.0.0',role:'owner_research_package',consulted:'2026-10-17',access:'private owner research (documentary; not re-verified by PEE)',teaches:'luminance by window and mode, reflections, contrast and colour, motion, input lag by signal mode, dialogue and accessibility, longevity; spec labels as proxies'},
+];

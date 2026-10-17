@@ -1,0 +1,17 @@
+{
+ "schema": "pee272.ab-protocol-addendum.v1",
+ "addedAt": "2026-10-17",
+ "addedBefore": "any untouched page request (written during development on the development pages only)",
+ "amends": "evaluation/phase272/protocol.json (sha256 aed8bb46b132bce1feb9f25e2dfcae9290364d0c74f2d049d4639975bbaa5a99)",
+ "scoringAdditions": {
+  "duplicateLeads": "Within one document, leads (and, separately, qualitative findings) with the same value, unit and subject (findings: dimension, direction and subject) count once: a result repeated in a summary box and in the body is one finding, for every arm alike.",
+  "conditions": "A candidate's recognised conditions are its Phase225/270 codes mapped by codeToConditionMap plus, for plan-guided candidates, planConditionIds272 (taught condition ids whose terms the value's sentence uses: a cue that the condition is stated, not proof that it is met)."
+ },
+ "codeToOutcomeMap": {
+  "air_fryers": {"crispness": "crisp_texture", "evenness": "cooking_evenness", "browning": "cooking_results", "doneness": "cooking_results", "moisture": "cooking_results", "noise": "untaught:noise"},
+  "dishwashers": {"noise": "noise_and_acoustic_events"},
+  "air_purifiers": {"noise": "quiet_night_operation"},
+  "televisions": {"noise": "untaught:noise"},
+  "tumble_dryers": {"noise": "untaught:noise"}
+ }
+}
