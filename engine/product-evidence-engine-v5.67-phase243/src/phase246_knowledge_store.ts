@@ -39,7 +39,7 @@ import {classDecision249,QUALITATIVE_AMENDMENT270,type SourceClassPolicy249,type
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
 import {screenTestLead265,subjectAssociation265,reportedBy265,type TestLeadsInput265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=7;
+export const STORE_SCHEMA_VERSION246=8;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -262,8 +262,31 @@ const MIGRATIONS:string[]=[
    laboratory_measurement INTEGER NOT NULL DEFAULT 0 CHECK(laboratory_measurement=0),
    independent_finding INTEGER NOT NULL DEFAULT 0 CHECK(independent_finding=0));
   CREATE INDEX qualitative_observations270_product ON qualitative_observations270(product_id,outcome);`,
+ // v8 (Phase271): publisher-reported COMPARATIVE results (one task, several appliances: an air fryer and an oven are
+ // different equipment classes, never variants of each other). Duration, energy and cost are separate measurands; a cost
+ // is always derived from a tariff. experiment_key identifies the experiment by its content, so the same experiment
+ // republished elsewhere is a duplicate, not a replication. The CHECKs state what a row never is.
+ `CREATE TABLE comparative_results271 (result_id TEXT PRIMARY KEY, revision_id TEXT NOT NULL REFERENCES revisions(revision_id),
+   reader_version TEXT NOT NULL, experiment_key TEXT NOT NULL, task_index INTEGER NOT NULL, task_label TEXT,
+   equipment_class TEXT NOT NULL, subject_name TEXT, subject_model TEXT, product_id TEXT REFERENCES products(product_id),
+   identity TEXT NOT NULL CHECK(identity IN ('exact_variant','named_product','equipment_class','ambiguous','unresolved')),
+   measurand TEXT NOT NULL CHECK(measurand IN ('duration','energy','cost')), value REAL, unit TEXT NOT NULL,
+   value_basis TEXT NOT NULL CHECK(value_basis IN ('measured','derived_from_tariff','estimated')), approximate INTEGER NOT NULL CHECK(approximate IN (0,1)),
+   uncertainty TEXT, condition_codes TEXT NOT NULL, limitations TEXT NOT NULL, form TEXT NOT NULL, block_sha256 TEXT NOT NULL,
+   testing_status TEXT NOT NULL CHECK(testing_status='first_hand_test_reported_unreviewed'),
+   reported_by TEXT NOT NULL, duplicate_of_revision TEXT,
+   independence TEXT NOT NULL DEFAULT 'not_established' CHECK(independence='not_established'),
+   verification TEXT NOT NULL DEFAULT 'unreviewed' CHECK(verification='unreviewed'),
+   ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0),
+   retention TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('current','superseded_by_revision','superseded_by_reader')), recorded_at TEXT NOT NULL,
+   CHECK(measurand<>'cost' OR value_basis='derived_from_tariff'), CHECK(value IS NOT NULL));
+  CREATE INDEX comparative_results271_experiment ON comparative_results271(experiment_key,task_index,measurand);`,
 ];
 
+/** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */
+export interface ComparativeRow271 {result_id:string;revision_id:string;experiment_key:string;task_index:number;task_label:string|null;equipment_class:string;
+ subject_name:string|null;subject_model:string|null;product_id:string|null;identity:string;measurand:string;value:number;unit:string;value_basis:string;approximate:number;
+ condition_codes:string[];limitations:string[];form:string;duplicate_of_revision:string|null;retention:string;state:string;url:string;fetched_at:string;host:string;source_type:string;[k:string]:unknown}
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;
  sourceTypeBasis:'operator_asserted'|'heuristic_unverified';policy?:WebSourcePolicy;}
 export interface ObservationInput246 {
@@ -407,6 +430,7 @@ export class KnowledgeStore246 {
       const keep2=VALUE_RETAINING246.includes(eff)&&(!kinds2||kinds2.includes('quantity'));
       const exp2=eff==='local_pending_rights_review'?new Date(Date.parse(o.fetchedAt)+this.storage.localPendingRightsCache.expiresAfterDays*86400000).toISOString():null;
       tm=this.applyTestLeads265(o,revisionId,main,keep2,eff,keep2?null:eff,exp2);
+      this.applyComparative271(o,revisionId,main,keep2,eff);
      }
      let q270:{offered:number;persisted:number;withheld:number;reason:string|null}|undefined;
      if(o.qualitative270){const eff=(this.db.prepare('SELECT retention FROM revisions WHERE revision_id=?').get(revisionId) as {retention:RetentionClass246}).retention;
@@ -554,6 +578,7 @@ export class KnowledgeStore246 {
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
    const tm=o.testLeads?this.applyTestLeads265(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective,
     !keep?(classReason??effective):kinds&&!kinds.includes('quantity')?'value_kind_not_retained':null,expires):undefined;
+   if(o.testLeads)this.applyComparative271(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective);
    const q270=o.qualitative270?this.applyQualitative270(o,revisionId,mainId,keep&&effective==='facts_retained_class_policy',effective):undefined;
    this.db.prepare('INSERT OR IGNORE INTO sightings VALUES (?,?,?)').run(revisionId,o.fetchedAt,o.runId);
    for(const pid of priorLinks)if(!this.db.prepare('SELECT 1 FROM product_sources WHERE product_id=?').get(pid)){
@@ -648,6 +673,50 @@ export class KnowledgeStore246 {
   }
   if(out.persisted||out.withheld)this.event('qualitative_codes_ingested',{revisionId,readerVersion:q.readerVersion,...out},o.fetchedAt);
   return out;
+ }
+ /** Phase271: keep the comparative results of one revision under the same rule as its test measurements (values only when
+  * the revision keeps measurement kinds). Re-offering is a no-op; a new reader version supersedes this revision's rows.
+  * A row is linked to a store product only when its subject is exactly the page's own product (never by fuzzy names). */
+ private applyComparative271(o:ObservationInput246,revisionId:string,mainId:string|null,keep:boolean,retention:RetentionClass246):number{
+  const rows=o.testLeads?.comparative270??[];if(!rows.length)return 0;
+  if(!keep){this.event('comparative_results_withheld',{revisionId,offered:rows.length,reason:retention},o.fetchedAt);return 0;}
+  const ver=String(o.testLeads!.extractorVersion)+'+cmp271';
+  this.db.prepare("UPDATE comparative_results271 SET state='superseded_by_reader' WHERE revision_id=? AND reader_version<>? AND state='current'").run(revisionId,ver);
+  const main=mainId?(this.db.prepare('SELECT name FROM products WHERE product_id=?').get(mainId) as {name:string|null}|undefined)?.name??null:null;
+  // The experiment, by content: the same subjects, tasks and values reported again are the same experiment.
+  const key='exp_'+sha(rows.map(r=>[r.appliance,r.subject?.name??'',r.taskLabel??r.taskIndex,r.dimension,r.value,r.unit].join('|')).sort().join('\n')).slice(0,24);
+  const dup=(this.db.prepare("SELECT revision_id FROM comparative_results271 WHERE experiment_key=? AND revision_id<>? AND state='current' LIMIT 1").get(key,revisionId) as {revision_id:string}|undefined)?.revision_id??null;
+  const by=reportedBy265(o.source.sourceType);let n=0;
+  for(const r of rows){
+   if(!r||!['duration','energy','cost'].includes(r.dimension)||!Number.isFinite(r.value)||!/^[0-9a-f]{64}$/.test(r.blockSha256))continue;
+   const identity=r.appliance==='several'?'ambiguous':r.subject?.model?'exact_variant':r.subject?'named_product':'equipment_class';
+   const pid=r.subject&&main&&r.subject.name===main?mainId:null;
+   const lim=[...(r.conditionCodes.includes('quantity_reduced')?['load_not_matched']:[]),...(r.approximate?['approximate_value']:[]),...(identity==='exact_variant'?[]:['variant_not_established'])];
+   const id='cr_'+sha([revisionId,ver,r.blockSha256,r.appliance,r.taskIndex,r.dimension,r.value,r.unit].join('|')).slice(0,24);
+   const res=this.db.prepare(`INSERT OR IGNORE INTO comparative_results271(result_id,revision_id,reader_version,experiment_key,task_index,task_label,equipment_class,subject_name,subject_model,product_id,
+     identity,measurand,value,unit,value_basis,approximate,uncertainty,condition_codes,limitations,form,block_sha256,testing_status,reported_by,duplicate_of_revision,retention,state,recorded_at)
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,?,'first_hand_test_reported_unreviewed',?,?,?,'current',?)`)
+    .run(id,revisionId,ver,key,r.taskIndex,r.taskLabel,r.appliance,r.subject?.name?.slice(0,180)??null,r.subject?.model??null,pid,identity,r.dimension,r.value,r.unit,
+     r.dimension==='cost'?'derived_from_tariff':r.approximate?'estimated':'measured',r.approximate?1:0,JSON.stringify(r.conditionCodes),JSON.stringify(lim),r.form,r.blockSha256,by,dup,retention,o.fetchedAt);
+   n+=Number(res.changes);
+  }
+  if(n)this.event('comparative_results_ingested',{revisionId,experimentKey:key,persisted:n,duplicateOf:dup},o.fetchedAt);
+  return n;
+ }
+ /** Phase271: a page headline recorded as a product before the Phase271 headline rule (a comparison or guide article) is
+  * not a product; it leaves the active product set with a journaled reason (reversible, nothing deleted). */
+ retireNonProduct271(productId:string,reason:string,at=new Date().toISOString()):boolean{
+  const r=this.db.prepare("UPDATE products SET identity_state='unsupported_after_rederivation' WHERE product_id=? AND identity_state NOT IN ('reviewed','merged')").run(productId);
+  if(Number(r.changes))this.event('product_not_a_product',{productId,reason:reason.slice(0,200)},at);return Number(r.changes)>0;
+ }
+ /** Phase271: stored comparative results (current only), with their source. Unreviewed; never ranking input. */
+ comparativeResults271(f:{equipmentClass?:string;measurand?:string;experimentKey?:string}={}){
+  const w:string[]=["c.state='current'"];const a:string[]=[];
+  if(f.equipmentClass){w.push('c.equipment_class=?');a.push(f.equipmentClass);}if(f.measurand){w.push('c.measurand=?');a.push(f.measurand);}
+  if(f.experimentKey){w.push('c.experiment_key=?');a.push(f.experimentKey);}
+  return (this.db.prepare(`SELECT c.*,r.url,r.fetched_at,s.host,s.source_type FROM comparative_results271 c JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
+   WHERE ${w.join(' AND ')} ORDER BY c.experiment_key,c.task_index,c.measurand,c.equipment_class`).all(...a) as Record<string,unknown>[]).map(r=>({...r,
+   condition_codes:JSON.parse(String(r.condition_codes)) as string[],limitations:JSON.parse(String(r.limitations)) as string[]}) as ComparativeRow271);
  }
  /** Phase270: stored qualitative outcome codes (current only). Never ranking input. */
  qualitativeObservations270(f:{productId?:string|null}={}){
@@ -1096,7 +1165,7 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
    if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
@@ -1134,7 +1203,7 @@ export class KnowledgeStore246 {
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
   category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
-  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id'};
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
@@ -1154,6 +1223,7 @@ export class KnowledgeStore246 {
    if((t==='declarations'||t==='test_measurements265')&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    // Phase270: qualitative codes are kept under a private amendment that permits no publication.
    if(t==='qualitative_observations270'&&audience==='public')rows=[];
+   if(t==='comparative_results271'&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);
    files[t+'.ndjson']={rows:rows.length,sha256:sha(body)};

@@ -153,7 +153,14 @@ export interface GoalAssessment253 {
  outcomes:{need:string;coverage:'assessed'|'proxy_only'|'unassessed'|'context';
   relevantMeasures:string[];rejectedProxies:string[];requiredConditions:string[];
   /** Supplied measurements that cannot be compared for this outcome (a proxy, or a test configuration the user excluded). */
-  incomparable:string[];assessedBy?:string[]}[];
+  incomparable:string[];assessedBy?:string[];
+  /** Phase271: retained comparative results for a relevant measurement: how many experiments report it, how many groups
+   * compare two products of the asked class (what a choice between products needs), how many compare the class with
+   * another class, and the taught conditions no group satisfies. Unreviewed; never ranking input. */
+  comparativeEvidence?:{measure:string;experiments:number;sameClassComparable:number;crossClass:number;conditionsMissing:string[]}}[];
+ /** Phase271: when the user owns an alternative, comparisons of the asked class with that alternative in one experiment. */
+ alternativeComparison?:{host:string;url:string;task:string|null;measure:string;asked:{subject:string|null;identity:string;value:number;unit:string};
+  alternative:{equipmentClass:string;subject:string|null;identity:string;value:number;unit:string};conditionsMissing:string[]}[];
  /** A metric comparison shown separately from any recommendation, with its raw quantity and per-product limitations. */
  partialComparison?:{measure:string;label:string;direction:'lower_is_better'|'higher_is_better';doesNotAssess:string[];
   items:{productId:string;name:string;value:number;unit:string;sourceUrl:string;variantVerified:boolean;limitations:string[]}[]};

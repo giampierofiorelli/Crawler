@@ -47,6 +47,10 @@ const MODEL_TOKEN=/^(?=[A-Z0-9/-]{4,16}$)[A-Z]{1,5}[A-Z0-9]*\d[A-Z0-9]*(?:\/[0-9
 export function testDocumentSubject268(x:SpecExtraction245|null,sourceType:SourceKind265|string):SpecExtraction245|null{
  if(!x||sourceType!=='independent_original_test'||!x.mainProduct.name||x.mainProduct.ambiguous||x.mainProduct.pageSignals?.ogType!=='article')return x;
  const m=/^(.{3,140}?)\s+review\s*(?:[:|–—-]\s|$)/i.exec(x.mainProduct.name.replace(/\u00a0/g,' '));
+ // Phase271: a comparison, guide, method or question article ("Air fryer vs oven: …", "How we test …", "Do air fryers use
+ // a lot of electricity?") is not a product; its headline never becomes a product identity.
+ if(!m&&/\b(?:vs\.?|versus|compared|how we test|best\b.*\b(?:for|of|20\d\d)|buying guide)\b|\?\s*$|^(?:the )?best\b/i.test(x.mainProduct.name))
+  return {...x,mainProduct:{...x.mainProduct,ambiguous:true}};
  if(!m)return x;
  const name=m[1].replace(/\s+/g,' ').trim();
  const tokens=name.split(/[\s()]+/).filter(t=>MODEL_TOKEN.test(t));

@@ -19,6 +19,8 @@ import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase25
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
 import {relations247} from './phase247_category_relations.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
+import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_comparative_evidence.js';
+import {applianceMentions270} from './phase270_comparative_results.js';
 import type {GoalAssessment253} from './phase253_advice_contract.js';
 import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
 
@@ -274,7 +276,8 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   out.statements=out.statements.filter(x=>!/^Ranked by /.test(x));out.statements.push('No ranking: the evidence does not assess every stated objective, so no overall order is given.');}
  if(g&&(g.decision==='partial_comparison'||g.decision==='no_purchase_check')&&out.response!=='out_of_scope')out.response=g.decision;
  // Principle 8: an objective the answer does not assess stays explicit.
- const unassessedNeeds=perf.filter(id=>!assessed.has(id));
+ // Context needs (owned equipment, stated use) are not objectives to assess.
+ const unassessedNeeds=perf.filter(id=>!assessed.has(id)&&!CONTEXT_NEEDS269.has(id));
  const toks=(x:string)=>x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
  out.unassessedObjectives=[...unassessedNeeds,...out.unresolved.filter(n=>!unassessedNeeds.includes(n)),...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
  if(out.unassessedObjectives.length&&out.response!=='out_of_scope')
@@ -330,11 +333,37 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
    `This metric does not show the electricity needed to cook a meal, and it does not assess ${partial.doesNotAssess.map(st).join(', ')}.`);
   for(const i of partial.items)if(i.limitations.length)out.limitations.push(`${i.name}: ${i.limitations.join('; ')} (${i.sourceUrl}).`);}
  if(excluded)out.statements.push('The only energy measurements PEE holds ran every compartment at once, so they cannot answer a question about using one drawer.');
+ // Phase271: retained comparative results (one task, several appliances) for a relevant measurement. They are used only for
+ // what one experiment can show: a comparison between the products it tested, under the conditions it records.
+ const askedClass=({air_fryers:'air_fryer'} as Record<string,string>)[out.category!]??null;
+ let altComparison:GoalAssessment253['alternativeComparison'];
+ if(askedClass)for(const o of real){
+  const m=o.relevantMeasures.find(x=>COMPARATIVE_MEASURES271[x]);if(!m)continue;
+  const ev=comparativeEvidence271(store,m,askedClass,o.requiredConditions);if(!ev||!ev.experiments)continue;
+  // Conditions no comparable group satisfies (the best evidence available, not the union of every group's gaps).
+  const usable=ev.groups.filter(g=>g.comparableWithinExperiment);
+  const missing=o.requiredConditions.filter(c=>(usable.length?usable:ev.groups).every(g=>g.conditionsMissing.includes(c)));
+  o.comparativeEvidence={measure:m,experiments:ev.experiments,sameClassComparable:ev.sameClassComparable,crossClass:ev.crossClass,conditionsMissing:missing};
+  if(!ev.sameClassComparable)out.statements.push(`Original test evidence for ${st(m)} exists (${ev.experiments} experiment${ev.experiments>1?'s':''}), but no experiment measures two ${st(askedClass)}s under the same conditions, so it cannot show which ${st(askedClass)} uses less${missing.length?`; not recorded: ${missing.map(st).join(', ')}`:''}.`);
+  // The user's own alternative (named in the request): within-experiment comparisons with that equipment class only.
+  if(decision==='no_purchase_check'){
+   const alts=new Set(applianceMentions270(out.text).map(x=>x.cls).filter(c=>c!==askedClass));
+   for(const g of ev.groups.filter(g=>g.comparableWithinExperiment)){
+    const a=g.items.find(i=>i.equipmentClass===askedClass),b=g.items.find(i=>alts.has(i.equipmentClass as never));if(!a||!b)continue;
+    (altComparison??=[]).push({host:g.host,url:g.url,task:g.task,measure:m,asked:{subject:a.subject,identity:a.identity,value:a.value,unit:a.unit},
+     alternative:{equipmentClass:b.equipmentClass,subject:b.subject,identity:b.identity,value:b.value,unit:b.unit},conditionsMissing:g.conditionsMissing});}
+   if(alts.size&&!altComparison)out.statements.push(`No retained experiment compares a ${st(askedClass)} with the ${[...alts].map(st).join(' or ')} you have.`);
+  }
+ }
+ if(altComparison){const u=(x:string)=>x==='kwh'?'kWh':x;
+  out.statements=out.statements.map(x=>x.startsWith('Buying may not be necessary.')?x.replace('That needs a comparison under the same conditions; PEE does not hold one.','That needs a comparison under the same conditions; the closest evidence PEE holds follows.'):x);const byHost=[...new Set(altComparison.map(c=>c.host))];
+  const a=altComparison[0];
+  out.statements.push(`Original test evidence (${byHost.join(', ')}; publisher-reported, not reviewed by PEE): for the same dishes, the ${st(askedClass!)} tested${a.asked.subject?` (${a.asked.subject})`:''} used ${altComparison.map(c=>`${c.asked.value} ${u(c.asked.unit)} against ${c.alternative.value} ${u(c.alternative.unit)} for ${c.task?st(c.task):'one dish'}`).join('; ')} in the ${st(a.alternative.equipmentClass)} tested${a.alternative.subject?` (${a.alternative.subject})`:''}. This is one ${st(askedClass!)} against one ${st(a.alternative.equipmentClass)} in one experiment; whether it holds for your ${st(a.alternative.equipmentClass)} is not established.`);}
  if(decision==='research'||decision==='partial_comparison'||decision==='no_purchase_check'){
   const need=know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)).map(statement).filter((x):x is string=>!!x);
   if(need.length)out.statements.push(`What would answer this: ${need.join('; ')}.`);
   for(const k of know)for(const p of k.proxies)if(p.startsWith('attr:')&&!CONTEXT_NEEDS269.has(k.need))out.limitations.push(`Declared ${st(p.slice(5))} is not evidence of ${st(k.need)}: ${plain(k.notes.get(p))}`.slice(0,320));
  }
- return {decision,outcomes,...(partial?{partialComparison:partial}:{})};
+ return {decision,outcomes,...(partial?{partialComparison:partial}:{}),...(altComparison?{alternativeComparison:altComparison}:{})};
 }
 

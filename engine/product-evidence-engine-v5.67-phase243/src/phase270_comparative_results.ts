@@ -22,10 +22,22 @@ export interface ComparativeResult270 {
  approximate:boolean;form:'line_list'|'table_row'|'prose';
  subject:{name:string;model:string|null;sku:null}|null;
  subjectAssignment:'class_row_resolved_by_document_appliance_list'|'appliance_class_only'|'document_tested_product'|'several_appliances';
- conditionCodes:readonly ('includes_preheat'|'power_meter')[];blockSha256:string;blockIndex:number;
+ conditionCodes:readonly ComparativeCondition270[];blockSha256:string;blockIndex:number;
+ /** Phase271: the task (dish) as a PEE code from the result's heading or meal line, or null when not stated. */
+ taskLabel:string|null;
  classification:'publisher_reported_comparative_result_lead_only';rankingInput:false;
 }
+/** Phase271 condition codes: 'same_food_load' (the document states equal quantities in every appliance), 'quantity_reduced'
+ * (this task's load was reduced in one appliance: not comparable), 'quality_assessed_same_task' (the document grades the
+ * cooked result of the same task, so the time and energy refer to a completed cook). */
+export type ComparativeCondition270='includes_preheat'|'power_meter'|'same_food_load'|'quantity_reduced'|'quality_assessed_same_task';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
+// Phase271 (developed on the Phase270 documents, now development data): task labels from headings and meal lines.
+const TASKS:readonly [string,RegExp][]=[['snacks',/\bsnacks?|nuggets|tenders\b/i],['chicken',/\bchicken|drumsticks?|wings?\b/i],['chips',/\bchips|fries\b/i],['potatoes',/\bpotato(?:es)?\b/i],['cake',/\bcakes?|sponge|muffins?\b/i],
+ ['sausages',/\bsausages?\b/i],['bacon',/\bbacon\b/i],['pie',/\bpies?\b/i],['vegetables',/\bvegetables?|veg\b/i],['snacks',/\bsnacks?|nuggets|tenders\b/i],['fish',/\bfish|salmon\b/i]];
+export const taskLabel271=(s:string):string|null=>TASKS.find(([,re])=>re.test(s))?.[0]??null;
+const SAME_LOAD=/\b(?:quantities of (?:all )?the foods? were the same|the (?:exact )?same (?:meal|quantity|amount)|same quantit(?:y|ies) (?:in|for) (?:each|both))\b/i;
+const REDUCED=/\b(?:smaller|half the size|reduced|had to be halved|cut (?:it )?in half)\b/i;
 const CLASS_RE=/\b(halogen ovens?|air[- ]?fryers?|deep[- ]fat fryers?|slow cookers?|microwaves?(?: ovens?)?|(?:(?:built-in|electric|fan|conventional|regular|single|double)[- ]){0,3}ovens?|grills?|hobs?)\b/gi;
 const classOf=(s:string):ApplianceClass270=>{const x=s.toLowerCase();return x.includes('halogen')?'halogen_oven':/air[- ]?fryer/.test(x)?'air_fryer':x.includes('deep')?'deep_fat_fryer':
  x.includes('slow')?'slow_cooker':x.includes('microwave')?'microwave':x.includes('grill')?'grill':x.includes('hob')?'hob':'oven';};
@@ -44,7 +56,7 @@ const TARIFF_AFTER=/^\s*(?:\/\s*kwh|per\s+(?:kwh|unit|kilowatt))/i;
 const DOC_TEST=/\b(?:I|we)\s+(?:used|measured|cooked|tested|timed|tried)\b|\bour (?:test|tests|lab)\b/i;
 const DOC_METER=/\b(?:smart meter|energy (?:meter|monitor)|power meter|plug-in (?:meter|monitor)|lab|laboratory)\b/i;
 const PREHEAT_DOC=/\b(?:times|figures) include (?:the )?(?:energy used during )?preheat/i;
-const SUBJECT_CUE=/\b(?:picked up the|bought the|head-to-head|i tested the|we tested the|model we tested|i used the)\b/i;
+const SUBJECT_CUE=/\b(?:picked up the|bought the|head-to-head|i tested the|we tested the|model we tested|i used the|our appliances|appliances we used|the appliances (?:we|i) (?:used|tested)|i opted to test)\b/i;
 const MODEL=/\b(?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{3,}\b/;
 
 function unitOf(u:string|undefined):{dimension:ComparativeResult270['dimension'];unit:ComparativeResult270['unit']}|null{
@@ -89,7 +101,10 @@ function namedSubjects(blocks:readonly string[]):Map<ApplianceClass270,{name:str
 }
 /** Appliance classes named in a text, in order (shared with the qualitative reader). */
 export const applianceMentions270=(text:string)=>[...text.matchAll(CLASS_RE)].map(m=>({cls:classOf(m[0]),at:m.index!,end:m.index!+m[0].length}));
-const mentions=(text:string)=>[...text.matchAll(CLASS_RE)].map(m=>({cls:classOf(m[0]),at:m.index!,end:m.index!+m[0].length}));
+/** Phase271 (development: Which? "At only 6p, and baking in less time than the oven, the air fryer …"): a mention introduced
+ * by "than (the)" is the comparison target, dropped when the clause names another appliance. */
+const mentions=(text:string)=>{const all=[...text.matchAll(CLASS_RE)].map(m=>({cls:classOf(m[0]),at:m.index!,end:m.index!+m[0].length,
+ than:/\bthan\s+(?:the\s+|an?\s+|your\s+|my\s+)?$/i.test(text.slice(Math.max(0,m.index!-14),m.index!))}));return all.some(m=>!m.than)?all.filter(m=>!m.than):all;};
 
 export function comparativeResults270(html:string,opts:{testedClass?:ApplianceClass270}={}):{results:ComparativeResult270[];gated:boolean}{
  // Navigation-heavy pages hold the article after hundreds of menu blocks (the CHOICE page: 1,084 blocks, article after
@@ -97,20 +112,28 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
  const {blocks,tags=[]}=textBlocks225(html,{splitLineBreaks:true,maxBlocks:1500});
  const doc=blocks.join('\n');
  if(!DOC_TEST.test(doc)||!DOC_METER.test(doc))return {results:[],gated:false};
- const subjects=namedSubjects(blocks);const docCodes:('includes_preheat'|'power_meter')[]=['power_meter'];if(PREHEAT_DOC.test(doc))docCodes.unshift('includes_preheat');
+ const subjects=namedSubjects(blocks);const docCodes:ComparativeCondition270[]=['power_meter'];if(PREHEAT_DOC.test(doc))docCodes.unshift('includes_preheat');
+ if(SAME_LOAD.test(doc))docCodes.push('same_food_load');
+ // "The quantities … were the same in each appliance (except for the cake in the air fryer)": that task is reduced.
+ const excepted=new Set([...doc.matchAll(/\bexcept (?:for )?the (\w+)/gi)].map(m=>taskLabel271(m[1])).filter((x):x is string=>!!x));
+ let label:string|null=null;const reducedTasks=new Set<string>(excepted);const gradedTasks=new Set<string>();
  const tested=opts.testedClass??null;
- const resolve=(cls:ApplianceClass270|'several'):Pick<ComparativeResult270,'subject'|'subjectAssignment'>=>{
+ const resolve=(cls:ApplianceClass270|'several',rowLabel?:string):Pick<ComparativeResult270,'subject'|'subjectAssignment'>=>{
   if(cls==='several')return {subject:null,subjectAssignment:'several_appliances'};
-  const named=subjects.get(cls)??[];
+  let named=subjects.get(cls)??[];
+  // Phase271: several products of one class ("Zephyrine air fryer", "Nimbus air fryer" rows): a row names one listed
+  // product when its own words (beyond the class name) occur in exactly one listed name. Exact tokens, never similarity.
+  if(named.length>1&&rowLabel){const words=rowLabel.toLowerCase().replace(CLASS_RE,' ').split(/[^a-z0-9]+/).filter(w=>w.length>2&&!['built','the','and'].includes(w));
+   const hit=words.length?named.filter(x=>words.every(w=>x.name.toLowerCase().split(/[^a-z0-9]+/).includes(w))):[];if(hit.length===1)named=hit;}
   if(named.length===1)return {subject:{name:named[0].name,model:named[0].model,sku:null},subjectAssignment:cls===tested&&!named[0].model?'document_tested_product':'class_row_resolved_by_document_appliance_list'};
   return {subject:null,subjectAssignment:'appliance_class_only'};
  };
  const out:ComparativeResult270[]=[];const seen=new Set<string>(),seenAny=new Set<string>();let task=0;
- const push=(cls:ApplianceClass270|'several',h:Hit,form:ComparativeResult270['form'],block:string,bi:number,extra:('includes_preheat')[]=[])=>{
+ const push=(cls:ApplianceClass270|'several',h:Hit,form:ComparativeResult270['form'],block:string,bi:number,extra:('includes_preheat')[]=[],rowLabel?:string)=>{
   // A list or table value is one result per task; a prose value repeating any earlier result is not a new one.
-  const any=[cls,h.dimension,h.value,h.unit].join('|'),key=any+'|'+task;
+  const who=resolve(cls,rowLabel);const any=[cls,who.subject?.name??'',h.dimension,h.value,h.unit].join('|'),key=any+'|'+task;
   if(seen.has(key)||(form==='prose'&&seenAny.has(any)))return;seen.add(key);seenAny.add(any);
-  out.push({appliance:cls,taskIndex:task,dimension:h.dimension,value:h.value,unit:h.unit,approximate:h.approximate,form,...resolve(cls),
+  out.push({appliance:cls,taskIndex:task,taskLabel:label,dimension:h.dimension,value:h.value,unit:h.unit,approximate:h.approximate,form,...who,
    conditionCodes:[...new Set([...docCodes,...extra])].sort(),blockSha256:sha(block),blockIndex:bi,classification:'publisher_reported_comparative_result_lead_only',rankingInput:false});
  };
  // 1. Tables: a header row naming at least two of time / energy / cost; the first cell of each row is the appliance.
@@ -119,12 +142,18 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
   const hi=rows.findIndex(r=>r.filter(c=>/\b(?:time|duration)\b|\benergy\b|\bcost\b/i.test(c)).length>=2);if(hi<0)continue;
   const head=rows[hi].map(c=>/\b(?:time|duration)\b/i.test(c)?'duration':/\benergy\b/i.test(c)?'energy':/\bcost\b/i.test(c)?'cost':null);
   task++;
+  // The task is named by the nearest heading before the table; the text up to the next heading may say the load was reduced.
+  const before=html.slice(Math.max(0,t.index!-6000),t.index!);const hs=[...before.matchAll(/<h[2-4]\b[^>]*>([\s\S]*?)<\/h[2-4]>/gi)];
+  label=hs.length?taskLabel271(textBlocks225(`<p>${hs.at(-1)![1]}</p>`).blocks.join(' ')):null;
+  const afterT=html.slice(t.index!+t[0].length,t.index!+t[0].length+8000).split(/<h[2-4]\b/i)[0];
+  if(label&&REDUCED.test(textBlocks225(afterT).blocks.join(' ')))reducedTasks.add(label);
+  if(label&&head.length>head.filter(Boolean).length+1)gradedTasks.add(label);
   for(const r of rows.slice(hi+1)){const m=mentions(r[0]??'');if(m.length!==1)continue;
-   r.forEach((cell,ci)=>{const dim=head[ci];if(!dim||ci===0)return;for(const h of values(cell))if(h.dimension===dim)push(m[0].cls,h,'table_row',r.join('|'),-1);});}
+   r.forEach((cell,ci)=>{const dim=head[ci];if(!dim||ci===0)return;for(const h of values(cell))if(h.dimension===dim)push(m[0].cls,h,'table_row',r.join('|'),-1,[],r[0]);});}
  }
  // 2. Blocks: list lines ("Oven – 36min, 31 cents") and first-person prose.
  blocks.forEach((b,bi)=>{
-  if(/^h[1-6]$/.test(tags[bi]??'')||/^(?:meal|test|dish)\s*\d+\b/i.test(b)){task++;return;}
+  if(/^h[1-6]$/.test(tags[bi]??'')||/^(?:meal|test|dish)\s*\d+\b/i.test(b)){task++;label=taskLabel271(b);return;}
   const line=/^\s*([A-Za-z][A-Za-z -]{2,40}?)\s*(?:–|—|-|:)\s+(.{3,160})$/.exec(b);
   if(line&&mentions(line[1]).length===1&&line[1].length<=40){
    const cls=mentions(line[1])[0].cls;const hs=values(line[2]);
@@ -135,6 +164,9 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
   if(b.length>900)return;
   for(const sent of b.split(/(?<=[.!?])\s+(?=[A-Z£])/)){
    if(HYPOTHETICAL.test(sent))continue;
+   // A prose result names its own task when the heading does not ("We could cook four medium potatoes …").
+   const sentenceTask=taskLabel271(sent);if(sentenceTask)label=sentenceTask;
+   if(label&&REDUCED.test(sent))reducedTasks.add(label);
    // Clauses: a comparison word starts a new clause.
    const clauses=sent.split(/\b(?=compared (?:to|with)\b|\bwhereas\b|\bwhile\b|\bbut\b|\bversus\b|\bvs\.?\s)/i);
    for(const c of clauses){
@@ -156,5 +188,7 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
  // Comparative evidence names at least two appliance classes with results; otherwise this reader yields nothing (a
  // single-product review is the Phase225 probe's job).
  if(new Set(out.map(x=>x.appliance).filter(a=>a!=='several')).size<2)return {results:[],gated:true};
+ for(const r of out){const c=new Set(r.conditionCodes);if(r.taskLabel&&reducedTasks.has(r.taskLabel)){c.delete('same_food_load');c.add('quantity_reduced');}
+  if(r.taskLabel&&gradedTasks.has(r.taskLabel))c.add('quality_assessed_same_task');(r as {conditionCodes:readonly ComparativeCondition270[]}).conditionCodes=[...c].sort();}
  return {results:out.slice(0,80),gated:true};
 }
