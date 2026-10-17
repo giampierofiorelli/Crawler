@@ -54,6 +54,14 @@ export const FACTUAL_CLASS_POLICY249:SourceClassPolicy249={
  honour:{contentSignalAiInputNo:true,tdmReservation:true,noaiMeta:true},
  publicExport:false,
 };
+/** Phase270 amendment (owner brief 2026-10-17 §7): structured, attributable QUALITATIVE outcome codes from a tester's
+ * own cooking tests may be kept where the source's rights permit, i.e. where v1 itself keeps the source's measurements
+ * (same classes, same per-host product cap, same reservations honoured). Codes only, from PEE's own vocabulary: dish,
+ * outcome, direction, hedging, whether the setting was changed, comparison, appliance, identity state and the hash of
+ * the source block. No sentence, adjective or passage; no conversion into a number; never ranking input. */
+export const QUALITATIVE_AMENDMENT270={policyId:'pee249-factual-observations-v2-qualitative-codes',amends:'pee249-factual-observations-v1',
+ authorisation:'owner brief 2026-10-17 section 7: controlled retention amendment for structured attributable qualitative outcome codes where source rights permit; codes remain rankingInput false; no legal review performed',
+ sourceClasses:['independent_original_test'] as readonly SourceClass249[],codesOnly:true as const,rankingInput:false as const} as const;
 export interface Reservations249 {
  /** "yes" | "no" | null (not declared) from a robots.txt Content-Signal line. */
  contentSignalAiInput:'yes'|'no'|null;

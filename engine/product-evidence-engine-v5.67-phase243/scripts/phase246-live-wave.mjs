@@ -192,6 +192,8 @@ switch(cmd){
   const {detectReservations249}=await import('../dist/src/phase249_retention_policy.js');
   // Phase265: the Phase225/226/227 test-result probe runs on the same transient bytes; only its leads travel on.
   const {testLeadsFromHtml265,testDocumentSubject268}=await import('../dist/src/phase265_test_measurements.js');
+  // Phase270: qualitative outcome codes travel with the observation; the store keeps them only under the pee249 v2 amendment.
+  const {qualitativeObservations269}=await import('../dist/src/phase269_qualitative_observations.js');
   const out=[];
   for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
   for(const p of S.pages){
@@ -206,7 +208,8 @@ switch(cmd){
    out.push({observation:{source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:p.sourceType,sourceTypeBasis:'operator_asserted'},
     url:p.finalUrl??p.url,sha256:p.sha256,bytes:p.bytes,httpStatus:p.httpStatus,fetchedAt:p.fetchedAt,runId:(F.run??'phase246_wave1')+'_'+p.role,
     extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category&&p.category!=='mixed'?[p.category]:[],reservations,
-    testLeads:testLeadsFromHtml265(b.toString('utf8'),p.finalUrl??p.url,p.sha256,p.role==='method_reference'?null:x,{category:p.category})},
+    testLeads:testLeadsFromHtml265(b.toString('utf8'),p.finalUrl??p.url,p.sha256,p.role==='method_reference'?null:x,{category:p.category}),
+    ...(p.role==='method_reference'?{}:{qualitative270:{readerVersion:'phase270-qual-1',observations:qualitativeObservations269(b.toString('utf8')).observations}})},
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
    out.at(-1).yield.testLeads=out.at(-1).observation.testLeads.probe.candidates.length;

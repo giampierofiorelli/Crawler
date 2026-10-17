@@ -35,10 +35,11 @@ import {validateBrain128,compileCategoryKnowledge128,type CategoryBrain128,type 
 import type {StudyStream179} from './phase179_category_learning.js';
 import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from './phase193_screening_memory.js';
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
-import {classDecision249,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
+import {classDecision249,QUALITATIVE_AMENDMENT270,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
+import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
 import {screenTestLead265,subjectAssociation265,reportedBy265,type TestLeadsInput265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=6;
+export const STORE_SCHEMA_VERSION246=7;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -246,6 +247,21 @@ const MIGRATIONS:string[]=[
  `ALTER TABLE test_measurements265 ADD COLUMN condition_codes TEXT NOT NULL DEFAULT '[]';
   ALTER TABLE test_measurements265 ADD COLUMN protocol_codes TEXT NOT NULL DEFAULT '[]';
   ALTER TABLE test_measurements265 ADD COLUMN setpoint_c REAL;`,
+ // v7 (Phase270): qualitative outcome codes under the pee249 v2 amendment. Codes only (no text); the CHECKs state what a
+ // row never is: ranking input, a laboratory measurement or an independent finding.
+ `CREATE TABLE qualitative_observations270 (observation_id TEXT PRIMARY KEY, revision_id TEXT NOT NULL REFERENCES revisions(revision_id),
+   reader_version TEXT NOT NULL, product_id TEXT REFERENCES products(product_id),
+   identity TEXT NOT NULL CHECK(identity IN ('page_main_product_unverified','appliance_class_only','subject_unresolved')),
+   appliance TEXT, dish TEXT NOT NULL, outcome TEXT NOT NULL CHECK(outcome IN ('crispness','browning','evenness','doneness','moisture')),
+   direction TEXT NOT NULL CHECK(direction IN ('positive','negative','mixed')), strength TEXT NOT NULL CHECK(strength IN ('explicit','hedged')),
+   setting_adjusted INTEGER NOT NULL CHECK(setting_adjusted IN (0,1)), comparative INTEGER NOT NULL CHECK(comparative IN (0,1)),
+   dish_from_heading INTEGER NOT NULL CHECK(dish_from_heading IN (0,1)), block_sha256 TEXT NOT NULL, block_index INTEGER NOT NULL,
+   basis TEXT NOT NULL CHECK(basis='first_person_cooking_test'), policy_id TEXT NOT NULL, retention TEXT NOT NULL,
+   state TEXT NOT NULL CHECK(state IN ('current','superseded_by_revision','superseded_by_reader')), recorded_at TEXT NOT NULL,
+   ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0),
+   laboratory_measurement INTEGER NOT NULL DEFAULT 0 CHECK(laboratory_measurement=0),
+   independent_finding INTEGER NOT NULL DEFAULT 0 CHECK(independent_finding=0));
+  CREATE INDEX qualitative_observations270_product ON qualitative_observations270(product_id,outcome);`,
 ];
 
 export interface SourceInput246 {sourceId:string;host:string;sourceType:SourceType246;
@@ -259,12 +275,15 @@ export interface ObservationInput246 {
  reservations?:Reservations249;
  /** Phase265: Phase225/226/227 test-result leads from the same transient bytes (see phase265_test_measurements.ts). */
  testLeads?:TestLeadsInput265|null;
+ /** Phase270: qualitative outcome codes from the same transient bytes (qualitativeObservations269), kept only under the
+  * pee249 v2 amendment. */
+ qualitative270?:{readerVersion:string;observations:readonly QualitativeObservation269[]}|null;
 }
 export interface IngestResult246 {revisionId:string;newRevision:boolean;rederived?:boolean;retention:RetentionClass246;
  productIds:string[];variantIds:string[];declarationsSeen:number;declarationsRetained:number;
  supersededRevisionIds:string[];staleNodes:string[];screeningVerdict:string|null;
  /** Phase265: what happened to the test-result leads offered with this observation. */
- testMeasurements?:TestMeasurementOutcome265;}
+ testMeasurements?:TestMeasurementOutcome265;qualitative270?:{offered:number;persisted:number;withheld:number;reason:string|null};}
 export interface TestMeasurementOutcome265 {offered:number;persisted:number;associated:number;unresolved:number;
  alreadyStored:number;withheldRights:number;withheldReason:string|null;rejected:Record<string,number>;}
 export interface CategoryItemInput246 {categoryId:string;section:CategorySection246;statement:string;
@@ -389,8 +408,12 @@ export class KnowledgeStore246 {
       const exp2=eff==='local_pending_rights_review'?new Date(Date.parse(o.fetchedAt)+this.storage.localPendingRightsCache.expiresAfterDays*86400000).toISOString():null;
       tm=this.applyTestLeads265(o,revisionId,main,keep2,eff,keep2?null:eff,exp2);
      }
+     let q270:{offered:number;persisted:number;withheld:number;reason:string|null}|undefined;
+     if(o.qualitative270){const eff=(this.db.prepare('SELECT retention FROM revisions WHERE revision_id=?').get(revisionId) as {retention:RetentionClass246}).retention;
+      const main=(this.db.prepare("SELECT product_id FROM product_sources WHERE revision_id=? AND role='main_product'").get(revisionId) as {product_id:string}|undefined)?.product_id??null;
+      q270=this.applyQualitative270(o,revisionId,main,eff==='facts_retained_class_policy',eff);}
      return {revisionId,newRevision:false,retention,productIds:products,variantIds:[],declarationsSeen:0,declarationsRetained:0,
-      supersededRevisionIds:[],staleNodes:[],screeningVerdict:null,...(tm?{testMeasurements:tm}:{})};
+      supersededRevisionIds:[],staleNodes:[],screeningVerdict:null,...(tm?{testMeasurements:tm}:{}),...(q270?{qualitative270:q270}:{})};
     }
     rederive=true;
     // Product links of this revision are derived: recomputed under the new rules (products themselves are kept).
@@ -531,6 +554,7 @@ export class KnowledgeStore246 {
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
    const tm=o.testLeads?this.applyTestLeads265(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective,
     !keep?(classReason??effective):kinds&&!kinds.includes('quantity')?'value_kind_not_retained':null,expires):undefined;
+   const q270=o.qualitative270?this.applyQualitative270(o,revisionId,mainId,keep&&effective==='facts_retained_class_policy',effective):undefined;
    this.db.prepare('INSERT OR IGNORE INTO sightings VALUES (?,?,?)').run(revisionId,o.fetchedAt,o.runId);
    for(const pid of priorLinks)if(!this.db.prepare('SELECT 1 FROM product_sources WHERE product_id=?').get(pid)){
     this.db.prepare("UPDATE products SET identity_state='unsupported_after_rederivation' WHERE product_id=? AND identity_state NOT IN ('reviewed','merged')").run(pid);
@@ -548,7 +572,7 @@ export class KnowledgeStore246 {
    for(const c of o.categoryHypotheses)for(const n of this.invalidate(['category_observations:'+c],'new_observation'))stale.add(n);
    this.event('revision_ingested',{revisionId,url:o.url,sha256:o.sha256,retention,seen:facts.length,retained,superseded},o.fetchedAt);
    return {revisionId,newRevision:!rederive,rederived:rederive,retention,productIds,variantIds,declarationsSeen:facts.length,declarationsRetained:retained,
-    supersededRevisionIds:superseded,staleNodes:[...stale].sort(),screeningVerdict:verdict,...(tm?{testMeasurements:tm}:{})};
+    supersededRevisionIds:superseded,staleNodes:[...stale].sort(),screeningVerdict:verdict,...(tm?{testMeasurements:tm}:{}),...(q270?{qualitative270:q270}:{})};
   });
  }
  /** Phase265: persist the screened test-result leads of one revision (inside the caller's ingest transaction). Values
@@ -595,6 +619,40 @@ export class KnowledgeStore246 {
   if(out.unresolved)this.addGap('source',revisionId,'test_measurement_subject_unresolved',`${out.unresolved} test measurements kept without a product: subject not identified on the page`,
    'review_test_subject_identity',o.fetchedAt);
   return out;
+ }
+ /** Phase270: keep qualitative outcome codes under the pee249 v2 amendment: only when the revision keeps values under the
+  * class policy, only for the amendment's source classes, and only codes from PEE's vocabulary. Anything else is
+  * withheld with a reason (counts only). Re-offering is a no-op; a new reader version supersedes this revision's rows. */
+ private applyQualitative270(o:ObservationInput246,revisionId:string,mainId:string|null,classKeeps:boolean,retention:RetentionClass246):{offered:number;persisted:number;withheld:number;reason:string|null}{
+  const q=o.qualitative270!;const obs=Array.isArray(q?.observations)?q.observations:null;
+  if(!obs||!shortText(q.readerVersion,80))throw Error('270_invalid_qualitative');
+  const out={offered:obs.length,persisted:0,withheld:0,reason:null as string|null};if(!obs.length)return out;
+  const allowed=classKeeps&&(QUALITATIVE_AMENDMENT270.sourceClasses as readonly string[]).includes(o.source.sourceType);
+  if(!allowed){out.withheld=obs.length;out.reason=!classKeeps?`revision_retention_${retention}`:'source_class_not_in_amendment';
+   this.event('qualitative_codes_withheld',{revisionId,offered:obs.length,reason:out.reason},o.fetchedAt);return out;}
+  const ok=(x:QualitativeObservation269)=>!!x&&/^[a-z_]{2,40}$/.test(x.dish)&&['crispness','browning','evenness','doneness','moisture'].includes(x.outcome)&&
+   ['positive','negative','mixed'].includes(x.direction)&&['explicit','hedged'].includes(x.strength)&&/^[0-9a-f]{64}$/.test(x.blockSha256)&&Number.isSafeInteger(x.blockIndex)&&
+   x.rankingInput===false&&x.laboratoryMeasurement===false&&x.independentFinding===false&&x.basis==='first_person_cooking_test'&&(x.appliance===null||x.appliance===undefined||/^[a-z_]{3,20}$/.test(x.appliance));
+  this.db.prepare("UPDATE qualitative_observations270 SET state='superseded_by_reader' WHERE revision_id=? AND reader_version<>? AND state='current'").run(revisionId,q.readerVersion);
+  for(const x of obs){
+   if(!ok(x)){out.withheld++;out.reason='invalid_code';continue;}
+   // An outcome attributed to another appliance in a comparison is not the page product's outcome.
+   const identity=x.appliance?'appliance_class_only':mainId?'page_main_product_unverified':'subject_unresolved';
+   const pid=identity==='page_main_product_unverified'?mainId:null;
+   const id='qo_'+sha([revisionId,q.readerVersion,x.blockSha256,x.dish,x.outcome,x.direction,x.appliance??'',x.settingAdjusted].join('|')).slice(0,24);
+   const r=this.db.prepare(`INSERT OR IGNORE INTO qualitative_observations270(observation_id,revision_id,reader_version,product_id,identity,appliance,dish,outcome,direction,strength,
+     setting_adjusted,comparative,dish_from_heading,block_sha256,block_index,basis,policy_id,retention,state,recorded_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?)`)
+    .run(id,revisionId,q.readerVersion,pid,identity,x.appliance??null,x.dish,x.outcome,x.direction,x.strength,x.settingAdjusted?1:0,x.comparative?1:0,x.dishFromHeading?1:0,
+     x.blockSha256,x.blockIndex,x.basis,QUALITATIVE_AMENDMENT270.policyId,retention,o.fetchedAt);
+   if(Number(r.changes))out.persisted++;
+  }
+  if(out.persisted||out.withheld)this.event('qualitative_codes_ingested',{revisionId,readerVersion:q.readerVersion,...out},o.fetchedAt);
+  return out;
+ }
+ /** Phase270: stored qualitative outcome codes (current only). Never ranking input. */
+ qualitativeObservations270(f:{productId?:string|null}={}){
+  return (this.db.prepare(`SELECT q.*,r.url,s.host FROM qualitative_observations270 q JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
+   WHERE q.state='current'${f.productId?' AND q.product_id=?':''} ORDER BY q.observation_id`).all(...(f.productId?[f.productId]:[])) as Record<string,unknown>[]);
  }
  /** Phase265: stored test measurements with provenance (current only unless asked). Unreviewed and never evidence. */
  testMeasurements265(f:{productId?:string|null;revisionId?:string;includeSuperseded?:boolean}={}){
@@ -1038,7 +1096,7 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
    if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
@@ -1076,7 +1134,7 @@ export class KnowledgeStore246 {
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
   category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
-  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id'};
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
@@ -1094,6 +1152,8 @@ export class KnowledgeStore246 {
    let rows=this.db.prepare(`SELECT * FROM ${t} ORDER BY ${key}`).all() as Record<string,unknown>[];
    if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    if((t==='declarations'||t==='test_measurements265')&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
+   // Phase270: qualitative codes are kept under a private amendment that permits no publication.
+   if(t==='qualitative_observations270'&&audience==='public')rows=[];
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);
    files[t+'.ndjson']={rows:rows.length,sha256:sha(body)};
