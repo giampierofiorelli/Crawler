@@ -1,0 +1,1033 @@
+{
+ "schema": "pee.step1c.run.v1",
+ "label": "firstrun",
+ "at": "2026-10-17T16:44:28.787Z",
+ "tier": "T2_untouched_first_run",
+ "protocolSha256": "ee4672c895580be982464e413fec89a8e942360ccf2071ba338a029423d8d62d",
+ "goldSha256": "4b22768234ffdb85c106902980c83a0844bb632d74a18f922f9feef8f20fb8a9",
+ "matchingRuleDigest": "82758554d1338a54accb35d18eb7d104e0a2b338ca858a519db6f2701593bc00",
+ "builds": {
+  "A": {
+   "dist": "/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "c206c9a",
+   "srcDirty": false,
+   "readersSha256": "9ffce02220027a8e39e463ec4d10be17b641c7455cdf8025d1a318de593bcdb1",
+   "readers": 6
+  },
+  "B": {
+   "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "cf3f14a",
+   "srcDirty": false,
+   "readersSha256": "e0026e3ba6a44cedefc36866ca8fe994ded7efe186f3ae4e9056af95291565f3",
+   "readers": 6
+  },
+  "C": {
+   "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "cf3f14a",
+   "srcDirty": false,
+   "readersSha256": "e0026e3ba6a44cedefc36866ca8fe994ded7efe186f3ae4e9056af95291565f3",
+   "readers": 6
+  },
+  "D": {
+   "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "cf3f14a",
+   "srcDirty": false,
+   "readersSha256": "e0026e3ba6a44cedefc36866ca8fe994ded7efe186f3ae4e9056af95291565f3",
+   "readers": 6
+  }
+ },
+ "documents": [
+  {
+   "tag": "s1c_tv_trd_affordable_oled3",
+   "category": "televisions"
+  },
+  {
+   "tag": "s1c_tv_trd_rgb_vs_miniled",
+   "category": "televisions"
+  },
+  {
+   "tag": "s1c_tv_trd_bravia7ii_r95h",
+   "category": "televisions"
+  },
+  {
+   "tag": "s1c_ap_hf_small",
+   "category": "air_purifiers"
+  },
+  {
+   "tag": "s1c_ap_hf_bedroom",
+   "category": "air_purifiers"
+  }
+ ],
+ "gold": {
+  "values": 102,
+  "byStatus": {
+   "exact": 102
+  }
+ },
+ "summary": {
+  "A": {
+   "items": {
+    "missing": 26,
+    "wrong_product": 65,
+    "unresolved": 11
+   },
+   "leads": {
+    "lead_wrong_product": 70,
+    "lead_unresolved": 11,
+    "lead_not_gold_value": 17
+   },
+   "perDocument": {
+    "s1c_tv_trd_affordable_oled3": {
+     "items": {
+      "missing": 1,
+      "wrong_product": 2
+     },
+     "leads": {
+      "lead_wrong_product": 2
+     }
+    },
+    "s1c_tv_trd_rgb_vs_miniled": {
+     "items": {
+      "unresolved": 6,
+      "missing": 3
+     },
+     "leads": {
+      "lead_unresolved": 6
+     }
+    },
+    "s1c_tv_trd_bravia7ii_r95h": {
+     "items": {
+      "unresolved": 5,
+      "missing": 1
+     },
+     "leads": {
+      "lead_unresolved": 5
+     }
+    },
+    "s1c_ap_hf_small": {
+     "items": {
+      "wrong_product": 39,
+      "missing": 9
+     },
+     "leads": {
+      "lead_wrong_product": 44
+     }
+    },
+    "s1c_ap_hf_bedroom": {
+     "items": {
+      "wrong_product": 24,
+      "missing": 12
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_wrong_product": 24
+     }
+    }
+   },
+   "rulesUsed": {
+    "page_context_unverified": 87,
+    "not_identified": 11
+   }
+  },
+  "B": {
+   "items": {
+    "missing": 26,
+    "wrong_product": 70,
+    "correct": 4,
+    "unresolved": 2
+   },
+   "leads": {
+    "lead_correct": 4,
+    "lead_wrong_product": 75,
+    "lead_unresolved": 2,
+    "lead_not_gold_value": 17
+   },
+   "perDocument": {
+    "s1c_tv_trd_affordable_oled3": {
+     "items": {
+      "missing": 1,
+      "wrong_product": 1,
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1,
+      "lead_wrong_product": 1
+     }
+    },
+    "s1c_tv_trd_rgb_vs_miniled": {
+     "items": {
+      "wrong_product": 3,
+      "unresolved": 2,
+      "missing": 3,
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1,
+      "lead_wrong_product": 3,
+      "lead_unresolved": 2
+     }
+    },
+    "s1c_tv_trd_bravia7ii_r95h": {
+     "items": {
+      "correct": 2,
+      "wrong_product": 3,
+      "missing": 1
+     },
+     "leads": {
+      "lead_wrong_product": 3,
+      "lead_correct": 2
+     }
+    },
+    "s1c_ap_hf_small": {
+     "items": {
+      "wrong_product": 39,
+      "missing": 9
+     },
+     "leads": {
+      "lead_wrong_product": 44
+     }
+    },
+    "s1c_ap_hf_bedroom": {
+     "items": {
+      "wrong_product": 24,
+      "missing": 12
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_wrong_product": 24
+     }
+    }
+   },
+   "rulesUsed": {
+    "clause_named_model_unverified": 12,
+    "page_context_unverified": 84,
+    "not_identified": 2
+   }
+  },
+  "C": {
+   "items": {
+    "missing": 26,
+    "wrong_product": 1,
+    "correct": 7,
+    "unresolved": 55,
+    "false_identity_match": 13
+   },
+   "leads": {
+    "lead_correct": 7,
+    "lead_wrong_product": 1,
+    "lead_unresolved": 58,
+    "lead_false_identity": 15,
+    "lead_not_gold_value": 17
+   },
+   "perDocument": {
+    "s1c_tv_trd_affordable_oled3": {
+     "items": {
+      "missing": 1,
+      "wrong_product": 1,
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1,
+      "lead_wrong_product": 1
+     }
+    },
+    "s1c_tv_trd_rgb_vs_miniled": {
+     "items": {
+      "correct": 2,
+      "unresolved": 4,
+      "missing": 3
+     },
+     "leads": {
+      "lead_unresolved": 4,
+      "lead_correct": 2
+     }
+    },
+    "s1c_tv_trd_bravia7ii_r95h": {
+     "items": {
+      "correct": 2,
+      "unresolved": 3,
+      "missing": 1
+     },
+     "leads": {
+      "lead_unresolved": 3,
+      "lead_correct": 2
+     }
+    },
+    "s1c_ap_hf_small": {
+     "items": {
+      "false_identity_match": 13,
+      "missing": 9,
+      "unresolved": 26
+     },
+     "leads": {
+      "lead_false_identity": 15,
+      "lead_unresolved": 29
+     }
+    },
+    "s1c_ap_hf_bedroom": {
+     "items": {
+      "unresolved": 22,
+      "missing": 12,
+      "correct": 2
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_unresolved": 22,
+      "lead_correct": 2
+     }
+    }
+   },
+   "rulesUsed": {
+    "R1c_possessive": 1,
+    "R3c_pronoun_antecedent": 1,
+    "R4_no_subject_evidence": 71,
+    "R2_grammatical_subject": 4,
+    "R3b_section_heading": 21
+   }
+  },
+  "D": {
+   "items": {
+    "missing": 26,
+    "wrong_product": 68,
+    "correct": 4,
+    "unresolved": 4
+   },
+   "leads": {
+    "lead_correct": 4,
+    "lead_wrong_product": 73,
+    "lead_unresolved": 4,
+    "lead_not_gold_value": 17
+   },
+   "perDocument": {
+    "s1c_tv_trd_affordable_oled3": {
+     "items": {
+      "missing": 1,
+      "wrong_product": 1,
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1,
+      "lead_wrong_product": 1
+     }
+    },
+    "s1c_tv_trd_rgb_vs_miniled": {
+     "items": {
+      "unresolved": 4,
+      "missing": 3,
+      "correct": 1,
+      "wrong_product": 1
+     },
+     "leads": {
+      "lead_correct": 1,
+      "lead_unresolved": 4,
+      "lead_wrong_product": 1
+     }
+    },
+    "s1c_tv_trd_bravia7ii_r95h": {
+     "items": {
+      "correct": 2,
+      "wrong_product": 3,
+      "missing": 1
+     },
+     "leads": {
+      "lead_wrong_product": 3,
+      "lead_correct": 2
+     }
+    },
+    "s1c_ap_hf_small": {
+     "items": {
+      "wrong_product": 39,
+      "missing": 9
+     },
+     "leads": {
+      "lead_wrong_product": 44
+     }
+    },
+    "s1c_ap_hf_bedroom": {
+     "items": {
+      "wrong_product": 24,
+      "missing": 12
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_wrong_product": 24
+     }
+    }
+   },
+   "rulesUsed": {
+    "clause_named_model_unverified": 10,
+    "page_context_unverified": 84,
+    "multiple_models_unresolved": 2,
+    "not_identified": 2
+   }
+  }
+ },
+ "comparisons": {
+  "A->C": {
+   "transitions": {
+    "wrong_product>correct": 3,
+    "unresolved>correct": 4,
+    "wrong_product>false_identity_match": 13,
+    "wrong_product>unresolved": 48
+   },
+   "newConfidentlyWrong": [],
+   "correctLost": [],
+   "correctGained": [
+    "t1-03",
+    "t2-01",
+    "t2-02",
+    "t3-01",
+    "t3-05",
+    "a2-03",
+    "a2-04"
+   ],
+   "wrongRemoved": [
+    "t1-03",
+    "a1-16",
+    "a1-17",
+    "a1-18",
+    "a1-25",
+    "a1-26",
+    "a1-27",
+    "a1-28",
+    "a1-29",
+    "a1-30",
+    "a1-31",
+    "a1-32",
+    "a1-33",
+    "a1-34",
+    "a1-35",
+    "a1-36",
+    "a1-37",
+    "a1-38",
+    "a1-39",
+    "a1-40",
+    "a1-41",
+    "a1-42",
+    "a1-43",
+    "a1-44",
+    "a1-45",
+    "a1-46",
+    "a1-48",
+    "a2-01",
+    "a2-03",
+    "a2-04",
+    "a2-12",
+    "a2-15",
+    "a2-16",
+    "a2-17",
+    "a2-18",
+    "a2-19",
+    "a2-20",
+    "a2-21",
+    "a2-22",
+    "a2-24",
+    "a2-25",
+    "a2-26",
+    "a2-27",
+    "a2-28",
+    "a2-29",
+    "a2-30",
+    "a2-31",
+    "a2-32",
+    "a2-33",
+    "a2-34",
+    "a2-35"
+   ]
+  },
+  "B->C": {
+   "transitions": {
+    "wrong_product>correct": 4,
+    "correct>unresolved": 1,
+    "wrong_product>unresolved": 52,
+    "wrong_product>false_identity_match": 13
+   },
+   "newConfidentlyWrong": [],
+   "correctLost": [
+    "t2-06"
+   ],
+   "correctGained": [
+    "t2-01",
+    "t2-02",
+    "a2-03",
+    "a2-04"
+   ],
+   "wrongRemoved": [
+    "t2-01",
+    "t2-02",
+    "t2-08",
+    "t3-02",
+    "t3-04",
+    "t3-06",
+    "a1-16",
+    "a1-17",
+    "a1-18",
+    "a1-25",
+    "a1-26",
+    "a1-27",
+    "a1-28",
+    "a1-29",
+    "a1-30",
+    "a1-31",
+    "a1-32",
+    "a1-33",
+    "a1-34",
+    "a1-35",
+    "a1-36",
+    "a1-37",
+    "a1-38",
+    "a1-39",
+    "a1-40",
+    "a1-41",
+    "a1-42",
+    "a1-43",
+    "a1-44",
+    "a1-45",
+    "a1-46",
+    "a1-48",
+    "a2-01",
+    "a2-03",
+    "a2-04",
+    "a2-12",
+    "a2-15",
+    "a2-16",
+    "a2-17",
+    "a2-18",
+    "a2-19",
+    "a2-20",
+    "a2-21",
+    "a2-22",
+    "a2-24",
+    "a2-25",
+    "a2-26",
+    "a2-27",
+    "a2-28",
+    "a2-29",
+    "a2-30",
+    "a2-31",
+    "a2-32",
+    "a2-33",
+    "a2-34",
+    "a2-35"
+   ]
+  },
+  "D->C": {
+   "transitions": {
+    "unresolved>correct": 2,
+    "correct>unresolved": 1,
+    "wrong_product>unresolved": 52,
+    "wrong_product>false_identity_match": 13,
+    "wrong_product>correct": 2
+   },
+   "newConfidentlyWrong": [],
+   "correctLost": [
+    "t2-06"
+   ],
+   "correctGained": [
+    "t2-01",
+    "t2-02",
+    "a2-03",
+    "a2-04"
+   ],
+   "wrongRemoved": [
+    "t2-08",
+    "t3-02",
+    "t3-04",
+    "t3-06",
+    "a1-16",
+    "a1-17",
+    "a1-18",
+    "a1-25",
+    "a1-26",
+    "a1-27",
+    "a1-28",
+    "a1-29",
+    "a1-30",
+    "a1-31",
+    "a1-32",
+    "a1-33",
+    "a1-34",
+    "a1-35",
+    "a1-36",
+    "a1-37",
+    "a1-38",
+    "a1-39",
+    "a1-40",
+    "a1-41",
+    "a1-42",
+    "a1-43",
+    "a1-44",
+    "a1-45",
+    "a1-46",
+    "a1-48",
+    "a2-01",
+    "a2-03",
+    "a2-04",
+    "a2-12",
+    "a2-15",
+    "a2-16",
+    "a2-17",
+    "a2-18",
+    "a2-19",
+    "a2-20",
+    "a2-21",
+    "a2-22",
+    "a2-24",
+    "a2-25",
+    "a2-26",
+    "a2-27",
+    "a2-28",
+    "a2-29",
+    "a2-30",
+    "a2-31",
+    "a2-32",
+    "a2-33",
+    "a2-34",
+    "a2-35"
+   ]
+  },
+  "A->B": {
+   "transitions": {
+    "wrong_product>correct": 1,
+    "unresolved>wrong_product": 6,
+    "unresolved>correct": 3
+   },
+   "newConfidentlyWrong": [
+    "t2-01",
+    "t2-02",
+    "t2-08",
+    "t3-02",
+    "t3-04",
+    "t3-06"
+   ],
+   "correctLost": [],
+   "correctGained": [
+    "t1-03",
+    "t2-06",
+    "t3-01",
+    "t3-05"
+   ],
+   "wrongRemoved": [
+    "t1-03"
+   ]
+  }
+ },
+ "items": {
+  "A": {
+   "t1-01": "missing",
+   "t1-02": "wrong_product",
+   "t1-03": "wrong_product",
+   "t2-01": "unresolved",
+   "t2-02": "unresolved",
+   "t2-03": "unresolved",
+   "t2-04": "unresolved",
+   "t2-05": "missing",
+   "t2-06": "unresolved",
+   "t2-07": "missing",
+   "t2-08": "unresolved",
+   "t2-09": "missing",
+   "t3-01": "unresolved",
+   "t3-02": "unresolved",
+   "t3-03": "missing",
+   "t3-04": "unresolved",
+   "t3-05": "unresolved",
+   "t3-06": "unresolved",
+   "a1-01": "wrong_product",
+   "a1-02": "wrong_product",
+   "a1-03": "wrong_product",
+   "a1-04": "wrong_product",
+   "a1-05": "missing",
+   "a1-06": "wrong_product",
+   "a1-07": "wrong_product",
+   "a1-08": "wrong_product",
+   "a1-09": "wrong_product",
+   "a1-10": "wrong_product",
+   "a1-11": "wrong_product",
+   "a1-12": "wrong_product",
+   "a1-13": "wrong_product",
+   "a1-14": "wrong_product",
+   "a1-15": "missing",
+   "a1-16": "wrong_product",
+   "a1-17": "wrong_product",
+   "a1-18": "wrong_product",
+   "a1-19": "missing",
+   "a1-20": "missing",
+   "a1-21": "missing",
+   "a1-22": "missing",
+   "a1-23": "missing",
+   "a1-24": "missing",
+   "a1-25": "wrong_product",
+   "a1-26": "wrong_product",
+   "a1-27": "wrong_product",
+   "a1-28": "wrong_product",
+   "a1-29": "wrong_product",
+   "a1-30": "wrong_product",
+   "a1-31": "wrong_product",
+   "a1-32": "wrong_product",
+   "a1-33": "wrong_product",
+   "a1-34": "wrong_product",
+   "a1-35": "wrong_product",
+   "a1-36": "wrong_product",
+   "a1-37": "wrong_product",
+   "a1-38": "wrong_product",
+   "a1-39": "wrong_product",
+   "a1-40": "wrong_product",
+   "a1-41": "wrong_product",
+   "a1-42": "wrong_product",
+   "a1-43": "wrong_product",
+   "a1-44": "wrong_product",
+   "a1-45": "wrong_product",
+   "a1-46": "wrong_product",
+   "a1-47": "missing",
+   "a1-48": "wrong_product",
+   "a2-01": "wrong_product",
+   "a2-02": "missing",
+   "a2-03": "wrong_product",
+   "a2-04": "wrong_product",
+   "a2-05": "missing",
+   "a2-06": "missing",
+   "a2-07": "missing",
+   "a2-08": "missing",
+   "a2-09": "missing",
+   "a2-10": "missing",
+   "a2-11": "missing",
+   "a2-12": "wrong_product",
+   "a2-13": "missing",
+   "a2-14": "missing",
+   "a2-15": "wrong_product",
+   "a2-16": "wrong_product",
+   "a2-17": "wrong_product",
+   "a2-18": "wrong_product",
+   "a2-19": "wrong_product",
+   "a2-20": "wrong_product",
+   "a2-21": "wrong_product",
+   "a2-22": "wrong_product",
+   "a2-23": "missing",
+   "a2-24": "wrong_product",
+   "a2-25": "wrong_product",
+   "a2-26": "wrong_product",
+   "a2-27": "wrong_product",
+   "a2-28": "wrong_product",
+   "a2-29": "wrong_product",
+   "a2-30": "wrong_product",
+   "a2-31": "wrong_product",
+   "a2-32": "wrong_product",
+   "a2-33": "wrong_product",
+   "a2-34": "wrong_product",
+   "a2-35": "wrong_product",
+   "a2-36": "missing"
+  },
+  "B": {
+   "t1-01": "missing",
+   "t1-02": "wrong_product",
+   "t1-03": "correct",
+   "t2-01": "wrong_product",
+   "t2-02": "wrong_product",
+   "t2-03": "unresolved",
+   "t2-04": "unresolved",
+   "t2-05": "missing",
+   "t2-06": "correct",
+   "t2-07": "missing",
+   "t2-08": "wrong_product",
+   "t2-09": "missing",
+   "t3-01": "correct",
+   "t3-02": "wrong_product",
+   "t3-03": "missing",
+   "t3-04": "wrong_product",
+   "t3-05": "correct",
+   "t3-06": "wrong_product",
+   "a1-01": "wrong_product",
+   "a1-02": "wrong_product",
+   "a1-03": "wrong_product",
+   "a1-04": "wrong_product",
+   "a1-05": "missing",
+   "a1-06": "wrong_product",
+   "a1-07": "wrong_product",
+   "a1-08": "wrong_product",
+   "a1-09": "wrong_product",
+   "a1-10": "wrong_product",
+   "a1-11": "wrong_product",
+   "a1-12": "wrong_product",
+   "a1-13": "wrong_product",
+   "a1-14": "wrong_product",
+   "a1-15": "missing",
+   "a1-16": "wrong_product",
+   "a1-17": "wrong_product",
+   "a1-18": "wrong_product",
+   "a1-19": "missing",
+   "a1-20": "missing",
+   "a1-21": "missing",
+   "a1-22": "missing",
+   "a1-23": "missing",
+   "a1-24": "missing",
+   "a1-25": "wrong_product",
+   "a1-26": "wrong_product",
+   "a1-27": "wrong_product",
+   "a1-28": "wrong_product",
+   "a1-29": "wrong_product",
+   "a1-30": "wrong_product",
+   "a1-31": "wrong_product",
+   "a1-32": "wrong_product",
+   "a1-33": "wrong_product",
+   "a1-34": "wrong_product",
+   "a1-35": "wrong_product",
+   "a1-36": "wrong_product",
+   "a1-37": "wrong_product",
+   "a1-38": "wrong_product",
+   "a1-39": "wrong_product",
+   "a1-40": "wrong_product",
+   "a1-41": "wrong_product",
+   "a1-42": "wrong_product",
+   "a1-43": "wrong_product",
+   "a1-44": "wrong_product",
+   "a1-45": "wrong_product",
+   "a1-46": "wrong_product",
+   "a1-47": "missing",
+   "a1-48": "wrong_product",
+   "a2-01": "wrong_product",
+   "a2-02": "missing",
+   "a2-03": "wrong_product",
+   "a2-04": "wrong_product",
+   "a2-05": "missing",
+   "a2-06": "missing",
+   "a2-07": "missing",
+   "a2-08": "missing",
+   "a2-09": "missing",
+   "a2-10": "missing",
+   "a2-11": "missing",
+   "a2-12": "wrong_product",
+   "a2-13": "missing",
+   "a2-14": "missing",
+   "a2-15": "wrong_product",
+   "a2-16": "wrong_product",
+   "a2-17": "wrong_product",
+   "a2-18": "wrong_product",
+   "a2-19": "wrong_product",
+   "a2-20": "wrong_product",
+   "a2-21": "wrong_product",
+   "a2-22": "wrong_product",
+   "a2-23": "missing",
+   "a2-24": "wrong_product",
+   "a2-25": "wrong_product",
+   "a2-26": "wrong_product",
+   "a2-27": "wrong_product",
+   "a2-28": "wrong_product",
+   "a2-29": "wrong_product",
+   "a2-30": "wrong_product",
+   "a2-31": "wrong_product",
+   "a2-32": "wrong_product",
+   "a2-33": "wrong_product",
+   "a2-34": "wrong_product",
+   "a2-35": "wrong_product",
+   "a2-36": "missing"
+  },
+  "C": {
+   "t1-01": "missing",
+   "t1-02": "wrong_product",
+   "t1-03": "correct",
+   "t2-01": "correct",
+   "t2-02": "correct",
+   "t2-03": "unresolved",
+   "t2-04": "unresolved",
+   "t2-05": "missing",
+   "t2-06": "unresolved",
+   "t2-07": "missing",
+   "t2-08": "unresolved",
+   "t2-09": "missing",
+   "t3-01": "correct",
+   "t3-02": "unresolved",
+   "t3-03": "missing",
+   "t3-04": "unresolved",
+   "t3-05": "correct",
+   "t3-06": "unresolved",
+   "a1-01": "false_identity_match",
+   "a1-02": "false_identity_match",
+   "a1-03": "false_identity_match",
+   "a1-04": "false_identity_match",
+   "a1-05": "missing",
+   "a1-06": "false_identity_match",
+   "a1-07": "false_identity_match",
+   "a1-08": "false_identity_match",
+   "a1-09": "false_identity_match",
+   "a1-10": "false_identity_match",
+   "a1-11": "false_identity_match",
+   "a1-12": "false_identity_match",
+   "a1-13": "false_identity_match",
+   "a1-14": "false_identity_match",
+   "a1-15": "missing",
+   "a1-16": "unresolved",
+   "a1-17": "unresolved",
+   "a1-18": "unresolved",
+   "a1-19": "missing",
+   "a1-20": "missing",
+   "a1-21": "missing",
+   "a1-22": "missing",
+   "a1-23": "missing",
+   "a1-24": "missing",
+   "a1-25": "unresolved",
+   "a1-26": "unresolved",
+   "a1-27": "unresolved",
+   "a1-28": "unresolved",
+   "a1-29": "unresolved",
+   "a1-30": "unresolved",
+   "a1-31": "unresolved",
+   "a1-32": "unresolved",
+   "a1-33": "unresolved",
+   "a1-34": "unresolved",
+   "a1-35": "unresolved",
+   "a1-36": "unresolved",
+   "a1-37": "unresolved",
+   "a1-38": "unresolved",
+   "a1-39": "unresolved",
+   "a1-40": "unresolved",
+   "a1-41": "unresolved",
+   "a1-42": "unresolved",
+   "a1-43": "unresolved",
+   "a1-44": "unresolved",
+   "a1-45": "unresolved",
+   "a1-46": "unresolved",
+   "a1-47": "missing",
+   "a1-48": "unresolved",
+   "a2-01": "unresolved",
+   "a2-02": "missing",
+   "a2-03": "correct",
+   "a2-04": "correct",
+   "a2-05": "missing",
+   "a2-06": "missing",
+   "a2-07": "missing",
+   "a2-08": "missing",
+   "a2-09": "missing",
+   "a2-10": "missing",
+   "a2-11": "missing",
+   "a2-12": "unresolved",
+   "a2-13": "missing",
+   "a2-14": "missing",
+   "a2-15": "unresolved",
+   "a2-16": "unresolved",
+   "a2-17": "unresolved",
+   "a2-18": "unresolved",
+   "a2-19": "unresolved",
+   "a2-20": "unresolved",
+   "a2-21": "unresolved",
+   "a2-22": "unresolved",
+   "a2-23": "missing",
+   "a2-24": "unresolved",
+   "a2-25": "unresolved",
+   "a2-26": "unresolved",
+   "a2-27": "unresolved",
+   "a2-28": "unresolved",
+   "a2-29": "unresolved",
+   "a2-30": "unresolved",
+   "a2-31": "unresolved",
+   "a2-32": "unresolved",
+   "a2-33": "unresolved",
+   "a2-34": "unresolved",
+   "a2-35": "unresolved",
+   "a2-36": "missing"
+  },
+  "D": {
+   "t1-01": "missing",
+   "t1-02": "wrong_product",
+   "t1-03": "correct",
+   "t2-01": "unresolved",
+   "t2-02": "unresolved",
+   "t2-03": "unresolved",
+   "t2-04": "unresolved",
+   "t2-05": "missing",
+   "t2-06": "correct",
+   "t2-07": "missing",
+   "t2-08": "wrong_product",
+   "t2-09": "missing",
+   "t3-01": "correct",
+   "t3-02": "wrong_product",
+   "t3-03": "missing",
+   "t3-04": "wrong_product",
+   "t3-05": "correct",
+   "t3-06": "wrong_product",
+   "a1-01": "wrong_product",
+   "a1-02": "wrong_product",
+   "a1-03": "wrong_product",
+   "a1-04": "wrong_product",
+   "a1-05": "missing",
+   "a1-06": "wrong_product",
+   "a1-07": "wrong_product",
+   "a1-08": "wrong_product",
+   "a1-09": "wrong_product",
+   "a1-10": "wrong_product",
+   "a1-11": "wrong_product",
+   "a1-12": "wrong_product",
+   "a1-13": "wrong_product",
+   "a1-14": "wrong_product",
+   "a1-15": "missing",
+   "a1-16": "wrong_product",
+   "a1-17": "wrong_product",
+   "a1-18": "wrong_product",
+   "a1-19": "missing",
+   "a1-20": "missing",
+   "a1-21": "missing",
+   "a1-22": "missing",
+   "a1-23": "missing",
+   "a1-24": "missing",
+   "a1-25": "wrong_product",
+   "a1-26": "wrong_product",
+   "a1-27": "wrong_product",
+   "a1-28": "wrong_product",
+   "a1-29": "wrong_product",
+   "a1-30": "wrong_product",
+   "a1-31": "wrong_product",
+   "a1-32": "wrong_product",
+   "a1-33": "wrong_product",
+   "a1-34": "wrong_product",
+   "a1-35": "wrong_product",
+   "a1-36": "wrong_product",
+   "a1-37": "wrong_product",
+   "a1-38": "wrong_product",
+   "a1-39": "wrong_product",
+   "a1-40": "wrong_product",
+   "a1-41": "wrong_product",
+   "a1-42": "wrong_product",
+   "a1-43": "wrong_product",
+   "a1-44": "wrong_product",
+   "a1-45": "wrong_product",
+   "a1-46": "wrong_product",
+   "a1-47": "missing",
+   "a1-48": "wrong_product",
+   "a2-01": "wrong_product",
+   "a2-02": "missing",
+   "a2-03": "wrong_product",
+   "a2-04": "wrong_product",
+   "a2-05": "missing",
+   "a2-06": "missing",
+   "a2-07": "missing",
+   "a2-08": "missing",
+   "a2-09": "missing",
+   "a2-10": "missing",
+   "a2-11": "missing",
+   "a2-12": "wrong_product",
+   "a2-13": "missing",
+   "a2-14": "missing",
+   "a2-15": "wrong_product",
+   "a2-16": "wrong_product",
+   "a2-17": "wrong_product",
+   "a2-18": "wrong_product",
+   "a2-19": "wrong_product",
+   "a2-20": "wrong_product",
+   "a2-21": "wrong_product",
+   "a2-22": "wrong_product",
+   "a2-23": "missing",
+   "a2-24": "wrong_product",
+   "a2-25": "wrong_product",
+   "a2-26": "wrong_product",
+   "a2-27": "wrong_product",
+   "a2-28": "wrong_product",
+   "a2-29": "wrong_product",
+   "a2-30": "wrong_product",
+   "a2-31": "wrong_product",
+   "a2-32": "wrong_product",
+   "a2-33": "wrong_product",
+   "a2-34": "wrong_product",
+   "a2-35": "wrong_product",
+   "a2-36": "missing"
+  }
+ }
+}
