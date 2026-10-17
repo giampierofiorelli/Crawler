@@ -68,9 +68,24 @@ export function meetsReference(c:ExperienceCase,o:ObservedState):boolean{
  if(!o.subject)return !!r.unresolvedAcceptable;
  return (r.acceptedSubjects??[]).some(s=>s===o.subject);
 }
-export type ReplayTransition='preserved_success'|'lost_success'|'corrected'|'persistent_failure'|'unreproducible';
+/** Step 1B: incomparable_state = the knowledge state that governs the observation (the compiled plan digest) differs from
+ * the frozen one, so a difference cannot be attributed to the extractor; it is reported, never counted as a regression or a
+ * correction. */
+export type ReplayTransition='preserved_success'|'lost_success'|'corrected'|'persistent_failure'|'unreproducible'|'incomparable_state';
+/** Step 1B: what an observation says about attribution, kept apart from "meets the reference". An unresolved subject is
+ * safer than a wrong one but is not a correct attribution. */
+export type AttributionClass='correct'|'accepted_variant'|'wrong_product'|'unresolved_preserved'|'missing'|'emitted'|'not_emitted'|'gap_stated'|'other_response';
+export function attributionClass(c:ExperienceCase,o:ObservedState):AttributionClass{
+ if(o.status==='emitted'||o.status==='not_emitted')return o.status;
+ if(o.status==='responded')return meetsReference(c,o)?'gap_stated':'other_response';
+ if(o.status!=='found')return 'missing';
+ if(o.subjectOutcome==='correct')return 'correct';
+ if(!o.subject||o.subjectOutcome==='unresolved')return 'unresolved_preserved';
+ return (c.reference.acceptedSubjects??[]).includes(o.subject)?'accepted_variant':'wrong_product';
+}
 export interface ReplayVerdict {caseId:string;family:ExperienceFamily;historicalMeets:boolean;currentMeets:boolean|null;
- historicalReproduced:boolean|null;transition:ReplayTransition;reason:string|null}
+ historicalReproduced:boolean|null;transition:ReplayTransition;reason:string|null;
+ historicalClass:AttributionClass;currentClass:AttributionClass|null}
 /** Two observations are the same when status, subject outcome, response and category agree. Subject strings and locators
  * are not compared: committed runs record the subject OUTCOME, and block indices may differ between builds. */
 export function sameObservation(a:ObservedState,b:ObservedState):boolean{
@@ -79,18 +94,22 @@ export function sameObservation(a:ObservedState,b:ObservedState):boolean{
 /** The replay verdict of one case. `current` null = the case's inputs could not be observed (missing bytes, receipt
  * mismatch, unavailable build): unreproducible, never guessed. `frozenReobserved` is a fresh observation on the frozen
  * historical build, compared with the committed historical state. */
-export function replayVerdict(c:ExperienceCase,current:ObservedState|null,frozenReobserved:ObservedState|null,reason:string|null=null):ReplayVerdict{
- const h=meetsReference(c,c.historical);
+export function replayVerdict(c:ExperienceCase,current:ObservedState|null,frozenReobserved:ObservedState|null,reason:string|null=null,
+ state:{comparable:boolean;why?:string}={comparable:true}):ReplayVerdict{
+ const h=meetsReference(c,c.historical);const hc=attributionClass(c,c.historical);
  const reproduced=frozenReobserved?sameObservation(c.historical,frozenReobserved):null;
- if(!current)return {caseId:c.id,family:c.family,historicalMeets:h,currentMeets:null,historicalReproduced:reproduced,transition:'unreproducible',reason:reason??'inputs not observable'};
+ if(!current)return {caseId:c.id,family:c.family,historicalMeets:h,currentMeets:null,historicalReproduced:reproduced,transition:'unreproducible',reason:reason??'inputs not observable',historicalClass:hc,currentClass:null};
  const n=meetsReference(c,current);
- const transition:ReplayTransition=h&&n?'preserved_success':h&&!n?'lost_success':!h&&n?'corrected':'persistent_failure';
- return {caseId:c.id,family:c.family,historicalMeets:h,currentMeets:n,historicalReproduced:reproduced,transition,reason};
+ const transition:ReplayTransition=!state.comparable?'incomparable_state':h&&n?'preserved_success':h&&!n?'lost_success':!h&&n?'corrected':'persistent_failure';
+ return {caseId:c.id,family:c.family,historicalMeets:h,currentMeets:n,historicalReproduced:reproduced,transition,
+  reason:!state.comparable?[reason,state.why??'knowledge state differs from the frozen one'].filter(Boolean).join('; '):reason,historicalClass:hc,currentClass:attributionClass(c,current)};
 }
 export function summariseReplay(v:readonly ReplayVerdict[]){
  const count=(t:ReplayTransition)=>v.filter(x=>x.transition===t).length;
  return {cases:v.length,preserved_success:count('preserved_success'),lost_success:count('lost_success'),corrected:count('corrected'),
-  persistent_failure:count('persistent_failure'),unreproducible:count('unreproducible'),
+  persistent_failure:count('persistent_failure'),unreproducible:count('unreproducible'),incomparable_state:count('incomparable_state'),
+  /** Current attribution classes (Step 1B): correct, accepted variant, wrong product, unresolved but preserved, missing. */
+  currentClasses:Object.fromEntries([...new Set(v.map(x=>x.currentClass??'unobserved'))].sort().map(k=>[k,v.filter(x=>(x.currentClass??'unobserved')===k).length])),
   historicalReproduced:v.filter(x=>x.historicalReproduced===true).length,historicalNotReproduced:v.filter(x=>x.historicalReproduced===false).length,
   /** A regression signal: any previously meeting case that no longer does. */
   regression:v.some(x=>x.transition==='lost_success')};

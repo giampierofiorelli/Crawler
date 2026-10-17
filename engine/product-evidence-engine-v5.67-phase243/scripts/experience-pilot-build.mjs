@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /** Continuous-learning Step 1A: build the pilot experience-case set (18 cases) from EXISTING committed evaluations only.
+ * Step 1B: `--set step1b` builds the separate 6-case extension (EX-19..EX-24, attribution cases around the tuned Phase272
+ * mention rule) into step1b-cases.json / evaluation/experience/step1b-index.json; the Step 1A set is never rewritten.
  *  - historical state: the committed first-run records (immutable): Phase272 untouched first run (arm B, private full copy of
  *    evaluation/phase272/ab-untouched-firstrun.json) and the unknown-category pilot (evaluation/phase272/unknown-category-pilot.json);
  *  - locator and lead subject string: re-observed on the frozen arm-B build (commit c206c9a, worktree /home/user/p272-frozenB);
@@ -15,8 +17,10 @@ const {publicCase,sameObservation}=await import(resolve('dist/src/experience_cas
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const PRIV=join(homedir(),'.local/share/product-evidence-engine/private-eval/phase272');
 // The private knowledge repository (CLAUDE.md: cloned at /home/user/pee-knowledge; PEE_KNOWLEDGE_REPO overrides).
-const OUT_PRIV=join(process.env.PEE_KNOWLEDGE_REPO??'/home/user/pee-knowledge','private-eval/experience/pilot-cases.json');
-const OUT_PUB='evaluation/experience/pilot-index.json';
+const SETNAME=process.argv.includes('--set')?process.argv[process.argv.indexOf('--set')+1]:'step1a';
+if(!['step1a','step1b'].includes(SETNAME))throw Error('unknown set '+SETNAME);
+const OUT_PRIV=join(process.env.PEE_KNOWLEDGE_REPO??'/home/user/pee-knowledge','private-eval/experience/'+(SETNAME==='step1a'?'pilot-cases.json':'step1b-cases.json'));
+const OUT_PUB='evaluation/experience/'+(SETNAME==='step1a'?'pilot-index.json':'step1b-index.json');
 for(const f of [OUT_PRIV,OUT_PUB])if(existsSync(f))throw Error(f+' exists: the pilot set is never overwritten');
 const FROZEN_B={commit:'c206c9a',path:'/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src'};
 const CURRENT=resolve('dist/src');
@@ -64,8 +68,24 @@ const SEL=[
   lesson:'A product noun phrase the registry does not know is a gap to state, not a near match to accept.',supports:[],counter:['EX-18']},
  {id:'EX-18',kind:'request',family:'S_gap_recognition_success',req:0,cause:['not_applicable','unknown product named after "Which"; gap stated'],lesson:'Guard: a stated gap must stay stated.',supports:[],counter:[]},
 ];
+// Step 1B extension: the attribution behaviour of the tuned Phase272 mention rule (body/table-header mentions activate the
+// clause rule "nearest preceding named product"). Selected from the census of first-run vs after-change subject outcomes.
+const SEL1B=[
+ {id:'EX-19',kind:'quantitative_value',family:'S_attribution_success',gold:'tv-q26',cause:['confirmed','correct by page-product default; the tuned mention list activates the clause rule, which binds the value to the nearest preceding named product (a comparison object of the sentence)'],
+  lesson:'In "X has less Y (v) than Z", the value belongs to the sentence subject X, not to the nearest named product.',supports:['EX-05'],counter:['EX-20']},
+ {id:'EX-20',kind:'quantitative_value',family:'F1_identity_by_default',gold:'tv-q29',cause:['confirmed','wrong by page-product default; the tuned clause rule binds the value to the product named just before it'],
+  lesson:'A value in parentheses directly after a product name belongs to that product.',supports:['EX-21'],counter:['EX-19']},
+ {id:'EX-21',kind:'quantitative_value',family:'F1_identity_by_default',gold:'tv-q22',cause:['confirmed','as EX-20: parenthetical value directly after a named product; corrected by the tuned rule; an all-ambiguous policy would leave it unresolved'],
+  lesson:'Counterexample to "several products in the sentence = unresolved": adjacency can still identify the subject.',supports:['EX-20'],counter:['EX-05']},
+ {id:'EX-22',kind:'quantitative_value',family:'F1_identity_by_default',gold:'tv-q38',cause:['confirmed','another page and model family: parenthetical value after a named rival; corrected by the tuned rule'],
+  lesson:'Same as EX-20 on a second page.',supports:['EX-20','EX-21'],counter:[]},
+ {id:'EX-23',kind:'quantitative_value',family:'F1_identity_by_default',gold:'ap-q21',cause:['candidate','corrected by the tuned rule, but the bound subject string is a truncated name (the capitalised word before the code is taken as the brand); the scorer accepts it through the shared model code'],
+  lesson:'A model-code match is not an identity: the stored subject name must be a valid product name, or stay unresolved.',supports:[],counter:[]},
+ {id:'EX-24',kind:'quantitative_value',family:'F1_identity_by_default',gold:'ap-q26',cause:['candidate','"both with ... 174 cfm" names two products; the frozen build binds the page product, the tuned rule the nearest code-bearing product, which is a third, unrelated product; the committed "absent" comes from the scorer counting identical (value, unit, subject) leads once'],
+  lesson:'A value stated for several products at once ("both") needs a multi-subject or unresolved attribution, never the nearest name.',supports:[],counter:[]},
+];
 const cases=[];
-for(const s of SEL){
+for(const s of SETNAME==='step1a'?SEL:SEL1B){
  let c;
  if(s.kind==='request'){
   const g=UC.gapBefore[s.req];
@@ -120,7 +140,7 @@ for(const s of SEL){
  }
  c.features=[...new Set(c.features)].sort();cases.push(c);
 }
-const doc={schema:'pee.experience-case-set.v1',set:'step1a-pilot',builtAt:new Date().toISOString(),builder:'scripts/experience-pilot-build.mjs',frozenHistoricalBuild:FROZEN_B.commit,
+const doc={schema:'pee.experience-case-set.v1',set:SETNAME==='step1a'?'step1a-pilot':'step1b-attribution-extension',builtAt:new Date().toISOString(),builder:'scripts/experience-pilot-build.mjs',frozenHistoricalBuild:FROZEN_B.commit,
  goldSha256:sha(readFileSync(join(PRIV,'gold-untouched.json'))),cases};
 mkdirSync(join(OUT_PRIV,'..'),{recursive:true});mkdirSync('evaluation/experience',{recursive:true});
 writeFileSync(OUT_PRIV,JSON.stringify(doc,null,1)+'\n');

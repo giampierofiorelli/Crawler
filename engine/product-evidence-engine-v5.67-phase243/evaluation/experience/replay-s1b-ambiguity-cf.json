@@ -1,0 +1,294 @@
+{
+ "schema": "pee.experience-replay.v2",
+ "label": "s1b-ambiguity-cf",
+ "at": "2026-10-17T12:54:57.709Z",
+ "set": "step1b",
+ "mode": "counterfactual",
+ "faultCase": null,
+ "policy": "ambiguity_preserving",
+ "currentBuild": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+ "caseSetSha256": "049e3aab47680fa1429f99eb045cb8de039bb8cde6b06ff2f2321fe5c674097b",
+ "provenance": {
+  "currentBuild": {
+   "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "fc7a040",
+   "srcDirty": false,
+   "readersSha256": "e0026e3ba6a44cedefc36866ca8fe994ded7efe186f3ae4e9056af95291565f3",
+   "readers": 6
+  },
+  "historicalBuilds": {
+   "c206c9a": {
+    "dist": "/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src",
+    "commit": "c206c9a",
+    "srcDirty": false,
+    "readersSha256": "9ffce02220027a8e39e463ec4d10be17b641c7455cdf8025d1a318de593bcdb1",
+    "readers": 6
+   }
+  },
+  "matchingRuleDigest": "82758554d1338a54accb35d18eb7d104e0a2b338ca858a519db6f2701593bc00",
+  "knowledgeSnapshot": {
+   "sha256": "b69a5f8ce4f8489f2159e4fabaca92534232b4bba2d19cf09567ad9aafff6d72",
+   "verifiedAt": "2026-10-17T11:47:15.496Z",
+   "schemaVersion": 8
+  },
+  "liveStoreFileNote": "file bytes change when SQLite opens the store (WAL), so the comparability test is the compiled plan digest, not this hash",
+  "liveStoreFileSha256": "5dd1e763cd553a7bcc4ecde75f10e5f249951c28061d3fa10513183be08b5607",
+  "planDigestsFrozen": "evaluation/phase272/plans-frozen-known.json",
+  "caseSetSha256": "049e3aab47680fa1429f99eb045cb8de039bb8cde6b06ff2f2321fe5c674097b",
+  "scoringLimits": "committed historical states come from whole-document one-to-one scoring with identical (value, unit, subject) leads counted once; the per-case observer is not exclusive, so same-value gold siblings are flagged"
+ },
+ "summary": {
+  "cases": 6,
+  "preserved_success": 0,
+  "lost_success": 1,
+  "corrected": 2,
+  "persistent_failure": 3,
+  "unreproducible": 0,
+  "incomparable_state": 0,
+  "currentClasses": {
+   "correct": 2,
+   "unresolved_preserved": 3,
+   "wrong_product": 1
+  },
+  "historicalReproduced": 5,
+  "historicalNotReproduced": 1,
+  "regression": true
+ },
+ "byFamily": {
+  "S_attribution_success": {
+   "lost_success": 1
+  },
+  "F1_identity_by_default": {
+   "persistent_failure": 3,
+   "corrected": 2
+  }
+ },
+ "patterns": [
+  {
+   "family": "F1_identity_by_default",
+   "feature": "document_names_several_products",
+   "cases": [
+    "EX-20",
+    "EX-21",
+    "EX-22",
+    "EX-23",
+    "EX-24"
+   ],
+   "hosts": [
+    "housefresh.com",
+    "www.tomsguide.com"
+   ],
+   "categories": [
+    "air_purifiers",
+    "televisions"
+   ],
+   "counterexamples": [
+    "EX-19"
+   ],
+   "status": "candidate_lesson_hypothesis"
+  },
+  {
+   "family": "F1_identity_by_default",
+   "feature": "subject_is_not_page_product",
+   "cases": [
+    "EX-20",
+    "EX-21",
+    "EX-22",
+    "EX-23",
+    "EX-24"
+   ],
+   "hosts": [
+    "housefresh.com",
+    "www.tomsguide.com"
+   ],
+   "categories": [
+    "air_purifiers",
+    "televisions"
+   ],
+   "counterexamples": [],
+   "status": "candidate_lesson_hypothesis"
+  }
+ ],
+ "rows": [
+  {
+   "caseId": "EX-19",
+   "family": "S_attribution_success",
+   "transition": "lost_success",
+   "historicalMeets": true,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "unresolved_preserved",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "unresolved",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-20",
+   "family": "F1_identity_by_default",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "unresolved_preserved",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "unresolved",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-21",
+   "family": "F1_identity_by_default",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "unresolved_preserved",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "unresolved",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-22",
+   "family": "F1_identity_by_default",
+   "transition": "corrected",
+   "historicalMeets": false,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-23",
+   "family": "F1_identity_by_default",
+   "transition": "corrected",
+   "historicalMeets": false,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-24",
+   "family": "F1_identity_by_default",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": false,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "missing",
+   "currentClass": "wrong_product",
+   "allocationAmbiguous": true,
+   "states": {
+    "historical": {
+     "status": "absent",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "schema": "pee.experience-loss-audit.v1",
+ "at": "2026-10-17",
+ "subject": "the 8 Phase272 'lost by guidance' items (evaluation/phase272/ab-untouched-firstrun.json lostByGuidance: 1 value, 7 findings) and EX-11",
+ "definitionAudited": "scripts/phase272-ab-extraction.mjs: an item is 'lost' when arm A or arm E matched it (including exploratory leads) and neither B nor C did",
+ "method": "re-read of the committed first-run records (private full copy) and per-item re-observation on the frozen arm-B build c206c9a with the live store's plan (digests equal evaluation/phase272/plans-frozen-known.json); developer audit, not independent; reasons are paraphrased, no page text",
+ "headline": "0 of 8 were found by arm A (the existing reader); all 8 were reached only by arm E. 4 are scoring artefacts; 4 are genuine guided-pass effects (a clause linked to a wrong taught outcome, then dropped as a duplicate finding).",
+ "items": [
+  {"goldId": "ap-q13", "case": "EX-11", "kind": "value", "class": "scorer_duplicate_allocation_artefact",
+   "evidence": "the reader emits two leads with this value and unit for the same product (one in a table block, one in a prose block); the scorer addendum counts identical (value, unit, subject) leads once, so only one of the two same-value gold items (ap-q10, ap-q13) can match"},
+  {"goldId": "af-o5", "kind": "finding", "class": "scorer_lenient_exploratory_match",
+   "evidence": "arm E's credit is a lead from a feature bullet about which foods can be cooked; it shares only the word 'cook' with the gold dimension (cooking speed); no arm records the speed finding"},
+  {"goldId": "af-o11", "kind": "finding", "class": "scorer_lenient_exploratory_match",
+   "evidence": "arm E's credit is a lead from a summary sentence about cooking-test results, matched through the word 'cooking'; B/C link that sentence to taught outcomes instead; no arm records the speed finding"},
+  {"goldId": "af-o19", "kind": "finding", "class": "scorer_lenient_exploratory_match",
+   "evidence": "arm E's credit is a lead from a list of cooking functions, matched through the word 'cooking'; no arm records the speed finding"},
+  {"goldId": "ap-o17", "kind": "finding", "class": "guided_mislink_absorbed",
+   "evidence": "the clause on sensor reaction speed is linked by the plan to a taught odour outcome; the untaught dimension never becomes an exploratory lead"},
+  {"goldId": "ap-o24", "kind": "finding", "class": "guided_mislink_absorbed",
+   "evidence": "sentences about the companion app's information are linked by the plan to quiet night operation and to room coverage; the per-(dimension, direction, subject) de-duplication then drops them; no exploratory lead"},
+  {"goldId": "ap-o25", "kind": "finding", "class": "guided_mislink_absorbed",
+   "evidence": "a specification list of fan speeds and mode names is linked to quiet night operation through a mode name; dropped as a duplicate; the gold item itself rests on a specification list (weak as a tester finding)"},
+  {"goldId": "tv-o17", "kind": "finding", "class": "guided_mislink_absorbed",
+   "evidence": "a taught dimension: the whole sentence links to dialogue clarity, but the reader splits it at a contrast word and the short clause links to fast-motion clarity through the word 'clear'; dropped as a duplicate"}
+ ],
+ "counts": {"scorer_artefact": 4, "genuine_guided_effect": 4, "found_by_arm_A": 0, "indeterminate": 0},
+ "consequences": [
+  "the Phase272 phrase 'lost by guidance' overstates a loss against the existing reader: none of the 8 was found by arm A",
+  "four losses are real: plan linking can capture a clause for a wrong taught outcome, and de-duplication hides the capture; this is the same mechanism family as the F2 false positives (EX-12, EX-13)",
+  "exploratory credit by single-word overlap is too lenient to count as recall; it should be reported as a lead count only"
+ ]
+}

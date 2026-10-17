@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {meetsReference,replayVerdict,summariseReplay,recurringPatterns,publicCase,type ExperienceCase,type ObservedState} from '../src/experience_cases.js';
+import {meetsReference,replayVerdict,summariseReplay,recurringPatterns,publicCase,attributionClass,type ExperienceCase,type ObservedState} from '../src/experience_cases.js';
 
 // Step 1A: experience-case representation and replay verdicts. Every case below is FICTIONAL (the authentic pilot cases are
 // private; their public index is checked at the end for leakage).
@@ -57,4 +57,29 @@ test('the public view carries no values, names or source text; the committed pil
  for(const k of ['"item"','"goldSubject"','"subject"','"value"','"acceptedSubjects"','"text"'])assert.ok(!text.includes(k),'public index must not contain '+k);
  assert.ok(new Set(idx.cases.map((c:{category:string})=>c.category)).size>=3,'at least three categories');
  assert.ok(idx.cases.some((c:{family:string})=>c.family.startsWith('S_'))&&idx.cases.some((c:{family:string})=>c.family.startsWith('F')),'failures and successes');
+});
+
+test('Step 1B: attribution classes keep wrong, unresolved, variant and missing apart; a changed knowledge state is incomparable',()=>{
+ const c=base('a1',{reference:{expected:'found_with_accepted_subject',acceptedSubjects:['Zentra K1','Zentra K1-80'],basis:'independent_gold_plus_developer_audit',independence:'x'}});
+ assert.equal(attributionClass(c,found('Zentra K1','correct')),'correct');
+ assert.equal(attributionClass(c,found('Zentra K1-80','incorrect_match')),'accepted_variant');
+ assert.equal(attributionClass(c,found('Korvo K2','incorrect_match')),'wrong_product');
+ assert.equal(attributionClass(c,found(null,'unresolved')),'unresolved_preserved');
+ assert.equal(attributionClass(c,{status:'absent'}),'missing');
+ // An unresolved subject is safer than a wrong one but does not meet a found-with-subject reference.
+ const ok=base('a2');const v=replayVerdict(ok,found(null,'unresolved'),null);assert.deepEqual([v.transition,v.currentClass],['lost_success','unresolved_preserved']);
+ const i=replayVerdict(ok,{status:'absent'},null,null,{comparable:false,why:'plan digest differs'});
+ assert.deepEqual([i.transition,i.historicalClass,i.currentClass],['incomparable_state','correct','missing']);assert.match(i.reason!,/plan digest/);
+ const s=summariseReplay([i,v]);assert.deepEqual([s.incomparable_state,s.lost_success,s.regression],[1,1,true]);
+ assert.equal(summariseReplay([i]).regression,false,'an incomparable case is never counted as a regression');
+});
+
+test('Step 1B: the committed extension index and replays carry no values, names or source text',()=>{
+ const rd=(f:string)=>readFileSync(new URL('../../evaluation/experience/'+f,import.meta.url),'utf8');
+ const idx=JSON.parse(rd('step1b-index.json'));assert.equal(idx.cases.length,6);
+ assert.ok(idx.cases.every((c:{id:string})=>/^EX-(19|2[0-4])$/.test(c.id)));
+ for(const f of ['step1b-index.json','replay-s1a-tuned-fc7a040.json','replay-s1b-tuned-fc7a040.json','replay-s1b-ambiguity-cf.json','replay-s1a-changed-knowledge-demo.json']){const t=rd(f);
+  for(const k of ['"item"','"goldSubject"','"subject"','"value"','"acceptedSubjects"','"text"'])assert.ok(!t.includes(k),f+' must not contain '+k);}
+ const cf=JSON.parse(rd('replay-s1b-ambiguity-cf.json'));assert.equal(cf.mode,'counterfactual');assert.equal(cf.policy,'ambiguity_preserving');
+ const demo=JSON.parse(rd('replay-s1a-changed-knowledge-demo.json'));assert.ok(demo.summary.incomparable_state>0&&demo.summary.regression===false);
 });

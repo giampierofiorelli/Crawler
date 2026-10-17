@@ -19,6 +19,61 @@ Use this skill to make PEE a better independent product-buying adviser. It cover
 - A phase brief.
 - Authority for spending, new services, external agents or new owner decisions.
 
+## 0. Permanent strategic mission (owner decision, Step 1B brief, 2026-10-17)
+
+This section records **direction**, not capability. Implementing it is authorised only phase by phase.
+
+**Mission.** PEE is to become an evidence-driven, **cumulative scientific-learning system**. It is not just a store of
+product facts or a set of extraction rules. Its scientific knowledge, past investigations, successes, failures, ambiguous
+findings, counterexamples and validated methods must progressively improve:
+- understanding of consumer goals;
+- research and source discovery;
+- quantitative and qualitative extraction;
+- exact product and variant attribution;
+- evidence evaluation and applicability;
+- investigation of unfamiliar categories;
+- transfer of validated principles across categories;
+- learning **without losing demonstrated capabilities**.
+
+Three kinds of learning reinforce one another:
+- **scientific knowledge:** what determines performance and what establishes a result;
+- **research methodology:** how to investigate an unfamiliar category and close its gaps;
+- **operational experience:** what successful and failed readings, ambiguities, corrections and counterexamples teach.
+
+The intended cycle is: scientific learning → better research → better extraction → better evaluation → new experiences →
+improved knowledge. Build it inside the existing modules and private stores: no parallel engines, no product-specific
+rules.
+
+**Uncertainty is a research problem.**
+- An ambiguous observation (identity, test conditions, meaning) is **retained provisionally** when the rights policy
+  permits. It is not silently discarded.
+- Its unresolved question is stated, and it is kept out of rankings.
+- It is investigated when the expected decision value justifies the budget. It is resolved only on evidence and **never
+  promoted to certain product evidence without adequate support**.
+- What each investigation teaches is kept, including failed investigations. Some ambiguities stay unresolved, with a
+  justified stop.
+- **Methodological references** (not mandates for new systems or dependencies):
+  - entity resolution with explicit undecided states (Fellegi–Sunter);
+  - case-based reasoning (Aamodt–Plaza);
+  - value of information;
+  - metamorphic testing (Segura et al.);
+  - counterexample-guided refinement;
+  - provenance-aware truth maintenance (W3C PROV-DM);
+  - continual learning with regression prevention.
+
+**Assessment rule for every phase.** Ask whether the phase advances cumulative, reusable scientific and operational
+learning, not merely whether it fixes a local example or passes a test.
+
+**Experience-based lessons** keep their provenance, applicability, counterexamples, validation maturity and rollback path.
+A lesson stays a hypothesis until held-out evidence supports it.
+
+| Keep apart | Where it is recorded |
+|---|---|
+| Permanent mission (this section) | here; `docs/plans/continuous-scientific-learning-readiness.md` (architecture, error families, roadmap) |
+| Verified existing capabilities | the newest phase or step report; `references/current-state.md`; `docs/architecture/vertical-contract.json` |
+| Current unresolved technical debt | `vertical-contract.json` `openDebt`; the newest step report's open problems (`docs/plans/experience-pilot-step1b.md` §7, §10) |
+| Work authorised for the current phase only | the owner's current brief; never inferred from this section |
+
 ## 1. Read before acting, in this precedence order
 
 1. **The owner's latest explicit instruction, and the repository as it is now.** The newest phase report under

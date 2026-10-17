@@ -1,0 +1,142 @@
+{
+ "schema": "pee.experience-attribution-census.v1",
+ "label": "phase272-untouched",
+ "at": "2026-10-17T12:59:16.046Z",
+ "set": "phase272 untouched gold (SPENT: tuned on)",
+ "items": 163,
+ "builds": {
+  "frozen": {
+   "dist": "/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "c206c9a",
+   "srcDirty": false,
+   "readersSha256": "9ffce02220027a8e39e463ec4d10be17b641c7455cdf8025d1a318de593bcdb1",
+   "readers": 6
+  },
+  "current": {
+   "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "fc7a040",
+   "srcDirty": false,
+   "readersSha256": "e0026e3ba6a44cedefc36866ca8fe994ded7efe186f3ae4e9056af95291565f3",
+   "readers": 6
+  }
+ },
+ "matchingRuleDigest": "82758554d1338a54accb35d18eb7d104e0a2b338ca858a519db6f2701593bc00",
+ "goldSha256": "3364031a889449ad0518a9bd7dc008ddcc3077300e13e3d70c71d1da8c5ab881",
+ "planDigestsAllFrozen": true,
+ "method": "per-item, non-exclusive observation (value + canonical unit; same-subject lead preferred); items with same-value siblings may share one lead",
+ "classes": {
+  "all": {
+   "frozen": {
+    "missing": 93,
+    "correct": 48,
+    "wrong_product": 22
+   },
+   "tuned": {
+    "missing": 93,
+    "correct": 54,
+    "wrong_product": 16
+   },
+   "ambiguity_cf": {
+    "missing": 93,
+    "correct": 50,
+    "wrong_product": 13,
+    "unresolved_preserved": 7
+   }
+  },
+  "televisions": {
+   "frozen": {
+    "correct": 8,
+    "missing": 53,
+    "wrong_product": 14
+   },
+   "tuned": {
+    "wrong_product": 9,
+    "missing": 53,
+    "correct": 13
+   },
+   "ambiguity_cf": {
+    "unresolved_preserved": 7,
+    "missing": 53,
+    "correct": 9,
+    "wrong_product": 6
+   }
+  },
+  "air_purifiers": {
+   "frozen": {
+    "correct": 33,
+    "missing": 23,
+    "wrong_product": 6
+   },
+   "tuned": {
+    "correct": 34,
+    "missing": 23,
+    "wrong_product": 5
+   },
+   "ambiguity_cf": {
+    "correct": 34,
+    "missing": 23,
+    "wrong_product": 5
+   }
+  },
+  "air_fryers": {
+   "frozen": {
+    "missing": 9,
+    "correct": 7
+   },
+   "tuned": {
+    "missing": 9,
+    "correct": 7
+   },
+   "ambiguity_cf": {
+    "missing": 9,
+    "correct": 7
+   }
+  },
+  "dishwashers": {
+   "frozen": {
+    "missing": 8,
+    "wrong_product": 2
+   },
+   "tuned": {
+    "missing": 8,
+    "wrong_product": 2
+   },
+   "ambiguity_cf": {
+    "missing": 8,
+    "wrong_product": 2
+   }
+  },
+  "withSameValueSiblings": {
+   "frozen": {
+    "correct": 8,
+    "missing": 13,
+    "wrong_product": 2
+   },
+   "tuned": {
+    "correct": 8,
+    "missing": 13,
+    "wrong_product": 2
+   },
+   "ambiguity_cf": {
+    "correct": 8,
+    "missing": 13,
+    "wrong_product": 2
+   }
+  }
+ },
+ "changes": {
+  "frozen_to_tuned": {
+   "wrong_product>correct": 8,
+   "correct>wrong_product": 2
+  },
+  "tuned_to_ambiguity_cf": {
+   "wrong_product>unresolved_preserved": 3,
+   "correct>unresolved_preserved": 4
+  },
+  "frozen_to_ambiguity_cf": {
+   "wrong_product>correct": 4,
+   "correct>unresolved_preserved": 2,
+   "wrong_product>unresolved_preserved": 5
+  }
+ }
+}

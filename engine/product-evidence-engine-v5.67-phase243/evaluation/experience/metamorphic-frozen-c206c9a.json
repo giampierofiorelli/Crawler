@@ -1,0 +1,155 @@
+{
+ "schema": "pee.experience-metamorphic.v1",
+ "label": "frozen-c206c9a",
+ "at": "2026-10-17T12:55:58.455Z",
+ "tier": "T1_synthetic",
+ "build": {
+  "dist": "/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "c206c9a",
+  "srcDirty": false,
+  "readersSha256": "9ffce02220027a8e39e463ec4d10be17b641c7455cdf8025d1a318de593bcdb1",
+  "readers": 6
+ },
+ "planDigest": "fdb5881726983e6f554af83f48de4c4f803d0913c9bb23f7539d559405214597",
+ "fixturesSha256": "3b4f7a7bfd48e2f59f33436970ff337423f8a1285a52925cc11eca6dc219c73f",
+ "summary": {
+  "holds": 3,
+  "holds_unresolved": 0,
+  "violated": 3,
+  "precondition_not_met": 0
+ },
+ "verdicts": [
+  {
+   "relation": "MR1_table_reordering",
+   "variant": "body rows reversed",
+   "status": "holds",
+   "checked": [
+    {
+     "value": 250,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    },
+    {
+     "value": 9.1,
+     "unit": "ms",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    },
+    {
+     "value": 690,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    }
+   ],
+   "note": "expected: every named table value keeps its product"
+  },
+  {
+   "relation": "MR1_table_reordering",
+   "variant": "product columns swapped",
+   "status": "violated",
+   "checked": [
+    {
+     "value": 250,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "missing"
+    },
+    {
+     "value": 9.1,
+     "unit": "ms",
+     "source": "Zentra Z10",
+     "followUp": "missing"
+    },
+    {
+     "value": 690,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "missing"
+    }
+   ],
+   "note": "expected: every named table value follows its column product"
+  },
+  {
+   "relation": "MR2_irrelevant_context",
+   "variant": "unrelated product paragraph after the results",
+   "status": "holds",
+   "checked": [
+    {
+     "value": 520,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    },
+    {
+     "value": 300,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    }
+   ],
+   "note": "expected: unchanged"
+  },
+  {
+   "relation": "MR2_irrelevant_context",
+   "variant": "unrelated related-link paragraph before the results",
+   "status": "holds",
+   "checked": [
+    {
+     "value": 520,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    },
+    {
+     "value": 300,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Zentra Z10"
+    }
+   ],
+   "note": "expected: unchanged"
+  },
+  {
+   "relation": "MR3_named_over_page_product",
+   "variant": "page main product changed (Zentra Z10 to Brixel B30)",
+   "status": "violated",
+   "checked": [
+    {
+     "value": 520,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Brixel B30"
+    },
+    {
+     "value": 1180,
+     "unit": "nits",
+     "source": "Zentra Z10",
+     "followUp": "Brixel B30"
+    }
+   ],
+   "note": "expected: the Korvo K20 values keep their subject"
+  },
+  {
+   "relation": "MR3_named_over_page_product",
+   "variant": "oracle: named tested product on the source input",
+   "status": "violated",
+   "checked": [
+    {
+     "value": 520,
+     "unit": "nits",
+     "source": "Korvo K20",
+     "followUp": "Zentra Z10"
+    },
+    {
+     "value": 1180,
+     "unit": "nits",
+     "source": "Korvo K20",
+     "followUp": "Zentra Z10"
+    }
+   ],
+   "note": "expected: subject Korvo K20; a null subject is unresolved"
+  }
+ ]
+}

@@ -1,0 +1,354 @@
+{
+ "schema": "pee.experience-case-index.v1",
+ "set": "step1b-attribution-extension",
+ "builtAt": "2026-10-17T12:54:32.224Z",
+ "frozenHistoricalBuild": "c206c9a",
+ "privateCasesSha256": "049e3aab47680fa1429f99eb045cb8de039bb8cde6b06ff2f2321fe5c674097b",
+ "goldSha256": "3364031a889449ad0518a9bd7dc008ddcc3077300e13e3d70c71d1da8c5ab881",
+ "cases": [
+  {
+   "id": "EX-19",
+   "kind": "quantitative_value",
+   "family": "S_attribution_success",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_lg_b6",
+    "docSha256": "a32e73e0bb33ab91b87dfb2e3a8241fb079de14275b5f7690512a76101bdc9c5",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q26",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "correct",
+    "response": null,
+    "blockSha256": "20b0e8698842cc1822f94c137d2a5f1aa5d33b35b75da382993603b1807e41c8"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products"
+   ],
+   "cause": {
+    "candidate": "correct by page-product default; the tuned mention list activates the clause rule, which binds the value to the nearest preceding named product (a comparison object of the sentence)",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "In \"X has less Y (v) than Z\", the value belongs to the sentence subject X, not to the nearest named product.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-20"
+    ]
+   },
+   "supports": [
+    "EX-05"
+   ],
+   "counterexamples": [
+    "EX-20"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "correct"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-20",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_lg_b6",
+    "docSha256": "a32e73e0bb33ab91b87dfb2e3a8241fb079de14275b5f7690512a76101bdc9c5",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q29",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "20b0e8698842cc1822f94c137d2a5f1aa5d33b35b75da382993603b1807e41c8"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "wrong by page-product default; the tuned clause rule binds the value to the product named just before it",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "A value in parentheses directly after a product name belongs to that product.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-19"
+    ]
+   },
+   "supports": [
+    "EX-21"
+   ],
+   "counterexamples": [
+    "EX-19"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-21",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_lg_b6",
+    "docSha256": "a32e73e0bb33ab91b87dfb2e3a8241fb079de14275b5f7690512a76101bdc9c5",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q22",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "d2ffb1fb4b5c87a66c9cecde8c5094f68ddb0f209f60207de385626f12ade2d6"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "as EX-20: parenthetical value directly after a named product; corrected by the tuned rule; an all-ambiguous policy would leave it unresolved",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "Counterexample to \"several products in the sentence = unresolved\": adjacency can still identify the subject.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": [
+     "see EX-05"
+    ]
+   },
+   "supports": [
+    "EX-20"
+   ],
+   "counterexamples": [
+    "EX-05"
+   ],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-22",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "televisions",
+   "source": {
+    "host": "www.tomsguide.com",
+    "docTag": "u_tv_tg_samsung_s85f",
+    "docSha256": "7e9680febe690f508db9ad03b67518e40c2f114059628fc56d5559dbc2b8f093",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "tv-q38",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "ac178f0efbde1d6f9f3e6df924e633031067129817ee1cd7d8a49b76fe759579"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "another page and model family: parenthetical value after a named rival; corrected by the tuned rule",
+    "status": "confirmed",
+    "evidence": "Phase272 REPORT.md §5/§7 audit and this case's re-observation"
+   },
+   "lesson": {
+    "hypothesis": "Same as EX-20 on a second page.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [
+    "EX-20",
+    "EX-21"
+   ],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-23",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "air_purifiers",
+   "source": {
+    "host": "housefresh.com",
+    "docTag": "u_ap_hf_xiaomi_4pro",
+    "docSha256": "eb262f6c48de20ddb9f88faa6f7c509aad91b3b9c3cccb9899abe164baf473a4",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "ap-q21",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "found",
+    "subjectOutcome": "incorrect_match",
+    "response": null,
+    "blockSha256": "139e696cec8e06bdaa1d28c2bb30e6ce1c899a9fdd5187c64b025c5716efbe30"
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "corrected by the tuned rule, but the bound subject string is a truncated name (the capitalised word before the code is taken as the brand); the scorer accepts it through the shared model code",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "A model-code match is not an identity: the stored subject name must be a valid product name, or stay unresolved.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": true,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": null
+   }
+  },
+  {
+   "id": "EX-24",
+   "kind": "quantitative_value",
+   "family": "F1_identity_by_default",
+   "category": "air_purifiers",
+   "source": {
+    "host": "housefresh.com",
+    "docTag": "u_ap_hf_xiaomi_4pro",
+    "docSha256": "eb262f6c48de20ddb9f88faa6f7c509aad91b3b9c3cccb9899abe164baf473a4",
+    "evaluation": "phase272",
+    "run": "evaluation/phase272/ab-untouched-firstrun.json",
+    "goldId": "ap-q26",
+    "historicalArm": "B",
+    "historicalBuild": "c206c9a"
+   },
+   "historical": {
+    "status": "absent",
+    "subjectOutcome": null,
+    "response": null,
+    "blockSha256": null
+   },
+   "reference": {
+    "expected": "found_with_accepted_subject",
+    "basis": "independent_gold",
+    "independence": "untouched gold by an independent Claude annotator (frozen before any run; hash in evaluation/phase272/gold-untouched-freeze.json); not author-independent of the project"
+   },
+   "features": [
+    "document_names_several_products",
+    "subject_is_not_page_product"
+   ],
+   "cause": {
+    "candidate": "\"both with ... 174 cfm\" names two products; the frozen build binds the page product, the tuned rule the nearest code-bearing product, which is a third, unrelated product; the committed \"absent\" comes from the scorer counting identical (value, unit, subject) leads once",
+    "status": "candidate",
+    "evidence": "Phase272 REPORT.md audit; not yet isolated by a controlled change"
+   },
+   "lesson": {
+    "hypothesis": "A value stated for several products at once (\"both\") needs a multi-subject or unresolved attribution, never the nearest name.",
+    "status": "hypothesis",
+    "applicability": "documents and requests of the kind described by this case's features; not validated beyond the listed cases",
+    "exceptions": []
+   },
+   "supports": [],
+   "counterexamples": [],
+   "maturity": "T2_untouched_first_run",
+   "historicalCheck": {
+    "reobservedOn": "c206c9a",
+    "reproduced": false,
+    "reobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match"
+    },
+    "note": "the committed run and a single-case re-observation on the frozen build disagree; the committed state is kept unchanged"
+   }
+  }
+ ]
+}
