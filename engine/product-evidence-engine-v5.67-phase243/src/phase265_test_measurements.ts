@@ -19,7 +19,8 @@
 import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_transient_test_probe.js';
 import {comparativeResults270,type ComparativeResult270,type ApplianceClass270} from './phase270_comparative_results.js';
 import {probeTransientTestContent225,textBlocks225,type ProductMention272} from './phase225_transient_test_probe.js';
-import type {ExtractionPlan272} from './phase272_extraction_plan.js';
+import {TEST_CONTEXT272,type ExtractionPlan272} from './phase272_extraction_plan.js';
+import {structuredTableLeads1D2,type DocumentSemantics1D2} from './document_semantics.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
@@ -104,7 +105,11 @@ export function planPageSubject272<T extends {name:string;model:string|null}>(le
 /** Run the existing Phase225 probe (which runs Phase226/227) on transient bytes. Nothing of the body is returned.
  * Phase272: `plan` (the category's extraction plan, compiled from the store before reading) and `exploratory` are passed
  * to the same readers; without them the behaviour is exactly the Phase271 one. */
-export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null,opts:{category?:string|null;plan?:ExtractionPlan272;exploratory?:boolean}={}):TestLeadsInput265{
+export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null,opts:{category?:string|null;plan?:ExtractionPlan272;exploratory?:boolean;
+ /** Step 1D-A2 (with a plan only; evaluation or shadow): the page's semantic-document contract. Its test-table cells are
+  * read through the Phase245 grid with their own labels. Such leads carry methodCue 'structured_table_measurement_term',
+  * which the persistence screen (screenTestLead265) does not admit, so nothing they find reaches the store. */
+ semantics?:DocumentSemantics1D2}={}):TestLeadsInput265{
  let lead=pageProductLead265(x);
  const mentions=opts.plan?documentMentions272(html):[];
  // Phase272 (plan only): a headline that is a sentence ("I tested the LG C6 and LG C5 side-by-side") is not a product name:
@@ -117,6 +122,10 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  if(opts.plan){const cells=comparisonCells272(html);if(cells.size){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
   probe.candidates=probe.candidates.map(c=>{const cell=cells.get((deep[c.blockIndex]??'').trim());if(cell===undefined)return c;
    return cell?{...c,subject:{name:cell.name,model:null,sku:null},subjectAssignment:'clause_named_model_unverified' as const}:{...c,subject:null,subjectAssignment:'multiple_models_unresolved' as const};});}}
+ if(opts.plan&&opts.semantics){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
+  const extra=structuredTableLeads1D2(opts.semantics,opts.plan,{sourceUrl:url,documentSha256:sha256,blocks:deep,documentReportsTesting:deep.some(b=>TEST_CONTEXT272.test(b))});
+  const seen=(c:TestCandidate225)=>probe.candidates.some(o=>o.blockIndex===c.blockIndex&&o.value===c.value&&o.unit.toLowerCase()===c.unit);
+  probe.candidates=[...probe.candidates,...extra.filter(c=>!seen(c))];}
  return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe,...(comparative.length?{comparative270:comparative}:{})};
 }
 

@@ -35,6 +35,9 @@ export interface Context1C {
  cells:ReadonlyMap<string,{name:string}|null>;
  /** Step 1D-A (optional): section scope from a document inventory's heading hierarchy; replaces the nearest-heading rule. */
  section?:(blockIndex:number)=>{subject:{name:string}|null;competing:number};
+ /** Step 1D-A2 (optional): the product of a table cell from its own row/column header through the Phase245 grid
+  * (src/document_semantics.ts cellProducts1D2); undefined when the block is not such a cell. Used before `cells`. */
+ cellOf?:(blockIndex:number)=>{subject:{name:string}|null}|undefined;
 }
 
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
@@ -125,7 +128,9 @@ export function attributeLead1C(l:Lead1C,ctx:Context1C):Decision1C{
  const onPage=(m:Mention1C)=>!!ctx.page&&new RegExp('\\b'+esc(m.model)+'\\b').test(ctx.page.name);
  if(at===null)return !ctx.mentions.some(m=>!onPage(m))&&ctx.page?ok(ctx.page,'R3a_document_main_product',null)
   :un('R0_unlocated','value not located in its block','a locatable source sentence or cell',l.subject?[l.subject.name]:[]);
- // R1a: comparison-table column.
+ // R1a: comparison-table column (Step 1D-A2: by grid position when the caller supplies it, else by cell text).
+ const grid=ctx.cellOf?.(l.blockIndex);
+ if(grid!==undefined)return grid.subject?ok(grid.subject,'R1a_table_column',null):un('R1a_table_cell_ambiguous','the cell header does not name one document product','a product named by the row or column header',[]);
  const cell=ctx.cells.get(block.trim());
  if(cell!==undefined)return cell?ok(cell,'R1a_table_column',null):un('R1a_table_cell_ambiguous','the cell text occurs in several product columns','the column of this cell',[]);
  const sents=block.split(SENT);let off=0,si=0;

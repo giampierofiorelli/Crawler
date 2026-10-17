@@ -20,6 +20,7 @@
 import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
+import {homedir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {restrictedHttpsTransport as T,RESEARCH_AGENT,PAGE_MAX_BYTES} from '../dist/src/approved_web_reader.js';
 import {publicRobotsDecision223} from '../dist/src/phase223_public_metadata_access.js';
@@ -194,6 +195,14 @@ switch(cmd){
   const {testLeadsFromHtml265,testDocumentSubject268}=await import('../dist/src/phase265_test_measurements.js');
   // Phase270: qualitative outcome codes travel with the observation; the store keeps them only under the pee249 v2 amendment.
   const {qualitativeObservations269}=await import('../dist/src/phase269_qualitative_observations.js');
+  // Step 1D-A2 (--shadow-semantics, off by default): the same transient bytes are also read through the semantic-document
+  // contract with the category's extraction plan (compiled read-only from the live store). Only counts go to the yield;
+  // the observation that is ingested is unchanged, and table-reader leads are checked against the persistence screen.
+  let SHADOW=null;
+  if(F['shadow-semantics']){const st=await import('../dist/src/phase246_knowledge_store.js');const reg=await import('../dist/src/phase248_category_registry.js');
+   const sem=await import('../dist/src/document_semantics.js');const pl=await import('../dist/src/phase272_extraction_plan.js');const tl=await import('../dist/src/phase265_test_measurements.js');
+   const live=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
+   SHADOW={sem,pl,tl,reg,store:new st.KnowledgeStore246(live)};}
   const out=[];
   for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
   for(const p of S.pages){
@@ -213,7 +222,14 @@ switch(cmd){
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
    out.at(-1).yield.testLeads=out.at(-1).observation.testLeads.probe.candidates.length;
+   if(SHADOW&&p.role!=='method_reference'&&SHADOW.reg.CATEGORY_REGISTRY250.some(e=>e.id===p.category)){const html=b.toString('utf8'),u=p.finalUrl??p.url;
+    const d=SHADOW.sem.readDocumentSemantics1D2(html,u);const plan=SHADOW.pl.compileExtractionPlan272(SHADOW.store,p.category,SHADOW.reg.CATEGORY_REGISTRY250.find(e=>e.id===p.category)?.aliases??[],[]);
+    const c=SHADOW.tl.testLeadsFromHtml265(html,u,p.sha256,x,{category:p.category,plan,semantics:d}).probe.candidates.filter(k=>k.methodCue==='structured_table_measurement_term');
+    out.at(-1).yield.shadowSemantics={pageType:d.pageType.kind,principalFromStructure:!!d.principal.name,conflicts:d.principal.conflicts.length,tables:d.tables.length,
+     testTables:d.tables.filter(t=>t.context==='test').length,alignedBlocks:d.alignment.aligned,blocks:d.alignment.blocks,tableReaderLeads:c.length,
+     persistenceAdmitted:c.filter(k=>SHADOW.tl.screenTestLead265(k,{url:u,sha256:p.sha256}).ok).length,ms:d.stats.milliseconds};}
   }
+  if(SHADOW)SHADOW.store.close();
   writeFileSync(resolve(F.out),JSON.stringify(out));
   for(const o of out)if(o.yield)console.log(JSON.stringify(o.yield));
   break;}

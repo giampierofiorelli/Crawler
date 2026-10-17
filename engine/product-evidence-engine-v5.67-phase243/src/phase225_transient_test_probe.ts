@@ -89,7 +89,10 @@ export interface TestCandidate225 {
  methodCue:'first_person_test_statement'|'test_section_with_method_cue'|'bounded_table_result_with_local_method'|'energy_result_with_document_protocol'|
   /** Phase272: accepted because the category's extraction plan names this unit's dimension and a taught term in the value's
    * own sentence (or its table label), in a document that reports first-hand testing. A plan is a reading prior, not evidence. */
-  'plan_guided_measurement_term';
+  'plan_guided_measurement_term'|
+  /** Step 1D-A2 (plan + document semantics only): a test-table cell read through the Phase245 grid, its unit and taught
+   * term taken from the cell and its own row/column labels (src/document_semantics.ts). Not produced by default. */
+  'structured_table_measurement_term';
  subject:{name:string;model:string|null;sku:string|null}|null;
  subjectAssignment:'page_context_unverified'|'multiple_models_unresolved'|'not_identified'|'table_row_declared_model_unverified'|
   /** Phase272 (plan only): the value's own clause names one of the document's products. */

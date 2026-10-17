@@ -2,14 +2,14 @@
 /** Continuous-learning Step 1B: run the three metamorphic attribution relations (src/experience_metamorphic.ts) against one
  * extractor build, on FICTIONAL fixtures only (no network, no live store: the television plan is compiled from that build's
  * own teaching modules in a temporary store). Results are synthetic (tier T1) and are never independent evidence.
- * Usage: node scripts/experience-metamorphic.mjs LABEL [--build DIST] [--policy constrained_candidate_1c|candidate_1c_inventory]
+ * Usage: node scripts/experience-metamorphic.mjs LABEL [--build DIST] [--policy constrained_candidate_1c|candidate_1c_inventory|candidate_1c_semantics_tables]
  *   (default build: this checkout's dist/src; --policy applies the Step 1C evaluation-only attribution candidate)
  * Writes evaluation/experience/metamorphic-LABEL.json; never overwrites. */
 import {writeFileSync,existsSync,mkdtempSync} from 'node:fs';import {join,resolve} from 'node:path';import {tmpdir} from 'node:os';import {createHash} from 'node:crypto';
 import {buildIdentity,candidate1C} from './experience-observe.mjs';
 const A=process.argv.slice(2);const label=A[0];if(!/^[a-z0-9-]{3,40}$/.test(label??''))throw Error('usage: LABEL [--build DIST]');
 const i=A.indexOf('--build');const D=resolve(i>0?A[i+1]:'dist/src')+'/';const pi=A.indexOf('--policy');const POLICY=pi>0?A[pi+1]:null;
-if(POLICY&&!['constrained_candidate_1c','candidate_1c_inventory'].includes(POLICY))throw Error('unknown policy '+POLICY);
+if(POLICY&&!['constrained_candidate_1c','candidate_1c_inventory','candidate_1c_semantics_tables'].includes(POLICY))throw Error('unknown policy '+POLICY);
 const OUT=`evaluation/experience/metamorphic-${label}.json`;if(existsSync(OUT))throw Error(OUT+' exists: results are never overwritten');
 const {runMetamorphic,MR_FIXTURES}=await import(resolve('dist/src/experience_metamorphic.js'));
 const [st,ret,t252,t271,t272,pl,sp,tl,bk]=await Promise.all(['phase246_knowledge_store.js','phase249_retention_policy.js','phase252_category_teaching.js','phase271_category_teaching.js',
@@ -23,7 +23,10 @@ const sha=x=>createHash('sha256').update(x).digest('hex');const url='https://www
 // The harness is synchronous: with --policy, every fixture's leads are re-decided by the candidate first.
 const {MR_FIXTURES:FX}=await import(resolve('dist/src/experience_metamorphic.js'));const pre=new Map();
 for(const html of Object.values(FX)){const x=tl.testDocumentSubject268(sp.extractSpecifications245(html,url),'independent_original_test');
- let c=tl.testLeadsFromHtml265(html,url,sha(html),x,{category:'televisions',plan}).probe.candidates;if(POLICY)c=await candidate1C({tl,blocks:bk},html,x,c,POLICY==='candidate_1c_inventory'?{inventory:true,nouns:['tv','television'],host:'www.lab.test'}:{});
+ // Step 1D-A2: candidate_1c_semantics_tables reads the fixture through the semantic-document contract (arm C).
+ const sem=POLICY==='candidate_1c_semantics_tables'?(await import(D+'document_semantics.js')).readDocumentSemantics1D2(html,url):null;
+ let c=tl.testLeadsFromHtml265(html,url,sha(html),x,{category:'televisions',plan,...(sem?{semantics:sem}:{})}).probe.candidates;
+ if(POLICY)c=await candidate1C({tl,blocks:bk},html,x,c,POLICY==='candidate_1c_inventory'?{inventory:true,nouns:['tv','television'],host:'www.lab.test'}:sem?{semantics:sem,nouns:['tv','television'],host:'www.lab.test'}:{});
  pre.set(html,c.map(c=>({value:c.value,unit:String(c.unit).toLowerCase(),subject:c.subject?.name??null})));}
 const extract=html=>{if(!pre.has(html))throw Error('fixture not prepared');return pre.get(html);};
 const verdicts=runMetamorphic(extract);

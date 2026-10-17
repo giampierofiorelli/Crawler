@@ -87,11 +87,34 @@ const isSuffix=(short:string[],long:string[])=>short.length<long.length&&lower(s
 const same=(a:string[],b:string[])=>a.length===b.length&&lower(a).every((t,i)=>t===lower(b)[i]);
 
 export function buildInventory1D(input:{blocks:readonly string[];tags:readonly string[];title:string|null;categoryNouns:readonly string[];
- /** The page host (document metadata): the publisher's own name is not a product. */publisherHost?:string|null}):Inventory1D{
+ /** The page host (document metadata): the publisher's own name is not a product. */publisherHost?:string|null;
+ /** Step 1D-A2 (optional): names the page STRUCTURE states (JSON-LD Product / reviewed item, table product headers), with
+  * provenance, and reader blocks in boilerplate regions (navigation, footers, item listings) that are not read. A structured
+  * name becomes a product form; its exact occurrences and its word-suffixes of two or more tokens (not made only of
+  * category words) are mentions. Code-less names ("Ninja Crispi") are thus found only when the structure states them. */
+ structured?:{names:readonly {name:string;source:string;blockIndex:number|null}[];excludedBlocks?:ReadonlySet<number>}}):Inventory1D{
  const publisher=(input.publisherHost??'').replace(/^www\./,'').split('.')[0].toLowerCase();
  const {blocks,tags}=input;const h1=tags.findIndex(t=>t==='h1');const start=h1>=0?h1:0;
  const nouns=input.categoryNouns.map(n=>n.toLowerCase());const stopNouns=new Set([...nouns.flatMap(n=>n.split(/\s+/)),'review','tested','test','vs']);
- const all:Span[]=[];for(let i=start;i<blocks.length;i++)all.push(...spans(blocks[i],i,regionOf(tags[i]??'p'),stopNouns));
+ const skip=input.structured?.excludedBlocks;
+ const all:Span[]=[];for(let i=start;i<blocks.length;i++)if(!skip?.has(i))all.push(...spans(blocks[i],i,regionOf(tags[i]??'p'),stopNouns));
+ // Step 1D-A2: structured names as forms, then their observed occurrences in the read blocks.
+ const structuredSource=new Map<string,string>();
+ for(const s of input.structured?.names??[]){const tk=s.name.replace(/\s*\(.*$/,'').replace(/[’']s\b/g,'').split(/\s+/).map(t=>t.replace(/[,;:]+$/,'')).filter(Boolean);
+  if(tk.length<2||tk.length>8||!/^[A-Z0-9]/.test(tk[0])||tk.every(t=>stopNouns.has(t.toLowerCase())))continue;const k=lower(tk).join(' ');
+  if(!structuredSource.has(k))structuredSource.set(k,s.source);
+  if(s.source==='linked_name'){/* a link is a lead, not a location of product evidence: only its text occurrences count */}
+  else if(s.blockIndex!==null&&s.blockIndex>=start&&!skip?.has(s.blockIndex)&&!all.some(sp=>sp.at.blockIndex===s.blockIndex&&same(sp.tokens,tk)))
+   all.push({tokens:tk,at:{blockIndex:s.blockIndex,offset:Math.max(0,(blocks[s.blockIndex]??'').indexOf(tk[0])),region:'table_header'}});
+  // A metadata name (JSON-LD) has no reader block: region 'title'. A header cell outside the reader blocks (th) keeps 'table_header'.
+  else if(s.blockIndex===null&&!all.some(sp=>sp.at.blockIndex===-1&&same(sp.tokens,tk)))all.push({tokens:tk,at:{blockIndex:-1,offset:0,region:s.source==='table_product_header'?'table_header':'title'}});
+  // Exact and word-suffix occurrences (two tokens or more, not only category words) in the read blocks.
+  for(let n=tk.length;n>=(s.source==='linked_name'?tk.length:2);n--){const suf=tk.slice(tk.length-n);if(suf.every(t=>stopNouns.has(t.toLowerCase())||!/^[A-Z0-9]/.test(t)))continue;
+   const re=new RegExp('(?<![\\w])'+suf.map(esc).join('\\s+')+'(?![\\w])','g');
+   for(let i=start;i<blocks.length;i++){if(skip?.has(i))continue;for(const m of blocks[i].matchAll(re)){
+    if(all.some(sp=>sp.at.blockIndex===i&&m.index!>=sp.at.offset-1&&m.index!<sp.at.offset+sp.tokens.join(' ').length))continue;
+    all.push({tokens:m[0].split(/\s+/),at:{blockIndex:i,offset:m.index!,region:regionOf(tags[i]??'p')}});}}}}
+ all.sort((a,b)=>a.at.blockIndex-b.at.blockIndex||a.at.offset-b.at.offset);
  const after=(sp:Span,n:number)=>{const b=blocks[sp.at.blockIndex]??'';return b.slice(sp.at.offset).split(/\s+/).slice(sp.tokens.length,sp.tokens.length+n).join(' ').toLowerCase().replace(/[^a-z\s-]/g,'');};
  // Full forms: observed forms that are not a word-suffix of a longer observed form.
  const forms:string[][]=[];for(const sp of all)if(!forms.some(f=>same(f,sp.tokens)))forms.push(sp.tokens);
@@ -107,6 +130,7 @@ export function buildInventory1D(input:{blocks:readonly string[];tags:readonly s
   // that merely contains a standard term ("PuroAir HEPA 14 240") is not a standard.
   else if(STANDARD_ACRONYM.test(first.replace(/\+$/,''))||(f.length>1&&!modelLike1D(first)&&STANDARD_ACRONYM.test(f[1].replace(/\+$/,'')))||(f.length===1&&TECH_CODE.test(first))){type='standard';reason='technical standard or grade acronym';}
   else if(occ.some(sp=>after(sp,4).split(/\s+/).some(w=>INSTRUMENT_NOUN.test(w)))){type='instrument';reason='followed by a measuring-instrument noun';}
+  else if(structuredSource.has(key(f))&&structuredSource.get(key(f))!=='linked_name'){type='product';reason='named by the page structure ('+structuredSource.get(key(f))+')';}
   else if(occ.some(sp=>sp.at.region==='heading'||sp.at.region==='table_header')&&(f.length>1||/\d/.test(first))){type='product';reason='named in a heading or table header';}
   else if(occ.some(sp=>nouns.some(n=>after(sp,4).includes(n)))){type='product';reason='followed by a category noun';}
   else if(occ.length>=2&&(f.length>1||/\d/.test(first))){type='product';reason='recurs in the document';}
@@ -118,14 +142,23 @@ export function buildInventory1D(input:{blocks:readonly string[];tags:readonly s
  // least three times as frequent (then the longer one is a descriptor-extended or variant mention and is the ambiguous one).
  // A full form observed only in the h1 whose model-like tokens equal those of a form used in the body ("AI B6" in a title,
  // "LG B6" in the text) is a descriptor-extended title form of the body form, not a separate product.
- const h1Only=(f:string[])=>all.filter(sp=>same(sp.tokens,f)).every(sp=>tags[sp.at.blockIndex]==='h1');
+ // Step 1D-A2: a name seen only in page metadata (JSON-LD) is title-like and treated as an h1-only form (same model
+ // tokens as exactly one body form). Table-header names are exact cell text and only take the descriptor rule below.
+ const structuralOnly=(f:string[])=>structuredSource.has(key(f))&&all.filter(sp=>same(sp.tokens,f)).every(sp=>(sp.at.blockIndex===-1&&sp.at.region==='title')||tags[sp.at.blockIndex]==='h1');
+ const h1Only=(f:string[])=>all.filter(sp=>same(sp.tokens,f)).every(sp=>tags[sp.at.blockIndex]==='h1')||structuralOnly(f);
  const modelSet=(f:string[])=>lower(f.filter(modelLike1D)).sort().join(' ');
  const titleVariant=new Map<string,string[]>();
- for(const a of full)if(h1Only(a)&&modelSet(a)){const body=full.filter(b=>b!==a&&!h1Only(b)&&modelSet(b)===modelSet(a));if(body.length===1)titleVariant.set(key(a),body[0]);}
  const isPrefix=(a:string[],b:string[])=>a.length<b.length&&lower(a).every((t,i)=>t===lower(b)[i]);
+ for(const a of full)if(h1Only(a)&&modelSet(a)){const body=full.filter(b=>b!==a&&!h1Only(b)&&modelSet(b)===modelSet(a));if(body.length===1)titleVariant.set(key(a),body[0]);}
+ // Descriptor words: only words of the category's own nouns in the registry ("Dishwasher", "OLED" from "oled tv"); never
+ // numbers, sizes or edition words ("XL", "Series", "Pro", "Mini"), which may name a different product.
+ const descriptor=(t:string)=>stopNouns.has(t.toLowerCase());
+ // Step 1D-A2: a structured name that is exactly one document form plus trailing descriptor words without model tokens
+ // ("Samsung S85F OLED", "... Dishwasher") is that form; a different or additional model token never qualifies.
+ for(const a of full)if(!titleVariant.has(key(a))&&structuredSource.has(key(a))&&modelSet(a)){const body=full.filter(b=>b!==a&&isPrefix(b,a)&&modelSet(b)===modelSet(a)&&a.slice(b.length).every(descriptor));if(body.length===1)titleVariant.set(key(a),body[0]);}
  const count=(f:string[])=>all.filter(sp=>same(sp.tokens,f)||isSuffix(sp.tokens,f)).length;
  const prefixAmbiguous=new Map<string,string>();
- for(const a of full)for(const b of full)if(isPrefix(a,b)){const ca=count(a),cb=count(b);
+ for(const a of full)for(const b of full)if(isPrefix(a,b)&&!(input.structured&&titleVariant.has(key(b))&&same(titleVariant.get(key(b))!,a))){const ca=count(a),cb=count(b);
   if(ca>=3*cb)prefixAmbiguous.set(key(b),'longer form of '+a.join(' ')+' (descriptor or variant not established)');
   else prefixAmbiguous.set(key(a),'word-prefix of '+b.join(' ')+' (family or variant not established)');}
  // Mentions: each observed span, linked to the unique full form it equals or is a word-suffix of.
@@ -156,7 +189,10 @@ export function buildInventory1D(input:{blocks:readonly string[];tags:readonly s
   if(!top)return {entityId:null,competing:named.filter(n=>!n.comparative).reduce((a,n)=>a+n.ids.length,0)};
   // A deeper non-comparative heading naming another single product, or several products, competes with the section's product.
   return single.some(n=>n.ids[0]!==top.ids[0])||named.some(n=>!n.comparative&&n.ids.length>1)?{entityId:null,competing:2}:{entityId:top.ids[0],competing:0};};
- return {entities,mentions,articleStart:start,section};
+ // Step 1D-A2 (structured input only): a title or structural form linked to a body form is that entity's alias, not a
+ // separate entity (without structured input the Step 1D-A output is unchanged).
+ const kept=input.structured?entities.filter(e=>!titleVariant.has(key(e.canonical.split(' ')))):entities;
+ return {entities:kept,mentions,articleStart:start,section};
 }
 /** Surfaces for attribution: every observed form of each product entity, keyed by the entity and named by its canonical
  * form. Instruments, standards, unknown single mentions and ambiguous forms are left out. */

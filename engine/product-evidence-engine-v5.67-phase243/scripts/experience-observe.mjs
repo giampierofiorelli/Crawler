@@ -16,7 +16,9 @@ export const sameProduct=(a,b)=>{const x=core(a),y=core(b);if(!x.size||!y.size)r
 export const MATCHING_RULE_DIGEST=sha('core-jaccard>=0.6|shared-digit-token|'+[...GENERIC].sort().join(','));
 /** Step 1B: which build produced an observation. The reader files' content hash is the deciding identity (a commit can be
  * dirty, a dist can be stale); commit and dirty flag are recorded alongside. */
-const READERS=['phase225_transient_test_probe.js','phase245_spec_extraction.js','phase265_test_measurements.js','phase269_qualitative_observations.js','phase272_extraction_plan.js','phase253_request_advice.js'];
+const READERS=['phase225_transient_test_probe.js','phase245_spec_extraction.js','phase265_test_measurements.js','phase269_qualitative_observations.js','phase272_extraction_plan.js','phase253_request_advice.js',
+ // Step 1D-A2: readers that run inside testLeadsFromHtml265 (missing before) and the semantic-document contract.
+ 'phase226_transient_test_tables.js','phase270_comparative_results.js','document_semantics.js'];
 export function buildIdentity(dist){const d=resolve(dist);const git=(...a)=>{try{return execFileSync('git',['-C',d,...a],{encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim();}catch{return null;}};
  const readers=READERS.filter(f=>existsSync(join(d,f))).map(f=>f+':'+sha(readFileSync(join(d,f))));
  return {dist:d,commit:git('rev-parse','--short','HEAD'),srcDirty:git('status','--porcelain','--',...READERS.map(f=>'../../src/'+f.replace(/\.js$/,'.ts')))?true:false,readersSha256:sha(readers.join('\n')),readers:readers.length};}
@@ -34,8 +36,25 @@ export async function candidate1C(M,html,x,cands,opt={}){
   const inv=I.buildInventory1D({blocks:deep,tags,title:x?.mainProduct?.name??null,categoryNouns:opt.nouns??[],publisherHost:opt.host??null});
   mentions=I.attributionMentions1D(inv);const nameOf=id=>inv.entities.find(e=>e.id===id)?.canonical;
   section=bi=>{const r=inv.section(bi);return {subject:r.entityId?{name:nameOf(r.entityId)}:null,competing:r.competing};};}
- const page0=x?.mainProduct?.name&&!x.mainProduct.ambiguous?{name:x.mainProduct.name,model:null}:null;const page=M.tl.planPageSubject272(page0,raw);
- const ctx={blocks:deep,tags,mentions,page:C.pageIdentity1C(page?{name:page.name}:null,mentions),cells:M.tl.comparisonCells272(html),...(section?{section}:{})};
+ // Step 1D-A2 (evaluation only): the semantic-document contract (src/document_semantics.ts) feeds the same inventory with the
+ // names the page structure states and the boilerplate blocks it marks, gives table cells their header product by grid
+ // position, and replaces the headline-derived page product with the structural principal (none on comparison and roundup
+ // pages). `opt.off` disables single components for ablation: names_json_ld, names_tables, names_links, exclusion, cells, principal.
+ let cellOf,principal;
+ if(opt.semantics){const I=await import(resolve('dist/src/experience_entity_inventory.js'));const off=new Set(opt.off??[]);const sem=opt.semantics;
+  const allow=n=>n.source.startsWith('json_ld')?!off.has('names_json_ld'):n.source==='table_product_header'?!off.has('names_tables'):n.source==='linked_name'?!off.has('names_links'):false;
+  const excluded=off.has('exclusion')?new Set():new Set(sem.blocks.map((b,i)=>b.hardExcluded?i:-1).filter(i=>i>=0));
+  const title=off.has('principal')?x?.mainProduct?.name??null:sem.principal.name;
+  const inv=I.buildInventory1D({blocks:deep,tags,title,categoryNouns:opt.nouns??[],publisherHost:opt.host??null,structured:{names:sem.names.filter(allow),excludedBlocks:excluded}});
+  mentions=I.attributionMentions1D(inv);const nameOf=id=>inv.entities.find(e=>e.id===id)?.canonical;
+  section=bi=>{const r=inv.section(bi);return {subject:r.entityId?{name:nameOf(r.entityId)}:null,competing:r.competing};};
+  if(!off.has('cells')){const D=await import(resolve('dist/src/document_semantics.js'));
+   const resolveName=t=>{const k=String(t).trim().toLowerCase();const m=inv.mentions.find(m=>m.entityId&&(m.state==='explicit_identity'||m.state==='contextual_alias')&&m.surface.toLowerCase()===k);
+    const e=m?inv.entities.find(e=>e.id===m.entityId):inv.entities.find(e=>e.type==='product'&&e.canonical.toLowerCase()===k);return e&&e.type==='product'?e.canonical:null;};
+   const cp=D.cellProducts1D2(sem,resolveName);cellOf=bi=>{const c=cp.get(bi);return c?{subject:c.product?{name:c.product}:null}:undefined;};}
+  if(!off.has('principal'))principal={page:sem.principal.name?{name:sem.principal.name,model:null}:null};}
+ const page0=principal?principal.page:x?.mainProduct?.name&&!x.mainProduct.ambiguous?{name:x.mainProduct.name,model:null}:null;const page=principal?page0:M.tl.planPageSubject272(page0,raw);
+ const ctx={blocks:deep,tags,mentions,page:C.pageIdentity1C(page?{name:page.name}:null,mentions),cells:M.tl.comparisonCells272(html),...(section?{section}:{}),...(cellOf?{cellOf}:{})};
  return cands.map(l=>{const d=C.attributeLead1C(l,ctx);return {...l,subject:d.subject?{name:d.subject,model:null,sku:null}:null,subjects272:d.subjects??null,rule1c:d.rule,decision1c:d};});
 }
 /** Step 1B (evaluation-only counterfactual, NOT production behaviour): a value bound by the clause rule to the nearest
@@ -76,6 +95,10 @@ export async function observeCase(c,dist,opts={}){
   if(opts.policy==='ambiguity_preserving'){const deep=M.blocks.textBlocks225(html,{maxBlocks:1500}).blocks;const ms=M.tl.documentMentions272?M.tl.documentMentions272(html):[];cands=cands.map(l=>ambiguityPreserving(l,deep,ms));}
   else if(opts.policy==='constrained_candidate_1c')cands=await candidate1C(M,html,x,cands);
   else if(opts.policy==='candidate_1c_inventory')cands=await candidate1C(M,html,x,cands,{inventory:true,nouns:nounsOf(M,c.category),host:new URL(url).host});
+  else if(opts.policy==='candidate_1c_semantics'||opts.policy==='candidate_1c_semantics_tables'){
+   const sem=(await import(resolve('dist/src/document_semantics.js'))).readDocumentSemantics1D2(html,url);
+   if(opts.policy==='candidate_1c_semantics_tables')cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:c.category,plan,semantics:sem}).probe.candidates;
+   cands=await candidate1C(M,html,x,cands,{semantics:sem,off:opts.off,nouns:nounsOf(M,c.category),host:new URL(url).host});}
   else if(opts.policy)throw Error('unknown counterfactual policy '+opts.policy);
   const leads=cands.map(l=>({value:l.value,unit:canonUnit(M,l.unit),subject:l.subject?.name??null,blockIndex:l.blockIndex,blockSha256:l.blockSha256,...(l.subjects272?{subjects:l.subjects272}:{}),...(l.rule1c?{rule1c:l.rule1c}:{})}));
   // A multi-subject lead serves each of its named subjects.
@@ -119,6 +142,11 @@ export async function documentLeads(dist,doc,opts={}){
  if(opts.policy==='ambiguity_preserving'){const deep=M.blocks.textBlocks225(html,{maxBlocks:1500}).blocks;const ms=M.tl.documentMentions272?M.tl.documentMentions272(html):[];cands=cands.map(l=>ambiguityPreserving(l,deep,ms));}
  else if(opts.policy==='constrained_candidate_1c')cands=await candidate1C(M,html,x,cands);
  else if(opts.policy==='candidate_1c_inventory')cands=await candidate1C(M,html,x,cands,{inventory:true,nouns:nounsOf(M,doc.category),host:new URL(url).host});
+ else if(opts.policy==='candidate_1c_semantics'||opts.policy==='candidate_1c_semantics_tables'){
+  // Step 1D-A2: arm B (structural identity and document context) and arm C (B plus the structured test-table reader).
+  const sem=(await import(resolve('dist/src/document_semantics.js'))).readDocumentSemantics1D2(html,url);
+  if(opts.policy==='candidate_1c_semantics_tables')cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:doc.category,plan,semantics:sem}).probe.candidates;
+  cands=await candidate1C(M,html,x,cands,{semantics:sem,off:opts.off,nouns:nounsOf(M,doc.category),host:new URL(url).host});}
  else if(opts.policy)throw Error('unknown policy '+opts.policy);
  return {leads:cands.map(l=>({value:l.value,unit:canonUnit(M,l.unit),rawUnit:l.unit,subject:l.subject?.name??null,subjects:l.subjects272??null,
    assignment:l.rule1c??l.subjectAssignment??null,blockIndex:l.blockIndex,blockSha256:l.blockSha256,
@@ -129,13 +157,17 @@ export async function documentLeads(dist,doc,opts={}){
 /** Step 1D-A: category nouns from the existing category registry (the same aliases the plan compiler receives). */
 function nounsOf(M,category){return M.reg.CATEGORY_REGISTRY250.find(e=>e.id===category)?.aliases??[];}
 /** Step 1D-A (diagnostics): the document identity inventory of one retained document, with the reader's block list. */
-export async function documentInventory(dist,doc){
+export async function documentInventory(dist,doc,opts={}){
  const M=await load(dist);const dir=join(PRIV,doc.evaluation);const W=JSON.parse(readFileSync(join(dir,'wave.json'),'utf8'));const p=W.pages.find(x=>x.tag===doc.docTag);
  const b=readFileSync(join(dir,'raw',doc.docTag+'.html'));if(!p||sha(b)!==p.sha256)return {unobservable:'page bytes do not match the receipt'};
  const html=b.toString('utf8');const I=await import(resolve('dist/src/experience_entity_inventory.js'));const C=await import(resolve('dist/src/experience_attribution_candidate.js'));
  const deep=M.blocks.textBlocks225(html,{maxBlocks:1500}).blocks;const w=M.blocks.textBlocks225(html,{withTags:true,maxBlocks:1500});
  const keep=w.blocks.map((x,i)=>[x,w.tags[i]]).filter(([,t])=>t!=='th');const aligned=keep.length>=deep.length&&deep.every((x,i)=>keep[i][0]===x);
  const x=M.tl.testDocumentSubject268(M.spec.extractSpecifications245(html,p.finalUrl??p.url),p.sourceType??'independent_original_test');
- const inv=I.buildInventory1D({blocks:deep,tags:aligned?keep.map(k=>k[1]):[],title:x?.mainProduct?.name??null,categoryNouns:nounsOf(M,doc.category),publisherHost:new URL(p.finalUrl??p.url).host});
- const raw=M.tl.documentMentions272(html);return {inventory:inv,blocks:deep,step1cMentions:C.prepareMentions1C(raw,deep.join('\n')),rawMentions:raw};
+ // Step 1D-A2: with `semantics`, the same inventory also receives the structured names and boilerplate blocks (as in arm B).
+ let sem=null,structured;if(opts.semantics){sem=(await import(resolve('dist/src/document_semantics.js'))).readDocumentSemantics1D2(html,p.finalUrl??p.url);const off=new Set(opts.off??[]);
+  const allow=n=>n.source.startsWith('json_ld')?!off.has('names_json_ld'):n.source==='table_product_header'?!off.has('names_tables'):n.source==='linked_name'?!off.has('names_links'):false;
+  structured={names:sem.names.filter(allow),excludedBlocks:off.has('exclusion')?new Set():new Set(sem.blocks.map((b,i)=>b.hardExcluded?i:-1).filter(i=>i>=0))};}
+ const inv=I.buildInventory1D({blocks:deep,tags:aligned?keep.map(k=>k[1]):[],title:sem&&!(opts.off??[]).includes('principal')?sem.principal.name:x?.mainProduct?.name??null,categoryNouns:nounsOf(M,doc.category),publisherHost:new URL(p.finalUrl??p.url).host,...(structured?{structured}:{})});
+ const raw=M.tl.documentMentions272(html);return {inventory:inv,blocks:deep,step1cMentions:C.prepareMentions1C(raw,deep.join('\n')),rawMentions:raw,semantics:sem,pageSubject245:x?.mainProduct?.name??null,html,url:p.finalUrl??p.url};
 }
