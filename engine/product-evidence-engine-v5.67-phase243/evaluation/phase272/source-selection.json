@@ -1,0 +1,184 @@
+{
+ "schema": "pee272.source-selection.v1",
+ "frozenAt": "2026-10-17",
+ "protocolSha256": "aed8bb46b132bce1feb9f25e2dfcae9290364d0c74f2d049d4639975bbaa5a99",
+ "method": "Chosen from web-search result titles and URLs (and the search tool's own result summaries, whose exposure is recorded per page) before any page body was read. Pages whose numbers appeared in a search summary were excluded from the untouched set or used for development.",
+ "hosts": [
+  "www.trustedreviews.com",
+  "www.tomsguide.com",
+  "www.techradar.com",
+  "www.expertreviews.co.uk",
+  "housefresh.com"
+ ],
+ "hostRationale": "Five open publishers that state first-hand testing: Trusted Reviews (lab and home tests, method pages per category), Tom's Guide (TV test bench, kitchen tests), TechRadar (TV measurements, home tests), Expert Reviews (home tests), HouseFresh (independent air-purifier room tests). Which?, CHOICE, Consumer NZ and RTINGS results are paywalled and not used.",
+ "excludedForExposure": [
+  "tomsguide tcl-qm9k / tcl qm8l / ninja-premier-oven / chefman-crispinator (numbers or findings in summaries)",
+  "expertreviews hisense-dhga80, haier-hd90-a636 (numbers)",
+  "trustedreviews blueair-blue-signature (number)",
+  "tomsguide samsung-s95h (number)"
+ ],
+ "development": [
+  {
+   "tag": "dev_dw_tr_bosch_smv68md00g",
+   "category": "dishwashers",
+   "url": "https://www.trustedreviews.com/reviews/bosch-perfectdry-smv68md00g-dishwasher",
+   "priorExposure": "gist (qualitative) in a search summary"
+  },
+  {
+   "tag": "dev_ap_hf_airdoctor3000",
+   "category": "air_purifiers",
+   "url": "https://housefresh.com/airdoctor-ad3000/",
+   "priorExposure": "one number in a search summary"
+  },
+  {
+   "tag": "dev_tv_trd_lgc6_c5",
+   "category": "televisions",
+   "url": "https://www.techradar.com/televisions/i-tested-the-lg-c6-and-lg-c5-oled-tvs-side-by-side",
+   "priorExposure": "numbers in a search summary"
+  }
+ ],
+ "unknownCategoryLearning": [
+  {
+   "tag": "m_td_tr_howwetest",
+   "category": "tumble_dryers",
+   "url": "https://www.trustedreviews.com/info/how-we-test-tumble-dryers-4144064",
+   "priorExposure": "method summary seen in a search summary (developer exposure; PEE learns only from its own reading)"
+  },
+  {
+   "tag": "m_td_er_best",
+   "category": "tumble_dryers",
+   "url": "https://www.expertreviews.co.uk/home-garden/large-appliances/best-tumble-dryer",
+   "priorExposure": "one number in a search summary"
+  }
+ ],
+ "untouched": [
+  {
+   "tag": "u_af_tg_ninja_crispi",
+   "category": "air_fryers",
+   "url": "https://www.tomsguide.com/home/air-fryers/ninja-crispi-air-fryer-review",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_af_tg_tfal_infrared",
+   "category": "air_fryers",
+   "url": "https://www.tomsguide.com/home/air-fryers/t-fal-infrared-air-fryer-review",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_af_tr_philips_1000_flexdrawer",
+   "category": "air_fryers",
+   "url": "https://www.trustedreviews.com/reviews/philips-1000-series-flexdrawer-air-fryer",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_af_tr_sharp_5_5l",
+   "category": "air_fryers",
+   "url": "https://www.trustedreviews.com/reviews/sharp-5-5l-air-fryer",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_dw_tr_lg_ldnpm654s",
+   "category": "dishwashers",
+   "url": "https://www.trustedreviews.com/reviews/lg-ldnpm654s-flushfit-dishwasher",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_dw_tr_candy_cf57cf0w",
+   "category": "dishwashers",
+   "url": "https://www.trustedreviews.com/reviews/candy-cf-57cf0w",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_dw_er_bosch_smv68nd00g",
+   "category": "dishwashers",
+   "url": "https://www.expertreviews.co.uk/home-garden/large-appliances/bosch-perfectdry-smv68nd00g-review-an-integrated-dishwashing-tour-de-force",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_dw_trd_bob_mini",
+   "category": "dishwashers",
+   "url": "https://www.techradar.com/reviews/bob-mini-dishwasher-review",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_ap_hf_xiaomi_4pro",
+   "category": "air_purifiers",
+   "url": "https://housefresh.com/xiaomi-4-pro-review/",
+   "priorExposure": "title only"
+  },
+  {
+   "tag": "u_ap_hf_puroair_240",
+   "category": "air_purifiers",
+   "url": "https://housefresh.com/puroair-hepa-14-240-review/",
+   "priorExposure": "title only"
+  },
+  {
+   "tag": "u_ap_trd_coway_350",
+   "category": "air_purifiers",
+   "url": "https://www.techradar.com/home/air-quality/coway-airmega-350-review-a-quiet-powerful-air-purifier-that-will-earn-its-place-in-any-home",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_ap_trd_iqair_atemx",
+   "category": "air_purifiers",
+   "url": "https://www.techradar.com/home/air-quality/iqair-atem-x-review",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_tv_tg_lg_b6",
+   "category": "televisions",
+   "url": "https://www.tomsguide.com/tvs/4k-tvs/lg-b6-oled-tv-review",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_tv_tg_samsung_s85f",
+   "category": "televisions",
+   "url": "https://www.tomsguide.com/tvs/oled-tvs/samsung-s85f-oled-tv-review",
+   "priorExposure": "title only"
+  },
+  {
+   "tag": "u_tv_tr_samsung_qe65s85h",
+   "category": "televisions",
+   "url": "https://www.trustedreviews.com/reviews/samsung-qe65s85h",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_tv_tr_sony_bravia8ii",
+   "category": "televisions",
+   "url": "https://www.trustedreviews.com/reviews/sony-bravia-8-ii",
+   "priorExposure": "gist"
+  },
+  {
+   "tag": "u_td_tr_hisense_dh5s102bw",
+   "category": "tumble_dryers",
+   "url": "https://www.trustedreviews.com/reviews/hisense-dh5s102bw",
+   "priorExposure": "title only"
+  },
+  {
+   "tag": "u_td_tr_haier_hd90_a3q397u1",
+   "category": "tumble_dryers",
+   "url": "https://www.trustedreviews.com/reviews/haier-hd90-a3q397u1",
+   "priorExposure": "title only"
+  },
+  {
+   "tag": "u_td_tr_samsung_dv90t6240ln",
+   "category": "tumble_dryers",
+   "url": "https://www.trustedreviews.com/reviews/samsung-dv90t6240ln",
+   "priorExposure": "title only"
+  },
+  {
+   "tag": "u_td_er_bosch_wtwh7660gb",
+   "category": "tumble_dryers",
+   "url": "https://www.expertreviews.co.uk/home-garden/large-appliances/bosch-serie-6-wtwh7660gb-review-brilliant-drying-and-low-running-costs",
+   "priorExposure": "gist"
+  }
+ ],
+ "untouchedUrlListSha256": "7e5857517fcc7b99f81a945c804701e321439c02a43d85d99496bdf1fba19c16",
+ "plannedRequests": {
+  "robots": 5,
+  "development": 3,
+  "learning": 2,
+  "untouched": 20,
+  "reserveForReplacementOrStageTwo": 30
+ }
+}
