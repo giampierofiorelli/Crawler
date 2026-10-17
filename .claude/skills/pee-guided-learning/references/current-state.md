@@ -11,6 +11,22 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000000000000000000. Phase271 evidence operations and nine-family research intake (2026-10-17) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase271/REPORT.md` (stopped for independent review).
+
+- **Store v8** `comparative_results271`; 2 authentic experiments retained (Which? lab, lovemoney home test), duplicates
+  keyed by content. `comparativeEvidence271` judges comparability; Phase253 uses it for air fryer vs owned oven and
+  refuses it for choosing an air fryer (no same-class experiment; compartments in use never recorded).
+- **Attribution**: appliance lists and row labels resolve subjects (Phase270 docs, tuned: exact subject 0.35 -> 1.0).
+  Held-out (5 TechRadar documents): qualitative 9/49 -> 11/49; quantitative 0/3 (dB and seconds not read).
+- **Packages**: 04, 05, 06 (+ duplicate countertop), 07, 08, dehumidifier R01-R39 preserved in pee-knowledge; Stage-A
+  inventories in `research-inventory/phase271`; speakers (09) and air fryers v3.9.0 not received.
+- **Taught**: dishwashers and air purifiers (`phase271_category_teaching.ts`, generated from inventories); untouched
+  cross-category set: category 0 -> 0.75, decision 0.31 -> 0.56. Dehumidifier provenance t271.d2.
+- **Signer**: key handles have no sign(); copied handles refused. Publication acknowledgements are line-exact (tested).
+- Phase270 pilot budget: 22 of 24 requests spent (continuation state `private-eval/phase271/wave.json`).
+
 ## 000000000000000000000. Phase270 review fixes and bounded pilot (2026-10-17) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase270/REPORT.md` (stopped for independent review).

@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "2026-10-17 (Phase270)",
+ "updated": "2026-10-17 (Phase271)",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -410,21 +410,28 @@
    "id": "D5",
    "stage": "authorised_ranking",
    "since": "Phase268",
-   "item": "dedicated signer (phase270_catalog_signer) signs only policy-checked compiled catalogs with evaluation keys; production signing not authorised for activation (owner decision)"
+   "item": "signer (phase270_catalog_signer): key handles carry no signing capability since Phase271; signs only catalogs it compiles under a signing policy; evaluation keys only; production signing not authorised (owner decision)"
   },
   {
    "id": "D6",
    "stage": "authentic_evidence",
    "since": "Phase268",
-   "item": "Phase270 pilot: Which? lab and a lovemoney home test give energy and time per completed dish for identified appliances, extracted (37/60 held-out) but not retained in the store (comparative results are appliance-level; no retention path yet), and one air fryer per publisher: no cross-model comparison of the consumer outcome",
+   "item": "Phase271: 2 authentic comparative experiments retained (store v8; Which? lab: one air fryer vs one oven, 4 dishes; lovemoney home meter test); used for air-fryer-vs-oven no-purchase checks; no experiment compares two air fryers, and compartments in use is never recorded, so the frozen air-fryer request stays unassessed",
    "resolvedStatus": "open"
   },
   {
    "id": "D7",
    "stage": "evidence_validation",
    "since": "Phase269",
-   "item": "resolved in Phase270: pee249 v2 amendment and store v7 keep qualitative outcome codes (codes only, test publishers, never ranking input, never public); held-out qualitative reading is weak (1/24)",
+   "item": "qualitative codes retainable (store v7); reader extended in Phase271 (table cells, product sections) but held-out qualitative recall is 0.22 (11/49) and codes are never ranking input",
    "resolvedStatus": "resolved_retention_reader_weak"
+  },
+  {
+   "id": "D8",
+   "stage": "authentic_evidence",
+   "since": "Phase271",
+   "item": "six of nine research families inventoried but not taught (robot cleaners, televisions, soundbars; speakers package not received); coffee partly taught",
+   "resolvedStatus": "open"
   }
  ],
  "authenticValidationRequirement": {

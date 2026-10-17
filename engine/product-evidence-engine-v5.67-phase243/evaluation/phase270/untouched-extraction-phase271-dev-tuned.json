@@ -1,0 +1,194 @@
+{
+ "schema": "pee270.untouched-extraction-run-public.v1",
+ "label": "phase271-dev-tuned",
+ "at": "2026-10-17T06:46:04.886Z",
+ "goldSha256": "468aefc2b5c3498808ce168034cfd3b54594ac06910387f2b59fd5a2d6ac6090",
+ "summary": {
+  "quantitative": {
+   "gold": 60,
+   "leads": 39,
+   "matched": 37,
+   "precision": 0.949,
+   "recall": 0.617,
+   "exactSubjectAttribution": 1,
+   "dimensionAgreement": 1,
+   "byMeasurand": {
+    "duration_per_completed_task": {
+     "gold": 15,
+     "matched": 13
+    },
+    "energy_per_completed_task": {
+     "gold": 9,
+     "matched": 9
+    },
+    "cost_per_task_derived_from_tariff": {
+     "gold": 8,
+     "matched": 8
+    },
+    "cost_per_task_measured_meter": {
+     "gold": 8,
+     "matched": 7
+    },
+    "annual_running_cost_publisher_derived": {
+     "gold": 20,
+     "matched": 0
+    }
+   }
+  },
+  "qualitative": {
+   "gold": 24,
+   "extracted": 18,
+   "matched": 10,
+   "precision": 0.556,
+   "recall": 0.417
+  }
+ },
+ "documents": [
+  {
+   "tag": "w_vs_oven",
+   "quantitative": {
+    "gold": 24,
+    "leads": 24,
+    "matched": 24,
+    "falsePositives": []
+   },
+   "qualitative": {
+    "gold": 15,
+    "extracted": 13,
+    "matched": 8,
+    "falsePositives": [
+     {
+      "dish": "chips",
+      "outcome": "doneness",
+      "direction": "negative"
+     },
+     {
+      "dish": "chicken",
+      "outcome": "moisture",
+      "direction": "negative"
+     },
+     {
+      "dish": "chips",
+      "outcome": "doneness",
+      "direction": "negative"
+     },
+     {
+      "dish": "chips",
+      "outcome": "crispness",
+      "direction": "positive"
+     },
+     {
+      "dish": "cakes",
+      "outcome": "moisture",
+      "direction": "positive"
+     }
+    ]
+   }
+  },
+  {
+   "tag": "lm_test",
+   "quantitative": {
+    "gold": 15,
+    "leads": 15,
+    "matched": 13,
+    "falsePositives": [
+     {
+      "unit": "p",
+      "dimension": "other",
+      "methodCue": "comparative_prose",
+      "subject": "none"
+     },
+     {
+      "unit": "minutes",
+      "dimension": "duration",
+      "methodCue": "comparative_prose",
+      "subject": "named"
+     }
+    ]
+   },
+   "qualitative": {
+    "gold": 7,
+    "extracted": 2,
+    "matched": 2,
+    "falsePositives": []
+   }
+  },
+  {
+   "tag": "tr_electricity",
+   "quantitative": {
+    "gold": 0,
+    "leads": 0,
+    "matched": 0,
+    "falsePositives": []
+   },
+   "qualitative": {
+    "gold": 0,
+    "extracted": 2,
+    "matched": 0,
+    "falsePositives": [
+     {
+      "dish": "vegetables",
+      "outcome": "crispness",
+      "direction": "positive"
+     },
+     {
+      "dish": "vegetables",
+      "outcome": "moisture",
+      "direction": "positive"
+     }
+    ]
+   }
+  },
+  {
+   "tag": "tr_af300",
+   "quantitative": {
+    "gold": 1,
+    "leads": 0,
+    "matched": 0,
+    "falsePositives": []
+   },
+   "qualitative": {
+    "gold": 2,
+    "extracted": 1,
+    "matched": 0,
+    "falsePositives": [
+     {
+      "dish": "chips",
+      "outcome": "crispness",
+      "direction": "positive"
+     }
+    ]
+   }
+  },
+  {
+   "tag": "w_ninja_brand",
+   "quantitative": {
+    "gold": 13,
+    "leads": 0,
+    "matched": 0,
+    "falsePositives": []
+   },
+   "qualitative": {
+    "gold": 0,
+    "extracted": 0,
+    "matched": 0,
+    "falsePositives": []
+   }
+  },
+  {
+   "tag": "w_tower_t17102",
+   "quantitative": {
+    "gold": 7,
+    "leads": 0,
+    "matched": 0,
+    "falsePositives": []
+   },
+   "qualitative": {
+    "gold": 0,
+    "extracted": 0,
+    "matched": 0,
+    "falsePositives": []
+   }
+  }
+ ]
+}
