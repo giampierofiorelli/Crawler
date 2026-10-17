@@ -18,17 +18,22 @@ Metadata-only inventories are in two places:
 - private: `research-inventory/phase271/`, six files;
 - public: `evaluation/phase271/research-package-inventory.json`, with no content.
 
-| Family | Version found | State |
+> **Correction (Phase272, 2026-10-17).** The table first published here mislabelled families 04–08 (it listed "04
+> Dishwashers v1", "05 Air purifiers v1.0.0 … v1.1.0 companion missing", "06 Ovens / countertop" and unnamed 07/08).
+> The rows below are re-derived from the verified `evaluation/phase271/research-package-inventory.json`; nothing else in
+> this report changes. The v1.1.0 gap belongs to the robot package (05), not to air purifiers (04).
+
+| Family | Version found (inventory JSON) | State at the end of Phase271 |
 |---|---|---|
-| 01 Air fryers | v2.2.0 reconstructed + addenda | taught Phase269; **v3.9.0 named but not supplied** |
-| 02 Dehumidifiers | register R01–R39 | provenance reconciled (§C) |
-| 03 Coffee | as Phase269 | taught Phase269 |
-| 04 Dishwashers | v1 | **taught Phase271** |
-| 05 Air purifiers | v1.0.0 | **taught Phase271**; the v1.1.0 companion it references is missing |
-| 06 Ovens / countertop | v2.0.0 | inventoried; the countertop file is a byte-identical duplicate (one kept as canonical) |
-| 07 | — | inventoried, not taught |
-| 08 | — | inventoried, not taught |
-| 09 Speakers | — | **not supplied** |
+| 01 Air fryers | reconstruction of compendium v2.2.0 + 34 addenda | taught (Phase269/270); **original v3.9.0 not supplied** |
+| 02 Dehumidifiers | consolidated research + restored register R01–R39 | taught (Phase270); provenance reconciled (§C, t271.d2) |
+| 03 Coffee machines and grinders | cumulative package | partly taught (Phase269/270) |
+| 04 Air purifiers | v1.2.0-research-complete | **taught Phase271** (t271.ai1); nothing missing |
+| 05 Robot vacuum cleaners and mops | v1.0.0-research (Supplement 02 alone headed v1.1.0) | inventoried only; `CONSUMER-NEEDS-TEACHING-CASES.json` (the probable v1.1.0 companion) is absent |
+| 06 Household dishwashers | v2.0.0-research (embeds countertop v1.0.0) | **taught Phase271** (t271.di1); the separate countertop v1.0.0 zip is byte-identical to the embedded folder |
+| 07 Televisions | v1.0.0-research | inventoried only |
+| 08 Soundbars | v1.0.0-research | inventoried only |
+| 09 Speakers | — | **not supplied** in Phase271 (received in Phase272) |
 
 Nothing missing was regenerated or reconstructed.
 
@@ -171,7 +176,7 @@ There is no category-specific engine. The teaching is generated from the invento
 - **Evidence:** no matched same-class multi-model experiment for air fryers; compartments in use are never recorded.
 - **Extraction:** decibel and seconds measurements are not read; PU7 is misclassified.
 - **Provenance:** the dehumidifier register needs live re-verification (budget needed).
-- **Missing material:** the speakers package (09), air fryers v3.9.0, the air-purifier v1.1.0 companion, and the robot teaching-case files.
+- **Missing material:** the speakers package (09), air fryers v3.9.0, and the robot package's consumer-needs teaching cases (its probable v1.1.0 companion). *(Corrected in Phase272: an earlier wording attributed the v1.1.0 companion to air purifiers.)*
 - **Policy:** production signing (owner decision; it stays disabled).
 
 ## M. Next milestone

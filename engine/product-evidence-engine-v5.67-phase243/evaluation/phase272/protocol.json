@@ -1,0 +1,51 @@
+{
+ "schema": "pee272.ab-protocol.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "any Phase272 web search for sources, any Phase272 page request, and any Phase272 extractor change",
+ "authorisation": "owner answer 2026-10-17 (Phase272 brief): new bounded research policy, at most 60 HTTP requests, at most 6 publisher hosts, at most 15 requests per host, 7 days; stop when evidence suffices",
+ "hypothesis": "Category scientific knowledge already in the store (Phase252/269/270/271/272 teaching: outcomes, measurement concepts, conditions, measured_by / requires_condition / not_sufficient_for relations, category names) improves the extraction and attribution of authentic original evidence when it is compiled into an extraction plan BEFORE reading, compared with the same extractor reading without it. The outcome is unknown until measured; negative results are reported unchanged.",
+ "arms": {
+  "A": "Existing extractor (Phase225 probe + Phase226 tables + Phase270 comparative + Phase269 qualitative reader) exactly as at commit 09526c4: no plan.",
+  "B": "The same extractor with the extraction plan compiled from the store for the document's category supplied before reading (guided candidates, plan-derived units, terms, sections, conditions, category nouns and proxy warnings). No exploratory pass.",
+  "C": "B plus the generic exploratory pass: high-recall candidates (any unit of a generic physical-unit lexicon, any evaluative statement in a test context) that the plan did not anticipate are recorded as research leads, never as findings.",
+  "E": "Ablation: A plus the same generic exploratory pass, without any plan. Separates the effect of category knowledge from the effect of a wider generic vocabulary."
+ },
+ "sharedAfterReading": "For every arm, the same post-extraction interpretation links a candidate to a taught measurement concept or outcome of the category (the knowledge PEE already uses downstream). The A/B difference therefore measures knowledge supplied BEFORE reading, not knowledge available at all.",
+ "categories": {
+  "known": ["air_fryers", "dishwashers", "air_purifiers", "televisions"],
+  "unknown": "tumble_dryers (no owner package; excluded from all teaching; its material is acquired only by PEE's own process in this phase)",
+  "televisionTeaching": "taught in Phase272 from the private Stage-A inventory (package 07 v1.0.0) by the existing Phase271 generator, BEFORE any television page is read"
+ },
+ "sourceSelectionCriteria": [
+  "The publisher states that it tested the product itself (hands-on, lab or home test) and reports its own results; a 'how we test' page counts as a method reference, never as results.",
+  "Publicly accessible without login, paywall, CAPTCHA or membership; robots.txt allows the agent ProductEvidenceResearchBot (or *) for the path; no Content-Signal ai-input=no, noai or TDM reservation.",
+  "No retailer, manufacturer, press-release or affiliate-only roundup without first-hand testing.",
+  "Diversity before volume: at least two publishers per known category where open sources exist; a publisher used for development in a category is not used for that category's untouched pages when another qualifying publisher exists.",
+  "Pages are chosen from search-result titles, URLs and publisher method statements only, BEFORE their bodies are read; the untouched list is frozen (URL list hashed) before the first untouched request.",
+  "Hosts are limited to 6; requests (robots.txt included) to 60 overall and 15 per host; politeness 5 s per host; stop on robots disallow, 401/403/429, Retry-After, 3 errors on a host, cross-site redirect or a paywall/login wall."
+ ],
+ "split": {
+  "development": "Phase268-271 authentic air-fryer pages already read (29 pages, private), plus at most one new development page per new known category (dishwashers, air purifiers, televisions). Rules may be written on these only.",
+  "untouched": "New pages per known category (target 3-4 each, at least 2 publishers per category where available) and new tumble-dryer review pages; never read before the code, plan compiler and scoring are frozen; gold annotated before any arm runs; each arm runs once; first runs committed unchanged.",
+  "unknownCategoryResearch": "Tumble-dryer method pages acquired by PEE's research step (stage 1) are learning material, never evaluation pages; tumble-dryer review pages (stage 2) are untouched evaluation pages."
+ },
+ "goldRules": {
+  "quantitative": "Every number the publisher reports as its OWN test result for a named product or appliance (prose, list, table cell or caption), with unit; kind measured or derived_from_measurement (e.g. a cost computed from measured kWh). Not gold (negative controls; extracting one is a false positive): manufacturer specifications and claims, prices, tariffs, publisher star ratings or scores out of N, settings chosen, food or load quantities, ranges, upper bounds, hypothetical figures, and numbers from other publishers.",
+  "qualitative": "Every evaluative finding the tester reports from their own use or test about a product's performance on a consumer outcome (not a feature list, specification, design remark, price or value judgement). One finding per (document, subject, dimension, direction); a sentence with two outcomes in contrast gives two findings. Dimension label: the taught outcome id of the category when the finding is about that outcome, otherwise 'untaught:<short label>' (these measure whether guided reading loses what it was not taught). Direction positive, negative or mixed.",
+  "subject": "The product the finding is about as the page states it: name and model code when given; identity state exact_variant, named_product, equipment_class, ambiguous or unresolved.",
+  "conditions": "For quantitative gold: the conditions the page states for that value (mode, setting, load, programme, distance, window size, room, duration), labelled with the category's taught condition id where one applies, else 'untaught:<label>'.",
+  "annotator": "Claude (the developer) annotates; frozen does not mean author-independent."
+ },
+ "scoring": {
+  "quantitative": "A lead matches a gold value when the numbers are equal (relative tolerance 1e-9) and the units are equivalent under the frozen unit-equivalence table; one lead per gold item. Precision = matched / leads; recall = matched / gold.",
+  "qualitative": "A finding matches gold when subject-compatible, the dimension is equal (or, for untaught gold, the finding's recorded term token occurs in the gold label) and the direction is equal. Precision = matched / findings; recall = matched / gold.",
+  "subject": "correct, incorrect_match (a named or exact subject that is the wrong product) or unresolved, for every matched item (Phase271 rule: core-token Jaccard >= 0.6).",
+  "conditions": "For matched quantitative items: share of gold taught-condition labels the arm reports (A's Phase225/270 codes are mapped by the frozen table below).",
+  "decisionUsable": "Matched, subject-correct items whose unit passes the store's retention screen and which the shared after-reading interpretation links to a taught measurement or outcome of the category.",
+  "lostByGuidance": "Gold items matched by A or E but by neither B nor C.",
+  "falsePositives": "Unmatched findings, counted separately for negative-control types where identifiable; research leads (arms C and E) are counted separately and never as findings.",
+  "unitEquivalence": {"db": ["db", "dba", "db(a)"], "nits": ["nits", "cd/m2", "cd/m²"], "kwh": ["kwh"], "wh": ["wh"], "w": ["w", "watts"], "minutes": ["minutes", "mins", "min"], "seconds": ["seconds", "s", "secs"], "hours": ["hours", "hrs", "h"], "ms": ["ms"], "%": ["%", "percent"], "l": ["l", "litres", "liters"], "ml": ["ml"], "kg": ["kg"], "g": ["g"], "m3/h": ["m3/h", "m³/h"], "°c": ["°c", "c"], "hz": ["hz"]},
+  "codeToConditionMap": {"all_compartments": "compartments_in_use", "single_compartment": "compartments_in_use", "same_food_load": "same_food_load", "quality_assessed_same_task": "completed_doneness"}
+ },
+ "reporting": "Tier T2 (authentic controlled). Denominators always shown; small samples reported as counts, not percentages alone; development results never reported as untouched; the budget actually used is reported."
+}
