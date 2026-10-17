@@ -1,0 +1,11 @@
+{
+ "schema": "pee269.untouched-extraction-rules.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "fetching the documents and any Phase271 extraction change; extractor hashes in extractor-freeze-untouched.sha256 (Phase270 final extractor, commit 4a7a0f2)",
+ "selection": "remaining Phase270 bounded-pilot budget only (9 requests; hosts www.techradar.com and www.lovemoney.com; Which? exhausted): one TechRadar air-fryer listing page for discovery, then air-fryer reviews and a multi-product guide never read by PEE; chosen from the listing by URL before reading their content",
+ "gold": "annotated by reading the transient bytes BEFORE any extractor run: tester-reported measurements (value, unit, measurand, subject identity state) and professional qualitative cooking outcomes (dish, outcome, direction, subject); subject identity states: exact_variant (model code in the tested subject), named_product, equipment_class, ambiguous, unresolved",
+ "negativeControls": "manufacturer claims, recipe settings, prices, ratings, other products' values and generic marketing descriptions are negative controls",
+ "metrics": {"quantitative": "precision, recall", "attribution": "separately: correct exact matches, incorrect exact matches, unresolved/class associations", "qualitative": "precision, recall, correct subject"},
+ "developmentDocuments": "Phase270 documents (w_vs_oven, lm_test, tr_af300, tr_electricity, Which? listings) and Phase268/269 documents are development material in Phase271",
+ "rule": "first run committed unchanged; the after-change run is single and held out from tuning"
+}
