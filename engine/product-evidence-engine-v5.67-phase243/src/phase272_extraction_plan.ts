@@ -121,6 +121,10 @@ export function compileExtractionPlan272(store:KnowledgeStore246,categoryId:stri
  return {...plan,compiledFrom:{items:items.length,relations:rels.length,digest:sha(JSON.stringify(plan))}};
 }
 
+/** Original roadmap Step 3: the digest of what a plan actually contains (every field the readers consume), computed the same
+ * way as `compiledFrom.digest`, so a compiled plan's two digests agree and a plan built or edited by hand is still
+ * identified by its content, never by a label it carries. */
+export function planContentDigest272(plan:ExtractionPlan272):string{const {compiledFrom:_c,...content}=plan;return sha(JSON.stringify(content));}
 /** The taught condition terms of a plan: a number printed directly before one ("10% window", "50% load") is a parameter
  * of the test condition, not a result. */
 export function conditionTerms272(plan:ExtractionPlan272):Set<string>{

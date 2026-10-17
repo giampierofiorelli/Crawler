@@ -37,7 +37,7 @@ import {lookupScreening193,type ScreeningLedger193,type SourceRevision193} from 
 import type {CandidateResearch243} from './phase243_budgeted_category_search.js';
 import {classDecision249,QUALITATIVE_AMENDMENT270,type SourceClassPolicy249,type Reservations249} from './phase249_retention_policy.js';
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
-import {screenTestLead265,subjectAssociation265,reportedBy265,type TestLeadsInput265} from './phase265_test_measurements.js';
+import {screenTestLead265,subjectAssociation265,reportedBy265,readingIdentity265,type TestLeadsInput265,type ReadingConfiguration265} from './phase265_test_measurements.js';
 
 export const STORE_SCHEMA_VERSION246=8;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
@@ -427,9 +427,13 @@ export class KnowledgeStore246 {
       const eff=(this.db.prepare('SELECT retention FROM revisions WHERE revision_id=?').get(revisionId) as {retention:RetentionClass246}).retention;
       const main=(this.db.prepare("SELECT product_id FROM product_sources WHERE revision_id=? AND role='main_product'").get(revisionId) as {product_id:string}|undefined)?.product_id??null;
       const kinds2=eff==='facts_retained_class_policy'&&this.storage.classPolicy?(this.storage.classPolicy.classes[o.source.sourceType]??this.storage.classPolicy.classes.unknown).valueKinds:null;
-      const keep2=VALUE_RETAINING246.includes(eff)&&(!kinds2||kinds2.includes('quantity'));
+      let keep2=VALUE_RETAINING246.includes(eff)&&(!kinds2||kinds2.includes('quantity'));
+      // Step 3: identical bytes may be re-derived under a new reading version; the reservations and host cap of THIS
+      // observation still decide whether values may be written (the stored revision class alone is not enough).
+      let rightsNow:string|null=null;
+      if(keep2&&eff==='facts_retained_class_policy'&&this.storage.classPolicy){const d=this.classDecisionNow246(o,o.source.host,main);if(!d.retain){keep2=false;rightsNow=d.reason;}}
       const exp2=eff==='local_pending_rights_review'?new Date(Date.parse(o.fetchedAt)+this.storage.localPendingRightsCache.expiresAfterDays*86400000).toISOString():null;
-      tm=this.applyTestLeads265(o,revisionId,main,keep2,eff,keep2?null:eff,exp2);
+      tm=this.applyTestLeads265(o,revisionId,main,keep2,eff,keep2?null:(rightsNow??eff),exp2);
       this.applyComparative271(o,revisionId,main,keep2,eff);
      }
      let q270:{offered:number;persisted:number;withheld:number;reason:string|null}|undefined;
@@ -543,11 +547,7 @@ export class KnowledgeStore246 {
    // Phase249 class policy: per-observation checks (reservations, per-host cap) decide this revision's retention.
    let effective:RetentionClass246=retention;let kinds:readonly string[]|null=null;let classReason:string|null=null;
    if(retention==='facts_retained_class_policy'&&this.storage.classPolicy){
-    const counted=(this.db.prepare(`SELECT DISTINCT d.product_id FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
-     WHERE s.host=? AND d.retention='facts_retained_class_policy' AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor')
-     UNION SELECT DISTINCT COALESCE(t.product_id,'rev:'||t.revision_id) FROM test_measurements265 t JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
-     WHERE s.host=? AND t.retention='facts_retained_class_policy' AND t.state='current'`).all(host,host) as {product_id:string}[]).map(r=>r.product_id);
-    const d=classDecision249(this.storage.classPolicy,o.source.sourceType,o.reservations,counted.length,!!mainId&&counted.includes(mainId));
+    const d=this.classDecisionNow246(o,host,mainId);
     if(d.retain)kinds=d.rule.valueKinds;
     else{effective='metadata_only';classReason=d.reason;this.addGap('source',revisionId,d.reason,`class policy ${this.storage.classPolicy.policyId}: ${d.reason}`.slice(0,300),
      d.reason==='insubstantial_part_cap_reached'?'per_source_rights_review_to_exceed_cap':'respect_reservation_metadata_only',o.fetchedAt);}
@@ -600,6 +600,16 @@ export class KnowledgeStore246 {
     supersededRevisionIds:superseded,staleNodes:[...stale].sort(),screeningVerdict:verdict,...(tm?{testMeasurements:tm}:{}),...(q270?{qualitative270:q270}:{})};
   });
  }
+ /** Phase249 class-policy decision for THIS observation: its machine-readable reservations and the host's current
+  * insubstantial-part count. Used at first ingest and (Step 3) whenever identical bytes are re-derived, so a new reading
+  * version can never write values that the rights in force now would not allow. */
+ private classDecisionNow246(o:ObservationInput246,host:string,mainId:string|null){
+  const counted=(this.db.prepare(`SELECT DISTINCT d.product_id FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
+     WHERE s.host=? AND d.retention='facts_retained_class_policy' AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor')
+     UNION SELECT DISTINCT COALESCE(t.product_id,'rev:'||t.revision_id) FROM test_measurements265 t JOIN revisions r USING(revision_id) JOIN sources s ON s.source_id=r.source_id
+     WHERE s.host=? AND t.retention='facts_retained_class_policy' AND t.state='current'`).all(host,host) as {product_id:string}[]).map(r=>r.product_id);
+  return classDecision249(this.storage.classPolicy!,o.source.sourceType,o.reservations,counted.length,!!mainId&&counted.includes(mainId));
+ }
  /** Phase265: persist the screened test-result leads of one revision (inside the caller's ingest transaction). Values
   * are kept only when this revision's retention keeps values; otherwise only counts are journaled and a gap records
   * why. Re-offering the same leads is a no-op; a new lead extractor supersedes and re-derives this revision's rows. */
@@ -608,14 +618,21 @@ export class KnowledgeStore246 {
   const t=o.testLeads!;const out:TestMeasurementOutcome265={offered:0,persisted:0,associated:0,unresolved:0,alreadyStored:0,withheldRights:0,withheldReason:null,rejected:{}};
   if(!t||typeof t.extractorVersion!=='string'||!shortText(t.extractorVersion,80)||t.probe?.schema!=='pee225.transient-test-probe.v1'||t.probe.sourceUrl!==o.url||
    !Array.isArray(t.probe.candidates)||t.probe.sourceBodyRetained!==false||t.probe.sourcePassagesRetained!==false)throw Error('265_invalid_test_leads');
+  // Step 3: a plan-guided reading carries its configuration, and its version must be the digest of that configuration.
+  if(t.readingConfiguration!==undefined&&(!t.readingConfiguration||typeof t.readingConfiguration!=='object'||readingIdentity265(t.readingConfiguration)!==t.extractorVersion))
+   throw Error('265_reading_configuration_mismatch');
+  const cfg=t.readingConfiguration?{readingConfiguration:t.readingConfiguration}:{};
   const cands=t.probe.candidates;out.offered=cands.length;
-  if(!cands.length)return out;
+  // Step 3: rows derived under another reading configuration stop being current whatever this reading finds — also when
+  // it finds nothing, and also when its values are withheld (they are incompatible with the reading now in force).
+  const existing=this.db.prepare("SELECT COUNT(*) AS n FROM test_measurements265 WHERE revision_id=? AND extractor_version=? AND state='current'").get(revisionId,t.extractorVersion) as {n:number};
+  const otherVersion=Number((this.db.prepare("UPDATE test_measurements265 SET state='superseded_by_extractor' WHERE revision_id=? AND extractor_version<>? AND state='current'").run(revisionId,t.extractorVersion)).changes);
+  if(!cands.length){if(otherVersion)this.event('test_measurements_ingested',{revisionId,extractorVersion:t.extractorVersion,offered:0,persisted:0,associated:0,unresolved:0,alreadyStored:0,
+   supersededByExtractor:otherVersion,previouslyCurrent:existing.n,rejected:{},...cfg},o.fetchedAt);return out;}
   if(!keep){out.withheldRights=cands.length;out.withheldReason=withheldReason??retention;
    this.addGap('source',revisionId,'test_measurements_not_retained_rights',`${cands.length} publisher-reported test measurement leads observed; values not retained (${out.withheldReason})`,
     'review_source_rights_then_reobserve',o.fetchedAt);
-   this.event('test_measurements_withheld',{revisionId,offered:cands.length,reason:out.withheldReason},o.fetchedAt);return out;}
-  const existing=this.db.prepare("SELECT COUNT(*) AS n FROM test_measurements265 WHERE revision_id=? AND extractor_version=? AND state='current'").get(revisionId,t.extractorVersion) as {n:number};
-  const otherVersion=Number((this.db.prepare("UPDATE test_measurements265 SET state='superseded_by_extractor' WHERE revision_id=? AND extractor_version<>? AND state='current'").run(revisionId,t.extractorVersion)).changes);
+   this.event('test_measurements_withheld',{revisionId,offered:cands.length,reason:out.withheldReason,...(otherVersion?{extractorVersion:t.extractorVersion,supersededByExtractor:otherVersion,...cfg}:{})},o.fetchedAt);return out;}
   const main=mainId?this.db.prepare('SELECT name,declared_model,identifiers_json FROM products WHERE product_id=?').get(mainId) as {name:string|null;declared_model:string|null;identifiers_json:string}:null;
   const pageLead=o.extraction&&o.extraction.mainProduct.name&&!o.extraction.mainProduct.ambiguous&&mainId?
    {name:o.extraction.mainProduct.name,model:o.extraction.mainProduct.identifiers.model??o.extraction.mainProduct.identifiers.mpn??null,sku:o.extraction.mainProduct.identifiers.sku??null}:
@@ -633,14 +650,20 @@ export class KnowledgeStore246 {
      ON CONFLICT(measurement_id) DO UPDATE SET state='current',extractor_version=excluded.extractor_version,product_id=excluded.product_id,
       subject_association=excluded.subject_association,dimension=excluded.dimension,dimension_basis=excluded.dimension_basis,target_scope=excluded.target_scope,
       retention=excluded.retention,expires_at=excluded.expires_at,condition_codes=excluded.condition_codes,protocol_codes=excluded.protocol_codes,
-      setpoint_c=excluded.setpoint_c WHERE test_measurements265.state='superseded_by_extractor'`)
+      setpoint_c=excluded.setpoint_c,
+      -- Step 3: a revived row takes EVERY derived column from the reading now in force (no stale offset, cue, condition,
+      -- instrument, attribution or provenance time survives from the version that first wrote it).
+      block_sha256=excluded.block_sha256,block_index=excluded.block_index,value_offset=excluded.value_offset,subject_assignment=excluded.subject_assignment,
+      value=excluded.value,unit=excluded.unit,condition=excluded.condition,instrument=excluded.instrument,method_cue=excluded.method_cue,
+      evidence_role=excluded.evidence_role,reported_by=excluded.reported_by,recorded_at=excluded.recorded_at
+      WHERE test_measurements265.state='superseded_by_extractor'`)
     .run(mid,revisionId,l.leadId,t.extractorVersion,l.blockSha256,l.blockIndex,l.valueOffset,pid,assoc,l.subjectAssignment,l.value,l.unit,l.dimension,l.dimensionBasis,
      l.targetScope,l.condition,l.instrument,l.methodCue,role,by,retention,expires,o.fetchedAt,JSON.stringify(l.conditionCodes),JSON.stringify(l.protocolCodes),l.setpointC);
    if(Number(res.changes)){out.persisted++;if(pid)out.associated++;else out.unresolved++;}else out.alreadyStored++;
   }
   if(out.persisted||otherVersion||Object.keys(out.rejected).length)this.event('test_measurements_ingested',{revisionId,extractorVersion:t.extractorVersion,offered:out.offered,
    persisted:out.persisted,associated:out.associated,unresolved:out.unresolved,alreadyStored:out.alreadyStored,supersededByExtractor:otherVersion,
-   previouslyCurrent:existing.n,rejected:out.rejected},o.fetchedAt);
+   previouslyCurrent:existing.n,rejected:out.rejected,...cfg},o.fetchedAt);
   if(out.unresolved)this.addGap('source',revisionId,'test_measurement_subject_unresolved',`${out.unresolved} test measurements kept without a product: subject not identified on the page`,
    'review_test_subject_identity',o.fetchedAt);
   return out;
@@ -678,10 +701,14 @@ export class KnowledgeStore246 {
   * the revision keeps measurement kinds). Re-offering is a no-op; a new reader version supersedes this revision's rows.
   * A row is linked to a store product only when its subject is exactly the page's own product (never by fuzzy names). */
  private applyComparative271(o:ObservationInput246,revisionId:string,mainId:string|null,keep:boolean,retention:RetentionClass246):number{
-  const rows=o.testLeads?.comparative270??[];if(!rows.length)return 0;
+  const rows=o.testLeads?.comparative270??[];
+  // Step 3: the comparative reader does not use the plan, so a plan-guided reading keeps the base reader's version
+  // (no needless supersession); other reader versions stop being current before any early return.
+  const ver=String(o.testLeads?.comparativeReaderVersion??o.testLeads?.extractorVersion??'')+'+cmp271';if(!shortText(ver,80))throw Error('271_invalid_reader_version');
+  const superseded=o.testLeads?Number(this.db.prepare("UPDATE comparative_results271 SET state='superseded_by_reader' WHERE revision_id=? AND reader_version<>? AND state='current'").run(revisionId,ver).changes):0;
+  if(superseded)this.event('comparative_results_superseded',{revisionId,readerVersion:ver,superseded},o.fetchedAt);
+  if(!rows.length)return 0;
   if(!keep){this.event('comparative_results_withheld',{revisionId,offered:rows.length,reason:retention},o.fetchedAt);return 0;}
-  const ver=String(o.testLeads!.extractorVersion)+'+cmp271';
-  this.db.prepare("UPDATE comparative_results271 SET state='superseded_by_reader' WHERE revision_id=? AND reader_version<>? AND state='current'").run(revisionId,ver);
   const main=mainId?(this.db.prepare('SELECT name FROM products WHERE product_id=?').get(mainId) as {name:string|null}|undefined)?.name??null:null;
   // The experiment, by content: the same subjects, tasks and values reported again are the same experiment.
   const key='exp_'+sha(rows.map(r=>[r.appliance,r.subject?.name??'',r.taskLabel??r.taskIndex,r.dimension,r.value,r.unit].join('|')).sort().join('\n')).slice(0,24);
@@ -693,9 +720,16 @@ export class KnowledgeStore246 {
    const pid=r.subject&&main&&r.subject.name===main?mainId:null;
    const lim=[...(r.conditionCodes.includes('quantity_reduced')?['load_not_matched']:[]),...(r.approximate?['approximate_value']:[]),...(identity==='exact_variant'?[]:['variant_not_established'])];
    const id='cr_'+sha([revisionId,ver,r.blockSha256,r.appliance,r.taskIndex,r.dimension,r.value,r.unit].join('|')).slice(0,24);
-   const res=this.db.prepare(`INSERT OR IGNORE INTO comparative_results271(result_id,revision_id,reader_version,experiment_key,task_index,task_label,equipment_class,subject_name,subject_model,product_id,
+   // Step 3: a rolled-back reader version revives its own rows (same id = same reader version and content) with every
+   // derived column re-computed now; a current row is never touched.
+   const res=this.db.prepare(`INSERT INTO comparative_results271(result_id,revision_id,reader_version,experiment_key,task_index,task_label,equipment_class,subject_name,subject_model,product_id,
      identity,measurand,value,unit,value_basis,approximate,uncertainty,condition_codes,limitations,form,block_sha256,testing_status,reported_by,duplicate_of_revision,retention,state,recorded_at)
-     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,?,'first_hand_test_reported_unreviewed',?,?,?,'current',?)`)
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,?,?,?,?,'first_hand_test_reported_unreviewed',?,?,?,'current',?)
+     ON CONFLICT(result_id) DO UPDATE SET state='current',experiment_key=excluded.experiment_key,task_label=excluded.task_label,subject_name=excluded.subject_name,
+      subject_model=excluded.subject_model,product_id=excluded.product_id,identity=excluded.identity,value_basis=excluded.value_basis,approximate=excluded.approximate,
+      condition_codes=excluded.condition_codes,limitations=excluded.limitations,form=excluded.form,reported_by=excluded.reported_by,
+      duplicate_of_revision=excluded.duplicate_of_revision,retention=excluded.retention,recorded_at=excluded.recorded_at
+      WHERE comparative_results271.state='superseded_by_reader'`)
     .run(id,revisionId,ver,key,r.taskIndex,r.taskLabel,r.appliance,r.subject?.name?.slice(0,180)??null,r.subject?.model??null,pid,identity,r.dimension,r.value,r.unit,
      r.dimension==='cost'?'derived_from_tariff':r.approximate?'estimated':'measured',r.approximate?1:0,JSON.stringify(r.conditionCodes),JSON.stringify(lim),r.form,r.blockSha256,by,dup,retention,o.fetchedAt);
    n+=Number(res.changes);
@@ -724,6 +758,29 @@ export class KnowledgeStore246 {
    WHERE q.state='current'${f.productId?' AND q.product_id=?':''} ORDER BY q.observation_id`).all(...(f.productId?[f.productId]:[])) as Record<string,unknown>[]);
  }
  /** Phase265: stored test measurements with provenance (current only unless asked). Unreviewed and never evidence. */
+ /** Step 3: every reading configuration the journal recorded, by extractor version: which scientific plan (by content
+  * digest) and which reader versions produced the test measurements of that version. `verified` recomputes the version
+  * from the configuration. The base (no-plan) version has no configuration and is not listed. */
+ readingConfigurations265():{extractorVersion:string;configuration:ReadingConfiguration265;firstRecordedAt:string;verified:boolean}[]{
+  const out=new Map<string,{extractorVersion:string;configuration:ReadingConfiguration265;firstRecordedAt:string;verified:boolean}>();
+  for(const e of this.db.prepare("SELECT at,payload_json FROM events WHERE kind IN ('test_measurements_ingested','test_measurements_withheld') ORDER BY seq").all() as {at:string;payload_json:string}[]){
+   const p=JSON.parse(e.payload_json) as {extractorVersion?:string;readingConfiguration?:ReadingConfiguration265};
+   if(!p.extractorVersion||!p.readingConfiguration||out.has(p.extractorVersion))continue;
+   out.set(p.extractorVersion,{extractorVersion:p.extractorVersion,configuration:p.readingConfiguration,firstRecordedAt:e.at,verified:readingIdentity265(p.readingConfiguration)===p.extractorVersion});}
+  return [...out.values()];
+ }
+ /** Step 3: what must be reconsidered when scientific knowledge changes. Given the plans in force now (category and
+  * content digest), the current test measurements derived under a DIFFERENT plan of the same category, grouped by
+  * revision. Re-deriving those revisions from their retained bytes (same source revision, new reading version)
+  * supersedes them under the ordinary rules. No-plan rows were not derived from a plan and are not listed. */
+ readingsToReconsider265(plansNow:readonly {categoryId:string;contentDigest:string}[]):{revisionId:string;url:string;extractorVersion:string;categoryId:string;
+  planDigestUsed:string;planDigestNow:string;currentMeasurements:number}[]{
+  const now=new Map(plansNow.map(p=>[p.categoryId,p.contentDigest]));const out=[];
+  for(const c of this.readingConfigurations265()){const d=now.get(c.configuration.plan.categoryId);if(!d||d===c.configuration.plan.contentDigest)continue;
+   for(const r of this.db.prepare("SELECT t.revision_id AS revisionId,r.url AS url,COUNT(*) AS n FROM test_measurements265 t JOIN revisions r USING(revision_id) WHERE t.extractor_version=? AND t.state='current' GROUP BY t.revision_id,r.url ORDER BY t.revision_id").all(c.extractorVersion) as {revisionId:string;url:string;n:number}[])
+    out.push({revisionId:r.revisionId,url:r.url,extractorVersion:c.extractorVersion,categoryId:c.configuration.plan.categoryId,planDigestUsed:c.configuration.plan.contentDigest,planDigestNow:d,currentMeasurements:Number(r.n)});}
+  return out;
+ }
  testMeasurements265(f:{productId?:string|null;revisionId?:string;includeSuperseded?:boolean}={}){
   const where:string[]=[];const args:string[]=[];
   if(f.productId!==undefined){if(f.productId===null)where.push('t.product_id IS NULL');else{where.push('t.product_id=?');args.push(f.productId);}}

@@ -1,0 +1,119 @@
+{
+ "schema": "pee.step3.versioning-demo.v1",
+ "label": "after",
+ "at": "2026-10-17T20:06:16.294Z",
+ "build": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src/",
+ "tier": "T1_synthetic",
+ "scenarios": {
+  "D1_identity": {
+   "question": "do no-plan, plan A and plan B readings get distinct extractor versions?",
+   "observed": {
+    "noPlanEqualsA": false,
+    "AEqualsB": false
+   },
+   "failureObserved": false
+  },
+  "D2_revised_plan": {
+   "question": "after plan B, is a value only plan A read still current?",
+   "observed": {
+    "afterA": [
+     "160 seconds",
+     "3 minutes",
+     "61 db"
+    ],
+    "afterB": [
+     "160 seconds",
+     "61 db"
+    ]
+   },
+   "failureObserved": false
+  },
+  "D3_zero_results": {
+   "question": "after a new reading version with no results, do earlier rows stay current?",
+   "observed": {
+    "currentAfter": []
+   },
+   "failureObserved": false
+  },
+  "D4_lead_id_collision": {
+   "question": "with the same lead id under v2, does the row carry v2's columns?",
+   "observed": {
+    "storedVersion": "v2",
+    "stored": [
+     "first_person_test_statement",
+     "20 °c",
+     "sound meter",
+     "not_identified",
+     5,
+     12,
+     true
+    ],
+    "offered": [
+     "first_person_test_statement",
+     "20 °c",
+     "sound meter",
+     "not_identified",
+     5,
+     12,
+     true
+    ]
+   },
+   "failureObserved": false
+  },
+  "D5_rollback": {
+   "question": "plan A → B → A: does A reproduce its first reading?",
+   "observed": {
+    "first": [
+     [
+      160,
+      "test_section_with_method_cue",
+      39
+     ],
+     [
+      3,
+      "plan_guided_measurement_term",
+      22
+     ],
+     [
+      61,
+      "test_section_with_method_cue",
+      82
+     ]
+    ],
+    "afterRollback": [
+     [
+      160,
+      "test_section_with_method_cue",
+      39
+     ],
+     [
+      3,
+      "plan_guided_measurement_term",
+      22
+     ],
+     [
+      61,
+      "test_section_with_method_cue",
+      82
+     ]
+    ]
+   },
+   "failureObserved": false
+  },
+  "D6_rights_on_rederivation": {
+   "question": "re-derived under a reservation now in force: are values written or kept current?",
+   "observed": {
+    "persisted": 0,
+    "currentWithValues": 0
+   },
+   "failureObserved": false
+  },
+  "D7_comparative_rollback": {
+   "question": "comparative rows after reader v1 → v2 → v1: is v1's result current again?",
+   "observed": {
+    "currentRows": 1
+   },
+   "failureObserved": false
+  }
+ }
+}

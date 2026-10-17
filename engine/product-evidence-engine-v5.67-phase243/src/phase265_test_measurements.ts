@@ -19,14 +19,51 @@
 import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_transient_test_probe.js';
 import {comparativeResults270,type ComparativeResult270,type ApplianceClass270} from './phase270_comparative_results.js';
 import {probeTransientTestContent225,textBlocks225,type ProductMention272} from './phase225_transient_test_probe.js';
-import {TEST_CONTEXT272,type ExtractionPlan272} from './phase272_extraction_plan.js';
+import {createHash} from 'node:crypto';
+import {TEST_CONTEXT272,planContentDigest272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 import {structuredTableLeads1D2,type DocumentSemantics1D2} from './document_semantics.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
  * explicit header links). A change re-derives the measurements of a revision whose bytes are offered again. */
 export const TEST_LEAD_EXTRACTOR265='pee225-probe.v2+pee226-tables.v1+pee227-headers';
+/** Original roadmap Step 3 — versioned scientific reading. The code versions of the readers that run only with a plan:
+ * the Phase272 guided pass of the Phase225 probe with the plan's condition-term filter and the comparison-cell
+ * re-attribution (comparisonCells272), and the Step 1D-A2 semantic-document contract with its structured table reader.
+ * A change to either reader's behaviour must change its constant. */
+export const GUIDED_READER272_VERSION='pee225-guided272.v1+pee265-cells272.v1';
+export const SEMANTIC_TABLES1D2_VERSION='pee.document-semantics.v1d2+tables1d2.v1';
+/** The complete configuration that determines which test leads a plan-guided reading produces. It names knowledge by
+ * digest only (no plan text, no page content), so it may be journaled and published. */
+export interface ReadingConfiguration265 {schema:'pee.reading-configuration.v1';baseReader:string;guidedReader:string;
+ /** The plan by content: `contentDigest` is recomputed from what the plan contains; `compiledDigest` is the label the plan
+  * carries; `digestVerified` says whether they agree (a compiled, unedited plan). */
+ plan:{schema:string;categoryId:string;contentDigest:string;compiledDigest:string;digestVerified:boolean};
+ semanticReading:string|null}
+const canonical=(x:unknown):string=>x===null||typeof x!=='object'?JSON.stringify(x):Array.isArray(x)?'['+x.map(canonical).join(',')+']':
+ '{'+Object.keys(x as object).sort().map(k=>JSON.stringify(k)+':'+canonical((x as Record<string,unknown>)[k])).join(',')+'}';
+/** The reading configuration of one call, or null when no plan is used (the historical, unversioned path). */
+// Not part of the identity, because neither changes which candidates are produced: the exploratory pass (research leads,
+// never candidates, never persisted) and the page category (used only by the comparative reader, versioned separately).
+export function readingConfiguration265(opts:{plan?:ExtractionPlan272;semantics?:unknown}):ReadingConfiguration265|null{
+ if(!opts.plan)return null;const contentDigest=planContentDigest272(opts.plan);
+ return {schema:'pee.reading-configuration.v1',baseReader:TEST_LEAD_EXTRACTOR265,guidedReader:GUIDED_READER272_VERSION,
+  plan:{schema:String(opts.plan.schema),categoryId:String(opts.plan.categoryId),contentDigest,compiledDigest:String(opts.plan.compiledFrom?.digest??''),digestVerified:opts.plan.compiledFrom?.digest===contentDigest},
+  semanticReading:opts.semantics?SEMANTIC_TABLES1D2_VERSION:null};
+}
+/** The extractor version of a plan-guided reading: the base version plus a 96-bit digest of the canonical EFFECTIVE
+ * configuration (75 characters, within the store's 80): reader versions, the plan's schema, category and content digest,
+ * and the semantic reading. Identical effective inputs give identical versions; any material difference gives a different
+ * one. The plan's own label (`compiledDigest`, `digestVerified`) is provenance, not an input, and is not hashed. The
+ * configuration is journaled with the ingest, so the version is recoverable and checkable. */
+export function readingIdentity265(c:ReadingConfiguration265):string{
+ const effective={schema:c.schema,baseReader:c.baseReader,guidedReader:c.guidedReader,plan:{schema:c.plan.schema,categoryId:c.plan.categoryId,contentDigest:c.plan.contentDigest},semanticReading:c.semanticReading};
+ return c.baseReader+'+r1:'+createHash('sha256').update(canonical(effective)).digest('hex').slice(0,24);}
 export interface TestLeadsInput265 {extractorVersion:string;probe:TestProbe225;
+ /** Step 3: present only for a plan-guided reading. `extractorVersion` is then readingIdentity265(readingConfiguration). */
+ readingConfiguration?:ReadingConfiguration265;
+ /** Step 3: the comparative reader does not use the plan; its rows keep the base reader's version. */
+ comparativeReaderVersion?:string;
  /** Phase270: comparative results (several appliances per task). Extraction leads only: the store does not retain them
   * (an appliance-class result is not a product measurement; see the Phase270 report). */
  comparative270?:readonly ComparativeResult270[]}
@@ -126,7 +163,10 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
   const extra=structuredTableLeads1D2(opts.semantics,opts.plan,{sourceUrl:url,documentSha256:sha256,blocks:deep,documentReportsTesting:deep.some(b=>TEST_CONTEXT272.test(b))});
   const seen=(c:TestCandidate225)=>probe.candidates.some(o=>o.blockIndex===c.blockIndex&&o.value===c.value&&o.unit.toLowerCase()===c.unit);
   probe.candidates=[...probe.candidates,...extra.filter(c=>!seen(c))];}
- return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe,...(comparative.length?{comparative270:comparative}:{})};
+ // Step 3: a plan-guided reading is versioned by its configuration; the no-plan output is unchanged.
+ const cfg=readingConfiguration265({plan:opts.plan,semantics:opts.semantics});
+ return {extractorVersion:cfg?readingIdentity265(cfg):TEST_LEAD_EXTRACTOR265,probe,...(comparative.length?{comparative270:comparative}:{}),
+  ...(cfg?{readingConfiguration:cfg,comparativeReaderVersion:TEST_LEAD_EXTRACTOR265}:{})};
 }
 
 const UNITS:Readonly<Record<string,string>>={mm:'mm',cm:'cm',kg:'kg',g:'g',l:'l',litre:'l',litres:'l',liter:'l',liters:'l',db:'db',dba:'dba',

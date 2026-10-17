@@ -1,0 +1,250 @@
+{
+ "schema": "pee.step3.store-copy-rederivation.v1",
+ "label": "step3",
+ "at": "2026-10-17T20:13:14.089Z",
+ "tier": "T2_authentic_controlled (authentic retained revisions, store copy)",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src/"
+ },
+ "revisions": 17,
+ "categories": [
+  "air_fryers"
+ ],
+ "steps": [
+  {
+   "step": "S0_copy_as_is",
+   "testMeasurements": {
+    "rows": 12,
+    "digest": "929903c4d9c05888bafc6ee56da08d8649a1ef68a53fd25890874f85b1a5894d",
+    "currentDigest": "295ebeb52c175fbb7fd085ccf5a876a5798bb36c2a5135d25705110d6b14630f",
+    "byVersionAndState": {
+     "BASE:current": 12
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0
+  },
+  {
+   "step": "S1_no_plan",
+   "mode": "none",
+   "ingest": {
+    "revisions": 17,
+    "persisted": 2,
+    "alreadyStored": 10,
+    "withheld": 0
+   },
+   "testMeasurements": {
+    "rows": 14,
+    "digest": "db611cdde6cd9428af1ef571e90ffd1d8094de9e655f47471d0397237146c606",
+    "currentDigest": "9ae41155c63ad26c6ba3c1cbea90ffdba952d7b631c799638c3c50436792b712",
+    "byVersionAndState": {
+     "BASE:current": 14
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0,
+   "currentEqualsThisReading": false,
+   "toReconsiderIfPlanBecame": null
+  },
+  {
+   "step": "S2_plan_A",
+   "mode": "A",
+   "ingest": {
+    "revisions": 17,
+    "persisted": 87,
+    "alreadyStored": 0,
+    "withheld": 0
+   },
+   "testMeasurements": {
+    "rows": 89,
+    "digest": "0c2f19745ce1524c7b215810083aa817d4868221b9df15b3a8e56ea47a29ca97",
+    "currentDigest": "966fc09a3893c7e5667f509550ac314c1fcd95796af3efd5269759bc5193a0d7",
+    "byVersionAndState": {
+     "BASE+r1:5eb8f7adf535af01a54464d6:current": 87,
+     "BASE:superseded_by_extractor": 2
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0,
+   "currentEqualsThisReading": true,
+   "toReconsiderIfPlanBecame": {
+    "plan": "B",
+    "revisions": 14,
+    "measurements": 87
+   }
+  },
+  {
+   "step": "S3_plan_A_again",
+   "mode": "A",
+   "ingest": {
+    "revisions": 17,
+    "persisted": 0,
+    "alreadyStored": 87,
+    "withheld": 0
+   },
+   "testMeasurements": {
+    "rows": 89,
+    "digest": "0c2f19745ce1524c7b215810083aa817d4868221b9df15b3a8e56ea47a29ca97",
+    "currentDigest": "966fc09a3893c7e5667f509550ac314c1fcd95796af3efd5269759bc5193a0d7",
+    "byVersionAndState": {
+     "BASE+r1:5eb8f7adf535af01a54464d6:current": 87,
+     "BASE:superseded_by_extractor": 2
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0,
+   "currentEqualsThisReading": true,
+   "toReconsiderIfPlanBecame": {
+    "plan": "B",
+    "revisions": 14,
+    "measurements": 87
+   }
+  },
+  {
+   "step": "S4_plan_B_revised",
+   "mode": "B",
+   "ingest": {
+    "revisions": 17,
+    "persisted": 83,
+    "alreadyStored": 0,
+    "withheld": 0
+   },
+   "testMeasurements": {
+    "rows": 89,
+    "digest": "ffd2690d4bcaf2aeb5f23457db38d80bd8955d2eae442314aac5b50bf352fcef",
+    "currentDigest": "672272226088c4d62275001baee14bd6ef00e948b807e82f7d9bfdc4e07492d4",
+    "byVersionAndState": {
+     "BASE+r1:2f75a2d872b722c27fdd6b48:current": 83,
+     "BASE:superseded_by_extractor": 2,
+     "BASE+r1:5eb8f7adf535af01a54464d6:superseded_by_extractor": 4
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0,
+   "currentEqualsThisReading": true,
+   "toReconsiderIfPlanBecame": {
+    "plan": "A",
+    "revisions": 14,
+    "measurements": 83
+   }
+  },
+  {
+   "step": "S5_rollback_plan_A",
+   "mode": "A",
+   "ingest": {
+    "revisions": 17,
+    "persisted": 87,
+    "alreadyStored": 0,
+    "withheld": 0
+   },
+   "testMeasurements": {
+    "rows": 89,
+    "digest": "0c2f19745ce1524c7b215810083aa817d4868221b9df15b3a8e56ea47a29ca97",
+    "currentDigest": "966fc09a3893c7e5667f509550ac314c1fcd95796af3efd5269759bc5193a0d7",
+    "byVersionAndState": {
+     "BASE+r1:5eb8f7adf535af01a54464d6:current": 87,
+     "BASE:superseded_by_extractor": 2
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0,
+   "currentEqualsThisReading": true,
+   "toReconsiderIfPlanBecame": {
+    "plan": "B",
+    "revisions": 14,
+    "measurements": 87
+   }
+  },
+  {
+   "step": "S6_rollback_no_plan",
+   "mode": "none",
+   "ingest": {
+    "revisions": 17,
+    "persisted": 12,
+    "alreadyStored": 0,
+    "withheld": 0
+   },
+   "testMeasurements": {
+    "rows": 89,
+    "digest": "3180411a12e9db56f08d5d1aa96762d2738d75f7f6e140f5a227c62cae92befe",
+    "currentDigest": "07d1ac25242a0396ee6641b4744e25b5c482e0865e7614c387db44eea1672fd7",
+    "byVersionAndState": {
+     "BASE+r1:5eb8f7adf535af01a54464d6:superseded_by_extractor": 75,
+     "BASE:current": 12,
+     "BASE:superseded_by_extractor": 2
+    }
+   },
+   "comparative": {
+    "rows": 87,
+    "digest": "594e36eb76c31275da6dedcaa16dc7e90400d8bff0a2713d6d15b3af30f4bde8",
+    "byVersionAndState": {
+     "BASE+cmp271:current": 87
+    }
+   },
+   "journalOk": true,
+   "valuesInNonRetainingRows": 0,
+   "currentEqualsThisReading": true,
+   "toReconsiderIfPlanBecame": null
+  }
+ ],
+ "checks": {
+  "noPlanReobservationKeepsEveryStoredRowAndOnlyAddsNewLeads": true,
+  "samePlanTwiceIsANoOp": true,
+  "revisedPlanIsADistinctVersion": true,
+  "rollbackToPlanAReproducesItsCurrentRows": true,
+  "everyPlanStepCurrentEqualsItsReading": true,
+  "rollbackToNoPlanReproducesTodaysNoPlanReading": true,
+  "comparativeUnchangedByPlans": true,
+  "noValuesInNonRetainingRows": true,
+  "journalOkThroughout": true
+ },
+ "liveStoreUnchanged": true,
+ "baseReaderDrift": {
+  "storedAtFirstIngest": 12,
+  "stillProduced": 10,
+  "noLongerProduced": 2,
+  "newlyProduced": 2
+ }
+}

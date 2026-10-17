@@ -242,6 +242,12 @@ M = about one phase, L = several phases.
 - nothing learned influences a decision until steps 2–4 hold;
 - ranking stays gated by the unchanged Phase181/270 authorisation throughout.
 
+**Progress note (2026-10-17, added; nothing above is changed).**
+- Step 1 was carried out as Steps 1A–1C, with the Step 1D-A/1D-A2 subphases added under owner briefs (`docs/plans/experience-pilot-step1*.md`).
+- Step 2 (attribution safety) has development evidence only (Steps 1C–1D-A2); its independent untouched validation is pending (planned as Step 1D-B).
+- Step 3 (version identity of guided reading, F7) is implemented and verified on synthetic cases and on a copy of the store with authentic retained revisions (`docs/plans/continuous-learning-step3-versioned-reading.md`). A plan-guided reading's extractor version is the base version plus a digest of its effective configuration, and supersession, rollback and rights hold on re-derivation.
+- Step 4 has not started.
+
 ## 6. Recommended first step (only this one)
 
 **Step 1 — Experience case corpus and deterministic replay (no runtime change).**
