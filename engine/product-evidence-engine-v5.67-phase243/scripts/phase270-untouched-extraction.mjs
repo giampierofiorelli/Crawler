@@ -29,7 +29,10 @@ for(const tag of G.documents){
  const p=S.pages.find(x=>x.tag===tag);const b=readFileSync(join(P,'raw',tag+'.html'));if(sha(b)!==p.sha256)throw Error('receipt mismatch '+tag);
  const html=b.toString('utf8'),url=p.finalUrl??p.url;
  const x=testDocumentSubject268(extractSpecifications245(html,url),p.sourceType);
- const cands=testLeadsFromHtml265(html,url,p.sha256,x).probe.candidates;
+ // The lead set is everything the operational path extracts: the Phase225/226 product leads and (from Phase270) the
+ // comparative results. Matching and scoring rules are unchanged from the first run.
+ const tl=testLeadsFromHtml265(html,url,p.sha256,x,{category:p.category});
+ const cands=[...tl.probe.candidates,...(tl.comparative270??[]).map(c=>({...c,publisherDeclaredDimension:c.dimension==='cost'?'other':c.dimension,methodCue:'comparative_'+c.form}))];
  const gold=G.quantitative.filter(g=>g.doc===tag);const used=new Set();const matches=[];
  for(const g of gold){
   (byMeasurand[g.measurand]??={gold:0,matched:0}).gold++;

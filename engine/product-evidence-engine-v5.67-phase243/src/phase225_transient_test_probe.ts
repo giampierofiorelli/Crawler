@@ -61,10 +61,14 @@ function segmentFor(sentence:string,at:number,all:readonly number[]):string{
 }
 /** The bounded semantic text blocks (paragraphs, list items, cells, headings) the probe reads; shared with the Phase269
  * qualitative-observation pilot so both read exactly the same text. Transient: nothing here is retained. */
-export function textBlocks225(html:string):{blocks:string[];truncated:boolean}{
+export function textBlocks225(html:string,opts:{splitLineBreaks?:boolean;withTags?:boolean;maxBlocks?:number}={}):{blocks:string[];truncated:boolean;tags?:string[]}{
  const stripped=html.replace(/<!--([\s\S]*?)-->/g,'').replace(/<(script|style|svg|template|noscript|iframe)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,'');
- const raw=[...stripped.matchAll(/<(p|li|td|h[1-6])\b[^>]{0,1200}>([\s\S]{0,4000}?)<\/\1\s*>/gi)];
- return {blocks:raw.slice(0,380).map(m=>fragment(m[2])).filter(x=>x.length>0&&x.length<=1400),truncated:raw.length>380};
+ const raw=[...stripped.matchAll(/<(p|li|td|th|h[1-6])\b[^>]{0,1200}>([\s\S]{0,4000}?)<\/\1\s*>/gi)].filter(m=>opts.splitLineBreaks||opts.withTags||m[1].toLowerCase()!=='th');
+ // Phase270 (opt-in): lines separated by <br> inside one paragraph ("Oven – 36min, 31 cents<br>Air fryer – …") are
+ // separate blocks; the tag of each block is reported so a reader can use headings as context.
+ const cap=opts.maxBlocks??380;
+ const parts=raw.slice(0,cap).flatMap(m=>(opts.splitLineBreaks?m[2].split(/<br\s*\/?>/i):[m[2]]).map(x=>({t:m[1].toLowerCase(),x:fragment(x)}))).filter(b=>b.x.length>0&&b.x.length<=1400);
+ return {blocks:parts.map(b=>b.x),truncated:raw.length>cap,...(opts.withTags||opts.splitLineBreaks?{tags:parts.map(b=>b.t)}:{})};
 }
 export interface TestCandidate225 {
  /** Phase268: PEE-authored codes for the stated conditions of this value, the setpoint in °C, and the document's own

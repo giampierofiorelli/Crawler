@@ -206,7 +206,7 @@ switch(cmd){
    out.push({observation:{source:{sourceId:'src_'+host.replace(/[^a-z0-9]+/gi,'_'),host,sourceType:p.sourceType,sourceTypeBasis:'operator_asserted'},
     url:p.finalUrl??p.url,sha256:p.sha256,bytes:p.bytes,httpStatus:p.httpStatus,fetchedAt:p.fetchedAt,runId:(F.run??'phase246_wave1')+'_'+p.role,
     extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:p.role==='method_reference'?null:x,categoryHypotheses:p.category&&p.category!=='mixed'?[p.category]:[],reservations,
-    testLeads:testLeadsFromHtml265(b.toString('utf8'),p.finalUrl??p.url,p.sha256,p.role==='method_reference'?null:x)},
+    testLeads:testLeadsFromHtml265(b.toString('utf8'),p.finalUrl??p.url,p.sha256,p.role==='method_reference'?null:x,{category:p.category})},
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
    out.at(-1).yield.testLeads=out.at(-1).observation.testLeads.probe.candidates.length;

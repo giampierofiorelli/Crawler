@@ -17,13 +17,17 @@
  * cue codes.
  */
 import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_transient_test_probe.js';
+import {comparativeResults270,type ComparativeResult270,type ApplianceClass270} from './phase270_comparative_results.js';
 import {probeTransientTestContent225} from './phase225_transient_test_probe.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
  * explicit header links). A change re-derives the measurements of a revision whose bytes are offered again. */
 export const TEST_LEAD_EXTRACTOR265='pee225-probe.v2+pee226-tables.v1+pee227-headers';
-export interface TestLeadsInput265 {extractorVersion:string;probe:TestProbe225}
+export interface TestLeadsInput265 {extractorVersion:string;probe:TestProbe225;
+ /** Phase270: comparative results (several appliances per task). Extraction leads only: the store does not retain them
+  * (an appliance-class result is not a product measurement; see the Phase270 report). */
+ comparative270?:readonly ComparativeResult270[]}
 export type SourceKind265='manufacturer'|'retailer'|'independent_original_test'|'editorial'|'community'|
  'promotional_announcement'|'reference_encyclopedia'|'unknown';
 
@@ -50,9 +54,11 @@ export function testDocumentSubject268(x:SpecExtraction245|null,sourceType:Sourc
  return {...x,mainProduct:{...x.mainProduct,name,identifiers:ids}};
 }
 /** Run the existing Phase225 probe (which runs Phase226/227) on transient bytes. Nothing of the body is returned. */
-export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null):TestLeadsInput265{
+export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:SpecExtraction245|null,opts:{category?:string|null}={}):TestLeadsInput265{
  const lead=pageProductLead265(x);
- return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe:probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[]})};
+ const tested=({air_fryers:'air_fryer',ovens:'oven',microwaves:'microwave',slow_cookers:'slow_cooker',halogen_ovens:'halogen_oven'} as Record<string,ApplianceClass270>)[opts.category??''];
+ const comparative=comparativeResults270(html,{testedClass:tested}).results;
+ return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe:probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[]}),...(comparative.length?{comparative270:comparative}:{})};
 }
 
 const UNITS:Readonly<Record<string,string>>={mm:'mm',cm:'cm',kg:'kg',g:'g',l:'l',litre:'l',litres:'l',liter:'l',liters:'l',db:'db',dba:'dba',
