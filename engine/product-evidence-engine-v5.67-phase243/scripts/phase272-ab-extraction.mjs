@@ -32,8 +32,9 @@ const protocol=readFileSync('evaluation/phase272/protocol.json');const P=JSON.pa
 const addendum=existsSync('evaluation/phase272/protocol-addendum.json')?JSON.parse(readFileSync('evaluation/phase272/protocol-addendum.json','utf8')):{};
 const goldBytes=readFileSync(resolve(F.gold));const G=JSON.parse(goldBytes);const W=JSON.parse(readFileSync(join(DIR,'wave.json'),'utf8'));
 const TAUGHT=['air_fryers','coffee_machines','dehumidifiers','dishwashers','air_purifiers','televisions'];
-const store=new KnowledgeStore246(process.env.PEE_KNOWLEDGE_DIR?join(process.env.PEE_KNOWLEDGE_DIR,'pee246.sqlite'):join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite'));
-const plans={};for(const c of new Set(G.documents.map(d=>d.category))){const nouns=CATEGORY_REGISTRY250.find(e=>e.id===c)?.aliases??[];plans[c]=compileExtractionPlan272(store,c,nouns,TAUGHT.filter(t=>t!==c));}
+// --store: a store COPY (e.g. the unknown-category stage T or L copy) whose knowledge compiles the plans.
+const store=new KnowledgeStore246(F.store?resolve(F.store):process.env.PEE_KNOWLEDGE_DIR?join(process.env.PEE_KNOWLEDGE_DIR,'pee246.sqlite'):join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite'));
+const plans={};for(const c of new Set(G.documents.map(d=>d.category))){const nouns=CATEGORY_REGISTRY250.find(e=>e.id===c)?.aliases??[];plans[c]=compileExtractionPlan272(store,c,nouns.length?nouns:(F.nouns?String(F.nouns).split(','):[]),TAUGHT.filter(t=>t!==c));}
 store.close();
 if(F.plans){const fz=JSON.parse(readFileSync(resolve(F.plans),'utf8'));for(const [c,p] of Object.entries(plans))if(fz[c]!==p.compiledFrom.digest)throw Error('plan digest mismatch for '+c+': knowledge changed since the freeze');}
 // Frozen scoring vocabulary (protocol.scoring.unitEquivalence; printed units canonicalised the same way for every arm).
