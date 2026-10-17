@@ -35,18 +35,23 @@ export interface Protocol268 {
   * outcomes it can and cannot establish), and whether it measures a fixed duration rather than a completed task. */
  measureId?:string;fixedDuration?:boolean;
 }
+/** Phase270: 'authorised_partial_comparison_only' is the owner's restricted authorisation (brief 2026-10-17 §4/§5): the
+ * policy may produce accurately labelled partial evidence comparisons of raw quantities, conditional on catalog
+ * verification and on identity, provenance and rights checks. It authorises no recommendation, no ranking and no
+ * exact-variant promotion of a name-only identity. */
+export type PolicyStatus268='proposed_not_authorised'|'authorised_partial_comparison_only'|'authorised';
 export interface QualifiedPublisher268 {host:string;qualifiedFor:readonly string[];basis:readonly string[];
  /** The publisher's recorded protocol: conditions it applies to every result of the measurand. */
  recordedProtocol:readonly string[];reviewedBy:string}
 export interface ValidationPolicy268 {
- policyId:string;revision:number;status:'proposed_not_authorised'|'authorised';
+ policyId:string;revision:number;status:PolicyStatus268;
  qualifiedPublishers:readonly QualifiedPublisher268[];protocols:readonly Protocol268[];
  identity:{requireDeclaredModelCode:boolean;
   /** Phase269 (r2): which identity confidence a test needs to support a consumer ranking, versus a labelled comparison. */
   rankingRequires?:'model_code_in_tested_subject';comparisonAllows?:'product_name_only'|'model_code_in_tested_subject'};
 }
 export interface ScoringPolicy268 {
- policyId:string;revision:number;status:'proposed_not_authorised'|'authorised';
+ policyId:string;revision:number;status:PolicyStatus268;
  /** valuePoints = round(10000 * (zeroPointsAt - value) / (zeroPointsAt - fullPointsAt)), clipped to [0, 10000]:
   * linear in the measured quantity (energy and its cost are proportional), so equal kWh differences are equal point
   * differences; the anchors are fixed by policy, not by the products present (adding a product never moves others). */
@@ -76,13 +81,13 @@ export const SCORING_POLICY268_R1:ScoringPolicy268={
 };
 /** r2 (Phase269, proposed): the protocol names its measurement concept (a fixed-duration empty run, which category
  * knowledge marks as not sufficient for energy per cooked meal); identity confidence decides ranking eligibility. */
-export const VALIDATION_POLICY268:ValidationPolicy268={...VALIDATION_POLICY268_R1,revision:2,
+export const VALIDATION_POLICY268:ValidationPolicy268={...VALIDATION_POLICY268_R1,revision:2,status:'authorised_partial_comparison_only',
  protocols:VALIDATION_POLICY268_R1.protocols.map(p=>({...p,measureId:'energy_empty_run',fixedDuration:true})),
  identity:{requireDeclaredModelCode:false,rankingRequires:'model_code_in_tested_subject',comparisonAllows:'product_name_only'}};
 /** r2 (Phase269, proposed): no score. The dimension is the measurement itself, compared only by its raw quantity, and it
  * cannot be confirmed as any consumer outcome (its key is a measurement id, not a need id). The r1 anchors are retired:
  * no replacement anchors are invented. */
-export const SCORING_POLICY268:ScoringPolicy268={policyId:'pee268-energy-scoring',revision:2,status:'proposed_not_authorised',
+export const SCORING_POLICY268:ScoringPolicy268={policyId:'pee268-energy-scoring',revision:2,status:'authorised_partial_comparison_only',
  dimensions:[{key:'energy_empty_run',label:'Electricity used in a fixed one-hour empty run at 200 °C (one publisher protocol; not energy to cook a meal)',
   protocolId:'er_energy_1h_empty_200c_v1',mode:'raw_quantity_only',fullPointsAt:0,zeroPointsAt:0,weightUnits:{hard:8000,high:4000,normal:2000,low:500},
   justification:'raw kWh only; no consumer score'}]};
@@ -170,7 +175,7 @@ export function compileCatalog268(v:ValidationRun268,scoring:ScoringPolicy268,ar
  reviewedAt:string;expiresAt:string;validationPolicy:ValidationPolicy268}):ProductKnowledgeCatalog181{
  const tests:OriginalTest181[]=[];const products=new Map<string,ProductKnowledge181>();
  // Phase181 accepts only identifiers (/^[a-z][a-z0-9_.:-]*$/) in its reference fields; prose stays in the policies.
- const vp=args.validationPolicy,st=(s:string)=>s==='authorised'?'authorised':'proposed';
+ const vp=args.validationPolicy,st=(s:string)=>s==='authorised'?'authorised':s==='authorised_partial_comparison_only'?'partial-comparison-only':'proposed';
  const ver=`${vp.policyId}:r${vp.revision}`;
  for(const d of scoring.dimensions)for(const m of v.validated.filter(x=>x.protocolId===d.protocolId)){
   const id='t_'+createHash('sha256').update(m.measurementId+'|'+d.key).digest('hex').slice(0,20);
@@ -189,7 +194,8 @@ export function compileCatalog268(v:ValidationRun268,scoring:ScoringPolicy268,ar
   coverageStatement:`Products of this category with a measurement valid under ${ver} (${vp.status}); one publisher; not market coverage.`,
   marketCoverageComplete:false,
   dimensions:scoring.dimensions.map(d=>({key:d.key,label:d.label,value:{kind:'boolean',value:true},methodId:d.protocolId,protocolVersion:ver,
-   weightUnits:d.weightUnits,weightingReviewReference:pol,normalizationReviewReference:`${pol}:${d.mode==='raw_quantity_only'?'raw-quantity-only':'linear-anchored'}`})),
+   weightUnits:d.weightUnits,weightingReviewReference:pol,normalizationReviewReference:`${pol}:${d.mode==='raw_quantity_only'?'raw-quantity-only':'linear-anchored'}`,
+   ...(d.mode==='raw_quantity_only'?{valueKind:'raw_quantity_only' as const}:{})})),
   originalTests:tests.sort((a,b)=>a.id.localeCompare(b.id)),products:[...products.values()].sort((a,b)=>a.variantId.localeCompare(b.variantId)),
   externalReviewReference:`not_externally_reviewed:machine_validated:${ver}:${st(vp.status)}`};
 }

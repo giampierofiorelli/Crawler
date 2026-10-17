@@ -16,7 +16,7 @@ import {decideAdvice249,candidatesFromStore249,SPEC_CRITERIA249,type Candidate24
 import {createDecision177,applyDecisionAction177} from './phase177_decision_snapshot.js';
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
-import {dynamicKnowledgeAnswer181,type SignedCatalog181,type KnowledgeDimension181} from './phase181_dynamic_knowledge_ranking.js';
+import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
 import {relations247} from './phase247_category_relations.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
 import type {GoalAssessment253} from './phase253_advice_contract.js';
@@ -176,8 +176,33 @@ function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly
 /** The measurement a catalog dimension carries: its key when it is a measurement concept, else the measurement of the
  * protocol its method names; null when unknown (the catalog then asserts relevance itself, as before Phase269). */
 function dimensionMeasure269(d:KnowledgeDimension181,measureIds:ReadonlySet<string>):string|null{
- if(measureIds.has(d.key))return d.key;return protocolOfMethod268(d.methodId)?.measureId??null;
+ if(d.measureId)return measureIds.has(d.measureId)?d.measureId:null;
+ if(measureIds.has(d.key))return d.key;const m=protocolOfMethod268(d.methodId)?.measureId??null;return m&&measureIds.has(m)?m:null;
 }
+/** Phase270 ranking authorisation (replaces the Phase269 permissive rule, under which an unknown measurement or a need
+ * without category teaching allowed ranking). A scored catalog dimension may assess a consumer outcome only when ALL hold:
+ * category knowledge for the need exists; the dimension's measurement is known to that knowledge; a 'measured_by'
+ * relation says this measurement establishes the outcome; the measurement is not marked as a proxy for it; the
+ * dimension's protocol satisfies every condition the knowledge requires for comparability; and the dimension carries a
+ * score at all (raw quantities never rank). The explicit policy behind any ranking is therefore the category teaching
+ * ('measured_by' and 'requires_condition' relations, cited to their sources) plus the signed catalog. */
+export function outcomeAuthorised270(k:{relevant:readonly string[];proxies:readonly string[];conditions:readonly string[]}|undefined,d:KnowledgeDimension181,measure:string|null):
+ {ok:true}|{ok:false;reason:'no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_met'|'raw_quantity_not_a_score'}{
+ if(d.valueKind==='raw_quantity_only')return {ok:false,reason:'raw_quantity_not_a_score'};
+ if(!k)return {ok:false,reason:'no_category_teaching'};
+ if(!measure)return {ok:false,reason:'unknown_measurement'};
+ if(k.proxies.includes(measure))return {ok:false,reason:'known_proxy'};
+ if(!k.relevant.includes(measure))return {ok:false,reason:'no_measured_by_relation'};
+ if(!k.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_met'};
+ return {ok:true};
+}
+/** Phase270 (owner brief §4): the policy revisions under which a catalog may be shown as a labelled partial comparison.
+ * Restricted authorisation: comparison of raw quantities only, after catalog verification; never a recommendation. */
+export const PARTIAL_COMPARISON_POLICY270={policyRevisions:['pee268-energy-scoring:r2:partial-comparison-only'] as readonly string[],
+ protocolVersions:['pee268-test-evidence-validation:r2'] as readonly string[]};
+const REJECTION_TEXT270:Record<CatalogRejection181,string>={no_catalog:'no catalog was supplied',untrusted_key_or_bad_signature:'its signature does not verify against a pinned key',
+ invalid_or_altered_content:'its content is invalid or was altered after signing',wrong_category:'it covers a different category',wrong_market:'it covers a different market',
+ not_yet_valid:'it is not yet valid',expired:'it has expired',policy_revision_not_permitted:'its policy revision is not permitted for this use'};
 const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'the tester names the product without a model code, so the exact variant is not verified',
  condition_from_same_paragraph:'a test condition is stated in the same paragraph rather than the same sentence',load_from_document_protocol:'the empty load is stated in the review\'s test protocol, not beside the result',
  load_from_publisher_protocol:'the review does not itself say the appliance ran empty',all_compartments_running:'every compartment was running',includes_preheat:'the figure includes preheating',
@@ -193,14 +218,24 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  const assessed=new Set<string>();
  const rankable=!!opts.ranking&&!!out.category&&out.target.kind==='category'&&ri?.categoryBasis==='explicit_alias'&&perf.length>0&&
   (out.response==='positive_shortlist'||(out.response==='clarification'&&(ri?.statedCriteria.length??0)===0));
+ // Phase270: every evidence-consuming path below uses only a catalog verified here (signature against a pinned key,
+ // content and test-reference integrity, category, market, validity). A rejected catalog contributes no measurement.
+ const vc=opts.ranking&&out.category?verifySignedCatalog181(opts.ranking.catalog,opts.ranking.authority,{categoryId:out.category}):null;
+ const verified=vc?.ok?vc.catalog:null;
+ if(vc&&!vc.ok&&vc.reason!=='no_catalog'){out.limitations.push(`The supplied evidence catalog was not used: ${REJECTION_TEXT270[vc.reason]}. None of its measurements appear in this answer.`);
+  out.researchPlan.push(`need_review: catalog rejected (${vc.reason}); obtain a valid reviewed catalog or research the stated objectives directly`);}
  if(rankable){
-  const r=opts.ranking!;const dims=new Map((r.catalog?.catalog.dimensions??[]).map(d=>[d.key,d]));
-  // Phase269: a dimension confirms a need only when category knowledge does not mark its measurement as a proxy for that
-  // need (and, when the measurement is known, lists it as establishing the need).
-  const nk=new Map(needKnowledge269(store,out.category!,(ri!.performanceNeedSpans??[]).map(n=>n.id)).map(k=>[k.need,k]));
+  const r=opts.ranking!;const dims=new Map((verified?.dimensions??[]).map(d=>[d.key,d]));
+  // Phase270: a dimension confirms a need only under outcomeAuthorised270 (positive, attributable relevance).
+  const spans=(ri!.performanceNeedSpans??[]).filter(n=>!CONTEXT_NEEDS269.has(n.id));
+  const nk=new Map(needKnowledge269(store,out.category!,spans.map(n=>n.id)).filter(k=>k.kind!==null).map(k=>[k.need,k]));
   const mIds=new Set(store.categoryItems246(out.category!).filter(i=>i.concept?.kind==='measurement').map(i=>i.concept!.id));
-  const covered=(ri!.performanceNeedSpans??[]).filter(n=>{const d=dims.get(n.id);if(!d)return false;const m=dimensionMeasure269(d,mIds);const k=nk.get(n.id);
-   return !m||!k||(!k.proxies.includes(m)&&(k.relevant.length===0||k.relevant.includes(m)));});
+  const refused:string[]=[];
+  const covered=spans.filter(n=>{const d=dims.get(n.id);if(!d)return false;const a=outcomeAuthorised270(nk.get(n.id),d,dimensionMeasure269(d,mIds));
+   if(!a.ok)refused.push(`${n.id}: ${a.reason.replace(/_/g,' ')}`);return a.ok;});
+  // Every stated outcome and every factual need must be assessed; otherwise no overall ranking (principle 8).
+  const complete=covered.length===spans.length&&out.unresolved.length===0;
+  if(refused.length)out.limitations.push(`Catalog dimensions not accepted as evidence of the stated outcome (${refused.join('; ')}).`);
   let snap=createDecision177('request_'+sha(text).slice(0,16));
   snap=applyDecisionAction177(snap,{type:'set_scope',source:'user_request_statement',scope:{task:'product_selection',category:out.category!}}).snapshot;
   for(const n of covered){const d=dims.get(n.id)!;
@@ -209,7 +244,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   // Only products that passed every stated factual check (or, with none stated, every eligible product) can be ranked.
   const allowed=new Set((ri!.statedCriteria.length?out.shortlist.map(x=>x.productId):eligibleCandidates253(store,out.category!).filter(p=>p.eligible).map(p=>p.candidate.productId)));
   const name=(id:string,fallback:string)=>(store.db.prepare('SELECT name FROM products WHERE product_id=?').get(id) as {name:string|null}|undefined)?.name??fallback;
-  const ranked=covered.length?d.ranked.filter(x=>allowed.has(x.variantId)):[];
+  const ranked=covered.length&&complete?d.ranked.filter(x=>allowed.has(x.variantId)):[];
   if(d.status==='ranking_ready'&&ranked.length){
    const rows=ranked.map((x,i)=>({productId:x.variantId,name:name(x.variantId,x.name),rank:0,scorePoints:x.scorePoints,originalTestIds:[...x.originalTestIds],sourceUrls:[...x.sourceUrls],i}));
    rows.forEach((x,i)=>{x.rank=i>0&&x.scorePoints===rows[i-1].scorePoints?rows[i-1].rank:i+1;});
@@ -225,16 +260,23 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
    out.limitations.push('Only the criteria named above are ranked, from original tests cited per product; the stated limits were checked against declared specifications.',
     `Catalog review status: ${r.catalog!.catalog.externalReviewReference.replace(/[_:]+/g,' ')}.`,...d.visibleCautions);
   }else{
-   out.statements.push(covered.length?`No ranking: ${d.firstLayer[0]}`:'No ranking: no reviewed catalog dimension covers the stated objectives.');
+   out.statements.push(!covered.length?'No ranking: no reviewed catalog dimension covers the stated objectives.':!complete?'No ranking: not every stated objective is assessed by relevant evidence, so no overall order is given.':`No ranking: ${d.firstLayer[0]}`);
    out.researchPlan.push(...d.researchGaps.map(g=>`${g.kind}: ${g.reference} (${g.action})`));
   }
  }
  // Phase269: consumer-goal relevance, always computed when a category is known.
- if(out.category)out.goalAssessment=goalAssessment269(store,out,assessed,opts.ranking??null);
+ if(out.category)out.goalAssessment=goalAssessment269(store,out,assessed,verified);
+ // Phase270: one decision. The response states what the goal assessment decided (a partial comparison or a no-purchase
+ // check is never presented as a recommendation); an order survives only when the decision is a ranking.
+ const g=out.goalAssessment;
+ if(g&&out.response==='ranked_recommendation'&&g.decision!=='ranking'){out.ordered=false;out.rankingAuthorized=false;delete out.ranked;delete out.held;
+  for(const id of [...assessed])assessed.delete(id);
+  out.statements=out.statements.filter(x=>!/^Ranked by /.test(x));out.statements.push('No ranking: the evidence does not assess every stated objective, so no overall order is given.');}
+ if(g&&(g.decision==='partial_comparison'||g.decision==='no_purchase_check')&&out.response!=='out_of_scope')out.response=g.decision;
  // Principle 8: an objective the answer does not assess stays explicit.
  const unassessedNeeds=perf.filter(id=>!assessed.has(id));
  const toks=(x:string)=>x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
- out.unassessedObjectives=[...unassessedNeeds,...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
+ out.unassessedObjectives=[...unassessedNeeds,...out.unresolved.filter(n=>!unassessedNeeds.includes(n)),...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
  if(out.unassessedObjectives.length&&out.response!=='out_of_scope')
   out.statements.push(`Not assessed: ${out.unassessedObjectives.map(o=>`"${o.replace(/_/g,' ')}"`).join(', ')}. PEE holds no reviewed evidence for ${out.unassessedObjectives.length>1?'these':'this'}, so this answer does not address ${out.unassessedObjectives.length>1?'them':'it'}.`);
  return out;
@@ -243,10 +285,12 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
 /** Phase269 decision: ranking only when every recognised outcome is assessed by a measurement that establishes it;
  * a proxy metric is shown separately as a partial comparison (never when the user excluded its test configuration);
  * an existing appliance makes the decision a no-purchase check; otherwise targeted research. */
-function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:ReadonlySet<string>,ranking:RankingContext253|null):GoalAssessment253{
+function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:ReadonlySet<string>,verified:ProductKnowledgeCatalog181|null):GoalAssessment253{
  const needs=[...new Set(out.needs)];const know=needKnowledge269(store,out.category!,needs);
  const mIds=new Set(store.categoryItems246(out.category!).filter(i=>i.concept?.kind==='measurement').map(i=>i.concept!.id));
- const cat=ranking?.catalog?.catalog??null;
+ // Phase270: only a verified catalog, and for a partial comparison only one under a permitted policy revision.
+ const cat=verified;
+ const comparable=!!cat&&PARTIAL_COMPARISON_POLICY270.policyRevisions.includes(cat.policyRevision);
  const dims=(cat?.dimensions??[]).map(d=>({d,m:dimensionMeasure269(d,mIds)}));
  const single=needs.includes('single_compartment_use');
  const outcomes:GoalAssessment253['outcomes']=know.map(k=>{
@@ -256,11 +300,11 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
    requiredConditions:k.conditions,incomparable:[...new Set(proxyDims)],...(assessed.has(k.need)?{assessedBy:dims.filter(x=>x.d.key===k.need).map(x=>x.m??x.d.key)}:{})};});
  const real=outcomes.filter(o=>o.coverage!=='context');
  // The proxy metric to show separately, when its tested configuration does not contradict the user's stated use.
- const proxy=dims.find(x=>x.m&&real.some(o=>o.incomparable.includes(x.m!)));
+ const proxy=dims.find(x=>x.m&&x.d.valueKind==='raw_quantity_only'&&PARTIAL_COMPARISON_POLICY270.protocolVersions.includes(x.d.protocolVersion)&&real.some(o=>o.incomparable.includes(x.m!)));
  const proto=proxy?protocolOfMethod268(proxy.d.methodId):null;
  const excluded=!!proxy&&single&&proto?.compartments==='whole_appliance';
  let partial:GoalAssessment253['partialComparison'];
- if(proxy&&cat&&!excluded){
+ if(proxy&&cat&&comparable&&!excluded){
   const name=(id:string)=>(store.db.prepare('SELECT name FROM products WHERE product_id=?').get(id) as {name:string|null}|undefined)?.name??id;
   const items=cat.originalTests.filter(t=>t.dimensionKey===proxy.d.key&&t.measured).map(t=>({productId:t.variantId,name:name(t.variantId),value:t.measured!.value,unit:t.measured!.unit,
    sourceUrl:t.sourceUrl,variantVerified:t.scope==='exact_variant_original_professional_test',limitations:[...(t.limitations??[])].map(c=>LIMITATION_TEXT269[c]??c)}));

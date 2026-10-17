@@ -13,7 +13,10 @@
  */
 import {SPEC_CRITERIA249,comparable249,type Dimension249} from './phase249_decision.js';
 
-export const RESPONSES253=['positive_shortlist','clarification','justified_negative','justified_abstention','out_of_scope','ranked_recommendation'] as const;
+export const RESPONSES253=['positive_shortlist','clarification','justified_negative','justified_abstention','out_of_scope','ranked_recommendation',
+ /** Phase270: the response mirrors the goal assessment's decision when it is a labelled partial comparison or a
+  * no-purchase check (neither is a recommendation; a no-purchase check does not mean "do not buy"). */
+ 'partial_comparison','no_purchase_check'] as const;
 export type Response253=typeof RESPONSES253[number];
 export type TargetKind253='category'|'other'|'none'|'ambiguous';
 export interface Constraint253 {criterion:string;value:number;unit:string;bound?:'min'|'max';span?:string;

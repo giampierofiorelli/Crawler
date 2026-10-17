@@ -78,7 +78,9 @@ test('store v6 keeps the condition codes; validation applies the protocol, names
  assert.deepEqual(why('Nimbus Mini NM2 Air Fryer'),[[0.633,['load_not_established']]]);
  assert.deepEqual(why('Cirrus Duo Air Fryer').sort(),[[0.47,['duration_not_stated','load_not_established','single_compartment_value']],[0.91,['duration_not_stated','load_not_established']]]);
  assert.deepEqual(why('Stratus Glass Air Fryer'),[[22,['measurand_not_in_protocol']]]);
- assert.ok(v.validated.every(x=>x.independenceEstablished===false&&x.humanReviewed===false&&x.policyStatus==='proposed_not_authorised'));
+ assert.ok(v.validated.every(x=>x.independenceEstablished===false&&x.humanReviewed===false&&x.policyStatus===qualified.status));
+ // Phase270: r2 carries only the owner's restricted authorisation (labelled partial comparisons), never a full one.
+ assert.equal(VALIDATION_POLICY268.status,'authorised_partial_comparison_only');
  // Alternatives: the publisher's recorded protocol admits the silent review; an unqualified publisher admits nothing.
  assert.equal(validateTestMeasurements268(rows,product,{...qualified,protocols:qualified.protocols.map(p=>({...p,load:'stated_or_publisher_protocol' as const}))}).validated.length,4);
  assert.equal(validateTestMeasurements268(rows,product,VALIDATION_POLICY268).validated.length,0);

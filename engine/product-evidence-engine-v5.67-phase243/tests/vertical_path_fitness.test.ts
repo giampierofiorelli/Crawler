@@ -11,6 +11,8 @@ import {canonicalJson180} from '../src/phase180_reviewed_first_answer.js';
 import type {ProductKnowledgeCatalog181} from '../src/phase181_dynamic_knowledge_ranking.js';
 import {testLeadsFromHtml265} from '../src/phase265_test_measurements.js';
 import type {Advice253} from '../src/phase253_advice_contract.js';
+import {applyTeaching252,registerTeachingSources252} from '../src/phase252_category_teaching.js';
+import {COFFEE_TEACHING269,COFFEE_SOURCES269} from '../src/phase269_research_teaching.js';
 
 // ARCHITECTURAL FITNESS TEST — the consumer-request-to-decision path as one service (principles 2, 8, 10).
 // SYNTHETIC and isolated: fictional machines on fictional hosts, ingested through the real Phase246 path into an
@@ -20,10 +22,13 @@ const REQUEST='Which espresso machine makes the best-tasting traditional Italian
 const CLASS:StoragePolicy246={...DEFAULT_STORAGE_POLICY246,policyVersion:'pee249-class-policy',classPolicy:FACTUAL_CLASS_POLICY249};
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 const MACHINES=[['Aurora A1 Espresso Machine','A1',399],['Borealis B2 Espresso Machine','B2',549],['Cumulus C3 Espresso Machine','C3',650],['Drift D4 Espresso Machine','D4',299]] as const;
-function world(){
+function world(teach=true){
  const s=new KnowledgeStore246(':memory:',CLASS);
  seedCategoryHypotheses246(s,'coffee_machines');
  for(const [id,al] of Object.entries(CONCEPT_VOCABULARY248.coffee_machines))s.addConceptAliases246('coffee_machines',id,al);
+ // Phase270: the explicit policy that lets a measurement assess the taste outcome is the category teaching (the package's
+ // 'measured_by' relation from a blind sensory assessment to espresso quality, and its comparability condition).
+ if(teach){registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[COFFEE_TEACHING269],'2026-10-16T08:30:00.000Z');}
  const ids:Record<string,string>={};
  for(const [name,mpn,price] of MACHINES){
   const url=`https://maker-${mpn.toLowerCase()}.pee-vertical.test/p/${mpn}`;
@@ -44,7 +49,7 @@ function catalog(ids:Record<string,string>,o:Partial<ProductKnowledgeCatalog181>
   reviewedAt:'2026-10-15T00:00:00Z',expiresAt:'2026-11-15T00:00:00Z',discoveredVariantIds:[ids.A1,ids.B2,ids.C3,ids.D4],marketCoverageComplete:false,
   coverageStatement:'Synthetic controlled set of fictional machines; not market data.',
   dimensions:[{key:'espresso_quality',label:'Traditional espresso taste (specialist panel)',value:{kind:'boolean',value:true},methodId:'synthetic_specialist_panel',protocolVersion:'v1',
-   weightUnits:{hard:8000,high:4000,normal:2000,low:500},weightingReviewReference:'synthetic_weights',normalizationReviewReference:'synthetic_normalisation'}],
+   measureId:'espresso_sensory_assessment',conditionsMet:['same_beans_and_grind'],weightUnits:{hard:8000,high:4000,normal:2000,low:500},weightingReviewReference:'synthetic_weights',normalizationReviewReference:'synthetic_normalisation'}],
   originalTests:['A1','B2','C3'].map(m=>({id:'t_'+m.toLowerCase(),variantId:ids[m],dimensionKey:'espresso_quality',originalTestId:'panel_'+m.toLowerCase(),methodId:'synthetic_specialist_panel',protocolVersion:'v1',
    sourceUrl:`https://panel.pee-vertical.test/${m}`,observedAt:'2026-10-14T00:00:00Z',scope:'exact_variant_original_professional_test' as const})),
   products:[obs('A1',8000),obs('B2',9000),obs('C3',9500)],externalReviewReference:'synthetic_panel_review',...o};

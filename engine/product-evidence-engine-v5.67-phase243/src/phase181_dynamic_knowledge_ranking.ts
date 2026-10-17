@@ -20,6 +20,15 @@ export interface KnowledgeDimension181 {
  /** Reviewed weights are per-dimension AND per-priority, not invented from UI phrases. */
  weightUnits:Readonly<Record<CriterionPriority177,number>>;
  weightingReviewReference:string;normalizationReviewReference:string;
+ /** Phase270: 'raw_quantity_only' marks a dimension that carries measured quantities and NO consumer-quality score: its
+  * observations hold valuePoints 0 as a placeholder that is never a score, every test states its measured quantity, and
+  * Phase181 never ranks on it (no tie, no order). Absent: a scored dimension, as before. */
+ valueKind?:'raw_quantity_only';
+ /** Phase270: the measurement (a category-knowledge measurement id) this dimension's tests report; category knowledge
+  * decides whether it establishes a consumer outcome. */
+ measureId?:string;
+ /** Phase270: the test conditions (category-knowledge measurement ids) the dimension's protocol satisfies. */
+ conditionsMet?:readonly string[];
 }
 export interface ProductObservation181 {
  dimensionKey:string;valuePoints:number;hardOutcome:'pass'|'fail'|'unknown';
@@ -89,7 +98,9 @@ function validateCatalog(c:ProductKnowledgeCatalog181):void{
    !nameOK(d.methodId)||!nameOK(d.protocolVersion)||!nameOK(d.weightingReviewReference)||!nameOK(d.normalizationReviewReference)||
    !d.weightUnits||Object.getPrototypeOf(d.weightUnits)!==Object.prototype||
    Object.keys(d.weightUnits).sort().join(',')!=='hard,high,low,normal'||
-   priority.some(p=>!number(d.weightUnits[p],1,100000))||!d.value||typeof d.value!=='object')throw Error('phase181_bad_dimension');
+   priority.some(p=>!number(d.weightUnits[p],1,100000))||!d.value||typeof d.value!=='object'||
+   (d.valueKind!==undefined&&d.valueKind!=='raw_quantity_only')||(d.measureId!==undefined&&!nameOK(d.measureId))||
+   (d.conditionsMet!==undefined&&(!Array.isArray(d.conditionsMet)||d.conditionsMet.length>20||!d.conditionsMet.every(nameOK)||!distinct(d.conditionsMet))))throw Error('phase181_bad_dimension');
   // Prevent exotic prototypes and undefined numbers from entering trusted JSON.
   canonicalJson180(d.value);definitions.set(d.key,d);
  }
@@ -115,21 +126,44 @@ function validateCatalog(c:ProductKnowledgeCatalog181):void{
    const e=tests.get(o.evidenceId),d=definitions.get(o.dimensionKey);
    if(!d||!number(o.valuePoints)||!['pass','fail','unknown'].includes(o.hardOutcome)||!e||
     e.variantId!==p.variantId||e.dimensionKey!==o.dimensionKey||e.methodId!==d.methodId||
-    e.protocolVersion!==d.protocolVersion||o.hardOutcome==='unknown'&&o.valuePoints!==0)
+    e.protocolVersion!==d.protocolVersion||o.hardOutcome==='unknown'&&o.valuePoints!==0||
+    // A raw-quantity dimension has no score: the placeholder must be 0 and the test must carry its measured quantity.
+    d.valueKind==='raw_quantity_only'&&(o.valuePoints!==0||!e.measured))
     throw Error('phase181_wrong_product_protocol_or_measurement');
   }
  }
 }
-function verifiedCatalog(envelope:SignedCatalog181|null,authority:TrustedRankingAuthority180):ProductKnowledgeCatalog181|null{
- if(!envelope||!nameOK(envelope.keyId)||!authority.publicKeys||
+/** Phase270: the one verification every evidence-consuming path uses (ranking, partial comparison, any display of catalog
+ * measurements): pinned key and Ed25519 signature over the canonical catalog, full structural and reference integrity
+ * (validateCatalog: every observation bound to an original test of the same product, dimension, method and protocol),
+ * category, market, validity interval at the authority's date, and, when given, the permitted policy revisions. A rejected
+ * catalog yields no measurement; the reason is a code, never catalog content. */
+export type CatalogRejection181='no_catalog'|'untrusted_key_or_bad_signature'|'invalid_or_altered_content'|'wrong_category'|'wrong_market'|'not_yet_valid'|'expired'|'policy_revision_not_permitted';
+export function verifySignedCatalog181(envelope:SignedCatalog181|null,authority:TrustedRankingAuthority180,expect:{categoryId:string;permittedPolicyRevisions?:readonly string[];permittedProtocolVersions?:readonly string[]}):
+ {ok:true;catalog:ProductKnowledgeCatalog181}|{ok:false;reason:CatalogRejection181}{
+ if(!envelope)return {ok:false,reason:'no_catalog'};
+ if(!authority||!stamp(authority.asOf)||!nameOK(authority.market))return {ok:false,reason:'untrusted_key_or_bad_signature'};
+ if(!signatureValid(envelope,authority))return {ok:false,reason:'untrusted_key_or_bad_signature'};
+ try{validateCatalog(envelope.catalog);}catch{return {ok:false,reason:'invalid_or_altered_content'};}
+ const c=envelope.catalog;
+ if(c.categoryId!==expect.categoryId)return {ok:false,reason:'wrong_category'};
+ if(c.market!==authority.market)return {ok:false,reason:'wrong_market'};
+ if(Date.parse(authority.asOf)<Date.parse(c.reviewedAt))return {ok:false,reason:'not_yet_valid'};
+ if(Date.parse(authority.asOf)>Date.parse(c.expiresAt))return {ok:false,reason:'expired'};
+ if(expect.permittedPolicyRevisions&&!expect.permittedPolicyRevisions.includes(c.policyRevision))return {ok:false,reason:'policy_revision_not_permitted'};
+ if(expect.permittedProtocolVersions&&!c.dimensions.every(d=>expect.permittedProtocolVersions!.includes(d.protocolVersion)))return {ok:false,reason:'policy_revision_not_permitted'};
+ return {ok:true,catalog:c};
+}
+function signatureValid(envelope:SignedCatalog181,authority:TrustedRankingAuthority180):boolean{
+ if(!nameOK(envelope.keyId)||!authority.publicKeys||Object.getPrototypeOf(authority.publicKeys)!==Object.prototype||
   !Object.prototype.hasOwnProperty.call(authority.publicKeys,envelope.keyId)||
-  typeof envelope.signatureBase64!=='string'||!/^[a-zA-Z0-9+/]+={0,2}$/.test(envelope.signatureBase64))return null;
- try{
-  const signature=Buffer.from(envelope.signatureBase64,'base64');
-  if(signature.length!==64||!verify(null,Buffer.from(canonicalJson180(envelope.catalog)),
-   createPublicKey(authority.publicKeys[envelope.keyId]),signature))return null;
-  validateCatalog(envelope.catalog);return envelope.catalog;
- }catch{return null;}
+  typeof envelope.signatureBase64!=='string'||!/^[a-zA-Z0-9+/]+={0,2}$/.test(envelope.signatureBase64))return false;
+ try{const signature=Buffer.from(envelope.signatureBase64,'base64');
+  return signature.length===64&&verify(null,Buffer.from(canonicalJson180(envelope.catalog)),createPublicKey(authority.publicKeys[envelope.keyId]),signature);}catch{return false;}
+}
+function verifiedCatalog(envelope:SignedCatalog181|null,authority:TrustedRankingAuthority180):ProductKnowledgeCatalog181|null{
+ if(!envelope||!signatureValid(envelope,authority))return null;
+ try{validateCatalog(envelope.catalog);return envelope.catalog;}catch{return null;}
 }
 /** No rank is part of the signed catalog. Each changed criterion/priority reranks
  * the same trusted per-product knowledge on demand. External source/policy review
@@ -164,6 +198,11 @@ export function dynamicKnowledgeAnswer181(args:{snapshot:DecisionSnapshot177;cat
  if(missing.length){return pending(snapshot,missing.map(x=>gap('missing_criterion',x.key,
   'Study this exact goal/value and validate its required tests and policy; do not ignore an unrecognized need.')),
   'The verified knowledge does not cover every confirmed requirement.');}
+ // Phase270: a raw-quantity dimension is shown as a labelled comparison by the request path, never ranked here.
+ const raw=confirmed.filter(x=>definitions.get(x.key)!.valueKind==='raw_quantity_only');
+ if(raw.length)return pending(snapshot,raw.map(x=>gap('need_review',x.key,
+  'This dimension carries raw measured quantities without a reviewed consumer-quality score; it cannot order products.')),
+  'Raw measured quantities are not a quality score and cannot rank products.');
  const weights=new Map(confirmed.map(x=>[x.key,definitions.get(x.key)!.weightUnits[x.priority]]));
  const weightSum=[...weights.values()].reduce((a,b)=>a+b,0);
  const evidence=new Map(c.originalTests.map(x=>[x.id,x]));
