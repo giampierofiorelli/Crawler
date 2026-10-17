@@ -85,7 +85,7 @@ test('stated use and owned equipment change the decision: one drawer makes the w
  assert.ok(one.goalAssessment!.outcomes.find(o=>o.need==='low_energy_use')!.incomparable.includes('compartments_in_use'));
  assert.ok(one.statements.some(x=>/cannot answer a question about using one drawer/.test(x)));
  const oven=adviseFromRequest253('I already have a fan oven. Is an air fryer actually cheaper to run, or should I keep using the oven?',s,CATEGORY_REGISTRY250,{ranking:r});
- assert.equal(oven.goalAssessment!.decision,'no_purchase_check');assert.ok(oven.statements.some(x=>/buying may not be necessary/.test(x)));
+ assert.equal(oven.goalAssessment!.decision,'no_purchase_check');assert.ok(oven.statements.some(x=>/Buying may not be necessary/i.test(x)));
  s.close();
 });
 

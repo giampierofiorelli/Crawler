@@ -321,7 +321,11 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
  const statement=(k:NeedKnowledge269)=>k.relevant.length?`for ${st(k.need)}, ${k.relevant.map(st).join(' or ')}${k.conditions.length?` (${k.conditions.map(st).join(', ')})`:''}`:null;
  const unit=(u:string)=>({kwh:'kWh',w:'W',minutes:'min'} as Record<string,string>)[u]??u;
  const plain=(q:string|undefined)=>(q??'').replace(/^[a-z_]+:\s*/,'').replace(/\s*Package [^.]*\.?\s*$/,'');
- if(decision==='no_purchase_check')out.statements.push(`You already have equipment that may do this job (${needs.filter(n=>n.endsWith('_alternative')).map(n=>st(n.replace(/_alternative$/,''))).join(', ')}), so buying may not be necessary: a new ${st(out.category!).replace(/s$/,'')} is worthwhile only if, for your own use, it is measurably better on what you care about. That needs a comparison of both under the same conditions; PEE does not hold one.`);
+ // Phase270: the alternative is named by its taught statement (owned equipment, or a leak to repair), never assumed to
+ // be equipment; a no-purchase check is not an instruction not to buy.
+ if(decision==='no_purchase_check'){const alt=needs.filter(n=>n.endsWith('_alternative'));
+  const taught=store.categoryItems246(out.category!).filter(i=>i.concept&&alt.includes(i.concept.id)&&i.section==='user_goals').map(i=>i.statement.replace(/\s*\[[^\]]*\]\s*$/,'').replace(/\.$/,''));
+  out.statements.push(`Buying may not be necessary. ${taught.length?taught.join('; ')+'. ':''}A new ${st(out.category!).replace(/s$/,'')} is worthwhile only if, for your own use, it is measurably better than that alternative on what you care about. That needs a comparison under the same conditions; PEE does not hold one.`);}
  if(partial){out.statements.push(`Partial comparison only, not a recommendation: ${partial.label}. ${partial.direction==='lower_is_better'?'Lower is better for this metric':'Higher is better for this metric'}: ${partial.items.map(i=>`${i.name} (${i.value} ${unit(i.unit)}${i.variantVerified?'':'; variant not verified'})`).join('; ')}.`,
    `This metric does not show the electricity needed to cook a meal, and it does not assess ${partial.doesNotAssess.map(st).join(', ')}.`);
   for(const i of partial.items)if(i.limitations.length)out.limitations.push(`${i.name}: ${i.limitations.join('; ')} (${i.sourceUrl}).`);}

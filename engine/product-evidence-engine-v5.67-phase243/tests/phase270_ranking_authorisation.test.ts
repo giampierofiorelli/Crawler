@@ -180,6 +180,6 @@ test('§10: owned equipment gives a no-purchase check that does not say "do not 
  const a=advise(s,{catalog:env(cat),authority:auth},'I already have a fan oven. Is an air fryer actually cheaper to run, or should I keep using the oven?');
  assert.equal(a.goalAssessment!.decision,'no_purchase_check');assert.equal(a.response,'no_purchase_check');
  assert.ok(!a.statements.some(x=>/\b(?:do not|don't|must not|should not) buy\b/i.test(x)));
- assert.ok(a.statements.some(x=>/buying may not be necessary/.test(x)));
+ assert.ok(a.statements.some(x=>/Buying may not be necessary/i.test(x)));
  s.close();
 });
