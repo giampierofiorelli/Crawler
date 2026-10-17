@@ -17,7 +17,9 @@
  * referents. Deterministic, no dependencies, no category vocabulary. Pure: callers supply the reader's blocks and mentions.
  */
 
-export interface Mention1C {name:string;model:string}
+/** `model` is the surface matched in the text; `name` the identity reported. Step 1D-A (optional, additive): `key` groups several
+ * surfaces of one entity (a document inventory supplies them); without it every model is its own entity, as in Step 1C. */
+export interface Mention1C {name:string;model:string;key?:string}
 export interface Lead1C {value:number;unit:string;blockIndex:number;valueOffset?:number|null;subject?:{name:string}|null}
 export type Rule1C='R1a_table_column'|'R1a_table_cell_ambiguous'|'R1b_parenthetical'|'R1c_possessive'|'R1d_unnamed_referent'|'R1e_multi_subject'
  |'R1e_multi_subject_unidentified'|'R1f_coordinated_possessive'|'R2_grammatical_subject'|'R2_several_subject_candidates'|'R2b_elided_subject'
@@ -31,6 +33,8 @@ export interface Context1C {
  blocks:readonly string[];tags:readonly string[];mentions:readonly Mention1C[];page:{name:string}|null;
  /** comparisonCells272: cell text -> column product, or null when the text occurs in several columns. */
  cells:ReadonlyMap<string,{name:string}|null>;
+ /** Step 1D-A (optional): section scope from a document inventory's heading hierarchy; replaces the nearest-heading rule. */
+ section?:(blockIndex:number)=>{subject:{name:string}|null;competing:number};
 }
 
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
@@ -67,9 +71,11 @@ function occurrences(text:string,mentions:readonly Mention1C[]):Occ[]{
  for(const m of mentions)for(const x of text.matchAll(new RegExp('\\b'+esc(m.model)+'\\b','g')))occ.push({m,i:x.index!,len:x[0].length});
  // A standalone brand ("the LG's 632 nits", "the Panasonic (12.7ms)") stands for a product only when exactly one document
  // product carries that brand; a brand shared by several products (or followed by a model token) is not an alias.
- const brands=new Map<string,Mention1C[]>();for(const m of mentions){const b=m.name.split(/\s+/)[0];if(b!==m.model)brands.set(b,[...(brands.get(b)??[]),m]);}
+ const brands=new Map<string,Mention1C[]>();for(const m of mentions){const b=m.name.split(/\s+/)[0];if(b!==m.model&&!(brands.get(b)??[]).some(x=>K(x)===K(m)))brands.set(b,[...(brands.get(b)??[]),m]);}
  for(const [b,ms] of brands)if(ms.length===1)for(const x of text.matchAll(new RegExp('\\b'+esc(b)+'\\b(?!\\s+[A-Z0-9])','g')))occ.push({m:ms[0],i:x.index!,len:x[0].length});
- occ.sort((a,b)=>a.i-b.i);const out:Occ[]=[];
+ occ.sort((a,b)=>a.i-b.i||b.len-a.len);const out:Occ[]=[];
+ // With entity keys, a surface nested inside a longer surface of the same entity ("Airmega 100" in "Coway Airmega 100") is one occurrence.
+ for(let j=occ.length-1;j>=0;j--){const o=occ[j];if(o.m.key&&occ.some((p,q)=>q!==j&&K(p.m)===K(o.m)&&p.i<=o.i&&p.i+p.len>=o.i+o.len&&p.len>o.len))occ.splice(j,1);}
  for(const o of occ){let pre=text.slice(0,o.i);
   // Strip the product's own name tokens ("the LG " before "B5") and determiners, then read the governing word.
   for(const t of o.m.name.split(/\s+/).filter(t=>t!==o.m.model).reverse())pre=pre.replace(new RegExp(esc(t)+'\\s*$','i'),'');
@@ -80,7 +86,8 @@ function occurrences(text:string,mentions:readonly Mention1C[]):Occ[]{
   out.push({...o,object:OBJECT.test(pre)||coordObject,lead:pre});}
  return out;
 }
-const distinct=(o:readonly Occ[])=>[...new Map(o.map(x=>[x.m.model,x.m])).values()];
+const K=(m:Mention1C)=>m.key??m.model;
+const distinct=(o:readonly Occ[])=>[...new Map(o.map(x=>[K(x.m),x.m])).values()];
 /** Subject of a span: the only product not in an object position, preceded by at most 12 words in the span. */
 function subjectOf(span:string,mentions:readonly Mention1C[]):Mention1C|null{
  const s=occurrences(span,mentions).filter(o=>!o.object);if(distinct(s).length!==1)return null;
@@ -94,7 +101,8 @@ function locate(block:string,l:Lead1C):number|null{
 }
 /** The nearest preceding h1-h3 heading: its subject (the only non-object product, in a heading without comparison
  * wording), and whether it names any product in a non-object position. */
-function section(ctx:Context1C,bi:number):{subject:Mention1C|null;competing:number}{
+function section(ctx:Context1C,bi:number):{subject:{name:string}|null;competing:number}{
+ if(ctx.section)return ctx.section(bi);
  for(let i=bi-1;i>=0;i--)if(/^h[1-3]$/.test(ctx.tags[i]??'')){const h=ctx.blocks[i];const occ=occurrences(h,ctx.mentions);const non=distinct(occ.filter(o=>!o.object));
   const comparative=/\b(?:vs\.?|versus|than|compared|against)\b/i.test(h);
   return {subject:non.length===1&&!comparative?non[0]:null,competing:non.length};}
@@ -106,7 +114,7 @@ function section(ctx:Context1C,bi:number):{subject:Mention1C|null;competing:numb
 export function pageIdentity1C(page:{name:string}|null,mentions:readonly Mention1C[]):{name:string}|null{
  if(!page)return null;const w=page.name.trim().split(/\s+/);
  if(w.length<=7&&!/\b(?:I|we|you|would|is|are|was|were|but|my|our|if|wins?)\b/i.test(page.name))return page;
- const inside=mentions.filter(m=>new RegExp('\\b'+esc(m.model)+'\\b').test(page.name));return inside.length===1?{name:inside[0].name}:null;
+ const inside=[...new Map(mentions.filter(m=>new RegExp('\\b'+esc(m.model)+'\\b').test(page.name)).map(m=>[K(m),m])).values()];return inside.length===1?{name:inside[0].name}:null;
 }
 export function attributeLead1C(l:Lead1C,ctx:Context1C):Decision1C{
  const block=ctx.blocks[l.blockIndex]??'';const at=block?locate(block,l):null;

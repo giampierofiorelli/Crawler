@@ -1,0 +1,1582 @@
+{
+ "schema": "pee.step1d.identity-eval.v1",
+ "label": "dev2",
+ "at": "2026-10-17T17:24:51.736Z",
+ "tier": "development (spent and examined pages; never untouched)",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "93efede",
+  "srcDirty": false,
+  "readersSha256": "e0026e3ba6a44cedefc36866ca8fe994ded7efe186f3ae4e9056af95291565f3",
+  "readers": 6
+ },
+ "arms": {
+  "A": "constrained_candidate_1c",
+  "B": "candidate_1c_inventory"
+ },
+ "summary": {
+  "step1c (spent; inventory designed on it)": {
+   "documents": 5,
+   "gold": 102,
+   "items": {
+    "A": {
+     "missing": 26,
+     "wrong_product": 1,
+     "correct": 7,
+     "unresolved": 55,
+     "false_identity_match": 13
+    },
+    "B": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    }
+   },
+   "leads": {
+    "A": {
+     "lead_correct": 7,
+     "lead_wrong_product": 1,
+     "lead_unresolved": 58,
+     "lead_false_identity": 15,
+     "lead_not_gold_value": 17
+    },
+    "B": {
+     "lead_correct": 77,
+     "lead_unresolved": 4,
+     "lead_not_gold_value": 17
+    }
+   },
+   "regressions": 0,
+   "newWrong": 0,
+   "improperMerges": 0
+  },
+  "phase272 untouched (spent; examined)": {
+   "documents": 13,
+   "gold": 163,
+   "items": {
+    "A": {
+     "missing": 93,
+     "correct": 60,
+     "wrong_product": 7,
+     "unresolved": 3
+    },
+    "B": {
+     "missing": 93,
+     "correct": 60,
+     "wrong_product": 6,
+     "unresolved": 4
+    }
+   },
+   "leads": {
+    "A": {
+     "lead_correct": 67,
+     "lead_not_gold_value": 36,
+     "lead_wrong_product": 7,
+     "lead_unresolved": 3
+    },
+    "B": {
+     "lead_correct": 67,
+     "lead_not_gold_value": 36,
+     "lead_wrong_product": 6,
+     "lead_unresolved": 4
+    }
+   },
+   "regressions": 0,
+   "newWrong": 0,
+   "improperMerges": 0
+  },
+  "phase272 development pages": {
+   "documents": 3,
+   "gold": 28,
+   "items": {
+    "A": {
+     "false_identity_match": 1,
+     "missing": 4,
+     "correct": 23
+    },
+    "B": {
+     "correct": 24,
+     "missing": 4
+    }
+   },
+   "leads": {
+    "A": {
+     "lead_not_gold_value": 2,
+     "lead_false_identity": 1,
+     "lead_correct": 27
+    },
+    "B": {
+     "lead_not_gold_value": 2,
+     "lead_correct": 26,
+     "lead_wrong_product": 1,
+     "lead_unresolved": 1
+    }
+   },
+   "regressions": 0,
+   "newWrong": 0,
+   "improperMerges": 0
+  }
+ },
+ "entityView": {
+  "step1c (spent; inventory designed on it)": {
+   "goldEntities": 18,
+   "detectedByStep1C": 6,
+   "detectedByInventory": 17,
+   "withAliasLinks": 15,
+   "entitiesWithRemainingProblem": 4
+  },
+  "phase272 untouched (spent; examined)": {
+   "goldEntities": 37,
+   "detectedByStep1C": 16,
+   "detectedByInventory": 28,
+   "withAliasLinks": 16,
+   "entitiesWithRemainingProblem": 5
+  },
+  "phase272 development pages": {
+   "goldEntities": 5,
+   "detectedByStep1C": 3,
+   "detectedByInventory": 4,
+   "withAliasLinks": 3,
+   "entitiesWithRemainingProblem": 0
+  }
+ },
+ "problemSummary": {
+  "distinctProblems": 9,
+  "measurementsAffected": 14,
+  "byCause": {
+   "5_identity_present_not_used": 7,
+   "1_not_detected": 2
+  },
+  "measurementsByCause": {
+   "5_identity_present_not_used": 10,
+   "1_not_detected": 4
+  }
+ },
+ "documents": [
+  {
+   "set": "step1c (spent; inventory designed on it)",
+   "doc": "s1c_tv_trd_affordable_oled3",
+   "category": "televisions",
+   "gold": 3,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 1,
+      "wrong_product": 1,
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1,
+      "lead_wrong_product": 1
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "t1-02",
+     "A": "wrong_product",
+     "B": "correct"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 12,
+     "product": 6,
+     "standard": 1,
+     "other": 1
+    },
+    "mentions": {
+     "contextual_alias": 55,
+     "unknown_product": 12,
+     "explicit_identity": 11,
+     "ambiguous": 11,
+     "not_product": 6
+    },
+    "aliasLinks": 55,
+    "productEntitiesWithoutGold": 3,
+    "notProduct": 2
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "step1c (spent; inventory designed on it)",
+   "doc": "s1c_tv_trd_rgb_vs_miniled",
+   "category": "televisions",
+   "gold": 9,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 2,
+      "unresolved": 4,
+      "missing": 3
+     },
+     "leads": {
+      "lead_unresolved": 4,
+      "lead_correct": 2
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "t2-03",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "t2-04",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "t2-08",
+     "A": "unresolved",
+     "B": "correct"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 10,
+     "other": 1,
+     "product": 5
+    },
+    "mentions": {
+     "unknown_product": 9,
+     "not_product": 4,
+     "explicit_identity": 10,
+     "contextual_alias": 52,
+     "ambiguous": 4
+    },
+    "aliasLinks": 52,
+    "productEntitiesWithoutGold": 3,
+    "notProduct": 1
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 1
+    }
+   ]
+  },
+  {
+   "set": "step1c (spent; inventory designed on it)",
+   "doc": "s1c_tv_trd_bravia7ii_r95h",
+   "category": "televisions",
+   "gold": 6,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 2,
+      "unresolved": 3,
+      "missing": 1
+     },
+     "leads": {
+      "lead_unresolved": 3,
+      "lead_correct": 2
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "t3-02",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "t3-06",
+     "A": "unresolved",
+     "B": "correct"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 6,
+     "unknown": 8,
+     "other": 1
+    },
+    "mentions": {
+     "explicit_identity": 13,
+     "unknown_product": 8,
+     "contextual_alias": 79,
+     "ambiguous": 2,
+     "not_product": 3
+    },
+    "aliasLinks": 79,
+    "productEntitiesWithoutGold": 3,
+    "notProduct": 1
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 1
+    }
+   ]
+  },
+  {
+   "set": "step1c (spent; inventory designed on it)",
+   "doc": "s1c_ap_hf_small",
+   "category": "air_purifiers",
+   "gold": 48,
+   "arms": {
+    "A": {
+     "items": {
+      "false_identity_match": 13,
+      "missing": 9,
+      "unresolved": 26
+     },
+     "leads": {
+      "lead_false_identity": 15,
+      "lead_unresolved": 29
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 43,
+      "lead_unresolved": 1
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "a1-01",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-02",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-03",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-04",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-06",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-07",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-08",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-09",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-10",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-11",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-12",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-13",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-14",
+     "A": "false_identity_match",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-16",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-17",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-18",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-25",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-26",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-27",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-28",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-29",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-30",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-31",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-32",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-33",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-34",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-35",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-36",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-37",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-38",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-39",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-40",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-41",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-42",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-43",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-44",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-45",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a1-46",
+     "A": "unresolved",
+     "B": "correct"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 16,
+     "product": 10,
+     "standard": 4,
+     "other": 1
+    },
+    "mentions": {
+     "unknown_product": 15,
+     "explicit_identity": 17,
+     "ambiguous": 3,
+     "contextual_alias": 10,
+     "not_product": 15
+    },
+    "aliasLinks": 10,
+    "productEntitiesWithoutGold": 5,
+    "notProduct": 5
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 1
+    }
+   ]
+  },
+  {
+   "set": "step1c (spent; inventory designed on it)",
+   "doc": "s1c_ap_hf_bedroom",
+   "category": "air_purifiers",
+   "gold": 36,
+   "arms": {
+    "A": {
+     "items": {
+      "unresolved": 22,
+      "missing": 12,
+      "correct": 2
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_unresolved": 22,
+      "lead_correct": 2
+     }
+    },
+    "B": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "a2-12",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-15",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-16",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-17",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-18",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-19",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-20",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-21",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-22",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-24",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-25",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-26",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-27",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-28",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-29",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-30",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-31",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-32",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-33",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-34",
+     "A": "unresolved",
+     "B": "correct"
+    },
+    {
+     "goldId": "a2-35",
+     "A": "unresolved",
+     "B": "correct"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 11,
+     "product": 7,
+     "standard": 3,
+     "other": 1
+    },
+    "mentions": {
+     "unknown_product": 12,
+     "explicit_identity": 17,
+     "not_product": 16,
+     "contextual_alias": 6,
+     "ambiguous": 5
+    },
+    "aliasLinks": 6,
+    "productEntitiesWithoutGold": 1,
+    "notProduct": 4
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 1
+    }
+   ]
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tg_ninja_crispi",
+   "category": "air_fryers",
+   "gold": 2,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {}
+    },
+    "B": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {}
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 1,
+     "unknown": 6
+    },
+    "mentions": {
+     "explicit_identity": 2,
+     "unknown_product": 6
+    },
+    "aliasLinks": 0,
+    "productEntitiesWithoutGold": 1,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tg_tfal_infrared",
+   "category": "air_fryers",
+   "gold": 1,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 5
+    },
+    "mentions": {
+     "unknown_product": 5
+    },
+    "aliasLinks": 0,
+    "productEntitiesWithoutGold": 0,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tr_philips_1000_flexdrawer",
+   "category": "air_fryers",
+   "gold": 5,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 6,
+     "unknown": 7
+    },
+    "mentions": {
+     "explicit_identity": 12,
+     "unknown_product": 8,
+     "ambiguous": 4
+    },
+    "aliasLinks": 0,
+    "productEntitiesWithoutGold": 4,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tr_sharp_5_5l",
+   "category": "air_fryers",
+   "gold": 8,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 4,
+     "product": 4
+    },
+    "mentions": {
+     "unknown_product": 5,
+     "explicit_identity": 7
+    },
+    "aliasLinks": 0,
+    "productEntitiesWithoutGold": 4,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_dw_tr_lg_ldnpm654s",
+   "category": "dishwashers",
+   "gold": 4,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 9,
+     "instrument": 1,
+     "unknown": 9
+    },
+    "mentions": {
+     "contextual_alias": 1,
+     "explicit_identity": 19,
+     "not_product": 4,
+     "unknown_product": 9,
+     "ambiguous": 6
+    },
+    "aliasLinks": 1,
+    "productEntitiesWithoutGold": 7,
+    "notProduct": 1
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_dw_tr_candy_cf57cf0w",
+   "category": "dishwashers",
+   "gold": 6,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 4,
+      "wrong_product": 2
+     },
+     "leads": {
+      "lead_wrong_product": 2
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 4,
+      "wrong_product": 2
+     },
+     "leads": {
+      "lead_wrong_product": 2
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 7,
+     "unknown": 3
+    },
+    "mentions": {
+     "explicit_identity": 20,
+     "unknown_product": 4,
+     "ambiguous": 2,
+     "contextual_alias": 1
+    },
+    "aliasLinks": 1,
+    "productEntitiesWithoutGold": 6,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 2
+    }
+   ]
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_ap_hf_xiaomi_4pro",
+   "category": "air_purifiers",
+   "gold": 27,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 11,
+     "unknown": 2,
+     "standard": 1,
+     "instrument": 1,
+     "other": 1
+    },
+    "mentions": {
+     "explicit_identity": 26,
+     "unknown_product": 2,
+     "not_product": 9,
+     "contextual_alias": 8,
+     "ambiguous": 6
+    },
+    "aliasLinks": 8,
+    "productEntitiesWithoutGold": 4,
+    "notProduct": 3
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "1_not_detected",
+     "measurementsAffected": 3
+    }
+   ]
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_ap_hf_puroair_240",
+   "category": "air_purifiers",
+   "gold": 33,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 14,
+      "missing": 19
+     },
+     "leads": {
+      "lead_correct": 17,
+      "lead_not_gold_value": 3
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 14,
+      "missing": 19
+     },
+     "leads": {
+      "lead_correct": 17,
+      "lead_not_gold_value": 3
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 12,
+     "unknown": 21,
+     "other": 1,
+     "standard": 5,
+     "instrument": 2
+    },
+    "mentions": {
+     "explicit_identity": 82,
+     "unknown_product": 20,
+     "ambiguous": 32,
+     "contextual_alias": 9,
+     "not_product": 23
+    },
+    "aliasLinks": 9,
+    "productEntitiesWithoutGold": 2,
+    "notProduct": 8
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_ap_trd_iqair_atemx",
+   "category": "air_purifiers",
+   "gold": 2,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "unknown": 14,
+     "product": 2
+    },
+    "mentions": {
+     "unknown_product": 23,
+     "explicit_identity": 4
+    },
+    "aliasLinks": 0,
+    "productEntitiesWithoutGold": 2,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "1_not_detected",
+     "measurementsAffected": 1
+    }
+   ]
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tg_lg_b6",
+   "category": "televisions",
+   "gold": 30,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 7,
+      "missing": 22,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 7,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 7,
+      "missing": 22,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 7,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 6,
+     "unknown": 15,
+     "standard": 1,
+     "instrument": 3
+    },
+    "mentions": {
+     "explicit_identity": 33,
+     "contextual_alias": 39,
+     "ambiguous": 32,
+     "unknown_product": 16,
+     "not_product": 4
+    },
+    "aliasLinks": 39,
+    "productEntitiesWithoutGold": 2,
+    "notProduct": 4
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 1
+    }
+   ]
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tg_samsung_s85f",
+   "category": "televisions",
+   "gold": 28,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 8,
+      "missing": 20
+     },
+     "leads": {
+      "lead_correct": 8
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 8,
+      "missing": 20
+     },
+     "leads": {
+      "lead_correct": 8
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 6,
+     "standard": 2,
+     "unknown": 10,
+     "instrument": 3
+    },
+    "mentions": {
+     "contextual_alias": 24,
+     "explicit_identity": 34,
+     "not_product": 6,
+     "unknown_product": 10,
+     "ambiguous": 16
+    },
+    "aliasLinks": 24,
+    "productEntitiesWithoutGold": 2,
+    "notProduct": 5
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tr_samsung_qe65s85h",
+   "category": "televisions",
+   "gold": 5,
+   "arms": {
+    "A": {
+     "items": {
+      "wrong_product": 3,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 4,
+      "lead_not_gold_value": 1
+     }
+    },
+    "B": {
+     "items": {
+      "wrong_product": 2,
+      "missing": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 3,
+      "lead_not_gold_value": 1
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "tv-q63",
+     "A": "wrong_product",
+     "B": "unresolved"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 9,
+     "unknown": 18,
+     "standard": 3
+    },
+    "mentions": {
+     "explicit_identity": 30,
+     "unknown_product": 18,
+     "not_product": 6,
+     "contextual_alias": 16
+    },
+    "aliasLinks": 16,
+    "productEntitiesWithoutGold": 8,
+    "notProduct": 3
+   },
+   "improperMerges": 0,
+   "entityProblems": [
+    {
+     "cause": "5_identity_present_not_used",
+     "measurementsAffected": 3
+    }
+   ]
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tr_sony_bravia8ii",
+   "category": "televisions",
+   "gold": 12,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 9,
+      "correct": 3
+     },
+     "leads": {
+      "lead_correct": 3,
+      "lead_not_gold_value": 3
+     }
+    },
+    "B": {
+     "items": {
+      "missing": 9,
+      "correct": 3
+     },
+     "leads": {
+      "lead_correct": 3,
+      "lead_not_gold_value": 3
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 16,
+     "standard": 1,
+     "unknown": 14
+    },
+    "mentions": {
+     "explicit_identity": 40,
+     "ambiguous": 64,
+     "not_product": 3,
+     "contextual_alias": 27,
+     "unknown_product": 15
+    },
+    "aliasLinks": 27,
+    "productEntitiesWithoutGold": 13,
+    "notProduct": 1
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 development pages",
+   "doc": "dev_dw_tr_bosch_smv68md00g",
+   "category": "dishwashers",
+   "gold": 3,
+   "arms": {
+    "A": {
+     "items": {
+      "false_identity_match": 1,
+      "missing": 1,
+      "correct": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_false_identity": 1,
+      "lead_correct": 1
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     }
+    }
+   },
+   "itemsChanged": [
+    {
+     "goldId": "q0",
+     "A": "false_identity_match",
+     "B": "correct"
+    }
+   ],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 8,
+     "unknown": 12
+    },
+    "mentions": {
+     "ambiguous": 16,
+     "explicit_identity": 16,
+     "unknown_product": 15,
+     "contextual_alias": 3
+    },
+    "aliasLinks": 3,
+    "productEntitiesWithoutGold": 6,
+    "notProduct": 0
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 development pages",
+   "doc": "dev_ap_hf_airdoctor3000",
+   "category": "air_purifiers",
+   "gold": 16,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_correct": 18,
+      "lead_not_gold_value": 1
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 5,
+     "unknown": 11,
+     "standard": 3,
+     "instrument": 1,
+     "other": 1
+    },
+    "mentions": {
+     "explicit_identity": 25,
+     "unknown_product": 14,
+     "ambiguous": 14,
+     "not_product": 10,
+     "contextual_alias": 7
+    },
+    "aliasLinks": 7,
+    "productEntitiesWithoutGold": 4,
+    "notProduct": 5
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  },
+  {
+   "set": "phase272 development pages",
+   "doc": "dev_tv_trd_lgc6_c5",
+   "category": "televisions",
+   "gold": 9,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     }
+    },
+    "B": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     }
+    }
+   },
+   "itemsChanged": [],
+   "regressions": [],
+   "newWrong": [],
+   "inventory": {
+    "entities": {
+     "product": 4,
+     "unknown": 11,
+     "standard": 1,
+     "other": 1
+    },
+    "mentions": {
+     "explicit_identity": 18,
+     "contextual_alias": 69,
+     "unknown_product": 11,
+     "not_product": 4,
+     "ambiguous": 4
+    },
+    "aliasLinks": 69,
+    "productEntitiesWithoutGold": 2,
+    "notProduct": 2
+   },
+   "improperMerges": 0,
+   "entityProblems": []
+  }
+ ]
+}

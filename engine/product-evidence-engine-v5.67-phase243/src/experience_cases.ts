@@ -17,7 +17,9 @@ export type CaseKind='quantitative_value'|'qualitative_finding'|'false_positive_
 /** Failure families of the readiness review (§3) and the success families that guard against regressions. */
 export type ExperienceFamily=
  |'F1_identity_by_default'|'F1_identity_headline'|'F2_qualitative_overreach'|'F3_lost_under_guidance'|'F5_category_recognition'|'F8_identity_variant'
- |'S_attribution_success'|'S_extraction_success'|'S_gap_recognition_success';
+ |'S_attribution_success'|'S_extraction_success'|'S_gap_recognition_success'
+ /** Step 1D-A document-identity families. */
+ |'F9_mention_not_detected'|'F9_alias_not_linked'|'F9_section_scope_lost'|'F9_variant_or_family'|'F9_identity_split'|'F9_grammar_after_identity'|'S_identity_link_success';
 export type SubjectOutcome='correct'|'incorrect_match'|'unresolved';
 /** One observation of a case by one build. Values and names live only in the private copy. */
 export interface ObservedState {
@@ -58,6 +60,13 @@ export interface ExperienceCase {
   * the lead to one of them (the source of the EX-11 disagreement). */
  sameValueGoldIds?:string[];
  historicalCheck?:{reobservedOn:string;reproduced:boolean;reobserved:{status:ObservedState['status'];subjectOutcome:SubjectOutcome|null};note:string|null};
+ /** Step 1D-A diagnostic trace: the observable steps of an identity decision (source region, mentions before and after the
+  * document inventory, candidate identities and their evidence, both attributions, the reference, cause, what would resolve
+  * the remaining ambiguity). Observable operations only; no private reasoning. */
+ diagnostic?:{region:{blockIndex:number|null;blockSha256:string|null;regionType:string|null;headingChain:string[]};
+  mentionsBefore:string[];inventory:{entity:string|null;state:string|null;reason:string|null;support:{blockIndex:number;region:string}|null;competing:string[]};
+  attributionBefore:{subject:string|null;rule:string|null;class:string};attributionAfter:{subject:string|null;rule:string|null;class:string};
+  causeCode:string;neededEvidence:string|null};
 }
 
 /** Does an observation meet the case's reference expectation? */
