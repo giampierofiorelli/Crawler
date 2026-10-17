@@ -1,0 +1,490 @@
+{
+ "schema": "pee271.research-package-inventory.v1",
+ "received": "2026-10-17",
+ "storage": "packages unmodified in the private repository pee-knowledge/research-packages/; detailed Stage-A inventories (paraphrased concepts, measurements, proxies, conditions, source leads) in pee-knowledge/research-inventory/phase271/; this public file holds metadata only",
+ "method": "archives unpacked into empty directories; manifests verified (all listed SHA-256 match); duplicates checked byte-wise; each package read by a separate inventory pass with a fixed schema, no network",
+ "families": [
+  {
+   "family": "01 air fryers",
+   "supplied": [
+    "PEE-AIR-FRYERS-RESEARCH-RECOVERED.zip (in PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES.zip, 2026-10-16)"
+   ],
+   "sha256": {
+    "PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES.zip": "25ace2c09c391a3b6e5a29e8771585c5350c7f9760adca9fdaf33b0540bc2f93"
+   },
+   "inventory": "evaluation/phase269/research-package-inventory.json",
+   "missing": [
+    "original v3.9.0 archive not supplied (the received package is a reconstruction of compendium v2.2.0 plus 34 addenda)"
+   ],
+   "operational": "taught in runtime (Phase269 t269.1, Phase270 t270.a1)"
+  },
+  {
+   "family": "02 dehumidifiers",
+   "supplied": [
+    "PEE-DEHUMIDIFIERS-CONSOLIDATED-RESEARCH-2026-10-15.md (2026-10-16)",
+    "PEE-DEHUMIDIFIERS-RESTORED-SOURCES-R01-R39.zip (2026-10-17)"
+   ],
+   "sha256": {
+    "PEE-DEHUMIDIFIERS-RESTORED-SOURCES-R01-R39.zip": "7d147d8f6f86ca1b62f2d44be4164d33ae3e84bd19d75d2e350620ff4e1b7f64"
+   },
+   "register": {
+    "entries": 39,
+    "classes": {
+     "regulatory_or_official_standard": 19,
+     "specialist_technical_guidance": 6,
+     "publisher_abstract_or_partial_access": 5,
+     "peer_reviewed_original_study": 4,
+     "government_laboratory_report": 2,
+     "original_independent_experiment": 1,
+     "peer_reviewed_synthesis": 1,
+     "unresolved_claim": 1
+    },
+    "notes": [
+     "R38 cited only in the original export (removed in the consolidated file); R39 never cited",
+     "R24 points to the same URL as R02",
+     "the ORIGINAL export is the earlier v1.0.0-research text (sections 1-17, Addendum A, register); the consolidated file adds Addenda B-E without R ids",
+     "retrieved by the owner from an earlier library; sources not re-verified by PEE"
+    ]
+   },
+   "missing": [],
+   "operational": "taught in runtime (Phase270 t270.d1; provenance upgraded to t271.d2)"
+  },
+  {
+   "family": "03 coffee machines and grinders",
+   "supplied": [
+    "PEE-COFFEE-COMPLETE-CUMULATIVE-KNOWLEDGE-PACKAGE.md (2026-10-16)"
+   ],
+   "inventory": "evaluation/phase269/research-package-inventory.json",
+   "missing": [],
+   "operational": "partly taught (Phase269 t269.c1, Phase270 t270.c1: espresso quality, shot consistency, moka alternative)"
+  },
+  {
+   "family": "04 air purifiers",
+   "supplied": [
+    "PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-COMPLETE-v1.2.0.zip"
+   ],
+   "sha256": {
+    "zip": "b4d60a9a89453870efd262711f9355101685cc3c983e11ef1792c8915dc4d017"
+   },
+   "packageId": "PEE-CAT-AP-004",
+   "version": "1.2.0-research-complete (manifest); consolidated document labelled 1.2.0-research; Supplements S01 and S02 each 1.0.0-research; teaching-cases JSON labelled 1.0.0-research",
+   "dates": {
+    "packageDate": "2026-10-16",
+    "researchCutoff": "2026-10-16",
+    "sourceReviewDate": "2026-10-16",
+    "supplement01Cutoff": "2026-10-16",
+    "supplement02EvidenceCutoff": "2026-10-16",
+    "standardsMapAsOf": "2026-10-16",
+    "notableSourceDates": {
+     "energyStarV3Effective": "2025-10-09",
+     "energyStarV3FinalSpecIssued": "2025-01-06",
+     "altroconsumoMethod": "2024-09-16",
+     "warentestUpdate": "2026-04-23",
+     "afriCTrialPublished": "2026-07-27",
+     "ukPstiInForce": "2024-04-29",
+     "myVoiceComFieldwork": "2024-05-01..2024-05-07"
+    }
+   },
+   "files": 7,
+   "cumulativeVsSuperseded": "The v1.2 CONSOLIDATED file is the cumulative master: base research §§0-19 with source register R01-R32, then Supplement 01 (A01-A17) and Supplement 02 (N01-N23). Verified: both standalone supplement files appear verbatim inside it (every non-blank line present). Supplement 01 is relabelled as part of the curriculum but the master's own curriculum lives in §15. archive/...-PREVIOUS.md is superseded",
+   "sourceRegister": {
+    "records": 72,
+    "withUrls": 72,
+    "evidenceClassCounts": {
+     "R_namespace_base_32 (classes paraphrased from free-text 'Evidence:' fields)": {
+      "regulatory_procedure_or_programme": 2,
+      "standards_catalogue_or_announcement": 6,
+      "certification_or_efficiency_programme": 5,
+      "official_guidance_or_technical_summary": 8,
+      "independent_consumer_lab_method": 2,
+      "systematic_review": 3,
+      "original_clinical_or_randomised_trial": 3,
+      "published_review_protocol": 1,
+      "manufacturer_industry_educational": 1,
+      "research_institution_news_summary": 1
+     },
+     "A_namespace_supplement01_17": {
+      "DIRECT_GUIDANCE (incl. one DIRECT_GUIDANCE/SCIENTIFIC_REVIEW)": 2,
+      "INDUSTRY_GUIDANCE": 1,
+      "INDEPENDENT_CONSUMER_LAB_SUMMARY": 1,
+      "OFFICIAL_GUIDANCE": 2,
+      "ORIGINAL_LAB_SUMMARY": 1,
+      "ORIGINAL_FIELD": 1,
+      "RESEARCH_INSTITUTION_SUMMARY_OF_ORIGINAL_LAB": 1,
+      "STANDARDS_BODY_ANNOUNCEMENT": 1,
+      "MANUFACTURER_DECLARED_FEATURE": 3,
+      "REGULATORY_GUIDANCE": 1,
+      "OFFICIAL_METHOD_DESCRIPTION": 2,
+      "ORIGINAL_RESEARCH": 1
+     },
+     "N_namespace_supplement02_23": {
+      "ORIGINAL_USER_SURVEY (incl. one /QUALITATIVE)": 2,
+      "ORIGINAL_USER_INTERVENTION": 1,
+      "SPECIALIST_GUIDANCE": 1,
+      "OFFICIAL_GUIDANCE (various sub-labels: clinical/building, public-health, technical, source, wildfire, sensor)": 13,
+      "OFFICIAL_GUIDANCE/ORIGINAL_FIELD": 1,
+      "SYSTEMATIC_REVIEW": 1,
+      "ORIGINAL_PRAGMATIC_CLINICAL_TRIAL": 1,
+      "INDUSTRY_GUIDANCE": 1,
+      "INDEPENDENT_PRODUCT_TEST_METHOD": 2,
+      "ORIGINAL_FIELD": 1
+     }
+    }
+   },
+   "missingContents": [
+    "Supplement 01 says it extends 'PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS.md'; no file by that name is in the package (the content survives as §§0-19 of the CONSOLIDATED file).",
+    "Cross-referenced dehumidifier package PEE-CAT-DH-002 is not included.",
+    "Full licensed texts of AHAM AC-1/AC-2/AC-3/AC-4/AC-5/AC-7, IEC 63086-1/-2-1, ISO 29463-1, EN 1822, ASHRAE 241 and GB/T 18801:2022 were not obtained; method details are marked unknown.",
+    "Stiftung Warentest model-level result table (paywalled) and Altroconsumo model-level numeric data were not extracted; no product-level measurements are included.",
+    "The original Ye et al. (Environmental Science & Technology Letters) paper behind the MIT summary was not retrieved.",
+    "Exact virus-prevention and odour-removal percentages of the MyVoiceCom survey are undisclosed ('over 30%'); owner vs purchase-interested denominators are not given.",
+    "No representative UK or Italian consumer-motivation survey was found.",
+    "No PEE execution results for any teaching case (all PROPOSED_NOT_RUN).",
+    "The archive's '# SUPPLEMENT 02' heading and consolidation note are absent from the v1.2 master (cosmetic)."
+   ],
+   "counts": {
+    "outcomes": 12,
+    "subtypes": 16,
+    "contextAlternatives": 11,
+    "measurements": 15,
+    "weakProxies": 12,
+    "conditions": 8,
+    "originalTestSourceLeads": 11,
+    "teachingCases": 18
+   },
+   "crossCategoryLinks": [
+    "Dehumidifiers (PEE-CAT-DH-002): water vapour, damp and mould are moisture problems; purifiers only catch airborne spores; combined units need two separately tes",
+    "Humidifiers / air washers: added moisture is not cleaner air and can worsen damp; water/aerosol hygiene evidence needed",
+    "Ventilation and CO2 monitors: fresh-air supply is a different function from recirculating filtration",
+    "Cooker hoods: ducted extraction at the source for cooking particles and NO2",
+    "CO alarms: carbon monoxide is a safety emergency, not a purifier use case",
+    "Central HVAC/MERV filters and ASHRAE 241: building-level distinct category"
+   ],
+   "operational": "taught in runtime (Phase271 t271.ai1: 7 outcomes, 4 context alternatives); evaluated on the cross-category set"
+  },
+  {
+   "family": "05 robot vacuum cleaners and robot mops",
+   "supplied": [
+    "PEE-CATEGORY-RESEARCH-05-ROBOT-FLOOR-CLEANERS-COMPLETE-v1.0.0.zip"
+   ],
+   "sha256": {
+    "zip": "cadff9aa71193222c87fbf41db0adeb724e6a042f4b1e548c90acd31e714c20b"
+   },
+   "packageId": "PEE-CAT-RFC-005",
+   "version": "1.0.0-research (README, MANIFEST, MASTER, CURRICULUM, teaching-cases JSON, CONSOLIDATED); Supplements 01 and 03 headed 'v1.0.0'; Supplement 02 alone is headed 'v1.1.0 consumer-needs research'. No v1.1.0 package manifest, changelog or other v1.1.0 file is present; the owner brief's 'v1.1.0' matches only Supplement 02's edition label.",
+   "dates": {
+    "researchCutoff": "2026-10-16",
+    "teachingCasesDate": "2026-10-16",
+    "packageReceivedLocal": "directory timestamps 2026-10-17 (not stated by package)",
+    "sourceDateRange": "2007 (Forlizzi ethnography) to 2026-09-23 (Reddit R25); newest formal sources: IEC 60335-2-2 2026-07-15, RTINGS Test Bench 1.1 2026-07-27, Euroconsumers survey 2026-08-20",
+    "keyRegulatoryDates": "UK PSTI effective 2024-04-29; EU CRA in force 2024-12-10, reporting from 2026-09-11, main duties 2027-12-11; Stiftung Warentest mode change Nov 2025"
+   },
+   "files": 11,
+   "cumulativeVsSuperseded": "CONSOLIDATED.md is the cumulative edition: verified to be a verbatim concatenation of MASTER, Supplements 01-03, CURRICULUM and SOURCE-REGISTER.md (only per-part reference-link blocks dropped, one final link list kept). The teaching-cases JSON sits outside it. Nothing in the package is marked superseded; no archive or older edition is included. Internally, RTINGS Bench 1.0 stain results count as s",
+   "sourceRegister": {
+    "records": 40,
+    "withUrls": 40,
+    "evidenceClassCounts": {
+     "STANDARD_CATALOGUE": 6,
+     "REGULATORY_GUIDANCE": 5,
+     "ANECDOTAL_NEEDS_DISCOVERY": 4,
+     "INDEPENDENT_TEST_METHOD": 3,
+     "ORIGINAL_TEST_METHOD": 3,
+     "PEER_REVIEWED_ORIGINAL_EXPERIMENT": 3,
+     "PEER_REVIEWED_ORIGINAL_FIELD": 2,
+     "SAFETY_STANDARD_CATALOGUE": 1,
+     "LAW": 1,
+     "INDEPENDENT_ORIGINAL_LAB": 1,
+     "OFFICIAL_HEALTH_GUIDANCE": 1,
+     "PEER_REVIEWED_ORIGINAL_MIXED": 1,
+     "ORIGINAL_FIELD_STUDY": 1,
+     "ORIGINAL_DIARY_STUDY": 1,
+     "ORIGINAL_JOURNALISM_SECURITY": 1,
+     "ORIGINAL_SECURITY_DISCLOSURE": 1,
+     "MANUFACTURER_INSTRUCTIONS": 1,
+     "ACADEMIC_PREPRINT": 1,
+     "INDEPENDENT_CONSUMER_GUIDANCE": 1,
+     "FOLLOW_UP_ORIGINAL_JOURNALISM": 1,
+     "EXPERT_PRACTICAL_OBSERVATION": 1
+    }
+   },
+   "missingContents": [
+    "CONSUMER-NEEDS-TEACHING-CASES.json, which Supplement 02 section 6 says holds 28 authored scenarios, is not in the package. Only the 46-case PEE-TEACHING-CASES-ROBOT-FLOOR-CLEANERS.json exists. This is",
+    "Any v1.1.0 manifest, changelog or edition note to explain why Supplement 02 is labelled v1.1.0 while the package is 1.0.0",
+    "MASTER section 11 points to 'SUPPLEMENT-01-TEST-PROTOCOLS.md'. The file is actually named SUPPLEMENT-01-PHYSICS-AND-TEST-PROTOCOLS.md: a name mismatch, the content is present",
+    "The N01-N35 consumer-needs sources are absent from the machine-readable SOURCE-REGISTER.json. The manifest's 'all_40_source_ids_resolve' covers only R ids",
+    "Full paid standard texts (IEC/ASTM 62885-7, 62885-6, IEC 60335-2-2, 62849, 60704-2-20, ASTM F608/F2607): excluded by design",
+    "Paywalled per-model results (Stiftung Warentest, others) and any numeric product test values: none are included",
+    "Altroconsumo per-model results and the Euroconsumers survey's underlying data tables are not included"
+   ],
+   "counts": {
+    "outcomes": 12,
+    "subtypes": 8,
+    "contextAlternatives": 6,
+    "measurements": 15,
+    "weakProxies": 12,
+    "conditions": 8,
+    "originalTestSourceLeads": 7,
+    "teachingCases": 46
+   },
+   "crossCategoryLinks": [
+    "Dry debris pickup vs adhered stain removal: separate mechanisms, separate evidence",
+    "Cleaning vs sanitising vs disinfection: hot water or UV at the dock is not floor disinfection (same overclaim discipline as hygiene claims in dishwashers and ot",
+    "HEPA filter class vs measured device-level emissions (air purifiers, vacuums)",
+    "Headline spec as weak proxy (Pa, mAh, rpm) vs measured outcome, analogous to wattage/capacity proxies in other categories",
+    "Whole-system energy including standby, heating and drying phases (dishwashers, dehumidifiers)",
+    "Sound power vs sound pressure and event peaks (dehumidifiers, air purifiers, dishwashers)"
+   ],
+   "versionNote": "the brief names v1.1.0; the archive is COMPLETE-v1.0.0 and only Supplement 02 is headed v1.1.0; its companion CONSUMER-NEEDS-TEACHING-CASES.json (28 scenarios) is missing",
+   "operational": "inventoried only"
+  },
+  {
+   "family": "06 household dishwashers",
+   "supplied": [
+    "PEE-CATEGORY-RESEARCH-06-HOUSEHOLD-DISHWASHERS-COMPLETE-v2.0.0.zip",
+    "PEE-CATEGORY-RESEARCH-06-COUNTERTOP-DISHWASHERS-COMPLETE-v1.0.0.zip (byte-identical to the v2.0.0 ORIGINAL-COUNTERTOP-v1.0.0 folder: a duplicate)"
+   ],
+   "sha256": {
+    "v2": "869784bc6888a3a8bcbc92aa801a3b353dfe9a3a2052dd222841004e6e382188",
+    "countertop_v1": "e7ee74051ebd487642af8c383bca7d5ba1f879a366ab20e600789c30c380a2ee"
+   },
+   "packageId": "PEE-CAT-DW-006 (v2 cumulative); embeds PEE-CAT-CD-006 (countertop v1.0.0) unchanged",
+   "version": "2.0.0-research (v2 manifest); embedded subpackage 1.0.0-research",
+   "dates": {
+    "v2Release": "2026-10-16",
+    "v2ResearchCutoff": "2026-10-16",
+    "v1Release": "2026-10-16",
+    "v1ResearchCutoff": "2026-10-16",
+    "receivedForInventory": "2026-10-17"
+   },
+   "files": 22,
+   "cumulativeVsSuperseded": "v2 is strictly additive. All 11 v1 files sit unchanged in ORIGINAL-COUNTERTOP-v1.0.0/ (hash-verified; identical to the separate v1 package, so that package is a pure duplicate). v2 adds a category-wide master, test protocols, a 108-situation needs atlas (+JSON), safety/lifecycle/connectivity module, a curriculum, 144 acceptance cases and a new 29-source register; the compendium is an exact concate",
+   "sourceRegister": {
+    "records": 59,
+    "withUrls": 59,
+    "evidenceClassCounts": {
+     "v2_total": 29,
+     "v2_REGULATORY_and_official_explanations_or_texts": 7,
+     "v2_OFFICIAL_STANDARD_or_TEST_METHOD_catalogue_or_spec": 7,
+     "v2_ORIGINAL_CONSUMER_LAB_method_summary_sample_or_estimate_metadata": 6,
+     "v2_ORIGINAL_OWNER_SURVEY": 2,
+     "v2_ORIGINAL_PEER_REVIEWED_or_ENGINEERING_EXPERIMENT": 3,
+     "v2_ORIGINAL_CONSUMER_STUDY_or_LCA_MODEL": 2,
+     "v2_CERTIFICATION_REQUIREMENT": 1,
+     "v2_PUBLIC_HEALTH_GUIDANCE": 1,
+     "v2_TECHNICAL_PREPARATORY_STUDY": 1,
+     "v2_UK_OFFICIAL_SECURITY": 1,
+     "v1_total": 30,
+     "v1_REGULATORY_family_incl_guidance_database_method_sector_guidance": 10,
+     "v1_STANDARD_SCOPE": 2,
+     "v1_OFFICIAL_VOLUNTARY_PROGRAMME": 1,
+     "v1_CERTIFICATION_GUIDANCE": 1,
+     "v1_HEALTH_GUIDANCE": 1,
+     "v1_ORIGINAL_consumer_lab_or_hands_on_or_mixed": 5,
+     "v1_ORIGINAL_LCA_or_OBSERVATIONAL_research": 2,
+     "v1_REVIEW_MECHANISM": 1,
+     "v1_DECLARED_manufacturer_incl_competitor_marketing": 3,
+     "v1_QUALITATIVE_NEED_reddit": 3,
+     "v1_OUT_OF_CATEGORY_or_editorial": 1
+    }
+   },
+   "missingContents": [
+    "No ZIP archive was supplied although both READMEs and the curriculum refer to the material being 'inside the ZIP'; only the unpacked folders exist.",
+    "No per-model measured values anywhere: no raw lab results from Altroconsumo, Stiftung Warentest, Which? or Good Housekeeping, and no PEE-run measurements.",
+    "Full IEC 60436:2025, IEC 60704-2-3:2025 and IEC 60335-2-5:2025 texts not accessed; repeat counts, tolerances and soil recipes unknown.",
+    "No independent tests of 45 cm vs 60 cm vs countertop on matched household workloads (flagged as the top research gap).",
+    "No reliability survival data with denominators at model level; the Which? brand tables were not accessed.",
+    "No real consumer-sample study: all 108 v2 and 64 v1 need situations are composed by the author, not observed.",
+    "v2 scenario evidence_source_ids are templated by domain (90 scenarios all cite v2 R05/R23/R24; 18 hygiene/materials scenarios all cite R11/R13/R14/R12), so they are not scenario-specific citations.",
+    "v2's 108 need acceptance cases have generic, templated expected_reasoning and must_not lists; only the 36 adversarial cases carry case-specific expected statuses.",
+    "v1 MASTER-RESEARCH section 6 mentions a '50-scenario' taxonomy, but SUPPLEMENT-02 and the JSON hold 64 (internal count inconsistency).",
+    "No dehumidifier/air-purifier quantitative cross-links; cross-category notes are qualitative.",
+    "No gold labels, held-out split or scoring keys for the teaching cases; status is NOT_EXECUTED / executed:false throughout."
+   ],
+   "counts": {
+    "outcomes": 12,
+    "subtypes": 10,
+    "contextAlternatives": 8,
+    "measurements": 15,
+    "weakProxies": 12,
+    "conditions": 8,
+    "originalTestSourceLeads": 10,
+    "teachingCases": 192
+   },
+   "crossCategoryLinks": [
+    "dehumidifiers: humid vent/door-open drying can raise room humidity; do not reuse dehumidifier moisture ratings",
+    "air purifiers: detergent aromas or humid exhaust are not particle/ventilation metrics",
+    "coffee machines: espresso parts and coffee oils need maker-approved cleaning; electronics never go in",
+    "washing machines: textile test methods do not transfer to dishwashers",
+    "baby bottle sterilisers/infant feeding: CDC process, item compatibility; dishwasher is not a sterilizer",
+    "water treatment/softeners: hardness drives spotting; 'mineral wash' buttons are not softeners"
+   ],
+   "referenceNote": "v1 and v2 registers number sources independently (v1 R13 and v2 R13 are different sources); PEE prefixes v1:/v2:",
+   "operational": "taught in runtime (Phase271 t271.di1: 7 outcomes, 1 constraint, 1 alternative); evaluated on the cross-category set"
+  },
+  {
+   "family": "07 televisions",
+   "supplied": [
+    "PEE-CATEGORY-RESEARCH-07-TELEVISIONS-COMPLETE-v1.0.0.zip"
+   ],
+   "sha256": {
+    "zip": "d5a9f2dc55f30a979b88f60d7b8ec66a676cb3410bb3c80e71ea5bcf08d3eddc"
+   },
+   "packageId": "PEE-CAT-TV-007",
+   "version": "1.0.0-research (TEACHING-ACCEPTANCE-CASES.json states version 1.0.0)",
+   "dates": {
+    "researchCutoff": "2026-10-16",
+    "manifestCreated": "2026-10-16",
+    "consumerNeedsAsOf": "2026-10-16",
+    "inventoriedOn": "2026-10-17",
+    "newestDatedSource": "RTINGS longevity results page, updated 2026-10-06 (R10); Which? method page dated 2026-10-12 (R20)"
+   },
+   "files": 11,
+   "cumulativeVsSuperseded": "This is a single first release (1.0.0-research) with no earlier television version, addenda or errata, so nothing in it is superseded. The compendium is a verbatim concatenation of the master file, the three supplements, the curriculum and the source register. Every line of each component appears in it (checked), so read either the compendium or the six component files, not both. The two JSON data",
+   "sourceRegister": {
+    "records": 40,
+    "withUrls": 40,
+    "evidenceClassCounts": {
+     "OFFICIAL_TECHNICAL_STANDARD": 2,
+     "PROFESSIONAL_TEST_METHOD": 1,
+     "ORIGINAL_LAB_METHOD": 10,
+     "ORIGINAL_COMPARATIVE_ANALYSIS": 1,
+     "ORIGINAL_ACCELERATED_TEST": 2,
+     "ORIGINAL_ACCELERATED_TEST_ANALYSIS": 1,
+     "ENGINEERING_GUIDE": 1,
+     "ORIGINAL_CONSUMER_LAB_METHOD": 2,
+     "ORIGINAL_CONSUMER_LAB_INDEX": 1,
+     "REGULATORY_SUMMARY": 1,
+     "REGULATORY_PRIMARY": 1,
+     "REGULATORY_ENFORCEMENT": 1,
+     "REGULATORY_GUIDANCE": 1,
+     "OFFICIAL_DATABASE": 1,
+     "OFFICIAL_STANDARD_OVERVIEW": 1,
+     "OFFICIAL_VOLUNTARY_PROGRAMME": 1,
+     "OFFICIAL_AUDIENCE_STATISTICS": 2,
+     "OFFICIAL_BROADCAST_GUIDANCE": 1,
+     "OFFICIAL_ACCESSIBILITY_REPORT": 1,
+     "OFFICIAL_USER_RESEARCH": 1,
+     "OFFICIAL_SECURITY_GUIDANCE": 1,
+     "OFFICIAL_SAFETY_STANDARD": 1,
+     "PLATFORM_PRIMARY": 2,
+     "SERVICE_PRIMARY": 1,
+     "INDUSTRY_STANDARD_PRIMARY": 1,
+     "ORIGINAL_PREPRINT": 1
+    }
+   },
+   "missingContents": [
+    "No product, brand or model data of any kind: no model lists, rankings, scores, prices or stock",
+    "No measured values from any TV; all package experiments are proposed and unexecuted",
+    "No paywalled numeric results (Stiftung Warentest, Which? member scores, Altroconsumo member results)",
+    "No field-reliability or repair-rate data; only accelerated-stress mechanisms from RTINGS",
+    "No real consumer utterances or prevalence data; the 130 need scenarios are authored, not observed",
+    "No executed evaluation; the 166 cases have no PEE outputs, and the package says they are not an untouched held-out set",
+    "No numeric decision thresholds (lux, nits, input-lag cut-offs): the package deliberately refuses to invent them",
+    "No access dates in the source register; no rights decisions per source (rights gate deferred to PEE)",
+    "No countries beyond UK/Italy covered in depth; other markets flagged as needing their own standards",
+    "No manufacturer-declaration sources registered, although the DECLARED class is defined",
+    "No numeric values for the soundbar/projector/monitor alternatives; they are listed only as hypotheses to verify"
+   ],
+   "counts": {
+    "outcomes": 12,
+    "subtypes": 11,
+    "contextAlternatives": 10,
+    "measurements": 15,
+    "weakProxies": 12,
+    "conditions": 8,
+    "originalTestSourceLeads": 6,
+    "teachingCases": 166
+   },
+   "crossCategoryLinks": [
+    "Dialogue intelligibility and late-night listening are often better solved by a soundbar or headphones (soundbar/speaker/headphone categories) than by a new TV",
+    "Dark-room very-large-picture goals may belong to the projector category",
+    "Desk, PC-work and static-dashboard uses compete with the computer monitor category (chroma 4:4:4, burn-in)",
+    "Missing or slow apps are a streaming-device (stick or box) problem, not a panel problem",
+    "Reception gaps (DVB-T2/HEVC, no aerial) can be solved by a set-top tuner or decoder, an aerial, or a Freely-capable device",
+    "HDMI port shortages and eARC sharing link to AV receiver and HDMI switch categories"
+   ],
+   "operational": "inventoried only"
+  },
+  {
+   "family": "08 soundbars",
+   "supplied": [
+    "PEE-CATEGORY-RESEARCH-08-SOUNDBARS-COMPLETE-v1.0.0.zip"
+   ],
+   "sha256": {
+    "zip": "da3593ccab6e784050a8d7b5815bdb9fdd8cb5f11c2f42f0cee85238b0ce04c3"
+   },
+   "packageId": "PEE-CAT-SB-008",
+   "version": "1.0.0-research",
+   "dates": {
+    "researchCutoff": "2026-10-16",
+    "sourcesAccessed": "2026-10-16 (all 38 register entries)",
+    "newestSourceDated": "2026-09-22 (R38 Reddit post); newest methodology page 2026-09-11 (R18 Stiftung Warentest)",
+    "oldestSourceDated": "1998 (R26 ITU-R BT.1359-1 per register); oldest study 2009 (R33)",
+    "packageOnDisk": "p271 directory, files present 2026-10-17"
+   },
+   "files": 11,
+   "cumulativeVsSuperseded": "Single first edition (1.0.0-research); nothing superseded internally. The compendium is a pure concatenation: every line of the six narrative components appears in it and its only extra lines are a header, component list and part dividers, so it adds no new content. CONSUMER-NEEDS-STRUCTURED.json repeats the 96 Supplement-02 utterances verbatim; the 96 NEED_TRANSLATION cases in TEACHING-ACCEPTANCE",
+   "sourceRegister": {
+    "records": 38,
+    "withUrls": 38,
+    "evidenceClassCounts": {
+     "ORIGINAL_TEST_METHOD": 12,
+     "ORIGINAL_RESEARCH": 1,
+     "ORIGINAL_CLINICAL_RESEARCH": 1,
+     "CONSUMER_GUIDANCE": 3,
+     "CONSUMER_LAB_EDITORIAL": 2,
+     "STANDARD_OFFICIAL": 4,
+     "STANDARD_OFFICIAL_DESCRIPTION": 1,
+     "STANDARD_CATALOG": 3,
+     "MANUFACTURER_TECH_GUIDANCE": 1,
+     "OFFICIAL_REGULATORY_GUIDANCE": 1,
+     "REGULATORY": 1,
+     "REGULATORY_GUIDANCE": 1,
+     "OFFICIAL_PRIVACY_GUIDANCE": 1,
+     "PUBLIC_HEALTH_GUIDANCE": 2,
+     "ANECDOTAL_NEED_DISCOVERY": 4
+    }
+   },
+   "missingContents": [
+    "No product-level facts, measurements, scores or model identities of any kind (by design)",
+    "No quantitative numbers from any lab (paywalled scores deliberately excluded); RTINGS latency research cited only as ~500 measurements with a directional finding",
+    "Full IEC 60268-21, AES75 and IEC 62368-1 texts not read",
+    "Corrected Altroconsumo 2022 weighting (published components sum to 110%) unavailable",
+    "No executed PEE runs, pass rates or held-out results; all 128 cases PROPOSED_NOT_EXECUTED",
+    "No untouched held-out utterance set (curriculum asks for one to be built separately)",
+    "No population prevalence, survey shares, price sensitivity or failure-rate data",
+    "No TV-brand/firmware codec passthrough matrix",
+    "No named-expert or practitioner listening evidence",
+    "Category 09 speakers package referenced by owner is not present and not mentioned anywhere in this package"
+   ],
+   "counts": {
+    "outcomes": 12,
+    "subtypes": 9,
+    "contextAlternatives": 7,
+    "measurements": 15,
+    "weakProxies": 12,
+    "conditions": 8,
+    "originalTestSourceLeads": 5,
+    "teachingCases": 128
+   },
+   "crossCategoryLinks": [
+    "Televisions: exact TV model/firmware governs format output, volume control (CEC) and lip-sync; TV evidence imported only with matching chain",
+    "Headphones / personal audio: alternative for neighbour, bedroom and individual-hearing needs",
+    "Active stereo / bookshelf speakers (category 09, not supplied): alternative for music and for owners needing only a TV DAC path",
+    "AV receivers with discrete surround speakers: alternative for robust rear effects",
+    "Game consoles, gaming monitors, streamers and disc players: HDMI passthrough and latency",
+    "Smart speakers / voice assistants and multiroom platforms: privacy and interoperability"
+   ],
+   "operational": "inventoried only"
+  },
+  {
+   "family": "09 speakers",
+   "supplied": [],
+   "missing": [
+    "PEE-CATEGORY-RESEARCH-09-SPEAKERS-COMPLETE-v1.0.0.zip was named in the brief but not supplied"
+   ],
+   "operational": "not received"
+  }
+ ]
+}
