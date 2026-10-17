@@ -58,7 +58,7 @@ if(catalogRev==='r2'){
 /** What the answer exposes, in the set's vocabulary. Falls back to the baseline derivation when no goal assessment exists. */
 function observed(a,j){
  const g=a.goalAssessment??null;
- if(g)return {decision:g.decision,needs:a.needs,unassessed:a.unassessedObjectives,
+ if(g)return {category:a.category,decision:g.decision,needs:a.needs,unassessed:a.unassessedObjectives,
   measures:Object.fromEntries(g.outcomes.map(o=>[o.need,o.relevantMeasures])),proxies:Object.fromEntries(g.outcomes.map(o=>[o.need,o.rejectedProxies])),
   conditions:[...new Set(g.outcomes.flatMap(o=>o.requiredConditions))],incomparable:g.outcomes.some(o=>o.incomparable.length>0),
   assessedVia:Object.fromEntries(g.outcomes.filter(o=>o.coverage==='assessed').map(o=>[o.need,o.assessedBy??[]]))};
@@ -66,11 +66,13 @@ function observed(a,j){
  const decision=a.response==='ranked_recommendation'?'ranking':a.response==='clarification'&&a.questions.length?'clarify':'research';
  // A ranked answer in the baseline is assessed through the catalog dimensions it was ranked by.
  const assessedVia={};if(a.response==='ranked_recommendation')for(const n of a.needs)if(!a.unassessedObjectives.includes(n))assessedVia[n]=['energy_empty_run'];
- return {decision,needs:a.needs,unassessed:a.unassessedObjectives,measures:{},proxies,conditions:[],incomparable:false,assessedVia};
+ return {category:a.category,decision,needs:a.needs,unassessed:a.unassessedObjectives,measures:{},proxies,conditions:[],incomparable:false,assessedVia};
 }
 const share=(hit,total)=>total?hit/total:null;
 function score(r,o){
  const s={};
+ // Phase271: category recognition, for sets whose requests carry a gold category.
+ if(r.category!==undefined)s['0_category']=o.category===r.category?1:0;
  s['1_outcomes']=share(r.outcomes.filter(x=>o.needs.includes(x)).length,r.outcomes.length);
  const m=Object.entries(r.measures).flatMap(([n,ms])=>ms.map(x=>[n,x]));s['2_criteria']=share(m.filter(([n,x])=>(o.measures[n]??[]).includes(x)).length,m.length);
  const p=Object.entries(r.proxies).flatMap(([n,ps])=>ps.map(x=>[n,x]));s['3_proxies']=share(p.filter(([n,x])=>(o.proxies[n]??[]).includes(x)).length,p.length);
@@ -90,7 +92,7 @@ for(const part of ['development','untouched'])for(const r of SET[part]){
  const o=observed(a,j);rows.push({id:r.id,part,goldDecision:r.decision,observed:{...o,response:a.response,ranked:(a.ranked??[]).length},score:score(r,o)});
 }
 const mean=(part,k)=>{const xs=rows.filter(x=>x.part===part).map(x=>x.score[k]).filter(x=>typeof x==='number');return xs.length?Math.round(1000*xs.reduce((a,b)=>a+b,0)/xs.length)/1000:null;};
-const K=['1_outcomes','2_criteria','3_proxies','4_conditions','5_incomparable','6_unassessed','7_decision'];
+const K=['0_category','1_outcomes','2_criteria','3_proxies','4_conditions','5_incomparable','6_unassessed','7_decision'];
 const summary=Object.fromEntries(['development','untouched'].map(p=>[p,{...Object.fromEntries(K.map(k=>[k,mean(p,k)])),
  proxyAssessedFailures:rows.filter(x=>x.part===p&&x.score['6_proxyAssessedFailure'].length).map(x=>x.id)}]));
 const after=JSON.stringify(store.stats246());store.close();

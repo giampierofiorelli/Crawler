@@ -1,0 +1,448 @@
+{
+ "schema": "pee269.teaching-eval-set.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "any Phase271 teaching for dishwashers or air purifiers",
+ "context": "same runner and scorer as Phase269/270 (phase269-teaching-eval.mjs, --catalog r2); category recognition added as behaviour 0 for sets that carry a category",
+ "vocabulary": {
+  "source": "Stage-A inventories of packages 06 (household dishwashers v2.0.0) and 04 (air purifiers v1.2.0), private: pee-knowledge/research-inventory/phase271",
+  "note": "ids are the inventory ids; cannot_plumb_constraint is a context need (an installation constraint, not owned equipment)"
+ },
+ "development": [
+  {
+   "id": "WD1",
+   "category": "dishwashers",
+   "text": "Which dishwasher actually gets baked-on lasagne off the dishes?",
+   "outcomes": [
+    "cleaning_soil_removal"
+   ],
+   "measures": {
+    "cleaning_soil_removal": [
+     "residual_soil_score_by_soil_type"
+    ]
+   },
+   "proxies": {},
+   "conditions": [
+    "load_and_soil_definition",
+    "programme_identity"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "WD2",
+   "category": "dishwashers",
+   "text": "I rent and can't plumb anything in. What kind of dishwasher could I use?",
+   "outcomes": [
+    "cannot_plumb_constraint"
+   ],
+   "measures": {},
+   "proxies": {},
+   "conditions": [],
+   "decision": "research"
+  },
+  {
+   "id": "WD3",
+   "category": "dishwashers",
+   "text": "Our plastic boxes always come out wet. Which dishwasher dries properly?",
+   "outcomes": [
+    "drying_by_material"
+   ],
+   "measures": {
+    "drying_by_material": [
+     "drying_fraction_by_material_over_time"
+    ]
+   },
+   "proxies": {
+    "drying_by_material": [
+     "attr:energy_label_class"
+    ]
+   },
+   "conditions": [
+    "load_and_soil_definition"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PD1",
+   "category": "air_purifiers",
+   "text": "I get hay fever every spring. Will an air purifier help in my bedroom?",
+   "outcomes": [
+    "allergen_particle_reduction"
+   ],
+   "measures": {
+    "allergen_particle_reduction": [
+     "pollen_dust_cadr_at_sleep_mode"
+    ]
+   },
+   "proxies": {
+    "allergen_particle_reduction": [
+     "attr:hepa_filter_class"
+    ]
+   },
+   "conditions": [
+    "same_mode_pairing"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PD2",
+   "category": "air_purifiers",
+   "text": "Which air purifier gets rid of the smell from cooking?",
+   "outcomes": [
+    "gas_odour_reduction"
+   ],
+   "measures": {
+    "gas_odour_reduction": [
+     "gas_species_reduction_breakthrough"
+    ]
+   },
+   "proxies": {
+    "gas_odour_reduction": [
+     "attr:carbon_filter_present"
+    ]
+   },
+   "conditions": [
+    "named_challenge_and_method_edition"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PD3",
+   "category": "air_purifiers",
+   "text": "Our new flat smells of paint. Should I buy an air purifier or just open the windows?",
+   "outcomes": [
+    "ventilation_alternative"
+   ],
+   "measures": {},
+   "proxies": {},
+   "conditions": [],
+   "decision": "no_purchase_check"
+  }
+ ],
+ "untouched": [
+  {
+   "id": "WU1",
+   "category": "dishwashers",
+   "text": "Which dishwasher uses the least electricity per wash?",
+   "outcomes": [
+    "energy_per_cycle_and_workload"
+   ],
+   "measures": {
+    "energy_per_cycle_and_workload": [
+     "wall_plug_kwh_per_programme"
+    ]
+   },
+   "proxies": {},
+   "conditions": [
+    "programme_identity",
+    "energy_boundary_hot_fill"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "WU2",
+   "category": "dishwashers",
+   "text": "Will a dishwasher with an A energy rating dry my plastic containers better?",
+   "outcomes": [
+    "drying_by_material"
+   ],
+   "measures": {
+    "drying_by_material": [
+     "drying_fraction_by_material_over_time"
+    ]
+   },
+   "proxies": {
+    "drying_by_material": [
+     "attr:energy_label_class"
+    ]
+   },
+   "conditions": [
+    "load_and_soil_definition"
+   ],
+   "decision": "research",
+   "negativeControl": "impressive_specification"
+  },
+  {
+   "id": "WU3",
+   "category": "dishwashers",
+   "text": "We're a family of five. Will a 14 place setting dishwasher fit our big pans?",
+   "outcomes": [
+    "usable_capacity_geometry"
+   ],
+   "measures": {
+    "usable_capacity_geometry": [
+     "household_item_fit_inventory"
+    ]
+   },
+   "proxies": {
+    "usable_capacity_geometry": [
+     "attr:place_settings"
+    ]
+   },
+   "conditions": [
+    "load_and_soil_definition"
+   ],
+   "decision": "research",
+   "negativeControl": "impressive_specification"
+  },
+  {
+   "id": "WU4",
+   "category": "dishwashers",
+   "text": "I need a quiet dishwasher because it runs at night next to the baby's room.",
+   "outcomes": [
+    "noise_and_acoustic_events"
+   ],
+   "measures": {
+    "noise_and_acoustic_events": [
+     "in_situ_sound_pressure_time_trace"
+    ]
+   },
+   "proxies": {
+    "noise_and_acoustic_events": [
+     "attr:label_noise_db"
+    ]
+   },
+   "conditions": [
+    "acoustic_quantity_and_position"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "WU5",
+   "category": "dishwashers",
+   "text": "It's just me and I only wash a few plates a day by hand. Do I really need a dishwasher?",
+   "outcomes": [
+    "handwashing_alternative"
+   ],
+   "measures": {},
+   "proxies": {},
+   "conditions": [],
+   "decision": "no_purchase_check",
+   "negativeControl": "owns_plausible_alternative"
+  },
+  {
+   "id": "WU6",
+   "category": "dishwashers",
+   "text": "Does a dishwasher properly sterilise baby bottles?",
+   "outcomes": [
+    "hygiene_sanitisation"
+   ],
+   "measures": {
+    "hygiene_sanitisation": [
+     "nsf_184_log_reduction_certified_cycle"
+    ]
+   },
+   "proxies": {
+    "hygiene_sanitisation": [
+     "attr:advertised_programme_temperature"
+    ]
+   },
+   "conditions": [
+    "exact_model_variant_and_market"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "WU7",
+   "category": "dishwashers",
+   "text": "What uses less water, a dishwasher or washing up by hand?",
+   "outcomes": [
+    "water_per_cycle_and_workload",
+    "handwashing_alternative"
+   ],
+   "measures": {
+    "water_per_cycle_and_workload": [
+     "litres_per_completed_workload"
+    ]
+   },
+   "proxies": {},
+   "conditions": [
+    "energy_boundary_hot_fill"
+   ],
+   "decision": "no_purchase_check"
+  },
+  {
+   "id": "WU8",
+   "category": "dishwashers",
+   "text": "Which dishwasher cleans best?",
+   "outcomes": [
+    "cleaning_soil_removal"
+   ],
+   "measures": {
+    "cleaning_soil_removal": [
+     "residual_soil_score_by_soil_type"
+    ]
+   },
+   "proxies": {},
+   "conditions": [
+    "load_and_soil_definition",
+    "programme_identity"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PU1",
+   "category": "air_purifiers",
+   "text": "Which air purifier is best for wildfire smoke?",
+   "outcomes": [
+    "fine_particle_reduction"
+   ],
+   "measures": {
+    "fine_particle_reduction": [
+     "particle_cadr_by_pollutant_and_mode"
+    ]
+   },
+   "proxies": {
+    "fine_particle_reduction": [
+     "attr:hepa_filter_class"
+    ]
+   },
+   "conditions": [
+    "named_challenge_and_method_edition"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PU2",
+   "category": "air_purifiers",
+   "text": "This purifier says H13 HEPA and covers 60 square metres. Is that enough for my living room?",
+   "outcomes": [
+    "room_coverage_distribution"
+   ],
+   "measures": {
+    "room_coverage_distribution": [
+     "room_volume_equivalent_ach"
+    ]
+   },
+   "proxies": {
+    "room_coverage_distribution": [
+     "attr:room_size_claim"
+    ]
+   },
+   "conditions": [
+    "same_mode_pairing"
+   ],
+   "decision": "research",
+   "negativeControl": "impressive_specification"
+  },
+  {
+   "id": "PU3",
+   "category": "air_purifiers",
+   "text": "I need an air purifier quiet enough to sleep next to.",
+   "outcomes": [
+    "quiet_night_operation"
+   ],
+   "measures": {
+    "quiet_night_operation": [
+     "cadr_noise_power_curve"
+    ]
+   },
+   "proxies": {
+    "quiet_night_operation": [
+     "attr:noise_db"
+    ]
+   },
+   "conditions": [
+    "same_mode_pairing"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PU4",
+   "category": "air_purifiers",
+   "text": "Will an air purifier stop my kids catching colds?",
+   "outcomes": [
+    "clinical_health_outcome"
+   ],
+   "measures": {
+    "clinical_health_outcome": [
+     "clinical_endpoint_trial"
+    ]
+   },
+   "proxies": {
+    "clinical_health_outcome": [
+     "attr:germ_kill_percentage"
+    ]
+   },
+   "conditions": [],
+   "decision": "research",
+   "negativeControl": "outcome_not_measurable_by_available_evidence"
+  },
+  {
+   "id": "PU5",
+   "category": "air_purifiers",
+   "text": "There's mould in the bathroom. Would an air purifier fix it?",
+   "outcomes": [
+    "moisture_mould_remediation_alternative"
+   ],
+   "measures": {},
+   "proxies": {},
+   "conditions": [],
+   "decision": "no_purchase_check"
+  },
+  {
+   "id": "PU6",
+   "category": "air_purifiers",
+   "text": "Which air purifier is cheapest to run once you count the filters?",
+   "outcomes": [
+    "ownership_cost_energy"
+   ],
+   "measures": {
+    "ownership_cost_energy": [
+     "mode_power_and_tco"
+    ]
+   },
+   "proxies": {
+    "ownership_cost_energy": [
+     "attr:filter_lifetime_claim"
+    ]
+   },
+   "conditions": [
+    "same_mode_pairing"
+   ],
+   "decision": "research"
+  },
+  {
+   "id": "PU7",
+   "category": "air_purifiers",
+   "text": "One review says this purifier is whisper quiet and another says it is noisy on night mode. Which is right?",
+   "outcomes": [
+    "quiet_night_operation"
+   ],
+   "measures": {
+    "quiet_night_operation": [
+     "cadr_noise_power_curve"
+    ]
+   },
+   "proxies": {
+    "quiet_night_operation": [
+     "attr:noise_db"
+    ]
+   },
+   "conditions": [
+    "same_mode_pairing"
+   ],
+   "decision": "research",
+   "negativeControl": "conflicting_original_observations"
+  },
+  {
+   "id": "PU8",
+   "category": "air_purifiers",
+   "text": "Purifier A claims 400 m3/h CADR and purifier B 350 under a different test. Which cleans the air faster?",
+   "outcomes": [
+    "fine_particle_reduction"
+   ],
+   "measures": {
+    "fine_particle_reduction": [
+     "particle_cadr_by_pollutant_and_mode"
+    ]
+   },
+   "proxies": {},
+   "conditions": [
+    "named_challenge_and_method_edition"
+   ],
+   "decision": "research",
+   "negativeControl": "incomparable_protocols"
+  }
+ ],
+ "rule": "written by the developer in ordinary consumer language before any teaching; untouched requests are never used to choose teaching phrases; runs committed unchanged"
+}
