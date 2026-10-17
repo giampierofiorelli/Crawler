@@ -1,0 +1,599 @@
+{
+ "schema": "pee272.ab-run-public.v1",
+ "label": "td-transfer-firstrun",
+ "at": "2026-10-17T11:37:46.582Z",
+ "protocolSha256": "aed8bb46b132bce1feb9f25e2dfcae9290364d0c74f2d049d4639975bbaa5a99",
+ "goldSha256": "6e085ddb30a5520a8f52ce16afc8441b7c357aa10da2c2a30a3a2954212a3943",
+ "armADist": "/home/user/p272-armA/engine/product-evidence-engine-v5.67-phase243/dist/src/",
+ "plans": {
+  "tumble_dryers": "f85877fc1c4c660da805149208ba554929cbc6afd6bb57fa09cad0aefbd4ad5b"
+ },
+ "lostByGuidance": {
+  "quantitative": 0,
+  "qualitative": 1
+ },
+ "summary": {
+  "A": {
+   "quantitative": {
+    "gold": 27,
+    "leads": 2,
+    "matched": 1,
+    "precision": 0.5,
+    "recall": 0.037,
+    "subjects": {
+     "correct": 1,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 1,
+     "recognised": 0
+    },
+    "decisionUsable": 1,
+    "falsePositives": 1
+   },
+   "qualitative": {
+    "gold": 31,
+    "findings": 0,
+    "matched": 0,
+    "precision": null,
+    "recall": 0,
+    "subjects": {
+     "correct": 0,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 17,
+     "matched": 0
+    },
+    "decisionUsable": 0,
+    "falsePositives": 0
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 0,
+     "matched": 0
+    },
+    "qualitative": {
+     "leads": 0,
+     "matched": 0
+    }
+   }
+  },
+  "B": {
+   "quantitative": {
+    "gold": 27,
+    "leads": 1,
+    "matched": 1,
+    "precision": 1,
+    "recall": 0.037,
+    "subjects": {
+     "correct": 1,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 1,
+     "recognised": 0
+    },
+    "decisionUsable": 1,
+    "falsePositives": 0
+   },
+   "qualitative": {
+    "gold": 31,
+    "findings": 9,
+    "matched": 2,
+    "precision": 0.222,
+    "recall": 0.065,
+    "subjects": {
+     "correct": 2,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 17,
+     "matched": 0
+    },
+    "decisionUsable": 2,
+    "falsePositives": 7
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 0,
+     "matched": 0
+    },
+    "qualitative": {
+     "leads": 0,
+     "matched": 0
+    }
+   }
+  },
+  "C": {
+   "quantitative": {
+    "gold": 27,
+    "leads": 1,
+    "matched": 1,
+    "precision": 1,
+    "recall": 0.037,
+    "subjects": {
+     "correct": 1,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 1,
+     "recognised": 0
+    },
+    "decisionUsable": 1,
+    "falsePositives": 0
+   },
+   "qualitative": {
+    "gold": 31,
+    "findings": 9,
+    "matched": 2,
+    "precision": 0.222,
+    "recall": 0.065,
+    "subjects": {
+     "correct": 2,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 17,
+     "matched": 0
+    },
+    "decisionUsable": 2,
+    "falsePositives": 7
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 25,
+     "matched": 10
+    },
+    "qualitative": {
+     "leads": 37,
+     "matched": 1
+    }
+   }
+  },
+  "E": {
+   "quantitative": {
+    "gold": 27,
+    "leads": 2,
+    "matched": 1,
+    "precision": 0.5,
+    "recall": 0.037,
+    "subjects": {
+     "correct": 1,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 1,
+     "recognised": 0
+    },
+    "decisionUsable": 1,
+    "falsePositives": 1
+   },
+   "qualitative": {
+    "gold": 31,
+    "findings": 0,
+    "matched": 0,
+    "precision": null,
+    "recall": 0,
+    "subjects": {
+     "correct": 0,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 17,
+     "matched": 0
+    },
+    "decisionUsable": 0,
+    "falsePositives": 0
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 24,
+     "matched": 10
+    },
+    "qualitative": {
+     "leads": 62,
+     "matched": 2
+    }
+   }
+  }
+ },
+ "documents": [
+  {
+   "tag": "u_td_tr_hisense_dh5s102bw",
+   "category": "tumble_dryers",
+   "gold": {
+    "quantitative": 7,
+    "qualitative": 9
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 3,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": [
+       {
+        "dimension": "duration_outcome",
+        "direction": "negative"
+       },
+       {
+        "dimension": "temperature_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "duration_outcome",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 3,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": [
+       {
+        "dimension": "duration_outcome",
+        "direction": "negative"
+       },
+       {
+        "dimension": "temperature_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "duration_outcome",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 7,
+      "qualitative": 11
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 7,
+      "qualitative": 18
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_td_tr_haier_hd90_a3q397u1",
+   "category": "tumble_dryers",
+   "gold": {
+    "quantitative": 13,
+    "qualitative": 9
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 2,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 2,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 8,
+      "qualitative": 6
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 8,
+      "qualitative": 14
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_td_tr_samsung_dv90t6240ln",
+   "category": "tumble_dryers",
+   "gold": {
+    "quantitative": 7,
+    "qualitative": 8
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 2,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 2,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": [
+       {
+        "dimension": "duration_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "duration_outcome",
+        "direction": "negative"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 2,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": [
+       {
+        "dimension": "duration_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "duration_outcome",
+        "direction": "negative"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 8,
+      "qualitative": 10
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 2,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 7,
+      "qualitative": 16
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_td_er_bosch_wtwh7660gb",
+   "category": "tumble_dryers",
+   "gold": {
+    "quantitative": 0,
+    "qualitative": 5
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 2,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": [
+       {
+        "dimension": "duration_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "temperature_outcome",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 2,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": [
+       {
+        "dimension": "duration_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "temperature_outcome",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 10
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 14
+     }
+    }
+   }
+  }
+ ]
+}
