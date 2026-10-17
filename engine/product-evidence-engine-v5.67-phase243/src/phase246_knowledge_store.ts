@@ -746,7 +746,8 @@ export class KnowledgeStore246 {
   const revs=[...(i.sourceRevisionIds??[])];
   for(const r of revs)if(!this.db.prepare('SELECT 1 FROM revisions WHERE revision_id=?').get(r))throw Error('246_unknown_source_revision');
   if(i.provenance==='professional_method_reference'&&!revs.length)throw Error('246_method_reference_requires_source');
-  if(i.concept&&(!ident(i.concept.id)||!i.concept.aliases.length))throw Error('246_invalid_concept');
+  // Phase269: a 'measurement' concept (what would establish an outcome, or a test condition) has no everyday aliases.
+  if(i.concept&&(!ident(i.concept.id)||(!i.concept.aliases.length&&i.concept.kind!=='measurement')||(i.concept.kind==='measurement'&&i.concept.aliases.length)))throw Error('246_invalid_concept');
   const id='cat_'+sha(canon([i.categoryId,i.section,norm(i.statement)])).slice(0,20);
   return this.tx(()=>{
    const exists=this.db.prepare('SELECT 1 FROM category_items WHERE item_id=?').get(id);

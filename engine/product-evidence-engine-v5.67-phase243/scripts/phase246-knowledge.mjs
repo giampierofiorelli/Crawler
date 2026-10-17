@@ -143,6 +143,11 @@ try{
   case 'seed-vocabulary':{let n=0;for(const [c,m] of Object.entries(CONCEPT_VOCABULARY248))for(const [id,al] of Object.entries(m))n+=store.addConceptAliases246(c,id,al);out({itemsUpdated:n});break;}
   // Phase250: the adopted category lessons (need hypotheses, everyday vocabulary, mechanism and method statements).
   case 'apply-lessons':out(applyLessons250(store,ADOPTED_LESSONS250));break;
+  // Phase269: research-package teaching through the Phase252 machinery (concepts, measurements, conditions, relations).
+  case 'apply-teaching':{const {applyTeaching252,registerTeachingSources252}=await import('../dist/src/phase252_category_teaching.js');
+   const {AIR_FRYER_TEACHING269,RESEARCH_SOURCES269,COFFEE_TEACHING269,COFFEE_SOURCES269}=await import('../dist/src/phase269_research_teaching.js');
+   registerTeachingSources252([...RESEARCH_SOURCES269,...COFFEE_SOURCES269]);const t={air_fryers:AIR_FRYER_TEACHING269,coffee_machines:COFFEE_TEACHING269}[flags.category];if(!t)throw Error('no teaching for '+flags.category);
+   out(applyTeaching252(store,[t]));break;}
   case 'retire-item':out({retired:store.retireCategoryItem246(flags.item,flags.reason)});break;
   case 'seed-relations':out({category:flags.category,...seedRelations247(store,flags.category)});break;
   case 'category-graph':{const c=flags.category;const comp=compileTo116(store,c);

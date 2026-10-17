@@ -13,7 +13,8 @@
  * Nothing is written back to the store: the store's CHECK constraints keep every row unreviewed. A validated
  * measurement is "valid under policy P (machine-checked)", not "reviewed", and never independence established.
  */
-import type {ProductKnowledgeCatalog181,KnowledgeDimension181,OriginalTest181,ProductKnowledge181} from './phase181_dynamic_knowledge_ranking.js';
+import type {ProductKnowledgeCatalog181,KnowledgeDimension181,OriginalTest181,ProductKnowledge181,TEST_LIMITATIONS181} from './phase181_dynamic_knowledge_ranking.js';
+type Limitation181=(typeof TEST_LIMITATIONS181)[number];
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {createHash} from 'node:crypto';
 
@@ -30,6 +31,9 @@ export interface Protocol268 {
  compartments:'whole_appliance';
  /** Lower measured energy is better for this measurand. */
  direction:'lower_is_better';
+ /** Phase269: the category measurement concept this protocol produces (category knowledge decides which consumer
+  * outcomes it can and cannot establish), and whether it measures a fixed duration rather than a completed task. */
+ measureId?:string;fixedDuration?:boolean;
 }
 export interface QualifiedPublisher268 {host:string;qualifiedFor:readonly string[];basis:readonly string[];
  /** The publisher's recorded protocol: conditions it applies to every result of the measurand. */
@@ -37,19 +41,23 @@ export interface QualifiedPublisher268 {host:string;qualifiedFor:readonly string
 export interface ValidationPolicy268 {
  policyId:string;revision:number;status:'proposed_not_authorised'|'authorised';
  qualifiedPublishers:readonly QualifiedPublisher268[];protocols:readonly Protocol268[];
- identity:{requireDeclaredModelCode:boolean};
+ identity:{requireDeclaredModelCode:boolean;
+  /** Phase269 (r2): which identity confidence a test needs to support a consumer ranking, versus a labelled comparison. */
+  rankingRequires?:'model_code_in_tested_subject';comparisonAllows?:'product_name_only'|'model_code_in_tested_subject'};
 }
 export interface ScoringPolicy268 {
  policyId:string;revision:number;status:'proposed_not_authorised'|'authorised';
  /** valuePoints = round(10000 * (zeroPointsAt - value) / (zeroPointsAt - fullPointsAt)), clipped to [0, 10000]:
   * linear in the measured quantity (energy and its cost are proportional), so equal kWh differences are equal point
   * differences; the anchors are fixed by policy, not by the products present (adding a product never moves others). */
- dimensions:readonly {key:string;label:string;protocolId:string;fullPointsAt:number;zeroPointsAt:number;
+ dimensions:readonly {key:string;label:string;protocolId:string;
+  /** r1: linear with fixed anchors. r2: 'raw_quantity_only' keeps the measured value and assigns no score (valuePoints 0). */
+  mode?:'linear_anchored'|'raw_quantity_only';fullPointsAt:number;zeroPointsAt:number;
   weightUnits:KnowledgeDimension181['weightUnits'];justification:string}[];
 }
 
-/** Proposed minimum defaults (owner decision pending). Alternatives are recorded in the Phase268 report. */
-export const VALIDATION_POLICY268:ValidationPolicy268={
+/** r1 as proposed and evaluated in Phase268 (kept unchanged for reproduction). */
+export const VALIDATION_POLICY268_R1:ValidationPolicy268={
  policyId:'pee268-test-evidence-validation',revision:1,status:'proposed_not_authorised',
  qualifiedPublishers:[{host:'www.expertreviews.co.uk',qualifiedFor:['appliance_energy_one_hour_empty'],
   basis:['first-hand tests by named staff reviewers','energy protocol stated in its own reviews','not a manufacturer or retailer of the products',
@@ -60,12 +68,28 @@ export const VALIDATION_POLICY268:ValidationPolicy268={
   acceptBlockContext:true,compartments:'whole_appliance',direction:'lower_is_better'}],
  identity:{requireDeclaredModelCode:false},
 };
-export const SCORING_POLICY268:ScoringPolicy268={
+export const SCORING_POLICY268_R1:ScoringPolicy268={
  policyId:'pee268-energy-scoring',revision:1,status:'proposed_not_authorised',
  dimensions:[{key:'low_energy_use',label:'Measured electricity use (1 hour empty at 200 °C, one publisher protocol)',protocolId:'er_energy_1h_empty_200c_v1',
   fullPointsAt:0,zeroPointsAt:2,weightUnits:{hard:8000,high:4000,normal:2000,low:500},
   justification:'linear in kWh; 0 kWh = 10000 points, 2 kWh (above every appliance in the protocol) = 0; fixed anchors'}],
 };
+/** r2 (Phase269, proposed): the protocol names its measurement concept (a fixed-duration empty run, which category
+ * knowledge marks as not sufficient for energy per cooked meal); identity confidence decides ranking eligibility. */
+export const VALIDATION_POLICY268:ValidationPolicy268={...VALIDATION_POLICY268_R1,revision:2,
+ protocols:VALIDATION_POLICY268_R1.protocols.map(p=>({...p,measureId:'energy_empty_run',fixedDuration:true})),
+ identity:{requireDeclaredModelCode:false,rankingRequires:'model_code_in_tested_subject',comparisonAllows:'product_name_only'}};
+/** r2 (Phase269, proposed): no score. The dimension is the measurement itself, compared only by its raw quantity, and it
+ * cannot be confirmed as any consumer outcome (its key is a measurement id, not a need id). The r1 anchors are retired:
+ * no replacement anchors are invented. */
+export const SCORING_POLICY268:ScoringPolicy268={policyId:'pee268-energy-scoring',revision:2,status:'proposed_not_authorised',
+ dimensions:[{key:'energy_empty_run',label:'Electricity used in a fixed one-hour empty run at 200 °C (one publisher protocol; not energy to cook a meal)',
+  protocolId:'er_energy_1h_empty_200c_v1',mode:'raw_quantity_only',fullPointsAt:0,zeroPointsAt:0,weightUnits:{hard:8000,high:4000,normal:2000,low:500},
+  justification:'raw kWh only; no consumer score'}]};
+/** Phase269: the protocol a catalog method id refers to (the request path asks category knowledge what it establishes). */
+export function protocolOfMethod268(methodId:string,policies:readonly ValidationPolicy268[]=[VALIDATION_POLICY268]):Protocol268|null{
+ for(const p of policies)for(const x of p.protocols)if(x.id===methodId)return x;return null;
+}
 
 export type Rejection268='not_current'|'not_retained'|'publisher_not_qualified'|'not_a_test_publisher_source'|'subject_unresolved'|'model_code_not_declared'|
  'measurand_not_in_protocol'|'setpoint_not_stated'|'setpoint_differs'|'duration_not_stated'|'load_not_established'|'block_context_not_accepted'|
@@ -75,6 +99,10 @@ export interface Validated268 {
  source:{host:string;url:string;sha256:string;fetchedAt:string};
  /** What made it acceptable, and what limits it (always stated in the answer). */
  basis:readonly string[];limitations:readonly string[];
+ /** Phase269: identity confidence and the distinct qualifications that are easily conflated. */
+ identityConfidence:'model_code_in_tested_subject'|'product_name_only';
+ publisherQualification:'qualified_for_measurand_by_policy';firstHand:'first_person_statement'|'review_test_protocol';
+ limitationCodes:readonly Limitation181[];
  status:'valid_under_policy';policyId:string;policyRevision:number;policyStatus:ValidationPolicy268['status'];
  independenceEstablished:false;humanReviewed:false;
 }
@@ -112,7 +140,13 @@ export function validateTestMeasurements268(rows:readonly Row265[],product:(id:s
    if(codes.has('power_meter')||doc.has('power_meter'))basis.push('plug-in power meter');
   }
   if(why.length){rejected.push({measurementId:r.measurementId,productId:r.productId,value:r.value,unit:r.unit,reasons:[...new Set(why)]});continue;}
+  const lc:Limitation181[]=[];if(!p!.declaredModel)lc.push('identity_by_product_name_only');if(codes.has('conditions_from_block'))lc.push('condition_from_same_paragraph');
+  if(!codes.has('load_empty')&&doc.has('load_empty'))lc.push('load_from_document_protocol');else if(!codes.has('load_empty'))lc.push('load_from_publisher_protocol');
+  if(codes.has('all_compartments')||doc.has('all_compartments'))lc.push('all_compartments_running');if(codes.has('includes_preheat'))lc.push('includes_preheat');
+  if(proto!.fixedDuration)lc.push('fixed_duration_not_cooking_task');if(policy.qualifiedPublishers.length===1)lc.push('single_publisher');
   ok.push({measurementId:r.measurementId,productId:r.productId!,productName:p!.name??r.productId!,declaredModel:p!.declaredModel,protocolId:proto!.id,value:r.value!,unit:r.unit,
+   identityConfidence:p!.declaredModel?'model_code_in_tested_subject':'product_name_only',publisherQualification:'qualified_for_measurand_by_policy',
+   firstHand:r.methodCue==='energy_result_with_document_protocol'?'review_test_protocol':'first_person_statement',limitationCodes:lc,
    source:{host:r.source.host,url:r.source.url,sha256:r.source.sha256,fetchedAt:r.source.fetchedAt},basis,limitations:lim,status:'valid_under_policy',
    policyId:policy.policyId,policyRevision:policy.revision,policyStatus:policy.status,independenceEstablished:false,humanReviewed:false});
  }
@@ -129,6 +163,7 @@ export function validateTestMeasurements268(rows:readonly Row265[],product:(id:s
 
 /** Rule set 3: deterministic scoring and compilation into an UNSIGNED Phase181 catalog. */
 export function points268(value:number,d:ScoringPolicy268['dimensions'][number]):number{
+ if(d.mode==='raw_quantity_only')return 0;
  const x=10000*(d.zeroPointsAt-value)/(d.zeroPointsAt-d.fullPointsAt);return Math.max(0,Math.min(10000,Math.round(x)));
 }
 export function compileCatalog268(v:ValidationRun268,scoring:ScoringPolicy268,args:{categoryId:string;market:string;discoveredVariantIds:readonly string[];
@@ -140,7 +175,10 @@ export function compileCatalog268(v:ValidationRun268,scoring:ScoringPolicy268,ar
  for(const d of scoring.dimensions)for(const m of v.validated.filter(x=>x.protocolId===d.protocolId)){
   const id='t_'+createHash('sha256').update(m.measurementId+'|'+d.key).digest('hex').slice(0,20);
   tests.push({id,variantId:m.productId,dimensionKey:d.key,originalTestId:m.measurementId,methodId:m.protocolId,protocolVersion:ver,
-   sourceUrl:m.source.url,observedAt:m.source.fetchedAt.replace(/\.\d+Z$/,'Z'),scope:'exact_variant_original_professional_test'});
+   sourceUrl:m.source.url,observedAt:m.source.fetchedAt.replace(/\.\d+Z$/,'Z'),
+   // Phase269: exact-variant scope only when the tested subject's own model code identifies it.
+   scope:m.identityConfidence==='model_code_in_tested_subject'?'exact_variant_original_professional_test':'named_product_original_professional_test',
+   ...(d.mode==='raw_quantity_only'?{measured:{value:m.value,unit:m.unit,direction:'lower_is_better' as const},limitations:[...m.limitationCodes]}:{})});
   const p=products.get(m.productId)??{variantId:m.productId,name:m.productName,observations:[]};
   products.set(m.productId,{...p,observations:[...p.observations,{dimensionKey:d.key,valuePoints:points268(m.value,d),hardOutcome:'pass',evidenceId:id}]});
  }
@@ -151,7 +189,7 @@ export function compileCatalog268(v:ValidationRun268,scoring:ScoringPolicy268,ar
   coverageStatement:`Products of this category with a measurement valid under ${ver} (${vp.status}); one publisher; not market coverage.`,
   marketCoverageComplete:false,
   dimensions:scoring.dimensions.map(d=>({key:d.key,label:d.label,value:{kind:'boolean',value:true},methodId:d.protocolId,protocolVersion:ver,
-   weightUnits:d.weightUnits,weightingReviewReference:pol,normalizationReviewReference:`${pol}:linear-anchored`})),
+   weightUnits:d.weightUnits,weightingReviewReference:pol,normalizationReviewReference:`${pol}:${d.mode==='raw_quantity_only'?'raw-quantity-only':'linear-anchored'}`})),
   originalTests:tests.sort((a,b)=>a.id.localeCompare(b.id)),products:[...products.values()].sort((a,b)=>a.variantId.localeCompare(b.variantId)),
   externalReviewReference:`not_externally_reviewed:machine_validated:${ver}:${st(vp.status)}`};
 }

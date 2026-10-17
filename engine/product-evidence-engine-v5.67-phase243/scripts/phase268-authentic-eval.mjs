@@ -14,7 +14,7 @@ import {privateEvaluationDir249} from '../dist/src/phase249_retention_policy.js'
 import {CATEGORY_REGISTRY250} from '../dist/src/phase248_category_registry.js';
 import {adviseFromRequest253} from '../dist/src/phase253_request_advice.js';
 import {canonicalJson180} from '../dist/src/phase180_reviewed_first_answer.js';
-import {validateTestMeasurements268,compileCatalog268,VALIDATION_POLICY268,SCORING_POLICY268} from '../dist/src/phase268_evidence_validation.js';
+import {validateTestMeasurements268,compileCatalog268,VALIDATION_POLICY268_R1 as VALIDATION_POLICY268,SCORING_POLICY268_R1 as SCORING_POLICY268} from '../dist/src/phase268_evidence_validation.js';
 
 const label=process.argv.includes('--label')?process.argv[process.argv.indexOf('--label')+1]:'firstrun';
 if(!/^[a-z0-9-]{3,40}$/.test(label))throw Error('bad --label');

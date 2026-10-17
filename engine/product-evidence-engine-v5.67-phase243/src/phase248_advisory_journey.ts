@@ -112,7 +112,10 @@ function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string
 function longestMatches<T>(t:string,entries:readonly {key:T;aliases:readonly string[]}[],loose=false,singular=false){
  const hits:{key:T;alias:string;start:number;end:number}[]=[];
  for(const e of entries)for(const al of e.aliases)for(const p of (loose?findLoose(t,al):find(t,al,singular)))hits.push({key:e.key,alias:al,...p});
- return hits.filter(h=>!hits.some(o=>o!==h&&o.key!==h.key&&o.start<=h.start&&o.end>=h.end&&(o.end-o.start)>(h.end-h.start)));
+ // Phase269 (development D1): a loose hit that skips words ("cooking [results] for one") does not suppress a contiguous
+ // hit of another concept inside it ("cooking results").
+ const gapped=(h:{alias:string;start:number;end:number})=>!new RegExp(`^${norm(h.alias).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}(?:e?s)?$`).test(t.slice(h.start,h.end));
+ return hits.filter(h=>!hits.some(o=>o!==h&&o.key!==h.key&&o.start<=h.start&&o.end>=h.end&&(o.end-o.start)>(h.end-h.start)&&!(gapped(o)&&!gapped(h))));
 }
 const GENERIC=/^(?:something|anything|one|ones|new one|an? appliance|appliances?|products?|things?|gadgets?|a gadget|a product|stuff|kit|equipment|it|this|that|the kitchen|kitchen|type|kind|model|brand|options?|features?|machines?|devices?|units?)$/;
 // ---- Phase253: purchase target. The product being bought is the head of the noun phrase that follows a buying
@@ -155,6 +158,9 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
      // Reality check 2026-10-16: an article inside the phrase starts a new noun phrase, so the word before it is a verb
      // or preposition, not part of the purchase ("which espresso machine makes the best ..." names an espresso machine).
      if(np.length&&/^(?:a|an|the)$/.test(toks[i])){np.pop();break;}
+     // Phase269 (development D7): after a category name, an adverb or a verb starts the predicate ("which air fryer
+     // actually cooks ..."), not a longer noun phrase.
+     if(np.length&&categoryAt(np.join(' '))&&(/ly$/.test(toks[i])||/^(?:cooks|makes|gives|uses|has|heats|browns|produces|works|runs|costs|keeps|lets|takes|needs|does)$/.test(toks[i])))break;
      np.push(toks[i]);}
     if(!np.length)break;
     // A title led by a verb form ("Using the outlet ...") or by a relation noun ("Meaning of ...") names no purchase.
@@ -166,7 +172,12 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
     const rawNp=raw.match(new RegExp(np.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('[^A-Za-z0-9]+'),'i'))?.[0]??'';
     const capitals=(rawNp.match(/(?:^|[^A-Za-z])[A-Z][a-z]/g)??[]).length;
     const proper=/\d/.test(head)||capitals>=2||(/^[A-Z]/.test(rawHead)&&raw.trim().indexOf(rawHead)>0&&!/^[A-Z]/.test(raw.trim().split(/\s+/)[1]??''));
-    const cat=categoryAt(phrase);
+    let cat=categoryAt(phrase);
+    // Phase269 (development D3): "the crispiest chips possible from an air fryer" - an outcome obtained from a named
+    // category is a purchase of that category ('from' or 'using' only: "a tray in an air fryer" is an accessory).
+    if(!cat){const after=seg.slice(Math.min(st,seg.length)).trim();const at=after.indexOf(phrase);
+     const tail=at>=0?after.slice(at+phrase.length):'';const m2=/^ (?:\S+ ){0,2}?(?:from|using) (?:a|an|my|the) (.{3,60})$/.exec(tail);
+     if(m2){const words=m2[1].split(' ');for(let n=Math.min(4,words.length);n>0&&!cat;n--){const c2=categoryAt(words.slice(0,n).join(' '));if(c2)cat=c2;}}}
     if(cat)phrases.push({phrase,head,category:cat});
     else if(blocked(phrase)){}
     else if(!proper&&head.length>=3&&/^[a-z]+$/.test(head)&&!GENERIC_HEAD253.test(head)&&!GENERIC.test(phrase)){

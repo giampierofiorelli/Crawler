@@ -29,10 +29,18 @@ export interface ProductObservation181 {
 export interface ProductKnowledge181 {
  variantId:string;name:string;observations:readonly ProductObservation181[];
 }
+/** Phase269: limitation codes a test carries into the answer (rendered by the request path). */
+export const TEST_LIMITATIONS181=['identity_by_product_name_only','condition_from_same_paragraph','load_from_document_protocol','load_from_publisher_protocol',
+ 'all_compartments_running','includes_preheat','fixed_duration_not_cooking_task','single_publisher'] as const;
 export interface OriginalTest181 {
  id:string;variantId:string;dimensionKey:string;originalTestId:string;
  methodId:string;protocolVersion:string;sourceUrl:string;observedAt:string;
- scope:'exact_variant_original_professional_test';
+ /** Phase269: 'exact_variant' only when the tested subject's own model code identifies the variant; a test of a product
+  * named without a model code is 'named_product' and the answer must say the variant is not verified. */
+ scope:'exact_variant_original_professional_test'|'named_product_original_professional_test';
+ /** Phase269: the raw measured quantity (never converted to a score when a transformation is not justified). */
+ measured?:{value:number;unit:string;direction:'lower_is_better'|'higher_is_better'};
+ limitations?:readonly (typeof TEST_LIMITATIONS181)[number][];
 }
 export interface ProductKnowledgeCatalog181 {
  phase:181;schema:'181.1';market:string;categoryId:string;
@@ -90,7 +98,10 @@ function validateCatalog(c:ProductKnowledgeCatalog181):void{
   if(!nameOK(e?.id)||tests.has(e.id)||!discovered.has(e.variantId)||!definitions.has(e.dimensionKey)||
    !nameOK(e.originalTestId)||!nameOK(e.methodId)||!nameOK(e.protocolVersion)||
    !urlOK(e.sourceUrl)||!stamp(e.observedAt)||Date.parse(e.observedAt)>Date.parse(c.reviewedAt)||
-   e.scope!=='exact_variant_original_professional_test')throw Error('phase181_bad_test');
+   !['exact_variant_original_professional_test','named_product_original_professional_test'].includes(e.scope)||
+   (e.measured!==undefined&&(!e.measured||typeof e.measured.value!=='number'||!Number.isFinite(e.measured.value)||!nameOK(e.measured.unit)||
+    !['lower_is_better','higher_is_better'].includes(e.measured.direction)))||
+   (e.limitations!==undefined&&(!Array.isArray(e.limitations)||e.limitations.length>TEST_LIMITATIONS181.length||!e.limitations.every((l:string)=>(TEST_LIMITATIONS181 as readonly string[]).includes(l)))))throw Error('phase181_bad_test');
   tests.set(e.id,e);
  }
  const products=new Set<string>();

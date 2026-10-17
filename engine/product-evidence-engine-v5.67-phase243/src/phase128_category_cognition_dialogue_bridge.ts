@@ -17,7 +17,9 @@ const txt=(s:unknown):s is string=>typeof s==='string'&&s.length>0&&s.length<=16
 const url=(s:unknown):s is string=>typeof s==='string'&&/^https:\/\/[a-z0-9][^\s]{4,3000}$/i.test(s);
 const hash=(v:unknown)=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const sort=(x:readonly string[])=>[...new Set(x)].sort();
-const KIND=['task','environment','capability','meaning','outcome','failure','mechanism'] as const;
+// Phase269: 'measurement' names what would establish an outcome (a measurand under a protocol) or a test condition; it has
+// no everyday aliases and is never recognised as a user need.
+const KIND=['task','environment','capability','meaning','outcome','failure','mechanism','measurement'] as const;
 export type ConceptKind128=typeof KIND[number];
 export type KnowledgeState128='proposed_unverified'|'reviewed_definition';
 export interface SourceRef128 {id:string;url:string;title:string;originalDocumentId:string;

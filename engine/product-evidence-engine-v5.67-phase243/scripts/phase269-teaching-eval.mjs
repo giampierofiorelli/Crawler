@@ -12,12 +12,21 @@ import {CATEGORY_REGISTRY250} from '../dist/src/phase248_category_registry.js';
 import {adviseFromRequest253} from '../dist/src/phase253_request_advice.js';
 import {runJourney248} from '../dist/src/phase248_advisory_journey.js';
 import {canonicalJson180} from '../dist/src/phase180_reviewed_first_answer.js';
-import {validateTestMeasurements268,compileCatalog268,VALIDATION_POLICY268,SCORING_POLICY268} from '../dist/src/phase268_evidence_validation.js';
+import * as P268 from '../dist/src/phase268_evidence_validation.js';
+const {validateTestMeasurements268,compileCatalog268}=P268;
+// The baseline ran with the Phase268 r1 policies (then exported under these names). '--catalog r1' (default) repeats exactly
+// that context; '--catalog r2' uses the Phase269 proposed revisions.
+const catalogRev=process.argv.includes('--catalog')?process.argv[process.argv.indexOf('--catalog')+1]:'r1';
+if(!['r1','r2'].includes(catalogRev))throw Error('bad --catalog');
+const VALIDATION_POLICY268=catalogRev==='r1'?P268.VALIDATION_POLICY268_R1:P268.VALIDATION_POLICY268;
+const SCORING_POLICY268=catalogRev==='r1'?P268.SCORING_POLICY268_R1:P268.SCORING_POLICY268;
 
 const label=process.argv.includes('--label')?process.argv[process.argv.indexOf('--label')+1]:'baseline';
 if(!/^[a-z0-9-]{3,40}$/.test(label))throw Error('bad --label');
-const out=`evaluation/phase269/teaching-${label}.json`;if(existsSync(out))throw Error(`${out} exists: runs are never overwritten`);
-const setFile='evaluation/phase269/teaching-eval-set.json';const SET=JSON.parse(readFileSync(setFile,'utf8'));
+// '--set coffee' runs evaluation/phase269/coffee-eval-set.json (cross-category transfer); default: the air-fryer set.
+const setName=process.argv.includes('--set')?process.argv[process.argv.indexOf('--set')+1]:'teaching';if(!/^[a-z]+$/.test(setName))throw Error('bad --set');
+const out=`evaluation/phase269/${setName}-${label}.json`;if(existsSync(out))throw Error(`${out} exists: runs are never overwritten`);
+const setFile=`evaluation/phase269/${setName==='teaching'?'teaching':setName}-eval-set.json`;const SET=JSON.parse(readFileSync(setFile,'utf8'));
 const setSha=createHash('sha256').update(readFileSync(setFile)).digest('hex');
 const dir=join(homedir(),'.local','share','product-evidence-engine','p269');mkdirSync(dir,{recursive:true});
 const db=join(dir,`eval-${label}.sqlite`);for(const x of ['','-wal','-shm'])rmSync(db+x,{force:true});
@@ -73,5 +82,5 @@ const summary=Object.fromEntries(['development','untouched'].map(p=>[p,{...Objec
  proxyAssessedFailures:rows.filter(x=>x.part===p&&x.score['6_proxyAssessedFailure'].length).map(x=>x.id)}]));
 const after=JSON.stringify(store.stats246());store.close();
 writeFileSync(out,JSON.stringify({schema:'pee269.teaching-run.v1',label,at:asOf,setSha256:setSha,storeCopyUnchanged:before===after,
- controlledCatalog:{validated:v.validated.length,dimension:compiled.dimensions.map(d=>d.key)},summary,rows},null,1)+'\n');
+ controlledCatalog:{revision:catalogRev,validated:v.validated.length,dimension:compiled.dimensions.map(d=>d.key)},summary,rows},null,1)+'\n');
 console.log(JSON.stringify(summary,null,1));

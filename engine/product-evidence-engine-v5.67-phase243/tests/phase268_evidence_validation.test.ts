@@ -5,7 +5,7 @@ import {extractSpecifications245} from '../src/phase245_spec_extraction.js';
 import {FACTUAL_CLASS_POLICY249} from '../src/phase249_retention_policy.js';
 import {probeTransientTestContent225} from '../src/phase225_transient_test_probe.js';
 import {testLeadsFromHtml265,testDocumentSubject268} from '../src/phase265_test_measurements.js';
-import {validateTestMeasurements268,compileCatalog268,points268,VALIDATION_POLICY268,SCORING_POLICY268,type ValidationPolicy268} from '../src/phase268_evidence_validation.js';
+import {validateTestMeasurements268,compileCatalog268,points268,VALIDATION_POLICY268,SCORING_POLICY268_R1 as SCORING_POLICY268,type ValidationPolicy268} from '../src/phase268_evidence_validation.js';
 import {dynamicKnowledgeAnswer181} from '../src/phase181_dynamic_knowledge_ranking.js';
 import {canonicalJson180} from '../src/phase180_reviewed_first_answer.js';
 import {createDecision177,applyDecisionAction177} from '../src/phase177_decision_snapshot.js';
@@ -90,6 +90,7 @@ test('store v6 keeps the condition codes; validation applies the protocol, names
  s.close();
 });
 
+// Phase269: r1 scoring (kept for reproduction of the Phase268 runs); r2 is tested in phase269_goal_relevance.test.ts.
 test('scoring is fixed and monotone; the compiled catalog is accepted by the existing Phase181 engine only when signed by a pinned key',()=>{
  const d=SCORING_POLICY268.dimensions[0];
  assert.deepEqual([points268(0,d),points268(0.5,d),points268(1,d),points268(2,d),points268(3,d)],[10000,7500,5000,0,0]);

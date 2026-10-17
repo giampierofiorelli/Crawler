@@ -40,6 +40,10 @@ export interface Advice253 {
  excluded:{productId:string;name:string;reasons:string[]}[];
  conflicts:{productId:string;criterion:string;reason:string}[];
  questions:string[];statements:string[];limitations:string[];researchPlan:string[];
+ /** Phase269: consumer-goal relevance. For each recognised need: which measurements would establish it (category
+  * knowledge), which proxies are rejected, which test conditions are required, whether supplied evidence assesses it
+  * directly or only through a proxy, and the resulting decision. A proxy never assesses an outcome. */
+ goalAssessment?:GoalAssessment253;
  /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
   * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
  researchInputs?:AdviceResearchInputs253;
@@ -139,3 +143,16 @@ export function summarise253(rows:readonly AdviceRow253[]){
   m9_provenance:{included:s('included'),withFullProvenance:s('includedWithFullProvenance')},
   m10_response:{correct:c(r=>r.responseOk),of:n,harmful:c(r=>r.harmful),byResponse,questionsAsked:s('questions')}};
 }
+/** Phase269 goal-relevance contract (consumer outcome -> relevant criteria -> evidence -> applicability -> coverage ->
+ * decision). Ids are category concept ids; attribute proxies are 'attr:<attribute with underscores>'. */
+export interface GoalAssessment253 {
+ decision:'clarify'|'research'|'partial_comparison'|'ranking'|'abstain'|'no_purchase_check';
+ outcomes:{need:string;coverage:'assessed'|'proxy_only'|'unassessed'|'context';
+  relevantMeasures:string[];rejectedProxies:string[];requiredConditions:string[];
+  /** Supplied measurements that cannot be compared for this outcome (a proxy, or a test configuration the user excluded). */
+  incomparable:string[];assessedBy?:string[]}[];
+ /** A metric comparison shown separately from any recommendation, with its raw quantity and per-product limitations. */
+ partialComparison?:{measure:string;label:string;direction:'lower_is_better'|'higher_is_better';doesNotAssess:string[];
+  items:{productId:string;name:string;value:number;unit:string;sourceUrl:string;variantVerified:boolean;limitations:string[]}[]};
+}
+

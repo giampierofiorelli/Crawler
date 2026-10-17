@@ -59,7 +59,8 @@ import {addRelation247} from './phase247_category_relations.js';
 
 export type TeachingBasis252='source_backed_observation'|'method_reference'|'instructor_hypothesis'|'independently_supported_relation';
 export interface TeachingSource252 {id:string;url:string;publisher:string;
- role:'regulator'|'standard_catalogue'|'manufacturer_guide'|'retail_guide'|'academic'|'independent_test_publisher'|'standards_body';
+ /** Phase269: 'owner_research_package' is the owner's documentary research (its own status labels are kept in the text). */
+ role:'regulator'|'standard_catalogue'|'manufacturer_guide'|'retail_guide'|'academic'|'independent_test_publisher'|'standards_body'|'owner_research_package';
  consulted:string;access:string;teaches:string}
 export interface Taught252 {text:string;basis:TeachingBasis252;sources:readonly string[]}
 export interface TaughtNeed252 extends NeedLesson250 {
@@ -71,6 +72,12 @@ export interface TaughtNeed252 extends NeedLesson250 {
  proxies?:readonly {attribute:string;kind:'not_sufficient_for'|'may_support';note:Taught252}[];
  /** D: the clarification asked when this need is recognised but its parameter is unknown. */
  question?:string;
+ /** Phase269: the measurement id (a 'measurement' concept, no aliases) of the outcome method, and the test conditions
+  * without which its results are not comparable. Measurements and conditions are shared across needs by id. */
+ measureId?:string;conditions?:readonly string[];
+ /** Phase269: measurements that look relevant but do not establish this outcome (e.g. a fixed-duration empty run for
+  * energy per cooked meal): stored as 'not_sufficient_for' from the measurement to the need. */
+ proxyMeasures?:readonly {measureId:string;statement:Taught252;note:Taught252}[];
 }
 export interface CategoryTeaching252 {
  categoryId:string;version:string;written:string;
@@ -86,6 +93,8 @@ export interface CategoryTeaching252 {
  applicability:readonly Taught252[];
  /** Known gaps and instructor hypotheses still to test. */
  gaps:readonly Taught252[];
+ /** Phase269: test conditions referenced by needs' conditions (id -> what it requires). */
+ conditions?:readonly {id:string;statement:Taught252}[];
 }
 
 export const TEACHING_SOURCES252:readonly TeachingSource252[]=[
@@ -235,30 +244,46 @@ export function registryWithTeaching252(base:readonly CategoryEntry248[],teachin
   for(const n of t.needs){if(n.requirement)needCriteria[n.id]=[...n.requirement.criteria];if(n.question)needQuestions[n.id]=n.question;}
   return {...e,needCriteria,needQuestions};});
 }
-const cite=(x:Taught252)=>`${x.text} [${x.basis}${x.sources.length?'; '+x.sources.map(id=>TEACHING_SOURCES252.find(s=>s.id===id)?.url??id).join(' '):''}]`.slice(0,500);
+/** Phase269: teachings may cite sources registered elsewhere (e.g. the air-fryer research package); ids resolve here. */
+const EXTRA_SOURCES252=new Map<string,TeachingSource252>();
+export function registerTeachingSources252(sources:readonly TeachingSource252[]):void{for(const s of sources)EXTRA_SOURCES252.set(s.id,s);}
+// Registered (Phase269) sources are cited by id (their URL and access terms stay in the source register), so that the
+// statement fits the store's 300-character item limit without cutting its text.
+const cite=(x:Taught252)=>`${x.text} [${x.basis}${x.sources.length?'; '+x.sources.map(id=>TEACHING_SOURCES252.find(s=>s.id===id)?.url??(EXTRA_SOURCES252.has(id)?'src:'+id:id)).join(' '):''}]`.slice(0,500);
 /** Applies teachings through the store's own APIs (idempotent): need concepts (Phase250 path), then measurement,
  * subtype, mechanism, gap and question items, measured_by relations from each taught method to its need, and
  * declared-attribute relations (may_support / not_sufficient_for). All are hypotheses; nothing is promoted. */
 export function applyTeaching252(store:KnowledgeStore246,teachings:readonly CategoryTeaching252[],at=new Date().toISOString()){
  const lessons=applyLessons250(store,teachings.map(lessonOf252),at);let items=0,relations=0;
  for(const t of teachings){
-  const add=(section:Parameters<KnowledgeStore246['addCategoryItem246']>[0]['section'],x:Taught252,stream:string)=>{
+  const add=(section:Parameters<KnowledgeStore246['addCategoryItem246']>[0]['section'],x:Taught252,stream:string,concept?:{kind:'measurement';id:string;aliases:string[]})=>{
    const n=store.categoryItems246(t.categoryId).length;
-   const id=store.addCategoryItem246({categoryId:t.categoryId,section,statement:cite(x),knowledgeClass:'technical_hypothesis',provenance:'assistant_authored_unreviewed',studyStream:stream as never},at);
+   const id=store.addCategoryItem246({categoryId:t.categoryId,section,statement:cite(x),knowledgeClass:'technical_hypothesis',provenance:'assistant_authored_unreviewed',studyStream:stream as never,...(concept?{concept}:{})},at);
    if(store.categoryItems246(t.categoryId).length>n)items++;return id;};
+  const rel=(from:string,to:string,kind:'measured_by'|'not_sufficient_for'|'requires_condition',q:string)=>{
+   const before=store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number};
+   addRelation247(store,{categoryId:t.categoryId,from:'item:'+from,to:'item:'+to,kind,support:'hypothesis',qualification:q.slice(0,300).replace(/[<>\r\n]/g,' ')},at);
+   if((store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number}).c>before.c)relations++;};
+  // Phase269: one item per measurement or condition id, shared by every need that refers to it.
+  const measureItem=(id:string,x:Taught252)=>store.categoryItems246(t.categoryId).find(i=>i.concept?.kind==='measurement'&&i.concept.id===id)?.itemId??
+   add('quality_measurements',x,'original_test_methods',{kind:'measurement',id,aliases:[]});
+  for(const c of t.conditions??[])measureItem(c.id,c.statement);
   const needItem=(id:string)=>store.categoryItems246(t.categoryId).find(i=>i.concept?.id===id)?.itemId;
   for(const x of t.subtypes)add('product_subtypes',x,'technical_mechanisms');
   for(const x of t.mechanisms.slice(1))add('mechanisms',x,'technical_mechanisms');
   for(const x of [...t.interpretation.slice(1),...t.applicability])add('spec_need_relevance',x,'original_test_methods');
   for(const x of t.gaps)add('unknowns_priorities',x,'original_test_methods');
   for(const n of t.needs){const target=needItem(n.id);if(!target)continue;
-   if(n.outcome){const m=add('quality_measurements',n.outcome,'original_test_methods');
+   if(n.outcome){const m=n.measureId?measureItem(n.measureId,n.outcome):add('quality_measurements',n.outcome,'original_test_methods');
+    for(const c of n.conditions??[]){const ci=store.categoryItems246(t.categoryId).find(i=>i.concept?.kind==='measurement'&&i.concept.id===c)?.itemId;
+     if(!ci)throw Error('252_unknown_condition:'+c);rel(m,ci,'requires_condition',`${c} is required for comparable results of ${n.measureId??'this method'}`);}
     const before=store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number};
     addRelation247(store,{categoryId:t.categoryId,from:'item:'+m,to:'item:'+target,kind:'measured_by',support:'hypothesis',qualification:`${n.outcome.basis}: ${n.outcome.text}`.slice(0,300).replace(/[<>\r\n]/g,' ')},at);
     if((store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number}).c>before.c)relations++;}
    for(const p of n.proxies??[]){const before=store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number};
     addRelation247(store,{categoryId:t.categoryId,from:'attr:'+p.attribute.toLowerCase(),to:'item:'+target,kind:p.kind,support:'hypothesis',qualification:`${p.note.basis}: ${p.note.text}`.slice(0,300).replace(/[<>\r\n]/g,' ')},at);
     if((store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number}).c>before.c)relations++;}
+   for(const p of n.proxyMeasures??[])rel(measureItem(p.measureId,p.statement),target,'not_sufficient_for',`${p.note.basis}: ${p.note.text}`);
    if(n.question)add('user_questions',S(n.question,'instructor_hypothesis'),'user_outcomes');
   }
  }

@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "2026-10-16 (Phase268)",
+ "updated": "2026-10-17 (Phase269)",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -64,10 +64,11 @@
     "technical_requirements"
    ],
    "status": "authentic_verified",
-   "evidence": "Phase253 T2; reality check 6/7 -> 7/7 targets; performance needs 1/3 (vocabulary gaps)",
+   "evidence": "Phase253 T2; reality check 6/7 -> 7/7 targets; performance needs 1/3 (vocabulary gaps); Phase269: research-package teaching (measurement concepts, conditions, proxies) and parser fixes; teaching set dev outcomes 0.452 -> 1.0, untouched 0.583 -> 0.75",
    "fitnessTests": [
-    "tests/vertical_path_fitness.test.ts",
-    "tests/phase266_reality_fixes.test.ts"
+    "tests/phase266_reality_fixes.test.ts",
+    "tests/phase269_goal_relevance.test.ts",
+    "tests/vertical_path_fitness.test.ts"
    ],
    "missing": [
     "noise and other performance-need vocabulary",
@@ -93,7 +94,7 @@
     }
    ],
    "inputs": "text; recognised needs; catalog dimensions (for performance criteria)",
-   "outputs": "Phase177 snapshot: criteria confirmed with provenance user_request_statement",
+   "outputs": "Phase177 snapshot: criteria confirmed with provenance user_request_statement; Phase269 goal assessment: relevant measurements, rejected proxies and required test conditions per need (category knowledge)",
    "gates": [
     "only stated limits and stated needs are confirmed; inferences stay candidates"
    ],
@@ -104,6 +105,7 @@
    "status": "authentic_verified",
    "evidence": "Phase253 25/26 constraints; T3 QueryNER control; reality check 4/5",
    "fitnessTests": [
+    "tests/phase269_goal_relevance.test.ts",
     "tests/vertical_path_fitness.test.ts"
    ],
    "missing": [],
@@ -243,12 +245,14 @@
     "comparable_assessment"
    ],
    "status": "blocked",
-   "evidence": "Phase268 T2: 3 of 10 authentic rows valid under the proposed default; 7 rejected with reasons; alternatives 0/5/1",
+   "evidence": "Phase268 T2 (3 of 10 rows under r1 default); Phase269 r2 adds identity confidence, distinct publisher qualification / first-hand / independence fields, limitation codes",
    "fitnessTests": [
-    "tests/phase268_evidence_validation.test.ts"
+    "tests/phase268_evidence_validation.test.ts",
+    "tests/phase269_goal_relevance.test.ts"
    ],
    "missing": [
-    "owner authorisation of pee268-test-evidence-validation (publisher qualification, load rule)"
+    "owner authorisation of pee268-test-evidence-validation r2",
+    "retention of qualitative outcome codes (pee249 amendment)"
    ],
    "authenticValidation": {
     "tier": "T2_authentic_controlled",
@@ -267,6 +271,10 @@
     {
      "module": "phase268_evidence_validation",
      "export": "points268"
+    },
+    {
+     "module": "phase268_evidence_validation",
+     "export": "protocolOfMethod268"
     }
    ],
    "inputs": "validated measurements; scoring policy",
@@ -278,13 +286,14 @@
     "authorised_ranking"
    ],
    "status": "blocked",
-   "evidence": "Phase268 T2: linear, fixed-anchor energy scoring compiled into a Phase181 catalog accepted by the unchanged engine",
+   "evidence": "Phase269 r2: raw quantity only (no score) for the fixed-duration empty-run measurement; named-product vs exact-variant scope; raw values and limitation codes carried in the signed catalog",
    "fitnessTests": [
-    "tests/phase268_evidence_validation.test.ts"
+    "tests/phase268_evidence_validation.test.ts",
+    "tests/phase269_goal_relevance.test.ts"
    ],
    "missing": [
-    "owner authorisation of pee268-energy-scoring",
-    "cooking-result dimension: specialist verdicts are not retained under pee249 (owner decision)"
+    "an outcome-relevant measurement (energy per completed cooking task; cooking outcome assessment) for any product",
+    "owner authorisation of pee268-energy-scoring r2"
    ],
    "authenticValidation": {
     "tier": "T2_authentic_controlled",
@@ -312,7 +321,8 @@
     "expiry",
     "category and market",
     "every criterion covered",
-    "hard outcomes pass"
+    "hard outcomes pass",
+    "Phase269: a dimension confirms a need only when category knowledge does not mark its measurement as a proxy for that need"
    ],
    "consumers": [
     "explainable_answer"
@@ -320,9 +330,10 @@
    "status": "blocked",
    "evidence": "connected 2026-10-16; Phase268 T2: deterministic cited ranking of 3 authentic products from a catalog signed by an evaluation-only key; production disabled: no pinned production signer",
    "fitnessTests": [
-    "tests/vertical_path_fitness.test.ts",
     "tests/phase266_controlled_decision.test.ts",
-    "tests/phase268_evidence_validation.test.ts"
+    "tests/phase268_evidence_validation.test.ts",
+    "tests/phase269_goal_relevance.test.ts",
+    "tests/vertical_path_fitness.test.ts"
    ],
    "missing": [
     "an authorised producer of signed catalogs"
@@ -345,19 +356,21 @@
    "inputs": "checks, ranking, held, gaps",
    "outputs": "Advice253 statements, citations, limitations, unassessedObjectives",
    "gates": [
-    "principle 8: unassessed objectives always stated"
+    "principle 8: unassessed objectives always stated",
+    "Phase269: decision = ranking | partial_comparison | no_purchase_check | research | clarify; a proxy metric is shown only as a labelled partial comparison with raw values and per-product limitations"
    ],
    "consumers": [],
    "status": "synthetic_verified",
-   "evidence": "ranked answer on authentic evidence in the Phase268 T2 run; catalog review status always stated",
+   "evidence": "Phase269 T2: teaching set dev decisions 0.286 -> 1.0 (r2 catalog), untouched 0.167 -> 0.667; 0 proxy-assessed outcomes after teaching (5 before)",
    "fitnessTests": [
+    "tests/phase269_goal_relevance.test.ts",
     "tests/vertical_path_fitness.test.ts"
    ],
    "missing": [],
    "authenticValidation": {
     "tier": "T2_authentic_controlled",
     "status": "done",
-    "run": "evaluation/phase268/authentic-advisory-after-fix1.json"
+    "run": "evaluation/phase269/teaching-after-teaching-r2.json"
    }
   }
  ],
@@ -379,13 +392,13 @@
    "id": "D1",
    "stage": "evidence_validation",
    "since": "Phase253 gap audit F2/F5",
-   "item": "validator exists (Phase268); its policy is proposed, not authorised"
+   "item": "validator r2 exists; its policy is proposed, not authorised"
   },
   {
    "id": "D2",
    "stage": "comparable_assessment",
    "since": "Phase249",
-   "item": "compiler and scoring exist (Phase268); scoring policy proposed, not authorised; no cooking-result dimension"
+   "item": "compiler r2 (raw quantity only) exists; scoring policy proposed, not authorised; no outcome-relevant dimension"
   },
   {
    "id": "D4",
@@ -403,8 +416,14 @@
    "id": "D6",
    "stage": "authentic_evidence",
    "since": "Phase268",
-   "item": "one publisher only; per-product test limitations are not yet carried into the answer text",
+   "item": "one publisher; no measurement relevant to the consumer outcome (energy per completed task, cooking outcome) for any product",
    "resolvedStatus": "open"
+  },
+  {
+   "id": "D7",
+   "stage": "evidence_validation",
+   "since": "Phase269",
+   "item": "qualitative outcome codes (pilot) are not retained: pee249 keeps measurement kinds only for independent_original_test"
   }
  ],
  "authenticValidationRequirement": {

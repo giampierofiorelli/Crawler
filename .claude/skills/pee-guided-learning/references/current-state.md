@@ -11,6 +11,27 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000000000000000000. Phase269 scientific integration and goal relevance (2026-10-17) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase269/SCIENTIFIC-INTEGRATION-REPORT.md`.
+
+- **Research packages:** received 16 Oct 2026; unmodified in the private repo `pee-knowledge/research-packages/`, extracted
+  for reading at `~/.local/share/product-evidence-engine/research-packages/`. The air-fryer package is a RECONSTRUCTED
+  v2.2.0 compendium plus addenda, not v3.9.0. Inventory: `evaluation/phase269/research-package-inventory.json`.
+- **Teaching:** `src/phase269_research_teaching.ts` (air fryers, coffee), applied to the live store with
+  `phase246-knowledge.mjs apply-teaching --category air_fryers|coffee_machines`.
+- **Goal relevance:** `Advice253.goalAssessment` (decision, coverage, relevant measures, rejected proxies, conditions,
+  incomparability, partial comparison).
+- **Policies r2:** proposed. `VALIDATION_POLICY268` and `SCORING_POLICY268` are now r2; `_R1` constants reproduce Phase268.
+- **Evaluations:**
+  - `evaluation/phase269/teaching-*.json` and `coffee-*.json`;
+  - untouched extraction first run (0/12);
+  - qualitative pilot (`scripts/phase269-qualitative-pilot.mjs`, private).
+- **Owner decisions pending:**
+  - approval of the r2 policies;
+  - initial key management for policy-bound signing;
+  - the pee249 amendment for qualitative outcome codes.
+
 ## 0000000000000000000. Phase268 real evidence and first authentic ranking (2026-10-16) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase268/REAL-EVIDENCE-REPORT.md`.

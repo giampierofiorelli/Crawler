@@ -1,0 +1,21 @@
+{
+ "schema": "pee269.untouched-extraction-firstrun.v1",
+ "rules": "untouched-extraction-rules.json",
+ "documents": 2,
+ "publishers": [
+  "CHOICE (AU)",
+  "Consumer NZ"
+ ],
+ "goldMeasurements": 12,
+ "extractedMatching": 0,
+ "leadsOutsideGold": 1,
+ "precision": 0.0,
+ "recall": 0.0,
+ "attribution": {
+  "leads": 1,
+  "correct": 0,
+  "error": "the lead's subject is the article title (a page about appliance classes), not a product; the store would not associate it (no product markup) but the probe labelled it page_context_unverified"
+ },
+ "misses": "all 12 gold values are times written as 'NNmin' and costs in cents in a list without first-person cues; the falsely extracted lead is a modelled scenario ('if we added an extra 10 minutes')",
+ "status": "first run on genuinely untouched documents, committed unchanged; no extraction change was made from these documents"
+}

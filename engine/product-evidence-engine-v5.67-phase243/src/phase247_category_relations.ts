@@ -13,7 +13,8 @@ import {createHash} from 'node:crypto';
 import type {KnowledgeStore246,ReviewReceipt246} from './phase246_knowledge_store.js';
 import {validateModel116,auditCategoryTemplate116,type CategoryModel116,type LinkKind116} from './phase116_category_function_model.js';
 
-export type RelationKind247='enables'|'may_support'|'measured_by'|'may_risk'|'not_sufficient_for';
+/** Phase269: 'requires_condition' links a measurement to a test condition without which its results are not comparable. */
+export type RelationKind247='enables'|'may_support'|'measured_by'|'may_risk'|'not_sufficient_for'|'requires_condition';
 export type Support247='hypothesis'|'method_reference'|'reviewed'|'evidence_supported';
 export interface RelationInput247 {categoryId:string;from:string;to:string;kind:RelationKind247;qualification:string;
  support:'hypothesis'|'method_reference';sourceRevisionIds?:readonly string[];}
@@ -31,7 +32,7 @@ function itemExists(store:KnowledgeStore246,categoryId:string,ref:string):boolea
  * publisher; a hypothesis cites nothing it does not have. */
 export function addRelation247(store:KnowledgeStore246,r:RelationInput247,at=new Date().toISOString()):string{
  if(!/^[a-z][a-z0-9_]{0,79}$/.test(r.categoryId)||!REF.test(r.from)||!REF.test(r.to)||r.from===r.to)throw Error('247_invalid_relation_ref');
- if(!['enables','may_support','measured_by','may_risk','not_sufficient_for'].includes(r.kind))throw Error('247_invalid_relation_kind');
+ if(!['enables','may_support','measured_by','may_risk','not_sufficient_for','requires_condition'].includes(r.kind))throw Error('247_invalid_relation_kind');
  if(!r.qualification||r.qualification.length>300||/[<>\r\n]/.test(r.qualification))throw Error('247_invalid_qualification');
  if(!itemExists(store,r.categoryId,r.from)||!itemExists(store,r.categoryId,r.to))throw Error('247_unknown_item');
  const revs=[...(r.sourceRevisionIds??[])];
@@ -83,7 +84,7 @@ export function attributeVocabulary247(store:KnowledgeStore246,categoryId:string
   note:'Counts of pages declaring an attribute (labels only, no values). Frequency of declaration is not evidence of importance or performance.'};
 }
 
-const KIND116:Record<RelationKind247,LinkKind116|null>={enables:'enables',may_support:'may_support',measured_by:'measured_by',may_risk:'may_risk',not_sufficient_for:null};
+const KIND116:Record<RelationKind247,LinkKind116|null>={enables:'enables',may_support:'may_support',measured_by:'measured_by',may_risk:'may_risk',not_sufficient_for:null,requires_condition:null};
 /** Compiles store items + relations into a Phase116 model and runs its audit. Goals: user_goals/performance_outcomes
  * items; mechanisms: mechanisms items; endpoints: quality_measurements items; failure modes: failure_modes_safety
  * items linked by may_risk. Relations without a Phase116 counterpart (not_sufficient_for) stay in the store. */

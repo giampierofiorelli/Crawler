@@ -16,7 +16,10 @@ import {decideAdvice249,candidatesFromStore249,SPEC_CRITERIA249,type Candidate24
 import {createDecision177,applyDecisionAction177} from './phase177_decision_snapshot.js';
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
-import {dynamicKnowledgeAnswer181,type SignedCatalog181} from './phase181_dynamic_knowledge_ranking.js';
+import {dynamicKnowledgeAnswer181,type SignedCatalog181,type KnowledgeDimension181} from './phase181_dynamic_knowledge_ranking.js';
+import {relations247} from './phase247_category_relations.js';
+import {protocolOfMethod268} from './phase268_evidence_validation.js';
+import type {GoalAssessment253} from './phase253_advice_contract.js';
 import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
@@ -147,6 +150,39 @@ function statedObjectives253(text:string):string[]{
   const phrase=[m[1],...kept].join(' ').toLowerCase();if(!out.includes(phrase))out.push(phrase);}
  return out;
 }
+/** Phase269: what category knowledge says about each recognised need. Measurements are 'measurement' concept items;
+ * 'measured_by' links a measurement to the outcome it establishes, 'not_sufficient_for' marks a proxy (a declared
+ * attribute or a measurement), 'requires_condition' the test conditions without which results are not comparable. */
+interface NeedKnowledge269 {need:string;kind:string|null;relevant:string[];proxies:string[];conditions:string[];notes:Map<string,string>;statements:Map<string,string>}
+/** Context needs (not outcomes): equipment already owned ('*_alternative', a naming contract of the teaching) and stated use. */
+const CONTEXT_NEEDS269={has:(id:string)=>id.endsWith('_alternative')||id==='single_compartment_use'};
+function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly string[]):NeedKnowledge269[]{
+ const items=store.categoryItems246(category);const rels=relations247(store,category);
+ const byRef=new Map(items.map(i=>['item:'+i.itemId,i]));
+ const measureOf=(ref:string)=>{const i=byRef.get(ref);return i?.concept?.kind==='measurement'?i.concept.id:null;};
+ const attrId=(ref:string)=>'attr:'+ref.slice(5).replace(/\s+/g,'_');
+ return needs.map(need=>{
+  const targets=new Set(items.filter(i=>i.concept?.id===need&&i.concept.kind!=='measurement').map(i=>'item:'+i.itemId));
+  const into=rels.filter(r=>targets.has(r.to));
+  const relevant=[...new Set(into.filter(r=>r.kind==='measured_by').map(r=>measureOf(r.from)).filter((x):x is string=>!!x))].sort();
+  const notes=new Map<string,string>();const proxies:string[]=[];
+  for(const r of into.filter(r=>r.kind==='not_sufficient_for')){const id=r.from.startsWith('attr:')?attrId(r.from):measureOf(r.from);if(id&&!proxies.includes(id)){proxies.push(id);notes.set(id,r.qualification);}}
+  const relevantRefs=new Set(items.filter(i=>i.concept?.kind==='measurement'&&relevant.includes(i.concept.id)).map(i=>'item:'+i.itemId));
+  const conditions=[...new Set(rels.filter(r=>r.kind==='requires_condition'&&relevantRefs.has(r.from)).map(r=>measureOf(r.to)).filter((x):x is string=>!!x))].sort();
+  const statements=new Map(items.filter(i=>i.concept?.kind==='measurement').map(i=>[i.concept!.id,i.statement.replace(/\s*\[[^\]]*\]\s*$/,'')]));
+  return {need,kind:items.find(i=>i.concept?.id===need)?.concept?.kind??null,relevant,proxies:proxies.sort(),conditions,notes,statements};
+ });
+}
+/** The measurement a catalog dimension carries: its key when it is a measurement concept, else the measurement of the
+ * protocol its method names; null when unknown (the catalog then asserts relevance itself, as before Phase269). */
+function dimensionMeasure269(d:KnowledgeDimension181,measureIds:ReadonlySet<string>):string|null{
+ if(measureIds.has(d.key))return d.key;return protocolOfMethod268(d.methodId)?.measureId??null;
+}
+const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'the tester names the product without a model code, so the exact variant is not verified',
+ condition_from_same_paragraph:'a test condition is stated in the same paragraph rather than the same sentence',load_from_document_protocol:'the empty load is stated in the review\'s test protocol, not beside the result',
+ load_from_publisher_protocol:'the review does not itself say the appliance ran empty',all_compartments_running:'every compartment was running',includes_preheat:'the figure includes preheating',
+ fixed_duration_not_cooking_task:'a fixed one-hour run, not the energy to cook a meal',single_publisher:'one publisher only'};
+
 /** From an ordinary-English request to a justified answer (see the module comment). With a ranking context, stated
  * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
  * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
@@ -159,7 +195,12 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   (out.response==='positive_shortlist'||(out.response==='clarification'&&(ri?.statedCriteria.length??0)===0));
  if(rankable){
   const r=opts.ranking!;const dims=new Map((r.catalog?.catalog.dimensions??[]).map(d=>[d.key,d]));
-  const covered=(ri!.performanceNeedSpans??[]).filter(n=>dims.has(n.id));
+  // Phase269: a dimension confirms a need only when category knowledge does not mark its measurement as a proxy for that
+  // need (and, when the measurement is known, lists it as establishing the need).
+  const nk=new Map(needKnowledge269(store,out.category!,(ri!.performanceNeedSpans??[]).map(n=>n.id)).map(k=>[k.need,k]));
+  const mIds=new Set(store.categoryItems246(out.category!).filter(i=>i.concept?.kind==='measurement').map(i=>i.concept!.id));
+  const covered=(ri!.performanceNeedSpans??[]).filter(n=>{const d=dims.get(n.id);if(!d)return false;const m=dimensionMeasure269(d,mIds);const k=nk.get(n.id);
+   return !m||!k||(!k.proxies.includes(m)&&(k.relevant.length===0||k.relevant.includes(m)));});
   let snap=createDecision177('request_'+sha(text).slice(0,16));
   snap=applyDecisionAction177(snap,{type:'set_scope',source:'user_request_statement',scope:{task:'product_selection',category:out.category!}}).snapshot;
   for(const n of covered){const d=dims.get(n.id)!;
@@ -188,6 +229,8 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
    out.researchPlan.push(...d.researchGaps.map(g=>`${g.kind}: ${g.reference} (${g.action})`));
   }
  }
+ // Phase269: consumer-goal relevance, always computed when a category is known.
+ if(out.category)out.goalAssessment=goalAssessment269(store,out,assessed,opts.ranking??null);
  // Principle 8: an objective the answer does not assess stays explicit.
  const unassessedNeeds=perf.filter(id=>!assessed.has(id));
  const toks=(x:string)=>x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
@@ -196,3 +239,54 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   out.statements.push(`Not assessed: ${out.unassessedObjectives.map(o=>`"${o.replace(/_/g,' ')}"`).join(', ')}. PEE holds no reviewed evidence for ${out.unassessedObjectives.length>1?'these':'this'}, so this answer does not address ${out.unassessedObjectives.length>1?'them':'it'}.`);
  return out;
 }
+
+/** Phase269 decision: ranking only when every recognised outcome is assessed by a measurement that establishes it;
+ * a proxy metric is shown separately as a partial comparison (never when the user excluded its test configuration);
+ * an existing appliance makes the decision a no-purchase check; otherwise targeted research. */
+function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:ReadonlySet<string>,ranking:RankingContext253|null):GoalAssessment253{
+ const needs=[...new Set(out.needs)];const know=needKnowledge269(store,out.category!,needs);
+ const mIds=new Set(store.categoryItems246(out.category!).filter(i=>i.concept?.kind==='measurement').map(i=>i.concept!.id));
+ const cat=ranking?.catalog?.catalog??null;
+ const dims=(cat?.dimensions??[]).map(d=>({d,m:dimensionMeasure269(d,mIds)}));
+ const single=needs.includes('single_compartment_use');
+ const outcomes:GoalAssessment253['outcomes']=know.map(k=>{
+  if(CONTEXT_NEEDS269.has(k.need))return {need:k.need,coverage:'context',relevantMeasures:[],rejectedProxies:[],requiredConditions:[],incomparable:[]};
+  const proxyDims=dims.filter(x=>x.m&&k.proxies.includes(x.m)).map(x=>x.m!);
+  return {need:k.need,coverage:assessed.has(k.need)?'assessed':proxyDims.length?'proxy_only':'unassessed',relevantMeasures:k.relevant,rejectedProxies:k.proxies,
+   requiredConditions:k.conditions,incomparable:[...new Set(proxyDims)],...(assessed.has(k.need)?{assessedBy:dims.filter(x=>x.d.key===k.need).map(x=>x.m??x.d.key)}:{})};});
+ const real=outcomes.filter(o=>o.coverage!=='context');
+ // The proxy metric to show separately, when its tested configuration does not contradict the user's stated use.
+ const proxy=dims.find(x=>x.m&&real.some(o=>o.incomparable.includes(x.m!)));
+ const proto=proxy?protocolOfMethod268(proxy.d.methodId):null;
+ const excluded=!!proxy&&single&&proto?.compartments==='whole_appliance';
+ let partial:GoalAssessment253['partialComparison'];
+ if(proxy&&cat&&!excluded){
+  const name=(id:string)=>(store.db.prepare('SELECT name FROM products WHERE product_id=?').get(id) as {name:string|null}|undefined)?.name??id;
+  const items=cat.originalTests.filter(t=>t.dimensionKey===proxy.d.key&&t.measured).map(t=>({productId:t.variantId,name:name(t.variantId),value:t.measured!.value,unit:t.measured!.unit,
+   sourceUrl:t.sourceUrl,variantVerified:t.scope==='exact_variant_original_professional_test',limitations:[...(t.limitations??[])].map(c=>LIMITATION_TEXT269[c]??c)}));
+  const dir=cat.originalTests.find(t=>t.dimensionKey===proxy.d.key&&t.measured)?.measured?.direction??'lower_is_better';
+  items.sort((a,b)=>(dir==='lower_is_better'?a.value-b.value:b.value-a.value)||a.productId.localeCompare(b.productId));
+  if(items.length)partial={measure:proxy.m!,label:proxy.d.label,direction:dir,doesNotAssess:real.filter(o=>o.coverage!=='assessed').map(o=>o.need),items};
+ }
+ for(const o of real)if(excluded&&o.incomparable.length&&!o.incomparable.includes('compartments_in_use'))o.incomparable.push('compartments_in_use');
+ const decision:GoalAssessment253['decision']=!real.length&&!needs.length?'clarify':needs.some(n=>n.endsWith('_alternative'))?'no_purchase_check':
+  real.length&&real.every(o=>o.coverage==='assessed')&&out.response==='ranked_recommendation'?'ranking':
+  partial||(out.response==='ranked_recommendation'&&real.some(o=>o.coverage==='assessed'))?'partial_comparison':real.length?'research':'clarify';
+ // What the answer says (concise; details stay in the structure).
+ const st=(id:string)=>id.replace(/_/g,' ');
+ const statement=(k:NeedKnowledge269)=>k.relevant.length?`for ${st(k.need)}, ${k.relevant.map(st).join(' or ')}${k.conditions.length?` (${k.conditions.map(st).join(', ')})`:''}`:null;
+ const unit=(u:string)=>({kwh:'kWh',w:'W',minutes:'min'} as Record<string,string>)[u]??u;
+ const plain=(q:string|undefined)=>(q??'').replace(/^[a-z_]+:\s*/,'').replace(/\s*Package [^.]*\.?\s*$/,'');
+ if(decision==='no_purchase_check')out.statements.push(`You already have equipment that may do this job (${needs.filter(n=>n.endsWith('_alternative')).map(n=>st(n.replace(/_alternative$/,''))).join(', ')}), so buying may not be necessary: a new ${st(out.category!).replace(/s$/,'')} is worthwhile only if, for your own use, it is measurably better on what you care about. That needs a comparison of both under the same conditions; PEE does not hold one.`);
+ if(partial){out.statements.push(`Partial comparison only, not a recommendation: ${partial.label}. ${partial.direction==='lower_is_better'?'Lower is better for this metric':'Higher is better for this metric'}: ${partial.items.map(i=>`${i.name} (${i.value} ${unit(i.unit)}${i.variantVerified?'':'; variant not verified'})`).join('; ')}.`,
+   `This metric does not show the electricity needed to cook a meal, and it does not assess ${partial.doesNotAssess.map(st).join(', ')}.`);
+  for(const i of partial.items)if(i.limitations.length)out.limitations.push(`${i.name}: ${i.limitations.join('; ')} (${i.sourceUrl}).`);}
+ if(excluded)out.statements.push('The only energy measurements PEE holds ran every compartment at once, so they cannot answer a question about using one drawer.');
+ if(decision==='research'||decision==='partial_comparison'||decision==='no_purchase_check'){
+  const need=know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)).map(statement).filter((x):x is string=>!!x);
+  if(need.length)out.statements.push(`What would answer this: ${need.join('; ')}.`);
+  for(const k of know)for(const p of k.proxies)if(p.startsWith('attr:')&&!CONTEXT_NEEDS269.has(k.need))out.limitations.push(`Declared ${st(p.slice(5))} is not evidence of ${st(k.need)}: ${plain(k.notes.get(p))}`.slice(0,320));
+ }
+ return {decision,outcomes,...(partial?{partialComparison:partial}:{})};
+}
+

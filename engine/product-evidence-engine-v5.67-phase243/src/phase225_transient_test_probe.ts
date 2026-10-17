@@ -59,6 +59,13 @@ function segmentFor(sentence:string,at:number,all:readonly number[]):string{
  const start=prev===undefined?0:Math.min(after(prev),at);const end=after(at);
  return sentence.slice(start,Math.max(end,at+1));
 }
+/** The bounded semantic text blocks (paragraphs, list items, cells, headings) the probe reads; shared with the Phase269
+ * qualitative-observation pilot so both read exactly the same text. Transient: nothing here is retained. */
+export function textBlocks225(html:string):{blocks:string[];truncated:boolean}{
+ const stripped=html.replace(/<!--([\s\S]*?)-->/g,'').replace(/<(script|style|svg|template|noscript|iframe)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,'');
+ const raw=[...stripped.matchAll(/<(p|li|td|h[1-6])\b[^>]{0,1200}>([\s\S]{0,4000}?)<\/\1\s*>/gi)];
+ return {blocks:raw.slice(0,380).map(m=>fragment(m[2])).filter(x=>x.length>0&&x.length<=1400),truncated:raw.length>380};
+}
 export interface TestCandidate225 {
  /** Phase268: PEE-authored codes for the stated conditions of this value, the setpoint in °C, and the document's own
   * first-person protocol codes (when the document states one). Codes only; no text. */
@@ -101,10 +108,7 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
    (opts.documentSha256!==undefined&&opts.documentSha256!==null&&!/^[a-f0-9]{64}$/.test(opts.documentSha256)))return out;
  // Intentionally restrict to semantic paragraphs/list cells and headings.
  // This is NOT a general HTML or JavaScript renderer.
- const stripped=html.replace(/<!--([\s\S]*?)-->/g,'').replace(/<(script|style|svg|template|noscript|iframe)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,'');
- const raw=[...stripped.matchAll(/<(p|li|td|h[1-6])\b[^>]{0,1200}>([\s\S]{0,4000}?)<\/\1\s*>/gi)];
- const all=raw.slice(0,380).map(m=>fragment(m[2])).filter(x=>x.length>0&&x.length<=1400);
- out.truncated=raw.length>380;
+ const tb=textBlocks225(html);const all=tb.blocks;out.truncated=tb.truncated;
  const leads=opts.productLeads??[];
  const distinct=[...new Map(leads.filter(p=>safeText(p.name,180)).map(p=>[JSON.stringify([p.name,p.model,p.sku]),p])).values()];
  const subject=distinct.length===1?{name:distinct[0].name,model:distinct[0].model,sku:distinct[0].sku}:null;
