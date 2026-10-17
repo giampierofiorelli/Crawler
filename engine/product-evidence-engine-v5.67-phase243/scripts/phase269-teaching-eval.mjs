@@ -25,8 +25,10 @@ const label=process.argv.includes('--label')?process.argv[process.argv.indexOf('
 if(!/^[a-z0-9-]{3,40}$/.test(label))throw Error('bad --label');
 // '--set coffee' runs evaluation/phase269/coffee-eval-set.json (cross-category transfer); default: the air-fryer set.
 const setName=process.argv.includes('--set')?process.argv[process.argv.indexOf('--set')+1]:'teaching';if(!/^[a-z]+$/.test(setName))throw Error('bad --set');
-const out=`evaluation/phase269/${setName}-${label}.json`;if(existsSync(out))throw Error(`${out} exists: runs are never overwritten`);
-const setFile=`evaluation/phase269/${setName==='teaching'?'teaching':setName}-eval-set.json`;const SET=JSON.parse(readFileSync(setFile,'utf8'));
+// '--dir phase270' reads and writes evaluation/phase270 (default phase269).
+const evalDir=process.argv.includes('--dir')?process.argv[process.argv.indexOf('--dir')+1]:'phase269';if(!/^phase\d{3}$/.test(evalDir))throw Error('bad --dir');
+const out=`evaluation/${evalDir}/${setName}-${label}.json`;if(existsSync(out))throw Error(`${out} exists: runs are never overwritten`);
+const setFile=`evaluation/${evalDir}/${setName}-eval-set.json`;const SET=JSON.parse(readFileSync(setFile,'utf8'));
 const setSha=createHash('sha256').update(readFileSync(setFile)).digest('hex');
 const dir=join(homedir(),'.local','share','product-evidence-engine','p269');mkdirSync(dir,{recursive:true});
 const db=join(dir,`eval-${label}.sqlite`);for(const x of ['','-wal','-shm'])rmSync(db+x,{force:true});

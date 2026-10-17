@@ -1,0 +1,43 @@
+{
+ "schema": "pee269.teaching-eval-set.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "any Phase270 change to recognition, teaching, the dehumidifier category, goal assessment or catalog verification",
+ "context": "same runner and scorer as evaluation/phase269/teaching-eval-set.json (Phase268 controlled air-fryer catalog supplied); all requests are new and untouched",
+ "vocabulary": {
+  "outcomes": "air fryers as in Phase269; coffee as in coffee-eval-set; dehumidifiers: moisture_removal, low_energy_use, leak_or_structural_alternative (context: repair before buying), cold_room_use (context)",
+  "measures": "dehumidifiers: removal_at_room_conditions, energy_per_litre_matched",
+  "proxies": "dehumidifiers: attr:capacity (declared litres per day), attr:power",
+  "conditions": "dehumidifiers: matched_temperature_humidity",
+  "decisions": "clarify | research | partial_comparison | ranking | abstain | no_purchase_check"
+ },
+ "development": [],
+ "untouched": [
+  {"id":"G1","text":"Which twin-drawer air fryer is best for making a main and a side together?",
+   "outcomes":["cook_two_foods_simultaneously"],"measures":{"cook_two_foods_simultaneously":["two_zone_cooking_test"]},"proxies":{},"conditions":["compartments_in_use"],"decision":"research"},
+  {"id":"G2","text":"What's the most economical air fryer to run if I only cook small meals?",
+   "outcomes":["low_energy_use","cook_single_portion"],"measures":{"low_energy_use":["energy_per_cooking_task"]},"proxies":{"low_energy_use":["energy_empty_run"]},"conditions":["same_food_load","completed_doneness"],"decision":"partial_comparison"},
+  {"id":"G3","text":"Which air fryer draws the least power while cooking a jacket potato?",
+   "outcomes":["low_energy_use"],"measures":{"low_energy_use":["energy_per_cooking_task"]},"proxies":{"low_energy_use":["energy_empty_run","attr:power"]},"conditions":["same_food_load","completed_doneness"],"decision":"partial_comparison"},
+  {"id":"G4","text":"We need an air fryer big enough for a family of five.",
+   "outcomes":["batch_capacity"],"measures":{"batch_capacity":["batch_cooking_test"]},"proxies":{"batch_capacity":["attr:capacity"]},"conditions":["same_food_load"],"decision":"research"},
+  {"id":"G5","text":"Which air fryer makes the crunchiest chicken wings?",
+   "outcomes":["crisp_texture"],"measures":{"crisp_texture":["cooking_outcome_assessment"]},"proxies":{},"conditions":["same_food_load","completed_doneness"],"decision":"research"},
+  {"id":"G6","text":"I've got a halogen oven already. Is an air fryer worth buying for quick dinners?",
+   "outcomes":["oven_alternative"],"measures":{},"proxies":{},"conditions":[],"decision":"no_purchase_check"},
+  {"id":"G7","text":"Which espresso machine makes a proper Neapolitan-style espresso?",
+   "outcomes":["espresso_quality"],"measures":{"espresso_quality":["espresso_sensory_assessment"]},"proxies":{},"conditions":["same_beans_and_grind"],"decision":"research"},
+  {"id":"G8","text":"Does a 20 bar pump make better espresso than a 15 bar pump?",
+   "outcomes":["espresso_quality"],"measures":{"espresso_quality":["espresso_sensory_assessment"]},"proxies":{"espresso_quality":["attr:pump_pressure"]},"conditions":["same_beans_and_grind"],"decision":"research"},
+  {"id":"G9","text":"Which bean-to-cup machine gives the most consistent shots every morning?",
+   "outcomes":["shot_consistency"],"measures":{"shot_consistency":["brew_temperature_stability"]},"proxies":{},"conditions":["consecutive_shots"],"decision":"research"},
+  {"id":"H1","text":"Our bedroom windows are wet every morning. Which dehumidifier should I buy?",
+   "outcomes":["moisture_removal"],"measures":{"moisture_removal":["removal_at_room_conditions"]},"proxies":{"moisture_removal":["attr:capacity"]},"conditions":["matched_temperature_humidity"],"decision":"research"},
+  {"id":"H2","text":"Which dehumidifier works best in a cold unheated garage?",
+   "outcomes":["moisture_removal","cold_room_use"],"measures":{"moisture_removal":["removal_at_room_conditions"]},"proxies":{"moisture_removal":["attr:capacity"]},"conditions":["matched_temperature_humidity"],"decision":"research"},
+  {"id":"H3","text":"There is mould behind the wardrobe after a pipe leak last month. Will a dehumidifier fix it?",
+   "outcomes":["leak_or_structural_alternative"],"measures":{},"proxies":{},"conditions":[],"decision":"no_purchase_check"},
+  {"id":"H4","text":"Which dehumidifier is cheapest to run?",
+   "outcomes":["low_energy_use"],"measures":{"low_energy_use":["energy_per_litre_matched"]},"proxies":{"low_energy_use":["attr:power"]},"conditions":["matched_temperature_humidity"],"decision":"research"}
+ ],
+ "rule": "frozen before any Phase270 change; never used to choose teaching phrases or code; each run committed unchanged"
+}
