@@ -1,0 +1,882 @@
+{
+ "schema": "pee269.teaching-run.v1",
+ "label": "after-teaching",
+ "at": "2026-10-17T06:39:47Z",
+ "setSha256": "e7cf10aa95528579473e8e0c53dc8c356bd06c93b220e5d8d2ff500d21ff8093",
+ "storeCopyUnchanged": true,
+ "controlledCatalog": {
+  "revision": "r2",
+  "validated": 3,
+  "dimension": [
+   "energy_empty_run"
+  ]
+ },
+ "summary": {
+  "development": {
+   "0_category": 1,
+   "1_outcomes": 1,
+   "2_criteria": 1,
+   "3_proxies": 1,
+   "4_conditions": 1,
+   "5_incomparable": null,
+   "6_unassessed": 0.667,
+   "7_decision": 1,
+   "proxyAssessedFailures": []
+  },
+  "untouched": {
+   "0_category": 0.75,
+   "1_outcomes": 0.375,
+   "2_criteria": 0.357,
+   "3_proxies": 0.5,
+   "4_conditions": 0.308,
+   "5_incomparable": null,
+   "6_unassessed": 0.313,
+   "7_decision": 0.563,
+   "proxyAssessedFailures": []
+  }
+ },
+ "rows": [
+  {
+   "id": "WD1",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "research",
+    "needs": [
+     "cleaning_soil_removal"
+    ],
+    "unassessed": [
+     "cleaning_soil_removal"
+    ],
+    "measures": {
+     "cleaning_soil_removal": [
+      "consumer_lab_cleaning_drying_score",
+      "residual_soil_score_by_soil_type"
+     ]
+    },
+    "proxies": {
+     "cleaning_soil_removal": [
+      "attr:ai_estimated_consumer_score",
+      "attr:feature_names_auto_dose_zeolite_aquastop",
+      "attr:nominal_width_cm",
+      "attr:retailer_star_rating"
+     ]
+    },
+    "conditions": [
+     "exact_model_variant_and_market",
+     "load_and_soil_definition",
+     "measured_not_estimated",
+     "programme_identity",
+     "water_hardness_and_detergent"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": null,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "WD2",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "research",
+    "needs": [
+     "cannot_plumb_constraint"
+    ],
+    "unassessed": [],
+    "measures": {
+     "cannot_plumb_constraint": []
+    },
+    "proxies": {
+     "cannot_plumb_constraint": []
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": null,
+    "3_proxies": null,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "WD3",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "research",
+    "needs": [
+     "drying_by_material"
+    ],
+    "unassessed": [
+     "drying_by_material"
+    ],
+    "measures": {
+     "drying_by_material": [
+      "drying_fraction_by_material_over_time"
+     ]
+    },
+    "proxies": {
+     "drying_by_material": [
+      "attr:energy_label_class"
+     ]
+    },
+    "conditions": [
+     "load_and_soil_definition",
+     "water_hardness_and_detergent"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PD1",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "research",
+    "needs": [
+     "allergen_particle_reduction"
+    ],
+    "unassessed": [
+     "allergen_particle_reduction"
+    ],
+    "measures": {
+     "allergen_particle_reduction": [
+      "pollen_dust_cadr_at_sleep_mode"
+     ]
+    },
+    "proxies": {
+     "allergen_particle_reduction": [
+      "attr:hepa_filter_class"
+     ]
+    },
+    "conditions": [
+     "background_decay_control",
+     "same_mode_pairing"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PD2",
+   "part": "development",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "research",
+    "needs": [
+     "gas_odour_reduction"
+    ],
+    "unassessed": [
+     "gas_odour_reduction"
+    ],
+    "measures": {
+     "gas_odour_reduction": [
+      "gas_species_reduction_breakthrough",
+      "sorbent_cumulative_capacity"
+     ]
+    },
+    "proxies": {
+     "gas_odour_reduction": [
+      "attr:carbon_filter_present",
+      "attr:particle_cadr_for_gas"
+     ]
+    },
+    "conditions": [
+     "exact_model_variant_identity",
+     "filter_condition_recorded",
+     "humidity_temperature_documented",
+     "named_challenge_and_method_edition"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PD3",
+   "part": "development",
+   "goldDecision": "no_purchase_check",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "no_purchase_check",
+    "needs": [
+     "gas_odour_reduction",
+     "source_control_alternative",
+     "ventilation_alternative"
+    ],
+    "unassessed": [
+     "gas_odour_reduction"
+    ],
+    "measures": {
+     "gas_odour_reduction": [
+      "gas_species_reduction_breakthrough",
+      "sorbent_cumulative_capacity"
+     ],
+     "source_control_alternative": [],
+     "ventilation_alternative": []
+    },
+    "proxies": {
+     "gas_odour_reduction": [
+      "attr:carbon_filter_present",
+      "attr:particle_cadr_for_gas"
+     ],
+     "source_control_alternative": [],
+     "ventilation_alternative": []
+    },
+    "conditions": [
+     "exact_model_variant_identity",
+     "filter_condition_recorded",
+     "humidity_temperature_documented",
+     "named_challenge_and_method_edition"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "no_purchase_check",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": null,
+    "3_proxies": null,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "WU1",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": null,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "WU2",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "WU3",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "research",
+    "needs": [
+     "usable_capacity_geometry"
+    ],
+    "unassessed": [
+     "usable_capacity_geometry"
+    ],
+    "measures": {
+     "usable_capacity_geometry": [
+      "household_item_fit_inventory"
+     ]
+    },
+    "proxies": {
+     "usable_capacity_geometry": [
+      "attr:occupant_count",
+      "attr:place_settings"
+     ]
+    },
+    "conditions": [
+     "load_and_soil_definition"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "WU4",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "research",
+    "needs": [
+     "noise_and_acoustic_events"
+    ],
+    "unassessed": [
+     "noise_and_acoustic_events"
+    ],
+    "measures": {
+     "noise_and_acoustic_events": [
+      "in_situ_sound_pressure_time_trace",
+      "sound_power_label_db"
+     ]
+    },
+    "proxies": {
+     "noise_and_acoustic_events": [
+      "attr:label_noise_db"
+     ]
+    },
+    "conditions": [
+     "acoustic_quantity_and_position",
+     "method_version_and_jurisdiction"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "WU5",
+   "part": "untouched",
+   "goldDecision": "no_purchase_check",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 0,
+    "2_criteria": null,
+    "3_proxies": null,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "WU6",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "WU7",
+   "part": "untouched",
+   "goldDecision": "no_purchase_check",
+   "observed": {
+    "category": null,
+    "decision": "research",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "out_of_scope",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 0,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": null,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "WU8",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": null,
+    "decision": "research",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "out_of_scope",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 0,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": null,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PU1",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "research",
+    "needs": [
+     "fine_particle_reduction"
+    ],
+    "unassessed": [
+     "fine_particle_reduction"
+    ],
+    "measures": {
+     "fine_particle_reduction": [
+      "aged_filter_cadr",
+      "filter_bypass_leakage",
+      "particle_cadr_by_pollutant_and_mode"
+     ]
+    },
+    "proxies": {
+     "fine_particle_reduction": [
+      "attr:hepa_filter_class",
+      "attr:rated_airflow"
+     ]
+    },
+    "conditions": [
+     "background_decay_control",
+     "exact_model_variant_identity",
+     "filter_condition_recorded",
+     "named_challenge_and_method_edition"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PU2",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "research",
+    "needs": [
+     "room_coverage_distribution"
+    ],
+    "unassessed": [
+     "room_coverage_distribution"
+    ],
+    "measures": {
+     "room_coverage_distribution": [
+      "room_volume_equivalent_ach",
+      "zone_concentration_multiroom"
+     ]
+    },
+    "proxies": {
+     "room_coverage_distribution": [
+      "attr:room_size_claim"
+     ]
+    },
+    "conditions": [
+     "background_decay_control",
+     "independent_reference_at_breathing_zone",
+     "same_mode_pairing"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": 1,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PU3",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "PU4",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "research",
+    "needs": [
+     "clinical_health_outcome"
+    ],
+    "unassessed": [
+     "clinical_health_outcome"
+    ],
+    "measures": {
+     "clinical_health_outcome": [
+      "clinical_endpoint_trial"
+     ]
+    },
+    "proxies": {
+     "clinical_health_outcome": [
+      "attr:germ_kill_percentage"
+     ]
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": 1,
+    "3_proxies": 1,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 1,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PU5",
+   "part": "untouched",
+   "goldDecision": "no_purchase_check",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "no_purchase_check",
+    "needs": [
+     "moisture_mould_remediation_alternative"
+    ],
+    "unassessed": [],
+    "measures": {
+     "moisture_mould_remediation_alternative": []
+    },
+    "proxies": {
+     "moisture_mould_remediation_alternative": []
+    },
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "no_purchase_check",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 1,
+    "2_criteria": null,
+    "3_proxies": null,
+    "4_conditions": null,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PU6",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "air_purifiers",
+    "decision": "clarify",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 1,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 0
+   }
+  },
+  {
+   "id": "PU7",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": "dishwashers",
+    "decision": "research",
+    "needs": [
+     "noise_and_acoustic_events"
+    ],
+    "unassessed": [
+     "noise_and_acoustic_events"
+    ],
+    "measures": {
+     "noise_and_acoustic_events": [
+      "in_situ_sound_pressure_time_trace",
+      "sound_power_label_db"
+     ]
+    },
+    "proxies": {
+     "noise_and_acoustic_events": [
+      "attr:label_noise_db"
+     ]
+    },
+    "conditions": [
+     "acoustic_quantity_and_position",
+     "method_version_and_jurisdiction"
+    ],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "clarification",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 0,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": 0,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  },
+  {
+   "id": "PU8",
+   "part": "untouched",
+   "goldDecision": "research",
+   "observed": {
+    "category": null,
+    "decision": "research",
+    "needs": [],
+    "unassessed": [],
+    "measures": {},
+    "proxies": {},
+    "conditions": [],
+    "incomparable": false,
+    "assessedVia": {},
+    "response": "out_of_scope",
+    "ranked": 0
+   },
+   "score": {
+    "0_category": 0,
+    "1_outcomes": 0,
+    "2_criteria": 0,
+    "3_proxies": null,
+    "4_conditions": 0,
+    "5_incomparable": null,
+    "6_unassessed": 0,
+    "6_proxyAssessedFailure": [],
+    "7_decision": 1
+   }
+  }
+ ]
+}

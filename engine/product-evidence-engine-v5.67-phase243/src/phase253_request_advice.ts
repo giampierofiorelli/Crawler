@@ -157,7 +157,8 @@ function statedObjectives253(text:string):string[]{
  * attribute or a measurement), 'requires_condition' the test conditions without which results are not comparable. */
 interface NeedKnowledge269 {need:string;kind:string|null;relevant:string[];proxies:string[];conditions:string[];notes:Map<string,string>;statements:Map<string,string>}
 /** Context needs (not outcomes): equipment already owned ('*_alternative', a naming contract of the teaching) and stated use. */
-const CONTEXT_NEEDS269={has:(id:string)=>id.endsWith('_alternative')||id==='single_compartment_use'};
+// Phase271: '*_constraint' (an installation constraint such as cannot plumb) is context too, but not owned equipment.
+const CONTEXT_NEEDS269={has:(id:string)=>id.endsWith('_alternative')||id.endsWith('_constraint')||id==='single_compartment_use'};
 function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly string[]):NeedKnowledge269[]{
  const items=store.categoryItems246(category);const rels=relations247(store,category);
  const byRef=new Map(items.map(i=>['item:'+i.itemId,i]));
@@ -318,7 +319,7 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
  for(const o of real)if(excluded&&o.incomparable.length&&!o.incomparable.includes('compartments_in_use'))o.incomparable.push('compartments_in_use');
  const decision:GoalAssessment253['decision']=!real.length&&!needs.length?'clarify':needs.some(n=>n.endsWith('_alternative'))?'no_purchase_check':
   real.length&&real.every(o=>o.coverage==='assessed')&&out.response==='ranked_recommendation'?'ranking':
-  partial||(out.response==='ranked_recommendation'&&real.some(o=>o.coverage==='assessed'))?'partial_comparison':real.length?'research':'clarify';
+  partial||(out.response==='ranked_recommendation'&&real.some(o=>o.coverage==='assessed'))?'partial_comparison':real.length||needs.some(n=>n.endsWith('_constraint'))?'research':'clarify';
  // What the answer says (concise; details stay in the structure).
  const st=(id:string)=>id.replace(/_/g,' ');
  const statement=(k:NeedKnowledge269)=>k.relevant.length?`for ${st(k.need)}, ${k.relevant.map(st).join(' or ')}${k.conditions.length?` (${k.conditions.map(st).join(', ')})`:''}`:null;

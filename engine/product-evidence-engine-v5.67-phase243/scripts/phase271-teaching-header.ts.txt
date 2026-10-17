@@ -1,0 +1,18 @@
+/** Phase271 — operational teaching of two newly supplied categories through the Phase252/269 mechanism (owner directive
+ * 2026-10-17 §8-§9): household dishwashers (package 06 v2.0.0, which embeds the countertop v1.0.0 package unchanged) and
+ * air purifiers (package 04 v1.2.0). GENERATED from the private Stage-A inventories (pee-knowledge/research-inventory/phase271)
+ * by scripts/phase271-generate-teaching.py (config: scripts/phase271-teaching-config.json); paraphrased statements, never package text. Each lesson keeps the package's
+ * own status label and reference ids; nothing here was re-verified by PEE against the original sources.
+ * Aliases come from the packages' own need phrases and the DEVELOPMENT requests of evaluation/phase271/cross-eval-set.json;
+ * overlaps with untouched requests are computed in tests/phase271_category_teaching.test.ts and reported, never chosen.
+ */
+import type {CategoryTeaching252,TeachingSource252,Taught252,TaughtNeed252} from './phase252_category_teaching.js';
+import type {NeedLesson250} from './phase250_category_lessons.js';
+import type {ConceptKind128} from './phase128_category_cognition_dialogue_bridge.js';
+const S=(text:string,basis:Taught252['basis'],...sources:string[]):Taught252=>({text,basis,sources});
+const N=(id:string,kind:ConceptKind128,statement:string,aliases:string[]):NeedLesson250=>({id,kind,statement,aliases});
+const TN=(n:NeedLesson250,x:Omit<TaughtNeed252,keyof NeedLesson250>):TaughtNeed252=>({...n,...x});
+export const SOURCES271:readonly TeachingSource252[]=[
+ {id:'dw_pkg',url:'owner-research:dishwashers/household-v2.0.0',publisher:'owner research package 06: PEE household dishwashers v2.0.0 (embeds countertop v1.0.0)',role:'owner_research_package',consulted:'2026-10-17',access:'private owner research (documentary; not re-verified by PEE); v1 and v2 reference ids are prefixed v1:/v2:',teaches:'need-to-test mapping, programme and load comparability, installation constraints, handwashing and repair alternatives'},
+ {id:'ap_pkg',url:'owner-research:air-purifiers/v1.2.0',publisher:'owner research package 04: PEE air purifiers v1.2.0',role:'owner_research_package',consulted:'2026-10-17',access:'private owner research (documentary; not re-verified by PEE)',teaches:'CADR at the used mode, gas vs particle removal, noise-CADR pairing, health-claim evidence, ventilation and source-control alternatives'},
+];

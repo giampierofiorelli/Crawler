@@ -159,8 +159,8 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
      // or preposition, not part of the purchase ("which espresso machine makes the best ..." names an espresso machine).
      if(np.length&&/^(?:a|an|the)$/.test(toks[i])){np.pop();break;}
      // Phase269 (development D7): after a category name, an adverb or a verb starts the predicate ("which air fryer
-     // actually cooks ..."), not a longer noun phrase.
-     if(np.length&&categoryAt(np.join(' '))&&(/ly$/.test(toks[i])||/^(?:cooks|makes|gives|uses|has|heats|browns|produces|works|runs|costs|keeps|lets|takes|needs|does)$/.test(toks[i])))break;
+     // actually cooks ..."), not a longer noun phrase. Phase271 adds the verbs of development requests WD3 and PD2.
+     if(np.length&&categoryAt(np.join(' '))&&(/ly$/.test(toks[i])||/^(?:cooks|makes|gives|uses|has|heats|browns|produces|works|runs|costs|keeps|lets|takes|needs|does|dries|gets)$/.test(toks[i])))break;
      np.push(toks[i]);}
     if(!np.length)break;
     // A title led by a verb form ("Using the outlet ...") or by a relation noun ("Meaning of ...") names no purchase.

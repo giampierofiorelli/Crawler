@@ -1,0 +1,170 @@
+{
+ "dishwashers": {
+  "file": "dishwashers",
+  "src": "dw_pkg",
+  "const": "DISHWASHER_TEACHING271",
+  "pkg": "Package 06",
+  "aliases": [
+   "dishwasher",
+   "dishwashers",
+   "dish washer"
+  ],
+  "outcomes": {
+   "cleaning_soil_removal": [
+    "scrubbing dried egg",
+    "pasta starch sticks",
+    "food spots on plates",
+    "avoid pre-rinsing",
+    "baked-on"
+   ],
+   "drying_by_material": [
+    "dry without a towel",
+    "lunch boxes always drip",
+    "mugs trap water",
+    "come out wet",
+    "dries properly"
+   ],
+   "energy_per_cycle_and_workload": [
+    "electricity is expensive",
+    "reduce my bills",
+    "most efficient washing"
+   ],
+   "water_per_cycle_and_workload": [
+    "water supply is metered",
+    "use less water than handwashing",
+    "save water"
+   ],
+   "noise_and_acoustic_events": [
+    "while baby sleeps",
+    "draining pump wakes me",
+    "beeps at night",
+    "shares bedroom wall",
+    "quiet hours"
+   ],
+   "usable_capacity_geometry": [
+    "dinner plates",
+    "deep pasta bowls",
+    "big pasta pot",
+    "baking trays",
+    "tall wine glasses"
+   ],
+   "hygiene_sanitisation": [
+    "infant bottles",
+    "sterilizes everything",
+    "dishwasher bacteria",
+    "smells musty"
+   ]
+  },
+  "context": {
+   "cannot_plumb_constraint": [
+    [
+     "cannot plumb",
+     "can't plumb",
+     "i rent",
+     "no drilling"
+    ],
+    "Cannot plumb an inlet or must not drill (renting): a tank-fed or countertop unit with reversible connections may fit, only if a lawful drain route exists."
+   ],
+   "handwashing_alternative": [
+    [
+     "basin handwashing",
+     "a few cups"
+    ],
+    "A small workload (a few cups or plates) may be met by efficient handwashing, so buying may be unnecessary."
+   ]
+  },
+  "extraProxies": {}
+ },
+ "air_purifiers": {
+  "file": "air_purifiers",
+  "src": "ap_pkg",
+  "const": "AIR_PURIFIER_TEACHING271",
+  "pkg": "Package 04",
+  "aliases": [
+   "air purifier",
+   "air purifiers",
+   "air cleaner"
+  ],
+  "outcomes": {
+   "fine_particle_reduction": [
+    "smoke remover",
+    "busy road",
+    "smoky days",
+    "wildfire smoke"
+   ],
+   "allergen_particle_reduction": [
+    "anti-allergy",
+    "hay fever",
+    "sneeze all night",
+    "always dusty",
+    "sheds lots of hair"
+   ],
+   "gas_odour_reduction": [
+    "smells like paint",
+    "smell gone",
+    "chemical smell",
+    "frying smell",
+    "smell from cooking"
+   ],
+   "quiet_night_operation": [
+    "noise when sleeping",
+    "hear nothing",
+    "fan is audible"
+   ],
+   "room_coverage_distribution": [
+    "square metres",
+    "entire house",
+    "two bedrooms and a living room"
+   ],
+   "ownership_cost_energy": [
+    "running cost",
+    "expensive filters",
+    "little electricity"
+   ],
+   "clinical_health_outcome": [
+    "stop getting colds",
+    "catching flu",
+    "asthma flares",
+    "fixes headaches"
+   ]
+  },
+  "context": {
+   "ventilation_alternative": [
+    [
+     "open the windows",
+     "stuffy room",
+     "high co2"
+    ],
+    "Stuffy air or high CO2 needs outdoor-air ventilation, not recirculating filtration; buying may be unnecessary."
+   ],
+   "source_control_alternative": [
+    [
+     "new furniture",
+     "indoor smoking",
+     "air freshener sprays"
+    ],
+    "Remove or reduce the emission source (smoking, paint, sprays, new furniture) first."
+   ],
+   "moisture_mould_remediation_alternative": [
+    [
+     "visible mould",
+     "damp patch"
+    ],
+    "Damp or visible mould needs the moisture source fixed and remediation (dehumidifiers are a separate category); a purifier does not fix it."
+   ],
+   "cooker_extraction_alternative": [
+    [
+     "gas hob",
+     "cooking fumes",
+     "range hood"
+    ],
+    "Cooking fumes and NO2 from a gas hob need a ducted extractor venting outdoors."
+   ]
+  },
+  "extraProxies": {
+   "allergen_particle_reduction": [
+    "hepa_filter_class"
+   ]
+  }
+ }
+}

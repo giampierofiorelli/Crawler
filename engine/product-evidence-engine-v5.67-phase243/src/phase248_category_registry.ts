@@ -9,6 +9,9 @@ export const CATEGORY_REGISTRY248:readonly CategoryEntry248[]=[
  {id:'toaster_ovens',aliases:['toaster oven','mini oven','toaster convection oven','convection toaster oven','countertop oven']},
  {id:'kettles',aliases:['kettle']},
  // Phase270: minimal registration for the package-B teaching pilot (needs and measurements come from the teaching).
+ // Phase271: packages 06 and 04, taught in src/phase271_category_teaching.ts.
+ {id:'dishwashers',aliases:['dishwasher','dishwashers','dish washer']},
+ {id:'air_purifiers',aliases:['air purifier','air purifiers','air cleaner']},
  {id:'dehumidifiers',aliases:['dehumidifier','dehumidifiers'],cues:['damp','condensation','humidity']},
  {id:'blenders',aliases:['blender','smoothie maker'],cues:['smoothies','smoothie']},
  {id:'deep_fryers',aliases:['deep fryer','deep fat fryer','chip pan']},
