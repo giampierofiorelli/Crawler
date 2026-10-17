@@ -19,7 +19,7 @@ test('a result table: appliance rows, time/energy/cost columns kept apart; class
 });
 
 test('a <br> list per meal and first-person prose: attribution per clause; tariffs, prices, bounds, ranges and hypotheticals are not results',()=>{
- const html=page(`<p>I used my smart meter to measure the electricity, with nothing else on. I picked up the Nimbus Duo Air Fryer for £129.99.</p>
+ const html=page(`<p>I used my smart meter to measure the electricity, with nothing else on. I picked up the Nimbus Duo Air Fryer for £117.45.</p>
  <p>Meal 1: Fish fingers<br>Oven &ndash; 28min, 21 cents<br>Air fryer &ndash; 14 min, 6 cents</p>
  <p>We cooked two jacket potatoes in the air fryer for 45 minutes at a cost of 12p, or 0.31kwh. But in the oven the same potatoes cost 30p and took 65 minutes.</p>
  <p>Toast took seven minutes under the grill for 5p, compared to four minutes in the air fryer for 2p.</p>

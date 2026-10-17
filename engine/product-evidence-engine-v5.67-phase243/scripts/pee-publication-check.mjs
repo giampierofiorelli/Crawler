@@ -31,9 +31,16 @@ const rev=A.includes('--history')?['--all']:arg('--range')?[arg('--range')]:['HE
 const diff=A.includes('--tree')?'commit '+git(['rev-parse','HEAD']).trim()+'\n'+git(['diff','--unified=0','--no-color','--no-renames',git(['hash-object','-t','tree','/dev/null']).trim(),'HEAD'])
  :git(['log','-p','--unified=0','--no-color','--no-renames','--format=commit %H',...rev]);
 const {lines,files}=addedLinesFromDiff(diff);
-const findings=[...privateArtifactFindings(files),...scanAddedLines(lines,idx)];
+const raw=[...privateArtifactFindings(files),...scanAddedLines(lines,idx)];
+// Phase270: reviewed false positives, acknowledged one by one (commit, file, line, value digest, reason) in
+// docs/architecture/publication-acknowledgements.json. An acknowledgement never covers another line, commit or value,
+// and never a private store artefact.
+const ackFile=new URL('../docs/architecture/publication-acknowledgements.json',import.meta.url);
+const acks=existsSync(ackFile)?JSON.parse((await import('node:fs')).readFileSync(ackFile,'utf8')).acknowledged??[]:[];
+const acked=f=>f.rule==='product_bound_declared_value'&&acks.some(a=>a.commit===f.commit&&a.file===f.file&&a.line===f.line&&a.valueDigest===f.valueDigest&&typeof a.reason==='string'&&a.reason.length>20);
+const findings=raw.filter(f=>!acked(f));const acknowledged=raw.length-findings.length;
 const commits=new Set(lines.map(l=>l.commit)).size;
 console.log(JSON.stringify({store:store.includes('pee-knowledge')?'private snapshot':'live store',retainedDeclarations:rows.length,commitsScanned:commits,addedLines:lines.length,
- findings:findings.length,byCommit:Object.fromEntries([...new Set(findings.map(f=>f.commit))].map(c=>[c,findings.filter(f=>f.commit===c).length])),
+ findings:findings.length,acknowledged,byCommit:Object.fromEntries([...new Set(findings.map(f=>f.commit))].map(c=>[c,findings.filter(f=>f.commit===c).length])),
  detail:findings},null,1));
 process.exit(findings.length?1:0);
