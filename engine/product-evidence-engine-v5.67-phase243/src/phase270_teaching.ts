@@ -9,7 +9,8 @@
  *    package cites R01-R37 but its source register (section 17) is empty, so every dehumidifier lesson is an
  *    instructor hypothesis marked "awaiting source verification"; no reference is reconstructed or invented.
  */
-import type {CategoryTeaching252,TeachingSource252,Taught252,TaughtNeed252} from './phase252_category_teaching.js';
+import {applyTeaching252,type CategoryTeaching252,type TeachingSource252,type Taught252,type TaughtNeed252} from './phase252_category_teaching.js';
+import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import type {NeedLesson250} from './phase250_category_lessons.js';
 import type {ConceptKind128} from './phase128_category_cognition_dialogue_bridge.js';
 
@@ -73,3 +74,35 @@ export const OVERLAP270:readonly {phrase:string;request:string;origin:string}[]=
  {phrase:'unheated',request:'H2',origin:'package B 4.2 ("an unheated UK cellar")'},
  {phrase:'mould behind',request:'H3',origin:'package B section 6 need table ("There is mould behind the wardrobe")'},
 ];
+
+/** Phase271: the dehumidifier lessons with their restored provenance (owner supplied the R01-R39 register, 2026-10-17).
+ * Each statement now names its registered sources and their evidence class from the reconciliation
+ * (pee-knowledge/research-inventory/phase271/dehumidifier_register.json). The sources were NOT reopened by PEE: a lesson
+ * the register supports as stated becomes 'source_backed_observation'; one it supports only partly stays an instructor
+ * hypothesis, with the unsupported part named. Applied as version t271.d2; the t270.d1 items are retired. */
+const REG='Restored register (owner, 2026-10-17); not re-verified by PEE';
+export const DEHUMIDIFIER_TEACHING271:CategoryTeaching252={...DEHUMIDIFIER_TEACHING270,version:'t271.d2',
+ subtypes:[S(`Refrigerant, desiccant and Peltier machines remove moisture differently; the label proves no winter advantage. R10-R11 small prototype studies, R09/R12 abstract-level reviews; partly supported. ${REG}.`,'instructor_hypothesis','dehum_pkg')],
+ mechanisms:[S(`Water removal depends on temperature, humidity, airflow, defrost and cycling. R01-R02 fix rating points (official); the dependence itself rests on R07 (2016 test) and R08 (2014 lab report). ${REG}.`,'instructor_hypothesis','dehum_pkg')],
+ needs:[
+  TN(N('moisture_removal','outcome','Remove enough moisture to keep the room at a safe humidity.',[]),
+   {measureId:'removal_at_room_conditions',conditions:['matched_temperature_humidity'],
+    outcome:S(`Water removal measured at the room's temperature and humidity, not a rating point projected to a home. R01 (official rating procedure) and R07 (independent test, three conditions; 2016). ${REG}.`,'source_backed_observation','dehum_pkg'),
+    proxies:[{attribute:'capacity',kind:'not_sufficient_for',note:S(`Declared litres per day hold at their own test point (R01, R07); the tank-size and coverage part is inference, not in the register. ${REG}.`,'instructor_hypothesis','dehum_pkg')}]}),
+  TN(N('low_energy_use','outcome','Use little electricity for the moisture removed.',[]),
+   {measureId:'energy_per_litre_matched',conditions:['matched_temperature_humidity'],
+    outcome:S(`Litres per kWh under the same conditions for every machine. R01/R17 (official IEF, prescribed modes; not household L/kWh); defrost inclusion is not stated there. Partly supported. ${REG}.`,'instructor_hypothesis','dehum_pkg'),
+    proxies:[{attribute:'power',kind:'not_sufficient_for',note:S(`Rated watts is not electricity per litre: R08 (2014 government lab report) shows cycling losses; the 150 W vs 400 W case is illustrative, not measured. ${REG}.`,'instructor_hypothesis','dehum_pkg')}]}),
+  ...DEHUMIDIFIER_TEACHING270.needs.filter(n=>!['moisture_removal','low_energy_use'].includes(n.id)),
+ ],
+ interpretation:[S(`Compare results only with the same variable, mechanism, inlet temperature and humidity, mode and electricity boundary. R07 shows condition dependence; the full checklist is engineering reasoning. ${REG}.`,'instructor_hypothesis','dehum_pkg')],
+ applicability:[S(`A dehumidifier does not repair a leak or remove existing mould: R13 (WHO), R14 (UK, England), R15 (US EPA) guidance, consistent as registered; guidance, not appliance trials. ${REG}.`,'source_backed_observation','dehum_pkg')],
+ gaps:[S(`R01-R39 register restored but not reopened by PEE; R38 is cited only in the original text and R39 never; R24 duplicates R02's URL. Re-verify R01, R02, R07, R08, R13, R14, R17 before stronger use.`,'instructor_hypothesis','dehum_pkg')],
+ conditions:[{id:'matched_temperature_humidity',statement:S(`Condition: the same inlet temperature and relative humidity, mode and duration for every compared machine. R01 (official procedure), R07 (independent test across conditions). ${REG}.`,'source_backed_observation','dehum_pkg')}],
+};
+/** Phase271: replaces the t270.d1 dehumidifier lessons ("awaiting source verification") by t271.d2: the old items are
+ * retired with a journaled reason (nothing deleted), then t271.d2 is applied. Idempotent. */
+export function upgradeDehumidifierProvenance271(store:KnowledgeStore246,at=new Date().toISOString()){
+ let retired=0;for(const i of store.categoryItems246('dehumidifiers'))if(/Awaiting source verification|register \(R01-R37\) is missing/.test(i.statement)&&store.retireCategoryItem246(i.itemId,'superseded_by_restored_register_t271',at))retired++;
+ return {retired,...applyTeaching252(store,[DEHUMIDIFIER_TEACHING271],at)};
+}

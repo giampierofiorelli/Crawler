@@ -7,7 +7,7 @@ import {CATEGORY_REGISTRY250} from '../src/phase248_category_registry.js';
 import {applyLessons250,ADOPTED_LESSONS250} from '../src/phase250_category_lessons.js';
 import {applyTeaching252,registerTeachingSources252} from '../src/phase252_category_teaching.js';
 import {AIR_FRYER_TEACHING269,RESEARCH_SOURCES269,COFFEE_TEACHING269,COFFEE_SOURCES269} from '../src/phase269_research_teaching.js';
-import {AIR_FRYER_TEACHING270,COFFEE_TEACHING270,DEHUMIDIFIER_TEACHING270,SOURCES270} from '../src/phase270_teaching.js';
+import {AIR_FRYER_TEACHING270,COFFEE_TEACHING270,DEHUMIDIFIER_TEACHING270,SOURCES270,upgradeDehumidifierProvenance271} from '../src/phase270_teaching.js';
 import {adviseFromRequest253} from '../src/phase253_request_advice.js';
 
 // Phase270 §9: the development failures U4, U6, C2 (Phase269 teaching set) and a package-B example; never the
@@ -53,5 +53,16 @@ test('dehumidifiers: package-B teaching registers the category; every lesson is 
  // A leak is a context: the decision is a no-purchase check, not a purchase.
  const leak=ask(s,'Water came in after rain and now there is mould behind the bed. Do I need a dehumidifier?');
  assert.equal(leak.goalAssessment!.decision,'no_purchase_check');
+ s.close();
+});
+
+test('Phase271: the restored R01-R39 register replaces "awaiting source verification" without losing the taught relations',()=>{
+ const s=store(true);const r=upgradeDehumidifierProvenance271(s,'2026-10-17T12:00:00.000Z');assert.ok(r.retired>=8,JSON.stringify(r));
+ const active=s.categoryItems246('dehumidifiers').filter(i=>i.section!=='user_goals');
+ assert.ok(active.every(i=>!/Awaiting source verification/.test(i.statement)));
+ assert.ok(active.filter(i=>i.provenance==='assistant_authored_unreviewed').every(i=>/not re-verified by PEE|not reopened by PEE/.test(i.statement)),'no lesson claims PEE verified a source');
+ const a=ask(s,'My bedroom smells damp. Which dehumidifier should I get?');const o=a.goalAssessment!.outcomes.find(x=>x.need==='moisture_removal')!;
+ assert.deepEqual([o.relevantMeasures,o.rejectedProxies,o.requiredConditions],[['removal_at_room_conditions'],['attr:capacity'],['matched_temperature_humidity']]);
+ assert.deepEqual(upgradeDehumidifierProvenance271(s,'2026-10-17T12:00:00.000Z').retired,0,'idempotent');
  s.close();
 });

@@ -150,7 +150,7 @@ try{
    const P271=await import('../dist/src/phase271_category_teaching.js');
    registerTeachingSources252([...RESEARCH_SOURCES269,...COFFEE_SOURCES269,...P270.SOURCES270,...P271.SOURCES271]);
    // '--teaching phase270' applies the Phase270 deltas (air fryers, coffee) or the dehumidifier pilot; default: Phase269.
-   const t=(flags.teaching==='phase271'?{dishwashers:P271.DISHWASHER_TEACHING271,air_purifiers:P271.AIR_PURIFIER_TEACHING271}:flags.teaching==='phase270'?{air_fryers:P270.AIR_FRYER_TEACHING270,coffee_machines:P270.COFFEE_TEACHING270,dehumidifiers:P270.DEHUMIDIFIER_TEACHING270}:
+   const t=(flags.teaching==='phase271'?{dishwashers:P271.DISHWASHER_TEACHING271,air_purifiers:P271.AIR_PURIFIER_TEACHING271}:flags.teaching==='phase270'?{air_fryers:P270.AIR_FRYER_TEACHING270,coffee_machines:P270.COFFEE_TEACHING270,dehumidifiers:P270.DEHUMIDIFIER_TEACHING270}:flags.teaching==='phase271-provenance'?{dehumidifiers:P270.DEHUMIDIFIER_TEACHING271}:
     {air_fryers:AIR_FRYER_TEACHING269,coffee_machines:COFFEE_TEACHING269})[flags.category];if(!t)throw Error('no teaching for '+flags.category);
    out(applyTeaching252(store,[t]));break;}
   case 'retire-item':out({retired:store.retireCategoryItem246(flags.item,flags.reason)});break;
