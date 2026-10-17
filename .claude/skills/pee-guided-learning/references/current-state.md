@@ -11,6 +11,27 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000000000000000000. Phase270 review fixes and bounded pilot (2026-10-17) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase270/REPORT.md` (stopped for independent review).
+
+- **Ranking** is authorised only positively (`outcomeAuthorised270`): teaching `measured_by` + known measurement (signed
+  `measureId`) + no proxy + all `requires_condition` met + every stated outcome and factual need assessed. Missing
+  knowledge refuses. One verification (`verifySignedCatalog181`) gates ranking and partial comparison; partial
+  comparisons need a revision in `PARTIAL_COMPARISON_POLICY270`. Raw quantities: `valueKind:'raw_quantity_only'`.
+- **Response** mirrors `goalAssessment.decision` (`partial_comparison`, `no_purchase_check` are responses now).
+- **r2 policies**: `authorised_partial_comparison_only`. **Signer** `phase270_catalog_signer` (evaluation keys only;
+  production refused). Owner setup proposal in the report §2.
+- **Store v7**: `qualitative_observations270` under `pee249-factual-observations-v2-qualitative-codes`.
+- **Extraction**: `phase270_comparative_results` (tables, `<br>` lists, prose; duration/energy/cost separate). Held-out
+  (6 docs, 3 new publishers): 0/60 -> 37/60, precision 0.925, exact subject 0.351; qualitative 1/24 (weak).
+- **Teaching**: `phase270_teaching` deltas (U4, U6, C2) and dehumidifiers (package B; R01-R37 missing, every lesson
+  "awaiting source verification"). Generalisation set (13): decision 7 -> 9.
+- **Evidence**: Which? lab energy/time per completed dish for one named air fryer and one oven; not retained (no
+  comparative retention path). No cross-model comparison exists: no complete recommendation is possible.
+- **Publication check** accepts line-exact reviewed acknowledgements (`docs/architecture/publication-acknowledgements.json`).
+- Pilot: `pee-knowledge/policy/phase270-bounded-pilot-policy.json`, 15 of 24 requests spent.
+
 ## 00000000000000000000. Phase269 scientific integration and goal relevance (2026-10-17) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase269/SCIENTIFIC-INTEGRATION-REPORT.md`.

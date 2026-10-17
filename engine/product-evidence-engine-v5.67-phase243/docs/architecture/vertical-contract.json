@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "2026-10-17 (Phase269)",
+ "updated": "2026-10-17 (Phase270)",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -392,13 +392,13 @@
    "id": "D1",
    "stage": "evidence_validation",
    "since": "Phase253 gap audit F2/F5",
-   "item": "validator r2 exists; its policy is proposed, not authorised"
+   "item": "validator r2 authorised for accurately labelled partial comparisons only (owner brief 2026-10-17 §4); not authorised for recommendations or exact-variant promotion of name-only identities"
   },
   {
    "id": "D2",
    "stage": "comparable_assessment",
    "since": "Phase249",
-   "item": "compiler r2 (raw quantity only) exists; scoring policy proposed, not authorised; no outcome-relevant dimension"
+   "item": "scoring r2 approved as raw quantities with no score (valueKind raw_quantity_only, never ranked); no outcome-relevant scored dimension exists for any category"
   },
   {
    "id": "D4",
@@ -410,20 +410,21 @@
    "id": "D5",
    "stage": "authorised_ranking",
    "since": "Phase268",
-   "item": "no production signing authority (owner decision): rankings only in controlled evaluation"
+   "item": "dedicated signer (phase270_catalog_signer) signs only policy-checked compiled catalogs with evaluation keys; production signing not authorised for activation (owner decision)"
   },
   {
    "id": "D6",
    "stage": "authentic_evidence",
    "since": "Phase268",
-   "item": "one publisher; no measurement relevant to the consumer outcome (energy per completed task, cooking outcome) for any product",
+   "item": "Phase270 pilot: Which? lab and a lovemoney home test give energy and time per completed dish for identified appliances, extracted (37/60 held-out) but not retained in the store (comparative results are appliance-level; no retention path yet), and one air fryer per publisher: no cross-model comparison of the consumer outcome",
    "resolvedStatus": "open"
   },
   {
    "id": "D7",
    "stage": "evidence_validation",
    "since": "Phase269",
-   "item": "qualitative outcome codes (pilot) are not retained: pee249 keeps measurement kinds only for independent_original_test"
+   "item": "resolved in Phase270: pee249 v2 amendment and store v7 keep qualitative outcome codes (codes only, test publishers, never ranking input, never public); held-out qualitative reading is weak (1/24)",
+   "resolvedStatus": "resolved_retention_reader_weak"
   }
  ],
  "authenticValidationRequirement": {
