@@ -1,0 +1,6630 @@
+{
+ "schema": "pee.step1d-a2.semantic-eval.v1",
+ "label": "dev1",
+ "at": "2026-10-17T19:30:12.185Z",
+ "tier": "development (spent and examined pages; never untouched)",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "ebda3d4",
+  "srcDirty": false,
+  "readersSha256": "6c2571c5bfbf3428cc0eebce3c0e9533b57c80805fee72370098ddd255c8885e",
+  "readers": 9
+ },
+ "arms": {
+  "A": {
+   "policy": "candidate_1c_inventory",
+   "off": []
+  },
+  "B": {
+   "policy": "candidate_1c_semantics",
+   "off": []
+  },
+  "C": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": []
+  },
+  "C-names_json_ld": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "names_json_ld"
+   ]
+  },
+  "C-names_tables": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "names_tables"
+   ]
+  },
+  "C-names_links": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "names_links"
+   ]
+  },
+  "C-exclusion": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "exclusion"
+   ]
+  },
+  "C-cells": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "cells"
+   ]
+  },
+  "C-principal": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "principal"
+   ]
+  },
+  "T": {
+   "policy": "candidate_1c_semantics_tables",
+   "off": [
+    "names_json_ld",
+    "names_tables",
+    "names_links",
+    "exclusion",
+    "cells",
+    "principal"
+   ]
+  }
+ },
+ "summary": {
+  "step1c (spent; examined)": {
+   "documents": 5,
+   "gold": 102,
+   "items": {
+    "A": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "B": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C-names_json_ld": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C-names_tables": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C-names_links": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C-exclusion": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C-cells": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "C-principal": {
+     "missing": 26,
+     "correct": 72,
+     "wrong_product": 1,
+     "unresolved": 3
+    },
+    "T": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    }
+   },
+   "regressionsVsA": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 0,
+    "T": 0
+   },
+   "newWrongVsA": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 1,
+    "T": 0
+   },
+   "negativeControlLeads": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 0,
+    "T": 0
+   },
+   "tableReaderLeads": {},
+   "entities": {
+    "A": {
+     "goldEntities": 18,
+     "found": 17,
+     "split": 2,
+     "productEntities": 34,
+     "nonGoldProducts": 15,
+     "merges": 0,
+     "notProduct": 13
+    },
+    "B": {
+     "goldEntities": 18,
+     "found": 17,
+     "split": 2,
+     "productEntities": 31,
+     "nonGoldProducts": 12,
+     "merges": 0,
+     "notProduct": 13
+    }
+   },
+   "principal": {
+    "A": {
+     "false_main_subject": 4,
+     "missed": 1
+    },
+    "B": {
+     "correct_none": 3,
+     "missed": 2
+    }
+   },
+   "phase153": {
+    "proposedAll": 180,
+    "proposedFiltered": 24,
+    "goldFoundFiltered": 6,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 14,
+    "msPerDocument": 25
+   },
+   "missingC": {
+    "prose_value_with_unit": 4,
+    "prose_value_unit_elsewhere": 4,
+    "table_cell": 16,
+    "visible_not_in_reader_blocks": 2
+   },
+   "missingCByUnit": {
+    "prose_value_with_unit:nits": 3,
+    "prose_value_unit_elsewhere:delta_e": 1,
+    "prose_value_unit_elsewhere:nits": 1,
+    "table_cell:db": 10,
+    "visible_not_in_reader_blocks:db": 2,
+    "prose_value_unit_elsewhere:hours": 1,
+    "table_cell:minutes": 1,
+    "table_cell:w": 4,
+    "prose_value_unit_elsewhere:db": 1,
+    "table_cell:usd/year": 1,
+    "prose_value_with_unit:microns": 1
+   },
+   "region": {
+    "goldInBlocks": 100,
+    "hardExcluded": 4,
+    "phase245Excluded": 4
+   },
+   "qualitative": {},
+   "msPerDocument": {
+    "A": 183,
+    "B": 221,
+    "C": 255
+   },
+   "semanticsMsPerDocument": 62
+  },
+  "phase272 untouched (spent; examined)": {
+   "documents": 13,
+   "gold": 163,
+   "items": {
+    "A": {
+     "missing": 93,
+     "correct": 60,
+     "wrong_product": 6,
+     "unresolved": 4
+    },
+    "B": {
+     "missing": 93,
+     "correct": 60,
+     "wrong_product": 6,
+     "unresolved": 4
+    },
+    "C": {
+     "missing": 60,
+     "correct": 86,
+     "wrong_product": 12,
+     "unresolved": 3,
+     "false_identity_match": 2
+    },
+    "C-names_json_ld": {
+     "missing": 60,
+     "correct": 86,
+     "wrong_product": 12,
+     "unresolved": 3,
+     "false_identity_match": 2
+    },
+    "C-names_tables": {
+     "missing": 60,
+     "correct": 83,
+     "wrong_product": 11,
+     "unresolved": 9
+    },
+    "C-names_links": {
+     "missing": 60,
+     "correct": 86,
+     "wrong_product": 12,
+     "unresolved": 3,
+     "false_identity_match": 2
+    },
+    "C-exclusion": {
+     "missing": 60,
+     "correct": 86,
+     "wrong_product": 12,
+     "unresolved": 3,
+     "false_identity_match": 2
+    },
+    "C-cells": {
+     "missing": 60,
+     "correct": 73,
+     "wrong_product": 27,
+     "unresolved": 3
+    },
+    "C-principal": {
+     "missing": 60,
+     "correct": 86,
+     "wrong_product": 12,
+     "unresolved": 3,
+     "false_identity_match": 2
+    },
+    "T": {
+     "missing": 60,
+     "correct": 73,
+     "wrong_product": 27,
+     "unresolved": 3
+    }
+   },
+   "regressionsVsA": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 0,
+    "T": 0
+   },
+   "newWrongVsA": {
+    "A": 0,
+    "B": 0,
+    "C": 8,
+    "C-names_json_ld": 8,
+    "C-names_tables": 5,
+    "C-names_links": 8,
+    "C-exclusion": 8,
+    "C-cells": 21,
+    "C-principal": 8,
+    "T": 21
+   },
+   "negativeControlLeads": {
+    "A": 16,
+    "B": 16,
+    "C": 16,
+    "C-names_json_ld": 16,
+    "C-names_tables": 16,
+    "C-names_links": 16,
+    "C-exclusion": 16,
+    "C-cells": 16,
+    "C-principal": 16,
+    "T": 16
+   },
+   "tableReaderLeads": {
+    "lead_wrong_product": 6,
+    "lead_correct": 43,
+    "lead_false_identity": 2
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 37,
+     "found": 28,
+     "split": 3,
+     "productEntities": 92,
+     "nonGoldProducts": 58,
+     "merges": 0,
+     "notProduct": 25
+    },
+    "B": {
+     "goldEntities": 37,
+     "found": 34,
+     "split": 3,
+     "productEntities": 98,
+     "nonGoldProducts": 58,
+     "merges": 0,
+     "notProduct": 28
+    }
+   },
+   "principal": {
+    "A": {
+     "correct": 7,
+     "false_main_subject": 6
+    },
+    "B": {
+     "correct": 7,
+     "false_main_subject": 5,
+     "missed": 1
+    }
+   },
+   "phase153": {
+    "proposedAll": 456,
+    "proposedFiltered": 56,
+    "goldFoundFiltered": 16,
+    "goldMissingInBAdded": 1,
+    "nonGoldFiltered": 30,
+    "msPerDocument": 18
+   },
+   "missingC": {
+    "prose_value_with_unit": 15,
+    "table_cell": 37,
+    "prose_value_unit_elsewhere": 7,
+    "visible_not_in_reader_blocks": 1
+   },
+   "missingCByUnit": {
+    "prose_value_with_unit:db": 2,
+    "prose_value_with_unit:minutes": 5,
+    "table_cell:minutes": 2,
+    "prose_value_unit_elsewhere:minutes": 4,
+    "prose_value_with_unit:c": 4,
+    "prose_value_with_unit:p": 2,
+    "visible_not_in_reader_blocks:cfm": 1,
+    "table_cell:delta_e": 7,
+    "table_cell:%": 24,
+    "table_cell:ms": 2,
+    "prose_value_unit_elsewhere:delta_e": 1,
+    "table_cell:nits": 2,
+    "prose_value_unit_elsewhere:nits": 2,
+    "prose_value_with_unit:nits": 1,
+    "prose_value_with_unit:ms": 1
+   },
+   "region": {
+    "goldInBlocks": 162,
+    "hardExcluded": 0,
+    "phase245Excluded": 54
+   },
+   "qualitative": {
+    "A:correct": 38,
+    "A:missing": 52,
+    "A:unresolved": 1,
+    "B:correct": 39,
+    "B:missing": 52,
+    "B:unresolved": 4,
+    "emittedA": 130,
+    "emittedB": 127,
+    "nonGoldSubjectA": 23,
+    "nonGoldSubjectB": 15,
+    "A:wrong_product": 10,
+    "B:wrong_product": 6
+   },
+   "msPerDocument": {
+    "A": 122,
+    "B": 169,
+    "C": 226
+   },
+   "semanticsMsPerDocument": 46
+  },
+  "phase272 development pages": {
+   "documents": 3,
+   "gold": 28,
+   "items": {
+    "A": {
+     "correct": 24,
+     "missing": 4
+    },
+    "B": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C-names_json_ld": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C-names_tables": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C-names_links": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C-exclusion": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C-cells": {
+     "correct": 24,
+     "missing": 4
+    },
+    "C-principal": {
+     "correct": 24,
+     "missing": 4
+    },
+    "T": {
+     "correct": 24,
+     "missing": 4
+    }
+   },
+   "regressionsVsA": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 0,
+    "T": 0
+   },
+   "newWrongVsA": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 0,
+    "T": 0
+   },
+   "negativeControlLeads": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "C-names_json_ld": 0,
+    "C-names_tables": 0,
+    "C-names_links": 0,
+    "C-exclusion": 0,
+    "C-cells": 0,
+    "C-principal": 0,
+    "T": 0
+   },
+   "tableReaderLeads": {},
+   "entities": {
+    "A": {
+     "goldEntities": 5,
+     "found": 4,
+     "split": 0,
+     "productEntities": 18,
+     "nonGoldProducts": 14,
+     "merges": 0,
+     "notProduct": 7
+    },
+    "B": {
+     "goldEntities": 5,
+     "found": 4,
+     "split": 0,
+     "productEntities": 16,
+     "nonGoldProducts": 12,
+     "merges": 0,
+     "notProduct": 7
+    }
+   },
+   "principal": {
+    "A": {
+     "correct": 2,
+     "missed": 1
+    },
+    "B": {
+     "correct": 2,
+     "missed": 1
+    }
+   },
+   "phase153": {
+    "proposedAll": 81,
+    "proposedFiltered": 12,
+    "goldFoundFiltered": 4,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 5,
+    "msPerDocument": 11
+   },
+   "missingC": {
+    "prose_value_with_unit": 4
+   },
+   "missingCByUnit": {
+    "prose_value_with_unit:kwh": 1,
+    "prose_value_with_unit:db": 1,
+    "prose_value_with_unit:w": 1,
+    "prose_value_with_unit:nits": 1
+   },
+   "region": {
+    "goldInBlocks": 28,
+    "hardExcluded": 0,
+    "phase245Excluded": 3
+   },
+   "qualitative": {
+    "A:wrong_product": 3,
+    "A:correct": 6,
+    "A:unresolved": 1,
+    "A:missing": 6,
+    "B:correct": 7,
+    "B:unresolved": 1,
+    "B:missing": 6,
+    "emittedA": 30,
+    "emittedB": 30,
+    "nonGoldSubjectA": 10,
+    "nonGoldSubjectB": 9,
+    "B:wrong_product": 2
+   },
+   "msPerDocument": {
+    "A": 106,
+    "B": 137,
+    "C": 172
+   },
+   "semanticsMsPerDocument": 38
+  }
+ },
+ "problemSummary": {
+  "distinctProblems": 11,
+  "measurementsAffected": 21,
+  "byCause": {
+   "5_identity_present_not_used": 8,
+   "1_not_detected": 3
+  }
+ },
+ "documents": [
+  {
+   "set": "step1c (spent; examined)",
+   "doc": "s1c_tv_trd_affordable_oled3",
+   "category": "televisions",
+   "gold": 3,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 306
+    },
+    "B": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 297
+    },
+    "C": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 293
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 302
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 294
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 315
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 289
+    },
+    "C-cells": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 300
+    },
+    "C-principal": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 277
+    },
+    "T": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "leads": {
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 277
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 3,
+     "found": 3,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 3,
+     "merges": 0,
+     "notProduct": 2,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 3,
+     "found": 3,
+     "split": 0,
+     "productEntities": 4,
+     "nonGoldProducts": 1,
+     "merges": 0,
+     "notProduct": 2,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "t1-01",
+     "unit": "nits",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 37,
+    "proposedFiltered": 6,
+    "goldFoundFiltered": 2,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 2,
+    "truncated": true,
+    "ms": 42
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "correct_none",
+    "pageType": "comparison",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 3,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": null,
+   "semantics": {
+    "pageType": {
+     "kind": "comparison",
+     "signals": [
+      "og_type:article",
+      "headline_comparison_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 503,
+     "aligned": 499
+    },
+    "tables": [],
+    "names": {
+     "linked_name": 12
+    },
+    "ms": 67,
+    "nodes": 7631,
+    "truncated": false
+   }
+  },
+  {
+   "set": "step1c (spent; examined)",
+   "doc": "s1c_tv_trd_rgb_vs_miniled",
+   "category": "televisions",
+   "gold": 9,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 174
+    },
+    "B": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 237
+    },
+    "C": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 320
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 283
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 264
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 259
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 297
+    },
+    "C-cells": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 280
+    },
+    "C-principal": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "wrong_product": 1
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 271
+    },
+    "T": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 0,
+     "ms": 270
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [
+     "t2-06"
+    ],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 2,
+     "found": 2,
+     "split": 0,
+     "productEntities": 5,
+     "nonGoldProducts": 3,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 2,
+     "found": 2,
+     "split": 0,
+     "productEntities": 4,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "t2-05",
+     "unit": "nits",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "t2-07",
+     "unit": "nits",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "t2-09",
+     "unit": "delta_e",
+     "where": "prose_value_unit_elsewhere"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 36,
+    "proposedFiltered": 4,
+    "goldFoundFiltered": 2,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": true,
+    "ms": 29
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "missed",
+    "pageType": "comparison",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 9,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": null,
+   "semantics": {
+    "pageType": {
+     "kind": "comparison",
+     "signals": [
+      "og_type:article",
+      "headline_comparison_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 515,
+     "aligned": 511
+    },
+    "tables": [],
+    "names": {
+     "linked_name": 9
+    },
+    "ms": 91,
+    "nodes": 8144,
+    "truncated": false
+   }
+  },
+  {
+   "set": "step1c (spent; examined)",
+   "doc": "s1c_tv_trd_bravia7ii_r95h",
+   "category": "televisions",
+   "gold": 6,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 147
+    },
+    "B": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 232
+    },
+    "C": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 255
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 262
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 270
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 250
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 261
+    },
+    "C-cells": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 254
+    },
+    "C-principal": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 271
+    },
+    "T": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 4,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 291
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 2,
+     "found": 2,
+     "split": 1,
+     "productEntities": 6,
+     "nonGoldProducts": 3,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 2,
+     "found": 2,
+     "split": 1,
+     "productEntities": 6,
+     "nonGoldProducts": 3,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "t3-03",
+     "unit": "nits",
+     "where": "prose_value_unit_elsewhere"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 39,
+    "proposedFiltered": 4,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 2,
+    "truncated": true,
+    "ms": 20
+   },
+   "principal": {
+    "Aclass": "missed",
+    "Bclass": "missed",
+    "pageType": "comparison",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 6,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": null,
+   "semantics": {
+    "pageType": {
+     "kind": "comparison",
+     "signals": [
+      "og_type:article",
+      "headline_comparison_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 495,
+     "aligned": 491
+    },
+    "tables": [],
+    "names": {
+     "linked_name": 9
+    },
+    "ms": 83,
+    "nodes": 7386,
+    "truncated": false
+   }
+  },
+  {
+   "set": "step1c (spent; examined)",
+   "doc": "s1c_ap_hf_small",
+   "category": "air_purifiers",
+   "gold": 48,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 43,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 176
+    },
+    "B": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 164
+    },
+    "C": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 192
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 182
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 181
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 171
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 43,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 170
+    },
+    "C-cells": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 168
+    },
+    "C-principal": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 41,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 208
+    },
+    "T": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 43,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 187
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 6,
+     "found": 5,
+     "split": 0,
+     "productEntities": 9,
+     "nonGoldProducts": 4,
+     "merges": 0,
+     "notProduct": 5,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 6,
+     "found": 5,
+     "split": 0,
+     "productEntities": 9,
+     "nonGoldProducts": 4,
+     "merges": 0,
+     "notProduct": 5,
+     "missing": 1
+    }
+   },
+   "missingC": [
+    {
+     "id": "a1-05",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-15",
+     "unit": "db",
+     "where": "visible_not_in_reader_blocks"
+    },
+    {
+     "id": "a1-19",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-20",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-21",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-22",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-23",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-24",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a1-47",
+     "unit": "hours",
+     "where": "prose_value_unit_elsewhere"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 44,
+    "proposedFiltered": 6,
+    "goldFoundFiltered": 0,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 6,
+    "truncated": true,
+    "ms": 20
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "correct_none",
+    "pageType": "other",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 47,
+    "hardExcluded": 4,
+    "phase245Excluded": 4
+   },
+   "qualitative": null,
+   "semantics": {
+    "pageType": {
+     "kind": "other",
+     "signals": [
+      "og_type:article"
+     ]
+    },
+    "alignment": {
+     "blocks": 272,
+     "aligned": 272
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "linked_name": 15
+    },
+    "ms": 38,
+    "nodes": 3209,
+    "truncated": false
+   }
+  },
+  {
+   "set": "step1c (spent; examined)",
+   "doc": "s1c_ap_hf_bedroom",
+   "category": "air_purifiers",
+   "gold": 36,
+   "arms": {
+    "A": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 114
+    },
+    "B": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 173
+    },
+    "C": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 214
+    },
+    "C-names_json_ld": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 161
+    },
+    "C-names_tables": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 159
+    },
+    "C-names_links": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 162
+    },
+    "C-exclusion": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 162
+    },
+    "C-cells": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 203
+    },
+    "C-principal": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 174
+    },
+    "T": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 23,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 156
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 5,
+     "found": 5,
+     "split": 1,
+     "productEntities": 8,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 4,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 5,
+     "found": 5,
+     "split": 1,
+     "productEntities": 8,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 4,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "a2-02",
+     "unit": "minutes",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-05",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-06",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-07",
+     "unit": "db",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-08",
+     "unit": "w",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-09",
+     "unit": "w",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-10",
+     "unit": "w",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-11",
+     "unit": "w",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-13",
+     "unit": "db",
+     "where": "visible_not_in_reader_blocks"
+    },
+    {
+     "id": "a2-14",
+     "unit": "db",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "a2-23",
+     "unit": "usd/year",
+     "where": "table_cell"
+    },
+    {
+     "id": "a2-36",
+     "unit": "microns",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 24,
+    "proposedFiltered": 4,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 3,
+    "truncated": true,
+    "ms": 14
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "correct_none",
+    "pageType": "other",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 35,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": null,
+   "semantics": {
+    "pageType": {
+     "kind": "other",
+     "signals": [
+      "og_type:article",
+      "multi_product_tables:1"
+     ]
+    },
+    "alignment": {
+     "blocks": 231,
+     "aligned": 230
+    },
+    "tables": [
+     {
+      "mode": "products_in_columns",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 4
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 14,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "linked_name": 5
+    },
+    "ms": 33,
+    "nodes": 2740,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tg_ninja_crispi",
+   "category": "air_fryers",
+   "gold": 2,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 162
+    },
+    "B": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 244
+    },
+    "C": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 295
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 300
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 300
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 317
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 320
+    },
+    "C-cells": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 377
+    },
+    "C-principal": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 347
+    },
+    "T": {
+     "items": {
+      "missing": 2
+     },
+     "leads": {},
+     "negativeControlLeads": 0,
+     "ms": 363
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 0,
+     "split": 0,
+     "productEntities": 1,
+     "nonGoldProducts": 1,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 2,
+     "nonGoldProducts": 1,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "af-q1",
+     "unit": "db",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "af-q2",
+     "unit": "minutes",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 30,
+    "proposedFiltered": 3,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 2,
+    "truncated": false,
+    "ms": 17
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_not_in_headline"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 2,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 6,
+    "A": {
+     "correct": 2,
+     "missing": 3,
+     "unresolved": 1
+    },
+    "B": {
+     "correct": 2,
+     "missing": 3,
+     "unresolved": 1
+    },
+    "emittedA": 9,
+    "emittedB": 10,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 1
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article"
+     ]
+    },
+    "alignment": {
+     "blocks": 530,
+     "aligned": 528
+    },
+    "tables": [],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 5
+    },
+    "ms": 99,
+    "nodes": 7767,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tg_tfal_infrared",
+   "category": "air_fryers",
+   "gold": 1,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 176
+    },
+    "B": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 263
+    },
+    "C": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 327
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 305
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 303
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 292
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 369
+    },
+    "C-cells": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 351
+    },
+    "C-principal": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 318
+    },
+    "T": {
+     "items": {
+      "correct": 1
+     },
+     "leads": {
+      "lead_correct": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 352
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 0,
+     "split": 0,
+     "productEntities": 0,
+     "nonGoldProducts": 0,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 1,
+     "nonGoldProducts": 0,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    }
+   },
+   "missingC": [],
+   "phase153": {
+    "proposedAll": 20,
+    "proposedFiltered": 2,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": true,
+    "ms": 13
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 1,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 10,
+    "A": {
+     "correct": 4,
+     "missing": 6
+    },
+    "B": {
+     "correct": 4,
+     "missing": 6
+    },
+    "emittedA": 16,
+    "emittedB": 16,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 0
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article"
+     ]
+    },
+    "alignment": {
+     "blocks": 526,
+     "aligned": 524
+    },
+    "tables": [],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 2
+    },
+    "ms": 77,
+    "nodes": 8106,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tr_philips_1000_flexdrawer",
+   "category": "air_fryers",
+   "gold": 5,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 89
+    },
+    "B": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 111
+    },
+    "C": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 173
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 152
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 191
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 153
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 176
+    },
+    "C-cells": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 163
+    },
+    "C-principal": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 159
+    },
+    "T": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 10,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 2,
+     "ms": 157
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 1,
+     "productEntities": 8,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 1,
+     "productEntities": 7,
+     "nonGoldProducts": 4,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "af-q4",
+     "unit": "minutes",
+     "where": "table_cell"
+    },
+    {
+     "id": "af-q6",
+     "unit": "minutes",
+     "where": "prose_value_unit_elsewhere"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 25,
+    "proposedFiltered": 1,
+    "goldFoundFiltered": 0,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": true,
+    "ms": 10
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 5,
+    "hardExcluded": 0,
+    "phase245Excluded": 5
+   },
+   "qualitative": {
+    "gold": 8,
+    "A": {
+     "correct": 2,
+     "missing": 6
+    },
+    "B": {
+     "correct": 2,
+     "missing": 6
+    },
+    "emittedA": 9,
+    "emittedB": 9,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 0
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 294,
+     "aligned": 291
+    },
+    "tables": [
+     {
+      "mode": "unsupported",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 1,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 13,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 4
+    },
+    "ms": 23,
+    "nodes": 2966,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_af_tr_sharp_5_5l",
+   "category": "air_fryers",
+   "gold": 8,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 105
+    },
+    "B": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 138
+    },
+    "C": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 148
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 142
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 160
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 170
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 150
+    },
+    "C-cells": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 149
+    },
+    "C-principal": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 182
+    },
+    "T": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "leads": {
+      "lead_not_gold_value": 17,
+      "lead_correct": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 171
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 0,
+     "split": 0,
+     "productEntities": 5,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "af-q9",
+     "unit": "minutes",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "af-q11",
+     "unit": "minutes",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "af-q13",
+     "unit": "minutes",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "af-q14",
+     "unit": "minutes",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "af-q16",
+     "unit": "minutes",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 24,
+    "proposedFiltered": 3,
+    "goldFoundFiltered": 0,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 3,
+    "truncated": true,
+    "ms": 14
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 8,
+    "hardExcluded": 0,
+    "phase245Excluded": 8
+   },
+   "qualitative": {
+    "gold": 13,
+    "A": {
+     "correct": 4,
+     "missing": 9
+    },
+    "B": {
+     "correct": 4,
+     "missing": 9
+    },
+    "emittedA": 9,
+    "emittedB": 9,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 0
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 298,
+     "aligned": 295
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 12,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 7
+    },
+    "ms": 36,
+    "nodes": 2944,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_dw_tr_lg_ldnpm654s",
+   "category": "dishwashers",
+   "gold": 4,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 95
+    },
+    "B": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 107
+    },
+    "C": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 135
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 139
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 203
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 154
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 142
+    },
+    "C-cells": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 135
+    },
+    "C-principal": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 140
+    },
+    "T": {
+     "items": {
+      "missing": 4
+     },
+     "leads": {
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 127
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 8,
+     "nonGoldProducts": 7,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 7,
+     "nonGoldProducts": 6,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "dw-q1",
+     "unit": "c",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "dw-q2",
+     "unit": "c",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "dw-q3",
+     "unit": "c",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "dw-q4",
+     "unit": "c",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 19,
+    "proposedFiltered": 2,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": false,
+    "ms": 8
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 4,
+    "hardExcluded": 0,
+    "phase245Excluded": 4
+   },
+   "qualitative": {
+    "gold": 7,
+    "A": {
+     "missing": 3,
+     "correct": 4
+    },
+    "B": {
+     "missing": 3,
+     "correct": 4
+    },
+    "emittedA": 6,
+    "emittedB": 6,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 1
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 289,
+     "aligned": 286
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 10,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 4
+    },
+    "ms": 21,
+    "nodes": 3069,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_dw_tr_candy_cf57cf0w",
+   "category": "dishwashers",
+   "gold": 6,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 4,
+      "wrong_product": 2
+     },
+     "leads": {
+      "lead_wrong_product": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 70
+    },
+    "B": {
+     "items": {
+      "missing": 4,
+      "wrong_product": 2
+     },
+     "leads": {
+      "lead_wrong_product": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 94
+    },
+    "C": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 147
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 145
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 147
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 148
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 140
+    },
+    "C-cells": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 140
+    },
+    "C-principal": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 138
+    },
+    "T": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "leads": {
+      "lead_wrong_product": 4
+     },
+     "negativeControlLeads": 0,
+     "ms": 135
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "C-names_json_ld": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "C-names_tables": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "C-names_links": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "C-exclusion": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "C-cells": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "C-principal": [
+     "dw-q7",
+     "dw-q9"
+    ],
+    "T": [
+     "dw-q7",
+     "dw-q9"
+    ]
+   },
+   "itemsChangedAC": [
+    {
+     "goldId": "dw-q7",
+     "A": "missing",
+     "B": "missing",
+     "C": "wrong_product"
+    },
+    {
+     "goldId": "dw-q9",
+     "A": "missing",
+     "B": "missing",
+     "C": "wrong_product"
+    }
+   ],
+   "tableReaderLeads": {
+    "total": 2,
+    "byClass": {
+     "lead_wrong_product": 2
+    }
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 7,
+     "nonGoldProducts": 6,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "dw-q5",
+     "unit": "p",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "dw-q6",
+     "unit": "p",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 18,
+    "proposedFiltered": 1,
+    "goldFoundFiltered": 0,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": false,
+    "ms": 7
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "false_main_subject",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 6,
+    "hardExcluded": 0,
+    "phase245Excluded": 6
+   },
+   "qualitative": {
+    "gold": 8,
+    "A": {
+     "missing": 5,
+     "wrong_product": 3
+    },
+    "B": {
+     "missing": 5,
+     "wrong_product": 3
+    },
+    "emittedA": 4,
+    "emittedB": 4,
+    "nonGoldSubjectA": 4,
+    "nonGoldSubjectB": 4
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 293,
+     "aligned": 290
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 5,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 10,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 6
+    },
+    "ms": 21,
+    "nodes": 3063,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_ap_hf_xiaomi_4pro",
+   "category": "air_purifiers",
+   "gold": 27,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 72
+    },
+    "B": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 95
+    },
+    "C": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 143
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 103
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 112
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 109
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 114
+    },
+    "C-cells": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 94
+    },
+    "C-principal": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 99
+    },
+    "T": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 24,
+      "lead_wrong_product": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 117
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 6,
+     "found": 5,
+     "split": 1,
+     "productEntities": 11,
+     "nonGoldProducts": 4,
+     "merges": 0,
+     "notProduct": 3,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 6,
+     "found": 5,
+     "split": 1,
+     "productEntities": 11,
+     "nonGoldProducts": 4,
+     "merges": 0,
+     "notProduct": 3,
+     "missing": 1
+    }
+   },
+   "missingC": [
+    {
+     "id": "ap-q3",
+     "unit": "cfm",
+     "where": "visible_not_in_reader_blocks"
+    },
+    {
+     "id": "ap-q4",
+     "unit": "minutes",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "ap-q22",
+     "unit": "minutes",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 18,
+    "proposedFiltered": 4,
+    "goldFoundFiltered": 2,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 2,
+    "truncated": false,
+    "ms": 8
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_not_in_headline"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 26,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 6,
+    "A": {
+     "missing": 4,
+     "correct": 2
+    },
+    "B": {
+     "missing": 4,
+     "correct": 2
+    },
+    "emittedA": 7,
+    "emittedB": 7,
+    "nonGoldSubjectA": 3,
+    "nonGoldSubjectB": 0
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 122,
+     "aligned": 122
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 6
+    },
+    "ms": 22,
+    "nodes": 1924,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_ap_hf_puroair_240",
+   "category": "air_purifiers",
+   "gold": 33,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 14,
+      "missing": 19
+     },
+     "leads": {
+      "lead_correct": 17,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 4,
+     "ms": 119
+    },
+    "B": {
+     "items": {
+      "correct": 14,
+      "missing": 19
+     },
+     "leads": {
+      "lead_correct": 17,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 4,
+     "ms": 167
+    },
+    "C": {
+     "items": {
+      "correct": 28,
+      "missing": 1,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "leads": {
+      "lead_correct": 36,
+      "lead_not_gold_value": 3,
+      "lead_false_identity": 2
+     },
+     "negativeControlLeads": 4,
+     "ms": 185
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 28,
+      "missing": 1,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "leads": {
+      "lead_correct": 36,
+      "lead_not_gold_value": 3,
+      "lead_false_identity": 2
+     },
+     "negativeControlLeads": 4,
+     "ms": 183
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 25,
+      "missing": 1,
+      "wrong_product": 1,
+      "unresolved": 6
+     },
+     "leads": {
+      "lead_correct": 33,
+      "lead_not_gold_value": 3,
+      "lead_unresolved": 5
+     },
+     "negativeControlLeads": 4,
+     "ms": 167
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 28,
+      "missing": 1,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "leads": {
+      "lead_correct": 36,
+      "lead_not_gold_value": 3,
+      "lead_false_identity": 2
+     },
+     "negativeControlLeads": 4,
+     "ms": 172
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 28,
+      "missing": 1,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "leads": {
+      "lead_correct": 36,
+      "lead_not_gold_value": 3,
+      "lead_false_identity": 2
+     },
+     "negativeControlLeads": 4,
+     "ms": 174
+    },
+    "C-cells": {
+     "items": {
+      "correct": 15,
+      "missing": 1,
+      "wrong_product": 17
+     },
+     "leads": {
+      "lead_correct": 18,
+      "lead_not_gold_value": 3,
+      "lead_wrong_product": 20
+     },
+     "negativeControlLeads": 4,
+     "ms": 194
+    },
+    "C-principal": {
+     "items": {
+      "correct": 28,
+      "missing": 1,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "leads": {
+      "lead_correct": 36,
+      "lead_not_gold_value": 3,
+      "lead_false_identity": 2
+     },
+     "negativeControlLeads": 4,
+     "ms": 170
+    },
+    "T": {
+     "items": {
+      "correct": 15,
+      "missing": 1,
+      "wrong_product": 17
+     },
+     "leads": {
+      "lead_correct": 18,
+      "lead_not_gold_value": 3,
+      "lead_wrong_product": 20
+     },
+     "negativeControlLeads": 4,
+     "ms": 204
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [
+     "ap-q44",
+     "ap-q53",
+     "ap-q54",
+     "ap-q58"
+    ],
+    "C-names_json_ld": [
+     "ap-q44",
+     "ap-q53",
+     "ap-q54",
+     "ap-q58"
+    ],
+    "C-names_tables": [
+     "ap-q44"
+    ],
+    "C-names_links": [
+     "ap-q44",
+     "ap-q53",
+     "ap-q54",
+     "ap-q58"
+    ],
+    "C-exclusion": [
+     "ap-q44",
+     "ap-q53",
+     "ap-q54",
+     "ap-q58"
+    ],
+    "C-cells": [
+     "ap-q44",
+     "ap-q45",
+     "ap-q46",
+     "ap-q47",
+     "ap-q48",
+     "ap-q49",
+     "ap-q50",
+     "ap-q51",
+     "ap-q52",
+     "ap-q53",
+     "ap-q54",
+     "ap-q55",
+     "ap-q56",
+     "ap-q57",
+     "ap-q58",
+     "ap-q59",
+     "ap-q60"
+    ],
+    "C-principal": [
+     "ap-q44",
+     "ap-q53",
+     "ap-q54",
+     "ap-q58"
+    ],
+    "T": [
+     "ap-q44",
+     "ap-q45",
+     "ap-q46",
+     "ap-q47",
+     "ap-q48",
+     "ap-q49",
+     "ap-q50",
+     "ap-q51",
+     "ap-q52",
+     "ap-q53",
+     "ap-q54",
+     "ap-q55",
+     "ap-q56",
+     "ap-q57",
+     "ap-q58",
+     "ap-q59",
+     "ap-q60"
+    ]
+   },
+   "itemsChangedAC": [
+    {
+     "goldId": "ap-q29",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q44",
+     "A": "missing",
+     "B": "missing",
+     "C": "wrong_product"
+    },
+    {
+     "goldId": "ap-q45",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q46",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q47",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q48",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q49",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q50",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q51",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q52",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q53",
+     "A": "missing",
+     "B": "missing",
+     "C": "false_identity_match"
+    },
+    {
+     "goldId": "ap-q54",
+     "A": "missing",
+     "B": "missing",
+     "C": "wrong_product"
+    },
+    {
+     "goldId": "ap-q55",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q56",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q57",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q58",
+     "A": "missing",
+     "B": "missing",
+     "C": "false_identity_match"
+    },
+    {
+     "goldId": "ap-q59",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "ap-q60",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    }
+   ],
+   "tableReaderLeads": {
+    "total": 21,
+    "byClass": {
+     "lead_correct": 19,
+     "lead_false_identity": 2
+    }
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 12,
+     "found": 8,
+     "split": 1,
+     "productEntities": 12,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 8,
+     "missing": 4
+    },
+    "B": {
+     "goldEntities": 12,
+     "found": 11,
+     "split": 1,
+     "productEntities": 21,
+     "nonGoldProducts": 8,
+     "merges": 0,
+     "notProduct": 8,
+     "missing": 1
+    }
+   },
+   "missingC": [
+    {
+     "id": "ap-q30",
+     "unit": "minutes",
+     "where": "table_cell"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 62,
+    "proposedFiltered": 6,
+    "goldFoundFiltered": 2,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 3,
+    "truncated": true,
+    "ms": 40
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "false_main_subject",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_not_in_headline"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 33,
+    "hardExcluded": 0,
+    "phase245Excluded": 14
+   },
+   "qualitative": {
+    "gold": 5,
+    "A": {
+     "missing": 2,
+     "correct": 2,
+     "wrong_product": 1
+    },
+    "B": {
+     "missing": 2,
+     "correct": 3
+    },
+    "emittedA": 19,
+    "emittedB": 16,
+    "nonGoldSubjectA": 4,
+    "nonGoldSubjectB": 1
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording",
+      "multi_product_tables:1"
+     ]
+    },
+    "alignment": {
+     "blocks": 295,
+     "aligned": 293
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 14,
+      "cols": 2
+     },
+     {
+      "mode": "products_in_rows",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 5,
+      "cols": 3
+     },
+     {
+      "mode": "unsupported",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:paging",
+      "rows": 10,
+      "cols": 3
+     },
+     {
+      "mode": "unsupported",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:paging",
+      "rows": 8,
+      "cols": 4
+     },
+     {
+      "mode": "key_value",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 4,
+      "cols": 2
+     },
+     {
+      "mode": "unsupported",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:paging",
+      "rows": 9,
+      "cols": 4
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "table_product_header": 28,
+     "linked_name": 9
+    },
+    "ms": 32,
+    "nodes": 2829,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_ap_trd_iqair_atemx",
+   "category": "air_purifiers",
+   "gold": 2,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 136
+    },
+    "B": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 241
+    },
+    "C": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 286
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 255
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 268
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 271
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 301
+    },
+    "C-cells": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 256
+    },
+    "C-principal": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 280
+    },
+    "T": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 333
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 0,
+     "split": 0,
+     "productEntities": 2,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 0,
+     "split": 0,
+     "productEntities": 2,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 1
+    }
+   },
+   "missingC": [
+    {
+     "id": "ap-q61",
+     "unit": "db",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 34,
+    "proposedFiltered": 3,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 1,
+    "nonGoldFiltered": 1,
+    "truncated": true,
+    "ms": 16
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "missed",
+    "pageType": "other",
+    "conflicts": [
+     "structured_name_is_headline"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 2,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 7,
+    "A": {
+     "wrong_product": 4,
+     "missing": 3
+    },
+    "B": {
+     "wrong_product": 1,
+     "unresolved": 3,
+     "missing": 3
+    },
+    "emittedA": 7,
+    "emittedB": 8,
+    "nonGoldSubjectA": 7,
+    "nonGoldSubjectB": 1
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "other",
+     "signals": [
+      "json_ld_top_level_product",
+      "og_type:article"
+     ]
+    },
+    "alignment": {
+     "blocks": 572,
+     "aligned": 568
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 6,
+      "cols": 2
+     },
+     {
+      "mode": "unsupported",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 4,
+      "cols": 3
+     }
+    ],
+    "names": {
+     "linked_name": 10
+    },
+    "ms": 64,
+    "nodes": 7558,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tg_lg_b6",
+   "category": "televisions",
+   "gold": 30,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 7,
+      "missing": 22,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 7,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 174
+    },
+    "B": {
+     "items": {
+      "correct": 7,
+      "missing": 22,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_correct": 7,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 243
+    },
+    "C": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 319
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 442
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 356
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 324
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 311
+    },
+    "C-cells": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 358
+    },
+    "C-principal": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 352
+    },
+    "T": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 1,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 330
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [
+    {
+     "goldId": "tv-q7",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q10",
+     "A": "unresolved",
+     "B": "unresolved",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q19",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q27",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q30",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    }
+   ],
+   "tableReaderLeads": {
+    "total": 8,
+    "byClass": {
+     "lead_correct": 8
+    }
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 4,
+     "found": 4,
+     "split": 0,
+     "productEntities": 7,
+     "nonGoldProducts": 3,
+     "merges": 0,
+     "notProduct": 4,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 4,
+     "found": 4,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 4,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "tv-q2",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q3",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q5",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q6",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q8",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q9",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q11",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q12",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q14",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q15",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q17",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q18",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q20",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q21",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q23",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q24",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q25",
+     "unit": "ms",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q28",
+     "unit": "ms",
+     "where": "table_cell"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 47,
+    "proposedFiltered": 7,
+    "goldFoundFiltered": 3,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 2,
+    "truncated": true,
+    "ms": 31
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "false_main_subject",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_not_in_headline"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 30,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 6,
+    "A": {
+     "correct": 5,
+     "missing": 1
+    },
+    "B": {
+     "correct": 5,
+     "missing": 1
+    },
+    "emittedA": 14,
+    "emittedB": 13,
+    "nonGoldSubjectA": 1,
+    "nonGoldSubjectB": 0
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "multi_product_tables:1"
+     ]
+    },
+    "alignment": {
+     "blocks": 570,
+     "aligned": 568
+    },
+    "tables": [
+     {
+      "mode": "products_in_rows",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 8,
+      "cols": 5
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "table_product_header": 4,
+     "linked_name": 5
+    },
+    "ms": 70,
+    "nodes": 7573,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tg_samsung_s85f",
+   "category": "televisions",
+   "gold": 28,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 8,
+      "missing": 20
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 173
+    },
+    "B": {
+     "items": {
+      "correct": 8,
+      "missing": 20
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 258
+    },
+    "C": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 419
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 319
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 15,
+      "lead_unresolved": 3
+     },
+     "negativeControlLeads": 0,
+     "ms": 321
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 310
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 315
+    },
+    "C-cells": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 328
+    },
+    "C-principal": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 331
+    },
+    "T": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "leads": {
+      "lead_correct": 18
+     },
+     "negativeControlLeads": 0,
+     "ms": 342
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [
+    {
+     "goldId": "tv-q52",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q58",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    }
+   ],
+   "tableReaderLeads": {
+    "total": 10,
+    "byClass": {
+     "lead_correct": 10
+    }
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 4,
+     "found": 4,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 5,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 4,
+     "found": 4,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 5,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "tv-q32",
+     "unit": "delta_e",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "tv-q33",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q35",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q36",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q39",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q40",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q42",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q43",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q46",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q47",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q48",
+     "unit": "nits",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q49",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q50",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q53",
+     "unit": "delta_e",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q54",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q55",
+     "unit": "nits",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q56",
+     "unit": "%",
+     "where": "table_cell"
+    },
+    {
+     "id": "tv-q57",
+     "unit": "%",
+     "where": "table_cell"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 50,
+    "proposedFiltered": 13,
+    "goldFoundFiltered": 3,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 4,
+    "truncated": true,
+    "ms": 24
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "false_main_subject",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_not_in_headline"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 28,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 6,
+    "A": {
+     "correct": 5,
+     "missing": 1
+    },
+    "B": {
+     "correct": 5,
+     "missing": 1
+    },
+    "emittedA": 10,
+    "emittedB": 8,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 0
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "multi_product_tables:1"
+     ]
+    },
+    "alignment": {
+     "blocks": 573,
+     "aligned": 571
+    },
+    "tables": [
+     {
+      "mode": "products_in_rows",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 8,
+      "cols": 5
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "table_product_header": 4,
+     "linked_name": 8
+    },
+    "ms": 73,
+    "nodes": 7548,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tr_samsung_qe65s85h",
+   "category": "televisions",
+   "gold": 5,
+   "arms": {
+    "A": {
+     "items": {
+      "wrong_product": 2,
+      "missing": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 3,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 85
+    },
+    "B": {
+     "items": {
+      "wrong_product": 2,
+      "missing": 2,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 3,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 104
+    },
+    "C": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 150
+    },
+    "C-names_json_ld": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 154
+    },
+    "C-names_tables": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 153
+    },
+    "C-names_links": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 153
+    },
+    "C-exclusion": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 156
+    },
+    "C-cells": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 157
+    },
+    "C-principal": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 149
+    },
+    "T": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "leads": {
+      "lead_unresolved": 1,
+      "lead_wrong_product": 7,
+      "lead_not_gold_value": 1
+     },
+     "negativeControlLeads": 1,
+     "ms": 154
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "C-names_json_ld": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "C-names_tables": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "C-names_links": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "C-exclusion": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "C-cells": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "C-principal": [
+     "tv-q61",
+     "tv-q62"
+    ],
+    "T": [
+     "tv-q61",
+     "tv-q62"
+    ]
+   },
+   "itemsChangedAC": [
+    {
+     "goldId": "tv-q61",
+     "A": "missing",
+     "B": "missing",
+     "C": "wrong_product"
+    },
+    {
+     "goldId": "tv-q62",
+     "A": "missing",
+     "B": "missing",
+     "C": "wrong_product"
+    }
+   ],
+   "tableReaderLeads": {
+    "total": 4,
+    "byClass": {
+     "lead_wrong_product": 4
+    }
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 9,
+     "nonGoldProducts": 8,
+     "merges": 0,
+     "notProduct": 3,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 8,
+     "nonGoldProducts": 7,
+     "merges": 0,
+     "notProduct": 4,
+     "missing": 0
+    }
+   },
+   "missingC": [],
+   "phase153": {
+    "proposedAll": 53,
+    "proposedFiltered": 5,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 4,
+    "truncated": true,
+    "ms": 17
+   },
+   "principal": {
+    "Aclass": "false_main_subject",
+    "Bclass": "false_main_subject",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 5,
+    "hardExcluded": 0,
+    "phase245Excluded": 5
+   },
+   "qualitative": {
+    "gold": 7,
+    "A": {
+     "missing": 5,
+     "wrong_product": 2
+    },
+    "B": {
+     "missing": 5,
+     "wrong_product": 2
+    },
+    "emittedA": 4,
+    "emittedB": 5,
+    "nonGoldSubjectA": 4,
+    "nonGoldSubjectB": 4
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 354,
+     "aligned": 351
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 6,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 20,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 6
+    },
+    "ms": 38,
+    "nodes": 3289,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 untouched (spent; examined)",
+   "doc": "u_tv_tr_sony_bravia8ii",
+   "category": "televisions",
+   "gold": 12,
+   "arms": {
+    "A": {
+     "items": {
+      "missing": 9,
+      "correct": 3
+     },
+     "leads": {
+      "lead_correct": 3,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 132
+    },
+    "B": {
+     "items": {
+      "missing": 9,
+      "correct": 3
+     },
+     "leads": {
+      "lead_correct": 3,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 138
+    },
+    "C": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 206
+    },
+    "C-names_json_ld": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 199
+    },
+    "C-names_tables": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 194
+    },
+    "C-names_links": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 199
+    },
+    "C-exclusion": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 227
+    },
+    "C-cells": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 200
+    },
+    "C-principal": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 218
+    },
+    "T": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "leads": {
+      "lead_correct": 9,
+      "lead_not_gold_value": 3
+     },
+     "negativeControlLeads": 3,
+     "ms": 190
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [
+    {
+     "goldId": "tv-q69",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q70",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q71",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q72",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    },
+    {
+     "goldId": "tv-q75",
+     "A": "missing",
+     "B": "missing",
+     "C": "correct"
+    }
+   ],
+   "tableReaderLeads": {
+    "total": 6,
+    "byClass": {
+     "lead_correct": 6
+    }
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 3,
+     "found": 3,
+     "split": 0,
+     "productEntities": 16,
+     "nonGoldProducts": 13,
+     "merges": 0,
+     "notProduct": 1,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 3,
+     "found": 3,
+     "split": 0,
+     "productEntities": 15,
+     "nonGoldProducts": 12,
+     "merges": 0,
+     "notProduct": 3,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "tv-q64",
+     "unit": "nits",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "tv-q66",
+     "unit": "nits",
+     "where": "prose_value_unit_elsewhere"
+    },
+    {
+     "id": "tv-q67",
+     "unit": "nits",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "tv-q74",
+     "unit": "ms",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 56,
+    "proposedFiltered": 6,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 5,
+    "truncated": true,
+    "ms": 28
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 12,
+    "hardExcluded": 0,
+    "phase245Excluded": 12
+   },
+   "qualitative": {
+    "gold": 12,
+    "A": {
+     "correct": 8,
+     "missing": 4
+    },
+    "B": {
+     "correct": 8,
+     "missing": 4
+    },
+    "emittedA": 16,
+    "emittedB": 16,
+    "nonGoldSubjectA": 0,
+    "nonGoldSubjectB": 3
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 357,
+     "aligned": 354
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "test",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 7,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 20,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 12
+    },
+    "ms": 25,
+    "nodes": 3393,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 development pages",
+   "doc": "dev_dw_tr_bosch_smv68md00g",
+   "category": "dishwashers",
+   "gold": 3,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 77
+    },
+    "B": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 97
+    },
+    "C": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 139
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 124
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 140
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 127
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 127
+    },
+    "C-cells": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 149
+    },
+    "C-principal": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 142
+    },
+    "T": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "leads": {
+      "lead_not_gold_value": 1,
+      "lead_correct": 2
+     },
+     "negativeControlLeads": 0,
+     "ms": 160
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 7,
+     "nonGoldProducts": 6,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 1,
+     "found": 1,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 0,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "q1",
+     "unit": "kwh",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 27,
+    "proposedFiltered": 3,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": true,
+    "ms": 11
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": [
+     "structured_name_review_suffix_removed"
+    ]
+   },
+   "region": {
+    "goldInBlocks": 3,
+    "hardExcluded": 0,
+    "phase245Excluded": 3
+   },
+   "qualitative": {
+    "gold": 8,
+    "A": {
+     "wrong_product": 3,
+     "correct": 2,
+     "unresolved": 1,
+     "missing": 2
+    },
+    "B": {
+     "correct": 5,
+     "unresolved": 1,
+     "missing": 2
+    },
+    "emittedA": 11,
+    "emittedB": 9,
+    "nonGoldSubjectA": 8,
+    "nonGoldSubjectB": 1
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 299,
+     "aligned": 296
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "specification",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 5,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 2,
+      "cols": 2
+     },
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": "non_main_marker:reviews",
+      "rows": 2,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 4
+    },
+    "ms": 30,
+    "nodes": 2926,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 development pages",
+   "doc": "dev_ap_hf_airdoctor3000",
+   "category": "air_purifiers",
+   "gold": 16,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 58
+    },
+    "B": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 80
+    },
+    "C": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 98
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 89
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 91
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 99
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 94
+    },
+    "C-cells": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 99
+    },
+    "C-principal": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 100
+    },
+    "T": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "leads": {
+      "lead_wrong_product": 1,
+      "lead_correct": 16,
+      "lead_not_gold_value": 1,
+      "lead_unresolved": 1
+     },
+     "negativeControlLeads": 0,
+     "ms": 96
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 2,
+     "found": 1,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 5,
+     "missing": 1
+    },
+    "B": {
+     "goldEntities": 2,
+     "found": 1,
+     "split": 0,
+     "productEntities": 6,
+     "nonGoldProducts": 5,
+     "merges": 0,
+     "notProduct": 5,
+     "missing": 1
+    }
+   },
+   "missingC": [
+    {
+     "id": "q6",
+     "unit": "db",
+     "where": "prose_value_with_unit"
+    },
+    {
+     "id": "q17",
+     "unit": "w",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 19,
+    "proposedFiltered": 4,
+    "goldFoundFiltered": 1,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 3,
+    "truncated": false,
+    "ms": 6
+   },
+   "principal": {
+    "Aclass": "correct",
+    "Bclass": "correct",
+    "pageType": "single_product_review",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 16,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 3,
+    "A": {
+     "missing": 3
+    },
+    "B": {
+     "missing": 3
+    },
+    "emittedA": 11,
+    "emittedB": 13,
+    "nonGoldSubjectA": 1,
+    "nonGoldSubjectB": 7
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "single_product_review",
+     "signals": [
+      "json_ld_review_item_reviewed:1",
+      "og_type:article",
+      "headline_review_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 119,
+     "aligned": 119
+    },
+    "tables": [
+     {
+      "mode": "key_value",
+      "context": "unknown",
+      "hardExcluded": false,
+      "regionReason": null,
+      "rows": 11,
+      "cols": 2
+     }
+    ],
+    "names": {
+     "json_ld_item_reviewed": 1,
+     "linked_name": 2
+    },
+    "ms": 21,
+    "nodes": 1889,
+    "truncated": false
+   }
+  },
+  {
+   "set": "phase272 development pages",
+   "doc": "dev_tv_trd_lgc6_c5",
+   "category": "televisions",
+   "gold": 9,
+   "arms": {
+    "A": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 184
+    },
+    "B": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 233
+    },
+    "C": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 279
+    },
+    "C-names_json_ld": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 254
+    },
+    "C-names_tables": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 259
+    },
+    "C-names_links": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 254
+    },
+    "C-exclusion": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 268
+    },
+    "C-cells": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 257
+    },
+    "C-principal": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 273
+    },
+    "T": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "leads": {
+      "lead_correct": 8
+     },
+     "negativeControlLeads": 0,
+     "ms": 264
+    }
+   },
+   "regressionsVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "newWrongVsA": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "C-names_json_ld": [],
+    "C-names_tables": [],
+    "C-names_links": [],
+    "C-exclusion": [],
+    "C-cells": [],
+    "C-principal": [],
+    "T": []
+   },
+   "itemsChangedAC": [],
+   "tableReaderLeads": {
+    "total": 0,
+    "byClass": {}
+   },
+   "entities": {
+    "A": {
+     "goldEntities": 2,
+     "found": 2,
+     "split": 0,
+     "productEntities": 5,
+     "nonGoldProducts": 3,
+     "merges": 0,
+     "notProduct": 2,
+     "missing": 0
+    },
+    "B": {
+     "goldEntities": 2,
+     "found": 2,
+     "split": 0,
+     "productEntities": 4,
+     "nonGoldProducts": 2,
+     "merges": 0,
+     "notProduct": 2,
+     "missing": 0
+    }
+   },
+   "missingC": [
+    {
+     "id": "q21",
+     "unit": "nits",
+     "where": "prose_value_with_unit"
+    }
+   ],
+   "phase153": {
+    "proposedAll": 35,
+    "proposedFiltered": 5,
+    "goldFoundFiltered": 2,
+    "goldMissingInBAdded": 0,
+    "nonGoldFiltered": 1,
+    "truncated": true,
+    "ms": 17
+   },
+   "principal": {
+    "Aclass": "missed",
+    "Bclass": "missed",
+    "pageType": "comparison",
+    "conflicts": []
+   },
+   "region": {
+    "goldInBlocks": 9,
+    "hardExcluded": 0,
+    "phase245Excluded": 0
+   },
+   "qualitative": {
+    "gold": 5,
+    "A": {
+     "correct": 4,
+     "missing": 1
+    },
+    "B": {
+     "wrong_product": 2,
+     "correct": 2,
+     "missing": 1
+    },
+    "emittedA": 8,
+    "emittedB": 8,
+    "nonGoldSubjectA": 1,
+    "nonGoldSubjectB": 1
+   },
+   "semantics": {
+    "pageType": {
+     "kind": "comparison",
+     "signals": [
+      "og_type:article",
+      "headline_comparison_wording"
+     ]
+    },
+    "alignment": {
+     "blocks": 506,
+     "aligned": 502
+    },
+    "tables": [],
+    "names": {
+     "linked_name": 10
+    },
+    "ms": 63,
+    "nodes": 7857,
+    "truncated": false
+   }
+  }
+ ]
+}

@@ -1,0 +1,759 @@
+{
+ "schema": "pee.experience-replay.v2",
+ "label": "s1a-semantics-1d2",
+ "at": "2026-10-17T19:30:19.324Z",
+ "set": "step1a",
+ "mode": "counterfactual",
+ "faultCase": null,
+ "policy": "candidate_1c_semantics_tables",
+ "currentBuild": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+ "caseSetSha256": "924654c0a2b27e1362776db350907e997f175440902cabc058431b8b34be591f",
+ "provenance": {
+  "currentBuild": {
+   "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+   "commit": "ebda3d4",
+   "srcDirty": false,
+   "readersSha256": "6c2571c5bfbf3428cc0eebce3c0e9533b57c80805fee72370098ddd255c8885e",
+   "readers": 9
+  },
+  "historicalBuilds": {
+   "c206c9a": {
+    "dist": "/home/user/p272-frozenB/engine/product-evidence-engine-v5.67-phase243/dist/src",
+    "commit": "c206c9a",
+    "srcDirty": false,
+    "readersSha256": "aa4f416862d75533c7e417a0a9ef45e47e4c090e4d1b17aecc30ed023fc17fd7",
+    "readers": 8
+   }
+  },
+  "matchingRuleDigest": "82758554d1338a54accb35d18eb7d104e0a2b338ca858a519db6f2701593bc00",
+  "knowledgeSnapshot": {
+   "sha256": "b69a5f8ce4f8489f2159e4fabaca92534232b4bba2d19cf09567ad9aafff6d72",
+   "verifiedAt": "2026-10-17T11:47:15.496Z",
+   "schemaVersion": 8
+  },
+  "liveStoreFileNote": "file bytes change when SQLite opens the store (WAL), so the comparability test is the compiled plan digest, not this hash",
+  "liveStoreFileSha256": "5dd1e763cd553a7bcc4ecde75f10e5f249951c28061d3fa10513183be08b5607",
+  "planDigestsFrozen": "evaluation/phase272/plans-frozen-known.json",
+  "caseSetSha256": "924654c0a2b27e1362776db350907e997f175440902cabc058431b8b34be591f",
+  "scoringLimits": "committed historical states come from whole-document one-to-one scoring with identical (value, unit, subject) leads counted once; the per-case observer is not exclusive, so same-value gold siblings are flagged"
+ },
+ "summary": {
+  "cases": 18,
+  "preserved_success": 9,
+  "lost_success": 0,
+  "corrected": 4,
+  "persistent_failure": 5,
+  "unreproducible": 0,
+  "incomparable_state": 0,
+  "currentClasses": {
+   "accepted_variant": 2,
+   "correct": 10,
+   "emitted": 2,
+   "gap_stated": 1,
+   "missing": 1,
+   "other_response": 1,
+   "unresolved_preserved": 1
+  },
+  "historicalReproduced": 15,
+  "historicalNotReproduced": 1,
+  "regression": false
+ },
+ "byFamily": {
+  "F1_identity_by_default": {
+   "corrected": 3
+  },
+  "S_attribution_success": {
+   "preserved_success": 2
+  },
+  "F8_identity_variant": {
+   "preserved_success": 2
+  },
+  "F1_identity_headline": {
+   "persistent_failure": 1
+  },
+  "S_extraction_success": {
+   "preserved_success": 4
+  },
+  "F3_lost_under_guidance": {
+   "corrected": 1,
+   "persistent_failure": 1
+  },
+  "F2_qualitative_overreach": {
+   "persistent_failure": 2
+  },
+  "F5_category_recognition": {
+   "persistent_failure": 1
+  },
+  "S_gap_recognition_success": {
+   "preserved_success": 1
+  }
+ },
+ "patterns": [
+  {
+   "family": "F1_identity_by_default",
+   "feature": "document_names_several_products",
+   "cases": [
+    "EX-01",
+    "EX-02",
+    "EX-03"
+   ],
+   "hosts": [
+    "housefresh.com",
+    "www.tomsguide.com",
+    "www.trustedreviews.com"
+   ],
+   "categories": [
+    "air_purifiers",
+    "televisions"
+   ],
+   "counterexamples": [
+    "EX-04",
+    "EX-05",
+    "EX-09",
+    "EX-10",
+    "EX-14"
+   ],
+   "status": "candidate_lesson_hypothesis"
+  },
+  {
+   "family": "F1_identity_by_default",
+   "feature": "subject_is_not_page_product",
+   "cases": [
+    "EX-01",
+    "EX-02",
+    "EX-03"
+   ],
+   "hosts": [
+    "housefresh.com",
+    "www.tomsguide.com",
+    "www.trustedreviews.com"
+   ],
+   "categories": [
+    "air_purifiers",
+    "televisions"
+   ],
+   "counterexamples": [
+    "EX-04"
+   ],
+   "status": "candidate_lesson_hypothesis"
+  },
+  {
+   "family": "F2_qualitative_overreach",
+   "feature": "document_names_several_products",
+   "cases": [
+    "EX-12",
+    "EX-13"
+   ],
+   "hosts": [
+    "housefresh.com",
+    "www.tomsguide.com"
+   ],
+   "categories": [
+    "air_purifiers",
+    "televisions"
+   ],
+   "counterexamples": [
+    "EX-04",
+    "EX-05",
+    "EX-09",
+    "EX-10",
+    "EX-14"
+   ],
+   "status": "candidate_lesson_hypothesis"
+  },
+  {
+   "family": "F3_lost_under_guidance",
+   "feature": "found_only_by_exploratory_pass",
+   "cases": [
+    "EX-11",
+    "EX-15"
+   ],
+   "hosts": [
+    "housefresh.com",
+    "www.tomsguide.com"
+   ],
+   "categories": [
+    "air_fryers",
+    "air_purifiers"
+   ],
+   "counterexamples": [],
+   "status": "candidate_lesson_hypothesis"
+  },
+  {
+   "family": "F8_identity_variant",
+   "feature": "document_names_several_products",
+   "cases": [
+    "EX-06",
+    "EX-07"
+   ],
+   "hosts": [
+    "www.trustedreviews.com"
+   ],
+   "categories": [
+    "dishwashers",
+    "televisions"
+   ],
+   "counterexamples": [
+    "EX-04",
+    "EX-05",
+    "EX-09",
+    "EX-10",
+    "EX-14"
+   ],
+   "status": "candidate_lesson_hypothesis"
+  },
+  {
+   "family": "F8_identity_variant",
+   "feature": "subject_is_not_page_product",
+   "cases": [
+    "EX-06",
+    "EX-07"
+   ],
+   "hosts": [
+    "www.trustedreviews.com"
+   ],
+   "categories": [
+    "dishwashers",
+    "televisions"
+   ],
+   "counterexamples": [
+    "EX-04"
+   ],
+   "status": "candidate_lesson_hypothesis"
+  }
+ ],
+ "rows": [
+  {
+   "caseId": "EX-01",
+   "family": "F1_identity_by_default",
+   "transition": "corrected",
+   "historicalMeets": false,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-02",
+   "family": "F1_identity_by_default",
+   "transition": "corrected",
+   "historicalMeets": false,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-03",
+   "family": "F1_identity_by_default",
+   "transition": "corrected",
+   "historicalMeets": false,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-04",
+   "family": "S_attribution_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-05",
+   "family": "S_attribution_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-06",
+   "family": "F8_identity_variant",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "accepted_variant",
+   "currentClass": "accepted_variant",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-07",
+   "family": "F8_identity_variant",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "accepted_variant",
+   "currentClass": "accepted_variant",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-08",
+   "family": "F1_identity_headline",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "wrong_product",
+   "currentClass": "unresolved_preserved",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "incorrect_match",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "unresolved",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-09",
+   "family": "S_extraction_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-10",
+   "family": "S_extraction_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-11",
+   "family": "F3_lost_under_guidance",
+   "transition": "corrected",
+   "historicalMeets": false,
+   "currentMeets": true,
+   "historicalReproduced": false,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "missing",
+   "currentClass": "correct",
+   "allocationAmbiguous": true,
+   "states": {
+    "historical": {
+     "status": "absent",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-12",
+   "family": "F2_qualitative_overreach",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "emitted",
+   "currentClass": "emitted",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "emitted",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "emitted",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "current": {
+     "status": "emitted",
+     "subjectOutcome": null,
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-13",
+   "family": "F2_qualitative_overreach",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "emitted",
+   "currentClass": "emitted",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "emitted",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "emitted",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "current": {
+     "status": "emitted",
+     "subjectOutcome": null,
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-14",
+   "family": "S_extraction_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-15",
+   "family": "F3_lost_under_guidance",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "missing",
+   "currentClass": "missing",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "absent",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "absent",
+     "subjectOutcome": null,
+     "response": null
+    },
+    "current": {
+     "status": "absent",
+     "subjectOutcome": null,
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-16",
+   "family": "S_extraction_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": true,
+   "planFrozen": true,
+   "reason": null,
+   "historicalClass": "correct",
+   "currentClass": "correct",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "frozenReobserved": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    },
+    "current": {
+     "status": "found",
+     "subjectOutcome": "correct",
+     "response": null
+    }
+   }
+  },
+  {
+   "caseId": "EX-17",
+   "family": "F5_category_recognition",
+   "transition": "persistent_failure",
+   "historicalMeets": false,
+   "currentMeets": false,
+   "historicalReproduced": null,
+   "planFrozen": null,
+   "reason": null,
+   "historicalClass": "other_response",
+   "currentClass": "other_response",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "responded",
+     "subjectOutcome": null,
+     "response": "clarification"
+    },
+    "frozenReobserved": null,
+    "current": {
+     "status": "responded",
+     "subjectOutcome": null,
+     "response": "clarification"
+    }
+   }
+  },
+  {
+   "caseId": "EX-18",
+   "family": "S_gap_recognition_success",
+   "transition": "preserved_success",
+   "historicalMeets": true,
+   "currentMeets": true,
+   "historicalReproduced": null,
+   "planFrozen": null,
+   "reason": null,
+   "historicalClass": "gap_stated",
+   "currentClass": "gap_stated",
+   "allocationAmbiguous": false,
+   "states": {
+    "historical": {
+     "status": "responded",
+     "subjectOutcome": null,
+     "response": "out_of_scope"
+    },
+    "frozenReobserved": null,
+    "current": {
+     "status": "responded",
+     "subjectOutcome": null,
+     "response": "out_of_scope"
+    }
+   }
+  }
+ ]
+}
