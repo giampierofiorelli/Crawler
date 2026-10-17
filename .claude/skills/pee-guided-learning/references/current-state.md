@@ -11,6 +11,22 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 00000000000000000000000. Phase272 knowledge-guided extraction and unknown-category pilot (2026-10-17) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase272/REPORT.md` (stopped for independent review).
+
+- **Plan before reading**: `compileExtractionPlan272` (store teaching -> outcomes, measurement terms, units, conditions,
+  proxies, category nouns; never evidence) passed to the Phase225/265/269 readers; without a plan they are byte-identical
+  to 09526c4 (54 retained pages). Arm A runs from a frozen build at /home/user/p272-armA (worktree of 09526c4).
+- **Untouched first run** (16 pages, air fryers / dishwashers / air purifiers / televisions; independent gold):
+  values A 2/163 -> B 65/163 (precision 0.75); findings A 12/123 -> B 58/123 (precision 0.56); but 20 of B's 65 matched
+  values counted wrong-product (14 audited true, comparison content). E (generic units, no knowledge) finds 77 values only
+  as leads. Tuned mention rule (spent set): 15 wrong of 66.
+- **Televisions taught** (t272.tv1, generator with config); speakers package received and Stage-A inventoried.
+- **Unknown category** (tumble dryers): gap now stated (out_of_scope) for 1 of 3 requests and the reuse request;
+  transferred plans gave B 1/27 = A on 4 untouched pages (negative); learned teaching kept in the store as hypotheses.
+- **Policy** pee272 (owner, 60 requests / 6 hosts / 7 days): 30 requests used, 5 hosts.
+
 ## 0000000000000000000000. Phase271 evidence operations and nine-family research intake (2026-10-17) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase271/REPORT.md` (stopped for independent review).

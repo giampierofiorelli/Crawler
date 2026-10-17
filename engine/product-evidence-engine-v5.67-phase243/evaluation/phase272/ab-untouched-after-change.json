@@ -1,0 +1,2302 @@
+{
+ "schema": "pee272.ab-run-public.v1",
+ "label": "untouched-after-change",
+ "at": "2026-10-17T11:39:13.337Z",
+ "protocolSha256": "aed8bb46b132bce1feb9f25e2dfcae9290364d0c74f2d049d4639975bbaa5a99",
+ "goldSha256": "3364031a889449ad0518a9bd7dc008ddcc3077300e13e3d70c71d1da8c5ab881",
+ "armADist": "/home/user/p272-armA/engine/product-evidence-engine-v5.67-phase243/dist/src/",
+ "plans": {
+  "air_fryers": "1fc395227d51d8f088e07bc68a1cf0bfdb35c263a2e84db32dd83f542a1196ee",
+  "dishwashers": "97c0dd08601b75aefaa2b6f70f26c7607b65f4fcfc15f45ac17e42fed88df4dc",
+  "air_purifiers": "132422e7eda4625b74f4bc4cd591ccd911207fd1e91a699dcf1e921ecfebfad3",
+  "televisions": "43ce61351fae73f9d522db0a2748cdc215782b70a546a3aaa60bd443076ce994"
+ },
+ "lostByGuidance": {
+  "quantitative": 1,
+  "qualitative": 7
+ },
+ "summary": {
+  "A": {
+   "quantitative": {
+    "gold": 163,
+    "leads": 2,
+    "matched": 2,
+    "precision": 1,
+    "recall": 0.012,
+    "subjects": {
+     "correct": 1,
+     "incorrect": 1,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 1,
+     "recognised": 0
+    },
+    "decisionUsable": 1,
+    "falsePositives": 0
+   },
+   "qualitative": {
+    "gold": 123,
+    "findings": 17,
+    "matched": 12,
+    "precision": 0.706,
+    "recall": 0.098,
+    "subjects": {
+     "correct": 12,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 30,
+     "matched": 1
+    },
+    "decisionUsable": 11,
+    "falsePositives": 5
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 0,
+     "matched": 0
+    },
+    "qualitative": {
+     "leads": 0,
+     "matched": 0
+    }
+   }
+  },
+  "B": {
+   "quantitative": {
+    "gold": 163,
+    "leads": 88,
+    "matched": 66,
+    "precision": 0.75,
+    "recall": 0.405,
+    "subjects": {
+     "correct": 51,
+     "incorrect": 15,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 66,
+     "recognised": 24
+    },
+    "decisionUsable": 51,
+    "falsePositives": 22
+   },
+   "qualitative": {
+    "gold": 123,
+    "findings": 110,
+    "matched": 58,
+    "precision": 0.527,
+    "recall": 0.472,
+    "subjects": {
+     "correct": 47,
+     "incorrect": 11,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 30,
+     "matched": 1
+    },
+    "decisionUsable": 46,
+    "falsePositives": 52
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 0,
+     "matched": 0
+    },
+    "qualitative": {
+     "leads": 0,
+     "matched": 0
+    }
+   }
+  },
+  "C": {
+   "quantitative": {
+    "gold": 163,
+    "leads": 88,
+    "matched": 66,
+    "precision": 0.75,
+    "recall": 0.405,
+    "subjects": {
+     "correct": 51,
+     "incorrect": 15,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 66,
+     "recognised": 24
+    },
+    "decisionUsable": 51,
+    "falsePositives": 22
+   },
+   "qualitative": {
+    "gold": 123,
+    "findings": 110,
+    "matched": 58,
+    "precision": 0.527,
+    "recall": 0.472,
+    "subjects": {
+     "correct": 47,
+     "incorrect": 11,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 30,
+     "matched": 1
+    },
+    "decisionUsable": 46,
+    "falsePositives": 52
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 108,
+     "matched": 47
+    },
+    "qualitative": {
+     "leads": 162,
+     "matched": 5
+    }
+   }
+  },
+  "E": {
+   "quantitative": {
+    "gold": 163,
+    "leads": 2,
+    "matched": 2,
+    "precision": 1,
+    "recall": 0.012,
+    "subjects": {
+     "correct": 1,
+     "incorrect": 1,
+     "unresolved": 0
+    },
+    "conditions": {
+     "goldLabels": 1,
+     "recognised": 0
+    },
+    "decisionUsable": 1,
+    "falsePositives": 0
+   },
+   "qualitative": {
+    "gold": 123,
+    "findings": 17,
+    "matched": 12,
+    "precision": 0.706,
+    "recall": 0.098,
+    "subjects": {
+     "correct": 12,
+     "incorrect": 0,
+     "unresolved": 0
+    },
+    "untaught": {
+     "gold": 30,
+     "matched": 1
+    },
+    "decisionUsable": 11,
+    "falsePositives": 5
+   },
+   "exploratoryLeads": {
+    "quantitative": {
+     "leads": 152,
+     "matched": 77
+    },
+    "qualitative": {
+     "leads": 434,
+     "matched": 27
+    }
+   }
+  }
+ },
+ "documents": [
+  {
+   "tag": "u_af_tg_ninja_crispi",
+   "category": "air_fryers",
+   "gold": {
+    "quantitative": 2,
+    "qualitative": 6
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 3,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 6,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "cooking_results",
+        "direction": "negative"
+       },
+       {
+        "dimension": "cleaning_effort",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 6,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "cooking_results",
+        "direction": "negative"
+       },
+       {
+        "dimension": "cleaning_effort",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 9
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 3,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 27
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_af_tg_tfal_infrared",
+   "category": "air_fryers",
+   "gold": {
+    "quantitative": 1,
+    "qualitative": 10
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "crisp_texture",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 6,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "crisp_texture",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 6,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "crisp_texture",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 1,
+      "qualitative": 5
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "crisp_texture",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 28
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_af_tr_philips_1000_flexdrawer",
+   "category": "air_fryers",
+   "gold": {
+    "quantitative": 5,
+    "qualitative": 8
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 3,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_results",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 6,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_results",
+        "direction": "positive"
+       },
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 6,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_results",
+        "direction": "positive"
+       },
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 4,
+      "qualitative": 5
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 3,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_results",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 4,
+      "qualitative": 22
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_af_tr_sharp_5_5l",
+   "category": "air_fryers",
+   "gold": {
+    "quantitative": 8,
+    "qualitative": 13
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 10,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 5,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 10,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 5,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 8,
+      "qualitative": 7
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "cooking_evenness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 13,
+      "qualitative": 23
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_dw_tr_lg_ldnpm654s",
+   "category": "dishwashers",
+   "gold": {
+    "quantitative": 4,
+    "qualitative": 7
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 5,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "noise_and_acoustic_events",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 5,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "noise_and_acoustic_events",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 10
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 20
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_dw_tr_candy_cf57cf0w",
+   "category": "dishwashers",
+   "gold": {
+    "quantitative": 6,
+    "qualitative": 8
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 2,
+      "matched": 2,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 3,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "water_per_cycle_and_workload",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 2,
+      "matched": 2,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 3,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "water_per_cycle_and_workload",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 5,
+      "qualitative": 13
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 7,
+      "qualitative": 19
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_dw_er_bosch_smv68nd00g",
+   "category": "dishwashers",
+   "gold": {
+    "quantitative": 0,
+    "qualitative": 9
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 2,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 5,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "usable_capacity_geometry",
+        "direction": "negative"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 2,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 5,
+      "matched": 4,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "usable_capacity_geometry",
+        "direction": "negative"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 12,
+      "qualitative": 15
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 14,
+      "qualitative": 22
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_dw_trd_bob_mini",
+   "category": "dishwashers",
+   "gold": {
+    "quantitative": 0,
+    "qualitative": 5
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_ap_hf_xiaomi_4pro",
+   "category": "air_purifiers",
+   "gold": {
+    "quantitative": 27,
+    "qualitative": 6
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 21,
+      "matched": 21,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 6,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 21,
+      "matched": 21,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 6,
+      "matched": 2,
+      "subjects": [
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 2,
+      "qualitative": 6
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 11,
+      "qualitative": 15
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_ap_hf_puroair_240",
+   "category": "air_purifiers",
+   "gold": {
+    "quantitative": 33,
+    "qualitative": 5
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 17,
+      "matched": 14,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 14,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "mixed"
+       },
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       },
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       },
+       {
+        "dimension": "gas_odour_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "fine_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "negative"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 17,
+      "matched": 14,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 14,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "mixed"
+       },
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       },
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       },
+       {
+        "dimension": "gas_odour_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "fine_particle_reduction",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "negative"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 22,
+      "qualitative": 10
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 40,
+      "qualitative": 38
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_ap_trd_coway_350",
+   "category": "air_purifiers",
+   "gold": {
+    "quantitative": 0,
+    "qualitative": 8
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 7,
+      "matched": 5,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 7,
+      "matched": 5,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "room_coverage_distribution",
+        "direction": "positive"
+       },
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 13
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 30
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_ap_trd_iqair_atemx",
+   "category": "air_purifiers",
+   "gold": {
+    "quantitative": 2,
+    "qualitative": 7
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 7,
+      "matched": 4,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 7,
+      "matched": 4,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "ownership_cost_energy",
+        "direction": "positive"
+       },
+       {
+        "dimension": "clinical_health_outcome",
+        "direction": "positive"
+       },
+       {
+        "dimension": "allergen_particle_reduction",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 1,
+      "qualitative": 10
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 1,
+      "qualitative": 40
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_tv_tg_lg_b6",
+   "category": "televisions",
+   "gold": {
+    "quantitative": 30,
+    "qualitative": 6
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 9,
+      "matched": 8,
+      "subjects": [
+       "incorrect_match",
+       "correct",
+       "incorrect_match",
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 13,
+      "matched": 5,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "dark_room_cinema_picture",
+        "direction": "positive"
+       },
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "positive"
+       },
+       {
+        "dimension": "accessible_operation",
+        "direction": "positive"
+       },
+       {
+        "dimension": "gaming_responsiveness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "wide_seating_consistency",
+        "direction": "positive"
+       },
+       {
+        "dimension": "fast_motion_clarity",
+        "direction": "positive"
+       },
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "negative"
+       },
+       {
+        "dimension": "low_quality_source_rendering",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 9,
+      "matched": 8,
+      "subjects": [
+       "incorrect_match",
+       "correct",
+       "incorrect_match",
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 13,
+      "matched": 5,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "dark_room_cinema_picture",
+        "direction": "positive"
+       },
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "positive"
+       },
+       {
+        "dimension": "accessible_operation",
+        "direction": "positive"
+       },
+       {
+        "dimension": "gaming_responsiveness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "wide_seating_consistency",
+        "direction": "positive"
+       },
+       {
+        "dimension": "fast_motion_clarity",
+        "direction": "positive"
+       },
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "negative"
+       },
+       {
+        "dimension": "low_quality_source_rendering",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 15,
+      "qualitative": 15
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 16,
+      "qualitative": 43
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_tv_tg_samsung_s85f",
+   "category": "televisions",
+   "gold": {
+    "quantitative": 28,
+    "qualitative": 6
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 8,
+      "matched": 8,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "incorrect_match",
+       "correct",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 8,
+      "matched": 5,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "accessible_operation",
+        "direction": "positive"
+       },
+       {
+        "dimension": "low_quality_source_rendering",
+        "direction": "positive"
+       },
+       {
+        "dimension": "dark_room_cinema_picture",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 8,
+      "matched": 8,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "incorrect_match",
+       "incorrect_match",
+       "correct",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 8,
+      "matched": 5,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "accessible_operation",
+        "direction": "positive"
+       },
+       {
+        "dimension": "low_quality_source_rendering",
+        "direction": "positive"
+       },
+       {
+        "dimension": "dark_room_cinema_picture",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 14,
+      "qualitative": 17
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 0,
+      "matched": 0,
+      "subjects": []
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 14,
+      "qualitative": 32
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_tv_tr_samsung_qe65s85h",
+   "category": "televisions",
+   "gold": {
+    "quantitative": 5,
+    "qualitative": 7
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 4,
+      "matched": 3,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 2,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "negative"
+       },
+       {
+        "dimension": "film_motion_naturalness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 4,
+      "matched": 3,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match",
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 4,
+      "matched": 2,
+      "subjects": [
+       "incorrect_match",
+       "incorrect_match"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "negative"
+       },
+       {
+        "dimension": "film_motion_naturalness",
+        "direction": "positive"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 11,
+      "qualitative": 16
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "incorrect_match"
+      ]
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 15,
+      "qualitative": 31
+     }
+    }
+   }
+  },
+  {
+   "tag": "u_tv_tr_sony_bravia8ii",
+   "category": "televisions",
+   "gold": {
+    "quantitative": 12,
+    "qualitative": 12
+   },
+   "arms": {
+    "A": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "B": {
+     "quantitative": {
+      "leads": 6,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 16,
+      "matched": 8,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "positive"
+       },
+       {
+        "dimension": "gaming_responsiveness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "accessible_operation",
+        "direction": "positive"
+       },
+       {
+        "dimension": "fast_motion_clarity",
+        "direction": "positive"
+       },
+       {
+        "dimension": "dark_room_cinema_picture",
+        "direction": "mixed"
+       },
+       {
+        "dimension": "film_motion_naturalness",
+        "direction": "mixed"
+       },
+       {
+        "dimension": "fast_motion_clarity",
+        "direction": "negative"
+       },
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "mixed"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 0,
+      "qualitative": 0
+     }
+    },
+    "C": {
+     "quantitative": {
+      "leads": 6,
+      "matched": 3,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 16,
+      "matched": 8,
+      "subjects": [
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct",
+       "correct"
+      ],
+      "falsePositives": [
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "positive"
+       },
+       {
+        "dimension": "gaming_responsiveness",
+        "direction": "positive"
+       },
+       {
+        "dimension": "accessible_operation",
+        "direction": "positive"
+       },
+       {
+        "dimension": "fast_motion_clarity",
+        "direction": "positive"
+       },
+       {
+        "dimension": "dark_room_cinema_picture",
+        "direction": "mixed"
+       },
+       {
+        "dimension": "film_motion_naturalness",
+        "direction": "mixed"
+       },
+       {
+        "dimension": "fast_motion_clarity",
+        "direction": "negative"
+       },
+       {
+        "dimension": "bright_room_visibility",
+        "direction": "mixed"
+       }
+      ]
+     },
+     "exploratory": {
+      "quantitative": 9,
+      "qualitative": 11
+     }
+    },
+    "E": {
+     "quantitative": {
+      "leads": 1,
+      "matched": 1,
+      "subjects": [
+       "correct"
+      ]
+     },
+     "qualitative": {
+      "findings": 0,
+      "matched": 0,
+      "subjects": [],
+      "falsePositives": []
+     },
+     "exploratory": {
+      "quantitative": 11,
+      "qualitative": 44
+     }
+    }
+   }
+  }
+ ]
+}

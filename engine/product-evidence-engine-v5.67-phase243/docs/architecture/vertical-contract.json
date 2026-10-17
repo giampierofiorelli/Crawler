@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "2026-10-17 (Phase271)",
+ "updated": "Phase272 (2026-10-17)",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -166,6 +166,10 @@
     {
      "module": "phase265_test_measurements",
      "export": "testDocumentSubject268"
+    },
+    {
+     "module": "phase272_extraction_plan",
+     "export": "compileExtractionPlan272"
     }
    ],
    "inputs": "lawfully acquired page bytes",
@@ -178,14 +182,16 @@
     "evidence_validation"
    ],
    "status": "authentic_verified",
-   "evidence": "Phase268 live pilot: 10 authentic Expert Reviews test documents, 11 gold measurements; final extractor 8/11 (tuned), held-out first run 0/1; 10 rows retained in the operational store (unreviewed)",
+   "evidence": "Phase268 live pilot: 10 authentic Expert Reviews test documents, 11 gold measurements; final extractor 8/11 (tuned), held-out first run 0/1; 10 rows retained in the operational store (unreviewed); Phase272 untouched A/B/C/E (16 pages, 4 categories, 163 gold values, 123 qualitative findings; first run committed unchanged): arm A 2/163 values, 12/123 findings; arm B (store teaching compiled into a plan before reading) 65/163 values (precision 0.75; 20 wrong-product attributions), 58/123 findings (precision 0.56)",
    "fitnessTests": [
     "tests/phase265_test_measurements.test.ts",
-    "tests/phase268_evidence_validation.test.ts"
+    "tests/phase268_evidence_validation.test.ts",
+    "tests/phase272_guided_extraction.test.ts"
    ],
    "missing": [
     "more publishers: RTINGS (paywall) and TechGearLab (self-redirect) inaccessible; Which?/CHOICE results subscriber-only",
-    "word numerals; result sentences without a first-person cue"
+    "word numerals; result sentences without a first-person cue",
+    "comparison content: values of other models bound to the reviewed product (Phase272: 14 of 65 matched B values on untouched pages); qualitative codes outside the five cooking outcomes are not retained (Phase270 amendment)"
    ],
    "authenticValidation": {
     "tier": "T3_operational",
@@ -430,7 +436,21 @@
    "id": "D8",
    "stage": "authentic_evidence",
    "since": "Phase271",
-   "item": "six of nine research families inventoried but not taught (robot cleaners, televisions, soundbars; speakers package not received); coffee partly taught",
+   "item": "six of nine research families inventoried but not taught (robot cleaners, televisions, soundbars; speakers package not received); coffee partly taught; Phase272: televisions taught (t272.tv1); speakers package received and inventoried (Stage A), not taught",
+   "resolvedStatus": "open"
+  },
+  {
+   "id": "D9",
+   "stage": "attribution",
+   "since": "Phase272",
+   "item": "guided reading of comparison reviews binds other models' values to the page product (untouched first run 20/65 counted wrong, 14 audited true wrong-product; after a tuned mention rule 15/66); a similar-name head word routes an unknown product to a known category (fictional \"garment steamer\" -> steam_cookers)",
+   "resolvedStatus": "open"
+  },
+  {
+   "id": "D10",
+   "stage": "authentic_evidence",
+   "since": "Phase272",
+   "item": "unknown-category research: transferred plans did not improve extraction on 4 untouched tumble-dryer pages (B 1/27 values = A); method-page acquisition changed labels, not reading; purchase-phrase detection misses 2 of 3 gap requests",
    "resolvedStatus": "open"
   }
  ],

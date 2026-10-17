@@ -56,6 +56,7 @@ test('comparability: within one experiment and task only; a reduced load and a r
  assert.equal(ev.experiments,1,'the same experiment republished is one experiment');assert.ok(ev.duplicatesIgnored>0);
  const chicken=ev.groups.find(g=>g.task==='chicken')!,cake=ev.groups.find(g=>g.task==='cake')!;
  assert.equal(chicken.comparableWithinExperiment,true);assert.deepEqual(chicken.conditionsMissing,['compartments_in_use']);
+ assert.equal(chicken.comparability,'comparable_with_unmet_conditions','structurally comparable, but a required condition is not recorded');assert.equal(cake.comparability,'not_comparable');
  assert.deepEqual([cake.comparableWithinExperiment,cake.reasons],[false,['load_not_matched']]);
  assert.equal(ev.sameClassComparable,0);assert.equal(ev.crossClass,1);
  assert.ok(chicken.items.every(i=>i.unit==='kwh'),'energy groups carry energy only (never cost or time)');
@@ -68,6 +69,7 @@ test('decision: evidence is used for what it shows (air fryer vs owned oven) and
  assert.equal(own.goalAssessment!.decision,'no_purchase_check');
  assert.ok((own.goalAssessment!.alternativeComparison??[]).length>=2);
  assert.ok(own.statements.some(x=>/^Original test evidence .*publisher-reported, not reviewed by PEE.*one experiment/.test(x)));
+ assert.ok(own.statements.some(x=>/comparable only within that experiment.*does not record compartments in use.*conditional comparison/.test(x)),'unmet essential conditions are stated');
  const pick=adviseFromRequest253('Which air fryer gives the best cooking results for one person while using relatively little electricity?',s,CATEGORY_REGISTRY250);
  const e=pick.goalAssessment!.outcomes.find(o=>o.need==='low_energy_use')!;
  assert.equal(e.comparativeEvidence!.sameClassComparable,1,'one experiment does compare two air fryers');

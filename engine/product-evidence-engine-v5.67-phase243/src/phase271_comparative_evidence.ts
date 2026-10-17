@@ -22,6 +22,9 @@ export interface ComparativeGroup271 {
  experimentKey:string;host:string;url:string;task:string|null;measurand:string;
  items:{equipmentClass:string;subject:string|null;identity:string;value:number;unit:string;valueBasis:string}[];
  comparableWithinExperiment:boolean;reasons:string[];conditionsMet:string[];conditionsMissing:string[];
+ /** Phase272 (owner review §9): "comparable" is structural (one experiment, one task, matched load, distinct appliances);
+  * it is not the same as every taught essential condition being met. 'comparable_with_unmet_conditions' says so. */
+ comparability:'comparable'|'comparable_with_unmet_conditions'|'not_comparable';
 }
 export interface ComparativeEvidence271 {
  measure:string;groups:ComparativeGroup271[];experiments:number;duplicatesIgnored:number;
@@ -50,7 +53,8 @@ export function comparativeEvidence271(store:KnowledgeStore246,measure:string,eq
   const met=conditions.filter(c=>spec.conditionCodes[c]&&codes.has(spec.conditionCodes[c]));
   out.push({experimentKey:g[0].experiment_key,host:g[0].host,url:g[0].url,task:g[0].task_label,measurand:spec.measurand,
    items:g.map(r=>({equipmentClass:r.equipment_class,subject:r.subject_name,identity:r.identity,value:r.value,unit:r.unit,valueBasis:r.value_basis})),
-   comparableWithinExperiment:!reasons.length,reasons,conditionsMet:met,conditionsMissing:conditions.filter(c=>!met.includes(c))});
+   comparableWithinExperiment:!reasons.length,reasons,conditionsMet:met,conditionsMissing:conditions.filter(c=>!met.includes(c)),
+   comparability:reasons.length?'not_comparable':met.length===conditions.length?'comparable':'comparable_with_unmet_conditions'});
  }
  out.sort((a,b)=>a.experimentKey.localeCompare(b.experimentKey)||String(a.task).localeCompare(String(b.task)));
  const sameClass=(g:ComparativeGroup271)=>g.comparableWithinExperiment&&new Set(g.items.filter(i=>i.equipmentClass===equipmentClass&&i.subject).map(i=>i.subject)).size>=2;

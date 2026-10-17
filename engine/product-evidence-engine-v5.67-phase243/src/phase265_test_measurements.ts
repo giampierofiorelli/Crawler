@@ -64,12 +64,35 @@ export function testDocumentSubject268(x:SpecExtraction245|null,sourceType:Sourc
 export function documentMentions272(html:string):ProductMention272[]{
  const {blocks,tags=[]}=textBlocks225(html,{withTags:true,maxBlocks:1500});const out=new Map<string,ProductMention272>();
  const NOT_BRAND=/^(?:The|A|An|I|We|My|Our|Best|Review|Tested|Vs|And|With|Top|New|Why|How|What|This|Is|It|In|On|For|Of|To|Series)$/;
+ // Phase272 (after the untouched first run; tuned): products a review compares in its body or table headers ("the B5
+ // reached …", "LG B5 | LG C6") are document products too, when their brand + code recurs (two or more blocks).
+ const body=new Map<string,{m:ProductMention272;n:number}>();
+ blocks.forEach((b,i)=>{if(/^h[1-3]$/.test(tags[i]??''))return;
+  for(const m of b.matchAll(/\b([A-Z][A-Za-z]+)\s+((?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{1,15})\b/g)){
+   if(/^(?:The|A|An|I|We|My|Our|Best|Review|Tested|Vs|And|With|Top|New|Why|How|What|This|Is|It|In|On|For|Of|To|Series|Speed|Mode|Level|Step|Setting|Version|Model|Page|Rated|Rec|Delta|HDR|SDR|Dolby|HDMI|Wi|USB)$/.test(m[1])||/^(?:19|20)\d\d$/.test(m[2]))continue;
+   const e=body.get(m[2])??{m:{name:m[1]+' '+m[2],model:m[2]},n:0};e.n++;body.set(m[2],e);}});
  blocks.forEach((b,i)=>{if(!/^h[1-3]$/.test(tags[i]??''))return;
   for(const m of b.matchAll(/\b([A-Z][A-Za-z]+)\s+((?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{1,15})\b/g)){
    if(NOT_BRAND.test(m[1])||/^(?:19|20)\d\d$/.test(m[2]))continue;const k=m[2];if(!out.has(k))out.set(k,{name:m[1]+' '+m[2],model:m[2]});}});
  // A code printed once (a heading typo, a passing comparison) does not make a second product of the document.
+ for(const [k,e] of body)if(!out.has(k)&&e.n>=2)out.set(k,e.m);
  const all=blocks.join('\n');
  return [...out.values()].filter(m=>(all.match(new RegExp('\\b'+m.model.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','g'))??[]).length>=2);
+}
+/** Phase272 (after the untouched first run; tuned): comparison tables. A table whose header row names two or more products
+ * ("LG B6 | LG B5 | LG C6") reports each column's values for that column's product; a value read from such a cell is
+ * attributed to its column, and a cell text found in several columns stays unresolved. Never the page product by default. */
+export function comparisonCells272(html:string):Map<string,{name:string}|null>{
+ const out=new Map<string,{name:string}|null>();const strip=(x:string)=>textBlocks225(`<p>${x}</p>`).blocks.join(' ').trim();
+ for(const t of html.matchAll(/<table\b[\s\S]{0,60000}?<\/table>/gi)){
+  const rows=[...t[0].matchAll(/<tr\b[\s\S]*?<\/tr>/gi)].map(r=>[...r[0].matchAll(/<(t[hd])\b[^>]*>([\s\S]*?)<\/\1>/gi)].map(c=>strip(c[2])));
+  if(rows.length<2)continue;const head=rows[0];
+  const prod=head.map(h=>/^[A-Z][A-Za-z+&-]*(?:\s+[A-Za-z0-9+&.-]+){1,5}$/.test(h)&&/\d|[A-Z]{2}/.test(h.split(/\s+/).slice(1).join(' '))?h:null);
+  if(prod.filter(Boolean).length<2)continue;
+  for(const r of rows.slice(1))r.forEach((cell,j)=>{if(!cell||j>=prod.length||!prod[j])return;const prev=out.get(cell);
+   out.set(cell,prev===undefined||prev?.name===prod[j]?{name:prod[j]!}:null);});
+ }
+ return out;
 }
 /** Phase272 (plan only): the page subject when the headline is a sentence: the one product it names, none when it names
  * several (each value then binds to its own clause), unchanged otherwise. */
@@ -89,8 +112,12 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  if(opts.plan)lead=planPageSubject272(lead,mentions) as typeof lead;
  const tested=({air_fryers:'air_fryer',ovens:'oven',microwaves:'microwave',slow_cookers:'slow_cooker',halogen_ovens:'halogen_oven'} as Record<string,ApplianceClass270>)[opts.category??''];
  const comparative=comparativeResults270(html,{testedClass:tested}).results;
- return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe:probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[],
-  ...(opts.plan?{plan:opts.plan,mentions}:{}),...(opts.exploratory?{exploratory:true}:{})}),...(comparative.length?{comparative270:comparative}:{})};
+ const probe=probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[],
+  ...(opts.plan?{plan:opts.plan,mentions}:{}),...(opts.exploratory?{exploratory:true}:{})});
+ if(opts.plan){const cells=comparisonCells272(html);if(cells.size){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
+  probe.candidates=probe.candidates.map(c=>{const cell=cells.get((deep[c.blockIndex]??'').trim());if(cell===undefined)return c;
+   return cell?{...c,subject:{name:cell.name,model:null,sku:null},subjectAssignment:'clause_named_model_unverified' as const}:{...c,subject:null,subjectAssignment:'multiple_models_unresolved' as const};});}}
+ return {extractorVersion:TEST_LEAD_EXTRACTOR265,probe,...(comparative.length?{comparative270:comparative}:{})};
 }
 
 const UNITS:Readonly<Record<string,string>>={mm:'mm',cm:'cm',kg:'kg',g:'g',l:'l',litre:'l',litres:'l',liter:'l',liters:'l',db:'db',dba:'dba',
