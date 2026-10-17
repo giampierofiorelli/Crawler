@@ -1,0 +1,25 @@
+{
+ "schema": "pee269.teaching-eval-set.v1",
+ "frozenAt": "2026-10-17",
+ "frozenBefore": "any coffee teaching from the owner's coffee package (PEE-COFFEE-COMPLETE-CUMULATIVE-KNOWLEDGE-PACKAGE.md); the air-fryer teaching and the generic goal-relevance code already exist (this set measures transfer of the same learning process)",
+ "context": "same runner and scorer as teaching-eval-set.json; the supplied controlled catalog is an air-fryer catalog, so no coffee evidence exists",
+ "vocabulary": {
+  "outcomes": "espresso_quality, shot_consistency, moka_alternative",
+  "measures": "espresso_sensory_assessment (blinded panel or trained assessors on the same beans and grind), brew_temperature_stability (measured at the group or puck over consecutive shots)",
+  "proxies": "attr:pump_pressure (declared pump bar rating), attr:power",
+  "conditions": "same_beans_and_grind, consecutive_shots",
+  "decisions": "clarify | research | partial_comparison | ranking | abstain | no_purchase_check"
+ },
+ "development": [],
+ "untouched": [
+  {"id":"C1","text":"Is a 19 bar espresso machine better than a 15 bar one for proper Italian espresso?",
+   "outcomes":["espresso_quality"],"measures":{"espresso_quality":["espresso_sensory_assessment"]},"proxies":{"espresso_quality":["attr:pump_pressure"]},"conditions":["same_beans_and_grind"],"decision":"research"},
+  {"id":"C2","text":"Which espresso machine makes the best-tasting traditional Italian espresso at home?",
+   "outcomes":["espresso_quality"],"measures":{"espresso_quality":["espresso_sensory_assessment"]},"proxies":{"espresso_quality":["attr:pump_pressure"]},"conditions":["same_beans_and_grind"],"decision":"research"},
+  {"id":"C3","text":"My espresso shots are all over the place. Which coffee machine gives consistent shots?",
+   "outcomes":["shot_consistency"],"measures":{"shot_consistency":["brew_temperature_stability"]},"proxies":{},"conditions":["consecutive_shots","same_beans_and_grind"],"decision":"research"},
+  {"id":"C4","text":"I already have a moka pot. Do I really need to buy an espresso machine for good coffee?",
+   "outcomes":["espresso_quality","moka_alternative"],"measures":{"espresso_quality":["espresso_sensory_assessment"]},"proxies":{},"conditions":["same_beans_and_grind"],"decision":"no_purchase_check"}
+ ],
+ "rule": "all coffee requests are untouched (no coffee development set): teaching is chosen from the coffee package only, never from these texts; each run is committed unchanged"
+}
