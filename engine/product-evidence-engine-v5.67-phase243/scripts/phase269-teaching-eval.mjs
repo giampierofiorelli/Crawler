@@ -40,9 +40,20 @@ const product=id=>{const r=store.db.prepare('SELECT name,declared_model FROM pro
 const discovered=store.db.prepare("SELECT product_id FROM products WHERE category_hypotheses_json LIKE '%\"air_fryers\"%'").all().map(r=>r.product_id);
 const v=validateTestMeasurements268(store.testMeasurements265(),product,VALIDATION_POLICY268);
 const compiled=compileCatalog268(v,SCORING_POLICY268,{categoryId:'air_fryers',market:'uk',discoveredVariantIds:discovered,reviewedAt:asOf,expiresAt:expires,validationPolicy:VALIDATION_POLICY268});
-const keys=generateKeyPairSync('ed25519');const keyId='pee269_controlled_evaluation_only';
-const ranking={catalog:{catalog:compiled,keyId,signatureBase64:sign(null,Buffer.from(canonicalJson180(compiled)),keys.privateKey).toString('base64')},
- authority:{publicKeys:{[keyId]:keys.publicKey.export({type:'spki',format:'pem'}).toString()},asOf,market:'uk'}};
+let ranking;
+if(catalogRev==='r2'){
+ // Phase270: r2 catalogs are produced by the dedicated signer (it compiles, checks policy and signs; evaluation key only).
+ const {signCompiledCatalog270,evaluationSigningKey270,EVALUATION_SIGNING_POLICY270}=await import('../dist/src/phase270_catalog_signer.js');
+ const key=evaluationSigningKey270('controlled_evaluation');
+ const signed=signCompiledCatalog270({validation:v,scoring:SCORING_POLICY268,validationPolicy:VALIDATION_POLICY268,categoryId:'air_fryers',market:'uk',discoveredVariantIds:discovered,reviewedAt:asOf,expiresAt:expires},EVALUATION_SIGNING_POLICY270,key);
+ if(!signed.ok)throw Error('signer refused: '+signed.reason);
+ ranking={catalog:signed.envelope,authority:{publicKeys:{[key.keyId]:key.publicKeyPem},asOf,market:'uk'}};
+}else{
+ // r1 reproduces the Phase268/269 baselines exactly (the signer refuses r1 by policy).
+ const keys=generateKeyPairSync('ed25519');const keyId='pee269_controlled_evaluation_only';
+ ranking={catalog:{catalog:compiled,keyId,signatureBase64:sign(null,Buffer.from(canonicalJson180(compiled)),keys.privateKey).toString('base64')},
+  authority:{publicKeys:{[keyId]:keys.publicKey.export({type:'spki',format:'pem'}).toString()},asOf,market:'uk'}};
+}
 
 /** What the answer exposes, in the set's vocabulary. Falls back to the baseline derivation when no goal assessment exists. */
 function observed(a,j){
