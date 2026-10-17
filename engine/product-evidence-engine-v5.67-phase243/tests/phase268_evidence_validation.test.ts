@@ -69,7 +69,7 @@ test('a review headline is not a product identity; the subject and a single mode
 
 test('store v6 keeps the condition codes; validation applies the protocol, names every rejection, never writes back',()=>{
  const {s,product,ids}=build();const rows=s.testMeasurements265();
- assert.equal(s.schemaVersion(),6);
+ assert.ok(s.schemaVersion()>=6,'v6 or later (Phase270: v7 adds qualitative codes)');
  const z=rows.find(r=>r.productId===ids['Zephyrine Crisp 3 ZC300X Air Fryer'])!;assert.deepEqual([z.setpointC,z.protocolCodes.includes('load_empty')],[200,true]);
  const v=validateTestMeasurements268(rows,product,qualified);
  const valid=Object.fromEntries(v.validated.map(x=>[x.productName,x.value]));
