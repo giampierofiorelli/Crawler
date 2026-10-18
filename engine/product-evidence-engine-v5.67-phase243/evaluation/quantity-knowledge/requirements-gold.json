@@ -1,0 +1,3378 @@
+{
+ "schema": "pee.qk-request-gold.v1",
+ "annotator": "fresh-context Claude agent, blind to the reader under test",
+ "annotatedAt": "2026-10-18",
+ "inputSha256": "5ed030d9cd324a7a3c3386fc162c22f16158c6df6e9d559b264892f8dab12e2e",
+ "items": [
+  {
+   "id": "R002",
+   "quantities": [
+    {
+     "surface": "24-hour",
+     "value": 24,
+     "low": null,
+     "high": null,
+     "unit": "hour",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "test duration",
+     "ambiguity": "Defines how the capacity rating is measured; not a buyer limit."
+    }
+   ]
+  },
+  {
+   "id": "R034",
+   "quantities": []
+  },
+  {
+   "id": "R050",
+   "quantities": []
+  },
+  {
+   "id": "R067",
+   "quantities": [
+    {
+     "surface": "80 degrees Celsius",
+     "value": 80,
+     "low": null,
+     "high": null,
+     "unit": "degrees Celsius",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "target water temperature",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R071",
+   "quantities": []
+  },
+  {
+   "id": "R072",
+   "quantities": [
+    {
+     "surface": "15 bar",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "First mention: a claim that 15 bar is sufficient, not a stated purchase limit."
+    },
+    {
+     "surface": "15 bar",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure of home machines",
+     "ambiguity": null
+    },
+    {
+     "surface": "9 bar",
+     "value": 9,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure of professional machines",
+     "ambiguity": null
+    },
+    {
+     "surface": "16",
+     "value": 16,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "Unit 'bar' shared from '21 bar' in the list."
+    },
+    {
+     "surface": "19",
+     "value": 19,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "Unit 'bar' shared from '21 bar' in the list."
+    },
+    {
+     "surface": "20",
+     "value": 20,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "Unit 'bar' shared from '21 bar' in the list."
+    },
+    {
+     "surface": "21 bar",
+     "value": 21,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure",
+     "ambiguity": null
+    },
+    {
+     "surface": "9 bar",
+     "value": 9,
+     "low": null,
+     "high": null,
+     "unit": "bar",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure for professional coffee",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R073",
+   "quantities": [
+    {
+     "surface": "2-3 cups",
+     "value": null,
+     "low": 2,
+     "high": 3,
+     "unit": "cups",
+     "bound": "range",
+     "describes": "context_not_requirement",
+     "quantityMeant": "coffee drunk per day",
+     "ambiguity": null
+    },
+    {
+     "surface": "5-6",
+     "value": null,
+     "low": 5,
+     "high": 6,
+     "unit": "cups",
+     "bound": "range",
+     "describes": "context_not_requirement",
+     "quantityMeant": "partner's coffee per day",
+     "ambiguity": "Unit 'cups' is implied from the preceding '2-3 cups'."
+    }
+   ]
+  },
+  {
+   "id": "R075",
+   "quantities": [
+    {
+     "surface": "10 bars",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "bars",
+     "bound": "max",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure of the ROK",
+     "ambiguity": null
+    },
+    {
+     "surface": "15",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "bars",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "pump pressure of the Flair",
+     "ambiguity": "Unit implied from 'bars'; 'around 15'."
+    }
+   ]
+  },
+  {
+   "id": "R078",
+   "quantities": [
+    {
+     "surface": "1 cup",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "max",
+     "describes": "context_not_requirement",
+     "quantityMeant": "coffee drunk per day",
+     "ambiguity": null
+    },
+    {
+     "surface": "0 cups",
+     "value": 0,
+     "low": null,
+     "high": null,
+     "unit": "cups",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "coffee drunk per day",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R079",
+   "quantities": [
+    {
+     "surface": "1000W",
+     "value": 1000,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power of blenders available in budget",
+     "ambiguity": "Could be read as candidate power levels the buyer would accept."
+    },
+    {
+     "surface": "1200W",
+     "value": 1200,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power of blenders available in budget",
+     "ambiguity": "Could be read as candidate power levels the buyer would accept."
+    }
+   ]
+  },
+  {
+   "id": "R080",
+   "quantities": [
+    {
+     "surface": "250W",
+     "value": 250,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power rating of KitchenAid Classic",
+     "ambiguity": null
+    },
+    {
+     "surface": "300W",
+     "value": 300,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power rating of KitchenAid Artisan",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R082",
+   "quantities": [
+    {
+     "surface": "40%",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "%",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "dough hydration",
+     "ambiguity": "Dough property that implies how strong the mixer must be."
+    },
+    {
+     "surface": "35%",
+     "value": 35,
+     "low": null,
+     "high": null,
+     "unit": "%",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "dough hydration",
+     "ambiguity": "Dough property that implies how strong the mixer must be."
+    },
+    {
+     "surface": "375 watt",
+     "value": 375,
+     "low": null,
+     "high": null,
+     "unit": "watt",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power of old mixer",
+     "ambiguity": null
+    },
+    {
+     "surface": "275 watt",
+     "value": 275,
+     "low": null,
+     "high": null,
+     "unit": "watt",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power of current mixer",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R084",
+   "quantities": []
+  },
+  {
+   "id": "R085",
+   "quantities": [
+    {
+     "surface": "454g",
+     "value": 454,
+     "low": null,
+     "high": null,
+     "unit": "g",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "weight of beans to cook",
+     "ambiguity": "Implies the cooker size needed, but is food weight."
+    }
+   ]
+  },
+  {
+   "id": "R087",
+   "quantities": [
+    {
+     "surface": "100-115 F",
+     "value": null,
+     "low": 100,
+     "high": 115,
+     "unit": "F",
+     "bound": "range",
+     "describes": "product_requirement",
+     "quantityMeant": "holding temperature",
+     "ambiguity": null
+    },
+    {
+     "surface": "24 hours",
+     "value": 24,
+     "low": null,
+     "high": null,
+     "unit": "hours",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "holding duration",
+     "ambiguity": "Usage duration the appliance must sustain; could be read as context."
+    }
+   ]
+  },
+  {
+   "id": "R089",
+   "quantities": [
+    {
+     "surface": "1400 W",
+     "value": 1400,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power of two listed air fryers",
+     "ambiguity": null
+    },
+    {
+     "surface": "4 liters",
+     "value": 4,
+     "low": null,
+     "high": null,
+     "unit": "liters",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "capacity of two listed air fryers",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R097",
+   "quantities": []
+  },
+  {
+   "id": "R099",
+   "quantities": [
+    {
+     "surface": "25 year",
+     "value": 25,
+     "low": null,
+     "high": null,
+     "unit": "year",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "age of old rice cooker",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R102",
+   "quantities": []
+  },
+  {
+   "id": "R103",
+   "quantities": [
+    {
+     "surface": "5",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": null,
+     "bound": "min",
+     "describes": "context_not_requirement",
+     "quantityMeant": "steeping time",
+     "ambiguity": "Text is cut off before the unit; likely minutes."
+    }
+   ]
+  },
+  {
+   "id": "R104",
+   "quantities": [
+    {
+     "surface": "200-300ml",
+     "value": null,
+     "low": 200,
+     "high": 300,
+     "unit": "ml",
+     "bound": "range",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R105",
+   "quantities": [
+    {
+     "surface": "3 meals",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "meals",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "number of meals cooked at once",
+     "ambiguity": "Batch size may imply pan size, but is not a stated product limit."
+    }
+   ]
+  },
+  {
+   "id": "R109",
+   "quantities": []
+  },
+  {
+   "id": "R111",
+   "quantities": []
+  },
+  {
+   "id": "R114",
+   "quantities": []
+  },
+  {
+   "id": "R117",
+   "quantities": []
+  },
+  {
+   "id": "R118",
+   "quantities": []
+  },
+  {
+   "id": "R124",
+   "quantities": []
+  },
+  {
+   "id": "R127",
+   "quantities": [
+    {
+     "surface": "10-12 cups",
+     "value": null,
+     "low": 10,
+     "high": 12,
+     "unit": "cups",
+     "bound": "range",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "bean capacity of advertised blade grinders",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R128",
+   "quantities": []
+  },
+  {
+   "id": "R130",
+   "quantities": [
+    {
+     "surface": "5 inches",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "inches",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "inside bottom diameter of Wagner #3",
+     "ambiguity": null
+    },
+    {
+     "surface": "7 inches",
+     "value": 7,
+     "low": null,
+     "high": null,
+     "unit": "inches",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "inside bottom diameter of Wagner #6",
+     "ambiguity": null
+    },
+    {
+     "surface": "8 inches",
+     "value": 8,
+     "low": null,
+     "high": null,
+     "unit": "inches",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "inside bottom diameter of Lodge skillet",
+     "ambiguity": null
+    },
+    {
+     "surface": "8 inch",
+     "value": 8,
+     "low": null,
+     "high": null,
+     "unit": "inch",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "size of nonstick skillets",
+     "ambiguity": null
+    },
+    {
+     "surface": "5 years",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "time period",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R131",
+   "quantities": []
+  },
+  {
+   "id": "R132",
+   "quantities": []
+  },
+  {
+   "id": "R138",
+   "quantities": [
+    {
+     "surface": "6 qt",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": "qt",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R145",
+   "quantities": [
+    {
+     "surface": "36\"",
+     "value": 36,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "range width",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R150",
+   "quantities": []
+  },
+  {
+   "id": "R151",
+   "quantities": [
+    {
+     "surface": "30 years",
+     "value": 30,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "min",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "age of current oven",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R152",
+   "quantities": [
+    {
+     "surface": "1/4 or 1/2 steer",
+     "value": null,
+     "low": 0.25,
+     "high": 0.5,
+     "unit": "steer",
+     "bound": "range",
+     "describes": "context_not_requirement",
+     "quantityMeant": "amount of meat to store",
+     "ambiguity": "Alternatives (quarter or half animal), not a range; implies freezer capacity."
+    }
+   ]
+  },
+  {
+   "id": "R156",
+   "quantities": [
+    {
+     "surface": "2mm",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "gauge (thickness) of the copper pans",
+     "ambiguity": null
+    },
+    {
+     "surface": "2cm",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "difference in pan diameter",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R165",
+   "quantities": []
+  },
+  {
+   "id": "R166",
+   "quantities": [
+    {
+     "surface": "5 quart",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "quart",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "capacity of current pot",
+     "ambiguity": "Replacement may be expected to match this size."
+    }
+   ]
+  },
+  {
+   "id": "R170",
+   "quantities": [
+    {
+     "surface": "10\"",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "steamer diameter",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R174",
+   "quantities": []
+  },
+  {
+   "id": "R175",
+   "quantities": []
+  },
+  {
+   "id": "R178",
+   "quantities": [
+    {
+     "surface": "18 months",
+     "value": 18,
+     "low": null,
+     "high": null,
+     "unit": "months",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "lifespan before leaking or breaking",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R179",
+   "quantities": []
+  },
+  {
+   "id": "R180",
+   "quantities": []
+  },
+  {
+   "id": "R187",
+   "quantities": [
+    {
+     "surface": "40 hour",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "hour",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "working week",
+     "ambiguity": null
+    },
+    {
+     "surface": "4-5 hours",
+     "value": null,
+     "low": 4,
+     "high": 5,
+     "unit": "hours",
+     "bound": "range",
+     "describes": "product_requirement",
+     "quantityMeant": "keep-warm duration",
+     "ambiguity": "Usage duration the cooker must sustain; could be read as context."
+    },
+    {
+     "surface": "4-5 hours",
+     "value": null,
+     "low": 4,
+     "high": 5,
+     "unit": "hours",
+     "bound": "range",
+     "describes": "product_requirement",
+     "quantityMeant": "running duration",
+     "ambiguity": "Usage duration the cooker must sustain; could be read as context."
+    }
+   ]
+  },
+  {
+   "id": "R188",
+   "quantities": [
+    {
+     "surface": "400W",
+     "value": 400,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power of current mixer",
+     "ambiguity": null
+    },
+    {
+     "surface": "800W",
+     "value": 800,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "motor power",
+     "ambiguity": "Hypothetical wattage asked about ('would it be too much'), not a firm limit."
+    }
+   ]
+  },
+  {
+   "id": "R189",
+   "quantities": [
+    {
+     "surface": "6.8 Liters",
+     "value": 6.8,
+     "low": null,
+     "high": null,
+     "unit": "Liters",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "capacity of biggest slow cooker found",
+     "ambiguity": null
+    },
+    {
+     "surface": "2 kg",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "kg",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "weight of chicken to cook",
+     "ambiguity": null
+    },
+    {
+     "surface": "6.8 Liters",
+     "value": 6.8,
+     "low": null,
+     "high": null,
+     "unit": "Liters",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "capacity of biggest slow cooker found",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R191",
+   "quantities": [
+    {
+     "surface": "10 degree",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "degree",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "temperature difference",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R192",
+   "quantities": [
+    {
+     "surface": "50°-90°",
+     "value": null,
+     "low": 50,
+     "high": 90,
+     "unit": "°",
+     "bound": "range",
+     "describes": "product_requirement",
+     "quantityMeant": "liquid heating temperature range",
+     "ambiguity": "Degrees Fahrenheit, stated after the range ('or so Farenheit'); approximate."
+    }
+   ]
+  },
+  {
+   "id": "R193",
+   "quantities": [
+    {
+     "surface": "500",
+     "value": 500,
+     "low": null,
+     "high": null,
+     "unit": "grit",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Unit shared from '2000 grit'."
+    },
+    {
+     "surface": "2000 grit",
+     "value": 2000,
+     "low": null,
+     "high": null,
+     "unit": "grit",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": null
+    },
+    {
+     "surface": "500",
+     "value": 500,
+     "low": null,
+     "high": null,
+     "unit": "grit",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Second list; unit implied."
+    },
+    {
+     "surface": "2K",
+     "value": 2000,
+     "low": null,
+     "high": null,
+     "unit": "K",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Unit grit implied."
+    },
+    {
+     "surface": "4K",
+     "value": 4000,
+     "low": null,
+     "high": null,
+     "unit": "K",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Unit grit implied."
+    }
+   ]
+  },
+  {
+   "id": "R196",
+   "quantities": [
+    {
+     "surface": "9 in",
+     "value": 9,
+     "low": null,
+     "high": null,
+     "unit": "in",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "length",
+     "ambiguity": null
+    },
+    {
+     "surface": "4.5 in",
+     "value": 4.5,
+     "low": null,
+     "high": null,
+     "unit": "in",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "width",
+     "ambiguity": null
+    },
+    {
+     "surface": "2 in",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "in",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "height",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R202",
+   "quantities": [
+    {
+     "surface": "3 years",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "time spent roasting",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R203",
+   "quantities": []
+  },
+  {
+   "id": "R205",
+   "quantities": [
+    {
+     "surface": "10 cm",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "diameter of tartlet forms",
+     "ambiguity": null
+    },
+    {
+     "surface": "6 cm",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "size of silicone muffin cups",
+     "ambiguity": null
+    },
+    {
+     "surface": "6 cm",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "size of muffin paper liners",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R206",
+   "quantities": []
+  },
+  {
+   "id": "R210",
+   "quantities": []
+  },
+  {
+   "id": "R211",
+   "quantities": []
+  },
+  {
+   "id": "R212",
+   "quantities": []
+  },
+  {
+   "id": "R213",
+   "quantities": [
+    {
+     "surface": "58mm",
+     "value": 58,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "portafilter diameter",
+     "ambiguity": "Implies the wanted baskets must fit 58 mm."
+    },
+    {
+     "surface": "15 seconds",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "seconds",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "extraction time",
+     "ambiguity": null
+    },
+    {
+     "surface": "2 seconds",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "seconds",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "preinfusion time",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R214",
+   "quantities": []
+  },
+  {
+   "id": "R216",
+   "quantities": [
+    {
+     "surface": "16\"",
+     "value": 16,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "vent width (vents in store)",
+     "ambiguity": null
+    },
+    {
+     "surface": "16\"",
+     "value": 16,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "vent width",
+     "ambiguity": null
+    },
+    {
+     "surface": "16\"",
+     "value": 16,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "metal sheet panel width",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R217",
+   "quantities": [
+    {
+     "surface": "7.5kW",
+     "value": 7.5,
+     "low": null,
+     "high": null,
+     "unit": "kW",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "heater power",
+     "ambiguity": null
+    },
+    {
+     "surface": "240V",
+     "value": 240,
+     "low": null,
+     "high": null,
+     "unit": "V",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "heater voltage",
+     "ambiguity": null
+    },
+    {
+     "surface": "31.25 amps",
+     "value": 31.25,
+     "low": null,
+     "high": null,
+     "unit": "amps",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "heater current draw",
+     "ambiguity": null
+    },
+    {
+     "surface": "35 amp",
+     "value": 35,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "breaker rating",
+     "ambiguity": "Asks whether a 35 A breaker is acceptable; a candidate, not a fixed limit."
+    },
+    {
+     "surface": "40 amp",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "recommended breaker rating",
+     "ambiguity": null
+    },
+    {
+     "surface": "6",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": null,
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "wire gauge",
+     "ambiguity": "'a 6 wire' presumably means 6 AWG; no unit printed."
+    },
+    {
+     "surface": "20 amp",
+     "value": 20,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "hot tub circuit rating",
+     "ambiguity": "Planned circuit; may imply a 20 A breaker to buy."
+    },
+    {
+     "surface": "35 amps",
+     "value": 35,
+     "low": null,
+     "high": null,
+     "unit": "amps",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "remaining capacity for heater",
+     "ambiguity": null
+    },
+    {
+     "surface": "15 amp",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "hot tub required circuit rating",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R218",
+   "quantities": [
+    {
+     "surface": "3 feet",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "feet",
+     "bound": "min",
+     "describes": "context_not_requirement",
+     "quantityMeant": "pony wall height",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R219",
+   "quantities": []
+  },
+  {
+   "id": "R220",
+   "quantities": []
+  },
+  {
+   "id": "R223",
+   "quantities": [
+    {
+     "surface": "R14",
+     "value": 14,
+     "low": null,
+     "high": null,
+     "unit": "R",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "insulation R-value",
+     "ambiguity": "One of the options being compared; repeated in the text."
+    },
+    {
+     "surface": "R20",
+     "value": 20,
+     "low": null,
+     "high": null,
+     "unit": "R",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "insulation R-value",
+     "ambiguity": "One of the options being compared; repeated in the text."
+    },
+    {
+     "surface": "1\"",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "polystyrene thickness",
+     "ambiguity": null
+    },
+    {
+     "surface": "R3.75",
+     "value": 3.75,
+     "low": null,
+     "high": null,
+     "unit": "R",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "polystyrene R-value",
+     "ambiguity": null
+    },
+    {
+     "surface": "R12",
+     "value": 12,
+     "low": null,
+     "high": null,
+     "unit": "R",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "insulation R-value",
+     "ambiguity": "One of the options being compared; repeated in the text."
+    },
+    {
+     "surface": "500 sqft",
+     "value": 500,
+     "low": null,
+     "high": null,
+     "unit": "sqft",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "area to insulate",
+     "ambiguity": null
+    },
+    {
+     "surface": "R15",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "R",
+     "bound": "min",
+     "describes": "context_not_requirement",
+     "quantityMeant": "combined R-value with R12 and polystyrene",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R226",
+   "quantities": []
+  },
+  {
+   "id": "R227",
+   "quantities": []
+  },
+  {
+   "id": "R228",
+   "quantities": [
+    {
+     "surface": "24*7",
+     "value": null,
+     "low": null,
+     "high": null,
+     "unit": null,
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "running time",
+     "ambiguity": "Means running 24 hours a day, 7 days a week; no unit printed."
+    },
+    {
+     "surface": "20 million observations",
+     "value": 20000000,
+     "low": null,
+     "high": null,
+     "unit": "observations",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "dataset size",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R229",
+   "quantities": [
+    {
+     "surface": "1TB",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "TB",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "expandable memory of tablet",
+     "ambiguity": null
+    },
+    {
+     "surface": "1 TB",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "TB",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "storage capacity of SD card seen",
+     "ambiguity": "Candidate product being considered; could be read as the buyer's capacity choice."
+    },
+    {
+     "surface": "1TB",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "TB",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "storage capacity of SSD seen",
+     "ambiguity": "Candidate product being considered."
+    }
+   ]
+  },
+  {
+   "id": "R230",
+   "quantities": [
+    {
+     "surface": "3.20GHz",
+     "value": 3.2,
+     "low": null,
+     "high": null,
+     "unit": "GHz",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "clock speed of current CPU",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R231",
+   "quantities": [
+    {
+     "surface": "24/24",
+     "value": null,
+     "low": null,
+     "high": null,
+     "unit": null,
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "running time",
+     "ambiguity": "Means running 24 hours a day; no unit printed."
+    },
+    {
+     "surface": "100 gigabytes",
+     "value": 100,
+     "low": null,
+     "high": null,
+     "unit": "gigabytes",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "storage capacity",
+     "ambiguity": "'about 100 gigabytes' may be a minimum."
+    }
+   ]
+  },
+  {
+   "id": "R232",
+   "quantities": [
+    {
+     "surface": "3x",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "x",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "number of drive bays",
+     "ambiguity": "'3x 3.5\" or more' = at least three bays."
+    },
+    {
+     "surface": "3.5\"",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "drive bay size",
+     "ambiguity": null
+    },
+    {
+     "surface": "12 TByte",
+     "value": 12,
+     "low": null,
+     "high": null,
+     "unit": "TByte",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "supported drive capacity",
+     "ambiguity": "'compatible with 12 TByte drives' read as supporting at least 12 TB per drive."
+    },
+    {
+     "surface": "12 TByte",
+     "value": 12,
+     "low": null,
+     "high": null,
+     "unit": "TByte",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "supported drive capacity of other enclosures",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R234",
+   "quantities": [
+    {
+     "surface": "5%",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "%",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "performance difference between CPUs",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R235",
+   "quantities": []
+  },
+  {
+   "id": "R236",
+   "quantities": [
+    {
+     "surface": "26\"",
+     "value": 26,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "wheel size",
+     "ambiguity": null
+    },
+    {
+     "surface": "1-1/8\"",
+     "value": 1.125,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "steerer diameter",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R237",
+   "quantities": [
+    {
+     "surface": "21-speed",
+     "value": 21,
+     "low": null,
+     "high": null,
+     "unit": "speed",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "number of gears",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R238",
+   "quantities": [
+    {
+     "surface": "700 x 28c",
+     "value": null,
+     "low": null,
+     "high": null,
+     "unit": "c",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "tyre size",
+     "ambiguity": "French size notation: 700 (nominal wheel diameter) by 28 mm width; given as the owned wheel size the tyres must fit."
+    }
+   ]
+  },
+  {
+   "id": "R241",
+   "quantities": [
+    {
+     "surface": "9 speed",
+     "value": 9,
+     "low": null,
+     "high": null,
+     "unit": "speed",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "chain speed rating",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R242",
+   "quantities": []
+  },
+  {
+   "id": "R249",
+   "quantities": []
+  },
+  {
+   "id": "R251",
+   "quantities": [
+    {
+     "surface": "1750W",
+     "value": 1750,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "air fryer power",
+     "ambiguity": "Appears in the owned product's listing name."
+    },
+    {
+     "surface": "5.2L",
+     "value": 5.2,
+     "low": null,
+     "high": null,
+     "unit": "L",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "air fryer capacity",
+     "ambiguity": "Appears in the owned product's listing name."
+    }
+   ]
+  },
+  {
+   "id": "R253",
+   "quantities": [
+    {
+     "surface": "1 winter squash",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "winter squash",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "daily processing amount",
+     "ambiguity": "A food count per day, not a product property."
+    }
+   ]
+  },
+  {
+   "id": "R254",
+   "quantities": [
+    {
+     "surface": "5 speeds",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "speeds",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "number of speed settings of typical models",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R255",
+   "quantities": [
+    {
+     "surface": "325",
+     "value": 325,
+     "low": null,
+     "high": null,
+     "unit": "watt",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "motor power of smaller candidate",
+     "ambiguity": "Unit shared from '575 watt'."
+    },
+    {
+     "surface": "575 watt",
+     "value": 575,
+     "low": null,
+     "high": null,
+     "unit": "watt",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "motor power of larger candidate",
+     "ambiguity": null
+    },
+    {
+     "surface": "5",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "qts",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "bowl capacity of smaller candidate",
+     "ambiguity": "Unit shared from '6qts'."
+    },
+    {
+     "surface": "6qts",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": "qts",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "bowl capacity of larger candidate",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R256",
+   "quantities": [
+    {
+     "surface": "24 hours",
+     "value": 24,
+     "low": null,
+     "high": null,
+     "unit": "hours",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "keep-warm duration of programmable cookers",
+     "ambiguity": null
+    },
+    {
+     "surface": "7 minute",
+     "value": 7,
+     "low": null,
+     "high": null,
+     "unit": "minute",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "cooking time",
+     "ambiguity": null
+    },
+    {
+     "surface": "7 hour",
+     "value": 7,
+     "low": null,
+     "high": null,
+     "unit": "hour",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "cooking time",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R268",
+   "quantities": [
+    {
+     "surface": "1000L",
+     "value": 1000,
+     "low": null,
+     "high": null,
+     "unit": "L",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "batch yield",
+     "ambiguity": null
+    },
+    {
+     "surface": "40L",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "L",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "current batch size",
+     "ambiguity": null
+    },
+    {
+     "surface": "40-micron",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "micron",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "mesh size of current filter",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R273",
+   "quantities": [
+    {
+     "surface": "3.5 mm",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "connector size",
+     "ambiguity": null
+    },
+    {
+     "surface": "3.5 mm",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "connector size",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R274",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "audio input size",
+     "ambiguity": "Stated as acceptable in addition to USB, not required."
+    }
+   ]
+  },
+  {
+   "id": "R275",
+   "quantities": [
+    {
+     "surface": "6 months",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": "months",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "time period",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R276",
+   "quantities": [
+    {
+     "surface": "5 minutes",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "minutes",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "auto-off delay of European headsets",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R277",
+   "quantities": [
+    {
+     "surface": "10 regular headphones",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "headphones",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "number of headphones to drive",
+     "ambiguity": "A count of headphones the amp must drive; could be read as context."
+    }
+   ]
+  },
+  {
+   "id": "R278",
+   "quantities": []
+  },
+  {
+   "id": "R280",
+   "quantities": []
+  },
+  {
+   "id": "R281",
+   "quantities": []
+  },
+  {
+   "id": "R282",
+   "quantities": [
+    {
+     "surface": "4 years",
+     "value": 4,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "min",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "lifespan of old earphones",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R283",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "connector size",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R284",
+   "quantities": [
+    {
+     "surface": "400g",
+     "value": 400,
+     "low": null,
+     "high": null,
+     "unit": "g",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "weight of old headphones",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R285",
+   "quantities": [
+    {
+     "surface": "1/8 in.",
+     "value": 0.125,
+     "low": null,
+     "high": null,
+     "unit": "in.",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "audio plug size",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R286",
+   "quantities": []
+  },
+  {
+   "id": "R287",
+   "quantities": [
+    {
+     "surface": "55-250 mm",
+     "value": null,
+     "low": 55,
+     "high": 250,
+     "unit": "mm",
+     "bound": "range",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "lens focal length",
+     "ambiguity": "Part of the owned lens's name; a focal-length range."
+    }
+   ]
+  },
+  {
+   "id": "R288",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "mic input jack size of camcorder",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R289",
+   "quantities": []
+  },
+  {
+   "id": "R290",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "value": 3.5,
+     "low": null,
+     "high": null,
+     "unit": "mm",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "headphone jack size",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R291",
+   "quantities": []
+  },
+  {
+   "id": "R292",
+   "quantities": [
+    {
+     "surface": "600ohm",
+     "value": 600,
+     "low": null,
+     "high": null,
+     "unit": "ohm",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "supported impedance",
+     "ambiguity": "Says it must support a 600 ohm soundcard; unclear which impedance is meant."
+    }
+   ]
+  },
+  {
+   "id": "R294",
+   "quantities": []
+  },
+  {
+   "id": "R296",
+   "quantities": [
+    {
+     "surface": "52cm",
+     "value": 52,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "current microwave width",
+     "ambiguity": null
+    },
+    {
+     "surface": "31cm",
+     "value": 31,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "current microwave height",
+     "ambiguity": null
+    },
+    {
+     "surface": "57.5cm",
+     "value": 57.5,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "available_space",
+     "quantityMeant": "opening width",
+     "ambiguity": null
+    },
+    {
+     "surface": "36.5cm",
+     "value": 36.5,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "none",
+     "describes": "available_space",
+     "quantityMeant": "opening height",
+     "ambiguity": null
+    },
+    {
+     "surface": "3 inches",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "inches",
+     "bound": "min",
+     "describes": "context_not_requirement",
+     "quantityMeant": "required clearance on each side and top",
+     "ambiguity": "A clearance rule that, with the opening, limits the product size."
+    },
+    {
+     "surface": "7.5cm",
+     "value": 7.5,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "min",
+     "describes": "context_not_requirement",
+     "quantityMeant": "required clearance on each side and top",
+     "ambiguity": "A clearance rule that, with the opening, limits the product size."
+    }
+   ]
+  },
+  {
+   "id": "R297",
+   "quantities": [
+    {
+     "surface": "25\"",
+     "value": 25,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "available_space",
+     "quantityMeant": "opening dimension",
+     "ambiguity": "Which of width, height or depth is not stated."
+    },
+    {
+     "surface": "15\"",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "available_space",
+     "quantityMeant": "opening dimension",
+     "ambiguity": "Which of width, height or depth is not stated."
+    },
+    {
+     "surface": "16\"",
+     "value": 16,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "available_space",
+     "quantityMeant": "opening dimension",
+     "ambiguity": "Which of width, height or depth is not stated."
+    }
+   ]
+  },
+  {
+   "id": "R298",
+   "quantities": [
+    {
+     "surface": "30\"",
+     "value": 30,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "width of ordered hood",
+     "ambiguity": null
+    },
+    {
+     "surface": "900CFM",
+     "value": 900,
+     "low": null,
+     "high": null,
+     "unit": "CFM",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "airflow of ordered hood",
+     "ambiguity": null
+    },
+    {
+     "surface": "2-3 feet",
+     "value": null,
+     "low": 2,
+     "high": 3,
+     "unit": "feet",
+     "bound": "range",
+     "describes": "context_not_requirement",
+     "quantityMeant": "distance between ceiling and roof",
+     "ambiguity": null
+    },
+    {
+     "surface": "90\"",
+     "value": 90,
+     "low": null,
+     "high": null,
+     "unit": "\"",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "elbow angle",
+     "ambiguity": "Written with an inch mark but almost certainly a 90-degree elbow."
+    },
+    {
+     "surface": "10 ft",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "ft",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "distance to wall",
+     "ambiguity": null
+    },
+    {
+     "surface": "8ft",
+     "value": 8,
+     "low": null,
+     "high": null,
+     "unit": "ft",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "ceiling height",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R301",
+   "quantities": []
+  },
+  {
+   "id": "R302",
+   "quantities": [
+    {
+     "surface": "5 years",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "pipe replacement interval",
+     "ambiguity": null
+    },
+    {
+     "surface": "10 years",
+     "value": 10,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "pipe replacement interval",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R303",
+   "quantities": [
+    {
+     "surface": "2000-2400W",
+     "value": null,
+     "low": 2000,
+     "high": 2400,
+     "unit": "W",
+     "bound": "range",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "rated power range of kettle",
+     "ambiguity": null
+    },
+    {
+     "surface": "1970W",
+     "value": 1970,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "measured power of kettle",
+     "ambiguity": null
+    },
+    {
+     "surface": "2000W",
+     "value": 2000,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "lowest rated power of kettle",
+     "ambiguity": null
+    },
+    {
+     "surface": "2400W",
+     "value": 2400,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "max",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "highest rated power of kettle",
+     "ambiguity": null
+    },
+    {
+     "surface": "2400W",
+     "value": 2400,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "power consumption of kettle",
+     "ambiguity": null
+    },
+    {
+     "surface": "2000W",
+     "value": 2000,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "measured power of kettle",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R305",
+   "quantities": [
+    {
+     "surface": "110v",
+     "value": 110,
+     "low": null,
+     "high": null,
+     "unit": "v",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "plug voltage",
+     "ambiguity": null
+    },
+    {
+     "surface": "50 years",
+     "value": 50,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "time period",
+     "ambiguity": null
+    },
+    {
+     "surface": "220v",
+     "value": 220,
+     "low": null,
+     "high": null,
+     "unit": "v",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "UK mains voltage",
+     "ambiguity": null
+    },
+    {
+     "surface": "110v",
+     "value": 110,
+     "low": null,
+     "high": null,
+     "unit": "v",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "voltage of hand tools",
+     "ambiguity": null
+    },
+    {
+     "surface": "220v",
+     "value": 220,
+     "low": null,
+     "high": null,
+     "unit": "v",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "voltage of tools",
+     "ambiguity": null
+    },
+    {
+     "surface": "50 years",
+     "value": 50,
+     "low": null,
+     "high": null,
+     "unit": "years",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "time period",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R306",
+   "quantities": []
+  },
+  {
+   "id": "R307",
+   "quantities": [
+    {
+     "surface": "40 amp",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "breaker rating",
+     "ambiguity": null
+    },
+    {
+     "surface": "40 amp",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "current breaker rating",
+     "ambiguity": null
+    },
+    {
+     "surface": "220",
+     "value": 220,
+     "low": null,
+     "high": null,
+     "unit": null,
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "outlet voltage",
+     "ambiguity": "No unit printed; presumably 220 V."
+    },
+    {
+     "surface": "120/240 V",
+     "value": null,
+     "low": null,
+     "high": null,
+     "unit": "V",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "stove voltage",
+     "ambiguity": "Dual rating 120 V / 240 V, not a range."
+    },
+    {
+     "surface": "60 Hz",
+     "value": 60,
+     "low": null,
+     "high": null,
+     "unit": "Hz",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "stove frequency",
+     "ambiguity": null
+    },
+    {
+     "surface": "13 kW",
+     "value": 13,
+     "low": null,
+     "high": null,
+     "unit": "kW",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "stove power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R308",
+   "quantities": [
+    {
+     "surface": "1500 watt",
+     "value": 1500,
+     "low": null,
+     "high": null,
+     "unit": "watt",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "kettle power",
+     "ambiguity": null
+    },
+    {
+     "surface": "120 Volts",
+     "value": 120,
+     "low": null,
+     "high": null,
+     "unit": "Volts",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "kettle voltage",
+     "ambiguity": null
+    },
+    {
+     "surface": "1500 watt",
+     "value": 1500,
+     "low": null,
+     "high": null,
+     "unit": "watt",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "kettle element power",
+     "ambiguity": null
+    },
+    {
+     "surface": "60 Hz",
+     "value": 60,
+     "low": null,
+     "high": null,
+     "unit": "Hz",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "kettle frequency",
+     "ambiguity": null
+    },
+    {
+     "surface": "15 amp",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "receptacle current rating",
+     "ambiguity": "One of two options being considered."
+    },
+    {
+     "surface": "20 amp",
+     "value": 20,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "product_requirement",
+     "quantityMeant": "receptacle current rating",
+     "ambiguity": "One of two options being considered."
+    }
+   ]
+  },
+  {
+   "id": "R309",
+   "quantities": [
+    {
+     "surface": "15 amp",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "receptacle rating",
+     "ambiguity": null
+    },
+    {
+     "surface": "30 amp",
+     "value": 30,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "current fuse rating",
+     "ambiguity": null
+    },
+    {
+     "surface": "12 gauge",
+     "value": 12,
+     "low": null,
+     "high": null,
+     "unit": "gauge",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "wire gauge",
+     "ambiguity": null
+    },
+    {
+     "surface": "15 amps",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "amps",
+     "bound": "max",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "wire current rating",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R310",
+   "quantities": [
+    {
+     "surface": "20amp",
+     "value": 20,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "code-required circuit rating",
+     "ambiguity": null
+    },
+    {
+     "surface": "12 gauge",
+     "value": 12,
+     "low": null,
+     "high": null,
+     "unit": "gauge",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "code-required wire gauge",
+     "ambiguity": null
+    },
+    {
+     "surface": "14 gauge",
+     "value": 14,
+     "low": null,
+     "high": null,
+     "unit": "gauge",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "wire gauge of outlet",
+     "ambiguity": null
+    },
+    {
+     "surface": "15 amp",
+     "value": 15,
+     "low": null,
+     "high": null,
+     "unit": "amp",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "circuit breaker rating",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R312",
+   "quantities": [
+    {
+     "surface": "1.5 cup",
+     "value": 1.5,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of matzoh meal",
+     "ambiguity": null
+    },
+    {
+     "surface": "1.5 cup",
+     "value": 1.5,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of water",
+     "ambiguity": null
+    },
+    {
+     "surface": ".5 cup",
+     "value": 0.5,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of oil",
+     "ambiguity": null
+    },
+    {
+     "surface": "1 tsp",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "tsp",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of salt",
+     "ambiguity": null
+    },
+    {
+     "surface": "1 tbsp",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "tbsp",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of sugar",
+     "ambiguity": null
+    },
+    {
+     "surface": "7 extra-large eggs",
+     "value": 7,
+     "low": null,
+     "high": null,
+     "unit": "eggs",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of eggs",
+     "ambiguity": "A food count rather than a measurement unit."
+    },
+    {
+     "surface": "45-50 minutes",
+     "value": null,
+     "low": 45,
+     "high": 50,
+     "unit": "minutes",
+     "bound": "range",
+     "describes": "context_not_requirement",
+     "quantityMeant": "baking time",
+     "ambiguity": null
+    },
+    {
+     "surface": "400 degrees",
+     "value": 400,
+     "low": null,
+     "high": null,
+     "unit": "degrees",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "baking temperature",
+     "ambiguity": "Scale not stated (presumably Fahrenheit)."
+    }
+   ]
+  },
+  {
+   "id": "R313",
+   "quantities": [
+    {
+     "surface": "3 minutes",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "minutes",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "sauté time",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R314",
+   "quantities": [
+    {
+     "surface": "2 large avocados",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "avocados",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of avocados",
+     "ambiguity": "A food count rather than a measurement unit."
+    },
+    {
+     "surface": "1/2 cup",
+     "value": 0.5,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of cocoa powder",
+     "ambiguity": null
+    },
+    {
+     "surface": "1/2 cup",
+     "value": 0.5,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of brown sugar",
+     "ambiguity": null
+    },
+    {
+     "surface": "1/3 cup",
+     "value": 0.3333333333333333,
+     "low": null,
+     "high": null,
+     "unit": "cup",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of coconut milk",
+     "ambiguity": null
+    },
+    {
+     "surface": "2 teaspoons",
+     "value": 2,
+     "low": null,
+     "high": null,
+     "unit": "teaspoons",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of vanilla extract",
+     "ambiguity": null
+    },
+    {
+     "surface": "1 pinch",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "pinch",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "recipe amount of cinnamon",
+     "ambiguity": null
+    },
+    {
+     "surface": "30 minutes",
+     "value": 30,
+     "low": null,
+     "high": null,
+     "unit": "minutes",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "chilling time",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R316",
+   "quantities": [
+    {
+     "surface": "3 kgs",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "kgs",
+     "bound": "none",
+     "describes": "owned_or_other_product",
+     "quantityMeant": "weight of current mixie",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R317",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R318",
+   "quantities": []
+  },
+  {
+   "id": "R319",
+   "quantities": [
+    {
+     "surface": "7 litres",
+     "value": 7,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R320",
+   "quantities": [
+    {
+     "surface": "6 kg",
+     "value": 6,
+     "low": null,
+     "high": null,
+     "unit": "kg",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "weight",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R321",
+   "quantities": [
+    {
+     "surface": "12 litres",
+     "value": 12,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R322",
+   "quantities": [
+    {
+     "surface": "40 cm",
+     "value": 40,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "width",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R323",
+   "quantities": []
+  },
+  {
+   "id": "R324",
+   "quantities": [
+    {
+     "surface": "5 kg",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "kg",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "weight",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R325",
+   "quantities": [
+    {
+     "surface": "1400 W",
+     "value": 1400,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R326",
+   "quantities": []
+  },
+  {
+   "id": "R327",
+   "quantities": [
+    {
+     "surface": "25 cm",
+     "value": 25,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "width",
+     "ambiguity": "Limit driven by a narrow shelf; the shelf's own width is not stated."
+    }
+   ]
+  },
+  {
+   "id": "R328",
+   "quantities": [
+    {
+     "surface": "1000 W",
+     "value": 1000,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R329",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "value": 1.5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R330",
+   "quantities": []
+  },
+  {
+   "id": "R331",
+   "quantities": []
+  },
+  {
+   "id": "R332",
+   "quantities": [
+    {
+     "surface": "2.5 kg",
+     "value": 2.5,
+     "low": null,
+     "high": null,
+     "unit": "kg",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "weight",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R333",
+   "quantities": [
+    {
+     "surface": "30 cm",
+     "value": 30,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "width",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R334",
+   "quantities": [
+    {
+     "surface": "2000 W",
+     "value": 2000,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R335",
+   "quantities": []
+  },
+  {
+   "id": "R336",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "value": 1.5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R337",
+   "quantities": []
+  },
+  {
+   "id": "R339",
+   "quantities": [
+    {
+     "surface": "300 W",
+     "value": 300,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R341",
+   "quantities": []
+  },
+  {
+   "id": "R342",
+   "quantities": []
+  },
+  {
+   "id": "R343",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "none",
+     "describes": "context_not_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": "Negated: the buyer says the air fryer does not need to be 5 litres, so it is not a requirement."
+    }
+   ]
+  },
+  {
+   "id": "R344",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R345",
+   "quantities": [
+    {
+     "surface": "700 W",
+     "value": 700,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R346",
+   "quantities": [
+    {
+     "surface": "35 cm",
+     "value": 35,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "width",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R347",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "value": 5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R348",
+   "quantities": [
+    {
+     "surface": "2000 W",
+     "value": 2000,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R349",
+   "quantities": [
+    {
+     "surface": "2800 W",
+     "value": 2800,
+     "low": null,
+     "high": null,
+     "unit": "W",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "power",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R350",
+   "quantities": [
+    {
+     "surface": "25 cm",
+     "value": 25,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "height",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R351",
+   "quantities": [
+    {
+     "surface": "33 cm",
+     "value": 33,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "width",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R352",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "value": 1.5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R353",
+   "quantities": [
+    {
+     "surface": "1 litre",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "litre",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R354",
+   "quantities": []
+  },
+  {
+   "id": "R355",
+   "quantities": [
+    {
+     "surface": "3 kg",
+     "value": 3,
+     "low": null,
+     "high": null,
+     "unit": "kg",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "weight",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R356",
+   "quantities": [
+    {
+     "surface": "1 litre",
+     "value": 1,
+     "low": null,
+     "high": null,
+     "unit": "litre",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R357",
+   "quantities": [
+    {
+     "surface": "35 cm",
+     "value": 35,
+     "low": null,
+     "high": null,
+     "unit": "cm",
+     "bound": "max",
+     "describes": "product_requirement",
+     "quantityMeant": "height",
+     "ambiguity": "Limit set by the space under the cupboards; the space itself is not measured."
+    }
+   ]
+  },
+  {
+   "id": "R359",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "value": 1.5,
+     "low": null,
+     "high": null,
+     "unit": "litres",
+     "bound": "min",
+     "describes": "product_requirement",
+     "quantityMeant": "water tank capacity",
+     "ambiguity": null
+    }
+   ]
+  },
+  {
+   "id": "R360",
+   "quantities": []
+  },
+  {
+   "id": "R362",
+   "quantities": []
+  }
+ ]
+}

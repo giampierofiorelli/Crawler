@@ -50,7 +50,13 @@ export interface Advice253 {
  /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
   * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
  researchInputs?:AdviceResearchInputs253;
+ /** GK (opt-in, quantity knowledge supplied): quantitative requirements the request states that the Phase253 constraint
+  * reader does not cover, typed by the quantity knowledge. Understood, explicit, never checked or ranked here. */
+ quantityRequirements?:QuantityRequirement253[];
 }
+export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range';value:number|null;low?:number;high?:number;unit:string;
+ kind:string|null;kindCandidates:string[];metric:string|null;weighting:string|null;status:'typed'|'kind_ambiguous';
+ evidence:{target:string;methods:string[];conditions:string[];notEvidence:string[]};knowledge:string}
 export interface AdviceResearchInputs253 {
  targetKind:TargetKind253;category:string|null;statedCriteria:string[];pendingCriteria:string[];
  performanceNeeds:string[];unresolvedNeeds:string[];

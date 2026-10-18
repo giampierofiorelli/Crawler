@@ -23,6 +23,8 @@ import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_compara
 import {applianceMentions270} from './phase270_comparative_results.js';
 import type {GoalAssessment253} from './phase253_advice_contract.js';
 import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
+import {readQuantityRequirements,evidenceNeed,type QuantityKnowledge,type QuantityRequirement} from './quantity_knowledge.js';
+import type {QuantityRequirement253} from './phase253_advice_contract.js';
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 const ROLE_LABEL:Record<string,string>={manufacturer_declaration:'declared by the manufacturer',retailer_declaration:'declared by a retailer',
@@ -95,7 +97,7 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  if(!stated.length){
   out.response='clarification';
   if(!out.questions.length)out.questions.push(...j.clarificationQuestions.slice(0,2));
-  out.statements.push('No checkable requirement is stated yet, so no product can be checked against your needs.');
+  out.statements.push(NO_CHECKABLE253);
   return out;}
  // 3. The decision snapshot: the scope only when the product was named, the stated limits as hard requirements.
  if(j.stages.category.basis!=='explicit_alias'){out.response='clarification';
@@ -215,7 +217,34 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
  * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
  * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
  * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
-export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
+export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null}={}):Advice253{
+ const out=adviseFromRequestBase253(text,store,registry,opts);
+ if(opts.quantityKnowledge&&out.response!=='out_of_scope')applyQuantityRequirements253(out,text,opts.quantityKnowledge);
+ return out;
+}
+const NO_CHECKABLE253='No checkable requirement is stated yet, so no product can be checked against your needs.';
+const kindText=(qk:QuantityKnowledge,r:QuantityRequirement)=>{const q=r.quantity;const k=q.metric.id?qk.metrics.get(q.metric.id)!.label:(q.kind.id?q.kind.id:q.kind.candidates.join(' or ')).replace(/_/g,' ');
+ return k+(q.weighting&&q.weighting!=='unspecified'?`, ${q.weighting}-weighted`:'');};
+/** GK: the quantitative requirements the request states beyond the Phase253 constraint vocabulary. Without quantity
+ * knowledge they were dropped silently (no constraint, no unmapped span, no unassessed objective). With it they are
+ * typed, stated as understood-but-not-checked, asked about when the quantity is ambiguous, and turned into evidence
+ * needs (metric, defining method, comparability conditions). Nothing here checks, filters or orders products. */
+function applyQuantityRequirements253(out:Advice253,text:string,qk:QuantityKnowledge):void{
+ const covered=[...out.constraints.map(c=>c.span),...out.unmappedConstraints.map(u=>u.span)].filter((s):s is string=>typeof s==="string").map(s=>({s,i:text.indexOf(s)})).filter(x=>x.i>=0);
+ const reqs=readQuantityRequirements(qk,text).filter(r=>(r.bound!==null||r.quantity.low!==undefined)&&r.status!=='no_bound'&&
+  !covered.some(c=>c.i<r.end&&c.i+c.s.length>r.start)&&!/^[£$€]/.test(r.quantity.unit.surface));
+ if(!reqs.length)return;
+ out.quantityRequirements=reqs.map((r):QuantityRequirement253=>{const q=r.quantity;const e=evidenceNeed(qk,q);
+  return {span:r.span,bound:r.bound??'range',value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{}),unit:q.unit.surface,kind:q.kind.id,kindCandidates:q.kind.candidates,
+   metric:q.metric.id,weighting:q.weighting,status:r.status==='typed'?'typed':'kind_ambiguous',evidence:{target:e.target,methods:e.methods,conditions:e.conditions,notEvidence:e.notEvidence},knowledge:qk.identity};});
+ const i=out.statements.indexOf(NO_CHECKABLE253);
+ if(i>=0)out.statements[i]='No requirement that PEE can check against retained declarations is stated yet.';
+ out.statements.push(`Understood but not checked: ${reqs.map(r=>`"${r.span}" (${kindText(qk,r)})`).join('; ')}. PEE has no retained declarations it can compare with ${reqs.length>1?'these requirements':'this requirement'}, so the answer does not assess ${reqs.length>1?'them':'it'}.`);
+ for(const r of reqs){if(!out.unassessedObjectives.includes(r.span))out.unassessedObjectives.push(r.span);if(r.question&&!out.questions.includes(r.question))out.questions.push(r.question);
+  const e=evidenceNeed(qk,r.quantity);
+  out.researchPlan.push(`need_evidence: ${e.target}${e.methods.length?` (defined by ${e.methods.join('; ')})`:''}${e.conditions.length?`; comparable only when ${e.conditions.join(', ')} ${e.conditions.length>1?'are':'is'} stated`:''}${e.notEvidence.length?`; not evidence of it: ${e.notEvidence.join(', ')}`:''}`);}
+}
+function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
  const out=adviseCore253(text,store,registry);
  const ri=out.researchInputs;const perf=ri?.performanceNeeds??[];const objectives=statedObjectives253(text);
  const assessed=new Set<string>();

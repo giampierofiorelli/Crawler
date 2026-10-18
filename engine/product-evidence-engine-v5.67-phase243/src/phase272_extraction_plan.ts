@@ -15,6 +15,7 @@
 import {createHash} from 'node:crypto';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
+import {hasPhrase,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 
 /** Generic physical / consumer units: canonical unit, dimension, and the surface forms a page may print. */
 export const UNIT_LEXICON272:readonly {unit:string;dimension:string;re:string}[]=[
@@ -182,4 +183,43 @@ export const TEST_CONTEXT272=/\b(?:(?:we|i) (?:tested|ran|used|measured|recorded
 export function rangeOrBound272(line:string,at:number,end:number):boolean{
  const before=line.slice(Math.max(0,at-22),at),after=line.slice(end,end+14);
  return /\b(?:less than|more than|under|over|up to|at least|at most|around|about|approximately|roughly|from|sub|below|above|nearly|almost)\s*-?\s*$/i.test(before)||/^\s*(?:to|–|-|and)\s*\d/i.test(after)||/\d\s*(?:to|–|-)\s*$/.test(before);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// GK (2026-10-18): taught measurements typed by the quantity knowledge, and a typed link from a value to them. The
+// word-overlap link above (linkToMeasure272) stays unchanged; this one consults what the knowledge says the value IS.
+/** What a taught measurement measures, read from its id and statement with the quantity knowledge: the metrics it names
+ * (CADR) and the quantity kinds it names (sound pressure, sound power, air changes). Empty: the knowledge cannot type it. */
+export interface TypedMeasure272 {id:string;outcomes:string[];metrics:string[];kinds:string[]}
+export function typedMeasures272(store:KnowledgeStore246,categoryId:string,plan:ExtractionPlan272,qk:QuantityKnowledge):TypedMeasure272[]{
+ const st=new Map(store.categoryItems246(categoryId).filter(i=>i.concept?.kind==='measurement').map(i=>[i.concept!.id,i.statement]));
+ // The teaching's name of a measurement says what it measures; its statement is read only when the name says nothing.
+ // Only metric names and kind discriminators count: generic words ("pressure" inside "sound pressure", "load") do not.
+ const read=(text:string)=>({metrics:qk.pack.metrics.filter(x=>x.terms.some(t=>hasPhrase(text,t))).map(x=>x.id),
+  kinds:qk.pack.kinds.filter(k=>(k.discriminators??[]).some(t=>hasPhrase(text,t))).map(k=>k.id)});
+ return plan.measurements.map(m=>{const byId=read(m.id.replace(/_/g,' '));const r=byId.metrics.length||byId.kinds.length?byId:read(st.get(m.id)??'');
+  return {id:m.id,outcomes:m.outcomes,metrics:r.metrics,kinds:r.kinds};});
+}
+export interface TypedLink272 {measureId:string|null;outcomes:string[];candidates:string[];proxyFor:string[];basis:string}
+/** Link a typed value to the taught measurement it reports. A value whose metric the knowledge declares not equivalent to
+ * a measurement's metric (fan airflow vs CADR) never links to it; a value named by a taught proxy (attr:rated airflow) is
+ * reported as a proxy for that outcome; an unresolved kind links only when every candidate kind leads to one measurement. */
+export function linkTypedToMeasure272(plan:ExtractionPlan272,measures:readonly TypedMeasure272[],q:TypedQuantity,text:string,qk:QuantityKnowledge):TypedLink272{
+ const proxyFor=[...new Set(plan.proxies.filter(p=>hasPhrase(text,p.ref.slice(5).replace(/_/g,' '))).map(p=>p.outcome).filter(Boolean))].sort();
+ const kinds=q.kind.id?[q.kind.id]:q.kind.candidates;const metric=q.metric.id;
+ const blocked=new Set(metric?qk.metrics.get(metric)!.notEquivalentTo??[]:[]);
+ const fits=measures.filter(m=>m.outcomes.length&&!m.metrics.some(x=>blocked.has(x))&&(
+  metric&&m.metrics.length?(m.metrics.includes(metric)&&(!m.kinds.length||m.kinds.some(k=>kinds.includes(k))))
+        :(m.kinds.some(k=>kinds.includes(k))||(!m.kinds.length&&m.metrics.some(x=>kinds.includes(qk.metrics.get(x)!.kind))&&!m.metrics.some(x=>qk.metrics.get(x)!.notEquivalentTo?.length)))));
+ if(metric&&blocked.size&&!fits.length)return {measureId:null,outcomes:[],candidates:[],proxyFor,basis:`${metric} is not equivalent to ${[...blocked].join(', ')}: no taught measurement reports it`};
+ if(!fits.length)return {measureId:null,outcomes:[],candidates:[],proxyFor,basis:'no taught measurement measures this quantity'};
+ const restricted={...plan,measurements:plan.measurements.filter(m=>fits.some(f=>f.id===m.id))};
+ const unitCanon=canonicalUnit272(q.unit.surface)??q.unit.surface;
+ const byWords=linkToMeasure272(restricted,text,unitCanon);
+ const ids=fits.map(f=>f.id);
+ // words never settle what the knowledge leaves open: an unresolved kind with candidates of different kinds abstains
+ if(!q.kind.id&&new Set(fits.map(f=>f.kinds.filter(k=>kinds.includes(k)).join('+'))).size>1)return {measureId:null,outcomes:[],candidates:ids,proxyFor,basis:`the value's kind is unresolved (${kinds.join(' or ')}) and the candidates measure different kinds`};
+ if(byWords)return {measureId:byWords.measureId,outcomes:byWords.outcomes,candidates:ids,proxyFor,basis:'typed candidates, chosen by the measurement words'};
+ if(fits.length===1)return {measureId:fits[0].id,outcomes:fits[0].outcomes,candidates:ids,proxyFor,basis:'the only taught measurement of this quantity'};
+ return {measureId:null,outcomes:[],candidates:ids,proxyFor,basis:'several taught measurements of this quantity; the words do not choose'};
 }
