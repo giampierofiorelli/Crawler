@@ -257,6 +257,8 @@ export interface TypedQuantity {surface:string;value:number|null;low?:number;hig
  weighting:string|null;reference:string|null;conditions:TypedCondition[];missingConditions:string[];unresolved:string[];knowledge:string;
  /** The source document and the protocol statement that covers the value, when known. */
  source:string|null;protocol:string|null;cohort:string|null;
+ /** The product the value is attributed to, when the reader established it. */
+ product:string|null;
  /** KR2: which nearby texts were read for this value and which were excluded by the scope rules, with the derivation. */
  contextScope:{applied:string[];excluded:string[];derivation:string[]}|null}
 const toSi=(u:ParsedUnit,v:number|null|undefined)=>v==null?null:u.level?v:v*u.factor+u.offset;
@@ -400,7 +402,7 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   si:q.unit.level?{value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{})}:{value:toSi(q.unit,q.value),...(q.low!==undefined?{low:toSi(q.unit,q.low)!,high:toSi(q.unit,q.high)!}:{})},
   kind:{id:kind,candidates,basis:kindBasis,justification},metric:{id:metricId,candidates:metricCands,basis:metricBasis},
   weighting:q.unit.level?.weighting??null,reference:q.unit.level?.reference??(kind?qk.kinds.get(kind)!.reference??null:null),
-  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef,cohort:ctx.cohort??null,contextScope:scope?{applied:scope.applied,excluded:scope.excluded,derivation:scope.derivation}:null};
+  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef,cohort:ctx.cohort??null,product:ctx.product??null,contextScope:scope?{applied:scope.applied,excluded:scope.excluded,derivation:scope.derivation}:null};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -422,14 +424,14 @@ export interface ComparisonResult {verdict:Comparability;reasons:string[];a:numb
  * category rules: a different kind or metric, an unestablished weighting, a conventional basis, a condition. */
 export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQuantity):ComparisonResult&{rules:string[];derivation:string[]}{
  // KR: the decision is program `compare` of rules.v1.json; the code states each value's facts and reads the verdict.
- const F:Record<string,(string|number)[][]>={value:[['a'],['b']],metric_label:[],candidate_kind:[],kind_of:[],metric_of:[],not_equivalent:[],level_value:[],weighting:[],conventional_basis:[],unit_expression:[],required_condition:[],stated_condition:[],presented_test:[],kind_unjustified:[]};
+ const F:Record<string,(string|number)[][]>={value:[['a'],['b']],metric_label:[],candidate_kind:[],kind_of:[],metric_of:[],not_equivalent:[],level_value:[],weighting:[],conventional_basis:[],unit_expression:[],required_condition:[],stated_condition:[],presented_test:[],value_product:[],kind_unjustified:[]};
  for(const [v,q] of [['a',a],['b',b]] as const){
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)F.candidate_kind.push([v,k]);if(q.kind.id)F.kind_of.push([v,q.kind.id]);
   if(q.metric.id){F.metric_of.push([v,q.metric.id]);F.metric_label.push([q.metric.id,qk.metrics.get(q.metric.id)!.label]);for(const n of qk.metrics.get(q.metric.id)!.notEquivalentTo??[])F.not_equivalent.push([q.metric.id,n],[n,q.metric.id]);}
   if(q.unit.level){F.level_value.push([v]);if(q.weighting)F.weighting.push([v,q.weighting]);}
   if(q.unit.conventional)F.conventional_basis.push([v]);F.unit_expression.push([v,q.unit.expression]);
   for(const x of q.missingConditions)F.required_condition.push([v,x]);for(const c of q.conditions)F.stated_condition.push([v,c.axis,c.value]);
-  if(q.cohort)F.presented_test.push([v,q.cohort]);if(q.kind.justification.type==='insufficient')F.kind_unjustified.push([v]);}
+  if(q.cohort)F.presented_test.push([v,q.cohort]);if(q.product)F.value_product.push([v,q.product]);if(q.kind.justification.type==='insufficient')F.kind_unjustified.push([v]);}
  const m=evaluate(qk.rules.get('compare')!,F,{record:`the record of the pair a="${a.surface}", b="${b.surface}"`});
  const verdicts=m.all('verdict');if(!verdicts.length)throw Error('compare rules reached no verdict');
  const verdict=verdicts[0].args[0] as Comparability;

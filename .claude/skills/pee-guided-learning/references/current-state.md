@@ -34,7 +34,9 @@ Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowl
 - **KR / S56:** declarative rules in `src/knowledge_rules.ts` and `resources/quantity-knowledge/rules.v1.json`
   (programs `kind`, `compare`; identity `qk.2.2+kr.1:…`). Check equivalence with
   `scripts/kr-equivalence.mjs LABEL REFERENCE_ROOT` before any rule change.
-- **Open:** D19, D20, D21, D22, D23, D24 (v2 knowledge reported but used by no decision; class scale needs a registry
+- **KV / S59:** first unseen validation (`evaluation/kr-unseen/`, `scripts/kr-unseen-eval.mjs`): 7 pages, only 1 with table values.
+  Kinds transfer; conditions in cells and comparability do not. P2 adopted (TUNED).
+- **Open:** D19, D20, D21, D22, D23, D24, D25 (v2 knowledge reported but used by no decision; class scale needs a registry
   category).
 
 ## 000000000000000000000000. Typed quantity knowledge GK (2026-10-18) — read first

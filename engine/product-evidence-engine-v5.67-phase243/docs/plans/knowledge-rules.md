@@ -164,3 +164,11 @@ Other results:
 - Kind discriminators (local) and typed kindEvidence (scoped) overlap.
 - No operational decision consumes the rule verdicts yet.
 - No unseen pages have been tested.
+
+## 7. First validation on unseen sources (KV)
+
+See `docs/plans/kr-unseen-validation.md`:
+- kind identification transferred (0 unjustified interpretations or abstentions);
+- conditions in table cells and comparability did not transfer;
+- coverage outside tables is the first obstacle;
+- principle P2 (within-source comparability is between products) was adopted in the rule data, TUNED.

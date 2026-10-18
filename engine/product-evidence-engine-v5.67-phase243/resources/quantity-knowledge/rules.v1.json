@@ -977,9 +977,9 @@
     },
     {
      "id": "Q14",
-     "rule": "one_presented_test(C) :- presented_test(a,C), presented_test(b,C), not kind_unjustified(a), not kind_unjustified(b).",
-     "statement": "a and b are printed in one test their source presents.",
-     "source": "K10"
+     "rule": "one_presented_test(C) :- presented_test(a,C), presented_test(b,C), value_product(a,P), value_product(b,Q), P != Q, not kind_unjustified(a), not kind_unjustified(b).",
+     "statement": "a and b are printed in one test their source presents, for different products. Two values of one product under the same labels are different tests, told apart by something the record does not show (KV P2, unseen-validation finding).",
+     "source": "K10; KV P2 (2026-10-18)"
     },
     {
      "id": "F1",

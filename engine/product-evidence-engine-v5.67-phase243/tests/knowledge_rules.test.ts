@@ -79,3 +79,12 @@ test('KR2 context scope: a nearby paragraph about another product is not read fo
  const r=rulesFile();const sc=r.programs.find(p=>p.id==='scope')!;sc.rules=sc.rules.filter(x=>x.id!=='X2');
  const b2=levels(h,loadQuantityKnowledge(undefined,r)).find(x=>x.product==='Beta B2')!.quantity!;assert.ok(b2.conditions.some(c=>c.axis==='measurement_distance'));
 });
+
+test('KV P2: within-source comparability is between products of one test; one product under the same labels is two tests', ()=>{
+ const h=`<html><body><h1>Review</h1><table><tr><th>Test</th><th>Alpha A1</th><th>Beta B2</th></tr><tr><td>Sound pressure level</td><td>45 dBA<br>52 dBA</td><td>47 dBA</td></tr></table></body></html>`;
+ const qk=loadQuantityKnowledge();const o=interpretWithKnowledge1G(h,qk).tables.flatMap(t=>t.observations).filter(x=>x.quantity?.unit.level);
+ const a1=o.filter(x=>x.product==='Alpha A1'),b=o.find(x=>x.product==='Beta B2')!;
+ assert.equal(a1.length,2);
+ assert.equal(compareQuantities(qk,a1[0].quantity!,a1[1].quantity!).verdict,'comparable_conditions_unestablished','two values of Alpha A1 under one label: something unshown tells them apart');
+ assert.equal(compareQuantities(qk,a1[0].quantity!,b.quantity!).verdict,'comparable_within_source');
+});
