@@ -478,3 +478,11 @@ values only; for other values, a statement restating the value is required.
   - it is not scoped by the products a statement names.
   
   The formal-rule evaluation below proposes making each such scope an explicit, tested rule.
+
+## K11. Decisions moved into declarative rules (2026-10-18)
+
+See `docs/plans/knowledge-rules.md`:
+- scope, kind justification and comparability are now rules (`resources/quantity-knowledge/rules.v1.json`, engine
+  `src/knowledge_rules.ts`);
+- every earlier decision is reproduced on the 69 pages;
+- two scope defects and one duplication were found and fixed.

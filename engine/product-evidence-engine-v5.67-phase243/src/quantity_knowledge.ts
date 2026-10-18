@@ -17,6 +17,7 @@
  */
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {compileRuleSet,evaluate,explain,type RuleSet,type CompiledProgram,type Model,type Fact} from './knowledge_rules.js';
 
 export const QUANTITY_KNOWLEDGE_SCHEMA='pee.quantity-knowledge.v1';
 type Dim=Partial<Record<string,number>>;
@@ -47,7 +48,9 @@ export interface QuantityPack {schema:string;version:string;statement:string;dim
  language:{en:{min:string[];minAfter:string[];max:string[];maxAfter:string[];perWords:string[];exponentWords:Record<string,number>;increaseComparatives:string[];decreaseComparatives:string[];
   labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[]}}}
 
-export interface QuantityKnowledge {pack:QuantityPack;digest:string;identity:string;kinds:Map<string,KindDef>;metrics:Map<string,MetricDef>;axes:Map<string,AxisDef>;methods:Map<string,MethodDef>;
+export interface QuantityKnowledge {pack:QuantityPack;digest:string;identity:string;
+ /** KR: compiled declarative rules (programs `kind` and `compare`) and their version. */
+ rules:Map<string,CompiledProgram>;ruleSetVersion:string;kinds:Map<string,KindDef>;metrics:Map<string,MetricDef>;axes:Map<string,AxisDef>;methods:Map<string,MethodDef>;
  atomForms:{form:string;atom:AtomDef;lower:string}[];levelForms:{form:string;unit:LevelUnitDef;lower:string}[]}
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
@@ -69,8 +72,13 @@ export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
 /** The default pack. v1 stays loadable (pass its JSON) to reproduce readings identified by qk.1. */
 export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v2.json';
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
-export function loadQuantityKnowledge(pack?:unknown):QuantityKnowledge{
+/** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
+export const DEFAULT_KNOWLEDGE_RULES='rules.v1.json';
+export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnowledge{
  const raw=pack??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_QUANTITY_PACK,import.meta.url),'utf8'));
+ const ruleSet=(rules??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_KNOWLEDGE_RULES,import.meta.url),'utf8'))) as RuleSet;
+ let programs:Map<string,CompiledProgram>;try{programs=compileRuleSet(ruleSet);}catch(e){throw Error('quantity_knowledge_invalid: rules: '+(e as Error).message);}
+ for(const id of ['kind','compare'])if(!programs.has(id))throw Error('quantity_knowledge_invalid: rules: program '+id+' missing');
  const p=raw as QuantityPack;const fail=(m:string):never=>{throw Error('quantity_knowledge_invalid: '+m);};
  if(!p||p.schema!==QUANTITY_KNOWLEDGE_SCHEMA)fail('schema');
  const src=new Set(p.sources.map(s=>s.id));const basis=new Set(p.dimensionBasis);
@@ -100,10 +108,10 @@ export function loadQuantityKnowledge(pack?:unknown):QuantityKnowledge{
   if((e.justification==='documented_method'||e.justification==='standard')&&!e.covers?.length)fail(`a document-wide ${e.justification} for ${e.kind} must say which values it covers`);}
  for(const sc of p.scales??[]){if(!src.has(sc.source))fail('source of scale '+sc.id);if(!sc.values.includes(sc.best))fail('best of '+sc.id);if(sc.metric&&!metricIds.has(sc.metric))fail('metric of scale '+sc.id);
   for(const n of sc.notComparableWith??[])if(!(p.scales??[]).some(x=>x.id===n))fail(`scale ${n} of ${sc.id}`);}
- const digest=sha(JSON.stringify(p));
+ const digest=sha(JSON.stringify(p)+'\n'+JSON.stringify(ruleSet));
  const atomForms=p.units.flatMap(atom=>atom.forms.map(form=>({form,atom,lower:form.toLowerCase()}))).sort((a,b)=>b.form.length-a.form.length);
  const levelForms=p.levelUnits.flatMap(unit=>unit.forms.map(form=>({form,unit,lower:form.toLowerCase()}))).sort((a,b)=>b.form.length-a.form.length);
- return {pack:p,digest,identity:`${p.version}:${digest.slice(0,16)}`,kinds:new Map(p.kinds.map(k=>[k.id,k])),metrics:new Map(p.metrics.map(m=>[m.id,m])),
+ return {pack:p,digest,rules:programs,ruleSetVersion:ruleSet.version,identity:`${p.version}+${ruleSet.version}:${digest.slice(0,16)}`,kinds:new Map(p.kinds.map(k=>[k.id,k])),metrics:new Map(p.metrics.map(m=>[m.id,m])),
   axes:new Map(p.conditionAxes.map(a=>[a.id,a])),methods:new Map((p.methods??[]).map(m=>[m.id,m])),atomForms,levelForms};
 }
 
@@ -219,8 +227,14 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
 // ---------------------------------------------------------------------------------------------------------------------
 // Typing a quantity in its context.
 export interface QuantityContext {labels?:readonly string[];conditions?:readonly string[];context?:readonly string[];
- /** KN K9: statements the document makes once (test protocol, declared scheme), each with a reference to where it is. */
- protocol?:readonly {text:string;ref:string;inTable?:boolean}[];
+ /** KR: the document's text blocks that may state how values were obtained (each with a reference), the order of
+  * blocks within sections, the product names the document's tables use, and which blocks are notes of the value's table. */
+ document?:DocumentStatements;tableNotes?:readonly string[];
+ /** The product the value is attributed to. */
+ product?:string|null;
+ /** KR scope: the context that frames every value of the table (caption, heading). When given, only it and the value's
+  * own labels decide the kind locally; nearby paragraphs are document statements, applied through the scope rules. */
+ frame?:readonly string[];
  /** The value's evidence class: says which document-wide statements cover it (a reviewer's instrument covers its readings, not a maker's spec). */
  evidenceClass?:string;
  /** Identity of the source document. */
@@ -228,56 +242,74 @@ export interface QuantityContext {labels?:readonly string[];conditions?:readonly
  /** KN K10: the test the publisher presents the value under (source, table and every non-product label). Only values of
   * one presented test share the conditions the source leaves unstated; a common source or protocol does not. */
  cohort?:string}
+export interface DocumentStatements {blocks:readonly {ref:string;text:string}[];next:readonly (readonly [string,string])[];products:readonly string[]}
 export interface TypedCondition {axis:string;value:string;raw:string;from:'labels'|'conditions'|'context'|'method'}
 export interface TypedQuantity {surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit;
  si:{value:number|null;low?:number;high?:number}|null;
  kind:{id:string|null;candidates:string[];basis:string[];
   /** KN K9: how the kind is justified, where, by which words. */
-  justification:{type:KindJustification;from:'unit'|'labels'|'context'|'protocol'|null;evidence:string[];ref:string|null}};metric:{id:string|null;candidates:string[];basis:string[]};
+  justification:{type:KindJustification;from:'unit'|'labels'|'context'|'protocol'|null;evidence:string[];ref:string|null;
+   /** KR: the rules the conclusion rests on, and the readable derivation. */
+   rules:string[];derivation:string[]}};metric:{id:string|null;candidates:string[];basis:string[]};
  weighting:string|null;reference:string|null;conditions:TypedCondition[];missingConditions:string[];unresolved:string[];knowledge:string;
  /** The source document and the protocol statement that covers the value, when known. */
  source:string|null;protocol:string|null;cohort:string|null}
 const toSi=(u:ParsedUnit,v:number|null|undefined)=>v==null?null:u.level?v:v*u.factor+u.offset;
 function distanceIn(qk:QuantityKnowledge,texts:readonly string[]):boolean{const ax=qk.axes.get('measurement_distance');if(!ax)return false;
  return texts.some(t=>findQuantities(qk,t).some(f=>f.unit.kinds.includes('length')&&(ax.cues??[]).some(c=>hasPhrase(t.slice(Math.max(0,f.start-24),f.end+12),c))));}
-/** Support for each candidate kind from the document's own statements (KN K9): a statement restating this value speaks
- * about it directly; a method note in the value's table covers it; a document-wide statement covers the evidence classes
- * the knowledge names. Explicit names of another kind elsewhere in the document are returned as possible defeaters. */
-function protocolSupport(qk:QuantityKnowledge,q:{value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext,candidates:readonly string[]){
- const sup=new Map<string,{type:KindJustification;evidence:string[];refs:string[]}>();const explicitIn=new Set<string>();
- const nums=[q.value,q.low,q.high].filter((x):x is number=>typeof x==='number');
- const hitT=(t:string,terms:readonly string[])=>terms.filter(x=>hasPhrase(t,x));
- for(const st of ctx.protocol??[]){
-  const restates=findQuantities(qk,st.text).some(f=>!!f.unit.level===!!q.unit.level&&nums.some(n=>n===f.value||n===f.low||n===f.high));
-  for(const e of qk.pack.kindEvidence??[]){if(!candidates.includes(e.kind)||e.justification==='contextual')continue;const h=hitT(st.text,e.terms);if(!h.length)continue;
-   // the statement must be about this measurand ("noise", "sound"), not another instrument of the same document
-   if(!hitT(st.text,qk.kinds.get(e.kind)!.terms??[]).length)continue;
-   const add=()=>{const x=sup.get(e.kind)??{type:e.justification as KindJustification,evidence:[],refs:[]};if(RANK[e.justification]>RANK[x.type])x.type=e.justification;x.evidence.push(...h);x.refs.push(st.ref+(restates?' (restates the value)':''));sup.set(e.kind,x);};
-   if(e.justification==='explicit'){if(restates)add();else explicitIn.add(e.kind);continue;}
-   if(restates||st.inTable||(ctx.evidenceClass&&e.covers?.includes(ctx.evidenceClass)))add();}}
- return {sup,explicitIn};
+/** KR: per-document facts, computed once per document object: which blocks carry typed kind evidence, name a measurand
+ * or a product, and the block order. */
+const docFactCache=new WeakMap<DocumentStatements,{evidence:string[][];measurand:string[][];products:string[][];next:string[][];texts:Map<string,string>}>();
+function documentFacts(qk:QuantityKnowledge,d:DocumentStatements){
+ const c=docFactCache.get(d);if(c)return c;
+ const evidence:string[][]=[],measurand:string[][]=[],products:string[][]=[];
+ for(const b of d.blocks){for(const e of qk.pack.kindEvidence??[])for(const t of e.terms)if(hasPhrase(b.text,t))evidence.push([b.ref,e.kind,e.justification,t]);
+  for(const k of qk.pack.kinds)if((k.terms??[]).some(t=>hasPhrase(b.text,t)))measurand.push([b.ref,k.id]);
+  for(const p of d.products)if(p&&hasPhrase(b.text,p))products.push([b.ref,p]);}
+ const out={evidence,measurand,products,next:d.next.map(x=>[x[0],x[1]]),texts:new Map(d.blocks.map(b=>[b.ref,b.text]))};docFactCache.set(d,out);return out;
 }
-const RANK:Record<string,number>={explicit:4,standard:3,documented_method:2,contextual:1};
-/** The strongest justification of an established kind: the unit itself, the value's own words (by the type the knowledge
- * gives them), the document's protocol, or a weaker contextual cue. */
-function justifyKind(qk:QuantityKnowledge,unit:ParsedUnit,kind:string|null,basis:readonly string[],own:readonly string[],context:readonly string[],proto:{type:KindJustification;evidence:string[]}|null,ref:string|null):TypedQuantity['kind']['justification']{
- if(!kind)return {type:'insufficient',from:null,evidence:[],ref:null};
- if(proto)return {type:proto.type,from:'protocol',evidence:proto.evidence,ref};
- if(unit.kinds.length===1)return {type:'unit',from:'unit',evidence:[unit.surface],ref:null};
- if(unit.level?.reference)return {type:'explicit',from:'unit',evidence:[unit.surface],ref:null};
- let best:{type:KindJustification;from:'labels'|'context';evidence:string[]}|null=null;
- for(const [texts,from] of [[own,'labels'],[context,'context']] as const)for(const e of (qk.pack.kindEvidence??[]).filter(e=>e.kind===kind)){
-  const h=e.terms.filter(t=>texts.some(x=>hasPhrase(x,t)));if(h.length&&(!best||RANK[e.justification]>RANK[best.type]))best={type:e.justification,from,evidence:h};}
- if(best)return {...best,ref:null};
- // decided by a metric the labels name (an energy label metric) or by discriminating words the evidence list does not type
- const named=basis.find(b=>/name /.test(b));if(named)return {type:named.startsWith('labels')?'explicit':'contextual',from:named.startsWith('labels')?'labels':'context',evidence:[named],ref:null};
- return {type:'contextual',from:'context',evidence:[...basis],ref:null};
+const foundCache=new WeakMap<QuantityKnowledge,Map<string,FoundQuantity[]>>();
+const foundIn=(qk:QuantityKnowledge,text:string)=>{let m=foundCache.get(qk);if(!m){m=new Map();foundCache.set(qk,m);}let f=m.get(text);if(!f){f=findQuantities(qk,text);m.set(text,f);}return f;};
+/** Facts for program `kind`, and its conclusions: a kind settled by the document, a document conflict, and the
+ * strongest justification with the rules and derivation behind it. */
+function kindRules(qk:QuantityKnowledge,q:{value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext,
+ v:{candidates:readonly string[];metricNamed:{kind:string;from:string;metric:string}|null;refKind:string|null;own:readonly string[];context:readonly string[]}){
+ const o='o';const F:Record<string,(string|number)[][]>={value:[[o]],candidate_kind:v.candidates.map(k=>[o,k])};
+ if(v.candidates.length===1)F.local_kind=[[o,v.candidates[0]]];
+ if(q.unit.kinds.length===1)F.unit_only_kind=[[o,q.unit.kinds[0]]];
+ if(v.refKind)F.unit_reference_kind=[[o,v.refKind]];
+ if(v.metricNamed)F.metric_named=[[o,v.metricNamed.kind,v.metricNamed.from,v.metricNamed.metric]];
+ F.local_evidence=[];for(const e of qk.pack.kindEvidence??[]){if(!v.candidates.includes(e.kind))continue;
+  for(const [texts,from] of [[v.own,'labels'],[v.context,'context']] as const)for(const t of e.terms)if(texts.some(x=>hasPhrase(x,t)))F.local_evidence.push([o,e.kind,e.justification,from,t]);}
+ if(ctx.evidenceClass)F.evidence_class=[[o,ctx.evidenceClass]];
+ if(ctx.product)F.value_product=[[o,ctx.product]];
+ F.covers_class=(qk.pack.kindEvidence??[]).flatMap(e=>(e.covers??[]).map(c=>[e.kind,e.justification,c]));
+ if(ctx.document){const d=documentFacts(qk,ctx.document);F.block_evidence=d.evidence;F.block_measurand=d.measurand;F.block_names_product=d.products;F.next_block=d.next;
+  const nums=[q.value,q.low,q.high].filter((x):x is number=>typeof x==='number');
+  F.block_restates=[...d.texts].filter(([,t])=>foundIn(qk,t).some(f=>!!f.unit.level===!!q.unit.level&&nums.some(n=>n===f.value||n===f.low||n===f.high))).map(([ref])=>[ref,o]);
+  F.block_in_table=(ctx.tableNotes??[]).map(ref=>[ref,o]);}
+ const m=evaluate(qk.rules.get('kind')!,F);
+ const byDoc=m.match('kind_by_document',[o,null]);
+ const conflict=v.candidates.length>1&&m.has('document_conflict',[o])?[...new Set([...m.match('supported',[o,null]),...m.match('names_kind_elsewhere',[o,null])].map(f=>f.args[1]))]:null;
+ const best=m.match('best_justification',[o,null,null,null]);
+ let justification:TypedQuantity['kind']['justification'];
+ if(!best.length)justification={type:'insufficient',from:null,evidence:[],ref:null,rules:m.match('kind_unjustified',[o]).flatMap(f=>m.rulesOf(f)),derivation:m.match('kind_unjustified',[o]).flatMap(f=>m.why(f))};
+ else{const t=best[0].args[1] as KindJustification,from=best[0].args[2] as TypedQuantity['kind']['justification']['from'];const xs=[...new Set(best.map(f=>f.args[3]))];
+  let evidence=xs,ref:string|null=null;
+  if(from==='protocol'){const kinds=m.match('kind_of',[o,null]).map(f=>f.args[1]);
+   evidence=[...new Set(xs.flatMap(sx=>kinds.flatMap(k=>m.match('statement_says',[sx,k,t,null]).map(f=>f.args[3]))))];
+   ref=xs.map(sx=>sx+(m.has('statement_restates',[sx,o])?' (restates the value)':'')).join(',');}
+  else if(from==='unit')evidence=[q.unit.surface];
+  justification={type:t,from,evidence,ref,rules:[...new Set(best.flatMap(f=>m.rulesOf(f)))],derivation:best.flatMap(f=>m.why(f))};}
+ return {byDocument:byDoc.length===1?byDoc[0].args[1]:null,conflict,justification};
 }
 /** Type one quantity: its kind (from the unit, then from discriminating words), the metric its labels name, the
  * conditions the knowledge requires and which of them the context states. Nothing is guessed: ambiguity stays explicit. */
 export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext={}):TypedQuantity{
  const labels=[...(ctx.labels??[])],conds=[...(ctx.conditions??[])],context=[...(ctx.context??[])];
  const own=[...labels,...conds];const all=[...own,...context];
+ // words that decide the kind locally: the value's own labels and the table's frame (all the context without a frame)
+ const kindCtx=ctx.frame?[...ctx.frame]:context;const kindAll=[...own,...kindCtx];
  const hit=(texts:readonly string[],terms:readonly string[]=[])=>terms.filter(t=>texts.some(x=>hasPhrase(x,t)));
  const unresolved:string[]=[];const kindBasis:string[]=[];
  let candidates=[...q.unit.kinds];
@@ -290,33 +322,27 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
  if(incompatible.length&&!compatible.length&&mFrom==='labels')unresolved.push(`metric: the labels name ${incompatible.map(x=>x.m.id).join(', ')} but the unit ${q.unit.surface} cannot express it`);
  // A metric named in a label settles the kind ("energy label" -> sound power level).
  const metricKinds=[...new Set(compatible.map(x=>x.m.kind))];
- if(candidates.length>1&&metricKinds.length===1){candidates=metricKinds;kindBasis.push(`${mFrom} name ${compatible.find(x=>x.m.kind===metricKinds[0])!.m.id}`);}
- if(q.unit.level&&q.unit.level.reference){const ref=qk.pack.kinds.find(k=>k.reference===q.unit.level!.reference);if(ref&&candidates.includes(ref.id)){candidates=[ref.id];kindBasis.push(`unit reference ${q.unit.level.reference}`);}}
+ let metricNamed:{kind:string;from:string;metric:string}|null=null;
+ if(candidates.length>1&&metricKinds.length===1){const mid=compatible.find(x=>x.m.kind===metricKinds[0])!.m.id;candidates=metricKinds;metricNamed={kind:metricKinds[0],from:mFrom,metric:mid};kindBasis.push(`${mFrom} name ${mid}`);}
+ let refKind:string|null=null;
+ if(q.unit.level&&q.unit.level.reference){const ref=qk.pack.kinds.find(k=>k.reference===q.unit.level!.reference);if(ref&&candidates.includes(ref.id)){candidates=[ref.id];refKind=ref.id;kindBasis.push(`unit reference ${q.unit.level.reference}`);}}
  if(candidates.length>1){
   // words that name a kind family first ("noise" excludes signal-to-noise), then discriminators ("sound power", "3 ft away")
-  const termHit=candidates.filter(k=>{const d=qk.kinds.get(k)!;return hit(all,[...d.terms,...(d.comparatives?.max??[]),...(d.comparatives?.min??[])]).length;});if(termHit.length&&termHit.length<candidates.length)candidates=termHit;
-  const disc=candidates.map(k=>({k,t:[...hit(all,qk.kinds.get(k)!.discriminators??[]),...((qk.kinds.get(k)!.requires??[]).includes('measurement_distance')&&distanceIn(qk,all)?['a stated measurement distance']:[])]})).filter(x=>x.t.length);
+  const termHit=candidates.filter(k=>{const d=qk.kinds.get(k)!;return hit(kindAll,[...d.terms,...(d.comparatives?.max??[]),...(d.comparatives?.min??[])]).length;});if(termHit.length&&termHit.length<candidates.length)candidates=termHit;
+  const disc=candidates.map(k=>({k,t:[...hit(kindAll,qk.kinds.get(k)!.discriminators??[]),...((qk.kinds.get(k)!.requires??[]).includes('measurement_distance')&&distanceIn(qk,kindAll)?['a stated measurement distance']:[])]})).filter(x=>x.t.length);
   if(disc.length===1){candidates=[disc[0].k];kindBasis.push(`discriminating words: ${disc[0].t.join(', ')}`);}
   else if(disc.length>1)unresolved.push(`kind: evidence for several kinds (${disc.map(d=>d.k+': '+d.t.join(', ')).join('; ')})`);
  }
-  // KN K9: defeasible document protocol. When the value's own words leave the kind open, a statement the document makes
- // once (an instrument of its tests, the scheme it declares under) settles it for the values it covers (by evidence
- // class). It never overrides the value's own words, and it yields nothing when the document supports several kinds.
- let protoRef:string|null=null;let protoEv:{type:KindJustification;evidence:string[]}|null=null;
- if(candidates.length>1&&ctx.protocol?.length){
-  const {sup,explicitIn}=protocolSupport(qk,q,ctx,candidates);
-  const kinds=[...sup.keys()];const others=[...explicitIn].filter(k=>!kinds.includes(k));
-  if(kinds.length===1&&!others.length){const k=kinds[0],x=sup.get(k)!;candidates=[k];protoRef=[...new Set(x.refs)].join(',');protoEv={type:x.type,evidence:[...new Set(x.evidence)]};
-   kindBasis.push(`the document's ${x.type==='standard'?'declared scheme':'test protocol'} (${protoRef}): ${protoEv.evidence.join(', ')}`);
-   for(let i=unresolved.length-1;i>=0;i--)if(unresolved[i].startsWith('kind:'))unresolved.splice(i,1);}
-  else if(kinds.length+others.length>1)unresolved.push(`kind: the document's statements support several kinds (${[...kinds,...others].join(', ')})`);}
- // KN correction (owner review 2026-10-18): that a source measured a value does not decide pressure or power (a laboratory
- // or an EU label reports a determined sound power as its result). Only the source's own words decide (discriminators above).
+ // KR: the document's statements, their scope and the kind's justification are decided by the declarative rules
+ // (program `kind` of rules.v1.json). The code above only reads the value's own unit and words; the code here only
+ // states facts and reads conclusions back.
+ const R=kindRules(qk,q,ctx,{candidates,metricNamed,refKind,own,context:kindCtx});
+ if(R.byDocument){candidates=[R.byDocument];kindBasis.push(`the document's ${R.justification.type==='standard'?'declared scheme':'test protocol'} (${R.justification.ref}): ${R.justification.evidence.join(', ')}`);
+  for(let i=unresolved.length-1;i>=0;i--)if(unresolved[i].startsWith('kind:'))unresolved.splice(i,1);}
+ else if(R.conflict)unresolved.push(`kind: the document's statements support several kinds (${R.conflict.join(', ')})`);
  const kind=candidates.length===1?candidates[0]:null;
- let justification=justifyKind(qk,q.unit,kind,kindBasis,own,context,protoEv,protoRef);
- // the value's own words settled the kind; a stronger statement of the document for the same kind is the better justification
- if(kind&&!protoEv&&ctx.protocol?.length&&RANK[justification.type]!==undefined){const {sup}=protocolSupport(qk,q,ctx,[kind]);const x=sup.get(kind);
-  if(x&&RANK[x.type]>RANK[justification.type]){protoRef=[...new Set(x.refs)].join(',');justification={type:x.type,from:'protocol',evidence:[...new Set(x.evidence)],ref:protoRef};}}
+ const justification=kind?{...R.justification,evidence:R.justification.from==='context'&&R.justification.evidence[0]==='discriminators'?[...kindBasis]:R.justification.evidence}:R.justification;
+ const protoRef=justification.from==='protocol'?justification.ref:null;
  if(!kind)unresolved.push(candidates.length?`kind: ${q.unit.surface} can express ${candidates.join(' or ')}; nothing here says which`:`kind: no known quantity is expressed in ${q.unit.surface}`);
  let metricCands=[...new Set(compatible.filter(x=>!kind||x.m.kind===kind).map(x=>x.m.id))];
  // the most specific name wins when one metric's matched words contain another's ("max room size" over "room size")
@@ -374,29 +400,26 @@ export type Comparability='comparable'|'comparable_within_source'|'comparable_co
 export interface ComparisonResult {verdict:Comparability;reasons:string[];a:number|null;b:number|null;unit:string|null}
 /** Whether two quantities can be compared, and on which common scale. The reasons come from the knowledge, not from
  * category rules: a different kind or metric, an unestablished weighting, a conventional basis, a condition. */
-export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQuantity):ComparisonResult{
- const no=(why:string):ComparisonResult=>({verdict:'not_comparable',reasons:[why],a:null,b:null,unit:null});
- const und=(why:string):ComparisonResult=>({verdict:'undetermined',reasons:[why],a:null,b:null,unit:null});
- const ka=a.kind.id?[a.kind.id]:a.kind.candidates,kb=b.kind.id?[b.kind.id]:b.kind.candidates;
- if(!ka.some(k=>kb.includes(k)))return no(`different quantities: ${ka.join('/')||'unknown'} vs ${kb.join('/')||'unknown'}`);
- if(!a.kind.id||!b.kind.id||a.kind.id!==b.kind.id)return und(`which quantity is meant is not established (${ka.join(' or ')} vs ${kb.join(' or ')})`);
- const ma=a.metric.id,mb=b.metric.id;
- if(ma&&mb&&ma!==mb){const m=qk.metrics.get(ma)!;return no(`different metrics: ${ma} vs ${mb}${m.notEquivalentTo?.includes(mb)?' (the knowledge says they are not equivalent)':''}`);}
- if((ma||mb)&&!(ma&&mb)){const m=qk.metrics.get((ma??mb)!)!;return und(`only one side is established as ${m.label}; the other is a ${a.kind.id.replace(/_/g,' ')} of unstated definition`);}
- if((a.unit.level||b.unit.level)&&a.weighting!==b.weighting)return a.weighting==='unspecified'||b.weighting==='unspecified'?und(`frequency weighting not established on both sides (${a.weighting} vs ${b.weighting})`):no(`different frequency weightings (${a.weighting} vs ${b.weighting})`);
- if((a.unit.conventional||b.unit.conventional)&&a.unit.expression!==b.unit.expression)return no(`different reporting bases (${a.unit.expression} vs ${b.unit.expression}); a conventional basis is not converted`);
- const req=[...new Set([...a.missingConditions,...b.missingConditions,...a.conditions.map(c=>c.axis),...b.conditions.map(c=>c.axis)])];
- const unest:string[]=[];
- for(const ax of req){const ca=a.conditions.filter(c=>c.axis===ax).map(c=>c.value),cb=b.conditions.filter(c=>c.axis===ax).map(c=>c.value);
-  if(ca.length&&cb.length){if(!ca.some(v=>cb.includes(v)))return no(`different ${ax.replace(/_/g,' ')}: ${ca.join('/')} vs ${cb.join('/')}`);}
-  else unest.push(ax.replace(/_/g,' '));}
- const unit=a.unit.level?a.unit.expression:'SI';const av=a.si?.value??null,bv=b.si?.value??null;
- // KN K10 (owner review): a common source or protocol does not make unstated conditions equal. Only values the source
- // presents as one test (same table, same labels apart from the product) share them; they compare with each other,
- // never with other sources.
- if(unest.length&&a.cohort&&a.cohort===b.cohort&&a.kind.justification.type!=='insufficient')return {verdict:'comparable_within_source',reasons:[`same quantity in one test the source presents (${a.cohort.split('#').slice(1).join(' / ')}); not established: ${unest.join(', ')}, so not comparable with other sources or other tests of this source`],a:av,b:bv,unit};
- if(unest.length)return {verdict:'comparable_conditions_unestablished',reasons:[`same quantity; not established on both sides: ${unest.join(', ')}`],a:av,b:bv,unit};
- return {verdict:'comparable',reasons:['same quantity, metric and conditions'],a:av,b:bv,unit};
+export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQuantity):ComparisonResult&{rules:string[];derivation:string[]}{
+ // KR: the decision is program `compare` of rules.v1.json; the code states each value's facts and reads the verdict.
+ const F:Record<string,(string|number)[][]>={value:[['a'],['b']],candidate_kind:[],kind_of:[],metric_of:[],not_equivalent:[],level_value:[],weighting:[],conventional_basis:[],unit_expression:[],required_condition:[],stated_condition:[],presented_test:[],kind_unjustified:[]};
+ for(const [v,q] of [['a',a],['b',b]] as const){
+  for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)F.candidate_kind.push([v,k]);if(q.kind.id)F.kind_of.push([v,q.kind.id]);
+  if(q.metric.id){F.metric_of.push([v,q.metric.id]);for(const n of qk.metrics.get(q.metric.id)!.notEquivalentTo??[])F.not_equivalent.push([q.metric.id,n],[n,q.metric.id]);}
+  if(q.unit.level){F.level_value.push([v]);if(q.weighting)F.weighting.push([v,q.weighting]);}
+  if(q.unit.conventional)F.conventional_basis.push([v]);F.unit_expression.push([v,q.unit.expression]);
+  for(const x of q.missingConditions)F.required_condition.push([v,x]);for(const c of q.conditions)F.stated_condition.push([v,c.axis,c.value]);
+  if(q.cohort)F.presented_test.push([v,q.cohort]);if(q.kind.justification.type==='insufficient')F.kind_unjustified.push([v]);}
+ const m=evaluate(qk.rules.get('compare')!,F);
+ const verdicts=m.all('verdict');if(!verdicts.length)throw Error('compare rules reached no verdict');
+ const verdict=verdicts[0].args[0] as Comparability;
+ // the findings behind the verdict: every finding at the deciding stage, explained by its rule's template
+ const stage=m.all('finding').filter(f=>verdicts.some(v=>v.args[1]===f.args[2])).map(f=>f.args[0])[0];
+ const findings=m.all('finding').filter(f=>f.args[0]===stage);
+ const reasons=[...new Set(findings.map(f=>explain(m,f).replace(/_/g,' ')))];
+ const keeps=verdict==='comparable'||verdict==='comparable_within_source'||verdict==='comparable_conditions_unestablished';
+ return {verdict,reasons,a:keeps?a.si?.value??null:null,b:keeps?b.si?.value??null:null,unit:keeps?(a.unit.level?a.unit.expression:'SI'):null,
+  rules:[...new Set(verdicts.flatMap(v=>m.rulesOf(v)))],derivation:verdicts.flatMap(v=>m.why(v))};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

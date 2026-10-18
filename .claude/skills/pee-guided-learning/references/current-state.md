@@ -31,7 +31,10 @@ Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowl
   carry `nature` and `caveat`. Published qk.2 runs are kept (`*-kn-v2*`); corrected runs are `*-kn-v21`.
 - **K9 / S54:** pack `qk.2.2` with `kindEvidence` and document protocols. Adjudication: `scripts/acoustic-ac-eval.mjs LABEL [ENGINE_ROOT]`
   against `evaluation/acoustic-ac/freeze.json`.
-- **Open:** D19, D20, D21, D22, D23 (v2 knowledge reported but used by no decision; class scale needs a registry
+- **KR / S56:** declarative rules in `src/knowledge_rules.ts` and `resources/quantity-knowledge/rules.v1.json`
+  (programs `kind`, `compare`; identity `qk.2.2+kr.1:…`). Check equivalence with
+  `scripts/kr-equivalence.mjs LABEL REFERENCE_ROOT` before any rule change.
+- **Open:** D19, D20, D21, D22, D23, D24 (v2 knowledge reported but used by no decision; class scale needs a registry
   category).
 
 ## 000000000000000000000000. Typed quantity knowledge GK (2026-10-18) — read first
