@@ -1,0 +1,432 @@
+{
+ "schema": "pee.tables1g.metamorphic.v1",
+ "label": "dev-m1",
+ "set": "dev",
+ "at": "2026-10-18T08:19:28.658Z",
+ "interpreter": "pee.table-interpreter.v1g.1",
+ "summary": {
+  "tables": 18,
+  "tested": 18,
+  "transpositionInvariant": 17,
+  "permutationInvariant": 18,
+  "transpositionDifferences": 66,
+  "permutationDifferences": 0,
+  "observations": 317
+ },
+ "tables": [
+  {
+   "id": "S01",
+   "publisher": "which.co.uk",
+   "base": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:property|product",
+    "observations": 8
+   },
+   "transposed": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:product|property",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:property|product",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S02",
+   "publisher": "techradar.com",
+   "base": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:property|product",
+    "observations": 12
+   },
+   "transposed": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:product|property",
+    "observations": 12,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:property|product",
+    "observations": 12,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S03",
+   "publisher": "techradar.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 41
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 41,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 41,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S04",
+   "publisher": "techradar.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|record",
+    "observations": 6
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:record|property",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|record",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S05",
+   "publisher": "trustedreviews.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 4
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 4,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 4,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S06",
+   "publisher": "trustedreviews.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 6
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S07",
+   "publisher": "trustedreviews.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 15
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 15,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 15,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S08",
+   "publisher": "trustedreviews.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 2
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 2,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 2,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S09",
+   "publisher": "housefresh.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|condition",
+    "observations": 4
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c0:condition|-",
+    "observations": 4,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|condition",
+    "observations": 4,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S10",
+   "publisher": "housefresh.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 21
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 21,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 21,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S11",
+   "publisher": "housefresh.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 8
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S12",
+   "publisher": "housefresh.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h2c1:record+product|property",
+    "observations": 30
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c2:property|record+product",
+    "observations": 30,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h2c1:record+product|property",
+    "observations": 30,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S13",
+   "publisher": "tomsguide.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 30
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 30,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 30,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S14",
+   "publisher": "airpurifierfirst.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|condition",
+    "observations": 8
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:condition|product",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|condition",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S15",
+   "publisher": "airpurifierfirst.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|condition",
+    "observations": 20
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:condition|product",
+    "observations": 20,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|condition",
+    "observations": 20,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S16",
+   "publisher": "airpurifierfirst.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 66
+   },
+   "transposed": {
+    "status": "not_interpreted",
+    "hypothesis": null,
+    "observations": 0,
+    "differences": 66,
+    "invariant": false
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 66,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S17",
+   "publisher": "idealhome.co.uk",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 36
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 36,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 36,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "S18",
+   "publisher": "lovemoney.com",
+   "base": {
+    "status": "not_interpreted",
+    "hypothesis": null,
+    "observations": 0
+   },
+   "transposed": {
+    "status": "not_interpreted",
+    "hypothesis": null,
+    "observations": 0,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "not_interpreted",
+    "hypothesis": null,
+    "observations": 0,
+    "differences": 0,
+    "invariant": true
+   }
+  }
+ ]
+}
