@@ -12,7 +12,7 @@ const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/
 const typed=(k:QuantityKnowledge,surface:string,ctx:Parameters<typeof typeQuantity>[2]={})=>{const f=findQuantities(k,surface)[0];assert.ok(f,'no quantity in '+surface);return typeQuantity(k,f,ctx);};
 
 test('pack: validated, sourced and identified by its digest; UCUM is recorded as not used', ()=>{
- assert.match(qk.identity,/^qk\.2:[0-9a-f]{16}$/);
+ assert.match(qk.identity,/^qk\.2\.1:[0-9a-f]{16}$/);
  const p=rawPack();assert.ok(p.sources.find(s=>s.id==='ucum_not_used')!.use.includes('NOT incorporated'));
  for(const k of p.kinds)assert.ok(p.sources.some(s=>s.id===k.source));
  const bad=rawPack();bad.metrics[0].kind='no_such_kind';assert.throws(()=>loadQuantityKnowledge(bad),/quantity_knowledge_invalid/);
@@ -166,6 +166,7 @@ test('v2 pack: every method, relation, scale and source reference resolves; a ba
  for(const x of [...p.methods!,...p.relations!,...p.scales!])assert.ok(ids.has(x.source),x.id+' cites '+x.source);
  for(const m of p.methods!)for(const id of m.measures)assert.ok(p.metrics.some(x=>x.id===id),m.id+' measures '+id);
  const b1=rawPack();b1.relations![0].expression='cadr*60/(ach*nope)';assert.throws(()=>loadQuantityKnowledge(b1),/quantity_knowledge_invalid|unknown name/);
+ const b3=rawPack();delete (b3.relations![0] as {nature?:string}).nature;assert.throws(()=>loadQuantityKnowledge(b3),/nature and caveat/);
  const b2=rawPack();b2.methods![0].measures=['no_such_metric'];assert.throws(()=>loadQuantityKnowledge(b2),/quantity_knowledge_invalid/);
  assert.throws(()=>compileExpression('x+evil()',['x']),/unknown name/);assert.equal(compileExpression('2^3*log10(100)-1',[])({}),15);
 });
@@ -187,11 +188,17 @@ test('v2 labels: a unit stated by a label, a basis named by a label, a unitless 
  assert.equal(typeLabelledNumber(qk,{surface:'1.2',value:1.2},{labels:['Score']}),null);
 });
 
-test('v2 sound: a publisher reading is sound pressure, because sound power is only ever computed (ISO 3741/3744)', ()=>{
- assert.equal(typed(qk,'52 dB(A)',{labels:['Noise level']}).kind.id,null,'without the evidence class the kind stays open');
- const r=typed(qk,'52 dB(A)',{labels:['Noise level'],measuredReading:true});assert.equal(r.kind.id,'sound_pressure_level');assert.match(r.kind.basis[0],/never read directly/);
- assert.equal(typed(qk,'52 dB(A)',{labels:['Sound power level'],measuredReading:true}).kind.id,'sound_power_level','a discriminator still wins');
- const p=rawPack();for(const k of p.kinds)delete k.notDirectlyMeasured;assert.equal(typed(loadQuantityKnowledge(p),'52 dB(A)',{labels:['Noise level'],measuredReading:true}).kind.id,null,'ablation');
+test('acoustics: only the source words decide pressure or power; a bare reading stays ambiguous (owner review 2026-10-18)', ()=>{
+ assert.equal(typed(qk,'45 dBA',{labels:['Noise level']}).kind.id,null,'45 dBA alone: pressure or power, not decided');
+ assert.equal(typed(qk,'45 dBA',{labels:['Noise level'],context:['measured with a sound level meter 1 m away']}).kind.id,'sound_pressure_level');
+ assert.equal(typed(qk,'45 dB(A) re 1 pW',{labels:['Noise']}).kind.id,'sound_power_level');
+ assert.equal(typed(qk,'45 dBA',{labels:['LWA']}).kind.id,'sound_power_level');
+ assert.equal(typed(qk,'45 dBA',{labels:['Noise emission (energy label)']}).kind.id,'sound_power_level','EU 2019/2017 labels declare sound power');
+ // a reading the publisher took is not, by itself, evidence of either kind
+ const H=`<html><body><h2>Our test results</h2><table><tr><th>Test</th><th>Alpha A1</th></tr><tr><td>Noise</td><td>45 dBA</td></tr></table></body></html>`;
+ const o=interpretWithKnowledge1G(H,qk).tables[0].observations.find(x=>x.quantity?.unit.level)!;assert.equal(o.quantity!.kind.id,null);
+ assert.ok(!('notDirectlyMeasured' in qk.kinds.get('sound_power_level')!),'the unjustified marker is gone; the method stays as knowledge');
+ assert.equal(qk.kinds.get('sound_power_level')!.determinedBy,'iso_3741_3744_sound_power');
 });
 
 test('v2 methods: a named method brings the conditions it fixes; two ratings under different methods do not compare', ()=>{
@@ -205,7 +212,7 @@ test('v2 methods: a named method brings the conditions it fixes; two ratings und
 
 test('v2 relations: consistent, an implied assumption, and no check when the pairing is ambiguous', ()=>{
  const cadr=typed(qk,'200 CFM',{labels:['Smoke CADR']}),ctx={labels:['Room size'],context:['based on 4.8 air changes per hour']};
- const ok=relationChecks(qk,[cadr,typed(qk,'313 sq ft',ctx)]);assert.equal(ok.length,1);assert.equal(ok[0].consistent,true);assert.equal(ok[0].expected,312.5);
+ const ok=relationChecks(qk,[cadr,typed(qk,'313 sq ft',ctx)]);assert.equal(ok.length,1);assert.equal(ok[0].nature,'sizing_convention');assert.match(ok[0].caveat,/not a measurement/);assert.equal(ok[0].consistent,true);assert.equal(ok[0].expected,312.5);
  const off=relationChecks(qk,[cadr,typed(qk,'420 sq ft',ctx)])[0];assert.equal(off.consistent,false);assert.deepEqual([off.implied!.name,off.implied!.value],['height',5.95]);
  assert.equal(relationChecks(qk,[cadr,typed(qk,'180 CFM',{labels:['Dust CADR']}),typed(qk,'313 sq ft',ctx)])[0].inputs.cadr.value,200,'AHAM sizes by the smoke CADR');
  assert.deepEqual(relationChecks(qk,[typed(qk,'200 CFM',{labels:['CADR']}),typed(qk,'150 CFM',{labels:['CADR']}),typed(qk,'313 sq ft',ctx)]),[],'two CADRs, nothing pairs one: no guess');

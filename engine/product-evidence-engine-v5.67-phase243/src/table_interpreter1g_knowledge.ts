@@ -43,7 +43,7 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
   const obs:KnowledgeObservation1G[]=t.observations.map(o=>{
    const labels=[...o.property,...o.records,...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??'')].filter(Boolean);
    let quantity:TypedQuantity|null=null,unitSurface:string|null=null,unitFrom:KnowledgeObservation1G['unitFrom']=null,labelBasis:string|null=null;
-   const tctx={labels,conditions:o.conditions,context:ctx,measuredReading:o.evidence.class==='publisher_measured'};
+   const tctx={labels,conditions:o.conditions,context:ctx};
    const withBasis=(u:ParsedUnit)=>{const b=withLabelBasis(qk,u,labels);if(b){labelBasis=b.basis;return b.unit;}return u;};
    if(o.kind==='quantity'||o.kind==='range'||o.kind==='bound'||o.kind==='number'){
     // the value is read in its whole cell (a dimension list or an axis letter is visible only there), then in its own surface

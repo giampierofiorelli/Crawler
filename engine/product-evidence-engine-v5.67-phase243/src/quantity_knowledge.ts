@@ -21,7 +21,7 @@ import {createHash} from 'node:crypto';
 export const QUANTITY_KNOWLEDGE_SCHEMA='pee.quantity-knowledge.v1';
 type Dim=Partial<Record<string,number>>;
 interface SourceRef {id:string;title:string;url:string|null;use:string;licence:string}
-export interface KindDef {id:string;dim:Dim;level?:boolean;unitOnly?:boolean;affine?:boolean;notDirectlyMeasured?:boolean;determinedBy?:string;form?:{requiresClass?:string;excludesClass?:string};
+export interface KindDef {id:string;dim:Dim;level?:boolean;unitOnly?:boolean;affine?:boolean;determinedBy?:string;form?:{requiresClass?:string;excludesClass?:string};
  terms:string[];plain?:string;expressions?:string[];discriminators?:string[];requires?:string[];comparatives?:{max?:string[];min?:string[]};reference?:string|null;note?:string;qudt?:string;source:string}
 export interface AxisDef {id:string;valueKind?:string;cues?:string[];values?:Record<string,string[]>;freeText?:string[];source:string}
 export interface MetricDef {id:string;label:string;kind:string;terms:string[];unitless?:boolean;definedBy?:{method:string;source:string}[];requires:string[];notEquivalentTo?:string[];derivedFrom?:string[];note?:string;source:string}
@@ -33,7 +33,9 @@ export interface MethodDef {id:string;label:string;terms:string[];measures:strin
 export interface RelationInput {name:string;metric?:string;kind?:string;axis?:string;unit:string;assumption?:boolean;default?:number;note?:string;
  /** among several candidate values, the one with these conditions (AHAM sizes rooms by the smoke CADR) */
  prefer?:Record<string,string>}
-export interface RelationDef {id:string;statement:string;output:{metric?:string;kind?:string;unit:string};inputs:RelationInput[];expression:string;tolerance:number;use?:string[];source:string}
+export interface RelationDef {id:string;
+ /** What kind of truth the relation is: a definition, an idealised physical law, or a sizing convention (assumptions, not a measurement). */
+ nature:'definition'|'physical_law_idealised'|'sizing_convention';caveat:string;statement:string;output:{metric?:string;kind?:string;unit:string};inputs:RelationInput[];expression:string;tolerance:number;use?:string[];source:string}
 /** An ordinal class scale (energy classes, filter classes), ordered best first (v2). */
 export interface ScaleDef {id:string;label:string;values:string[];best:string;terms:string[];distinctive?:string[];regimes?:{productGroups:string[];from?:string;until?:string}[];notComparableWith?:string[];thresholds?:Record<string,string>;metric?:string;source:string}
 export interface QuantityPack {schema:string;version:string;statement:string;dimensionBasis:string[];sources:SourceRef[];kinds:KindDef[];conditionAxes:AxisDef[];
@@ -85,7 +87,7 @@ export function loadQuantityKnowledge(pack?:unknown):QuantityKnowledge{
  uniq(p.methods??[],'method');uniq(p.relations??[],'relation');uniq(p.scales??[],'scale');
  for(const m of p.methods??[]){if(!src.has(m.source))fail('source of method '+m.id);for(const x of m.measures)if(!metricIds.has(x))fail(`metric ${x} of method ${m.id}`);
   for(const a of Object.keys(m.fixedConditions))if(!axes.has(a))fail(`axis ${a} of method ${m.id}`);if(m.supersededBy&&!(p.methods??[]).some(x=>x.id===m.supersededBy))fail('superseding method of '+m.id);}
- for(const r of p.relations??[]){if(!src.has(r.source))fail('source of relation '+r.id);if(r.output.metric&&!metricIds.has(r.output.metric))fail('output of '+r.id);if(r.output.kind&&!kinds.has(r.output.kind))fail('output kind of '+r.id);
+ for(const r of p.relations??[]){if(!src.has(r.source))fail('source of relation '+r.id);if(!['definition','physical_law_idealised','sizing_convention'].includes(r.nature)||!r.caveat)fail('nature and caveat of relation '+r.id);if(r.output.metric&&!metricIds.has(r.output.metric))fail('output of '+r.id);if(r.output.kind&&!kinds.has(r.output.kind))fail('output kind of '+r.id);
   for(const i of r.inputs){if(i.metric&&!metricIds.has(i.metric))fail(`input ${i.name} of ${r.id}`);if(i.kind&&!kinds.has(i.kind))fail(`input kind ${i.name} of ${r.id}`);if(i.axis&&!axes.has(i.axis))fail(`input axis ${i.name} of ${r.id}`);
    if(i.assumption&&typeof i.default!=='number')fail(`assumption ${i.name} of ${r.id} needs a default`);}
   try{compileExpression(r.expression,r.inputs.map(i=>i.name));}catch(e){fail(`expression of ${r.id}: ${(e as Error).message}`);}}
@@ -209,9 +211,7 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Typing a quantity in its context.
-export interface QuantityContext {labels?:readonly string[];conditions?:readonly string[];context?:readonly string[];
- /** The value is a reading the publisher took (not a declaration): a quantity that is never measured directly cannot be it. */
- measuredReading?:boolean}
+export interface QuantityContext {labels?:readonly string[];conditions?:readonly string[];context?:readonly string[]}
 export interface TypedCondition {axis:string;value:string;raw:string;from:'labels'|'conditions'|'context'|'method'}
 export interface TypedQuantity {surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit;
  si:{value:number|null;low?:number;high?:number}|null;
@@ -246,11 +246,8 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   if(disc.length===1){candidates=[disc[0].k];kindBasis.push(`discriminating words: ${disc[0].t.join(', ')}`);}
   else if(disc.length>1)unresolved.push(`kind: evidence for several kinds (${disc.map(d=>d.k+': '+d.t.join(', ')).join('; ')})`);
  }
- // A publisher's own reading cannot be a quantity that is only ever computed from other measurements (sound power, ISO 3741/3744).
- if(candidates.length>1&&ctx.measuredReading){const direct=candidates.filter(k=>!qk.kinds.get(k)!.notDirectlyMeasured);
-  if(direct.length===1&&!hit(all,candidates.filter(k=>!direct.includes(k)).flatMap(k=>qk.kinds.get(k)!.discriminators??[])).length){
-   const not=candidates.filter(k=>!direct.includes(k));candidates=direct;kindBasis.push(`a publisher's reading: ${not.join(', ')} is never read directly (${not.map(k=>qk.kinds.get(k)!.determinedBy).filter(Boolean).join(', ')||'computed'})`);
-   for(let i=unresolved.length-1;i>=0;i--)if(unresolved[i].startsWith('kind:'))unresolved.splice(i,1);}}
+ // KN correction (owner review 2026-10-18): that a source measured a value does not decide pressure or power (a laboratory
+ // or an EU label reports a determined sound power as its result). Only the source's own words decide (discriminators above).
  const kind=candidates.length===1?candidates[0]:null;
  if(!kind)unresolved.push(candidates.length?`kind: ${q.unit.surface} can express ${candidates.join(' or ')}; nothing here says which`:`kind: no known quantity is expressed in ${q.unit.surface}`);
  let metricCands=[...new Set(compatible.filter(x=>!kind||x.m.kind===kind).map(x=>x.m.id))];
@@ -445,7 +442,7 @@ export function compileExpression(src:string,names:readonly string[]):Expr{
  const add=():Expr=>{let l=mul();while(peek()==='+'||peek()==='-'){const op=eat(),r=mul(),L=l;l=op==='+'?env=>L(env)+r(env):env=>L(env)-r(env);}return l;};
  const e=add();if(i!==toks.length)throw Error('trailing tokens');return e;
 }
-export interface RelationCheck {relation:string;output:string;observed:number;expected:number;unit:string;consistent:boolean;inputs:Record<string,{value:number;from:string}>;implied?:{name:string;value:number;unit:string;default:number};statement:string}
+export interface RelationCheck {relation:string;output:string;observed:number;expected:number;unit:string;consistent:boolean;inputs:Record<string,{value:number;from:string}>;implied?:{name:string;value:number;unit:string;default:number};statement:string;nature:RelationDef['nature'];caveat:string}
 const inUnit=(qk:QuantityKnowledge,q:TypedQuantity,unit:string)=>{const u=parseUnit(qk,unit);if(!u||q.si?.value==null||q.unit.level)return null;return (q.si.value-u.offset)/u.factor;};
 /** Check every relation whose output and inputs a set of typed values (one product) provides: the expected output, whether
  * the printed one agrees within the relation's tolerance and, when it does not and one assumption was used, the value of
@@ -467,7 +464,7 @@ export function relationChecks(qk:QuantityKnowledge,values:readonly TypedQuantit
     else if(inp.assumption){env[inp.name]=inp.default!;from[inp.name]={value:inp.default!,from:'assumption'};assumption=inp;}}
    if(!ok)continue;const f=compileExpression(r.expression,r.inputs.map(i=>i.name));const expected=f(env);
    const consistent=Math.abs(expected-observed)<=r.tolerance*Math.abs(observed);
-   const rc:RelationCheck={relation:r.id,output:o.surface,observed,expected,unit:r.output.unit,consistent,inputs:from,statement:r.statement};
+   const rc:RelationCheck={relation:r.id,output:o.surface,observed,expected,unit:r.output.unit,consistent,inputs:from,statement:r.statement,nature:r.nature,caveat:r.caveat};
    if(!consistent&&assumption){let lo=assumption.default!/20,hi=assumption.default!*20;const g=(x:number)=>f({...env,[assumption!.name]:x})-observed;
     if(g(lo)*g(hi)<0){for(let k=0;k<80;k++){const mid=(lo+hi)/2;if(g(lo)*g(mid)<=0)hi=mid;else lo=mid;}rc.implied={name:assumption.name,value:Math.round((lo+hi)/2*100)/100,unit:assumption.unit,default:assumption.default!};}}
    out.push(rc);}}

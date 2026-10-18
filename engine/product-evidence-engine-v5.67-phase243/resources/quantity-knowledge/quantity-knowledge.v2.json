@@ -1,6 +1,6 @@
 {
  "schema": "pee.quantity-knowledge.v1",
- "version": "qk.2",
+ "version": "qk.2.1",
  "statement": "Typed scientific knowledge about quantities: what a quantity is (kind, dimension), how it is expressed (units and their properties), which quantities are defined by a method (metrics) and which conditions make results comparable. General physics and metrology, never product facts. Written in PEE's own words; facts only, no third-party text reproduced. v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion.",
  "dimensionBasis": [
   "L",
@@ -717,11 +717,10 @@
     ]
    },
    "reference": "1 pW",
-   "note": "A property of the source, independent of distance; what EU energy labels declare. Never comparable with a sound pressure level measured at a distance. It is computed from sound pressure measured over an enveloping surface or in a reverberation room (ISO 3741/3744); a single sound level meter reading is never a sound power level.",
+   "note": "A property of the source, independent of distance; what EU energy labels declare. Never comparable with a sound pressure level measured at a distance. It is determined from sound pressure measured over an enveloping surface or in a reverberation room (ISO 3741/3744) and is reported as a result by laboratories and on EU labels (dB(A) re 1 pW); that a source measured a value does not say whether it reports pressure or power.",
    "qudt": "quantitykind:SoundPowerLevel",
    "source": "iso_80000_8",
    "plain": "the noise emission the maker declares, as on EU energy labels (sound power level, independent of distance)",
-   "notDirectlyMeasured": true,
    "determinedBy": "iso_3741_3744_sound_power"
   },
   {
@@ -2484,6 +2483,8 @@
  "relations": [
   {
    "id": "room_area_from_cadr",
+   "nature": "sizing_convention",
+   "caveat": "A consistency check between declared figures under the AHAM/ENERGY STAR sizing assumptions (smoke CADR, stated air changes, 8 ft ceiling, well-mixed room); it is not a measurement of how the purifier performs in a real room.",
    "statement": "The floor area a clean air delivery rate serves at a given number of air changes per hour and ceiling height: area = CADR × 60 / (ACH × height).",
    "output": {
     "metric": "room_coverage",
@@ -2518,6 +2519,8 @@
   },
   {
    "id": "energy_from_power_time",
+   "nature": "definition",
+   "caveat": "Exact for a constant power; a varying power needs the average over the time.",
    "statement": "Energy is power multiplied by time.",
    "output": {
     "kind": "energy",
@@ -2541,6 +2544,8 @@
   },
   {
    "id": "per_cycle_from_per_100",
+   "nature": "definition",
+   "caveat": "Holds only for the same programme and conditions.",
    "statement": "A value per 100 cycles divided by 100 is the value per cycle under the same programme and conditions.",
    "output": {
     "kind": "energy_per_event",
@@ -2559,6 +2564,8 @@
   },
   {
    "id": "spl_distance_free_field",
+   "nature": "physical_law_idealised",
+   "caveat": "Free field and point source; indoors reflections make the fall-off smaller.",
    "statement": "In a free field a point source loses 20·log10(d2/d1) dB of sound pressure level between distances d1 and d2 (about 6 dB per doubling); rooms add reflected sound, so this holds only approximately indoors.",
    "output": {
     "kind": "sound_pressure_level",
@@ -2590,6 +2597,8 @@
   },
   {
    "id": "power_from_voltage_impedance",
+   "nature": "physical_law_idealised",
+   "caveat": "Resistive load; a loudspeaker impedance is nominal and varies with frequency.",
    "statement": "Electrical power into a resistive load is V²/R: 2.83 V gives 1 W into 8 Ω and 2 W into 4 Ω.",
    "output": {
     "kind": "power",

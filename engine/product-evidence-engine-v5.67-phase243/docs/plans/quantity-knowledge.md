@@ -335,3 +335,51 @@ Other results:
 - Every page is spent. A small authorised unseen set is still needed for an out-of-distribution claim.
 - Qualitative results (package teaching) entered no new mechanism in this step; they remain in the Phase269–272
   teaching.
+
+## K8. Correction (owner review, 2026-10-18): acoustic kind inferred from the evidence class — withdrawn
+
+**What was wrong.** Published qk.2 (`2b2e6fd`, identity `qk.2:4827ebd09f9d2771`) marked sound power
+`notDirectlyMeasured`. The layer then concluded that any value a publisher measured itself was sound pressure. This is
+scientifically unjustified:
+- ISO 3741/3744 determine sound power *from* pressure measurements, but a laboratory reports the determined power as
+  its own result;
+- EU Regulation 2019/2017 has dishwasher labels declare noise emission in dB(A) re 1 pW.
+
+Only the source's words decide the kind:
+- a meter reading at a distance → sound pressure;
+- LWA, "re 1 pW" or an energy label → sound power;
+- a bare "45 dBA" stays ambiguous.
+
+**Correction of the K4/K5 wording.** The rise in sound pressure from 49 to 97 was not 48 cases decided by this rule.
+Re-examining every value against its page shows two groups:
+
+| Values | What decided them | Verdict |
+|---|---|---|
+| 31 | The source's own words: "from 3 ft. away" in the label, or "sound level meter … measured from … away" in the context | Justified; they stay sound pressure |
+| 16 | The rule (one reviewer, two pages). The pages describe "a special noise measurement tool" and the dBA scale, with no distance, in a methodology section the reader does not consult | Pressure is plausible from that protocol, but the rule reached it for the wrong reason |
+| 1 | The rule ("Sound (normal) 62.1 dB" in a review's test data). Nothing on the page says pressure or power | Unjustified |
+
+None of the 17 rule-decided values was shown to be power. Still, none was established, so all 17 return to
+ambiguous.
+
+**Change (qk.2.1).**
+- The marker and the rule are removed.
+- `determinedBy` stays as knowledge of the method, with a note that "measured" does not decide the kind.
+- Relations now carry their `nature` and a `caveat`; the loader refuses a relation without them:
+  - `definition`: energy = power × time; per cycle;
+  - `physical_law_idealised`: the distance law, V²/R;
+  - `sizing_convention`: room area from CADR. Its caveat says it is a consistency check between declared figures
+    under the AHAM/ENERGY STAR assumptions, not a measurement of performance in a real room.
+
+**Results** (`reading-kn-v21.json`, `links-kn-v21.json`, same pages):
+- kind established 859 → 842;
+- acoustic values ambiguous 23 → 40;
+- sound pressure 97 → 80;
+- every other count unchanged;
+- links unchanged.
+
+The published qk.2 and its runs (`*-kn-v2*`) are kept for comparison and reproduce at `2b2e6fd`.
+
+**Open.** A document's own test protocol (instrument, distance, stated once in a methodology section) is not yet read
+as a condition of the table values it governs. That is the general route by which the 16 values could be resolved
+legitimately. It is not added here: it would be tuned on these spent pages.

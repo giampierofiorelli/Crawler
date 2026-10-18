@@ -1,0 +1,1535 @@
+{
+ "knowledge": "qk.2.1:fb96c5ac19de93f3",
+ "codeSha256": "298533f60fa55242c824f410b7d2a35405afe6e8f77ba1277bdf0f71a54c21bc",
+ "generatedAt": "2026-10-18T14:07:45.295Z",
+ "schema": "pee.qk-eval-links.v1",
+ "evidenceTier": "T2 authentic controlled on SPENT development pages; category teaching from a store copy (read only)",
+ "counts": {
+  "values": 748,
+  "both_none": 310,
+  "air_fryers:both_none": 44,
+  "typed_reports_taught_proxy": 19,
+  "words_only": 66,
+  "air_fryers:words_only": 33,
+  "same": 325,
+  "air_fryers:same": 24,
+  "air_purifiers:same": 252,
+  "air_purifiers:both_none": 194,
+  "dishwashers:same": 7,
+  "dishwashers:words_only": 1,
+  "air_purifiers:words_only": 26,
+  "different": 26,
+  "air_purifiers:different": 24,
+  "typed_only": 21,
+  "air_purifiers:typed_only": 7,
+  "dishwashers:both_none": 7,
+  "tumble_dryers:same": 7,
+  "tumble_dryers:both_none": 14,
+  "televisions:same": 35,
+  "televisions:typed_only": 8,
+  "televisions:both_none": 40,
+  "televisions:different": 2,
+  "dehumidifiers:typed_only": 6,
+  "dehumidifiers:words_only": 6,
+  "words_links_taught_proxy_to_its_outcome": 6,
+  "dehumidifiers:both_none": 11
+ },
+ "typedMeasures": {
+  "air_fryers": [
+   {
+    "id": "energy_empty_run",
+    "outcomes": [],
+    "metrics": [],
+    "kinds": [
+     "energy"
+    ]
+   },
+   {
+    "id": "energy_per_cooking_task",
+    "outcomes": [
+     "low_energy_use"
+    ],
+    "metrics": [],
+    "kinds": [
+     "energy"
+    ]
+   },
+   {
+    "id": "usable_cooking_area",
+    "outcomes": [
+     "cook_single_portion"
+    ],
+    "metrics": [],
+    "kinds": [
+     "area"
+    ]
+   }
+  ],
+  "air_purifiers": [
+   {
+    "id": "aged_filter_cadr",
+    "outcomes": [
+     "fine_particle_reduction"
+    ],
+    "metrics": [
+     "cadr"
+    ],
+    "kinds": []
+   },
+   {
+    "id": "cadr_noise_power_curve",
+    "outcomes": [
+     "quiet_night_operation"
+    ],
+    "metrics": [
+     "cadr"
+    ],
+    "kinds": [
+     "power",
+     "sound_pressure_level",
+     "sound_power_level"
+    ]
+   },
+   {
+    "id": "gas_species_reduction_breakthrough",
+    "outcomes": [
+     "gas_odour_reduction"
+    ],
+    "metrics": [],
+    "kinds": [
+     "ratio"
+    ]
+   },
+   {
+    "id": "mode_power_and_tco",
+    "outcomes": [
+     "ownership_cost_energy"
+    ],
+    "metrics": [],
+    "kinds": [
+     "power"
+    ]
+   },
+   {
+    "id": "particle_cadr_by_pollutant_and_mode",
+    "outcomes": [
+     "fine_particle_reduction"
+    ],
+    "metrics": [
+     "cadr"
+    ],
+    "kinds": []
+   },
+   {
+    "id": "pollen_dust_cadr_at_sleep_mode",
+    "outcomes": [
+     "allergen_particle_reduction"
+    ],
+    "metrics": [
+     "cadr"
+    ],
+    "kinds": []
+   },
+   {
+    "id": "room_volume_equivalent_ach",
+    "outcomes": [
+     "room_coverage_distribution"
+    ],
+    "metrics": [],
+    "kinds": [
+     "volume",
+     "air_change_rate"
+    ]
+   },
+   {
+    "id": "sorbent_cumulative_capacity",
+    "outcomes": [
+     "gas_odour_reduction"
+    ],
+    "metrics": [],
+    "kinds": [
+     "volume"
+    ]
+   },
+   {
+    "id": "zone_concentration_multiroom",
+    "outcomes": [
+     "room_coverage_distribution"
+    ],
+    "metrics": [],
+    "kinds": [
+     "mass_concentration"
+    ]
+   }
+  ],
+  "coffee_machines": [
+   {
+    "id": "brew_temperature_stability",
+    "outcomes": [
+     "shot_consistency"
+    ],
+    "metrics": [],
+    "kinds": [
+     "temperature"
+    ]
+   }
+  ],
+  "dehumidifiers": [
+   {
+    "id": "removal_at_room_conditions",
+    "outcomes": [
+     "moisture_removal"
+    ],
+    "metrics": [
+     "dehumidifier_capacity"
+    ],
+    "kinds": []
+   }
+  ],
+  "dishwashers": [
+   {
+    "id": "drying_fraction_by_material_over_time",
+    "outcomes": [
+     "drying_by_material"
+    ],
+    "metrics": [],
+    "kinds": [
+     "duration"
+    ]
+   },
+   {
+    "id": "eu_label_kwh_per_100_eco_cycles",
+    "outcomes": [
+     "energy_per_cycle_and_workload"
+    ],
+    "metrics": [],
+    "kinds": [
+     "energy"
+    ]
+   },
+   {
+    "id": "eu_label_litres_per_eco_cycle",
+    "outcomes": [
+     "water_per_cycle_and_workload"
+    ],
+    "metrics": [],
+    "kinds": [
+     "volume"
+    ]
+   },
+   {
+    "id": "in_situ_sound_pressure_time_trace",
+    "outcomes": [
+     "noise_and_acoustic_events"
+    ],
+    "metrics": [],
+    "kinds": [
+     "duration",
+     "sound_pressure_level"
+    ]
+   },
+   {
+    "id": "litres_per_completed_workload",
+    "outcomes": [
+     "water_per_cycle_and_workload"
+    ],
+    "metrics": [],
+    "kinds": [
+     "volume"
+    ]
+   },
+   {
+    "id": "nsf_184_log_reduction_certified_cycle",
+    "outcomes": [
+     "hygiene_sanitisation"
+    ],
+    "metrics": [],
+    "kinds": [
+     "ratio"
+    ]
+   },
+   {
+    "id": "sound_power_label_db",
+    "outcomes": [
+     "noise_and_acoustic_events"
+    ],
+    "metrics": [],
+    "kinds": [
+     "sound_power_level"
+    ]
+   },
+   {
+    "id": "wall_plug_kwh_per_programme",
+    "outcomes": [
+     "energy_per_cycle_and_workload"
+    ],
+    "metrics": [],
+    "kinds": [
+     "energy"
+    ]
+   },
+   {
+    "id": "zeolite_adsorption_drying_energy",
+    "outcomes": [
+     "energy_per_cycle_and_workload"
+    ],
+    "metrics": [],
+    "kinds": [
+     "energy"
+    ]
+   }
+  ],
+  "televisions": [
+   {
+    "id": "eotf_tracking_and_colour_accuracy",
+    "outcomes": [
+     "dark_room_cinema_picture"
+    ],
+    "metrics": [
+     "display_colour_error"
+    ],
+    "kinds": [
+     "colour_difference"
+    ]
+   },
+   {
+    "id": "hdr_luminance_by_window_and_duration",
+    "outcomes": [
+     "bright_room_visibility"
+    ],
+    "metrics": [],
+    "kinds": [
+     "duration",
+     "luminance"
+    ]
+   },
+   {
+    "id": "input_lag_by_signal_mode",
+    "outcomes": [
+     "gaming_responsiveness"
+    ],
+    "metrics": [
+     "input_lag"
+    ],
+    "kinds": []
+   },
+   {
+    "id": "motion_persistence_and_response",
+    "outcomes": [
+     "fast_motion_clarity"
+    ],
+    "metrics": [
+     "display_refresh_rate"
+    ],
+    "kinds": []
+   },
+   {
+    "id": "off_axis_colour_luminance_shift",
+    "outcomes": [
+     "wide_seating_consistency"
+    ],
+    "metrics": [],
+    "kinds": [
+     "luminance"
+    ]
+   },
+   {
+    "id": "sustained_sdr_luminance",
+    "outcomes": [
+     "bright_room_visibility"
+    ],
+    "metrics": [],
+    "kinds": [
+     "luminance"
+    ]
+   }
+  ],
+  "tumble_dryers": [
+   {
+    "id": "duration_per_completed_task",
+    "outcomes": [
+     "duration_outcome"
+    ],
+    "metrics": [],
+    "kinds": [
+     "duration"
+    ]
+   },
+   {
+    "id": "energy_per_completed_task",
+    "outcomes": [
+     "energy_outcome"
+    ],
+    "metrics": [],
+    "kinds": [
+     "energy"
+    ]
+   },
+   {
+    "id": "sound_per_completed_task",
+    "outcomes": [
+     "sound_outcome"
+    ],
+    "metrics": [],
+    "kinds": [
+     "sound_pressure_level",
+     "sound_power_level"
+    ]
+   },
+   {
+    "id": "temperature_per_completed_task",
+    "outcomes": [
+     "temperature_outcome"
+    ],
+    "metrics": [],
+    "kinds": [
+     "temperature"
+    ]
+   }
+  ]
+ },
+ "changed": [
+  {
+   "category": "air_fryers",
+   "unit": "h",
+   "kind": "duration",
+   "metric": null,
+   "words": "cleaning_effort_assessment",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "h",
+   "kind": "duration",
+   "metric": null,
+   "words": "cleaning_effort_assessment",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "h",
+   "kind": "duration",
+   "metric": null,
+   "words": "cleaning_effort_assessment",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "usable_cooking_area",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "kg",
+   "kind": "mass",
+   "metric": null,
+   "words": "batch_cooking_test",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "kg",
+   "kind": "mass",
+   "metric": null,
+   "words": "batch_cooking_test",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cleaning_effort_assessment",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "kg",
+   "kind": "mass",
+   "metric": null,
+   "words": "batch_cooking_test",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dishwashers",
+   "unit": "dB",
+   "kind": null,
+   "metric": null,
+   "words": "in_situ_sound_pressure_time_trace",
+   "typed": null,
+   "typedBasis": "the value's kind is unresolved (sound_pressure_level or sound_power_level) and the candidates measure different kinds",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "kg",
+   "kind": "mass",
+   "metric": null,
+   "words": "batch_cooking_test",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_fryers",
+   "unit": "kg",
+   "kind": "mass",
+   "metric": null,
+   "words": "batch_cooking_test",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "kWh",
+   "kind": "energy",
+   "metric": null,
+   "words": "mode_power_and_tco",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "kWh",
+   "kind": "energy",
+   "metric": null,
+   "words": "mode_power_and_tco",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "kWh",
+   "kind": "energy",
+   "metric": null,
+   "words": "mode_power_and_tco",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "kWh",
+   "kind": "energy",
+   "metric": null,
+   "words": "mode_power_and_tco",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "cfm",
+   "kind": "volumetric_flow_rate",
+   "metric": "cadr",
+   "words": "room_volume_equivalent_ach",
+   "typed": "aged_filter_cadr",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "cfm",
+   "kind": "volumetric_flow_rate",
+   "metric": "cadr",
+   "words": "room_volume_equivalent_ach",
+   "typed": "aged_filter_cadr",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "cfm",
+   "kind": "volumetric_flow_rate",
+   "metric": "cadr",
+   "words": "room_volume_equivalent_ach",
+   "typed": "aged_filter_cadr",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "cfm",
+   "kind": "volumetric_flow_rate",
+   "metric": "cadr",
+   "words": "room_volume_equivalent_ach",
+   "typed": "aged_filter_cadr",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "dBA",
+   "kind": "sound_pressure_level",
+   "metric": null,
+   "words": "pollen_dust_cadr_at_sleep_mode",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "1",
+   "kind": "colour_difference",
+   "metric": "display_colour_error",
+   "words": null,
+   "typed": "eotf_tracking_and_colour_accuracy",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "Hz",
+   "kind": "frequency",
+   "metric": "display_refresh_rate",
+   "words": "input_lag_by_signal_mode",
+   "typed": "motion_persistence_and_response",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "televisions",
+   "unit": "Hz",
+   "kind": "frequency",
+   "metric": "display_refresh_rate",
+   "words": "input_lag_by_signal_mode",
+   "typed": "motion_persistence_and_response",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "kg",
+   "kind": "mass",
+   "metric": null,
+   "words": "sorbent_cumulative_capacity",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "min",
+   "kind": "duration",
+   "metric": null,
+   "words": "cadr_noise_power_curve",
+   "typed": null,
+   "typedBasis": "no taught measurement measures this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "dBA",
+   "kind": "sound_pressure_level",
+   "metric": null,
+   "words": "pollen_dust_cadr_at_sleep_mode",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "ach",
+   "kind": "air_change_rate",
+   "metric": null,
+   "words": null,
+   "typed": "room_volume_equivalent_ach",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "dBA",
+   "kind": null,
+   "metric": null,
+   "words": "pollen_dust_cadr_at_sleep_mode",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "dBA",
+   "kind": null,
+   "metric": null,
+   "words": "pollen_dust_cadr_at_sleep_mode",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "air_purifiers",
+   "unit": "W",
+   "kind": "power",
+   "metric": null,
+   "words": "aged_filter_cadr",
+   "typed": "cadr_noise_power_curve",
+   "typedBasis": "typed candidates, chosen by the measurement words",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L/day",
+   "kind": "periodic_volume",
+   "metric": "dehumidifier_capacity",
+   "words": null,
+   "typed": "removal_at_room_conditions",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L",
+   "kind": "volume",
+   "metric": "tank_capacity",
+   "words": "removal_at_room_conditions",
+   "typed": null,
+   "typedBasis": "tank_capacity is not equivalent to dehumidifier_capacity: no taught measurement reports it",
+   "proxyFor": [
+    "moisture_removal"
+   ]
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L/day",
+   "kind": "periodic_volume",
+   "metric": "dehumidifier_capacity",
+   "words": null,
+   "typed": "removal_at_room_conditions",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L",
+   "kind": "volume",
+   "metric": "tank_capacity",
+   "words": "removal_at_room_conditions",
+   "typed": null,
+   "typedBasis": "tank_capacity is not equivalent to dehumidifier_capacity: no taught measurement reports it",
+   "proxyFor": [
+    "moisture_removal"
+   ]
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L/day",
+   "kind": "periodic_volume",
+   "metric": "dehumidifier_capacity",
+   "words": null,
+   "typed": "removal_at_room_conditions",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L",
+   "kind": "volume",
+   "metric": "tank_capacity",
+   "words": "removal_at_room_conditions",
+   "typed": null,
+   "typedBasis": "tank_capacity is not equivalent to dehumidifier_capacity: no taught measurement reports it",
+   "proxyFor": [
+    "moisture_removal"
+   ]
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L/day",
+   "kind": "periodic_volume",
+   "metric": "dehumidifier_capacity",
+   "words": null,
+   "typed": "removal_at_room_conditions",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L",
+   "kind": "volume",
+   "metric": "tank_capacity",
+   "words": "removal_at_room_conditions",
+   "typed": null,
+   "typedBasis": "tank_capacity is not equivalent to dehumidifier_capacity: no taught measurement reports it",
+   "proxyFor": [
+    "moisture_removal"
+   ]
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L/day",
+   "kind": "periodic_volume",
+   "metric": "dehumidifier_capacity",
+   "words": null,
+   "typed": "removal_at_room_conditions",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L",
+   "kind": "volume",
+   "metric": "tank_capacity",
+   "words": "removal_at_room_conditions",
+   "typed": null,
+   "typedBasis": "tank_capacity is not equivalent to dehumidifier_capacity: no taught measurement reports it",
+   "proxyFor": [
+    "moisture_removal"
+   ]
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L/day",
+   "kind": "periodic_volume",
+   "metric": "dehumidifier_capacity",
+   "words": null,
+   "typed": "removal_at_room_conditions",
+   "typedBasis": "the only taught measurement of this quantity",
+   "proxyFor": []
+  },
+  {
+   "category": "dehumidifiers",
+   "unit": "L",
+   "kind": "volume",
+   "metric": "tank_capacity",
+   "words": "removal_at_room_conditions",
+   "typed": null,
+   "typedBasis": "tank_capacity is not equivalent to dehumidifier_capacity: no taught measurement reports it",
+   "proxyFor": [
+    "moisture_removal"
+   ]
+  }
+ ]
+}

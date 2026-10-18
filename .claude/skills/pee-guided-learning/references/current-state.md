@@ -27,6 +27,8 @@ Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowl
   `classRequirements`.
 - **Evaluations:** `evaluation/quantity-knowledge/reading-kn-v1|v2|v2b`, `links-kn-v2|v2b|v2c`,
   `requests-kn-v2-tuned` (TUNED). All pages are spent.
+- **Correction K8 / S53:** pack now `qk.2.1`. The acoustic inference from the evidence class was withdrawn; relations
+  carry `nature` and `caveat`. Published qk.2 runs are kept (`*-kn-v2*`); corrected runs are `*-kn-v21`.
 - **Open:** D19, D20, D21, D22 (v2 knowledge reported but used by no decision; class scale needs a registry
   category).
 
