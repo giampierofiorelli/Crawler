@@ -1,0 +1,1081 @@
+{
+ "schema": "pee.tables1e.adjudication.v1",
+ "label": "cmp1",
+ "at": "2026-10-18T06:27:44.870Z",
+ "by": "developer (Claude), from the page source after the sealed comparison; the frozen comparison is unchanged",
+ "mechanisms": {
+  "F-T1": {
+   "name": "method statement outside the last paragraph",
+   "stage": "context",
+   "rule": "R08_unknown_context_no_test_label",
+   "generic": "the table reader seeks the test context only in the heading, caption, headers and the last paragraph if it says we/I; a first-person measuring statement elsewhere in the same section is ignored"
+  },
+  "F-T2": {
+   "name": "unit or bare number not resolved from the cell labels",
+   "stage": "element",
+   "rule": "R12_no_plan_unit",
+   "generic": "a bare number takes a label unit only if the whole cell is one bare number without thousands separator; unit-bearing headers like (dBA) or (in nits) and cells with two values (12.9 / 8.9) or 1,251 are not read"
+  },
+  "F-T3": {
+   "name": "dimension word only in the table heading",
+   "stage": "element",
+   "rule": "R14_no_dimension_term",
+   "generic": "the dimension word must be in the cell labels; a heading such as Noise Level Test is ignored"
+  },
+  "F-T4": {
+   "name": "whole cell dropped for a currency",
+   "stage": "evidence",
+   "rule": "R11_price_in_cell",
+   "generic": "a cell 31.3W ($2.74) loses its power value because it also holds a cost"
+  },
+  "F-T5": {
+   "name": "operating-setting axis not carried as condition",
+   "stage": "interpretation",
+   "rule": "none",
+   "generic": "labels such as Speed 2 (Medium) are never attached to the value as its condition"
+  },
+  "F-T6": {
+   "name": "distinct cells collapsed by the duplicate rule",
+   "stage": "output",
+   "rule": "R16_duplicate",
+   "generic": "the lead id hashes the cell text, not its position: two cells with the same text (23 minutes, 48.2 dBA) yield one observation"
+  },
+  "F-T7": {
+   "name": "table cells read as prose by the block reader",
+   "stage": "evidence",
+   "rule": "plan_guided_measurement_term on td blocks",
+   "generic": "the plan-guided block reader reads td text outside the table interpretation: certified CADR and declared spec values become test leads, and table values lose their column product"
+  },
+  "F-T8": {
+   "name": "placeholder corner flips Phase245 orientation",
+   "stage": "structure",
+   "rule": "phase245 products_in_rows",
+   "generic": "a corner cell with placeholder text (Header Cell - Column 0, Row 0 - Cell 0) makes Phase245 read products in rows: production specification facts get the property label as product (not present in the live store)"
+  }
+ },
+ "summary": {
+  "items": 67,
+  "byAdjudication": {
+   "justified_abstention_context_and_identity": 4,
+   "out_of_scope_no_plan": 2,
+   "scorer_artefact_same_product": 2,
+   "confirmed_failure": 20,
+   "justified_abstention": 6,
+   "confirmed_false_measurement": 11,
+   "plan_vocabulary_not_table": 16,
+   "disagreement_page_level_method": 6
+  },
+  "byMechanism": {
+   "F-T6": 1,
+   "F-T7": 20,
+   "F-T2": 6,
+   "F-T1": 8,
+   "F-T3": 4,
+   "F-T4": 10
+  }
+ },
+ "tables": [
+  {
+   "id": "S01",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S02",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S03",
+   "axis": "confirmed_structural_failure F-T8 (Phase245 orientation flipped by placeholder corner)",
+   "context": "agree"
+  },
+  {
+   "id": "S04",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S05",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S06",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S07",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S08",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S09",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S10",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "mixed table: both readings partly right"
+  },
+  {
+   "id": "S11",
+   "axis": "agree",
+   "context": "mixed table: both readings partly right"
+  },
+  {
+   "id": "S12",
+   "axis": "agree",
+   "context": "agree"
+  },
+  {
+   "id": "S13",
+   "axis": "confirmed_structural_failure F-T8 (Phase245 orientation flipped by placeholder corner)",
+   "context": "agree"
+  },
+  {
+   "id": "S14",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "confirmed_failure F-T1"
+  },
+  {
+   "id": "S15",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S16",
+   "axis": "agree",
+   "context": "agree"
+  },
+  {
+   "id": "S17",
+   "axis": "comparison_mapping_artefact (key_value or unsupported has no product axis by construction; not a reading error)",
+   "context": "agree"
+  },
+  {
+   "id": "S18",
+   "axis": "agree",
+   "context": "agree"
+  }
+ ],
+ "items": [
+  {
+   "id": "S01",
+   "r": 1,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention_context_and_identity",
+   "mechanisms": [],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S01",
+   "r": 1,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention_context_and_identity",
+   "mechanisms": [],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S01",
+   "r": 2,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention_context_and_identity",
+   "mechanisms": [],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S01",
+   "r": 2,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention_context_and_identity",
+   "mechanisms": [],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S08",
+   "r": 1,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "out_of_scope_no_plan",
+   "mechanisms": [],
+   "blockers": [
+    "P0_no_plan",
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S08",
+   "r": 2,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "out_of_scope_no_plan",
+   "mechanisms": [],
+   "blockers": [
+    "P0_no_plan",
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S10",
+   "r": 5,
+   "c": 1,
+   "frozen": "read_wrong_product",
+   "adjudicated": "scorer_artefact_same_product",
+   "mechanisms": [],
+   "blockers": [],
+   "conditionMissing": true
+  },
+  {
+   "id": "S10",
+   "r": 5,
+   "c": 2,
+   "frozen": "read_wrong_product",
+   "adjudicated": "scorer_artefact_same_product",
+   "mechanisms": [],
+   "blockers": [],
+   "conditionMissing": true
+  },
+  {
+   "id": "S10",
+   "r": 7,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T6"
+   ],
+   "blockers": [
+    "R16_duplicate"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 3,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 3,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention",
+   "mechanisms": [],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 3,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention",
+   "mechanisms": [],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 1,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 1,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 1,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 2,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 2,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 2,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 3,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 3,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S12",
+   "r": 4,
+   "c": 3,
+   "frozen": "read_as_measurement_but_nominal_certified",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 2,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 2,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 2,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 2,
+   "c": 4,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 3,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 3,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 3,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 3,
+   "c": 4,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 4,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T2"
+   ],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 4,
+   "c": 4,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T2"
+   ],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 5,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 5,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 5,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 5,
+   "c": 4,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 6,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 6,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 6,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 6,
+   "c": 4,
+   "frozen": "not_read",
+   "adjudicated": "plan_vocabulary_not_table",
+   "mechanisms": [],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 7,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T2"
+   ],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 7,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T2"
+   ],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 7,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T2"
+   ],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S13",
+   "r": 7,
+   "c": 3,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T2"
+   ],
+   "blockers": [
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S14",
+   "r": 1,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T1"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S14",
+   "r": 2,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T1"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S14",
+   "r": 2,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T1",
+    "F-T3"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S14",
+   "r": 3,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T1"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S14",
+   "r": 3,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T1",
+    "F-T3"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S14",
+   "r": 4,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T1"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S14",
+   "r": 4,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T1",
+    "F-T3"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S14",
+   "r": 5,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T1",
+    "F-T3"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S15",
+   "r": 1,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "disagreement_page_level_method",
+   "mechanisms": [
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell",
+    "R14_no_dimension_term"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S15",
+   "r": 1,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "disagreement_page_level_method",
+   "mechanisms": [
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell",
+    "R14_no_dimension_term"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S15",
+   "r": 2,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S15",
+   "r": 3,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S15",
+   "r": 3,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "disagreement_page_level_method",
+   "mechanisms": [
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S15",
+   "r": 4,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S15",
+   "r": 4,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "disagreement_page_level_method",
+   "mechanisms": [
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S15",
+   "r": 5,
+   "c": 1,
+   "frozen": "read_unresolved",
+   "adjudicated": "confirmed_failure",
+   "mechanisms": [
+    "F-T7",
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": true
+  },
+  {
+   "id": "S15",
+   "r": 5,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "disagreement_page_level_method",
+   "mechanisms": [
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S15",
+   "r": 6,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "disagreement_page_level_method",
+   "mechanisms": [
+    "F-T4"
+   ],
+   "blockers": [
+    "R08_unknown_context_no_test_label",
+    "R11_price_in_cell"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S16",
+   "r": 6,
+   "c": 1,
+   "frozen": "read_as_measurement_but_declared",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R03_table_context_specification",
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S16",
+   "r": 6,
+   "c": 1,
+   "frozen": "read_as_measurement_but_declared",
+   "adjudicated": "confirmed_false_measurement",
+   "mechanisms": [
+    "F-T7"
+   ],
+   "blockers": [
+    "R03_table_context_specification",
+    "R08_unknown_context_no_test_label"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S16",
+   "r": 21,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention",
+   "mechanisms": [],
+   "blockers": [
+    "R03_table_context_specification",
+    "R08_unknown_context_no_test_label",
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S16",
+   "r": 21,
+   "c": 1,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention",
+   "mechanisms": [],
+   "blockers": [
+    "R03_table_context_specification",
+    "R08_unknown_context_no_test_label",
+    "R15_range_or_bound"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S16",
+   "r": 21,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention",
+   "mechanisms": [],
+   "blockers": [
+    "R03_table_context_specification",
+    "R08_unknown_context_no_test_label",
+    "R12_no_plan_unit"
+   ],
+   "conditionMissing": false
+  },
+  {
+   "id": "S16",
+   "r": 21,
+   "c": 2,
+   "frozen": "not_read",
+   "adjudicated": "justified_abstention",
+   "mechanisms": [],
+   "blockers": [
+    "R03_table_context_specification",
+    "R08_unknown_context_no_test_label",
+    "R15_range_or_bound"
+   ],
+   "conditionMissing": false
+  }
+ ]
+}
