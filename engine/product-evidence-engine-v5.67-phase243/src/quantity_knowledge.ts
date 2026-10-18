@@ -38,8 +38,12 @@ export interface RelationDef {id:string;
  nature:'definition'|'physical_law_idealised'|'sizing_convention';caveat:string;statement:string;output:{metric?:string;kind?:string;unit:string};inputs:RelationInput[];expression:string;tolerance:number;use?:string[];source:string}
 /** An ordinal class scale (energy classes, filter classes), ordered best first (v2). */
 export interface ScaleDef {id:string;label:string;values:string[];best:string;terms:string[];distinctive?:string[];regimes?:{productGroups:string[];from?:string;until?:string}[];notComparableWith?:string[];thresholds?:Record<string,string>;metric?:string;source:string}
+/** KN K9: words that justify a kind, the type of justification, and (for statements a document makes once: its test
+ * protocol, the scheme it declares under) the evidence classes of the values such a statement covers. */
+export type KindJustification='unit'|'explicit'|'standard'|'documented_method'|'contextual'|'insufficient';
+export interface KindEvidenceDef {kind:string;justification:'explicit'|'standard'|'documented_method'|'contextual';terms:string[];covers?:string[];note?:string;source:string}
 export interface QuantityPack {schema:string;version:string;statement:string;dimensionBasis:string[];sources:SourceRef[];kinds:KindDef[];conditionAxes:AxisDef[];
- metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];
+ metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];kindEvidence?:KindEvidenceDef[];
  language:{en:{min:string[];minAfter:string[];max:string[];maxAfter:string[];perWords:string[];exponentWords:Record<string,number>;increaseComparatives:string[];decreaseComparatives:string[];
   labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[]}}}
 
@@ -91,6 +95,9 @@ export function loadQuantityKnowledge(pack?:unknown):QuantityKnowledge{
   for(const i of r.inputs){if(i.metric&&!metricIds.has(i.metric))fail(`input ${i.name} of ${r.id}`);if(i.kind&&!kinds.has(i.kind))fail(`input kind ${i.name} of ${r.id}`);if(i.axis&&!axes.has(i.axis))fail(`input axis ${i.name} of ${r.id}`);
    if(i.assumption&&typeof i.default!=='number')fail(`assumption ${i.name} of ${r.id} needs a default`);}
   try{compileExpression(r.expression,r.inputs.map(i=>i.name));}catch(e){fail(`expression of ${r.id}: ${(e as Error).message}`);}}
+ for(const e of p.kindEvidence??[]){if(!kinds.has(e.kind))fail('kind of evidence '+e.kind);if(!src.has(e.source))fail('source of kind evidence '+e.kind);
+  if(!['explicit','standard','documented_method','contextual'].includes(e.justification)||!e.terms.length)fail('kind evidence of '+e.kind);
+  if((e.justification==='documented_method'||e.justification==='standard')&&!e.covers?.length)fail(`a document-wide ${e.justification} for ${e.kind} must say which values it covers`);}
  for(const sc of p.scales??[]){if(!src.has(sc.source))fail('source of scale '+sc.id);if(!sc.values.includes(sc.best))fail('best of '+sc.id);if(sc.metric&&!metricIds.has(sc.metric))fail('metric of scale '+sc.id);
   for(const n of sc.notComparableWith??[])if(!(p.scales??[]).some(x=>x.id===n))fail(`scale ${n} of ${sc.id}`);}
  const digest=sha(JSON.stringify(p));
@@ -211,15 +218,58 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Typing a quantity in its context.
-export interface QuantityContext {labels?:readonly string[];conditions?:readonly string[];context?:readonly string[]}
+export interface QuantityContext {labels?:readonly string[];conditions?:readonly string[];context?:readonly string[];
+ /** KN K9: statements the document makes once (test protocol, declared scheme), each with a reference to where it is. */
+ protocol?:readonly {text:string;ref:string;inTable?:boolean}[];
+ /** The value's evidence class: says which document-wide statements cover it (a reviewer's instrument covers its readings, not a maker's spec). */
+ evidenceClass?:string;
+ /** Identity of the source document: values from one source under one protocol compare within that source. */
+ source?:string}
 export interface TypedCondition {axis:string;value:string;raw:string;from:'labels'|'conditions'|'context'|'method'}
 export interface TypedQuantity {surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit;
  si:{value:number|null;low?:number;high?:number}|null;
- kind:{id:string|null;candidates:string[];basis:string[]};metric:{id:string|null;candidates:string[];basis:string[]};
- weighting:string|null;reference:string|null;conditions:TypedCondition[];missingConditions:string[];unresolved:string[];knowledge:string}
+ kind:{id:string|null;candidates:string[];basis:string[];
+  /** KN K9: how the kind is justified, where, by which words. */
+  justification:{type:KindJustification;from:'unit'|'labels'|'context'|'protocol'|null;evidence:string[];ref:string|null}};metric:{id:string|null;candidates:string[];basis:string[]};
+ weighting:string|null;reference:string|null;conditions:TypedCondition[];missingConditions:string[];unresolved:string[];knowledge:string;
+ /** The source document and the protocol statement that covers the value, when known. */
+ source:string|null;protocol:string|null}
 const toSi=(u:ParsedUnit,v:number|null|undefined)=>v==null?null:u.level?v:v*u.factor+u.offset;
 function distanceIn(qk:QuantityKnowledge,texts:readonly string[]):boolean{const ax=qk.axes.get('measurement_distance');if(!ax)return false;
  return texts.some(t=>findQuantities(qk,t).some(f=>f.unit.kinds.includes('length')&&(ax.cues??[]).some(c=>hasPhrase(t.slice(Math.max(0,f.start-24),f.end+12),c))));}
+/** Support for each candidate kind from the document's own statements (KN K9): a statement restating this value speaks
+ * about it directly; a method note in the value's table covers it; a document-wide statement covers the evidence classes
+ * the knowledge names. Explicit names of another kind elsewhere in the document are returned as possible defeaters. */
+function protocolSupport(qk:QuantityKnowledge,q:{value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext,candidates:readonly string[]){
+ const sup=new Map<string,{type:KindJustification;evidence:string[];refs:string[]}>();const explicitIn=new Set<string>();
+ const nums=[q.value,q.low,q.high].filter((x):x is number=>typeof x==='number');
+ const hitT=(t:string,terms:readonly string[])=>terms.filter(x=>hasPhrase(t,x));
+ for(const st of ctx.protocol??[]){
+  const restates=findQuantities(qk,st.text).some(f=>!!f.unit.level===!!q.unit.level&&nums.some(n=>n===f.value||n===f.low||n===f.high));
+  for(const e of qk.pack.kindEvidence??[]){if(!candidates.includes(e.kind)||e.justification==='contextual')continue;const h=hitT(st.text,e.terms);if(!h.length)continue;
+   // the statement must be about this measurand ("noise", "sound"), not another instrument of the same document
+   if(!hitT(st.text,qk.kinds.get(e.kind)!.terms??[]).length)continue;
+   const add=()=>{const x=sup.get(e.kind)??{type:e.justification as KindJustification,evidence:[],refs:[]};if(RANK[e.justification]>RANK[x.type])x.type=e.justification;x.evidence.push(...h);x.refs.push(st.ref+(restates?' (restates the value)':''));sup.set(e.kind,x);};
+   if(e.justification==='explicit'){if(restates)add();else explicitIn.add(e.kind);continue;}
+   if(restates||st.inTable||(ctx.evidenceClass&&e.covers?.includes(ctx.evidenceClass)))add();}}
+ return {sup,explicitIn};
+}
+const RANK:Record<string,number>={explicit:4,standard:3,documented_method:2,contextual:1};
+/** The strongest justification of an established kind: the unit itself, the value's own words (by the type the knowledge
+ * gives them), the document's protocol, or a weaker contextual cue. */
+function justifyKind(qk:QuantityKnowledge,unit:ParsedUnit,kind:string|null,basis:readonly string[],own:readonly string[],context:readonly string[],proto:{type:KindJustification;evidence:string[]}|null,ref:string|null):TypedQuantity['kind']['justification']{
+ if(!kind)return {type:'insufficient',from:null,evidence:[],ref:null};
+ if(proto)return {type:proto.type,from:'protocol',evidence:proto.evidence,ref};
+ if(unit.kinds.length===1)return {type:'unit',from:'unit',evidence:[unit.surface],ref:null};
+ if(unit.level?.reference)return {type:'explicit',from:'unit',evidence:[unit.surface],ref:null};
+ let best:{type:KindJustification;from:'labels'|'context';evidence:string[]}|null=null;
+ for(const [texts,from] of [[own,'labels'],[context,'context']] as const)for(const e of (qk.pack.kindEvidence??[]).filter(e=>e.kind===kind)){
+  const h=e.terms.filter(t=>texts.some(x=>hasPhrase(x,t)));if(h.length&&(!best||RANK[e.justification]>RANK[best.type]))best={type:e.justification,from,evidence:h};}
+ if(best)return {...best,ref:null};
+ // decided by a metric the labels name (an energy label metric) or by discriminating words the evidence list does not type
+ const named=basis.find(b=>/name /.test(b));if(named)return {type:named.startsWith('labels')?'explicit':'contextual',from:named.startsWith('labels')?'labels':'context',evidence:[named],ref:null};
+ return {type:'contextual',from:'context',evidence:[...basis],ref:null};
+}
 /** Type one quantity: its kind (from the unit, then from discriminating words), the metric its labels name, the
  * conditions the knowledge requires and which of them the context states. Nothing is guessed: ambiguity stays explicit. */
 export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext={}):TypedQuantity{
@@ -246,9 +296,24 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   if(disc.length===1){candidates=[disc[0].k];kindBasis.push(`discriminating words: ${disc[0].t.join(', ')}`);}
   else if(disc.length>1)unresolved.push(`kind: evidence for several kinds (${disc.map(d=>d.k+': '+d.t.join(', ')).join('; ')})`);
  }
+  // KN K9: defeasible document protocol. When the value's own words leave the kind open, a statement the document makes
+ // once (an instrument of its tests, the scheme it declares under) settles it for the values it covers (by evidence
+ // class). It never overrides the value's own words, and it yields nothing when the document supports several kinds.
+ let protoRef:string|null=null;let protoEv:{type:KindJustification;evidence:string[]}|null=null;
+ if(candidates.length>1&&ctx.protocol?.length){
+  const {sup,explicitIn}=protocolSupport(qk,q,ctx,candidates);
+  const kinds=[...sup.keys()];const others=[...explicitIn].filter(k=>!kinds.includes(k));
+  if(kinds.length===1&&!others.length){const k=kinds[0],x=sup.get(k)!;candidates=[k];protoRef=[...new Set(x.refs)].join(',');protoEv={type:x.type,evidence:[...new Set(x.evidence)]};
+   kindBasis.push(`the document's ${x.type==='standard'?'declared scheme':'test protocol'} (${protoRef}): ${protoEv.evidence.join(', ')}`);
+   for(let i=unresolved.length-1;i>=0;i--)if(unresolved[i].startsWith('kind:'))unresolved.splice(i,1);}
+  else if(kinds.length+others.length>1)unresolved.push(`kind: the document's statements support several kinds (${[...kinds,...others].join(', ')})`);}
  // KN correction (owner review 2026-10-18): that a source measured a value does not decide pressure or power (a laboratory
  // or an EU label reports a determined sound power as its result). Only the source's own words decide (discriminators above).
  const kind=candidates.length===1?candidates[0]:null;
+ let justification=justifyKind(qk,q.unit,kind,kindBasis,own,context,protoEv,protoRef);
+ // the value's own words settled the kind; a stronger statement of the document for the same kind is the better justification
+ if(kind&&!protoEv&&ctx.protocol?.length&&RANK[justification.type]!==undefined){const {sup}=protocolSupport(qk,q,ctx,[kind]);const x=sup.get(kind);
+  if(x&&RANK[x.type]>RANK[justification.type]){protoRef=[...new Set(x.refs)].join(',');justification={type:x.type,from:'protocol',evidence:[...new Set(x.evidence)],ref:protoRef};}}
  if(!kind)unresolved.push(candidates.length?`kind: ${q.unit.surface} can express ${candidates.join(' or ')}; nothing here says which`:`kind: no known quantity is expressed in ${q.unit.surface}`);
  let metricCands=[...new Set(compatible.filter(x=>!kind||x.m.kind===kind).map(x=>x.m.id))];
  // the most specific name wins when one metric's matched words contain another's ("max room size" over "room size")
@@ -284,9 +349,9 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
  const missing=required.filter(a=>!conditions.some(c=>c.axis===a));
  return {surface:q.surface,value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{}),unit:q.unit,
   si:q.unit.level?{value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{})}:{value:toSi(q.unit,q.value),...(q.low!==undefined?{low:toSi(q.unit,q.low)!,high:toSi(q.unit,q.high)!}:{})},
-  kind:{id:kind,candidates,basis:kindBasis},metric:{id:metricId,candidates:metricCands,basis:metricBasis},
+  kind:{id:kind,candidates,basis:kindBasis,justification},metric:{id:metricId,candidates:metricCands,basis:metricBasis},
   weighting:q.unit.level?.weighting??null,reference:q.unit.level?.reference??(kind?qk.kinds.get(kind)!.reference??null:null),
-  conditions,missingConditions:missing,unresolved,knowledge:qk.identity};
+  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -302,7 +367,7 @@ export function sameQuantity(a:TypedQuantity,b:TypedQuantity):{same:boolean;reas
  const d=Math.abs(a.si.value-b.si.value);
  return d<=tol*1.0001?{same:true,reason:`agree within printed precision (difference ${d.toPrecision(3)}, tolerance ${tol.toPrecision(3)} in SI units)`}:{same:false,reason:`differ by ${d.toPrecision(3)} beyond printed precision ${tol.toPrecision(3)} (SI units)`};
 }
-export type Comparability='comparable'|'comparable_conditions_unestablished'|'not_comparable'|'undetermined';
+export type Comparability='comparable'|'comparable_within_source'|'comparable_conditions_unestablished'|'not_comparable'|'undetermined';
 export interface ComparisonResult {verdict:Comparability;reasons:string[];a:number|null;b:number|null;unit:string|null}
 /** Whether two quantities can be compared, and on which common scale. The reasons come from the knowledge, not from
  * category rules: a different kind or metric, an unestablished weighting, a conventional basis, a condition. */
@@ -323,6 +388,9 @@ export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQu
   if(ca.length&&cb.length){if(!ca.some(v=>cb.includes(v)))return no(`different ${ax.replace(/_/g,' ')}: ${ca.join('/')} vs ${cb.join('/')}`);}
   else unest.push(ax.replace(/_/g,' '));}
  const unit=a.unit.level?a.unit.expression:'SI';const av=a.si?.value??null,bv=b.si?.value??null;
+ // KN K9: one source, one documented protocol: the values compare with each other although the protocol leaves a
+ // condition unstated; they still do not compare with other sources.
+ if(unest.length&&a.source&&a.source===b.source&&a.protocol&&a.protocol===b.protocol)return {verdict:'comparable_within_source',reasons:[`same quantity under one protocol of one source (${a.protocol}); not established: ${unest.join(', ')}, so not comparable with other sources`],a:av,b:bv,unit};
  if(unest.length)return {verdict:'comparable_conditions_unestablished',reasons:[`same quantity; not established on both sides: ${unest.join(', ')}`],a:av,b:bv,unit};
  return {verdict:'comparable',reasons:['same quantity, metric and conditions'],a:av,b:bv,unit};
 }

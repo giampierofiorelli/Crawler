@@ -5,10 +5,11 @@
  * ("147 CFM (250 m³/h)"). The result carries its own reading identity (1G identity + knowledge identity), so a
  * knowledge-informed reading is never confused with the baseline reading.
  */
+import {createHash} from 'node:crypto';
 import {acquireTables1F} from './table_acquisition1f.js';
 import {documentModel1G,interpretDocumentTables1G,renderedView1G,INTERPRETER1G_RENDERED_VERSION,type TextModel1G,type DocumentInterpretation1G,type Observation1G} from './table_interpreter1g.js';
 import type {InterpreterLessonId1G} from './table_interpreter1g_lessons.js';
-import {findQuantities,typeQuantity,sameQuantity,unitStatedInLabel,withLabelBasis,typeLabelledNumber,typeClass,relationChecks,type QuantityKnowledge,type TypedQuantity,type ParsedUnit,type TypedClass,type RelationCheck} from './quantity_knowledge.js';
+import {hasPhrase,findQuantities,typeQuantity,sameQuantity,unitStatedInLabel,withLabelBasis,typeLabelledNumber,typeClass,relationChecks,type QuantityKnowledge,type TypedQuantity,type ParsedUnit,type TypedClass,type RelationCheck} from './quantity_knowledge.js';
 
 export interface KnowledgeObservation1G extends Observation1G {
  /** Typed by the quantity knowledge; null: not a quantity, or its unit is unknown to the knowledge. */
@@ -35,15 +36,29 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
  // The layer reads the rendered cell text (v1g.2) unless a base reading or another text model is given.
  const text:TextModel1G=opts.base?(opts.base.version===INTERPRETER1G_RENDERED_VERSION?'rendered':'decoded'):opts.text??'rendered';
  const base=opts.base??interpretDocumentTables1G(html,{lessons:opts.lessons,text});
- const acq0=acquireTables1F(html,text==='rendered'?{rendered:true}:{});const acq=text==='rendered'?{...acq0,tables:acq0.tables.map(renderedView1G)}:acq0;const doc=documentModel1G(html);
+ // KN K9: statements the document makes once about how its values were obtained (an instrument, a declared scheme):
+ // every block naming a document-wide kind justification of the knowledge. Applied defeasibly per value by typeQuantity.
+ const docEv=(qk.pack.kindEvidence??[]).filter(e=>e.justification!=='contextual');
+ const source='doc:'+createHash('sha256').update(html).digest('hex').slice(0,16);
+ const doc0=documentModel1G(html);
+ // A method sentence is usually followed by its results ("We measured … with a noise meter." "At the lowest speed it
+ // operates at 40.2 dBA."): the statement takes in the next two text blocks of the same section.
+ const sameSec=(a:typeof doc0.blocks[number],b:typeof doc0.blocks[number])=>a.sectionPath.join('/')===b.sectionPath.join('/');
+ const protocol=doc0.blocks.filter(b=>b.text&&docEv.some(e=>e.terms.some(t=>hasPhrase(b.text,t)))).map(b=>{
+  const next=doc0.blocks.slice(b.index+1).filter(n=>n.text).slice(0,2).filter(n=>sameSec(n,b));
+  return {text:[b.text,...next.map(n=>n.text)].join(' '),ref:'block '+b.index+(next.length?'-'+next.at(-1)!.index:'')};});
+ const acq0=acquireTables1F(html,text==='rendered'?{rendered:true}:{});const acq=text==='rendered'?{...acq0,tables:acq0.tables.map(renderedView1G)}:acq0;const doc=doc0;
  const tables=base.tables.map(t=>{
   const at=acq.tables[t.table];const cellText=new Map(at?.cells.map(c=>[c.id,c.normalisedText])??[]);
+  // a method note inside the table (an info cell, a footnote row) speaks about this table's values of its measurand: it
+  // is more specific than the class the table heading suggests, so it covers every evidence class here (KN K9)
+  const tableNotes=(at?.cells??[]).filter(c=>docEv.some(e=>e.terms.some(tm=>hasPhrase(c.normalisedText,tm)))).map(c=>({text:c.normalisedText,ref:`table ${t.table} cell ${c.id}`,inTable:true}));
   const ctx=[at?.caption?.normalisedText??'',at?.context.headingPath.at(-1)?.decodedText??'',...(at?.context.before.slice(-2).map(b=>b.decodedText)??[]),
    ...t.context.filter(l=>l.applies).map(l=>doc.blocks[l.block]?.text??'')].filter(Boolean);
   const obs:KnowledgeObservation1G[]=t.observations.map(o=>{
    const labels=[...o.property,...o.records,...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??'')].filter(Boolean);
    let quantity:TypedQuantity|null=null,unitSurface:string|null=null,unitFrom:KnowledgeObservation1G['unitFrom']=null,labelBasis:string|null=null;
-   const tctx={labels,conditions:o.conditions,context:ctx};
+   const tctx={labels,conditions:o.conditions,context:ctx,protocol:[...tableNotes,...protocol],evidenceClass:o.evidence.class,source};
    const withBasis=(u:ParsedUnit)=>{const b=withLabelBasis(qk,u,labels);if(b){labelBasis=b.basis;return b.unit;}return u;};
    if(o.kind==='quantity'||o.kind==='range'||o.kind==='bound'||o.kind==='number'){
     // the value is read in its whole cell (a dimension list or an axis letter is visible only there), then in its own surface
@@ -51,7 +66,9 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
     const inCell=findQuantities(qk,cellText.get(o.cell)??'');const listed=inCell.filter(x=>x.axis!==undefined);
     const f=inCell.find(x=>same(x)&&o.surface.includes(String(x.value??x.low)))??(listed.some(same)?null:findQuantities(qk,o.surface).find(same)??null);
     if(f){quantity=typeQuantity(qk,{surface:f.surface,value:f.value,low:f.low,high:f.high,unit:withBasis(f.unit)},tctx);unitSurface=f.unitSurface;unitFrom='cell';}
-    else if(o.value!==null||o.low!==undefined){
+    // a header's unit is the unit of a cell's unitless numbers only when the cell prints no unit of its own: in
+    // "Speed 1 / 40.2 dBA" the 1 belongs to a label, not to the decibels of the column header (KN K9)
+    else if((o.value!==null||o.low!==undefined)&&!inCell.length){
      // the unit a label of the value states (column or row header, its in-cell label, caption): "(m³/h)", "in watts"
      const lu=[...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??''),...o.property,at?.caption?.normalisedText??''].map(l=>unitStatedInLabel(qk,l)).find(Boolean)??null;
      if(lu){quantity=typeQuantity(qk,{surface:o.surface+' '+lu.surface,value:o.value,...(o.low!==undefined?{low:o.low,high:o.high}:{}),unit:withBasis(lu.unit)},tctx);unitSurface=lu.surface;unitFrom='label';}

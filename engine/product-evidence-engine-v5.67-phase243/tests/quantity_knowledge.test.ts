@@ -12,7 +12,7 @@ const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/
 const typed=(k:QuantityKnowledge,surface:string,ctx:Parameters<typeof typeQuantity>[2]={})=>{const f=findQuantities(k,surface)[0];assert.ok(f,'no quantity in '+surface);return typeQuantity(k,f,ctx);};
 
 test('pack: validated, sourced and identified by its digest; UCUM is recorded as not used', ()=>{
- assert.match(qk.identity,/^qk\.2\.1:[0-9a-f]{16}$/);
+ assert.match(qk.identity,/^qk\.2\.2:[0-9a-f]{16}$/);
  const p=rawPack();assert.ok(p.sources.find(s=>s.id==='ucum_not_used')!.use.includes('NOT incorporated'));
  for(const k of p.kinds)assert.ok(p.sources.some(s=>s.id===k.source));
  const bad=rawPack();bad.metrics[0].kind='no_such_kind';assert.throws(()=>loadQuantityKnowledge(bad),/quantity_knowledge_invalid/);
@@ -262,4 +262,46 @@ test('KN errors become knowledge and mechanism: "HEPA" is not an efficiency; a b
  assert.equal(linkTypedToMeasure272(plan,tm,typed(qk,'100%',{labels:['Warranty']}),'Warranty 100%',qk).measureId,null);
  assert.equal(linkTypedToMeasure272(plan,tm,typed(qk,'92%',{labels:['Gas reduction']}),'Gas reduction 92%',qk).measureId,'gas_reduction_percentage','the measurement words still link it');
  store.close();
+});
+
+// KN K9 (owner review 2026-10-18): maximise justified conclusions; record how each kind is justified. Synthetic pages.
+const page=(intro:string,heading:string,rows:string)=>`<html><body><h1>Review</h1>${intro}<h2>${heading}</h2><table><tr><th>Test</th><th>Alpha A1</th><th>Beta B2</th></tr>${rows}</table></body></html>`;
+const levelObs=(h:string)=>interpretWithKnowledge1G(h,qk).tables.flatMap(t=>t.observations).filter(o=>o.quantity?.unit.level);
+test('K9 protocol: a document stating its instrument once establishes sound pressure for its own readings, with provenance', ()=>{
+ const h=page('<p>We measured the noise of every purifier with a decibel meter at all fan speeds.</p>','Our test results','<tr><td>Noise (measured)</td><td>45 dBA</td><td>52 dBA</td></tr>');
+ const o=levelObs(h);assert.equal(o.length,2);
+ for(const x of o){assert.equal(x.quantity!.kind.id,'sound_pressure_level');assert.deepEqual([x.quantity!.kind.justification.type,x.quantity!.kind.justification.from],['documented_method','protocol']);
+  assert.match(x.quantity!.kind.justification.ref!,/^block /);assert.ok(x.quantity!.missingConditions.includes('measurement_distance'),'the distance stays a comparability condition');}
+ // one source, one protocol: they compare with each other, not with other sources
+ const c=compareQuantities(qk,o[0].quantity!,o[1].quantity!);assert.equal(c.verdict,'comparable_within_source');assert.match(c.reasons[0],/not comparable with other sources/);
+ const other=levelObs(h.replace('Alpha A1','Gamma G3'))[0];const elsewhere={...other.quantity!,source:'doc:other'};
+ assert.equal(compareQuantities(qk,o[0].quantity!,elsewhere).verdict,'comparable_conditions_unestablished');
+});
+test('K9 protocol limits: a maker spec is not covered by the reviewer\'s instrument; a power statement defeats; no protocol, no kind', ()=>{
+ const spec=page('<p>We measured the noise with a decibel meter.</p>','Manufacturer specifications','<tr><td>Noise level (declared by the manufacturer)</td><td>45 dBA</td><td>52 dBA</td></tr>');
+ const s=levelObs(spec);if(s.length&&s[0].evidence.class==='manufacturer_declared')assert.equal(s[0].quantity!.kind.id,null,'a declared spec is not a reading of the reviewer\'s meter');
+ const both=page('<p>We record the noise with a decibel meter and compute the sound power from these readings.</p>','Our test results','<tr><td>Noise (measured)</td><td>45 dBA</td><td>52 dBA</td></tr>');
+ assert.equal(levelObs(both)[0].quantity!.kind.id,null,'the document names both quantities: ambiguous');
+ const none=page('<p>A quiet machine.</p>','Our test results','<tr><td>Noise</td><td>45 dBA</td><td>52 dBA</td></tr>');
+ assert.deepEqual([levelObs(none)[0].quantity!.kind.id,levelObs(none)[0].quantity!.kind.justification.type],[null,'insufficient']);
+});
+test('K9 restated value and standard: a label claim the text restates is sound power under the EU label scheme', ()=>{
+ const h=page('<p>It ran close to its quiet energy label claim of 44 dB.</p>','In use','<tr><td>Noise during wash</td><td>44 dB</td><td>47 dB</td></tr>');
+ const o=levelObs(h);const a=o.find(x=>x.value===44)!,b=o.find(x=>x.value===47)!;
+ assert.equal(a.quantity!.kind.id,'sound_power_level');assert.equal(a.quantity!.kind.justification.type,'standard');assert.match(a.quantity!.kind.justification.ref!,/restates the value/);
+ assert.equal(b.quantity!.kind.id,null,'the claim speaks about 44 dB only');
+});
+test('K9 header units: a header unit never reaches a number of a cell that prints its own unit (speed index)', ()=>{
+ const h=`<html><body><table><tr><th>Noise level in decibels</th><th>Alpha A1</th></tr><tr><td>Fan</td><td>Speed 1<br>40.2 dBA</td></tr><tr><td>Night (dB)</td><td>31</td></tr></table></body></html>`;
+ const o=interpretWithKnowledge1G(h,qk).tables.flatMap(t=>t.observations);
+ assert.ok(!o.some(x=>x.value===1&&x.quantity),'the 1 of "Speed 1" is not a level');
+ assert.equal(o.find(x=>x.surface==='40.2 dBA')!.quantity!.unit.level!.weighting,'A');
+ const n=o.find(x=>x.value===31);if(n)assert.equal(n.unitFrom,'label','a bare number alone in its cell still takes the header unit');
+});
+test('K9 pack: document-wide justifications must say which values they cover', ()=>{
+ const p=rawPack();delete p.kindEvidence!.find(e=>e.justification==='documented_method')!.covers;assert.throws(()=>loadQuantityKnowledge(p),/must say which values it covers/);
+ const p2=rawPack();p2.kindEvidence=[];const k=loadQuantityKnowledge(p2);
+ assert.equal(levelObs(page('<p>We measured the noise with a decibel meter.</p>','Our test results','<tr><td>Noise</td><td>45 dBA</td><td>52 dBA</td></tr>')).length>0,true);
+ const o=interpretWithKnowledge1G(page('<p>We measured the noise with a decibel meter.</p>','Our test results','<tr><td>Noise</td><td>45 dBA</td><td>52 dBA</td></tr>'),k).tables[0].observations.find(x=>x.quantity?.unit.level)!;
+ assert.equal(o.quantity!.kind.id,null,'ablation: without the kind evidence the protocol establishes nothing');
 });

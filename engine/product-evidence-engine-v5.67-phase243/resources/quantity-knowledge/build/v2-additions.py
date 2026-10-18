@@ -6,7 +6,7 @@ research package section that prompted the entry (private packages; no text copi
 import json,sys,os
 here=os.path.dirname(os.path.abspath(__file__));root=os.path.dirname(here)
 d=json.load(open(os.path.join(root,'quantity-knowledge.v1.json')))
-d['version']='qk.2.1'
+d['version']='qk.2.2'
 d['statement']+=" v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion."
 def src(i,title,url,use,licence,verification):d['sources'].append({'id':i,'title':title,'url':url,'use':use,'licence':licence,'verification':verification})
 src('energystar_dehumidifier','US EPA ENERGY STAR: Dehumidifier testing and capacity','https://www.energystar.gov/products/dehumidifier_testing_and_capacity',
@@ -84,6 +84,18 @@ for k in d['kinds']:
   # publisher's own reading was sound pressure. Unjustified: a laboratory or a label (EU 2019/2017, dB(A) re 1 pW) reports a
   # determined sound power as its own result. Only the source's words (a meter at a distance; LWA, re 1 pW) decide the kind.
   if k['id']=='sound_power_level':k['note']+=' It is determined from sound pressure measured over an enveloping surface or in a reverberation room (ISO 3741/3744) and is reported as a result by laboratories and on EU labels (dB(A) re 1 pW); that a source measured a value does not say whether it reports pressure or power.';k['determinedBy']='iso_3741_3744_sound_power'
+# kind evidence (KN K9, owner review 2026-10-18): which words justify a kind, of what type, and whether a statement made
+# once in a document (its test protocol or the scheme it declares under) covers values of a given evidence class.
+src('iec_61672','IEC 61672-1:2013 Electroacoustics - Sound level meters - Part 1: Specifications','https://www.sis.se/en/produkter/metrology-and-measurement-physical-phenomena/acoustics-and-acoustic-measurements/electroacoustics/iec6167212013',
+ 'a sound level meter reports time- and frequency-weighted sound (pressure) levels at the measuring point; its readings are sound pressure levels, never sound power','cited as a reference; scope read','standard catalogue scope read (SIS, EN listing); owner review cited IEC 61672-1 and ISVR')
+src('eu_2019_2017_noise','Commission Delegated Regulation (EU) 2019/2017, household dishwasher energy label: airborne acoustical noise emission in dB(A) re 1 pW','https://eur-lex.europa.eu/eli/reg_del/2019/2017/oj',
+ 'the label noise value is a sound power level re 1 pW','EU law; facts only','cited by the owner review; consistent with the eu_2019_2017 source already in the pack')
+d['kindEvidence']=[
+ {'kind':'sound_pressure_level','justification':'explicit','terms':['sound pressure','sound pressure level','spl'],'source':'iso_80000_8'},
+ {'kind':'sound_pressure_level','justification':'documented_method','terms':['sound level meter','sound level metre','sound meter','decibel meter','db meter','noise meter','noise measurement tool','noise measuring device','noise measurement device'],'covers':['publisher_measured','unknown'],'source':'iec_61672','note':'an instrument reading is a sound pressure level at the measuring point; the distance stays a comparability condition'},
+ {'kind':'sound_pressure_level','justification':'contextual','terms':['measured from','away','at a distance'],'source':'iso_80000_8'},
+ {'kind':'sound_power_level','justification':'explicit','terms':['sound power','sound power level','lwa','re 1 pw'],'source':'iso_80000_8'},
+ {'kind':'sound_power_level','justification':'standard','terms':['energy label','noise class','acoustical noise emission','airborne acoustical noise','acoustic airborne noise','airborne noise'],'covers':['manufacturer_declared','nominal_certified'],'source':'eu_2019_2017_noise','note':'EU label noise emission is sound power re 1 pW'}]
 # relations
 d['relations']=[
  {'id':'room_area_from_cadr','nature':'sizing_convention','caveat':'A consistency check between declared figures under the AHAM/ENERGY STAR sizing assumptions (smoke CADR, stated air changes, 8 ft ceiling, well-mixed room); it is not a measurement of how the purifier performs in a real room.','statement':'The floor area a clean air delivery rate serves at a given number of air changes per hour and ceiling height: area = CADR × 60 / (ACH × height).','output':{'metric':'room_coverage','unit':'ft^2'},'inputs':[{'name':'cadr','metric':'cadr','unit':'cfm','prefer':{'challenge_pollutant':'smoke'},'note':'AHAM sizes rooms by the smoke CADR'},{'name':'ach','axis':'air_changes_per_hour','unit':'ach'},{'name':'height','assumption':True,'default':8,'unit':'ft','note':'ENERGY STAR / EPA sizing assumes an 8-foot ceiling'}],'expression':'cadr*60/(ach*height)','tolerance':0.03,'source':'aham_room_size'},

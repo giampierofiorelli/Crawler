@@ -1,6 +1,6 @@
 {
  "schema": "pee.quantity-knowledge.v1",
- "version": "qk.2.1",
+ "version": "qk.2.2",
  "statement": "Typed scientific knowledge about quantities: what a quantity is (kind, dimension), how it is expressed (units and their properties), which quantities are defined by a method (metrics) and which conditions make results comparable. General physics and metrology, never product facts. Written in PEE's own words; facts only, no third-party text reproduced. v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion.",
  "dimensionBasis": [
   "L",
@@ -185,6 +185,22 @@
    "use": "a gamut coverage percentage is relative to a named reference gamut in a named chromaticity diagram; values for different references or diagrams are different quantities",
    "licence": "cited as a reference (definition)",
    "verification": "definition"
+  },
+  {
+   "id": "iec_61672",
+   "title": "IEC 61672-1:2013 Electroacoustics - Sound level meters - Part 1: Specifications",
+   "url": "https://www.sis.se/en/produkter/metrology-and-measurement-physical-phenomena/acoustics-and-acoustic-measurements/electroacoustics/iec6167212013",
+   "use": "a sound level meter reports time- and frequency-weighted sound (pressure) levels at the measuring point; its readings are sound pressure levels, never sound power",
+   "licence": "cited as a reference; scope read",
+   "verification": "standard catalogue scope read (SIS, EN listing); owner review cited IEC 61672-1 and ISVR"
+  },
+  {
+   "id": "eu_2019_2017_noise",
+   "title": "Commission Delegated Regulation (EU) 2019/2017, household dishwasher energy label: airborne acoustical noise emission in dB(A) re 1 pW",
+   "url": "https://eur-lex.europa.eu/eli/reg_del/2019/2017/oj",
+   "use": "the label noise value is a sound power level re 1 pW",
+   "licence": "EU law; facts only",
+   "verification": "cited by the owner review; consistent with the eu_2019_2017 source already in the pack"
   }
  ],
  "kinds": [
@@ -2478,6 +2494,78 @@
    ],
    "fixedConditions": {},
    "source": "iec_62885_7"
+  }
+ ],
+ "kindEvidence": [
+  {
+   "kind": "sound_pressure_level",
+   "justification": "explicit",
+   "terms": [
+    "sound pressure",
+    "sound pressure level",
+    "spl"
+   ],
+   "source": "iso_80000_8"
+  },
+  {
+   "kind": "sound_pressure_level",
+   "justification": "documented_method",
+   "terms": [
+    "sound level meter",
+    "sound level metre",
+    "sound meter",
+    "decibel meter",
+    "db meter",
+    "noise meter",
+    "noise measurement tool",
+    "noise measuring device",
+    "noise measurement device"
+   ],
+   "covers": [
+    "publisher_measured",
+    "unknown"
+   ],
+   "source": "iec_61672",
+   "note": "an instrument reading is a sound pressure level at the measuring point; the distance stays a comparability condition"
+  },
+  {
+   "kind": "sound_pressure_level",
+   "justification": "contextual",
+   "terms": [
+    "measured from",
+    "away",
+    "at a distance"
+   ],
+   "source": "iso_80000_8"
+  },
+  {
+   "kind": "sound_power_level",
+   "justification": "explicit",
+   "terms": [
+    "sound power",
+    "sound power level",
+    "lwa",
+    "re 1 pw"
+   ],
+   "source": "iso_80000_8"
+  },
+  {
+   "kind": "sound_power_level",
+   "justification": "standard",
+   "terms": [
+    "energy label",
+    "noise class",
+    "acoustical noise emission",
+    "airborne acoustical noise",
+    "acoustic airborne noise",
+    "airborne noise"
+   ],
+   "covers": [
+    "manufacturer_declared",
+    "nominal_certified"
+   ],
+   "source": "eu_2019_2017_noise",
+   "note": "EU label noise emission is sound power re 1 pW"
   }
  ],
  "relations": [

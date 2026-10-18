@@ -209,6 +209,17 @@ Never claim to have read a file you have not opened. In reports, say which secti
   - regulatory safety notice;
   - methodology reference;
   - assistant hypothesis.
+- **Maximise justified conclusions; record their justification** (owner review 2026-10-18, S54).
+  - Never invent a meaning. Never abstain when an applicable standard, the document's own method or instrument, or an
+    established convention fixes it.
+  - Every interpreted kind carries its justification type: unit, explicit, standard, documented method, contextual, or
+    insufficient. It also carries where that justification is.
+  - A document-wide statement applies defeasibly, and only to the values it covers. More specific evidence overrides
+    it, and a conflicting statement withdraws it.
+  - Keep four questions apart: identity of the quantity, quality of the method, comparability, and sufficiency for the
+    decision. A missing condition limits comparability, not identity. Values of one source under one protocol compare
+    within that source.
+  - Measure unjustified interpretations and unjustified abstentions as two separate errors.
 - **A declaration is never independent test evidence and never a ranking.** Missing evidence is not evidence of poor
   performance.
 - **Never merge product identity on similar names.** Never attach evidence to the wrong variant.

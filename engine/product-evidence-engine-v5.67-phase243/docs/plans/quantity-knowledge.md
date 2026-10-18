@@ -383,3 +383,78 @@ The published qk.2 and its runs (`*-kn-v2*`) are kept for comparison and reprodu
 **Open.** A document's own test protocol (instrument, distance, stated once in a methodology section) is not yet read
 as a condition of the table values it governs. That is the general route by which the 16 values could be resolved
 legitimately. It is not added here: it would be tuned on these spent pages.
+
+## K9. From abstention to justified conclusions (owner review, 2026-10-18)
+
+**Owner's point.** K8 removed an unjustified inference but went to the other extreme: every value whose table did not
+name the quantity stayed ambiguous, even when an applicable standard, the document's own method or instrument, or an
+established convention fixes it. Four questions are distinct:
+- identity of the quantity;
+- quality of the method;
+- comparability;
+- sufficiency for the decision.
+
+Unjustified interpretations and unjustified abstentions are to be measured separately.
+
+**Reference, sealed first.**
+- A fresh-context agent annotated all 120 acoustic table values on the 12 pages carrying them, from document text only
+  and blind to every reader version. For each value it gave kind, justification type, distance and evidence.
+- Hash sealed in `evaluation/acoustic-ac/freeze.json`; private values in pee-knowledge `private-eval/acoustic-ac/`.
+- Development adjudication on spent pages, not held-out.
+- The annotation also found an error no earlier check had: 31 "values" are fan-speed indices ("Speed 1 / 40.2 dBA"),
+  read as decibels in every published version.
+
+**Mechanism (qk.2.2), general, in the existing interface and layer:**
+- **`kindEvidence` in the pack.** Words that justify a kind, by type (explicit, standard, documented method,
+  contextual), with sources:
+  - IEC 61672-1: a sound level meter reads sound pressure (scope read);
+  - EU 2019/2017: label noise emission is sound power re 1 pW.
+  
+  Document-wide types must say which evidence classes they cover (the loader refuses otherwise).
+- **Defeasible document protocols.** A statement the document makes once covers values in three cases:
+  - it restates the value ("operates at 40.2 dBA", "energy label claim of 44dB");
+  - it is a method note inside the value's own table;
+  - its covered classes include the value's class.
+
+  The value's own words override it. A document naming another quantity withdraws it.
+- **`kind.justification`** on every typed value: type, where (`unit`, `labels`, `context`, `protocol`), evidence and a
+  block or cell reference. The strongest available justification is reported.
+- **Within-source comparability.** Values of one source under one protocol get `comparable_within_source`: they compare
+  with each other, and the reason states that they do not compare with other sources.
+- **Header units.** A header's unit reaches a cell's unitless number only when the cell prints no unit of its own.
+
+**Results on the sealed reference** (`evaluation/acoustic-ac/score-*.json`):
+
+| Version | Correct interpretations | Unjustified interpretations | Unjustified abstentions | Correct abstentions | Speed indices read as dB |
+|---|---|---|---|---|---|
+| qk.2 published (`2b2e6fd`) | 65 | 1 | 17 | 6 | 31 |
+| qk.2.1 (`18932bc`) | 49 | 0 | 33 | 7 | 31 |
+| qk.2.2 first run (`score-qk22-first`, unchanged) | 65 | 0 | 17 | 7 | 31 |
+| qk.2.2 tuned (`score-qk22-tuned5`) | 82 | 0 | 0 | 7 | 0 |
+
+Notes on the table:
+- The tuned run's justification type agrees with the reference on 82 of 82 values.
+- The tuned row is TUNED on this reference. Its four refinements were each made after looking at a failing row:
+  restated values, in-table method notes, the next two blocks of a method paragraph, and the cell-unit rule for header
+  units.
+- It shows that the mechanism can reach the reference; it is not a generalisation result.
+
+**Regression check** (`reading-kn-v22b` vs `reading-kn-v21`):
+- 69 fewer typed values, every one a wrong typing now removed:
+  - 31 speed indices read as dB;
+  - 26 speed indices read as W;
+  - 12 dimension values that 1G truncates at an axis letter ("19.87D" read as 19). D23 stays open in 1G.
+- Links: 62 links of those wrong values removed. The dishwasher label value now links to the sound-power label
+  measurement instead of in-home sound pressure.
+- Advice without the knowledge: identical on 363 requests. Live store unchanged. Suite: 4,668 passed.
+
+**One overreach caught by a test during the work.** The label scheme briefly covered values of unknown class, so one
+mention of the energy label turned every unclassified dB on a review page into sound power. It now covers declared
+values only; for other values, a statement restating the value is required.
+
+**Open.**
+- The reference is spent. An authorised unseen set is needed for the generalisation claim.
+- "noise measurement tool" was added to the instrument terms after reading these pages.
+- Protocol coverage uses the 1G evidence class, whose `manufacturer_declared` default can rest on a heading word
+  ("Specs").
+- No decision consumes `comparable_within_source` yet (D21/D22).
