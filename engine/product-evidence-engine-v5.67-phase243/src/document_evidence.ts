@@ -411,7 +411,11 @@ function readQualitativeEvidence(qk:QuantityKnowledge,segs:readonly Segment[],qu
     const judged=count(evalWords,false)+count(evalWords,true)>0;
     if(!observed&&!judged)continue;
     const statementType=observed&&judged?'observation_and_judgement':observed?'observation':'judgement';
-    const evidenceType:QualitativeEvidence['evidenceType']=reported?'reported_by_others':claim?'manufacturer_claim':inference&&!observed?'inference':inTest||(documentTests&&observed)?'observed_in_test':experience?'experience_in_use':documentTests&&judged?'observed_in_test':'opinion';
+    // QE tuned (first run, 2026-10-18): a document's testing covers what its tests made observable, not every opinion it
+    // states (46 opinions and 25 use experiences were read as test observations on the 8 reference pages). The WD rule,
+    // tuned on one publisher whose every sentence reports a test, overreached; a pure judgement stays an opinion unless
+    // the sentence itself refers to the test.
+    const evidenceType:QualitativeEvidence['evidenceType']=reported?'reported_by_others':claim?'manufacturer_claim':inference&&!observed?'inference':inTest||(documentTests&&observed&&!experience)?'observed_in_test':experience?'experience_in_use':'opinion';
     // a number on the same property: its kind measures the property, or every kind it can still be does ("62 dBA": pressure or power, both noise)
     const kinds=a.kinds??[];const onProp=(q:SegmentQuantity)=>!!q.quantity&&(q.quantity.kind.id?kinds.includes(q.quantity.kind.id):q.quantity.kind.candidates.length>0&&q.quantity.kind.candidates.every(k=>kinds.includes(k)));
     const rq=sentQ.find(onProp)??null;const rn=rq?null:nextQ.find(onProp)??null;

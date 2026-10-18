@@ -255,4 +255,5 @@ en['evaluation']['hedges']+=['probably','likely','possibly','presumably','we sus
 for a in d['aspects']:
   if a['id']=='cleaning_result':a['terms']+=['cleaning result','cleaning results','cleaned well','left clean']
 d['aspects'].append({'id':'other','terms':[],'source':'pee'})
+en['qualitative']['experienceCues']+=['in my kitchen','at home','i use it','weeks of use','months of use','every day','each morning','in daily use']
 out=os.path.join(root,'quantity-knowledge.v2.json');json.dump(d,open(out,'w'),ensure_ascii=False,indent=1);open(out,'a').write('\n');print('wrote',out)
