@@ -20,7 +20,9 @@ const I=await import(D+'/table_interpreter1g.js');const GL=await import(D+'/tabl
 const SET=ARG('set')??'dev';const ARMS=(ARG('arms')??'1g,c,e').split(',').flatMap(a=>a==='ablation'?['1g-none',...GL.activeInterpreterLessons1G().map(id=>'1g-'+id.split('_')[0])]:a==='provisional'?GL.INTERPRETER_LESSONS1G.filter(l=>l.state==='provisional').map(l=>'1g+'+l.id.split('_')[0]):[a]);
 // 1G variants: '1g' = active lessons; '1g-none' = no lesson; '1g-GLk' = active lessons without GLk
 // '1g+GLk' = active lessons plus a provisional one
-const lessonsOf=arm=>arm==='1g'?GL.activeInterpreterLessons1G():arm==='1g-none'?[]:arm.startsWith('1g+')?[...GL.activeInterpreterLessons1G(),...GL.ALL_INTERPRETER_LESSONS1G.filter(id=>id.split('_')[0]===arm.slice(3))]:GL.activeInterpreterLessons1G().filter(id=>id.split('_')[0]!==arm.slice(3));
+// '1g2' = active lessons on the rendered cell text (v1g.2, acquisition v1f.2)
+const textOf=arm=>arm==='1g2'?'rendered':undefined;
+const lessonsOf=arm=>arm==='1g'||arm==='1g2'?GL.activeInterpreterLessons1G():arm==='1g-none'?[]:arm.startsWith('1g+')?[...GL.activeInterpreterLessons1G(),...GL.ALL_INTERPRETER_LESSONS1G.filter(id=>id.split('_')[0]===arm.slice(3))]:GL.activeInterpreterLessons1G().filter(id=>id.split('_')[0]!==arm.slice(3));
 const ROOT=join(homedir(),'.local/share/product-evidence-engine/private-eval');const REPO=process.env.PEE_KNOWLEDGE_REPO??'/home/user/pee-knowledge';
 const CFG=SET==='dev'?{sel:'evaluation/tables-1e/sample.json',ann:join(ROOT,'tables-1e/annotations.json'),freeze:'evaluation/tables-1e/annotation-freeze.json',dup:[]}
  :{sel:'evaluation/tables-1g/check-selection.json',ann:join(ROOT,'tables-1e/annotations-1g-check.json'),freeze:'evaluation/tables-1g/check-annotation-freeze.json',dup:['C02']};
@@ -42,7 +44,7 @@ for(const s of SEL){if(CFG.dup.includes(s.id))continue;const a=ANN.find(t=>t.id=
  const rowPos=new Map();const cellOf=new Map();for(const c of at.cells){const k=rowPos.get(c.sourceRow)??0;rowPos.set(c.sourceRow,k+1);cellOf.set(`${c.sourceRow},${k}`,c);}
  const byGrid=new Map(at.cells.filter(c=>c.gridRow!==null).map(c=>[`${c.gridRow},${c.gridCol}`,c]));
  const sys={};let tableRow=null;
- for(const arm of ARMS.filter(a=>a.startsWith('1g'))){const t0=process.hrtime.bigint();const r=I.interpretDocumentTables1G(p.html,{lessons:lessonsOf(arm)});const ms=Number(process.hrtime.bigint()-t0)/1e6;const ti=r.tables.find(t=>t.table===at.index);
+ for(const arm of ARMS.filter(a=>a.startsWith('1g'))){const t0=process.hrtime.bigint();const r=I.interpretDocumentTables1G(p.html,{lessons:lessonsOf(arm),text:textOf(arm)});const ms=Number(process.hrtime.bigint()-t0)/1e6;const ti=r.tables.find(t=>t.table===at.index);
   const h=ti.selected?.hypothesis??null;const im0=ti.implicitAxes??{};const role0=lv=>lv&&lv.length?lv[lv.length-1]:'none';
   const rr=h&&!h.layout?(h.rowLevels.length?role0(h.rowLevels):im0.row??'none'):null,cr=h&&!h.layout?(h.colLevels.length?role0(h.colLevels):im0.col??'none'):null;
   const axesOk=(rr?ROLE[rr].includes(a.rowAxis.role):a.structure==='layout_not_data')&&(cr?ROLE[cr].includes(a.colAxis.role):a.structure==='layout_not_data');

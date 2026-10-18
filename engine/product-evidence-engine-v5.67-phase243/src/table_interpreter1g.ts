@@ -34,6 +34,15 @@ import {activeInterpreterLessons1G,interpreterLessonsDigest1G,ALL_INTERPRETER_LE
 type Lessons=ReadonlySet<InterpreterLessonId1G>;const ALL:Lessons=new Set(ALL_INTERPRETER_LESSONS1G);
 
 export const INTERPRETER1G_VERSION='pee.table-interpreter.v1g.1';
+/** v1g.2 = v1g.1 reading the rendered cell text of acquisition v1f.2 (line breaks of <br> and blocks kept as line
+ * breaks), selected with {text:'rendered'}. Nothing else differs; v1g.1 stays the default and is reproducible. */
+export const INTERPRETER1G_RENDERED_VERSION='pee.table-interpreter.v1g.2';
+export type TextModel1G='decoded'|'rendered';
+/** The table as v1g.2 reads it: every cell and caption text is its rendered text (whitespace collapsed within lines). */
+export function renderedView1G(t:TableAcquisition1F):TableAcquisition1F{
+ const r=(c:{normalisedText:string;renderedText?:string})=>c.renderedText===undefined?c.normalisedText:c.renderedText.split('\n').map(l=>l.replace(/[\t\f\r ]+/g,' ').trim()).filter(Boolean).join('\n');
+ return {...t,cells:t.cells.map(c=>({...c,normalisedText:r(c)})),caption:t.caption?{...t.caption,normalisedText:r(t.caption)}:null};
+}
 export const LIMITS1G={minRows:2,maxRows:30,minCols:2,maxCols:12,maxHeaderRows:2,maxHeaderCols:2,maxPasses:3} as const;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -222,7 +231,7 @@ function scoreHypothesis(x:Ctx,h:Hypothesis1G):ScoredHypothesis1G{
  const done=()=>({hypothesis:h,support:ev.reduce((a,e)=>a+(e.weak?0:e.polarity),0),weak:ev.filter(e=>e.weak).reduce((a,e)=>a+e.polarity,0),violations:viol,evidence:ev});
  const anyValues=x.t.cells.some(c=>isQuantCell(x,c));
  if(h.layout){
-  const longOrLinks=x.t.cells.filter(c=>c.links.length||c.normalisedText.split(' ').length>12).length;
+  const longOrLinks=x.t.cells.filter(c=>c.links.length||c.normalisedText.split(/\s+/).length>12).length;
   if(longOrLinks>=x.t.cells.length*0.5)add('layout_content',1,'table',`${longOrLinks} of ${x.t.cells.length} cells are links or long text`);
   if(!anyValues)add('no_values',1,'table','no cell holds a number');else add('values_present',-1,'table','cells hold numbers');
   return done();}
@@ -480,9 +489,10 @@ function classify(x:Ctx,cell:SourceCell1F,e:Element1G,labels:SourceCell1F[],dime
 }
 
 /** Interpret every table of a document. Tables outside the limits or not completely acquired are listed, never dropped. */
-export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly InterpreterLessonId1G[]}={}):DocumentInterpretation1G{
+export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly InterpreterLessonId1G[];text?:TextModel1G}={}):DocumentInterpretation1G{
  const lessons=[...(opts.lessons??activeInterpreterLessons1G())].sort();const L:Lessons=new Set(lessons);
- const acq=acquireTables1F(html);const doc=documentModel1G(html);if(L.has('GL10_structured_names_are_name_shaped'))doc.principal=nameShapedPrincipal1G(doc.principal);
+ const rendered=opts.text==='rendered';const version=rendered?INTERPRETER1G_RENDERED_VERSION:INTERPRETER1G_VERSION;
+ const acq0=acquireTables1F(html,rendered?{rendered:true}:{});const acq=rendered?{...acq0,tables:acq0.tables.map(renderedView1G)}:acq0;const doc=documentModel1G(html);if(L.has('GL10_structured_names_are_name_shaped'))doc.principal=nameShapedPrincipal1G(doc.principal);
  const pick=(f:(s:string)=>boolean)=>[...new Set(doc.names.filter(n=>f(n.source)).map(n=>n.text).filter(t=>t&&t.length<=120))];
  const baseNames=pick(s=>s!=='heading'&&(L.has('GL3_structured_entity_grounding')||s!=='title_segment')),headings=pick(s=>s==='heading');
  let learned:string[]=[];let result:TableInterpretation1G[]=[];let passes=0;
@@ -493,5 +503,5 @@ export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly In
   for(const r of result){if(r.status!=='interpreted'||!r.selected)continue;const runner=r.alternatives.find(a=>!a.hypothesis.layout&&roleKey(a.hypothesis)!==roleKey(r.selected!.hypothesis));
    if(runner&&r.selected.support-runner.support<2)continue;for(const o of r.observations)if(o.product&&o.productSource!=='document')next.add(o.product);}
   if([...next].every(n=>learned.includes(n)))break;learned=[...next];}
- return {schema:'pee.table-interpretation.v1g',version:INTERPRETER1G_VERSION,lessons,readingIdentity:INTERPRETER1G_VERSION+'+lessons:'+interpreterLessonsDigest1G(lessons),limits:LIMITS1G,passes,tables:result,documentEntitiesLearned:learned};
+ return {schema:'pee.table-interpretation.v1g',version,lessons,readingIdentity:version+'+lessons:'+interpreterLessonsDigest1G(lessons),limits:LIMITS1G,passes,tables:result,documentEntitiesLearned:learned};
 }

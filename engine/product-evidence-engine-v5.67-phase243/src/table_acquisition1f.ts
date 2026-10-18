@@ -23,6 +23,10 @@ import {buildTableGrid245,type TableGrid245} from './phase245_table_grid.js';
 import {namedReferences1F,MAX_NAMED_REFERENCE1F} from './html5_named_references.js';
 
 export const ACQUISITION1F_VERSION='pee.table-acquisition.v1f.1';
+/** v1f.2 = v1f.1 plus `renderedText` on every cell and caption (opt-in: acquireTables1F(html,{rendered:true})). Every
+ * v1f.1 field is byte-identical; only the new field and the contract version differ. */
+export const ACQUISITION1F_RENDERED_VERSION='pee.table-acquisition.v1f.2';
+export const RENDERED_TEXT1F='renderedText approximates the WHATWG innerText of the cell with the user-agent default display only (no author stylesheet): <br> and the boundaries of block-level elements are line breaks, nested table cells are tab-separated and rows line-separated, collapsible whitespace (space, tab, LF, FF, CR) collapses to one space and is removed at line starts and ends, runs of line breaks collapse to one, content of raw-text elements and of elements with the hidden attribute or an inline display:none / visibility:hidden style is excluded (aria-hidden is not), image alt text is not included; inside pre, listing and textarea-free preformatted content whitespace is kept. Not modelled: author CSS, closed <details>, form controls, ::before/::after content';
 export const ACQUISITION1F_CONTRACT={
  version:ACQUISITION1F_VERSION,
  treeBuilder:'Phase245 tree builder (parseHtml245): NOT a conforming HTML5 tree builder. Structures where HTML5 would move content (foster parenting: text or elements directly inside table, row-group or row elements; form elements in tables; cells outside rows) are detected and make the table incomplete instead of being trusted',
@@ -127,7 +131,9 @@ export function tableAcquisitionStatus1F(table:Node245,grid:TableGrid245|null,op
 export type ElementRole1F='link'|'emphasis'|'superscript'|'subscript'|'citation_marker'|'footnote_marker'|'line_break'|'image'|'hidden'|'raw_text'|'nested_table';
 export interface InlineElement1F {tag:string;depth:number;start:number;end:number;attrs:Record<string,string>;rawAttrs:Record<string,string>;roles:ElementRole1F[];locator:string}
 export interface LinkRef1F {href:string;rawHref:string;start:number;end:number;fragmentTarget?:{resolved:boolean;locator?:string;tag?:string;decodedText?:string;textOmitted?:string}}
-export interface ContentSpan1F {raw:string|null;decodedText:string;normalisedText:string;elements:InlineElement1F[];links:LinkRef1F[];rawTextElements:{tag:string;locator:string;raw:string}[]}
+export interface ContentSpan1F {raw:string|null;decodedText:string;normalisedText:string;elements:InlineElement1F[];links:LinkRef1F[];rawTextElements:{tag:string;locator:string;raw:string}[];
+ /** v1f.2 only (RENDERED_TEXT1F): the text as a browser renders its lines. */
+ renderedText?:string}
 export interface SourceCell1F extends ContentSpan1F {
  id:number;sourceRow:number;rowInSection:number;section:'thead'|'tbody'|'tfoot'|'none'|null;
  gridRow:number|null;gridCol:number|null;rowspan:number|null;colspan:number|null;rowspanAttr:string|null;colspanAttr:string|null;
@@ -141,7 +147,7 @@ export interface TableAcquisition1F extends TableStatus1F {
  outsideCellContent:{kind:'text'|'element';tag:string;locator:string;raw:string|null}[];
  context:{headingPath:{level:number;locator:string;decodedText:string}[];before:ContextRef1F[];after:ContextRef1F[];figure:{locator:string;caption:ContextRef1F|null}|null};
 }
-export interface DocumentTables1F {schema:'pee.table-acquisition.v1f';contract:typeof ACQUISITION1F_CONTRACT;parse:{nodes:number;truncated:boolean};
+export interface DocumentTables1F {schema:'pee.table-acquisition.v1f';contract:typeof ACQUISITION1F_CONTRACT|(Omit<typeof ACQUISITION1F_CONTRACT,'version'>&{version:string;renderedText:string});parse:{nodes:number;truncated:boolean};
  tables:TableAcquisition1F[];
  /** Table markup the tree builder never parsed as a table (inside raw-text elements such as noscript or template). */
  unparsedTables:{status:'unsupported';reasons:AcquisitionReason1F[];locator:string;tag:string}[];
@@ -163,7 +169,36 @@ function rolesOf(n:Node245):ElementRole1F[]{const r:ElementRole1F[]=[];
  if(isHidden245(n))r.push('hidden');if(RAW.has(n.tag))r.push('raw_text');if(n.tag==='table')r.push('nested_table');return r;}
 function decodeURIComponentSafe(s:string):string{try{return decodeURIComponent(s);}catch{return s;}}
 
-export function acquireTables1F(html:string,opts:{maxTables?:number}={}):DocumentTables1F{
+// Rendered projection (v1f.2). Display types follow the HTML user-agent stylesheet.
+const BLOCK_DISPLAY1F=new Set(['address','article','aside','blockquote','center','details','dialog','dd','div','dl','dt','fieldset','figcaption','figure',
+ 'footer','form','h1','h2','h3','h4','h5','h6','header','hgroup','hr','legend','li','listing','main','menu','nav','ol','p','plaintext','pre','search','section','summary','ul','xmp','caption','table','thead','tbody','tfoot']);
+const NOT_RENDERED1F=new Set([...['script','style','textarea','title','noscript','template','xmp','iframe','noembed','noframes'],'head','datalist','param','source','track','area','map','img','picture','svg','video','audio','canvas','object','embed','input','select','button','option','optgroup','meter','progress']);
+const REPLACED1F=new Set(['img','picture','svg','video','audio','canvas','object','embed','input','select','button','meter','progress','iframe']);
+const notDisplayed1F=(n:Node245)=>'hidden' in n.attrs||/(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)/i.test(n.attrs.style??'');
+/** The rendered text of an element (RENDERED_TEXT1F). */
+export function renderedText1F(n:Node245):string{
+ // Segments: text (collapsible or preformatted) and required breaks; resolved at the end like innerText.
+ const out:({t:string;pre:boolean}|'\n'|'\t')[]=[];
+ const w=(x:Node245,pre:boolean)=>{
+  if(x.kind==='text'){out.push({t:decodeHtml5Text1F(x.rawText??x.text),pre});return;}
+  // a replaced element (image, control) still occupies a box: whitespace on its two sides does not collapse together
+  if(x!==n&&!notDisplayed1F(x)&&REPLACED1F.has(x.tag)){out.push({t:'\u0003',pre:true});return;}
+  if(x!==n&&(NOT_RENDERED1F.has(x.tag)||notDisplayed1F(x)))return;
+  if(x.tag==='br'){out.push('\n');return;}
+  const block=x!==n&&BLOCK_DISPLAY1F.has(x.tag);const isPre=pre||x.tag==='pre'||x.tag==='listing';
+  if(block||x.tag==='tr')out.push('\n');
+  const cells=x.tag==='tr';let first=true;
+  for(const c of x.children){if(cells&&c.kind==='element'&&(c.tag==='td'||c.tag==='th')){if(!first)out.push('\t');first=false;}w(c,isPre);}
+  if(block||x.tag==='tr')out.push('\n');};
+ w(n,false);
+ let s='';for(const seg of out){if(seg==='\n'||seg==='\t'){s+=seg==='\n'?'\u0000':'\u0001';continue;}
+  s+=seg.pre?seg.t.replace(/\n/g,'\u0000').replace(/[ \t]/g,'\u0002'):seg.t.replace(/[\t\n\f\r ]+/g,' ');}
+ // collapse spaces, drop spaces around breaks, collapse break runs, trim
+ s=s.replace(/ +/g,' ').replace(/ ?\u0000 ?/g,'\u0000').replace(/ ?\u0001 ?/g,'\u0001').replace(/\u0000+/g,'\u0000').replace(/^[\u0000 ]+|[\u0000 ]+$/g,'');
+ return s.replace(/\u0000/g,'\n').replace(/\u0001/g,'\t').replace(/\u0002/g,' ').replace(/\u0003/g,'');
+}
+
+export function acquireTables1F(html:string,opts:{maxTables?:number;rendered?:boolean}={}):DocumentTables1F{
  const maxTables=opts.maxTables??500;
  const {root,nodeCount,truncated}=parseHtml245(html,{keepSource:true});
  const ids=new Map<string,Node245>();
@@ -189,7 +224,7 @@ export function acquireTables1F(html:string,opts:{maxTables?:number}={}):Documen
   walk(n,0);
   // Attributes are decoded per HTML5 from their raw source (the Phase245 decoder is partial).
   for(const e of elements)e.attrs=Object.fromEntries(Object.entries(e.rawAttrs).map(([k,v])=>[k,decodeHtml5Attribute1F(v)]));
-  return {raw:withRaw?rawOf(n):null,decodedText:text,normalisedText:collapse(text),elements,links,rawTextElements};
+  return {raw:withRaw?rawOf(n):null,decodedText:text,normalisedText:collapse(text),elements,links,rawTextElements,...(opts.rendered&&withRaw?{renderedText:renderedText1F(n)}:{})};
  };
  // Document flow for neutral context references: headings, top-most blocks and tables in document order.
  type Flow={kind:'heading'|'block'|'table';node:Node245;level?:number};const flow:Flow[]=[];
@@ -238,5 +273,5 @@ export function acquireTables1F(html:string,opts:{maxTables?:number}={}):Documen
  const unparsedTables:DocumentTables1F['unparsedTables']=[];
  for(const n of walk245(root))if(n.kind==='element'&&RAW.has(n.tag)&&/<table[\s>\/]/i.test(n.text))
   unparsedTables.push({status:'unsupported',reasons:[{code:'table_in_raw_text_element',count:(n.text.match(/<table[\s>\/]/gi)??[]).length}],locator:locator245(n),tag:n.tag});
- return {schema:'pee.table-acquisition.v1f',contract:ACQUISITION1F_CONTRACT,parse:{nodes:nodeCount,truncated},tables:out,unparsedTables,notAcquired};
+ return {schema:'pee.table-acquisition.v1f',contract:opts.rendered?{...ACQUISITION1F_CONTRACT,version:ACQUISITION1F_RENDERED_VERSION,renderedText:RENDERED_TEXT1F}:ACQUISITION1F_CONTRACT,parse:{nodes:nodeCount,truncated},tables:out,unparsedTables,notAcquired};
 }

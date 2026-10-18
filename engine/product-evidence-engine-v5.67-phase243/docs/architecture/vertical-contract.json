@@ -507,7 +507,8 @@
    "stage": "authentic_evidence",
    "since": "Quantity knowledge GK",
    "item": "the neutral acquisition 1F (decodedText/normalisedText, textContent semantics) joins text across <br> without a separator (\"Dust: 134 CFM<br>Smoke: 126 CFM\" -> \"134 CFMSmoke\"; the legacy text keeps a space), so 1G in-cell labels merge and lose the challenge pollutant. A fix changes the 1F contract and therefore the published 1G reading: it needs a new 1F version and a new 1G identity, not an edit (docs/plans/quantity-knowledge.md §6)",
-   "resolvedStatus": "open"
+   "resolvedStatus": "resolved_in_new_versions",
+   "resolution": "2026-10-18: acquisition v1f.2 adds renderedText (innerText-like, user-agent display only; 2063 of 2063 retained and fixture cells equal Chromium innerText, scripts/rendered-text-1f-verify.mjs); 1G v1g.2 ({text:'rendered'}) reads it. v1f.1 and v1g.1 stay the defaults and byte-identical on all 69 retained pages; on the sealed 1E/1G gold v1g.2 scores identically; across the retained pages 34 merged in-cell labels drop to 0 and 73 bare numbers recover their unit. The quantity-knowledge layer reads v1g.2"
   },
   {
    "id": "D19",

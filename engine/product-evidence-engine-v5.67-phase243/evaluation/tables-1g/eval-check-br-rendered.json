@@ -1,0 +1,5177 @@
+{
+ "schema": "pee.tables1g.eval.v1",
+ "label": "br-rendered",
+ "set": "check",
+ "at": "2026-10-18T12:57:41.927Z",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "cb68490",
+  "srcDirty": false,
+  "readersSha256": "1067e2c8755ece120a7f9126b38beab87418938658fdc7204baf5c033b7a795e",
+  "readers": 9
+ },
+ "interpreter": "pee.table-interpreter.v1g.1",
+ "arms": [
+  "1g",
+  "1g2"
+ ],
+ "tier": "check: blind annotations sealed before the first 1G run; same publishers and partly the same templates as development; not held-out",
+ "summary": {
+  "all": {
+   "elements": 151,
+   "1g": {
+    "found": 143,
+    "fullyCorrect": 89,
+    "productCorrect": 128,
+    "productWrong": 6,
+    "productInvented": 0,
+    "productMissing": 9,
+    "conditionsFull": 8,
+    "conditionsWithUnmatchedExtra": 28,
+    "conditionsNeeded": 54,
+    "kindCorrect": 114,
+    "kindAbstained": 20,
+    "kindWrong": 9,
+    "falseMeasurements": 0,
+    "firstFailure": {
+     "axis_roles": 15,
+     "conditions": 35,
+     "evidence_kind": 4,
+     "value_parse": 8
+    }
+   },
+   "1g2": {
+    "found": 143,
+    "fullyCorrect": 89,
+    "productCorrect": 128,
+    "productWrong": 6,
+    "productInvented": 0,
+    "productMissing": 9,
+    "conditionsFull": 8,
+    "conditionsWithUnmatchedExtra": 28,
+    "conditionsNeeded": 54,
+    "kindCorrect": 114,
+    "kindAbstained": 20,
+    "kindWrong": 9,
+    "falseMeasurements": 0,
+    "firstFailure": {
+     "axis_roles": 15,
+     "conditions": 35,
+     "evidence_kind": 4,
+     "value_parse": 8
+    }
+   }
+  },
+  "measured": {
+   "elements": 49,
+   "1g": {
+    "found": 45,
+    "fullyCorrect": 28,
+    "productCorrect": 41,
+    "productWrong": 0,
+    "productInvented": 0,
+    "productMissing": 4,
+    "conditionsFull": 8,
+    "conditionsWithUnmatchedExtra": 4,
+    "conditionsNeeded": 25,
+    "kindCorrect": 37,
+    "kindAbstained": 4,
+    "kindWrong": 4,
+    "falseMeasurements": 0,
+    "firstFailure": {
+     "axis_roles": 4,
+     "conditions": 13,
+     "value_parse": 4
+    }
+   },
+   "1g2": {
+    "found": 45,
+    "fullyCorrect": 28,
+    "productCorrect": 41,
+    "productWrong": 0,
+    "productInvented": 0,
+    "productMissing": 4,
+    "conditionsFull": 8,
+    "conditionsWithUnmatchedExtra": 4,
+    "conditionsNeeded": 25,
+    "kindCorrect": 37,
+    "kindAbstained": 4,
+    "kindWrong": 4,
+    "falseMeasurements": 0,
+    "firstFailure": {
+     "axis_roles": 4,
+     "conditions": 13,
+     "value_parse": 4
+    }
+   }
+  },
+  "notMeasured": {
+   "elements": 102,
+   "1g": {
+    "found": 98,
+    "fullyCorrect": 61,
+    "productCorrect": 87,
+    "productWrong": 6,
+    "productInvented": 0,
+    "productMissing": 5,
+    "conditionsFull": 0,
+    "conditionsWithUnmatchedExtra": 24,
+    "conditionsNeeded": 29,
+    "kindCorrect": 77,
+    "kindAbstained": 16,
+    "kindWrong": 5,
+    "falseMeasurements": 0,
+    "firstFailure": {
+     "axis_roles": 11,
+     "conditions": 22,
+     "evidence_kind": 4,
+     "value_parse": 4
+    }
+   },
+   "1g2": {
+    "found": 98,
+    "fullyCorrect": 61,
+    "productCorrect": 87,
+    "productWrong": 6,
+    "productInvented": 0,
+    "productMissing": 5,
+    "conditionsFull": 0,
+    "conditionsWithUnmatchedExtra": 24,
+    "conditionsNeeded": 29,
+    "kindCorrect": 77,
+    "kindAbstained": 16,
+    "kindWrong": 5,
+    "falseMeasurements": 0,
+    "firstFailure": {
+     "axis_roles": 11,
+     "conditions": 22,
+     "evidence_kind": 4,
+     "value_parse": 4
+    }
+   }
+  },
+  "byKind": {
+   "measured": {
+    "elements": 49,
+    "1g": {
+     "found": 45,
+     "fullyCorrect": 28,
+     "productCorrect": 41,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 4,
+     "conditionsFull": 8,
+     "conditionsWithUnmatchedExtra": 4,
+     "conditionsNeeded": 25,
+     "kindCorrect": 37,
+     "kindAbstained": 4,
+     "kindWrong": 4,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 4,
+      "conditions": 13,
+      "value_parse": 4
+     }
+    },
+    "1g2": {
+     "found": 45,
+     "fullyCorrect": 28,
+     "productCorrect": 41,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 4,
+     "conditionsFull": 8,
+     "conditionsWithUnmatchedExtra": 4,
+     "conditionsNeeded": 25,
+     "kindCorrect": 37,
+     "kindAbstained": 4,
+     "kindWrong": 4,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 4,
+      "conditions": 13,
+      "value_parse": 4
+     }
+    }
+   },
+   "derived_or_estimated": {
+    "elements": 13,
+    "1g": {
+     "found": 13,
+     "fullyCorrect": 0,
+     "productCorrect": 8,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 2,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 8,
+     "conditionsNeeded": 13,
+     "kindCorrect": 0,
+     "kindAbstained": 13,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 5,
+      "conditions": 8
+     }
+    },
+    "1g2": {
+     "found": 13,
+     "fullyCorrect": 0,
+     "productCorrect": 8,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 2,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 8,
+     "conditionsNeeded": 13,
+     "kindCorrect": 0,
+     "kindAbstained": 13,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 5,
+      "conditions": 8
+     }
+    }
+   },
+   "rating_score": {
+    "elements": 20,
+    "1g": {
+     "found": 20,
+     "fullyCorrect": 15,
+     "productCorrect": 15,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 2,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 12,
+     "conditionsNeeded": 2,
+     "kindCorrect": 18,
+     "kindAbstained": 2,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 5
+     }
+    },
+    "1g2": {
+     "found": 20,
+     "fullyCorrect": 15,
+     "productCorrect": 15,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 2,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 12,
+     "conditionsNeeded": 2,
+     "kindCorrect": 18,
+     "kindAbstained": 2,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 5
+     }
+    }
+   },
+   "price": {
+    "elements": 11,
+    "1g": {
+     "found": 11,
+     "fullyCorrect": 0,
+     "productCorrect": 11,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 11,
+     "kindCorrect": 11,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 11
+     }
+    },
+    "1g2": {
+     "found": 11,
+     "fullyCorrect": 0,
+     "productCorrect": 11,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 11,
+     "kindCorrect": 11,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 11
+     }
+    }
+   },
+   "declared": {
+    "elements": 57,
+    "1g": {
+     "found": 53,
+     "fullyCorrect": 46,
+     "productCorrect": 52,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 1,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 4,
+     "conditionsNeeded": 2,
+     "kindCorrect": 48,
+     "kindAbstained": 1,
+     "kindWrong": 4,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 2,
+      "evidence_kind": 4,
+      "value_parse": 4,
+      "axis_roles": 1
+     }
+    },
+    "1g2": {
+     "found": 53,
+     "fullyCorrect": 46,
+     "productCorrect": 52,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 1,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 4,
+     "conditionsNeeded": 2,
+     "kindCorrect": 48,
+     "kindAbstained": 1,
+     "kindWrong": 4,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 2,
+      "evidence_kind": 4,
+      "value_parse": 4,
+      "axis_roles": 1
+     }
+    }
+   },
+   "other": {
+    "elements": 1,
+    "1g": {
+     "found": 1,
+     "fullyCorrect": 0,
+     "productCorrect": 1,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 1,
+     "kindCorrect": 0,
+     "kindAbstained": 0,
+     "kindWrong": 1,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 1
+     }
+    },
+    "1g2": {
+     "found": 1,
+     "fullyCorrect": 0,
+     "productCorrect": 1,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 1,
+     "kindCorrect": 0,
+     "kindAbstained": 0,
+     "kindWrong": 1,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 1
+     }
+    }
+   }
+  },
+  "byPublisher": {
+   "which.co.uk": {
+    "elements": 8,
+    "1g": {
+     "found": 8,
+     "fullyCorrect": 0,
+     "productCorrect": 0,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 8,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 8,
+     "kindCorrect": 0,
+     "kindAbstained": 8,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 8
+     }
+    },
+    "1g2": {
+     "found": 8,
+     "fullyCorrect": 0,
+     "productCorrect": 0,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 8,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 8,
+     "kindCorrect": 0,
+     "kindAbstained": 8,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 8
+     }
+    }
+   },
+   "techradar.com": {
+    "elements": 6,
+    "1g": {
+     "found": 6,
+     "fullyCorrect": 3,
+     "productCorrect": 3,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 0,
+     "kindCorrect": 6,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 3
+     }
+    },
+    "1g2": {
+     "found": 6,
+     "fullyCorrect": 3,
+     "productCorrect": 3,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 0,
+     "kindCorrect": 6,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 3
+     }
+    }
+   },
+   "housefresh.com": {
+    "elements": 18,
+    "1g": {
+     "found": 18,
+     "fullyCorrect": 0,
+     "productCorrect": 18,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 18,
+     "kindCorrect": 18,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 18
+     }
+    },
+    "1g2": {
+     "found": 18,
+     "fullyCorrect": 0,
+     "productCorrect": 18,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 18,
+     "kindCorrect": 18,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 18
+     }
+    }
+   },
+   "tomsguide.com": {
+    "elements": 28,
+    "1g": {
+     "found": 28,
+     "fullyCorrect": 28,
+     "productCorrect": 28,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 8,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 8,
+     "kindCorrect": 28,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {}
+    },
+    "1g2": {
+     "found": 28,
+     "fullyCorrect": 28,
+     "productCorrect": 28,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 8,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 8,
+     "kindCorrect": 28,
+     "kindAbstained": 0,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {}
+    }
+   },
+   "airpurifierfirst.com": {
+    "elements": 87,
+    "1g": {
+     "found": 79,
+     "fullyCorrect": 58,
+     "productCorrect": 79,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 28,
+     "conditionsNeeded": 17,
+     "kindCorrect": 62,
+     "kindAbstained": 8,
+     "kindWrong": 9,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 17,
+      "evidence_kind": 4,
+      "value_parse": 8
+     }
+    },
+    "1g2": {
+     "found": 79,
+     "fullyCorrect": 58,
+     "productCorrect": 79,
+     "productWrong": 0,
+     "productInvented": 0,
+     "productMissing": 0,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 28,
+     "conditionsNeeded": 17,
+     "kindCorrect": 62,
+     "kindAbstained": 8,
+     "kindWrong": 9,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "conditions": 17,
+      "evidence_kind": 4,
+      "value_parse": 8
+     }
+    }
+   },
+   "trustedreviews.com": {
+    "elements": 4,
+    "1g": {
+     "found": 4,
+     "fullyCorrect": 0,
+     "productCorrect": 0,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 1,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 3,
+     "kindCorrect": 0,
+     "kindAbstained": 4,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 4
+     }
+    },
+    "1g2": {
+     "found": 4,
+     "fullyCorrect": 0,
+     "productCorrect": 0,
+     "productWrong": 3,
+     "productInvented": 0,
+     "productMissing": 1,
+     "conditionsFull": 0,
+     "conditionsWithUnmatchedExtra": 0,
+     "conditionsNeeded": 3,
+     "kindCorrect": 0,
+     "kindAbstained": 4,
+     "kindWrong": 0,
+     "falseMeasurements": 0,
+     "firstFailure": {
+      "axis_roles": 4
+     }
+    }
+   }
+  },
+  "ablationVs1g": {},
+  "tables": {
+   "n": 8,
+   "rowAxisAgrees": 6,
+   "colAxisAgrees": 5,
+   "statuses": {
+    "ambiguous": 2,
+    "interpreted": 6
+   },
+   "msMedian": 181,
+   "msMax": 245
+  }
+ },
+ "tables": [
+  {
+   "id": "C01",
+   "publisher": "which.co.uk",
+   "status": "ambiguous",
+   "hypothesis": "h1c1:property|product",
+   "support": 5,
+   "annotated": {
+    "structure": "products_in_rows",
+    "row": "appliance_or_method",
+    "col": "measure"
+   },
+   "rowAgrees": false,
+   "colAgrees": true,
+   "ms": 181,
+   "passes": 1,
+   "tied": 1,
+   "contextLinks": 0
+  },
+  {
+   "id": "C03",
+   "publisher": "techradar.com",
+   "status": "interpreted",
+   "hypothesis": "h1c1:property|record",
+   "support": 4,
+   "annotated": {
+    "structure": "ratings_or_scores",
+    "row": "rating_criterion",
+    "col": "other"
+   },
+   "rowAgrees": true,
+   "colAgrees": false,
+   "ms": 175,
+   "passes": 1,
+   "tied": 0,
+   "contextLinks": 0
+  },
+  {
+   "id": "C04",
+   "publisher": "techradar.com",
+   "status": "interpreted",
+   "hypothesis": "h1c1:property|record",
+   "support": 5,
+   "annotated": {
+    "structure": "ratings_or_scores",
+    "row": "rating_criterion",
+    "col": "other"
+   },
+   "rowAgrees": true,
+   "colAgrees": false,
+   "ms": 137,
+   "passes": 1,
+   "tied": 0,
+   "contextLinks": 0
+  },
+  {
+   "id": "C05",
+   "publisher": "housefresh.com",
+   "status": "interpreted",
+   "hypothesis": "h1c0:property|-",
+   "support": 6,
+   "annotated": {
+    "structure": "products_in_rows",
+    "row": "product",
+    "col": "measure"
+   },
+   "rowAgrees": true,
+   "colAgrees": true,
+   "ms": 191,
+   "passes": 1,
+   "tied": 0,
+   "contextLinks": 9
+  },
+  {
+   "id": "C06",
+   "publisher": "tomsguide.com",
+   "status": "interpreted",
+   "hypothesis": "h1c1:product|property",
+   "support": 5,
+   "annotated": {
+    "structure": "products_in_columns",
+    "row": "measure",
+    "col": "product"
+   },
+   "rowAgrees": true,
+   "colAgrees": true,
+   "ms": 122,
+   "passes": 1,
+   "tied": 0,
+   "contextLinks": 0
+  },
+  {
+   "id": "C07",
+   "publisher": "airpurifierfirst.com",
+   "status": "interpreted",
+   "hypothesis": "h0c1:-|property",
+   "support": 2,
+   "annotated": {
+    "structure": "products_in_columns",
+    "row": "property",
+    "col": "product"
+   },
+   "rowAgrees": true,
+   "colAgrees": true,
+   "ms": 245,
+   "passes": 2,
+   "tied": 0,
+   "contextLinks": 0
+  },
+  {
+   "id": "C08",
+   "publisher": "airpurifierfirst.com",
+   "status": "interpreted",
+   "hypothesis": "h0c1:-|property",
+   "support": 2,
+   "annotated": {
+    "structure": "products_in_columns",
+    "row": "property",
+    "col": "product"
+   },
+   "rowAgrees": true,
+   "colAgrees": true,
+   "ms": 215,
+   "passes": 2,
+   "tied": 0,
+   "contextLinks": 0
+  },
+  {
+   "id": "C09",
+   "publisher": "trustedreviews.com",
+   "status": "ambiguous",
+   "hypothesis": "h0c1:-|condition",
+   "support": 3,
+   "annotated": {
+    "structure": "single_subject_properties",
+    "row": "property",
+    "col": "none"
+   },
+   "rowAgrees": false,
+   "colAgrees": false,
+   "ms": 49,
+   "passes": 1,
+   "tied": 2,
+   "contextLinks": 0
+  }
+ ],
+ "rows": [
+  {
+   "table": "C01",
+   "r": 1,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 1,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 1,
+   "c": 3,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 1,
+   "c": 4,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 2,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 2,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 2,
+   "c": 3,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C01",
+   "r": 2,
+   "c": 4,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C03",
+   "r": 1,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C03",
+   "r": 2,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C03",
+   "r": 3,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C04",
+   "r": 1,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C04",
+   "r": 2,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C04",
+   "r": 3,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 1,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 1,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 2,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 2,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 3,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 3,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 4,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 4,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 5,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 5,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 6,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 6,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 7,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 7,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 8,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 8,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 9,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C05",
+   "r": 9,
+   "c": 2,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 1,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 1,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 1,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 1,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 2,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 2,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 2,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 2,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 3,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 3,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 3,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 3,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 4,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 4,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 4,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 4,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "full",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 5,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 5,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 5,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 5,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 6,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 6,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 6,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 6,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 7,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 7,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 7,
+   "c": 3,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C06",
+   "r": 7,
+   "c": 4,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "measured",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 1,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 1,
+   "k": 2,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 1,
+   "k": 3,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 1,
+   "k": 4,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 1,
+   "k": 5,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 2,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 2,
+   "k": 2,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 2,
+   "k": 3,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 2,
+   "k": 4,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 4,
+   "c": 2,
+   "k": 5,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 5,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 5,
+   "c": 1,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 5,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 6,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 6,
+   "c": 1,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 6,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 6,
+   "c": 2,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 7,
+   "c": 1,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 7,
+   "c": 1,
+   "k": 1,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 7,
+   "c": 2,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 7,
+   "c": 2,
+   "k": 1,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 8,
+   "c": 1,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 8,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 11,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 11,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 11,
+   "c": 2,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 12,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 12,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 13,
+   "c": 1,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 13,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 14,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 14,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 21,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 21,
+   "c": 1,
+   "k": 1,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 21,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 21,
+   "c": 2,
+   "k": 1,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 22,
+   "c": 1,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 22,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 24,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C07",
+   "r": 24,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 1,
+   "c": 1,
+   "k": 0,
+   "kind": "other",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 1,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 1,
+   "k": 2,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 1,
+   "k": 3,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 1,
+   "k": 4,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 1,
+   "k": 5,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 2,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 2,
+   "k": 2,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 2,
+   "k": 3,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 2,
+   "k": 4,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 4,
+   "c": 2,
+   "k": 5,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 5,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 5,
+   "c": 1,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 5,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 5,
+   "c": 2,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 6,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 6,
+   "c": 1,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 6,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 6,
+   "c": 2,
+   "k": 1,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 7,
+   "c": 1,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 7,
+   "c": 1,
+   "k": 1,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 7,
+   "c": 2,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 7,
+   "c": 2,
+   "k": 1,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 8,
+   "c": 1,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 8,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 11,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 11,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 12,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 12,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "wrong",
+     "systemKind": "derived_or_estimated",
+     "falseMeasurement": false,
+     "stage": "evidence_kind"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 13,
+   "c": 1,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 13,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 14,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 14,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "none_needed",
+     "kind": "correct",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 21,
+   "c": 1,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 21,
+   "c": 1,
+   "k": 1,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 21,
+   "c": 2,
+   "k": 0,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "wrong",
+     "systemKind": "declared",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 21,
+   "c": 2,
+   "k": 1,
+   "kind": "measured",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 22,
+   "c": 1,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 22,
+   "c": 2,
+   "k": 0,
+   "kind": "rating_score",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    },
+    "1g2": {
+     "found": true,
+     "ok": true,
+     "product": "correct",
+     "conditions": "extra",
+     "kind": "correct",
+     "systemKind": "rating_score",
+     "falseMeasurement": false,
+     "stage": null
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 24,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 24,
+   "c": 2,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    },
+    "1g2": {
+     "found": false,
+     "ok": false,
+     "product": null,
+     "conditions": null,
+     "kind": null,
+     "systemKind": null,
+     "falseMeasurement": false,
+     "stage": "value_parse"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 26,
+   "c": 1,
+   "k": 0,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C08",
+   "r": 26,
+   "c": 1,
+   "k": 1,
+   "kind": "price",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "correct",
+     "conditions": "missing",
+     "kind": "correct",
+     "systemKind": "price",
+     "falseMeasurement": false,
+     "stage": "conditions"
+    }
+   }
+  },
+  {
+   "table": "C09",
+   "r": 0,
+   "c": 1,
+   "k": 0,
+   "kind": "declared",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "none_needed",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "missing",
+     "conditions": "none_needed",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C09",
+   "r": 2,
+   "c": 1,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C09",
+   "r": 3,
+   "c": 1,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  },
+  {
+   "table": "C09",
+   "r": 4,
+   "c": 1,
+   "k": 0,
+   "kind": "derived_or_estimated",
+   "arms": {
+    "1g": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    },
+    "1g2": {
+     "found": true,
+     "ok": false,
+     "product": "wrong",
+     "conditions": "missing",
+     "kind": "abstained",
+     "systemKind": "unclear",
+     "falseMeasurement": false,
+     "stage": "axis_roles"
+    }
+   }
+  }
+ ]
+}

@@ -6,7 +6,7 @@
  * knowledge-informed reading is never confused with the baseline reading.
  */
 import {acquireTables1F} from './table_acquisition1f.js';
-import {documentModel1G,interpretDocumentTables1G,type DocumentInterpretation1G,type Observation1G} from './table_interpreter1g.js';
+import {documentModel1G,interpretDocumentTables1G,renderedView1G,INTERPRETER1G_RENDERED_VERSION,type TextModel1G,type DocumentInterpretation1G,type Observation1G} from './table_interpreter1g.js';
 import type {InterpreterLessonId1G} from './table_interpreter1g_lessons.js';
 import {findQuantities,parseUnit,typeQuantity,sameQuantity,type QuantityKnowledge,type TypedQuantity,type ParsedUnit} from './quantity_knowledge.js';
 
@@ -31,9 +31,11 @@ export function unitInLabel1G(qk:QuantityKnowledge,label:string):{unit:ParsedUni
 }
 
 /** Apply the knowledge to the 1G reading of a document. `base` may be passed to reuse an existing 1G reading. */
-export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{lessons?:readonly InterpreterLessonId1G[];base?:DocumentInterpretation1G}={}):KnowledgeInterpretation1G{
- const base=opts.base??interpretDocumentTables1G(html,{lessons:opts.lessons});
- const acq=acquireTables1F(html);const doc=documentModel1G(html);
+export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{lessons?:readonly InterpreterLessonId1G[];base?:DocumentInterpretation1G;text?:TextModel1G}={}):KnowledgeInterpretation1G{
+ // The layer reads the rendered cell text (v1g.2) unless a base reading or another text model is given.
+ const text:TextModel1G=opts.base?(opts.base.version===INTERPRETER1G_RENDERED_VERSION?'rendered':'decoded'):opts.text??'rendered';
+ const base=opts.base??interpretDocumentTables1G(html,{lessons:opts.lessons,text});
+ const acq0=acquireTables1F(html,text==='rendered'?{rendered:true}:{});const acq=text==='rendered'?{...acq0,tables:acq0.tables.map(renderedView1G)}:acq0;const doc=documentModel1G(html);
  const tables=base.tables.map(t=>{
   const at=acq.tables[t.table];const cellText=new Map(at?.cells.map(c=>[c.id,c.normalisedText])??[]);
   const ctx=[at?.caption?.normalisedText??'',at?.context.headingPath.at(-1)?.decodedText??'',...(at?.context.before.slice(-2).map(b=>b.decodedText)??[]),
