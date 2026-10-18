@@ -58,10 +58,15 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
   const tableNotes=(notes.get(t.table)??[]).map(n=>n.ref);
   const ctx=[at?.caption?.normalisedText??'',at?.context.headingPath.at(-1)?.decodedText??'',...(at?.context.before.slice(-2).map(b=>b.decodedText)??[]),
    ...t.context.filter(l=>l.applies).map(l=>doc.blocks[l.block]?.text??'')].filter(Boolean);
+  // KR2: the same texts as statements with their place; the scope rules decide which apply to each value
+  const before=at?.context.before.slice(-2)??[];
+  const contextStatements=[{ref:'caption',text:at?.caption?.normalisedText??'',place:'frame' as const},{ref:'heading',text:at?.context.headingPath.at(-1)?.decodedText??'',place:'frame' as const},
+   ...before.map((b,i)=>({ref:`before ${before.length-i}`,text:b.decodedText,place:'nearby' as const})),
+   ...t.context.filter(l=>l.applies).map(l=>({ref:'block '+l.block,text:doc.blocks[l.block]?.text??'',place:'nearby' as const}))].filter(x=>x.text);
   const obs:KnowledgeObservation1G[]=t.observations.map(o=>{
    const labels=[...o.property,...o.records,...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??'')].filter(Boolean);
    let quantity:TypedQuantity|null=null,unitSurface:string|null=null,unitFrom:KnowledgeObservation1G['unitFrom']=null,labelBasis:string|null=null;
-   const tctx={labels,conditions:o.conditions,context:ctx,document,tableNotes,product:o.product,frame:[at?.caption?.normalisedText??'',at?.context.headingPath.at(-1)?.decodedText??''].filter(Boolean),evidenceClass:o.evidence.class,source,cohort:`${source}#table ${t.table}#${[...o.property,...o.records,...o.conditions].join(' | ')}`};
+   const tctx={labels,conditions:o.conditions,context:ctx,contextStatements,document,tableNotes,product:o.product,evidenceClass:o.evidence.class,source,cohort:`${source}#table ${t.table}#${[...o.property,...o.records,...o.conditions].join(' | ')}`};
    const withBasis=(u:ParsedUnit)=>{const b=withLabelBasis(qk,u,labels);if(b){labelBasis=b.basis;return b.unit;}return u;};
    if(o.kind==='quantity'||o.kind==='range'||o.kind==='bound'||o.kind==='number'){
     // the value is read in its whole cell (a dimension list or an axis letter is visible only there), then in its own surface

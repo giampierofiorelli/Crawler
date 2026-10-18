@@ -128,3 +128,39 @@ Other results:
   3. then the typed relevance link (Phase272).
 
   Each step gets the same equivalence check.
+
+## 6. KR2 (owner review 2026-10-18): complete provenance, and the context under the same scope rules
+
+**Negative premises are recorded.**
+- When a rule concludes from an absence (`not ...`), the derivation names the record checked and what was checked.
+- Example: `not block_names_product(before 1, Beta B2) [absent from the context of a value of …: no such fact among 7
+  given block_names_product facts]`.
+- For a derived predicate, it says that nothing in the record derives one.
+- This is evidence of absence from that record only, never from the world.
+
+**Nearby context now passes the scope rules too** (new program `scope`, rules X1–X3).
+- The texts the layer offers as context for a value are statements with a place: caption and heading (`frame`), the
+  paragraphs before or beside the table (`nearby`).
+- The frame applies to every value of the table. A nearby paragraph applies unless it names products and not the
+  value's.
+- Only applicable texts are read for the value's metric names, condition cues, methods and local kind decision.
+- Each value records `contextScope` (applied, excluded, derivation).
+- On the 69 pages:
+  - 248 values read nearby text;
+  - 57 values now exclude at least one paragraph. Examples: on a single-product review, the paragraphs about the
+    reviewed model are no longer read for the rival models of the comparison tables. The blind acoustic annotator had
+    judged that table the same way (the distance does not carry over).
+  - Kinds, metrics, conditions and verdicts are unchanged (`equivalence-kr2-final`, 0 differences; reading and links
+    0 differences).
+  - The acoustic reference is unchanged (`score-kr2`).
+- Known limit: a paragraph that names only the reviewed model ("I tested the PuroAir 240 and five rivals") is read as
+  about that model only.
+
+**Wording.** The "one metric only" reason again gives the metric's name, via an input fact `metric_label`.
+
+**Suite:** 4,675 passed. Advice without the knowledge is identical on 363 requests; the live store is unchanged.
+
+**Still open (D24).**
+- Kind discriminators (local) and typed kindEvidence (scoped) overlap.
+- No operational decision consumes the rule verdicts yet.
+- No unseen pages have been tested.

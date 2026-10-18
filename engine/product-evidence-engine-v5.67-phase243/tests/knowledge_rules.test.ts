@@ -59,3 +59,23 @@ test('KR comparability: the verdict comes with the rules it rests on', ()=>{
  const r=rulesFile();const cmp=r.programs.find(p=>p.id==='compare')!;cmp.rules=cmp.rules.filter(x=>x.id!=='F10');
  assert.notEqual(compareQuantities(loadQuantityKnowledge(undefined,r),t('250 m³/h',['CADR','Dust']),t('300 m³/h',['CADR','Smoke'])).verdict,'not_comparable');
 });
+
+test('KR provenance: a conclusion that rests on an absence says what was checked, in which record', ()=>{
+ const p=compileRuleSet(mini(['isolated(X) :- node(X), not edge(X,_).'])).get('g')!;
+ const m=evaluate(p,{edge:[['a','b']],node:[['a'],['b']]},{record:'the test graph'});
+ const w=m.why(m.match('isolated',['b'])[0]).join('\n');
+ assert.match(w,/not edge\(b, \*\)\s+\[absent from the test graph: no such fact among 1 given edge facts\]/);
+ const qk=loadQuantityKnowledge();const v=typeQuantity(qk,findQuantities(qk,'45 dBA')[0],{labels:['Noise']});
+ assert.ok(v.kind.justification.derivation.some(l=>/not has_kind\(o\)\s+\[absent from the record of value "45 dBA"/.test(l)));
+});
+test('KR2 context scope: a nearby paragraph about another product is not read for this value; the frame always is', ()=>{
+ const h=`<html><body><h1>Review</h1><p>We measured the Alpha A1 from 1 m away.</p><table><caption>Noise, measured</caption><tr><th>Test</th><th>Alpha A1</th><th>Beta B2</th></tr><tr><td>Sound pressure level</td><td>45 dBA</td><td>52 dBA</td></tr></table></body></html>`;
+ const o=levels(h);const a=o.find(x=>x.product==='Alpha A1')!.quantity!,b=o.find(x=>x.product==='Beta B2')!.quantity!;
+ assert.ok(a.conditions.some(c=>c.axis==='measurement_distance'),'the paragraph is about Alpha A1');
+ assert.ok(!b.conditions.some(c=>c.axis==='measurement_distance'),'its distance is not Beta B2\'s');
+ assert.ok(b.contextScope!.applied.includes('caption')&&b.contextScope!.excluded.length===1);
+ assert.ok(b.contextScope!.derivation.some(l=>/not block_names_product\(before 1, Beta B2\)/.test(l)));
+ // ablation: without rule X2 the paragraph would be read for Beta B2 too
+ const r=rulesFile();const sc=r.programs.find(p=>p.id==='scope')!;sc.rules=sc.rules.filter(x=>x.id!=='X2');
+ const b2=levels(h,loadQuantityKnowledge(undefined,r)).find(x=>x.product==='Beta B2')!.quantity!;assert.ok(b2.conditions.some(c=>c.axis==='measurement_distance'));
+});

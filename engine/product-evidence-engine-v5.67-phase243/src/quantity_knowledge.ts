@@ -78,7 +78,7 @@ export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnow
  const raw=pack??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_QUANTITY_PACK,import.meta.url),'utf8'));
  const ruleSet=(rules??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_KNOWLEDGE_RULES,import.meta.url),'utf8'))) as RuleSet;
  let programs:Map<string,CompiledProgram>;try{programs=compileRuleSet(ruleSet);}catch(e){throw Error('quantity_knowledge_invalid: rules: '+(e as Error).message);}
- for(const id of ['kind','compare'])if(!programs.has(id))throw Error('quantity_knowledge_invalid: rules: program '+id+' missing');
+ for(const id of ['kind','compare','scope'])if(!programs.has(id))throw Error('quantity_knowledge_invalid: rules: program '+id+' missing');
  const p=raw as QuantityPack;const fail=(m:string):never=>{throw Error('quantity_knowledge_invalid: '+m);};
  if(!p||p.schema!==QUANTITY_KNOWLEDGE_SCHEMA)fail('schema');
  const src=new Set(p.sources.map(s=>s.id));const basis=new Set(p.dimensionBasis);
@@ -235,6 +235,9 @@ export interface QuantityContext {labels?:readonly string[];conditions?:readonly
  /** KR scope: the context that frames every value of the table (caption, heading). When given, only it and the value's
   * own labels decide the kind locally; nearby paragraphs are document statements, applied through the scope rules. */
  frame?:readonly string[];
+ /** KR2: the texts near the table offered as context, each with a reference and its place. When given, the scope rules
+  * (program `scope`) decide which apply to this value; they replace `context` and `frame`. */
+ contextStatements?:readonly {ref:string;text:string;place:'frame'|'nearby'}[];
  /** The value's evidence class: says which document-wide statements cover it (a reviewer's instrument covers its readings, not a maker's spec). */
  evidenceClass?:string;
  /** Identity of the source document. */
@@ -253,7 +256,9 @@ export interface TypedQuantity {surface:string;value:number|null;low?:number;hig
    rules:string[];derivation:string[]}};metric:{id:string|null;candidates:string[];basis:string[]};
  weighting:string|null;reference:string|null;conditions:TypedCondition[];missingConditions:string[];unresolved:string[];knowledge:string;
  /** The source document and the protocol statement that covers the value, when known. */
- source:string|null;protocol:string|null;cohort:string|null}
+ source:string|null;protocol:string|null;cohort:string|null;
+ /** KR2: which nearby texts were read for this value and which were excluded by the scope rules, with the derivation. */
+ contextScope:{applied:string[];excluded:string[];derivation:string[]}|null}
 const toSi=(u:ParsedUnit,v:number|null|undefined)=>v==null?null:u.level?v:v*u.factor+u.offset;
 function distanceIn(qk:QuantityKnowledge,texts:readonly string[]):boolean{const ax=qk.axes.get('measurement_distance');if(!ax)return false;
  return texts.some(t=>findQuantities(qk,t).some(f=>f.unit.kinds.includes('length')&&(ax.cues??[]).some(c=>hasPhrase(t.slice(Math.max(0,f.start-24),f.end+12),c))));}
@@ -272,7 +277,7 @@ const foundCache=new WeakMap<QuantityKnowledge,Map<string,FoundQuantity[]>>();
 const foundIn=(qk:QuantityKnowledge,text:string)=>{let m=foundCache.get(qk);if(!m){m=new Map();foundCache.set(qk,m);}let f=m.get(text);if(!f){f=findQuantities(qk,text);m.set(text,f);}return f;};
 /** Facts for program `kind`, and its conclusions: a kind settled by the document, a document conflict, and the
  * strongest justification with the rules and derivation behind it. */
-function kindRules(qk:QuantityKnowledge,q:{value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext,
+function kindRules(qk:QuantityKnowledge,q:{surface?:string;value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext,
  v:{candidates:readonly string[];metricNamed:{kind:string;from:string;metric:string}|null;refKind:string|null;own:readonly string[];context:readonly string[]}){
  const o='o';const F:Record<string,(string|number)[][]>={value:[[o]],candidate_kind:v.candidates.map(k=>[o,k])};
  if(v.candidates.length===1)F.local_kind=[[o,v.candidates[0]]];
@@ -288,7 +293,7 @@ function kindRules(qk:QuantityKnowledge,q:{value:number|null;low?:number;high?:n
   const nums=[q.value,q.low,q.high].filter((x):x is number=>typeof x==='number');
   F.block_restates=[...d.texts].filter(([,t])=>foundIn(qk,t).some(f=>!!f.unit.level===!!q.unit.level&&nums.some(n=>n===f.value||n===f.low||n===f.high))).map(([ref])=>[ref,o]);
   F.block_in_table=(ctx.tableNotes??[]).map(ref=>[ref,o]);}
- const m=evaluate(qk.rules.get('kind')!,F);
+ const m=evaluate(qk.rules.get('kind')!,F,{record:`the record of value "${q.surface??''}"${ctx.cohort?` (${ctx.cohort})`:ctx.source?` (${ctx.source})`:''}`});
  const byDoc=m.match('kind_by_document',[o,null]);
  const conflict=v.candidates.length>1&&m.has('document_conflict',[o])?[...new Set([...m.match('supported',[o,null]),...m.match('names_kind_elsewhere',[o,null])].map(f=>f.args[1]))]:null;
  const best=m.match('best_justification',[o,null,null,null]);
@@ -303,9 +308,24 @@ function kindRules(qk:QuantityKnowledge,q:{value:number|null;low?:number;high?:n
   justification={type:t,from,evidence,ref,rules:[...new Set(best.flatMap(f=>m.rulesOf(f)))],derivation:best.flatMap(f=>m.why(f))};}
  return {byDocument:byDoc.length===1?byDoc[0].args[1]:null,conflict,justification};
 }
+/** KR2: which context texts apply to a value (program `scope`): the frame always; a nearby paragraph unless it names
+ * products and not this value's. Text reading (which products a paragraph names) stays here; the decision is the rules'. */
+function contextScope(qk:QuantityKnowledge,ctx:QuantityContext){
+ const st=ctx.contextStatements!;const products=ctx.document?.products??[];
+ const F:Record<string,(string|number)[][]>={value:[['o']],context_statement:st.map(x=>[x.ref,x.place]),
+  block_names_product:st.flatMap(x=>products.filter(p=>p&&hasPhrase(x.text,p)).map(p=>[x.ref,p]))};
+ if(ctx.product)F.value_product=[['o',ctx.product]];
+ const m=evaluate(qk.rules.get('scope')!,F,{record:`the context of a value of ${ctx.cohort??ctx.source??'a table'}`});
+ const ok=new Set(m.match('context_applies',[null,'o']).map(f=>f.args[0]));
+ const applied=st.filter(x=>ok.has(x.ref));const excluded=st.filter(x=>!ok.has(x.ref)).map(x=>x.ref);
+ return {texts:applied.map(x=>x.text),frame:applied.filter(x=>x.place==='frame').map(x=>x.text),applied:applied.map(x=>x.ref),excluded,
+  derivation:[...m.match('context_other_product',[null,'o']).flatMap(f=>m.why(f))]};
+}
 /** Type one quantity: its kind (from the unit, then from discriminating words), the metric its labels name, the
  * conditions the knowledge requires and which of them the context states. Nothing is guessed: ambiguity stays explicit. */
 export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit},ctx:QuantityContext={}):TypedQuantity{
+ const scope=ctx.contextStatements?contextScope(qk,ctx):null;
+ if(scope)ctx={...ctx,context:scope.texts,frame:scope.frame};
  const labels=[...(ctx.labels??[])],conds=[...(ctx.conditions??[])],context=[...(ctx.context??[])];
  const own=[...labels,...conds];const all=[...own,...context];
  // words that decide the kind locally: the value's own labels and the table's frame (all the context without a frame)
@@ -380,7 +400,7 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   si:q.unit.level?{value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{})}:{value:toSi(q.unit,q.value),...(q.low!==undefined?{low:toSi(q.unit,q.low)!,high:toSi(q.unit,q.high)!}:{})},
   kind:{id:kind,candidates,basis:kindBasis,justification},metric:{id:metricId,candidates:metricCands,basis:metricBasis},
   weighting:q.unit.level?.weighting??null,reference:q.unit.level?.reference??(kind?qk.kinds.get(kind)!.reference??null:null),
-  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef,cohort:ctx.cohort??null};
+  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef,cohort:ctx.cohort??null,contextScope:scope?{applied:scope.applied,excluded:scope.excluded,derivation:scope.derivation}:null};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -402,15 +422,15 @@ export interface ComparisonResult {verdict:Comparability;reasons:string[];a:numb
  * category rules: a different kind or metric, an unestablished weighting, a conventional basis, a condition. */
 export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQuantity):ComparisonResult&{rules:string[];derivation:string[]}{
  // KR: the decision is program `compare` of rules.v1.json; the code states each value's facts and reads the verdict.
- const F:Record<string,(string|number)[][]>={value:[['a'],['b']],candidate_kind:[],kind_of:[],metric_of:[],not_equivalent:[],level_value:[],weighting:[],conventional_basis:[],unit_expression:[],required_condition:[],stated_condition:[],presented_test:[],kind_unjustified:[]};
+ const F:Record<string,(string|number)[][]>={value:[['a'],['b']],metric_label:[],candidate_kind:[],kind_of:[],metric_of:[],not_equivalent:[],level_value:[],weighting:[],conventional_basis:[],unit_expression:[],required_condition:[],stated_condition:[],presented_test:[],kind_unjustified:[]};
  for(const [v,q] of [['a',a],['b',b]] as const){
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)F.candidate_kind.push([v,k]);if(q.kind.id)F.kind_of.push([v,q.kind.id]);
-  if(q.metric.id){F.metric_of.push([v,q.metric.id]);for(const n of qk.metrics.get(q.metric.id)!.notEquivalentTo??[])F.not_equivalent.push([q.metric.id,n],[n,q.metric.id]);}
+  if(q.metric.id){F.metric_of.push([v,q.metric.id]);F.metric_label.push([q.metric.id,qk.metrics.get(q.metric.id)!.label]);for(const n of qk.metrics.get(q.metric.id)!.notEquivalentTo??[])F.not_equivalent.push([q.metric.id,n],[n,q.metric.id]);}
   if(q.unit.level){F.level_value.push([v]);if(q.weighting)F.weighting.push([v,q.weighting]);}
   if(q.unit.conventional)F.conventional_basis.push([v]);F.unit_expression.push([v,q.unit.expression]);
   for(const x of q.missingConditions)F.required_condition.push([v,x]);for(const c of q.conditions)F.stated_condition.push([v,c.axis,c.value]);
   if(q.cohort)F.presented_test.push([v,q.cohort]);if(q.kind.justification.type==='insufficient')F.kind_unjustified.push([v]);}
- const m=evaluate(qk.rules.get('compare')!,F);
+ const m=evaluate(qk.rules.get('compare')!,F,{record:`the record of the pair a="${a.surface}", b="${b.surface}"`});
  const verdicts=m.all('verdict');if(!verdicts.length)throw Error('compare rules reached no verdict');
  const verdict=verdicts[0].args[0] as Comparability;
  // the findings behind the verdict: every finding at the deciding stage, explained by its rule's template

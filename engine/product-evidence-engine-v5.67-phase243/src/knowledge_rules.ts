@@ -86,13 +86,16 @@ export function compileRuleSet(rs:RuleSet):Map<string,CompiledProgram>{
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Evaluation with provenance
-export interface Fact {pred:string;args:Const[];rule:string|null;bindings:Record<string,Const>|null;premises:Fact[]}
+/** A negated premise that held: no fact matching `pattern` existed in the record (closed over the record, not the
+ * world). `inputPredicate`: the absence is of a given fact; otherwise nothing in the record derives one. */
+export interface Absence {pred:string;pattern:(Const|null)[];inputPredicate:boolean;factsOfPredicate:number}
+export interface Fact {pred:string;args:Const[];rule:string|null;bindings:Record<string,Const>|null;premises:Fact[];absences?:Absence[]}
 const key=(p:string,a:readonly Const[])=>p+'('+a.join('\u0001')+')';
 const num=(x:Const)=>/^-?\d+(?:\.\d+)?$/.test(x)?Number(x):null;
 const cmp=(op:string,a:Const,b:Const)=>{if(op==='=')return a===b;if(op==='!=')return a!==b;const x=num(a),y=num(b);if(x===null||y===null)return op==='<'?a<b:a>b;return op==='<'?x<y:x>y;};
 export class Model {
  private byPred=new Map<string,Map<string,Fact>>();
- constructor(readonly program:CompiledProgram){}
+ constructor(readonly program:CompiledProgram,readonly record:string='record'){}
  add(f:Fact):boolean{let m=this.byPred.get(f.pred);if(!m){m=new Map();this.byPred.set(f.pred,m);}const k=key(f.pred,f.args);if(m.has(k))return false;m.set(k,f);return true;}
  all(pred:string):Fact[]{return [...(this.byPred.get(pred)?.values()??[])];}
  /** Facts of a predicate whose arguments match a pattern (null = any). */
@@ -101,14 +104,15 @@ export class Model {
  /** The derivation of a fact: the rule, its statement and the premises, down to the input facts. */
  why(f:Fact,depth=0):string[]{const pad='  '.repeat(depth);const head=`${pad}${f.pred}(${f.args.join(', ')})`;
   if(!f.rule)return [head+'  [given]'];const r=this.program.rules.find(x=>x.id===f.rule)!;
-  return [`${head}  [${f.rule}: ${r.def.statement}]`,...f.premises.flatMap(p=>this.why(p,depth+1))];}
+  const abs=(f.absences??[]).map(a=>`${pad}  not ${a.pred}(${a.pattern.map(x=>x??'*').join(', ')})  [absent from ${this.record}: ${a.inputPredicate?`no such fact among ${a.factsOfPredicate} given ${a.pred} facts`:`nothing in it derives one (${a.factsOfPredicate} ${a.pred} facts derived)`}]`);
+  return [`${head}  [${f.rule}: ${r.def.statement}]`,...f.premises.flatMap(p=>this.why(p,depth+1)),...abs];}
  /** The rules a fact rests on (its own and its premises'), in derivation order. */
  rulesOf(f:Fact):string[]{return [...new Set([...(f.rule?[f.rule]:[]),...f.premises.flatMap(p=>this.rulesOf(p))])];}
 }
 type Input=Record<string,ReadonlyArray<ReadonlyArray<string|number>>>;
 /** Evaluate a compiled program over input facts. Every input predicate must be declared as an input. */
-export function evaluate(p:CompiledProgram,input:Input):Model{
- const m=new Model(p);
+export function evaluate(p:CompiledProgram,input:Input,opts:{record?:string}={}):Model{
+ const m=new Model(p,opts.record);
  // an input is an input predicate, or a predicate another program derives (kind_of is derived by `kind`, given to `compare`)
  for(const [pred,rows] of Object.entries(input)){const d=p.vocab.get(pred);if(!d||!(d.role==='input'||(d.role==='derived'&&!p.rules.some(r=>r.head.pred===pred))))fail(`${pred} is not an input of program ${p.id}`);
   for(const r of rows){if(r.length!==d!.args.length)fail(`${pred} needs ${d!.args.length} arguments`);m.add({pred,args:r.map(String),rule:null,bindings:null,premises:[]});}}
@@ -121,9 +125,12 @@ export function evaluate(p:CompiledProgram,input:Input):Model{
      if(i<pos.length){const a=pos[i].atom;const pat=a.args.map(t=>t.c??(b[t.v!]??null));
       for(const f of m.match(a.pred,pat)){const nb={...b};let ok=true;a.args.forEach((t,j)=>{if(t.v){if(nb[t.v]!==undefined&&nb[t.v]!==f.args[j])ok=false;nb[t.v]=f.args[j];}});if(ok)solve(i+1,nb,[...prem,f]);}
       return;}
-     const val=(t:Term)=>t.c??b[t.v!];
-     for(const l of rest){if(l.kind==='cmp'){if(!cmp(l.op,val(l.l),val(l.r)))return;}else if(l.kind==='neg'){if(m.match(l.atom.pred,l.atom.args.map(t=>t.c??b[t.v!]??null)).length)return;}}
-     if(m.add({pred:r.head.pred,args:r.head.args.map(val),rule:r.id,bindings:b,premises:prem}))changed=true;};
+     const val=(t:Term)=>t.c??b[t.v!];const absences:Absence[]=[];
+     for(const l of rest){if(l.kind==='cmp'){if(!cmp(l.op,val(l.l),val(l.r)))return;}
+      else if(l.kind==='neg'){const pat=l.atom.args.map(t=>t.c??b[t.v!]??null);if(m.match(l.atom.pred,pat).length)return;
+       // record what was checked: a negated premise is evidence of absence from this record only
+       absences.push({pred:l.atom.pred,pattern:pat,inputPredicate:!p.rules.some(x=>x.head.pred===l.atom.pred),factsOfPredicate:m.all(l.atom.pred).length});}}
+     if(m.add({pred:r.head.pred,args:r.head.args.map(val),rule:r.id,bindings:b,premises:prem,...(absences.length?{absences}:{})}))changed=true;};
     solve(0,{},[]);}}}
  return m;
 }
