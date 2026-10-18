@@ -51,7 +51,8 @@ export async function candidate1C(M,html,x,cands,opt={}){
   if(!off.has('cells')){const D=await import(resolve('dist/src/document_semantics.js'));
    const resolveName=t=>{const k=String(t).trim().toLowerCase();const m=inv.mentions.find(m=>m.entityId&&(m.state==='explicit_identity'||m.state==='contextual_alias')&&m.surface.toLowerCase()===k);
     const e=m?inv.entities.find(e=>e.id===m.entityId):inv.entities.find(e=>e.type==='product'&&e.canonical.toLowerCase()===k);return e&&e.type==='product'?e.canonical:null;};
-   const cp=D.cellProducts1D2(sem,resolveName);cellOf=bi=>{const c=cp.get(bi);return c?{subject:c.product?{name:c.product}:null}:undefined;};}
+   // Table understanding Stage D (policy candidate_1e_tables): the lesson-aware cell products (header units, setting labels).
+   const cp=opt.lessons?.length?(await import(resolve('dist/src/table_ledger1e.js'))).cellProducts1E(sem,resolveName,opt.lessons):D.cellProducts1D2(sem,resolveName);cellOf=bi=>{const c=cp.get(bi);return c?{subject:c.product?{name:c.product}:null}:undefined;};}
   if(!off.has('principal'))principal={page:sem.principal.name?{name:sem.principal.name,model:null}:null};}
  const page0=principal?principal.page:x?.mainProduct?.name&&!x.mainProduct.ambiguous?{name:x.mainProduct.name,model:null}:null;const page=principal?page0:M.tl.planPageSubject272(page0,raw);
  const ctx={blocks:deep,tags,mentions,page:C.pageIdentity1C(page?{name:page.name}:null,mentions),cells:M.tl.comparisonCells272(html),...(section?{section}:{}),...(cellOf?{cellOf}:{})};
@@ -95,10 +96,11 @@ export async function observeCase(c,dist,opts={}){
   if(opts.policy==='ambiguity_preserving'){const deep=M.blocks.textBlocks225(html,{maxBlocks:1500}).blocks;const ms=M.tl.documentMentions272?M.tl.documentMentions272(html):[];cands=cands.map(l=>ambiguityPreserving(l,deep,ms));}
   else if(opts.policy==='constrained_candidate_1c')cands=await candidate1C(M,html,x,cands);
   else if(opts.policy==='candidate_1c_inventory')cands=await candidate1C(M,html,x,cands,{inventory:true,nouns:nounsOf(M,c.category),host:new URL(url).host});
-  else if(opts.policy==='candidate_1c_semantics'||opts.policy==='candidate_1c_semantics_tables'){
+  else if(opts.policy==='candidate_1c_semantics'||opts.policy==='candidate_1c_semantics_tables'||opts.policy==='candidate_1e_tables'){
    const sem=(await import(resolve('dist/src/document_semantics.js'))).readDocumentSemantics1D2(html,url);
-   if(opts.policy==='candidate_1c_semantics_tables')cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:c.category,plan,semantics:sem}).probe.candidates;
-   cands=await candidate1C(M,html,x,cands,{semantics:sem,off:opts.off,nouns:nounsOf(M,c.category),host:new URL(url).host});}
+   const lessons=opts.policy==='candidate_1e_tables'?(opts.lessons??(await import(resolve('dist/src/table_lessons1e.js'))).activeTableLessons1E()):undefined;
+   if(opts.policy!=='candidate_1c_semantics')cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:c.category,plan,semantics:sem,...(lessons?{tableLessons:lessons}:{})}).probe.candidates;
+   cands=await candidate1C(M,html,x,cands,{semantics:sem,off:opts.off,nouns:nounsOf(M,c.category),host:new URL(url).host,...(lessons?{lessons}:{})});}
   else if(opts.policy)throw Error('unknown counterfactual policy '+opts.policy);
   const leads=cands.map(l=>({value:l.value,unit:canonUnit(M,l.unit),subject:l.subject?.name??null,blockIndex:l.blockIndex,blockSha256:l.blockSha256,...(l.subjects272?{subjects:l.subjects272}:{}),...(l.rule1c?{rule1c:l.rule1c}:{})}));
   // A multi-subject lead serves each of its named subjects.
@@ -142,11 +144,13 @@ export async function documentLeads(dist,doc,opts={}){
  if(opts.policy==='ambiguity_preserving'){const deep=M.blocks.textBlocks225(html,{maxBlocks:1500}).blocks;const ms=M.tl.documentMentions272?M.tl.documentMentions272(html):[];cands=cands.map(l=>ambiguityPreserving(l,deep,ms));}
  else if(opts.policy==='constrained_candidate_1c')cands=await candidate1C(M,html,x,cands);
  else if(opts.policy==='candidate_1c_inventory')cands=await candidate1C(M,html,x,cands,{inventory:true,nouns:nounsOf(M,doc.category),host:new URL(url).host});
- else if(opts.policy==='candidate_1c_semantics'||opts.policy==='candidate_1c_semantics_tables'){
+ else if(opts.policy==='candidate_1c_semantics'||opts.policy==='candidate_1c_semantics_tables'||opts.policy==='candidate_1e_tables'){
   // Step 1D-A2: arm B (structural identity and document context) and arm C (B plus the structured test-table reader).
+  // Table understanding Stage D: candidate_1e_tables = arm C with the table lessons (opts.lessons, default the promoted ones).
   const sem=(await import(resolve('dist/src/document_semantics.js'))).readDocumentSemantics1D2(html,url);
-  if(opts.policy==='candidate_1c_semantics_tables')cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:doc.category,plan,semantics:sem}).probe.candidates;
-  cands=await candidate1C(M,html,x,cands,{semantics:sem,off:opts.off,nouns:nounsOf(M,doc.category),host:new URL(url).host});}
+  const lessons=opts.policy==='candidate_1e_tables'?(opts.lessons??(await import(resolve('dist/src/table_lessons1e.js'))).activeTableLessons1E()):undefined;
+  if(opts.policy!=='candidate_1c_semantics')cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:doc.category,plan,semantics:sem,...(lessons?{tableLessons:lessons}:{})}).probe.candidates;
+  cands=await candidate1C(M,html,x,cands,{semantics:sem,off:opts.off,nouns:nounsOf(M,doc.category),host:new URL(url).host,...(lessons?{lessons}:{})});}
  else if(opts.policy)throw Error('unknown policy '+opts.policy);
  return {leads:cands.map(l=>({value:l.value,unit:canonUnit(M,l.unit),rawUnit:l.unit,subject:l.subject?.name??null,subjects:l.subjects272??null,
    assignment:l.rule1c??l.subjectAssignment??null,blockIndex:l.blockIndex,blockSha256:l.blockSha256,

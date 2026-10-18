@@ -1,0 +1,6522 @@
+{
+ "schema": "pee.tables1e.compare.v1",
+ "label": "cmp5-promoted",
+ "policy": "candidate_1e_tables",
+ "lessons": [
+  "TL2_header_units",
+  "TL6_cell_identity"
+ ],
+ "at": "2026-10-18T06:46:30.141Z",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "a5e37ea",
+  "srcDirty": true,
+  "readersSha256": "0f060fd37e791495d8473adcc1854688c0e6046968a25a5d6ed18ebc6ccc3059",
+  "readers": 9
+ },
+ "annotationsSha256": "d26d742d0c49f6ec4bc4862774041c8f93e047ddc584118a69ffb5c25cb353fd",
+ "tier": "development (spent pages); annotator is a separate Claude agent, not independent human ground truth",
+ "summary": {
+  "tables": 18,
+  "publishers": 8,
+  "elements": 272,
+  "measuredElements": 89,
+  "byClass": {
+   "not_read": 38,
+   "not_read_derived_or_estimated": 26,
+   "not_read_rating_score": 17,
+   "not_read_other": 4,
+   "not_read_setting": 4,
+   "not_read_price": 19,
+   "not_read_declared": 95,
+   "read_correct": 48,
+   "read_wrong_product": 2,
+   "not_read_nominal_certified": 4,
+   "read_unresolved": 1,
+   "read_as_measurement_but_nominal_certified": 9,
+   "not_read_identifier": 3,
+   "read_as_measurement_but_declared": 2
+  },
+  "measuredByClass": {
+   "not_read": 38,
+   "read_correct": 48,
+   "read_wrong_product": 2,
+   "read_unresolved": 1
+  },
+  "notReadBlockers": {
+   "R08_unknown_context_no_test_label": 20,
+   "P0_no_plan": 2,
+   "R12_no_plan_unit": 20,
+   "R11_price_in_cell": 6,
+   "R14_no_dimension_term": 2,
+   "R03_table_context_specification": 4,
+   "R15_range_or_bound": 2
+  },
+  "notReadEarliest": {
+   "context": 20,
+   "acquisition": 2,
+   "element": 16
+  },
+  "notReadSoleBlocker": {
+   "R08_unknown_context_no_test_label": 10,
+   "R12_no_plan_unit": 16
+  },
+  "conditionMissingOnRead": 44,
+  "measuredWithConditions": 81,
+  "falseMeasurements": 11,
+  "axisAgreement": {
+   "row": 8,
+   "col": 4,
+   "of": 18
+  },
+  "contextAgreement": 15,
+  "cellsAnnotated": 435,
+  "cellsInLedger": 435
+ },
+ "tables": [
+  {
+   "id": "S01",
+   "page": "phase270/w_vs_oven",
+   "publisher": "which.co.uk",
+   "category": "air_fryers",
+   "stratum": "appliance x measure matrix, no product names, cost column",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "products_in_rows",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "appliance_or_method",
+     "col": "measure"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 15,
+   "cellsInLedger": 15,
+   "elements": {
+    "not_read": 4,
+    "not_read_derived_or_estimated": 2,
+    "not_read_rating_score": 2
+   },
+   "elementRows": [
+    {
+     "id": "S01",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "time",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken (1.3-1.4kg)",
+      "includes preheating where required"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 1,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "energy",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken (1.3-1.4kg)",
+      "includes preheating where required"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 1,
+     "c": 3,
+     "kind": "derived_or_estimated",
+     "dimension": "cost",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken (1.3-1.4kg)",
+      "includes preheating where required",
+      "26.11p/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 1,
+     "c": 4,
+     "kind": "rating_score",
+     "dimension": "cooking quality",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken"
+     ],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "time",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken (1.3-1.4kg)",
+      "includes preheating where required"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 2,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "energy",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken (1.3-1.4kg)",
+      "includes preheating where required"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 2,
+     "c": 3,
+     "kind": "derived_or_estimated",
+     "dimension": "cost",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken (1.3-1.4kg)",
+      "includes preheating where required",
+      "26.11p/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S01",
+     "r": 2,
+     "c": 4,
+     "kind": "rating_score",
+     "dimension": "cooking quality",
+     "uncertain": false,
+     "conditions": [
+      "roast chicken"
+     ],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S02",
+   "page": "phase270/tr_electricity",
+   "publisher": "techradar.com",
+   "category": "air_fryers",
+   "stratum": "units in headers, calculated values, conditions in row labels",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "products_in_rows",
+   "annotatorEvidence": "calculated_or_estimated",
+   "axes": {
+    "annotator": {
+     "row": "appliance_or_method",
+     "col": "measure"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 20,
+   "cellsInLedger": 20,
+   "elements": {
+    "not_read_other": 2,
+    "not_read_setting": 4,
+    "not_read_price": 3,
+    "not_read_derived_or_estimated": 3
+   },
+   "elementRows": [
+    {
+     "id": "S02",
+     "r": 1,
+     "c": 1,
+     "kind": "other",
+     "dimension": "power",
+     "uncertain": true,
+     "conditions": [
+      "1hr @200°C"
+     ],
+     "cls": "not_read_other",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 1,
+     "c": 2,
+     "kind": "setting",
+     "dimension": "time",
+     "uncertain": true,
+     "conditions": [
+      "@200°C"
+     ],
+     "cls": "not_read_setting",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 1,
+     "c": 3,
+     "kind": "price",
+     "dimension": "electricity unit price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 1,
+     "c": 4,
+     "kind": "derived_or_estimated",
+     "dimension": "cost",
+     "uncertain": true,
+     "conditions": [
+      "1hr @200°C",
+      "34p/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 2,
+     "c": 1,
+     "kind": "setting",
+     "dimension": "power",
+     "uncertain": true,
+     "conditions": [
+      "7 mins @ 800W"
+     ],
+     "cls": "not_read_setting",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 2,
+     "c": 2,
+     "kind": "setting",
+     "dimension": "time",
+     "uncertain": false,
+     "conditions": [
+      "800W"
+     ],
+     "cls": "not_read_setting",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 2,
+     "c": 3,
+     "kind": "price",
+     "dimension": "electricity unit price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 2,
+     "c": 4,
+     "kind": "derived_or_estimated",
+     "dimension": "cost",
+     "uncertain": false,
+     "conditions": [
+      "7 mins @ 800W",
+      "34p/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 3,
+     "c": 1,
+     "kind": "other",
+     "dimension": "power",
+     "uncertain": true,
+     "conditions": [
+      "1hr @ 200°C"
+     ],
+     "cls": "not_read_other",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 3,
+     "c": 2,
+     "kind": "setting",
+     "dimension": "time",
+     "uncertain": false,
+     "conditions": [
+      "@ 200°C"
+     ],
+     "cls": "not_read_setting",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 3,
+     "c": 3,
+     "kind": "price",
+     "dimension": "electricity unit price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S02",
+     "r": 3,
+     "c": 4,
+     "kind": "derived_or_estimated",
+     "dimension": "cost",
+     "uncertain": false,
+     "conditions": [
+      "1hr @ 200°C",
+      "34p/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S03",
+   "page": "phase271/t_ninja_doublestack",
+   "publisher": "techradar.com",
+   "category": "air_fryers",
+   "stratum": "multi-product specification comparison (products in header row)",
+   "phase245Mode": "products_in_rows",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "products_in_columns",
+   "annotatorEvidence": "manufacturer_declared",
+   "axes": {
+    "annotator": {
+     "row": "property",
+     "col": "product"
+    },
+    "implied": {
+     "row": "product",
+     "col": "property"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 24,
+   "cellsInLedger": 24,
+   "elements": {
+    "not_read_price": 8,
+    "not_read_declared": 30
+   },
+   "elementRows": [
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 1,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 1,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 2,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 2,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 2,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 1,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size (height)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size (width)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size (depth)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size (height)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size (width)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size (depth)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size (height)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size (width)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size (depth)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size (height)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size (width)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size (depth)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "size (height)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "size (width)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "size (depth)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "size (height)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "size (width)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "size (depth)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 3,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 3,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 3,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 3,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 3,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 3,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 4,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S03",
+     "r": 4,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S04",
+   "page": "phase271/t_cosori_twinfry",
+   "publisher": "techradar.com",
+   "category": "air_fryers",
+   "stratum": "rating table (attribute, notes, rating): negative control",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "ratings_or_scores",
+   "annotatorEvidence": "editorial_rating",
+   "axes": {
+    "annotator": {
+     "row": "rating_criterion",
+     "col": "other"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 12,
+   "cellsInLedger": 12,
+   "elements": {
+    "not_read_rating_score": 3
+   },
+   "elementRows": [
+    {
+     "id": "S04",
+     "r": 1,
+     "c": 2,
+     "kind": "rating_score",
+     "dimension": "editorial rating (value)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S04",
+     "r": 2,
+     "c": 2,
+     "kind": "rating_score",
+     "dimension": "editorial rating (design)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S04",
+     "r": 3,
+     "c": 2,
+     "kind": "rating_score",
+     "dimension": "editorial rating (performance)",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S05",
+   "page": "phase272/u_dw_tr_candy_cf57cf0w",
+   "publisher": "trustedreviews.com",
+   "category": "dishwashers",
+   "stratum": "single-product test results (key/value, test context)",
+   "phase245Mode": "key_value",
+   "ledgerContext": "test",
+   "annotatorStructure": "measure_by_condition_matrix",
+   "annotatorEvidence": "publisher_measured",
+   "axes": {
+    "annotator": {
+     "row": "measure",
+     "col": "product"
+    },
+    "implied": {
+     "row": "property",
+     "col": "none"
+    },
+    "rowAgrees": true,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 10,
+   "cellsInLedger": 10,
+   "elements": {
+    "read_correct": 4
+   },
+   "elementRows": [
+    {
+     "id": "S05",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "energy",
+     "uncertain": false,
+     "conditions": [
+      "standard clean"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S05",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "water",
+     "uncertain": false,
+     "conditions": [
+      "standard clean"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S05",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "energy",
+     "uncertain": false,
+     "conditions": [
+      "eco clean"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S05",
+     "r": 4,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "water",
+     "uncertain": false,
+     "conditions": [
+      "eco clean"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    }
+   ]
+  },
+  {
+   "id": "S06",
+   "page": "phase272/u_tv_tr_sony_bravia8ii",
+   "publisher": "trustedreviews.com",
+   "category": "televisions",
+   "stratum": "single-product test results with units in labels",
+   "phase245Mode": "key_value",
+   "ledgerContext": "test",
+   "annotatorStructure": "single_subject_properties",
+   "annotatorEvidence": "publisher_measured",
+   "axes": {
+    "annotator": {
+     "row": "measure",
+     "col": "product"
+    },
+    "implied": {
+     "row": "property",
+     "col": "none"
+    },
+    "rowAgrees": true,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 14,
+   "cellsInLedger": 14,
+   "elements": {
+    "read_correct": 6
+   },
+   "elementRows": [
+    {
+     "id": "S06",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "input lag",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S06",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "brightness",
+     "uncertain": false,
+     "conditions": [
+      "5% window"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S06",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "brightness",
+     "uncertain": false,
+     "conditions": [
+      "2% window"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S06",
+     "r": 4,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "brightness",
+     "uncertain": false,
+     "conditions": [
+      "10% window"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S06",
+     "r": 5,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "brightness",
+     "uncertain": false,
+     "conditions": [
+      "100% window"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S06",
+     "r": 6,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "set-up time",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S07",
+   "page": "phase272/u_af_tr_sharp_5_5l",
+   "publisher": "trustedreviews.com",
+   "category": "air_fryers",
+   "stratum": "single-product specification sheet: negative control",
+   "phase245Mode": "key_value",
+   "ledgerContext": "specification",
+   "annotatorStructure": "specification_sheet",
+   "annotatorEvidence": "manufacturer_declared",
+   "axes": {
+    "annotator": {
+     "row": "property",
+     "col": "product"
+    },
+    "implied": {
+     "row": "property",
+     "col": "none"
+    },
+    "rowAgrees": true,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 24,
+   "cellsInLedger": 24,
+   "elements": {
+    "not_read_declared": 7,
+    "not_read_other": 2,
+    "not_read_price": 1
+   },
+   "elementRows": [
+    {
+     "id": "S07",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 2,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 3,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 4,
+     "c": 1,
+     "kind": "other",
+     "dimension": "release year",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_other",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 5,
+     "c": 1,
+     "kind": "other",
+     "dimension": "first reviewed date",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_other",
+     "peeCellFound": true,
+     "peeElementState": null,
+     "peeBlockers": [
+      "no_matching_element"
+     ],
+     "peeEarliest": null,
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 7,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 8,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "number of compartments",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 10,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "capacity",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S07",
+     "r": 11,
+     "c": 1,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [
+      "UK RRP"
+     ],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S08",
+   "page": "phase272/u_td_tr_hisense_dh5s102bw",
+   "publisher": "trustedreviews.com",
+   "category": "tumble_dryers",
+   "stratum": "repeated row labels, category without a plan",
+   "phase245Mode": "key_value",
+   "ledgerContext": "test",
+   "annotatorStructure": "measure_by_condition_matrix",
+   "annotatorEvidence": "publisher_measured",
+   "axes": {
+    "annotator": {
+     "row": "measure",
+     "col": "product"
+    },
+    "implied": {
+     "row": "property",
+     "col": "none"
+    },
+    "rowAgrees": true,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 6,
+   "cellsInLedger": 6,
+   "elements": {
+    "not_read": 2
+   },
+   "elementRows": [
+    {
+     "id": "S08",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "energy",
+     "uncertain": false,
+     "conditions": [
+      "cupboard dry"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "P0_no_plan",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "acquisition",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S08",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "energy",
+     "uncertain": true,
+     "conditions": [
+      "hanging dry"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "P0_no_plan",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "acquisition",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S09",
+   "page": "phase272/u_ap_hf_puroair_240",
+   "publisher": "housefresh.com",
+   "category": "air_purifiers",
+   "stratum": "operating conditions as rows (sleep, fan speeds)",
+   "phase245Mode": "key_value",
+   "ledgerContext": "test",
+   "annotatorStructure": "measure_by_condition_matrix",
+   "annotatorEvidence": "publisher_measured",
+   "axes": {
+    "annotator": {
+     "row": "condition",
+     "col": "measure"
+    },
+    "implied": {
+     "row": "property",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 8,
+   "cellsInLedger": 8,
+   "elements": {
+    "read_correct": 4
+   },
+   "elementRows": [
+    {
+     "id": "S09",
+     "r": 0,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Sleep mode"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R3b_section_heading",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S09",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Fan speed 1"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R3b_section_heading",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S09",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Fan speed 2"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R3b_section_heading",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S09",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Fan speed 3"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R3b_section_heading",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    }
+   ]
+  },
+  {
+   "id": "S10",
+   "page": "phase272/u_ap_hf_puroair_240",
+   "publisher": "housefresh.com",
+   "category": "air_purifiers",
+   "stratum": "multi-product measured results with a price column",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "test",
+   "annotatorStructure": "products_in_rows",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "product",
+     "col": "measure"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": false,
+   "cellsAnnotated": 32,
+   "cellsInLedger": 32,
+   "elements": {
+    "read_correct": 12,
+    "not_read_price": 7,
+    "read_wrong_product": 2
+   },
+   "elementRows": [
+    {
+     "id": "S10",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 1,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 1,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S10",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 2,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 2,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S10",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 3,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 3,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S10",
+     "r": 4,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 4,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 4,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S10",
+     "r": 5,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_wrong_product",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 5,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_wrong_product",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 5,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S10",
+     "r": 6,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 6,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 6,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S10",
+     "r": 7,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "top speed"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 7,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "publisher test room (728 cu ft per page)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S10",
+     "r": 7,
+     "c": 3,
+     "kind": "price",
+     "dimension": "price",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_price",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S11",
+   "page": "phase272/u_ap_hf_puroair_240",
+   "publisher": "housefresh.com",
+   "category": "air_purifiers",
+   "stratum": "certified ratings and derived cost: negative control",
+   "phase245Mode": "products_in_rows",
+   "ledgerContext": "test",
+   "annotatorStructure": "products_in_rows",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "product",
+     "col": "measure"
+    },
+    "implied": {
+     "row": "product",
+     "col": "property"
+    },
+    "rowAgrees": true,
+    "colAgrees": true
+   },
+   "contextAgrees": false,
+   "cellsAnnotated": 15,
+   "cellsInLedger": 15,
+   "elements": {
+    "not_read_nominal_certified": 4,
+    "not_read_derived_or_estimated": 4
+   },
+   "elementRows": [
+    {
+     "id": "S11",
+     "r": 1,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "not_read_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R10_declared_body_in_labels"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 1,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "cost per CADR cfm",
+     "uncertain": false,
+     "conditions": [
+      "dust CADR"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 2,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "not_read_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R10_declared_body_in_labels"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 2,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "cost per CADR cfm",
+     "uncertain": false,
+     "conditions": [
+      "dust CADR"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 3,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "not_read_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R10_declared_body_in_labels"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 3,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "cost per CADR cfm",
+     "uncertain": false,
+     "conditions": [
+      "dust CADR"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 4,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "not_read_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R10_declared_body_in_labels"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S11",
+     "r": 4,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "cost per CADR cfm",
+     "uncertain": true,
+     "conditions": [
+      "dust CADR"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "evidence",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S12",
+   "page": "step1c/s1c_ap_hf_bedroom",
+   "publisher": "housefresh.com",
+   "category": "air_purifiers",
+   "stratum": "products in columns with award headers (incomplete product headers)",
+   "phase245Mode": "products_in_columns",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "products_in_columns",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "property",
+     "col": "product"
+    },
+    "implied": {
+     "row": "property",
+     "col": "product"
+    },
+    "rowAgrees": true,
+    "colAgrees": true
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 44,
+   "cellsInLedger": 44,
+   "elements": {
+    "read_unresolved": 1,
+    "not_read": 2,
+    "read_as_measurement_but_nominal_certified": 9,
+    "not_read_declared": 7,
+    "not_read_identifier": 1,
+    "not_read_derived_or_estimated": 3
+   },
+   "elementRows": [
+    {
+     "id": "S12",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_unresolved",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 3,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 3,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "time to clean test room",
+     "uncertain": false,
+     "conditions": [
+      "top speed",
+      "728 cu ft test room"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [
+      "smoke"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 1,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [
+      "pollen"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 2,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 2,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "smoke"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 2,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "pollen"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 3,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": false,
+     "conditions": [
+      "dust"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 3,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [
+      "smoke"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 4,
+     "c": 3,
+     "kind": "nominal_certified",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [
+      "pollen"
+     ],
+     "cls": "read_as_measurement_but_nominal_certified",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 5,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "filtration stages",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 5,
+     "c": 3,
+     "kind": "identifier",
+     "dimension": "filter class",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_identifier",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 6,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "room size",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 6,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "room size",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 6,
+     "c": 3,
+     "kind": "derived_or_estimated",
+     "dimension": "room size",
+     "uncertain": false,
+     "conditions": [
+      "4.8 air changes per hour"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 7,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 7,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 7,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 7,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 7,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S12",
+     "r": 7,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S13",
+   "page": "phase272/u_tv_tg_lg_b6",
+   "publisher": "tomsguide.com",
+   "category": "televisions",
+   "stratum": "multi-product test comparison, placeholder corner cell",
+   "phase245Mode": "products_in_rows",
+   "ledgerContext": "test",
+   "annotatorStructure": "products_in_columns",
+   "annotatorEvidence": "publisher_measured",
+   "axes": {
+    "annotator": {
+     "row": "measure",
+     "col": "product"
+    },
+    "implied": {
+     "row": "product",
+     "col": "property"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 40,
+   "cellsInLedger": 40,
+   "elements": {
+    "read_correct": 14,
+    "not_read": 16
+   },
+   "elementRows": [
+    {
+     "id": "S13",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "SDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "SDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 1,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "SDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "SDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 1,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "SDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "SDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 1,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "SDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "SDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "colour accuracy (Delta-E)",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 2,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "colour accuracy (Delta-E)",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 2,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "colour accuracy (Delta-E)",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 2,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "colour accuracy (Delta-E)",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "Rec. 709 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 3,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "Rec. 709 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 3,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "Rec. 709 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 3,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "Rec. 709 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 4,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "HDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "HDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 4,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "HDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "HDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 4,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "HDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "HDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 4,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "HDR brightness",
+     "uncertain": false,
+     "conditions": [
+      "HDR",
+      "10% window",
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 5,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "UHDA-P3 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 5,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "UHDA-P3 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 5,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "UHDA-P3 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 5,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "UHDA-P3 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 6,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "Rec. 2020 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 6,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "Rec. 2020 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 6,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "Rec. 2020 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 6,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "Rec. 2020 gamut coverage",
+     "uncertain": false,
+     "conditions": [
+      "Filmmaker Mode (per methodology)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "element",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 7,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "input latency",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 7,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "input latency",
+     "uncertain": false,
+     "conditions": [
+      "Game Optimizer boost"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 7,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "input latency",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 7,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "input latency",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S13",
+     "r": 7,
+     "c": 3,
+     "kind": "measured",
+     "dimension": "input latency",
+     "uncertain": false,
+     "conditions": [
+      "Game Optimizer boost"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S13",
+     "r": 7,
+     "c": 4,
+     "kind": "measured",
+     "dimension": "input latency",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "table_lead",
+     "peeBlockers": [],
+     "peeEarliest": null,
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "structured_table_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S14",
+   "page": "step1d-b/s1db_ap_apf_a231_hpa100",
+   "publisher": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "stratum": "measurement x operating condition matrix, unit in product headers, dashes, method elsewhere in section",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "measure_by_condition_matrix",
+   "annotatorEvidence": "publisher_measured",
+   "axes": {
+    "annotator": {
+     "row": "condition",
+     "col": "product"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": false,
+   "cellsAnnotated": 18,
+   "cellsInLedger": 18,
+   "elements": {
+    "read_correct": 4,
+    "not_read": 4
+   },
+   "elementRows": [
+    {
+     "id": "S14",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Sleep Mode"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S14",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 1 (Low)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S14",
+     "r": 2,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 1 (Low)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S14",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 2 (Medium)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S14",
+     "r": 3,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 2 (Medium)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S14",
+     "r": 4,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 3 (High)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S14",
+     "r": 4,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 3 (High)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S14",
+     "r": 5,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "Speed 4 (Turbo)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S15",
+   "page": "step1d-b/s1db_ap_apf_a231_hpa100",
+   "publisher": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "stratum": "compound cells (power and cost), conditions as rows",
+   "phase245Mode": "products_in_rows",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "measure_by_condition_matrix",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "condition",
+     "col": "product"
+    },
+    "implied": {
+     "row": "product",
+     "col": "property"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 21,
+   "cellsInLedger": 21,
+   "elements": {
+    "not_read": 6,
+    "not_read_derived_or_estimated": 10,
+    "read_correct": 4
+   },
+   "elementRows": [
+    {
+     "id": "S15",
+     "r": 1,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Standby"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 1,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Standby",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 1,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Standby"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 1,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Standby",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 2,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Sleep Mode"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S15",
+     "r": 2,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Sleep Mode",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 3,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 1 (Low)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S15",
+     "r": 3,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 1 (Low)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 3,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 1 (Low)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 3,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 1 (Low)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 4,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 2 (Medium)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S15",
+     "r": 4,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 2 (Medium)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 4,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 2 (Medium)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 4,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 2 (Medium)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 5,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 3 (High)"
+     ],
+     "cls": "read_correct",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R1a_table_column",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": true
+    },
+    {
+     "id": "S15",
+     "r": 5,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 3 (High)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 5,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 3 (High)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 5,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 3 (High)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 6,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "power",
+     "uncertain": false,
+     "conditions": [
+      "Speed 4 (Turbo)"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S15",
+     "r": 6,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "monthly cost",
+     "uncertain": false,
+     "conditions": [
+      "Speed 4 (Turbo)",
+      "24h/day for one month",
+      "$0.12/kWh"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R11_price_in_cell"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S16",
+   "page": "step1d-b/s1db_ap_apf_a231_p800",
+   "publisher": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "stratum": "large two-product specification comparison: negative control",
+   "phase245Mode": "products_in_columns",
+   "ledgerContext": "specification",
+   "annotatorStructure": "mixed",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "property",
+     "col": "product"
+    },
+    "implied": {
+     "row": "property",
+     "col": "product"
+    },
+    "rowAgrees": true,
+    "colAgrees": true
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 81,
+   "cellsInLedger": 81,
+   "elements": {
+    "not_read_identifier": 2,
+    "not_read_declared": 26,
+    "read_as_measurement_but_declared": 2,
+    "not_read_derived_or_estimated": 4,
+    "not_read_rating_score": 6,
+    "not_read": 4
+   },
+   "elementRows": [
+    {
+     "id": "S16",
+     "r": 3,
+     "c": 1,
+     "kind": "identifier",
+     "dimension": "model",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_identifier",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 3,
+     "c": 2,
+     "kind": "identifier",
+     "dimension": "model",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_identifier",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "size",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 5,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 5,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 5,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 5,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "weight",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 6,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_as_measurement_but_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 6,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "read_as_measurement_but_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": "R4_no_subject_evidence",
+     "peeLeadMethod": "plan_guided_measurement_term",
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 6,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 6,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "CADR",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 7,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "room coverage",
+     "uncertain": false,
+     "conditions": [
+      "4.8 ACH"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R10_declared_body_in_labels",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 7,
+     "c": 1,
+     "kind": "derived_or_estimated",
+     "dimension": "room coverage",
+     "uncertain": false,
+     "conditions": [
+      "4.8 ACH"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R10_declared_body_in_labels",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 7,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "room coverage",
+     "uncertain": false,
+     "conditions": [
+      "4.8 ACH"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R10_declared_body_in_labels",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 7,
+     "c": 2,
+     "kind": "derived_or_estimated",
+     "dimension": "room coverage",
+     "uncertain": false,
+     "conditions": [
+      "4.8 ACH"
+     ],
+     "cls": "not_read_derived_or_estimated",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R10_declared_body_in_labels",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 8,
+     "c": 1,
+     "kind": "rating_score",
+     "dimension": "performance rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 8,
+     "c": 2,
+     "kind": "rating_score",
+     "dimension": "performance rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 11,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "filter life",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 11,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "filter life",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 12,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "power",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 12,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "power",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 13,
+     "c": 1,
+     "kind": "rating_score",
+     "dimension": "operating costs rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 13,
+     "c": 2,
+     "kind": "rating_score",
+     "dimension": "operating costs rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 14,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "number of fan speeds",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 14,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "number of fan speeds",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 21,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "lowest speed"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 21,
+     "c": 1,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "highest speed"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R15_range_or_bound"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 21,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "lowest speed"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 21,
+     "c": 2,
+     "kind": "measured",
+     "dimension": "noise",
+     "uncertain": false,
+     "conditions": [
+      "highest speed"
+     ],
+     "cls": "not_read",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R15_range_or_bound"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 22,
+     "c": 1,
+     "kind": "rating_score",
+     "dimension": "noise rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 22,
+     "c": 2,
+     "kind": "rating_score",
+     "dimension": "noise rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 24,
+     "c": 1,
+     "kind": "declared",
+     "dimension": "warranty",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S16",
+     "r": 24,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "warranty",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R03_table_context_specification",
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S17",
+   "page": "step1d-b/s1db_dh_ih_best",
+   "publisher": "idealhome.co.uk",
+   "category": "dehumidifiers",
+   "stratum": "products in rows without header cells",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "products_in_rows",
+   "annotatorEvidence": "mixed",
+   "axes": {
+    "annotator": {
+     "row": "product",
+     "col": "property"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": false,
+    "colAgrees": false
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 49,
+   "cellsInLedger": 49,
+   "elements": {
+    "not_read_declared": 25,
+    "not_read_rating_score": 6
+   },
+   "elementRows": [
+    {
+     "id": "S17",
+     "r": 1,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "extraction rate",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 1,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "tank capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 1,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 1,
+     "c": 5,
+     "kind": "declared",
+     "dimension": "suitable area",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 1,
+     "c": 6,
+     "kind": "rating_score",
+     "dimension": "Ideal Home rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 2,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "extraction rate",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 2,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "tank capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 2,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 2,
+     "c": 5,
+     "kind": "declared",
+     "dimension": "suitable area",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 2,
+     "c": 6,
+     "kind": "rating_score",
+     "dimension": "Ideal Home rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 3,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "extraction rate",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 3,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "tank capacity",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 3,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "range minimum"
+     ],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 3,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [
+      "range maximum"
+     ],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 3,
+     "c": 5,
+     "kind": "declared",
+     "dimension": "suitable area",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 3,
+     "c": 6,
+     "kind": "rating_score",
+     "dimension": "Ideal Home rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 4,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "extraction rate",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 4,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "tank capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 4,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 4,
+     "c": 5,
+     "kind": "declared",
+     "dimension": "suitable area",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 4,
+     "c": 6,
+     "kind": "rating_score",
+     "dimension": "Ideal Home rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 5,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "extraction rate",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 5,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "tank capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 5,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 5,
+     "c": 5,
+     "kind": "declared",
+     "dimension": "suitable area",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 5,
+     "c": 6,
+     "kind": "rating_score",
+     "dimension": "Ideal Home rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 6,
+     "c": 2,
+     "kind": "declared",
+     "dimension": "extraction rate",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 6,
+     "c": 3,
+     "kind": "declared",
+     "dimension": "tank capacity",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R14_no_dimension_term"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 6,
+     "c": 4,
+     "kind": "declared",
+     "dimension": "noise",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 6,
+     "c": 5,
+     "kind": "declared",
+     "dimension": "suitable area",
+     "uncertain": true,
+     "conditions": [],
+     "cls": "not_read_declared",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    },
+    {
+     "id": "S17",
+     "r": 6,
+     "c": 6,
+     "kind": "rating_score",
+     "dimension": "Ideal Home rating",
+     "uncertain": false,
+     "conditions": [],
+     "cls": "not_read_rating_score",
+     "peeCellFound": true,
+     "peeElementState": "rejected",
+     "peeBlockers": [
+      "R08_unknown_context_no_test_label",
+      "R12_no_plan_unit"
+     ],
+     "peeEarliest": "context",
+     "peeLeadRule": null,
+     "peeLeadMethod": null,
+     "peeLeadCondition": null,
+     "conditionMissing": false
+    }
+   ]
+  },
+  {
+   "id": "S18",
+   "page": "phase270/lm_test",
+   "publisher": "lovemoney.com",
+   "category": "air_fryers",
+   "stratum": "layout or promotion table, not data: control",
+   "phase245Mode": "unsupported",
+   "ledgerContext": "unknown",
+   "annotatorStructure": "layout_not_data",
+   "annotatorEvidence": "unclear",
+   "axes": {
+    "annotator": {
+     "row": "none",
+     "col": "none"
+    },
+    "implied": {
+     "row": "none",
+     "col": "none"
+    },
+    "rowAgrees": true,
+    "colAgrees": true
+   },
+   "contextAgrees": true,
+   "cellsAnnotated": 2,
+   "cellsInLedger": 2,
+   "elements": {},
+   "elementRows": []
+  }
+ ]
+}

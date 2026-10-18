@@ -11,7 +11,9 @@
 import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';import {join,resolve} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
 import {documentLeads,buildIdentity} from './experience-observe.mjs';
 const sha=b=>createHash('sha256').update(b).digest('hex');
-const [cmd,label]=process.argv.slice(2);
+const [cmd,label,...rest]=process.argv.slice(2);const ARG=k=>{const i=rest.indexOf('--'+k);return i>=0?rest[i+1]:null;};
+// Stage D: the PEE side may be the lesson-enabled shadow reader (--policy candidate_1e_tables [--lessons a,b]); default the frozen arm C.
+const POLICY=ARG('policy')??'candidate_1c_semantics_tables';const LESSONS=ARG('lessons')?ARG('lessons').split(','):null;
 const ROOT=join(homedir(),'.local/share/product-evidence-engine/private-eval');const P=join(ROOT,'tables-1e');const REPO=process.env.PEE_KNOWLEDGE_REPO??'/home/user/pee-knowledge';
 const PUBD='evaluation/tables-1e';const D=resolve('dist/src');
 const H=await import(D+'/phase245_html_dom.js');const G=await import(D+'/phase245_table_grid.js');const SEM=await import(D+'/document_semantics.js');
@@ -60,9 +62,10 @@ const MEASURED=k=>k==='measured';const count=xs=>xs.reduce((o,k)=>(o[k]=(o[k]??0
 const out=[];const leadCache={};
 for(const s of SAMPLE.tables){const a=A.tables.find(t=>t.id===s.id);if(!a)throw Error('no annotation for '+s.id);
  const p=pageOf(s.page);const plan=planOf(p.category);const sem=SEM.readDocumentSemantics1D2(p.html,p.url);const deep=B.textBlocks225(p.html,{maxBlocks:1500}).blocks;
- const led=L.tableLedger1E(sem,plan,{sourceUrl:p.url,documentSha256:p.sha256,blocks:deep,documentReportsTesting:deep.some(b=>PL.TEST_CONTEXT272.test(b)),html:p.html});
+ const lessons=POLICY==='candidate_1e_tables'?(LESSONS??(await import(D+'/table_lessons1e.js')).activeTableLessons1E(['promoted','provisional'])):undefined;
+ const led=L.tableLedger1E(sem,plan,{sourceUrl:p.url,documentSha256:p.sha256,blocks:deep,documentReportsTesting:deep.some(b=>PL.TEST_CONTEXT272.test(b)),html:p.html,...(lessons?{lessons}:{})});
  const lt=led.tables.find(t=>t.table===s.table);
- let leads=[];if(plan){leadCache[s.page]??=(await documentLeads(D,{evaluation:p.ev,docTag:p.tag,category:p.category},{policy:'candidate_1c_semantics_tables',details:true})).leads;leads=leadCache[s.page];}
+ let leads=[];if(plan){leadCache[s.page]??=(await documentLeads(D,{evaluation:p.ev,docTag:p.tag,category:p.category},{policy:POLICY,details:true,...(lessons?{lessons}:{})})).leads;leads=leadCache[s.page];}
  const cellOf=(r,c)=>lt.cells.find(x=>x.sourceRow===r&&x.sourceCell===c)??null;
  const elements=[];
  for(const ac of a.cells??[])for(const ae of ac.elements??[]){const lc=cellOf(ac.r,ac.c);
@@ -92,7 +95,7 @@ const summary={tables:out.length,publishers:[...new Set(out.map(t=>t.publisher))
  falseMeasurements:all.filter(e=>e.cls.startsWith('read_as_measurement')).length,
  axisAgreement:{row:out.filter(t=>t.axes.rowAgrees).length,col:out.filter(t=>t.axes.colAgrees).length,of:out.length},contextAgreement:out.filter(t=>t.contextAgrees).length,
  cellsAnnotated:out.reduce((a,t)=>a+t.cellsAnnotated,0),cellsInLedger:out.reduce((a,t)=>a+t.cellsInLedger,0)};
-const meta={schema:'pee.tables1e.compare.v1',label,at:new Date().toISOString(),build:buildIdentity(D),annotationsSha256:AF.annotationsSha256,tier:'development (spent pages); annotator is a separate Claude agent, not independent human ground truth'};
+const meta={schema:'pee.tables1e.compare.v1',label,policy:POLICY,lessons:LESSONS??(POLICY==='candidate_1e_tables'?'promoted+provisional (shadow)':null),at:new Date().toISOString(),build:buildIdentity(D),annotationsSha256:AF.annotationsSha256,tier:'development (spent pages); annotator is a separate Claude agent, not independent human ground truth'};
 mkdirSync(join(REPO,'private-eval/tables-1e'),{recursive:true});
 writeFileSync(PRIV,JSON.stringify({...meta,summary,tables:out},null,1)+'\n');
 writeFileSync(PUB,JSON.stringify({...meta,summary,tables:out.map(t=>({...t,notes:undefined,elementRows:(t.elementRows??[]).map(({_private,...e})=>e)}))},null,1)+'\n');

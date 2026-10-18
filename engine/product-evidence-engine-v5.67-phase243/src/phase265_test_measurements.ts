@@ -22,6 +22,8 @@ import {probeTransientTestContent225,textBlocks225,type ProductMention272} from 
 import {createHash} from 'node:crypto';
 import {TEST_CONTEXT272,planContentDigest272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 import {structuredTableLeads1D2,type DocumentSemantics1D2} from './document_semantics.js';
+import {tableLedger1E,ledgerTableLeads1E,cellDeclarationEvidence1E,type TableLessonId1E} from './table_ledger1e.js';
+import {tableLessonsDigest1E} from './table_lessons1e.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
@@ -45,11 +47,12 @@ const canonical=(x:unknown):string=>x===null||typeof x!=='object'?JSON.stringify
 /** The reading configuration of one call, or null when no plan is used (the historical, unversioned path). */
 // Not part of the identity, because neither changes which candidates are produced: the exploratory pass (research leads,
 // never candidates, never persisted) and the page category (used only by the comparative reader, versioned separately).
-export function readingConfiguration265(opts:{plan?:ExtractionPlan272;semantics?:unknown}):ReadingConfiguration265|null{
+export function readingConfiguration265(opts:{plan?:ExtractionPlan272;semantics?:unknown;tableLessons?:readonly TableLessonId1E[]}):ReadingConfiguration265|null{
  if(!opts.plan)return null;const contentDigest=planContentDigest272(opts.plan);
  return {schema:'pee.reading-configuration.v1',baseReader:TEST_LEAD_EXTRACTOR265,guidedReader:GUIDED_READER272_VERSION,
   plan:{schema:String(opts.plan.schema),categoryId:String(opts.plan.categoryId),contentDigest,compiledDigest:String(opts.plan.compiledFrom?.digest??''),digestVerified:opts.plan.compiledFrom?.digest===contentDigest},
-  semanticReading:opts.semantics?SEMANTIC_TABLES1D2_VERSION:null};
+  // Table lessons (shadow reading only) are part of the semantic reading: a lesson change changes the reading identity.
+  semanticReading:opts.semantics?SEMANTIC_TABLES1D2_VERSION+(opts.tableLessons?.length?'+lessons1e:'+tableLessonsDigest1E(opts.tableLessons):''):null};
 }
 /** The extractor version of a plan-guided reading: the base version plus a 96-bit digest of the canonical EFFECTIVE
  * configuration (75 characters, within the store's 80): reader versions, the plan's schema, category and content digest,
@@ -60,6 +63,8 @@ export function readingIdentity265(c:ReadingConfiguration265):string{
  const effective={schema:c.schema,baseReader:c.baseReader,guidedReader:c.guidedReader,plan:{schema:c.plan.schema,categoryId:c.plan.categoryId,contentDigest:c.plan.contentDigest},semanticReading:c.semanticReading};
  return c.baseReader+'+r1:'+createHash('sha256').update(canonical(effective)).digest('hex').slice(0,24);}
 export interface TestLeadsInput265 {extractorVersion:string;probe:TestProbe225;
+ /** Table understanding Stage D (shadow only): prose-reader leads from table cells dropped by lesson TL7, recorded. */
+ shadowDiagnostics?:{tl7DroppedBlockReaderLeads?:{blockIndex:number;valueOffset:number;value:number;unit:string;methodCue:string;reason:string}[];tl5ConditionsAttached?:{blockIndex:number;valueOffset:number;condition:string}[]};
  /** Step 3: present only for a plan-guided reading. `extractorVersion` is then readingIdentity265(readingConfiguration). */
  readingConfiguration?:ReadingConfiguration265;
  /** Step 3: the comparative reader does not use the plan; its rows keep the base reader's version. */
@@ -146,7 +151,10 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  /** Step 1D-A2 (with a plan only; evaluation or shadow): the page's semantic-document contract. Its test-table cells are
   * read through the Phase245 grid with their own labels. Such leads carry methodCue 'structured_table_measurement_term',
   * which the persistence screen (screenTestLead265) does not admit, so nothing they find reaches the store. */
- semantics?:DocumentSemantics1D2}={}):TestLeadsInput265{
+ semantics?:DocumentSemantics1D2;
+ /** Table understanding Stage D (with plan and semantics only; shadow): the table leads come from the lesson-enabled decision
+  * ledger (src/table_ledger1e.ts) instead of structuredTableLeads1D2. Same methodCue, so nothing reaches the store. */
+ tableLessons?:readonly TableLessonId1E[]}={}):TestLeadsInput265{
  let lead=pageProductLead265(x);
  const mentions=opts.plan?documentMentions272(html):[];
  // Phase272 (plan only): a headline that is a sentence ("I tested the LG C6 and LG C5 side-by-side") is not a product name:
@@ -159,14 +167,29 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  if(opts.plan){const cells=comparisonCells272(html);if(cells.size){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
   probe.candidates=probe.candidates.map(c=>{const cell=cells.get((deep[c.blockIndex]??'').trim());if(cell===undefined)return c;
    return cell?{...c,subject:{name:cell.name,model:null,sku:null},subjectAssignment:'clause_named_model_unverified' as const}:{...c,subject:null,subjectAssignment:'multiple_models_unresolved' as const};});}}
+ let tl7Dropped:{blockIndex:number;valueOffset:number;value:number;unit:string;methodCue:string;reason:string}[]|null=null;
+ let tl5Attached:{blockIndex:number;valueOffset:number;condition:string}[]|null=null;
  if(opts.plan&&opts.semantics){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
-  const extra=structuredTableLeads1D2(opts.semantics,opts.plan,{sourceUrl:url,documentSha256:sha256,blocks:deep,documentReportsTesting:deep.some(b=>TEST_CONTEXT272.test(b))});
-  const seen=(c:TestCandidate225)=>probe.candidates.some(o=>o.blockIndex===c.blockIndex&&o.value===c.value&&o.unit.toLowerCase()===c.unit);
+  const drt=deep.some(b=>TEST_CONTEXT272.test(b));
+  const extra=opts.tableLessons?.length
+   ?ledgerTableLeads1E(tableLedger1E(opts.semantics,opts.plan,{sourceUrl:url,documentSha256:sha256,blocks:deep,documentReportsTesting:drt,html,lessons:opts.tableLessons}),{sourceUrl:url,documentSha256:sha256,blocks:deep})
+   :structuredTableLeads1D2(opts.semantics,opts.plan,{sourceUrl:url,documentSha256:sha256,blocks:deep,documentReportsTesting:drt});
+  // TL7 v3 (shadow): a prose-reader lead from a table cell the table itself shows to be a declaration is dropped (v1, every
+  // table cell, and v2, rating names too, were rejected). Dropped leads are recorded in shadowDiagnostics, never lost silently.
+  if(opts.tableLessons?.includes('TL7_table_cells_owned_by_table')){const why=(c:TestCandidate225)=>cellDeclarationEvidence1E(opts.semantics!,c.blockIndex);
+   tl7Dropped=probe.candidates.filter(c=>why(c)).map(c=>({blockIndex:c.blockIndex,valueOffset:c.valueOffset,value:c.value,unit:c.unit,methodCue:c.methodCue,reason:why(c)!}));probe.candidates=probe.candidates.filter(c=>!why(c));}
+  const same=(o:TestCandidate225,c:TestCandidate225)=>o.blockIndex===c.blockIndex&&o.value===c.value&&o.unit.toLowerCase()===c.unit;
+  const seen=(c:TestCandidate225)=>probe.candidates.some(o=>same(o,c));
+  // TL5 v2 (shadow): the condition a table's setting axis gives a cell also attaches to the prose-reader lead of that same cell
+  // when that lead has none (v1 lost it, because the earlier prose lead shadowed the table lead). Recorded in shadowDiagnostics.
+  if(opts.tableLessons?.includes('TL5_setting_axis_conditions')){tl5Attached=[];
+   probe.candidates=probe.candidates.map(o=>{if(o.condition)return o;const t=extra.find(c=>c.condition&&same(o,c));if(!t)return o;
+    tl5Attached!.push({blockIndex:o.blockIndex,valueOffset:o.valueOffset,condition:t.condition!});return {...o,condition:t.condition};});}
   probe.candidates=[...probe.candidates,...extra.filter(c=>!seen(c))];}
  // Step 3: a plan-guided reading is versioned by its configuration; the no-plan output is unchanged.
- const cfg=readingConfiguration265({plan:opts.plan,semantics:opts.semantics});
+ const cfg=readingConfiguration265({plan:opts.plan,semantics:opts.semantics,tableLessons:opts.semantics?opts.tableLessons:undefined});
  return {extractorVersion:cfg?readingIdentity265(cfg):TEST_LEAD_EXTRACTOR265,probe,...(comparative.length?{comparative270:comparative}:{}),
-  ...(cfg?{readingConfiguration:cfg,comparativeReaderVersion:TEST_LEAD_EXTRACTOR265}:{})};
+  ...(cfg?{readingConfiguration:cfg,comparativeReaderVersion:TEST_LEAD_EXTRACTOR265}:{}),...(tl7Dropped||tl5Attached?{shadowDiagnostics:{...(tl7Dropped?{tl7DroppedBlockReaderLeads:tl7Dropped}:{}),...(tl5Attached?{tl5ConditionsAttached:tl5Attached}:{})}}:{})};
 }
 
 const UNITS:Readonly<Record<string,string>>={mm:'mm',cm:'cm',kg:'kg',g:'g',l:'l',litre:'l',litres:'l',liter:'l',liters:'l',db:'db',dba:'dba',

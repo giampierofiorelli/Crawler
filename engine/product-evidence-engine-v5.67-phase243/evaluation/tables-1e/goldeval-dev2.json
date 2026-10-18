@@ -1,0 +1,5921 @@
+{
+ "schema": "pee.tables1e.goldeval.v1",
+ "label": "dev2",
+ "at": "2026-10-18T06:34:34.570Z",
+ "tier": "development: every page and gold set is spent; the Stage C sample informed the lessons; no generalisation claim",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "a5e37ea",
+  "srcDirty": true,
+  "readersSha256": "99aaf88061e94256ac65c892caad32d3d4db034a31117896a3676dcb1f1073fe",
+  "readers": 9
+ },
+ "arms": {
+  "C": {
+   "policy": "candidate_1c_semantics_tables",
+   "lessons": null
+  },
+  "E": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL2_header_units",
+    "TL3_dimension_from_table_context",
+    "TL4_compound_cell_elements",
+    "TL6_cell_identity",
+    "TL7_table_cells_owned_by_table",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL1": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL2_header_units",
+    "TL3_dimension_from_table_context",
+    "TL4_compound_cell_elements",
+    "TL6_cell_identity",
+    "TL7_table_cells_owned_by_table",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL2": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL3_dimension_from_table_context",
+    "TL4_compound_cell_elements",
+    "TL6_cell_identity",
+    "TL7_table_cells_owned_by_table",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL3": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL2_header_units",
+    "TL4_compound_cell_elements",
+    "TL6_cell_identity",
+    "TL7_table_cells_owned_by_table",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL4": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL2_header_units",
+    "TL3_dimension_from_table_context",
+    "TL6_cell_identity",
+    "TL7_table_cells_owned_by_table",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL6": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL2_header_units",
+    "TL3_dimension_from_table_context",
+    "TL4_compound_cell_elements",
+    "TL7_table_cells_owned_by_table",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL7": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL2_header_units",
+    "TL3_dimension_from_table_context",
+    "TL4_compound_cell_elements",
+    "TL6_cell_identity",
+    "TL5_setting_axis_conditions"
+   ]
+  },
+  "E-TL5": {
+   "policy": "candidate_1e_tables",
+   "lessons": [
+    "TL1_section_method_scope",
+    "TL2_header_units",
+    "TL3_dimension_from_table_context",
+    "TL4_compound_cell_elements",
+    "TL6_cell_identity",
+    "TL7_table_cells_owned_by_table"
+   ]
+  }
+ },
+ "readingIdentityExample": "pee225-probe.v2+pee226-tables.v1+pee227-headers+r1:c4b5e394707508515bd40678",
+ "summary": {
+  "all": {
+   "documents": 31,
+   "gold": 382,
+   "C": {
+    "missing": 141,
+    "correct": 200,
+    "unresolved": 27,
+    "wrong_product": 12,
+    "false_identity_match": 2
+   },
+   "E": {
+    "missing": 220,
+    "correct": 136,
+    "unresolved": 13,
+    "wrong_product": 11,
+    "false_identity_match": 2
+   },
+   "gained": 11,
+   "lost": 75,
+   "newWrong": 0,
+   "wrongRemoved": 1,
+   "negativeControlsRead": {
+    "C": 40,
+    "E": 32
+   },
+   "tableLeads": {
+    "C": 51,
+    "E": 119,
+    "EwithCondition": 12
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 6,
+     "gainedVsE": 0,
+     "newWrongVsE": 1,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 10,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 2,
+     "gainedVsE": 0,
+     "newWrongVsE": 2,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 87,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  "bySet": {
+   "step1c": {
+    "documents": 5,
+    "gold": 102,
+    "C": {
+     "missing": 26,
+     "correct": 72,
+     "unresolved": 4
+    },
+    "E": {
+     "missing": 76,
+     "correct": 22,
+     "unresolved": 4
+    },
+    "gained": 0,
+    "lost": 50,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 0,
+     "E": 0
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 7,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 50,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "phase272_untouched": {
+    "documents": 13,
+    "gold": 163,
+    "C": {
+     "missing": 60,
+     "correct": 86,
+     "wrong_product": 12,
+     "unresolved": 3,
+     "false_identity_match": 2
+    },
+    "E": {
+     "missing": 70,
+     "correct": 76,
+     "wrong_product": 11,
+     "unresolved": 4,
+     "false_identity_match": 2
+    },
+    "gained": 5,
+    "lost": 15,
+    "newWrong": 0,
+    "wrongRemoved": 1,
+    "negativeControlsRead": {
+     "C": 16,
+     "E": 12
+    },
+    "tableLeads": {
+     "C": 51,
+     "E": 74,
+     "EwithCondition": 4
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 4,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 1,
+      "gainedVsE": 0,
+      "newWrongVsE": 1,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 15,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "phase272_dev": {
+    "documents": 3,
+    "gold": 28,
+    "C": {
+     "correct": 24,
+     "missing": 4
+    },
+    "E": {
+     "correct": 14,
+     "missing": 13,
+     "unresolved": 1
+    },
+    "gained": 0,
+    "lost": 10,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 0,
+     "E": 0
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 0,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 10,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "step1d_b": {
+    "documents": 10,
+    "gold": 89,
+    "C": {
+     "missing": 51,
+     "correct": 18,
+     "unresolved": 20
+    },
+    "E": {
+     "missing": 61,
+     "correct": 24,
+     "unresolved": 4
+    },
+    "gained": 6,
+    "lost": 0,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 24,
+     "E": 20
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 38,
+     "EwithCondition": 8
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 6,
+      "gainedVsE": 0,
+      "newWrongVsE": 1,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 6,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 1,
+      "gainedVsE": 0,
+      "newWrongVsE": 1,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 12,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   }
+  },
+  "byHost": {
+   "techradar.com": {
+    "documents": 5,
+    "gold": 29,
+    "C": {
+     "missing": 7,
+     "correct": 19,
+     "unresolved": 3
+    },
+    "E": {
+     "missing": 7,
+     "correct": 19,
+     "unresolved": 3
+    },
+    "gained": 0,
+    "lost": 0,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 0,
+     "E": 0
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 0,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "housefresh.com": {
+    "documents": 5,
+    "gold": 160,
+    "C": {
+     "correct": 124,
+     "missing": 27,
+     "unresolved": 3,
+     "wrong_product": 4,
+     "false_identity_match": 2
+    },
+    "E": {
+     "correct": 51,
+     "missing": 99,
+     "unresolved": 5,
+     "wrong_product": 3,
+     "false_identity_match": 2
+    },
+    "gained": 1,
+    "lost": 74,
+    "newWrong": 0,
+    "wrongRemoved": 1,
+    "negativeControlsRead": {
+     "C": 5,
+     "E": 1
+    },
+    "tableLeads": {
+     "C": 21,
+     "E": 41,
+     "EwithCondition": 4
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 1,
+      "gainedVsE": 0,
+      "newWrongVsE": 1,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 74,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "tomsguide.com": {
+    "documents": 4,
+    "gold": 61,
+    "C": {
+     "missing": 38,
+     "correct": 23
+    },
+    "E": {
+     "missing": 34,
+     "correct": 27
+    },
+    "gained": 4,
+    "lost": 0,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 1,
+     "E": 1
+    },
+    "tableLeads": {
+     "C": 18,
+     "E": 26,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 4,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "trustedreviews.com": {
+    "documents": 7,
+    "gold": 43,
+    "C": {
+     "missing": 18,
+     "correct": 16,
+     "wrong_product": 8,
+     "unresolved": 1
+    },
+    "E": {
+     "missing": 19,
+     "correct": 15,
+     "wrong_product": 8,
+     "unresolved": 1
+    },
+    "gained": 0,
+    "lost": 1,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 10,
+     "E": 10
+    },
+    "tableLeads": {
+     "C": 12,
+     "E": 14,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 1,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "rtings.com": {
+    "documents": 3,
+    "gold": 0,
+    "C": {},
+    "E": {},
+    "gained": 0,
+    "lost": 0,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 0,
+     "E": 0
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 0,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "airpurifierfirst.com": {
+    "documents": 4,
+    "gold": 80,
+    "C": {
+     "missing": 44,
+     "correct": 17,
+     "unresolved": 19
+    },
+    "E": {
+     "missing": 54,
+     "correct": 23,
+     "unresolved": 3
+    },
+    "gained": 6,
+    "lost": 0,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 19,
+     "E": 15
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 38,
+     "EwithCondition": 8
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 6,
+      "gainedVsE": 0,
+      "newWrongVsE": 1,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 6,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 1,
+      "gainedVsE": 0,
+      "newWrongVsE": 1,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 12,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   },
+   "idealhome.co.uk": {
+    "documents": 3,
+    "gold": 9,
+    "C": {
+     "missing": 7,
+     "unresolved": 1,
+     "correct": 1
+    },
+    "E": {
+     "missing": 7,
+     "unresolved": 1,
+     "correct": 1
+    },
+    "gained": 0,
+    "lost": 0,
+    "newWrong": 0,
+    "wrongRemoved": 0,
+    "negativeControlsRead": {
+     "C": 5,
+     "E": 5
+    },
+    "tableLeads": {
+     "C": 0,
+     "E": 0,
+     "EwithCondition": 0
+    },
+    "ablation": {
+     "E-TL1": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL2": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL3": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL4": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL6": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL7": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     },
+     "E-TL5": {
+      "lostVsE": 0,
+      "gainedVsE": 0,
+      "newWrongVsE": 0,
+      "wrongRemovedVsE": 0
+     }
+    }
+   }
+  },
+  "outsideProvenance": {
+   "TL1": {
+    "provenance": [
+     "airpurifierfirst.com"
+    ],
+    "lostWithoutLessonOutside": 0,
+    "lostWithoutLessonInside": 6,
+    "gainedWithoutLessonOutside": 0,
+    "gainedWithoutLessonInside": 0
+   },
+   "TL2": {
+    "provenance": [
+     "tomsguide.com",
+     "airpurifierfirst.com"
+    ],
+    "lostWithoutLessonOutside": 0,
+    "lostWithoutLessonInside": 10,
+    "gainedWithoutLessonOutside": 0,
+    "gainedWithoutLessonInside": 0
+   },
+   "TL3": {
+    "provenance": [
+     "airpurifierfirst.com"
+    ],
+    "lostWithoutLessonOutside": 0,
+    "lostWithoutLessonInside": 0,
+    "gainedWithoutLessonOutside": 0,
+    "gainedWithoutLessonInside": 0
+   },
+   "TL4": {
+    "provenance": [
+     "airpurifierfirst.com"
+    ],
+    "lostWithoutLessonOutside": 0,
+    "lostWithoutLessonInside": 0,
+    "gainedWithoutLessonOutside": 0,
+    "gainedWithoutLessonInside": 0
+   },
+   "TL5": {
+    "provenance": [
+     "housefresh.com",
+     "airpurifierfirst.com"
+    ],
+    "lostWithoutLessonOutside": 0,
+    "lostWithoutLessonInside": 0,
+    "gainedWithoutLessonOutside": 0,
+    "gainedWithoutLessonInside": 0
+   },
+   "TL6": {
+    "provenance": [
+     "housefresh.com"
+    ],
+    "lostWithoutLessonOutside": 1,
+    "lostWithoutLessonInside": 1,
+    "gainedWithoutLessonOutside": 0,
+    "gainedWithoutLessonInside": 0
+   },
+   "TL7": {
+    "provenance": [
+     "housefresh.com",
+     "airpurifierfirst.com"
+    ],
+    "lostWithoutLessonOutside": 0,
+    "lostWithoutLessonInside": 0,
+    "gainedWithoutLessonOutside": 1,
+    "gainedWithoutLessonInside": 86
+   }
+  }
+ },
+ "corpus": {
+  "pages": 63,
+  "C": 51,
+  "E": 119,
+  "EwithCondition": 12
+ },
+ "documents": [
+  {
+   "set": "step1c",
+   "doc": "s1c_tv_trd_affordable_oled3",
+   "host": "techradar.com",
+   "category": "televisions",
+   "gold": 3,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 1,
+      "correct": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1c",
+   "doc": "s1c_tv_trd_rgb_vs_miniled",
+   "host": "techradar.com",
+   "category": "televisions",
+   "gold": 9,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 5,
+      "missing": 3,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1c",
+   "doc": "s1c_tv_trd_bravia7ii_r95h",
+   "host": "techradar.com",
+   "category": "televisions",
+   "gold": 6,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 4,
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 5
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1c",
+   "doc": "s1c_ap_hf_small",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "gold": 48,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 44
+    },
+    "E": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 38,
+      "missing": 9,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 44
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 6,
+      "missing": 40,
+      "unresolved": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 9
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [
+     {
+      "id": "a1-04",
+      "to": "missing"
+     },
+     {
+      "id": "a1-06",
+      "to": "missing"
+     },
+     {
+      "id": "a1-07",
+      "to": "missing"
+     },
+     {
+      "id": "a1-08",
+      "to": "missing"
+     },
+     {
+      "id": "a1-09",
+      "to": "missing"
+     },
+     {
+      "id": "a1-10",
+      "to": "missing"
+     },
+     {
+      "id": "a1-11",
+      "to": "missing"
+     },
+     {
+      "id": "a1-12",
+      "to": "missing"
+     },
+     {
+      "id": "a1-13",
+      "to": "missing"
+     },
+     {
+      "id": "a1-14",
+      "to": "missing"
+     },
+     {
+      "id": "a1-17",
+      "to": "missing"
+     },
+     {
+      "id": "a1-25",
+      "to": "missing"
+     },
+     {
+      "id": "a1-26",
+      "to": "missing"
+     },
+     {
+      "id": "a1-27",
+      "to": "missing"
+     },
+     {
+      "id": "a1-28",
+      "to": "missing"
+     },
+     {
+      "id": "a1-30",
+      "to": "missing"
+     },
+     {
+      "id": "a1-31",
+      "to": "missing"
+     },
+     {
+      "id": "a1-32",
+      "to": "missing"
+     },
+     {
+      "id": "a1-33",
+      "to": "missing"
+     },
+     {
+      "id": "a1-34",
+      "to": "unresolved"
+     },
+     {
+      "id": "a1-35",
+      "to": "missing"
+     },
+     {
+      "id": "a1-36",
+      "to": "missing"
+     },
+     {
+      "id": "a1-37",
+      "to": "missing"
+     },
+     {
+      "id": "a1-38",
+      "to": "missing"
+     },
+     {
+      "id": "a1-39",
+      "to": "missing"
+     },
+     {
+      "id": "a1-40",
+      "to": "missing"
+     },
+     {
+      "id": "a1-41",
+      "to": "missing"
+     },
+     {
+      "id": "a1-42",
+      "to": "missing"
+     },
+     {
+      "id": "a1-43",
+      "to": "missing"
+     },
+     {
+      "id": "a1-44",
+      "to": "missing"
+     },
+     {
+      "id": "a1-45",
+      "to": "missing"
+     },
+     {
+      "id": "a1-46",
+      "to": "missing"
+     }
+    ],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 32,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1c",
+   "doc": "s1c_ap_hf_bedroom",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "gold": 36,
+   "arms": {
+    "C": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 41
+    },
+    "E": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 7,
+     "withCondition": 0,
+     "leads": 14
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 7,
+     "withCondition": 0,
+     "leads": 14
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 11
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 7,
+     "withCondition": 0,
+     "leads": 14
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 7,
+     "withCondition": 0,
+     "leads": 14
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 7,
+     "withCondition": 0,
+     "leads": 14
+    },
+    "E-TL7": {
+     "items": {
+      "unresolved": 1,
+      "missing": 12,
+      "correct": 23
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 3,
+     "withCondition": 0,
+     "leads": 44
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 31,
+      "correct": 5
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 7,
+     "withCondition": 0,
+     "leads": 14
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [
+     {
+      "id": "a2-03",
+      "to": "missing"
+     },
+     {
+      "id": "a2-04",
+      "to": "missing"
+     },
+     {
+      "id": "a2-18",
+      "to": "missing"
+     },
+     {
+      "id": "a2-19",
+      "to": "missing"
+     },
+     {
+      "id": "a2-20",
+      "to": "missing"
+     },
+     {
+      "id": "a2-21",
+      "to": "missing"
+     },
+     {
+      "id": "a2-22",
+      "to": "missing"
+     },
+     {
+      "id": "a2-25",
+      "to": "missing"
+     },
+     {
+      "id": "a2-26",
+      "to": "missing"
+     },
+     {
+      "id": "a2-27",
+      "to": "missing"
+     },
+     {
+      "id": "a2-28",
+      "to": "missing"
+     },
+     {
+      "id": "a2-29",
+      "to": "missing"
+     },
+     {
+      "id": "a2-30",
+      "to": "missing"
+     },
+     {
+      "id": "a2-31",
+      "to": "missing"
+     },
+     {
+      "id": "a2-32",
+      "to": "missing"
+     },
+     {
+      "id": "a2-33",
+      "to": "missing"
+     },
+     {
+      "id": "a2-34",
+      "to": "missing"
+     },
+     {
+      "id": "a2-35",
+      "to": "missing"
+     }
+    ],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 18,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_af_tg_ninja_crispi",
+   "host": "tomsguide.com",
+   "category": "air_fryers",
+   "gold": 2,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_af_tg_tfal_infrared",
+   "host": "tomsguide.com",
+   "category": "air_fryers",
+   "gold": 1,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_af_tr_philips_1000_flexdrawer",
+   "host": "trustedreviews.com",
+   "category": "air_fryers",
+   "gold": 5,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 2,
+      "correct": 3
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_af_tr_sharp_5_5l",
+   "host": "trustedreviews.com",
+   "category": "air_fryers",
+   "gold": 8,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 5,
+      "correct": 3
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 22
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_dw_tr_lg_ldnpm654s",
+   "host": "trustedreviews.com",
+   "category": "dishwashers",
+   "gold": 4,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_dw_tr_candy_cf57cf0w",
+   "host": "trustedreviews.com",
+   "category": "dishwashers",
+   "gold": 6,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 2,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 2,
+     "withCondition": 0,
+     "leads": 4
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 2,
+      "wrong_product": 4
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 4
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_ap_hf_xiaomi_4pro",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "gold": 27,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 26
+    },
+    "E": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 21,
+      "missing": 3,
+      "wrong_product": 2,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 26
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 10,
+      "unresolved": 2,
+      "missing": 13,
+      "wrong_product": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 12
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [
+     {
+      "id": "ap-q2",
+      "to": "unresolved"
+     },
+     {
+      "id": "ap-q7",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q8",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q9",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q11",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q14",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q15",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q16",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q17",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q18",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q19",
+      "to": "missing"
+     }
+    ],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 11,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_ap_hf_puroair_240",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "gold": 33,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 28,
+      "missing": 1,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 21,
+     "withCondition": 0,
+     "leads": 41
+    },
+    "E": {
+     "items": {
+      "correct": 25,
+      "missing": 5,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 34,
+     "withCondition": 4,
+     "leads": 39
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 25,
+      "missing": 5,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 34,
+     "withCondition": 4,
+     "leads": 39
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 25,
+      "missing": 5,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 31,
+     "withCondition": 4,
+     "leads": 36
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 25,
+      "missing": 5,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 34,
+     "withCondition": 4,
+     "leads": 39
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 25,
+      "missing": 5,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 34,
+     "withCondition": 4,
+     "leads": 39
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 24,
+      "missing": 5,
+      "wrong_product": 2,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 32,
+     "withCondition": 4,
+     "leads": 37
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 29,
+      "missing": 1,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 26,
+     "withCondition": 0,
+     "leads": 46
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 25,
+      "missing": 5,
+      "wrong_product": 1,
+      "false_identity_match": 2
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 34,
+     "withCondition": 0,
+     "leads": 39
+    }
+   },
+   "transitionsCE": {
+    "gained": [
+     "ap-q54"
+    ],
+    "lost": [
+     {
+      "id": "ap-q36",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q37",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q38",
+      "to": "missing"
+     },
+     {
+      "id": "ap-q39",
+      "to": "missing"
+     }
+    ],
+    "newWrong": [],
+    "wrongRemoved": [
+     "ap-q54"
+    ]
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 1,
+     "gainedVsE": 0,
+     "newWrongVsE": 1,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 4,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_ap_trd_iqair_atemx",
+   "host": "techradar.com",
+   "category": "air_purifiers",
+   "gold": 2,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 1,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 1
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_tv_tg_lg_b6",
+   "host": "tomsguide.com",
+   "category": "televisions",
+   "gold": 30,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 8,
+     "withCondition": 0,
+     "leads": 17
+    },
+    "E": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 12,
+      "missing": 18
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 8,
+     "withCondition": 0,
+     "leads": 17
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 14,
+      "missing": 16
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 14,
+     "withCondition": 0,
+     "leads": 23
+    }
+   },
+   "transitionsCE": {
+    "gained": [
+     "tv-q25",
+     "tv-q28"
+    ],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 2,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_tv_tg_samsung_s85f",
+   "host": "tomsguide.com",
+   "category": "televisions",
+   "gold": 28,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 10,
+     "withCondition": 0,
+     "leads": 18
+    },
+    "E": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 10,
+      "missing": 18
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 10,
+     "withCondition": 0,
+     "leads": 18
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 12,
+      "missing": 16
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 12,
+     "withCondition": 0,
+     "leads": 20
+    }
+   },
+   "transitionsCE": {
+    "gained": [
+     "tv-q48",
+     "tv-q55"
+    ],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 2,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_tv_tr_samsung_qe65s85h",
+   "host": "trustedreviews.com",
+   "category": "televisions",
+   "gold": 5,
+   "arms": {
+    "C": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL1": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL2": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL3": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL4": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL6": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL7": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    },
+    "E-TL5": {
+     "items": {
+      "wrong_product": 4,
+      "unresolved": 1
+     },
+     "negativeControlsRead": 1,
+     "tableLeads": 4,
+     "withCondition": 0,
+     "leads": 9
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_untouched",
+   "doc": "u_tv_tr_sony_bravia8ii",
+   "host": "trustedreviews.com",
+   "category": "televisions",
+   "gold": 12,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 4,
+      "correct": 8
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 6,
+     "withCondition": 0,
+     "leads": 12
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_dev",
+   "doc": "dev_dw_tr_bosch_smv68md00g",
+   "host": "trustedreviews.com",
+   "category": "dishwashers",
+   "gold": 3,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 3
+    },
+    "E": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 2,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 3
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 1,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [
+     {
+      "id": "q2",
+      "to": "missing"
+     }
+    ],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 1,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_dev",
+   "doc": "dev_ap_hf_airdoctor3000",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "gold": 16,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 19
+    },
+    "E": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 14,
+      "missing": 2
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 19
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 5,
+      "unresolved": 1,
+      "missing": 10
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 7
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [
+     {
+      "id": "q4",
+      "to": "unresolved"
+     },
+     {
+      "id": "q5",
+      "to": "missing"
+     },
+     {
+      "id": "q9",
+      "to": "missing"
+     },
+     {
+      "id": "q10",
+      "to": "missing"
+     },
+     {
+      "id": "q12",
+      "to": "missing"
+     },
+     {
+      "id": "q13",
+      "to": "missing"
+     },
+     {
+      "id": "q14",
+      "to": "missing"
+     },
+     {
+      "id": "q15",
+      "to": "missing"
+     },
+     {
+      "id": "q16",
+      "to": "missing"
+     }
+    ],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 9,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "phase272_dev",
+   "doc": "dev_tv_trd_lgc6_c5",
+   "host": "techradar.com",
+   "category": "televisions",
+   "gold": 9,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 8,
+      "missing": 1
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_tv_rt_u7n",
+   "host": "rtings.com",
+   "category": "televisions",
+   "gold": 0,
+   "arms": {
+    "C": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL1": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL2": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL3": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL4": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL6": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL7": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL5": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_tv_rt_best_budget",
+   "host": "rtings.com",
+   "category": "televisions",
+   "gold": 0,
+   "arms": {
+    "C": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL1": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL2": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL3": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL4": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL6": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL7": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL5": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_tv_rt_best_oled",
+   "host": "rtings.com",
+   "category": "televisions",
+   "gold": 0,
+   "arms": {
+    "C": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL1": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL2": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL3": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL4": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL6": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL7": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL5": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "gold": 22,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 10,
+      "correct": 4,
+      "unresolved": 8
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 18
+    },
+    "E": {
+     "items": {
+      "missing": 12,
+      "correct": 10
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 8,
+     "withCondition": 8,
+     "leads": 16
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 17,
+      "correct": 4,
+      "wrong_product": 1
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 8
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 12,
+      "correct": 4,
+      "unresolved": 6
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 8,
+     "withCondition": 8,
+     "leads": 16
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 12,
+      "correct": 10
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 8,
+     "withCondition": 8,
+     "leads": 16
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 12,
+      "correct": 10
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 8,
+     "withCondition": 8,
+     "leads": 16
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 12,
+      "correct": 9,
+      "wrong_product": 1
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 6,
+     "withCondition": 6,
+     "leads": 14
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 8,
+      "correct": 14
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 4,
+     "withCondition": 4,
+     "leads": 22
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 12,
+      "correct": 10
+     },
+     "negativeControlsRead": 4,
+     "tableLeads": 8,
+     "withCondition": 0,
+     "leads": 16
+    }
+   },
+   "transitionsCE": {
+    "gained": [
+     "s1db_ap_apf_a231_hpa100-v6",
+     "s1db_ap_apf_a231_hpa100-v7",
+     "s1db_ap_apf_a231_hpa100-v8",
+     "s1db_ap_apf_a231_hpa100-v10",
+     "s1db_ap_apf_a231_hpa100-v11",
+     "s1db_ap_apf_a231_hpa100-v12"
+    ],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 6,
+     "gainedVsE": 0,
+     "newWrongVsE": 1,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 6,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 1,
+     "gainedVsE": 0,
+     "newWrongVsE": 1,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 4,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "gold": 26,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 12,
+      "correct": 6,
+      "unresolved": 8
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 18
+    },
+    "E": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 12,
+      "correct": 14
+     },
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 18
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 20,
+      "correct": 6
+     },
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 6
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 8,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_ap_apf_best_hepa",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "gold": 22,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 7,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 35
+    },
+    "E": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 30,
+     "withCondition": 0,
+     "leads": 51
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 30,
+     "withCondition": 0,
+     "leads": 51
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 21
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 30,
+     "withCondition": 0,
+     "leads": 51
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 30,
+     "withCondition": 0,
+     "leads": 51
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 26,
+     "withCondition": 0,
+     "leads": 47
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 7,
+     "tableLeads": 30,
+     "withCondition": 0,
+     "leads": 65
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 17,
+      "correct": 2,
+      "unresolved": 3
+     },
+     "negativeControlsRead": 5,
+     "tableLeads": 30,
+     "withCondition": 0,
+     "leads": 51
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_ap_apf_a231_p800",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "gold": 10,
+   "arms": {
+    "C": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 15
+    },
+    "E": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL1": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL2": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL3": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL4": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL6": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL7": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 15
+    },
+    "E-TL5": {
+     "items": {
+      "correct": 5,
+      "missing": 5
+     },
+     "negativeControlsRead": 6,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_af_ih_af400",
+   "host": "idealhome.co.uk",
+   "category": "air_fryers",
+   "gold": 0,
+   "arms": {
+    "C": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL1": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL2": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL3": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL4": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL6": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL7": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    },
+    "E-TL5": {
+     "items": {},
+     "negativeControlsRead": 2,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 2
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_af_ih_doublestack_af400",
+   "host": "idealhome.co.uk",
+   "category": "air_fryers",
+   "gold": 0,
+   "arms": {
+    "C": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL1": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL2": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL3": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL4": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL6": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL7": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    },
+    "E-TL5": {
+     "items": {},
+     "negativeControlsRead": 0,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 0
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  },
+  {
+   "set": "step1d_b",
+   "doc": "s1db_dh_ih_best",
+   "host": "idealhome.co.uk",
+   "category": "dehumidifiers",
+   "gold": 9,
+   "arms": {
+    "C": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL1": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL2": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL3": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL4": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL6": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL7": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    },
+    "E-TL5": {
+     "items": {
+      "missing": 7,
+      "unresolved": 1,
+      "correct": 1
+     },
+     "negativeControlsRead": 3,
+     "tableLeads": 0,
+     "withCondition": 0,
+     "leads": 13
+    }
+   },
+   "transitionsCE": {
+    "gained": [],
+    "lost": [],
+    "newWrong": [],
+    "wrongRemoved": []
+   },
+   "ablation": {
+    "E-TL1": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL2": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL3": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL4": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL6": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL7": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    },
+    "E-TL5": {
+     "lostVsE": 0,
+     "gainedVsE": 0,
+     "newWrongVsE": 0,
+     "wrongRemovedVsE": 0
+    }
+   }
+  }
+ ]
+}
