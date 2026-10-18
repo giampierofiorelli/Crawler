@@ -168,4 +168,14 @@ for a in A:
 #    DOE appendix X1: pints/day); "Extraction rate: 20L" states that convention without printing it.
 for m in M:
   if m['id']=='dehumidifier_capacity':m['conventionalBasis']={'per':'day','source':'energystar_dehumidifier','note':'capacity is reported per 24 h under the test procedures'}
+# 5. QE (2026-10-18, development verdict check): "standby" is an operating state of its own (device on, not running); a
+#    standby wattage and a speed-1 wattage are two tests.
+for a in A:
+  if a['id']=='fan_setting':a['values']['standby']=['standby','standby mode','stand-by']
+#    A named setting is its own value: "speed 1", "sleep mode" and "lowest speed" were one value ("lowest"), so a speed-1
+#    and a sleep-mode reading counted as one test. That speed 1 is the lowest speed is an inference about the product,
+#    not the page's statement; "speed 1" is now read as its own setting (free text), sleep as its own value.
+  if a['id']=='fan_setting':
+    a['values']['lowest']=['lowest speed','low speed','minimum speed']
+    a['values']['sleep']=['sleep mode','sleep','night mode']
 out=os.path.join(root,'quantity-knowledge.v2.json');json.dump(d,open(out,'w'),ensure_ascii=False,indent=1);open(out,'a').write('\n');print('wrote',out)

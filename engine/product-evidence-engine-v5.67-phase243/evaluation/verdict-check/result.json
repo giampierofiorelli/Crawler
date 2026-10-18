@@ -1,0 +1,17 @@
+{
+ "check": "Independent blind check of the 310 comparability verdicts changed by recording operating conditions from a value's own labels (WD tuned pass, rules kr.2): 280 on the 69 development pages, 30 on the KV rating-point table",
+ "date": "2026-10-18",
+ "method": "Two fresh-context annotators, each judged all 310 pairs from the table text, heading, caption and preceding paragraphs only, with no verdict shown; outputs hashed before comparison (sealed.sha256 in the private repository). Annotators are the same model family as the developer: frozen, not author-independent.",
+ "inputSha256Prefix": "ee1ec01acbda6d42",
+ "agreementBetweenAnnotators": "310 of 310",
+ "reference": {"different_conditions": 304, "different_quantities": 6, "same_conditions": 0, "not_stated": 0},
+ "verdicts": {
+  "previous_build_correct": 0,
+  "new_not_comparable_confirmed": 233,
+  "new_conditions_unestablished_where_reference_sees_different_conditions": 71,
+  "new_conditions_unestablished_where_reference_sees_different_quantities": 6,
+  "new_comparability_asserted_wrongly": 0
+ },
+ "reading": "Every one of the 310 previous verdicts was wrong (172 claimed comparability between values at different fan speeds or rating points). The new verdicts are correct in 233 cases and cautious in 77 (one side's condition not recognised: e.g. 'standby' and parenthesised speed names are missing from the fan-setting vocabulary). Only the changed pairs were checked; unchanged verdicts were not re-verified here.",
+ "promotion": "Recording operating conditions from a value's own labels is kept. Verdicts still feed no decision (debt D21/D22)."
+}

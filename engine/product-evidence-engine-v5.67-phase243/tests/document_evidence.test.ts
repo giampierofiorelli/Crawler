@@ -72,7 +72,7 @@ test('WD qualitative: a judgement is recorded as codes with its product, conditi
  const r=read('<h1>Acme Fan X200 review</h1><p>We noticed an annoying vibration at the highest speed.</p><p>The Acme Fan X200 is not noisy in sleep mode.</p>');
  const v=r.qualitative.find(o=>o.aspect==='vibration')!;assert.ok(v,'vibration observed');assert.equal(v.polarity,'negative');assert.deepEqual(v.conditions,[{axis:'fan_setting',value:'top'}]);
  assert.equal(v.basis,'tested_experience');assert.equal(v.product,'Acme Fan X200');assert.equal(v.rankingInput,false);
- const n=r.qualitative.find(o=>o.aspect==='noise')!;assert.equal(n.polarity,'positive','"not noisy"');assert.deepEqual(n.conditions,[{axis:'fan_setting',value:'lowest'}]);
+ const n=r.qualitative.find(o=>o.aspect==='noise')!;assert.equal(n.polarity,'positive','"not noisy"');assert.deepEqual(n.conditions,[{axis:'fan_setting',value:'sleep'}],'a named setting is its own value (QE: sleep is not "lowest")');
  const g=readDocumentEvidence(page('<p>Fans can be great and quiet in summer.</p>'),qk);assert.equal(g.qualitative.length,0,'a judgement about no identifiable product is not product evidence');
 });
 test('WD headings: an ordinal and a tagline are removed; a heading names a product only with a model token or a known name', ()=>{
