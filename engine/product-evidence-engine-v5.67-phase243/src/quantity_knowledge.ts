@@ -53,10 +53,15 @@ export interface ScaleDef {id:string;label:string;values:string[];best:string;te
 export type KindJustification='unit'|'explicit'|'standard'|'documented_method'|'contextual'|'insufficient';
 export interface KindEvidenceDef {kind:string;justification:'explicit'|'standard'|'documented_method'|'contextual';terms:string[];covers?:string[];note?:string;source:string}
 export interface QuantityPack {schema:string;version:string;statement:string;dimensionBasis:string[];sources:SourceRef[];kinds:KindDef[];conditionAxes:AxisDef[];
- metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];kindEvidence?:KindEvidenceDef[];aspects?:AspectDef[];
+ metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];kindEvidence?:KindEvidenceDef[];aspects?:AspectDef[];phenomena?:PhenomenonDef[];facets?:FacetDef[];useContexts?:{id:string;terms:string[]}[];
  language:{en:{min:string[];minAfter:string[];max:string[];maxAfter:string[];perWords:string[];exponentWords:Record<string,number>;increaseComparatives:string[];decreaseComparatives:string[];
   labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[];
-  evaluation?:{positive:string[];negative:string[];negators:string[];hedges:string[];reportedBy:string[]}}}}
+  evaluation?:{positive:string[];negative:string[];negators:string[];hedges:string[];reportedBy:string[]};
+  qualitative?:{observationVerbs:string[];testCues:string[];experienceCues:string[];inferenceCues:string[];claimCues:string[];causeMarkers:string[];comparativeCues:string[];testMaterials:string[];environmentCues:string[]}}}}
+/** QE (qk.2.3): an observable descriptor (a whine, residue left, uneven browning), on an aspect and a facet. */
+export interface PhenomenonDef {id:string;terms:string[];facet:string;polarity?:'positive'|'negative';aspect?:string;source:string}
+/** QE: a property of observations that recurs across categories, with the words a buyer uses for it; a hypothesis. */
+export interface FacetDef {id:string;needTerms:string[];statement:string;status:string;source:string}
 /** WD (qk.2.3): an aspect of a product a reviewer judges (noise, vibration, pickup): PEE's reading vocabulary, never a
  * product fact. Optional polar terms carry a judgement by themselves ("noisy"); `kinds` links the aspect to the quantities
  * that measure it. */
@@ -104,7 +109,8 @@ export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnow
   for(const n of [...(m.notEquivalentTo??[]),...(m.derivedFrom??[])])if(!p.metrics.some(x=>x.id===n))fail(`metric ${n} of ${m.id}`);for(const d of m.definedBy??[])if(!src.has(d.source))fail('source of method in '+m.id);}
  for(const a of p.conditionAxes){if(!src.has(a.source))fail('source of axis '+a.id);if(a.valueKind&&!kinds.has(a.valueKind))fail('value kind of axis '+a.id);for(const k of a.valueKinds??[])if(!kinds.has(k))fail('value kinds of axis '+a.id);}
  for(const k of p.kinds)if(k.specialises&&(!kinds.has(k.specialises)||!sameDim(k.dim as Record<string,number>,p.kinds.find(x=>x.id===k.specialises)!.dim)))fail('specialisation of kind '+k.id);
- uniq(p.aspects??[],'aspect');for(const a of p.aspects??[]){if(!src.has(a.source)||!a.terms.length)fail('aspect '+a.id);for(const k of a.kinds??[])if(!kinds.has(k))fail(`kind ${k} of aspect ${a.id}`);}
+ uniq(p.aspects??[],'aspect');uniq(p.phenomena??[],'phenomenon');uniq(p.facets??[],'facet');
+ for(const ph of p.phenomena??[]){if(ph.aspect&&!(p.aspects??[]).some(a=>a.id===ph.aspect))fail('aspect of phenomenon '+ph.id);if(!(p.facets??[]).some(f=>f.id===ph.facet)&&p.facets)if(!['surface_texture','surface_colour','internal_state','temporal_artefact','mechanical_disturbance','spatial_uniformity','consistency_across_runs','tonal_character','transient_event','residue','failure_event'].includes(ph.facet))fail('facet of phenomenon '+ph.id);}for(const a of p.aspects??[]){if(!src.has(a.source)||(!a.terms.length&&a.id!=='other'))fail('aspect '+a.id);for(const k of a.kinds??[])if(!kinds.has(k))fail(`kind ${k} of aspect ${a.id}`);}
  for(const u of p.units){if(!src.has(u.source))fail('source of unit '+u.id);if(!dimOk(u.dim)||!(u.factor>0))fail('unit '+u.id);if(u.kindHint&&!kinds.has(u.kindHint))fail('kind hint of '+u.id);}
  for(const u of p.levelUnits){if(!src.has(u.source))fail('source of unit '+u.id);for(const k of u.kinds)if(!kinds.has(k)||!p.kinds.find(x=>x.id===k)!.level)fail(`level kind ${k} of ${u.id}`);}
  // A surface form names one unit only (case-sensitive forms are distinct from their case-folded spellings).

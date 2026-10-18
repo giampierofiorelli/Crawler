@@ -79,3 +79,40 @@ test('WD headings: an ordinal and a tagline are removed; a heading names a produ
  assert.equal(headingProduct('3. Dreame X50 Ultra – best for pets'),'Dreame X50 Ultra');assert.equal(headingProduct('Key Features'),null);assert.equal(headingProduct('Best overall'),null);
  assert.equal(headingProduct('Roborock Qrevo Curv',['Roborock Qrevo Curv']),'Roborock Qrevo Curv');
 });
+
+// QE (2026-10-18): structured qualitative evidence. Synthetic pages only.
+import {readQualitativeNeed,relevantObservations} from '../src/qualitative_needs.js';
+const qe=(body:string,st:string|null='independent_review')=>readDocumentEvidence(page(body),qk,{sourceType:st}).qualitativeEvidence;
+test('QE: an observation is told apart from a judgement; conditions by kind; the test is the activity', ()=>{
+ const e=qe('<h1>Acme Fan X200 review</h1><h2>How we test</h2><p>In our noise test the Acme Fan X200 produced a high-pitched whine at the highest speed.</p><p>The Acme Fan X200 looks great.</p>');
+ const w=e.find(x=>x.property.phenomenon==='tonal_noise')!;assert.ok(w,'the whine is observed');
+ assert.equal(w.statementType,'observation');assert.equal(w.evidenceType,'observed_in_test');assert.equal(w.property.facet,'tonal_character');
+ assert.ok(w.conditions.some(c=>c.kind==='setting'&&c.value==='top'));assert.ok(w.conditions.some(c=>c.kind==='test_procedure'));assert.ok(w.provenance.activity);
+ const j=e.find(x=>x.property.aspect==='design_aesthetics');assert.equal(j?.statementType,'judgement');
+});
+test('QE: evidence types: a maker claim, a report of others and an inference are not test observations', ()=>{
+ const e=qe('<h1>Acme Fan X200 review</h1><p>The brand says the Acme Fan X200 is whisper-quiet.</p><p>Some users report that the Acme Fan X200 is noisy.</p><p>Its quiet fan means it should suit a bedroom.</p>');
+ const t=e.map(x=>x.evidenceType);assert.ok(t.includes('manufacturer_claim'));assert.ok(t.includes('reported_by_others'));assert.ok(t.includes('inference'));
+ assert.ok(e.every(x=>x.evidenceType!=='observed_in_test'));
+ assert.equal(e.find(x=>x.evidenceType==='inference')!.useContext,'night_bedroom');
+});
+test('QE: a cause is documented only when the statement rests on a test or a number; a comparison names the other product', ()=>{
+ const e=qe('<h1>Acme AF5 review</h1><h2>Acme AF5</h2><p>In our tests the chips came out crispy because the fan is powerful.</p><p>The chips were probably soggy due to the small basket.</p><p>It makes crispier chips than the Brandx Z9 Pro.</p>');
+ const d=e.find(x=>x.cause&&!x.hedged)!;assert.equal(d.cause!.status,'documented');
+ assert.equal(e.find(x=>x.hedged&&x.cause)!.cause!.status,'supposed');
+ const c=e.find(x=>x.comparison)!;assert.match(c.comparison!.other!,/Brandx Z9/);assert.equal(c.comparison!.better,'this');
+});
+test('QE: the measurement on the same property is linked; a product name says nothing about the product', ()=>{
+ const e=qe('<h1>Acme Compact C5 review</h1><p>The Acme Compact C5 is noisy, peaking at 62 dBA.</p>');
+ const n=e.find(x=>x.property.aspect==='noise')!;assert.equal(n.relatedMeasurement?.surface,'62 dBA');
+ assert.ok(!e.some(x=>x.property.aspect==='size_footprint'),'"Compact" in the name is not a size judgement');
+});
+test('QE facets (cross-category hypothesis): a need for an even result finds uneven observations in any category; "even though" is not one', ()=>{
+ const fryer=qe('<h1>Acme AF5 review</h1><p>In our test the Acme AF5 browned the chips unevenly, with pale patches.</p>');
+ const robot=qe('<h1>Acme R2 review</h1><p>During testing the Acme R2 left missed spots in the corners of the kitchen floor, a disappointing cleaning result.</p>');
+ const need=readQualitativeNeed(qk,'I want something that cooks evenly');assert.deepEqual(need.facets,['spatial_uniformity']);
+ assert.ok(relevantObservations(need,fryer).length>0&&relevantObservations(need,robot).length>0,'the same facet in two categories');
+ const neg=qe('<h1>Acme AF5 review</h1><p>The Acme AF5 is great even though it is large.</p>');
+ assert.equal(relevantObservations(need,neg).filter(r=>r.reasons.some(x=>x.includes('spatial'))).length,0);
+ const night=readQualitativeNeed(qk,'quiet enough for a bedroom at night');assert.ok(night.aspects.includes('noise')&&night.useContexts.includes('night_bedroom'));
+});

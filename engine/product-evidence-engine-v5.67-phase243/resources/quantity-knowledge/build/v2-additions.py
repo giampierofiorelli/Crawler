@@ -178,4 +178,81 @@ for a in A:
   if a['id']=='fan_setting':
     a['values']['lowest']=['lowest speed','low speed','minimum speed']
     a['values']['sleep']=['sleep mode','sleep','night mode']
+# ---------------------------------------------------------------------------------------------------------------------
+for a in d['aspects']:
+  if a['id']=='vibration':a['terms']=[t for t in a['terms'] if t not in ('shake','shakes')]
+# 6. QE (2026-10-18): structured qualitative evidence. PEE's reading vocabulary (source 'pee'), never product facts.
+#    - aspects for the remaining property families of the reference schema (the schema's list, fixed before annotation);
+#    - aspect kinds: the quantity kinds that measure the property (a statement and a number on the same property);
+#    - phenomena: observable descriptors, each on an aspect and a facet. A facet is a property of the observation that
+#      recurs across categories (spatial uniformity, consistency across runs, tonal character, a transient event, a
+#      failure event, residue). Facets are the reified second-order principle under test: "when a goal requires a
+#      uniform result, observations of spatial or run-to-run variation are relevant", whatever the category.
+for a in d['aspects']:
+  if a['id']=='speed_or_time':pass
+K2={'cooking_result':['temperature','duration'],'drying_dehumidifying':['periodic_volume','ratio','relative_humidity'],'picture_quality':['luminance','ratio'],
+    'size_footprint':['length','volume','mass','area'],'cleaning_pickup':['ratio'],'ease_of_use':[]}
+for a in d['aspects']:
+  if a['id'] in K2 and K2[a['id']]:a['kinds']=sorted(set(a.get('kinds',[]))|set(K2[a['id']]))
+d['aspects']+=[
+ {'id':'heat_or_temperature','terms':['heat','heats up','temperature','hot','cool','warm','overheat','preheat','preheating','heat distribution'],'positive':['heats up quickly','stays cool'],'negative':['overheats','gets hot','too hot'],'kinds':['temperature'],'source':'pee'},
+ {'id':'speed_or_time','terms':['cooks quickly','heats up quickly','dries quickly','cleans quickly','quick to heat','quick to cook','fast cooking','faster cooking','slower cooking','cooking time','cooking times','cycle time','cycle times','drying time','took ages','in no time','speedy'],'positive':['cooks quickly','heats up quickly','dries quickly','quick to heat','quick to cook','fast cooking','faster cooking','in no time','speedy'],'negative':['took ages','slower cooking'],'kinds':['duration'],'source':'pee'},
+ {'id':'capacity','terms':['capacity','space','room for','fits','fit','large enough','big enough','basket size','load','loads','portion','portions','family-sized','spacious','cramped'],'positive':['spacious','roomy','generous'],'negative':['cramped','too small'],'kinds':['volume','mass'],'source':'pee'},
+ {'id':'smell','terms':['smell','smells','odour','odor','odours','odors','fumes','plastic smell','burning smell'],'negative':['plastic smell','burning smell','fumes'],'source':'pee'},
+ {'id':'safety','terms':['safe','safety','burn','burns','scald','child lock','cool-touch','fire','hazard'],'negative':['hazard','burn','burns','scald'],'source':'pee'},
+ {'id':'connectivity_app','terms':['app','wi-fi','wifi','smart','alexa','google assistant','bluetooth','connectivity','smartphone','remote control'],'source':'pee'},
+ {'id':'design_aesthetics','terms':['design','looks','stylish','sleek','attractive','ugly','finish','aesthetic','premium feel','chunky'],'positive':['stylish','sleek','attractive'],'negative':['ugly','chunky'],'source':'pee'},
+ {'id':'reliability','terms':['reliable','reliability','broke','broken','faulty','fault','error','errors','stopped working','durable','durability','longevity'],'positive':['reliable','durable'],'negative':['broke','broken','faulty','stopped working'],'source':'pee'}]
+d['phenomena']=[
+ {'id':'uneven_result','terms':['uneven','unevenly','patchy','pale patches','hot spots','hotspots','cold spots','inconsistent results','streaky','missed spots','missed areas','not evenly'],'facet':'spatial_uniformity','polarity':'negative','source':'pee'},
+ {'id':'even_result','terms':['evenly','even results','uniform','uniformly','consistent colour','all over','edge to edge','every corner'],'facet':'spatial_uniformity','polarity':'positive','source':'pee'},
+ {'id':'run_to_run_variation','terms':['inconsistent','varied between','from batch to batch','each time','every time','repeatable','consistently'],'facet':'consistency_across_runs','source':'pee'},
+ {'id':'tonal_noise','terms':['whine','whining','whistle','whistling','hum','humming','buzz','buzzing','drone','droning','high-pitched','rattle','rattling','clatter','clicking'],'facet':'tonal_character','polarity':'negative','source':'pee'},
+ {'id':'transient_sound','terms':['beep','beeps','beeping','chime','alarm','loud bang','bursts','sudden noise','clunk'],'facet':'transient_event','polarity':'negative','source':'pee'},
+ {'id':'residue_left','terms':['residue','left behind','leftover','left over','traces','film','crumbs left','hair left','still dirty','not fully clean','grease remained','stains remained','damp patches'],'facet':'residue','polarity':'negative','source':'pee'},
+ {'id':'failure_event','terms':['got stuck','gets stuck','stopped','error message','failed','failure','jammed','tangled','tripped','shut off','crashed'],'facet':'failure_event','polarity':'negative','source':'pee'},
+ {'id':'crisp_texture','terms':['crisp','crispy','crispier','crunchy','crunch','soggy','limp','chewy'],'facet':'surface_texture','source':'pee'},
+ {'id':'browning','terms':['browned','browning','golden','golden brown','charred','burnt','pale'],'facet':'surface_colour','source':'pee'},
+ {'id':'moisture_retained','terms':['juicy','moist','succulent','tender','dried out','dry','rubbery','overcooked','undercooked','raw in the middle'],'facet':'internal_state','source':'pee'},
+ {'id':'blooming_halo','terms':['blooming','halo','haloing','halos','light bleed'],'facet':'spatial_uniformity','polarity':'negative','source':'pee'},
+ {'id':'motion_artefact','terms':['judder','stutter','motion blur','smearing','soap opera effect','artefacts','artifacts'],'facet':'temporal_artefact','polarity':'negative','source':'pee'},
+ {'id':'vibration_felt','terms':['vibrates','vibration','wobbles','walks across'],'facet':'mechanical_disturbance','polarity':'negative','source':'pee'}]
+d['useContexts']=[
+ {'id':'night_bedroom','terms':['at night','overnight','in the bedroom','bedroom','while sleeping','light sleeper','night-time','nighttime']},
+ {'id':'small_space','terms':['small kitchen','small flat','small apartment','limited counter space','compact kitchen','studio']},
+ {'id':'family_household','terms':['family','families','household of four','for four people','larger households','kids','children']},
+ {'id':'single_or_couple','terms':['singles','couples','one or two people','for two','solo']},
+ {'id':'pets','terms':['pet owners','with pets','dog hair','cat hair','pet hair']},
+ {'id':'daytime_living_room','terms':['during the day','living room','daytime']},
+ {'id':'dark_room_viewing','terms':['dark room','darkened room','at night with the lights off','movie night']},
+ {'id':'bright_room_viewing','terms':['bright room','sunlit room','daylight','bright living room']},
+ {'id':'gaming','terms':['gaming','gamers','console','ps5','xbox']},
+ {'id':'everyday_use','terms':['everyday use','daily use','day-to-day','weeknight','busy weekdays']}]
+en['qualitative']={
+ 'observationVerbs':['noticed','found','saw','heard','felt','smelled','left','came out','turned out','ended up','emerged','remained','measured','recorded','showed','produced','picked up','cleared','missed'],
+ 'testCues':['in our test','in our tests','during testing','during our test','in testing','we tested','i tested','we cooked','i cooked','we ran','i ran','test batch','our testing','when we','when i','in my tests','in my testing'],
+ 'experienceCues':['after a week','after a month','over the past','i have been using','i\'ve been using','day-to-day','everyday use','daily use','living with','long-term','over several weeks'],
+ 'inferenceCues':['should suit','would suit','ideal for','perfect for','great for','means it','which means','so it','so you','making it','suggests','would be','should be','will suit'],
+ 'claimCues':['claims','claimed','promises','says it','according to','is said to','advertised','marketed','the brand says','the manufacturer'],
+ 'causeMarkers':['because','due to','thanks to','as a result of','caused by','owing to','which is why'],
+ 'comparativeCues':['than','compared to','compared with','versus','vs','unlike','next to','against'],
+ 'testMaterials':['chips','fries','chicken','wings','drumsticks','salmon','fish','steak','sausages','bacon','toast','bread','cake','muffins','vegetables','broccoli','potatoes','roast','frozen','towels','cottons','bedding','jeans','synthetics','wool','pots','pans','glasses','cutlery','plates','grease','egg','dog hair','cat hair','pet hair','cereal','rice','flour','sand'],
+ 'environmentCues':['dark room','bright room','in daylight','ambient temperature','cold room','warm room','small room','large room','with the lights off','hdr','sdr'],
+ 'note':'reading vocabulary for the structured qualitative model; a statement can be an observation (what was perceived), a judgement (an evaluation), or both'}
+PA={'tonal_noise':'noise','transient_sound':'noise','vibration_felt':'vibration','crisp_texture':'cooking_result','browning':'cooking_result','moisture_retained':'cooking_result','blooming_halo':'picture_quality','motion_artefact':'picture_quality'}
+for ph in d['phenomena']:
+  if ph['id'] in PA:ph['aspect']=PA[ph['id']]
+# facets with the words a buyer uses for them ("evenly cooked", "consistent results", "no whine"): the request side
+# reads a need's facet and finds observations of that facet in any category
+d['facets']=[
+ {'id':'spatial_uniformity','needTerms':['evenly','even cooking','even results','uniform','every corner','whole floor','edge to edge','no hot spots','all over'],'statement':'when a goal requires a uniform result, observations of spatial variation are relevant','status':'hypothesis','source':'pee'},
+ {'id':'consistency_across_runs','needTerms':['consistent','consistently','reliable results','every time','repeatable'],'statement':'when a goal requires the same result each time, observations of run-to-run variation are relevant','status':'hypothesis','source':'pee'},
+ {'id':'tonal_character','needTerms':['no whine','no hum','not whiny','pleasant sound','unobtrusive noise'],'statement':'an annoyance from tonal noise is not captured by a level alone','status':'hypothesis','source':'pee'},
+ {'id':'transient_event','needTerms':['no beeps','silent beeps','no sudden noise'],'statement':'transient sounds matter for night use beyond the steady level','status':'hypothesis','source':'pee'},
+ {'id':'residue','needTerms':['spotless','no residue','completely clean','picks up everything'],'statement':'what is left behind is the observable of a cleaning goal','status':'hypothesis','source':'pee'},
+ {'id':'failure_event','needTerms':['no fuss','hassle-free','does not get stuck','reliable'],'statement':'failure events are relevant to unattended operation','status':'hypothesis','source':'pee'}]
+en['evaluation']['hedges']+=['probably','likely','possibly','presumably','we suspect','i suspect']
+for a in d['aspects']:
+  if a['id']=='cleaning_result':a['terms']+=['cleaning result','cleaning results','cleaned well','left clean']
+d['aspects'].append({'id':'other','terms':[],'source':'pee'})
 out=os.path.join(root,'quantity-knowledge.v2.json');json.dump(d,open(out,'w'),ensure_ascii=False,indent=1);open(out,'a').write('\n');print('wrote',out)
