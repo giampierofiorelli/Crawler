@@ -1,0 +1,44 @@
+{
+ "schema": "pee.whole-document-eval.protocol.v1",
+ "registeredAt": "2026-10-18",
+ "brief": "Owner brief 2026-10-18 (Italian): whole-document reading, restriction review, rule improvement, operational benefit. Measure how much available evidence reaches each stage, how much is interpreted correctly, how much is lost; separate coverage, attribution, scientific correctness, justified ambiguity and unjustified abstention; preserve first runs; separate development data, already-examined data and authentic new data.",
+ "registeredBefore": "any whole-document reader code exists; the reference is sealed before the first run",
+ "dataClasses": {
+  "development": "the 69 unique retained pages of earlier experiments (spent). All tuning happens here.",
+  "alreadyExamined": "the HTML table values of the KV page kru_dh_mc_12l (scored in KV, then tuned on: P2). Reported separately, never as held-out.",
+  "authenticNew": "everything outside HTML tables on the 7 fetched KV pages (paragraphs, lists, cards, captions, embedded JSON-LD and hydration data). Fetched 2026-10-18 for KV; their non-table content was never read by the developer: only location counts were taken (number of quantities per location). These are new documents for this reader; vacuumwars.com is also a new publisher and robot vacuums a category with no teaching."
+ },
+ "noHttp": true,
+ "reference": {
+  "annotators": "fresh-context Claude agents with no access to the reader code, its outputs or the developer's notes; they read a neutral rendering only. Same model family as the developer: frozen, not author-independent (skill: 'Frozen does not mean author-independent').",
+  "input": "per page: the visible text rendered by Chromium with JavaScript disabled and the network blocked (innerText, split into numbered lines; lines inside HTML tables flagged and excluded from annotation), and a data view: every string and number leaf of the page's JSON-LD and of its inline hydration payloads (Next.js __NEXT_DATA__ and self.__next_f flight data, other application/json scripts), flattened to numbered 'path: value' lines. Kept only on the container disk next to the raw pages (never committed).",
+  "items": {
+   "quantity": "every numeric expression outside tables that states a property, result, setting, condition, price or count about a product or a test: page, line, printed surface; class (measurement_result | declared_specification | test_condition | setting | price | rating_score | count | identifier_or_name_part | warranty_or_service | other_non_quantity); product (as named on the page, or 'page_subject', or 'none_or_unclear'); property in a few words and the knowledge's metric id when one fits; kind id from the knowledge list, or 'not_determinable_from_page' with a reason; conditions (axis id or free label, value as printed); evidence class (publisher_measured | manufacturer_declared | derived_or_estimated | unknown); whether the same statement repeats another item (duplicate_of).",
+   "qualitative": "every evaluative statement about a product's performance or behaviour (e.g. 'annoying vibration at the highest speed'): page, line, aspect (a few words), polarity (positive | negative | mixed), product, conditions, basis (tested_experience | opinion_without_test | reported_by_others | manufacturer_claim), author when the page names one.",
+   "noTextCopy": "annotators never copy sentences: surfaces are the printed numeric expressions only; properties and aspects are paraphrased in a few words."
+  },
+  "sealing": "the reference files are hashed into evaluation/whole-document/gold-freeze.json and committed before the first run."
+ },
+ "arms": {
+  "A_live": "the readers the live path persists today (Phase245 declarations, Phase225/265 test leads, Phase270 comparative results, Phase269 qualitative codes), unchanged.",
+  "B_tables": "the knowledge layer as it is (1G tables + quantity knowledge qk.2.2 + kr.1): reads tables only.",
+  "C_whole": "the whole-document reader built in WD-B/WD-C (frozen by commit hash before the run)."
+ },
+ "scoring": {
+  "match": "a reader item matches a reference quantity when it is on the same page, its segment text maps to the same rendered line (normalised whitespace, or the data-view line for embedded data) and its printed surface has the same number and unit after normalisation. Duplicates in the reference count once.",
+  "funnel": ["not_reached (no matching reader item)", "reached_not_interpreted (matched, no kind)", "interpreted (kind given)"],
+  "perItem": {
+   "kind": "correct | unjustified_interpretation (wrong kind, or a kind where the reference says not determinable) | unjustified_abstention (no kind where the reference gives one) | justified_abstention",
+   "nonQuantity": "an item the reference classes as identifier_or_name_part, warranty_or_service, price or other_non_quantity but the reader types as a measurement = wrong conclusion",
+   "product": "correct | wrong | missing (reader none, reference names one) | justified_none",
+   "metric": "correct | wrong | missing (reference gives a metric id, reader none)",
+   "conditions": "per reference condition: attributed | not_attributed; reader conditions absent from the reference: spurious",
+   "evidenceClass": "correct | wrong | missing"
+  },
+  "wrongConclusion": "any of: unjustified kind interpretation, non-quantity typed as a measurement, wrong product, wrong metric, spurious condition, wrong evidence class",
+  "qualitative": "matched by page and line; then aspect (judged by overlap of the reader's aspect id with the reference paraphrase, recorded per item), polarity, product, conditions",
+  "reportedBy": "data class, page, publisher novelty (new publisher / known publisher), location (paragraph, list, card, caption, embedded)"
+ },
+ "firstRun": "each arm is run once on the authentic data; outputs are committed unchanged. Any change after the first run is reported as TUNED on a separate label.",
+ "boundaries": "store, ranking, retention and access rules unchanged; no new acquisition; no Git history change; no page text in either repository."
+}
