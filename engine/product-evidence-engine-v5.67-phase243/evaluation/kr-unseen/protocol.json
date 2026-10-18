@@ -1,0 +1,28 @@
+{
+ "schema": "pee.kr-unseen.protocol.v1",
+ "frozenAt": "2026-10-18",
+ "frozenBefore": "any HTTP request of this experiment, any reading of its pages and any reference annotation",
+ "question": "Do the general knowledge and rules (pack qk.2.2, rules kr.1 with KR2) interpret quantities, protocols, conditions, scope of applicability and comparability correctly on genuinely new sources, and how often do they interpret without justification or abstain without justification?",
+ "authorisation": "owner message 2026-10-18 (Italian): 'autorizzo il piccolo esperimento su documenti nuovi ... Scegli autonomamente gli editori e le pagine, privilegiando differenze reali di struttura, metodologia e, se possibile, categoria. Mantieni il limite di 8–10 pagine, 3–4 editori e 20 richieste HTTP complessive, rispettando robots, diritti, politiche di conservazione e gli altri vincoli già stabiliti ... Mantieni invariati lo store operativo e il ranking ... Fermati dopo un risultato sostanziale e documentato, prima di ampliare ulteriormente l'acquisizione.' One-time budget; reuses no earlier allowance.",
+ "arms": [
+  {"id": "A", "build": "18932bc (qk.2.1: knowledge v2 after the K8 correction, before kind evidence, document protocols and rules)", "why": "what the general mechanisms added since add on new sources"},
+  {"id": "B", "build": "the commit that freezes this protocol (qk.2.2 + kr.1 with KR2)", "why": "the system under test"}
+ ],
+ "sameInputs": "both arms read the same page bytes (SHA-256 against the wave receipt) through the same 1G reader version (v1g.2, default of the layer); no arm gets plans, store teaching, extra vocabulary or manual corrections",
+ "units": "every table value observation of 1G (kinds quantity, range, bound, number) on each page; if a page has more than 60, a deterministic sample of 60 (every k-th in reading order, k = ceil(n/60)) fixed before annotation",
+ "reference": {
+  "annotator": "a fresh-context agent, given only rendered page text and the list of values with their table labels and products (no output of either arm), sealed by hash in evaluation/kr-unseen/gold-freeze.json before any arm runs",
+  "perValue": ["isQuantity (false for indices, scores, prices, settings, model numbers)", "kind (one of the pack's kind ids, 'other: <description>', or 'ambiguous')", "justification (unit | explicit | standard | documented_method | contextual | insufficient)", "metric (a pack metric id, 'none' or 'other: <description>')", "conditions stated for this value (axis: value)", "testGroup (values of one presented test with the same conditions, comparable with each other; null if none)", "applicableStatement (the document statement establishing method or conditions for this value, quoted briefly, or null)"]
+ },
+ "metrics": {
+  "kind": "on values whose unit can express more than one kind and on all values separately: correct interpretation, unjustified interpretation (a kind the reference does not establish, a different kind, or a non-quantity typed as a quantity), unjustified abstention (no kind where the reference establishes one), correct abstention",
+  "justification": "agreement of the justification type on correct interpretations",
+  "conditions": "reference conditions the arm states (recall by axis) and arm conditions the reference does not state (unjustified conditions)",
+  "scope": "values whose kind or conditions an arm takes from a document statement the reference does not apply to them (unjustified application), and values the reference covers by a statement that the arm does not use (unjustified non-application)",
+  "comparability": "pairs of reference quantities of one kind in one table: unjustified comparability (arm comparable or comparable_within_source, reference not in one test group) and unjustified non-comparability (reference in one test group, arm not_comparable, undetermined or conditions_unestablished)"
+ },
+ "noveltyClasses": "each page is classed as new document of a known publisher, new publisher, new structure (template not seen), new category (no teaching in the knowledge store); results are reported per class, never pooled as one generalisation claim",
+ "sourceSelection": "candidates from search titles and summaries only (pages showing values are not excluded: values are the object of this test); prefer: at least 3 categories, at least 2 publishers never used by PEE, different structures (single review with test table, comparison table, manufacturer specification page, roundup); exclude paywalled, login-walled, AI-reserved (robots Content-Signal ai-input=no, noai, TDM reservation) and client-rendered pages; every candidate screened against every URL used before; ordered list with substitutes committed before the first request",
+ "firstRun": "each arm runs once; outputs committed unchanged (public value-free counts; private rows); later fixes are reported as tuned and never replace the first run",
+ "unchanged": "live knowledge store (SHA-256 before and after), ranking, catalog paths; no page bytes in any Git repository"
+}

@@ -218,3 +218,35 @@ knowledge (not code) → reconsider unresolved earlier readings.
 5. Reconsideration (6), when the store integration is authorised.
 
 The scientific-knowledge integration proper follows step 2, as the owner decided.
+
+## Part D — higher-order learning (owner decision 2026-10-18, S58)
+
+A permanent learning principle, not a mandatory implementation.
+
+1. **Reason about the rules, not only with them.** After each error, correction or new rule, look for the structure it
+   shares with other rules:
+   - the same scope pattern ("a statement about X covers Y only if …");
+   - the same precedence pattern (specific over general, own words over document);
+   - the same comparability pattern (a condition required by a metric);
+   - the same evidence pattern (a method fixes conditions).
+
+   Several rules sharing one pattern are a candidate principle.
+2. **State the principle once, over reified objects.** Where PEE's knowledge already makes kinds, metrics, methods,
+   condition axes and scopes into objects, a principle is one first-order rule quantified over them. Example: for every
+   metric M and condition C, if M requires C and C is not stated for O, the comparability of O is not established. Prefer
+   this to a new formalism.
+3. **Generalise from cases, then try to break it.**
+   - Positive and negative cases (experience cases, adjudications, counterexample suites) are the material.
+   - ILP-style generalisation (the least general rule covering the positives and no negative), metamorphic variants and
+     deliberately constructed counterexamples are the tests.
+   - A principle that fails a counterexample is narrowed or dropped. It is never patched with an exception for that
+     case.
+4. **Validate on groups not used to find it**: another category, publisher, structure or measurand. Agreement on the
+   cases that suggested it is not evidence.
+5. **When first order is not enough** (a rule must quantify over rules or predicates themselves, e.g. "every scope rule
+   must name its covered evidence classes", or learn which predicate a new category needs), first try a meta-level
+   check or a schema in the rule data. Only then propose a bounded, reversible higher-order mechanism, with its benefit
+   measured before adoption.
+6. **Report three things separately:** principles found; principles implemented; principles demonstrated (on which
+   groups, which tier).
+
