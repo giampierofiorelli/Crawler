@@ -88,7 +88,14 @@ for(const p of wave.pages.filter(p=>p.set==='reference')){const html=readFileSyn
   inc('derived_presence',pf.derived.presence.length);inc('derived_effectiveness_unassessed',pf.derived.effectivenessUnassessed.length);inc('derived_effectiveness_evidence',pf.derived.effectivenessEvidence.length);inc('derived_may_support',pf.derived.mayHave.length);
   inc('derived_different_state_pairs',pf.derived.differentState.length);inc('derived_same_state_pairs',pf.derived.sameState.length);}}
 if(PF){const rs=JSON.parse(readFileSync(join(resolve(process.env.PEE_FC_BUILD??'.'),'resources/quantity-knowledge/product-rules.v1.json'),'utf8'));
- C.rules_deriving_effectiveness_without_evidence=rs.programs[0].rules.filter(r=>{const [h,b='']=r.rule.split(':-');if(!/effectiveness|performance/.test(h))return false;if(/unassessed/.test(h))return !/not has_effectiveness_evidence|\beffectiveness_unassessed\(/.test(b);return !/(?<!not )\b(?:performs|performs_via|result|effectiveness_evidence)\(/.test(b);}).length;}
+ // R1 (2026-10-18, a change of the measuring instrument, labelled): the invariant of tests/product_facts.test.ts. A rule concluding an
+ // assessment has a statement or result (or an assessment) in its body; support or refutation needs a direct test or measurement.
+ C.rules_deriving_effectiveness_without_evidence=rs.programs[0].rules.filter(r=>{const [h0,b='']=r.rule.split(':-');const h=h0.trim().split('(')[0];
+  const A=['evidence_relation','supports','refutes','measures_aspect','aspect_assessed','effectiveness_evidence','has_effectiveness_evidence'];
+  if(/unassessed/.test(h))return !/not has_effectiveness_evidence|not aspect_assessed|\beffectiveness_unassessed\(/.test(b);
+  if(!A.includes(h)&&!/effectiveness|performance/.test(h))return false;
+  const pos=[...b.matchAll(/(?<!not )\b([a-z_]+)\(/g)].map(m=>m[1]);if(!pos.some(p=>['performs','performs_via','result',...A].includes(p)))return true;
+  return (h==='supports'||h==='refutes')&&!(/\bdirect_evidence\(/.test(b)&&/\btest_evidence\(/.test(b));}).length;}
 const meta={protocol:'evaluation/function-fc/protocol.json',arm,label,build:process.env.PEE_FC_BUILD_COMMIT??'working tree',readingIdentity:ident,generatedAt:new Date().toISOString(),tier:'development pages (function content not inspected by the developer); first run unless labelled tuned'};
 mkdirSync('evaluation/function-fc',{recursive:true});mkdirSync(join(REPO,'private-eval/function-fc'),{recursive:true});
 writeFileSync(PUB,JSON.stringify({...meta,counts:C},null,1)+'\n');writeFileSync(PRIV,JSON.stringify({...meta,counts:C,rows},null,1)+'\n');console.log(JSON.stringify(C));console.log('wrote',PUB);

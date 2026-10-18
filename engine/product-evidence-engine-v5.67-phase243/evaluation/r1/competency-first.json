@@ -1,0 +1,202 @@
+{
+ "schema": "pee.r1.competency.v1",
+ "label": "first",
+ "generatedAt": "2026-10-18T22:45:03.780Z",
+ "note": "synthetic records; answers and proofs produced by the software",
+ "questions": [
+  {
+   "id": "CQ1",
+   "question": "Does PEE distinguish a function stated present from one verified in use?",
+   "status": "answered by the software",
+   "answer": {
+    "declaredOnly": [
+     "child_lock"
+    ],
+    "verifiedInUse": [
+     "auto_mode"
+    ]
+   },
+   "derivation": [
+    "presence_declared_only(Acme AP5, child_lock)  [F11: stated present, not observed in use (in this record).]",
+    "  function_available(Acme AP5, child_lock)  [F1: a statement says P has F.]",
+    "    states_function(f0, Acme AP5, child_lock, available)  [given]",
+    "  not presence_verified_in_use(Acme AP5, child_lock)  [absent from document wd.1+pee.table-interpreter.v1g.2+lessons:848f574c8b9d46e7+qk:qk.2.3+kr.3:33b6addae10f369a: nothing in it derives one (1 presence_verified_in_use facts derived)]"
+   ]
+  },
+  {
+   "id": "CQ2",
+   "question": "Can PEE explain why two measurements are not directly comparable?",
+   "status": "answered by the software",
+   "answer": {
+    "sleepVsSpeed1": {
+     "verdict": "not_comparable",
+     "reasons": [
+      "fan setting named differently (sleep vs speed 1); not shown to be the same state or different states"
+     ]
+    },
+    "speed1VsSpeed3": {
+     "verdict": "not_comparable",
+     "reasons": [
+      "different fan setting: speed 1 vs speed 3"
+     ]
+    }
+   },
+   "derivation": [
+    "verdict(not_comparable, conditions_not_shown_equal)  [F15: The verdict is the earliest finding.]",
+    "  finding(7, not_comparable, conditions_not_shown_equal)  [F10b: the two values state different names for a condition, and nothing shows that they are the same state or different states (sleep vs speed 1): not comparable, relation unknown.]",
+    "    relevant_condition(fan_setting)  [Q9: A condition stated for either value matters.]",
+    "      stated_condition(a, fan_setting, sleep)  [given]",
+    "    stated_both(fan_setting)  [Q10: The record states the condition for both.]",
+    "      stated_condition(a, fan_setting, sleep)  [given]",
+    "      stated_condition(b, fan_setting, speed 1)  [given]",
+    "    not common_value(fan_setting)  [absent from the record of the pair a=\"250 m³/h\", b=\"300 m³/h\": nothing in it derives one (0 common_value facts derived)]",
+    "    not documented_distinct(fan_setting)  [absent from the record of the pair a=\"250 m³/h\", b=\"300 m³/h\": nothing in it derives one (0 documented_distinct facts derived)]",
+    "  not earlier_finding(7)  [absent from the record of the pair a=\"250 m³/h\", b=\"300 m³/h\": nothing in it derives one (2 earlier_finding facts derived)]"
+   ]
+  },
+  {
+   "id": "CQ3",
+   "question": "Does PEE see that a result in auto mode is relevant to consumption but insufficient for the quality of the control?",
+   "status": "answered by the software",
+   "answer": {
+    "measuredAspects": [
+     "auto_mode:energy"
+    ],
+    "unassessedAspects": [
+     "auto_mode:response_time",
+     "auto_mode:air_quality_reached",
+     "auto_mode:oscillation"
+    ],
+    "supports": 0
+   },
+   "derivation": [
+    "measures_aspect(Acme AP5, auto_mode, p3, energy)  [S3: a measured value of an aspect is data to compare, not a verdict.]",
+    "  evidence_relation(Acme AP5, auto_mode, p3, energy, relevant_to, measured)  [V1: a statement about how the function behaves is relevant to the aspect it is about, whatever its evidence.]",
+    "    performs(p3, Acme AP5, auto_mode)  [given]",
+    "    performance_what(p3, energy)  [given]",
+    "    performance_evidence(p3, measured)  [given]",
+    "  function_what(auto_mode, energy)  [given]",
+    "aspect_unassessed(Acme AP5, auto_mode, response_time)  [A4: nothing in the record assesses this aspect.]",
+    "  function_available(Acme AP5, auto_mode)  [F1: a statement says P has F.]",
+    "    states_function(f0, Acme AP5, auto_mode, available)  [given]",
+    "  function_what(auto_mode, response_time)  [given]",
+    "  not aspect_assessed(Acme AP5, auto_mode, response_time)  [absent from document wd.1+pee.table-interpreter.v1g.2+lessons:848f574c8b9d46e7+qk:qk.2.3+kr.3:33b6addae10f369a: nothing in it derives one (1 aspect_assessed facts derived)]"
+   ]
+  },
+  {
+   "id": "CQ4",
+   "question": "Can a new scientific relation, added as knowledge (not code), be used on a product never seen before?",
+   "status": "answered by the software; the relation was added by Claude as data, not learned by PEE",
+   "answer": {
+    "presence": [
+     [
+      "Zeta DH3",
+      "frost_protection",
+      "available"
+     ]
+    ],
+    "supports": [
+     [
+      "Zeta DH3",
+      "frost_protection",
+      "low_temperature_operation"
+     ]
+    ]
+   },
+   "derivation": [
+    "supports(Zeta DH3, frost_protection, p1, low_temperature_operation, observed_in_test)  [S1: a positive test or measurement on an aspect of the function supports that aspect, bounded to the statement's product, method and conditions; an opinion, a claim or a component's behaviour does not.]",
+    "  evidence_relation(Zeta DH3, frost_protection, p1, low_temperature_operation, relevant_to, observed_in_test)  [V1: a statement about how the function behaves is relevant to the aspect it is about, whatever its evidence.]",
+    "    performs(p1, Zeta DH3, frost_protection)  [given]",
+    "    performance_what(p1, low_temperature_operation)  [given]",
+    "    performance_evidence(p1, observed_in_test)  [given]",
+    "  direct_evidence(p1)  [D1: a statement about the function itself.]",
+    "    performs(p1, Zeta DH3, frost_protection)  [given]",
+    "  test_evidence(observed_in_test)  [given]",
+    "  performance_polarity(p1, positive)  [given]",
+    "  function_what(frost_protection, low_temperature_operation)  [given]"
+   ]
+  },
+  {
+   "id": "CQ5",
+   "question": "Does PEE recognise that an earlier conclusion is no longer justified once a contradicting result arrives (and when its only support is removed)?",
+   "status": "answered by the software",
+   "answer": {
+    "withOneTest": {
+     "supported": [
+      "response_time"
+     ],
+     "controversial": 0
+    },
+    "withContradiction": {
+     "controversial": [
+      "response_time"
+     ]
+    },
+    "withoutSupport": {
+     "unassessed": [
+      "auto_mode"
+     ]
+    }
+   },
+   "derivation": [
+    "aspect_controversial(Acme AP5, auto_mode, response_time)  [A5: the record both supports and refutes the aspect: an open question, never settled by a vote.]",
+    "  supports(Acme AP5, auto_mode, p2, response_time, observed_in_test)  [S1: a positive test or measurement on an aspect of the function supports that aspect, bounded to the statement's product, method and conditions; an opinion, a claim or a component's behaviour does not.]",
+    "    evidence_relation(Acme AP5, auto_mode, p2, response_time, relevant_to, observed_in_test)  [V1: a statement about how the function behaves is relevant to the aspect it is about, whatever its evidence.]",
+    "      performs(p2, Acme AP5, auto_mode)  [given]",
+    "      performance_what(p2, response_time)  [given]",
+    "      performance_evidence(p2, observed_in_test)  [given]",
+    "    direct_evidence(p2)  [D1: a statement about the function itself.]",
+    "      performs(p2, Acme AP5, auto_mode)  [given]",
+    "    test_evidence(observed_in_test)  [given]",
+    "    performance_polarity(p2, positive)  [given]",
+    "    function_what(auto_mode, response_time)  [given]",
+    "  refutes(Acme AP5, auto_mode, p4, response_time, observed_in_test)  [S2: a negative test or measurement on an aspect refutes it, bounded likewise.]",
+    "    evidence_relation(Acme AP5, auto_mode, p4, response_time, relevant_to, observed_in_test)  [V1: a statement about how the function behaves is relevant to the aspect it is about, whatever its evidence.]",
+    "      performs(p4, Acme AP5, auto_mode)  [given]",
+    "      performance_what(p4, response_time)  [given]",
+    "      performance_evidence(p4, observed_in_test)  [given]",
+    "    direct_evidence(p4)  [D1: a statement about the function itself.]",
+    "      performs(p4, Acme AP5, auto_mode)  [given]",
+    "    test_evidence(observed_in_test)  [given]",
+    "    performance_polarity(p4, negative)  [given]",
+    "    function_what(auto_mode, response_time)  [given]"
+   ]
+  },
+  {
+   "id": "CQ6",
+   "question": "Does PEE tell an unknown relation between settings from a documented difference?",
+   "status": "answered by the software",
+   "answer": {
+    "unknown": [
+     "sleep vs speed 1",
+     "sleep vs speed 3",
+     "speed 1 vs sleep",
+     "speed 3 vs sleep"
+    ],
+    "different": [
+     "speed 1 vs speed 3",
+     "speed 3 vs speed 1"
+    ]
+   },
+   "derivation": [
+    "state_relation_unknown(q0, q1)  [M8: sleep vs speed 1, speed 4 vs top: neither the same state nor different states is shown; the relation is unknown, not a difference.]",
+    "  result(q0, Acme AP5, quantity)  [given]",
+    "  result(q1, Acme AP5, quantity)  [given]",
+    "  result_mode(q0, sleep)  [given]",
+    "  result_mode(q1, speed 1)  [given]",
+    "  not same_state(Acme AP5, sleep, speed 1)  [absent from document wd.1+pee.table-interpreter.v1g.2+lessons:848f574c8b9d46e7+qk:qk.2.3+kr.3:33b6addae10f369a: nothing in it derives one (3 same_state facts derived)]",
+    "  not different_state_results(q0, q1)  [absent from document wd.1+pee.table-interpreter.v1g.2+lessons:848f574c8b9d46e7+qk:qk.2.3+kr.3:33b6addae10f369a: nothing in it derives one (2 different_state_results facts derived)]"
+   ]
+  },
+  {
+   "id": "CQ7",
+   "question": "Can PEE acquire a new rule or relation by itself from examples and counterexamples?",
+   "status": "not possible today (roadmap R5)",
+   "answer": {
+    "answer": "no",
+    "reason": "no mechanism of the software proposes, tests or promotes rules; every rule and relation in the knowledge was written by Claude (or taught from owner packages by Claude); experience cases and table lessons are stored and replayed, not induced"
+   },
+   "derivation": null
+  }
+ ]
+}

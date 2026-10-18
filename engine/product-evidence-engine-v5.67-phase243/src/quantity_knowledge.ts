@@ -92,7 +92,8 @@ export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
 export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v2.json';
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
 /** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
-export const DEFAULT_KNOWLEDGE_RULES='rules.v2.json';
+/** kr.3 (R1, 2026-10-18): a difference of conditions only when documented or definitional; rules.v2.json kept for reproduction. */
+export const DEFAULT_KNOWLEDGE_RULES='rules.v3.json';
 export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnowledge{
  const raw=pack??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_QUANTITY_PACK,import.meta.url),'utf8'));
  const ruleSet=(rules??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_KNOWLEDGE_RULES,import.meta.url),'utf8'))) as RuleSet;
@@ -503,9 +504,16 @@ export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQu
   if(q.metric.id){F.metric_of.push([v,q.metric.id]);F.metric_label.push([q.metric.id,qk.metrics.get(q.metric.id)!.label]);for(const n of qk.metrics.get(q.metric.id)!.notEquivalentTo??[])F.not_equivalent.push([q.metric.id,n],[n,q.metric.id]);}
   if(q.unit.level){F.level_value.push([v]);if(q.weighting)F.weighting.push([v,q.weighting]);}
   if(q.unit.conventional)F.conventional_basis.push([v]);F.unit_expression.push([v,q.unit.expression]);
-  for(const x of q.missingConditions)F.required_condition.push([v,x]);for(const c of q.conditions)F.stated_condition.push([v,c.axis,c.value]);
+  for(const x of q.missingConditions)F.required_condition.push([v,x]);for(const c of q.conditions){F.stated_condition.push([v,c.axis,c.value]);
+   // kr.3: what makes two condition values documented-different: ranks of one ordinal series, numbers in one unit
+   const ax=qk.pack.conditionAxes.find(x=>x.id===c.axis);if(ax?.operatingCondition)(F.operating_axis??=[]).push([c.axis]);
+   if((ax?.values&&Object.prototype.hasOwnProperty.call(ax.values,c.value))||(c.axis==='method'&&(qk.pack.methods??[]).some(m=>m.id===c.value)))(F.named_value??=[]).push([c.axis,c.value]);
+   const rk=/^(?:fan\s+)?(speed|level|setting|power level)\s*(\d{1,2})\b/i.exec(c.value);if(rk)(F.condition_rank??=[]).push([v,c.axis,rk[1].toLowerCase(),Number(rk[2])]);
+   const nu=/^(-?\d+(?:\.\d+)?)\s*(°c|°f|%|%rh|hz|w|v|m|cm|ft|in)\b/i.exec(c.value);if(nu)(F.condition_number??=[]).push([v,c.axis,Number(nu[1]),nu[2].toLowerCase()]);}
   if(q.cohort)F.presented_test.push([v,q.cohort]);if(q.product)F.value_product.push([v,q.product]);if(q.kind.justification.type==='insufficient')F.kind_unjustified.push([v]);}
- const m=evaluate(qk.rules.get('compare')!,F,{record:`the record of the pair a="${a.surface}", b="${b.surface}"`});
+ // facts a rule set does not declare are left out, so that an earlier rules file (kr.2) still reproduces
+ const prog=qk.rules.get('compare')!;for(const k of Object.keys(F))if(!prog.vocab.has(k))delete F[k];
+ const m=evaluate(prog,F,{record:`the record of the pair a="${a.surface}", b="${b.surface}"`});
  const verdicts=m.all('verdict');if(!verdicts.length)throw Error('compare rules reached no verdict');
  const verdict=verdicts[0].args[0] as Comparability;
  // the findings behind the verdict: every finding at the deciding stage, explained by its rule's template

@@ -28,7 +28,7 @@ import {compileRuleSet,evaluate,type CompiledProgram,type Model,type RuleSet} fr
 import {sentences,productMentions,foreignNames,type DocumentEvidence,type Segment,type QualitativeEvidence} from './document_evidence.js';
 import {normText,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 
-export const PRODUCT_FACTS_VERSION='fc.2';
+export const PRODUCT_FACTS_VERSION='fc.3';
 interface Cue {what:string;cues?:string[];metricKinds?:string[]}
 export interface FunctionDef {id:string;label:string;terms:string[];sensorBased:boolean;effectiveness:Cue[];source:string}
 export interface ComponentDef {id:string;label:string;terms:string[];class:string;enables:string[];source:string}
@@ -59,7 +59,8 @@ export interface ProductFacts {schema:'pee.product-facts.v1';version:string;iden
  reclassifiedQualitative:{id:string;function:string}[];
  /** qualitative items about how a function works: linked to the function */
  qualitativeAboutFunction:{id:string;function:string}[];
- facts:Record<string,string[][]>;model:Model;derived:{presence:string[][];notVerified:number;mayHave:string[][];effectivenessUnassessed:string[][];effectivenessEvidence:string[][];sameState:string[][];differentState:string[][];sameNamed:number};
+ facts:Record<string,string[][]>;model:Model;derived:{presence:string[][];notVerified:number;mayHave:string[][];effectivenessUnassessed:string[][];effectivenessEvidence:string[][];sameState:string[][];differentState:string[][];sameNamed:number;
+  relationUnknown:number;supports:string[][];refutes:string[][];measures:string[][];relevant:number;aspectUnassessed:number};
  rankingInput:false}
 
 const PACK_URL=new URL('../../resources/quantity-knowledge/functions.v1.json',import.meta.url);const RULES_URL=new URL('../../resources/quantity-knowledge/product-rules.v1.json',import.meta.url);
@@ -179,6 +180,9 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
    for(const m of t.matchAll(/(?<![\p{L}\p{N}])((?:[A-Z][\p{L}+-]*|\d+)(?:\s+(?:[A-Z][\p{L}+-]*|\d+)){0,2})\s+(mode|setting|programme|program|cycle|preset)s?\b/gu)){
     const words=m[1].split(/\s+/);const name=NOT_A_NAME.test(words[0])?words.slice(1).join(' '):m[1];if(!name||NOT_A_NAME.test(name))continue;const sp={start:m.index!+m[0].indexOf(name),end:m.index!+m[0].length};
     const scale:ModeScale=/programme|program|cycle|preset/.test(m[2])?'programme':'nominal';const mi=modeId(fp,name+' '+m[2]);addMode(sp,t0.slice(sp.start,sp.end),mi.scale==='ordinal'?'ordinal':scale,mi.scale==='ordinal'||fp.modes.nominalTerms.some(([w])=>w===normText(name+' '+m[2]))?mi.id:normText(name),mi.position);}
+   // R1: "in auto mode" names the mode that realises the auto function, as well as the function
+   for(const f of fnHere){const mid=Object.entries(fp.modes.realises??{}).find(([,fid])=>fid===f.function)?.[0];if(!mid)continue;const fi=lt.indexOf(f.name.toLowerCase());
+    if(fi>=0&&/\b(?:in|on|using|set to|switched to)\s+(?:the\s+|its\s+)?$/i.test(t.slice(Math.max(0,fi-20),fi))){const ms:ModeStatement={id:nid('m'),mode:mid,name:f.name,scale:'nominal',position:null,product:f.product,...where};modes.push(ms);modeHere.push({m:ms,sp:{start:fi,end:fi+f.name.length}});}}
    const listM=/\b(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)?\s*(?:wash\s+|drying\s+|cooking\s+|preset\s+)?(?:programmes|programs|cycles|presets|modes)\s*(?:\(|:|,?\s+(?:such as|including|like|namely)\s+)([^.;)]{3,200})/i.exec(t);
    if(listM){const off=listM.index+listM[0].length-listM[1].length;for(const part of listM[1].split(/,|\band\b|\bor\b|\//)){const nmx=part.trim().replace(/^the\s+/i,'').replace(/\s+(?:available|are|is|on|too|as well|included)$/i,'');if(!nmx||nmx.split(/\s+/).length>3||!/\p{L}/u.test(nmx))continue;
      const p0=t.indexOf(nmx,off);if(p0<0)continue;addMode({start:p0,end:p0+nmx.length},t0.slice(p0,p0+nmx.length),'programme',normText(nmx).replace(/\s+(?:programme|program|cycle|mode)$/,''),null);}}
@@ -195,11 +199,14 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
    const anaphor=!fnHere.length&&prevFns.length===1&&/^\s*(?:in testing,?\s*)?(?:this|the|that)\s+(?:setting|function|feature|mode)\b|^\s*it\s+(?:worked|works|kicked|kicks|reacted|reacts|responded|responds)\b/i.test(t)?prevFns:[];
    for(const f of [...fnHere.filter(x=>x.presence==='available'),...anaphor]){const def=fp.functions.find(x=>x.id===f.function);
     // the statement's other words (outside the function's own name) carry the judgement or observation
-    const fi=lt.indexOf(f.name.toLowerCase());const outside=(fi<0?lt:lt.slice(0,fi)+' '+lt.slice(fi+f.name.length)).replace(/\bworks? with\b|\bworking with\b/g,' ');
+    // R1: every recognised name (function, component, mode) is blanked: "PM2.5 sensor" says nothing about air quality reached
+    let outside=lt;for(const c of claimed)outside=outside.slice(0,c.start)+' '.repeat(c.end-c.start)+outside.slice(c.end);outside=outside.replace(/\bworks? with\b|\bworking with\b/g,' ');
     const whats=(def?.effectiveness??[]).filter(c=>c.cues&&stem(outside,c.cues).length).map(c=>c.what);
     const general=stem(outside,fp.performanceCues.general).length>0;const evalW=ev?[...ev.positive,...ev.negative].filter(w=>spans(outside,w).length).length:0;
     const judgedQe=qes.find(e=>e.statementType!=='observation'||e.property.phenomenon);
     const kindsE=(def?.effectiveness??[]).flatMap(c=>c.metricKinds??[]);const numQ=sq.find(q=>kindsE.includes(q.quantity!.kind.id??'')||whats.length>0);
+    // R1: a measured value's kind names the aspect it measures (power and energy: the energy of auto mode)
+    if(numQ)for(const c of def?.effectiveness??[])if((c.metricKinds??[]).includes(numQ.quantity!.kind.id??'')&&!whats.includes(c.what))whats.push(c.what);
     if(!whats.length&&!general&&!evalW&&!judgedQe&&!numQ)continue;
     const posN=ev?ev.positive.filter(w=>spans(outside,w).length).length:0,negN=ev?ev.negative.filter(w=>spans(outside,w).length).length:0;
     const pol:FunctionPerformance['polarity']=judgedQe?.polarity??(posN&&negN?'mixed':posN?'positive':negN?'negative':'neutral');
@@ -209,7 +216,8 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
    // "laundry mode dried a load in four hours") is a statement about that function; the function is resolved at the end
    const judged=(outside:string)=>stem(outside,fp.performanceCues.general).length>0||(ev?[...ev.positive,...ev.negative].some(w=>spans(outside,w).length>0):false)||qes.some(e=>e.statementType!=='observation'||e.property.phenomenon);
    for(const c of components.filter(x=>x.segment===s.id&&x.sentence.start===u.start&&x.presence==='available')){const def=fp.components.find(x=>x.id===c.component)!;
-    const cands=def.class==='sensor'?fp.functions.filter(f=>def.enables.includes(f.id)||(def.id==='sensor_unspecified'&&f.sensorBased)):fp.functions.filter(f=>def.enables.includes(f.id));if(!cands.length||perf.some(p=>p.segment===s.id&&p.sentence.start===u.start))continue;
+    // fc.3 (R1): only the functions the component can enable; a sensor the document does not specify is tied to none
+    const cands=fp.functions.filter(f=>def.enables.includes(f.id));if(!cands.length||perf.some(p=>p.segment===s.id&&p.sentence.start===u.start))continue;
     const ci=lt.indexOf(c.name.toLowerCase());const outside=ci<0?lt:lt.slice(0,ci)+' '+lt.slice(ci+c.name.length);const whats=[...new Set(cands.flatMap(f=>f.effectiveness.filter(x=>x.cues&&stem(outside,x.cues).length).map(x=>x.what)))];
     if(!whats.length&&!judged(outside))continue;const q0=qes.find(e=>e.statementType!=='observation'||e.property.phenomenon);
     pending.push({kind:'component',id:c.component,cands:cands.map(f=>f.id),product:c.product,whats,qe:q0??null,quantity:sq[0]?.id??null,t,lt,where});}
@@ -255,7 +263,7 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
   results.push(r);}
  for(const m of modes)if(m.scale==='ordinal'&&m.position&&m.position.rank!==null&&m.product&&seriesOf.has(m.product))m.position.of=seriesOf.get(m.product)!;
  // ---- first-order facts and the product program
- const F:Record<string,string[][]>={performs_via:[],mode_realises:[],sensor_based:[],product:[],function:[],states_function:[],stated_by:[],has_component:[],component_enables:[],stated_enables:[],offers_mode:[],mode_scale:[],stated_equivalent:[],function_mode:[],result:[],result_mode:[],performs:[],performance_evidence:[]};
+ const F:Record<string,string[][]>={performance_what:[],performance_polarity:[],result_kind:[],effectiveness_kind:[],function_what:[],mode_rank:[],mode_extreme:[],stated_different:[],performs_via:[],mode_realises:[],product:[],function:[],states_function:[],stated_by:[],has_component:[],component_enables:[],stated_enables:[],offers_mode:[],mode_scale:[],stated_equivalent:[],function_mode:[],result:[],result_mode:[],performs:[],performance_evidence:[]};
  const P=(x:string|null)=>x??'unattributed';const prods=new Set<string>();
  for(const f of fp.functions)F.function.push([f.id]);for(const c of fp.components)for(const e of c.enables)F.component_enables.push([c.id,e]);
  F.function_mode.push(['auto_mode','auto'],['auto_mode','auto mode'],['auto_mode','automatic']);
@@ -265,7 +273,13 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
  for(const e of equivalences)F.stated_equivalent.push([P(e.product),e.a,e.b]);
  for(const r of results){prods.add(P(r.product));F.result.push([r.id,P(r.product),r.metric??r.kind??'quantity']);for(const m of r.modes)F.result_mode.push([r.id,m]);}
  for(const p of perf){if(p.via.kind==='function')F.performs.push([p.id,P(p.product),p.function]);else F.performs_via.push([p.id,P(p.product),p.via.kind,p.via.id]);F.performance_evidence.push([p.id,p.evidence]);}
- for(const [m,f] of Object.entries(fp.modes.realises??{}))F.mode_realises.push([m,f]);for(const f of fp.functions)if(f.sensorBased)F.sensor_based.push([f.id]);
+ for(const [m,f] of Object.entries(fp.modes.realises??{}))F.mode_realises.push([m,f]);
+ for(const p of perf){for(const w of p.what)F.performance_what.push([p.id,w]);F.performance_polarity.push([p.id,p.polarity]);}
+ for(const f of fp.functions)for(const c of f.effectiveness){F.function_what.push([f.id,c.what]);for(const k of c.metricKinds??[])F.effectiveness_kind.push([f.id,c.what,k]);}
+ for(const r of results){const k=r.kind??(r.metric?qk.metrics.get(r.metric)?.kind:null);if(k)F.result_kind.push([r.id,k]);}
+ // mode ranks and extremes, from the mode ids (ordinal 'speed 3') and the knowledge's scales (top, lowest)
+ const allModes=new Set([...modes.map(m=>m.mode),...results.flatMap(r=>r.modes)]);
+ for(const m of allModes){const rk=/^(speed|level|setting|power level) (\d+)$/.exec(m);if(rk)F.mode_rank.push([m,rk[1],rk[2]]);const ex=fp.modes.valueScale.fan_setting?.[m]?.extreme;if(ex)F.mode_extreme.push([m,ex]);}
  for(const p of prods)if(p!=='unattributed')F.product.push([p]);
  for(const k of Object.keys(F))F[k]=[...new Map(F[k].map(r=>[r.join('\u0001'),r])).values()];
  const model=evaluate(L.program,F,{record:'document '+doc.readingIdentity});
@@ -273,7 +287,8 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
  return {schema:'pee.product-facts.v1',version:PRODUCT_FACTS_VERSION,identity:`${PRODUCT_FACTS_VERSION}+pf:${L.digest}+${doc.readingIdentity}`,reading:doc.readingIdentity,
   functions,components,modes,equivalences,results,functionPerformance:perf,reclassifiedQualitative:reclassified,qualitativeAboutFunction:aboutFunction,facts:F,model,
   derived:{presence:A('presence'),notVerified:A('presence_not_verified').length,mayHave:A('may_support'),effectivenessUnassessed:A('effectiveness_unassessed'),effectivenessEvidence:A('effectiveness_evidence'),
-   sameState:A('same_state_results'),differentState:A('different_state_results'),sameNamed:A('same_named_setting').length},rankingInput:false};}
+   sameState:A('same_state_results'),differentState:A('different_state_results'),sameNamed:A('same_named_setting').length,
+   relationUnknown:A('state_relation_unknown').length,supports:A('supports'),refutes:A('refutes'),measures:A('measures_aspect'),relevant:A('evidence_relation').length,aspectUnassessed:A('aspect_unassessed').length},rankingInput:false};}
 
 /** A buyer's function needs over a reading's facts: presence met, not verified, or present with effectiveness unassessed. */
 export function functionNeeds(pf:ProductFacts,needs:readonly {need:string;function:string}[],functions?:ProductFunctions):{met:string[][];unverified:string[][];effectivenessUnassessed:string[][]}{

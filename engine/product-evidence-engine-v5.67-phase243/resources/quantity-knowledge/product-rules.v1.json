@@ -1,7 +1,7 @@
 {
  "schema": "pee.knowledge-rules.v1",
- "version": "pr.2",
- "statement": "FC (2026-10-18): first-order facts about what a product can do, with what, in which state, and what bears on how well it works. A function's presence is categorical; no rule derives effectiveness or performance from presence alone (checked by tests over the rules). Two mode names are one state only for a product whose document states it. pr.2 (after the first run): what is said about how the component that enables a function, or the mode that realises it, behaves is evidence about that function; a mode that realises a function makes the function present or absent with it.",
+ "version": "pr.3",
+ "statement": "FC (2026-10-18): first-order facts about what a product can do, with what, in which state, and what bears on how well it works. A function's presence is categorical; no rule derives effectiveness or performance from presence alone (checked by tests over the rules). Two mode names are one state only for a product whose document states it. pr.2 (after the first run): what is said about how the component that enables a function, or the mode that realises it, behaves is evidence about that function; a mode that realises a function makes the function present or absent with it. pr.3 (R1, 2026-10-18): evidence relations are kept apart (relevant_to, supports, refutes, a measured value of an aspect); effectiveness is assessed per aspect, and only direct statements of a test or a measurement on that aspect assess it; what is said about an enabling component is relevant, never support; an unspecified sensor is tied to no function; two modes are different states only by definition (distinct ranks of one series, highest vs lowest) or by a statement, otherwise their relation is unknown.",
  "vocabulary": [
   {
    "name": "product",
@@ -218,7 +218,7 @@
     "E"
    ],
    "role": "derived",
-   "meaning": "Statement or result O, resting on E, bears on how well P's function F works."
+   "meaning": "O, resting on E, supports, refutes or measures an aspect of how well P's F works."
   },
   {
    "name": "has_effectiveness_evidence",
@@ -227,7 +227,7 @@
     "F"
    ],
    "role": "derived",
-   "meaning": "Something bears on how well P's F works."
+   "meaning": "Some aspect of how well P's F works is assessed."
   },
   {
    "name": "effectiveness_unassessed",
@@ -264,7 +264,7 @@
     "R2"
    ],
    "role": "derived",
-   "meaning": "Two results of one product and one metric were obtained in modes the record does not show to be the same state."
+   "meaning": "Two results of one product and metric were obtained in different states, by definition (distinct ranks of one series; highest vs lowest) or by a statement."
   },
   {
    "name": "same_named_setting",
@@ -329,6 +329,221 @@
    ],
    "role": "input",
    "meaning": "Knowledge: function F acts on a sensor's reading."
+  },
+  {
+   "name": "performance_what",
+   "args": [
+    "O",
+    "W"
+   ],
+   "role": "input",
+   "meaning": "Statement O is about aspect W of a function's behaviour (response time, air quality reached, energy...)."
+  },
+  {
+   "name": "performance_polarity",
+   "args": [
+    "O",
+    "X"
+   ],
+   "role": "input",
+   "meaning": "Statement O judges positively, negatively, mixed or neutrally."
+  },
+  {
+   "name": "result_kind",
+   "args": [
+    "R",
+    "K"
+   ],
+   "role": "input",
+   "meaning": "Result R is a value of quantity kind K."
+  },
+  {
+   "name": "effectiveness_kind",
+   "args": [
+    "F",
+    "W",
+    "K"
+   ],
+   "role": "input",
+   "meaning": "Knowledge: a value of kind K measures aspect W of function F (power and energy measure the energy of auto mode)."
+  },
+  {
+   "name": "function_what",
+   "args": [
+    "F",
+    "W"
+   ],
+   "role": "input",
+   "meaning": "Knowledge: W is an aspect of how well F works."
+  },
+  {
+   "name": "mode_rank",
+   "args": [
+    "M",
+    "S",
+    "N"
+   ],
+   "role": "input",
+   "meaning": "Mode M is rank N of ordinal series S (speed 3)."
+  },
+  {
+   "name": "mode_extreme",
+   "args": [
+    "M",
+    "X"
+   ],
+   "role": "input",
+   "meaning": "Mode M is the highest or the lowest setting."
+  },
+  {
+   "name": "stated_different",
+   "args": [
+    "P",
+    "M1",
+    "M2"
+   ],
+   "role": "input",
+   "meaning": "The document states that, on P, M1 and M2 are different states."
+  },
+  {
+   "name": "test_evidence",
+   "args": [
+    "E"
+   ],
+   "role": "constant",
+   "meaning": "E is evidence from a test or a measurement."
+  },
+  {
+   "name": "evidence_relation",
+   "args": [
+    "P",
+    "F",
+    "O",
+    "W",
+    "REL",
+    "E"
+   ],
+   "role": "derived",
+   "meaning": "Statement or result O, resting on E, stands in relation REL (relevant_to) to aspect W of P's function F."
+  },
+  {
+   "name": "direct_evidence",
+   "args": [
+    "O"
+   ],
+   "role": "derived",
+   "meaning": "O is about the function itself or the mode that realises it, not about a component."
+  },
+  {
+   "name": "supports",
+   "args": [
+    "P",
+    "F",
+    "O",
+    "W",
+    "E"
+   ],
+   "role": "derived",
+   "meaning": "O, a test or a measurement, says P's F works well on aspect W: a conclusion bounded to O's product, method and conditions."
+  },
+  {
+   "name": "refutes",
+   "args": [
+    "P",
+    "F",
+    "O",
+    "W",
+    "E"
+   ],
+   "role": "derived",
+   "meaning": "O, a test or a measurement, says P's F works badly on aspect W (bounded likewise)."
+  },
+  {
+   "name": "measures_aspect",
+   "args": [
+    "P",
+    "F",
+    "O",
+    "W"
+   ],
+   "role": "derived",
+   "meaning": "O is a measured value of aspect W of P's F: data to compare, not a verdict."
+  },
+  {
+   "name": "aspect_assessed",
+   "args": [
+    "P",
+    "F",
+    "W"
+   ],
+   "role": "derived",
+   "meaning": "Aspect W of P's F is supported, refuted or measured."
+  },
+  {
+   "name": "aspect_unassessed",
+   "args": [
+    "P",
+    "F",
+    "W"
+   ],
+   "role": "derived",
+   "meaning": "P has F, and nothing in the record assesses aspect W."
+  },
+  {
+   "name": "aspect_controversial",
+   "args": [
+    "P",
+    "F",
+    "W"
+   ],
+   "role": "derived",
+   "meaning": "The record both supports and refutes aspect W of P's F."
+  },
+  {
+   "name": "state_relation_unknown",
+   "args": [
+    "R1",
+    "R2"
+   ],
+   "role": "derived",
+   "meaning": "Two results of one product and metric were obtained in modes the record shows neither to be the same state nor different states."
+  },
+  {
+   "name": "state_relation_controversial",
+   "args": [
+    "R1",
+    "R2"
+   ],
+   "role": "derived",
+   "meaning": "The record shows two results' modes both to be the same state and different states."
+  },
+  {
+   "name": "presence_basis",
+   "args": [
+    "P",
+    "F",
+    "B"
+   ],
+   "role": "derived",
+   "meaning": "A statement that P has F is made by B (spec or maker, reviewer observed, reviewer mention, reported by others)."
+  },
+  {
+   "name": "presence_verified_in_use",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "A reviewer states having used or tested P's F: presence observed, not only declared."
+  },
+  {
+   "name": "presence_declared_only",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "P's F is stated present, but no statement reports using or testing it."
   }
  ],
  "programs": [
@@ -385,30 +600,6 @@
      "source": "FC"
     },
     {
-     "id": "E1",
-     "rule": "effectiveness_evidence(P,F,O,E) :- performs(O,P,F), performance_evidence(O,E).",
-     "statement": "a statement about how well F works is evidence about its effectiveness, with its own evidence type.",
-     "source": "FC"
-    },
-    {
-     "id": "E2",
-     "rule": "effectiveness_evidence(P,F,R,measured) :- result(R,P,_), result_mode(R,M), function_mode(F,M).",
-     "statement": "a value measured while the function was in use (in auto mode) bears on how the function behaves.",
-     "source": "FC"
-    },
-    {
-     "id": "E3",
-     "rule": "has_effectiveness_evidence(P,F) :- effectiveness_evidence(P,F,_,_).",
-     "statement": "something bears on how well P's F works.",
-     "source": "FC"
-    },
-    {
-     "id": "E4",
-     "rule": "effectiveness_unassessed(P,F) :- function_available(P,F), not has_effectiveness_evidence(P,F).",
-     "statement": "presence is categorical and is never evidence of effectiveness.",
-     "source": "FC"
-    },
-    {
      "id": "M1",
      "rule": "same_state(P,M,M) :- offers_mode(P,M).",
      "statement": "a mode is the same state as itself.",
@@ -439,12 +630,6 @@
      "source": "FC"
     },
     {
-     "id": "M6",
-     "rule": "different_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), not same_state(P,M1,M2).",
-     "statement": "speed 1, sleep and lowest are different states unless the record says otherwise.",
-     "source": "FC"
-    },
-    {
      "id": "M7",
      "rule": "same_named_setting(R1,R2) :- result(R1,P1,Q), result(R2,P2,Q), P1 != P2, result_mode(R1,M), result_mode(R2,M).",
      "statement": "two products at the same named setting: names match, the physical states are not shown to.",
@@ -469,23 +654,177 @@
      "source": "FC"
     },
     {
-     "id": "E5",
-     "rule": "effectiveness_evidence(P,F,O,E) :- performs_via(O,P,component,C), component_enables(C,F), function_available(P,F), performance_evidence(O,E).",
-     "statement": "how the component that enables P's function behaves (a responsive sensor) is evidence about that function.",
-     "source": "FC tuned"
+     "id": "V1",
+     "rule": "evidence_relation(P,F,O,W,relevant_to,E) :- performs(O,P,F), performance_what(O,W), performance_evidence(O,E).",
+     "statement": "a statement about how the function behaves is relevant to the aspect it is about, whatever its evidence.",
+     "source": "R1 (pr.3)"
     },
     {
-     "id": "E6",
-     "rule": "effectiveness_evidence(P,F,O,E) :- performs_via(O,P,component,sensor_unspecified), sensor_based(F), function_available(P,F), performance_evidence(O,E).",
-     "statement": "a sensor the document does not specify serves P's sensor-based functions.",
-     "source": "FC tuned"
+     "id": "V2",
+     "rule": "evidence_relation(P,F,O,W,relevant_to,E) :- performs_via(O,P,component,C), component_enables(C,F), function_available(P,F), performance_what(O,W), performance_evidence(O,E).",
+     "statement": "what is said about an enabling component (a responsive sensor) is relevant to the function, and only relevant: the component's behaviour is one step of the function, not its result.",
+     "source": "R1 (pr.3)"
     },
     {
-     "id": "E7",
-     "rule": "effectiveness_evidence(P,F,O,E) :- performs_via(O,P,mode,M), mode_realises(M,F), performance_evidence(O,E).",
-     "statement": "how the mode that realises a function behaves (laundry mode dried a load in four hours) is evidence about that function.",
-     "source": "FC tuned"
+     "id": "V3",
+     "rule": "evidence_relation(P,F,O,W,relevant_to,E) :- performs_via(O,P,mode,M), mode_realises(M,F), performance_what(O,W), performance_evidence(O,E).",
+     "statement": "what is said about the mode that realises a function is relevant to that function.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "V4",
+     "rule": "evidence_relation(P,F,R,W,relevant_to,measured) :- result(R,P,_), result_mode(R,M), function_mode(F,M), result_kind(R,K), effectiveness_kind(F,W,K).",
+     "statement": "a value measured in the function's mode is relevant to the aspect its kind measures (the energy of auto mode) and to no other aspect (not to control quality).",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "D1",
+     "rule": "direct_evidence(O) :- performs(O,_,_).",
+     "statement": "a statement about the function itself.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "D2",
+     "rule": "direct_evidence(O) :- performs_via(O,_,mode,_).",
+     "statement": "a statement about the mode that realises the function (the function's own means and outcome).",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "S1",
+     "rule": "supports(P,F,O,W,E) :- evidence_relation(P,F,O,W,relevant_to,E), direct_evidence(O), test_evidence(E), performance_polarity(O,positive), function_what(F,W).",
+     "statement": "a positive test or measurement on an aspect of the function supports that aspect, bounded to the statement's product, method and conditions; an opinion, a claim or a component's behaviour does not.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "S2",
+     "rule": "refutes(P,F,O,W,E) :- evidence_relation(P,F,O,W,relevant_to,E), direct_evidence(O), test_evidence(E), performance_polarity(O,negative), function_what(F,W).",
+     "statement": "a negative test or measurement on an aspect refutes it, bounded likewise.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "S3",
+     "rule": "measures_aspect(P,F,O,W) :- evidence_relation(P,F,O,W,relevant_to,measured), function_what(F,W).",
+     "statement": "a measured value of an aspect is data to compare, not a verdict.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "A1",
+     "rule": "aspect_assessed(P,F,W) :- supports(P,F,_,W,_).",
+     "statement": "supported.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "A2",
+     "rule": "aspect_assessed(P,F,W) :- refutes(P,F,_,W,_).",
+     "statement": "refuted.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "A3",
+     "rule": "aspect_assessed(P,F,W) :- measures_aspect(P,F,_,W).",
+     "statement": "measured.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "A4",
+     "rule": "aspect_unassessed(P,F,W) :- function_available(P,F), function_what(F,W), not aspect_assessed(P,F,W).",
+     "statement": "nothing in the record assesses this aspect.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "A5",
+     "rule": "aspect_controversial(P,F,W) :- supports(P,F,_,W,_), refutes(P,F,_,W,_).",
+     "statement": "the record both supports and refutes the aspect: an open question, never settled by a vote.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "E1",
+     "rule": "effectiveness_evidence(P,F,O,E) :- supports(P,F,O,_,E).",
+     "statement": "support of an aspect.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "E2",
+     "rule": "effectiveness_evidence(P,F,O,E) :- refutes(P,F,O,_,E).",
+     "statement": "refutation of an aspect.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "E3",
+     "rule": "effectiveness_evidence(P,F,O,measured) :- measures_aspect(P,F,O,_).",
+     "statement": "a measured aspect.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "E3b",
+     "rule": "has_effectiveness_evidence(P,F) :- aspect_assessed(P,F,_).",
+     "statement": "some aspect is assessed.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "E4",
+     "rule": "effectiveness_unassessed(P,F) :- function_available(P,F), not has_effectiveness_evidence(P,F).",
+     "statement": "presence is categorical and never evidence of effectiveness; relevance alone assesses nothing.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "M6",
+     "rule": "different_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), mode_rank(M1,S,N1), mode_rank(M2,S,N2), N1 != N2.",
+     "statement": "two ranks of one ordinal series are different states.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "M6b",
+     "rule": "different_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), mode_extreme(M1,highest), mode_extreme(M2,lowest).",
+     "statement": "the highest and the lowest setting are different states.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "M6c",
+     "rule": "different_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), mode_extreme(M1,lowest), mode_extreme(M2,highest).",
+     "statement": "likewise.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "M6d",
+     "rule": "different_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), stated_different(P,M1,M2).",
+     "statement": "a stated difference, for that product.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "M8",
+     "rule": "state_relation_unknown(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), not same_state(P,M1,M2), not different_state_results(R1,R2).",
+     "statement": "sleep vs speed 1, speed 4 vs top: neither the same state nor different states is shown; the relation is unknown, not a difference.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "M9",
+     "rule": "state_relation_controversial(R1,R2) :- same_state_results(R1,R2), different_state_results(R1,R2).",
+     "statement": "both shown: an open question.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "F9",
+     "rule": "presence_basis(P,F,B) :- states_function(S,P,F,available), stated_by(S,B).",
+     "statement": "who states that P has F.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "F10",
+     "rule": "presence_verified_in_use(P,F) :- presence_basis(P,F,reviewer_observed).",
+     "statement": "presence observed in use or in a test.",
+     "source": "R1 (pr.3)"
+    },
+    {
+     "id": "F11",
+     "rule": "presence_declared_only(P,F) :- function_available(P,F), not presence_verified_in_use(P,F).",
+     "statement": "stated present, not observed in use (in this record).",
+     "source": "R1 (pr.3)"
     }
+   ],
+   "constants": [
+    "test_evidence(measured).",
+    "test_evidence(observed_in_test)."
    ]
   }
  ]

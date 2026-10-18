@@ -7,10 +7,24 @@ esci più dal selciato".
 - The SessionStart hook (`.claude/hooks/pee-knowledge-session-start.sh`) prints the **Current step** line below at the
   start of every session.
 - `CLAUDE.md` and `SKILL.md` §1 (item 0) send every piece of PEE work here first.
-- Changing a step, its order or its exit criteria needs an owner decision, recorded in
+- Changing a step's goal, its order, the architecture or the resources needs an owner decision, recorded in
   `decisions-and-supersessions.md`.
+- Claude adapts engineering details and experiment designs autonomously, giving reasons in the report (owner,
+  2026-10-18, S64). Ordinary technical progress needs no approval.
 - Claude may propose amendments, marked *proposed*. Claude never moves the Current step without meeting the step's
   exit criteria and recording the owner's review.
+
+**Kinds of source; keep them apart (owner, S64).** A research note or an external evaluation inserted here does not
+become a mandatory rule.
+
+| Source | Status |
+|---|---|
+| The owner's decisions | project requirements |
+| Scientific research | knowledge and methodological reference |
+| Evaluations by other assistants the owner consults (e.g. the FC review) | recommendations, to be verified |
+| Claude's technical choices | justified and demonstrated in reports |
+
+This matters most for higher-order reasoning, where alternatives are still to be tested.
 
 Sources:
 - the owner's FC review and engineering research, verbatim in `research-fc-review-2026-10-18.md`;
@@ -112,11 +126,17 @@ existing architecture and the demonstrated capabilities.
    - new acquisition;
    - a new architecture or new technology.
 
-**Exit:**
-- a report with counts and maturity levels;
-- unjustified inferences corrected or explicitly bounded, with derivation tests;
-- equivalence replays committed;
-- the owner's review.
+**Exit (the owner's criteria, S64), each shown with code and experiments:**
+1. Rules draw no conclusion stronger than the evidence, also when several rules combine.
+2. Stored scientific knowledge, applied rules and hand-coded behaviour are clearly told apart, with counts.
+3. Consulting scientific knowledge has a measurable effect on at least one PEE capability, or the report says
+   exactly why it has none today.
+4. The report says, without inventing results, which learning and generalisation mechanisms are operational and
+   which are missing.
+
+A negative result on any of these is a diagnosis, not a failure. R1 must change our understanding of what the system
+really does. It must not be another phase of many tests and a document. Its central question: **how much of what PEE
+does comes from knowledge, and how much from behaviour Claude wrote into the code?**
 
 ### R2 — Justified inference layer, across the KR programs
 
@@ -151,7 +171,9 @@ existing architecture and the demonstrated capabilities.
 
 ### R5 — Rule learning by PEE
 
-The ILP / Popper / MIL method, inside KR:
+**Capability:** PEE learns general relations and rules from facts and counterexamples. ILP, Popper and MIL are
+scientific references to evaluate, not an obligation to build a specific algorithm (owner, S64). The algorithm is
+chosen by experiment, weighing performance, complexity and cost. Method principles:
 - a bounded, typed hypothesis space;
 - positive and negative examples from the experience cases;
 - a counterexample store;
@@ -165,8 +187,13 @@ No ILP engine as a dependency unless an experiment shows a substantial gain.
 ### R6 — Transfer
 
 - A relation acquired in category A improves category B, unseen, without manual correction. Report the worst group.
-- Needs new authentic data, which needs the owner's authorisation.
+- **Data:** authentic documents already held may be used if they are genuinely independent and were never used to
+  develop or correct the mechanism (owner, S64). A new acquisition needs the authorisations in force.
 - **Exit:** a first run on independent data, unchanged.
+
+**Throughout R1–R6 (owner, S64):** the full path from request to advice stays continuously verified, with shadow
+experiments as needed, so the work never becomes a laboratory cut off from the final product (vertical-path fitness
+tests, principle 2).
 
 ### R7 — Use in advice (only after R2, and after R6 evidence)
 
@@ -203,3 +230,10 @@ No ILP engine as a dependency unless an experiment shows a substantial gain.
 ## 5. Progress log
 
 - 2026-10-18: roadmap created (S63). FC is complete at L3. R1 opened.
+- 2026-10-18: owner amendments S64 (autonomy on engineering details; sources kept apart; R1 exit criteria; R5 names a
+  capability, not an algorithm; R6 data; the full path verified throughout). R1 started.
+- 2026-10-18: R1 work done (`docs/plans/r1-conformity.md`, S65). All four exit criteria are answered: overclaiming rules
+  corrected (kr.3, pr.3); knowledge and code separated with counts; a measured effect of scientific knowledge
+  (acoustics 82 vs 42 of 120) and the diagnosis that the newer readers never consult the teaching; learning mechanisms:
+  none operational. Awaiting the owner's review before R2, including the architecture question of the two reading
+  stacks.

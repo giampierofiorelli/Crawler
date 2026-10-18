@@ -1,0 +1,328 @@
+{
+ "schema": "pee.r1.knowledge-map.v1",
+ "generatedAt": "2026-10-18T22:22:22.796Z",
+ "method": "static census: typescript syntax trees; JSON string leaves; KR rules; store counts",
+ "code": {
+  "all": {
+   "lines": 50732,
+   "regex": 2704,
+   "regexAlternatives": 7628,
+   "wordLists": 987,
+   "wordListItems": 5770,
+   "strings": 34873
+  },
+  "new_reading_stack": {
+   "files": 8,
+   "lines": 2280,
+   "regex": 259,
+   "regexAlternatives": 810,
+   "wordLists": 24,
+   "wordListItems": 129,
+   "strings": 1993
+  },
+  "legacy_plan_guided_reading": {
+   "files": 8,
+   "lines": 2584,
+   "regex": 410,
+   "regexAlternatives": 1162,
+   "wordLists": 36,
+   "wordListItems": 307,
+   "strings": 1982
+  },
+  "teaching_and_category_knowledge": {
+   "files": 7,
+   "lines": 1284,
+   "regex": 23,
+   "regexAlternatives": 2,
+   "wordLists": 59,
+   "wordListItems": 249,
+   "strings": 1360
+  },
+  "advice": {
+   "files": 2,
+   "lines": 904,
+   "regex": 100,
+   "regexAlternatives": 631,
+   "wordLists": 5,
+   "wordListItems": 292,
+   "strings": 830
+  },
+  "new_reading_stack_by_file": {
+   "document_evidence": {
+    "lines": 433,
+    "regex": 78,
+    "regexAlternatives": 275,
+    "wordLists": 7,
+    "wordListItems": 46,
+    "strings": 455
+   },
+   "table_interpreter1g": {
+    "lines": 511,
+    "regex": 73,
+    "regexAlternatives": 282,
+    "wordLists": 8,
+    "wordListItems": 44,
+    "strings": 632
+   },
+   "table_interpreter1g_knowledge": {
+    "lines": 119,
+    "regex": 0,
+    "regexAlternatives": 0,
+    "wordLists": 0,
+    "wordListItems": 0,
+    "strings": 65
+   },
+   "table_interpreter1g_lessons": {
+    "lines": 67,
+    "regex": 0,
+    "regexAlternatives": 0,
+    "wordLists": 3,
+    "wordListItems": 9,
+    "strings": 121
+   },
+   "quantity_knowledge": {
+    "lines": 684,
+    "regex": 43,
+    "regexAlternatives": 17,
+    "wordLists": 5,
+    "wordListItems": 24,
+    "strings": 374
+   },
+   "knowledge_rules": {
+    "lines": 144,
+    "regex": 11,
+    "regexAlternatives": 1,
+    "wordLists": 0,
+    "wordListItems": 0,
+    "strings": 75
+   },
+   "product_facts": {
+    "lines": 282,
+    "regex": 54,
+    "regexAlternatives": 235,
+    "wordLists": 0,
+    "wordListItems": 0,
+    "strings": 261
+   },
+   "qualitative_needs": {
+    "lines": 40,
+    "regex": 0,
+    "regexAlternatives": 0,
+    "wordLists": 1,
+    "wordListItems": 6,
+    "strings": 10
+   }
+  }
+ },
+ "data": {
+  "quantity_knowledge": {
+   "version": "qk.2.3",
+   "stringLeaves": 2502,
+   "entries": {
+    "dimensionBasis": 7,
+    "sources": 26,
+    "kinds": 32,
+    "conditionAxes": 12,
+    "metrics": 19,
+    "units": 57,
+    "levelUnits": 5,
+    "methods": 7,
+    "kindEvidence": 5,
+    "relations": 5,
+    "scales": 4,
+    "aspects": 25,
+    "phenomena": 13,
+    "useContexts": 10,
+    "facets": 6
+   },
+   "languageTerms": 348,
+   "sources": 26
+  },
+  "functions": {
+   "version": "pf.2",
+   "stringLeaves": 760,
+   "functions": 29,
+   "components": 22,
+   "terms": 270
+  },
+  "english_lexical_bundle_phase141": {
+   "stringLeaves": 19669
+  }
+ },
+ "rules": {
+  "rules.v2.json": {
+   "version": "kr.2",
+   "predicates": 82,
+   "programs": {
+    "kind": 40,
+    "compare": 29,
+    "scope": 3,
+    "record": 5
+   },
+   "negatedLiterals": 20
+  },
+  "product-rules.v1.json": {
+   "version": "pr.2",
+   "predicates": 35,
+   "programs": {
+    "product": 25
+   },
+   "negatedLiterals": 8
+  }
+ },
+ "store": {
+  "categoryItems": [
+   {
+    "k": null,
+    "c": "technical_hypothesis",
+    "n": 90
+   },
+   {
+    "k": "capability",
+    "c": "technical_hypothesis",
+    "n": 9
+   },
+   {
+    "k": "environment",
+    "c": "technical_hypothesis",
+    "n": 23
+   },
+   {
+    "k": "failure",
+    "c": "technical_hypothesis",
+    "n": 5
+   },
+   {
+    "k": "measurement",
+    "c": "technical_hypothesis",
+    "n": 93
+   },
+   {
+    "k": "mechanism",
+    "c": "technical_hypothesis",
+    "n": 3
+   },
+   {
+    "k": "outcome",
+    "c": "technical_hypothesis",
+    "n": 55
+   },
+   {
+    "k": "task",
+    "c": "technical_hypothesis",
+    "n": 6
+   }
+  ],
+  "itemsByProvenance": [
+   {
+    "p": "assistant_authored_unreviewed",
+    "n": 278
+   },
+   {
+    "p": "professional_method_reference",
+    "n": 6
+   }
+  ],
+  "relations": [
+   {
+    "k": "enables",
+    "n": 4
+   },
+   {
+    "k": "may_risk",
+    "n": 1
+   },
+   {
+    "k": "may_support",
+    "n": 2
+   },
+   {
+    "k": "measured_by",
+    "n": 63
+   },
+   {
+    "k": "not_sufficient_for",
+    "n": 49
+   },
+   {
+    "k": "requires_condition",
+    "n": 81
+   }
+  ],
+  "categories": [
+   {
+    "c": "air_fryers",
+    "n": 45
+   },
+   {
+    "c": "air_purifiers",
+    "n": 37
+   },
+   {
+    "c": "blenders",
+    "n": 6
+   },
+   {
+    "c": "coffee_grinders",
+    "n": 6
+   },
+   {
+    "c": "coffee_machines",
+    "n": 27
+   },
+   {
+    "c": "dehumidifiers",
+    "n": 20
+   },
+   {
+    "c": "dishwashers",
+    "n": 38
+   },
+   {
+    "c": "food_processors",
+    "n": 4
+   },
+   {
+    "c": "kettles",
+    "n": 5
+   },
+   {
+    "c": "pee_write_test",
+    "n": 1
+   },
+   {
+    "c": "pressure_cookers",
+    "n": 6
+   },
+   {
+    "c": "rice_cookers",
+    "n": 3
+   },
+   {
+    "c": "stand_mixers",
+    "n": 5
+   },
+   {
+    "c": "televisions",
+    "n": 41
+   },
+   {
+    "c": "toaster_ovens",
+    "n": 5
+   },
+   {
+    "c": "toasters",
+    "n": 17
+   },
+   {
+    "c": "tumble_dryers",
+    "n": 18
+   }
+  ]
+ },
+ "learned": {
+  "note": "items whose provenance or class names a software learning process (not an instructor, a source or Claude)",
+  "storeItems": 0,
+  "rules": 0
+ }
+}

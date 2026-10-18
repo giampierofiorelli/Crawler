@@ -6,7 +6,7 @@ import {loadQuantityKnowledge,findQuantities,typeQuantity,compareQuantities,type
 import {interpretWithKnowledge1G} from '../src/table_interpreter1g_knowledge.js';
 
 // KR (2026-10-18): declarative rules with provenance. Synthetic rules and pages only.
-const rulesFile=():RuleSet=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/rules.v2.json',import.meta.url),'utf8'));
+const rulesFile=():RuleSet=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/rules.v3.json',import.meta.url),'utf8'));
 const packFile=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/quantity-knowledge.v2.json',import.meta.url),'utf8'));
 const mini=(rules:string[],extra:RuleSet['vocabulary']=[]):RuleSet=>({schema:'t',version:'t',statement:'t',
  vocabulary:[{name:'edge',args:['X','Y'],role:'input',meaning:'an edge'},{name:'path',args:['X','Y'],role:'derived',meaning:'a path'},{name:'node',args:['X'],role:'input',meaning:'a node'},
@@ -87,4 +87,13 @@ test('KV P2: within-source comparability is between products of one test; one pr
  assert.equal(a1.length,2);
  assert.equal(compareQuantities(qk,a1[0].quantity!,a1[1].quantity!).verdict,'comparable_conditions_unestablished','two values of Alpha A1 under one label: something unshown tells them apart');
  assert.equal(compareQuantities(qk,a1[0].quantity!,b.quantity!).verdict,'comparable_within_source');
+});
+
+test('KR kr.3 (R1): a difference of conditions is concluded only when documented or definitional; otherwise not shown equal', ()=>{
+ const qk=loadQuantityKnowledge();const t=(s:string,labels:string[])=>typeQuantity(qk,findQuantities(qk,s)[0],{labels});
+ const reason=(a:string[],b:string[])=>{const c=compareQuantities(qk,t('250 m³/h',a),t('300 m³/h',b));return {v:c.verdict,r:c.reasons.join('; '),rules:c.rules};};
+ const sl=reason(['CADR','Sleep mode'],['CADR','Speed 1']);assert.equal(sl.v,'not_comparable');assert.match(sl.r,/not shown to be the same state or different states/);assert.ok(sl.rules.includes('F10b'));
+ const rk=reason(['CADR','Speed 1'],['CADR','Speed 3']);assert.equal(rk.v,'not_comparable');assert.match(rk.r,/^different fan setting/);assert.ok(rk.rules.includes('F10'));
+ const ex=reason(['CADR','Lowest speed'],['CADR','Top speed']);assert.ok(ex.rules.includes('F10'),'highest vs lowest: different by definition');
+ const s4=reason(['CADR','Speed 4'],['CADR','Top speed']);assert.ok(s4.rules.includes('F10b'),'speed 4 may or may not be the top speed');
 });

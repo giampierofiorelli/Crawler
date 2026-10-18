@@ -29,23 +29,6 @@ test('FC presence is never evidence of effectiveness; a statement of how the fun
  const p=b.functionPerformance.find(x=>x.function==='auto_mode')!;assert.ok(p.what.includes('response_time'));assert.equal(p.evidence,'observed_in_test');
  assert.equal(b.derived.effectivenessUnassessed.length,0);
 });
-test('FC rules: no rule derives effectiveness or performance from presence alone (checked over the rule set)', ()=>{
- const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/product-rules.v1.json',import.meta.url),'utf8')) as RuleSet;
- // invariant: a rule concluding about effectiveness has a positive statement or result about it in its body, or concludes
- // that effectiveness is unassessed from the absence of any; presence alone never suffices
- const evidence=/(?<!not )\b(?:performs|performs_via|result|effectiveness_evidence)\(/;let checked=0;
- for(const r of rs.programs[0].rules){const [head,body='']=r.rule.split(':-');if(!/effectiveness|performance/.test(head))continue;checked++;
-  if(/unassessed/.test(head)){assert.match(body,/not has_effectiveness_evidence|\beffectiveness_unassessed\(/,r.id);continue;}
-  assert.ok(evidence.test(body),`rule ${r.id} concludes about effectiveness without a statement or result about it`);}
- assert.ok(checked>=4);assert.ok(compileRuleSet(rs).get('product'));
-});
-test('FC speed 1, sleep and lowest are three operating states; results under them are not the same state', ()=>{
- const pf=facts('<h2>Acme AP5</h2><p>The Acme AP5 measured 22 dBA in sleep mode. At speed 1 it measured 31 dBA. At its lowest speed it measured 30 dBA.</p>');
- const ms=new Set(pf.modes.map(m=>m.mode));for(const m of ['sleep','speed 1','lowest'])assert.ok(ms.has(m),'mode '+m+' among '+[...ms].join(', '));
- assert.equal(pf.equivalences.length,0);assert.equal(pf.derived.sameState.length,0);assert.ok(pf.derived.differentState.length>=6);
- assert.equal(modeId(loadProductFunctions().pack,'Speed 3').position?.rank,3);assert.equal(pf.modes.find(m=>m.mode==='lowest')!.position?.extreme,'lowest');
- assert.equal(pf.modes.find(m=>m.mode==='sleep')!.scale,'nominal');
-});
 test('FC a stated equivalence makes two names one state, for that product only', ()=>{
  const pf=facts('<h2>Acme AP5</h2><p>The Acme AP5 sleep mode (speed 1) measured 22 dBA, and at speed 1 it measured 22 dBA in a second run.</p><h2>Brandx Q7</h2><p>The Brandx Q7 measured 25 dBA in sleep mode and 33 dBA at speed 1.</p>');
  assert.deepEqual(pf.equivalences.map(e=>[e.product,e.a,e.b]),[['Acme AP5','sleep','speed 1']]);
@@ -87,13 +70,58 @@ test('FC the vocabulary is validated: a component enabling an unknown function i
  const p=JSON.parse(JSON.stringify(loadProductFunctions().pack));p.components[0].enables=['no_such_function'];
  assert.throws(()=>loadProductFunctions(p),/enables unknown/);
 });
-test('FC tuned: what is said about the enabling component or the realising mode is evidence about the function', ()=>{
- const a=facts('<h2>Acme AP5</h2><p>The Acme AP5 has an auto mode and a PM2.5 sensor. In testing, the sensor was very responsive to cooking smells.</p>');
- const p=a.functionPerformance.find(x=>x.via.kind==='component')!;assert.equal(p.function,'auto_mode');assert.ok(a.derived.effectivenessEvidence.some(x=>x[1]==='auto_mode'));
- assert.equal(a.derived.effectivenessUnassessed.length,0);
- const b=facts('<h2>Acme DH9</h2><p>In testing, the Acme DH9 laundry mode dried a full load in four hours.</p>');
- assert.equal(b.derived.presence.find(x=>x[1]==='laundry_drying')?.[2],'available');assert.ok(b.derived.effectivenessEvidence.some(x=>x[1]==='laundry_drying'));
+test('FC rules (R1): every conclusion about effectiveness rests on a statement or a result; support needs a direct test or measurement', ()=>{
+ const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/product-rules.v1.json',import.meta.url),'utf8')) as RuleSet;
+ const rules=rs.programs[0].rules.map(r=>({id:r.id,head:r.rule.split(':-')[0].trim(),body:r.rule.split(':-')[1]??''}));
+ const assessment=['evidence_relation','supports','refutes','measures_aspect','aspect_assessed','effectiveness_evidence','has_effectiveness_evidence'];
+ const evidenceInputs=['performs','performs_via','result'];const pos=(b:string)=>[...b.matchAll(/(?<!not )\b([a-z_]+)\(/g)].map(m=>m[1]);
+ let checked=0;
+ for(const r of rules){const h=r.head.split('(')[0];
+  if(assessment.includes(h)){checked++;assert.ok(pos(r.body).some(p=>evidenceInputs.includes(p)||assessment.includes(p)),`${r.id} concludes ${h} without a statement or result`);}
+  if(h==='supports'||h==='refutes'){assert.match(r.body,/\bdirect_evidence\(/,r.id);assert.match(r.body,/\btest_evidence\(/,r.id);}
+  if(/unassessed/.test(h))assert.match(r.body,/not has_effectiveness_evidence|not aspect_assessed|\beffectiveness_unassessed\(/,r.id);
+  if(h==='different_state_results')assert.match(r.body,/mode_rank|mode_extreme|stated_different/,`${r.id}: a difference of states needs a definition or a statement`);}
+ assert.ok(checked>=10);assert.ok(compileRuleSet(rs).get('product'));
+});
+test('FC (R1) unknown is not different: sleep, speed 1 and lowest have an unknown relation; distinct ranks and the extremes are different', ()=>{
+ const pf=facts('<h2>Acme AP5</h2><p>The Acme AP5 measured 22 dBA in sleep mode. At speed 1 it measured 31 dBA. At its lowest speed it measured 30 dBA. At speed 3 it measured 45 dBA. At top speed it measured 55 dBA.</p>');
+ const ms=new Set(pf.modes.map(m=>m.mode));for(const m of ['sleep','speed 1','lowest','speed 3','top'])assert.ok(ms.has(m),'mode '+m+' among '+[...ms].join(', '));
+ const mode=(r:string)=>pf.results.find(x=>x.id===r)!.modes[0];const pairs=(xs:string[][])=>new Set(xs.map(([a,b])=>[mode(a),mode(b)].sort().join('|')));
+ const diff=pairs(pf.derived.differentState);assert.ok(diff.has('speed 1|speed 3'));assert.ok(diff.has('lowest|top'));
+ for(const p of ['sleep|speed 1','lowest|speed 1','lowest|sleep','speed 3|top'])assert.ok(!diff.has(p),p+' is not shown to be different');
+ const unknown=new Set(pf.model.all('state_relation_unknown').map(f=>[mode(f.args[0]),mode(f.args[1])].sort().join('|')));
+ for(const p of ['sleep|speed 1','lowest|speed 1','lowest|sleep','speed 3|top'])assert.ok(unknown.has(p),p+' has an unknown relation');
+ assert.equal(pf.derived.sameState.length,0);assert.equal(pf.modes.find(m=>m.mode==='sleep')!.scale,'nominal');
+ assert.equal(modeId(loadProductFunctions().pack,'Speed 3').position?.rank,3);
+});
+test('FC (R1) combined relations: a component\'s behaviour, a value in auto mode and an opinion are relevant, never support', ()=>{
+ const pf=facts('<h2>Acme AP5</h2><p>The Acme AP5 has an auto mode and a PM2.5 sensor. In testing, the PM2.5 sensor was very responsive to cooking smells. The Acme AP5 drew 8 W in auto mode. I think the auto mode is great.</p>');
+ assert.ok(pf.derived.relevant>=2,'relations recorded');assert.equal(pf.derived.supports.length,0);assert.equal(pf.derived.refutes.length,0);
+ // the wattage measures the energy aspect of auto mode, and only that aspect
+ assert.deepEqual([...new Set(pf.derived.measures.map(x=>x[1]+':'+x[3]))],['auto_mode:energy']);
+ assert.ok(pf.model.all('evidence_relation').some(f=>f.args[1]==='auto_mode'&&f.args[3]==='response_time'),'the sensor\'s behaviour is relevant to the response of auto mode');
+ const unassessed=pf.model.all('aspect_unassessed').filter(f=>f.args[1]==='auto_mode').map(f=>f.args[2]).sort();
+ assert.deepEqual(unassessed,['air_quality_reached','oscillation','response_time']);
+ // an unspecified sensor is tied to no function
+ const u=facts('<h2>Acme AP5</h2><p>The Acme AP5 has an auto mode. In testing, its sensor was very responsive.</p>');
+ assert.equal(u.derived.relevant,0);assert.deepEqual(u.derived.effectivenessUnassessed,[['Acme AP5','auto_mode']]);
+});
+test('FC (R1) a direct test supports or refutes one aspect, bounded to its statement; both make the aspect controversial', ()=>{
+ const pos=facts('<h2>Acme AP5</h2><p>The Acme AP5 has an auto mode. In testing, the auto mode reacted quickly and well when I burned toast.</p>');
+ assert.ok(pos.derived.supports.some(x=>x[1]==='auto_mode'&&x[3]==='response_time'),JSON.stringify(pos.derived));
+ const both=facts('<h2>Acme AP5</h2><p>The Acme AP5 has an auto mode. In testing, the auto mode reacted quickly and well when I burned toast. In testing, the auto mode was slow to react and disappointing when I fried fish.</p>');
+ assert.ok(both.model.all('aspect_controversial').some(f=>f.args[2]==='response_time'));
+});
+test('FC (R1) metamorphic: renaming the product keeps the inferences; removing the only support withdraws them; another mode changes the condition', ()=>{
+ const body=(name:string,extra='')=>`<h2>${name}</h2><p>The ${name} has an auto mode. ${extra}At speed 2 it measured 40 dBA.</p>`;
+ const shape=(pf:ReturnType<typeof facts>)=>JSON.stringify({p:pf.derived.presence.map(x=>x.slice(1)),s:pf.derived.supports.map(x=>[x[1],x[3]]),u:pf.derived.effectivenessUnassessed.map(x=>x[1]),m:pf.results.map(r=>r.modes)});
+ const sup='In testing, the auto mode reacted quickly and well when I burned toast. ';
+ assert.equal(shape(facts(body('Acme AP5',sup))),shape(facts(body('Brandx Q7',sup))));
+ assert.equal(facts(body('Acme AP5',sup)).derived.effectivenessUnassessed.length,0);assert.equal(facts(body('Acme AP5')).derived.effectivenessUnassessed.length,1,'the only support removed: unassessed again');
+ assert.deepEqual(facts('<h2>Acme AP5</h2><p>At speed 3 it measured 40 dBA.</p>').results.map(r=>r.modes),[['speed 3']]);
+});
+test('FC (R1) the mode that realises a function: its tested outcome is direct evidence; absence of the mode is absence of the function', ()=>{
+ const b=facts('<h2>Acme DH9</h2><p>In testing, the Acme DH9 laundry mode dried a full load quickly and well.</p>');
+ assert.equal(b.derived.presence.find(x=>x[1]==='laundry_drying')?.[2],'available');assert.ok(b.derived.supports.some(x=>x[1]==='laundry_drying'&&x[3]==='drying_time'),JSON.stringify(b.derived));
  const c=facts('<h2>Acme DH9</h2><p>The Acme DH9 has no dedicated laundry mode.</p>');assert.equal(c.derived.presence.find(x=>x[1]==='laundry_drying')?.[2],'not_available');
- // a sensor's behaviour is not evidence about a function the product is not stated to have
- const d=facts('<h2>Acme AP5</h2><p>The Acme AP5 has a PM2.5 sensor that is very responsive.</p>');assert.equal(d.derived.effectivenessEvidence.length,0);
 });
