@@ -1,0 +1,22 @@
+{
+ "schema": "pee.kr-unseen.source-selection.v1",
+ "committedBefore": "the first request of this experiment (protocol frozen in 6e59e35)",
+ "method": "candidates from search titles and summaries only (8 searches); all 10 screened new against 3,081 earlier canonical URLs (step1d-b-eval screen, read-only); publisher novelty checked against the store's revisions and every evaluation set",
+ "excluded": ["aio.lv: client-rendered templates in the search snippets ({{ totalProductsCount }})", "dishwasher and dehumidifier spec sheets: PDFs are excluded by the policy", "Stereophile specification sidebars: prose, no tables (the layer reads tables)", "RTINGS: client-rendered (Step 1D-B)"],
+ "pages": [
+  {"order":1,"tag":"kru_rv_vw_t80s","url":"https://vacuumwars.com/ecovacs-deebot-t80s-omni-review/","category":"robot_vacuums","type":"single review with test results","novelty":["new_publisher","new_structure","new_category"]},
+  {"order":2,"tag":"kru_rv_vw_qrevo","url":"https://vacuumwars.com/roborock-qrevo-edge-s5a-review/","category":"robot_vacuums","type":"single review with test results","novelty":["new_publisher","new_category"]},
+  {"order":3,"tag":"kru_rv_vw_best_july","url":"https://vacuumwars.com/best-july-2026-robot-vacuums/","category":"robot_vacuums","type":"roundup","novelty":["new_publisher","new_structure","new_category"]},
+  {"order":4,"tag":"kru_dh_mb_extraction","url":"https://blog.meaco.com/dehumidifier-extraction-rate/","category":"dehumidifiers","type":"manufacturer blog comparison (extraction at several conditions)","novelty":["new_publisher","new_structure"]},
+  {"order":5,"tag":"kru_dh_mb_cost","url":"https://blog.meaco.com/much-meaco-12-low-energy-dehumidifier-cost-run/","category":"dehumidifiers","type":"manufacturer blog running-cost article","novelty":["new_publisher"]},
+  {"order":6,"tag":"kru_dh_mc_12l","url":"https://www.meaco.com/products/meaco-12l-low-energy-dehumidifier-and-air-purifier","category":"dehumidifiers","type":"manufacturer product page","novelty":["new_document_known_publisher"]},
+  {"order":7,"tag":"kru_dw_bo_smv68","url":"https://www.bosch-home.ie/productlist/dishwashers/built-in-dishwashers/built-in-dishwasher-with-60cm-width/SMV68TD06G","category":"dishwashers","type":"manufacturer product page (EU label data)","novelty":["new_document_known_publisher","new_structure"]},
+  {"order":8,"tag":"kru_dw_bo_spv66","url":"https://www.bosch-home.ie/en/mkt-product/SPV66TX01E","category":"dishwashers","type":"manufacturer product page (EU label data)","novelty":["new_document_known_publisher"]}
+ ],
+ "substitutes": [
+  {"for":"any vacuumwars page unusable","tag":"kru_rv_vw_best_may","url":"https://vacuumwars.com/best-may-2026-robot-vacuums/","category":"robot_vacuums"},
+  {"for":"any blog.meaco page unusable","tag":"kru_dh_mb_new12","url":"https://blog.meaco.com/the-new-meaco-12l-low-energy-dehumidifier/","category":"dehumidifiers"}
+ ],
+ "noveltyNote": "meaco.com and bosch-home (co.uk) appear in the store's revisions (2 product pages each); their pages here are new documents of known publishers, not new publishers. vacuumwars.com and blog.meaco.com were never used. Robot vacuums have no teaching in the store (new category); dehumidifiers and dishwashers are taught.",
+ "budgetPlan": "4 robots + 8 pages = 12 of 20 requests; redirects and at most 2 substitutes within the remaining 8"
+}
