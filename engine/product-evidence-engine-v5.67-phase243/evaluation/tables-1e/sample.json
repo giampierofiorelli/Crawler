@@ -1,0 +1,36 @@
+{
+ "schema": "pee.tables1e.sample.v1",
+ "frozenAt": "2026-10-18",
+ "frozenBefore": "any source-grounded table annotation and any Claude-PEE comparison",
+ "tier": "development: every page was retained and examined in earlier phases (Phase268-272, Step 1C, Step 1D-B); nothing here is held-out",
+ "selectionRule": "one or two tables per structural stratum, from the structural inventory (evaluation/tables-1e/inventory-audit1.json): Phase245 mode, table context, header shape, header units, operating-setting labels, compound and currency cells, dashes, size; at most 4 tables per publisher; at most 81 cells per table; the selector also saw the frozen reader's lead count per table (successes are included on purpose) but no adjudicated error",
+ "annotationSchema": "evaluation/tables-1e/annotation-schema.json",
+ "comparisonCriteria": [
+  "axes: the annotator's row and column roles against the roles implied by the Phase245 mode (products_in_columns: columns products, rows properties; products_in_rows: rows products; key_value: rows properties of one subject; unsupported: none)",
+  "context: the annotator's evidence type for the table against the semantic contract's context (test, specification, unknown)",
+  "each element the annotator marks measured (publisher-reported measurement): read by PEE (any arm C lead from that cell's block with the same value) with the same product and canonical unit, read with another product, or not read (with the ledger's blockers and earliest stage)",
+  "each element the annotator marks declared, nominal or certified, setting, derived or estimated, price or rating: read by PEE as a test lead (false measurement) or not",
+  "conditions: annotator conditions on a measured element against the PEE lead's condition",
+  "every disagreement is adjudicated from the source; neither side is presumed right"
+ ],
+ "tables": [
+  {"id": "S01", "page": "phase270/w_vs_oven", "table": 0, "publisher": "which.co.uk", "category": "air_fryers", "stratum": "appliance x measure matrix, no product names, cost column"},
+  {"id": "S02", "page": "phase270/tr_electricity", "table": 0, "publisher": "techradar.com", "category": "air_fryers", "stratum": "units in headers, calculated values, conditions in row labels"},
+  {"id": "S03", "page": "phase271/t_ninja_doublestack", "table": 1, "publisher": "techradar.com", "category": "air_fryers", "stratum": "multi-product specification comparison (products in header row)"},
+  {"id": "S04", "page": "phase271/t_cosori_twinfry", "table": 1, "publisher": "techradar.com", "category": "air_fryers", "stratum": "rating table (attribute, notes, rating): negative control"},
+  {"id": "S05", "page": "phase272/u_dw_tr_candy_cf57cf0w", "table": 0, "publisher": "trustedreviews.com", "category": "dishwashers", "stratum": "single-product test results (key/value, test context)"},
+  {"id": "S06", "page": "phase272/u_tv_tr_sony_bravia8ii", "table": 0, "publisher": "trustedreviews.com", "category": "televisions", "stratum": "single-product test results with units in labels"},
+  {"id": "S07", "page": "phase272/u_af_tr_sharp_5_5l", "table": 0, "publisher": "trustedreviews.com", "category": "air_fryers", "stratum": "single-product specification sheet: negative control"},
+  {"id": "S08", "page": "phase272/u_td_tr_hisense_dh5s102bw", "table": 0, "publisher": "trustedreviews.com", "category": "tumble_dryers", "stratum": "repeated row labels, category without a plan"},
+  {"id": "S09", "page": "phase272/u_ap_hf_puroair_240", "table": 4, "publisher": "housefresh.com", "category": "air_purifiers", "stratum": "operating conditions as rows (sleep, fan speeds)"},
+  {"id": "S10", "page": "phase272/u_ap_hf_puroair_240", "table": 3, "publisher": "housefresh.com", "category": "air_purifiers", "stratum": "multi-product measured results with a price column"},
+  {"id": "S11", "page": "phase272/u_ap_hf_puroair_240", "table": 1, "publisher": "housefresh.com", "category": "air_purifiers", "stratum": "certified ratings and derived cost: negative control"},
+  {"id": "S12", "page": "step1c/s1c_ap_hf_bedroom", "table": 0, "publisher": "housefresh.com", "category": "air_purifiers", "stratum": "products in columns with award headers (incomplete product headers)"},
+  {"id": "S13", "page": "phase272/u_tv_tg_lg_b6", "table": 0, "publisher": "tomsguide.com", "category": "televisions", "stratum": "multi-product test comparison, placeholder corner cell"},
+  {"id": "S14", "page": "step1d-b/s1db_ap_apf_a231_hpa100", "table": 1, "publisher": "airpurifierfirst.com", "category": "air_purifiers", "stratum": "measurement x operating condition matrix, unit in product headers, dashes, method elsewhere in section"},
+  {"id": "S15", "page": "step1d-b/s1db_ap_apf_a231_hpa100", "table": 2, "publisher": "airpurifierfirst.com", "category": "air_purifiers", "stratum": "compound cells (power and cost), conditions as rows"},
+  {"id": "S16", "page": "step1d-b/s1db_ap_apf_a231_p800", "table": 0, "publisher": "airpurifierfirst.com", "category": "air_purifiers", "stratum": "large two-product specification comparison: negative control"},
+  {"id": "S17", "page": "step1d-b/s1db_dh_ih_best", "table": 0, "publisher": "idealhome.co.uk", "category": "dehumidifiers", "stratum": "products in rows without header cells"},
+  {"id": "S18", "page": "phase270/lm_test", "table": 0, "publisher": "lovemoney.com", "category": "air_fryers", "stratum": "layout or promotion table, not data: control"}
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "schema": "pee.tables1e.annotation-schema.v1",
+ "frozenAt": "2026-10-18",
+ "purpose": "source-grounded interpretation of one HTML table by a separate Claude agent in a fresh context, in a form that can be compared cell by cell and element by element with the PEE table decision ledger (src/table_ledger1e.ts); it is separation from PEE's output, not independent human ground truth",
+ "cellIdentity": "source coordinates: r = index of the <tr> among the table's own rows in document order (0-based), c = index of the <td>/<th> within that <tr> (0-based); the same identity the ledger records as sourceRow/sourceCell",
+ "fileShape": {
+  "schema": "pee.tables1e.annotation.v1",
+  "annotator": "string",
+  "tables": "array of TableAnnotation"
+ },
+ "TableAnnotation": {
+  "id": "sample id (S01...)",
+  "structure": "one of: single_subject_properties | products_in_columns | products_in_rows | measure_by_condition_matrix | specification_sheet | ratings_or_scores | layout_not_data | mixed | other",
+  "rowAxis": {"role": "product | property | measure | condition | appliance_or_method | rating_criterion | none | other", "evidence": "short paraphrase of the source evidence"},
+  "colAxis": {"role": "same vocabulary", "evidence": "short paraphrase"},
+  "headerCells": "array of {r,c}: cells that act as labels (whatever their tag)",
+  "evidenceType": "one of: publisher_measured | manufacturer_declared | certified_rating | calculated_or_estimated | editorial_rating | mixed | unclear (for the table as a whole)",
+  "evidenceSupport": "array of {where: table_heading | caption | section_text | page_text | header_cell | none, paraphrase}: where the evidence type is established; none if the source does not establish it",
+  "cells": "array of CellAnnotation, one per source cell (every cell, including labels and empty cells)",
+  "alternatives": "array of short strings: interpretations considered and rejected, with the reason",
+  "unresolved": "array of short strings: relations the source does not establish"
+ },
+ "CellAnnotation": {
+  "r": "integer", "c": "integer",
+  "role": "one of: product_label | property_label | condition_label | measure_label | value | empty | dash | not_applicable | layout | other",
+  "elements": "array of ElementAnnotation (values only; [] for labels, empty, dash, layout)"
+ },
+ "ElementAnnotation": {
+  "surface": "the exact substring of the cell text holding the number (and its unit or currency) as printed",
+  "value": "number",
+  "unit": "unit as printed, or null if none is printed in the cell; unitFrom: cell | column_header | row_header | caption | none",
+  "kind": "one of: measured | declared | nominal_certified | setting | derived_or_estimated | price | rating_score | identifier | other",
+  "product": "exact product name the source establishes for this element, or null",
+  "variant": "variant designation if the source states one, else null",
+  "dimension": "short label (noise, power, energy, time, brightness, airflow, capacity, size, weight, cost, ...)",
+  "conditions": "array of short labels the source states for this element (fan speed, mode, programme, window size...), [] if none",
+  "dashMeaning": "for a dash or empty cell only: not_applicable | not_measured | unknown, with the source evidence; unknown when the source says nothing",
+  "uncertain": "true when the source does not let you decide kind, product or unit",
+  "note": "short"
+ },
+ "rules": [
+  "measured only when the source states (in the table, its heading or caption, its section or elsewhere on the page) that the publisher itself measured or tested this quantity; otherwise declared, nominal_certified, derived_or_estimated or unclear",
+  "a statement of measurement elsewhere on the page counts only if it plausibly covers this table (same quantity, same section or an explicit reference); record where",
+  "names differing by model code, size, region or suffix are different products unless the page equates them",
+  "a dash or empty cell is never zero; its meaning is unknown unless the source explains it",
+  "do not use any PEE output: none is provided"
+ ]
+}
