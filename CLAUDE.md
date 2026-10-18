@@ -17,6 +17,13 @@ implementing, evaluating or reporting any PEE work. It holds:
 - the evaluation protocol;
 - the complete cumulative research.
 
+## Roadmap (owner request 2026-10-18)
+
+`.claude/skills/pee-guided-learning/references/roadmap.md` is the path. Its **Current step** is printed at session
+start. Name the step any work serves and answer its anti-drift checklist; work outside the current step needs an owner
+decision. Report every capability by maturity level (proposed → operational) and kind (vocabulary, inference,
+learning, transfer).
+
 ## Non-negotiables (details in the skill)
 
 - **Claude is the sole development agent.** ChatGPT or Codex reviewers, AI bridges and extra AI services are

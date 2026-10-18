@@ -160,3 +160,29 @@ never suffices.
 3. Use function needs in advice. Advice should report "available, effectiveness unassessed" and never rank on
    presence.
 4. A new authentic set, which needs the owner's authorisation for any acquisition.
+
+## 5. Owner review, 2026-10-18 (dated note; the text above is unchanged)
+
+The owner's review is preserved verbatim in the skill: `references/research-fc-review-2026-10-18.md`. Decision: S63.
+Roadmap: `references/roadmap.md`, current step R1.
+
+**Corrections and readings this report needs:**
+- **The 96% is over reached items.** Presence is correct for 108 of 227 reference functions; 113 were reached.
+- **The 73 of 113 is "stated by", not attribution.** Product attribution was 92 correct, 11 wrong and 10 missing.
+- **"0 false equivalences" is uninformative.** The reader asserted no equivalence and missed the only stated one
+  (0 of 1).
+- **The reference holds 610 items** (221 + 174 + 215, from the sealed files). A working message said 670; that was an
+  addition error, and no item was excluded.
+
+**Rules that license more than their evidence supports; to be audited in R1 (shadow only, nothing in advice):**
+- **M6** turns "equivalence not shown" into "different state". Closed-world negation is applied where the
+  question is open: the relation is unknown unless a difference is documented.
+- **E2** makes a value measured in the function's mode evidence about the function. Relevance needs a scientific link
+  between the metric and the outcome: a wattage in auto mode says nothing about the air quality it holds.
+- **E5 and E7** make what is said about the enabling component or the realising mode evidence of effectiveness. It is
+  *relevant to* the function, and *supports* at most a bounded conclusion (method, product, configuration,
+  conditions).
+- **E6** ties an unspecified sensor to every sensor-based function. That is not justified.
+
+**Superseded next steps.** The "Next" list in §4 (action vocabulary, scope rules for modes, advice) is superseded by
+the roadmap order. No new feature series comes before the R1 conformity verification.

@@ -76,6 +76,10 @@ A lesson stays a hypothesis until held-out evidence supports it.
 
 ## 1. Read before acting, in this precedence order
 
+0. **[references/roadmap.md](references/roadmap.md) — the path (owner request 2026-10-18, S63).** Its *Current step*
+   line is printed at every session start. Before any PEE work, name the roadmap step it serves and answer the §4
+   anti-drift checklist; work outside the current step needs an owner decision. The owner review behind it is
+   verbatim in [references/research-fc-review-2026-10-18.md](references/research-fc-review-2026-10-18.md).
 1. **The owner's latest explicit instruction, and the repository as it is now.** The newest phase report under
    `engine/product-evidence-engine-v5.67-phase243/docs/phaseNNN/` and its code, tests and committed results decide
    the current status.

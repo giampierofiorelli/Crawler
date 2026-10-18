@@ -1,0 +1,205 @@
+# PEE roadmap — the path ("il selciato")
+
+**Owner request (2026-10-18):** "non so se c'è un modo per fare una road map che tu possa memorizzare così che non
+esci più dal selciato".
+
+**How this roadmap is kept in mind.** Claude has no memory between sessions; the repository is the memory.
+- The SessionStart hook (`.claude/hooks/pee-knowledge-session-start.sh`) prints the **Current step** line below at the
+  start of every session.
+- `CLAUDE.md` and `SKILL.md` §1 (item 0) send every piece of PEE work here first.
+- Changing a step, its order or its exit criteria needs an owner decision, recorded in
+  `decisions-and-supersessions.md`.
+- Claude may propose amendments, marked *proposed*. Claude never moves the Current step without meeting the step's
+  exit criteria and recording the owner's review.
+
+Sources:
+- the owner's FC review and engineering research, verbatim in `research-fc-review-2026-10-18.md`;
+- the permanent mission (SKILL.md §0);
+- the higher-order learning decision (`generalization-method.md` Part D, S58);
+- decision S63.
+
+**Current step: R1 — conformity verification (no new features). Read §3 R1 and the §4 checklist before any work.**
+
+## 1. Destination
+
+**The cycle to demonstrate, in PEE's software and not in Claude's head:** scientific knowledge → general relations →
+justified inferences → transferable learning.
+
+**What PEE must know:** what a product can do, how it does it, how well, under which conditions, and which evidence
+supports each claim. Progress is measured by evidence correctly understood, attributed and justified on data not used
+to build the method, not by rules, terms or tests added.
+
+## 2. Maturity: report every capability on two separate axes
+
+**Level:**
+
+| Level | Meaning |
+|---|---|
+| L0 proposed | written as an idea or plan |
+| L1 documented | specified in the skill or a plan, with exit criteria |
+| L2 implemented | code and synthetic tests (tier T1) |
+| L3 measured on development data | first run unchanged; later runs labelled TUNED; the set then counts as spent |
+| L4 demonstrated on independent data | a sealed reference, data not used to build it, a first run |
+| L5 operational | on the user's path (T3), with the advice consequences checked |
+
+**Kind:**
+- *vocabulary*: words that recognise things;
+- *inference*: rules that derive conclusions from facts;
+- *learning*: rules or relations acquired by PEE, not written by Claude;
+- *transfer*: what was acquired in one category improves another category without manual correction.
+
+Never report vocabulary growth as learning, nor inference as learning. Claude learning as a developer is not PEE
+learning as software.
+
+**Status on 2026-10-18 (honest baseline):**
+
+| Area | Level | Kind | Note |
+|---|---|---|---|
+| 1G tables + QK typed quantities | L3–L4 | vocabulary + inference | KV unseen validation (S59) |
+| KR engine (programs kind, compare, scope, record) | L3 | inference | rules written by Claude |
+| WD whole-document reader | L4 once (KV first run), now spent | vocabulary + inference | |
+| QE qualitative evidence | L3 | vocabulary + inference | the facet hypothesis is only at L2 |
+| FC product facts (functions, components, modes) | L3 | vocabulary + inference | rules M6, E2, E5–E7 under review (R1) |
+| Rule learning by PEE | L0–L1 | learning | `generalization-method.md` Part C proposed, not built |
+| Cross-category transfer | L0–L2 | transfer | no demonstration on unseen data |
+| Use of FC, QE or WD in advice | none | — | shadow only |
+
+## 3. Steps, in order
+
+Each step names its exit criteria. A later step does not start before the earlier one exits, unless the owner decides
+otherwise.
+
+### R1 — Conformity verification against the existing skill (CURRENT)
+
+**Owner (2026-10-18):** "non manderei ancora Claude a sviluppare un'altra serie di funzionalità": first verify the
+existing architecture and the demonstrated capabilities.
+
+1. **Map of where knowledge lives,** per module (1G, QK, KR, WD, QE, FC, the teaching):
+   - what is declarative knowledge (data);
+   - what is executed logic (KR programs);
+   - what is embedded in TypeScript recognisers (regexes, cue lists in code);
+   - with counts (the complexity account of `generalization-method.md` B4).
+2. **Audit of every rule** in `rules.v2.json` and `product-rules.v1.json`: what inference it licenses, what it does not,
+   and what further evidence it needs. Specifically:
+   - **Negation as failure.** Classify each use: is it closed over a record declared complete for that question, or
+     open? Example: M6 turns "equivalence not shown" into "different state". The correct reading is "relation
+     unknown" unless a difference is documented.
+   - **Function ↔ performance links.**
+     - E2: a value measured in the function's mode is not evidence about the function without a scientific relevance
+       link between the metric and the outcome. For example, 8 W in auto mode says nothing about air quality held.
+     - E5 and E7: what is said about the component or mode is *relevant to* the function. It *supports* only a bounded
+       conclusion, scoped to method, product, configuration and conditions.
+     - E6: an unspecified sensor cannot be tied to a specific function.
+   - **Comparability and causality** in `compare` and `record`.
+   - **Tests on derivations, not only on rule shapes:** combined relations (component + mode + observation), with
+     metamorphic cases. Preserve every valid inference: an equivalence replay must show which conclusions change and
+     why.
+3. **Competency questions answered by the software, with derivations.** At least:
+   - a declared function vs one verified in a test;
+   - why two measurements do not compare;
+   - an auto-mode result relevant to consumption but insufficient for control quality;
+   - a new scientific relation used on an unseen product;
+   - a conclusion withdrawn after a contradicting result;
+   - unknown vs documented-different settings.
+4. **Mechanism status table:** every mechanism the skill describes, marked operational, documented only, or proposed.
+   Synthetic tests do not make a capability demonstrated.
+5. **One knowledge-isolation experiment:** does the existing scientific knowledge (taught outcomes, `measured_by`,
+   methods, facets) change interpretation on a category not used to build it? Run it as an ablation (knowledge on or
+   off), or report that the software cannot yet do it, and why.
+6. **Out of scope in R1:**
+   - new recognisers or vocabulary;
+   - use in advice;
+   - new acquisition;
+   - a new architecture or new technology.
+
+**Exit:**
+- a report with counts and maturity levels;
+- unjustified inferences corrected or explicitly bounded, with derivation tests;
+- equivalence replays committed;
+- the owner's review.
+
+### R2 — Justified inference layer, across the KR programs
+
+- **Epistemic status of relations:** documented same / documented different / unknown / controversial.
+- **Negation** only under declared completeness.
+- **Evidence relations:** relevant_to, supports, refutes, requires_condition, derived_from, unresolved. These are the
+  owner's illustrative names, not prescribed predicates.
+- **Bounded conclusions:** method, product, configuration, conditions.
+- **Defeasible re-derivation** when premises change: versioned derivations, conclusions withdrawn when they lose
+  support. Build on KR proofs (PROV-style); no new provenance infrastructure.
+- **Exit:**
+  - metamorphic tests pass: renaming a product leaves the inferences unchanged; removing the only support withdraws
+    the conclusion; changing a mode changes the result's conditions;
+  - no unexplained regression in the equivalence replays.
+
+### R3 — Scientific knowledge consulted in reading
+
+- Taught outcomes, `measured_by`, methods and facets generate interpretation hypotheses. The text verifies them;
+  explicit facts and inferences stay apart.
+- A functional model (verb–object with flows: Functional Basis principles; device / function / state / property: SAREF
+  principles), inside the existing declarative structures. It reads functions described by actions, not only by
+  names.
+- **Exit:** an ablation shows a gain attributable to knowledge, not to added words, on documents and categories not
+  used to build it, with the complexity accounted for.
+
+### R4 — Evidence linking across the whole document
+
+- Conditions, modes, methods and products are linked across sentences, headings and tables, with coreference.
+- Every link carries its location and confidence. References: DocRED, SciERC; ACOS and COQE serve as extraction
+  components only.
+- **Exit:** a sealed reference, with coverage and risk reported together (selective prediction).
+
+### R5 — Rule learning by PEE
+
+The ILP / Popper / MIL method, inside KR:
+- a bounded, typed hypothesis space;
+- positive and negative examples from the experience cases;
+- a counterexample store;
+- promotion only after independent validation;
+- comparison with the manual rules on complexity, errors and generalisation.
+
+No ILP engine as a dependency unless an experiment shows a substantial gain.
+
+**Exit:** at least one rule or relation acquired by PEE, not written by Claude, validated on held-out data.
+
+### R6 — Transfer
+
+- A relation acquired in category A improves category B, unseen, without manual correction. Report the worst group.
+- Needs new authentic data, which needs the owner's authorisation.
+- **Exit:** a first run on independent data, unchanged.
+
+### R7 — Use in advice (only after R2, and after R6 evidence)
+
+- A verified presence of a must-have function may determine eligibility.
+- Effectiveness is never inferred from presence.
+- Partial comparisons keep their labels.
+
+### Deferred (not on the path unless the owner decides)
+
+- a complete second-order engine;
+- an external knowledge graph or RDF migration;
+- large specialised models;
+- paid services;
+- per-category fixes.
+
+## 4. Anti-drift checklist: answer it before starting work, and again in every report
+
+1. **Step:** which step does this serve? If none, stop and ask the owner.
+2. **Kind:** is it vocabulary, inference, learning or transfer? Say so plainly.
+3. **Level and tier:** which level and tier will it reach? Give rates over the **whole** reference (e.g. 113 of 227),
+   not only over what was reached.
+4. **Unseen data:** would the gain hold on a category or document not used to build it? If untested, say "not shown".
+5. **Complexity:** terms, rules and code added versus capability gained.
+6. **Negation:** for every negation or absence, over which record is it closed, and is that record declared complete?
+7. **Evidence links:** what exactly does each license (relevant vs supports vs refutes), and bounded to what?
+8. **Integrity:** first runs unchanged; tuned runs labelled. Reference counts come from the sealed files, never from
+   memory (the FC "670" was an addition error: the files hold 610).
+9. **Owner's standing warnings:**
+   - no per-category fixes;
+   - no new architecture imposed;
+   - preserve materials and history;
+   - shadow until R7.
+
+## 5. Progress log
+
+- 2026-10-18: roadmap created (S63). FC is complete at L3. R1 opened.

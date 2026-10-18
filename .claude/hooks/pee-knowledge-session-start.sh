@@ -19,4 +19,9 @@ else
   echo "PEE knowledge store NOT loaded: the private repository giampierofiorelli/pee-knowledge is not attached to this session."
   echo "If the task needs the store: attach giampierofiorelli/pee-knowledge (add_repo, push access), clone it to $K, then run 'node scripts/knowledge-snapshot.mjs load' from $ENGINE."
 fi
+R="${CLAUDE_PROJECT_DIR:-/home/user/Crawler}/.claude/skills/pee-guided-learning/references/roadmap.md"
+if [ -f "$R" ]; then
+  echo "PEE ROADMAP (owner request 2026-10-18): $(grep -m1 '^\*\*Current step:' "$R" | sed 's/\*\*//g')"
+  echo "Before any PEE work: name the roadmap step it serves and answer the anti-drift checklist (roadmap.md section 4). Work outside the current step needs an owner decision."
+fi
 exit 0
