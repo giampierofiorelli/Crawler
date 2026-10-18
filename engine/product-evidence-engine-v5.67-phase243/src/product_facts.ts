@@ -28,13 +28,15 @@ import {compileRuleSet,evaluate,type CompiledProgram,type Model,type RuleSet} fr
 import {sentences,productMentions,foreignNames,type DocumentEvidence,type Segment,type QualitativeEvidence} from './document_evidence.js';
 import {normText,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 
-export const PRODUCT_FACTS_VERSION='fc.1';
+export const PRODUCT_FACTS_VERSION='fc.2';
 interface Cue {what:string;cues?:string[];metricKinds?:string[]}
 export interface FunctionDef {id:string;label:string;terms:string[];sensorBased:boolean;effectiveness:Cue[];source:string}
 export interface ComponentDef {id:string;label:string;terms:string[];class:string;enables:string[];source:string}
 export type ModeScale='nominal'|'ordinal'|'numeric_setting'|'programme';
 export interface FunctionPack {schema:string;version:string;statement:string;sources:{id:string}[];classes:{id:string;statement:string}[];functions:FunctionDef[];components:ComponentDef[];
- modes:{valueScale:Record<string,Record<string,{scale:ModeScale;extreme?:'highest'|'lowest'}>>;nominalTerms:[string,string][];ordinalWords:string[];ordinalSeriesWords:string[];programmeWords:string[]};
+ modes:{valueScale:Record<string,Record<string,{scale:ModeScale;extreme?:'highest'|'lowest'}>>;nominalTerms:[string,string][];ordinalWords:string[];ordinalSeriesWords:string[];programmeWords:string[];
+  /** pf.2: the function a mode is the means of (laundry mode realises laundry drying) */
+  realises?:Record<string,string>};
  presence:{negators:string[];availableValues:string[];absentValues:string[];observedCues:string[];makerCues:string[];reportedCues:string[];genericCues:string[]};
  performanceCues:{general:string[]}}
 export type StatedBy='spec_or_maker'|'reviewer_observed'|'reviewer_mention'|'reported_by_others';
@@ -48,7 +50,9 @@ export interface ModeEquivalence extends Where {product:string|null;a:string;b:s
 export interface ResultStatement {id:string;quantity:string;product:string|null;metric:string|null;kind:string|null;surface:string;evidenceClass:string;
  conditions:{kind:'operating_mode'|'test_material'|'environment'|'procedure';axis:string;value:string;from:string}[];modes:string[];segment:string|null;table:number|null;text:string}
 export interface FunctionPerformance extends Where {id:string;function:string;statement:string|null;product:string|null;what:string[];evidence:'measured'|'observed_in_test'|'experience_in_use'|'opinion'|'manufacturer_claim'|'reported_by_others';
- polarity:'positive'|'negative'|'mixed'|'neutral';qualitative:string|null;quantity:string|null}
+ polarity:'positive'|'negative'|'mixed'|'neutral';qualitative:string|null;quantity:string|null;
+ /** fc.2: what the statement is about: the function itself, the component that enables it, or the mode that realises it */
+ via:{kind:'function'|'component'|'mode';id:string}}
 export interface ProductFacts {schema:'pee.product-facts.v1';version:string;identity:string;reading:string;
  functions:FunctionStatement[];components:ComponentStatement[];modes:ModeStatement[];equivalences:ModeEquivalence[];results:ResultStatement[];functionPerformance:FunctionPerformance[];
  /** qualitative items that only state a function's availability (no statement of how it works): not observations */
@@ -120,6 +124,7 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
  const qBySeg=new Map<string,DocumentEvidence['quantities']>();for(const q of doc.quantities)qBySeg.set(q.segment,[...(qBySeg.get(q.segment)??[]),q]);
  const ev=qk.pack.language.en.evaluation;
  let n=0;const nid=(p:string)=>p+(n++);
+ const pending:{kind:'component'|'mode';id:string;cands:string[];product:string|null;whats:string[];qe:QualitativeEvidence|null;quantity:string|null;t:string;lt:string;where:Where}[]=[];
  const negatedAt=(t:string,start:number,end:number)=>{
   // the clause before the term (from the last clause boundary), up to six words, or a negation right after it
   let cs=0;for(const m of t.slice(0,start).matchAll(CLAUSE))cs=m.index!+m[0].length;
@@ -199,7 +204,20 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
     const posN=ev?ev.positive.filter(w=>spans(outside,w).length).length:0,negN=ev?ev.negative.filter(w=>spans(outside,w).length).length:0;
     const pol:FunctionPerformance['polarity']=judgedQe?.polarity??(posN&&negN?'mixed':posN?'positive':negN?'negative':'neutral');
     const evidence:FunctionPerformance['evidence']=numQ?'measured':judgedQe?(judgedQe.evidenceType==='inference'?'opinion':judgedQe.evidenceType):has(lt,pr.observedCues)||/\bin testing\b/i.test(t)?'observed_in_test':has(lt,pr.makerCues)?'manufacturer_claim':'opinion';
-    perf.push({id:nid('p'),function:f.function,statement:anaphor.includes(f)?null:f.id,product:f.product,what:whats.length?whats:['general'],evidence,polarity:pol,qualitative:judgedQe?.id??null,quantity:numQ?.id??null,...where});}
+    perf.push({id:nid('p'),function:f.function,statement:anaphor.includes(f)?null:f.id,product:f.product,what:whats.length?whats:['general'],evidence,polarity:pol,qualitative:judgedQe?.id??null,quantity:numQ?.id??null,via:{kind:'function',id:f.function},...where});}
+   // fc.2: how the component that enables a function, or the mode that realises it, behaves ("the sensor is very responsive",
+   // "laundry mode dried a load in four hours") is a statement about that function; the function is resolved at the end
+   const judged=(outside:string)=>stem(outside,fp.performanceCues.general).length>0||(ev?[...ev.positive,...ev.negative].some(w=>spans(outside,w).length>0):false)||qes.some(e=>e.statementType!=='observation'||e.property.phenomenon);
+   for(const c of components.filter(x=>x.segment===s.id&&x.sentence.start===u.start&&x.presence==='available')){const def=fp.components.find(x=>x.id===c.component)!;
+    const cands=def.class==='sensor'?fp.functions.filter(f=>def.enables.includes(f.id)||(def.id==='sensor_unspecified'&&f.sensorBased)):fp.functions.filter(f=>def.enables.includes(f.id));if(!cands.length||perf.some(p=>p.segment===s.id&&p.sentence.start===u.start))continue;
+    const ci=lt.indexOf(c.name.toLowerCase());const outside=ci<0?lt:lt.slice(0,ci)+' '+lt.slice(ci+c.name.length);const whats=[...new Set(cands.flatMap(f=>f.effectiveness.filter(x=>x.cues&&stem(outside,x.cues).length).map(x=>x.what)))];
+    if(!whats.length&&!judged(outside))continue;const q0=qes.find(e=>e.statementType!=='observation'||e.property.phenomenon);
+    pending.push({kind:'component',id:c.component,cands:cands.map(f=>f.id),product:c.product,whats,qe:q0??null,quantity:sq[0]?.id??null,t,lt,where});}
+   for(const {m} of modeHere){const F0=fp.modes.realises?.[m.mode];if(!F0||m.mode==='auto'||fnHere.some(f=>f.function===F0))continue;
+    // the mode states the function's presence with it ("no dedicated laundry mode": no laundry drying)
+    const mi=lt.indexOf(m.name.toLowerCase());const fs:FunctionStatement={id:nid('f'),function:F0,name:m.name,presence:mi>=0&&negatedAt(lt,mi,mi+m.name.length)?'not_available':'available',sensorBased:fp.functions.find(x=>x.id===F0)?.sensorBased??null,statedBy:statedBy(t0,s),product:m.product,...where};functions.push(fs);fnHere.push(fs);
+    const outside=mi<0?lt:lt.slice(0,mi)+' '+lt.slice(mi+m.name.length);const def=fp.functions.find(x=>x.id===F0);const whats=(def?.effectiveness??[]).filter(x=>x.cues&&stem(outside,x.cues).length).map(x=>x.what);
+    if(fs.presence==='available'&&(whats.length||judged(outside)||sq.length)){const q0=qes.find(e=>e.statementType!=='observation'||e.property.phenomenon);pending.push({kind:'mode',id:m.mode,cands:[F0],product:m.product,whats,qe:q0??null,quantity:sq[0]?.id??null,t,lt,where});}}
    // qualitative items whose only property word is a function's name, with no statement of how it works: availability, not an opinion
    for(const e of qes){const aspect=qk.pack.aspects?.find(a=>a.id===e.property.aspect);if(!aspect)continue;
     const termSpans=aspect.terms.flatMap(w=>spans(lt,w));if(!termSpans.length||!termSpans.every(sp=>claimed.some(c=>sp.start>=c.start&&sp.end<=c.end)))continue;
@@ -207,6 +225,9 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
     if(perf.some(p=>p.qualitative===e.id||(p.segment===s.id&&p.sentence.start===u.start&&p.function===fn.function)))aboutFunction.push({id:e.id,function:fn.function});
     else if(!e.property.phenomenon)reclassified.push({id:e.id,function:fn.function});}
    prevFns=fnHere.filter(x=>x.presence==='available');}}
+ for(const x of pending){const have=x.kind==='mode'?x.cands:x.cands.filter(f=>functions.some(s=>s.function===f&&s.presence==='available'&&s.product===x.product));if(have.length!==1)continue;
+  const ev2:FunctionPerformance['evidence']=x.quantity?'measured':x.qe?(x.qe.evidenceType==='inference'?'opinion':x.qe.evidenceType):has(x.lt,pr.observedCues)||/\bin testing\b/i.test(x.t)?'observed_in_test':'opinion';
+  perf.push({id:nid('p'),function:have[0],statement:null,product:x.product,what:x.whats.length?x.whats:['general'],evidence:ev2,polarity:x.qe?.polarity??'neutral',qualitative:x.qe?.id??null,quantity:x.quantity,via:{kind:x.kind,id:x.id},...x.where});}
  // tables: a property label naming a function or component with a yes/no or text value; a features cell listing functions
  for(const tb of doc.tables.tables)for(const o of tb.observations){if(o.kind!=='boolean'&&o.kind!=='text')continue;const label=o.property.join(' ').toLowerCase();const val=normText(o.text??o.surface);
   const absent=pr.absentValues.includes(val)||/^no\b/.test(val);const text=o.property.join(' ')+' '+o.surface;const w0:Where={segment:'table',sentence:{start:0,end:0},text,table:{table:tb.table,observation:o.id}};
@@ -234,7 +255,7 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
   results.push(r);}
  for(const m of modes)if(m.scale==='ordinal'&&m.position&&m.position.rank!==null&&m.product&&seriesOf.has(m.product))m.position.of=seriesOf.get(m.product)!;
  // ---- first-order facts and the product program
- const F:Record<string,string[][]>={product:[],function:[],states_function:[],stated_by:[],has_component:[],component_enables:[],stated_enables:[],offers_mode:[],mode_scale:[],stated_equivalent:[],function_mode:[],result:[],result_mode:[],performs:[],performance_evidence:[]};
+ const F:Record<string,string[][]>={performs_via:[],mode_realises:[],sensor_based:[],product:[],function:[],states_function:[],stated_by:[],has_component:[],component_enables:[],stated_enables:[],offers_mode:[],mode_scale:[],stated_equivalent:[],function_mode:[],result:[],result_mode:[],performs:[],performance_evidence:[]};
  const P=(x:string|null)=>x??'unattributed';const prods=new Set<string>();
  for(const f of fp.functions)F.function.push([f.id]);for(const c of fp.components)for(const e of c.enables)F.component_enables.push([c.id,e]);
  F.function_mode.push(['auto_mode','auto'],['auto_mode','auto mode'],['auto_mode','automatic']);
@@ -243,7 +264,8 @@ export function readProductFacts(qk:QuantityKnowledge,doc:DocumentEvidence,opts:
  for(const m of modes){prods.add(P(m.product));F.offers_mode.push([P(m.product),m.mode]);F.mode_scale.push([m.mode,m.scale]);}
  for(const e of equivalences)F.stated_equivalent.push([P(e.product),e.a,e.b]);
  for(const r of results){prods.add(P(r.product));F.result.push([r.id,P(r.product),r.metric??r.kind??'quantity']);for(const m of r.modes)F.result_mode.push([r.id,m]);}
- for(const p of perf){F.performs.push([p.id,P(p.product),p.function]);F.performance_evidence.push([p.id,p.evidence]);}
+ for(const p of perf){if(p.via.kind==='function')F.performs.push([p.id,P(p.product),p.function]);else F.performs_via.push([p.id,P(p.product),p.via.kind,p.via.id]);F.performance_evidence.push([p.id,p.evidence]);}
+ for(const [m,f] of Object.entries(fp.modes.realises??{}))F.mode_realises.push([m,f]);for(const f of fp.functions)if(f.sensorBased)F.sensor_based.push([f.id]);
  for(const p of prods)if(p!=='unattributed')F.product.push([p]);
  for(const k of Object.keys(F))F[k]=[...new Map(F[k].map(r=>[r.join('\u0001'),r])).values()];
  const model=evaluate(L.program,F,{record:'document '+doc.readingIdentity});

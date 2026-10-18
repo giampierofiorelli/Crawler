@@ -31,13 +31,13 @@ test('FC presence is never evidence of effectiveness; a statement of how the fun
 });
 test('FC rules: no rule derives effectiveness or performance from presence alone (checked over the rule set)', ()=>{
  const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/product-rules.v1.json',import.meta.url),'utf8')) as RuleSet;
- const evidenceOf=['performs','result','effectiveness_evidence','has_effectiveness_evidence'];
- for(const r of rs.programs[0].rules){const head=r.rule.split(':-')[0];if(!/effectiveness_evidence|performance/.test(head))continue;
-  const body=r.rule.split(':-')[1]??'';assert.ok(evidenceOf.some(p=>new RegExp('(?<!not )\\b'+p+'\\(').test(body)),`rule ${r.id} derives effectiveness without a statement or result about it`);}
- // the one rule that uses presence with effectiveness concludes its ABSENCE (unassessed), never its presence
- const uses=rs.programs[0].rules.filter(r=>/function_available/.test(r.rule.split(':-')[1]??'')&&/effectiveness/.test(r.rule.split(':-')[0]));
- assert.deepEqual(uses.map(r=>r.id),['E4']);assert.match(uses[0].rule,/not has_effectiveness_evidence/);
- assert.ok(compileRuleSet(rs).get('product'));
+ // invariant: a rule concluding about effectiveness has a positive statement or result about it in its body, or concludes
+ // that effectiveness is unassessed from the absence of any; presence alone never suffices
+ const evidence=/(?<!not )\b(?:performs|performs_via|result|effectiveness_evidence)\(/;let checked=0;
+ for(const r of rs.programs[0].rules){const [head,body='']=r.rule.split(':-');if(!/effectiveness|performance/.test(head))continue;checked++;
+  if(/unassessed/.test(head)){assert.match(body,/not has_effectiveness_evidence|\beffectiveness_unassessed\(/,r.id);continue;}
+  assert.ok(evidence.test(body),`rule ${r.id} concludes about effectiveness without a statement or result about it`);}
+ assert.ok(checked>=4);assert.ok(compileRuleSet(rs).get('product'));
 });
 test('FC speed 1, sleep and lowest are three operating states; results under them are not the same state', ()=>{
  const pf=facts('<h2>Acme AP5</h2><p>The Acme AP5 measured 22 dBA in sleep mode. At speed 1 it measured 31 dBA. At its lowest speed it measured 30 dBA.</p>');
@@ -86,4 +86,14 @@ test('FC needs: a function need is met by presence, unverified without a stateme
 test('FC the vocabulary is validated: a component enabling an unknown function is refused', ()=>{
  const p=JSON.parse(JSON.stringify(loadProductFunctions().pack));p.components[0].enables=['no_such_function'];
  assert.throws(()=>loadProductFunctions(p),/enables unknown/);
+});
+test('FC tuned: what is said about the enabling component or the realising mode is evidence about the function', ()=>{
+ const a=facts('<h2>Acme AP5</h2><p>The Acme AP5 has an auto mode and a PM2.5 sensor. In testing, the sensor was very responsive to cooking smells.</p>');
+ const p=a.functionPerformance.find(x=>x.via.kind==='component')!;assert.equal(p.function,'auto_mode');assert.ok(a.derived.effectivenessEvidence.some(x=>x[1]==='auto_mode'));
+ assert.equal(a.derived.effectivenessUnassessed.length,0);
+ const b=facts('<h2>Acme DH9</h2><p>In testing, the Acme DH9 laundry mode dried a full load in four hours.</p>');
+ assert.equal(b.derived.presence.find(x=>x[1]==='laundry_drying')?.[2],'available');assert.ok(b.derived.effectivenessEvidence.some(x=>x[1]==='laundry_drying'));
+ const c=facts('<h2>Acme DH9</h2><p>The Acme DH9 has no dedicated laundry mode.</p>');assert.equal(c.derived.presence.find(x=>x[1]==='laundry_drying')?.[2],'not_available');
+ // a sensor's behaviour is not evidence about a function the product is not stated to have
+ const d=facts('<h2>Acme AP5</h2><p>The Acme AP5 has a PM2.5 sensor that is very responsive.</p>');assert.equal(d.derived.effectivenessEvidence.length,0);
 });

@@ -1,7 +1,7 @@
 {
  "schema": "pee.knowledge-rules.v1",
- "version": "pr.1",
- "statement": "FC (2026-10-18): first-order facts about what a product can do, with what, in which state, and what bears on how well it works. A function's presence is categorical; no rule derives effectiveness or performance from presence alone (checked by tests over the rules). Two mode names are one state only for a product whose document states it.",
+ "version": "pr.2",
+ "statement": "FC (2026-10-18): first-order facts about what a product can do, with what, in which state, and what bears on how well it works. A function's presence is categorical; no rule derives effectiveness or performance from presence alone (checked by tests over the rules). Two mode names are one state only for a product whose document states it. pr.2 (after the first run): what is said about how the component that enables a function, or the mode that realises it, behaves is evidence about that function; a mode that realises a function makes the function present or absent with it.",
  "vocabulary": [
   {
    "name": "product",
@@ -301,6 +301,34 @@
    ],
    "role": "derived",
    "meaning": "P has the function need N asks for, but how well it works is unassessed."
+  },
+  {
+   "name": "performs_via",
+   "args": [
+    "O",
+    "P",
+    "K",
+    "X"
+   ],
+   "role": "input",
+   "meaning": "Statement O says how well product P's component (K=component) or mode (K=mode) X works or behaves."
+  },
+  {
+   "name": "mode_realises",
+   "args": [
+    "M",
+    "F"
+   ],
+   "role": "input",
+   "meaning": "Knowledge: mode M is the means of function F (laundry mode realises laundry drying)."
+  },
+  {
+   "name": "sensor_based",
+   "args": [
+    "F"
+   ],
+   "role": "input",
+   "meaning": "Knowledge: function F acts on a sensor's reading."
   }
  ],
  "programs": [
@@ -439,6 +467,24 @@
      "rule": "need_effectiveness_unassessed(N,P) :- need_function(N,F), effectiveness_unassessed(P,F).",
      "statement": "it has it; how well it works is unassessed.",
      "source": "FC"
+    },
+    {
+     "id": "E5",
+     "rule": "effectiveness_evidence(P,F,O,E) :- performs_via(O,P,component,C), component_enables(C,F), function_available(P,F), performance_evidence(O,E).",
+     "statement": "how the component that enables P's function behaves (a responsive sensor) is evidence about that function.",
+     "source": "FC tuned"
+    },
+    {
+     "id": "E6",
+     "rule": "effectiveness_evidence(P,F,O,E) :- performs_via(O,P,component,sensor_unspecified), sensor_based(F), function_available(P,F), performance_evidence(O,E).",
+     "statement": "a sensor the document does not specify serves P's sensor-based functions.",
+     "source": "FC tuned"
+    },
+    {
+     "id": "E7",
+     "rule": "effectiveness_evidence(P,F,O,E) :- performs_via(O,P,mode,M), mode_realises(M,F), performance_evidence(O,E).",
+     "statement": "how the mode that realises a function behaves (laundry mode dried a load in four hours) is evidence about that function.",
+     "source": "FC tuned"
     }
    ]
   }
