@@ -25,7 +25,8 @@ const BRACKETED=/[([]\s*(?:in\s+)?([^()[\]]{1,28}?)\s*[)\]]/g;
 /** A unit a label prints for its values: "(m³/h)", "[dB]", "Noise (dBA)", "Weight (pounds / kg)" (several: ambiguous, none taken). */
 export function unitInLabel1G(qk:QuantityKnowledge,label:string):{unit:ParsedUnit;surface:string}|null{
  const found:{unit:ParsedUnit;surface:string}[]=[];
- for(const m of label.matchAll(BRACKETED)){const inner=m[1].trim();const u=parseUnit(qk,inner);if(u)found.push({unit:u,surface:inner});}
+ // a bracket may also state a condition ("(10%, in nits)"): each comma-separated part is tried, "in" is dropped
+ for(const m of label.matchAll(BRACKETED))for(const part of m[1].split(/[,;]/)){const inner=part.trim().replace(/^in\s+/i,'');const u=inner?parseUnit(qk,inner):null;if(u)found.push({unit:u,surface:inner});}
  return found.length===1?found[0]:null;
 }
 

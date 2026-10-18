@@ -41,6 +41,14 @@ const phraseRe=new Map<string,RegExp>();
 export function hasPhrase(text:string,phrase:string):boolean{const p=normText(phrase);let re=phraseRe.get(p);
  if(!re){re=new RegExp('(?<![\\p{L}\\p{N}])'+esc(p)+'(?![\\p{L}\\p{N}])','u');phraseRe.set(p,re);}return re.test(normText(text));}
 
+/** Which of several phrases a text names, longest first: a phrase inside a longer matched phrase does not count
+ * ("pressure" inside "sound pressure"). Returns the matched phrases. */
+export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
+ let t=' '+normText(text)+' ';const out=new Set<string>();
+ for(const p of [...new Set(phrases.map(normText))].sort((a,b)=>b.length-a.length)){const re=new RegExp('(?<![\\p{L}\\p{N}])'+esc(p)+'(?![\\p{L}\\p{N}])','gu');
+  if(re.test(t)){out.add(p);t=t.replace(re,m=>' '.repeat(m.length));}}
+ return out;
+}
 /** Load and validate a pack (default: the committed v1 pack). Fails closed on any inconsistency. */
 export function loadQuantityKnowledge(pack?:unknown):QuantityKnowledge{
  const raw=pack??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/quantity-knowledge.v1.json',import.meta.url),'utf8'));

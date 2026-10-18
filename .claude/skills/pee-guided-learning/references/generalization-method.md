@@ -119,8 +119,11 @@ owner fields. Where a lesson has no entry for a field, it records why.
 - **Splits:**
   - every observation of a group stays on one side (leave-one-group-out);
   - the development side is frozen before the check side is examined.
-- **Deduplication:**
-  - by page content hash and by template signature;
+- **Deduplication and grouping** (corrected 2026-10-18, owner review of bb64e96; the earlier wording "deduplication by
+  page content hash and by template signature" is superseded, see S51):
+  - identical copies (same content hash) are removed from independent counts;
+  - pages that share a template, or whose content derives from the same source, are **grouped**, not deleted: they stay
+    as legitimate evidence and count as one group in splits and in the worst-group report;
   - a table identical in structure and source to a development table is not independent (C02 = C01; C07/C08 ≈ S16).
 - **Report:**
   - overall result;
@@ -176,12 +179,16 @@ knowledge (not code) → reconsider unresolved earlier readings.
 
 ## Part C — mechanisms PEE must own in software (proposed; not built, not authorised)
 
-1. **Typed scientific knowledge.**
+1. **Typed scientific knowledge.** *Built 2026-10-18 (GK), see `docs/plans/quantity-knowledge.md` and S51.*
    - Quantity kinds, dimensions with the algebra needed (power, energy, time; flow; level weighting), units with
      conversions, and application metrics defined by method.
-   - Held as knowledge records in the existing store and teaching, not in code. Design informed by QUDT/UCUM, with
-     licences checked.
-2. **Knowledge consultation in the global interpreter.**
+   - Superseded on one point: general metrology is a versioned public data pack in the code repository
+     (`resources/quantity-knowledge/`), not store records; category teaching stays in the store and is typed by the
+     pack. UCUM not incorporated (licence forbids derivative works); QUDT identifiers only (CC BY 4.0).
+   - One interface (`src/quantity_knowledge.ts`); consumers: 1G layer, request understanding (opt-in and the Phase253
+     rate guard), typed relevance link. Legacy vocabularies still to migrate (debt D20).
+2. **Knowledge consultation in the global interpreter.** *Partly built (GK): as a layer over the frozen 1G reading,
+   with its own identity; with/without measured on spent pages (`evaluation/quantity-knowledge/reading-final.json`).*
    - Expected measurands, units and required conditions of a category enter 1G as typed constraints and support.
    - They never act as acquisition gates.
    - Measured by a with/without-knowledge ablation on identical inputs. When the effect is zero, find out whether the

@@ -15,7 +15,7 @@
 import {createHash} from 'node:crypto';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
-import {hasPhrase,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
+import {hasPhrase,namedPhrases,normText,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 
 /** Generic physical / consumer units: canonical unit, dimension, and the surface forms a page may print. */
 export const UNIT_LEXICON272:readonly {unit:string;dimension:string;re:string}[]=[
@@ -190,14 +190,20 @@ export function rangeOrBound272(line:string,at:number,end:number):boolean{
 // word-overlap link above (linkToMeasure272) stays unchanged; this one consults what the knowledge says the value IS.
 /** What a taught measurement measures, read from its id and statement with the quantity knowledge: the metrics it names
  * (CADR) and the quantity kinds it names (sound pressure, sound power, air changes). Empty: the knowledge cannot type it. */
-export interface TypedMeasure272 {id:string;outcomes:string[];metrics:string[];kinds:string[]}
+export interface TypedMeasure272 {id:string;outcomes:string[];metrics:string[];kinds:string[];ratio?:{numerator:string[];denominator:string[]}}
 export function typedMeasures272(store:KnowledgeStore246,categoryId:string,plan:ExtractionPlan272,qk:QuantityKnowledge):TypedMeasure272[]{
  const st=new Map(store.categoryItems246(categoryId).filter(i=>i.concept?.kind==='measurement').map(i=>[i.concept!.id,i.statement]));
  // The teaching's name of a measurement says what it measures; its statement is read only when the name says nothing.
  // Only metric names and kind discriminators count: generic words ("pressure" inside "sound pressure", "load") do not.
- const read=(text:string)=>({metrics:qk.pack.metrics.filter(x=>x.terms.some(t=>hasPhrase(text,t))).map(x=>x.id),
-  kinds:qk.pack.kinds.filter(k=>(k.discriminators??[]).some(t=>hasPhrase(text,t))).map(k=>k.id)});
- return plan.measurements.map(m=>{const byId=read(m.id.replace(/_/g,' '));const r=byId.metrics.length||byId.kinds.length?byId:read(st.get(m.id)??'');
+ // In the concise name every quantity word counts; in the longer statement only discriminators do. "A per B" in a name
+ // is a ratio when B is itself a quantity ("energy per litre"), a reporting basis when it is not ("energy per task").
+ const read=(text:string,strict:boolean)=>{const words=(k:typeof qk.pack.kinds[number])=>[...(k.discriminators??[]),...(strict?[]:k.terms)];
+  const named=namedPhrases(text,[...qk.pack.metrics.flatMap(x=>x.terms),...qk.pack.kinds.flatMap(words)]);const has=(t:string)=>named.has(normText(t));
+  return {metrics:qk.pack.metrics.filter(x=>x.terms.some(has)).map(x=>x.id),kinds:qk.pack.kinds.filter(k=>words(k).some(has)).map(k=>k.id)};};
+ return plan.measurements.map(m=>{const name=m.id.replace(/_/g,' ');const per=/^(.+?) per (.+)$/.exec(name);
+  if(per){const a=read(per[1],false),b=read(per[2],false);if(b.kinds.length&&a.kinds.length)return {id:m.id,outcomes:m.outcomes,metrics:a.metrics,kinds:[],ratio:{numerator:a.kinds,denominator:b.kinds}};
+   if(a.kinds.length||a.metrics.length)return {id:m.id,outcomes:m.outcomes,metrics:a.metrics,kinds:a.kinds};}
+  const byId=read(name,false);const r=byId.metrics.length||byId.kinds.length?byId:read(st.get(m.id)??'',true);
   return {id:m.id,outcomes:m.outcomes,metrics:r.metrics,kinds:r.kinds};});
 }
 export interface TypedLink272 {measureId:string|null;outcomes:string[];candidates:string[];proxyFor:string[];basis:string}
@@ -208,9 +214,13 @@ export function linkTypedToMeasure272(plan:ExtractionPlan272,measures:readonly T
  const proxyFor=[...new Set(plan.proxies.filter(p=>hasPhrase(text,p.ref.slice(5).replace(/_/g,' '))).map(p=>p.outcome).filter(Boolean))].sort();
  const kinds=q.kind.id?[q.kind.id]:q.kind.candidates;const metric=q.metric.id;
  const blocked=new Set(metric?qk.metrics.get(metric)!.notEquivalentTo??[]:[]);
- const fits=measures.filter(m=>m.outcomes.length&&!m.metrics.some(x=>blocked.has(x))&&(
+ // a ratio measurement ("energy per litre") is reported only by a value whose unit has the ratio's dimension (or its inverse)
+ const dimOf=(ks:string[])=>ks.map(k=>qk.kinds.get(k)!.dim);
+ const ratioFits=(m:TypedMeasure272)=>{if(!m.ratio)return true;const u=q.unit.dim;const eq=(x:Record<string,number|undefined>,y:Record<string,number|undefined>)=>[...new Set([...Object.keys(x),...Object.keys(y)])].every(k=>(x[k]??0)===(y[k]??0));
+  return dimOf(m.ratio.numerator).some(n=>dimOf(m.ratio!.denominator).some(d=>{const r:Record<string,number>={},inv:Record<string,number>={};for(const k of new Set([...Object.keys(n),...Object.keys(d)])){r[k]=(n[k]??0)-(d[k]??0);inv[k]=-r[k];}return eq(u,r)||eq(u,inv);}));};
+ const fits=measures.filter(m=>m.outcomes.length&&ratioFits(m)&&(m.ratio?true:!m.metrics.some(x=>blocked.has(x))&&(
   metric&&m.metrics.length?(m.metrics.includes(metric)&&(!m.kinds.length||m.kinds.some(k=>kinds.includes(k))))
-        :(m.kinds.some(k=>kinds.includes(k))||(!m.kinds.length&&m.metrics.some(x=>kinds.includes(qk.metrics.get(x)!.kind))&&!m.metrics.some(x=>qk.metrics.get(x)!.notEquivalentTo?.length)))));
+        :(m.kinds.some(k=>kinds.includes(k))||(!m.kinds.length&&m.metrics.some(x=>kinds.includes(qk.metrics.get(x)!.kind))&&!m.metrics.some(x=>qk.metrics.get(x)!.notEquivalentTo?.length))))));
  if(metric&&blocked.size&&!fits.length)return {measureId:null,outcomes:[],candidates:[],proxyFor,basis:`${metric} is not equivalent to ${[...blocked].join(', ')}: no taught measurement reports it`};
  if(!fits.length)return {measureId:null,outcomes:[],candidates:[],proxyFor,basis:'no taught measurement measures this quantity'};
  const restricted={...plan,measurements:plan.measurements.filter(m=>fits.some(f=>f.id===m.id))};

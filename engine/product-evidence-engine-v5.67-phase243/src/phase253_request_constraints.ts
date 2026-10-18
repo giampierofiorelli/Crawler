@@ -14,6 +14,10 @@
 import {canonicalUnit245,parseNumber245} from './phase245_value_normalizer.js';
 import {composeQuestion125} from './phase125_compositional_dialogue_frame.js';
 import type {Constraint253} from './phase253_advice_contract.js';
+import {loadQuantityKnowledge,findQuantities,type QuantityKnowledge} from './quantity_knowledge.js';
+// GK: the quantity knowledge says what the printed unit expresses; loaded once (the committed, validated pack).
+let QK253:QuantityKnowledge|null=null;const qk253=()=>QK253??=loadQuantityKnowledge();
+const KIND_OF_DIMENSION253:Record<string,string>={volume:'volume',length:'length',mass:'mass',power:'power',duration:'duration'};
 
 export interface RequestConstraint253 extends Constraint253 {
  bound:'min'|'max';property:'capacity'|'water_tank'|'width'|'height'|'depth'|'weight'|'power'|'battery_life'|'price';
@@ -47,6 +51,12 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   // Groups: 1 low bound of 'between', 2 its unit, 3 low bound of 'X-Y', 4 the (last) number, 5 its unit, 6 a '+'.
   const lowNum=m[1]??m[3]??null,mainNum=m[4],unitRaw=m[5],plus=!!m[6];
   const unit=unitOf(unitRaw);if(!unit)continue;const dim=dimensionOf(unit);if(!dim)continue;
+  // GK (2026-10-18): "12 L/day" or "1.5 L per minute" is a rate, not a capacity. The unit the vocabulary matched may be
+  // only the start of a longer unit; the quantity knowledge reads the whole expression, and a quantity of another kind
+  // is never checked as this dimension (it stays explicit, as an unmapped requirement).
+  {const at=m.index+(m[0].length-m[0].trimStart().length);const full=findQuantities(qk253(),text.slice(at,at+m[0].length+40))[0];
+   if(full&&full.start===0&&full.unit.kinds.length&&!full.unit.kinds.includes(KIND_OF_DIMENSION253[dim])){
+    unmapped.push({span:full.surface,reason:`${full.surface} is a ${full.unit.kinds.map(k=>k.replace(/_/g,' ')).join(' or ')}, not a ${dim}: it is not checked as one`});re.lastIndex=Math.max(re.lastIndex,at+full.end);continue;}}
   // Clause-local context: the words before the quantity back to the last sentence break, and a few words after.
   // A sentence break is punctuation followed by a space or the end, never a decimal point ("57.5").
   let clauseStart=0;for(const b of lower.slice(0,m.index).matchAll(/[.;!?\n](?=\s|$)/g))clauseStart=b.index!+1;

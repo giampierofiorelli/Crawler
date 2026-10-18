@@ -11,6 +11,21 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 000000000000000000000000. Typed quantity knowledge GK (2026-10-18) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowledge.md`.
+
+- **Pack** `resources/quantity-knowledge/quantity-knowledge.v1.json` (27 kinds, 51 unit atoms, 5 level units, 6
+  metrics, 6 condition axes, English bound words); **interface** `src/quantity_knowledge.ts` (identity `qk.1:<digest>`).
+  Add knowledge by editing the pack, never by adding a unit list to a reader.
+- **Consumers:** `src/table_interpreter1g_knowledge.ts` (layer over frozen 1G, identity `…+qk:…`);
+  `adviseFromRequest253(…,{quantityKnowledge})` (opt-in quantitative requirements, questions, evidence needs); Phase253
+  rate guard (default path: a rate is never a capacity); `typedMeasures272` / `linkTypedToMeasure272`.
+- **Evaluation** `scripts/qk-eval.mjs reading|requests|links LABEL` (never overwrites); request gold sealed in
+  `evaluation/quantity-knowledge/requirements-freeze.json`; first run `requests-firstrun.json` unchanged.
+- **Open debt** D18 (1F `<br>`), D19 (role of a quantity in a request), D20 (seven legacy vocabularies), D21
+  (comparability not consumed on the default path).
+
 ## 00000000000000000000000. Phase272 knowledge-guided extraction and unknown-category pilot (2026-10-17) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/phase272/REPORT.md` (stopped for independent review).
