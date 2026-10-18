@@ -98,6 +98,16 @@ A lesson stays a hypothesis until held-out evidence supports it.
    - Read the full passages before a design decision rests on them.
 7. **[references/evaluation-and-reporting.md](references/evaluation-and-reporting.md)** covers how to evaluate and
    report material work: first-failure chain, A/B/C pilots, tier labels and the report checklist.
+8. **[references/generalization-method.md](references/generalization-method.md)** governs any change to how PEE
+   interprets, learns or generalises:
+   - lesson admission and promotion;
+   - counterexample-guided development with stop rules;
+   - the out-of-distribution protocol (group splits, deduplication, worst group);
+   - complexity accounting and selective-prediction reporting;
+   - the boundary between Claude's method and PEE's own mechanisms.
+
+   The owner research behind it is preserved verbatim in
+   [references/research-generalization-2026-10-18.md](references/research-generalization-2026-10-18.md).
 
 Never claim to have read a file you have not opened. In reports, say which sections you consulted.
 
@@ -257,6 +267,7 @@ can execute today, and what is the next demonstrated obstacle to a trustworthy r
 | 16 | Comparative evidence is one experiment's evidence: results of one task in several appliances are kept with equipment class, subject identity (exact_variant / named_product / equipment_class / ambiguous / unresolved), measurand (duration, energy, cost; cost always tariff-derived) and a content-keyed experiment (a republished experiment is a duplicate). Values are compared only within one experiment and task with matched loads; they support what that experiment compared (e.g. an air fryer vs an owned oven), never a choice between products it did not compare. | `comparative_results271` (store v8); `src/phase271_comparative_evidence.ts`; `tests/phase271_comparative_retention.test.ts`. |
 | 17 | Research packages are preserved unmodified, inventoried with a fixed schema, then taught selectively through the existing teaching mechanism; teaching keeps each lesson's package status and reference ids, aliases come from package need phrases and development requests, and overlaps with untouched requests are computed and reported. A package received is not a package integrated. | `evaluation/phase271/research-package-inventory.json`; `scripts/phase271-generate-teaching.py`; `tests/phase271_category_teaching.test.ts`. |
 | 18 | Knowledge guides reading, never replaces observation (owner brief and memo 2026-10-17): category teaching is compiled into a transient extraction plan (outcomes, measurement terms, generic-lexicon units, conditions, proxies, category nouns) handed to the EXISTING readers before reading; the plan is never evidence, the no-plan path stays byte-identical, a generic exploratory pass records what no rule anticipated as research leads, and every gain is measured as an A/B/C/E ablation (E = wider generic vocabulary without knowledge) on untouched pages with independent gold. Wrong-product attribution is reported apart from recall. | `src/phase272_extraction_plan.ts`; `scripts/phase272-ab-extraction.mjs` (refuses to overwrite; arm A runs the frozen build); `scripts/phase272-no-plan-equivalence.mjs`; `tests/phase272_guided_extraction.test.ts`. |
+| 19 | Generalisation before knowledge integration (owner decision 2026-10-18, S50): first make the general interpretation and learning mechanism robust, then integrate scientific knowledge THROUGH it, as typed knowledge it consults, never as a second system. Complexity moves from code to knowledge representation. A correction is general only when it is stated over relations or types, survives counterexamples and works on groups (publisher, category, template, measurand, method) not used to build it. Gains on exposed data are never generalisation. The skill disciplines Claude's development; the mechanisms that must work without Claude (knowledge consultation, counterexample suites, lesson gate, reconsideration, group-split evaluation) belong in PEE's software. | `references/generalization-method.md` (Part B discipline; Part C proposed mechanisms); lesson registries `src/table_interpreter1g_lessons.ts`, `src/table_lessons1e.ts` with ablations; `scripts/tables-1g-eval.mjs`, `scripts/tables-1g-metamorphic.mjs`. |
 
 Before closing any phase: run the vertical fitness and contract tests, the publication check on the commits to be
 pushed, the full suite, and update the contract if a stage's connection or status changed.

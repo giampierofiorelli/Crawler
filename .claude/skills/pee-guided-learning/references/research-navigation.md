@@ -15,6 +15,12 @@ The **full** original research (not a summary) lives at [research-v9-full.md](re
 | 2252–2342 | Owner decision VIII: Claude-only now | Current operating restrictions and reuse of previous scientific ideas |
 | 2343–2440 | Owner correction IX: feasibility audit and independent-evaluation tiers | **Current correction** to v5's requests for independent validation |
 
+**Later owner research (separate files, preserved verbatim).**
+
+| File | Content | When to read |
+|---|---|---|
+| [research-generalization-2026-10-18.md](research-generalization-2026-10-18.md) | Engineering techniques for generalisation (ILP, CEGIS, typed scientific knowledge and QUDT/UCUM, constraint reasoning, metamorphic and property-based testing, OOD validation, MDL, selective prediction), the unit / quantity / metric / method / condition distinction, the unknown-measure procedure and the owner's assessment of 1G | Before any change to interpretation, learning, lesson promotion or validation design; Claude's analysis is in [generalization-method.md](generalization-method.md) |
+
 **Consultation record.**
 - Phase252 (proactive teaching) read lines 83–316, 464–707 and 800–1029 in full.
 - It did not re-read 1108–1453 or 1751–2008.

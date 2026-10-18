@@ -108,6 +108,9 @@ Always give denominators. Report each of these:
 7. What is unresolved and why. Name the owner decisions needed.
 8. Tests: full-suite count and new test files.
 9. Rollback path and the next highest-value task.
+10. For any change to interpretation or learning: the lesson-admission fields, the group-split (out-of-distribution)
+    evidence with deduplication, the complexity account and per-field coverage, precision and abstention. See
+    [generalization-method.md](generalization-method.md) Part B.
 
 After the report, update `current-state.md` in this skill when a phase changes the baseline: date, HEAD, numbers,
 open problems and new modules. Add a row to `decisions-and-supersessions.md` when an owner decision or verified fact
