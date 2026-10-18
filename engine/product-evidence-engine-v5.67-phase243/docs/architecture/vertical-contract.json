@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "Original roadmap Step 3 (2026-10-17)",
+ "updated": "Step 1D-B (2026-10-18)",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -457,7 +457,7 @@
    "id": "D11",
    "stage": "authentic_evidence",
    "since": "Step 1D-A2",
-   "item": "the test readers (Phase225/226/265, 269, 270) flatten HTML with regex and never receive the Phase245 DOM, regions or table grid; the Step 1D-A2 semantic-document contract (src/document_semantics.ts) and its structured test-table reader run in evaluation and shadow only (--shadow-semantics; methodCue 'structured_table_measurement_term' is not admitted by screenTestLead265, so nothing reaches the store). Development pages: +26 correct values on the Phase272 untouched set (not held-out); untouched validation pending (Step 1D-B)",
+   "item": "the test readers (Phase225/226/265, 269, 270) flatten HTML with regex and never receive the Phase245 DOM, regions or table grid; the Step 1D-A2 semantic-document contract (src/document_semantics.ts) and its structured test-table reader run in evaluation and shadow only (--shadow-semantics; methodCue 'structured_table_measurement_term' is not admitted by screenTestLead265, so nothing reaches the store). Development pages: +26 correct values on the Phase272 untouched set (not held-out); untouched validation (Step 1D-B, 10 new pages, 3 publishers, first run 4bc6c35): +3 correct values, all from structural identity, 0 from the table reader (its test-context gate does not recognise the new publisher templates), 0 new wrong values; benefit partial, not transferred; revise on development evidence before any integration",
    "resolvedStatus": "open"
   },
   {
@@ -465,6 +465,27 @@
    "stage": "authentic_evidence",
    "since": "Original roadmap Step 3",
    "item": "the base (no-plan) test-lead reader changed behaviour after Phase265 without a version change (TEST_LEAD_EXTRACTOR265 kept so the historical identity stays): on a store copy, 2 of the 12 stored measurements of 17 authentic revisions are no longer produced by today's base reader and stay current after a same-version re-observation, and 2 new ones are produced. Plan-guided readings are now versioned by their configuration (Step 3); bumping the base version, which re-derives every revision, needs an owner decision (Step 4)",
+   "resolvedStatus": "open"
+  },
+  {
+   "id": "D13",
+   "stage": "authentic_evidence",
+   "since": "Step 1D-B",
+   "item": "a newly restrictive rights decision under the SAME reader version may withhold a new write while an earlier observation of that version stays current (code-review suspicion after Step 3; no matching fixture yet). Step 4 must demonstrate or refute it with a fixture and define conservative retirement",
+   "resolvedStatus": "open"
+  },
+  {
+   "id": "D14",
+   "stage": "authentic_evidence",
+   "since": "Step 1D-B",
+   "item": "reconsideration (readingsToReconsider265) is row-based: a valid reading that produced zero measurements leaves no row and may not be offered for re-examination when scientific knowledge improves (Step 1D-B: 5 of 10 unseen pages yield no reference value, 3 of them client-rendered). Step 4 must verify this and let unsuccessful readings take part in later learning through the existing journal, without a parallel evidence database",
+   "resolvedStatus": "open"
+  },
+  {
+   "id": "D15",
+   "stage": "authentic_evidence",
+   "since": "Step 1D-B",
+   "item": "the shared plan-guided test reader (all arms, unchanged since Phase272) turns declared figures into test leads: on the unseen pages 21 of 87 reference declarations (certified CADR, motor wattage, tank capacity, packaging times) are read as leads in arms A, B and C alike, and 0 of the 18 correct leads carry the reference test condition (88 of 89 reference values state one). Leads stay unreviewed and unpersistable, so nothing reaches ranking; any persistence of plan-guided readings (Step 4) needs a declaration screen and condition capture first",
    "resolvedStatus": "open"
   }
  ],

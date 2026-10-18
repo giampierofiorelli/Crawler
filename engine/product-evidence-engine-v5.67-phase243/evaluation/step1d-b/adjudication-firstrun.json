@@ -1,0 +1,633 @@
+{
+ "schema": "pee.step1d-b.adjudication.v1",
+ "label": "firstrun",
+ "at": "2026-10-18T01:46:50.516Z",
+ "runSha256": "474398d45d5f614896c5c652655ff3e2a04887a455e2c5fe2fcca49a3bd3d8e5",
+ "note": "source-based adjudication by the developer (Claude), recorded beside the frozen score; the frozen run is unchanged",
+ "byArm": {
+  "A": {
+   "declaration_presented_as_test": 21,
+   "real_wrong_product": 4
+  },
+  "B": {
+   "declaration_presented_as_test": 21
+  },
+  "C": {
+   "declaration_presented_as_test": 21
+  }
+ },
+ "newInCvsA": {},
+ "gates": {
+  "G1_no_unproven_variant_merge": "pass (0 real_wrong_variant in any arm; 0 inventory merges in A or B)",
+  "G2_no_new_wrong_product": "pass (C: 0 wrong-product items or leads; A had 1 item / 3 leads, all removed)",
+  "G3_no_new_declaration_as_test": "pass as defined (0 new in C) - but 21 declarations are read as test leads identically in A, B and C (pre-existing base-reader defect)",
+  "G4_no_unsafe_title_identity": "pass (B/C: 0 false principal; 2 principals missed by abstention; A used a headline twice and a title once)",
+  "G5_no_silent_disappearance": "pass (0 A successes lost)",
+  "G6_no_experience_regression": "pass (replays s1a/s1b-semantics-1db equal semantics-1d2; default replays equal step3)"
+ },
+ "items": [
+  {
+   "key": "A:neg:s1db_ap_apf_a231_hpa100-n1",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_hpa100-n2",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_hpa100-n3",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_hpa100-n4",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_hpa100-n1",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_hpa100-n2",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_hpa100-n3",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_hpa100-n4",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_hpa100-n1",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_hpa100-n2",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_hpa100-n3",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_hpa100-n4",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_hpa100",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:item:s1db_ap_apf_ap1512_5500-v8",
+   "arm": "A",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "wrong_product",
+   "adjudicated": "real_wrong_product",
+   "newVsA": false,
+   "cause": "Winix 5500-2 result bound to Winix C535, a different model the page names elsewhere (Step 1D-A inventory alias; removed by B/C)"
+  },
+  {
+   "key": "A:lead:s1db_ap_apf_ap1512_5500:1",
+   "arm": "A",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "lead_wrong_product",
+   "adjudicated": "real_wrong_product",
+   "newVsA": false,
+   "cause": "Winix 5500-2 result bound to Winix C535, a different model the page names elsewhere (Step 1D-A inventory alias; removed by B/C)"
+  },
+  {
+   "key": "A:lead:s1db_ap_apf_ap1512_5500:10",
+   "arm": "A",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "lead_wrong_product",
+   "adjudicated": "real_wrong_product",
+   "newVsA": false,
+   "cause": "Winix 5500-2 result bound to Winix C535, a different model the page names elsewhere (Step 1D-A inventory alias; removed by B/C)"
+  },
+  {
+   "key": "A:lead:s1db_ap_apf_ap1512_5500:17",
+   "arm": "A",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "lead_wrong_product",
+   "adjudicated": "real_wrong_product",
+   "newVsA": false,
+   "cause": "Winix 5500-2 result bound to Winix C535, a different model the page names elsewhere (Step 1D-A inventory alias; removed by B/C)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_ap1512_5500-n1",
+   "arm": "A",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_ap1512_5500-n2",
+   "arm": "A",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_ap1512_5500-n1",
+   "arm": "B",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_ap1512_5500-n2",
+   "arm": "B",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_ap1512_5500-n1",
+   "arm": "C",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_ap1512_5500-n2",
+   "arm": "C",
+   "doc": "s1db_ap_apf_ap1512_5500",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n1",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n4",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n7",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n9",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n10",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n13",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_best_hepa-n15",
+   "arm": "A",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n1",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n4",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n7",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n9",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n10",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n13",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_best_hepa-n15",
+   "arm": "B",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n1",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n4",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n7",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n9",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n10",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n13",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_best_hepa-n15",
+   "arm": "C",
+   "doc": "s1db_ap_apf_best_hepa",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_p800-n1",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_p800-n2",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_p800-n8",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "A:neg:s1db_ap_apf_a231_p800-n9",
+   "arm": "A",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_p800-n1",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_p800-n2",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_p800-n8",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "B:neg:s1db_ap_apf_a231_p800-n9",
+   "arm": "B",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_p800-n1",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_p800-n2",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "certified CADR read as a plan-guided measurement (CADR term + unit)"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_p800-n8",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "C:neg:s1db_ap_apf_a231_p800-n9",
+   "arm": "C",
+   "doc": "s1db_ap_apf_a231_p800",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "rated motor wattage read as a measurement"
+  },
+  {
+   "key": "A:neg:s1db_af_ih_af400-n8",
+   "arm": "A",
+   "doc": "s1db_af_ih_af400",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "packaging oven time read as a cooking result"
+  },
+  {
+   "key": "A:neg:s1db_af_ih_af400-n9",
+   "arm": "A",
+   "doc": "s1db_af_ih_af400",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "packaging oven time read as a cooking result"
+  },
+  {
+   "key": "B:neg:s1db_af_ih_af400-n8",
+   "arm": "B",
+   "doc": "s1db_af_ih_af400",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "packaging oven time read as a cooking result"
+  },
+  {
+   "key": "B:neg:s1db_af_ih_af400-n9",
+   "arm": "B",
+   "doc": "s1db_af_ih_af400",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "packaging oven time read as a cooking result"
+  },
+  {
+   "key": "C:neg:s1db_af_ih_af400-n8",
+   "arm": "C",
+   "doc": "s1db_af_ih_af400",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "packaging oven time read as a cooking result"
+  },
+  {
+   "key": "C:neg:s1db_af_ih_af400-n9",
+   "arm": "C",
+   "doc": "s1db_af_ih_af400",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "packaging oven time read as a cooking result"
+  },
+  {
+   "key": "A:neg:s1db_dh_ih_best-n5",
+   "arm": "A",
+   "doc": "s1db_dh_ih_best",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "tank capacity read as a measurement"
+  },
+  {
+   "key": "A:neg:s1db_dh_ih_best-n10",
+   "arm": "A",
+   "doc": "s1db_dh_ih_best",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "tank capacity read as a measurement"
+  },
+  {
+   "key": "B:neg:s1db_dh_ih_best-n5",
+   "arm": "B",
+   "doc": "s1db_dh_ih_best",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "tank capacity read as a measurement"
+  },
+  {
+   "key": "B:neg:s1db_dh_ih_best-n10",
+   "arm": "B",
+   "doc": "s1db_dh_ih_best",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "tank capacity read as a measurement"
+  },
+  {
+   "key": "C:neg:s1db_dh_ih_best-n5",
+   "arm": "C",
+   "doc": "s1db_dh_ih_best",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "tank capacity read as a measurement"
+  },
+  {
+   "key": "C:neg:s1db_dh_ih_best-n10",
+   "arm": "C",
+   "doc": "s1db_dh_ih_best",
+   "frozen": "declaration_read_as_result",
+   "adjudicated": "declaration_presented_as_test",
+   "newVsA": false,
+   "cause": "tank capacity read as a measurement"
+  }
+ ]
+}

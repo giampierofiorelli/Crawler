@@ -246,6 +246,7 @@ M = about one phase, L = several phases.
 - Step 1 was carried out as Steps 1A–1C, with the Step 1D-A/1D-A2 subphases added under owner briefs (`docs/plans/experience-pilot-step1*.md`).
 - Step 2 (attribution safety) has development evidence only (Steps 1C–1D-A2); its independent untouched validation is pending (planned as Step 1D-B).
 - Step 3 (version identity of guided reading, F7) is implemented and verified on synthetic cases and on a copy of the store with authentic retained revisions (`docs/plans/continuous-learning-step3-versioned-reading.md`). A plan-guided reading's extractor version is the base version plus a digest of its effective configuration, and supersession, rollback and rights hold on re-derivation.
+- Step 2 independent-page validation (Step 1D-B, 2026-10-18, `docs/plans/experience-pilot-step1d-b.md`) is done: on 10 unseen pages (3 publishers, 89 reference values) the frozen HTML-first candidate gains +3 correct values over the Step 1D-A baseline (all from structural identity, 0 from the table reader) with no new wrong value and every safety gate passing. Pre-registered verdict: benefit partial; revise on development evidence before Step 4. Step 4 prerequisites D11-D15 are in `docs/architecture/vertical-contract.json`.
 - Step 4 has not started.
 
 ## 6. Recommended first step (only this one)
