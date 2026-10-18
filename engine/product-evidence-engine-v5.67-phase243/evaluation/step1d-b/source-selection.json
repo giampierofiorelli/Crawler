@@ -1,0 +1,56 @@
+{
+ "schema": "pee.step1d-b.source-selection.v1",
+ "frozenAt": "2026-10-18",
+ "protocol": "evaluation/step1d-b/protocol.json",
+ "method": "web-search titles, URLs and the search tool's own summaries only (9 searches); no page body read; summary exposure recorded per candidate; no page-specific search",
+ "queries": [
+  "air fryer review we tested cooking time minutes noise dB lab",
+  "TV review measured peak brightness nits input lag tested",
+  "best dehumidifiers tested litres extracted per day energy use",
+  "air purifier comparison tested CADR particle reduction minutes noise decibels",
+  "airpurifierfirst comparison vs (airpurifierfirst.com)",
+  "Ideal Home best air fryers tested (idealhome.co.uk)",
+  "rtings TV review 2026 (rtings.com)",
+  "PCMag / Serious Eats / Good Housekeeping / CNET domain searches: refused by the search tool because these publishers block Anthropic's crawler"
+ ],
+ "excludedPublishers": {
+  "pcmag.com, seriouseats.com, goodhousekeeping.com, cnet.com": "the publisher blocks Anthropic's crawler (search tool refusal); treated as a reservation and not requested",
+  "consumerreports.org, which.co.uk": "membership or paywall",
+  "manufacturer and retailer pages (tefal, mi.com, bestbuy blog, digitec)": "not independent tests"
+ },
+ "excludedForExposure": [
+  "housefresh.com ?p=33871 and ?p=27953 (measured values in summary; also a development publisher)",
+  "airpurifierfirst Levoit Vital 200S vs Austin Air HealthMate Jr, Honeywell HPA100 vs Hathaspace HSP001, Levoit EverestAir review, Blueair 311i Max vs Levoit Vital 200S, Coway AP-1512HH vs Alen FLEX (measured values in summary)",
+  "soundandvision Vizio PX75-G1 test bench (measured values in summary)",
+  "talkofthehouse best dehumidifiers (measured value in summary)",
+  "airpurifierfirst Coway AP-1512HH vs Levoit Core 600S (a coverage figure in summary; not selected, kept off the list)"
+ ],
+ "notEligible": ["airpurifierfirst Qingping 2 Gen vs Qingping Lite (air-quality monitors, not purifiers)", "rtings LG MRGB95B early-access review (early access)"],
+ "priorUrlCheck": "scripts/step1d-b-eval.mjs screen: all 15 listed candidates are absent from 3,060 earlier canonical URLs (708 files + store revisions)",
+ "hosts": {
+  "www.rtings.com": "not a Step 1D-A2 development publisher (3 air-fryer pages read in Phase268, none since)",
+  "www.airpurifierfirst.com": "never used",
+  "www.idealhome.co.uk": "never used; same publishing group (Future plc) as two development publishers (techradar.com, tomsguide.com), so its templates may resemble them: reported as a limitation"
+ },
+ "orderedCandidates": [
+  {"order": 1, "tag": "s1db_tv_rt_u7n", "host": "www.rtings.com", "category": "televisions", "stratum": "single_product_review", "url": "https://www.rtings.com/tv/reviews/hisense/u7-u7n", "exposure": "title only (summary said figures not shown)"},
+  {"order": 2, "tag": "s1db_tv_rt_best_budget", "host": "www.rtings.com", "category": "televisions", "stratum": "roundup", "url": "https://www.rtings.com/tv/reviews/best/budget", "exposure": "top pick named, no numbers"},
+  {"order": 3, "tag": "s1db_tv_rt_best_oled", "host": "www.rtings.com", "category": "televisions", "stratum": "roundup", "url": "https://www.rtings.com/tv/reviews/best/by-type/oled", "exposure": "top pick named, no numbers"},
+  {"order": 4, "tag": "s1db_ap_apf_a231_hpa100", "host": "www.airpurifierfirst.com", "category": "air_purifiers", "stratum": "comparison", "url": "https://www.airpurifierfirst.com/comparison/winix-a231-vs-honeywell-hpa100/", "exposure": "verdict only (Winix better; quieter at low speed), no numbers"},
+  {"order": 5, "tag": "s1db_ap_apf_ap1512_5500", "host": "www.airpurifierfirst.com", "category": "air_purifiers", "stratum": "comparison", "url": "https://www.airpurifierfirst.com/comparison/coway-ap-1512hh-vs-winix-5500-2/", "exposure": "verdict only, no numbers"},
+  {"order": 6, "tag": "s1db_ap_apf_best_hepa", "host": "www.airpurifierfirst.com", "category": "air_purifiers", "stratum": "roundup", "url": "https://www.airpurifierfirst.com/buying-guides/best-true-hepa-air-purifiers/", "exposure": "title only"},
+  {"order": 7, "tag": "s1db_ap_apf_a231_p800", "host": "www.airpurifierfirst.com", "category": "air_purifiers", "stratum": "comparison", "url": "https://www.airpurifierfirst.com/comparison/winix-a231-vs-philips-800-series/", "exposure": "verdict only, no numbers"},
+  {"order": 8, "tag": "s1db_af_ih_af400", "host": "www.idealhome.co.uk", "category": "air_fryers", "stratum": "single_product_review", "url": "https://www.idealhome.co.uk/kitchen/ninja-foodi-max-dual-zone-af400uk-95l-air-fryer-review", "exposure": "verdict only (still one of the best), no numbers"},
+  {"order": 9, "tag": "s1db_af_ih_doublestack_af400", "host": "www.idealhome.co.uk", "category": "air_fryers", "stratum": "comparison", "url": "https://www.idealhome.co.uk/kitchen/ninja-double-stack-vs-ninja-foodi-max-dual-zone-air-fryer", "exposure": "title only"},
+  {"order": 10, "tag": "s1db_dh_ih_best", "host": "www.idealhome.co.uk", "category": "dehumidifiers", "stratum": "roundup", "url": "https://www.idealhome.co.uk/buying-guide-reviews/best-dehumidifiers-197676", "exposure": "top pick named; two manufacturer capacity/power figures in the summary (declarations, not measured results)"}
+ ],
+ "orderedSubstitutes": [
+  {"replaces": "rtings.com", "tag": "s1db_tv_rt_best_4850", "category": "televisions", "stratum": "roundup", "url": "https://www.rtings.com/tv/reviews/best/by-size/48-50-inch", "exposure": "title only"},
+  {"replaces": "rtings.com", "tag": "s1db_tv_rt_best_rgb", "category": "televisions", "stratum": "roundup", "url": "https://www.rtings.com/tv/reviews/best/rgb-mini-led", "exposure": "top pick named, no numbers"},
+  {"replaces": "airpurifierfirst.com", "tag": "s1db_ap_apf_flex_600s", "category": "air_purifiers", "stratum": "comparison", "url": "https://www.airpurifierfirst.com/comparison/alen-flex-vs-levoit-core-600s/", "exposure": "verdict only, no numbers"},
+  {"replaces": "idealhome.co.uk", "tag": "s1db_af_ih_best", "category": "air_fryers", "stratum": "roundup", "url": "https://www.idealhome.co.uk/buying-guide-reviews/best-air-fryers-226692", "exposure": "top pick named, no numbers"},
+  {"replaces": "idealhome.co.uk", "tag": "s1db_af_ih_best_dual", "category": "air_fryers", "stratum": "roundup", "url": "https://www.idealhome.co.uk/kitchen/best-dual-zone-air-fryers", "exposure": "picks named, no numbers"}
+ ],
+ "plannedRequests": "3 robots + 10 pages = 13 of 20; 7 spare for substitutes or redirects; per host at most 6",
+ "limits": "3 publishers (not 4): every other independent publisher with own measurements reached through search was either paywalled, a development publisher or blocks Anthropic's crawler; no dishwasher or coffee-machine page was found without exposure; no single-product air-purifier review was found without exposure"
+}
