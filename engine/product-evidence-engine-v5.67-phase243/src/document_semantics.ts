@@ -212,6 +212,9 @@ export function cellProducts1D2(sem:DocumentSemantics1D2,isProduct:(name:string)
 
 const PRICE=/[$£€¥]\s?\d|\d\s?(?:usd|gbp|eur)\b/i;
 const DECLARED_BODY=/\b(?:AHAM|ANSI|ISO|IEC|ENERGY STAR|UL|CE)\b/;
+/** The table reader's own patterns, exported unchanged for the table decision ledger (src/table_ledger1e.ts), which must
+ * apply exactly the same gates. */
+export const TABLE_GATES1D2={TABLE_TEST,SPEC_HEAD,PRICE,DECLARED_BODY} as const;
 /** Measurement cells of test tables, read with the Phase272 plan gates (unit in the plan; a taught term of the unit's
  * dimension, or a generic dimension word, in the cell's own labels; no declaration cue; not a range or bound; not a price).
  * Several values in one cell are read separately with their local label ("3.6 V: 36.1 dB 4.2 V: 36.9 dB"). A bare number

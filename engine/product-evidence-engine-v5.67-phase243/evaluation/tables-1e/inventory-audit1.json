@@ -1,0 +1,7190 @@
+{
+ "schema": "pee.tables1e.inventory.v1",
+ "label": "audit1",
+ "at": "2026-10-18T06:10:24.367Z",
+ "build": {
+  "dist": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243/dist/src",
+  "commit": "75a62a1",
+  "srcDirty": true,
+  "readersSha256": "c80ba8dd105f7b5c7a9197eba397632d51fa500e45152fb35e0467de849b0c7e",
+  "readers": 9
+ },
+ "tier": "development (every page examined before)",
+ "ledgerVersion": "pee.table-ledger.v1e.1",
+ "summary": {
+  "pages": 69,
+  "hosts": 12,
+  "tablesDom": 75,
+  "nested": 2,
+  "noGrid": 0,
+  "beyondLimit": 0,
+  "readBySemantics": 73,
+  "sourceCells": 1831,
+  "occupiedSlots": 1831,
+  "emptySlots": 0,
+  "spannedCells": 0,
+  "thCells": 297,
+  "scopeCells": 71,
+  "headersAttrCells": 0,
+  "tablesWithThead": 48,
+  "tablesWithCaption": 3,
+  "gridWarnings": {},
+  "modes": {
+   "unsupported": 26,
+   "key_value": 38,
+   "products_in_rows": 6,
+   "products_in_columns": 5
+  },
+  "modeReasons": {
+   "too_few_quantitative_columns_for_product_rows": 15,
+   "too_small": 4,
+   "no_unique_product_key_column": 5,
+   "no_header_row_for_multi_column_table": 2,
+   "implicit_header_row": 3,
+   "product_names_from_name_row": 4
+  },
+  "contexts": {
+   "unknown": 38,
+   "specification": 22,
+   "test": 13
+  },
+  "hardExcludedTables": 0,
+  "cellsWithoutBlock": 326,
+  "cellsInUnreadTables": 2,
+  "parseTruncatedPages": 0,
+  "clientRenderedPages": [
+   "phase268/rt_turboblaze",
+   "phase268/rt_af101",
+   "phase268/rt_method",
+   "step1d-b/s1db_tv_rt_u7n",
+   "step1d-b/s1db_tv_rt_best_budget",
+   "step1d-b/s1db_tv_rt_best_oled"
+  ],
+  "pagesWithoutTables": 38,
+  "byHost": {
+   "rtings.com": {
+    "pages": 6,
+    "tables": 0,
+    "read": 0,
+    "modes": {},
+    "contexts": {}
+   },
+   "expertreviews.co.uk": {
+    "pages": 13,
+    "tables": 0,
+    "read": 0,
+    "modes": {},
+    "contexts": {}
+   },
+   "choice.com.au": {
+    "pages": 1,
+    "tables": 0,
+    "read": 0,
+    "modes": {},
+    "contexts": {}
+   },
+   "consumer.org.nz": {
+    "pages": 1,
+    "tables": 0,
+    "read": 0,
+    "modes": {},
+    "contexts": {}
+   },
+   "which.co.uk": {
+    "pages": 6,
+    "tables": 12,
+    "read": 12,
+    "modes": {
+     "unsupported": 12
+    },
+    "contexts": {
+     "unknown": 12
+    }
+   },
+   "lovemoney.com": {
+    "pages": 1,
+    "tables": 3,
+    "read": 1,
+    "modes": {
+     "unsupported": 3
+    },
+    "contexts": {
+     "unknown": 1
+    }
+   },
+   "techradar.com": {
+    "pages": 14,
+    "tables": 9,
+    "read": 9,
+    "modes": {
+     "unsupported": 4,
+     "key_value": 4,
+     "products_in_rows": 1
+    },
+    "contexts": {
+     "unknown": 5,
+     "specification": 4
+    }
+   },
+   "trustedreviews.com": {
+    "pages": 11,
+    "tables": 19,
+    "read": 19,
+    "modes": {
+     "key_value": 18,
+     "unsupported": 1
+    },
+    "contexts": {
+     "specification": 10,
+     "unknown": 2,
+     "test": 7
+    }
+   },
+   "housefresh.com": {
+    "pages": 5,
+    "tables": 16,
+    "read": 16,
+    "modes": {
+     "key_value": 11,
+     "products_in_rows": 1,
+     "unsupported": 3,
+     "products_in_columns": 1
+    },
+    "contexts": {
+     "unknown": 12,
+     "test": 4
+    }
+   },
+   "tomsguide.com": {
+    "pages": 4,
+    "tables": 2,
+    "read": 2,
+    "modes": {
+     "products_in_rows": 2
+    },
+    "contexts": {
+     "test": 2
+    }
+   },
+   "airpurifierfirst.com": {
+    "pages": 4,
+    "tables": 13,
+    "read": 13,
+    "modes": {
+     "products_in_columns": 4,
+     "unsupported": 2,
+     "products_in_rows": 2,
+     "key_value": 5
+    },
+    "contexts": {
+     "specification": 8,
+     "unknown": 5
+    }
+   },
+   "idealhome.co.uk": {
+    "pages": 3,
+    "tables": 1,
+    "read": 1,
+    "modes": {
+     "unsupported": 1
+    },
+    "contexts": {
+     "unknown": 1
+    }
+   }
+  },
+  "ms": 4068,
+  "ledgerEquivalence": {
+   "pages": 69,
+   "identical": 69,
+   "readerLeads": 65,
+   "ledgerLeads": 65
+  },
+  "ledger": {
+   "documents": 69,
+   "tables": 73,
+   "cells": 1829,
+   "headerCells": 310,
+   "elements": 2774,
+   "elementKinds": {
+    "text": 790,
+    "number_with_unit": 1187,
+    "currency": 117,
+    "bare_number": 613,
+    "empty": 59,
+    "dash": 8
+   },
+   "states": {
+    "header_label": 988,
+    "rejected": 1401,
+    "label_text": 253,
+    "empty": 59,
+    "table_lead": 65,
+    "dash_unexplained": 8
+   },
+   "valueElements": 1800,
+   "valueElementsOutsideLabels": 1358,
+   "tableLeads": 65,
+   "rejectedValueElements": 1293,
+   "blockersOnRejected": {
+    "R08_unknown_context_no_test_label": 1138,
+    "R12_no_plan_unit": 879,
+    "R06_first_column_label": 52,
+    "R14_no_dimension_term": 67,
+    "R03_table_context_specification": 488,
+    "R15_range_or_bound": 37,
+    "R09_declaration_cue_in_labels": 11,
+    "R10_declared_body_in_labels": 36,
+    "R16_duplicate": 2,
+    "P0_no_plan": 39,
+    "R11_price_in_cell": 20
+   },
+   "earliestStageOfRejected": {
+    "context": 1120,
+    "structure": 52,
+    "element": 76,
+    "evidence": 4,
+    "output": 2,
+    "acquisition": 39
+   },
+   "rejectedWithSeveralBlockers": 984,
+   "soleBlocker": {
+    "R08_unknown_context_no_test_label": 227,
+    "R12_no_plan_unit": 76,
+    "R10_declared_body_in_labels": 4,
+    "R16_duplicate": 2
+   },
+   "valueCellsWithoutBlock": 0,
+   "tablesUnknownContextWithSectionMethod": 4,
+   "tablesWithHeaderUnits": 8,
+   "tablesWithSettingFirstColumn": 5,
+   "compoundCells": 384,
+   "mixedValueCurrencyCells": 29
+  }
+ },
+ "documents": [
+  {
+   "page": "phase268/rt_turboblaze",
+   "host": "rtings.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 586,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 3,
+    "frameworkData": true,
+    "visibleChars": 1001,
+    "suspected": true
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/rt_af101",
+   "host": "rtings.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 582,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 3,
+    "frameworkData": true,
+    "visibleChars": 989,
+    "suspected": true
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/rt_method",
+   "host": "rtings.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 561,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 3,
+    "frameworkData": true,
+    "visibleChars": 1026,
+    "suspected": true
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_salter_crispgo",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2885,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 12449,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_cuisinart_compactmax",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2923,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 13068,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_ninja_af180",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2615,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 12838,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_ninja_af300",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2415,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 11630,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_cosori_turbotower",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 3498,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 15354,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_instant_vortexdual",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2460,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 13045,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_philips_5000steam",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2850,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 14161,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/er_typhur_dome2",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 3879,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 16569,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/ho_tower_xpresscombo",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2389,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 10757,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/ho_ninja_doublestack",
+   "host": "expertreviews.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2444,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 12505,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/u_choice_energy",
+   "host": "choice.com.au",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 8569,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 33791,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase268/u_cnz_energy",
+   "host": "consumer.org.nz",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 581,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 4464,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase270/w_vs_oven",
+   "host": "which.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 1165,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 9483,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 3,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase270/w_vs_deepfat",
+   "host": "which.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 1165,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 9483,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 3,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase270/w_cheapest",
+   "host": "which.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 1165,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 9483,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 5,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 5,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 3,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 3,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 4,
+       "currency": 2,
+       "bare_number": 2
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 2
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase270/lm_test",
+   "host": "lovemoney.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 1120,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 8428,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 2,
+     "cols": 1,
+     "sourceCells": 2,
+     "slots": 2,
+     "occupiedSlots": 2,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_small"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": true,
+     "grid": true,
+     "rows": 1,
+     "cols": 1,
+     "sourceCells": 1,
+     "slots": 1,
+     "occupiedSlots": 1,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_small"
+     ],
+     "phase245Readings": 0,
+     "semantics": "nested_table_not_read"
+    },
+    {
+     "domIndex": 2,
+     "nested": true,
+     "grid": true,
+     "rows": 1,
+     "cols": 1,
+     "sourceCells": 1,
+     "slots": 1,
+     "occupiedSlots": 1,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_small"
+     ],
+     "phase245Readings": 0,
+     "semantics": "nested_table_not_read"
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 2,
+      "cols": 1,
+      "headerRows": 0,
+      "cells": 2,
+      "elements": {
+       "text": 1,
+       "currency": 1
+      },
+      "states": {
+       "label_text": 1,
+       "rejected": 1
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 1,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 1
+      },
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 10,
+         "dimensions": []
+        }
+       ],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 1,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase270/tr_electricity",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 7441,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 24161,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 4,
+     "cols": 5,
+     "sourceCells": 20,
+     "slots": 20,
+     "occupiedSlots": 20,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_unique_product_key_column"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 4,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 20,
+      "elements": {
+       "text": 5,
+       "number_with_unit": 10,
+       "bare_number": 5,
+       "currency": 3
+      },
+      "states": {
+       "header_label": 6,
+       "rejected": 17
+      },
+      "blockers": {
+       "R06_first_column_label": 6,
+       "R08_unknown_context_no_test_label": 18,
+       "R14_no_dimension_term": 7,
+       "R12_no_plan_unit": 6,
+       "R11_price_in_cell": 3
+      },
+      "earliest": {
+       "structure": 5,
+       "context": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 2,
+         "dimensions": []
+        }
+       ],
+       "headingDimensions": [],
+       "headerUnitCells": 2,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 3,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase270/w_method",
+   "host": "which.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 757,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 9745,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase270/w_ninja_brand",
+   "host": "which.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2556,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 4371,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase270/w_tower_t17102",
+   "host": "which.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2098,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 3607,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase270/tr_af300",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 6946,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 22386,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase271/t_best_small",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 10484,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 2,
+    "frameworkData": false,
+    "visibleChars": 33456,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase271/t_best",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 12823,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 2,
+    "frameworkData": false,
+    "visibleChars": 38602,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase271/t_cosori_twinfry",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 8960,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 31051,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 13,
+     "cols": 2,
+     "sourceCells": 26,
+     "slots": 26,
+     "occupiedSlots": 26,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 13,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 4,
+     "cols": 3,
+     "sourceCells": 12,
+     "slots": 12,
+     "occupiedSlots": 12,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": true,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_header_row_for_multi_column_table"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 13,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 26,
+      "elements": {
+       "text": 17,
+       "bare_number": 4,
+       "number_with_unit": 9
+      },
+      "states": {
+       "header_label": 13,
+       "rejected": 13,
+       "label_text": 4
+      },
+      "blockers": {
+       "R03_table_context_specification": 13,
+       "R08_unknown_context_no_test_label": 13,
+       "R12_no_plan_unit": 10,
+       "R15_range_or_bound": 1
+      },
+      "earliest": {
+       "context": 13
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 13,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 4,
+      "cols": 3,
+      "headerRows": 0,
+      "cells": 12,
+      "elements": {
+       "text": 9,
+       "bare_number": 6
+      },
+      "states": {
+       "header_label": 4,
+       "label_text": 5,
+       "rejected": 6
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 6,
+       "R12_no_plan_unit": 6
+      },
+      "earliest": {
+       "context": 6
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 4,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase271/t_ninja_doublestack",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 7494,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 27995,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 6,
+     "cols": 2,
+     "sourceCells": 12,
+     "slots": 12,
+     "occupiedSlots": 12,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 6,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 6,
+     "cols": 4,
+     "sourceCells": 24,
+     "slots": 24,
+     "occupiedSlots": 24,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 4,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_rows",
+     "modeReasons": [],
+     "phase245Readings": 15,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 4
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 6,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 12,
+      "elements": {
+       "text": 8,
+       "number_with_unit": 11,
+       "bare_number": 1
+      },
+      "states": {
+       "header_label": 6,
+       "rejected": 12,
+       "label_text": 2
+      },
+      "blockers": {
+       "R03_table_context_specification": 12,
+       "R08_unknown_context_no_test_label": 12,
+       "R12_no_plan_unit": 11
+      },
+      "earliest": {
+       "context": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 6,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 4,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "products_in_rows",
+      "context": "unknown",
+      "rows": 6,
+      "cols": 4,
+      "headerRows": 1,
+      "cells": 24,
+      "elements": {
+       "bare_number": 2,
+       "text": 10,
+       "currency": 8,
+       "number_with_unit": 30
+      },
+      "states": {
+       "header_label": 9,
+       "rejected": 38,
+       "label_text": 3
+      },
+      "blockers": {
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R06_first_column_label": 1,
+       "R08_unknown_context_no_test_label": 40,
+       "R12_no_plan_unit": 29,
+       "R11_price_in_cell": 8
+      },
+      "earliest": {
+       "context": 38
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 5,
+        "headerRow": 0,
+        "headerRowOf": 3
+       },
+       "compoundCells": 12,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase271/t_philips_500",
+   "host": "techradar.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 9090,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 34540,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 13,
+     "cols": 2,
+     "sourceCells": 26,
+     "slots": 26,
+     "occupiedSlots": 26,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 13,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 4,
+     "cols": 3,
+     "sourceCells": 12,
+     "slots": 12,
+     "occupiedSlots": 12,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": true,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_header_row_for_multi_column_table"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 13,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 26,
+      "elements": {
+       "text": 17,
+       "bare_number": 6,
+       "number_with_unit": 8
+      },
+      "states": {
+       "header_label": 13,
+       "rejected": 14,
+       "label_text": 4
+      },
+      "blockers": {
+       "R03_table_context_specification": 14,
+       "R08_unknown_context_no_test_label": 14,
+       "R12_no_plan_unit": 12,
+       "R15_range_or_bound": 1
+      },
+      "earliest": {
+       "context": 14
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 13,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 4,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 4,
+      "cols": 3,
+      "headerRows": 0,
+      "cells": 12,
+      "elements": {
+       "text": 7,
+       "number_with_unit": 2,
+       "bare_number": 6
+      },
+      "states": {
+       "header_label": 4,
+       "label_text": 3,
+       "rejected": 8
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 8,
+       "R12_no_plan_unit": 8
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 4,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/dev_dw_tr_bosch_smv68md00g",
+   "host": "trustedreviews.com",
+   "category": "dishwashers",
+   "plan": true,
+   "nodes": 2926,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 18112,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 5,
+     "cols": 2,
+     "sourceCells": 10,
+     "slots": 10,
+     "occupiedSlots": 10,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 5,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 2,
+     "cols": 2,
+     "sourceCells": 4,
+     "slots": 4,
+     "occupiedSlots": 4,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 2,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 2,
+     "cols": 2,
+     "sourceCells": 4,
+     "slots": 4,
+     "occupiedSlots": 4,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 2,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 5,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 10,
+      "elements": {
+       "text": 6,
+       "number_with_unit": 1,
+       "currency": 3
+      },
+      "states": {
+       "header_label": 5,
+       "rejected": 4,
+       "label_text": 1
+      },
+      "blockers": {
+       "R03_table_context_specification": 4,
+       "R08_unknown_context_no_test_label": 4,
+       "R12_no_plan_unit": 1,
+       "R11_price_in_cell": 3
+      },
+      "earliest": {
+       "context": 4
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 5,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 2,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 4,
+      "elements": {
+       "text": 2,
+       "number_with_unit": 2
+      },
+      "states": {
+       "header_label": 2,
+       "rejected": 2
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 2
+      },
+      "earliest": {
+       "context": 2
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [
+        "mass"
+       ],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 2,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 4,
+      "elements": {
+       "text": 2,
+       "number_with_unit": 2
+      },
+      "states": {
+       "header_label": 2,
+       "rejected": 2
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 2
+      },
+      "earliest": {
+       "context": 2
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [
+        "mass"
+       ],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/dev_ap_hf_airdoctor3000",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 1889,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 13257,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 12,
+       "number_with_unit": 31,
+       "bare_number": 8
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 37,
+       "label_text": 3
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 39,
+       "R12_no_plan_unit": 23,
+       "R15_range_or_bound": 1,
+       "R06_first_column_label": 2,
+       "R14_no_dimension_term": 2,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 37
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 7,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/dev_tv_trd_lgc6_c5",
+   "host": "techradar.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 7857,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 25075,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/m_td_tr_howwetest",
+   "host": "trustedreviews.com",
+   "category": "tumble_dryers",
+   "plan": false,
+   "nodes": 2292,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 8981,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": false,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/m_td_er_best",
+   "host": "expertreviews.co.uk",
+   "category": "tumble_dryers",
+   "plan": false,
+   "nodes": 2156,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 18525,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": false,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/u_af_tg_ninja_crispi",
+   "host": "tomsguide.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 7767,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 24171,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/u_af_tg_tfal_infrared",
+   "host": "tomsguide.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 8106,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 25183,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/u_af_tr_philips_1000_flexdrawer",
+   "host": "trustedreviews.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2966,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 15718,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 1,
+     "cols": 2,
+     "sourceCells": 2,
+     "slots": 2,
+     "occupiedSlots": 2,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 2,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_small"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 2,
+     "headerCellsInSemantics": 2
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 13,
+     "cols": 2,
+     "sourceCells": 26,
+     "slots": 26,
+     "occupiedSlots": 26,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 14,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 12,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 14,
+     "headerCellsInSemantics": 14
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "test",
+      "rows": 1,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 2,
+      "elements": {
+       "empty": 1,
+       "text": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 1
+      },
+      "blockers": {},
+      "earliest": {},
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 0,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 13,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 26,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 7,
+       "text": 16,
+       "bare_number": 5,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 13,
+       "label_text": 4,
+       "rejected": 12
+      },
+      "blockers": {
+       "R03_table_context_specification": 13,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R08_unknown_context_no_test_label": 13,
+       "R12_no_plan_unit": 11,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 12,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 2,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_af_tr_sharp_5_5l",
+   "host": "trustedreviews.com",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 2944,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 16552,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 12,
+     "cols": 2,
+     "sourceCells": 24,
+     "slots": 24,
+     "occupiedSlots": 24,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 13,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 13,
+     "headerCellsInSemantics": 13
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 12,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 24,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 7,
+       "text": 14,
+       "bare_number": 5,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 12,
+       "label_text": 3,
+       "rejected": 12
+      },
+      "blockers": {
+       "R03_table_context_specification": 13,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R08_unknown_context_no_test_label": 13,
+       "R12_no_plan_unit": 11,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 2,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_dw_tr_lg_ldnpm654s",
+   "host": "trustedreviews.com",
+   "category": "dishwashers",
+   "plan": true,
+   "nodes": 3069,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 13049,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 10,
+     "cols": 2,
+     "sourceCells": 20,
+     "slots": 20,
+     "occupiedSlots": 20,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 11,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 9,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 11,
+     "headerCellsInSemantics": 11
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 10,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 20,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 6,
+       "text": 11,
+       "bare_number": 5,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 10,
+       "label_text": 2,
+       "rejected": 11
+      },
+      "blockers": {
+       "R03_table_context_specification": 12,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R08_unknown_context_no_test_label": 12,
+       "R12_no_plan_unit": 11,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 11
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 9,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 2,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_dw_tr_candy_cf57cf0w",
+   "host": "trustedreviews.com",
+   "category": "dishwashers",
+   "plan": true,
+   "nodes": 3063,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 14174,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 5,
+     "cols": 2,
+     "sourceCells": 10,
+     "slots": 10,
+     "occupiedSlots": 10,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 6,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 4,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 6,
+     "headerCellsInSemantics": 6
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 10,
+     "cols": 2,
+     "sourceCells": 20,
+     "slots": 20,
+     "occupiedSlots": 20,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 11,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 9,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 11,
+     "headerCellsInSemantics": 11
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 4,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 5,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 10,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 5,
+       "text": 4
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 5,
+       "table_lead": 4
+      },
+      "blockers": {
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R12_no_plan_unit": 1
+      },
+      "earliest": {},
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 4,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 10,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 20,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 6,
+       "text": 11,
+       "bare_number": 6,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 10,
+       "label_text": 2,
+       "rejected": 12
+      },
+      "blockers": {
+       "R03_table_context_specification": 13,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R08_unknown_context_no_test_label": 13,
+       "R12_no_plan_unit": 11,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 9,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_dw_er_bosch_smv68nd00g",
+   "host": "expertreviews.co.uk",
+   "category": "dishwashers",
+   "plan": true,
+   "nodes": 2189,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 9753,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/u_dw_trd_bob_mini",
+   "host": "techradar.com",
+   "category": "dishwashers",
+   "plan": true,
+   "nodes": 6990,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 22899,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/u_ap_hf_xiaomi_4pro",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 1924,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 14149,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 12,
+       "number_with_unit": 32,
+       "bare_number": 9
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 40,
+       "label_text": 2
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 41,
+       "R12_no_plan_unit": 23,
+       "R15_range_or_bound": 1,
+       "R14_no_dimension_term": 1,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 40
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 7,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_ap_hf_puroair_240",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 2829,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 27276,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 14,
+     "cols": 2,
+     "sourceCells": 28,
+     "slots": 28,
+     "occupiedSlots": 28,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 1,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 5,
+     "cols": 3,
+     "sourceCells": 15,
+     "slots": 15,
+     "occupiedSlots": 15,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_rows",
+     "modeReasons": [
+      "implicit_header_row"
+     ],
+     "phase245Readings": 8,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 3
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 10,
+     "cols": 3,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 3,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_unique_product_key_column"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 3,
+     "headerCellsInSemantics": 3
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 8,
+     "cols": 4,
+     "sourceCells": 32,
+     "slots": 32,
+     "occupiedSlots": 32,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 4,
+     "scope": 4,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_unique_product_key_column"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 4,
+     "headerCellsInSemantics": 4
+    },
+    {
+     "domIndex": 4,
+     "nested": false,
+     "grid": true,
+     "rows": 4,
+     "cols": 2,
+     "sourceCells": 8,
+     "slots": 8,
+     "occupiedSlots": 8,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 4,
+     "semantics": "read",
+     "semIndex": 4,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 5,
+     "nested": false,
+     "grid": true,
+     "rows": 9,
+     "cols": 4,
+     "sourceCells": 36,
+     "slots": 36,
+     "occupiedSlots": 36,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 4,
+     "scope": 4,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_unique_product_key_column"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 5,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 4,
+     "headerCellsInSemantics": 4
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 29,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 14,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 28,
+      "elements": {
+       "text": 13,
+       "number_with_unit": 26,
+       "bare_number": 8,
+       "currency": 2
+      },
+      "states": {
+       "header_label": 14,
+       "label_text": 2,
+       "table_lead": 4,
+       "rejected": 29
+      },
+      "blockers": {
+       "R06_first_column_label": 3,
+       "R08_unknown_context_no_test_label": 29,
+       "R12_no_plan_unit": 20,
+       "R14_no_dimension_term": 2,
+       "R09_declaration_cue_in_labels": 4,
+       "R11_price_in_cell": 2,
+       "R10_declared_body_in_labels": 1
+      },
+      "earliest": {
+       "context": 26,
+       "element": 3
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "products_in_rows",
+      "context": "test",
+      "rows": 5,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 15,
+      "elements": {
+       "text": 3,
+       "bare_number": 4,
+       "number_with_unit": 4,
+       "currency": 4
+      },
+      "states": {
+       "header_label": 7,
+       "rejected": 8
+      },
+      "blockers": {
+       "R06_first_column_label": 4,
+       "R12_no_plan_unit": 4,
+       "R10_declared_body_in_labels": 4,
+       "R11_price_in_cell": 4
+      },
+      "earliest": {
+       "evidence": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [
+        "duration"
+       ],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 4,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "unsupported",
+      "context": "test",
+      "rows": 10,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "text": 5,
+       "number_with_unit": 13,
+       "currency": 9,
+       "bare_number": 3
+      },
+      "states": {
+       "header_label": 12,
+       "table_lead": 8,
+       "rejected": 10
+      },
+      "blockers": {
+       "R06_first_column_label": 7,
+       "R12_no_plan_unit": 7,
+       "R11_price_in_cell": 9,
+       "R16_duplicate": 1
+      },
+      "earliest": {
+       "evidence": 9,
+       "output": 1
+      },
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 5,
+         "dimensions": [
+          "concentration"
+         ]
+        },
+        {
+         "distance": 4,
+         "dimensions": [
+          "duration"
+         ]
+        },
+        {
+         "distance": 3,
+         "dimensions": []
+        },
+        {
+         "distance": 2,
+         "dimensions": []
+        }
+       ],
+       "headingDimensions": [
+        "duration"
+       ],
+       "headerUnitCells": 1,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 9,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 3,
+      "mode": "unsupported",
+      "context": "test",
+      "rows": 8,
+      "cols": 4,
+      "headerRows": 1,
+      "cells": 32,
+      "elements": {
+       "text": 5,
+       "number_with_unit": 16,
+       "currency": 7,
+       "bare_number": 4
+      },
+      "states": {
+       "header_label": 11,
+       "table_lead": 13,
+       "rejected": 8
+      },
+      "blockers": {
+       "R06_first_column_label": 6,
+       "R12_no_plan_unit": 6,
+       "R11_price_in_cell": 7,
+       "R16_duplicate": 1
+      },
+      "earliest": {
+       "evidence": 7,
+       "output": 1
+      },
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 4,
+         "dimensions": [
+          "energy",
+          "power",
+          "sound",
+          "duration"
+         ]
+        },
+        {
+         "distance": 2,
+         "dimensions": [
+          "sound"
+         ]
+        }
+       ],
+       "headingDimensions": [
+        "sound",
+        "duration"
+       ],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 7,
+        "headerRow": 0,
+        "headerRowOf": 3
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 4,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 4,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 8,
+      "elements": {
+       "text": 1,
+       "number_with_unit": 4,
+       "bare_number": 3
+      },
+      "states": {
+       "header_label": 4,
+       "table_lead": 4
+      },
+      "blockers": {
+       "R06_first_column_label": 3,
+       "R12_no_plan_unit": 3
+      },
+      "earliest": {},
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 1,
+         "dimensions": [
+          "energy",
+          "power",
+          "duration"
+         ]
+        }
+       ],
+       "headingDimensions": [
+        "energy"
+       ],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 4,
+        "firstColumnOf": 4,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 5,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 9,
+      "cols": 4,
+      "headerRows": 1,
+      "cells": 36,
+      "elements": {
+       "text": 5,
+       "number_with_unit": 4,
+       "bare_number": 19,
+       "currency": 8
+      },
+      "states": {
+       "header_label": 12,
+       "rejected": 24
+      },
+      "blockers": {
+       "R06_first_column_label": 7,
+       "R08_unknown_context_no_test_label": 31,
+       "R12_no_plan_unit": 23,
+       "R11_price_in_cell": 8
+      },
+      "earliest": {
+       "context": 24
+      },
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 13,
+         "dimensions": [
+          "energy",
+          "power",
+          "duration"
+         ]
+        }
+       ],
+       "headingDimensions": [
+        "energy"
+       ],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 8,
+        "headerRow": 0,
+        "headerRowOf": 3
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_ap_trd_coway_350",
+   "host": "techradar.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 7641,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 24686,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "phase272/u_ap_trd_iqair_atemx",
+   "host": "techradar.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 7558,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 29668,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 6,
+     "cols": 2,
+     "sourceCells": 12,
+     "slots": 12,
+     "occupiedSlots": 12,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 6,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 4,
+     "cols": 3,
+     "sourceCells": 12,
+     "slots": 12,
+     "occupiedSlots": 12,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 3,
+     "headerCellsInSemantics": 3
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 6,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 12,
+      "elements": {
+       "text": 8,
+       "bare_number": 7,
+       "number_with_unit": 7
+      },
+      "states": {
+       "header_label": 6,
+       "rejected": 14,
+       "label_text": 2
+      },
+      "blockers": {
+       "R03_table_context_specification": 14,
+       "R08_unknown_context_no_test_label": 14,
+       "R12_no_plan_unit": 14
+      },
+      "earliest": {
+       "context": 14
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 6,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 4,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 4,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 12,
+      "elements": {
+       "text": 9,
+       "bare_number": 6
+      },
+      "states": {
+       "header_label": 6,
+       "label_text": 3,
+       "rejected": 6
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 6,
+       "R12_no_plan_unit": 6
+      },
+      "earliest": {
+       "context": 6
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 3,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_tv_tg_lg_b6",
+   "host": "tomsguide.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 7573,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 27158,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 8,
+     "cols": 5,
+     "sourceCells": 40,
+     "slots": 40,
+     "occupiedSlots": 40,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_rows",
+     "modeReasons": [
+      "implicit_header_row"
+     ],
+     "phase245Readings": 28,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 5
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 8,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "products_in_rows",
+      "context": "test",
+      "rows": 8,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 40,
+      "elements": {
+       "bare_number": 15,
+       "number_with_unit": 26,
+       "text": 2
+      },
+      "states": {
+       "header_label": 13,
+       "table_lead": 8,
+       "rejected": 22
+      },
+      "blockers": {
+       "R04_header_cell": 6,
+       "R06_first_column_label": 7,
+       "R12_no_plan_unit": 33
+      },
+      "earliest": {
+       "element": 22
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 7,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 2,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_tv_tg_samsung_s85f",
+   "host": "tomsguide.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 7548,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 26397,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 8,
+     "cols": 5,
+     "sourceCells": 40,
+     "slots": 40,
+     "occupiedSlots": 40,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_rows",
+     "modeReasons": [
+      "implicit_header_row"
+     ],
+     "phase245Readings": 28,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 5
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 10,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "products_in_rows",
+      "context": "test",
+      "rows": 8,
+      "cols": 5,
+      "headerRows": 1,
+      "cells": 40,
+      "elements": {
+       "bare_number": 8,
+       "number_with_unit": 31,
+       "text": 2
+      },
+      "states": {
+       "header_label": 13,
+       "table_lead": 10,
+       "rejected": 18
+      },
+      "blockers": {
+       "R04_header_cell": 6,
+       "R06_first_column_label": 7,
+       "R12_no_plan_unit": 29
+      },
+      "earliest": {
+       "element": 18
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 7,
+        "headerRow": 0,
+        "headerRowOf": 4
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_tv_tr_samsung_qe65s85h",
+   "host": "trustedreviews.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 3289,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 19522,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 6,
+     "cols": 2,
+     "sourceCells": 12,
+     "slots": 12,
+     "occupiedSlots": 12,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 7,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 5,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 7,
+     "headerCellsInSemantics": 7
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 20,
+     "cols": 2,
+     "sourceCells": 40,
+     "slots": 40,
+     "occupiedSlots": 40,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 21,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 19,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 21,
+     "headerCellsInSemantics": 21
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 4,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 6,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 12,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 8,
+       "text": 3
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 6,
+       "label_text": 1,
+       "table_lead": 4
+      },
+      "blockers": {
+       "R04_header_cell": 4,
+       "R05_no_reader_block": 4,
+       "R12_no_plan_unit": 4,
+       "R06_first_column_label": 3
+      },
+      "earliest": {},
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 4,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 5,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 20,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 40,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 12,
+       "text": 25,
+       "bare_number": 7,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 20,
+       "label_text": 7,
+       "rejected": 18
+      },
+      "blockers": {
+       "R03_table_context_specification": 20,
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R08_unknown_context_no_test_label": 20,
+       "R12_no_plan_unit": 17,
+       "R15_range_or_bound": 1,
+       "R06_first_column_label": 1,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 18
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 19,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 4,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_tv_tr_sony_bravia8ii",
+   "host": "trustedreviews.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 3393,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 21976,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 7,
+     "cols": 2,
+     "sourceCells": 14,
+     "slots": 14,
+     "occupiedSlots": 14,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 8,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 6,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 8,
+     "headerCellsInSemantics": 8
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 20,
+     "cols": 2,
+     "sourceCells": 40,
+     "slots": 40,
+     "occupiedSlots": 40,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 21,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 19,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 21,
+     "headerCellsInSemantics": 21
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 6,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 7,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 14,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 11,
+       "text": 2
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 7,
+       "table_lead": 6
+      },
+      "blockers": {
+       "R04_header_cell": 5,
+       "R05_no_reader_block": 5,
+       "R12_no_plan_unit": 5,
+       "R06_first_column_label": 4
+      },
+      "earliest": {},
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 5,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 6,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 20,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 40,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 14,
+       "text": 24,
+       "bare_number": 7,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 20,
+       "label_text": 6,
+       "rejected": 20
+      },
+      "blockers": {
+       "R03_table_context_specification": 22,
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R08_unknown_context_no_test_label": 22,
+       "R12_no_plan_unit": 19,
+       "R15_range_or_bound": 1,
+       "R06_first_column_label": 1,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "context": 20
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 19,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 5,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_td_tr_hisense_dh5s102bw",
+   "host": "trustedreviews.com",
+   "category": "tumble_dryers",
+   "plan": false,
+   "nodes": 2969,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 14362,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 2,
+     "sourceCells": 6,
+     "slots": 6,
+     "occupiedSlots": 6,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 4,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 2,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 4,
+     "headerCellsInSemantics": 4
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 14,
+     "cols": 2,
+     "sourceCells": 28,
+     "slots": 28,
+     "occupiedSlots": 28,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 15,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 13,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 15,
+     "headerCellsInSemantics": 15
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": false,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 3,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 6,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 3,
+       "text": 2
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 3,
+       "rejected": 2
+      },
+      "blockers": {
+       "P0_no_plan": 3,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R12_no_plan_unit": 3
+      },
+      "earliest": {
+       "acquisition": 2
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 14,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 28,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 7,
+       "text": 19,
+       "bare_number": 4,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 14,
+       "label_text": 6,
+       "rejected": 11
+      },
+      "blockers": {
+       "P0_no_plan": 12,
+       "R03_table_context_specification": 12,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R08_unknown_context_no_test_label": 12,
+       "R12_no_plan_unit": 11,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "acquisition": 11
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 13,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 2,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_td_tr_haier_hd90_a3q397u1",
+   "host": "trustedreviews.com",
+   "category": "tumble_dryers",
+   "plan": false,
+   "nodes": 3001,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 17329,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 3,
+     "cols": 2,
+     "sourceCells": 6,
+     "slots": 6,
+     "occupiedSlots": 6,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 4,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 2,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 4,
+     "headerCellsInSemantics": 4
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 14,
+     "cols": 2,
+     "sourceCells": 28,
+     "slots": 28,
+     "occupiedSlots": 28,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 15,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 13,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 15,
+     "headerCellsInSemantics": 15
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": false,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 3,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 6,
+      "elements": {
+       "empty": 1,
+       "bare_number": 1,
+       "number_with_unit": 3,
+       "text": 2
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 4,
+       "rejected": 2
+      },
+      "blockers": {
+       "P0_no_plan": 4,
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R12_no_plan_unit": 4
+      },
+      "earliest": {
+       "acquisition": 2
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 2,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 14,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 28,
+      "elements": {
+       "empty": 1,
+       "bare_number": 6,
+       "number_with_unit": 7,
+       "text": 19,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 15,
+       "label_text": 6,
+       "rejected": 12
+      },
+      "blockers": {
+       "P0_no_plan": 14,
+       "R03_table_context_specification": 14,
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R08_unknown_context_no_test_label": 14,
+       "R12_no_plan_unit": 13,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "acquisition": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 13,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 3,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_td_tr_samsung_dv90t6240ln",
+   "host": "trustedreviews.com",
+   "category": "tumble_dryers",
+   "plan": false,
+   "nodes": 2968,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 13741,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 4,
+     "cols": 2,
+     "sourceCells": 8,
+     "slots": 8,
+     "occupiedSlots": 8,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 5,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 3,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "test",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 5
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 15,
+     "cols": 2,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 16,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 16,
+     "headerCellsInSemantics": 16
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": false,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "test",
+      "rows": 4,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 8,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 4,
+       "text": 3
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 4,
+       "rejected": 3
+      },
+      "blockers": {
+       "P0_no_plan": 4,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R12_no_plan_unit": 4
+      },
+      "earliest": {
+       "acquisition": 3
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 3,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 15,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "empty": 1,
+       "number_with_unit": 8,
+       "text": 20,
+       "bare_number": 4,
+       "currency": 1
+      },
+      "states": {
+       "empty": 1,
+       "header_label": 15,
+       "label_text": 6,
+       "rejected": 12
+      },
+      "blockers": {
+       "P0_no_plan": 13,
+       "R03_table_context_specification": 13,
+       "R04_header_cell": 1,
+       "R05_no_reader_block": 1,
+       "R08_unknown_context_no_test_label": 13,
+       "R12_no_plan_unit": 12,
+       "R11_price_in_cell": 1
+      },
+      "earliest": {
+       "acquisition": 12
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 1
+       },
+       "compoundCells": 2,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "phase272/u_td_er_bosch_wtwh7660gb",
+   "host": "expertreviews.co.uk",
+   "category": "tumble_dryers",
+   "plan": false,
+   "nodes": 1831,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 7525,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": false,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1c/s1c_tv_trd_affordable_oled3",
+   "host": "techradar.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 7631,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 24306,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1c/s1c_tv_trd_rgb_vs_miniled",
+   "host": "techradar.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 8144,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 24799,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1c/s1c_tv_trd_bravia7ii_r95h",
+   "host": "techradar.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 7386,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 1,
+    "frameworkData": false,
+    "visibleChars": 25194,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1c/s1c_ap_hf_small",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 3209,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 23392,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 13,
+       "number_with_unit": 27,
+       "bare_number": 7
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 33,
+       "label_text": 3
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 34,
+       "R12_no_plan_unit": 21,
+       "R15_range_or_bound": 1,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 33
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 7,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 12,
+       "number_with_unit": 34,
+       "bare_number": 1
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 34,
+       "label_text": 2
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 35,
+       "R12_no_plan_unit": 21,
+       "R15_range_or_bound": 1,
+       "R14_no_dimension_term": 2,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 34
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 12,
+       "number_with_unit": 26,
+       "bare_number": 6
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 31,
+       "label_text": 2
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 32,
+       "R12_no_plan_unit": 19,
+       "R15_range_or_bound": 1,
+       "R14_no_dimension_term": 2,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 31
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 3,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 13,
+       "number_with_unit": 27,
+       "bare_number": 10
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 36,
+       "label_text": 3
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 37,
+       "R12_no_plan_unit": 22,
+       "R15_range_or_bound": 1,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 36
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "step1c/s1c_ap_hf_bedroom",
+   "host": "housefresh.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 2740,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 25310,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 4,
+     "sourceCells": 44,
+     "slots": 44,
+     "occupiedSlots": 44,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 4,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_columns",
+     "modeReasons": [],
+     "phase245Readings": 30,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 13,
+     "headerCellsInSemantics": 4
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 14,
+     "cols": 2,
+     "sourceCells": 28,
+     "slots": 28,
+     "occupiedSlots": 28,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 1,
+     "headerCellsInSemantics": 0
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 11,
+     "cols": 2,
+     "sourceCells": 22,
+     "slots": 22,
+     "occupiedSlots": 22,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 11,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 4,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "products_in_columns",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 4,
+      "headerRows": 1,
+      "cells": 44,
+      "elements": {
+       "empty": 10,
+       "text": 16,
+       "number_with_unit": 25,
+       "bare_number": 3
+      },
+      "states": {
+       "empty": 10,
+       "header_label": 10,
+       "rejected": 28,
+       "label_text": 6
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 28,
+       "R12_no_plan_unit": 13
+      },
+      "earliest": {
+       "context": 28
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 7,
+        "headerRow": 0,
+        "headerRowOf": 3
+       },
+       "compoundCells": 7,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 13,
+       "number_with_unit": 29,
+       "bare_number": 8
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 36,
+       "label_text": 3
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 37,
+       "R12_no_plan_unit": 21,
+       "R15_range_or_bound": 1,
+       "R14_no_dimension_term": 2,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 36
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 14,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 28,
+      "elements": {
+       "text": 14,
+       "number_with_unit": 26,
+       "bare_number": 8,
+       "currency": 2
+      },
+      "states": {
+       "header_label": 14,
+       "label_text": 3,
+       "table_lead": 4,
+       "rejected": 29
+      },
+      "blockers": {
+       "R06_first_column_label": 3,
+       "R08_unknown_context_no_test_label": 29,
+       "R12_no_plan_unit": 20,
+       "R14_no_dimension_term": 1,
+       "R09_declaration_cue_in_labels": 1,
+       "R11_price_in_cell": 2,
+       "R10_declared_body_in_labels": 1
+      },
+      "earliest": {
+       "context": 26,
+       "element": 3
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 3,
+      "mode": "key_value",
+      "context": "unknown",
+      "rows": 11,
+      "cols": 2,
+      "headerRows": 0,
+      "cells": 22,
+      "elements": {
+       "text": 13,
+       "number_with_unit": 27,
+       "bare_number": 6
+      },
+      "states": {
+       "header_label": 11,
+       "rejected": 32,
+       "label_text": 3
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 33,
+       "R12_no_plan_unit": 19,
+       "R15_range_or_bound": 1,
+       "R14_no_dimension_term": 2,
+       "R06_first_column_label": 1,
+       "R09_declaration_cue_in_labels": 1
+      },
+      "earliest": {
+       "context": 32
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 11,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "step1d-b/s1db_tv_rt_u7n",
+   "host": "rtings.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 579,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 3,
+    "frameworkData": true,
+    "visibleChars": 838,
+    "suspected": true
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1d-b/s1db_tv_rt_best_budget",
+   "host": "rtings.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 549,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 2,
+    "frameworkData": true,
+    "visibleChars": 805,
+    "suspected": true
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1d-b/s1db_tv_rt_best_oled",
+   "host": "rtings.com",
+   "category": "televisions",
+   "plan": true,
+   "nodes": 549,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 2,
+    "frameworkData": true,
+    "visibleChars": 801,
+    "suspected": true
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": false,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1d-b/s1db_ap_apf_a231_hpa100",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 1905,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 12504,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 27,
+     "cols": 3,
+     "sourceCells": 81,
+     "slots": 81,
+     "occupiedSlots": 81,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_columns",
+     "modeReasons": [
+      "product_names_from_name_row"
+     ],
+     "phase245Readings": 50,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 3
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 6,
+     "cols": 3,
+     "sourceCells": 18,
+     "slots": 18,
+     "occupiedSlots": 18,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 3
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 7,
+     "cols": 3,
+     "sourceCells": 21,
+     "slots": 21,
+     "occupiedSlots": 21,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_rows",
+     "modeReasons": [],
+     "phase245Readings": 12,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 3
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "products_in_columns",
+      "context": "specification",
+      "rows": 27,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 81,
+      "elements": {
+       "empty": 5,
+       "text": 39,
+       "bare_number": 36,
+       "number_with_unit": 58,
+       "currency": 1
+      },
+      "states": {
+       "empty": 5,
+       "header_label": 55,
+       "label_text": 22,
+       "rejected": 57
+      },
+      "blockers": {
+       "R03_table_context_specification": 95,
+       "R08_unknown_context_no_test_label": 83,
+       "R12_no_plan_unit": 80,
+       "R06_first_column_label": 43,
+       "R10_declared_body_in_labels": 4,
+       "R15_range_or_bound": 3,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 52,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 26,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 25,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 6,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 18,
+      "elements": {
+       "text": 2,
+       "bare_number": 6,
+       "number_with_unit": 8,
+       "dash": 2
+      },
+      "states": {
+       "header_label": 8,
+       "rejected": 8,
+       "dash_unexplained": 2
+      },
+      "blockers": {
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R08_unknown_context_no_test_label": 14,
+       "R12_no_plan_unit": 6,
+       "R06_first_column_label": 4
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [
+        {
+         "distance": 5,
+         "dimensions": [
+          "sound"
+         ]
+        }
+       ],
+       "headingDimensions": [
+        "sound"
+       ],
+       "headerUnitCells": 2,
+       "settingLabels": {
+        "firstColumn": 5,
+        "firstColumnOf": 5,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "products_in_rows",
+      "context": "unknown",
+      "rows": 7,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 21,
+      "elements": {
+       "text": 3,
+       "bare_number": 6,
+       "number_with_unit": 10,
+       "currency": 10,
+       "dash": 2
+      },
+      "states": {
+       "header_label": 9,
+       "rejected": 20,
+       "dash_unexplained": 2
+      },
+      "blockers": {
+       "R04_header_cell": 2,
+       "R05_no_reader_block": 2,
+       "R08_unknown_context_no_test_label": 26,
+       "R12_no_plan_unit": 6,
+       "R11_price_in_cell": 20,
+       "R14_no_dimension_term": 2,
+       "R06_first_column_label": 4
+      },
+      "earliest": {
+       "context": 20
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 2,
+       "settingLabels": {
+        "firstColumn": 6,
+        "firstColumnOf": 6,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 10,
+       "mixedValueCurrencyCells": 10
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "step1d-b/s1db_ap_apf_ap1512_5500",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 2536,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 20434,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 27,
+     "cols": 3,
+     "sourceCells": 81,
+     "slots": 81,
+     "occupiedSlots": 81,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_columns",
+     "modeReasons": [
+      "product_names_from_name_row"
+     ],
+     "phase245Readings": 50,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 4,
+     "headerCellsInSemantics": 3
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 6,
+     "cols": 3,
+     "sourceCells": 18,
+     "slots": 18,
+     "occupiedSlots": 18,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "too_few_quantitative_columns_for_product_rows"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 3
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 7,
+     "cols": 3,
+     "sourceCells": 21,
+     "slots": 21,
+     "occupiedSlots": 21,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_rows",
+     "modeReasons": [],
+     "phase245Readings": 12,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 3
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "products_in_columns",
+      "context": "specification",
+      "rows": 27,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 81,
+      "elements": {
+       "empty": 4,
+       "text": 38,
+       "number_with_unit": 61,
+       "bare_number": 42,
+       "currency": 3
+      },
+      "states": {
+       "empty": 4,
+       "header_label": 55,
+       "rejected": 68,
+       "label_text": 21
+      },
+      "blockers": {
+       "R03_table_context_specification": 106,
+       "R08_unknown_context_no_test_label": 94,
+       "R14_no_dimension_term": 4,
+       "R12_no_plan_unit": 87,
+       "R06_first_column_label": 43,
+       "R10_declared_body_in_labels": 4,
+       "R15_range_or_bound": 3,
+       "R11_price_in_cell": 9
+      },
+      "earliest": {
+       "context": 63,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 26,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 30,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 1,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 6,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 18,
+      "elements": {
+       "text": 2,
+       "bare_number": 6,
+       "number_with_unit": 9,
+       "dash": 2
+      },
+      "states": {
+       "header_label": 9,
+       "rejected": 8,
+       "dash_unexplained": 2
+      },
+      "blockers": {
+       "R04_header_cell": 3,
+       "R05_no_reader_block": 3,
+       "R08_unknown_context_no_test_label": 15,
+       "R12_no_plan_unit": 7,
+       "R06_first_column_label": 4
+      },
+      "earliest": {
+       "context": 8
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [
+        "sound"
+       ],
+       "headerUnitCells": 2,
+       "settingLabels": {
+        "firstColumn": 5,
+        "firstColumnOf": 5,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 0,
+       "mixedValueCurrencyCells": 0
+      }
+     },
+     {
+      "table": 2,
+      "mode": "products_in_rows",
+      "context": "unknown",
+      "rows": 7,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 21,
+      "elements": {
+       "text": 3,
+       "bare_number": 6,
+       "number_with_unit": 11,
+       "currency": 10,
+       "dash": 2
+      },
+      "states": {
+       "header_label": 10,
+       "rejected": 20,
+       "dash_unexplained": 2
+      },
+      "blockers": {
+       "R04_header_cell": 3,
+       "R05_no_reader_block": 3,
+       "R08_unknown_context_no_test_label": 27,
+       "R12_no_plan_unit": 7,
+       "R11_price_in_cell": 20,
+       "R14_no_dimension_term": 2,
+       "R06_first_column_label": 4
+      },
+      "earliest": {
+       "context": 20
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 2,
+       "settingLabels": {
+        "firstColumn": 6,
+        "firstColumnOf": 6,
+        "headerRow": 0,
+        "headerRowOf": 2
+       },
+       "compoundCells": 10,
+       "mixedValueCurrencyCells": 10
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "step1d-b/s1db_ap_apf_best_hepa",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 6136,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 63102,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 15,
+     "cols": 2,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 2,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 2,
+     "headerCellsInSemantics": 2
+    },
+    {
+     "domIndex": 1,
+     "nested": false,
+     "grid": true,
+     "rows": 15,
+     "cols": 2,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 2,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 1,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 2,
+     "headerCellsInSemantics": 2
+    },
+    {
+     "domIndex": 2,
+     "nested": false,
+     "grid": true,
+     "rows": 15,
+     "cols": 2,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 2,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 2,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 2,
+     "headerCellsInSemantics": 2
+    },
+    {
+     "domIndex": 3,
+     "nested": false,
+     "grid": true,
+     "rows": 15,
+     "cols": 2,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 2,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 3,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 2,
+     "headerCellsInSemantics": 2
+    },
+    {
+     "domIndex": 4,
+     "nested": false,
+     "grid": true,
+     "rows": 15,
+     "cols": 2,
+     "sourceCells": 30,
+     "slots": 30,
+     "occupiedSlots": 30,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 2,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "key_value",
+     "modeReasons": [],
+     "phase245Readings": 14,
+     "semantics": "read",
+     "semIndex": 4,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 2,
+     "headerCellsInSemantics": 2
+    },
+    {
+     "domIndex": 5,
+     "nested": false,
+     "grid": true,
+     "rows": 27,
+     "cols": 6,
+     "sourceCells": 162,
+     "slots": 162,
+     "occupiedSlots": 162,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 6,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_columns",
+     "modeReasons": [
+      "product_names_from_name_row"
+     ],
+     "phase245Readings": 125,
+     "semantics": "read",
+     "semIndex": 5,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 10,
+     "headerCellsInSemantics": 6
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 15,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "empty": 2,
+       "text": 10,
+       "number_with_unit": 41,
+       "bare_number": 21,
+       "currency": 1
+      },
+      "states": {
+       "empty": 2,
+       "header_label": 42,
+       "rejected": 27,
+       "label_text": 4
+      },
+      "blockers": {
+       "R03_table_context_specification": 63,
+       "R08_unknown_context_no_test_label": 57,
+       "R12_no_plan_unit": 52,
+       "R06_first_column_label": 41,
+       "R10_declared_body_in_labels": 2,
+       "R15_range_or_bound": 2,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 22,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 16,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 1,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 15,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "empty": 2,
+       "text": 10,
+       "number_with_unit": 41,
+       "bare_number": 21,
+       "currency": 1
+      },
+      "states": {
+       "empty": 2,
+       "header_label": 42,
+       "rejected": 27,
+       "label_text": 4
+      },
+      "blockers": {
+       "R03_table_context_specification": 63,
+       "R08_unknown_context_no_test_label": 57,
+       "R12_no_plan_unit": 52,
+       "R06_first_column_label": 41,
+       "R10_declared_body_in_labels": 2,
+       "R15_range_or_bound": 2,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 22,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 16,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 2,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 15,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "empty": 2,
+       "text": 10,
+       "number_with_unit": 38,
+       "bare_number": 25,
+       "currency": 1
+      },
+      "states": {
+       "empty": 2,
+       "header_label": 42,
+       "rejected": 28,
+       "label_text": 4
+      },
+      "blockers": {
+       "R03_table_context_specification": 64,
+       "R08_unknown_context_no_test_label": 58,
+       "R12_no_plan_unit": 53,
+       "R06_first_column_label": 41,
+       "R10_declared_body_in_labels": 2,
+       "R15_range_or_bound": 2,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 23,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 17,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 3,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 15,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "empty": 2,
+       "text": 10,
+       "bare_number": 25,
+       "number_with_unit": 37,
+       "currency": 1
+      },
+      "states": {
+       "empty": 2,
+       "header_label": 42,
+       "rejected": 27,
+       "label_text": 4
+      },
+      "blockers": {
+       "R03_table_context_specification": 63,
+       "R08_unknown_context_no_test_label": 57,
+       "R12_no_plan_unit": 52,
+       "R06_first_column_label": 41,
+       "R10_declared_body_in_labels": 2,
+       "R15_range_or_bound": 2,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 22,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 16,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 4,
+      "mode": "key_value",
+      "context": "specification",
+      "rows": 15,
+      "cols": 2,
+      "headerRows": 1,
+      "cells": 30,
+      "elements": {
+       "empty": 2,
+       "text": 9,
+       "number_with_unit": 42,
+       "bare_number": 27,
+       "currency": 1
+      },
+      "states": {
+       "empty": 2,
+       "header_label": 42,
+       "rejected": 34,
+       "label_text": 3
+      },
+      "blockers": {
+       "R03_table_context_specification": 70,
+       "R08_unknown_context_no_test_label": 64,
+       "R12_no_plan_unit": 59,
+       "R06_first_column_label": 41,
+       "R10_declared_body_in_labels": 2,
+       "R15_range_or_bound": 2,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 29,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 14,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 18,
+       "mixedValueCurrencyCells": 1
+      }
+     },
+     {
+      "table": 5,
+      "mode": "products_in_columns",
+      "context": "unknown",
+      "rows": 27,
+      "cols": 6,
+      "headerRows": 1,
+      "cells": 162,
+      "elements": {
+       "empty": 9,
+       "text": 71,
+       "number_with_unit": 101,
+       "bare_number": 97,
+       "currency": 7
+      },
+      "states": {
+       "empty": 9,
+       "header_label": 55,
+       "rejected": 167,
+       "label_text": 54
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 175,
+       "R14_no_dimension_term": 5,
+       "R12_no_plan_unit": 166,
+       "R06_first_column_label": 43,
+       "R10_declared_body_in_labels": 10,
+       "R15_range_or_bound": 6,
+       "R11_price_in_cell": 13
+      },
+      "earliest": {
+       "context": 132,
+       "element": 30,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 26,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 59,
+       "mixedValueCurrencyCells": 1
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "step1d-b/s1db_ap_apf_a231_p800",
+   "host": "airpurifierfirst.com",
+   "category": "air_purifiers",
+   "plan": true,
+   "nodes": 1777,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 12548,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 27,
+     "cols": 3,
+     "sourceCells": 81,
+     "slots": 81,
+     "occupiedSlots": 81,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 3,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 1,
+     "caption": false,
+     "warnings": [],
+     "mode": "products_in_columns",
+     "modeReasons": [
+      "product_names_from_name_row"
+     ],
+     "phase245Readings": 50,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "specification",
+     "hardExcluded": false,
+     "headerRows": 1,
+     "cellsWithoutBlock": 5,
+     "headerCellsInSemantics": 3
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "products_in_columns",
+      "context": "specification",
+      "rows": 27,
+      "cols": 3,
+      "headerRows": 1,
+      "cells": 81,
+      "elements": {
+       "empty": 5,
+       "text": 39,
+       "bare_number": 36,
+       "number_with_unit": 58,
+       "currency": 1
+      },
+      "states": {
+       "empty": 5,
+       "header_label": 55,
+       "label_text": 22,
+       "rejected": 57
+      },
+      "blockers": {
+       "R03_table_context_specification": 95,
+       "R08_unknown_context_no_test_label": 83,
+       "R12_no_plan_unit": 79,
+       "R06_first_column_label": 43,
+       "R10_declared_body_in_labels": 4,
+       "R15_range_or_bound": 3,
+       "R14_no_dimension_term": 3,
+       "R11_price_in_cell": 7
+      },
+      "earliest": {
+       "context": 52,
+       "structure": 5
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 1,
+        "firstColumnOf": 26,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 25,
+       "mixedValueCurrencyCells": 1
+      }
+     }
+    ]
+   }
+  },
+  {
+   "page": "step1d-b/s1db_af_ih_af400",
+   "host": "idealhome.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 4234,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 19703,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1d-b/s1db_af_ih_doublestack_af400",
+   "host": "idealhome.co.uk",
+   "category": "air_fryers",
+   "plan": true,
+   "nodes": 4379,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 15949,
+    "suspected": false
+   },
+   "tables": [],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": []
+   }
+  },
+  {
+   "page": "step1d-b/s1db_dh_ih_best",
+   "host": "idealhome.co.uk",
+   "category": "dehumidifiers",
+   "plan": true,
+   "nodes": 12168,
+   "parseTruncated": false,
+   "clientRendered": {
+    "longDataAttributes": 0,
+    "frameworkData": false,
+    "visibleChars": 49078,
+    "suspected": false
+   },
+   "tables": [
+    {
+     "domIndex": 0,
+     "nested": false,
+     "grid": true,
+     "rows": 7,
+     "cols": 7,
+     "sourceCells": 49,
+     "slots": 49,
+     "occupiedSlots": 49,
+     "emptySlots": 0,
+     "spanned": 0,
+     "th": 0,
+     "scope": 0,
+     "headersAttr": 0,
+     "thead": 0,
+     "caption": true,
+     "warnings": [],
+     "mode": "unsupported",
+     "modeReasons": [
+      "no_unique_product_key_column"
+     ],
+     "phase245Readings": 0,
+     "semantics": "read",
+     "semIndex": 0,
+     "context": "unknown",
+     "hardExcluded": false,
+     "headerRows": 0,
+     "cellsWithoutBlock": 0,
+     "headerCellsInSemantics": 0
+    }
+   ],
+   "ledger": {
+    "version": "pee.table-ledger.v1e.1",
+    "plan": true,
+    "documentReportsTesting": true,
+    "leads": 0,
+    "tables": [
+     {
+      "table": 0,
+      "mode": "unsupported",
+      "context": "unknown",
+      "rows": 7,
+      "cols": 7,
+      "headerRows": 0,
+      "cells": 49,
+      "elements": {
+       "text": 17,
+       "number_with_unit": 26,
+       "bare_number": 12
+      },
+      "states": {
+       "header_label": 5,
+       "label_text": 12,
+       "rejected": 38
+      },
+      "blockers": {
+       "R08_unknown_context_no_test_label": 38,
+       "R14_no_dimension_term": 12,
+       "R12_no_plan_unit": 24,
+       "R06_first_column_label": 2
+      },
+      "earliest": {
+       "context": 36,
+       "structure": 2
+      },
+      "notes": {
+       "sectionMethodStatements": [],
+       "headingDimensions": [],
+       "headerUnitCells": 0,
+       "settingLabels": {
+        "firstColumn": 0,
+        "firstColumnOf": 7,
+        "headerRow": 0,
+        "headerRowOf": 0
+       },
+       "compoundCells": 6,
+       "mixedValueCurrencyCells": 0
+      }
+     }
+    ]
+   }
+  }
+ ]
+}
