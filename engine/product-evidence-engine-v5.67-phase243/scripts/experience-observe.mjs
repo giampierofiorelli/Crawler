@@ -150,6 +150,8 @@ export async function documentLeads(dist,doc,opts={}){
  else if(opts.policy)throw Error('unknown policy '+opts.policy);
  return {leads:cands.map(l=>({value:l.value,unit:canonUnit(M,l.unit),rawUnit:l.unit,subject:l.subject?.name??null,subjects:l.subjects272??null,
    assignment:l.rule1c??l.subjectAssignment??null,blockIndex:l.blockIndex,blockSha256:l.blockSha256,
+   // Step 1D-B (opt-in; default output unchanged): the lead's own condition, dimension and method cue, for condition scoring.
+   ...(opts.details?{condition:l.condition??null,dimension:l.dimension??null,methodCue:l.methodCue??null,conditionCodes:l.conditionCodes??[]}:{}),
    ...(l.decision1c&&l.decision1c.status!=='attributed'?{unresolved:{reason:l.decision1c.reason??null,candidates:l.decision1c.candidates??[],neededEvidence:l.decision1c.neededEvidence??null}}:{})})),
   meta:{planDigest:plan.compiledFrom.digest,pageSubject:x?.mainProduct?.name??null,sha256:p.sha256}};
 }

@@ -1,0 +1,94 @@
+{
+ "schema": "pee.step1d-b.protocol.v1",
+ "frozenAt": "2026-10-18",
+ "frozenBefore": "any Step 1D-B HTTP request, any reading of a Step 1D-B page, and any reference annotation",
+ "question": "Does the Step 1D-A2 HTML-first reader (frozen candidate ebda3d4) transfer its benefit to genuinely unseen real pages while preserving exact product attribution and evidence quality?",
+ "authorisation": "owner Step 1D-B brief (2026-10-18): one-time budget of at most 20 outbound HTTP requests in total (robots.txt, redirects, failures and retries count), at most 4 publisher hosts, publicly accessible HTML only, no PDFs, no browser rendering, no paid APIs or scraping services, valid at most 7 days from first use; does not reuse the Step 1C or any earlier allowance; no live knowledge-store modification",
+ "baseline": {
+  "publicCommitBeforeStep": "4a24561",
+  "privateCommitBeforeStep": "82aaccb",
+  "frozenCandidate": "ebda3d4 (Step 1D-A2 arm C); the build at this freeze commit carries Step 3 (4a24561) on top, which changes no candidate output: the Step 1D-A2 development evaluation rerun before this freeze is identical to evaluation/experience/step1d-a2-dev1.json on 21 of 21 documents (summary, problems, per-document results)",
+  "build": "dist/src of this freeze commit (npx tsc -p tsconfig.json); every arm runs from it"
+ },
+ "arms": [
+  {"id": "A", "policy": "candidate_1c_inventory", "name": "Step 1D-A baseline: constrained attribution candidate (Step 1C) + document entity inventory; no semantic-document contract, no structured table reader"},
+  {"id": "B", "policy": "candidate_1c_semantics", "name": "A + Step 1D-A2 structural identity and document context (structured names, boilerplate exclusion, grid-cell products, structural principal, heading hierarchy); reads no new values"},
+  {"id": "C", "policy": "candidate_1c_semantics_tables", "name": "B + the structured test-table reader (Phase245 grid cells with their own labels) = the full frozen Step 1D-A2 candidate"}
+ ],
+ "sameInputs": "every arm reads the same page bytes (SHA-256 checked against the wave receipt), the same category plan compiled once per document from the unchanged live store (digest must equal knowledgeState.planDigests), the same category nouns, the same scorer; no arm receives extra vocabulary, plans or manual corrections",
+ "readingConfiguration": "the Step 3 reading identity (readingIdentity265 of readingConfiguration265) is recorded per document: arms A and B read with the plan and no semantic reading; arm C with the plan and the semantic reading pee.document-semantics.v1d2+tables1d2.v1",
+ "productionPath": "not used: no observation is ingested, the live store is opened only to compile plans, the persistence gate of the table reader is unchanged",
+ "knowledgeState": {
+  "liveStoreSha256": "5dd1e763cd553a7bcc4ecde75f10e5f249951c28061d3fa10513183be08b5607",
+  "planDigests": {
+   "air_fryers": "1fc395227d51d8f088e07bc68a1cf0bfdb35c263a2e84db32dd83f542a1196ee",
+   "dishwashers": "97c0dd08601b75aefaa2b6f70f26c7607b65f4fcfc15f45ac17e42fed88df4dc",
+   "air_purifiers": "132422e7eda4625b74f4bc4cd591ccd911207fd1e91a699dcf1e921ecfebfad3",
+   "televisions": "43ce61351fae73f9d522db0a2748cdc215782b70a546a3aaa60bd443076ce994",
+   "coffee_machines": "740fb8484ee9ba4b95f5b5ca28ddd89f5cdfd5e2297fcaacff17c692e9f9ef58",
+   "dehumidifiers": "5592bde924512694799c19b7fa63f885f6fa23340618e58a96af379e50c76587"
+  },
+  "note": "the first four equal evaluation/phase272/plans-frozen-known.json; coffee machines and dehumidifiers are taught but were never used in Step 1C-1D-A2 development (thin plans: 2 measurements each)"
+ },
+ "codeFreeze": "evaluation/step1d-b/freeze.sha256: every compiled module in dist/src, the observer, this evaluation script, the wave script and this protocol; the run refuses if any listed file changed",
+ "transport": "scripts/phase246-live-wave.mjs, one state file in the private evaluation directory (robots-checked restricted HTTPS transport, agent ProductEvidenceResearchBot, politeness 5 s per host); robots.txt and every redirect hop count; stops on robots disallow or unavailable, 401/403/429, Retry-After (honoured, never shortened), 3 errors on a host, cross-site or self redirect, too many redirects",
+ "preFetchGate": "after each host's robots.txt and before any page request on it: the robots decision for the page path must be allow, and detectReservations249(robots) must show no ai-input=no Content-Signal; otherwise no page on that host is requested",
+ "postFetchGate": "scripts/step1d-b-eval.mjs gate: a page with a noai/TDM reservation, a login or paywall, a canonical link to a URL used before, or 8-word-shingle Jaccard >= 0.5 with any earlier retained page is excluded from the evaluation (recorded; never replaced by a previously used page)",
+ "siteTerms": "terms of use are not machine-checked; no page behind a login, paywall, CAPTCHA or anti-bot step is used; no legal review was performed",
+ "sourceSelection": {
+  "method": "web-search result titles and URLs only (queries recorded), before any page body is read; each page's search-summary exposure is recorded; a candidate whose summary shows any of its measured values is excluded; no page-specific search is made",
+  "eligible": "a publicly accessible first-hand review, comparison or roundup by an independent publisher that states its own measured results for at least one named product of a category in knowledgeState.planDigests",
+  "excluded": "any URL whose canonical form occurs in any earlier wave receipt, evaluation file, private evaluation, policy or store revision (scripts/step1d-b-eval.mjs screen); any page examined for Phase270-272 or Step 1A-1D-A2 development, gold, diagnosis or template tuning; manufacturer and retailer pages; aggregators without their own tests; PDFs",
+  "hosts": "at most 4; at least 2 publishers; at least 2 of the hosts must not be among the Step 1D-A2 development publishers (techradar.com, housefresh.com, trustedreviews.com, tomsguide.com, expertreviews.co.uk), so that templates the candidate was developed on cannot dominate",
+  "strata": "target at least 2 single-product reviews with measurements, 2 multi-product comparisons and 2 roundups; more than one category; more than one category within a publisher where feasible; at least one page without product JSON-LD if one occurs (known only after fetching; never selected for)",
+  "ordering": "candidates are listed per stratum in search-result order before any fetch, with ordered substitutes; pages are fetched in that order; the first eligible candidate is used and the next substitute only replaces an excluded or blocked one",
+  "budgetPlan": "1 robots request per host (at most 4) + at most 16 page requests; per-host maximum 6 requests; stop when 10 eligible pages are fetched or the budget cannot reach another",
+  "shortfall": "fewer than 4 eligible pages: report the shortfall and stop; previously used pages are never substituted as unseen"
+ },
+ "retention": "page bytes and annotator renderings only in the private evaluation directory outside Git (never in either repository); the private repository keeps the reference, runs, adjudication and the request log, no page bytes; public files carry ids, classes and counts only",
+ "reference": {
+  "annotator": "a separate Claude agent with a fresh context, given only the plain-text renderings and these rules; it sees no extractor code, output, experience case or candidate rule; this is separation from the extractor output, not independent human adjudication",
+  "documentFields": "pageType (single_product_review | comparison | roundup | other); principal (the one product the page is about, or null); products (every product with at least one recorded value or observation, each with page-established variant names and the evidence); otherProducts (other named products); publisher; notes on ambiguity",
+  "values": "every number the publisher reports as its OWN measured test result for a named product (prose, list, table cell, caption), unit as printed; includes results for compared rival products; with conditions (mode, setting, distance, programme, load) as short labels, location (prose | table | list | caption) and, for tables, the owner axis (column | row); excludes manufacturer specifications and claims, certified or nominal ratings, prices, scores, settings, ranges, estimates and other publishers' numbers",
+  "subjectStatus": "exact (one product); shared (the same result stated for several named products: one item per product, common group); undetermined (the page reports the value but does not establish whose it is; subject null)",
+  "uncertain": "an item whose status the annotator cannot decide is flagged uncertain rather than forced; uncertain items are scored and reported separately",
+  "variants": "acceptedVariants only where the page itself establishes that two names denote the same product (evidence recorded); names differing by model code, size, region or suffix (e.g. A230/A231, S85H/QE65S85H) are distinct unless the page equates them",
+  "negativeControls": "numbers with a unit that the page presents as manufacturer declarations, certified or nominal specifications, estimates or unattributed claims, with kind (manufacturer_declaration | certified_nominal | estimate | unattributed_claim | other_publisher) and subject if stated; a test reader must never present them as results",
+  "qualitative": "the publisher's own evaluative observations from its testing, as subject + dimension (the category plan's outcome names, or untaught:<short label>) + direction (positive | negative | mixed)",
+  "freeze": "the reference hash and counts are committed (evaluation/step1d-b/gold-freeze.json) before any arm runs; contents stay private"
+ },
+ "scoring": "src/experience_attribution_scoring.ts (frozen Step 1C scorer): item classes correct | correct_multi | false_identity_match | unresolved | wrong_product | missing; for undetermined items correctly_unresolved | unsupported_assignment | missing; lead classes as in Step 1C; identity = the Phase272 shared-token rule plus brand consistency; unresolved is never correct; units canonicalised identically for reference and leads",
+ "measurements": [
+  "document understanding: principal product (correct, missed, false_main_subject, correct_none) for A (Phase272 page subject) and B/C (structural principal); page type agreement; gold products found by the inventory; splits; merges of distinct gold products; other named products; unknown product entities (adjudicated as non-product or real); scorer-indistinct gold product pairs (recorded before scoring)",
+  "quantitative: item classes per arm; regressions and new confidently wrong items versus A; competitor values assigned to the principal; unit mismatches; duplicates; leads that match no reference value (new false positives); unresolved subjects; reference conditions missing on correct leads",
+  "evidence classification: negative controls read as results per arm and new in B/C versus A",
+  "qualitative: per reference observation correct | wrong_product | unresolved | missing for A and B (C = B); emitted observations without a reference observation (unsupported) and with a subject that is no named product",
+  "operational: requests used, runtime per document and arm, lead and entity counts, DOM nodes, truncation, peak memory, table modes per publisher",
+  "breakdowns: by document, publisher, category, page type, unique product; distinct underlying error causes reported apart from the number of measurements they affect"
+ ],
+ "adjudication": {
+  "who": "the developer (Claude) from the page source, after the frozen run is committed; recorded in a separate file beside the frozen score; the frozen score is never changed",
+  "queue": "every confidently wrong item, every wrong, false-identity, unsupported or overreaching lead, and every negative control read, in every arm",
+  "classes": ["real_wrong_product", "real_wrong_variant", "declaration_presented_as_test", "scorer_artefact_same_product", "gold_error", "uncertain"],
+  "rules": "scorer_artefact_same_product only when the page itself establishes that the lead's name denotes the reference product (cited block); a name that designates another model, size, region or suffix is real_wrong_variant; a scorer disagreement is never assumed harmless; gold_error only when the source contradicts the reference (recorded; the frozen score stands); uncertain counts against the candidate in the gates"
+ },
+ "safetyGates": {
+  "G1_no_unproven_variant_merge": "C introduces no real_wrong_variant item or lead that A did not have, and B/C inventories merge no two distinct reference products that A kept apart",
+  "G2_no_new_wrong_product": "C introduces no real_wrong_product (or uncertain) item or lead that A did not have",
+  "G3_no_new_declaration_as_test": "C reads no negative control that A did not read (declaration_presented_as_test new in C)",
+  "G4_no_unsafe_title_identity": "no B/C principal is a page title or headline sentence rather than a product, and no B/C false_main_subject that A did not have",
+  "G5_no_silent_disappearance": "no item correct in A is missing or confidently wrong in C (a correct-to-unresolved change is reported as a regression, not silent)",
+  "G6_no_experience_regression": "replays of the frozen Step 1A and 1B experience cases with the candidate policy equal the Step 1D-A2 replays (replay-s1a/s1b-semantics-1d2), and the default-build replays keep their documented behaviour (EX-05, EX-19)"
+ },
+ "decisionRule": {
+  "inconclusive": "fewer than 4 documents, or fewer than 20 reference values read by any arm",
+  "benefitTransfers": "C has at least 5 more successes than A and gains in at least 2 documents from at least 2 publishers",
+  "benefitPartial": "C has more successes than A but below the transfer threshold",
+  "noBenefit": "C has no more successes than A",
+  "proceed": "benefit transfers and every safety gate passes after adjudication: the candidate warrants controlled original-Step-4 integration (not production)",
+  "revise": "a safety gate fails with at most 2 distinct identifiable causes, or the benefit is only partial: revise on development evidence, then a new untouched test",
+  "stop": "no benefit, or a safety gate fails with more than 2 distinct causes or more than 3 harmed measurements",
+  "noPostHocChange": "no rule, reference, scorer or candidate change after the first run counts as untouched; any later run on these pages is a separately labelled development run"
+ },
+ "reporting": "docs/plans/experience-pilot-step1d-b.md: per-document, publisher, category and page-type counts with denominators; lead-level counts beside item-level counts; transitions between arms; frozen and adjudicated results side by side; tiers kept apart (T1 synthetic, development, T2 untouched first run, never production)"
+}
