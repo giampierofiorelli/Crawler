@@ -11,6 +11,25 @@
 - Every figure below comes from committed Phase249 files, chiefly
   `engine/product-evidence-engine-v5.67-phase243/docs/phase249/PHASE249-TECHNICAL-REPORT.md`.
 
+## 0000000000000000000000000. `<br>` fix and knowledge v2 KN (2026-10-18) — read first
+
+Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowledge.md`, addendum KN.
+
+- **`<br>` (D18 resolved in new versions):** acquisition v1f.2 `renderedText` (opt-in `{rendered:true}`) and 1G
+  v1g.2 (`{text:'rendered'}`). v1f.1 and v1g.1 are the byte-identical defaults. The knowledge layer reads v1g.2 by
+  default. Oracle: `scripts/rendered-text-1f-verify.mjs` (Chromium innerText).
+- **Default pack is now `quantity-knowledge.v2.json` (`qk.2:…`):** built by
+  `resources/quantity-knowledge/build/v2-additions.py` from the unchanged v1. New sections: methods (fixed
+  conditions), relations (expression language), scales (ordinal classes with regimes), plus language extras (label
+  unit prepositions, basis words, axis letters).
+- **New functions:** `relationChecks`, `typeClass` / `compareClasses`, `readClassRequirements`, `unitStatedInLabel`,
+  `withLabelBasis`, `typeLabelledNumber`. Advice: `adviseFromRequest253(…,{quantityKnowledge,date})` adds
+  `classRequirements`.
+- **Evaluations:** `evaluation/quantity-knowledge/reading-kn-v1|v2|v2b`, `links-kn-v2|v2b|v2c`,
+  `requests-kn-v2-tuned` (TUNED). All pages are spent.
+- **Open:** D19, D20, D21, D22 (v2 knowledge reported but used by no decision; class scale needs a registry
+  category).
+
 ## 000000000000000000000000. Typed quantity knowledge GK (2026-10-18) — read first
 
 Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowledge.md`.

@@ -23,7 +23,7 @@ import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_compara
 import {applianceMentions270} from './phase270_comparative_results.js';
 import type {GoalAssessment253} from './phase253_advice_contract.js';
 import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
-import {readQuantityRequirements,evidenceNeed,type QuantityKnowledge,type QuantityRequirement} from './quantity_knowledge.js';
+import {readQuantityRequirements,readClassRequirements,evidenceNeed,type QuantityKnowledge,type QuantityRequirement} from './quantity_knowledge.js';
 import type {QuantityRequirement253} from './phase253_advice_contract.js';
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
@@ -217,9 +217,9 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
  * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
  * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
  * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
-export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null}={}):Advice253{
+export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
- if(opts.quantityKnowledge&&out.response!=='out_of_scope')applyQuantityRequirements253(out,text,opts.quantityKnowledge);
+ if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  return out;
 }
 const NO_CHECKABLE253='No checkable requirement is stated yet, so no product can be checked against your needs.';
@@ -243,6 +243,16 @@ function applyQuantityRequirements253(out:Advice253,text:string,qk:QuantityKnowl
  for(const r of reqs){if(!out.unassessedObjectives.includes(r.span))out.unassessedObjectives.push(r.span);if(r.question&&!out.questions.includes(r.question))out.questions.push(r.question);
   const e=evidenceNeed(qk,r.quantity);
   out.researchPlan.push(`need_evidence: ${e.target}${e.methods.length?` (defined by ${e.methods.join('; ')})`:''}${e.conditions.length?`; comparable only when ${e.conditions.join(', ')} ${e.conditions.length>1?'are':'is'} stated`:''}${e.notEvidence.length?`; not evidence of it: ${e.notEvidence.join(', ')}`:''}`);}
+}
+/** GK2: class requirements ("an A+++ dishwasher"). Resolved against the scale in force for the category on the request date;
+ * a class of a superseded scale is stated as such and never translated. Explicit, not checked here. */
+function applyClassRequirements253(out:Advice253,text:string,qk:QuantityKnowledge,date?:string):void{
+ const day=date??new Date().toISOString().slice(0,10);
+ const reqs=readClassRequirements(qk,text,{productGroup:out.category??undefined,date:day});if(!reqs.length)return;
+ out.classRequirements=reqs.map(r=>({...r,knowledge:qk.identity}));
+ for(const r of reqs){if(!out.unassessedObjectives.includes(r.span))out.unassessedObjectives.push(r.span);
+  if(r.note)out.statements.push(`"${r.span}": ${r.note}.`);
+  else if(!r.scale&&r.candidates.length>1)out.questions.push(`Which label do you mean by "${r.span}"? ${r.candidates.map(c=>(qk.pack.scales??[]).find(s=>s.id===c)!.label).join(' and ')} use the same letters for different efficiencies.`);}
 }
 function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
  const out=adviseCore253(text,store,registry);

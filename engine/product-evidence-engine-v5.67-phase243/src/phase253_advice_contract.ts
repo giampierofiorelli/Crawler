@@ -53,10 +53,13 @@ export interface Advice253 {
  /** GK (opt-in, quantity knowledge supplied): quantitative requirements the request states that the Phase253 constraint
   * reader does not cover, typed by the quantity knowledge. Understood, explicit, never checked or ranked here. */
  quantityRequirements?:QuantityRequirement253[];
+ /** GK2 (opt-in): class requirements (energy or filter classes) typed against the knowledge's scales. */
+ classRequirements?:ClassRequirement253[];
 }
 export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range';value:number|null;low?:number;high?:number;unit:string;
  kind:string|null;kindCandidates:string[];metric:string|null;weighting:string|null;status:'typed'|'kind_ambiguous';
  evidence:{target:string;methods:string[];conditions:string[];notEvidence:string[]};knowledge:string}
+export interface ClassRequirement253 {span:string;value:string;bound:'min'|'exact';scale:string|null;candidates:string[];note:string|null;knowledge:string}
 export interface AdviceResearchInputs253 {
  targetKind:TargetKind253;category:string|null;statedCriteria:string[];pendingCriteria:string[];
  performanceNeeds:string[];unresolvedNeeds:string[];

@@ -37,6 +37,10 @@ if(cmd==='reading'){
  const C={};const inc=(k,n=1)=>C[k]=(C[k]??0)+n;const perHost={};const rows=[];let copies=0;
  for(const p of pages()){copies+=p.copies.length;const t0=Date.now();const r=K.interpretWithKnowledge1G(p.html,qk);const ms=Date.now()-t0;inc('pages');
   const h=p.host??'unknown';perHost[h]??={pages:0,typed:0,sameQuantityTwice:0,aWeightingKept:0};perHost[h].pages++;
+  inc('base_'+r.baseReadingIdentity.split(':')[0]);
+  // v2 (KN): relation checks per table and classes typed on scales (counted only when the reading carries them)
+  for(const t of r.tables){for(const c of t.relationChecks??[]){inc('relation_'+c.check.relation+'_'+(c.check.consistent?'consistent':'inconsistent'));if(c.check.implied)inc('relation_implied_assumption');}
+   for(const o of t.observations)if(o.scaleClass)inc('class_'+(o.scaleClass.scale??'scale_ambiguous'));}
   for(const t of r.tables)for(const o of t.observations){if(!['quantity','range','bound','number'].includes(o.kind))continue;inc('valueObservations');
    const q=o.quantity;const currency=o.dimension==='currency';
    if(o.unit)inc('baseline_unit');if(q)inc('knowledge_typed');
@@ -48,6 +52,7 @@ if(cmd==='reading'){
    if(q.unit.level){inc('level_values');inc('level_weighting_'+q.weighting);inc('level_baseline_unit_'+(o.unit??'none'));if(q.weighting==='A')perHost[h].aWeightingKept++;
     inc('level_kind_'+(q.kind.id??'ambiguous'));}
    if(q.metric.id){inc('metric_'+q.metric.id);inc(q.missingConditions.length?'metric_conditions_incomplete':'metric_conditions_complete');}
+   if(o.unitFrom)inc('unit_from_'+o.unitFrom);if(o.labelBasis)inc('unit_basis_from_label');if(q.conditions.some(c=>c.axis==='method'))inc('method_detected');
    if(o.sameAs){inc('same_quantity_printed_twice');perHost[h].sameQuantityTwice++;}
    rows.push({page:p.key,obs:o.id,surface:o.surface,labels:o.property,baselineUnit:o.unit,baselineDimension:o.dimension,unit:q.unit.expression,kind:q.kind.id,kindCandidates:q.kind.candidates,kindBasis:q.kind.basis,
     metric:q.metric.id,weighting:q.weighting,conditions:q.conditions,missing:q.missingConditions,sameAs:o.sameAs,sameAsReason:o.sameAsReason,unresolved:q.unresolved});}

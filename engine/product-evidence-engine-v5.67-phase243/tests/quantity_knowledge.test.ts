@@ -8,11 +8,11 @@ import {typedMeasures272,linkTypedToMeasure272,linkToMeasure272,type ExtractionP
 import {KnowledgeStore246} from '../src/phase246_knowledge_store.js';
 
 const qk=loadQuantityKnowledge();
-const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/quantity-knowledge.v1.json',import.meta.url),'utf8'));
+const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/quantity-knowledge.v2.json',import.meta.url),'utf8'));
 const typed=(k:QuantityKnowledge,surface:string,ctx:Parameters<typeof typeQuantity>[2]={})=>{const f=findQuantities(k,surface)[0];assert.ok(f,'no quantity in '+surface);return typeQuantity(k,f,ctx);};
 
 test('pack: validated, sourced and identified by its digest; UCUM is recorded as not used', ()=>{
- assert.match(qk.identity,/^qk\.1:[0-9a-f]{16}$/);
+ assert.match(qk.identity,/^qk\.2:[0-9a-f]{16}$/);
  const p=rawPack();assert.ok(p.sources.find(s=>s.id==='ucum_not_used')!.use.includes('NOT incorporated'));
  for(const k of p.kinds)assert.ok(p.sources.some(s=>s.id===k.source));
  const bad=rawPack();bad.metrics[0].kind='no_such_kind';assert.throws(()=>loadQuantityKnowledge(bad),/quantity_knowledge_invalid/);
@@ -153,4 +153,106 @@ test('Phase253 requests: a rate is never checked as a capacity (the knowledge re
  // capacities, sizes, weights and powers are unchanged
  assert.deepEqual(extractConstraints253('A kettle of at least 1.5 litres, no wider than 20 cm, at least 2000 W.').constraints.map(c=>c.criterion),['capacity_min','width_max','power_min']);
  assert.deepEqual(extractConstraints253('A tumble dryer that takes at least 9 kg per load and weighs no more than 40 kg.').constraints.map(c=>c.criterion),['weight_max']);
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// v2 (KN, 2026-10-18): methods, relations, scales and label language. Synthetic texts; the facts are those the pack cites.
+import {unitStatedInLabel,withLabelBasis,typeLabelledNumber,typeClass,compareClasses,compileExpression,relationChecks,readClassRequirements} from '../src/quantity_knowledge.js';
+import {adviseFromRequest253} from '../src/phase253_request_advice.js';
+import {CATEGORY_REGISTRY250} from '../src/phase248_category_registry.js';
+
+test('v2 pack: every method, relation, scale and source reference resolves; a bad expression or reference is refused', ()=>{
+ const p=rawPack();const ids=new Set(p.sources.map(s=>s.id));
+ for(const x of [...p.methods!,...p.relations!,...p.scales!])assert.ok(ids.has(x.source),x.id+' cites '+x.source);
+ for(const m of p.methods!)for(const id of m.measures)assert.ok(p.metrics.some(x=>x.id===id),m.id+' measures '+id);
+ const b1=rawPack();b1.relations![0].expression='cadr*60/(ach*nope)';assert.throws(()=>loadQuantityKnowledge(b1),/quantity_knowledge_invalid|unknown name/);
+ const b2=rawPack();b2.methods![0].measures=['no_such_metric'];assert.throws(()=>loadQuantityKnowledge(b2),/quantity_knowledge_invalid/);
+ assert.throws(()=>compileExpression('x+evil()',['x']),/unknown name/);assert.equal(compileExpression('2^3*log10(100)-1',[])({}),15);
+});
+
+test('v2 dimension lists: an axis letter is never a unit (27.16W x 10.5D in is inches, not watts)', ()=>{
+ assert.deepEqual(findQuantities(qk,'27.16W x 10.5D x 3.2H inches').map(f=>[f.value,f.unit.expression,f.axis]),[[27.16,'in','W'],[10.5,'in','D'],[3.2,'in','H']]);
+ assert.deepEqual(findQuantities(qk,'Power: 30 W').map(f=>[f.value,f.unit.expression,f.axis]),[[30,'W',undefined]]);
+ // ablation: without the axis letters the old misreading returns
+ const p=rawPack();p.language.en.axisLetters=[];const k=loadQuantityKnowledge(p);
+ assert.equal(findQuantities(k,'27.16W x 10.5D x 3.2H inches')[0].unit.expression,'W');
+});
+
+test('v2 labels: a unit stated by a label, a basis named by a label, a unitless metric', ()=>{
+ assert.equal(unitStatedInLabel(qk,'Airflow (m³/h)')!.unit.expression,'m^3/h');assert.equal(unitStatedInLabel(qk,'Power in watts')!.unit.expression,'W');
+ assert.equal(unitStatedInLabel(qk,'Weight (lb, kg)'),null,'two units: none is assumed');
+ const b=withLabelBasis(qk,parseUnit(qk,'L')!,['Daily extraction']);assert.deepEqual([b!.unit.expression,b!.basis],['L/day','daily']);
+ assert.equal(withLabelBasis(qk,parseUnit(qk,'W')!,['Daily use']),null,'a rate never takes a basis');
+ const de=typeLabelledNumber(qk,{surface:'1.2',value:1.2},{labels:['Average Delta E']});assert.equal(de!.metric.id,'display_colour_error');
+ assert.equal(typeLabelledNumber(qk,{surface:'1.2',value:1.2},{labels:['Score']}),null);
+});
+
+test('v2 sound: a publisher reading is sound pressure, because sound power is only ever computed (ISO 3741/3744)', ()=>{
+ assert.equal(typed(qk,'52 dB(A)',{labels:['Noise level']}).kind.id,null,'without the evidence class the kind stays open');
+ const r=typed(qk,'52 dB(A)',{labels:['Noise level'],measuredReading:true});assert.equal(r.kind.id,'sound_pressure_level');assert.match(r.kind.basis[0],/never read directly/);
+ assert.equal(typed(qk,'52 dB(A)',{labels:['Sound power level'],measuredReading:true}).kind.id,'sound_power_level','a discriminator still wins');
+ const p=rawPack();for(const k of p.kinds)delete k.notDirectlyMeasured;assert.equal(typed(loadQuantityKnowledge(p),'52 dB(A)',{labels:['Noise level'],measuredReading:true}).kind.id,null,'ablation');
+});
+
+test('v2 methods: a named method brings the conditions it fixes; two ratings under different methods do not compare', ()=>{
+ const a=typed(qk,'50 pints/day',{labels:['Capacity'],context:['Tested to the DOE standard (appendix X1)']});
+ const b=typed(qk,'70 pints/day',{labels:['Capacity'],context:['AHAM DH-1 rating']});
+ assert.deepEqual(a.conditions.map(c=>[c.axis,c.from]),[['method','context'],['inlet_air_state','method']]);assert.match(a.conditions[1].value,/65 °f/);
+ assert.match(b.conditions.find(c=>c.axis==='inlet_air_state')!.value,/80 °f/);
+ const c=compareQuantities(qk,a,b);assert.equal(c.verdict,'not_comparable');assert.match(c.reasons[0],/different method/);
+ assert.ok(evidenceNeed(qk,typed(qk,'20 L/day',{labels:['Moisture removal']})).methods.some(m=>/65 °F/.test(m)),'the evidence need names the method and what it fixes');
+});
+
+test('v2 relations: consistent, an implied assumption, and no check when the pairing is ambiguous', ()=>{
+ const cadr=typed(qk,'200 CFM',{labels:['Smoke CADR']}),ctx={labels:['Room size'],context:['based on 4.8 air changes per hour']};
+ const ok=relationChecks(qk,[cadr,typed(qk,'313 sq ft',ctx)]);assert.equal(ok.length,1);assert.equal(ok[0].consistent,true);assert.equal(ok[0].expected,312.5);
+ const off=relationChecks(qk,[cadr,typed(qk,'420 sq ft',ctx)])[0];assert.equal(off.consistent,false);assert.deepEqual([off.implied!.name,off.implied!.value],['height',5.95]);
+ assert.equal(relationChecks(qk,[cadr,typed(qk,'180 CFM',{labels:['Dust CADR']}),typed(qk,'313 sq ft',ctx)])[0].inputs.cadr.value,200,'AHAM sizes by the smoke CADR');
+ assert.deepEqual(relationChecks(qk,[typed(qk,'200 CFM',{labels:['CADR']}),typed(qk,'150 CFM',{labels:['CADR']}),typed(qk,'313 sq ft',ctx)]),[],'two CADRs, nothing pairs one: no guess');
+ assert.equal(relationChecks(qk,[typed(qk,'2 kW',{labels:['Power']}),typed(qk,'1.5 h',{labels:['Cycle time']}),typed(qk,'3 kWh',{labels:['Energy']})])[0].consistent,true);
+ const p=rawPack();p.relations=[];assert.deepEqual(relationChecks(loadQuantityKnowledge(p),[cadr,typed(qk,'313 sq ft',ctx)]),[],'ablation');
+});
+
+test('v2 scales: an A+++ is pre-rescaling, a B needs the group and date, classes compare only on one scale', ()=>{
+ const old=typeClass(qk,'A+++',{labels:['Energy class']})!;assert.equal(old.scale,'eu_energy_class_pre2021');
+ const b=typeClass(qk,'B',{labels:['Energy class']})!;assert.equal(b.scale,null);assert.equal(b.candidates.length,2);
+ const bNow=typeClass(qk,'B',{labels:['Energy class'],productGroup:'dishwashers',date:'2026-10-18'})!;assert.equal(bNow.scale,'eu_energy_class_2021');
+ assert.equal(typeClass(qk,'B',{labels:['Energy class'],productGroup:'tumble_dryers',date:'2025-01-01'})!.scale,'eu_energy_class_pre2021','tumble dryers rescaled on 1 July 2025');
+ assert.equal(compareClasses(qk,old,bNow).verdict,'not_comparable');assert.equal(compareClasses(qk,old,b).verdict,'undetermined');
+ assert.deepEqual(compareClasses(qk,typeClass(qk,'H13')!,typeClass(qk,'H14')!),{verdict:'comparable',reasons:['same scale'],order:1});
+ assert.equal(typeClass(qk,'B'),null,'a bare letter with no scale named is not a class');
+});
+
+test('v2 class requirements: read with their bound and scale; the advice states them, and is unchanged without the knowledge', ()=>{
+ assert.deepEqual(readClassRequirements(qk,'energy class B or better',{productGroup:'dishwashers',date:'2026-10-18'}).map(r=>[r.span,r.value,r.bound,r.scale]),[['energy class B or better','B','min','eu_energy_class_2021']]);
+ const old=readClassRequirements(qk,'I want an A+++ rated dishwasher',{productGroup:'dishwashers',date:'2026-10-18'})[0];assert.equal(old.scale,'eu_energy_class_pre2021');assert.match(old.note!,/no longer used for dishwashers/);
+ assert.equal(readClassRequirements(qk,'true HEPA H13 please')[0].scale,'en_1822_filter_class');
+ const s=new KnowledgeStore246(':memory:');
+ for(const t of ['energy class B fridge','A tumble dryer, energy class A+++','I want a quiet kettle']){
+  const a0=adviseFromRequest253(t,s,CATEGORY_REGISTRY250),a0b=adviseFromRequest253(t,s,CATEGORY_REGISTRY250,{date:'2026-10-18'});
+  assert.equal(JSON.stringify(a0b),JSON.stringify(a0),'without the knowledge the date changes nothing');assert.equal(a0.classRequirements,undefined);}
+ const a=adviseFromRequest253('energy class B fridge',s,CATEGORY_REGISTRY250,{quantityKnowledge:qk,date:'2026-10-18'});
+ assert.deepEqual(a.classRequirements!.map(r=>[r.span,r.scale]),[['energy class B',null]]);assert.ok(a.unassessedObjectives.includes('energy class B'));
+ assert.ok(a.questions.some(q=>/Which label do you mean by "energy class B"/.test(q)),'an ambiguous scale becomes a question');
+ s.close();
+});
+
+test('v2 in 1G: <br>-separated values keep their own labels; a label unit and an axis letter are read in the cell', ()=>{
+ const H=`<html><body><table><tr><th>Spec</th><th>Alpha A1</th></tr><tr><td>Airflow (m³/h)</td><td>250</td></tr>
+<tr><td>Dimensions</td><td>27.16W x 10.5D x 3.2H inches</td></tr><tr><td>Energy class</td><td>A+++</td></tr></table></body></html>`;
+ const r=interpretWithKnowledge1G(H,qk);const obs=r.tables.flatMap(t=>t.observations);
+ const air=obs.find(o=>o.value===250)!;assert.deepEqual([air.unitFrom,air.quantity!.unit.expression],['label','m^3/h']);
+ assert.ok(obs.filter(o=>o.quantity?.unit.expression==='W').length===0,'no watts in a dimension list');
+ assert.equal(obs.find(o=>o.scaleClass)?.scaleClass!.scale,'eu_energy_class_pre2021');
+});
+
+test('KN errors become knowledge and mechanism: "HEPA" is not an efficiency; a bare percentage links to no measurement', ()=>{
+ assert.equal(typed(qk,'33%',{context:['HEPA filter']}).metric.id,null,'the word names the filter, not the percentage');
+ assert.equal(typed(qk,'99.97%',{labels:['Filter efficiency']}).metric.id,'hepa_filter_class');
+ const plan:ExtractionPlan272={schema:'pee272.extraction-plan.v1',categoryId:'c',isEvidence:false,compiledFrom:{items:0,relations:0,digest:''},categoryNouns:[],identity:{requireNamedSubject:true,modelCodeBindsResult:true},
+  outcomes:[],units:['%'],sectionCues:[],decisionEvidence:[],measurements:[{id:'gas_reduction_percentage',outcomes:['odour'],proxyFor:[],dimensions:['ratio'],units:['%'],terms:['reduction','gas'],conditions:[]}],proxies:[]};
+ const store=new KnowledgeStore246(':memory:');const tm=typedMeasures272(store,'c',plan,qk);
+ assert.equal(linkTypedToMeasure272(plan,tm,typed(qk,'100%',{labels:['Warranty']}),'Warranty 100%',qk).measureId,null);
+ assert.equal(linkTypedToMeasure272(plan,tm,typed(qk,'92%',{labels:['Gas reduction']}),'Gas reduction 92%',qk).measureId,'gas_reduction_percentage','the measurement words still link it');
+ store.close();
 });

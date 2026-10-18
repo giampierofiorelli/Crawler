@@ -230,6 +230,12 @@ export function linkTypedToMeasure272(plan:ExtractionPlan272,measures:readonly T
  // words never settle what the knowledge leaves open: an unresolved kind with candidates of different kinds abstains
  if(!q.kind.id&&new Set(fits.map(f=>f.kinds.filter(k=>kinds.includes(k)).join('+'))).size>1)return {measureId:null,outcomes:[],candidates:ids,proxyFor,basis:`the value's kind is unresolved (${kinds.join(' or ')}) and the candidates measure different kinds`};
  if(byWords)return {measureId:byWords.measureId,outcomes:byWords.outcomes,candidates:ids,proxyFor,basis:'typed candidates, chosen by the measurement words'};
+ // KN: a plain dimensionless number (a percentage, ppm) names no physical quantity by itself: without its metric or the
+ // measurement's words it is not linked ("100% warranty" is not a gas-removal result). Levels keep their kinds.
+ const bare=!metric&&kinds.length>0&&kinds.every(k=>{const d=qk.kinds.get(k)!;return d.unitOnly&&!d.level&&!Object.keys(d.dim).length;});
+ if(bare){const named=restricted.measurements.filter(m=>m.terms.some(t=>hasPhrase(text,t)));
+  if(named.length===1)return {measureId:named[0].id,outcomes:named[0].outcomes,candidates:ids,proxyFor,basis:'a dimensionless value, linked by the measurement words'};
+  return {measureId:null,outcomes:[],candidates:ids,proxyFor,basis:'a dimensionless value without its metric or measurement words identifies no measurement'};}
  if(fits.length===1)return {measureId:fits[0].id,outcomes:fits[0].outcomes,candidates:ids,proxyFor,basis:'the only taught measurement of this quantity'};
  return {measureId:null,outcomes:[],candidates:ids,proxyFor,basis:'several taught measurements of this quantity; the words do not choose'};
 }

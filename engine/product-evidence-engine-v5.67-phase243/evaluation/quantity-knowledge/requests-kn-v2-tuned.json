@@ -1,0 +1,6160 @@
+{
+ "knowledge": "qk.2:4827ebd09f9d2771",
+ "codeSha256": "89fc181f11f1eb22b0684c81a82d7395c52da68ff9da3ce889aa1670159ebc38",
+ "generatedAt": "2026-10-18T13:48:15.783Z",
+ "schema": "pee.qk-eval-requests.v1",
+ "evidenceTier": "TUNED re-run after looking at the first run (not a first run)",
+ "counts": {
+  "nonreq_total": 159,
+  "advice_other_fields_identical": 168,
+  "advice_added_unassessed": 2,
+  "advice_added_questions": 0,
+  "req_total": 76,
+  "req_baseline_silent": 32,
+  "req_combined_silent": 29,
+  "req_knowledge_read_not_surfaced_no_bound": 19,
+  "advice_baseline_states_no_requirement_but_gold_has_one": 3,
+  "advice_knowledge_states_no_requirement_but_gold_has_one": 2,
+  "nonreq_surfaced_by_knowledge_only": 5,
+  "nonreq_baseline_unmapped": 38,
+  "req_knowledge_not_read": 24,
+  "nonreq_baseline_constraint": 10,
+  "req_baseline_constraint": 33,
+  "req_combined_constraint": 33,
+  "req_knowledge_surfaced": 33,
+  "req_knowledge_bound_correct": 32,
+  "req_knowledge_status_typed": 33,
+  "req_baseline_unmapped": 11,
+  "req_combined_unmapped": 11,
+  "req_combined_knowledge": 3,
+  "req_knowledge_bound_differs": 1,
+  "nonreq_surfaced_by_knowledge_also_baseline": 5
+ },
+ "items": [
+  {
+   "id": "R002",
+   "quantities": [
+    {
+     "surface": "24-hour",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "hour",
+     "quantityMeant": "test duration",
+     "ambiguity": "Defines how the capacity rating is measured; not a buyer limit.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R034",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R050",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R067",
+   "quantities": [
+    {
+     "surface": "80 degrees Celsius",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "degrees Celsius",
+     "quantityMeant": "target water temperature",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "temperature"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "temperature_control"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "temperature_control"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R071",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "espresso_quality",
+      "milk_drinks"
+     ]
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "espresso_quality",
+      "milk_drinks"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R072",
+   "quantities": [
+    {
+     "surface": "15 bar",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "First mention: a claim that 15 bar is sufficient, not a stated purchase limit.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "pressure"
+     }
+    },
+    {
+     "surface": "15 bar",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure of home machines",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "pressure"
+     }
+    },
+    {
+     "surface": "9 bar",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure of professional machines",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "pressure"
+     }
+    },
+    {
+     "surface": "16",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "Unit 'bar' shared from '21 bar' in the list.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "19",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "Unit 'bar' shared from '21 bar' in the list.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "20",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure",
+     "ambiguity": "Unit 'bar' shared from '21 bar' in the list.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "21 bar",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "pressure"
+     }
+    },
+    {
+     "surface": "9 bar",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bar",
+     "quantityMeant": "pump pressure for professional coffee",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "pressure"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R073",
+   "quantities": [
+    {
+     "surface": "2-3 cups",
+     "describes": "context_not_requirement",
+     "goldBound": "range",
+     "unit": "cups",
+     "quantityMeant": "coffee drunk per day",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "5-6",
+     "describes": "context_not_requirement",
+     "goldBound": "range",
+     "unit": "cups",
+     "quantityMeant": "partner's coffee per day",
+     "ambiguity": "Unit 'cups' is implied from the preceding '2-3 cups'.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R075",
+   "quantities": [
+    {
+     "surface": "10 bars",
+     "describes": "owned_or_other_product",
+     "goldBound": "max",
+     "unit": "bars",
+     "quantityMeant": "pump pressure of the ROK",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "pressure",
+      "kindCandidates": [
+       "pressure"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "15",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "bars",
+     "quantityMeant": "pump pressure of the Flair",
+     "ambiguity": "Unit implied from 'bars'; 'around 15'.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "espresso_quality"
+     ]
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "espresso_quality",
+      "up to 10 bars"
+     ],
+     "quantityRequirements": [
+      {
+       "span": "up to 10 bars",
+       "bound": "max",
+       "value": 10,
+       "unit": "bars",
+       "kind": "pressure",
+       "kindCandidates": [
+        "pressure"
+       ],
+       "metric": null,
+       "weighting": null,
+       "status": "typed",
+       "evidence": {
+        "target": "pressure",
+        "methods": [],
+        "conditions": [],
+        "notEvidence": []
+       },
+       "knowledge": "qk.2:4827ebd09f9d2771"
+      }
+     ],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R078",
+   "quantities": [
+    {
+     "surface": "1 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "max",
+     "unit": "cup",
+     "quantityMeant": "coffee drunk per day",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "0 cups",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cups",
+     "quantityMeant": "coffee drunk per day",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "espresso_quality",
+      "milk_drinks"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "espresso_quality",
+      "milk_drinks"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R079",
+   "quantities": [
+    {
+     "surface": "1000W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power of blenders available in budget",
+     "ambiguity": "Could be read as candidate power levels the buyer would accept.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "1200W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power of blenders available in budget",
+     "ambiguity": "Could be read as candidate power levels the buyer would accept.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "hard_ingredients",
+      "smooth_texture"
+     ]
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "hard_ingredients",
+      "smooth_texture"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R080",
+   "quantities": [
+    {
+     "surface": "250W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power rating of KitchenAid Classic",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "300W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power rating of KitchenAid Artisan",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R082",
+   "quantities": [
+    {
+     "surface": "40%",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "%",
+     "quantityMeant": "dough hydration",
+     "ambiguity": "Dough property that implies how strong the mixer must be.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "ratio"
+     }
+    },
+    {
+     "surface": "35%",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "%",
+     "quantityMeant": "dough hydration",
+     "ambiguity": "Dough property that implies how strong the mixer must be.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "ratio"
+     }
+    },
+    {
+     "surface": "375 watt",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "watt",
+     "quantityMeant": "power of old mixer",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "275 watt",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "watt",
+     "quantityMeant": "power of current mixer",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R084",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R085",
+   "quantities": [
+    {
+     "surface": "454g",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "g",
+     "quantityMeant": "weight of beans to cook",
+     "ambiguity": "Implies the cooker size needed, but is food weight.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "mass"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "batch_capacity"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "batch_capacity"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R087",
+   "quantities": [
+    {
+     "surface": "100-115 F",
+     "describes": "product_requirement",
+     "goldBound": "range",
+     "unit": "F",
+     "quantityMeant": "holding temperature",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "24 hours",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "hours",
+     "quantityMeant": "holding duration",
+     "ambiguity": "Usage duration the appliance must sustain; could be read as context.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R089",
+   "quantities": [
+    {
+     "surface": "1400 W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power of two listed air fryers",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "4 liters",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "liters",
+     "quantityMeant": "capacity of two listed air fryers",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R097",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R099",
+   "quantities": [
+    {
+     "surface": "25 year",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "year",
+     "quantityMeant": "age of old rice cooker",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "best suited"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "best suited"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R102",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "espresso_quality",
+      "best drip coffee maker"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "espresso_quality",
+      "best drip coffee maker"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R103",
+   "quantities": [
+    {
+     "surface": "5",
+     "describes": "context_not_requirement",
+     "goldBound": "min",
+     "unit": null,
+     "quantityMeant": "steeping time",
+     "ambiguity": "Text is cut off before the unit; likely minutes.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "espresso_quality"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "espresso_quality"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R104",
+   "quantities": [
+    {
+     "surface": "200-300ml",
+     "describes": "product_requirement",
+     "goldBound": "range",
+     "unit": "ml",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R105",
+   "quantities": [
+    {
+     "surface": "3 meals",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "meals",
+     "quantityMeant": "number of meals cooked at once",
+     "ambiguity": "Batch size may imply pan size, but is not a stated product limit.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R109",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "espresso_quality"
+     ]
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "espresso_quality"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R111",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "milk_drinks"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "milk_drinks"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R114",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "versatility"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "versatility"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R117",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R118",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "versatility"
+     ]
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "versatility"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R124",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "grind_range",
+      "best grinder"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "grind_range",
+      "best grinder"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R127",
+   "quantities": [
+    {
+     "surface": "10-12 cups",
+     "describes": "owned_or_other_product",
+     "goldBound": "range",
+     "unit": "cups",
+     "quantityMeant": "bean capacity of advertised blade grinders",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R128",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "shot_consistency"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "shot_consistency"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R130",
+   "quantities": [
+    {
+     "surface": "5 inches",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "inches",
+     "quantityMeant": "inside bottom diameter of Wagner #3",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "7 inches",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "inches",
+     "quantityMeant": "inside bottom diameter of Wagner #6",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "8 inches",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "inches",
+     "quantityMeant": "inside bottom diameter of Lodge skillet",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "8 inch",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "inch",
+     "quantityMeant": "size of nonstick skillets",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "5 years",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "years",
+     "quantityMeant": "time period",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R131",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R132",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "hard_ingredients"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "hard_ingredients"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R138",
+   "quantities": [
+    {
+     "surface": "6 qt",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "qt",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R145",
+   "quantities": [
+    {
+     "surface": "36\"",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "range width",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R150",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R151",
+   "quantities": [
+    {
+     "surface": "30 years",
+     "describes": "owned_or_other_product",
+     "goldBound": "min",
+     "unit": "years",
+     "quantityMeant": "age of current oven",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R152",
+   "quantities": [
+    {
+     "surface": "1/4 or 1/2 steer",
+     "describes": "context_not_requirement",
+     "goldBound": "range",
+     "unit": "steer",
+     "quantityMeant": "amount of meat to store",
+     "ambiguity": "Alternatives (quarter or half animal), not a range; implies freezer capacity.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R156",
+   "quantities": [
+    {
+     "surface": "2mm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "gauge (thickness) of the copper pans",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "2cm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "difference in pan diameter",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best frying pans"
+     ]
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best frying pans"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R165",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R166",
+   "quantities": [
+    {
+     "surface": "5 quart",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "quart",
+     "quantityMeant": "capacity of current pot",
+     "ambiguity": "Replacement may be expected to match this size.",
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R170",
+   "quantities": [
+    {
+     "surface": "10\"",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "steamer diameter",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R174",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R175",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R178",
+   "quantities": [
+    {
+     "surface": "18 months",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "months",
+     "quantityMeant": "lifespan before leaking or breaking",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "within 18 months"
+     ],
+     "quantityRequirements": [
+      {
+       "span": "within 18 months",
+       "bound": "max",
+       "value": 18,
+       "unit": "months",
+       "kind": "duration",
+       "kindCandidates": [
+        "duration"
+       ],
+       "metric": null,
+       "weighting": null,
+       "status": "typed",
+       "evidence": {
+        "target": "duration",
+        "methods": [],
+        "conditions": [],
+        "notEvidence": []
+       },
+       "knowledge": "qk.2:4827ebd09f9d2771"
+      }
+     ],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R179",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "grind_range",
+      "portability"
+     ]
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [
+      "grind_range",
+      "portability"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R180",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best coffee brewing method"
+     ]
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best coffee brewing method"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R187",
+   "quantities": [
+    {
+     "surface": "40 hour",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "hour",
+     "quantityMeant": "working week",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    },
+    {
+     "surface": "4-5 hours",
+     "describes": "product_requirement",
+     "goldBound": "range",
+     "unit": "hours",
+     "quantityMeant": "keep-warm duration",
+     "ambiguity": "Usage duration the cooker must sustain; could be read as context.",
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "4-5 hours",
+     "describes": "product_requirement",
+     "goldBound": "range",
+     "unit": "hours",
+     "quantityMeant": "running duration",
+     "ambiguity": "Usage duration the cooker must sustain; could be read as context.",
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R188",
+   "quantities": [
+    {
+     "surface": "400W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power of current mixer",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "800W",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "motor power",
+     "ambiguity": "Hypothetical wattage asked about ('would it be too much'), not a firm limit.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "dough_kneading"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "dough_kneading"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R189",
+   "quantities": [
+    {
+     "surface": "6.8 Liters",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "Liters",
+     "quantityMeant": "capacity of biggest slow cooker found",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    },
+    {
+     "surface": "2 kg",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "kg",
+     "quantityMeant": "weight of chicken to cook",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "mass"
+     }
+    },
+    {
+     "surface": "6.8 Liters",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "Liters",
+     "quantityMeant": "capacity of biggest slow cooker found",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R191",
+   "quantities": [
+    {
+     "surface": "10 degree",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "degree",
+     "quantityMeant": "temperature difference",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R192",
+   "quantities": [
+    {
+     "surface": "50°-90°",
+     "describes": "product_requirement",
+     "goldBound": "range",
+     "unit": "°",
+     "quantityMeant": "liquid heating temperature range",
+     "ambiguity": "Degrees Fahrenheit, stated after the range ('or so Farenheit'); approximate.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R193",
+   "quantities": [
+    {
+     "surface": "500",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "grit",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Unit shared from '2000 grit'.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "2000 grit",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "grit",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "500",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "grit",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Second list; unit implied.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "2K",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "K",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Unit grit implied.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "4K",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "K",
+     "quantityMeant": "whetstone grit",
+     "ambiguity": "Unit grit implied.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R196",
+   "quantities": [
+    {
+     "surface": "9 in",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "in",
+     "quantityMeant": "length",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "4.5 in",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "in",
+     "quantityMeant": "width",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "2 in",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "in",
+     "quantityMeant": "height",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R202",
+   "quantities": [
+    {
+     "surface": "3 years",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "years",
+     "quantityMeant": "time spent roasting",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R203",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R205",
+   "quantities": [
+    {
+     "surface": "10 cm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "diameter of tartlet forms",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "6 cm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "size of silicone muffin cups",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "6 cm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "size of muffin paper liners",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R206",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R210",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R211",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "grind_consistency",
+      "grind_range"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "grind_consistency",
+      "grind_range"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R212",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R213",
+   "quantities": [
+    {
+     "surface": "58mm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "portafilter diameter",
+     "ambiguity": "Implies the wanted baskets must fit 58 mm.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "15 seconds",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "seconds",
+     "quantityMeant": "extraction time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    },
+    {
+     "surface": "2 seconds",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "seconds",
+     "quantityMeant": "preinfusion time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best single shot filter baskets"
+     ]
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best single shot filter baskets"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R214",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R216",
+   "quantities": [
+    {
+     "surface": "16\"",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "vent width (vents in store)",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    },
+    {
+     "surface": "16\"",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "vent width",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "16\"",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "metal sheet panel width",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R217",
+   "quantities": [
+    {
+     "surface": "7.5kW",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "kW",
+     "quantityMeant": "heater power",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "240V",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "V",
+     "quantityMeant": "heater voltage",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "voltage"
+     }
+    },
+    {
+     "surface": "31.25 amps",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amps",
+     "quantityMeant": "heater current draw",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "35 amp",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "breaker rating",
+     "ambiguity": "Asks whether a 35 A breaker is acceptable; a candidate, not a fixed limit.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "40 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "recommended breaker rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "6",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": null,
+     "quantityMeant": "wire gauge",
+     "ambiguity": "'a 6 wire' presumably means 6 AWG; no unit printed.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "20 amp",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "hot tub circuit rating",
+     "ambiguity": "Planned circuit; may imply a 20 A breaker to buy.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "35 amps",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "amps",
+     "quantityMeant": "remaining capacity for heater",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "15 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "hot tub required circuit rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R218",
+   "quantities": [
+    {
+     "surface": "3 feet",
+     "describes": "context_not_requirement",
+     "goldBound": "min",
+     "unit": "feet",
+     "quantityMeant": "pony wall height",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best lingo"
+     ]
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [
+      "best lingo"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R219",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R220",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R223",
+   "quantities": [
+    {
+     "surface": "R14",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "R",
+     "quantityMeant": "insulation R-value",
+     "ambiguity": "One of the options being compared; repeated in the text.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "R20",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "R",
+     "quantityMeant": "insulation R-value",
+     "ambiguity": "One of the options being compared; repeated in the text.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1\"",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "polystyrene thickness",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    },
+    {
+     "surface": "R3.75",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "R",
+     "quantityMeant": "polystyrene R-value",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "R12",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "R",
+     "quantityMeant": "insulation R-value",
+     "ambiguity": "One of the options being compared; repeated in the text.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "500 sqft",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "sqft",
+     "quantityMeant": "area to insulate",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "R15",
+     "describes": "context_not_requirement",
+     "goldBound": "min",
+     "unit": "R",
+     "quantityMeant": "combined R-value with R12 and polystyrene",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R226",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R227",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R228",
+   "quantities": [
+    {
+     "surface": "24*7",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": null,
+     "quantityMeant": "running time",
+     "ambiguity": "Means running 24 hours a day, 7 days a week; no unit printed.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "20 million observations",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "observations",
+     "quantityMeant": "dataset size",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R229",
+   "quantities": [
+    {
+     "surface": "1TB",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "TB",
+     "quantityMeant": "expandable memory of tablet",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1 TB",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "TB",
+     "quantityMeant": "storage capacity of SD card seen",
+     "ambiguity": "Candidate product being considered; could be read as the buyer's capacity choice.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1TB",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "TB",
+     "quantityMeant": "storage capacity of SSD seen",
+     "ambiguity": "Candidate product being considered.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R230",
+   "quantities": [
+    {
+     "surface": "3.20GHz",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "GHz",
+     "quantityMeant": "clock speed of current CPU",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R231",
+   "quantities": [
+    {
+     "surface": "24/24",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": null,
+     "quantityMeant": "running time",
+     "ambiguity": "Means running 24 hours a day; no unit printed.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "100 gigabytes",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "gigabytes",
+     "quantityMeant": "storage capacity",
+     "ambiguity": "'about 100 gigabytes' may be a minimum.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R232",
+   "quantities": [
+    {
+     "surface": "3x",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "x",
+     "quantityMeant": "number of drive bays",
+     "ambiguity": "'3x 3.5\" or more' = at least three bays.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "3.5\"",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "drive bay size",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "12 TByte",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "TByte",
+     "quantityMeant": "supported drive capacity",
+     "ambiguity": "'compatible with 12 TByte drives' read as supporting at least 12 TB per drive.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "12 TByte",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "TByte",
+     "quantityMeant": "supported drive capacity of other enclosures",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R234",
+   "quantities": [
+    {
+     "surface": "5%",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "%",
+     "quantityMeant": "performance difference between CPUs",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "ratio"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R235",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R236",
+   "quantities": [
+    {
+     "surface": "26\"",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "wheel size",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    },
+    {
+     "surface": "1-1/8\"",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "steerer diameter",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R237",
+   "quantities": [
+    {
+     "surface": "21-speed",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "speed",
+     "quantityMeant": "number of gears",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R238",
+   "quantities": [
+    {
+     "surface": "700 x 28c",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "c",
+     "quantityMeant": "tyre size",
+     "ambiguity": "French size notation: 700 (nominal wheel diameter) by 28 mm width; given as the owned wheel size the tyres must fit.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R241",
+   "quantities": [
+    {
+     "surface": "9 speed",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "speed",
+     "quantityMeant": "chain speed rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R242",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R249",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R251",
+   "quantities": [
+    {
+     "surface": "1750W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "air fryer power",
+     "ambiguity": "Appears in the owned product's listing name.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "5.2L",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "L",
+     "quantityMeant": "air fryer capacity",
+     "ambiguity": "Appears in the owned product's listing name.",
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R253",
+   "quantities": [
+    {
+     "surface": "1 winter squash",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "winter squash",
+     "quantityMeant": "daily processing amount",
+     "ambiguity": "A food count per day, not a product property.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R254",
+   "quantities": [
+    {
+     "surface": "5 speeds",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "speeds",
+     "quantityMeant": "number of speed settings of typical models",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R255",
+   "quantities": [
+    {
+     "surface": "325",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "watt",
+     "quantityMeant": "motor power of smaller candidate",
+     "ambiguity": "Unit shared from '575 watt'.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "575 watt",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "watt",
+     "quantityMeant": "motor power of larger candidate",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "5",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "qts",
+     "quantityMeant": "bowl capacity of smaller candidate",
+     "ambiguity": "Unit shared from '6qts'.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "6qts",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "qts",
+     "quantityMeant": "bowl capacity of larger candidate",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "dough_kneading",
+      "best use"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "dough_kneading",
+      "best use"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R256",
+   "quantities": [
+    {
+     "surface": "24 hours",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "hours",
+     "quantityMeant": "keep-warm duration of programmable cookers",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    },
+    {
+     "surface": "7 minute",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "minute",
+     "quantityMeant": "cooking time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    },
+    {
+     "surface": "7 hour",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "hour",
+     "quantityMeant": "cooking time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": [
+      "versatility"
+     ]
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [
+      "versatility"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R268",
+   "quantities": [
+    {
+     "surface": "1000L",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "L",
+     "quantityMeant": "batch yield",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    },
+    {
+     "surface": "40L",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "L",
+     "quantityMeant": "current batch size",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    },
+    {
+     "surface": "40-micron",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "micron",
+     "quantityMeant": "mesh size of current filter",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R273",
+   "quantities": [
+    {
+     "surface": "3.5 mm",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "connector size",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "3.5 mm",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "connector size",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R274",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "audio input size",
+     "ambiguity": "Stated as acceptable in addition to USB, not required.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R275",
+   "quantities": [
+    {
+     "surface": "6 months",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "months",
+     "quantityMeant": "time period",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R276",
+   "quantities": [
+    {
+     "surface": "5 minutes",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "minutes",
+     "quantityMeant": "auto-off delay of European headsets",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R277",
+   "quantities": [
+    {
+     "surface": "10 regular headphones",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "headphones",
+     "quantityMeant": "number of headphones to drive",
+     "ambiguity": "A count of headphones the amp must drive; could be read as context.",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R278",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R280",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R281",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R282",
+   "quantities": [
+    {
+     "surface": "4 years",
+     "describes": "owned_or_other_product",
+     "goldBound": "min",
+     "unit": "years",
+     "quantityMeant": "lifespan of old earphones",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R283",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "connector size",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R284",
+   "quantities": [
+    {
+     "surface": "400g",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "g",
+     "quantityMeant": "weight of old headphones",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R285",
+   "quantities": [
+    {
+     "surface": "1/8 in.",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "in.",
+     "quantityMeant": "audio plug size",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R286",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R287",
+   "quantities": [
+    {
+     "surface": "55-250 mm",
+     "describes": "owned_or_other_product",
+     "goldBound": "range",
+     "unit": "mm",
+     "quantityMeant": "lens focal length",
+     "ambiguity": "Part of the owned lens's name; a focal-length range.",
+     "baseline": "unmapped",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R288",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "mic input jack size of camcorder",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R289",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R290",
+   "quantities": [
+    {
+     "surface": "3.5mm",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "mm",
+     "quantityMeant": "headphone jack size",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R291",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R292",
+   "quantities": [
+    {
+     "surface": "600ohm",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "ohm",
+     "quantityMeant": "supported impedance",
+     "ambiguity": "Says it must support a 600 ohm soundcard; unclear which impedance is meant.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electrical_resistance"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R294",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R296",
+   "quantities": [
+    {
+     "surface": "52cm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "current microwave width",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "31cm",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "current microwave height",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "57.5cm",
+     "describes": "available_space",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "opening width",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "36.5cm",
+     "describes": "available_space",
+     "goldBound": "none",
+     "unit": "cm",
+     "quantityMeant": "opening height",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "3 inches",
+     "describes": "context_not_requirement",
+     "goldBound": "min",
+     "unit": "inches",
+     "quantityMeant": "required clearance on each side and top",
+     "ambiguity": "A clearance rule that, with the opening, limits the product size.",
+     "baseline": "unmapped",
+     "knowledge": null
+    },
+    {
+     "surface": "7.5cm",
+     "describes": "context_not_requirement",
+     "goldBound": "min",
+     "unit": "cm",
+     "quantityMeant": "required clearance on each side and top",
+     "ambiguity": "A clearance rule that, with the opening, limits the product size.",
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R297",
+   "quantities": [
+    {
+     "surface": "25\"",
+     "describes": "available_space",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "opening dimension",
+     "ambiguity": "Which of width, height or depth is not stated.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "15\"",
+     "describes": "available_space",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "opening dimension",
+     "ambiguity": "Which of width, height or depth is not stated.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "16\"",
+     "describes": "available_space",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "opening dimension",
+     "ambiguity": "Which of width, height or depth is not stated.",
+     "baseline": "unmapped",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R298",
+   "quantities": [
+    {
+     "surface": "30\"",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "width of ordered hood",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "900CFM",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "CFM",
+     "quantityMeant": "airflow of ordered hood",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volumetric_flow_rate"
+     }
+    },
+    {
+     "surface": "2-3 feet",
+     "describes": "context_not_requirement",
+     "goldBound": "range",
+     "unit": "feet",
+     "quantityMeant": "distance between ceiling and roof",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "90\"",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "\"",
+     "quantityMeant": "elbow angle",
+     "ambiguity": "Written with an inch mark but almost certainly a 90-degree elbow.",
+     "baseline": "unmapped",
+     "knowledge": null
+    },
+    {
+     "surface": "10 ft",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "ft",
+     "quantityMeant": "distance to wall",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    },
+    {
+     "surface": "8ft",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "ft",
+     "quantityMeant": "ceiling height",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "length"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R301",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R302",
+   "quantities": [
+    {
+     "surface": "5 years",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "years",
+     "quantityMeant": "pipe replacement interval",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    },
+    {
+     "surface": "10 years",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "years",
+     "quantityMeant": "pipe replacement interval",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R303",
+   "quantities": [
+    {
+     "surface": "2000-2400W",
+     "describes": "owned_or_other_product",
+     "goldBound": "range",
+     "unit": "W",
+     "quantityMeant": "rated power range of kettle",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "1970W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "measured power of kettle",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "2000W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "lowest rated power of kettle",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "2400W",
+     "describes": "owned_or_other_product",
+     "goldBound": "max",
+     "unit": "W",
+     "quantityMeant": "highest rated power of kettle",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "2400W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "power consumption of kettle",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "2000W",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "W",
+     "quantityMeant": "measured power of kettle",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R305",
+   "quantities": [
+    {
+     "surface": "110v",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "v",
+     "quantityMeant": "plug voltage",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "50 years",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "years",
+     "quantityMeant": "time period",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    },
+    {
+     "surface": "220v",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "v",
+     "quantityMeant": "UK mains voltage",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "110v",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "v",
+     "quantityMeant": "voltage of hand tools",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "220v",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "v",
+     "quantityMeant": "voltage of tools",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "50 years",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "years",
+     "quantityMeant": "time period",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R306",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R307",
+   "quantities": [
+    {
+     "surface": "40 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "breaker rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "40 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "current breaker rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "220",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": null,
+     "quantityMeant": "outlet voltage",
+     "ambiguity": "No unit printed; presumably 220 V.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "120/240 V",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "V",
+     "quantityMeant": "stove voltage",
+     "ambiguity": "Dual rating 120 V / 240 V, not a range.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "voltage"
+     }
+    },
+    {
+     "surface": "60 Hz",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "Hz",
+     "quantityMeant": "stove frequency",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "frequency"
+     }
+    },
+    {
+     "surface": "13 kW",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "kW",
+     "quantityMeant": "stove power",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R308",
+   "quantities": [
+    {
+     "surface": "1500 watt",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "watt",
+     "quantityMeant": "kettle power",
+     "ambiguity": null,
+     "baseline": "unmapped",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "120 Volts",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "Volts",
+     "quantityMeant": "kettle voltage",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1500 watt",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "watt",
+     "quantityMeant": "kettle element power",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "power"
+     }
+    },
+    {
+     "surface": "60 Hz",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "Hz",
+     "quantityMeant": "kettle frequency",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "frequency"
+     }
+    },
+    {
+     "surface": "15 amp",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "receptacle current rating",
+     "ambiguity": "One of two options being considered.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "20 amp",
+     "describes": "product_requirement",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "receptacle current rating",
+     "ambiguity": "One of two options being considered.",
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R309",
+   "quantities": [
+    {
+     "surface": "15 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "receptacle rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "30 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "current fuse rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "12 gauge",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "gauge",
+     "quantityMeant": "wire gauge",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "15 amps",
+     "describes": "owned_or_other_product",
+     "goldBound": "max",
+     "unit": "amps",
+     "quantityMeant": "wire current rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R310",
+   "quantities": [
+    {
+     "surface": "20amp",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "code-required circuit rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    },
+    {
+     "surface": "12 gauge",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "gauge",
+     "quantityMeant": "code-required wire gauge",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "14 gauge",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "gauge",
+     "quantityMeant": "wire gauge of outlet",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "15 amp",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "amp",
+     "quantityMeant": "circuit breaker rating",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "electric_current"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R312",
+   "quantities": [
+    {
+     "surface": "1.5 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cup",
+     "quantityMeant": "recipe amount of matzoh meal",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1.5 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cup",
+     "quantityMeant": "recipe amount of water",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": ".5 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cup",
+     "quantityMeant": "recipe amount of oil",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1 tsp",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "tsp",
+     "quantityMeant": "recipe amount of salt",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1 tbsp",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "tbsp",
+     "quantityMeant": "recipe amount of sugar",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "7 extra-large eggs",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "eggs",
+     "quantityMeant": "recipe amount of eggs",
+     "ambiguity": "A food count rather than a measurement unit.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "45-50 minutes",
+     "describes": "context_not_requirement",
+     "goldBound": "range",
+     "unit": "minutes",
+     "quantityMeant": "baking time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "bound": "range",
+      "status": "typed",
+      "kind": "duration",
+      "kindCandidates": [
+       "duration"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    },
+    {
+     "surface": "400 degrees",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "degrees",
+     "quantityMeant": "baking temperature",
+     "ambiguity": "Scale not stated (presumably Fahrenheit).",
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R313",
+   "quantities": [
+    {
+     "surface": "3 minutes",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "minutes",
+     "quantityMeant": "sauté time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R314",
+   "quantities": [
+    {
+     "surface": "2 large avocados",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "avocados",
+     "quantityMeant": "recipe amount of avocados",
+     "ambiguity": "A food count rather than a measurement unit.",
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1/2 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cup",
+     "quantityMeant": "recipe amount of cocoa powder",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1/2 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cup",
+     "quantityMeant": "recipe amount of brown sugar",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1/3 cup",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "cup",
+     "quantityMeant": "recipe amount of coconut milk",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "2 teaspoons",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "teaspoons",
+     "quantityMeant": "recipe amount of vanilla extract",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "1 pinch",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "pinch",
+     "quantityMeant": "recipe amount of cinnamon",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    },
+    {
+     "surface": "30 minutes",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "minutes",
+     "quantityMeant": "chilling time",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "duration"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "out_of_scope",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "out_of_scope",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R316",
+   "quantities": [
+    {
+     "surface": "3 kgs",
+     "describes": "owned_or_other_product",
+     "goldBound": "none",
+     "unit": "kgs",
+     "quantityMeant": "weight of current mixie",
+     "ambiguity": null,
+     "baseline": "silent",
+     "knowledge": null
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R317",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R318",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R319",
+   "quantities": [
+    {
+     "surface": "7 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R320",
+   "quantities": [
+    {
+     "surface": "6 kg",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "kg",
+     "quantityMeant": "weight",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "mass",
+      "kindCandidates": [
+       "mass"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R321",
+   "quantities": [
+    {
+     "surface": "12 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R322",
+   "quantities": [
+    {
+     "surface": "40 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "width",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R323",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R324",
+   "quantities": [
+    {
+     "surface": "5 kg",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "kg",
+     "quantityMeant": "weight",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "mass",
+      "kindCandidates": [
+       "mass"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R325",
+   "quantities": [
+    {
+     "surface": "1400 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R326",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R327",
+   "quantities": [
+    {
+     "surface": "25 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "width",
+     "ambiguity": "Limit driven by a narrow shelf; the shelf's own width is not stated.",
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R328",
+   "quantities": [
+    {
+     "surface": "1000 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R329",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R330",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R331",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R332",
+   "quantities": [
+    {
+     "surface": "2.5 kg",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "kg",
+     "quantityMeant": "weight",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "mass",
+      "kindCandidates": [
+       "mass"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R333",
+   "quantities": [
+    {
+     "surface": "30 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "width",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R334",
+   "quantities": [
+    {
+     "surface": "2000 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R335",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R336",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R337",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R339",
+   "quantities": [
+    {
+     "surface": "300 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R341",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R342",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R343",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "describes": "context_not_requirement",
+     "goldBound": "none",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": "Negated: the buyer says the air fryer does not need to be 5 litres, so it is not a requirement.",
+     "baseline": "constraint",
+     "knowledge": {
+      "surfaced": false,
+      "reason": "no_bound",
+      "kind": "volume"
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R344",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": [
+      "crisp_texture"
+     ]
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [
+      "crisp_texture"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R345",
+   "quantities": [
+    {
+     "surface": "700 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R346",
+   "quantities": [
+    {
+     "surface": "35 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "width",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R347",
+   "quantities": [
+    {
+     "surface": "5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R348",
+   "quantities": [
+    {
+     "surface": "2000 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R349",
+   "quantities": [
+    {
+     "surface": "2800 W",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "W",
+     "quantityMeant": "power",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "power",
+      "kindCandidates": [
+       "power"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_negative",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_negative",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R350",
+   "quantities": [
+    {
+     "surface": "25 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "height",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R351",
+   "quantities": [
+    {
+     "surface": "33 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "width",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R352",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R353",
+   "quantities": [
+    {
+     "surface": "1 litre",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litre",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R354",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R355",
+   "quantities": [
+    {
+     "surface": "3 kg",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "kg",
+     "quantityMeant": "weight",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "mass",
+      "kindCandidates": [
+       "mass"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R356",
+   "quantities": [
+    {
+     "surface": "1 litre",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litre",
+     "quantityMeant": "capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "justified_abstention",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "justified_abstention",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R357",
+   "quantities": [
+    {
+     "surface": "35 cm",
+     "describes": "product_requirement",
+     "goldBound": "max",
+     "unit": "cm",
+     "quantityMeant": "height",
+     "ambiguity": "Limit set by the space under the cupboards; the space itself is not measured.",
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "max",
+      "status": "typed",
+      "kind": "length",
+      "kindCandidates": [
+       "length"
+      ],
+      "metric": null,
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R359",
+   "quantities": [
+    {
+     "surface": "1.5 litres",
+     "describes": "product_requirement",
+     "goldBound": "min",
+     "unit": "litres",
+     "quantityMeant": "water tank capacity",
+     "ambiguity": null,
+     "baseline": "constraint",
+     "knowledge": {
+      "bound": "min",
+      "status": "typed",
+      "kind": "volume",
+      "kindCandidates": [
+       "volume"
+      ],
+      "metric": "tank_capacity",
+      "weighting": null
+     }
+    }
+   ],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R360",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "positive_shortlist",
+     "unassessed": [
+      "espresso_quality",
+      "best-tasting traditional italian espresso"
+     ]
+    },
+    "knowledge": {
+     "response": "positive_shortlist",
+     "unassessed": [
+      "espresso_quality",
+      "best-tasting traditional italian espresso"
+     ],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  },
+  {
+   "id": "R362",
+   "quantities": [],
+   "advice": {
+    "baseline": {
+     "response": "clarification",
+     "unassessed": []
+    },
+    "knowledge": {
+     "response": "clarification",
+     "unassessed": [],
+     "quantityRequirements": [],
+     "questions": []
+    }
+   }
+  }
+ ]
+}

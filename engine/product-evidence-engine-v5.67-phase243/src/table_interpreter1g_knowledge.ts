@@ -8,30 +8,30 @@
 import {acquireTables1F} from './table_acquisition1f.js';
 import {documentModel1G,interpretDocumentTables1G,renderedView1G,INTERPRETER1G_RENDERED_VERSION,type TextModel1G,type DocumentInterpretation1G,type Observation1G} from './table_interpreter1g.js';
 import type {InterpreterLessonId1G} from './table_interpreter1g_lessons.js';
-import {findQuantities,parseUnit,typeQuantity,sameQuantity,type QuantityKnowledge,type TypedQuantity,type ParsedUnit} from './quantity_knowledge.js';
+import {findQuantities,typeQuantity,sameQuantity,unitStatedInLabel,withLabelBasis,typeLabelledNumber,typeClass,relationChecks,type QuantityKnowledge,type TypedQuantity,type ParsedUnit,type TypedClass,type RelationCheck} from './quantity_knowledge.js';
 
 export interface KnowledgeObservation1G extends Observation1G {
  /** Typed by the quantity knowledge; null: not a quantity, or its unit is unknown to the knowledge. */
  quantity:TypedQuantity|null;
  /** The unit's printed surface and where it was found. */
- unitSurface:string|null;unitFrom:'cell'|'label'|null;
+ unitSurface:string|null;unitFrom:'cell'|'label'|'metric'|null;
+ /** v2: the reporting basis a label added to the unit ("daily" + L = L/day). */
+ labelBasis:string|null;
+ /** v2: a class value ("A+++", "H13") typed against the knowledge's ordinal scales. */
+ scaleClass:TypedClass|null;
  /** Another observation of the same cell printing this same quantity in another unit (conversion verified). */
  sameAs:string|null;sameAsReason:string|null;
 }
 export interface KnowledgeInterpretation1G {schema:'pee.table-interpretation.v1g+qk';readingIdentity:string;baseReadingIdentity:string;knowledge:string;
- tables:{table:number;status:string;observations:KnowledgeObservation1G[]}[]}
+ tables:{table:number;status:string;observations:KnowledgeObservation1G[];
+  /** v2: relations the knowledge holds, checked per product on this table's typed values. */
+  relationChecks:{product:string|null;check:RelationCheck}[]}[]}
 
-const BRACKETED=/[([]\s*(?:in\s+)?([^()[\]]{1,28}?)\s*[)\]]/g;
-/** A unit a label prints for its values: "(m³/h)", "[dB]", "Noise (dBA)", "Weight (pounds / kg)" (several: ambiguous, none taken). */
-export function unitInLabel1G(qk:QuantityKnowledge,label:string):{unit:ParsedUnit;surface:string}|null{
- const found:{unit:ParsedUnit;surface:string}[]=[];
- // a bracket may also state a condition ("(10%, in nits)"): each comma-separated part is tried, "in" is dropped
- for(const m of label.matchAll(BRACKETED))for(const part of m[1].split(/[,;]/)){const inner=part.trim().replace(/^in\s+/i,'');const u=inner?parseUnit(qk,inner):null;if(u)found.push({unit:u,surface:inner});}
- return found.length===1?found[0]:null;
-}
+/** A unit a label prints for its values (kept for callers; the knowledge's own reader since v2). */
+export function unitInLabel1G(qk:QuantityKnowledge,label:string):{unit:ParsedUnit;surface:string}|null{return unitStatedInLabel(qk,label);}
 
 /** Apply the knowledge to the 1G reading of a document. `base` may be passed to reuse an existing 1G reading. */
-export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{lessons?:readonly InterpreterLessonId1G[];base?:DocumentInterpretation1G;text?:TextModel1G}={}):KnowledgeInterpretation1G{
+export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{lessons?:readonly InterpreterLessonId1G[];base?:DocumentInterpretation1G;text?:TextModel1G;productGroup?:string}={}):KnowledgeInterpretation1G{
  // The layer reads the rendered cell text (v1g.2) unless a base reading or another text model is given.
  const text:TextModel1G=opts.base?(opts.base.version===INTERPRETER1G_RENDERED_VERSION?'rendered':'decoded'):opts.text??'rendered';
  const base=opts.base??interpretDocumentTables1G(html,{lessons:opts.lessons,text});
@@ -42,16 +42,23 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
    ...t.context.filter(l=>l.applies).map(l=>doc.blocks[l.block]?.text??'')].filter(Boolean);
   const obs:KnowledgeObservation1G[]=t.observations.map(o=>{
    const labels=[...o.property,...o.records,...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??'')].filter(Boolean);
-   let quantity:TypedQuantity|null=null,unitSurface:string|null=null,unitFrom:KnowledgeObservation1G['unitFrom']=null;
+   let quantity:TypedQuantity|null=null,unitSurface:string|null=null,unitFrom:KnowledgeObservation1G['unitFrom']=null,labelBasis:string|null=null;
+   const tctx={labels,conditions:o.conditions,context:ctx,measuredReading:o.evidence.class==='publisher_measured'};
+   const withBasis=(u:ParsedUnit)=>{const b=withLabelBasis(qk,u,labels);if(b){labelBasis=b.basis;return b.unit;}return u;};
    if(o.kind==='quantity'||o.kind==='range'||o.kind==='bound'||o.kind==='number'){
-    const f=findQuantities(qk,o.surface).find(x=>x.value===o.value||(o.low!==undefined&&x.low===o.low&&x.high===o.high))??null;
-    if(f){quantity=typeQuantity(qk,{surface:f.surface,value:f.value,low:f.low,high:f.high,unit:f.unit},{labels,conditions:o.conditions,context:ctx});unitSurface=f.unitSurface;unitFrom='cell';}
+    // the value is read in its whole cell (a dimension list or an axis letter is visible only there), then in its own surface
+    const same=(x:{value:number|null;low?:number;high?:number})=>x.value===o.value||(o.low!==undefined&&x.low===o.low&&x.high===o.high);
+    const inCell=findQuantities(qk,cellText.get(o.cell)??'');const listed=inCell.filter(x=>x.axis!==undefined);
+    const f=inCell.find(x=>same(x)&&o.surface.includes(String(x.value??x.low)))??(listed.some(same)?null:findQuantities(qk,o.surface).find(same)??null);
+    if(f){quantity=typeQuantity(qk,{surface:f.surface,value:f.value,low:f.low,high:f.high,unit:withBasis(f.unit)},tctx);unitSurface=f.unitSurface;unitFrom='cell';}
     else if(o.value!==null||o.low!==undefined){
-     // the unit printed in a label of the value (column or row header, caption)
-     const lu=[...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??''),at?.caption?.normalisedText??''].map(l=>unitInLabel1G(qk,l)).find(Boolean)??null;
-     if(lu){quantity=typeQuantity(qk,{surface:o.surface+' '+lu.surface,value:o.value,...(o.low!==undefined?{low:o.low,high:o.high}:{}),unit:lu.unit},{labels,conditions:o.conditions,context:ctx});unitSurface=lu.surface;unitFrom='label';}
+     // the unit a label of the value states (column or row header, its in-cell label, caption): "(m³/h)", "in watts"
+     const lu=[...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??''),...o.property,at?.caption?.normalisedText??''].map(l=>unitStatedInLabel(qk,l)).find(Boolean)??null;
+     if(lu){quantity=typeQuantity(qk,{surface:o.surface+' '+lu.surface,value:o.value,...(o.low!==undefined?{low:o.low,high:o.high}:{}),unit:withBasis(lu.unit)},tctx);unitSurface=lu.surface;unitFrom='label';}
+     else{const lq=typeLabelledNumber(qk,{surface:o.surface,value:o.value,...(o.low!==undefined?{low:o.low,high:o.high}:{})},tctx);if(lq){quantity=lq;unitFrom='metric';}}
     }}
-   return {...o,quantity,unitSurface,unitFrom,sameAs:null,sameAsReason:null};});
+   const scaleClass=o.kind==='text'||o.kind==='identifier'?typeClass(qk,o.surface,{labels,productGroup:opts.productGroup}):null;
+   return {...o,quantity,unitSurface,unitFrom,labelBasis,scaleClass,sameAs:null,sameAsReason:null};});
   // the same quantity printed twice in one cell: the later expression points to the first
   const byCell=new Map<number,KnowledgeObservation1G[]>();for(const o of obs)if(o.quantity)byCell.set(o.cell,[...(byCell.get(o.cell)??[]),o]);
   // A re-expression is in ANOTHER unit (two equal values in the same unit are two quantities, e.g. width and depth); the
@@ -61,6 +68,9 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
    const d=(p:KnowledgeObservation1G)=>Math.abs((p.quantity!.si?.value??0)-(cur.quantity!.si?.value??0));
    const prev=cands.sort((a,b)=>d(a)-d(b))[0];
    if(prev){cur.sameAs=prev.id;cur.sameAsReason=sameQuantity(prev.quantity!,cur.quantity!).reason;used.add(prev.id);}}}
-  return {table:t.table,status:t.status,observations:obs};});
+  // relations checked per product over the table's typed values (a re-expression is the same value: not counted twice)
+  const byProduct=new Map<string|null,TypedQuantity[]>();for(const o of obs)if(o.quantity&&!o.sameAs)byProduct.set(o.product,[...(byProduct.get(o.product)??[]),o.quantity]);
+  const checks=[...byProduct].flatMap(([product,vs])=>relationChecks(qk,vs).map(check=>({product,check})));
+  return {table:t.table,status:t.status,observations:obs,relationChecks:checks};});
  return {schema:'pee.table-interpretation.v1g+qk',readingIdentity:base.readingIdentity+'+qk:'+qk.identity,baseReadingIdentity:base.readingIdentity,knowledge:qk.identity,tables};
 }

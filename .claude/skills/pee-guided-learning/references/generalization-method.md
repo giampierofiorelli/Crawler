@@ -187,6 +187,9 @@ knowledge (not code) → reconsider unresolved earlier readings.
      pack. UCUM not incorporated (licence forbids derivative works); QUDT identifiers only (CC BY 4.0).
    - One interface (`src/quantity_knowledge.ts`); consumers: 1G layer, request understanding (opt-in and the Phase253
      rate guard), typed relevance link. Legacy vocabularies still to migrate (debt D20).
+   - *Extended 2026-10-18 (KN, S52):* qk.2 adds methods with fixed conditions, physical relations (consistency checks
+     with implied assumptions), ordinal class scales with regimes, and label language; consumers add comparability across
+     methods and scales, class requirements in requests and evidence needs naming methods. Not yet used by any decision (D22).
 2. **Knowledge consultation in the global interpreter.** *Partly built (GK): as a layer over the frozen 1G reading,
    with its own identity; with/without measured on spent pages (`evaluation/quantity-knowledge/reading-final.json`).*
    - Expected measurands, units and required conditions of a category enter 1G as typed constraints and support.

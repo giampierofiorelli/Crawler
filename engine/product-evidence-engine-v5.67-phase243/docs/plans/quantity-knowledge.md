@@ -200,3 +200,138 @@ Found and **not** fixed (debt D18): 1F joins text across `<br>` without a separa
   2. migrating each legacy vocabulary to a view of the pack, after an equivalence run;
   3. an authorised small set of unseen pages, split by publisher template, to test the reading claims out of
      distribution.
+
+---
+
+# Addendum KN (2026-10-18): the `<br>` fix and knowledge v2 (qk.2)
+
+Owner brief of 2026-10-18 (Italian; key parts): fix the `<br>` defect "preservando la fedeltà dell'acquisizione e le
+baseline pubblicate"; then enrich the scientific knowledge (quantities, application metrics, methods, conditions,
+physical relations, qualitative results, specialist knowledge) from the category packages and authoritative sources;
+"verifica quali report sono realmente disponibili e non ricostruire quelli mancanti"; errors become knowledge or
+mechanism fixes, always reusable.
+
+## K1. `<br>` defect (D18): fixed in new versions, baselines byte-identical
+
+- **Acquisition v1f.2** (opt-in `acquireTables1F(html,{rendered:true})`) adds `renderedText` to cells and captions: an
+  innerText-like text where `<br>` and block boundaries are line breaks, hidden content is excluded (the `hidden`
+  attribute, inline `display:none` / `visibility:hidden`), `aria-hidden` is kept, and an image is a non-collapsing
+  boundary. Every v1f.1 field is unchanged.
+- **Interpreter v1g.2** (`{text:'rendered'}`) reads that text. v1g.1 stays the default.
+- **Verification:**
+  - Chromium `innerText` oracle (`scripts/rendered-text-1f-verify.mjs`): 2,063 of 2,063 cells equal on the 69 retained
+    pages.
+  - v1f.1 and v1g.1 outputs are byte-identical to cb68490 on 69 of 69 pages.
+  - The sealed 1E dev gold and the 1G check gold score identically under v1g.1 and v1g.2.
+  - Labels merged across `<br>`: 34 → 0. Bare numbers that recovered their unit: 73. Values lost: 0.
+- The knowledge layer reads v1g.2 by default; with an explicit `base` reading it follows that reading's version.
+
+## K2. What research is actually available (no reconstruction)
+
+The private repository holds these packages, unmodified:
+- air purifiers v1.2.0;
+- robot floor cleaners v1.0.0;
+- household dishwashers v2.0.0 (plus a countertop v1.0.0);
+- televisions v1.0.0;
+- soundbars v1.0.0;
+- speakers v1.0.0;
+- dehumidifiers (consolidated, original, restored sources R01–R39);
+- coffee;
+- air fryers: only the RECOVERED v2.2.0 compendium and its addenda.
+
+The air-fryer v3.9.0 report is not available and was not reconstructed. Package claims were used only as leads. Each
+fact entered the pack only after it was checked against the cited official or standard source (the `verification`
+field of each new source). Where only secondary sources agreed, the source says so.
+
+## K3. Knowledge v2 (`quantity-knowledge.v2.json`, identity `qk.2:…`)
+
+Built reproducibly from v1 by `resources/quantity-knowledge/build/v2-additions.py`; v1 is unchanged and still loads.
+
+| Section | New content | Sources (verification) |
+|---|---|---|
+| Kinds | electric current, electrical resistance, volume per energy (energy factor), colour difference ΔE; sound power `notDirectlyMeasured`, `determinedBy` ISO 3741/3744 | SI; ISO catalogue descriptions |
+| Units | A (case-sensitive) / amp, Ω / ohm, ΔE (case-sensitive), UK pint | SI, physics |
+| Condition axes | method, inlet air state, reference gamut, signal mode, floor type, drive level | DOE, ITU-R BT.2020, IEC 62885-7 |
+| Metrics | dehumidifier capacity vs tank capacity (not equivalent), energy factor, filter efficiency class, robot suction vs debris pickup (not equivalent), pump vs brew pressure (not equivalent), gamut coverage, colour error ΔE (unitless), input lag, speaker sensitivity, impedance | ENERGY STAR, DOE, EN 1822, IEC 62885-7, secondary (espresso) |
+| Methods | DOE appendix X1 (65 °F, 60 % RH); AHAM DH-1-2008 (80 °F, 60 % RH, superseded); EU dishwasher label 2019 and tumble-dryer label 2025 (eco programme); AHAM AC-1; ISO 3741/3744; IEC 62885-7 | official pages read |
+| Relations | room area from CADR (`cadr*60/(ach*height)`, 8 ft default, smoke CADR preferred, AHAM); energy = power × time; per cycle from per 100 cycles; free-field distance law and P = V²/R (explain only) | AHAM, ENERGY STAR, physics |
+| Scales | EU energy class 2021 (A–G, regimes by product group and date), pre-2021 (A+++…; distinctive A+++/A++/A+; tumble dryers until 2025-06-30), EU dishwasher noise class, EN 1822 filter classes | European Commission, EN 1822 (secondary) |
+| Language | label unit prepositions ("in watts"), basis words ("daily" + L = L/day), axis letters (W, H, D, L, Ø) | — |
+
+## K4. Shared mechanisms that consume it (one knowledge, several functions)
+
+- **Reading** (`findQuantities`, `typeQuantity`, 1G knowledge layer):
+  - dimension lists with axis letters ("27.16W x 10.5D in" is inches, not watts);
+  - units stated by labels, bases named by labels, unitless metrics;
+  - a publisher's own reading is sound pressure, because sound power is only ever computed;
+  - a named method adds the conditions it fixes;
+  - classes are typed on scales.
+- **Comparability:**
+  - ratings under different methods are `not_comparable` (dehumidifier 65 °F vs 80 °F);
+  - classes compare only on one scale (`compareClasses`).
+- **Consistency:** `relationChecks` checks per product the relations a table's values provide. It reports the implied
+  assumption when a value disagrees ("the room size implies a 5.95 ft ceiling"). It never pairs values it cannot pair.
+- **Requests:**
+  - `readClassRequirements`, used in the advice with the request date;
+  - a class requirement is now an explicit unassessed objective. It was previously lost silently (principle 8);
+  - a superseded-scale class is stated as such and never translated;
+  - an ambiguous scale becomes a question.
+- **Evidence needs:** `evidenceNeed` names the defining method and the conditions it fixes.
+- **Relevance links (Phase272):** typed links now reach colour accuracy (ΔE), dehumidifier removal and ACH-based room
+  measures.
+
+## K5. Results (T2 on SPENT development pages; T1 tests; no held-out claim)
+
+Reading, 69 pages, same code, v1g.2 base (`evaluation/quantity-knowledge/reading-kn-v1.json` vs `reading-kn-v2b.json`):
+
+| Measure | qk.1 | qk.2 |
+|---|---|---|
+| typed values | 697 | 882 |
+| kind established / ambiguous | 657 / 40 | 859 / 23 |
+| sound levels resolved as sound pressure | 49 | 97 |
+| unit from label / from unitless metric | 41 / 0 | 110 / 8 |
+| same quantity printed twice (all 50 new: dimension lists in in and cm, axes checked) | 84 | 134 |
+| methods detected / classes typed | 0 / 0 | 7 / 7 |
+| relation checks (room area from smoke CADR) | 0 | 16, all consistent |
+| metrics with every required condition stated | 46 | 84 |
+
+Other results:
+- **Relevance links** (`links-kn-v2b.json`):
+  - 21 typed-only links, all checked correct (8 ΔE, 6 daily extraction, 7 ACH);
+  - 4 wrong links (percentages) removed;
+  - 2 "different" noise readings now go to the noise measure instead of a CADR.
+- **Requests** (`requests-kn-v2-tuned.json`, labelled TUNED, since the gold is spent):
+  - identical to the first run on every surfaced requirement;
+  - 6 more requirements are read but have no bound;
+  - the gold corpus contains no class requirement, so the class path is shown on own synthetic requests (T1/T2,
+    store copy):
+    - "A+++ rated dishwasher" → pre-2021 scale, stated as no longer in use;
+    - "energy class B or better" → 2021 scale, minimum bound;
+    - "energy class A++" TV → superseded;
+    - "true HEPA H13" → EN 1822.
+- **Default path:**
+  - the advice without the knowledge is byte-identical on the 363 corpus requests (same hash as cb68490);
+  - the live store is unchanged (SHA 5dd1e763…);
+  - full suite: 4,662 passed.
+
+## K6. Errors that became knowledge or mechanism fixes
+
+| Error found | Kind | Fix (reusable) |
+|---|---|---|
+| "27.16W x … inches" typed as watts | mechanism | dimension-list parsing with axis letters (pack language); cell-level reading |
+| energy = power × time paired arbitrary values | mechanism | no relation check when several distinct candidate values remain |
+| room area disagreed using dust CADR | knowledge | `prefer: {challenge_pollutant: smoke}` (AHAM two-thirds rule) |
+| "HEPA" made any nearby percentage a filter efficiency | knowledge | metric terms name efficiency; "HEPA" stays a scale term |
+| "100% warranty" linked to the only dimensionless measurement | mechanism (pre-existing since GK) | a bare dimensionless value links only by its metric or the measurement's own words |
+
+## K7. Open
+
+- Pairing of re-expressed dimension lists is by closest value, not by axis or list position (correct on all 50 cases
+  seen; an axis-aware pairing would be stricter).
+- Class requirements need the product group. A request whose category is not in the registry ("tumble dryer",
+  "fridge") keeps the scale ambiguous unless the class itself settles it.
+- Relations and classes are reported, not used by any decision. Ranking and persistence are not authorised (D21
+  stays open).
+- Every page is spent. A small authorised unseen set is still needed for an out-of-distribution claim.
+- Qualitative results (package teaching) entered no new mechanism in this step; they remain in the Phase269–272
+  teaching.
