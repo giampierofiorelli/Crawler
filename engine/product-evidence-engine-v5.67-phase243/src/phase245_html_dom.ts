@@ -9,6 +9,10 @@ export interface Node245 {
  parent:Node245|null;text:string;
  /** Document order, used for deterministic locators. */
  order:number;
+ /** Only with parseHtml245(html,{keepSource:true}): source offsets of the element (start of its start tag, end of its start
+  * tag, end of the element: after its end tag, or where an implied end or end of input closed it), and, for text nodes,
+  * the undecoded source text (concatenated when adjacent source runs merged into one node). Nothing else changes. */
+ src?:{start:number;startTagEnd:number;end:number};rawText?:string;rawAttrs?:Record<string,string>;implied?:boolean;
 }
 const VOID=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
 const RAW=new Set(['script','style','textarea','title','noscript','template','xmp','iframe','noembed','noframes']);
@@ -56,22 +60,26 @@ function scanTag(html:string,start:number):{0:string;1:string;2:string;3:string;
 }
 /** Parse HTML into a bounded tree. Throws only on unsupported input type; oversize input is truncated
  * at the node budget (the result notes this with `truncated`). */
-export function parseHtml245(html:string):{root:Node245;nodeCount:number;truncated:boolean}{
+export function parseHtml245(html:string,opts:{keepSource?:boolean}={}):{root:Node245;nodeCount:number;truncated:boolean}{
  if(typeof html!=='string')throw Error('245_html_not_string');
+ const keep=opts.keepSource===true;let tagStart=0;
  let order=0;
  const root:Node245={kind:'element',tag:'#document',attrs:{},children:[],parent:null,text:'',order:order++};
  const stack:Node245[]=[root];
  let truncated=false;
  const top=()=>stack[stack.length-1];
  const add=(n:Node245)=>{n.parent=top();top().children.push(n);};
- const addText=(t:string)=>{
-  if(!t)return;const p=top();const last=p.children[p.children.length-1];
-  if(last&&last.kind==='text'){last.text+=t;return;}
-  add({kind:'text',tag:'#text',attrs:{},children:[],parent:null,text:t,order:order++});
+ const addText=(t:string,raw?:string)=>{
+  if(!t&&!(keep&&raw))return;const p=top();const last=p.children[p.children.length-1];
+  if(last&&last.kind==='text'){last.text+=t;if(keep)last.rawText=(last.rawText??'')+(raw??t);return;}
+  const n:Node245={kind:'text',tag:'#text',attrs:{},children:[],parent:null,text:t,order:order++};if(keep)n.rawText=raw??t;add(n);
  };
- const closeTo=(tag:string,boundary:string[]=[])=>{
+ // keepSource: an element closed by its own end tag ends after it (endPos); elements closed implicitly end where the
+ // closing token starts.
+ const pop=(i:number,endPos?:number)=>{if(keep)for(let k=stack.length-1;k>=i;k--){const e=stack[k];if(e.src)e.src.end=k===i&&endPos!==undefined?endPos:tagStart;}stack.length=i;};
+ const closeTo=(tag:string,boundary:string[]=[],endPos?:number)=>{
   for(let i=stack.length-1;i>0;i--){const t=stack[i].tag;
-   if(t===tag){stack.length=i;return true;}
+   if(t===tag){pop(i,endPos);return true;}
    if(boundary.includes(t))return false;
   }
   return false;
@@ -80,41 +88,43 @@ export function parseHtml245(html:string):{root:Node245;nodeCount:number;truncat
  while(i<n){
   if(order>MAX_NODES){truncated=true;break;}
   const lt=html.indexOf('<',i);
-  if(lt<0){addText(decodeEntities245(html.slice(i)));break;}
-  if(lt>i)addText(decodeEntities245(html.slice(i,lt)));
-  i=lt;
+  if(lt<0){addText(decodeEntities245(html.slice(i)),html.slice(i));break;}
+  if(lt>i)addText(decodeEntities245(html.slice(i,lt)),html.slice(i,lt));
+  i=lt;tagStart=lt;
   if(html.startsWith('<!--',i)){const e=html.indexOf('-->',i+4);i=e<0?n:e+3;continue;}
   if(html[i+1]==='!'||html[i+1]==='?'){const e=html.indexOf('>',i);i=e<0?n:e+1;continue;}
   // Tag scan that respects quoted attribute values of any length (framework pages put large JSON
   // in attributes); a regex over a fixed window would turn such tags into text.
   const m=scanTag(html,i);
-  if(!m){addText('<');i++;continue;}
+  if(!m){addText('<','<');i++;continue;}
   i=m.end;
   const tag=m[2].toLowerCase();
   if(m[1]){ // end tag
    if(tag==='p'||tag==='li'||tag==='dt'||tag==='dd'||tag==='td'||tag==='th'||tag==='tr'||tag==='option'){
-    closeTo(tag,IMPLIED[tag]?.boundary??[]);continue;}
-   closeTo(tag);continue;
+    closeTo(tag,IMPLIED[tag]?.boundary??[],m.end);continue;}
+   closeTo(tag,[],m.end);continue;
   }
-  const attrs:Record<string,string>={};
+  const attrs:Record<string,string>={};const rawAttrs:Record<string,string>={};
   for(const a of m[3].matchAll(/([^\s"'>\/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+)))?/g)){
    const k=a[1].toLowerCase();if(k in attrs)continue;
-   attrs[k]=decodeEntities245(a[2]??a[3]??a[4]??'');
+   attrs[k]=decodeEntities245(a[2]??a[3]??a[4]??'');if(keep)rawAttrs[k]=a[2]??a[3]??a[4]??'';
   }
   const imp=IMPLIED[tag];
   if(imp)for(const c of imp.closes){if(stack.some(s=>s.tag===c))closeTo(c,imp.boundary);}
   if(BLOCK_CLOSES_P.has(tag)&&stack.some(s=>s.tag==='p'))closeTo('p',['div','section','article','main','td','th','li','button','table']);
   if((tag==='td'||tag==='th')&&top().tag!=='tr'&&['table','thead','tbody','tfoot'].includes(top().tag)){
-   const tr:Node245={kind:'element',tag:'tr',attrs:{},children:[],parent:null,text:'',order:order++};add(tr);stack.push(tr);}
+   const tr:Node245={kind:'element',tag:'tr',attrs:{},children:[],parent:null,text:'',order:order++};
+   if(keep){tr.src={start:lt,startTagEnd:lt,end:n};tr.implied=true;tr.rawAttrs={};}add(tr);stack.push(tr);}
   const el:Node245={kind:'element',tag,attrs,children:[],parent:null,text:'',order:order++};
+  if(keep){el.src={start:lt,startTagEnd:m.end,end:n};el.rawAttrs=rawAttrs;}
   add(el);
-  if(VOID.has(tag)||m[4])continue;
+  if(VOID.has(tag)||m[4]){if(el.src)el.src.end=m.end;continue;}
   if(RAW.has(tag)){
    const close=new RegExp(`</${tag}\\s*>`,'ig');close.lastIndex=i;
    const e=close.exec(html);const end=e?e.index:n;
-   el.text=html.slice(i,end);i=e?e.index+e[0].length:n;continue;
+   el.text=html.slice(i,end);i=e?e.index+e[0].length:n;if(el.src)el.src.end=i;continue;
   }
-  if(stack.length<MAX_DEPTH)stack.push(el);
+  if(stack.length<MAX_DEPTH)stack.push(el);else if(el.src)el.src.end=m.end;
  }
  return {root,nodeCount:order,truncated};
 }

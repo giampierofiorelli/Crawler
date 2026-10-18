@@ -18,8 +18,9 @@
  * `structuredTableLeads1D2` reads measurement cells with the same plan gates as the Phase272 guided reader; it is called
  * only when a caller passes both a plan and this contract (evaluation or shadow), so the default path is unchanged. */
 import {createHash} from 'node:crypto';
-import {parseHtml245,walk245,textOf245,decodeEntities245,type Node245} from './phase245_html_dom.js';
+import {parseHtml245,walk245,textOf245,decodeEntities245,locator245,type Node245} from './phase245_html_dom.js';
 import {buildTableGrid245,interpretTableGrid245,type TableGrid245} from './phase245_table_grid.js';
+import {tableAcquisitionStatus1F,type TableStatus1F} from './table_acquisition1f.js';
 import {classifyRegions245} from './phase245_spec_extraction.js';
 import {textBlocks225,type TestCandidate225} from './phase225_transient_test_probe.js';
 import {unitAlternation272,canonicalUnit272,dimensionOfUnit272,DIMENSION_WORDS272,DECLARATION_CUE272,TEST_CONTEXT272,rangeOrBound272,
@@ -39,12 +40,16 @@ export interface TableCell1D2 {blockIndex:number|null;row:number;col:number;text
 export interface Table1D2 {index:number;phase245Mode:string;rows:number;cols:number;headerRows:number;caption:string|null;
  heading:string|null;headingBlock:number|null;hardExcluded:boolean;regionReason:string|null;
  /** From the table's own heading, caption and header row: test results, a specification sheet, or unknown. */
- context:'test'|'specification'|'unknown';headerTexts:string[];firstColumn:string[];cells:TableCell1D2[]}
+ context:'test'|'specification'|'unknown';headerTexts:string[];firstColumn:string[];cells:TableCell1D2[];
+ /** Acquisition completeness of this table (src/table_acquisition1f.ts): 'complete' only when every source cell is represented. */
+ acquisition?:TableStatus1F}
 export interface DocumentSemantics1D2 {schema:'pee.document-semantics.v1d2';sourceUrl:string;
  metadata:{title:string|null;ogTitle:string|null;ogType:string|null;ogUrl:string|null;canonical:string|null;h1:string[];jsonLdTypes:string[];itemListEntries:number};
  names:StructuredName1D2[];pageType:{kind:PageType1D2;signals:string[]};
  principal:{name:string|null;source:NameSource1D2|null;conflicts:string[]};
  blocks:BlockInfo1D2[];tables:Table1D2[];figures:number;alignment:{blocks:number;aligned:number};
+ /** Every DOM table this contract does not read, with the reason and its acquisition status (never omitted silently). */
+ tablesNotRead?:{locator:string;reason:'nested'|'no_grid'|'table_limit_40';acquisition:TableStatus1F}[];
  stats:{nodes:number;truncated:boolean;milliseconds:number}}
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
@@ -115,10 +120,13 @@ export function readDocumentSemantics1D2(html:string,sourceUrl:string):DocumentS
    let a=n.parent;while(a){if(a.tag==='figure'){inFigure=true;break;}a=a.parent;}}
   return {tag:n?.tag??'unknown',aligned:!!n,region:r.region,regionReason:r.reason,hardExcluded:r.hard,headingPath:headingPath[i],sectionRole:role(i),links,emphasis,inFigure,cell:null};});
  // Tables: the Phase245 grid of every non-nested table, with each cell's reader block and its own header labels.
- const tables:Table1D2[]=[];let lastHeading:Node245|null=null;let lastPara:Node245|null=null;let figures=0;
+ const tables:Table1D2[]=[];const tablesNotRead:NonNullable<DocumentSemantics1D2['tablesNotRead']>=[];let lastHeading:Node245|null=null;let lastPara:Node245|null=null;let figures=0;
  for(const n of walk245(root)){if(n.kind!=='element')continue;if(level(n)){lastHeading=n;lastPara=null;}if(n.tag==='p')lastPara=n;if(n.tag==='figure')figures++;
-  if(n.tag!=='table')continue;{let a=n.parent,nested=false;while(a){if(a.tag==='table'){nested=true;break;}a=a.parent;}if(nested)continue;}
-  const g:TableGrid245|null=buildTableGrid245(n);if(!g||tables.length>=40)continue;const it=interpretTableGrid245(g);
+  if(n.tag!=='table')continue;{let a=n.parent,nested=false;while(a){if(a.tag==='table'){nested=true;break;}a=a.parent;}
+   if(nested){tablesNotRead.push({locator:locator245(n),reason:'nested',acquisition:tableAcquisitionStatus1F(n,buildTableGrid245(n),{truncated})});continue;}}
+  const g:TableGrid245|null=buildTableGrid245(n);
+  if(!g||tables.length>=40){tablesNotRead.push({locator:locator245(n),reason:g?'table_limit_40':'no_grid',acquisition:tableAcquisitionStatus1F(n,g,{truncated})});continue;}
+  const it=interpretTableGrid245(g);
   const cellAt=(r:number,c:number)=>{const id=g.slot[r]?.[c]??-1;return id>=0?g.cells[id]:null;};
   let hr=0;while(hr<g.rows&&(g.theadRows.has(hr)||g.slot[hr].every(id=>id<0||(g.cells[id].header&&g.cells[id].scope!=='row'))))hr++;
   if(hr===0&&(it.mode==='products_in_columns'||it.mode==='products_in_rows'||it.reasons.includes('implicit_header_row')))hr=1;
@@ -137,7 +145,7 @@ export function readDocumentSemantics1D2(html:string,sourceUrl:string):DocumentS
    cells.push({blockIndex:bi,row:c.row,col:c.col,text:c.text,header:c.header||c.row<hr,rowLabels,colLabels});
    if(bi!==null)blocks[bi].cell={table:index,row:c.row,col:c.col};}
   tables.push({index,phase245Mode:it.mode,rows:g.rows,cols:g.cols,headerRows:hr,caption:g.caption,heading,headingBlock:lastHeading?blockOf.get(lastHeading)??null:null,
-   hardExcluded:r.hard,regionReason:r.reason,context,headerTexts,firstColumn,cells});}
+   hardExcluded:r.hard,regionReason:r.reason,context,headerTexts,firstColumn,cells,acquisition:tableAcquisitionStatus1F(n,g,{truncated})});}
  // Names the structure states, with their provenance; none is an identity decision.
  const h1=dom.filter(n=>n.tag==='h1').map(n=>textOf245(n)).filter(Boolean);
  // A structured "name" that is a headline sentence (publishers put review titles there) is not a product name; a trailing
@@ -189,7 +197,7 @@ export function readDocumentSemantics1D2(html:string,sourceUrl:string):DocumentS
  for(const [i,b] of blocks.entries())for(const l of b.links){const tx=l.text.replace(/\s+reviews?$/i,'');if(/[A-Z]/.test(tx[0]??'')&&/\d/.test(tx)&&tx.split(/\s+/).length<=6)names.push({name:tx,source:'linked_name',blockIndex:i,href:l.href});}
  return {schema:'pee.document-semantics.v1d2',sourceUrl,
   metadata:{title:titleNode?titleNode.text.trim()||null:null,ogTitle,ogType,ogUrl:meta('og:url'),canonical,h1,jsonLdTypes:ld.types,itemListEntries:ld.listEntries},
-  names,pageType:{kind,signals},principal:{...principal,conflicts},blocks,tables,figures,
+  names,pageType:{kind,signals},principal:{...principal,conflicts},blocks,tables,tablesNotRead,figures,
   alignment:{blocks:deep.length,aligned:nodeOf.filter(Boolean).length},stats:{nodes:nodeCount,truncated,milliseconds:Date.now()-t0}};
 }
 
