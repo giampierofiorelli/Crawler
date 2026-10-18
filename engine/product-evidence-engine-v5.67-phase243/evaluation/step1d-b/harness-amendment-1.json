@@ -1,0 +1,11 @@
+{
+ "schema": "pee.step1d-b.harness-amendment.v1",
+ "amendment": 1,
+ "at": "2026-10-18",
+ "trigger": "the first invocation of `step1d-b-eval.mjs run firstrun` aborted on its first document, before any arm produced a lead or score: the sealed reference names each document by the key `doc`, while the harness read `tag` (the annotator instructions never named the key: a harness/instruction defect, reported as a finding)",
+ "change": "scripts/step1d-b-eval.mjs: after the reference hash check, `d.tag ??= d.doc` for every reference document; nothing else",
+ "unchanged": "arms, candidate code, compiled modules, scorer, protocol, sealed reference (hash f2d14ee8...), page bytes, plans",
+ "freeze": "evaluation/step1d-b/freeze.sha256: only the script's hash line changed (7010a524... -> 1e0b98db...)",
+ "resultsSeenBeforeAmendment": "none (no output file was written; the error names no value)",
+ "status": "the first run after this amendment is the T2 untouched first run"
+}

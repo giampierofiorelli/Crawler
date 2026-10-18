@@ -105,6 +105,8 @@ for(const [h,f] of readFileSync(join(PUBDIR,'freeze.sha256'),'utf8').trim().spli
 // 2. Gold freeze.
 const gb=readFileSync(join(P,'gold.json'));const GF=JSON.parse(readFileSync(join(PUBDIR,'gold-freeze.json'),'utf8'));
 if(sha(gb)!==GF.goldSha256)throw Error('gold differs from the frozen hash');const G=JSON.parse(gb);
+// Harness amendment 1 (evaluation/step1d-b/harness-amendment-1.json): the sealed reference names documents by `doc`.
+for(const d of G.documents)d.tag??=d.doc;
 const PR=JSON.parse(readFileSync(join(PUBDIR,'protocol.json'),'utf8'));const D=resolve('dist/src');
 const S=await import(D+'/experience_attribution_scoring.js');const PL=await import(D+'/phase272_extraction_plan.js');const T=await import(D+'/phase265_test_measurements.js');
 const SP=await import(D+'/phase245_spec_extraction.js');const Q=await import(D+'/phase269_qualitative_observations.js');const ST=await import(D+'/phase246_knowledge_store.js');
