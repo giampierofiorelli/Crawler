@@ -19,7 +19,8 @@ const PUBD='evaluation/tables-1e';const D=resolve('dist/src');
 const H=await import(D+'/phase245_html_dom.js');const G=await import(D+'/phase245_table_grid.js');const SEM=await import(D+'/document_semantics.js');
 const B=await import(D+'/phase225_transient_test_probe.js');const PL=await import(D+'/phase272_extraction_plan.js');const L=await import(D+'/table_ledger1e.js');
 const S=await import(D+'/experience_attribution_scoring.js');const ST=await import(D+'/phase246_knowledge_store.js');const R=await import(D+'/phase248_category_registry.js');
-const SAMPLE=JSON.parse(readFileSync(join(PUBD,'sample.json'),'utf8'));
+// --sample FILE / --packets-dir NAME: packets for another frozen selection (e.g. evaluation/tables-1g/check-selection.json).
+const SAMPLE=JSON.parse(readFileSync(ARG('sample')??join(PUBD,'sample.json'),'utf8'));const PACKETS=ARG('packets-dir')??'packets';
 const TAUGHT=['air_fryers','coffee_machines','dehumidifiers','dishwashers','air_purifiers','televisions'];
 const LIVE=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
 const pageOf=key=>{const [ev,tag]=key.split('/');const W=JSON.parse(readFileSync(join(ROOT,ev,'wave.json'),'utf8'));const p=W.pages.find(x=>x.tag===tag);
@@ -33,7 +34,7 @@ const renderText=html=>dec(html.replace(/<!--[\s\S]*?-->/g,'').replace(/<(script
  .replace(/<[^>]+>/g,' ')).split('\n').map(x=>x.replace(/[ \t]+/g,' ').trim()).filter(Boolean).join('\n');
 
 if(cmd==='packets'){
- mkdirSync(join(P,'packets'),{recursive:true});const pagesDone=new Set();
+ mkdirSync(join(P,PACKETS),{recursive:true});const pagesDone=new Set();
  for(const s of SAMPLE.tables){const p=pageOf(s.page);const {root}=H.parseHtml245(p.html);const n=tableNode(root,s.table);if(!n)throw Error('table not found '+s.id);
   const trs=[];const visit=x=>{for(const c of x.children){if(c.kind!=='element'||c.tag==='table')continue;if(c.tag==='tr')trs.push(c);else visit(c);}};visit(n);
   const rows=trs.map((tr,r)=>tr.children.filter(c=>c.kind==='element'&&(c.tag==='td'||c.tag==='th')).map((c,k)=>({r,c:k,tag:c.tag,rowspan:c.attrs.rowspan??null,colspan:c.attrs.colspan??null,scope:c.attrs.scope??null,headers:c.attrs.headers??null,text:H.textOf245(c,{skip:x=>x.tag==='table'})})));
@@ -44,8 +45,8 @@ if(cmd==='packets'){
   const path=Number.isFinite(first)?sem.blocks[first].headingPath:[];const head=path[path.length-1]??Math.max(0,first-8);
   const before=[];for(let b=head+1;b<first&&before.length<12;b++)if(!sem.blocks[b].cell)before.push(deep[b]);
   const after=[];for(let b=last+1;b<deep.length&&after.length<3;b++){if(sem.blocks[b].cell)continue;if(/^h[1-6]$/.test(sem.blocks[b].tag))break;after.push(deep[b]);}
-  const textFile=`page-${p.ev}-${p.tag}.txt`;if(!pagesDone.has(s.page)){writeFileSync(join(P,'packets',textFile),`URL: ${p.url}\nCATEGORY: ${p.category}\n\n${renderText(p.html)}\n`);pagesDone.add(s.page);}
-  writeFileSync(join(P,'packets',s.id+'.json'),JSON.stringify({id:s.id,url:p.url,category:s.category,pageTitle:sem.metadata.title,h1:sem.metadata.h1[0]??null,
+  const textFile=`page-${p.ev}-${p.tag}.txt`;if(!pagesDone.has(s.page)){writeFileSync(join(P,PACKETS,textFile),`URL: ${p.url}\nCATEGORY: ${p.category}\n\n${renderText(p.html)}\n`);pagesDone.add(s.page);}
+  writeFileSync(join(P,PACKETS,s.id+'.json'),JSON.stringify({id:s.id,url:p.url,category:s.category,pageTitle:sem.metadata.title,h1:sem.metadata.h1[0]??null,
    headingChain:path.map(i=>deep[i]),caption:cap?H.textOf245(cap):null,sectionTextBefore:before,textAfter:after,fullPageText:textFile,cells:rows.flat()},null,1)+'\n');
   console.log(s.id,rows.flat().length,'cells');}
  process.exit(0);}

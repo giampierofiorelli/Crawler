@@ -1,0 +1,74 @@
+{
+ "schema": "pee.tables1g.check-selection.v1",
+ "frozenAt": "2026-10-18",
+ "frozenBefore": "any code of the global table interpreter (1G) and before the check tables' cells were examined",
+ "purpose": "a check set for the global table interpreter that is not used for its development: annotated blind by a separate Claude agent and run once, after the interpreter is frozen",
+ "tier": "development-adjacent, NOT held-out: same retained pages' publishers and in part the same templates as the 18-table development sample (evaluation/tables-1e/sample.json); every page was retained and examined in earlier phases",
+ "selectionRule": "tables of the 69 retained pages, not in the development sample, acquisition status complete, 2-30 source rows, at least 3 columns; one table per page, at most 2 per publisher, first in (evaluation, page tag, table index) order; for a publisher with no such table, its first 2-column table under the same rule. Chosen from structural metadata only (rows, columns, th count), never from cell text",
+ "annotationSchema": "evaluation/tables-1e/annotation-schema.json (unchanged)",
+ "tables": [
+  {
+   "id": "C01",
+   "page": "phase270/w_cheapest",
+   "table": 0,
+   "publisher": "which.co.uk",
+   "category": "air_fryers"
+  },
+  {
+   "id": "C02",
+   "page": "phase270/w_vs_deepfat",
+   "table": 0,
+   "publisher": "which.co.uk",
+   "category": "air_fryers"
+  },
+  {
+   "id": "C03",
+   "page": "phase271/t_philips_500",
+   "table": 1,
+   "publisher": "techradar.com",
+   "category": "air_fryers"
+  },
+  {
+   "id": "C04",
+   "page": "phase272/u_ap_trd_iqair_atemx",
+   "table": 1,
+   "publisher": "techradar.com",
+   "category": "air_purifiers"
+  },
+  {
+   "id": "C05",
+   "page": "phase272/u_ap_hf_puroair_240",
+   "table": 2,
+   "publisher": "housefresh.com",
+   "category": "air_purifiers"
+  },
+  {
+   "id": "C06",
+   "page": "phase272/u_tv_tg_samsung_s85f",
+   "table": 0,
+   "publisher": "tomsguide.com",
+   "category": "televisions"
+  },
+  {
+   "id": "C07",
+   "page": "step1d-b/s1db_ap_apf_a231_hpa100",
+   "table": 0,
+   "publisher": "airpurifierfirst.com",
+   "category": "air_purifiers"
+  },
+  {
+   "id": "C08",
+   "page": "step1d-b/s1db_ap_apf_ap1512_5500",
+   "table": 0,
+   "publisher": "airpurifierfirst.com",
+   "category": "air_purifiers"
+  },
+  {
+   "id": "C09",
+   "page": "phase272/dev_dw_tr_bosch_smv68md00g",
+   "table": 0,
+   "publisher": "trustedreviews.com",
+   "category": "dishwashers"
+  }
+ ]
+}
