@@ -1,0 +1,446 @@
+{
+ "schema": "pee.knowledge-rules.v1",
+ "version": "pr.1",
+ "statement": "FC (2026-10-18): first-order facts about what a product can do, with what, in which state, and what bears on how well it works. A function's presence is categorical; no rule derives effectiveness or performance from presence alone (checked by tests over the rules). Two mode names are one state only for a product whose document states it.",
+ "vocabulary": [
+  {
+   "name": "product",
+   "args": [
+    "P"
+   ],
+   "role": "input",
+   "meaning": "P is a product the document names."
+  },
+  {
+   "name": "function",
+   "args": [
+    "F"
+   ],
+   "role": "input",
+   "meaning": "F is a function the knowledge knows."
+  },
+  {
+   "name": "states_function",
+   "args": [
+    "S",
+    "P",
+    "F",
+    "X"
+   ],
+   "role": "input",
+   "meaning": "Statement S of the document says product P's function F is X (available or not_available)."
+  },
+  {
+   "name": "stated_by",
+   "args": [
+    "S",
+    "B"
+   ],
+   "role": "input",
+   "meaning": "Statement S is made by B (spec_or_maker, reviewer_observed, reviewer_mention, reported_by_others)."
+  },
+  {
+   "name": "has_component",
+   "args": [
+    "S",
+    "P",
+    "C"
+   ],
+   "role": "input",
+   "meaning": "Statement S says product P has component C."
+  },
+  {
+   "name": "component_enables",
+   "args": [
+    "C",
+    "F"
+   ],
+   "role": "input",
+   "meaning": "Knowledge: component C can enable function F (a possibility, not a fact about a product)."
+  },
+  {
+   "name": "stated_enables",
+   "args": [
+    "P",
+    "C",
+    "F"
+   ],
+   "role": "input",
+   "meaning": "The document says P's component C serves P's function F."
+  },
+  {
+   "name": "offers_mode",
+   "args": [
+    "P",
+    "M"
+   ],
+   "role": "input",
+   "meaning": "Product P offers, or was tested in, operating mode or setting M."
+  },
+  {
+   "name": "mode_scale",
+   "args": [
+    "M",
+    "SC"
+   ],
+   "role": "input",
+   "meaning": "Mode M is nominal, ordinal, numeric_setting or programme."
+  },
+  {
+   "name": "stated_equivalent",
+   "args": [
+    "P",
+    "M1",
+    "M2"
+   ],
+   "role": "input",
+   "meaning": "The document states that, on product P, mode M1 is (or runs at) M2."
+  },
+  {
+   "name": "function_mode",
+   "args": [
+    "F",
+    "M"
+   ],
+   "role": "input",
+   "meaning": "Knowledge: function F is used through mode M (auto mode is used by selecting the auto mode)."
+  },
+  {
+   "name": "result",
+   "args": [
+    "R",
+    "P",
+    "Q"
+   ],
+   "role": "input",
+   "meaning": "R is a value of metric or kind Q for product P."
+  },
+  {
+   "name": "result_mode",
+   "args": [
+    "R",
+    "M"
+   ],
+   "role": "input",
+   "meaning": "Result R was obtained in operating mode or setting M."
+  },
+  {
+   "name": "performs",
+   "args": [
+    "O",
+    "P",
+    "F"
+   ],
+   "role": "input",
+   "meaning": "Statement O says how well product P's function F works or behaves."
+  },
+  {
+   "name": "performance_evidence",
+   "args": [
+    "O",
+    "E"
+   ],
+   "role": "input",
+   "meaning": "Statement O rests on E (measured, observed_in_test, experience_in_use, opinion, manufacturer_claim, reported_by_others)."
+  },
+  {
+   "name": "need_function",
+   "args": [
+    "N",
+    "F"
+   ],
+   "role": "input",
+   "meaning": "A buyer's need N asks for function F."
+  },
+  {
+   "name": "function_available",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "Some statement says P has F."
+  },
+  {
+   "name": "function_absent",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "Some statement says P lacks F."
+  },
+  {
+   "name": "presence",
+   "args": [
+    "P",
+    "F",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "The document's verdict on P's function F: available, not_available or conflicting."
+  },
+  {
+   "name": "presence_not_verified",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "No statement of the record says whether P has F (closed over the record, not the world)."
+  },
+  {
+   "name": "may_support",
+   "args": [
+    "P",
+    "C",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "P has a component that can enable F, but no statement says P has F: a research lead, never a presence."
+  },
+  {
+   "name": "enabled_by",
+   "args": [
+    "P",
+    "F",
+    "C"
+   ],
+   "role": "derived",
+   "meaning": "P's function F is served by its component C, as the document states."
+  },
+  {
+   "name": "effectiveness_evidence",
+   "args": [
+    "P",
+    "F",
+    "O",
+    "E"
+   ],
+   "role": "derived",
+   "meaning": "Statement or result O, resting on E, bears on how well P's function F works."
+  },
+  {
+   "name": "has_effectiveness_evidence",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "Something bears on how well P's F works."
+  },
+  {
+   "name": "effectiveness_unassessed",
+   "args": [
+    "P",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "P has F, and nothing in the record says how well it works: presence is not performance."
+  },
+  {
+   "name": "same_state",
+   "args": [
+    "P",
+    "M1",
+    "M2"
+   ],
+   "role": "derived",
+   "meaning": "On product P, M1 and M2 are the same operating state: the same name, or a stated equivalence."
+  },
+  {
+   "name": "same_state_results",
+   "args": [
+    "R1",
+    "R2"
+   ],
+   "role": "derived",
+   "meaning": "Two results of one product and one metric were obtained in the same operating state."
+  },
+  {
+   "name": "different_state_results",
+   "args": [
+    "R1",
+    "R2"
+   ],
+   "role": "derived",
+   "meaning": "Two results of one product and one metric were obtained in modes the record does not show to be the same state."
+  },
+  {
+   "name": "same_named_setting",
+   "args": [
+    "R1",
+    "R2"
+   ],
+   "role": "derived",
+   "meaning": "Two results of different products and one metric at the same named setting: a match of names, not shown to be the same physical state."
+  },
+  {
+   "name": "need_met_by_presence",
+   "args": [
+    "N",
+    "P"
+   ],
+   "role": "derived",
+   "meaning": "P has the function need N asks for; whether it works well is a separate question."
+  },
+  {
+   "name": "need_presence_unverified",
+   "args": [
+    "N",
+    "P"
+   ],
+   "role": "derived",
+   "meaning": "Whether P has the function need N asks for is not verified."
+  },
+  {
+   "name": "need_effectiveness_unassessed",
+   "args": [
+    "N",
+    "P"
+   ],
+   "role": "derived",
+   "meaning": "P has the function need N asks for, but how well it works is unassessed."
+  }
+ ],
+ "programs": [
+  {
+   "id": "product",
+   "statement": "Functions, components, modes, results and statements about how well functions work, linked by typed relations.",
+   "rules": [
+    {
+     "id": "F1",
+     "rule": "function_available(P,F) :- states_function(_,P,F,available).",
+     "statement": "a statement says P has F.",
+     "source": "FC"
+    },
+    {
+     "id": "F2",
+     "rule": "function_absent(P,F) :- states_function(_,P,F,not_available).",
+     "statement": "a statement says P lacks F.",
+     "source": "FC"
+    },
+    {
+     "id": "F3",
+     "rule": "presence(P,F,available) :- function_available(P,F), not function_absent(P,F).",
+     "statement": "P has F: stated, and no statement says otherwise.",
+     "source": "FC"
+    },
+    {
+     "id": "F4",
+     "rule": "presence(P,F,not_available) :- function_absent(P,F), not function_available(P,F).",
+     "statement": "P lacks F: stated, and no statement says otherwise.",
+     "source": "FC"
+    },
+    {
+     "id": "F5",
+     "rule": "presence(P,F,conflicting) :- function_available(P,F), function_absent(P,F).",
+     "statement": "the record says both: an unresolved question, never resolved by a vote.",
+     "source": "FC"
+    },
+    {
+     "id": "F6",
+     "rule": "presence_not_verified(P,F) :- product(P), function(F), not function_available(P,F), not function_absent(P,F).",
+     "statement": "nothing in the record says whether P has F; missing evidence is not absence.",
+     "source": "FC"
+    },
+    {
+     "id": "F7",
+     "rule": "may_support(P,C,F) :- has_component(_,P,C), component_enables(C,F), not function_available(P,F), not function_absent(P,F).",
+     "statement": "a component that can enable F is a lead for research, never evidence that P has F.",
+     "source": "FC"
+    },
+    {
+     "id": "F8",
+     "rule": "enabled_by(P,F,C) :- function_available(P,F), has_component(_,P,C), stated_enables(P,C,F).",
+     "statement": "the document links P's component to P's function.",
+     "source": "FC"
+    },
+    {
+     "id": "E1",
+     "rule": "effectiveness_evidence(P,F,O,E) :- performs(O,P,F), performance_evidence(O,E).",
+     "statement": "a statement about how well F works is evidence about its effectiveness, with its own evidence type.",
+     "source": "FC"
+    },
+    {
+     "id": "E2",
+     "rule": "effectiveness_evidence(P,F,R,measured) :- result(R,P,_), result_mode(R,M), function_mode(F,M).",
+     "statement": "a value measured while the function was in use (in auto mode) bears on how the function behaves.",
+     "source": "FC"
+    },
+    {
+     "id": "E3",
+     "rule": "has_effectiveness_evidence(P,F) :- effectiveness_evidence(P,F,_,_).",
+     "statement": "something bears on how well P's F works.",
+     "source": "FC"
+    },
+    {
+     "id": "E4",
+     "rule": "effectiveness_unassessed(P,F) :- function_available(P,F), not has_effectiveness_evidence(P,F).",
+     "statement": "presence is categorical and is never evidence of effectiveness.",
+     "source": "FC"
+    },
+    {
+     "id": "M1",
+     "rule": "same_state(P,M,M) :- offers_mode(P,M).",
+     "statement": "a mode is the same state as itself.",
+     "source": "FC"
+    },
+    {
+     "id": "M2",
+     "rule": "same_state(P,M,M) :- result(R,P,_), result_mode(R,M).",
+     "statement": "a mode a result was obtained in is the same state as itself.",
+     "source": "FC"
+    },
+    {
+     "id": "M3",
+     "rule": "same_state(P,M1,M2) :- stated_equivalent(P,M1,M2).",
+     "statement": "a stated equivalence makes two names one state, for that product only.",
+     "source": "FC"
+    },
+    {
+     "id": "M4",
+     "rule": "same_state(P,M2,M1) :- stated_equivalent(P,M1,M2).",
+     "statement": "equivalence is symmetric.",
+     "source": "FC"
+    },
+    {
+     "id": "M5",
+     "rule": "same_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), same_state(P,M1,M2).",
+     "statement": "two results of one product and metric in one state.",
+     "source": "FC"
+    },
+    {
+     "id": "M6",
+     "rule": "different_state_results(R1,R2) :- result(R1,P,Q), result(R2,P,Q), R1 != R2, result_mode(R1,M1), result_mode(R2,M2), not same_state(P,M1,M2).",
+     "statement": "speed 1, sleep and lowest are different states unless the record says otherwise.",
+     "source": "FC"
+    },
+    {
+     "id": "M7",
+     "rule": "same_named_setting(R1,R2) :- result(R1,P1,Q), result(R2,P2,Q), P1 != P2, result_mode(R1,M), result_mode(R2,M).",
+     "statement": "two products at the same named setting: names match, the physical states are not shown to.",
+     "source": "FC"
+    },
+    {
+     "id": "N1",
+     "rule": "need_met_by_presence(N,P) :- need_function(N,F), presence(P,F,available).",
+     "statement": "the product has the function asked for.",
+     "source": "FC"
+    },
+    {
+     "id": "N2",
+     "rule": "need_presence_unverified(N,P) :- need_function(N,F), presence_not_verified(P,F).",
+     "statement": "whether the product has it is not verified.",
+     "source": "FC"
+    },
+    {
+     "id": "N3",
+     "rule": "need_effectiveness_unassessed(N,P) :- need_function(N,F), effectiveness_unassessed(P,F).",
+     "statement": "it has it; how well it works is unassessed.",
+     "source": "FC"
+    }
+   ]
+  }
+ ]
+}

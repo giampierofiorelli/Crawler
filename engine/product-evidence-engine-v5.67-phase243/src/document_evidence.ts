@@ -139,6 +139,9 @@ function inventory(structured:readonly {name:string;source:string}[]):Inventory{
   ...[...short].filter(([s,fs])=>fs.length===1&&!names.some(n=>normText(n.name)===s)&&(/\d/.test(s)||/\s/.test(s))).map(([,fs])=>{const tk=words(fs[0]);return {name:fs[0],full:tk.slice(1).join(' '),re:mk(tk.slice(1).join(' '))};})]
   .sort((a,b)=>b.full.length-a.full.length);
  return {names,re};}
+/** FC: the known products a text names (exact names, as the reader matches them), for readers built on a reading. */
+const invCache=new WeakMap<readonly {name:string;source:string}[],Inventory>();
+export function productMentions(products:readonly {name:string;source:string}[],text:string):Segment['products']{let inv=invCache.get(products);if(!inv){inv=inventory(products);invCache.set(products,inv);}return mentions(inv,text);}
 function mentions(inv:Inventory,text:string):Segment['products']{const out:Segment['products']=[];
  for(const r of inv.re){r.re.lastIndex=0;let m;while((m=r.re.exec(text))){const s=m.index,e=s+m[0].length;if(!out.some(o=>s<o.end&&e>o.start))out.push({name:r.name,start:s,end:e});}}
  return out.sort((a,b)=>a.start-b.start);}
@@ -299,7 +302,7 @@ function ofName(text:string,f:FoundQuantity,known:readonly {name:string;start:nu
  const after=text.slice(f.end,f.end+40);const m=/^[^,;.\d]{0,24}?\b(?:of|for|from|by|on)\s+(?:the\s+|its\s+)?/i.exec(after);if(!m)return undefined;const at=f.end+m[0].length;
  const k=known.find(x=>x.start===at);if(k)return k.name;if(foreign.some(x=>x.start===at))return null;return undefined;}
 /** Capitalised names with a model code (letters and digits: EK5876, AF180UK, X50) not covered by a known mention. */
-function foreignNames(text:string,known:readonly {start:number;end:number}[]):{start:number;end:number}[]{const out:{start:number;end:number}[]=[];
+export function foreignNames(text:string,known:readonly {start:number;end:number}[]):{start:number;end:number}[]{const out:{start:number;end:number}[]=[];
  const re=/(?<![\p{L}\p{N}])[A-Z][\p{L}’'&+-]*(?:\s+(?:[A-Z0-9][\p{L}\p{N}.+-]*))*/gu;let m;
  while((m=re.exec(text))){const tk=m[0].split(/\s+/);if(tk.length<2||!tk.some(x=>/[A-Za-z]/.test(x)&&/\d/.test(x)&&!/^\d+(?:\.\d+)?[a-zA-Z]{1,3}$/.test(x)))continue;
   const s=m.index,e=s+m[0].length;if(known.some(k=>k.start>=0&&s<k.end&&e>k.start))continue;out.push({start:s,end:e});}
