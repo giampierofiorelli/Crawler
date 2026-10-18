@@ -223,8 +223,11 @@ export interface QuantityContext {labels?:readonly string[];conditions?:readonly
  protocol?:readonly {text:string;ref:string;inTable?:boolean}[];
  /** The value's evidence class: says which document-wide statements cover it (a reviewer's instrument covers its readings, not a maker's spec). */
  evidenceClass?:string;
- /** Identity of the source document: values from one source under one protocol compare within that source. */
- source?:string}
+ /** Identity of the source document. */
+ source?:string;
+ /** KN K10: the test the publisher presents the value under (source, table and every non-product label). Only values of
+  * one presented test share the conditions the source leaves unstated; a common source or protocol does not. */
+ cohort?:string}
 export interface TypedCondition {axis:string;value:string;raw:string;from:'labels'|'conditions'|'context'|'method'}
 export interface TypedQuantity {surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit;
  si:{value:number|null;low?:number;high?:number}|null;
@@ -233,7 +236,7 @@ export interface TypedQuantity {surface:string;value:number|null;low?:number;hig
   justification:{type:KindJustification;from:'unit'|'labels'|'context'|'protocol'|null;evidence:string[];ref:string|null}};metric:{id:string|null;candidates:string[];basis:string[]};
  weighting:string|null;reference:string|null;conditions:TypedCondition[];missingConditions:string[];unresolved:string[];knowledge:string;
  /** The source document and the protocol statement that covers the value, when known. */
- source:string|null;protocol:string|null}
+ source:string|null;protocol:string|null;cohort:string|null}
 const toSi=(u:ParsedUnit,v:number|null|undefined)=>v==null?null:u.level?v:v*u.factor+u.offset;
 function distanceIn(qk:QuantityKnowledge,texts:readonly string[]):boolean{const ax=qk.axes.get('measurement_distance');if(!ax)return false;
  return texts.some(t=>findQuantities(qk,t).some(f=>f.unit.kinds.includes('length')&&(ax.cues??[]).some(c=>hasPhrase(t.slice(Math.max(0,f.start-24),f.end+12),c))));}
@@ -351,7 +354,7 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   si:q.unit.level?{value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{})}:{value:toSi(q.unit,q.value),...(q.low!==undefined?{low:toSi(q.unit,q.low)!,high:toSi(q.unit,q.high)!}:{})},
   kind:{id:kind,candidates,basis:kindBasis,justification},metric:{id:metricId,candidates:metricCands,basis:metricBasis},
   weighting:q.unit.level?.weighting??null,reference:q.unit.level?.reference??(kind?qk.kinds.get(kind)!.reference??null:null),
-  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef};
+  conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef,cohort:ctx.cohort??null};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -388,9 +391,10 @@ export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQu
   if(ca.length&&cb.length){if(!ca.some(v=>cb.includes(v)))return no(`different ${ax.replace(/_/g,' ')}: ${ca.join('/')} vs ${cb.join('/')}`);}
   else unest.push(ax.replace(/_/g,' '));}
  const unit=a.unit.level?a.unit.expression:'SI';const av=a.si?.value??null,bv=b.si?.value??null;
- // KN K9: one source, one documented protocol: the values compare with each other although the protocol leaves a
- // condition unstated; they still do not compare with other sources.
- if(unest.length&&a.source&&a.source===b.source&&a.protocol&&a.protocol===b.protocol)return {verdict:'comparable_within_source',reasons:[`same quantity under one protocol of one source (${a.protocol}); not established: ${unest.join(', ')}, so not comparable with other sources`],a:av,b:bv,unit};
+ // KN K10 (owner review): a common source or protocol does not make unstated conditions equal. Only values the source
+ // presents as one test (same table, same labels apart from the product) share them; they compare with each other,
+ // never with other sources.
+ if(unest.length&&a.cohort&&a.cohort===b.cohort&&a.kind.justification.type!=='insufficient')return {verdict:'comparable_within_source',reasons:[`same quantity in one test the source presents (${a.cohort.split('#').slice(1).join(' / ')}); not established: ${unest.join(', ')}, so not comparable with other sources or other tests of this source`],a:av,b:bv,unit};
  if(unest.length)return {verdict:'comparable_conditions_unestablished',reasons:[`same quantity; not established on both sides: ${unest.join(', ')}`],a:av,b:bv,unit};
  return {verdict:'comparable',reasons:['same quantity, metric and conditions'],a:av,b:bv,unit};
 }

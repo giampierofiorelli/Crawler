@@ -274,6 +274,11 @@ test('K9 protocol: a document stating its instrument once establishes sound pres
   assert.match(x.quantity!.kind.justification.ref!,/^block /);assert.ok(x.quantity!.missingConditions.includes('measurement_distance'),'the distance stays a comparability condition');}
  // one source, one protocol: they compare with each other, not with other sources
  const c=compareQuantities(qk,o[0].quantity!,o[1].quantity!);assert.equal(c.verdict,'comparable_within_source');assert.match(c.reasons[0],/not comparable with other sources/);
+ // K10: one source and one protocol do not make two tests comparable (lowest vs highest speed)
+ const sp=levelObs(page('<p>We measured the noise of every purifier with a decibel meter.</p>','Our test results','<tr><td>Noise, lowest speed</td><td>32 dBA</td><td>35 dBA</td></tr><tr><td>Noise, highest speed</td><td>55 dBA</td><td>60 dBA</td></tr>'));
+ const v=(x:number)=>sp.find(o=>o.value===x)!.quantity!;
+ assert.equal(compareQuantities(qk,v(32),v(35)).verdict,'comparable_within_source','one presented test, two products');
+ for(const [x,y] of [[32,55],[32,60]])assert.equal(compareQuantities(qk,v(x),v(y)).verdict,'comparable_conditions_unestablished','different tests of the same source');
  const other=levelObs(h.replace('Alpha A1','Gamma G3'))[0];const elsewhere={...other.quantity!,source:'doc:other'};
  assert.equal(compareQuantities(qk,o[0].quantity!,elsewhere).verdict,'comparable_conditions_unestablished');
 });

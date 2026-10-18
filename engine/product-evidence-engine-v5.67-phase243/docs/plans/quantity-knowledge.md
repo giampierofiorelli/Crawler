@@ -458,3 +458,23 @@ values only; for other values, a statement restating the value is required.
 - Protocol coverage uses the 1G evidence class, whose `manufacturer_declared` default can rest on a heading word
   ("Specs").
 - No decision consumes `comparable_within_source` yet (D21/D22).
+
+## K10. Scope of applicability (owner review, 2026-10-18)
+
+**Defect.**
+- K9's `comparable_within_source` needed only the same source and the same protocol statement.
+- So "32 dBA, lowest speed" and "60 dBA, highest speed" of one review were declared comparable with each other.
+- A common source or a common method statement does not make unstated conditions equal.
+- On the 12 acoustic pages, 35 of the 54 pairs the K9 rule accepted belong to different tests of one source.
+
+**Correction.**
+- Values share the conditions their source leaves unstated only when the source presents them as one test: same
+  table, and the same row, column and condition labels apart from the product (`cohort`).
+- Such values compare with each other, never with other sources or with other tests of the same source.
+- Now 40 pairs; the sealed acoustic score is unchanged (`score-qk22-k10`).
+- Open:
+  - protocol coverage is still scoped by approximations: same table, the next two blocks of a method paragraph, the
+    evidence class;
+  - it is not scoped by the products a statement names.
+  
+  The formal-rule evaluation below proposes making each such scope an explicit, tested rule.
