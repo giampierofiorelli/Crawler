@@ -135,7 +135,8 @@ export function labelFeatures1G(text:string,docNames:readonly string[],headingNa
  const quantityLike=new RegExp(`^\\s*(?:[£$€]\\s?)?${NUM}\\s?(?:${UNIT_RE})?\\s*$`,'i').test(name);
  const docOrCode=modelCode||!!docEntity;
  const property=!placeholder&&!(L.has('GL1_values_are_not_labels')&&quantityLike)&&!setting&&propertyShaped&&!(L.has('GL8_property_head_precedence')&&docOrCode&&!PROPERTY_HEAD.test(name.replace(/\b[A-Za-z0-9-]*\d[A-Za-z0-9-]*\b/g,'')))&&!(modelCode&&!PROPERTY_WORDS.test(name.replace(/\b[A-Za-z0-9-]*\d[A-Za-z0-9-]*\b/g,'')));
- return {text:raw,name,unit,qualifiers,labelConditions:L.has('GL6_label_conditions')?labelConditions(name,dimensions):[],empty:!name||placeholder||isDash(name),entity:!placeholder&&!setting&&!quantityLike&&(modelCode||!!docEntity)&&words<=10,modelCode,docEntity,setting,property,dimensions,quantityLike,longText:words>12};
+ const prose=L.has('GL9_prose_labels_state_no_conditions')&&raw.split(/\s+/).length>12;
+ return {text:raw,name,unit,qualifiers:prose?[]:qualifiers,labelConditions:L.has('GL6_label_conditions')&&!prose?labelConditions(name,dimensions):[],empty:!name||placeholder||isDash(name),entity:!placeholder&&!setting&&!quantityLike&&(modelCode||!!docEntity)&&words<=10,modelCode,docEntity,setting,property,dimensions,quantityLike,longText:words>12};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -174,6 +175,10 @@ export function documentModel1G(html:string):DocumentModel1G{
   if(seg&&seg!==t&&seg.split(' ').length>=2)names.push({text:seg,source:'title_segment',locator:'title'});}
  const prods=[...new Set(names.filter(n=>n.source==='json-ld-product').map(n=>n.text))];
  return {headings,blocks,names,principal:prods.length===1?prods[0]:null,tableBlock};
+}
+/** GL10: a structured name is a subject only when it is name-shaped; editorial suffixes are removed. */
+export function nameShapedPrincipal1G(p:string|null):string|null{if(!p)return null;const t=p.replace(/\s+(?:review|reviews|full review)$/i,'').trim();
+ return t.split(/\s+/).length<=10&&!/[.!?;]\s|[.!?]$|…/.test(t)?t:null;
 }
 function collectLd(raw:string,out:DocumentModel1G['names'],loc:string){let j:unknown;try{j=JSON.parse(raw);}catch{return;}
  const visit=(o:unknown)=>{if(Array.isArray(o)){o.forEach(visit);return;}if(!o||typeof o!=='object')return;const r=o as Record<string,unknown>;
@@ -477,7 +482,7 @@ function classify(x:Ctx,cell:SourceCell1F,e:Element1G,labels:SourceCell1F[],dime
 /** Interpret every table of a document. Tables outside the limits or not completely acquired are listed, never dropped. */
 export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly InterpreterLessonId1G[]}={}):DocumentInterpretation1G{
  const lessons=[...(opts.lessons??activeInterpreterLessons1G())].sort();const L:Lessons=new Set(lessons);
- const acq=acquireTables1F(html);const doc=documentModel1G(html);
+ const acq=acquireTables1F(html);const doc=documentModel1G(html);if(L.has('GL10_structured_names_are_name_shaped'))doc.principal=nameShapedPrincipal1G(doc.principal);
  const pick=(f:(s:string)=>boolean)=>[...new Set(doc.names.filter(n=>f(n.source)).map(n=>n.text).filter(t=>t&&t.length<=120))];
  const baseNames=pick(s=>s!=='heading'&&(L.has('GL3_structured_entity_grounding')||s!=='title_segment')),headings=pick(s=>s==='heading');
  let learned:string[]=[];let result:TableInterpretation1G[]=[];let passes=0;

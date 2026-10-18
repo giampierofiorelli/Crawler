@@ -17,9 +17,10 @@ const [cmd,label,...rest]=process.argv.slice(2);const ARG=k=>{const i=rest.index
 if(cmd!=='run'||!/^[a-z0-9-]{3,40}$/.test(label??''))throw Error('usage: run LABEL --set dev|check [--arms 1g,c,e]');
 const sha=b=>createHash('sha256').update(b).digest('hex');const D=resolve('dist/src');
 const I=await import(D+'/table_interpreter1g.js');const GL=await import(D+'/table_interpreter1g_lessons.js');const A=await import(D+'/table_acquisition1f.js');const SEM=await import(D+'/document_semantics.js');
-const SET=ARG('set')??'dev';const ARMS=(ARG('arms')??'1g,c,e').split(',').flatMap(a=>a==='ablation'?['1g-none',...GL.ALL_INTERPRETER_LESSONS1G.map(id=>'1g-'+id.split('_')[0])]:[a]);
+const SET=ARG('set')??'dev';const ARMS=(ARG('arms')??'1g,c,e').split(',').flatMap(a=>a==='ablation'?['1g-none',...GL.activeInterpreterLessons1G().map(id=>'1g-'+id.split('_')[0])]:a==='provisional'?GL.INTERPRETER_LESSONS1G.filter(l=>l.state==='provisional').map(l=>'1g+'+l.id.split('_')[0]):[a]);
 // 1G variants: '1g' = active lessons; '1g-none' = no lesson; '1g-GLk' = active lessons without GLk
-const lessonsOf=arm=>arm==='1g'?GL.activeInterpreterLessons1G():arm==='1g-none'?[]:GL.activeInterpreterLessons1G().filter(id=>id.split('_')[0]!==arm.slice(3));
+// '1g+GLk' = active lessons plus a provisional one
+const lessonsOf=arm=>arm==='1g'?GL.activeInterpreterLessons1G():arm==='1g-none'?[]:arm.startsWith('1g+')?[...GL.activeInterpreterLessons1G(),...GL.ALL_INTERPRETER_LESSONS1G.filter(id=>id.split('_')[0]===arm.slice(3))]:GL.activeInterpreterLessons1G().filter(id=>id.split('_')[0]!==arm.slice(3));
 const ROOT=join(homedir(),'.local/share/product-evidence-engine/private-eval');const REPO=process.env.PEE_KNOWLEDGE_REPO??'/home/user/pee-knowledge';
 const CFG=SET==='dev'?{sel:'evaluation/tables-1e/sample.json',ann:join(ROOT,'tables-1e/annotations.json'),freeze:'evaluation/tables-1e/annotation-freeze.json',dup:[]}
  :{sel:'evaluation/tables-1g/check-selection.json',ann:join(ROOT,'tables-1e/annotations-1g-check.json'),freeze:'evaluation/tables-1g/check-annotation-freeze.json',dup:['C02']};
@@ -77,7 +78,7 @@ const summ=f=>{const R=rows.filter(f);const o={elements:R.length};for(const arm 
 const summary={all:summ(()=>true),measured:summ(r=>r.kind==='measured'),notMeasured:summ(r=>r.kind!=='measured'),
  byKind:Object.fromEntries([...new Set(rows.map(r=>r.kind))].map(k=>[k,summ(r=>r.kind===k)])),
  byPublisher:Object.fromEntries([...new Set(rows.map(r=>r.publisher))].map(k=>[k,summ(r=>r.publisher===k)])),
- ablationVs1g:Object.fromEntries(ARMS.filter(a=>a.startsWith('1g-')).map(a=>[a,{fullyCorrectLost:rows.filter(r=>r.arms['1g']?.ok&&!r.arms[a].ok).length,fullyCorrectGained:rows.filter(r=>!r.arms['1g']?.ok&&r.arms[a].ok).length,
+ ablationVs1g:Object.fromEntries(ARMS.filter(a=>a.startsWith('1g-')||a.startsWith('1g+')).map(a=>[a,{fullyCorrectLost:rows.filter(r=>r.arms['1g']?.ok&&!r.arms[a].ok).length,fullyCorrectGained:rows.filter(r=>!r.arms['1g']?.ok&&r.arms[a].ok).length,
   productWrongAdded:rows.filter(r=>r.arms[a].product==='wrong'&&r.arms['1g']?.product!=='wrong').length,falseMeasurementsAdded:rows.filter(r=>r.arms[a].falseMeasurement&&!r.arms['1g']?.falseMeasurement).length,
   axesTables:tables.length?undefined:undefined}])),
  tables:{n:tables.length,rowAxisAgrees:tables.filter(t=>t.rowAgrees).length,colAxisAgrees:tables.filter(t=>t.colAgrees).length,

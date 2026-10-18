@@ -101,3 +101,15 @@ test('limits are explicit: a table outside them is listed, not dropped',()=>{
  const wide=page(`<table><tr>${[...Array(14).keys()].map(i=>`<th>h${i}</th>`).join('')}</tr><tr>${[...Array(14).keys()].map(i=>`<td>${i}</td>`).join('')}</tr></table>`);
  const t=t0(wide);assert.equal(t.status,'not_interpreted');assert.match(t.reason!,/limits/);
 });
+test('provisional lessons (inactive by default): prose labels state no conditions; structured names must be name-shaped',()=>{
+ const prose='Score summary: out of 102 products tested, 20 reached 50 W or more at the top speed in our long test';
+ const html=page(`<h2>Results</h2><p>We measured power at every speed.</p><table><tr><th>Item</th><th>Breeze AP10</th></tr><tr><td>${prose}</td><td>45 W</td></tr></table>`);
+ const withL=(extra:InterpreterLessonId1G[])=>t0(html,[...activeInterpreterLessons1G(),...extra]);
+ assert.ok(withL([]).observations.some(o=>o.conditions.length>0),'by default the prose label adds conditions');
+ assert.ok(withL(['GL9_prose_labels_state_no_conditions']).observations.every(o=>o.conditions.length===0));
+ const ld='<script type="application/ld+json">{"@type":"Product","name":"The Breeze AP10 is one of the quietest purifiers we have tried this year."}</script>';
+ const kv=page(`<h2>Test data</h2><table><tr><th>Noise (low)</th><td>40 dBA</td></tr><tr><th>Power (high)</th><td>45 W</td></tr></table>`,ld);
+ assert.equal(interpretDocumentTables1G(kv).tables[0].observations[0].productSource,'document');
+ assert.equal(interpretDocumentTables1G(kv,{lessons:[...activeInterpreterLessons1G(),'GL10_structured_names_are_name_shaped']}).tables[0].observations[0].product,null);
+ assert.equal(activeInterpreterLessons1G().includes('GL9_prose_labels_state_no_conditions'),false);
+});

@@ -1,0 +1,202 @@
+{
+ "schema": "pee.tables1g.metamorphic.v1",
+ "label": "firstrun",
+ "set": "check",
+ "at": "2026-10-18T08:24:28.622Z",
+ "interpreter": "pee.table-interpreter.v1g.1",
+ "summary": {
+  "tables": 8,
+  "tested": 8,
+  "transpositionInvariant": 5,
+  "permutationInvariant": 8,
+  "transpositionDifferences": 145,
+  "permutationDifferences": 0,
+  "observations": 220
+ },
+ "tables": [
+  {
+   "id": "C01",
+   "publisher": "which.co.uk",
+   "base": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:property|product",
+    "observations": 8
+   },
+   "transposed": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:product|property",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "ambiguous",
+    "hypothesis": "h1c1:property|product",
+    "observations": 8,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C03",
+   "publisher": "techradar.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|record",
+    "observations": 6
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:record|property",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|record",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C04",
+   "publisher": "techradar.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|record",
+    "observations": 6
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:record|property",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|record",
+    "observations": 6,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C05",
+   "publisher": "housefresh.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c0:property|-",
+    "observations": 27
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 27,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c0:property|-",
+    "observations": 27,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C06",
+   "publisher": "tomsguide.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 28
+   },
+   "transposed": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:property|product",
+    "observations": 28,
+    "differences": 0,
+    "invariant": true
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h1c1:product|property",
+    "observations": 28,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C07",
+   "publisher": "airpurifierfirst.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 66
+   },
+   "transposed": {
+    "status": "not_interpreted",
+    "hypothesis": null,
+    "observations": 0,
+    "differences": 66,
+    "invariant": false
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 66,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C08",
+   "publisher": "airpurifierfirst.com",
+   "base": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 74
+   },
+   "transposed": {
+    "status": "not_interpreted",
+    "hypothesis": null,
+    "observations": 0,
+    "differences": 74,
+    "invariant": false
+   },
+   "permuted": {
+    "status": "interpreted",
+    "hypothesis": "h0c1:-|property",
+    "observations": 74,
+    "differences": 0,
+    "invariant": true
+   }
+  },
+  {
+   "id": "C09",
+   "publisher": "trustedreviews.com",
+   "base": {
+    "status": "ambiguous",
+    "hypothesis": "h0c1:-|condition",
+    "observations": 5
+   },
+   "transposed": {
+    "status": "ambiguous",
+    "hypothesis": "h0c1:-|property",
+    "observations": 8,
+    "differences": 5,
+    "invariant": false
+   },
+   "permuted": {
+    "status": "ambiguous",
+    "hypothesis": "h0c1:-|condition",
+    "observations": 5,
+    "differences": 0,
+    "invariant": true
+   }
+  }
+ ]
+}
