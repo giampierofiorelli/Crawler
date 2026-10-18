@@ -159,6 +159,9 @@ function textOf(n:Node245):string{let s='';const w=(x:Node245)=>{if(x.kind==='te
  const block=!INLINE.has(x.tag);if(block)s+=' ';for(const c of x.children)w(c);if(block)s+=' ';};w(n);return s.replace(/[\t\n\f\r ]+/g,' ').trim();}
 const BLOCK_TAGS=new Set(['p','li','dt','dd','blockquote','figcaption','pre','summary']);
 const blockKind=(t:string):Block1G['kind']=>ESTIMATE_CUE.test(t)&&/\b(?:we|i|our)\b/i.test(t)?'estimate':TEST_CONTEXT272.test(t)||(/\b(?:we|i)\b/i.test(t)&&TEST_CUE.test(t))?'method':DECLARATION_CUE272.test(t)?'declaration':'other';
+/** WD: the 1G block classification (method, declaration, estimate, other), shared with the whole-document reader. */
+export const blockKind1G=(t:string):Block1G['kind']=>blockKind(t);
+export const isMethodHeading1G=(t:string)=>METHOD_HEAD.test(t);
 export function documentModel1G(html:string):DocumentModel1G{
  const {root}=parseHtml245(html,{keepSource:true});const headings:Heading1G[]=[];const blocks:Block1G[]=[];const names:DocumentModel1G['names']=[];
  const tableBlock=new Map<number,number>();let tableIdx=0;let stack:number[]=[];

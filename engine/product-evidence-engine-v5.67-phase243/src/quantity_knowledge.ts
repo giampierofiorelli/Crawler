@@ -23,9 +23,18 @@ export const QUANTITY_KNOWLEDGE_SCHEMA='pee.quantity-knowledge.v1';
 type Dim=Partial<Record<string,number>>;
 interface SourceRef {id:string;title:string;url:string|null;use:string;licence:string}
 export interface KindDef {id:string;dim:Dim;level?:boolean;unitOnly?:boolean;affine?:boolean;determinedBy?:string;form?:{requiresClass?:string;excludesClass?:string};
- terms:string[];plain?:string;expressions?:string[];discriminators?:string[];requires?:string[];comparatives?:{max?:string[];min?:string[]};reference?:string|null;note?:string;qudt?:string;source:string}
-export interface AxisDef {id:string;valueKind?:string;cues?:string[];values?:Record<string,string[]>;freeText?:string[];source:string}
-export interface MetricDef {id:string;label:string;kind:string;terms:string[];unitless?:boolean;definedBy?:{method:string;source:string}[];requires:string[];notEquivalentTo?:string[];derivedFrom?:string[];note?:string;source:string}
+ terms:string[];plain?:string;expressions?:string[];
+ /** WD (qk.2.3): a narrower kind of the same dimension that words refine to (relative humidity is a ratio): the unit
+  * establishes the general kind; the narrower one needs its own words. */
+ specialises?:string;discriminators?:string[];requires?:string[];comparatives?:{max?:string[];min?:string[]};reference?:string|null;note?:string;qudt?:string;source:string}
+export interface AxisDef {id:string;valueKind?:string;
+ /** WD (qk.2.3): a composite condition read from several quantities together (inlet air state = temperature and relative humidity). */
+ valueKinds?:string[];
+ /** WD (qk.2.3): an operating condition a judgement can be made under (a speed, a programme, a floor). */
+ operatingCondition?:boolean;cues?:string[];values?:Record<string,string[]>;freeText?:string[];source:string}
+export interface MetricDef {id:string;label:string;kind:string;terms:string[];
+ /** WD (qk.2.3): the basis the metric is conventionally reported per (a dehumidifier capacity per day), when a value prints none. */
+ conventionalBasis?:{per:string;source:string;note?:string};unitless?:boolean;definedBy?:{method:string;source:string}[];requires:string[];notEquivalentTo?:string[];derivedFrom?:string[];note?:string;source:string}
 export interface AtomDef {id:string;forms:string[];dim:Dim;factor:number;offset?:number;kindHint?:string;class?:string;conventional?:boolean;standalone?:boolean;cs?:boolean;denominatorOnly?:boolean;note?:string;source:string}
 export interface LevelUnitDef {id:string;forms:string[];weighting:string;reference:string|null;kinds:string[];source:string}
 /** A test method or rating scheme: what it measures and the conditions it fixes (v2). */
@@ -44,9 +53,14 @@ export interface ScaleDef {id:string;label:string;values:string[];best:string;te
 export type KindJustification='unit'|'explicit'|'standard'|'documented_method'|'contextual'|'insufficient';
 export interface KindEvidenceDef {kind:string;justification:'explicit'|'standard'|'documented_method'|'contextual';terms:string[];covers?:string[];note?:string;source:string}
 export interface QuantityPack {schema:string;version:string;statement:string;dimensionBasis:string[];sources:SourceRef[];kinds:KindDef[];conditionAxes:AxisDef[];
- metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];kindEvidence?:KindEvidenceDef[];
+ metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];kindEvidence?:KindEvidenceDef[];aspects?:AspectDef[];
  language:{en:{min:string[];minAfter:string[];max:string[];maxAfter:string[];perWords:string[];exponentWords:Record<string,number>;increaseComparatives:string[];decreaseComparatives:string[];
-  labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[]}}}
+  labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[];
+  evaluation?:{positive:string[];negative:string[];negators:string[];hedges:string[];reportedBy:string[]}}}}
+/** WD (qk.2.3): an aspect of a product a reviewer judges (noise, vibration, pickup): PEE's reading vocabulary, never a
+ * product fact. Optional polar terms carry a judgement by themselves ("noisy"); `kinds` links the aspect to the quantities
+ * that measure it. */
+export interface AspectDef {id:string;terms:string[];positive?:string[];negative?:string[];kinds?:string[];source:string}
 
 export interface QuantityKnowledge {pack:QuantityPack;digest:string;identity:string;
  /** KR: compiled declarative rules (programs `kind` and `compare`) and their version. */
@@ -73,7 +87,7 @@ export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
 export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v2.json';
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
 /** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
-export const DEFAULT_KNOWLEDGE_RULES='rules.v1.json';
+export const DEFAULT_KNOWLEDGE_RULES='rules.v2.json';
 export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnowledge{
  const raw=pack??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_QUANTITY_PACK,import.meta.url),'utf8'));
  const ruleSet=(rules??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_KNOWLEDGE_RULES,import.meta.url),'utf8'))) as RuleSet;
@@ -88,7 +102,9 @@ export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnow
  for(const k of p.kinds){if(!src.has(k.source))fail('source of kind '+k.id);if(!dimOk(k.dim))fail('dim of kind '+k.id);for(const a of k.requires??[])if(!axes.has(a))fail(`axis ${a} of kind ${k.id}`);}
  for(const m of p.metrics){if(!kinds.has(m.kind))fail('kind of metric '+m.id);if(!src.has(m.source))fail('source of metric '+m.id);for(const a of m.requires)if(!axes.has(a))fail(`axis ${a} of metric ${m.id}`);
   for(const n of [...(m.notEquivalentTo??[]),...(m.derivedFrom??[])])if(!p.metrics.some(x=>x.id===n))fail(`metric ${n} of ${m.id}`);for(const d of m.definedBy??[])if(!src.has(d.source))fail('source of method in '+m.id);}
- for(const a of p.conditionAxes){if(!src.has(a.source))fail('source of axis '+a.id);if(a.valueKind&&!kinds.has(a.valueKind))fail('value kind of axis '+a.id);}
+ for(const a of p.conditionAxes){if(!src.has(a.source))fail('source of axis '+a.id);if(a.valueKind&&!kinds.has(a.valueKind))fail('value kind of axis '+a.id);for(const k of a.valueKinds??[])if(!kinds.has(k))fail('value kinds of axis '+a.id);}
+ for(const k of p.kinds)if(k.specialises&&(!kinds.has(k.specialises)||!sameDim(k.dim as Record<string,number>,p.kinds.find(x=>x.id===k.specialises)!.dim)))fail('specialisation of kind '+k.id);
+ uniq(p.aspects??[],'aspect');for(const a of p.aspects??[]){if(!src.has(a.source)||!a.terms.length)fail('aspect '+a.id);for(const k of a.kinds??[])if(!kinds.has(k))fail(`kind ${k} of aspect ${a.id}`);}
  for(const u of p.units){if(!src.has(u.source))fail('source of unit '+u.id);if(!dimOk(u.dim)||!(u.factor>0))fail('unit '+u.id);if(u.kindHint&&!kinds.has(u.kindHint))fail('kind hint of '+u.id);}
  for(const u of p.levelUnits){if(!src.has(u.source))fail('source of unit '+u.id);for(const k of u.kinds)if(!kinds.has(k)||!p.kinds.find(x=>x.id===k)!.level)fail(`level kind ${k} of ${u.id}`);}
  // A surface form names one unit only (case-sensitive forms are distinct from their case-folded spellings).
@@ -246,7 +262,9 @@ export interface QuantityContext {labels?:readonly string[];conditions?:readonly
   * one presented test share the conditions the source leaves unstated; a common source or protocol does not. */
  cohort?:string}
 export interface DocumentStatements {blocks:readonly {ref:string;text:string}[];next:readonly (readonly [string,string])[];products:readonly string[]}
-export interface TypedCondition {axis:string;value:string;raw:string;from:'labels'|'conditions'|'context'|'method'}
+export interface TypedCondition {axis:string;value:string;raw:string;from:'labels'|'conditions'|'context'|'method'|'record';
+ /** WD P1: for a condition read from the value's record (another value of the same table row or sentence), that value's surface. */
+ by?:string}
 export interface TypedQuantity {surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit;
  si:{value:number|null;low?:number;high?:number}|null;
  kind:{id:string|null;candidates:string[];basis:string[];
@@ -356,14 +374,20 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   else if(disc.length>1)unresolved.push(`kind: evidence for several kinds (${disc.map(d=>d.k+': '+d.t.join(', ')).join('; ')})`);
  }
  // KR: the document's statements, their scope and the kind's justification are decided by the declarative rules
- // (program `kind` of rules.v1.json). The code above only reads the value's own unit and words; the code here only
+ // (program `kind` of the rules file). The code above only reads the value's own unit and words; the code here only
  // states facts and reads conclusions back.
  const R=kindRules(qk,q,ctx,{candidates,metricNamed,refKind,own,context:kindCtx});
  if(R.byDocument){candidates=[R.byDocument];kindBasis.push(`the document's ${R.justification.type==='standard'?'declared scheme':'test protocol'} (${R.justification.ref}): ${R.justification.evidence.join(', ')}`);
   for(let i=unresolved.length-1;i>=0;i--)if(unresolved[i].startsWith('kind:'))unresolved.splice(i,1);}
  else if(R.conflict)unresolved.push(`kind: the document's statements support several kinds (${R.conflict.join(', ')})`);
- const kind=candidates.length===1?candidates[0]:null;
- const justification=kind?{...R.justification,evidence:R.justification.from==='context'&&R.justification.evidence[0]==='discriminators'?[...kindBasis]:R.justification.evidence}:R.justification;
+ let kind=candidates.length===1?candidates[0]:null;
+ // WD: a narrower kind of the same dimension when the value's own words name it ("60 % humidity" is relative humidity)
+ let refined:{id:string;terms:string[]}|null=null;
+ if(kind){const spec=qk.pack.kinds.filter(k=>k.specialises===kind).map(k=>({id:k.id,terms:hit(own,k.terms)})).filter(x=>x.terms.length);
+  if(spec.length===1){refined=spec[0];kindBasis.push(`labels name the narrower kind ${refined.id}: ${refined.terms.join(', ')}`);kind=refined.id;}
+  else if(q.unit.kindHint&&qk.kinds.get(q.unit.kindHint)?.specialises===kind){kind=q.unit.kindHint;refined={id:kind,terms:[q.unit.surface]};}}
+ const justification0=kind?{...R.justification,evidence:R.justification.from==='context'&&R.justification.evidence[0]==='discriminators'?[...kindBasis]:R.justification.evidence}:R.justification;
+ const justification=refined?{...justification0,type:'explicit' as const,from:(refined.terms[0]===q.unit.surface?'unit':'labels') as 'unit'|'labels',evidence:refined.terms}:justification0;
  const protoRef=justification.from==='protocol'?justification.ref:null;
  if(!kind)unresolved.push(candidates.length?`kind: ${q.unit.surface} can express ${candidates.join(' or ')}; nothing here says which`:`kind: no known quantity is expressed in ${q.unit.surface}`);
  let metricCands=[...new Set(compatible.filter(x=>!kind||x.m.kind===kind).map(x=>x.m.id))];
@@ -379,9 +403,10 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
  const scan=(axis:AxisDef,texts:readonly string[],from:TypedCondition['from'])=>{
   for(const t of texts){
    if(axis.values)for(const [v,ws] of Object.entries(axis.values))for(const w of ws)if(hasPhrase(t,w)&&!conditions.some(c=>c.axis===axis.id&&c.value===v))conditions.push({axis:axis.id,value:v,raw:w,from});
-   if(axis.valueKind){for(const f of findQuantities(qk,t)){if(!f.unit.kinds.includes(axis.valueKind))continue;
-    if(axis.cues&&!axis.cues.some(c=>hasPhrase(t.slice(Math.max(0,f.start-24),f.end+12),c)))continue;
-    if(!conditions.some(c=>c.axis===axis.id))conditions.push({axis:axis.id,value:normText(f.surface),raw:f.surface,from});}}
+   if(axis.valueKind||axis.valueKinds){const vks=axis.valueKinds??[axis.valueKind!];const parts=new Map<string,string>();
+    for(const f of findQuantities(qk,t)){const vk=vks.find(k=>quantityIsOfKind(qk,f,k,t));if(!vk||parts.has(vk))continue;
+     if(axis.cues&&!axis.cues.some(c=>hasPhrase(t.slice(Math.max(0,f.start-24),f.end+12),c))&&!qk.kinds.get(vk)?.specialises)continue;parts.set(vk,f.surface);}
+    if(parts.size&&!conditions.some(c=>c.axis===axis.id)){const raw=vks.filter(k=>parts.has(k)).map(k=>parts.get(k)!).join('; ');conditions.push({axis:axis.id,value:normText(raw),raw,from});}}
    if(axis.freeText&&!conditions.some(c=>c.axis===axis.id)){const m=new RegExp('(?:'+axis.freeText.map(w=>esc(w)).join('|')+')[\\s\\w.-]{0,14}','i').exec(t);
     if(m&&(axis.freeText.some(w=>/-$/.test(w)&&m[0].toLowerCase().startsWith(w))||/\d|\b(?:low|high|max|min|top|quiet|eco|turbo|auto|night)\b/i.test(m[0])))conditions.push({axis:axis.id,value:normText(m[0]),raw:m[0].trim(),from});}}};
  // Settings and challenges (value axes) are read from the value's own labels and conditions only: a paragraph near a table
@@ -405,6 +430,42 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
   conditions,missingConditions:missing,unresolved,knowledge:qk.identity,source:ctx.source??null,protocol:protoRef,cohort:ctx.cohort??null,product:ctx.product??null,contextScope:scope?{applied:scope.applied,excluded:scope.excluded,derivation:scope.derivation}:null};
 }
 
+/** WD P1: one value of a record (a table row with a record axis, a sentence, a key-value pair). `point`: a single value
+ * (not a range or a bound). */
+export interface RecordValue {id:string;record:string;quantity:TypedQuantity;point:boolean}
+export interface RecordRoles {role:Map<string,'condition'|'result'>;quantities:Map<string,TypedQuantity>;derivation:Map<string,string[]>}
+/** WD P1 (program `record`): which values of one record are conditions of its other values, decided by the rules from
+ * the knowledge (the axes a co-recorded metric requires and the kinds those axes take). Conditions a value's own labels
+ * state are kept; the record adds only axes the value does not state itself. Without program `record` (rules kr.1), no
+ * value changes. */
+export function applyRecordRoles(qk:QuantityKnowledge,values:readonly RecordValue[]):RecordRoles{
+ const out:RecordRoles={role:new Map(),quantities:new Map(values.map(v=>[v.id,v.quantity])),derivation:new Map()};
+ const prog=qk.rules.get('record');if(!prog||values.length<2)return out;
+ const F:Record<string,string[][]>={rec_value:[],rec_kind:[],rec_metric:[],rec_point:[],metric_requires:[],axis_value_kind:[]};
+ for(const v of values){F.rec_value.push([v.id,v.record]);if(v.quantity.kind.id)F.rec_kind.push([v.id,v.quantity.kind.id]);if(v.quantity.metric.id)F.rec_metric.push([v.id,v.quantity.metric.id]);if(v.point)F.rec_point.push([v.id]);}
+ const metrics=new Set(values.map(v=>v.quantity.metric.id).filter((x):x is string=>!!x));
+ for(const m of metrics)for(const a of qk.metrics.get(m)!.requires)F.metric_requires.push([m,a]);
+ for(const a of qk.pack.conditionAxes)for(const k of a.valueKinds??(a.valueKind?[a.valueKind]:[]))F.axis_value_kind.push([a.id,k]);
+ const m=evaluate(prog,F,{record:`record ${values[0].record}`});
+ for(const f of m.all('rec_is_condition'))out.role.set(f.args[0],'condition');
+ const byW=new Map<string,Map<string,string[]>>();
+ for(const f of m.all('rec_condition')){const [w,a,v]=f.args;out.role.set(w,'result');const g=byW.get(w)??new Map<string,string[]>();g.set(a,[...(g.get(a)??[]),v]);byW.set(w,g);
+  out.derivation.set(w,[...(out.derivation.get(w)??[]),...m.why(f)]);}
+ const surf=new Map(values.map(v=>[v.id,v.quantity]));
+ for(const [w,axes] of byW){const q=out.quantities.get(w)!;const conds=[...q.conditions];
+  for(const [a,vs] of axes){if(conds.some(c=>c.axis===a&&c.from!=='context'))continue;const axis=qk.axes.get(a)!;const order=axis.valueKinds??[axis.valueKind??''];
+   const sorted=[...new Set(vs)].sort((x,y)=>order.indexOf(surf.get(x)!.kind.id??'')-order.indexOf(surf.get(y)!.kind.id??''));
+   const raw=sorted.map(x=>surf.get(x)!.surface).join('; ');for(let i=conds.length-1;i>=0;i--)if(conds[i].axis===a)conds.splice(i,1);
+   conds.push({axis:a,value:normText(raw),raw,from:'record',by:sorted.join(', ')});}
+  out.quantities.set(w,{...q,conditions:conds,missingConditions:q.missingConditions.filter(a=>!conds.some(c=>c.axis===a))});}
+ return out;
+}
+/** WD: a found quantity is of kind K when its unit expresses K, or K is a narrower kind of one its unit expresses and K's
+ * words follow or precede the number closely ("60 % RH", "humidity of 60 %"). */
+export function quantityIsOfKind(qk:QuantityKnowledge,f:FoundQuantity,k:string,text:string):boolean{
+ if(f.unit.kinds.includes(k))return true;const d=qk.kinds.get(k);if(!d?.specialises||!f.unit.kinds.includes(d.specialises))return false;
+ const near=text.slice(Math.max(0,f.start-28),Math.min(text.length,f.end+20));return d.terms.some(tm=>hasPhrase(near,tm));
+}
 // ---------------------------------------------------------------------------------------------------------------------
 // Same quantity printed twice ("147 CFM (250 m³/h)") and comparability of two quantities.
 const decimals=(n:number)=>{const s=String(n);const i=s.indexOf('.');return i<0?0:s.length-i-1;};
@@ -423,7 +484,7 @@ export interface ComparisonResult {verdict:Comparability;reasons:string[];a:numb
 /** Whether two quantities can be compared, and on which common scale. The reasons come from the knowledge, not from
  * category rules: a different kind or metric, an unestablished weighting, a conventional basis, a condition. */
 export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQuantity):ComparisonResult&{rules:string[];derivation:string[]}{
- // KR: the decision is program `compare` of rules.v1.json; the code states each value's facts and reads the verdict.
+ // KR: the decision is program `compare` of the rules file; the code states each value's facts and reads the verdict.
  const F:Record<string,(string|number)[][]>={value:[['a'],['b']],metric_label:[],candidate_kind:[],kind_of:[],metric_of:[],not_equivalent:[],level_value:[],weighting:[],conventional_basis:[],unit_expression:[],required_condition:[],stated_condition:[],presented_test:[],value_product:[],kind_unjustified:[]};
  for(const [v,q] of [['a',a],['b',b]] as const){
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)F.candidate_kind.push([v,k]);if(q.kind.id)F.kind_of.push([v,q.kind.id]);
@@ -514,6 +575,13 @@ export function withLabelBasis(qk:QuantityKnowledge,unit:ParsedUnit,labels:reado
  const atom=BASIS_ATOM[words[Object.keys(words).find(k=>normText(k)===w)!]];if(!atom)return null;
  const u=parseUnit(qk,unit.surface+'/'+atom);return u?{unit:{...u,surface:unit.surface},basis:w}:null;
 }
+/** WD: a label that names a metric reported per a conventional basis ("Extraction rate" -> per day) gives a unit that
+ * prints none the metric's basis: "20L" under "Extraction rate" is 20 L/day by the metric's stated convention. */
+export function withConventionalBasis(qk:QuantityKnowledge,unit:ParsedUnit,labels:readonly string[]):{unit:ParsedUnit;basis:string;metric:string}|null{
+ if(unit.level||unit.atoms.some(a=>a.exp<0))return null;
+ for(const m of qk.pack.metrics){if(!m.conventionalBasis||!labels.some(l=>m.terms.some(t=>hasPhrase(l,t))))continue;if(unit.kinds.includes(m.kind))return null;
+  const atom=BASIS_ATOM[m.conventionalBasis.per];if(!atom)continue;const u=parseUnit(qk,unit.surface+'/'+atom);if(u&&u.kinds.includes(m.kind))return {unit:{...u,surface:unit.surface},basis:`${m.id} is reported per ${m.conventionalBasis.per} (${m.conventionalBasis.source})`,metric:m.id};}
+ return null;}
 /** A number without a unit whose label names a dimensionless metric (ΔE): typed with that metric's kind. */
 export function typeLabelledNumber(qk:QuantityKnowledge,q:{surface:string;value:number|null;low?:number;high?:number},ctx:QuantityContext={}):TypedQuantity|null{
  const labels=[...(ctx.labels??[])];const ms=qk.pack.metrics.filter(m=>m.unitless&&m.terms.some(t=>labels.some(l=>hasPhrase(l,t))));if(ms.length!==1)return null;

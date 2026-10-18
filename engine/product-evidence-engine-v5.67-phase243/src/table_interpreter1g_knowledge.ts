@@ -9,7 +9,7 @@ import {createHash} from 'node:crypto';
 import {acquireTables1F} from './table_acquisition1f.js';
 import {documentModel1G,interpretDocumentTables1G,renderedView1G,INTERPRETER1G_RENDERED_VERSION,type TextModel1G,type DocumentInterpretation1G,type Observation1G} from './table_interpreter1g.js';
 import type {InterpreterLessonId1G} from './table_interpreter1g_lessons.js';
-import {hasPhrase,findQuantities,typeQuantity,sameQuantity,unitStatedInLabel,withLabelBasis,typeLabelledNumber,typeClass,relationChecks,type QuantityKnowledge,type TypedQuantity,type ParsedUnit,type TypedClass,type RelationCheck,type DocumentStatements} from './quantity_knowledge.js';
+import {hasPhrase,findQuantities,typeQuantity,sameQuantity,unitStatedInLabel,withLabelBasis,typeLabelledNumber,typeClass,relationChecks,applyRecordRoles,withConventionalBasis,type RecordValue,type QuantityKnowledge,type TypedQuantity,type ParsedUnit,type TypedClass,type RelationCheck,type DocumentStatements} from './quantity_knowledge.js';
 
 export interface KnowledgeObservation1G extends Observation1G {
  /** Typed by the quantity knowledge; null: not a quantity, or its unit is unknown to the knowledge. */
@@ -22,6 +22,8 @@ export interface KnowledgeObservation1G extends Observation1G {
  scaleClass:TypedClass|null;
  /** Another observation of the same cell printing this same quantity in another unit (conversion verified). */
  sameAs:string|null;sameAsReason:string|null;
+ /** WD P1: the value's role in its record, when its record states conditions (null: not decided). */
+ recordRole?:'condition'|'result'|null;
 }
 export interface KnowledgeInterpretation1G {schema:'pee.table-interpretation.v1g+qk';readingIdentity:string;baseReadingIdentity:string;knowledge:string;
  tables:{table:number;status:string;observations:KnowledgeObservation1G[];
@@ -31,15 +33,12 @@ export interface KnowledgeInterpretation1G {schema:'pee.table-interpretation.v1g
 /** A unit a label prints for its values (kept for callers; the knowledge's own reader since v2). */
 export function unitInLabel1G(qk:QuantityKnowledge,label:string):{unit:ParsedUnit;surface:string}|null{return unitStatedInLabel(qk,label);}
 
-/** Apply the knowledge to the 1G reading of a document. `base` may be passed to reuse an existing 1G reading. */
-export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{lessons?:readonly InterpreterLessonId1G[];base?:DocumentInterpretation1G;text?:TextModel1G;productGroup?:string}={}):KnowledgeInterpretation1G{
- // The layer reads the rendered cell text (v1g.2) unless a base reading or another text model is given.
- const text:TextModel1G=opts.base?(opts.base.version===INTERPRETER1G_RENDERED_VERSION?'rendered':'decoded'):opts.text??'rendered';
- const base=opts.base??interpretDocumentTables1G(html,{lessons:opts.lessons,text});
- // KR: the document's statements as facts for the declarative rules (program `kind`): the blocks that name typed kind
- // evidence, the two text blocks after each of them in the same section (a method sentence is usually followed by its
- // results), the block order, the method notes inside tables, and the product names. Which statement covers which value
- // is decided by the rules, not here.
+/** KR: the document's statements as facts for the declarative rules (program `kind`): the blocks that name typed kind
+ * evidence, the two text blocks after each of them in the same section (a method sentence is usually followed by its
+ * results), the block order, the method notes inside tables, and the product names. Which statement covers which value
+ * is decided by the rules, not here. WD: shared by the table layer and the whole-document reader; `extraProducts` adds
+ * the product names a non-table reader finds. */
+export function documentStatements1G(html:string,qk:QuantityKnowledge,base:DocumentInterpretation1G,text:TextModel1G,extraProducts:readonly string[]=[]){
  const docEv=(qk.pack.kindEvidence??[]).filter(e=>e.justification!=='contextual');
  const named=(t:string)=>docEv.some(e=>e.terms.some(tm=>hasPhrase(t,tm)));
  const source='doc:'+createHash('sha256').update(html).digest('hex').slice(0,16);
@@ -51,8 +50,16 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
  const acqN=acquireTables1F(html,text==='rendered'?{rendered:true}:{});const acqNotes=text==='rendered'?acqN.tables.map(renderedView1G):acqN.tables;
  const notes=new Map<number,{ref:string;text:string}[]>(base.tables.map(t=>[t.table,(acqNotes[t.table]?.cells??[]).filter(c=>named(c.normalisedText)).map(c=>({ref:`table ${t.table} cell ${c.id}`,text:c.normalisedText}))]));
  const document:DocumentStatements={blocks:[...[...keep].sort((x,y)=>x-y).map(i=>({ref:'block '+text0[i].index,text:text0[i].text})),...[...notes.values()].flat()],next,
-  products:[...new Set(base.tables.flatMap(t=>t.observations.map(o=>o.product)).filter((x):x is string=>!!x))]};
+  products:[...new Set([...base.tables.flatMap(t=>t.observations.map(o=>o.product)).filter((x):x is string=>!!x),...extraProducts])]};
  const acq={...acqN,tables:acqNotes};const doc=doc0;
+ return {document,notes,acq,doc,source};
+}
+/** Apply the knowledge to the 1G reading of a document. `base` may be passed to reuse an existing 1G reading. */
+export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{lessons?:readonly InterpreterLessonId1G[];base?:DocumentInterpretation1G;text?:TextModel1G;productGroup?:string}={}):KnowledgeInterpretation1G{
+ // The layer reads the rendered cell text (v1g.2) unless a base reading or another text model is given.
+ const text:TextModel1G=opts.base?(opts.base.version===INTERPRETER1G_RENDERED_VERSION?'rendered':'decoded'):opts.text??'rendered';
+ const base=opts.base??interpretDocumentTables1G(html,{lessons:opts.lessons,text});
+ const {document,notes,acq,doc,source}=documentStatements1G(html,qk,base,text);
  const tables=base.tables.map(t=>{
   const at=acq.tables[t.table];const cellText=new Map(at?.cells.map(c=>[c.id,c.normalisedText])??[]);
   const tableNotes=(notes.get(t.table)??[]).map(n=>n.ref);
@@ -67,7 +74,7 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
    const labels=[...o.property,...o.records,...o.sourceCells.filter(id=>id!==o.cell).map(id=>cellText.get(id)??'')].filter(Boolean);
    let quantity:TypedQuantity|null=null,unitSurface:string|null=null,unitFrom:KnowledgeObservation1G['unitFrom']=null,labelBasis:string|null=null;
    const tctx={labels,conditions:o.conditions,context:ctx,contextStatements,document,tableNotes,product:o.product,evidenceClass:o.evidence.class,source,cohort:`${source}#table ${t.table}#${[...o.property,...o.records,...o.conditions].join(' | ')}`};
-   const withBasis=(u:ParsedUnit)=>{const b=withLabelBasis(qk,u,labels);if(b){labelBasis=b.basis;return b.unit;}return u;};
+   const withBasis=(u:ParsedUnit)=>{const b=withLabelBasis(qk,u,labels)??withConventionalBasis(qk,u,labels);if(b){labelBasis=b.basis;return b.unit;}return u;};
    if(o.kind==='quantity'||o.kind==='range'||o.kind==='bound'||o.kind==='number'){
     // the value is read in its whole cell (a dimension list or an axis letter is visible only there), then in its own surface
     const same=(x:{value:number|null;low?:number;high?:number})=>x.value===o.value||(o.low!==undefined&&x.low===o.low&&x.high===o.high);
@@ -84,6 +91,16 @@ export function interpretWithKnowledge1G(html:string,qk:QuantityKnowledge,opts:{
     }}
    const scaleClass=o.kind==='text'||o.kind==='identifier'?typeClass(qk,o.surface,{labels,productGroup:opts.productGroup}):null;
    return {...o,quantity,unitSurface,unitFrom,labelBasis,scaleClass,sameAs:null,sameAsReason:null};});
+  // WD P1: the values of one record (a row on the table's record axis, for one product) are read together: a value that is
+  // a condition of the record (a rating point's temperature and humidity) becomes a condition of its results.
+  const recs=new Map<string,RecordValue[]>();
+  // A record is a row on the record axis; when the properties are the columns and no axis names records, each body row is
+  // one record (an entity or a run: the rating points of a dehumidifier grid).
+  const H=t.selected?.hypothesis;const rowRecords=!!H&&H.colLevels.includes('property')&&!H.rowLevels.includes('property');
+  const rowOf=new Map((at?.cells??[]).map(c=>[c.id,c.sourceRow]));
+  const recordOf=(o:KnowledgeObservation1G)=>o.records.length?`table ${t.table}#${o.product??''}#${o.records.join(' | ')}`:rowRecords&&rowOf.has(o.cell)?`table ${t.table}#${o.product??''}#row ${rowOf.get(o.cell)}`:null;
+  for(const o of obs){const r=o.quantity?recordOf(o):null;if(!r)continue;recs.set(r,[...(recs.get(r)??[]),{id:o.id,record:r,quantity:o.quantity!,point:o.kind==='quantity'||o.kind==='number'}]);}
+  for(const vs of recs.values()){const rr=applyRecordRoles(qk,vs);for(const o of obs){const q=rr.quantities.get(o.id);if(q&&q!==o.quantity){o.quantity=q;o.recordRole='result';}else if(rr.role.get(o.id)==='condition')o.recordRole='condition';}}
   // the same quantity printed twice in one cell: the later expression points to the first
   const byCell=new Map<number,KnowledgeObservation1G[]>();for(const o of obs)if(o.quantity)byCell.set(o.cell,[...(byCell.get(o.cell)??[]),o]);
   // A re-expression is in ANOTHER unit (two equal values in the same unit are two quantities, e.g. width and depth); the

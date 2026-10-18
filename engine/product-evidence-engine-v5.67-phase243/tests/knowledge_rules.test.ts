@@ -6,7 +6,7 @@ import {loadQuantityKnowledge,findQuantities,typeQuantity,compareQuantities,type
 import {interpretWithKnowledge1G} from '../src/table_interpreter1g_knowledge.js';
 
 // KR (2026-10-18): declarative rules with provenance. Synthetic rules and pages only.
-const rulesFile=():RuleSet=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/rules.v1.json',import.meta.url),'utf8'));
+const rulesFile=():RuleSet=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/rules.v2.json',import.meta.url),'utf8'));
 const packFile=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/quantity-knowledge.v2.json',import.meta.url),'utf8'));
 const mini=(rules:string[],extra:RuleSet['vocabulary']=[]):RuleSet=>({schema:'t',version:'t',statement:'t',
  vocabulary:[{name:'edge',args:['X','Y'],role:'input',meaning:'an edge'},{name:'path',args:['X','Y'],role:'derived',meaning:'a path'},{name:'node',args:['X'],role:'input',meaning:'a node'},

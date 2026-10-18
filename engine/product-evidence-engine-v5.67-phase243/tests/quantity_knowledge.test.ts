@@ -12,7 +12,7 @@ const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/
 const typed=(k:QuantityKnowledge,surface:string,ctx:Parameters<typeof typeQuantity>[2]={})=>{const f=findQuantities(k,surface)[0];assert.ok(f,'no quantity in '+surface);return typeQuantity(k,f,ctx);};
 
 test('pack: validated, sourced and identified by its digest; UCUM is recorded as not used', ()=>{
- assert.match(qk.identity,/^qk\.2\.2\+kr\.1:[0-9a-f]{16}$/);
+ assert.match(qk.identity,/^qk\.2\.3\+kr\.2:[0-9a-f]{16}$/);
  const p=rawPack();assert.ok(p.sources.find(s=>s.id==='ucum_not_used')!.use.includes('NOT incorporated'));
  for(const k of p.kinds)assert.ok(p.sources.some(s=>s.id===k.source));
  const bad=rawPack();bad.metrics[0].kind='no_such_kind';assert.throws(()=>loadQuantityKnowledge(bad),/quantity_knowledge_invalid/);
@@ -84,15 +84,16 @@ test('requirements: every bound read from pack language; ambiguity becomes a que
 });
 
 test('knowledge change without code change: a new unit and a new metric reach every consumer', ()=>{
- const text='It must extract at least 20 pints per day and produce no more than 1.5 sones.';
+ const text='Its condensate output must be at least 20 pints per day and it must produce no more than 1.5 sones.';
  assert.equal(readQuantityRequirements(qk,text).some(r=>r.span.includes('sones')),false);
  const p=rawPack();
  p.kinds.push({id:'loudness',dim:{},unitOnly:true,terms:['loudness'],source:'pee'} as never);
  p.units.push({id:'sone',forms:['sone','sones'],dim:{},factor:1,kindHint:'loudness',source:'pee'} as never);
- p.metrics.push({id:'dehumidifier_extraction',label:'water extraction',kind:'periodic_volume',terms:['extract','extraction'],requires:[],source:'pee'} as never);
+ // WD (qk.2.3): the real pack now knows 'extract' as a dehumidifier capacity word; the new metric has a word of its own
+ p.metrics.push({id:'condensate_output',label:'condensate output',kind:'periodic_volume',terms:['condensate output'],requires:[],source:'pee'} as never);
  const k2=loadQuantityKnowledge(p);assert.notEqual(k2.identity,qk.identity,'the reading identity changes with the knowledge');
  const r=readQuantityRequirements(k2,text);
- assert.deepEqual(r.map(x=>[x.span,x.bound,x.quantity.kind.id,x.quantity.metric.id]),[['at least 20 pints per day','min','periodic_volume','dehumidifier_extraction'],['no more than 1.5 sones','max','loudness',null]]);
+ assert.deepEqual(r.map(x=>[x.span,x.bound,x.quantity.kind.id,x.quantity.metric.id]),[['at least 20 pints per day','min','periodic_volume','condensate_output'],['no more than 1.5 sones','max','loudness',null]]);
 });
 
 test('ablation: without the knowledge entry the behaviour disappears (cause, not coincidence)', ()=>{

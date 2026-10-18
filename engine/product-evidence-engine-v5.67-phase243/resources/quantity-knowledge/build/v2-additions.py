@@ -6,7 +6,7 @@ research package section that prompted the entry (private packages; no text copi
 import json,sys,os
 here=os.path.dirname(os.path.abspath(__file__));root=os.path.dirname(here)
 d=json.load(open(os.path.join(root,'quantity-knowledge.v1.json')))
-d['version']='qk.2.2'
+d['version']='qk.2.3'
 d['statement']+=" v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion."
 def src(i,title,url,use,licence,verification):d['sources'].append({'id':i,'title':title,'url':url,'use':use,'licence':licence,'verification':verification})
 src('energystar_dehumidifier','US EPA ENERGY STAR: Dehumidifier testing and capacity','https://www.energystar.gov/products/dehumidifier_testing_and_capacity',
@@ -116,4 +116,56 @@ en['axisLetters']=['W','H','D','L','Ø']
 en['axisNote']='a single capital W, H, D or L between numbers joined by x or × names a dimension axis (width, height, depth, length), not a unit'
 for u in d['units']:
   if u['id']=='W':u['note']='also the width axis letter in "20 W x 30 H": see language.axisLetters'
+
+# ---------------------------------------------------------------------------------------------------------------------
+# qk.2.3 (WD, 2026-10-18): whole-document reading.
+# 1. Relative humidity is a quantity of dimension one (ISO 80000-5 lists it); a bare "%" stays a ratio and only words
+#    ("relative humidity", "RH") refine it, so no percentage loses the kind it has today (specialisation, not a new
+#    ambiguity). It is the second component of a dehumidifier's inlet air state (KV finding: rating-point grids).
+src('iso_80000_5','ISO 80000-5:2019 Quantities and units - Part 5: Thermodynamics (relative humidity, dimension one)','https://www.iso.org/standard/64626.html',
+ 'relative humidity is a quantity of dimension one, the ratio of the partial pressure of water vapour to its saturation pressure at the same temperature','cited as a reference; catalogue scope read','standard catalogue description; definition consistent with secondary sources')
+kind(id='relative_humidity',dim={},unitOnly=True,specialises='ratio',terms=['relative humidity','humidity','rh'],note='Relative humidity (%RH) is a ratio of dimension one; a percentage is relative humidity only when the words say so.',qudt='quantitykind:RelativeHumidity',source='iso_80000_5')
+U.append({'id':'pct_rh','forms':['%RH','% RH','%rh','% rh','% r.h.','%r.h.'],'dim':{},'factor':0.01,'kindHint':'relative_humidity','source':'iso_80000_5'})
+for a in A:
+  if a['id']=='inlet_air_state':
+    a['valueKinds']=['temperature','relative_humidity']
+    a['note']+='; the two are read together as one condition (a rating point)'
+# 2. Qualitative evidence: the aspects a reviewer judges and the words that carry a judgement. This is PEE's working
+#    vocabulary for reading (source 'pee'), never a scientific claim and never a product fact: an observation records who
+#    said what about which product under which conditions; whether it holds is a separate question.
+d['aspects']=[
+ {'id':'noise','terms':['noise','noisy','loud','quiet','quieter','loudness','hum','whine','whining','drone','din','racket','buzzing','humming','rattling','grinding'],'positive':['quiet','quieter','whisper-quiet','near-silent','silent'],'negative':['noisy','loud','louder','whine','whining','whines','drone','droning','din','racket','buzzing','humming','rattling','grinding'],'kinds':['sound_pressure_level','sound_power_level'],'source':'pee'},
+ {'id':'vibration','terms':['vibration','vibrations','vibrate','vibrates','vibrating','wobble','wobbles','rattle','rattles','shake','shakes'],'negative':['rattle','rattles','wobble','wobbles'],'source':'pee'},
+ {'id':'cleaning_pickup','terms':['suction','pickup','pick-up','picked up','picks up','debris','crumbs','pet hair','carpet cleaning','mopping','mop','mops','dirt','dust pickup'],'source':'pee'},
+ {'id':'navigation','terms':['navigation','navigates','obstacle avoidance','avoids obstacles','mapping','got stuck','gets stuck','stuck','lidar'],'negative':['got stuck','gets stuck','stuck'],'source':'pee'},
+ {'id':'battery_runtime','terms':['battery life','runtime','run time','battery lasts','on a single charge'],'kinds':['duration'],'source':'pee'},
+ {'id':'ease_of_use','terms':['easy to use','app','controls','set up','setup','intuitive','user-friendly','fiddly','interface'],'positive':['intuitive','user-friendly'],'negative':['fiddly'],'source':'pee'},
+ {'id':'maintenance','terms':['easy to clean','to clean','cleaning the','dishwasher-safe','dishwasher safe','empty the tank','emptying','maintenance','self-emptying'],'source':'pee'},
+ {'id':'build_quality','terms':['build quality','sturdy','flimsy','well made','well-made','plasticky','solidly built','feels cheap'],'positive':['sturdy','well made','well-made','solidly built'],'negative':['flimsy','plasticky','feels cheap'],'source':'pee'},
+ {'id':'cooking_result','terms':['crisp','crispy','crispier','browned','browning','evenly cooked','soggy','burnt','undercooked','overcooked','juicy','golden'],'positive':['crisp','crispy','crispier','evenly cooked','juicy','golden'],'negative':['soggy','burnt','undercooked','overcooked'],'source':'pee'},
+ {'id':'drying_dehumidifying','terms':['dried','drying','damp','condensation','moisture','dehumidifying','laundry'],'source':'pee'},
+ {'id':'cleaning_result','terms':['spotless','residue','streaks','sparkling','clean dishes','cleaning performance','air cleaning','stains'],'positive':['spotless','sparkling'],'negative':['residue','streaks'],'source':'pee'},
+ {'id':'picture_quality','terms':['picture','brightness','contrast','colours','colors','blooming','reflections','black levels','hdr'],'negative':['blooming'],'source':'pee'},
+ {'id':'sound_quality','terms':['bass','treble','dialogue','soundstage','sound quality','audio quality','mids'],'source':'pee'},
+ {'id':'running_cost','terms':['running cost','running costs','energy use','energy-efficient','cheap to run','expensive to run','energy consumption'],'positive':['cheap to run','energy-efficient'],'negative':['expensive to run'],'kinds':['energy','power','periodic_energy_consumption','energy_per_event'],'source':'pee'},
+ {'id':'size_footprint','terms':['compact','bulky','footprint','takes up','space-saving'],'positive':['compact','space-saving'],'negative':['bulky'],'source':'pee'},
+ {'id':'value_for_money','terms':['value for money','worth the price','worth the money','overpriced','pricey','bargain'],'positive':['bargain','worth the price','worth the money'],'negative':['overpriced','pricey'],'source':'pee'}]
+en['evaluation']={'positive':['good','great','excellent','impressive','impressively','effective','effectively','well','strong','reliable','reliably','easy','quick','quickly','fast','superb','outstanding','solid','decent','perfect','perfectly','smooth','consistent','consistently','thorough','thoroughly','handy','convenient','efficient','brilliant','fantastic','admirably','top-notch','best'],
+ 'negative':['poor','poorly','bad','weak','disappointing','disappointed','annoying','annoyingly','irritating','struggled','struggles','struggle','failed','fails','missed','misses','problem','problems','issue','issues','awkward','slow','uneven','unevenly','inconsistent','frustrating','tangled','mediocre','lacklustre','lackluster','worse','worst','noticeable','distracting','unpleasant'],
+ 'negators':['not','never','no','hardly','barely',"isn't","wasn't","doesn't","didn't","don't","aren't","weren't","won't","can't","couldn't"],
+ 'hedges':['seems','seemed','appears','appeared','might','may','perhaps','somewhat','a little','slightly','fairly','reasonably'],
+ 'reportedBy':['users report','owners report','customers say','reviewers say','according to users','some users','many users','customer reviews'],
+ 'note':'polarity words; a negator within three words before flips the polarity; both polarities in one statement give mixed'}
+# 3. Word forms seen in prose on the development pages (verbs where tables use nouns), and which axes are operating
+#    conditions a judgement can be made under (a speed, a programme, a floor), as opposed to test materials or references.
+for m in M:
+  if m['id']=='dehumidifier_capacity':m['terms']+=['extracts','extract','extracting','extracted']
+for m in d['metrics']:
+  if m['id']=='room_coverage':m['terms']+=['rooms up to']
+for a in A:
+  if a['id'] in ('fan_setting','programme','floor_type','signal_mode'):a['operatingCondition']=True
+# 4. A metric's conventional reporting basis: a moisture removal capacity is water removed per 24 hours (ENERGY STAR,
+#    DOE appendix X1: pints/day); "Extraction rate: 20L" states that convention without printing it.
+for m in M:
+  if m['id']=='dehumidifier_capacity':m['conventionalBasis']={'per':'day','source':'energystar_dehumidifier','note':'capacity is reported per 24 h under the test procedures'}
 out=os.path.join(root,'quantity-knowledge.v2.json');json.dump(d,open(out,'w'),ensure_ascii=False,indent=1);open(out,'a').write('\n');print('wrote',out)
