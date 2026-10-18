@@ -1,0 +1,11 @@
+{
+ "schema": "pee.qualitative-qe.protocol.v1",
+ "registeredAt": "2026-10-18",
+ "brief": "Owner brief 2026-10-18 (Italian): a targeted engineering study of expert qualitative evidence and its link to existing metrics: distinguish an observable phenomenon from an opinion, a practical test from a commercial claim, a use-dependent judgement from a product property, a documented cause from a supposition; link qualitative and quantitative evidence where a scientific relation exists, without arbitrary scores; reuse it for needs, research and evaluation. Do not tune further on the seven KV pages.",
+ "registeredBefore": "any code of the structured qualitative model (qe.1); the reference was annotated and sealed first",
+ "dataClass": "development pages (spent for tables and earlier qualitative pilots) whose qualitative content the developer has not inspected in the WD work: 8 pages, 5 categories (air fryers 4, air purifiers 1, dishwashers 1, tumble dryers 1, televisions 1). Development evidence, never held-out; the developer will not read these pages' text before the first run. The KV pages are regression data only.",
+ "reference": "3 fresh-context annotators (same model family: frozen, not author-independent) from a neutral Chromium rendering; schema in the private prompt (product, property, propertyFamily, phenomenon, statementType, evidenceType, polarity, hedged, conditions, useContext, cause, comparison, relatedMeasurement, author). Sealed in freeze.json.",
+ "arms": {"wd1": "the WD reader's qualitative observations at commit 36a0f20 (current)", "qe1": "the structured qualitative model, frozen by commit before its single run"},
+ "scoring": "reader item maps to the rendered line holding most of its sentence (scorer of WD, corrected version); one reader item per reference item per line, best property-family agreement first. Per matched item: product, property family, statement type, evidence type, polarity, hedged, conditions (kind), use context present, cause status, comparison other/better, related measurement linked. Reported: reached, each field correct / wrong / missing, and reader items not in the reference.",
+ "firstRun": "each arm once; outputs committed unchanged; later changes labelled tuned."
+}
