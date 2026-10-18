@@ -36,6 +36,7 @@ Report: `engine/product-evidence-engine-v5.67-phase243/docs/plans/quantity-knowl
   `scripts/kr-equivalence.mjs LABEL REFERENCE_ROOT` before any rule change.
 - **KV / S59:** first unseen validation (`evaluation/kr-unseen/`, `scripts/kr-unseen-eval.mjs`): 7 pages, only 1 with table values.
   Kinds transfer; conditions in cells and comparability do not. P2 adopted (TUNED).
+- **WD / S60:** whole-document reader `src/document_evidence.ts` (wd.1, shadow only): pairs, sentences, lists, cards and embedded JSON-LD / Next.js data through `typeQuantity` and the shared rules; P1 as rule program `record` (`rules.v2.json`, kr.2); knowledge qk.2.3. Evaluation: `scripts/wd-eval.mjs` + `scripts/wd-score.mjs` (reference sealed on the KV pages' non-table content, now spent); funnel: `scripts/wd-funnel.mjs`, `scripts/wd-live-yield.mjs`. Restriction audit `docs/plans/restriction-audit.md`.
 - **Open:** D19, D20, D21, D22, D23, D24, D25 (v2 knowledge reported but used by no decision; class scale needs a registry
   category).
 

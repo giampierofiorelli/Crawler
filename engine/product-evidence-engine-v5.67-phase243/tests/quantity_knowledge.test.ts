@@ -49,7 +49,9 @@ test('kind and metric from words: CADR is a metric of flow, fan airflow is anoth
  const air=typed(qk,'500 m³/h',{labels:['Max airflow']});assert.equal(air.metric.id,'free_airflow');
  const dust=typed(qk,'134 CFM',{labels:['CADR','Dust'],conditions:['top speed']});assert.deepEqual(dust.conditions.map(c=>c.axis+'='+c.value),['challenge_pollutant=dust','fan_setting=top']);
  const spl=typed(qk,'36.9 dB',{labels:['Speed 1'],context:['Noise level measured from 3 ft. away with a sound level meter']});
- assert.equal(spl.kind.id,'sound_pressure_level');assert.deepEqual(spl.conditions.map(c=>c.axis),['measurement_distance']);assert.equal(spl.weighting,'unspecified');
+ assert.equal(spl.kind.id,'sound_pressure_level');
+ // WD: the value's own label states its fan setting; an operating condition is recorded whether or not the metric requires it
+ assert.deepEqual(spl.conditions.map(c=>c.axis),['measurement_distance','fan_setting']);assert.equal(spl.weighting,'unspecified');
  const label=typed(qk,'44dB',{labels:['Noise'],context:['its Energy Label claim of 44dB']});assert.equal(label.kind.id,'sound_power_level');
  const bare=typed(qk,'40.2 dBA',{labels:['Noise Level']});assert.equal(bare.kind.id,null,'nothing says pressure or power');assert.deepEqual(bare.kind.candidates,['sound_pressure_level','sound_power_level']);
  // a setting in a nearby paragraph does not say which setting a cell was measured at
@@ -279,7 +281,8 @@ test('K9 protocol: a document stating its instrument once establishes sound pres
  const sp=levelObs(page('<p>We measured the noise of every purifier with a decibel meter.</p>','Our test results','<tr><td>Noise, lowest speed</td><td>32 dBA</td><td>35 dBA</td></tr><tr><td>Noise, highest speed</td><td>55 dBA</td><td>60 dBA</td></tr>'));
  const v=(x:number)=>sp.find(o=>o.value===x)!.quantity!;
  assert.equal(compareQuantities(qk,v(32),v(35)).verdict,'comparable_within_source','one presented test, two products');
- for(const [x,y] of [[32,55],[32,60]])assert.equal(compareQuantities(qk,v(x),v(y)).verdict,'comparable_conditions_unestablished','different tests of the same source');
+ // WD (correction): the labels state the two speeds, so the verdict is no longer 'unestablished' but 'not comparable'
+ for(const [x,y] of [[32,55],[32,60]]){const c=compareQuantities(qk,v(x),v(y));assert.equal(c.verdict,'not_comparable','different tests of the same source');assert.match(c.reasons[0],/different fan setting/);}
  const other=levelObs(h.replace('Alpha A1','Gamma G3'))[0];const elsewhere={...other.quantity!,source:'doc:other'};
  assert.equal(compareQuantities(qk,o[0].quantity!,elsewhere).verdict,'comparable_conditions_unestablished');
 });

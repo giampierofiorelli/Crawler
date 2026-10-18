@@ -32,7 +32,13 @@ const NONQ=new Set(['identifier_or_name_part','warranty_or_service','other_non_q
  * of its segment text in common. */
 function lineFinder(page){const lines=page.lines.filter(l=>!l.inTable);const byPath=new Map();for(const d of page.data)byPath.set(d.path,[...(byPath.get(d.path)??[]),d]);
  return (item)=>{if(item.path!==undefined){const ds=byPath.get(item.path)??[];const d=ds.find(x=>!item.surface||nums(x.text).some(n=>nums(item.surface).includes(n)))??ds[0];return d?d.n:null;}
-  let best=null,score=0;for(const l of lines){if(item.surface&&!nums(item.surface).every(n=>nums(l.text).includes(n)))continue;const o=overlap(l.text,item.context??'')+(item.surface&&norm(l.text).includes(norm(item.surface))?0.5:0);
+  // Scorer correction (2026-10-18, after the first run, same frozen builds; label "first-scorerfix"): the first version
+  // normalised the word overlap by the SHORTER text, so a three-word line inside a paragraph scored 1 and won. A value is
+  // now placed on the line that holds its numbers and most of its own context window; a statement on the line that
+  // shares most words with it relative to the longer of the two.
+  let best=null,score=0;const C=toks(item.context??'');
+  for(const l of lines){if(item.surface&&!nums(item.surface).every(n=>nums(l.text).includes(n)))continue;const L=toks(l.text);let n=0;for(const x of C)if(L.has(x))n++;
+   const o=item.surface?(C.size?n/C.size:0)+(norm(l.text).includes(norm(item.surface))?0.5:0):(C.size&&L.size?n/Math.max(C.size,L.size):0);
    if(o>score){score=o;best=l.n;}}return score>=0.3?best:null;};}
 
 async function armItems(arm,root,page,html){

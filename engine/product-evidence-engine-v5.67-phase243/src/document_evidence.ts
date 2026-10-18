@@ -30,7 +30,7 @@ import {createHash} from 'node:crypto';
 import {parseHtml245,walk245,locator245,decodeEntities245,type Node245} from './phase245_html_dom.js';
 import {documentModel1G,interpretDocumentTables1G,blockKind1G,isMethodHeading1G,nameShapedPrincipal1G} from './table_interpreter1g.js';
 import {interpretWithKnowledge1G,documentStatements1G,type KnowledgeInterpretation1G} from './table_interpreter1g_knowledge.js';
-import {findQuantities,typeQuantity,applyRecordRoles,withLabelBasis,withConventionalBasis,hasPhrase,normText,type QuantityKnowledge,type TypedQuantity,type FoundQuantity,type RecordValue} from './quantity_knowledge.js';
+import {findQuantities,typeQuantity,applyRecordRoles,withLabelBasis,withConventionalBasis,unitStatedInLabel,parseUnit,hasPhrase,normText,type QuantityKnowledge,type TypedQuantity,type FoundQuantity,type RecordValue} from './quantity_knowledge.js';
 
 export const DOCUMENT_EVIDENCE_VERSION='wd.1';
 export type SegmentRole='pair'|'sentence'|'embedded_pair'|'embedded_sentence';
@@ -200,7 +200,7 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
  const sectionProduct=(hs:readonly string[])=>{for(let i=hs.length-1;i>=0;i--){const m=new Set(mentions(inv,hs[i]).map(x=>x.name));if(m.size===1)return [...m][0];if(m.size>1)return null;}return null;};
  for(const s of segs){if(s.duplicateOf)continue;
   const units=s.role==='sentence'||s.role==='embedded_sentence'?sentences(s.text):[{start:0,text:s.text}];
-  units.forEach((u,ui)=>{const found=findQuantities(qk,u.text);if(!found.length)return;const record=`${s.id}#${ui}`;
+  units.forEach((u,ui)=>{const found=findQuantities(qk,u.text);if(!found.length&&s.label!==null)found.push(...labelledValue(qk,s.label,u.text));if(!found.length)return;const record=`${s.id}#${ui}`;
    const own=s.role==='pair'||s.role==='embedded_pair'||s.products.some(p=>p.start<0)?s.products.filter(p=>p.start<0):s.products.filter(p=>p.start>=u.start&&p.end<=u.start+u.text.length).map(p=>({...p,start:p.start-u.start,end:p.end-u.start}));
    const inPairLabel=s.label?mentions(inv,s.label):[];
    // names of other products: a capitalised name with a model code that is not one of the page's products ("Salter EK5876")
@@ -231,6 +231,10 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
      const rangeEnd=!!prevF&&/^\s*(?:to|and|-|–)\s*$/i.test(u.text.slice(prevF.end,f.start))&&/\b(?:from|between)\s*$/i.test(u.text.slice(Math.max(0,prevF.start-12),prevF.start));
      const rangeStart=!!nextF&&/^\s*(?:to|and|-|–)\s*$/i.test(u.text.slice(f.end,nextF.start))&&/\b(?:from|between)\s*$/i.test(u.text.slice(Math.max(0,f.start-12),f.start));
      const point=f.low===undefined&&!rangeEnd&&!rangeStart&&!BOUND.test(u.text.slice(Math.max(0,f.start-16),f.start));
+     // the named test a value comes from ("in our hair-wrap test") identifies its record: two values of one product from two
+     // tests are two tests (the owner's test-identity principle; P2 follows from it)
+     const tn=/\b(?:our|the|in|during|a)\s+((?:[\p{L}-]+\s+){0,3}?(?:test|tests|testing|benchmark|trial))\b/iu.exec(s.label!==null?s.label+' '+s.headings.slice(-1).join(' '):labels.join(' ')+' '+s.headings.slice(-1).join(' '));
+     if(tn&&!quantity.conditions.some(c=>c.axis==='method'))quantity={...quantity,conditions:[...quantity.conditions,{axis:'method',value:normText(tn[1]),raw:tn[1],from:'labels'}]};
      records.set(record,[...(records.get(record)??[]),{id,record,quantity,point}]);}
     quantities.push({id,segment:s.id,record,start:u.start+f.start,end:u.start+f.end,surface:f.surface,quantity,identifierPart:ident,product,productBasis:basis,evidenceClass,recordRole:null});});});}
  const byId=new Map(quantities.map(q=>[q.id,q]));
@@ -261,6 +265,13 @@ export function windows(text:string,found:readonly FoundQuantity[],i:number):{le
  let k=i;while(k+1<found.length&&CONNECTIVE.test(text.slice(found[k].end,found[k+1].start)))k++;
  const g=found[k],next=found[k+1];const right=next?split(text.slice(g.end,next.start)).after:text.slice(g.end);
  return {left:left.slice(-80),right:right.slice(0,80)};}
+/** A key-value pair whose value is a bare number (or an h:mm time) and whose label states the unit ("Energy consumption in
+ * kWh per 100 cycles": 85; "Duration of programme": 3:15) is one quantity, as a column header's unit is in a table. */
+function labelledValue(qk:QuantityKnowledge,label:string,value:string):FoundQuantity[]{const v=value.trim();
+ const hm=/^(\d{1,2}):([0-5]\d)(?:\s*h)?$/i.exec(v);
+ if(hm&&/\b(?:duration|time|runtime|run time|programme|program|cycle)\b/i.test(label)){const u=parseUnit(qk,'h');if(u)return [{start:0,end:v.length,surface:v,value:+hm[1]+ +hm[2]/60,unit:u,unitSurface:'h'}];}
+ const m=/^[-−]?\d+(?:[.,]\d+)?$/.exec(v);if(!m)return [];const lu=unitStatedInLabel(qk,label);if(!lu)return [];
+ return [{start:0,end:v.length,surface:v,value:Number(v.replace(',','.')),unit:lu.unit,unitSurface:lu.surface}];}
 /** The product a value is "of": a known (name) or unknown (null) product named after "of", "for", "from" or "by" within
  * a few words after the value, before any other value. */
 function ofName(text:string,f:FoundQuantity,known:readonly {name:string;start:number;end:number}[],foreign:readonly {start:number;end:number}[]):string|null|undefined{
@@ -295,6 +306,10 @@ function authorOf(root:Node245):string|null{
 
 function readQualitative(qk:QuantityKnowledge,segs:readonly Segment[],inv:Inventory,pageSubject:string|null,sectionProduct:(h:readonly string[])=>string|null,author:string|null,sourceType:string|null):QualitativeObservation[]{
  const ev=qk.pack.language.en.evaluation;const aspects=qk.pack.aspects??[];if(!ev||!aspects.length)return [];const out:QualitativeObservation[]=[];let n=0;
+ // WD (tuned on the KV pages): a review whose own words say it tested the products (a method heading, a first-person test
+ // statement) covers its judgements, as a test protocol covers its values (rules C1-C5); a sentence that reports others or
+ // a maker's page keeps its own basis
+ const documentTests=sourceType!=='manufacturer'&&sourceType!=='retailer'&&segs.some(s=>s.region==='subject'&&(s.headings.some(h=>isMethodHeading1G(h))||blockKind1G(s.text)==='method'));
  const valueAxes=qk.pack.conditionAxes.filter(a=>a.operatingCondition&&a.values&&Object.keys(a.values).length);
  for(const s of segs){if(s.region==='boilerplate'||s.duplicateOf||s.role==='pair'||s.role==='embedded_pair')continue;
   for(const u of sentences(s.text)){const t=u.text;if(t.length<20||t.length>600)continue;
@@ -311,7 +326,7 @@ function readQualitative(qk:QuantityKnowledge,segs:readonly Segment[],inv:Invent
     // a judgement about no identifiable product is not product evidence
     if(!product)continue;
     const conditions:{axis:string;value:string}[]=[];for(const ax of valueAxes)for(const [v,ws] of Object.entries(ax.values!))if(ws.some(w=>hasPhrase(t,w))&&!conditions.some(c=>c.axis===ax.id))conditions.push({axis:ax.id,value:v});
-    const basis=ev.reportedBy.some(w=>hasPhrase(t,w))?'reported_by_others':sourceType==='manufacturer'?'manufacturer_claim':blockKind1G(t)==='method'||/\b(?:i|we|our (?:reviewers?|testers?|team|expert))\b.{0,40}\b(?:tested|found|noticed|measured|ran|tried|used|saw|heard|impressed|liked|disliked)\b/i.test(t)||s.headings.some(h=>isMethodHeading1G(h))?'tested_experience':'opinion_without_test';
+    const basis=ev.reportedBy.some(w=>hasPhrase(t,w))?'reported_by_others':sourceType==='manufacturer'?'manufacturer_claim':blockKind1G(t)==='method'||/\b(?:i|we|our (?:reviewers?|testers?|team|expert))\b.{0,40}\b(?:tested|found|noticed|measured|ran|tried|used|saw|heard|impressed|liked|disliked)\b/i.test(t)||s.headings.some(h=>isMethodHeading1G(h))||documentTests?'tested_experience':'opinion_without_test';
     out.push({id:'o'+(n++),segment:s.id,aspect:a.id,polarity,strength:ev.hedges.some(w=>hasPhrase(t,w))?'hedged':'explicit',conditions,product,productBasis,basis,
      author:basis==='tested_experience'||basis==='opinion_without_test'?author:null,rankingInput:false});}}}
  return out;}

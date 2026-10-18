@@ -196,8 +196,10 @@ export function parseUnit(qk:QuantityKnowledge,surface:string):ParsedUnit|null{
 export interface FoundQuantity {start:number;end:number;surface:string;value:number|null;low?:number;high?:number;unit:ParsedUnit;unitSurface:string;
  /** v2: the axis letter of a dimension list item (W, H, D, L) */
  axis?:string|null}
-const NUM_RE=/(?<![\p{L}\p{N}.,])[-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?/gu;
-const toNum=(s:string)=>Number(s.replace(/,/g,'').replace('−','-'));
+// WD (tuned on the KV pages, 2026-10-18): a comma followed by one or two digits is a decimal comma ("81,5 cm" is 81.5 cm,
+// never 5 cm); a comma followed by three digits groups thousands ("1,600W").
+const NUM_RE=/(?<![\p{L}\p{N}.,])[-−]?(?:\d{1,3}(?:,\d{3})+(?![\d])|\d+,\d{1,2}(?![\d,])|\d+)(?:\.\d+)?/gu;
+const toNum=(s:string)=>Number((/^[-−]?\d+,\d{1,2}$/.test(s)?s.replace(',','.'):s.replace(/,/g,'')).replace('−','-'));
 /** Every number in the text followed by a unit the pack knows (longest unit first). Ranges "40.2 – 66.5 dBA" are one quantity. */
 export function findQuantities(qk:QuantityKnowledge,text:string):FoundQuantity[]{
  const out:FoundQuantity[]=[];let lastEnd=-1;
@@ -220,7 +222,8 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
  for(const m of text.matchAll(NUM_RE)){const s=m.index!;if(s<lastEnd)continue;const j=s+m[0].length;let low:number|undefined,high:number|undefined;
   const rg=/^\s?(?:-|–|—|to)\s?([-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/.exec(text.slice(j));
   let rangeEnd=j;if(rg){low=toNum(m[0]);high=toNum(rg[1]);rangeEnd=j+rg[0].length;}
-  const tryAt=(k:number)=>{const after=text.slice(k);const lead=/^\s?/.exec(after)![0].length;const win=after.slice(lead,lead+48);
+  // a unit spelled in letters may follow a hyphen ("a 2-inch hair", "a 30-minute run"); a hyphen before a digit is a range
+  const tryAt=(k:number)=>{const after=text.slice(k);const lead=/^(?:\s|-(?=\p{L}{2}))?/u.exec(after)![0].length;const win=after.slice(lead,lead+48);
    // candidate ends: every boundary in the window, longest first
    const ends=[...new Set([...win.matchAll(/(?=[\s,;:)\]|])/g)].map(x=>x.index!).concat([win.length]))].filter(e=>e>0).sort((a,b)=>b-a);
    for(const e of ends){let cand=win.slice(0,e);let pu=parseUnit(qk,cand);if(!pu&&cand.endsWith('.')){cand=cand.slice(0,-1);pu=parseUnit(qk,cand);}if(!pu)continue;
@@ -413,6 +416,9 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
  // ("in sleep mode") does not say which setting each cell was measured at. A measured quantity axis (the distance of a
  // sound level, air changes per hour) may come from the context, where test methods state it; the source is recorded.
  for(const a of required){const axis=qk.axes.get(a)!;scan(axis,labels,'labels');scan(axis,conds,'conditions');if(axis.valueKind&&!conditions.some(c=>c.axis===a))scan(axis,context,'context');}
+ // WD (tuned on the KV pages): an operating condition the value's own words state (a floor, a speed, a programme) is part
+ // of its record whether or not the knowledge requires it for the metric: a carpet pickup and a hard-floor pickup are two tests.
+ for(const axis of qk.pack.conditionAxes)if(axis.operatingCondition&&!required.includes(axis.id)){scan(axis,labels,'labels');scan(axis,conds,'conditions');}
  // The method a value was produced under, and the conditions that method fixes (v2): named in the labels or the context.
  const methods=(qk.pack.methods??[]).filter(m=>(metricId?m.measures.includes(metricId):m.measures.some(x=>kind&&qk.metrics.get(x)!.kind===kind))&&hit(all,m.terms).length);
  if(methods.length===1&&!conditions.some(c=>c.axis==='method')){const m=methods[0];conditions.push({axis:'method',value:m.id,raw:hit(all,m.terms)[0],from:labels.some(l=>m.terms.some(t=>hasPhrase(l,t)))?'labels':'context'});
