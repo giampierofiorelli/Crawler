@@ -39,7 +39,7 @@ function world(o:{secondMeasure:boolean;establishes:boolean}){
  registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[t],'2026-10-16T08:30:00.000Z');
  const items=s.categoryItems246('coffee_machines');const ref=(id:string)=>'item:'+items.find(i=>i.concept?.id===id)!.itemId;
  const rel=relations247(s,'coffee_machines').find(r=>r.kind==='measured_by'&&r.from===ref('espresso_sensory_assessment')&&r.to===ref('espresso_quality'))!;
- if(o.establishes)assessRelation247(s,{relationId:rel.relationId,value:'establishes',basis:'teaching_source_statement',assessor:'fictional-source',citation:'fictional panel method page (test fixture)'},'2026-10-16T08:31:00.000Z');
+ if(o.establishes)assessRelation247(s,{relationId:rel.relationId,value:'establishes',basis:'teaching_source_statement',independence:'human_reviewer',assessor:'fictional-source',citation:'fictional panel method page (test fixture)'},'2026-10-16T08:31:00.000Z');
  const ids:Record<string,string>={};
  for(const [name,mpn,price] of MACHINES){
   const url=`https://maker-${mpn.toLowerCase()}.pee-s80.test/p/${mpn}`;

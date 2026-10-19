@@ -23,7 +23,7 @@ function store(cat:string,establish:[string,string][]=[]){
  const s=new KnowledgeStore246(':memory:');if(cat==='air_fryers')seedCategoryHypotheses246(s,cat);applyTeaching252(s,[TEACHING[cat]],'2026-10-19T09:00:00.000Z');
  const items=s.categoryItems246(cat);const ref=(id:string)=>'item:'+items.find(i=>i.concept?.id===id)!.itemId;
  for(const [m,o] of establish){const r=relations247(s,cat).find(x=>x.kind==='measured_by'&&x.from===ref(m)&&x.to===ref(o))!;
-  assessRelation247(s,{relationId:r.relationId,value:'establishes',basis:'teaching_source_statement',assessor:'test',citation:'test fixture'},'2026-10-19T09:01:00.000Z');}
+  assessRelation247(s,{relationId:r.relationId,value:'establishes',basis:'teaching_source_statement',independence:'human_reviewer',assessor:'test',citation:'test fixture'},'2026-10-19T09:01:00.000Z');}
  return s;
 }
 const know=(s:KnowledgeStore246,cat:string,ablate:KnowledgeAblation|null=null)=>categoryKnowledge(s,cat,{qk,ablate});

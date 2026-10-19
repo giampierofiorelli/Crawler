@@ -405,9 +405,11 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  const withAttrs=products.filter(p=>!!store.db.prepare('SELECT 1 FROM revision_properties WHERE product_id=?').get(p)).length;
  const retained=products.reduce((a,p)=>a+store.declarations246(p).length,0);
  const evidenceSupported=rels.filter(r=>r.support==='evidence_supported'&&wanted.has(conceptOfRef(r.to)??'')).length;
- // Independent product results for the need: retained declarations from independent original-test sources
- // that are verified for a purpose. None exist until test results are acquired under reviewed rights.
- const independentResults=products.reduce((a,p)=>a+store.declarations246(p).filter(d=>d.evidenceRole==='test_publisher_declaration_unreviewed'&&d.state==='verified_for_purpose').length,0);
+ // Independent product results for the need. S85 (owner): a specification value is never an independently measured
+ // result, even when a test publisher's page lists it (role test_publisher_declaration_unreviewed is a declaration).
+ // Declarations no longer count; measured results reach advice only through validated test evidence (Phase268, ranking
+ // path), so the journey reports none here.
+ const independentResults=0;
  // Safety notices attach to candidates only through an exact identifier the candidate's own sources declared.
  let safety:Journey248['stages']['evidence']['safety']=null;
  if(categoryId&&options.safetyNotices){

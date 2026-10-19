@@ -10,7 +10,7 @@ import {applyLessons250,ADOPTED_LESSONS250} from '../src/phase250_category_lesso
 import {applyTeaching252,registerTeachingSources252} from '../src/phase252_category_teaching.js';
 import {COFFEE_TEACHING269,COFFEE_SOURCES269,AIR_FRYER_TEACHING269,RESEARCH_SOURCES269} from '../src/phase269_research_teaching.js';
 import {adviseFromRequest253,outcomeAuthorised270,outcomeAuthorisedRa2,type RankingContext253} from '../src/phase253_request_advice.js';
-import {assessRelation247,relations247} from '../src/phase247_category_relations.js';
+import {assessRelation247,relations247,reviewRelation247,sufficiencyOf247} from '../src/phase247_category_relations.js';
 import {canonicalJson180} from '../src/phase180_reviewed_first_answer.js';
 import {verifySignedCatalog181,dynamicKnowledgeAnswer181,type ProductKnowledgeCatalog181,type KnowledgeDimension181} from '../src/phase181_dynamic_knowledge_ranking.js';
 import {createDecision177,applyDecisionAction177} from '../src/phase177_decision_snapshot.js';
@@ -33,13 +33,13 @@ const REQUEST='Which espresso machine makes the best-tasting traditional Italian
 // S78: ranking needs positive evidence that the measurement ESTABLISHES the outcome. The fictional world records it as a
 // source-citing assessment of its espresso relation ('establishes' by default; tests vary it).
 type Suff=('establishes'|'informs_only')[];
-function coffee(teach=true,sufficiency:Suff=['establishes']){
+function coffee(teach=true,sufficiency:Suff=['establishes'],independence:'human_reviewer'|'same_model_not_independent'='human_reviewer'){
  const s=new KnowledgeStore246(':memory:',CLASS);seedCategoryHypotheses246(s,'coffee_machines');
  for(const [id,al] of Object.entries(CONCEPT_VOCABULARY248.coffee_machines))s.addConceptAliases246('coffee_machines',id,al);
  if(teach){registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[COFFEE_TEACHING269],'2026-10-16T08:30:00.000Z');
   const items=s.categoryItems246('coffee_machines');const ref=(id:string)=>'item:'+items.find(i=>i.concept?.id===id)!.itemId;
   const rel=relations247(s,'coffee_machines').find(r=>r.kind==='measured_by'&&r.from===ref('espresso_sensory_assessment')&&r.to===ref('espresso_quality'))!;
-  sufficiency.forEach((v,i)=>assessRelation247(s,{relationId:rel.relationId,value:v,basis:'teaching_source_statement',assessor:'fictional-source-'+i,citation:'fictional panel method page, section 2 (test fixture)'},'2026-10-16T08:31:00.000Z'));}
+  sufficiency.forEach((v,i)=>assessRelation247(s,{relationId:rel.relationId,value:v,basis:'teaching_source_statement',independence,assessor:'fictional-source-'+i,citation:'fictional panel method page, section 2 (test fixture)'},'2026-10-16T08:31:00.000Z'));}
  const ids:Record<string,string>={};
  for(const [name,mpn,price] of [['Aurora A1 Espresso Machine','A1',399],['Borealis B2 Espresso Machine','B2',549]] as const){
   const url=`https://maker-${mpn.toLowerCase()}.pee270.test/p/${mpn}`;
@@ -196,7 +196,7 @@ test('§10: owned equipment gives a no-purchase check that does not say "do not 
 });
 
 test('S78 ra.2: conditions are checked per measurement, never pooled across the need; ra.1 stays for comparison only',()=>{
- const byMeasure=new Map([['energy_per_cooking_task',{sufficiency:'established',conditions:['same_food_load']}],['crisp_panel',{sufficiency:'established',conditions:['blinded_panel']}]]);
+ const byMeasure=new Map([['energy_per_cooking_task',{sufficiency:'established',conditions:['same_food_load'],rankingBasis:'independent_assessor'}],['crisp_panel',{sufficiency:'established',conditions:['blinded_panel'],rankingBasis:'independent_assessor'}]]);
  const k={proxies:['energy_empty_run'],byMeasure};
  const d={...panel({A1:'a1',B2:'b2'}).dimensions[0],conditionsMet:['same_food_load']};
  assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_per_cooking_task'),{ok:true},'the other measurement\'s blinded panel is not a condition of energy');
@@ -205,6 +205,9 @@ test('S78 ra.2: conditions are checked per measurement, never pooled across the 
  assert.deepEqual(outcomeAuthorisedRa2(k,{...d,conditionsMet:[]},'energy_per_cooking_task'),{ok:false,reason:'conditions_not_verified'});
  assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_empty_run'),{ok:false,reason:'known_proxy'});
  assert.deepEqual(outcomeAuthorisedRa2({proxies:[],byMeasure:new Map([['m',{sufficiency:'unassessed',conditions:[]}]])},d,'m'),{ok:false,reason:'sufficiency_not_established'});
+ // S85: an established verdict with no basis beyond same-model readings does not authorise
+ assert.deepEqual(outcomeAuthorisedRa2({proxies:[],byMeasure:new Map([['m',{sufficiency:'established',conditions:[],rankingBasis:null}]])},{...d,conditionsMet:[]},'m'),{ok:false,reason:'sufficiency_same_model_only'});
+ assert.deepEqual(outcomeAuthorisedRa2({proxies:[],byMeasure:new Map([['m',{sufficiency:'established',conditions:[]}]])},{...d,conditionsMet:[]},'m'),{ok:false,reason:'sufficiency_same_model_only'},'an absent basis is none');
  const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
  assert.equal(a.authorisationTrace![0].decidedBy,'ra.2-restrict-only');assert.equal(a.authorisationTrace![0].ra2,'authorised');
  // S80: the production path accepts no rule choice; the trace still shows what ra.1 would have accepted without evidence
@@ -219,7 +222,7 @@ test('S79 release rule: ra.2 only restricts; a pair ra.1 refused stays withheld 
  assert.equal(VALIDATED_NEW_AUTHORISATIONS.length,0,'no newly enabled pair is validated yet');
  const d={...panel({A1:'a1',B2:'b2'}).dimensions[0],conditionsMet:['same_food_load']};
  const k=(suff:string)=>({need:'low_energy_use',kind:'outcome',relevant:['energy_per_cooking_task','crisp_panel'],proxies:[],conditions:['blinded_panel','same_food_load'],notes:new Map(),statements:new Map(),
-  byMeasure:new Map([['energy_per_cooking_task',{relationId:'r1',sufficiency:suff as 'established',conditions:['same_food_load']}],['crisp_panel',{relationId:'r2',sufficiency:'established' as const,conditions:['blinded_panel']}]])});
+  byMeasure:new Map([['energy_per_cooking_task',{relationId:'r1',sufficiency:suff as 'established',conditions:['same_food_load'],rankingBasis:'independent_assessor' as const}],['crisp_panel',{relationId:'r2',sufficiency:'established' as const,conditions:['blinded_panel'],rankingBasis:'independent_assessor' as const}]])});
  // ra.2 alone would authorise (own conditions met); ra.1 refused (pooled conditions): withheld
  assert.deepEqual(outcomeAuthorisedRelease(k('established'),d,'energy_per_cooking_task'),{ok:false,reason:'new_authorisation_pending_validation'});
  // both rules authorise: authorised
@@ -239,4 +242,25 @@ test('S83 D28 shadow: conditions derived from the store records are traced besid
  assert.equal(tr.decision,'authorised','shadow only: the public decision is unchanged');assert.equal(a.rankingAuthorized,true);
  const {derivedConditions:_,...rest}=tr;assert.deepEqual(rest,{need:'espresso_quality',dimension:'espresso_quality',measure:'espresso_sensory_assessment',
   decidedBy:'ra.2-restrict-only',ra1:'authorised',ra2:'authorised',decision:'authorised'});
+});
+
+test('S85 sufficiency: a same-model assessment alone does not establish a relation for ranking; original evidence or an independent assessor does',()=>{
+ // the relation's only 'establishes' verdict is a same-model reading of the teaching package: no ranking, explicit trace
+ const w=coffee(true,['establishes'],'same_model_not_independent');const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
+ assert.equal(a.rankingAuthorized,false);assert.notEqual(a.response,'ranked_recommendation');
+ assert.equal(a.authorisationTrace![0].ra2,'sufficiency_same_model_only');assert.equal(a.authorisationTrace![0].decision,'sufficiency_same_model_only');
+ // the same relation promoted on original evidence (a verified receipt citing an independent original-test revision) ranks
+ const html='<html><body><h1>Fictional espresso panel method</h1><p>Blind panel tasting protocol (test fixture).</p></body></html>',url='https://panel.pee270.test/method';
+ const rev=w.s.ingestObservation246({source:{sourceId:'src_panel',host:'panel.pee270.test',sourceType:'independent_original_test',sourceTypeBasis:'operator_asserted'},url,sha256:sha(html),bytes:html.length,
+  httpStatus:200,fetchedAt:'2026-10-16T09:30:00.000Z',runId:'p285',extractorVersion:'phase245@test',extraction:extractSpecifications245(html,url),categoryHypotheses:['coffee_machines']}).revisionId;
+ const items=w.s.categoryItems246('coffee_machines');const ref=(id:string)=>'item:'+items.find(i=>i.concept?.id===id)!.itemId;
+ const rel=relations247(w.s,'coffee_machines').find(r=>r.kind==='measured_by'&&r.from===ref('espresso_sensory_assessment')&&r.to===ref('espresso_quality'))!;
+ assert.equal(sufficiencyOf247(w.s,rel.relationId).rankingBasis,null);
+ reviewRelation247(w.s,rel.relationId,'evidence_supported',{reviewId:'rv_s85',reviewerId:'fixture',reviewedAt:'2026-10-16T10:00:00.000Z',sourceRevisionIds:[rev],note:'fixture'},()=>true);
+ assert.equal(sufficiencyOf247(w.s,rel.relationId).rankingBasis,'original_evidence');
+ assert.equal(advise(w.s,{catalog:signed(panel(w.ids)),authority}).response,'ranked_recommendation');
+ // an independent assessor (not the model) is a basis too; an 'informs_only' verdict never gains one
+ assert.equal(advise(coffee().s,{catalog:signed(panel(coffee().ids)),authority}).authorisationTrace![0].ra2,'authorised');
+ const io=coffee(true,['informs_only']);const r2=relations247(io.s,'coffee_machines').find(r=>r.kind==='measured_by')!;
+ assert.equal(sufficiencyOf247(io.s,r2.relationId).rankingBasis,null);
 });

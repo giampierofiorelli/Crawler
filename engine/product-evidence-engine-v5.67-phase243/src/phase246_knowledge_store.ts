@@ -733,6 +733,12 @@ export class KnowledgeStore246 {
   if(superseded)this.event('comparative_results_superseded',{revisionId,readerVersion:ver,superseded},o.fetchedAt);
   if(!rows.length)return 0;
   if(!keep){this.event('comparative_results_withheld',{revisionId,offered:rows.length,reason:retention},o.fetchedAt);return 0;}
+  // S85 (owner: declarations never enter measured comparative evidence). A comparative result is stored as a first-hand
+  // test result ('measured', testing_status first_hand_test_reported_unreviewed) only when the source's role is a test
+  // publisher. Results read on a manufacturer's or another publisher's page are not tests: they are withheld, counted
+  // and journaled with the role that decided it (never silently dropped, never relabelled as measured).
+  const role=reportedBy265(o.source.sourceType);
+  if(role!=='test_publisher_operator_asserted'){this.event('comparative_results_withheld',{revisionId,offered:rows.length,reason:'source_role_not_test:'+role},o.fetchedAt);return 0;}
   const main=mainId?(this.db.prepare('SELECT name FROM products WHERE product_id=?').get(mainId) as {name:string|null}|undefined)?.name??null:null;
   // The experiment, by content: the same subjects, tasks and values reported again are the same experiment.
   const key='exp_'+sha(rows.map(r=>[r.appliance,r.subject?.name??'',r.taskLabel??r.taskIndex,r.dimension,r.value,r.unit].join('|')).sort().join('\n')).slice(0,24);

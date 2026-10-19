@@ -25,12 +25,12 @@ const OVEN_DOC=page('Air fryer vs oven: a fictional lab comparison',LAB+table('R
  table('Cake',[['Air fryer','30 mins','0.20kWh','5p'],['Built-in oven','50 mins','0.70kWh','18p']])+'<p>We had to make a smaller cake for the air fryer.</p><p>Our appliances:</p><ul><li>Gamma Heat GH4000X built-in electric oven</li><li>Zephyrine Crisp ZC300X air fryer</li></ul>');
 const TWO_FRYERS=page('Two air fryers compared on chips',LAB.replace(' (except for the cake in the air fryer)','')+table('Chips',[['Zephyrine air fryer','22 mins','0.28kWh','7p'],['Nimbus air fryer','25 mins','0.33kWh','9p'],['Built-in oven','33 mins','0.85kWh','22p']])+
  '<p>Our appliances:</p><ul><li>Zephyrine Crisp ZC300X air fryer</li><li>Nimbus Duo NB200Y air fryer</li><li>Gamma Heat GH4000X built-in electric oven</li></ul>');
-function world(docs:[string,string][]){
+function world(docs:[string,string][],sourceType:'independent_original_test'|'manufacturer'|'editorial'='independent_original_test'){
  const s=new KnowledgeStore246(join(dir,`c${++n}.sqlite`),CLASS);
  seedCategoryHypotheses246(s,'air_fryers','2026-10-16T08:00:00.000Z');applyLessons250(s,ADOPTED_LESSONS250,'2026-10-16T08:00:00.000Z');
  registerTeachingSources252(RESEARCH_SOURCES269);applyTeaching252(s,[AIR_FRYER_TEACHING269],'2026-10-16T08:30:00.000Z');
- for(const [u,html] of docs){const url=`https://www.labfryer.test/${u}`;const x=testDocumentSubject268(extractSpecifications245(html,url),'independent_original_test');
-  s.ingestObservation246({source:{sourceId:'src_lab',host:'www.labfryer.test',sourceType:'independent_original_test',sourceTypeBasis:'operator_asserted'},url,sha256:sha(html),bytes:html.length,httpStatus:200,
+ for(const [u,html] of docs){const url=`https://www.labfryer.test/${u}`;const x=testDocumentSubject268(extractSpecifications245(html,url),sourceType);
+  s.ingestObservation246({source:{sourceId:'src_lab',host:'www.labfryer.test',sourceType,sourceTypeBasis:'operator_asserted'},url,sha256:sha(html),bytes:html.length,httpStatus:200,
    fetchedAt:'2026-10-17T09:00:00.000Z',runId:'p271c',extractorVersion:'phase245@test',extraction:x,categoryHypotheses:['air_fryers'],testLeads:testLeadsFromHtml265(html,url,sha(html),x,{category:'air_fryers'})});}
  return s;
 }
@@ -79,4 +79,16 @@ test('decision: evidence is used for what it shows (air fryer vs owned oven) and
  assert.equal(e.coverage,'unassessed');assert.notEqual(pick.response,'ranked_recommendation');assert.equal(pick.ordered,false);
  assert.ok(pick.unassessedObjectives.includes('low_energy_use'));
  s.close();
+});
+
+test('S85: comparative results read on a manufacturer or editorial page are withheld (journaled), never stored as measured tests',()=>{
+ for(const role of ['manufacturer','editorial'] as const){
+  const s=world([['two-fryers',TWO_FRYERS]],role);
+  assert.equal(s.comparativeResults271({}).length,0,role+': no comparative row');
+  const ev=s.db.prepare("SELECT payload_json FROM events WHERE kind='comparative_results_withheld'").all() as {payload_json:string}[];
+  assert.ok(ev.some(e=>JSON.parse(e.payload_json).reason===(role==='manufacturer'?'source_role_not_test:manufacturer':'source_role_not_test:other_publisher')),role+': journaled with its role');
+  assert.equal(comparativeEvidence271(s,'energy_per_cooking_task','air_fryer',COND)!.groups.length,0);s.close();}
+ // control: the same page from a test publisher is kept as before, and nothing is excluded at query time
+ const t=world([['two-fryers',TWO_FRYERS]]);const ce=comparativeEvidence271(t,'energy_per_cooking_task','air_fryer',COND)!;
+ assert.ok(t.comparativeResults271({}).length>0);assert.equal(ce.notTestSourceExcluded,0);assert.ok(ce.groups.length>0);t.close();
 });

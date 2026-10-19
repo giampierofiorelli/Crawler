@@ -38,6 +38,8 @@ export interface ComparativeGroup271 {
 }
 export interface ComparativeEvidence271 {
  measure:string;groups:ComparativeGroup271[];experiments:number;duplicatesIgnored:number;
+ /** S85: stored results whose source role is not a test publisher, excluded from comparative test evidence */
+ notTestSourceExcluded:number;
  /** Groups that compare two or more distinct products of the asked equipment class under matched conditions. */
  sameClassComparable:number;
  /** Groups that compare the asked class with another class (e.g. an air fryer with an oven). */
@@ -48,7 +50,10 @@ type Row={experiment_key:string;task_index:number;task_label:string|null;equipme
 
 export function comparativeEvidence271(store:KnowledgeStore246,measure:string,equipmentClass:string,conditions:readonly string[]):ComparativeEvidence271|null{
  const spec=COMPARATIVE_MEASURES271[measure];if(!spec)return null;
- const all=store.comparativeResults271({measurand:spec.measurand}) as unknown as Row[];
+ const stored=store.comparativeResults271({measurand:spec.measurand}) as unknown as (Row&{reported_by:string})[];
+ // S85: only results reported by a test publisher are comparative test evidence (rows stored before the ingest gate, or
+ // by another path, are excluded here and counted, never shown as measured)
+ const all=stored.filter(r=>r.reported_by==='test_publisher_operator_asserted');
  const rows=all.filter(r=>!r.duplicate_of_revision);
  const groups=new Map<string,Row[]>();
  for(const r of rows){const k=r.experiment_key+'|'+(r.task_label??'#'+r.task_index);(groups.get(k)??groups.set(k,[]).get(k)!).push(r);}
@@ -72,6 +77,6 @@ export function comparativeEvidence271(store:KnowledgeStore246,measure:string,eq
  }
  out.sort((a,b)=>a.experimentKey.localeCompare(b.experimentKey)||String(a.task).localeCompare(String(b.task)));
  const sameClass=(g:ComparativeGroup271)=>g.comparableWithinExperiment&&new Set(g.items.filter(i=>i.equipmentClass===equipmentClass&&i.subject).map(i=>i.subject)).size>=2;
- return {measure,groups:out,experiments:new Set(out.map(g=>g.experimentKey)).size,duplicatesIgnored:all.length-rows.length,
+ return {measure,groups:out,experiments:new Set(out.map(g=>g.experimentKey)).size,duplicatesIgnored:all.length-rows.length,notTestSourceExcluded:stored.length-all.length,
   sameClassComparable:out.filter(sameClass).length,crossClass:out.filter(g=>g.comparableWithinExperiment&&g.items.some(i=>i.equipmentClass!==equipmentClass)).length};
 }

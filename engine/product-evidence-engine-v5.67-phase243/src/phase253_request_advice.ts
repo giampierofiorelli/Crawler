@@ -18,7 +18,7 @@ import {createDecision177,applyDecisionAction177} from './phase177_decision_snap
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
-import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
+import {relations247,sufficiencyOf247,type RankingBasis247} from './phase247_category_relations.js';
 import {caveatsAbout} from './knowledge_statements.js';
 import {conditionsMetFromStoreRecords} from './knowledge_link.js';
 import type {StoredStatement} from './knowledge_statements.js';
@@ -164,7 +164,9 @@ function statedObjectives253(text:string):string[]{
  * attribute or a measurement), 'requires_condition' the test conditions without which results are not comparable. */
 export interface NeedKnowledge269 {need:string;kind:string|null;relevant:string[];proxies:string[];conditions:string[];notes:Map<string,string>;statements:Map<string,string>;
  /** S78: per measurement linked by measured_by: its relation, the assessed sufficiency, and ITS required conditions. */
- byMeasure:Map<string,{relationId:string;sufficiency:'established'|'informs_only'|'unclear'|'contested'|'unassessed';conditions:string[]}>}
+ byMeasure:Map<string,{relationId:string;sufficiency:'established'|'informs_only'|'unclear'|'contested'|'unassessed';conditions:string[];
+  /** S85: what supports an established verdict for ranking beyond same-model readings (null: nothing) */
+  rankingBasis:RankingBasis247|null}>}
 /** Context needs (not outcomes): equipment already owned ('*_alternative', a naming contract of the teaching) and stated use. */
 // Phase271: '*_constraint' (an installation constraint such as cannot plumb) is context too, but not owned equipment.
 const CONTEXT_NEEDS269={has:(id:string)=>id.endsWith('_alternative')||id.endsWith('_constraint')||id==='single_compartment_use'};
@@ -185,10 +187,13 @@ export function needKnowledge269(store:KnowledgeStore246,category:string,needs:r
   const byMeasure:NeedKnowledge269['byMeasure']=new Map();
   for(const r of into.filter(r=>r.kind==='measured_by')){const m=measureOf(r.from);if(!m)continue;
    const conds=[...new Set(rels.filter(x=>x.kind==='requires_condition'&&x.from===r.from).map(x=>measureOf(x.to)).filter((x):x is string=>!!x))].sort();
-   const prev=byMeasure.get(m);const suff=sufficiencyOf247(store,r.relationId).state;
+   const prev=byMeasure.get(m);const so=sufficiencyOf247(store,r.relationId);const suff=so.state;
    // two measured_by relations for one measurement (two items of the same id): the weaker sufficiency holds
    const rank={established:4,informs_only:2,unclear:1,unassessed:0,contested:-1} as const;
-   if(!prev||rank[suff]<rank[prev.sufficiency])byMeasure.set(m,{relationId:r.relationId,sufficiency:suff,conditions:[...new Set([...(prev?.conditions??[]),...conds])].sort()});}
+   // S85: the weaker relation decides; with equal verdicts, a missing ranking basis is weaker
+   if(!prev||rank[suff]<rank[prev.sufficiency]||(rank[suff]===rank[prev.sufficiency]&&!so.rankingBasis))
+    byMeasure.set(m,{relationId:r.relationId,sufficiency:suff,conditions:[...new Set([...(prev?.conditions??[]),...conds])].sort(),rankingBasis:so.rankingBasis});
+   else byMeasure.set(m,{...prev,conditions:[...new Set([...prev.conditions,...conds])].sort()});}
   return {need,kind:items.find(i=>i.concept?.id===need)?.concept?.kind??null,relevant,proxies:proxies.sort(),conditions,notes,statements,byMeasure};
  });
 }
@@ -227,8 +232,8 @@ export const RANKING_AUTHORISATION_VERSION='ra.2';
  * applied restrict-only since S79 (outcomeAuthorisedRelease); ra.1 stays callable for comparison only. */
 export const DEFAULT_RANKING_AUTHORISATION:'ra.1'|'ra.2'='ra.2';
 export type AuthorisationRefusal='no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_verified'|'raw_quantity_not_a_score'|
- 'sufficiency_not_established'|'sufficiency_only_informs'|'sufficiency_contested'|'new_authorisation_pending_validation';
-export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:ReadonlyMap<string,{sufficiency:string;conditions:readonly string[]}>}|undefined,d:KnowledgeDimension181,measure:string|null):
+ 'sufficiency_not_established'|'sufficiency_only_informs'|'sufficiency_contested'|'new_authorisation_pending_validation'|'sufficiency_same_model_only';
+export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:ReadonlyMap<string,{sufficiency:string;conditions:readonly string[];rankingBasis?:string|null}>}|undefined,d:KnowledgeDimension181,measure:string|null):
  {ok:true}|{ok:false;reason:AuthorisationRefusal}{
  if(d.valueKind==='raw_quantity_only')return {ok:false,reason:'raw_quantity_not_a_score'};
  if(!k)return {ok:false,reason:'no_category_teaching'};
@@ -238,6 +243,9 @@ export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:Read
  if(m.sufficiency==='contested')return {ok:false,reason:'sufficiency_contested'};
  if(m.sufficiency==='informs_only')return {ok:false,reason:'sufficiency_only_informs'};
  if(m.sufficiency!=='established')return {ok:false,reason:'sufficiency_not_established'};
+ // S85 (owner decision): an 'established' verdict resting only on same-model readings of the teaching package does not
+ // establish the relation for public ranking (restrict-only; an absent basis is treated as none)
+ if(!m.rankingBasis)return {ok:false,reason:'sufficiency_same_model_only'};
  // S83: a required condition the catalog does not show is NOT VERIFIED (was 'conditions_not_met'): the refusal stands,
  // but the absence of a record is never stated as a failure of the products
  if(!m.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_verified'};

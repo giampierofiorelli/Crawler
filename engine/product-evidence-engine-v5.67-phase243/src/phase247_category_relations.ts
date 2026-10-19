@@ -89,12 +89,26 @@ export function assessRelation247(store:KnowledgeStore246,a:RelationAssessmentIn
 }
 /** S78: the current sufficiency of a measured_by relation from its active assessments. Positive only when some source-
  * citing assessment says 'establishes' and none says otherwise; a disagreement is 'contested' (never establishes). */
-export function sufficiencyOf247(store:KnowledgeStore246,relationId:string):{state:'established'|'informs_only'|'unclear'|'contested'|'unassessed';assessments:{value:string;basis:string;citation:string;assessor:string}[]}{
- const rows=store.db.prepare("SELECT value,basis,citation,assessor FROM relation_assessments WHERE relation_id=? AND aspect='sufficiency' AND superseded_by IS NULL ORDER BY assessment_id").all(relationId) as {value:string;basis:string;citation:string;assessor:string}[];
- if(!rows.length)return {state:'unassessed',assessments:[]};
+/** S85 (owner decision: a same-model assessment of the owner's teaching package is not, by itself, sufficient positive
+ * evidence for public ranking; source independence and assessor independence are distinct; no blanket human approval).
+ * What, besides the assessments' verdict, supports an 'established' state for ranking:
+ *  - 'independent_assessor': an 'establishes' assessment by an assessor independent of the model (human_reviewer);
+ *  - 'original_evidence': the relation was promoted to evidence_supported (a verified receipt citing an independent
+ *    original-test revision, reviewRelation247);
+ *  - 'reviewed_receipt': the relation was promoted to reviewed by a verified receipt citing its source revisions.
+ * null: the verdict rests on same-model readings only. Never a basis when the state is not 'established'. */
+export type RankingBasis247='independent_assessor'|'original_evidence'|'reviewed_receipt';
+export function sufficiencyOf247(store:KnowledgeStore246,relationId:string):{state:'established'|'informs_only'|'unclear'|'contested'|'unassessed';
+ assessments:{value:string;basis:string;citation:string;assessor:string;independence:string}[];rankingBasis:RankingBasis247|null}{
+ const rows=store.db.prepare("SELECT value,basis,citation,assessor,independence FROM relation_assessments WHERE relation_id=? AND aspect='sufficiency' AND superseded_by IS NULL ORDER BY assessment_id").all(relationId) as {value:string;basis:string;citation:string;assessor:string;independence:string}[];
+ if(!rows.length)return {state:'unassessed',assessments:[],rankingBasis:null};
  const v=new Set(rows.map(r=>r.value));
  const state=v.size>1?'contested':v.has('establishes')?'established':v.has('informs_only')?'informs_only':'unclear';
- return {state,assessments:rows};
+ let rankingBasis:RankingBasis247|null=null;
+ if(state==='established'){const support=(store.db.prepare('SELECT support FROM category_relations WHERE relation_id=?').get(relationId) as {support:string}|undefined)?.support;
+  rankingBasis=rows.some(r=>r.value==='establishes'&&r.independence==='human_reviewer')?'independent_assessor':
+   support==='evidence_supported'?'original_evidence':support==='reviewed'?'reviewed_receipt':null;}
+ return {state,assessments:rows,rankingBasis};
 }
 /** Relations of a category whose item endpoints are active. Audit S77 (A2-F3): a relation of a retired or superseded
  * item stays in the table (history) but is no longer returned; consumers had shown such relations as raw refs and counted
