@@ -4,11 +4,11 @@
  * evaluation/r3/align-freeze.json) before any validator is written or run on that side.
  *   node scripts/r3-align-input.mjs dev|heldout */
 import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
-const side=process.argv[2];if(!['dev','heldout'].includes(side))throw Error('usage: dev|heldout');
+const side=process.argv[2];if(!['dev','heldout','transfer'].includes(side))throw Error('usage: dev|heldout|transfer');
 const PE=join(process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval'),'r3');
 const D=new URL('../dist/src/',import.meta.url).href;const KT=await import(D+'knowledge_translation.js');const KL=await import(D+'knowledge_link.js');const {KnowledgeStore246}=await import(D+'phase246_knowledge_store.js');
 const store=new KnowledgeStore246(join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite'));
-const run=JSON.parse(readFileSync(join(PE,'runs',side==='dev'?'translate-dev2-cues2.json':'translate-heldout-fix1-tuned.json'),'utf8'));
+const run=JSON.parse(readFileSync(join(PE,'runs',side==='dev'?'translate-dev2-cues2.json':side==='transfer'?'translate-transfer.json':'translate-heldout-fix1-tuned.json'),'utf8'));
 const h=s=>createHash('sha256').update(s).digest('hex');const N=40;const out=[];
 for(const cat of Object.keys(run.detail)){
  const cs=store.categoryItems246(cat).filter(i=>i.concept);const seen=new Set();const concepts=[];for(const i of cs){if(seen.has(i.concept.id))continue;seen.add(i.concept.id);concepts.push({id:i.concept.id,kind:i.concept.kind,statement:i.statement,aliases:i.concept.aliases});}
