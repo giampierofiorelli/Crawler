@@ -1,0 +1,888 @@
+{
+ "schema": "pee.s88.e1-eval.v1",
+ "scope": "check",
+ "definitions": "pd.1:262c6380ecba89ab",
+ "overall": {
+  "defs": {
+   "conditions": 391,
+   "classified": 327,
+   "correct": 309,
+   "wrong": 18,
+   "coverage": 0.836,
+   "precision": 0.945,
+   "accuracy": 0.79
+  },
+  "model87": {
+   "conditions": 391,
+   "classified": 324,
+   "correct": 309,
+   "wrong": 15,
+   "coverage": 0.829,
+   "precision": 0.954,
+   "accuracy": 0.79
+  },
+  "qkBaseline": {
+   "conditions": 391,
+   "classified": 56,
+   "correct": 56,
+   "wrong": 0,
+   "coverage": 0.143,
+   "precision": 1,
+   "accuracy": 0.143
+  },
+  "fourSetsVsModel87": {
+   "bothRight": 309,
+   "fixed": 0,
+   "broken": 0,
+   "bothWrongOrMissing": 82
+  },
+  "basis": {
+   "observations": 268,
+   "model": 225,
+   "defs": 239,
+   "statedGold": 79,
+   "statedModel": 36,
+   "statedDefs": 50,
+   "defsWrongNonNone": 0,
+   "modelWrongNonNone": 0,
+   "propertyAttributed": 138
+  }
+ },
+ "byCategory": {
+  "air_fryers": {
+   "defs": {
+    "conditions": 93,
+    "classified": 73,
+    "correct": 70,
+    "wrong": 3,
+    "coverage": 0.785,
+    "precision": 0.959,
+    "accuracy": 0.753
+   },
+   "model87": {
+    "conditions": 93,
+    "classified": 71,
+    "correct": 70,
+    "wrong": 1,
+    "coverage": 0.763,
+    "precision": 0.986,
+    "accuracy": 0.753
+   },
+   "qkBaseline": {
+    "conditions": 93,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 70,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 23
+   },
+   "basis": {
+    "observations": 35,
+    "model": 27,
+    "defs": 28,
+    "statedGold": 33,
+    "statedModel": 25,
+    "statedDefs": 26,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 28
+   }
+  },
+  "air_purifiers": {
+   "defs": {
+    "conditions": 124,
+    "classified": 124,
+    "correct": 121,
+    "wrong": 3,
+    "coverage": 1,
+    "precision": 0.976,
+    "accuracy": 0.976
+   },
+   "model87": {
+    "conditions": 124,
+    "classified": 124,
+    "correct": 121,
+    "wrong": 3,
+    "coverage": 1,
+    "precision": 0.976,
+    "accuracy": 0.976
+   },
+   "qkBaseline": {
+    "conditions": 124,
+    "classified": 53,
+    "correct": 53,
+    "wrong": 0,
+    "coverage": 0.427,
+    "precision": 1,
+    "accuracy": 0.427
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 121,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 3
+   },
+   "basis": {
+    "observations": 82,
+    "model": 79,
+    "defs": 82,
+    "statedGold": 11,
+    "statedModel": 8,
+    "statedDefs": 11,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 82
+   }
+  },
+  "dehumidifiers": {
+   "defs": {
+    "conditions": 9,
+    "classified": 9,
+    "correct": 7,
+    "wrong": 2,
+    "coverage": 1,
+    "precision": 0.778,
+    "accuracy": 0.778
+   },
+   "model87": {
+    "conditions": 9,
+    "classified": 9,
+    "correct": 7,
+    "wrong": 2,
+    "coverage": 1,
+    "precision": 0.778,
+    "accuracy": 0.778
+   },
+   "qkBaseline": {
+    "conditions": 9,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 7,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 2
+   },
+   "basis": {
+    "observations": 9,
+    "model": 8,
+    "defs": 8,
+    "statedGold": 3,
+    "statedModel": 2,
+    "statedDefs": 2,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 4
+   }
+  },
+  "dishwashers": {
+   "defs": {
+    "conditions": 15,
+    "classified": 14,
+    "correct": 14,
+    "wrong": 0,
+    "coverage": 0.933,
+    "precision": 1,
+    "accuracy": 0.933
+   },
+   "model87": {
+    "conditions": 15,
+    "classified": 14,
+    "correct": 14,
+    "wrong": 0,
+    "coverage": 0.933,
+    "precision": 1,
+    "accuracy": 0.933
+   },
+   "qkBaseline": {
+    "conditions": 15,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 14,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 1
+   },
+   "basis": {
+    "observations": 13,
+    "model": 0,
+    "defs": 3,
+    "statedGold": 13,
+    "statedModel": 0,
+    "statedDefs": 3,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 5
+   }
+  },
+  "televisions": {
+   "defs": {
+    "conditions": 68,
+    "classified": 51,
+    "correct": 42,
+    "wrong": 9,
+    "coverage": 0.75,
+    "precision": 0.824,
+    "accuracy": 0.618
+   },
+   "model87": {
+    "conditions": 68,
+    "classified": 51,
+    "correct": 42,
+    "wrong": 9,
+    "coverage": 0.75,
+    "precision": 0.824,
+    "accuracy": 0.618
+   },
+   "qkBaseline": {
+    "conditions": 68,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 42,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 26
+   },
+   "basis": {
+    "observations": 102,
+    "model": 101,
+    "defs": 102,
+    "statedGold": 1,
+    "statedModel": 0,
+    "statedDefs": 1,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 1
+   }
+  },
+  "tumble_dryers": {
+   "defs": {
+    "conditions": 82,
+    "classified": 56,
+    "correct": 55,
+    "wrong": 1,
+    "coverage": 0.683,
+    "precision": 0.982,
+    "accuracy": 0.671
+   },
+   "model87": {
+    "conditions": 82,
+    "classified": 55,
+    "correct": 55,
+    "wrong": 0,
+    "coverage": 0.671,
+    "precision": 1,
+    "accuracy": 0.671
+   },
+   "qkBaseline": {
+    "conditions": 82,
+    "classified": 3,
+    "correct": 3,
+    "wrong": 0,
+    "coverage": 0.037,
+    "precision": 1,
+    "accuracy": 0.037
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 55,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 27
+   },
+   "basis": {
+    "observations": 27,
+    "model": 10,
+    "defs": 16,
+    "statedGold": 18,
+    "statedModel": 1,
+    "statedDefs": 7,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 18
+   }
+  }
+ },
+ "byGroup": {
+  "air_fryers @ lovemoney.com": {
+   "defs": {
+    "conditions": 50,
+    "classified": 33,
+    "correct": 30,
+    "wrong": 3,
+    "coverage": 0.66,
+    "precision": 0.909,
+    "accuracy": 0.6
+   },
+   "model87": {
+    "conditions": 50,
+    "classified": 31,
+    "correct": 30,
+    "wrong": 1,
+    "coverage": 0.62,
+    "precision": 0.968,
+    "accuracy": 0.6
+   },
+   "qkBaseline": {
+    "conditions": 50,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 30,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 20
+   },
+   "basis": {
+    "observations": 15,
+    "model": 15,
+    "defs": 15,
+    "statedGold": 15,
+    "statedModel": 15,
+    "statedDefs": 15,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 15
+   }
+  },
+  "air_fryers @ techradar.com": {
+   "defs": {
+    "conditions": 1,
+    "classified": 1,
+    "correct": 1,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "model87": {
+    "conditions": 1,
+    "classified": 1,
+    "correct": 1,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "qkBaseline": {
+    "conditions": 1,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 1,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 0
+   },
+   "basis": {
+    "observations": 4,
+    "model": 4,
+    "defs": 4,
+    "statedGold": 3,
+    "statedModel": 3,
+    "statedDefs": 3,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 4
+   }
+  },
+  "air_fryers @ tomsguide.com": {
+   "defs": {
+    "conditions": 4,
+    "classified": 4,
+    "correct": 4,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "model87": {
+    "conditions": 4,
+    "classified": 4,
+    "correct": 4,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "qkBaseline": {
+    "conditions": 4,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 4,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 0
+   },
+   "basis": {
+    "observations": 3,
+    "model": 2,
+    "defs": 3,
+    "statedGold": 2,
+    "statedModel": 1,
+    "statedDefs": 2,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 3
+   }
+  },
+  "air_fryers @ trustedreviews.com": {
+   "defs": {
+    "conditions": 38,
+    "classified": 35,
+    "correct": 35,
+    "wrong": 0,
+    "coverage": 0.921,
+    "precision": 1,
+    "accuracy": 0.921
+   },
+   "model87": {
+    "conditions": 38,
+    "classified": 35,
+    "correct": 35,
+    "wrong": 0,
+    "coverage": 0.921,
+    "precision": 1,
+    "accuracy": 0.921
+   },
+   "qkBaseline": {
+    "conditions": 38,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 35,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 3
+   },
+   "basis": {
+    "observations": 13,
+    "model": 6,
+    "defs": 6,
+    "statedGold": 13,
+    "statedModel": 6,
+    "statedDefs": 6,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 6
+   }
+  },
+  "air_purifiers @ airpurifierfirst.com": {
+   "defs": {
+    "conditions": 120,
+    "classified": 120,
+    "correct": 117,
+    "wrong": 3,
+    "coverage": 1,
+    "precision": 0.975,
+    "accuracy": 0.975
+   },
+   "model87": {
+    "conditions": 120,
+    "classified": 120,
+    "correct": 117,
+    "wrong": 3,
+    "coverage": 1,
+    "precision": 0.975,
+    "accuracy": 0.975
+   },
+   "qkBaseline": {
+    "conditions": 120,
+    "classified": 51,
+    "correct": 51,
+    "wrong": 0,
+    "coverage": 0.425,
+    "precision": 1,
+    "accuracy": 0.425
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 117,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 3
+   },
+   "basis": {
+    "observations": 80,
+    "model": 77,
+    "defs": 80,
+    "statedGold": 11,
+    "statedModel": 8,
+    "statedDefs": 11,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 80
+   }
+  },
+  "air_purifiers @ techradar.com": {
+   "defs": {
+    "conditions": 4,
+    "classified": 4,
+    "correct": 4,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "model87": {
+    "conditions": 4,
+    "classified": 4,
+    "correct": 4,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "qkBaseline": {
+    "conditions": 4,
+    "classified": 2,
+    "correct": 2,
+    "wrong": 0,
+    "coverage": 0.5,
+    "precision": 1,
+    "accuracy": 0.5
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 4,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 0
+   },
+   "basis": {
+    "observations": 2,
+    "model": 2,
+    "defs": 2,
+    "statedGold": 0,
+    "statedModel": 0,
+    "statedDefs": 0,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 2
+   }
+  },
+  "dehumidifiers @ idealhome.co.uk": {
+   "defs": {
+    "conditions": 9,
+    "classified": 9,
+    "correct": 7,
+    "wrong": 2,
+    "coverage": 1,
+    "precision": 0.778,
+    "accuracy": 0.778
+   },
+   "model87": {
+    "conditions": 9,
+    "classified": 9,
+    "correct": 7,
+    "wrong": 2,
+    "coverage": 1,
+    "precision": 0.778,
+    "accuracy": 0.778
+   },
+   "qkBaseline": {
+    "conditions": 9,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 7,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 2
+   },
+   "basis": {
+    "observations": 9,
+    "model": 8,
+    "defs": 8,
+    "statedGold": 3,
+    "statedModel": 2,
+    "statedDefs": 2,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 4
+   }
+  },
+  "dishwashers @ trustedreviews.com": {
+   "defs": {
+    "conditions": 15,
+    "classified": 14,
+    "correct": 14,
+    "wrong": 0,
+    "coverage": 0.933,
+    "precision": 1,
+    "accuracy": 0.933
+   },
+   "model87": {
+    "conditions": 15,
+    "classified": 14,
+    "correct": 14,
+    "wrong": 0,
+    "coverage": 0.933,
+    "precision": 1,
+    "accuracy": 0.933
+   },
+   "qkBaseline": {
+    "conditions": 15,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 14,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 1
+   },
+   "basis": {
+    "observations": 13,
+    "model": 0,
+    "defs": 3,
+    "statedGold": 13,
+    "statedModel": 0,
+    "statedDefs": 3,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 5
+   }
+  },
+  "televisions @ techradar.com": {
+   "defs": {
+    "conditions": 45,
+    "classified": 28,
+    "correct": 24,
+    "wrong": 4,
+    "coverage": 0.622,
+    "precision": 0.857,
+    "accuracy": 0.533
+   },
+   "model87": {
+    "conditions": 45,
+    "classified": 28,
+    "correct": 24,
+    "wrong": 4,
+    "coverage": 0.622,
+    "precision": 0.857,
+    "accuracy": 0.533
+   },
+   "qkBaseline": {
+    "conditions": 45,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 24,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 21
+   },
+   "basis": {
+    "observations": 27,
+    "model": 27,
+    "defs": 27,
+    "statedGold": 0,
+    "statedModel": 0,
+    "statedDefs": 0,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 0
+   }
+  },
+  "televisions @ tomsguide.com": {
+   "defs": {
+    "conditions": 22,
+    "classified": 22,
+    "correct": 18,
+    "wrong": 4,
+    "coverage": 1,
+    "precision": 0.818,
+    "accuracy": 0.818
+   },
+   "model87": {
+    "conditions": 22,
+    "classified": 22,
+    "correct": 18,
+    "wrong": 4,
+    "coverage": 1,
+    "precision": 0.818,
+    "accuracy": 0.818
+   },
+   "qkBaseline": {
+    "conditions": 22,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 18,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 4
+   },
+   "basis": {
+    "observations": 58,
+    "model": 58,
+    "defs": 58,
+    "statedGold": 0,
+    "statedModel": 0,
+    "statedDefs": 0,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 0
+   }
+  },
+  "televisions @ trustedreviews.com": {
+   "defs": {
+    "conditions": 1,
+    "classified": 1,
+    "correct": 0,
+    "wrong": 1,
+    "coverage": 1,
+    "precision": 0,
+    "accuracy": 0
+   },
+   "model87": {
+    "conditions": 1,
+    "classified": 1,
+    "correct": 0,
+    "wrong": 1,
+    "coverage": 1,
+    "precision": 0,
+    "accuracy": 0
+   },
+   "qkBaseline": {
+    "conditions": 1,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 0,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 1
+   },
+   "basis": {
+    "observations": 17,
+    "model": 16,
+    "defs": 17,
+    "statedGold": 1,
+    "statedModel": 0,
+    "statedDefs": 1,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 1
+   }
+  },
+  "tumble_dryers @ trustedreviews.com": {
+   "defs": {
+    "conditions": 82,
+    "classified": 56,
+    "correct": 55,
+    "wrong": 1,
+    "coverage": 0.683,
+    "precision": 0.982,
+    "accuracy": 0.671
+   },
+   "model87": {
+    "conditions": 82,
+    "classified": 55,
+    "correct": 55,
+    "wrong": 0,
+    "coverage": 0.671,
+    "precision": 1,
+    "accuracy": 0.671
+   },
+   "qkBaseline": {
+    "conditions": 82,
+    "classified": 3,
+    "correct": 3,
+    "wrong": 0,
+    "coverage": 0.037,
+    "precision": 1,
+    "accuracy": 0.037
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 55,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 27
+   },
+   "basis": {
+    "observations": 27,
+    "model": 10,
+    "defs": 16,
+    "statedGold": 18,
+    "statedModel": 1,
+    "statedDefs": 7,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 18
+   }
+  }
+ },
+ "worstGroupDefs": [
+  "televisions @ techradar.com",
+  0.533,
+  0.533
+ ]
+}

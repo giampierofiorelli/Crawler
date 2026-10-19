@@ -22,7 +22,7 @@ export interface ConditionDimension {id:string;qkAxis?:string;structure:typeof S
 export interface PropertyDefinition {id:string;label:string;form:'quantity'|'categorical'|'judgement';
  quantity?:{kinds:string[];metric?:string;nonQkUnits?:string[];countNouns?:string[]};
  judgement?:{aspect:string[];higherIsBetter:boolean};
- object:string;basis:{default:Basis;when:string;rule:string}|null;surface:[string,Lifecycle][];conditions:([string,Relevance]|[string,Relevance,{onlyForBasis:Basis}])[];
+ object:string;objectNouns?:string[];basis:{default:Basis;when:string;rule:string}|null;surface:[string,Lifecycle][];conditions:([string,Relevance]|[string,Relevance,{onlyForBasis:Basis}])[];
  outcomes?:string[];state:Lifecycle;sources:string[]}
 export interface CategoryProfile {category:string;properties:string[];relevance:Record<string,Record<string,Relevance>>;state:Lifecycle;sources:string[]}
 export interface BasisCues {note:string;per_run:string[];per_period:string[];per_hour:string[];per_unit:string[];runNamed:string[];state:Lifecycle;sources:string[]}

@@ -19,7 +19,7 @@ const norm=t=>String(t).replace(/^untaught:/,'').replace(/_/g,' ').trim();
 function baseline(o){const p=QK.parseUnit(qk,String(o.unit??''));const conds=(o.conditions??[]).map(norm);
  const tq=p?QK.typeQuantity(qk,{surface:`${o.value} ${o.unit}`,value:o.value,unit:p},{labels:[[o.note,o.measurand].filter(Boolean).join('; ')],conditions:conds}):null;
  return conds.map(t=>{const c=tq?.conditions.find(c=>c.from!=='method'&&(QK.hasPhrase(t,c.raw)||QK.hasPhrase(c.raw,t)));return c?(AXIS_CLASS[c.axis]??'other'):'unclassified';});}
-function defClass(r,text){if(!r||!r.structure)return 'unclassified';if(r.structure!=='quantity')return r.structure;const d=r.dimension;
+function defClass(r,text){if(!r||!r.structure)return 'unclassified';if(r.structure!=='quantity')return r.structure;if(r.kind)return 'quantity:'+(condKind[r.kind]??'other_quantity');const d=r.dimension;
  if(!d){const k=QK.findQuantities(qk,norm(text)).flatMap(x=>x.unit.kinds)[0];return 'quantity:'+(condKind[k]??'other_quantity');}
  if(d.nonQkUnit==='currency_per_energy')return 'quantity:price_or_tariff';
  const ks=d.valueKinds??[];const q=QK.findQuantities(qk,norm(text)).flatMap(x=>x.unit.kinds).find(k=>ks.includes(k));return 'quantity:'+(condKind[q??ks[0]]??'other_quantity');}

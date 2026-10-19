@@ -50,7 +50,9 @@ function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,contex
  if(d.quantity?.metric)for(const t of qk.metrics.get(d.quantity.metric)?.terms??[])terms.push([t,1]);
  for(const n of d.quantity?.countNouns??[])terms.push([n,1]);
  let score=0;const ev:string[]=[];
- for(const [t,w] of terms){if(has(label,t)){score+=2*w;ev.push('label:'+t);}else if(has(context,t)){score+=w;ev.push('context:'+t);}}
+ // fix1: a candidate (generic) term supports the property only together with a noun naming its object of interest
+ const objectNamed=!d.objectNouns?.length||d.objectNouns.some(n=>has(label,n)||has(context,n));
+ for(const [t,w] of terms){if(w<1&&!objectNamed)continue;if(has(label,t)){score+=2*w;ev.push('label:'+t);}else if(has(context,t)){score+=w;ev.push('context:'+t);}}
  return {score,evidence:ev};
 }
 
@@ -80,6 +82,10 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
 export function typeCondition(defs:PropertyDefinitions,qk:QuantityKnowledge,text:string,property?:string|null,category?:string|null):{dimension:ConditionDimension;value:string|null;via:'value'|'cue'|'quantity'}|null{
  const t=norm(text);if(!t)return null;
  const dims=[...defs.dimensions.values()];
+ // fix1: the head noun decides the dimension ("standard test load" is a load, whatever value word precedes it)
+ const head=t.replace(/[^a-z ]/g,' ').trim().split(/\s+/).at(-1)??'';
+ const headDim=head.length>2?dims.find(d=>d.cues.some(c=>c===head||c.split(' ').at(-1)===head)):undefined;
+ if(headDim){const v=Object.entries(headDim.values).find(([,ph])=>ph.some(p=>has(t,p)));return {dimension:headDim,value:v?.[0]??null,via:v?'value':'cue'};}
  const rel=(d:ConditionDimension)=>property?relevanceOf(defs,property,d.id,category):'irrelevant';
  const order=(d:ConditionDimension)=>({defining:0,influencing:1,irrelevant:2}[rel(d)]);
  const ranked=[...dims].sort((a,b)=>order(a)-order(b));
@@ -96,11 +102,11 @@ const RELATIONAL=new Set(['comparison_or_basis','procedure_state','identity']);
  * comparison, a procedure state or an identity statement is a relation, whatever setting it mentions); the dimension, its
  * value and relevance come from the definitions. Either layer may type a condition the other cannot. */
 export function classifyConditionWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,text:string,measuredKind:string|null,property?:string|null,category?:string|null):
- {structure:string|null;dimension:ConditionDimension|null;value:string|null;relational:boolean;via:string|null}{
+ {structure:string|null;dimension:ConditionDimension|null;value:string|null;relational:boolean;via:string|null;kind?:string|null}{
  const s=classifyCondition87(qk,String(text).replace(/_/g,' '),measuredKind);const d=typeCondition(defs,qk,text,property,category);
  const cls=s.class==='unclassified'?null:s.class;
  if(cls&&RELATIONAL.has(cls))return {structure:cls,dimension:d?.dimension??null,value:d?.via==='value'?d.value:null,relational:true,via:'structure'};
- if(cls)return {structure:cls==='quantity'?'quantity':cls,dimension:d?.dimension??null,value:d?.value??null,relational:false,via:d?'both':'structure'};
+ if(cls)return {structure:cls==='quantity'?'quantity':cls,dimension:d?.dimension??null,value:d?.value??null,relational:false,via:d?'both':'structure',kind:s.kind};
  return {structure:d?.dimension.structure??null,dimension:d?.dimension??null,value:d?.value??null,relational:false,via:d?'definitions':null};
 }
 

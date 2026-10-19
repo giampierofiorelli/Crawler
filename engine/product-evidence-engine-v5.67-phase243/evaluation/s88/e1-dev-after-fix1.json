@@ -1,0 +1,244 @@
+{
+ "schema": "pee.s88.e1-eval.v1",
+ "scope": "dev",
+ "definitions": "pd.1:262c6380ecba89ab",
+ "overall": {
+  "defs": {
+   "conditions": 480,
+   "classified": 472,
+   "correct": 466,
+   "wrong": 6,
+   "coverage": 0.983,
+   "precision": 0.987,
+   "accuracy": 0.971
+  },
+  "model87": {
+   "conditions": 480,
+   "classified": 472,
+   "correct": 466,
+   "wrong": 6,
+   "coverage": 0.983,
+   "precision": 0.987,
+   "accuracy": 0.971
+  },
+  "qkBaseline": {
+   "conditions": 480,
+   "classified": 126,
+   "correct": 126,
+   "wrong": 0,
+   "coverage": 0.263,
+   "precision": 1,
+   "accuracy": 0.263
+  },
+  "fourSetsVsModel87": {
+   "bothRight": 466,
+   "fixed": 0,
+   "broken": 0,
+   "bothWrongOrMissing": 14
+  },
+  "basis": {
+   "observations": 204,
+   "model": 198,
+   "defs": 204,
+   "statedGold": 74,
+   "statedModel": 68,
+   "statedDefs": 74,
+   "defsWrongNonNone": 0,
+   "modelWrongNonNone": 0,
+   "propertyAttributed": 203
+  }
+ },
+ "byCategory": {
+  "air_fryers": {
+   "defs": {
+    "conditions": 149,
+    "classified": 149,
+    "correct": 149,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "model87": {
+    "conditions": 149,
+    "classified": 149,
+    "correct": 149,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "qkBaseline": {
+    "conditions": 149,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 149,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 0
+   },
+   "basis": {
+    "observations": 44,
+    "model": 44,
+    "defs": 44,
+    "statedGold": 44,
+    "statedModel": 44,
+    "statedDefs": 44,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 44
+   }
+  },
+  "air_purifiers": {
+   "defs": {
+    "conditions": 331,
+    "classified": 323,
+    "correct": 317,
+    "wrong": 6,
+    "coverage": 0.976,
+    "precision": 0.981,
+    "accuracy": 0.958
+   },
+   "model87": {
+    "conditions": 331,
+    "classified": 323,
+    "correct": 317,
+    "wrong": 6,
+    "coverage": 0.976,
+    "precision": 0.981,
+    "accuracy": 0.958
+   },
+   "qkBaseline": {
+    "conditions": 331,
+    "classified": 126,
+    "correct": 126,
+    "wrong": 0,
+    "coverage": 0.381,
+    "precision": 1,
+    "accuracy": 0.381
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 317,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 14
+   },
+   "basis": {
+    "observations": 160,
+    "model": 154,
+    "defs": 160,
+    "statedGold": 30,
+    "statedModel": 24,
+    "statedDefs": 30,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 159
+   }
+  }
+ },
+ "byGroup": {
+  "air_fryers @ which.co.uk": {
+   "defs": {
+    "conditions": 149,
+    "classified": 149,
+    "correct": 149,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "model87": {
+    "conditions": 149,
+    "classified": 149,
+    "correct": 149,
+    "wrong": 0,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "qkBaseline": {
+    "conditions": 149,
+    "classified": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 149,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 0
+   },
+   "basis": {
+    "observations": 44,
+    "model": 44,
+    "defs": 44,
+    "statedGold": 44,
+    "statedModel": 44,
+    "statedDefs": 44,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 44
+   }
+  },
+  "air_purifiers @ housefresh.com": {
+   "defs": {
+    "conditions": 331,
+    "classified": 323,
+    "correct": 317,
+    "wrong": 6,
+    "coverage": 0.976,
+    "precision": 0.981,
+    "accuracy": 0.958
+   },
+   "model87": {
+    "conditions": 331,
+    "classified": 323,
+    "correct": 317,
+    "wrong": 6,
+    "coverage": 0.976,
+    "precision": 0.981,
+    "accuracy": 0.958
+   },
+   "qkBaseline": {
+    "conditions": 331,
+    "classified": 126,
+    "correct": 126,
+    "wrong": 0,
+    "coverage": 0.381,
+    "precision": 1,
+    "accuracy": 0.381
+   },
+   "fourSetsVsModel87": {
+    "bothRight": 317,
+    "fixed": 0,
+    "broken": 0,
+    "bothWrongOrMissing": 14
+   },
+   "basis": {
+    "observations": 160,
+    "model": 154,
+    "defs": 160,
+    "statedGold": 30,
+    "statedModel": 24,
+    "statedDefs": 30,
+    "defsWrongNonNone": 0,
+    "modelWrongNonNone": 0,
+    "propertyAttributed": 159
+   }
+  }
+ },
+ "worstGroupDefs": [
+  "air_purifiers @ housefresh.com",
+  0.958,
+  0.958
+ ]
+}
