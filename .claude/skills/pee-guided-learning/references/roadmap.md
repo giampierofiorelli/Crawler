@@ -138,6 +138,29 @@ A negative result on any of these is a diagnosis, not a failure. R1 must change 
 really does. It must not be another phase of many tests and a document. Its central question: **how much of what PEE
 does comes from knowledge, and how much from behaviour Claude wrote into the code?**
 
+**Added exit criterion (owner, 2026-10-18, S66).** Inherited rules and knowledge (the older reading stack, the store's
+teaching) are evaluated for correctness, utility, generality and consequences on decisions before any of it is migrated
+or reused.
+- Proportionate, not a new phase: highest-consequence rules first. These are product identity and evidence attribution,
+  admission of evidence, exclusions, comparability, effectiveness claims and must-have requirements. Simple
+  recognisers come later.
+- Classify each rule or relation: a general scientific principle, a technical convention, an unconfirmed hypothesis, a
+  shortcut for particular cases, or one that is superseded or in conflict.
+- Verify knowledge against its source: does the cited source support the relation, not merely exist (ProVe)?
+- Old behaviour is characterisation, not truth (Feathers): agreement with it proves continuity, not correctness.
+- **Architecture:** unifying knowledge and reading responsibilities is the goal (Strangler Fig, through a reversible
+  seam). Not yet decided: migrating the old rules wholesale, or retiring either stack. The decision follows a reversible
+  experiment on the same documents and criteria:
+  - A: the old stack with its teaching;
+  - B: the new stack alone;
+  - C: the new stack consulting validated knowledge;
+  - C with the knowledge removed again (does it change anything, and why?).
+  Precision, coverage, attribution and inference correctness are reported. Spent references serve diagnosis only.
+  Independent confirmation needs data unused in development.
+- **Wording:** "PEE learns nothing by itself" means no operational induction of rules or relations. PEE does reuse
+  knowledge, store experiences and apply inferences. What is missing is a verified cycle that turns new evidence into
+  generalised, controlled knowledge.
+
 ### R2 — Justified inference layer, across the KR programs
 
 - **Epistemic status of relations:** documented same / documented different / unknown / controversial.
@@ -237,3 +260,5 @@ tests, principle 2).
   (acoustics 82 vs 42 of 120) and the diagnosis that the newer readers never consult the teaching; learning mechanisms:
   none operational. Awaiting the owner's review before R2, including the architecture question of the two reading
   stacks.
+- 2026-10-18: owner review of R1 (S66). Added exit criterion: inherited rules and knowledge are validated before reuse;
+  the reversible integration experiment A/B/C (+ ablation) decides the architecture. R1 continues.
