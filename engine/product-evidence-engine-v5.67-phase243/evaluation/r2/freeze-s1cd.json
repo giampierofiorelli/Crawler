@@ -1,0 +1,31 @@
+{
+ "schema": "pee.r2.freeze.v1",
+ "set": "s1cd",
+ "frozenAt": "2026-10-19T05:32:46.579Z",
+ "buildCommit": "d3e049e",
+ "statement": "Build frozen before the s1cd link reference exists. The first run of every arm on s1cd is committed unchanged; any later run is TUNED.",
+ "build": {
+  "src/knowledge_link.ts": "e4fc52fa4388976d9b03ca9906111cd05191fba1961151efe9fee757089cc83f",
+  "resources/quantity-knowledge/link-rules.v1.json": "ec26f96e82efd4476c030ca2fa0a5f819aa47e0a0e27ea8712e311dbddd74031",
+  "scripts/r2-link-experiment.mjs": "7576bcfd7b5dd0ba5ef1370a1b96fe38bc2562afb1592b52bc296f867b204f88",
+  "dist/src/knowledge_link.js": "e45685c6696920355e4911a0dedc1ef0daeeea3f51911eb6c1a0b3633f49b7a1",
+  "resources/quantity-knowledge/quantity-knowledge.v2.json": "bd5aa5eeb671c65cead2d00d94fba073abdc01bc84c7f6934f3ccf6bf7e0f2ba",
+  "resources/quantity-knowledge/rules.v3.json": "f77cebca0b91ae6176faed9d5c3866bff89f65e4eac4620997a107e58ea32693"
+ },
+ "forceOverlay": {
+  "file": "pee-knowledge/knowledge-overlays/r2-relation-force.v1.json",
+  "sha256": "e9a41ddfe90e058f48fb70ae90e7263d31ffdd545a42ec280705f834ea3b99bd"
+ },
+ "annotationInput": {
+  "file": "r2/links-s1cd/input.json",
+  "sha256": "b54f52dcf8baf6c9474f10d14944fe7423fc73fc724005ce1ded228fd36dec8d",
+  "prompt": "26877af56fdf2a1abcc94ec8e5f183182e79ae8dfcdda54dcb73dba33cec4859",
+  "values": 191,
+  "categories": {
+   "air_purifiers": 164,
+   "dehumidifiers": 9,
+   "televisions": 18
+  }
+ },
+ "reference": null
+}
