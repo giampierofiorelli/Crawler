@@ -15,7 +15,7 @@ for(const m of inp){pool[m.category]??=(()=>{const s=new Set();return store.cate
  const dn=KT.denotationOf(qk,m.text);inc('denotation_'+(dn===a.denotes?'correct':'wrong'));inc(`dn_${a.denotes}->${dn}`);
  const pick=which==='identify'?KT.identifyConcept(m.text,pool[m.category]):which==='align1'?KT.alignWithType(qk,m.text,pool[m.category]).concept:KT.alignConcept(m.text,pool[m.category],{role:m.role,statementType:m.statementType}).concept;
  const pm=pick?(gold.includes(pick)?'correct_identity':(a.matches[pick]??'not_in_reference_candidates')):'abstain';
- inc('mentions');if(gold.length)inc('reference_identities');inc('pick_'+pm);if(gold.length&&pm==='abstain')inc('missed_identity');inc('denotes_'+a.denotes);}
+ inc('mentions');if(gold.length)inc('reference_identities');inc('pick_'+pm);if(gold.length&&pm!=='correct_identity'){inc('missed_identity_total');inc(pm==='abstain'?'missed_identity':'missed_identity_wrong_candidate');}inc('denotes_'+a.denotes);}
 store.close();
 writeFileSync(OUT,JSON.stringify({schema:'pee.r3.align-score.v1',side,identifier:which,label,generatedAt:new Date().toISOString(),
  tier:side==='heldout'?'first run against the sealed held-out alignment reference':'development reference (inspected)',reference:'blind same-model annotation, SKOS match types; identity = exact or close',counts:C},null,1)+'\n');

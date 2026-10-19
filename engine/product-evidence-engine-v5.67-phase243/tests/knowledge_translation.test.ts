@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {describeMeasurement} from '../src/knowledge_link.js';
-import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits,subjectHead,denotationOf,alignWithType,retrieveConcepts} from '../src/knowledge_translation.js';
+import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits,subjectHead,denotationOf,alignWithType,retrieveConcepts,documentConcepts,trainDistributional,wordSimilarity,phraseSimilarity} from '../src/knowledge_translation.js';
 
 // R3 (owner S73): PEE's translator of teaching documents and its question-driven acquisition of condition axes.
 // Synthetic text written for these tests (T1: wiring, not evidence about the owner documents).
@@ -165,4 +165,36 @@ test('R3 cycle 3: what a phrase denotes is checked before identity; retrieval de
  // a declaration shares words with a measurement concept but is not that measurement
  const a=alignWithType(qk,'a declared particle CADR',pool);assert.equal(a.status,'unresolved');assert.equal(a.denotes,'claim_or_label');
  assert.ok(a.candidates.every(c=>c.match!=='close'&&c.match!=='exact'));
+});
+
+test('R3 cycle 3: a limit about declarations qualifies declared values only; one about measurements, measured values only', ()=>{
+ const st=translateDocument(qk,['Advertised litres alone cannot establish usable cooking capacity.','A measured particle CADR does not establish gas removal.'].join('\n\n'),{source:'d'}).statements;
+ const ls=proxyLimits(qk,st);
+ const decl=ls.find(l=>l.quote.startsWith('Advertised'))!,meas=ls.find(l=>l.quote.startsWith('A measured'))!;
+ assert.equal(decl.appliesTo,'declared');assert.equal(meas.appliesTo,'measured');
+ const v=(metric:string|null,kind:string|null,label:string,evidenceClass:string|null)=>({metric,kind,label,conditions:[],evidenceClass});
+ assert.equal(applicableLimits([decl],v(null,'volume','Capacity litres','manufacturer_declared')).length,1);
+ assert.equal(applicableLimits([decl],v(null,'volume','Capacity litres','publisher_measured')).length,0,'a measured volume is not a declaration');
+ assert.equal(applicableLimits([meas],v('cadr','volumetric_flow_rate','CADR','publisher_measured')).length,1);
+ assert.equal(applicableLimits([meas],v('cadr','volumetric_flow_rate','CADR','manufacturer_declared')).length,0);
+ // unknown role: not applied, and counted
+ const sk={role:0};assert.equal(applicableLimits([meas],v('cadr','volumetric_flow_rate','CADR','unknown'),sk).length,0);assert.equal(sk.role,1);
+ // a value with no evidence class given at all keeps the cycle-2 behaviour
+ assert.equal(applicableLimits([meas],{metric:'cadr',kind:'volumetric_flow_rate',label:'CADR',conditions:[]}).length,1);
+});
+
+test('R3 cycle 3: document concepts keep what the store cannot name, with related links only', ()=>{
+ const pool=[{id:'fine_particle_reduction',kind:'outcome',statement:'Lower fine particle levels.'}];
+ const st=translateDocument(qk,'A dual-zone demonstration does not establish independent zone accuracy.',{source:'d'}).statements;
+ const dc=documentConcepts(qk,st,pool);
+ assert.ok(dc.length>=1);assert.ok(dc.every(d=>!d.related.includes('fine_particle_reduction')||d.denotes!=='outcome'));
+ assert.ok(dc.some(d=>/dual-zone demonstration/i.test(d.head)));
+});
+
+test('R3 cycle 3: distributional similarity from a corpus ranks related words; it is relatedness, not identity', ()=>{
+ const texts=['smoke particles and aerosol in the room air','aerosol particles reduce with filtration','pollen and dust particles trigger allergy','dust pollen and allergen particles','coffee extraction depends on grind size','grind size and coffee extraction time'];
+ const m=trainDistributional(Array(3).fill(texts).flat(),{minCount:2});
+ assert.ok(wordSimilarity(m,'aerosol','smoke')>wordSimilarity(m,'aerosol','coffee'));
+ assert.equal(wordSimilarity(m,'unknownword','dust'),0);
+ assert.ok(phraseSimilarity(m,'dust particles','pollen particles')>phraseSimilarity(m,'dust particles','coffee grind'));
 });

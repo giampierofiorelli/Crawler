@@ -277,7 +277,14 @@ export function deriveSufficiency(statements:readonly TranslatedStatement[],teac
 //    value when the value is of the subject's metric, or of its kind and the value's label shares a distinctive word of the
 //    subject; it does not apply when the value states another value of an axis the subject fixes (the statement's scope).
 //    A limit qualifies what a value can show; it never excludes a product and never ranks (owner S74).
-export interface ProxyLimit {id:string;type:'not_sufficient'|'not_comparable';metrics:string[];kinds:string[];axes:{axis:string;value:string}[];words:string[];
+/** Which values a limit concerns, from what its subject denotes: a declaration's limit concerns declared values, a
+ * measurement's limit measured values; any other subject concerns values of that quantity whatever their role. */
+export type LimitRole='declared'|'measured'|'any';
+/** Words by which a subject states that it is about measured values. */
+const ROLE_WORDS_MEASURED=['measured','tested','independently measured','laboratory','lab-measured','metered'];
+/** Evidence classes of read values (document_evidence / 1G) by the role a limit can concern. */
+const VALUE_ROLE:Record<string,'declared'|'measured'|undefined>={manufacturer_declared:'declared',publisher_measured:'measured'};
+export interface ProxyLimit {id:string;type:'not_sufficient'|'not_comparable';appliesTo:LimitRole;denotes:Denotation;metrics:string[];kinds:string[];axes:{axis:string;value:string}[];words:string[];
  object:string;outcome:string|null;scope:string[];quote:string;source:string;line:number}
 /** The head of a subject phrase: what the statement is about. The last sentence, without an introductory phrase
  * ("Without the source assumptions, coverage figures" -> "coverage figures"), cut before a preposition ("OLED burn-in in
@@ -293,18 +300,31 @@ export function proxyLimits(qk:QuantityKnowledge,statements:readonly TranslatedS
  const out:ProxyLimit[]=[];
  for(const s of statements){if((s.type!=='not_sufficient'&&s.type!=='not_comparable')||s.selfCheck.length||!s.subject)continue;
   const sub=typeSpan(qk,subjectHead(s.subject.text));if(!sub.metrics.length&&!sub.kinds.length)continue;
-  out.push({id:s.id,type:s.type,metrics:sub.metrics,kinds:sub.kinds,axes:s.subject.axes,words:sub.untyped.filter(w=>w.length>3),object:s.object?.text??'',
+  const denotes=denotationOf(qk,s.subject.text);
+  // a role restricts a limit only when its subject states it ("advertised litres", "a measured CADR"); a quantity alone
+  // concerns its values whatever their role
+  const C=loadDenotationCues();const said=(d:string)=>namedPhrases(subjectHead(s.subject!.text),C.cues[d]).size>0;
+  const appliesTo:LimitRole=said('claim_or_label')?'declared':namedPhrases(subjectHead(s.subject.text),ROLE_WORDS_MEASURED).size?'measured':'any';
+  out.push({id:s.id,type:s.type,appliesTo,denotes,metrics:sub.metrics,kinds:sub.kinds,axes:s.subject.axes,words:sub.untyped.filter(w=>w.length>3),object:s.object?.text??'',
    outcome:s.object?identifyConcept(s.object.text,outcomeConcepts):null,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())],
    quote:s.quote,source:s.provenance.source,line:s.provenance.line});}
  return out;
 }
-export function applicableLimits(limits:readonly ProxyLimit[],value:{metric:string|null;kind:string|null;conditions:readonly {axis:string;value:string}[];label:string}):{limit:ProxyLimit;basis:'metric'|'kind_and_word'}[]{
- const have=new Set(contentWords(value.label).map(stem));const out:{limit:ProxyLimit;basis:'metric'|'kind_and_word'}[]=[];
+export function applicableLimits(limits:readonly ProxyLimit[],value:{metric:string|null;kind:string|null;conditions:readonly {axis:string;value:string}[];label:string;evidenceClass?:string|null},skipped?:{role:number}):{limit:ProxyLimit;basis:'metric'|'kind_and_word'|'kind_and_role'}[]{
+ const have=new Set(contentWords(value.label).map(stem));const out:{limit:ProxyLimit;basis:'metric'|'kind_and_word'|'kind_and_role'}[]=[];
+ const role=value.evidenceClass===undefined?undefined:VALUE_ROLE[value.evidenceClass??''];
  for(const l of limits){
+  // evidence role: a limit about declarations does not qualify a measured value, nor the reverse; when the value's role
+  // is unknown such a limit is not applied (counted), since applying it could misdescribe what the value is
+  if(l.appliesTo!=='any'&&value.evidenceClass!==undefined&&role!==l.appliesTo){if(skipped&&!role)skipped.role++;continue;}
   // scope: a value stated at another value of an axis the statement names is outside the statement
   if(l.axes.some(a=>value.conditions.some(c=>c.axis===a.axis&&c.value!==a.value)))continue;
   if(value.metric&&l.metrics.includes(value.metric)){out.push({limit:l,basis:'metric'});continue;}
-  if(!l.metrics.length&&value.kind&&l.kinds.includes(value.kind)&&l.words.some(w=>have.has(stem(w))))out.push({limit:l,basis:'kind_and_word'});}
+  if(!l.metrics.length&&value.kind&&l.kinds.includes(value.kind)){
+   // the words naming the role ("advertised", "measured") are matched by the value's evidence class itself
+   if(l.words.some(w=>have.has(stem(w))))out.push({limit:l,basis:'kind_and_word'});
+   // a declaration's subject is specific by its role ("advertised litres"); "measured" alone is not specific
+   else if(l.appliesTo==='declared'&&role==='declared')out.push({limit:l,basis:'kind_and_role'});}}
  return out;
 }
 
@@ -363,4 +383,47 @@ export function alignWithType(qk:QuantityKnowledge,phrase:string,pool:readonly {
  const pick=identifyConcept(phrase,pool);const cands=retrieveConcepts(phrase,pool,5).map(c=>({id:c.id,match:'related' as MatchType}));
  if(pick&&ok.has(pool.find(p=>p.id===pick)?.kind??'')){const i=cands.findIndex(c=>c.id===pick);if(i>=0)cands[i].match='close';else cands.unshift({id:pick,match:'close'});return {concept:pick,status:'aligned',candidates:cands,denotes};}
  return {concept:null,status:'unresolved',candidates:cands,denotes};
+}
+
+// Document concepts (R3 cycle 3, option 3): what the documents name that the store has no concept for (features, claims,
+// evidence types, ...). Kept with their denotation, provenance and `related` links to taught concepts only; never an
+// identity, never a product fact. A census of what the teaching would need to represent.
+export interface DocumentConcept {key:string;head:string;denotes:Denotation;mentions:{statement:string;source:string;line:number;role:'subject'|'object'}[];related:string[]}
+export function documentConcepts(qk:QuantityKnowledge,statements:readonly TranslatedStatement[],pool:readonly {id:string;kind?:string;aliases?:readonly string[];statement?:string}[]):DocumentConcept[]{
+ const out=new Map<string,DocumentConcept>();
+ for(const s of statements){if(s.selfCheck.length)continue;for(const role of ['subject','object'] as const){const sp=s[role];if(!sp||sp.text.length<3)continue;
+  const al=alignWithType(qk,sp.text,pool);if(al.status==='aligned')continue;
+  const head=subjectHead(sp.text);const key=contentWords(head).map(stem).sort().join(' ');if(!key)continue;
+  const d=out.get(key)??{key,head,denotes:al.denotes,mentions:[],related:[]};
+  d.mentions.push({statement:s.id,source:s.provenance.source,line:s.provenance.line,role});for(const c of al.candidates)if(!d.related.includes(c.id))d.related.push(c.id);
+  out.set(key,d);}}
+ return [...out.values()].sort((a,b)=>b.mentions.length-a.mentions.length||a.key.localeCompare(b.key));
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// 7. Distributional similarity learned from the owner's own teaching corpus (R3 cycle 3, option 1). Each word is
+//    described by the words around it (window ±W) across the corpus, weighted by positive pointwise mutual information;
+//    word similarity is the cosine of those vectors. No external model, data or service. Similarity is relatedness, not
+//    identity (HANS): it may only rank candidates; validation (semantic type, explicit unresolved state) still decides.
+export interface DistributionalModel {vocab:number;vectors:Map<string,Map<string,number>>;norms:Map<string,number>}
+export function trainDistributional(texts:readonly string[],opts:{window?:number;minCount?:number}={}):DistributionalModel{
+ const W=opts.window??5,min=opts.minCount??3;const docs=texts.map(t=>contentWords(t).map(stem));
+ const count=new Map<string,number>();for(const d of docs)for(const w of d)count.set(w,(count.get(w)??0)+1);
+ const keep=(w:string)=>(count.get(w)??0)>=min;const co=new Map<string,Map<string,number>>();let total=0;
+ for(const d of docs){const ws=d.filter(keep);for(let i=0;i<ws.length;i++)for(let j=Math.max(0,i-W);j<Math.min(ws.length,i+W+1);j++){if(i===j)continue;
+  const a=ws[i],b=ws[j];const m=co.get(a)??new Map<string,number>();m.set(b,(m.get(b)??0)+1);co.set(a,m);total++;}}
+ const row=new Map<string,number>();for(const [a,m] of co){let s=0;for(const v of m.values())s+=v;row.set(a,s);}
+ const vectors=new Map<string,Map<string,number>>(),norms=new Map<string,number>();
+ for(const [a,m] of co){const v=new Map<string,number>();let n=0;for(const [b,c] of m){const p=Math.log((c*total)/((row.get(a)??1)*(row.get(b)??1)));if(p>0){v.set(b,p);n+=p*p;}}
+  vectors.set(a,v);norms.set(a,Math.sqrt(n));}
+ return {vocab:vectors.size,vectors,norms};
+}
+export function wordSimilarity(m:DistributionalModel,a:string,b:string):number{
+ const x=stem(a.toLowerCase()),y=stem(b.toLowerCase());if(x===y)return 1;const va=m.vectors.get(x),vb=m.vectors.get(y);if(!va||!vb)return 0;
+ const [s,l]=va.size<vb.size?[va,vb]:[vb,va];let d=0;for(const [k,v] of s){const w=l.get(k);if(w)d+=v*w;}return d/((m.norms.get(x)||1)*(m.norms.get(y)||1));
+}
+/** Soft overlap of two phrases: each content word of the first matched to its most similar word of the second. */
+export function phraseSimilarity(m:DistributionalModel,a:string,b:string):number{
+ const A=contentWords(a),B=contentWords(b);if(!A.length||!B.length)return 0;
+ return A.reduce((s,w)=>s+Math.max(...B.map(v=>wordSimilarity(m,w,v))),0)/A.length;
 }

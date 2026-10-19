@@ -133,8 +133,8 @@ const GOOD=new Set(['correct','correct_in_equivalent_set','correct_via_membershi
 for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl??p.url;const gq=SET.gold.filter(g=>g.doc===d.tag);
  const readNew=qkx=>{const doc=WD.readDocumentEvidence(html,qkx,{sourceType:'independent_review'});const seg=new Map(doc.segments.map(s=>[s.id,s]));
  return [...doc.quantities.filter(q=>!q.identifierPart&&q.quantity).map(q=>{const s=seg.get(q.segment);const u=WD.sentences(s.text).find(u=>q.start>=u.start&&q.end<=u.start+u.text.length);
-   return {value:q.quantity.value,unit:canon(q.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:q.quantity,product:q.product,text:[s.label??'',u?.text??s.text,s.headings.at(-1)??''].join(' '),rawUnit:q.surface};}),
-  ...doc.tables.tables.flatMap(tb=>tb.observations.filter(o=>o.quantity).map(o=>({value:o.quantity.value,unit:canon(o.unitSurface??o.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:o.quantity,product:o.product,text:o.property.join(' '),rawUnit:o.surface})))];};
+   return {value:q.quantity.value,unit:canon(q.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:q.quantity,product:q.product,text:[s.label??'',u?.text??s.text,s.headings.at(-1)??''].join(' '),rawUnit:q.surface,ev:q.evidenceClass??null};}),
+  ...doc.tables.tables.flatMap(tb=>tb.observations.filter(o=>o.quantity).map(o=>({value:o.quantity.value,unit:canon(o.unitSurface??o.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:o.quantity,product:o.product,text:o.property.join(' '),rawUnit:o.surface,ev:o.evidence?.class??null})))];};
  const lb=readNew(qk);const lb8=qkAcq[d.category]===qk?lb:readNew(qkAcq[d.category]);
  // arm A: the older reader with its plan (as R1)
  const {blocks}=textBlocks225(html,{maxBlocks:1500});const x=tl.testDocumentSubject268(spec.extractSpecifications245(html,url),p.sourceType);
@@ -190,8 +190,8 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
    const s=['C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
    if(GOOD.has(s)&&prod==='correct'){inc(a,'decision_usable_correct');
     if(a.startsWith('C3')||['C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
-  { const q=m.r.q;const ap=KT.applicableLimits(limits[d.category],{metric:q.metric.id,kind:q.kind.id??q.kind.candidates[0]??null,conditions:q.conditions,label:m.r.text});
-   row.limits=ap.map(x=>({id:x.limit.id,type:x.limit.type,basis:x.basis,object:x.limit.object,outcome:x.limit.outcome,scope:x.limit.scope,quote:x.limit.quote,source:x.limit.source,line:x.limit.line}));row.text=m.r.text;
+  { const q=m.r.q;const sk={role:0};const ap=KT.applicableLimits(limits[d.category],{metric:q.metric.id,kind:q.kind.id??q.kind.candidates[0]??null,conditions:q.conditions,label:m.r.text,evidenceClass:m.r.ev??null},sk);if(sk.role)inc('L','skipped_role_unknown',sk.role);inc('L','value_role_'+(m.r.ev??'none'));
+   row.limits=ap.map(x=>({id:x.limit.id,type:x.limit.type,appliesTo:x.limit.appliesTo,basis:x.basis,object:x.limit.object,outcome:x.limit.outcome,scope:x.limit.scope,quote:x.limit.quote,source:x.limit.source,line:x.limit.line}));row.text=m.r.text;
    inc('L','values');if(ap.length){inc('L','values_with_limit');inc('L','limits_applied',ap.length);for(const x of ap)inc('L','basis_'+x.basis);}}
   detail.push(row);}}
 // both directions, per value: C3 against C2

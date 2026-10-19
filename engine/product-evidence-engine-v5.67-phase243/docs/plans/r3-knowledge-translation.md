@@ -308,7 +308,13 @@ is compatible with that denotation. Frozen before the held-out run (`align-freez
 |---|---|---|---|---|---|---|
 | cycle-2 identifier | held-out (first run) | 21 | 3 | 14 / 4 | 16 of 19 | — |
 | v1 type-gated | development | 2 | 0 | 1 / 1 | 6 of 6 | 64 / 120 |
-| v1 type-gated | **held-out (first run)** | 6 | 2 | 4 / 0 | 16 of 19 | 54 / 120 (45%) |
+| v1 type-gated | **held-out (first run)** | 6 | 2 | 4 / 0 | 17 of 19 (16 unresolved, 1 on a wrong candidate) | 54 / 120 (45%) |
+
+Correction (owner review 2026-10-19): the scorer counted as "missed" only identities left unresolved; for v1 one
+reference identity went to a wrong candidate, so 17 of 19 were missed, not 16 (the scorer now reports both). Status
+of the reference: the held-out alignment annotation has been examined in aggregate (cycle-2 first run, this first
+run, the diagnoses above). These first runs stay as recorded; any later change evaluated on it is development or tuned
+evidence, not new validation.
 
 What this shows: checking semantic type removes 78% of false identities on unseen mentions (18 → 4) at the cost of
 one correct identity; precision rises from 14% to 33%, recall stays about 10%. The type recogniser itself is weak
@@ -323,3 +329,43 @@ Options for that recall limit, none chosen yet:
 3. not aligning to existing concepts at all where none fits: keep document concepts (features, claims, evidence types)
    with typed `related` links, and make limits evidence-role aware (a limit on a declared value applies to
    declarations, one on a measurement to measured values), which needs no identity.
+
+## 12. Cycle 3, options 3 and 1 (owner 2026-10-19: "prosegui con la 3 e poi la 1")
+
+All results below use the alignment and limit references already examined: development evidence, not validation.
+
+**Option 3a: evidence-role-aware limits.** A limit is restricted to declared values when its subject states a
+declaration ("advertised litres"), to measured values when it states a measurement ("a measured CADR"); otherwise it
+concerns any value of its quantity. A value whose role is unknown does not receive a role-restricted limit (counted).
+Read values carry the reader's evidence class (`document_evidence` / 1G). Effect on the link experiment
+(`link-*-r3l3.json`): attachments on measured values unchanged (5 / 15 / 1); 2 new on declared air-fryer cooking times,
+judged blind `true_but_trivial` (no harm, no value). Measured limit: 213 of the 327 read values have an unknown
+evidence class, so role-aware knowledge has little to act on: a reading limit, not a knowledge one.
+
+**Option 3b: document concepts** (`document-concepts-c3.json`). Unaligned subjects and objects of translated
+statements, by head words: 956 (development) and 856 (held-out) distinct, of which only 41 and 34 recur. Denotations:
+other 442 / 457, measurement or test 200 / 146, product feature 104 / 83, source or evidence 74 / 66, outcome 68 / 55,
+claim or label 53 / 44, condition 15 / 5. Without recognising that two phrases name the same thing, these are phrases,
+not concepts: consolidating them needs the same alignment ability that is missing.
+
+**Option 1: distributional similarity from the owner corpus** (`trainDistributional`: PPMI over ±5-word windows, 88
+package files, 6,182 paragraphs, 5,646 stems; no dependency). It learns topical relatedness, not equivalence:
+"aerosol" is as close to "gas" (0.21) as to "particle" (0.20); "dust" is near "pollen" (0.37) and "allergen" (0.28) but
+also "brush" and "hair".
+
+| Over the 25 annotated identities | first | top 3 | top 5 |
+|---|---|---|---|
+| lexical retrieval ranks the identity | 15 | 22 | 24 |
+| distributional retrieval ranks the identity | 10 | 21 | 23 |
+
+(The reference was built from lexical candidates, which favours lexical retrieval.)
+
+Validation by similarity, top lexical candidate accepted above a threshold on min(similarity both ways), all 240
+annotated mentions: with the type check, best 18 accepted / 5 correct (28% precision, 23% recall); with the
+annotators' own type, 23 / 6 (26%); without type, 64 / 9 (14%). No threshold separates identity from relatedness.
+
+**Conclusion of cycle 3.** Retrieval is not the bottleneck: the right concept is among the first three candidates for
+22 of 25 identities. Validation is: with lexical, structural or corpus-distributional evidence PEE cannot tell an
+identity from a related concept (precision ≤ 33% at every setting tried). What remains possible without a semantic
+validator: consumers that need only `related` links (never decisions), the semantic-type guard (78% fewer false
+identities), and quantity-typed knowledge, which does work (proxy limits, acquired axes).
