@@ -307,3 +307,53 @@ and abstention, on 23 values of one category.
 - **Independent validation beyond af** therefore needs new pages: taught categories with composite measurements and
   identified tests (purifiers, televisions, dishwashers). That would be a targeted request for testing pages, distinct
   from re-researching the scientific sources. It needs the owner's authorisation; it is not requested here.
+
+## 8. Closure check (owner review S72, 2026-10-19)
+
+The owner's text is preserved verbatim in the skill: `references/owner-r2-closure-review-2026-10-19.md`.
+
+### Protocol versus single test: checked, assumption corrected (lk.5)
+- **What `q.protocol` is.** It is the document's protocol statement that justified a value's kind (KN K9), so it is a
+  procedure shared by every run. The named test the reader attaches ("our particle removal test") is also a procedure.
+- **The lk.4 assumption was wrong in principle.** lk.4 used either one as the identity of an observation.
+- **lk.5** (`link-rules.v5.json`, default):
+  - a procedure is a **compatibility basis** (`same_protocol`: one identified procedure, every required condition
+    stated, none differing; one run is not required, per S69);
+  - a procedure is **never an identity**. Identity needs an identified run (`LinkValue.test`), and the reader supplies
+    none today, so identity stays unknown for reader values.
+  - `readerProcedureIdentity` replaces `readerTestIdentity`; the old name stays only for reproducing lk.4.
+- **Tests (20).** One protocol gives `same_protocol`. Different protocols give `compatibility_not_shown`. Two values
+  with one number under one protocol are neither merged nor independent. An identified run reported twice is one.
+- **The wrong assumption had no effect on the data.** The runs (`link-*-lk5*.json`) are identical to lk.4 on p272, s1cd
+  and af: no repeated report and no aligned point depended on it.
+
+### R2 requirements (roadmap §3 R2, S68, S69, S70, S71)
+
+| Requirement | Status | Where |
+|---|---|---|
+| Epistemic status (same / different / unknown / controversial) | implemented | kr.3 (unknown ≠ different), pr.3 (`conflicting`), lk (`ambiguous`, `compatibility_not_shown`, `identity_unknown`, `unresolved`) |
+| Negation only under declared completeness | checked | 73 negations in lk.5: universal checks over finite declared lists (required conditions, groups, members), choices among candidates, or weak conclusions. "Outside the teaching" is closed over the teaching view, and says so. |
+| Evidence relations (relevant, supports, refutes, requires condition, derived from, unresolved) | implemented | pr.3; lk (`component_only`, partial, direct, indirect, `conditions_not_shown`, unresolved; relationships derived from aligned observations) |
+| Bounded conclusions (method, product, configuration, conditions) | implemented | forces bounded to the measurement and its conditions; set evidence bounded to the aligned setting |
+| Defeasible re-derivation | implemented | KR recomputes per reading; metamorphic tests (support removed → conclusion withdrawn) |
+| Exit: metamorphic tests | pass | 20 link tests, 17 FC and 9 KR tests; full suite passes |
+| Exit: no unexplained regression in the equivalence replays | met | no existing module changed; arms A and C1 reproduce R1 exactly; each lk version reproduces its runs |
+| S68: typed reversible integration; ambiguity resolved with knowledge; both directions scored; older reader kept; graded force; shadow | implemented | the store, ranking and advice are untouched. D26 stays open: `outcomeAuthorised270` is unchanged while ranking is blocked |
+| S69: one observation, several analytical uses | implemented | lk.2 |
+| S70/S71/S72: provenance, positive compatibility, identity only from a run, unresolved ≠ partial, protocol ≠ run | implemented | lk.3–lk.5 |
+
+### Regressions and limits, documented
+- **Against the lexical link on af (first run):** 8 correct links lost, 14 errors avoided.
+- **Coverage on af:** the newer reader finds 23 of 64 values (the older reader 39), with no product attribution. These
+  reader limits are independent of R2.
+- **Positive set evidence is shown only in tests.** No aligned point appears on real data, and no value reaches direct
+  force.
+- **Still unvalidated:** force grades (no reference grades them), and independence across sources.
+
+### Verdict
+- **R2 is complete as experimental infrastructure** for justified inference over evidence (owner S72).
+- **It is not a validated scientific capability.**
+- **Maturity:**
+  - the typed link is at L4 candidate (first runs on s1cd and af);
+  - force grading, sets and compatibility are at L2 (tests) to L3 (development data);
+  - kind: inference; learning: none.

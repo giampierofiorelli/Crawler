@@ -30,8 +30,8 @@ import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantit
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
 
-/** lk.4 (owner review S71); v1 (lk.1), v2 (lk.2, S69) and v3 (lk.3, S70) stay loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v4.json';
+/** lk.5 (owner review S72); v1-v4 (lk.1-lk.4) stay loadable to reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v5.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -133,9 +133,12 @@ export function loadLinkRules(rs?:RuleSet):{rules:Map<string,CompiledProgram>;ve
 export interface LinkValue {id:string;quantity:TypedQuantity;product:string|null;
  /** S70: the source document the value comes from */
  source?:string|null;
- /** S71: the identified test (experiment) the value comes from, within its source, when the reader knows it (a named test,
-  * the protocol statement that covers it). Absent = unknown, never assumed. */
- test?:string|null}
+ /** S71/S72: the identified test RUN (one execution of an experiment) the value comes from, within its source. A protocol
+  * or a named test procedure is not a run. Absent = unknown, never assumed. */
+ test?:string|null;
+ /** S72: the identified procedure (protocol statement or named test procedure) the value was obtained with: it supports
+  * compatibility, never identity. */
+ protocol?:string|null}
 export type LinkStatus='linked'|'linked_condition_not_shown'|'linked_equivalent'|'ambiguous'|'member_only'|'no_taught_measurement'|'not_linked';
 export interface LinkResult {value:string;status:LinkStatus;measurements:string[];
  /** S69: the analytical sets the value is a member of (not exclusive, not evidence of the set's relationship) */
@@ -181,15 +184,19 @@ export function observationKey(v:LinkValue):string|null{const q=v.quantity;
  const prop=q.metric.id??q.kind.id??q.kind.candidates.join('|');const val=q.si?.value??q.value;
  return [v.source,v.test,v.product,prop,String(val),q.conditions.map(c=>c.axis+'='+c.value).sort().join(';')].join('\u0001');
 }
-/** S71: the test identity a reading supplies for a value, when it has one: the protocol statement that covers the value
- * (QK), or the named test the reader attached as its method ("our particle removal test"). Never the page alone. */
-export function readerTestIdentity(q:TypedQuantity):string|null{
+/** S71/S72: the procedure identity a reading supplies for a value, when it has one: the protocol statement that covers
+ * the value (QK), or the named test procedure the reader attached as its method ("our particle removal test"). It is a
+ * procedure, shared by every run that used it: a compatibility basis, never an observation's identity. The reader
+ * supplies no run identity today, so identity stays unknown for reader values. */
+export function readerProcedureIdentity(q:TypedQuantity):string|null{
  if(q.protocol)return 'protocol:'+q.protocol;const m=q.conditions.find(c=>c.axis==='method'&&/\b(?:test|tests|testing|benchmark|trial)\b/.test(c.value));
  return m?'named_test:'+m.value:null;
 }
+/** lk.4 reproduction only: lk.4 used the procedure as the test identity (superseded by S72). */
+export const readerTestIdentity=readerProcedureIdentity;
 /** The input facts of the `link` program for a set of values and descriptors (exported for tests and the census). */
 export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDescriptor[],values:readonly LinkValue[],qk?:QuantityKnowledge):Record<string,(string|number)[][]>{
- const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],value_test:[],observation:[],incomplete:[],closed_axis:[],operating_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
+ const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],value_test:[],value_protocol:[],observation:[],incomplete:[],closed_axis:[],operating_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
  for(const v of values){const q=v.quantity;I.value.push([v.id]);
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)I.value_kind.push([v.id,k]);
   if(q.metric.id)I.value_metric.push([v.id,q.metric.id]);
@@ -198,6 +205,7 @@ export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDesc
   if(v.product)I.value_product.push([v.id,v.product]);
   if(v.source)I.value_source.push([v.id,v.source]);
   if(v.test&&v.source)I.value_test.push([v.id,v.source+'#'+v.test]);
+  if(v.protocol&&v.source)I.value_protocol.push([v.id,v.source+'#'+v.protocol]);
   const ok=observationKey(v);if(ok)I.observation.push([v.id,ok]);}
  for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);
   for(const g of measurandGroups(d)){for(const k of g.kinds)I.group_kind.push([d.id,g.group,k]);for(const x of g.metrics)I.group_metric.push([d.id,g.group,x]);}

@@ -32,7 +32,7 @@ Sources:
 - the higher-order learning decision (`generalization-method.md` Part D, S58);
 - decision S63.
 
-**Current step: R2 — justified inference layer and typed, reversible integration on the newer reader (shadow only; owner S68). Read §3 R2 and the §4 checklist before any work.**
+**Current step: R3 — scientific knowledge consulted in reading, with translation fidelity and completeness (owner S68, S72). Read §3 R3 and the §4 checklist before any work.**
 
 ## 1. Destination
 
@@ -161,7 +161,7 @@ or reused.
   knowledge, store experiences and apply inferences. What is missing is a verified cycle that turns new evidence into
   generalised, controlled knowledge.
 
-### R2 — Justified inference layer, across the KR programs
+### R2 — Justified inference layer, across the KR programs (COMPLETE as experimental infrastructure, not as a validated scientific capability: owner S72)
 
 - **Epistemic status of relations:** documented same / documented different / unknown / controversial.
 - **Negation** only under declared completeness.
@@ -312,3 +312,4 @@ tests, principle 2).
 - 2026-10-19: owner clarification S69 (one observation, several analytical uses). lk.2: analytical sets, members, aligned points, dependent contributions. Unjustified set conclusions 6/22 → 0 (dev / tuned); correct links on s1cd 56 → 117 (tuned). No independent validation of lk.2 yet: no suitable unused pages held.
 - 2026-10-19: owner review S70 → lk.3: observations identified by provenance; aligned points need shown compatibility; direct force capped through incompletely translated measurements. Direct force 20 → 0 on s1cd (tuned); the only aligned point rejected (a value read at two settings). Next in R2: what held material can still show; acquisition not yet authorised.
 - 2026-10-19: owner review S71 → lk.4: positive compatibility, test identity, unresolved force. af (air fryers, link-unused, first run): lk.4 0 wrong vs 14 (lexical), 0 correct vs 8, 23 justified abstentions (13 outside the teaching, 10 untyped empty-vs-cooking). Held materials exhausted for independent link validation; targeted test-page acquisition would need authorisation (not requested).
+- 2026-10-19: closure check (S72): protocol ≠ run corrected (lk.5: procedure = compatibility basis, never identity; no effect on data); R2 requirements table and regressions in `r2-typed-link-and-evidential-force.md` §8. R2 complete as experimental infrastructure. Current step: R3. No acquisition authorised.

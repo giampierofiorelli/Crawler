@@ -9,6 +9,8 @@
  *   C3   lk.1: taught measurements translated into typed descriptors; link and force by the KR programs link/evidence
  *   C3k  ablation: C3 with the descriptors' condition values and axes removed (what conditions decide)
  *   C3m  ablation: C3 with metrics removed (kinds only: what metrics decide)
+ *   C7   lk.5 (owner review S72): the reader's procedure identity (protocol, named test) is a compatibility basis
+ *        (same_protocol), never an observation identity; no run identity is supplied, so identity stays unknown
  *   C6   lk.4 (owner review S71): positive compatibility only (one identified test, or a shared stated method, with every
  *        required condition stated); observation identity only from an identified test; unresolved force (not partial)
  *        through an incompletely translated measurement. The test identity comes from the reader (readerTestIdentity).
@@ -91,7 +93,8 @@ function typedLink(plan,q,text){const ks=q.kind.id?[q.kind.id]:q.kind.candidates
 const LK1=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v1.json','utf8'));
 const LK2=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v2.json','utf8'));
 const LK3=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v3.json','utf8'));
-const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
+const LK4=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v4.json','utf8'));
+const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6','C7'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
 /** one outcome per value and arm, in both directions */
 function score(ref,status,ms){
  const linkedSet=['linked','linked_condition_not_shown','linked_equivalent'].includes(status)?ms:[];
@@ -134,7 +137,11 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
  runs.C4=KL.linkValues(qk,views[d.category],values,{rules:LK2,descriptors:desc[d.category]});
  runs.C5=KL.linkValues(qk,views[d.category],values,{rules:LK3,descriptors:desc[d.category]});
  const values6=values.map(x=>({...x,test:KL.readerTestIdentity(x.quantity)}));
- runs.C6=KL.linkValues(qk,views[d.category],values6,{descriptors:desc[d.category]});
+ runs.C6=KL.linkValues(qk,views[d.category],values6,{rules:LK4,descriptors:desc[d.category]});
+ const values7=values.map(x=>({...x,test:null,protocol:KL.readerProcedureIdentity(x.quantity)}));
+ runs.C7=KL.linkValues(qk,views[d.category],values7,{descriptors:desc[d.category]});
+ for(const x of runs.C7.relationships)inc('C7',x.kind+(x.basis?':'+x.basis:''));for(const _ of runs.C7.repeatedReports)inc('C7','repeated_reports');
+ for(const x of values7)inc('C7',x.protocol?'procedure_identified':'procedure_unknown');for(const o of runs.C7.outcomes)inc('C7','outcome_'+o.assessment);for(const r of runs.C7.results)for(const e of r.evidence)inc('C7','force_'+e.force);
  for(const x of runs.C6.relationships)inc('C6',x.kind+(x.basis?':'+x.basis:''));for(const _ of runs.C6.repeatedReports)inc('C6','repeated_reports');
  for(const x of values6)inc('C6',x.test?'test_identity_known':'test_identity_unknown');
  for(const o of runs.C6.outcomes)inc('C6','outcome_'+o.assessment);for(const o of runs.C5.outcomes)inc('C5','outcome_'+o.assessment);
@@ -153,10 +160,10 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
   for(const a of ARMS.filter(a=>a!=='A')){inc(a,'gold_values');inc(a,'found');inc(a,'product_'+prod);let status,ms,ev=[];
    if(a==='C1'){const l=linkToMeasure272(plans[d.category],m.r.text,m.r.rawUnit.replace(/^[^A-Za-z°%µ]*/,''))?.measureId??null;status=l?'linked':'not_linked';ms=l?[l]:[];}
    else if(a==='C2'){const t=typedLink(plans[d.category],m.r.q,m.r.text);status=t.status==='linked'?'linked':t.status;ms=t.ms;}
-   else{const r=runs[a].results.find(x=>x.value===m.id);status=r.status;ms=r.measurements;ev=r.evidence;var mem=r.memberships??[];if(['C3','C4','C5','C6'].includes(a))row[a]={status,ms,mem,deciding:r.decidingAxes,evidence:ev,derivation:r.derivation.slice(0,12)};}
-   const s=['C4','C5','C6'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
+   else{const r=runs[a].results.find(x=>x.value===m.id);status=r.status;ms=r.measurements;ev=r.evidence;var mem=r.memberships??[];if(['C3','C4','C5','C6','C7'].includes(a))row[a]={status,ms,mem,deciding:r.decidingAxes,evidence:ev,derivation:r.derivation.slice(0,12)};}
+   const s=['C4','C5','C6','C7'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
    if(GOOD.has(s)&&prod==='correct'){inc(a,'decision_usable_correct');
-    if(a.startsWith('C3')||['C4','C5','C6'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
+    if(a.startsWith('C3')||['C4','C5','C6','C7'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
   detail.push(row);}}
 // both directions, per value: C3 against C2
 const cls=s=>GOOD.has(s)?'good':BAD.has(s)?'bad':'abstain';

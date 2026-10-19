@@ -109,7 +109,7 @@ test('R2 metamorphic: renaming the product keeps every link and force; removing 
 });
 
 test('R2 rules: no link without a candidate, no direct or partial force without its conditions (shape over the rule set)', ()=>{
- const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v4.json',import.meta.url),'utf8')) as RuleSet;
+ const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v5.json',import.meta.url),'utf8')) as RuleSet;
  loadLinkRules(rs);
  const rules=rs.programs.flatMap(p=>p.rules);
  for(const r of rules.filter(r=>/^linked(_equivalent)?\(/.test(r.rule)))assert.match(r.rule,/:- (chosen|assumed)\(/,r.id);
@@ -255,4 +255,19 @@ test('S71 verified partial stays partial; unresolved never becomes direct; a com
  assert.ok(!unres.outcomes.some(o=>o.assessment==='direct_evidence'));
  const typed=linkValues(qk,view([meas('power_by_fan_setting',[['energy_cost','direct']],{conditions:[PAIRING]})]),[at('w2','power','speed 2')]);
  assert.equal(typed.outcomes.find(o=>o.outcome==='energy_cost')?.assessment,'direct_evidence');
+});
+
+// S72 (owner review, 2026-10-19): a protocol is a procedure, not a run.
+test('S72 one procedure supports compatibility but is never one observation: two runs of one protocol stay distinct', ()=>{
+ const pr=(x:LinkValue,p:string|null='protocol:noise-from-1m',t:string|null=null):LinkValue=>({...x,test:t,protocol:p});
+ const vals=[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2')].map(x=>pr(x));
+ assert.deepEqual(linkValues(qk,CURVE,vals).relationships.map(x=>x.kind+':'+x.basis),['aligned_point:same_protocol']);
+ // different procedures, no run, no method: not shown
+ assert.deepEqual(linkValues(qk,CURVE,[vals[0],pr(vals[1],'protocol:other'),vals[2]]).relationships.map(x=>x.kind),['compatibility_not_shown']);
+ // two values with one number under one protocol: not merged into one observation (identity unknown), not independent
+ const two=linkValues(qk,CURVE,[pr(at('w2','power','speed 2')),pr(at('w2b','power','speed 2'))]);
+ assert.deepEqual(two.repeatedReports,[]);assert.equal(res(two,'w2').observation,null);
+ // a run identity, when known, still identifies: the same run reported twice is one
+ const run=linkValues(qk,CURVE,[pr(at('w2','power','speed 2'),'protocol:p','run-7'),pr(at('w2b','power','speed 2'),'protocol:p','run-7')]);
+ assert.deepEqual(run.repeatedReports,[['w2','w2b']]);
 });
