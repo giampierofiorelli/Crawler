@@ -1,0 +1,118 @@
+{
+ "schema": "pee.r2.link-experiment.v1",
+ "label": "dev1",
+ "generatedAt": "2026-10-19T05:26:19.805Z",
+ "set": "p272",
+ "tier": "Phase272 untouched set: SPENT (R1 tuning and R2 diagnosis inspected its link reference). Development evidence; never held-out.",
+ "rules": "lk.1",
+ "forceOverlay": "r2-relation-force.v1",
+ "descriptorCensus": {
+  "air_fryers": {
+   "measurements": 8,
+   "withHeadMeasurand": 3,
+   "withFixedConditions": 0,
+   "withAxes": 0,
+   "withUntypedWords": 8
+  },
+  "dishwashers": {
+   "measurements": 13,
+   "withHeadMeasurand": 8,
+   "withFixedConditions": 3,
+   "withAxes": 7,
+   "withUntypedWords": 13
+  },
+  "air_purifiers": {
+   "measurements": 11,
+   "withHeadMeasurand": 9,
+   "withFixedConditions": 1,
+   "withAxes": 8,
+   "withUntypedWords": 10
+  },
+  "televisions": {
+   "measurements": 15,
+   "withHeadMeasurand": 5,
+   "withFixedConditions": 0,
+   "withAxes": 7,
+   "withUntypedWords": 14
+  }
+ },
+ "arms": {
+  "C2": {
+   "gold_values": 163,
+   "found": 138,
+   "product_correct": 118,
+   "link_correct_no_link": 31,
+   "link_wrong_link_where_none": 2,
+   "not_found_by_reader": 25,
+   "product_wrong": 14,
+   "link_missed_ambiguous_ref_among": 39,
+   "link_wrong_measurement": 8,
+   "link_abstain_on_ambiguous_reference": 10,
+   "product_missing": 6,
+   "link_link_on_ambiguous_reference": 11,
+   "link_missed_no_candidate": 24,
+   "link_correct": 13,
+   "decision_usable_correct": 12
+  },
+  "C3": {
+   "gold_values": 163,
+   "found": 138,
+   "product_correct": 118,
+   "link_correct_none_reported_outside_teaching": 30,
+   "not_found_by_reader": 25,
+   "product_wrong": 14,
+   "link_missed_ambiguous_ref_among": 28,
+   "link_wrong_link_where_none": 2,
+   "link_correct_no_link": 1,
+   "link_correct": 56,
+   "decision_usable_correct": 52,
+   "decision_usable_force_conditions_not_shown": 28,
+   "link_abstain_on_ambiguous_reference": 21,
+   "product_missing": 6,
+   "decision_usable_force_partial": 24
+  },
+  "C3k": {
+   "gold_values": 163,
+   "found": 138,
+   "product_correct": 118,
+   "link_correct_none_reported_outside_teaching": 30,
+   "not_found_by_reader": 25,
+   "product_wrong": 14,
+   "link_missed_ambiguous_ref_among": 28,
+   "link_correct_no_link": 2,
+   "link_correct": 56,
+   "decision_usable_correct": 52,
+   "decision_usable_force_direct": 17,
+   "link_abstain_on_ambiguous_reference": 21,
+   "product_missing": 6,
+   "decision_usable_force_partial": 35,
+   "link_wrong_link_where_none": 1
+  },
+  "C3m": {
+   "gold_values": 163,
+   "found": 138,
+   "product_correct": 118,
+   "link_correct_none_reported_outside_teaching": 30,
+   "not_found_by_reader": 25,
+   "product_wrong": 14,
+   "link_missed_ambiguous_ref_among": 28,
+   "link_wrong_link_where_none": 2,
+   "link_correct_no_link": 1,
+   "link_correct": 32,
+   "decision_usable_correct": 28,
+   "decision_usable_force_conditions_not_shown": 28,
+   "link_abstain_on_ambiguous_reference": 21,
+   "product_missing": 6,
+   "link_missed_no_candidate": 24
+  }
+ },
+ "c2ToC3": {
+  "abstain->abstain": 58,
+  "bad->abstain": 20,
+  "abstain->bad": 2,
+  "bad->good": 1,
+  "abstain->good": 44,
+  "good->good": 11,
+  "good->abstain": 2
+ }
+}
