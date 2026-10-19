@@ -24,7 +24,7 @@ import {findQuantities,namedPhrases,normText,parseUnit,type QuantityKnowledge} f
 import type {TaughtConcept} from './knowledge_link.js';
 
 /** kt-cues.2 (R3 fidelity review): the split word is rendered; kt-cues.1 is kept for reproducing the held-out first run. */
-export const TRANSLATION_CUES_FILE='translation-cues.v3.json';
+export const TRANSLATION_CUES_FILE='translation-cues.v4.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 interface StatementTypeDef {type:string;meaning:string;display:string;patterns:string[];
@@ -48,7 +48,10 @@ export function parseTeachingDocument(md:string,range?:readonly {start:number;en
  const lines=md.split('\n');const blocks:DocBlock[]=[];const heads:string[]=[];let header:string[]|null=null;let para:{line:number;text:string}|null=null;
  const inRange=(i:number)=>!range||range.some(r=>i+1>=r.start&&i+1<=r.end);
  const flush=()=>{if(para&&para.text.trim())blocks.push({kind:'paragraph',line:para.line,headings:[...heads],text:clean(para.text)});para=null;};
+ // audit S78: a fenced code block (YAML headers, data examples) is not prose knowledge
+ let fence=false;
  lines.forEach((raw,i)=>{const l=raw.trimEnd();
+  if(/^\s*(?:```|~~~)/.test(l)){flush();header=null;fence=!fence;return;}if(fence)return;
   const h=/^(#{1,6})\s+(.*)$/.exec(l);if(h){flush();header=null;heads.length=Math.min(heads.length,h[1].length-1);heads[h[1].length-1]=clean(h[2]);heads.length=h[1].length;for(let k=0;k<heads.length;k++)heads[k]??='';return;}
   if(!inRange(i)){flush();header=null;return;}
   if(/^\s*\|/.test(l)){flush();const cells=l.trim().replace(/^\||\|$/g,'').replace(/\\\|/g,'\u0000').split('|').map(c=>clean(c.replace(/\u0000/g,'|')));
@@ -132,8 +135,14 @@ const RELATIONAL=new Set(['depends_on','increases','decreases','requires','measu
 const NEG_TAIL=/\s+(?:(?:does|do|did|can|could|will|would|may|might|should|must|is|are|was|were)\s*(?:not|n't)|never|cannot|can't|won't|fails?\s+to|failed\s+to)$/i;
 const HEDGE_TAIL=/\s+(?:rarely|seldom|hardly|often|usually|sometimes|generally|typically|may|might|can|could|tends?\s+to)$/i;
 // demonstratives are left out: "that requires", "this depends" are a pronoun and a verb
-const NOUN_BEFORE=/^(?:a|an|the|with|of|for|and|or|no|any|its|their|lower|higher|greater|smaller)$/i;
-const NOUN_AFTER=/^(?:is|are|was|were|be|apply|applies|matter|matters|remain|remains|occur|occurs|exist|exists|need|needs|of|to|size|and|or|shown)$/i;
+const NOUN_BEFORE=/^(?:a|an|the|with|of|for|and|or|no|any|its|their|lower|higher|greater|smaller|from|in|on|at|by|to|between|without|under|over|per|into)$/i;
+const NOUN_AFTER=/^(?:is|are|was|were|be|apply|applies|matter|matters|remain|remains|occur|occurs|exist|exists|need|needs|of|to|size|and|or|shown|in|on|at|from|for|between|plus|per|during|works?|separately)$/i;
+// audit S78: words used as nouns or adjectives as often as verbs ("filter change", "lower total energy", "fan control")
+// (bare forms only: the -s form after a noun subject is the verb, "stacking changes contact")
+const AMBIGUOUS_VERB=/^(?:change|control|lower|limit|increase|decrease|slow|boost|raise)$/i;
+const DETERMINER=/^(?:the|a|an|its|their|this|these|those|each|every|both|all|any|some|how|whether|what|which|his|her|our|your|it|them)$/i;
+const PRONOUN=/^(?:it|they|this|that|which|who|these|those)$/i;
+const BIBLIOGRAPHIC=/^(?:[\dA-Z]+[.)]?\s+)?(?:sources|references|bibliography|citations|reading list|source register|works cited|source cards?)\b/i;
 /** Document metadata and questions are not knowledge claims. */
 // a decimal followed by a unit ("2.5 hours") is a value, not a version (audit S77 A3-6)
 const METADATA_VALUE=/^(?:https?:\/\/|www\.|\S+\.(?:md|pdf|json|zip|html?|txt)\b|v\d+(?:\.\d+)*\b|\d+\.\d+\.\d+\b|\d+\.\d+\s*(?:\(|$)|\d{1,2}\s+\w+\s+\d{4}\b|\d{4}-\d{2}-\d{2}\b)/i;
@@ -146,13 +155,19 @@ function headerRole(cues:TranslationCues,h:string):string|null{const n=stemmed(h
  for(const [role,ws] of Object.entries(cues.tableHeaderRoles))if(ws.some(w=>n.includes(stemmed(w))))return role;return null;}
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
-const TABLE_ROLE_TYPE:Record<string,string>={method:'measured_by',limitation:'limitation',applicability:'applicability',outcome:'bears_on_outcome'};
+const TABLE_ROLE_TYPE:Record<string,string>={evidence_needed:'requires',method:'measured_by',limitation:'limitation',applicability:'applicability',outcome:'bears_on_outcome'};
 const TABLE_ROLE_DISPLAY:Record<string,string>={quantitative_finding:'{subject} {object}.',measured_by:'{subject} is measured by {object}.',limitation:'For {subject}, the document warns: {object}.',
- applicability:'For {subject}, applicability: {object}.',bears_on_outcome:'{subject} bears on: {object}.'};
+ applicability:'For {subject}, applicability: {object}.',bears_on_outcome:'{subject} bears on: {object}.',requires:'For {subject}, the evidence needed is: {object}.'};
 
 /** Translate a teaching document (or some of its line ranges) into typed statements. */
 export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:string;concepts?:readonly TaughtConcept[];range?:readonly {start:number;end:number}[];cues?:TranslationCues}):TranslationResult{
- const C=loadTranslationCues(opts.cues);const blocks=parseTeachingDocument(md,opts.range);const out:TranslatedStatement[]=[];let nClauses=0,unrec=0;
+ const C=loadTranslationCues(opts.cues);
+ // audit S78: a bibliographic section (sources, references) lists documents, not knowledge
+ const blocks=parseTeachingDocument(md,opts.range).filter(b=>!b.headings.some(h=>BIBLIOGRAPHIC.test(h)));
+ // audit S78: a label that recurs as "Label: value" in the document is a record field (a form, a source card, a YAML key),
+ // and so is an identifier-like label ("id", "relevantmeasure"); "Field: value" is then a record, not a definition
+ const labelCount=new Map<string,number>();for(const b of blocks){const m=/^([^:|]{2,70}):\s/.exec(b.text);if(m){const k=m[1].trim().toLowerCase();labelCount.set(k,(labelCount.get(k)??0)+1);}}
+ const fieldLabel=(l:string)=>{const k=l.trim().toLowerCase();return (labelCount.get(k)??0)>=3||/^[a-z][a-z0-9_]*$/.test(l.trim())&&!/\s/.test(l.trim())&&l.trim().length<=24&&/^[a-z]/.test(l.trim());};const out:TranslatedStatement[]=[];let nClauses=0,unrec=0;
  const concepts=opts.concepts??[];const T=(s:string|undefined)=>s?typeSpan(qk,s.trim(),concepts):null;
  const push=(b:DocBlock,type:string,quote:string,sub:string|undefined,obj:string|undefined,basis:TranslatedStatement['basis'],header?:string,verb?:string,ann:{polarity?:'positive'|'negative';hedge?:string|null;extra?:Record<string,string|undefined>;checkAgainst?:string}={})=>{
   if(type==='definition'&&obj&&METADATA_VALUE.test(obj.trim())){unrec++;return;}
@@ -168,30 +183,47 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
   // audit S77: "by itself" only when the source says it (blind judges: a plain "does not establish" was weakened)
   if(type==='not_sufficient'&&!/\b(?:by itself|by themselves|alone|on (?:its|their) own|itself|themselves)\b/i.test(quote))r=r.replace(/ by itself /,' ');
   if(st.hedge)r=`(${st.hedge}) `+r;if(st.polarity==='negative')r='It is not the case that '+r.replace(/^Limitation: /,'');st.rendered=r;st.selfCheck=renderSelfCheck(ann.checkAgainst??quote,st.rendered);};
- const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){
-  // a relation word rejected by the noun guard is masked and the pattern tried again, so a later relation word in the
-  // same clause is still found ("temperature control are interacting variables")
-  let probe=cl;for(let attempt=0;attempt<4;attempt++){const m=re.exec(probe);if(!m)break;
-   const idx=(m as RegExpExecArray&{indices?:{groups?:Record<string,[number,number]|undefined>}}).indices?.groups??{};
-   const g:Record<string,string|undefined>={};for(const [k,v] of Object.entries(m.groups??{}))g[k]=v===undefined?undefined:idx[k]?cl.slice(idx[k]![0],idx[k]![1]):v;
-   if(RELATIONAL.has(def.type)){
+ // audit S78: candidates first, then one choice. The first pattern in cue order wins, except that among relation patterns
+ // the leftmost relation verb wins (the main verb of the clause: "Different mechanisms require different control recipes"
+ // is a requirement, not a dependency on "control"). A question is not a claim.
+ const byPattern=(b:DocBlock,cl:string,header?:string)=>{if(/\?\s*$/.test(cl))return false;
+  type Cand={pos:number;relational:boolean;emit:()=>void};const cands:Cand[]=[];
+  for(const {def,res} of C.compiled)for(const re of res){
+   // a relation word rejected by the noun guard is masked and the pattern tried again, so a later relation word in the
+   // same clause is still found ("temperature control are interacting variables")
+   let probe=cl;for(let attempt=0;attempt<4;attempt++){const m=re.exec(probe);if(!m)break;
+    const idx=(m as RegExpExecArray&{indices?:{groups?:Record<string,[number,number]|undefined>}}).indices?.groups??{};
+    const g:Record<string,string|undefined>={};for(const [k,v] of Object.entries(m.groups??{}))g[k]=v===undefined?undefined:idx[k]?cl.slice(idx[k]![0],idx[k]![1]):v;
+    if(!RELATIONAL.has(def.type)){if(def.type==='definition'&&g.subject&&fieldLabel(g.subject))break;
+     cands.push({pos:Infinity,relational:false,emit:()=>push(b,def.type,cl,g.subject,g.object,'pattern',header,g.verb,{extra:g})});break;}
     // the group before the relation word and the one after it, whatever their roles
     const order=(['subject','object'] as const).filter(k=>g[k]!==undefined&&idx[k]).sort((a,c)=>idx[a]![0]-idx[c]![0]);
     const pre=order.length===2?order[0]:(order[0]&&idx[order[0]]![0]===0?order[0]:null),post=order.length===2?order[1]:(order[0]&&idx[order[0]]![0]>0?order[0]:null);
     const lastPre=pre?(g[pre]!.trim().split(/\s+/).pop()??''):'',firstPost=post?(g[post]!.trim().split(/\s+/)[0]??''):'';
-    // a relation word in noun or adjective position is not a relation ("temperature control are", "with lower rating")
-    if((pre&&NOUN_BEFORE.test(lastPre))||(post&&NOUN_AFTER.test(firstPost))){
-     const a=pre?idx[pre]![1]:0,z=post?idx[post]![0]:probe.length;if(z<=a)break;probe=probe.slice(0,a)+probe.slice(a,z).replace(/[A-Za-z]/g,'q')+probe.slice(z);continue;}
+    const a=pre?idx[pre]![1]:0,z=post?idx[post]![0]:probe.length;const span=cl.slice(a,z);
+    const word=(span.trim().split(/\s+/).pop()??'').toLowerCase();
+    // a relation word in noun or adjective position is not a relation ("temperature control are", "with lower rating",
+    // "Filter change, contact with dust", "changes in device behaviour"); a word that is a noun as often as a verb is read
+    // as a verb only with evidence: a modal before it, a determiner after it, or a pronoun subject
+    const ambiguous=AMBIGUOUS_VERB.test(word)&&!/\b(?:can|could|may|might|will|would|must|should|tends?\s+to|does|do|did|not|never)\b/i.test((pre?g[pre]!.split(/\s+/).slice(-2).join(' '):'')+' '+span)&&
+     !DETERMINER.test(firstPost)&&!PRONOUN.test(lastPre)&&!/[a-z][^s']s$/i.test(lastPre);
+    if((pre&&(NOUN_BEFORE.test(lastPre)||/,$/.test(lastPre)||/\bwhether\b/i.test(g[pre]!)))||(post&&NOUN_AFTER.test(firstPost))||ambiguous){
+     if(z<=a)break;probe=probe.slice(0,a)+probe.slice(a,z).replace(/[A-Za-z]/g,'q')+probe.slice(z);continue;}
     let polarity:'positive'|'negative'='positive',hedge:string|null=null;const v:Record<string,string|undefined>={...g};
     if(pre){const n=NEG_TAIL.exec(v[pre]!);if(n){polarity='negative';v[pre]=v[pre]!.slice(0,n.index).trim();}
      const h=HEDGE_TAIL.exec(v[pre]!);if(h){hedge=h[0].trim().toLowerCase();v[pre]=v[pre]!.slice(0,h.index).trim();}}
+    // a modal the pattern itself consumed ("charge can increase removal") is a hedge too
+    if(!hedge){const h=/\b(can|could|may|might|tends?\s+to)\b/i.exec(span);if(h)hedge=h[1].toLowerCase();}
     if(post){const n=/^(?:neither|not|no)\s+/i.exec(v[post]!);if(n){polarity='negative';v[post]=v[post]!.slice(n[0].length).replace(/\s+nor\s+/gi,' or ');}}
     // a contrast inside the object: "affects scale, not taste" is two statements, one of each polarity
     const cx=post?/^(.*?)(?:,\s+(?:and\s+)?|\s+but\s+)not\s+(.+)$/i.exec(v[post]!):null;
-    if(cx&&post){push(b,def.type,cl,post==='subject'?cx[1]:v.subject,post==='object'?cx[1]:v.object,'pattern',header,v.verb,{polarity,hedge,checkAgainst:cl.replace(/(?:,\s+(?:and\s+)?|\s+but\s+)not\s+.+$/i,'')});
-     push(b,def.type,cl,post==='subject'?cx[2]:v.subject,post==='object'?cx[2]:v.object,'pattern',header,v.verb,{polarity:polarity==='positive'?'negative':'positive',hedge});return true;}
-    push(b,def.type,cl,v.subject,v.object,'pattern',header,v.verb,{polarity,hedge});return true;}
-   push(b,def.type,cl,g.subject,g.object,'pattern',header,g.verb,{extra:g});return true;}}return false;};
+    cands.push({pos:a,relational:true,emit:()=>{
+     if(cx&&post){push(b,def.type,cl,post==='subject'?cx[1]:v.subject,post==='object'?cx[1]:v.object,'pattern',header,v.verb,{polarity,hedge,checkAgainst:cl.replace(/(?:,\s+(?:and\s+)?|\s+but\s+)not\s+.+$/i,'')});
+      push(b,def.type,cl,post==='subject'?cx[2]:v.subject,post==='object'?cx[2]:v.object,'pattern',header,v.verb,{polarity:polarity==='positive'?'negative':'positive',hedge});return;}
+     push(b,def.type,cl,v.subject,v.object,'pattern',header,v.verb,{polarity,hedge});}});break;}}
+  if(!cands.length)return false;
+  const first=cands[0];const pick=first.relational?cands.filter(c=>c.relational).reduce((x,y)=>y.pos<x.pos?y:x):first;
+  pick.emit();return true;};
  for(const b of blocks){
   if(b.kind==='table_row'&&b.cells){
    const subj=b.cells.find(c=>headerRole(C.cues,c.header)==='subject')?.text??b.cells[0]?.text;

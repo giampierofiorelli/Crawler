@@ -1,0 +1,24 @@
+{
+ "schema": "pee.s78.caveat-link.v1",
+ "sample": "40 of 68 distinct (concept, statement) links, reliable caveat types, any span position; deterministic hash sample",
+ "judge": "fresh-context agent of the developer model family, blind to the mechanism; not independent validation",
+ "firstRun": true,
+ "anyPosition": {
+  "applies": 30,
+  "misleading": 2,
+  "not_about": 1,
+  "related": 9
+ },
+ "subjectOnly": {
+  "applies": 12,
+  "misleading": 0,
+  "related": 4
+ },
+ "objectOrParts": {
+  "applies": 18,
+  "misleading": 2,
+  "not_about": 1,
+  "related": 5
+ },
+ "decision": "subject-only links chosen AFTER seeing this sample (TUNED); advice shows at most one caveat per concept, labelled machine-translated and unreviewed"
+}

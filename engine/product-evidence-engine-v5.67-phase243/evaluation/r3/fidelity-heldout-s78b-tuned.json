@@ -1,0 +1,88 @@
+{
+ "schema": "pee.r3.fidelity.v1",
+ "label": "heldout-s78b-tuned",
+ "base": "heldout-s78a-tuned",
+ "side": "heldout",
+ "generatedAt": "2026-10-19T12:47:02.494Z",
+ "tuned": true,
+ "judges": "changed items: fresh-context agents of the developer model family, blind to the translator; unchanged items carry over the base judgements; not independent human validation",
+ "categories": {
+  "air_purifiers": {
+   "statements": 222,
+   "rejudgedStatements": 0,
+   "units": 255,
+   "rejudgedUnits": 4,
+   "verdict": {
+    "faithful": 175,
+    "partial": 40,
+    "unjustified": 6,
+    "distorted": 1
+   },
+   "selfCheckFlagged": {},
+   "coverage": {
+    "captured": 111,
+    "omitted": 98,
+    "partial": 45,
+    "distorted": 1
+   },
+   "coverageHigh": {
+    "captured": 47,
+    "partial": 15,
+    "omitted": 15
+   },
+   "missing": 0
+  },
+  "coffee_machines": {
+   "statements": 133,
+   "rejudgedStatements": 2,
+   "units": 257,
+   "rejudgedUnits": 15,
+   "verdict": {
+    "faithful": 100,
+    "distorted": 2,
+    "unjustified": 3,
+    "partial": 28
+   },
+   "selfCheckFlagged": {},
+   "coverage": {
+    "captured": 86,
+    "omitted": 135,
+    "distorted": 2,
+    "partial": 34
+   },
+   "coverageHigh": {
+    "captured": 40,
+    "omitted": 38,
+    "distorted": 1,
+    "partial": 12
+   },
+   "missing": 0
+  },
+  "air_fryers": {
+   "statements": 192,
+   "rejudgedStatements": 10,
+   "units": 228,
+   "rejudgedUnits": 15,
+   "verdict": {
+    "faithful": 132,
+    "partial": 46,
+    "distorted": 2,
+    "unjustified": 12
+   },
+   "selfCheckFlagged": {},
+   "coverage": {
+    "omitted": 89,
+    "captured": 97,
+    "partial": 40,
+    "distorted": 2
+   },
+   "coverageHigh": {
+    "captured": 35,
+    "omitted": 20,
+    "partial": 14,
+    "distorted": 1
+   },
+   "missing": 0
+  }
+ }
+}

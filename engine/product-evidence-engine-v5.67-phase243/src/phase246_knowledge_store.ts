@@ -39,7 +39,7 @@ import {classDecision249,QUALITATIVE_AMENDMENT270,type SourceClassPolicy249,type
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
 import {screenTestLead265,subjectAssociation265,reportedBy265,readingIdentity265,type TestLeadsInput265,type ReadingConfiguration265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=9;
+export const STORE_SCHEMA_VERSION246=10;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -291,6 +291,20 @@ const MIGRATIONS:string[]=[
    independence TEXT NOT NULL CHECK(independence IN ('same_model_not_independent','human_reviewer')),
    assessed_at TEXT NOT NULL, superseded_by TEXT REFERENCES relation_assessments(assessment_id));
   CREATE INDEX relation_assessments_relation ON relation_assessments(relation_id,aspect);`,
+ // v10 (S78): typed statements translated from teaching documents (src/knowledge_translation.ts), kept with what the
+ // relational schema cannot hold: polarity, hedge, the document's status labels, scope, typed subject/object/parts, and
+ // provenance (document hash and line; never the quote). Machine translated and unreviewed: never a ranking input; each
+ // row carries the measured reliability of its statement type. A newer translator supersedes a document's rows.
+ `CREATE TABLE knowledge_statements (statement_id TEXT PRIMARY KEY, category_id TEXT NOT NULL, source_document TEXT NOT NULL,
+   source_sha256 TEXT NOT NULL, line INTEGER NOT NULL, headings_json TEXT NOT NULL, type TEXT NOT NULL,
+   polarity TEXT NOT NULL CHECK(polarity IN ('positive','negative')), hedge TEXT, status_json TEXT NOT NULL, scope_json TEXT NOT NULL,
+   subject_json TEXT, object_json TEXT, parts_json TEXT NOT NULL, rendered TEXT NOT NULL, quote_sha256 TEXT NOT NULL,
+   self_check_json TEXT NOT NULL, translator TEXT NOT NULL,
+   reliability TEXT NOT NULL CHECK(reliability IN ('reliable_type','unreliable_type','unmeasured_type')),
+   review TEXT NOT NULL DEFAULT 'machine_translated_unreviewed' CHECK(review='machine_translated_unreviewed'),
+   ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0),
+   state TEXT NOT NULL CHECK(state IN ('current','superseded_by_translator')), recorded_at TEXT NOT NULL);
+  CREATE INDEX knowledge_statements_category ON knowledge_statements(category_id,type,state);`,
 ];
 
 /** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */
@@ -1232,7 +1246,7 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271','relation_assessments']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271','relation_assessments','knowledge_statements']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
    if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
@@ -1270,7 +1284,7 @@ export class KnowledgeStore246 {
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
   category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
-  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id',relation_assessments:'assessment_id'};
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id',relation_assessments:'assessment_id',knowledge_statements:'statement_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
@@ -1291,7 +1305,7 @@ export class KnowledgeStore246 {
    // Phase270: qualitative codes are kept under a private amendment that permits no publication.
    if(t==='qualitative_observations270'&&audience==='public')rows=[];
    // S78: assessments cite owner research packages (private): never in a public destination
-   if(t==='relation_assessments'&&audience==='public')rows=[];
+   if((t==='relation_assessments'||t==='knowledge_statements')&&audience==='public')rows=[];
    if(t==='comparative_results271'&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);

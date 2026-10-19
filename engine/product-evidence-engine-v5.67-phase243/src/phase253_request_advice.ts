@@ -18,6 +18,7 @@ import {extractConstraints253,type RequestConstraint253} from './phase253_reques
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
+import {caveatsAbout} from './knowledge_statements.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
 import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_comparative_evidence.js';
 import {applianceMentions270} from './phase270_comparative_results.js';
@@ -447,6 +448,11 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
  if(decision==='research'||decision==='partial_comparison'||decision==='no_purchase_check'){
   const need=know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)).map(statement).filter((x):x is string=>!!x);
   if(need.length)out.statements.push(`What would answer this: ${need.join('; ')}.`);
+  // S78: what the category research says about these needs and measurements, as labelled caveats (never ranking input)
+  const cav:NonNullable<Advice253['teachingCaveats']>=[];const shown=new Set<string>();
+  for(const k of know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)))for(const c of [k.need,...k.byMeasure.keys()])
+   for(const s of caveatsAbout(store,out.category!,c,1))if(!shown.has(s.rendered)&&cav.length<6){shown.add(s.rendered);cav.push({concept:c,caveat:s.rendered,sourceDocument:s.sourceDocument,line:s.line,type:s.type});}
+  if(cav.length){out.teachingCaveats=cav;out.limitations.push(`From the category research (translated by PEE, not reviewed): ${cav.map(c=>c.caveat.replace(/^Limitation: /,'')).join(' ')}`.slice(0,900));}
   for(const k of know)for(const p of k.proxies)if(p.startsWith('attr:')&&!CONTEXT_NEEDS269.has(k.need))out.limitations.push(`Declared ${st(p.slice(5))} is not evidence of ${st(k.need)}: ${plain(k.notes.get(p))}`.slice(0,320));
  }
  return {decision,outcomes,...(partial?{partialComparison:partial}:{}),...(altComparison?{alternativeComparison:altComparison}:{})};

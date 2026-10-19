@@ -96,7 +96,7 @@ test('R3 kt-cues.2 a negated or prohibited statement renders with its negation (
  // the kt-cues.1 rendering dropped the word and inverted the meaning; the self-check catches that kind of loss
  assert.deepEqual(renderSelfCheck('A purifier cannot ventilate a room.','Limitation: A purifier ventilate a room.'),['negation_lost']);
  assert.deepEqual(renderSelfCheck('No device is made good by its fan alone.','Limitation: device is made good by its fan alone.'),['negation_lost']);
- assert.equal(loadTranslationCues().cues.version,'kt-cues.3');
+ assert.equal(loadTranslationCues().cues.version,'kt-cues.4');
 });
 
 test('R3 kt-cues.2 questions and document metadata are not knowledge claims', ()=>{
@@ -247,4 +247,27 @@ test('audit S77 (regression of the first fix): plural table headers keep their r
 test('audit S77: "by itself" is rendered only when the source says it', ()=>{
  assert.ok(tr('Particle CADR does not establish gas removal.').some(x=>x.type==='not_sufficient'&&!/by itself/.test(x.rendered)));
  assert.ok(tr('Particle CADR does not by itself establish gas removal.').some(x=>x.type==='not_sufficient'&&/by itself/.test(x.rendered)));
+});
+test('audit S78: nouns and adjectives are not relation verbs; questions are not claims; the main verb wins; consumed modals are hedges', ()=>{
+ const rel=(t:string)=>tr(t).filter(s=>['depends_on','increases','decreases','requires'].includes(s.type));
+ for(const t of ['Filter change, contact with dust, app privacy, control offline.',
+  'Track access changes separately from truth changes.','Cannot assume Bluetooth control works remotely.','Estimate difference from control with confounders.',
+  'Avoid treating changes in outdoor background pollution as device causality.','REL-B: lower electricity per task for the tested small chip job.',
+  'Source/entry controls plus bounded smoke-particle CADR.'])assert.deepEqual(rel(t).map(s=>s.type),[],t);
+ assert.deepEqual(tr('Do physical control buttons retain the manual fan speed?'),[],'a question is not a claim');
+ assert.equal(rel('Different mechanisms require different control recipes.')[0].type,'requires');
+ const h=rel('Charge can increase removal.')[0];assert.equal(h.type,'increases');assert.equal(h.hedge,'can');
+ // controls: verbs with evidence stay relations
+ for(const [t,ty] of [['Larger baskets increase capacity.','increases'],['Oven-safe containers change the task.','depends_on'],['Stacking changes contact and airflow.','depends_on'],
+  ['High airflow does not increase filter life.','increases']] as const)assert.equal(rel(t)[0]?.type,ty,t);
+});
+test('audit S78: records, code blocks and source lists are not knowledge; evidence-requirement columns are requirements', ()=>{
+ const doc=['# Package','','```yaml','id: suspendedparticles','relevantmeasure: deviceCADR','```','','## Sources','','1. 750g / A. Writer (2026-04-12), liners and airflow','',
+  '## Cards','','- Type: Consumer organisation','- Type: Chef interview','- Type: Broadcaster feature','','## Terms','','- CADR: the clean air delivery rate of the whole device at a stated mode.',
+  '','| Dish | Verification needed |','|---|---|','| Japchae | Evaluate full workflow and texture |'].join('\n');
+ const s=translateDocument(qk,doc,{source:'d'}).statements;
+ assert.ok(!s.some(x=>/suspendedparticles|relevantmeasure|750g|Consumer organisation/.test(x.quote)),s.map(x=>x.quote).join(' | '));
+ assert.ok(s.some(x=>x.type==='definition'&&/^CADR/.test(x.quote)),'a term with a definition stays a definition');
+ assert.ok(s.some(x=>x.type==='requires'&&/Japchae/.test(x.rendered)),'an evidence-requirement column is a requirement');
+ assert.ok(!s.some(x=>x.type==='bears_on_outcome'));
 });
