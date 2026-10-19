@@ -214,3 +214,37 @@ word.
 correct *conclusions* in the owner's sense: a limit qualifies a value, it does not decide anything. The binding
 constraint is identification: 85% of the documents' limit statements have a subject PEE cannot type (claims, labels,
 designs, product features), and taught concept names do not match document language.
+
+## 9. Cycle 3 start (owner S75): where held-out knowledge is lost (`evaluation/r3/funnel-c3-0.json`)
+
+The owner asked to test, not assume, whether the 45% omission and the 85% untyped limit subjects share a cause, by
+separating three bottlenecks. Census of the 740 held-out units (translation kt-cues.2, TUNED on these sections; blind
+same-model coverage judgements; store-comparison gaps; consumers as of cycle 2; `scripts/r3-funnel.mjs`):
+
+| Stage | Units | Share |
+|---|---|---|
+| 1a not extracted (no statement on the unit's lines) | 139 | 19% |
+| 1b extracted, but the statements there carry other knowledge | 193 | 26% |
+| 1c extracted, distorted | 28 | 4% |
+| 2a kept, but neither a taught concept nor a typed quantity is identified | 155 | 21% |
+| 3a identified (concept candidate or typed quantity), not consulted by any decision path | 221 | 30% |
+| 3b identified and consulted | 4 | 0.5% |
+
+Findings:
+- **The hypothesis is refuted as stated.** Omission (1a + 1b, 332) is an extraction and representation loss, not a
+  naming loss: in 193 of the 332 the translator produced statements on the same lines that the judges found to carry
+  something else. Omission concentrates where the store comparison found representational gaps: status or certainty
+  (63 omitted), compound procedures (49), expert judgements (37), and nearly all conflicts (11 of 15).
+- **Mapping (2a, 21%) is a separate loss**, concentrated in proposed methods, limitations and expert judgements.
+- **Consultation is the largest single loss (3a, 30%)**: knowledge kept and identified is read by nothing, because the
+  consumers read only two statement types and the link program's measurement concepts. This loss is upstream of any
+  "more correct conclusions".
+- **The 3a figure overstates the mapped stage:** identification there is a candidate (`identifyConcept`), not a
+  validated alignment. Candidate retrieval and validation of meaning are not yet separated (owner S75); mapping
+  correctness is unmeasured.
+
+Consequence for the next experiment: no single fix serves all three stages. The order chosen: (i) separate candidate
+retrieval from validated alignment with explicit match types (exact, close, broader/narrower, related, none), measured
+against a blind sealed annotation that includes negative pairs sharing words; (ii) a consumer for the validated
+alignments that changes an interpretation, not just an annotation; (iii) richer representation for the status,
+compound-procedure and conflict losses.
