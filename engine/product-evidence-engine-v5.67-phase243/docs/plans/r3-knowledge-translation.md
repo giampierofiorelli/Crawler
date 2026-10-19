@@ -136,7 +136,27 @@ C8r / C8d = acquired axes in reading only / in measurement descriptors only.
 
 ## 6. After-change fidelity (TUNED)
 
-(filled from `evaluation/r3/fidelity-heldout-fix1-tuned.json`)
+Cues kt-cues.2 (`translation-cues.v2.json`; kt-cues.1 kept to reproduce the first run): the word a pattern splits on is
+rendered; instructions without a subject are not shown as "(unspecified)"; questions and metadata values (file names,
+URLs, versions, dates) are not statements; the render-back self-check is added. Judged blind again by three new
+fresh-context judges, only where the run differs from the first one (169 changed statements, 326 units whose statements
+changed); the other judgements carry over (`scripts/r3-fidelity-delta.mjs`, `evaluation/r3/fidelity-heldout-fix1-tuned.json`).
+TUNED: the defects were found on these sections, so this is not held-out evidence.
+
+| | first run (unchanged) | after kt-cues.2 (TUNED) |
+|---|---|---|
+| statements | 592 | 549 (43 questions or metadata no longer read as claims) |
+| faithful | 254 (43%) | 367 (67%) |
+| partial | 116 | 106 |
+| distorted | 146 (25%) | 29 (5%) |
+| unjustified | 76 | 47 |
+| units captured / partial / distorted / omitted (740) | 171 / 108 / 129 / 332 | 265 / 115 / 28 / 332 |
+| high-importance units captured / distorted (238) | 77 / 45 | 114 / 9 |
+| statements flagged by the self-check | (140, applied afterwards) | 4 (all judged partial) |
+
+Development sections with kt-cues.2: reach 479/940 (was 482), 606 statements (was 640): no loss of coverage.
+Omission is unchanged (332 units, 45%): the fix corrected meaning, not coverage. The remaining partials are mostly
+clause fragments with an unresolved referent ("they", "it", "these results"), which needs clause-to-clause context.
 
 ## 7. What R3 establishes and what it does not
 

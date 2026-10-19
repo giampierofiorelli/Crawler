@@ -1,0 +1,91 @@
+{
+ "schema": "pee.r3.fidelity.v1",
+ "label": "heldout-fix1-tuned",
+ "base": "heldout-first",
+ "side": "heldout",
+ "generatedAt": "2026-10-19T08:43:02.320Z",
+ "tuned": true,
+ "judges": "changed items: fresh-context agents of the developer model family, blind to the translator; unchanged items carry over the base judgements; not independent human validation",
+ "categories": {
+  "air_purifiers": {
+   "statements": 231,
+   "rejudgedStatements": 61,
+   "units": 255,
+   "rejudgedUnits": 96,
+   "verdict": {
+    "faithful": 162,
+    "partial": 37,
+    "distorted": 3,
+    "unjustified": 29
+   },
+   "selfCheckFlagged": {},
+   "coverage": {
+    "omitted": 98,
+    "captured": 100,
+    "partial": 49,
+    "distorted": 8
+   },
+   "coverageHigh": {
+    "omitted": 16,
+    "captured": 44,
+    "partial": 14,
+    "distorted": 3
+   },
+   "missing": 0
+  },
+  "coffee_machines": {
+   "statements": 127,
+   "rejudgedStatements": 48,
+   "units": 257,
+   "rejudgedUnits": 108,
+   "verdict": {
+    "faithful": 85,
+    "distorted": 6,
+    "unjustified": 4,
+    "partial": 32
+   },
+   "selfCheckFlagged": {
+    "partial": 4
+   },
+   "coverage": {
+    "omitted": 140,
+    "captured": 77,
+    "distorted": 4,
+    "partial": 36
+   },
+   "coverageHigh": {
+    "omitted": 39,
+    "captured": 39,
+    "distorted": 1,
+    "partial": 12
+   },
+   "missing": 0
+  },
+  "air_fryers": {
+   "statements": 191,
+   "rejudgedStatements": 60,
+   "units": 228,
+   "rejudgedUnits": 122,
+   "verdict": {
+    "faithful": 120,
+    "distorted": 20,
+    "partial": 37,
+    "unjustified": 14
+   },
+   "selfCheckFlagged": {},
+   "coverage": {
+    "omitted": 94,
+    "captured": 88,
+    "distorted": 16,
+    "partial": 30
+   },
+   "coverageHigh": {
+    "captured": 31,
+    "omitted": 24,
+    "partial": 10,
+    "distorted": 5
+   },
+   "missing": 0
+  }
+ }
+}
