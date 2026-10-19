@@ -7,7 +7,7 @@ import {createHash} from 'node:crypto';
 import {analyzeEnglishReview155} from './phase155_review_orchestrator.js';
 import {safeMetadataUrl75} from './phase75_source_discovery.js';
 import {probeTransientTestTables226} from './phase226_transient_test_tables.js';
-import {unitAlternation272,canonicalUnit272,dimensionOfUnit272,DIMENSION_WORDS272,DECLARATION_CUE272,TEST_CONTEXT272,rangeOrBound272,
+import {DECLARED_BODY272,unitAlternation272,canonicalUnit272,dimensionOfUnit272,DIMENSION_WORDS272,DECLARATION_CUE272,TEST_CONTEXT272,rangeOrBound272,
  planWords272,EXPLORATORY_UNITS272,conditionTerms272,stem272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 const sha=(x:string)=>createHash('sha256').update(x).digest('hex');
 const safeText=(s:string,n:number)=>s.length>0&&s.length<=n&&!/[<>\x00-\x1f]/.test(s);
@@ -135,12 +135,77 @@ export interface TestProbe225 {
  /** S86 (owner: a test publisher's page also quotes specifications): values of a test sentence whose own clause states a
   * declaration ("its claimed 52 dB", "rated at 1,700W") are not test leads; counted here, never stored as measured. */
  declaredValuesSkipped86?:number;
+ /** S86c (plan + precision86c only): numeric observations the guided reader read but did not offer as results, each with
+  * its evidential role in its own clause (no text). Not persisted; counted for evaluation and future intake. */
+ classifiedObservations86c?:{value:number;unit:string;blockIndex:number;valueOffset:number;role:ObservationRole86c;reason:string}[];
+ /** S86c: further readings of a result already offered (same subject, value, unit and conditions): one result, not several. */
+ repeatedReadings86c?:number;
  exploratoryLeads272?:readonly {value:number;unit:string;blockIndex:number;blockSha256:string;subject:{name:string;model:string|null;sku:string|null}|null;status:'exploratory_research_lead'}[];
  }
 /** Phase272: a product the document names (brand + model code from its headline or headings); per-value attribution only. */
 export interface ProductMention272 {name:string;model:string}
 const HYPOTHETICAL272=/\b(?:would|if you|could|might|per year|a year|annual(?:ly)?|each year|over (?:a|the) year)\b/i;
 const REPORT_CUE272=/\b(?:measured|recorded|reached|peaked|clocked|took|needed|registered|used|consumed|pulls?|draws?|generates?|hit|ran at|came in at|our tests?|(?:we|i) found)\b/i;
+/** S86c: the evidential role of ONE numeric observation, read in its own clause (never from the publisher's identity).
+ * Order: a certification body or a declaration cue in the clause; a programme preset; an approximation or a generic
+ * statement (no exact result of this test); a derivation; a controlled condition (a temperature without a measuring verb; a
+ * duration, load or size introduced by a setting verb or preposition nearer than any measuring verb); otherwise a measured
+ * result. A label before a colon belongs to its value; a clause opened by "and" continues the previous one. */
+export type ObservationRole86c='measured_result'|'test_condition'|'programme_preset'|'declared_spec'|'certified_or_quoted'|'derived'|'unresolved';
+export interface Precision86c {role?:boolean;subject?:boolean;repeats?:boolean;boundary?:boolean;structure?:boolean}
+const CLAUSE_BREAK86c=/[,;()\[\]–—]|\b(?:but|while|whereas|than|versus|vs\.?)\b|(?<=[.!?])\s+/i;
+const RESULT_VERB86c=/\b(?:measured|recorded|reached|peaked|clocked|took|taking|takes|needed|needing|required|lasted|registered|used|uses|consumed|consumes|pulls?|pulled|draws?|drew|generat(?:es|ed|ing)|hit|hits|hitting|ran at|came in at|cleared|clears|cleaned|cleans|removed|finished|achieved|read|reads|showed|gave|managed|logged|scored)\b/gi;
+const PRESET86c=/\b(?:default(?:s|ed)?|pre-?set|presets?|programmed|recommended|suggested|automatically)\b/i;
+const SETTING86c=/\b(?:set|sets|setting|bumped|reduced|increased|lowered|raised|adjusted|changed|opted for|selected|chose|chosen|turned|preheat(?:ed|ing)?|cook(?:ed|ing)?|bak(?:e|ed|ing)|roast(?:ed|ing)?|fr(?:y|ied|ying)|loaded|placed|put|time of|temperature of|duration of)\b/gi;
+const CONDITION_PREP86c=/\b(?:at|to|for|on|with|of|from|over|under)\s+(?:(?:the|its|a|an|just|only)\s+)?(?:(?:maximum|max|minimum|min|highest|lowest|top|full|usual)\s+)?$/i;
+const DERIVED86c=/\b(?:which means|works out|equivalent to|equates to|calculated|we estimate|estimated?|based on|translates to|room size|good for rooms|suitable for rooms|per year|a year|annual(?:ly)?)\b/i;
+const APPROX86c=/\b(?:around|about|approximately|approx\.?|roughly|nearly|almost|near|just over|just under|some|up to)\s*$/i;
+const GENERIC86c=/\b(?:usually|typically|normally|generally|tends? to|on average)\b/i;
+const CONDITION_KINDS86c=new Set(['duration','mass','volume','length']);
+const lastAt=(re:RegExp,s:string)=>{let k=-1;for(const m of s.matchAll(re))k=m.index!;return k;};
+export function observationRole86c(sent:string,start:number,end:number,dim:string):{role:ObservationRole86c;reason:string}{
+ const head=sent.slice(0,start);const parts=head.split(CLAUSE_BREAK86c);let clauseHead=parts.at(-1)??head;
+ if(/^\s*(?:and|or|then)\b/i.test(clauseHead)&&parts.length>1)clauseHead=parts.at(-2)+', '+clauseHead;
+ const clauseTail=sent.slice(end).split(CLAUSE_BREAK86c)[0]??'';const clause=clauseHead+sent.slice(start,end)+clauseTail;
+ if(DECLARED_BODY272.test(clause))return {role:'certified_or_quoted',reason:'certification_body_in_clause'};
+ if(declaredInClause225(clauseHead)||/\b(?:lab-reported|reported CADR|on paper|stated|spec(?:ification)?s?)\b/i.test(clause))return {role:'declared_spec',reason:'declaration_cue_in_clause'};
+ if(PRESET86c.test(clauseHead))return {role:'programme_preset',reason:'preset_cue_before_value'};
+ if(APPROX86c.test(head.slice(-22)))return {role:'unresolved',reason:'approximate_value'};
+ if(GENERIC86c.test(clause))return {role:'unresolved',reason:'generic_statement'};
+ // the verb nearest the value governs it: "I used this to cook a 1.5kg chicken" is a load, "it used 0.5 kWh" a result
+ const verbAt=lastAt(RESULT_VERB86c,clauseHead),settingAt=lastAt(SETTING86c,clauseHead);const measuringVerb=verbAt>=0&&verbAt>settingAt;
+ if(DERIVED86c.test(clause)||(/^\s*(?:based on|from (?:its|the|this))\b/i.test(head)&&!measuringVerb))return {role:'derived',reason:'derivation_cue_in_clause'};
+ // a temperature in an appliance test is the controlled variable unless a measuring verb governs it ("it reached 210°C")
+ if(dim==='temperature'&&!measuringVerb)return {role:'test_condition',reason:'temperature_without_measuring_verb'};
+ if(CONDITION_KINDS86c.has(dim)&&!measuringVerb&&(CONDITION_PREP86c.test(clauseHead)||settingAt>=0))return {role:'test_condition',reason:'setting_or_condition_cue'};
+ return {role:'measured_result',reason:measuringVerb?'measuring_verb':'no_other_role'};
+}
+/** S86c: does the value belong to a product other than the page's? The name NEAREST before the value in its clause (or
+ * owning a parenthesis the value sits in, or a row label), or "achieved by" someone after it: a model-like token (letters
+ * and digits, or a capitalised name followed by a number) or two capitalised words that are not the page product's words.
+ * In prose a single capitalised name ("the Mila") counts too (a row label starts with a capital, so
+ * there it takes two words or a model-like token): withholding errs towards an unresolved result, never a wrong one. Used only to WITHHOLD the page product (never to establish an identity: no similarity matching). */
+const GENERIC_CAPS86c=/^(?:I|We|Our|My|The|A|An|It|Its|This|That|These|Those|At|In|On|For|With|And|But|Speeds?|Standby|Mode|Level|Setting|Fan|Eco|Auto|Express|Quick|Turbo|Sleep|Night|Max|Min|Top|Sub|Test|Data|PM\d*(?:\.\d)?|CADR|AHAM|dBA?|Wh?|kWh|UK|US|EU|HEPA|H1[0-4]|SPEED|TIME|NOISE|POWER)$/;
+export function otherProductInClause86c(sent:string,start:number,end:number,pageSubject:string|null,opts:{wholeLabel?:boolean}={}):boolean{
+ let head=sent.slice(0,start);const tail=sent.slice(end);
+ const paren=/\(\s*$/.test(head);if(paren)head=head.replace(/\(\s*$/,'');
+ const clauseHead=opts.wholeLabel?head:head.split(CLAUSE_BREAK86c).at(-1)??head;
+ if(/^\s*(?:\S+\s+){0,3}(?:achieved|managed|recorded|posted|set|taken|needed|required) by\b/i.test(tail))return true;
+ // another version of the product is another variant ("The SA600 v1 offered ...", "the previous model"): never the page's
+ if(/\b(?:v\d+(?:\.\d+)?|version \d|first version|previous (?:model|version|generation)|older (?:model|version)|predecessor|last year's model|original model)\b/i.test(clauseHead))return true;
+ const own=new Set((pageSubject??'').toLowerCase().split(/[\s()\/,-]+/).filter(Boolean));
+ const spans=[...clauseHead.replace(/^\s*\S+/,m=>opts.wholeLabel?m:m.toLowerCase()).matchAll(/\b([A-Z][A-Za-z0-9+]*(?:[\s-]+[A-Z0-9][A-Za-z0-9+]*)*)/g)]
+  // a capital glued to a number or degree sign is a unit ("200°C", "5L"), not a name
+  .filter(m=>!/[\d°\/]$/.test(clauseHead.slice(0,m.index!)))
+  .map(m=>m[1].split(/[\s-]+/).filter(t=>!GENERIC_CAPS86c.test(t)&&/[A-Za-z]/.test(t))).filter(t=>t.length&&(t.length>1||t[0]!.length>=3));
+ const nearest=spans.at(-1);if(!nearest)return false;
+ const foreign=nearest.filter(t=>!own.has(t.toLowerCase()));if(!foreign.length)return false;
+ return foreign.some(t=>/\d/.test(t)&&/[A-Za-z]/.test(t))||/[A-Za-z]\s+\d{2,}/.test(nearest.join(' '))||nearest.length>=(opts.wholeLabel?2:1);
+}
+/** S86c: a block that is only a value (a table cell or a label-value box entry), and the table/heading context of a block. */
+export const bareValue86c=(b:string)=>b.length<=60&&(b.replace(/\d[\d.,]*\s*[^\s\d]*/g,' ').match(/[A-Za-z]{3,}/g)?.length??0)<2;
+const TEST_SECTION86c=/\b(?:test(?:s|ed|ing)?|results?|measured|measurements?|performance)\b/i;
+const SPEC_SECTION86c=/\bspec(?:ification)?s?\b/i;
 export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
   documentSha256?:string|null;
   productLeads?:readonly {name:string;model:string|null;sku:string|null}[];
@@ -150,6 +215,11 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
   exploratory?:boolean;
   /** Phase272 (plan only): products the document names; a value whose own clause names one is attributed to it. */
   mentions?:readonly ProductMention272[];
+  /** S86c (with a plan only; shadow, evaluation): per-observation precision controls of the guided reader. Every control is on
+   * unless set to false (ablation): role (the value's role in its own clause), subject (a clause naming another product never
+   * gives the page product), repeats (one result read several times is offered once), boundary (a number glued to letters,
+   * a model code "B0G" or "PM2.5", is not a quantity). */
+  precision86c?:Precision86c;
 }={}):TestProbe225 {
  const empty=():TestProbe225=>({schema:'pee225.transient-test-probe.v1',sourceUrl,candidates:[],
   methodBlocks:0,instrumentBlocks:0,existingPhase155MeasurementLeads:0,
@@ -179,9 +249,18 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
  // blocks are the same list, so block indices stay comparable with the Phase268 reader's.
  const deep=plan||opts.exploratory?textBlocks225(html,{maxBlocks:1500}).blocks:all;
  const docTest=!!plan&&deep.some(b=>TEST_CONTEXT272.test(b)||claimedMethod.test(b));
- const planRe=plan?new RegExp('(?<![\\d.,])(\\d{1,3}(?:,\\d{3})+(?:\\.\\d{1,3})?|\\d{1,7}(?:\\.\\d{1,3})?)\\s*('+unitAlternation272(plan.units)+')(?![a-z0-9])','gi'):null;
+ // S86c: precision controls (plan only; each on unless set to false)
+ const p86=plan&&opts.precision86c?{role:opts.precision86c.role!==false,subject:opts.precision86c.subject!==false,repeats:opts.precision86c.repeats!==false,boundary:opts.precision86c.boundary!==false,structure:opts.precision86c.structure!==false}:null;
+ // S86c structure: a bare value (a cell, a label-value box entry) is read with its row label (a th cell the block list leaves
+ // out, or the nearest label block) and its section heading
+ const tagged86=p86?.structure?textBlocks225(html,{maxBlocks:1500,withTags:true}):null;const map86:number[]=[];
+ if(tagged86){let d=0;tagged86.tags!.forEach((t,k)=>{if(t!=='th')map86[d++]=k;});}
+ const heading86=(i:number)=>{const k=map86[i];if(k===undefined)return '';for(let j=k;j>=0;j--)if(/^h[1-6]$/.test(tagged86!.tags![j]!))return tagged86!.blocks[j]!;return '';};
+ const label86=(i:number)=>{const k=map86[i];if(k===undefined)return '';for(let j=k-1;j>=Math.max(0,k-5);j--){const x=tagged86!.blocks[j]!;if(tagged86!.tags![j]==='th'||(!bareValue86c(x)&&/[A-Za-z]/.test(x)))return x;}return '';};
+ const planRe=plan?new RegExp((p86?.boundary?'(?<![A-Za-z\\d.,])':'(?<![\\d.,])')+'(\\d{1,3}(?:,\\d{3})+(?:\\.\\d{1,3})?|\\d{1,7}(?:\\.\\d{1,3})?)\\s*('+unitAlternation272(plan.units)+')(?![a-z0-9])','gi'):null;
  const planTaught=(dim:string)=>new Set(plan?.measurements.filter(m=>m.dimensions.includes(dim)).flatMap(m=>m.terms)??[]);
- const clauseSubject=(sent:string,at:number)=>{const ms=opts.mentions??[];if(ms.length<2)return null;let best:{m:ProductMention272;i:number}|null=null;
+ // S86c (subject control): a generic measurement token ("PM1" from a "TIME TO REACH PM1 ZERO" header) is not a model code
+ const clauseSubject=(sent:string,at:number)=>{const ms=(p86?.subject?(opts.mentions??[]).filter(m=>!GENERIC_CAPS86c.test(m.model)):opts.mentions)??[];if(ms.length<2)return null;let best:{m:ProductMention272;i:number}|null=null;
   for(const m of ms){const re=new RegExp('\\b'+m.model.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','g');for(const x of sent.slice(0,at).matchAll(re))if(!best||x.index!>best.i)best={m,i:x.index!};}
   return best?{name:best.m.name,model:best.m.model,sku:null}:null;};
  const guided=(line:string,i:number,prevLabel:string)=>{
@@ -192,23 +271,46 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
     const unit=canonicalUnit272(m[2]);if(!unit||!plan!.units.includes(unit))continue;const dim=dimensionOfUnit272(unit)!;
     // The value's own sentence (or its table label) must use a taught term of this dimension, or a generic dimension word with
     // a reporting verb; a hypothetical projection, a threshold, a duration of a condition or a declaration is not a result.
-    const ctx=planWords272(sent+' '+prevLabel);const taught=planTaught(dim);
-    if(!(ctx.some(w=>taught.has(w))||(ctx.some(w=>(DIMENSION_WORDS272[dim]??[]).includes(w))&&REPORT_CUE272.test(sent))))continue;
+    const bare=!!tagged86&&bareValue86c(line);const label=bare?label86(i)||prevLabel:prevLabel;const section=bare?heading86(i):'';
+    const ctx=planWords272(sent+' '+label);const taught=planTaught(dim);
+    const taughtOk=ctx.some(w=>taught.has(w))||(ctx.some(w=>(DIMENSION_WORDS272[dim]??[]).includes(w))&&REPORT_CUE272.test(sent));
+    const classify=(role:ObservationRole86c,reason:string)=>{const v=Number(m[1].replace(/,/g,''));if(Number.isFinite(v))(out.classifiedObservations86c??=[]).push({value:v,unit,blockIndex:i,valueOffset:base+m.index!,role,reason});};
+    if(bare){
+     // S86c: a bare value in a specifications section is a declaration; outside a test section or test label it is not a
+     // result of this test; inside one, the section establishes the test and the taught term is not required
+     if(!taughtOk&&!TEST_SECTION86c.test(section+' '+label))continue;
+     if(SPEC_SECTION86c.test(section)||SPEC_SECTION86c.test(label)){classify('declared_spec','specification_section');continue;}
+     if(!(TEST_SECTION86c.test(section)||TEST_SECTION86c.test(label)||TEST_CONTEXT272.test(label))){classify('unresolved','bare_value_without_test_context');continue;}
+    }else if(!taughtOk)continue;
+    // S86c: the value's role in its own clause (a bare value: with its label) decides whether it can be a result; other roles
+    // are kept as classified observations (no text), never offered as test results
+    if(p86?.role){const lead=bare&&label?label+': ':'';const r=observationRole86c(lead+sent,lead.length+m.index!,lead.length+m.index!+m[0].length,dim);
+     if(r.role!=='measured_result'){classify(r.role,r.reason);continue;}}
     if(DECLARATION_CUE272.test(sent)||rangeOrBound272(sent,m.index!,m.index!+m[0].length))continue;
     if(HYPOTHETICAL272.test(sent)||/^[\s-]*(?:limit|threshold|cap|target|mark)\b/i.test(sent.slice(m.index!+m[0].length).replace(/^-?\w*\s/,' '))&&/\b(?:below|above|under|our|the)\s*$/i.test(sent.slice(0,m.index!)))continue;
     if(dim==='duration'&&/\b(?:for|after|left|over|every|each|within)\s*$/i.test(sent.slice(Math.max(0,m.index!-10),m.index!)))continue;
     const planConds=plan!.measurements.filter(x=>x.dimensions.includes(dim)).flatMap(x=>x.conditions).filter(c=>c.terms.some(t=>ctx.includes(t))).map(c=>c.id);
     const value=Number(m[1].replace(/,/g,''));if(!Number.isFinite(value)||value<0||value>1e7)continue;
     if(/^(?:g|kg)$/.test(unit)&&/^\s*of\b/i.test(sent.slice(m.index!+m[0].length)))continue;
-    const subj=clauseSubject(sent,m.index!)??subject;const blockHash=sha(line);
+    let named=clauseSubject(sent,m.index!);
+    // S86c (subject control): a mention whose words are all words of the page product's name ("Airmega 300" on the "Coway
+    // Airmega 300" page) is the page product (exact token containment, never similarity)
+    if(p86?.subject&&named&&subject){const own=new Set(subject.name.toLowerCase().split(/[\s()\/,-]+/));if(named.name.toLowerCase().split(/[\s()\/,-]+/).every(t=>own.has(t)))named=null;}
+    // S86c: a clause naming another product never gives the page product (the value stays unresolved, never discarded)
+    const withheld=!!p86?.subject&&!named&&(bare&&label?otherProductInClause86c(label,label.length,label.length,subject?.name??null,{wholeLabel:true})
+     :otherProductInClause86c(sent,m.index!,m.index!+m[0].length,subject?.name??null));
+    const subj=withheld?null:named??subject;const blockHash=sha(line);
     const id=sha(JSON.stringify([sourceUrl,blockHash,base+m.index!,value,unit,subj]));
     if(seen.has(id)||records.some(r=>r.blockIndex===i&&r.value===value&&canonicalUnit272(r.unit)===unit))continue;seen.add(id);
+    // S86c (repeats control): a further reading of a result already offered (same subject, value, unit) is counted, not
+    // offered again, so the bounded record list holds distinct results (it was filled by repeats on long pages)
+    if(p86?.repeats&&records.some(r=>(r.subject?.name??'unresolved@'+r.blockIndex)===(subj?.name??'unresolved@'+i)&&r.value===value&&(canonicalUnit272(r.unit)??r.unit)===unit)){out.repeatedReadings86c=(out.repeatedReadings86c??0)+1;continue;}
     const cc=codesOf(sent,sent);
     records.push({id,sourceUrl,documentSha256:opts.documentSha256??null,blockSha256:blockHash,blockIndex:i,valueOffset:base+m.index!,value,unit,
      ...(planConds.length?{planConditionIds272:[...new Set(planConds)].sort()}:{}),
      instrument:instrumentRe.exec(sent)?.[1]?.toLowerCase()??null,condition:conditionRe.exec(sent)?.[1]?.toLowerCase()??null,methodCue:'plan_guided_measurement_term',
      conditionCodes:cc.codes,setpointC:cc.setpointC,documentProtocolCodes:[],subject:subj,
-     subjectAssignment:subj&&subj!==subject?'clause_named_model_unverified':scope,classification:'publisher_reported_measurement_lead_only',
+     subjectAssignment:withheld?'multiple_models_unresolved':subj&&subj!==subject?'clause_named_model_unverified':scope,classification:'publisher_reported_measurement_lead_only',
      methodReviewed:false,originalWorkReviewed:false,reviewerIndependent:false,exactVariantVerified:false,market:'unknown',scientificEvidenceAdmitted:false,rankingAuthorized:false});
    }}
  };
@@ -278,6 +380,22 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
  if(plan){const ct=conditionTerms272(plan);for(let k=records.length-1;k>=0;k--){const r=records[k];const line=deep[r.blockIndex]??'';
   const rest=line.slice(r.valueOffset).replace(/^[\d.,]+\s*\S*?(?=\s|$)/,'').trim().split(/\s+/)[0]?.toLowerCase().replace(/[^a-z]/g,'')??'';
   if(rest&&ct.has(stem272(rest)))records.splice(k,1);}}
+ // S86c: in controlled mode the records of the legacy prose and table passes go through the same role and subject checks as
+ // the guided ones (one mechanism for every reading); only restrictive (a record is set aside or unresolved, never widened)
+ if(p86){for(let k=records.length-1;k>=0;k--){const r=records[k];if(r.methodCue==='plan_guided_measurement_term')continue;const line=deep[r.blockIndex]??'';
+  let off=0;let sent=line;for(const x of line.split(/(?<=[.!?])\s+(?=[A-Z£])/)){if(r.valueOffset>=off&&r.valueOffset<off+x.length+1){sent=x;break;}off+=x.length+1;}
+  const at=r.valueOffset-(sent===line?0:off);const end=at+String(r.value).length;const u=canonicalUnit272(r.unit);const dim=u?dimensionOfUnit272(u)??'':'';
+  if(p86.role){const ro=observationRole86c(sent,at,end,dim);if(ro.role!=='measured_result'){(out.classifiedObservations86c??=[]).push({value:r.value,unit:r.unit,blockIndex:r.blockIndex,valueOffset:r.valueOffset,role:ro.role,reason:ro.reason});records.splice(k,1);continue;}}
+  if(p86.subject&&r.subject&&subject&&r.subject.name===subject.name&&otherProductInClause86c(sent,at,end,subject.name))records[k]={...r,subject:null,subjectAssignment:'multiple_models_unresolved'};}}
+ // S86c: a value printed inside the page product's own name ("Vortex Compact 5L") is part of the name (a declaration), and
+ // one result read several times (summary, body, table: same subject, value, unit and conditions) is offered once.
+ if(p86?.role&&subject){const name=subject.name.toLowerCase();for(let k=records.length-1;k>=0;k--){const r=records[k];const line=(deep[r.blockIndex]??'').toLowerCase();
+  for(let at=line.indexOf(name);at>=0;at=line.indexOf(name,at+1))if(r.valueOffset>=at&&r.valueOffset<at+name.length){
+   (out.classifiedObservations86c??=[]).push({value:r.value,unit:r.unit,blockIndex:r.blockIndex,valueOffset:r.valueOffset,role:'declared_spec',reason:'value_in_product_name'});records.splice(k,1);break;}}}
+ if(p86?.repeats){const seenResult=new Set<string>();let rep86=0;
+  for(let k=0;k<records.length;k++){const r=records[k];const key=JSON.stringify([r.subject?.name??'unresolved@'+r.blockIndex,r.value,canonicalUnit272(r.unit)??r.unit.toLowerCase(),[...(r.conditionCodes??[])].sort()]);
+   if(seenResult.has(key)){records.splice(k--,1);rep86++;}else seenResult.add(key);}
+  if(rep86)out.repeatedReadings86c=(out.repeatedReadings86c??0)+rep86;}
  // Phase272 exploratory pass: any generic unit with a generic reporting cue, not covered by an accepted candidate.
  const exploratory:NonNullable<TestProbe225['exploratoryLeads272']>[number][]=[];
  if(opts.exploratory){const exRe=new RegExp('(?<![\\d.,])(\\d{1,3}(?:,\\d{3})+(?:\\.\\d{1,3})?|\\d{1,7}(?:\\.\\d{1,3})?)\\s*('+unitAlternation272(EXPLORATORY_UNITS272)+')(?![a-z0-9])','gi');

@@ -176,6 +176,9 @@ export function polarity272(clause:string):'positive'|'negative'|'mixed'|null{
  if(!pos&&!neg)return null;return pos&&neg?'mixed':pos?'positive':'negative';
 }
 /** Generic cues that a value is a declaration or a claim, not the tester's result. */
+/** A certification or standards body (moved from document_semantics.ts in S86c so the prose reader shares it): a value its
+ * clause attributes to one is a certified or quoted rating, not the tester's own result. */
+export const DECLARED_BODY272=/\b(?:AHAM|ANSI|ISO|IEC|ENERGY STAR|UL|CE)\b/;
 export const DECLARATION_CUE272=/\b(?:claim(?:s|ed)?|rated|rating of|label(?:led)?|advertis\w*|certified|official(?:ly)?|spec(?:ification)?s?|manufacturer|according to|promises?|quoted|says? (?:it|the)|listed)\b/i;
 /** Generic cues that a document reports first-hand testing (sentence- or document-level). */
 // audit S77 (A1-13): first-person measurement with an instrument or unit under test ("our sound meter showed", "I left it to

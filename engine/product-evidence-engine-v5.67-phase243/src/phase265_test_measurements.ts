@@ -18,7 +18,7 @@
  */
 import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_transient_test_probe.js';
 import {comparativeResults270,type ComparativeResult270,type ApplianceClass270} from './phase270_comparative_results.js';
-import {probeTransientTestContent225,textBlocks225,type ProductMention272} from './phase225_transient_test_probe.js';
+import {probeTransientTestContent225,textBlocks225,type ProductMention272,type Precision86c} from './phase225_transient_test_probe.js';
 import {createHash} from 'node:crypto';
 import {loadQuantityKnowledge,typeObservedValue,type QuantityKnowledge,type ObservedQuantity} from './quantity_knowledge.js';
 import {TEST_CONTEXT272,planContentDigest272,type ExtractionPlan272} from './phase272_extraction_plan.js';
@@ -52,9 +52,11 @@ const canonical=(x:unknown):string=>x===null||typeof x!=='object'?JSON.stringify
 /** The reading configuration of one call, or null when no plan is used (the historical, unversioned path). */
 // Not part of the identity, because neither changes which candidates are produced: the exploratory pass (research leads,
 // never candidates, never persisted) and the page category (used only by the comparative reader, versioned separately).
-export function readingConfiguration265(opts:{plan?:ExtractionPlan272;semantics?:unknown;tableLessons?:readonly TableLessonId1E[]}):ReadingConfiguration265|null{
+export function readingConfiguration265(opts:{plan?:ExtractionPlan272;semantics?:unknown;tableLessons?:readonly TableLessonId1E[];precision86c?:Precision86c}):ReadingConfiguration265|null{
  if(!opts.plan)return null;const contentDigest=planContentDigest272(opts.plan);
  return {schema:'pee.reading-configuration.v1',baseReader:TEST_LEAD_EXTRACTOR265,guidedReader:GUIDED_READER272_VERSION,
+  // S86c: the guided reader with its precision controls is a different reader (the enabled controls are named)
+  ...(opts.precision86c?{guidedReader:GUIDED_READER272_VERSION+'+p86c.v1:'+(['role','subject','repeats','boundary','structure'] as const).filter(k=>opts.precision86c![k]!==false).join('.')}:{}),
   plan:{schema:String(opts.plan.schema),categoryId:String(opts.plan.categoryId),contentDigest,compiledDigest:String(opts.plan.compiledFrom?.digest??''),digestVerified:opts.plan.compiledFrom?.digest===contentDigest},
   // Table lessons (shadow reading only) are part of the semantic reading: a lesson change changes the reading identity.
   semanticReading:opts.semantics?SEMANTIC_TABLES1D2_VERSION+(opts.tableLessons?.length?'+lessons1e:'+tableLessonsDigest1E(opts.tableLessons):''):null};
@@ -159,7 +161,9 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  semantics?:DocumentSemantics1D2;
  /** Table understanding Stage D (with plan and semantics only; shadow): the table leads come from the lesson-enabled decision
   * ledger (src/table_ledger1e.ts) instead of structuredTableLeads1D2. Same methodCue, so nothing reaches the store. */
- tableLessons?:readonly TableLessonId1E[]}={}):TestLeadsInput265{
+ tableLessons?:readonly TableLessonId1E[];
+ /** S86c (with a plan only; shadow): per-observation precision controls of the guided reader (see probeTransientTestContent225). */
+ precision86c?:Precision86c}={}):TestLeadsInput265{
  let lead=pageProductLead265(x);
  const mentions=opts.plan?documentMentions272(html):[];
  // Phase272 (plan only): a headline that is a sentence ("I tested the LG C6 and LG C5 side-by-side") is not a product name:
@@ -168,7 +172,7 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  const tested=({air_fryers:'air_fryer',ovens:'oven',microwaves:'microwave',slow_cookers:'slow_cooker',halogen_ovens:'halogen_oven'} as Record<string,ApplianceClass270>)[opts.category??''];
  const cmp=comparativeResults270(html,{testedClass:tested});const comparative=cmp.results;
  const probe=probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[],
-  ...(opts.plan?{plan:opts.plan,mentions}:{}),...(opts.exploratory?{exploratory:true}:{})});
+  ...(opts.plan?{plan:opts.plan,mentions,...(opts.precision86c?{precision86c:opts.precision86c}:{})}:{}),...(opts.exploratory?{exploratory:true}:{})});
  // S86: declared or quoted values the probe and the comparative reader set aside travel with the reading (journaled at ingest)
  {const n=(probe.declaredValuesSkipped86??0)+(cmp.declaredSkipped??0);if(n)probe.declaredValuesSkipped86=n;}
  if(opts.plan){const cells=comparisonCells272(html);if(cells.size){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
@@ -194,7 +198,7 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
     tl5Attached!.push({blockIndex:o.blockIndex,valueOffset:o.valueOffset,condition:t.condition!});return {...o,condition:t.condition};});}
   probe.candidates=[...probe.candidates,...extra.filter(c=>!seen(c))];}
  // Step 3: a plan-guided reading is versioned by its configuration; the no-plan output is unchanged.
- const cfg=readingConfiguration265({plan:opts.plan,semantics:opts.semantics,tableLessons:opts.semantics?opts.tableLessons:undefined});
+ const cfg=readingConfiguration265({plan:opts.plan,semantics:opts.semantics,tableLessons:opts.semantics?opts.tableLessons:undefined,precision86c:opts.plan?opts.precision86c:undefined});
  return {extractorVersion:cfg?readingIdentity265(cfg):TEST_LEAD_EXTRACTOR265,probe,...(comparative.length?{comparative270:comparative}:{}),
   ...(cfg?{readingConfiguration:cfg,comparativeReaderVersion:TEST_LEAD_EXTRACTOR265}:{}),...(tl7Dropped||tl5Attached?{shadowDiagnostics:{...(tl7Dropped?{tl7DroppedBlockReaderLeads:tl7Dropped}:{}),...(tl5Attached?{tl5ConditionsAttached:tl5Attached}:{})}}:{})};
 }

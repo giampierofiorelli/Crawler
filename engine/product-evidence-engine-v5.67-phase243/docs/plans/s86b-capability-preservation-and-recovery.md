@@ -110,6 +110,8 @@ Both were corrected in S86.
 
 **Sealing.** The reference was sealed by hash before any page run (`evaluation/s86b/page-reference-freeze.json`). Annotations, worksheets and runs are private.
 
+*Correction (2026-10-19, S86c):* the counts below come from scorer v1, which folded rounded repeats as new results and merged same-line mentions. The sealed freeze record's counts (123 measured, 175 declared) stand. The "stored, attributed correctly" column below is the screen plus the subject association, not storage. See `s86c-knowledge-guided-discovery.md` §1.
+
 **What the reference holds:**
 - 125 measured results (first mentions);
 - 170 declared values;

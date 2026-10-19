@@ -23,7 +23,7 @@ import {buildTableGrid245,interpretTableGrid245,type TableGrid245} from './phase
 import {tableAcquisitionStatus1F,type TableStatus1F} from './table_acquisition1f.js';
 import {classifyRegions245} from './phase245_spec_extraction.js';
 import {textBlocks225,type TestCandidate225} from './phase225_transient_test_probe.js';
-import {unitAlternation272,canonicalUnit272,dimensionOfUnit272,DIMENSION_WORDS272,DECLARATION_CUE272,TEST_CONTEXT272,rangeOrBound272,
+import {DECLARED_BODY272,unitAlternation272,canonicalUnit272,dimensionOfUnit272,DIMENSION_WORDS272,DECLARATION_CUE272,TEST_CONTEXT272,rangeOrBound272,
  planWords272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 
 export type PageType1D2='single_product_review'|'product_detail'|'comparison'|'roundup'|'methodology'|'other';
@@ -219,7 +219,7 @@ export function cellProducts1D2(sem:DocumentSemantics1D2,isProduct:(name:string)
 }
 
 const PRICE=/[$£€¥]\s?\d|\d\s?(?:usd|gbp|eur)\b/i;
-const DECLARED_BODY=/\b(?:AHAM|ANSI|ISO|IEC|ENERGY STAR|UL|CE)\b/;
+const DECLARED_BODY=DECLARED_BODY272; // S86c: one definition, shared with the prose reader
 /** The table reader's own patterns, exported unchanged for the table decision ledger (src/table_ledger1e.ts), which must
  * apply exactly the same gates. */
 export const TABLE_GATES1D2={TABLE_TEST,SPEC_HEAD,PRICE,DECLARED_BODY} as const;
