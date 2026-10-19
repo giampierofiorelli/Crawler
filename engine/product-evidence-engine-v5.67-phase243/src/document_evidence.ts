@@ -189,7 +189,11 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
  const tableProducts=[...new Set(tables.tables.flatMap(t=>t.observations.map(o=>o.product)).filter((x):x is string=>!!x))];
  // names from structured data, cleaned of an editorial suffix; list items and microdata names count only when product-shaped
  // (a breadcrumb "Home & Garden" or "Air Fryers" is not a product)
- const structured=doc.names.filter(n=>n.source==='json-ld-product'||n.source==='json-ld-list'||n.source==='microdata').map(n=>({name:cleanName(n.text),source:n.source}))
+ // audit S79: a structured "name" that is a sentence ("The IQAir Atem X wouldn't look out of place in the MoMA, but…")
+ // names its product in its leading capitalised run; the sentence itself is never a product name
+ const nameOf=(t:string)=>{const c=cleanName(t);if(nameShapedPrincipal1G(c)||words(c).length<=10&&!/[,…]|\b(?:is|are|was|were|wouldn't|isn't|has|have)\b/.test(c))return c;
+  const m=/^(?:The\s+|This\s+)?([A-Z][\p{L}\d+-]*(?:\s+(?:[A-Z0-9][\p{L}\d+-]*)){1,5})\b/u.exec(c);return m?m[1]:'';};
+ const structured=doc.names.filter(n=>n.source==='json-ld-product'||n.source==='json-ld-list'||n.source==='microdata').map(n=>({name:n.source==='json-ld-product'?nameOf(n.text):cleanName(n.text),source:n.source}))
   .filter(n=>n.name&&(n.source==='json-ld-product'?words(n.name).length<=10:!!headingProduct(n.name)));
  const known=[...structured.map(n=>n.name),...tableProducts];
  const fromHeadings=doc.headings.map(h=>headingProduct(h.text,known)).filter((x):x is string=>!!x).map(name=>({name,source:'heading'}));
@@ -200,7 +204,7 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
  const inv=inventory([...structured,...tableProducts.map(name=>({name,source:'table'})),...fromHeadings,...fromProse]);
  const titleSeg=doc.names.find(n=>n.source==='title_segment')?.text??null;
  const h1=doc.headings.find(h=>h.level===1);
- const pageSubject=(doc.principal?cleanName(doc.principal):null)??(h1?headingProduct(h1.text,known):null)??(titleSeg?headingProduct(titleSeg,known):null);
+ const pageSubject=(doc.principal?nameOf(doc.principal)||null:null)??(h1?headingProduct(h1.text,known):null)??(titleSeg?headingProduct(titleSeg,known):null);
  const {document,source}=documentStatements1G(html,qk,base,'rendered',inv.names.map(n=>n.name));
  const author=authorOf(root);const len=textLengths(root);const total=Math.max(1,len.get([...walk245(root)].find(x=>x.tag==='body')??root)??1);
  // ---- visible segments, in document order, with their section headings

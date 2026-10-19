@@ -134,3 +134,8 @@ test('audit S78: products named only in prose by brand and model code are found;
  assert.match(at(rev,'21 minutes').product??'',/^Acme P5/,'the opening "This" refers to the reviewed product');
  assert.equal(read(body,'','retailer').products.some(p=>(p.name??p)==='Hisense UR8'),false,'no prose discovery on a retailer page');
 });
+test('audit S79: a structured product "name" that is a sentence names its product in its leading capitalised run', ()=>{
+ const ld=`<script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Product',name:"The Acme Atem X wouldn't look out of place in a gallery, but is one of the most efficient purifiers I've…"})}</script>`;
+ const r=read('<h1>Review</h1><p>The noise level is around 44dB on the 4th speed.</p>',ld,'editorial');
+ assert.equal(r.pageSubject,'Acme Atem X');assert.ok(r.products.every(p=>!/wouldn't/.test(p.name??String(p))));
+});

@@ -607,3 +607,10 @@ Dated correction of §15.1 and §15.2 (owner review verbatim: skill `owner-s78-r
    measurement, run through the full path, plus a source check of the sufficiency verdict; for caveats, a blind
    applicability check against the user's stated situation (scope and conditions consumed by a rule), on requests not
    used to build the linking rule.
+4. **Attribution refinement after S79** (development sets, spent): the 14 wrong attributions on p272 were examined one
+   by one. 5 are a naming granularity difference, not a wrong product (reader "Samsung QE65S85H", the page's exact UK
+   65-inch code; reference "Samsung S85H"); 4 follow the page faithfully ("Candy CF 57CF0W"; the reference adds a "-80"
+   variant suffix the page does not print); 2 were a reader defect (a structured product "name" that is a sentence,
+   "The IQAir Atem X wouldn't look out of place…"), now read as its leading capitalised run; 3 are real errors ("the
+   Elite", a model named by a word without digits), left unresolved because a general rule would risk merging products.
+   p272 wrong 14 -> 12, usable decisions C8 63 -> 65; s1cd and af unchanged; evidence roles unchanged.
