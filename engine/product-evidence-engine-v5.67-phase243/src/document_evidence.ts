@@ -31,6 +31,7 @@ import {parseHtml245,walk245,locator245,decodeEntities245,type Node245} from './
 import {documentModel1G,interpretDocumentTables1G,blockKind1G,isMethodHeading1G,nameShapedPrincipal1G} from './table_interpreter1g.js';
 import {interpretWithKnowledge1G,documentStatements1G,type KnowledgeInterpretation1G} from './table_interpreter1g_knowledge.js';
 import {findQuantities,typeQuantity,applyRecordRoles,withLabelBasis,withConventionalBasis,unitStatedInLabel,parseUnit,hasPhrase,normText,type QuantityKnowledge,type TypedQuantity,type FoundQuantity,type RecordValue} from './quantity_knowledge.js';
+import {TEST_CONTEXT272,DECLARATION_CUE272} from './phase272_extraction_plan.js';
 
 export const DOCUMENT_EVIDENCE_VERSION='wd.1';
 export type SegmentRole='pair'|'sentence'|'embedded_pair'|'embedded_sentence';
@@ -220,6 +221,7 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
    products:e.item?[{name:e.item,start:-1,end:-1}]:mentions(inv,e.text),duplicateOf:dup});}
  // ---- quantities: typed with the shared knowledge, attributed, then read per record (P1)
  const quantities:SegmentQuantity[]=[];const records=new Map<string,RecordValue[]>();let qi=0;
+ const pageTests=opts.sourceType!=='manufacturer'&&opts.sourceType!=='retailer'&&segs.some(s=>s.region==='subject'&&(s.headings.some(h=>isMethodHeading1G(h))||blockKind1G(s.text)==='method'));
  const sectionProduct=(hs:readonly string[])=>{for(let i=hs.length-1;i>=0;i--){const m=new Set(mentions(inv,hs[i]).map(x=>x.name));if(m.size===1)return [...m][0];if(m.size>1)return null;}return null;};
  for(const s of segs){if(s.duplicateOf)continue;
   const units=s.role==='sentence'||s.role==='embedded_sentence'?sentences(s.text):[{start:0,text:s.text}];
@@ -242,7 +244,16 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
       if(lastF>lastK){product=null;basis='none';}else{product=before[before.length-1].name;basis='sentence';}}
      else if(after.length&&new Set(after.map(p=>p.name)).size===1){product=after[0].name;basis='sentence';}
      else{const sp=sectionProduct(s.headings);if(sp){product=sp;basis=s.role==='pair'?'pair_section':'section';}else if(pageSubject){product=pageSubject;basis='page';}}}
-    const evidenceClass=s.region==='boilerplate'?'unknown':classOf(s,u.text,opts.sourceType??null);
+    // audit S77 (A1-2): the value's own clause decides first ("the maker claims 12 L/day, but in our tests it extracted 9");
+    // the sentence and its headings decide only when the clause has no cue of its own
+    const ownRole=(()=>{if(s.region==='boilerplate')return null;const w=windows(u.text,found,fi);const t=w.left+' '+w.right;
+     if(DECLARATION_CUE272.test(t)&&!TEST_CONTEXT272.test(t))return 'manufacturer_declared';
+     if(TEST_CONTEXT272.test(t)&&!DECLARATION_CUE272.test(t))return 'publisher_measured';return null;})();
+    const evidenceClass0=s.region==="boilerplate"?"unknown":ownRole??classOf(s,u.text,opts.sourceType??null);
+    // audit S77 (A1-16): a review page that declares its own test (method heading or method block) covers its narrative
+    // sentences without a declaration cue, as documentTests covers its qualitative judgements; measured on the sealed role
+    // reference: 78 missed measurements recovered, 19 values asserted where the local text alone cannot tell, 0 wrong
+    const evidenceClass=evidenceClass0==='unknown'&&pageTests&&s.region==='subject'&&s.role==='sentence'&&!DECLARATION_CUE272.test(u.text)?'publisher_measured':evidenceClass0;
     let quantity:TypedQuantity|null=null;
     if(!ident){const {left,right}=windows(u.text,found,fi);
      const labels=s.label!==null?[s.label]:[left,right].filter(x=>x.trim());

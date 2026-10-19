@@ -178,7 +178,9 @@ export function polarity272(clause:string):'positive'|'negative'|'mixed'|null{
 /** Generic cues that a value is a declaration or a claim, not the tester's result. */
 export const DECLARATION_CUE272=/\b(?:claim(?:s|ed)?|rated|rating of|label(?:led)?|advertis\w*|certified|official(?:ly)?|spec(?:ification)?s?|manufacturer|according to|promises?|quoted|says? (?:it|the)|listed)\b/i;
 /** Generic cues that a document reports first-hand testing (sentence- or document-level). */
-export const TEST_CONTEXT272=/\b(?:(?:we|i) (?:tested|ran|used|measured|recorded|timed|put|tried|found|benchmarked|bought)|our (?:test(?:s|ing)?|lab|team|test team|testing)|in (?:our )?tests?\b|during (?:our )?test(?:s|ing)|in testing|hands-on|test room|test bench|for (?:over )?a (?:week|month))\b/i;
+// audit S77 (A1-13): first-person measurement with an instrument or unit under test ("our sound meter showed", "I left it to
+// cook", "our unit pulled") is a test context as well
+export const TEST_CONTEXT272=/\b(?:(?:we|i) (?:tested|ran|used|measured|recorded|timed|put|tried|found|benchmarked|bought|left|set|got|saw|noticed|cooked|weighed|metered|logged|clocked|heard)|(?:our|my) (?:test(?:s|ing)?|lab|team|test team|testing|unit|sample|review unit|sensor|meter|sound meter|power meter|energy meter|thermometer|readings?|measurements?)|in (?:our |my )?tests?\b|during (?:our |my )?test(?:s|ing)|in testing|hands-on|test room|test bench|for (?:over )?a (?:week|month))\b/i;
 /** A value that is an endpoint of a range or a bound is never a result ("0.7 to 0.8kWh", "less than 8 litres", "from 40.2 to 63.5 dBA"). */
 export function rangeOrBound272(line:string,at:number,end:number):boolean{
  const before=line.slice(Math.max(0,at-22),at),after=line.slice(end,end+14);

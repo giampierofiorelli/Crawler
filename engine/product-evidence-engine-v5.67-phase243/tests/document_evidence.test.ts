@@ -116,3 +116,12 @@ test('QE facets (cross-category hypothesis): a need for an even result finds une
  assert.equal(relevantObservations(need,neg).filter(r=>r.reasons.some(x=>x.includes('spatial'))).length,0);
  const night=readQualitativeNeed(qk,'quiet enough for a bedroom at night');assert.ok(night.aspects.includes('noise')&&night.useContexts.includes('night_bedroom'));
 });
+test('audit S77 (A1-16): a review that declares its own test covers its narrative values; a maker claim and a page without a test do not', ()=>{
+ const body='<h1>Acme AF5 review</h1><h2>How we test</h2><p>We cook chips, wings and a cake in every air fryer.</p><h2>Performance</h2><p>The chips were crisp after 15 minutes at 200°C.</p><p>The maker claims it heats to 200°C in 3 minutes.</p>';
+ const r=read(body,'','independent_original_test');
+ assert.equal(at(r,'15 minutes').evidenceClass,'publisher_measured');
+ assert.equal(at(r,'3 minutes').evidenceClass,'manufacturer_declared','a declaration cue keeps its own class');
+ const plain=read('<h1>Acme AF5 review</h1><h2>Performance</h2><p>The chips were crisp after 15 minutes at 200°C.</p>','','independent_original_test');
+ assert.equal(at(plain,'15 minutes').evidenceClass,'unknown','no declared test on the page: the narrative alone does not say who measured');
+ assert.equal(at(read(body,'','retailer'),'15 minutes').evidenceClass,'manufacturer_declared','a retailer page is never a test');
+});

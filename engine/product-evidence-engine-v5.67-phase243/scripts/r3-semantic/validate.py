@@ -50,6 +50,12 @@ else:
     tok = AutoTokenizer.from_pretrained(name); model = AutoModelForCausalLM.from_pretrained(name, dtype=torch.float32).eval()
     load = time.time() - t0
     opts = ['exact', 'close', 'broader', 'narrower', 'related', 'none']
+    # audit S77 (A4-1): the first design read only the first token of the lowercase forms, so "narrower" was the token "n"
+    # and capitalised answers ("Exact", the likely form at the start of a reply) were discarded. LLM_READOUT=seq (default)
+    # scores every surface form (lower/capitalised, with/without a leading space) by its full token-sequence probability.
+    import copy
+    READOUT = os.environ.get('LLM_READOUT', 'seq')
+    forms = {o: [tok.encode(v, add_special_tokens=False) for v in (o, ' ' + o, o.capitalize(), ' ' + o.capitalize())] for o in opts}
     first = [tok.encode(' ' + o, add_special_tokens=False)[0] for o in opts]
     first2 = [tok.encode(o, add_special_tokens=False)[0] for o in opts]
     sysmsg = ('You align phrases from scientific teaching documents about household appliances to taught concepts. '
@@ -64,13 +70,29 @@ else:
             msgs = [{'role': 'system', 'content': sysmsg}, {'role': 'user', 'content': user}]
             enc = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors='pt', return_dict=True)
             with torch.no_grad():
-                lp = torch.log_softmax(model(**enc).logits[0, -1].float(), -1)
-            p = {o: float(torch.logsumexp(torch.stack([lp[first[i]], lp[first2[i]]]), 0)) for i, o in enumerate(opts)}
+                out0 = model(**enc, use_cache=True)
+                lp = torch.log_softmax(out0.logits[0, -1].float(), -1)
+                if READOUT == 'first':
+                    p = {o: float(torch.logsumexp(torch.stack([lp[first[i]], lp[first2[i]]]), 0)) for i, o in enumerate(opts)}
+                else:
+                    p = {}
+                    for o in opts:
+                        seqs = []
+                        for ids in forms[o]:
+                            s_ = float(lp[ids[0]])
+                            if len(ids) > 1:
+                                cache = copy.deepcopy(out0.past_key_values)
+                                x = torch.tensor([ids[:-1]]); am = torch.ones(1, enc['input_ids'].shape[1] + len(ids) - 1, dtype=torch.long)
+                                l2 = torch.log_softmax(model(input_ids=x, attention_mask=am, past_key_values=cache, use_cache=True).logits[0].float(), -1)
+                                s_ += sum(float(l2[j, ids[j + 1]]) for j in range(len(ids) - 1))
+                            seqs.append(s_)
+                        p[o] = float(torch.logsumexp(torch.tensor(seqs), 0))
+            mass = float(torch.exp(torch.logsumexp(torch.tensor(list(p.values())), 0)))
             z = torch.logsumexp(torch.tensor(list(p.values())), 0).item()
-            rows.append({'mention': m['mention'], 'concept': c['concept'], 'p': {k: float(torch.exp(torch.tensor(v - z))) for k, v in p.items()}})
+            rows.append({'mention': m['mention'], 'concept': c['concept'], 'p': {k: float(torch.exp(torch.tensor(v - z))) for k, v in p.items()}, 'label_mass': mass})
 elapsed = time.time() - t0
 cost = {'model': name, 'load_seconds': round(load, 1), 'total_seconds': round(elapsed, 1), 'pairs': len(rows),
         'seconds_per_pair': round((elapsed - load) / max(1, len(rows)), 3), 'max_rss_mb': round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024),
         'threads': torch.get_num_threads(), 'device': 'cpu'}
-Path(out).write_text(json.dumps({'method': method, 'side': side, 'cost': cost, 'rows': rows}, indent=1) + '\n')
+Path(out).write_text(json.dumps({'method': method, 'side': side, 'readout': os.environ.get('LLM_READOUT', 'seq') if method != 'nli' else None, 'nli_variant': os.environ.get('NLI_VARIANT', 'a') if method == 'nli' else None, 'cost': cost, 'rows': rows}, indent=1) + '\n')
 print(json.dumps(cost))

@@ -158,7 +158,10 @@ const INLINE=new Set(['span','a','b','strong','em','i','sup','sub','small','abbr
 function textOf(n:Node245):string{let s='';const w=(x:Node245)=>{if(x.kind==='text'){s+=decodeHtml5Text1F(x.rawText??x.text);return;}if(RAW.has(x.tag))return;
  const block=!INLINE.has(x.tag);if(block)s+=' ';for(const c of x.children)w(c);if(block)s+=' ';};w(n);return s.replace(/[\t\n\f\r ]+/g,' ').trim();}
 const BLOCK_TAGS=new Set(['p','li','dt','dd','blockquote','figcaption','pre','summary']);
-const blockKind=(t:string):Block1G['kind']=>ESTIMATE_CUE.test(t)&&/\b(?:we|i|our)\b/i.test(t)?'estimate':TEST_CONTEXT272.test(t)||(/\b(?:we|i)\b/i.test(t)&&TEST_CUE.test(t))?'method':DECLARATION_CUE272.test(t)?'declaration':'other';
+// audit S77 (A1-1): a recurrence ("per day", "per cycle") makes an estimate only for a cost; for litres or kWh it is
+// the reporting basis of a measured or declared value
+const COST_CONTEXT=/\b(?:costs?|price|bill|spend|tariff|pence|cents?)\b|[£$€]/i;
+const blockKind=(t:string):Block1G['kind']=>(EXPLICIT_ESTIMATE.test(t)||(RECURRENCE.test(t)&&COST_CONTEXT.test(t)))&&/\b(?:we|i|our)\b/i.test(t)?'estimate':TEST_CONTEXT272.test(t)||(/\b(?:we|i)\b/i.test(t)&&TEST_CUE.test(t))?'method':DECLARATION_CUE272.test(t)?'declaration':'other';
 /** WD: the 1G block classification (method, declaration, estimate, other), shared with the whole-document reader. */
 export const blockKind1G=(t:string):Block1G['kind']=>blockKind(t);
 export const isMethodHeading1G=(t:string)=>METHOD_HEAD.test(t);

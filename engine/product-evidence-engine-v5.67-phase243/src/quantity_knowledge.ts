@@ -78,21 +78,24 @@ export interface QuantityKnowledge {pack:QuantityPack;digest:string;identity:str
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 export const normText=(s:string)=>s.normalize('NFKC').toLowerCase().replace(/[‐-―]/g,'-').replace(/\s+/g,' ').trim();
 const esc=(w:string)=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+/** Audit S77 (A1-12): a hyphen and a space are the same separator in a phrase ("sound-power level", "hard-floor"). */
+const phrasePat=(p:string)=>esc(p).replace(/[ -]+/g,'[\\s-]+');
 const phraseRe=new Map<string,RegExp>();
 /** Whole-phrase match on normalised text (no partial words: "pm1" does not match "pm10"). */
 export function hasPhrase(text:string,phrase:string):boolean{const p=normText(phrase);let re=phraseRe.get(p);
- if(!re){re=new RegExp('(?<![\\p{L}\\p{N}])'+esc(p)+'(?![\\p{L}\\p{N}])','u');phraseRe.set(p,re);}return re.test(normText(text));}
+ if(!re){re=new RegExp('(?<![\\p{L}\\p{N}])'+phrasePat(p)+'(?![\\p{L}\\p{N}])','u');phraseRe.set(p,re);}return re.test(normText(text));}
 
 /** Which of several phrases a text names, longest first: a phrase inside a longer matched phrase does not count
  * ("pressure" inside "sound pressure"). Returns the matched phrases. */
 export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
  let t=' '+normText(text)+' ';const out=new Set<string>();
- for(const p of [...new Set(phrases.map(normText))].sort((a,b)=>b.length-a.length)){const re=new RegExp('(?<![\\p{L}\\p{N}])'+esc(p)+'(?![\\p{L}\\p{N}])','gu');
+ for(const p of [...new Set(phrases.map(normText))].sort((a,b)=>b.length-a.length)){const re=new RegExp('(?<![\\p{L}\\p{N}])'+phrasePat(p)+'(?![\\p{L}\\p{N}])','gu');
   if(re.test(t)){out.add(p);t=t.replace(re,m=>' '.repeat(m.length));}}
  return out;
 }
 /** The default pack. v1 stays loadable (pass its JSON) to reproduce readings identified by qk.1. */
-export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v2.json';
+/** qk.2.4 (audit S77): generic words no longer settle a specific metric. qk.2.3 kept in v2 for reproduction. */
+export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v3.json';
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
 /** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
 /** kr.3 (R1, 2026-10-18): a difference of conditions only when documented or definitional; rules.v2.json kept for reproduction. */
