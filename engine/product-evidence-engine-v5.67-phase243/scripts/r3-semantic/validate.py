@@ -62,9 +62,9 @@ else:
                     f'Concept: {label(c["concept"])} ({c["kind"]}): {short(c["description"], 300)}\n'
                     'How does the concept relate to what the phrase refers to in this sentence? One word.')
             msgs = [{'role': 'system', 'content': sysmsg}, {'role': 'user', 'content': user}]
-            ids = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors='pt')
+            enc = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors='pt', return_dict=True)
             with torch.no_grad():
-                lp = torch.log_softmax(model(ids).logits[0, -1].float(), -1)
+                lp = torch.log_softmax(model(**enc).logits[0, -1].float(), -1)
             p = {o: float(torch.logsumexp(torch.stack([lp[first[i]], lp[first2[i]]]), 0)) for i, o in enumerate(opts)}
             z = torch.logsumexp(torch.tensor(list(p.values())), 0).item()
             rows.append({'mention': m['mention'], 'concept': c['concept'], 'p': {k: float(torch.exp(torch.tensor(v - z))) for k, v in p.items()}})
