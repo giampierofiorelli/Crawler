@@ -62,5 +62,31 @@
   "no operational change",
   "no category-specific rules: any vocabulary used must be general (metrology, document structure) or come from knowledge data"
  ],
- "stopRule": "at most three reformulations on development data"
+ "stopRule": "at most three reformulations on development data",
+ "declarationSplit": {
+  "rule": "hosts in sha256(host) order until >=20% of the sample",
+  "developmentHosts": [
+   "nutribullet.com",
+   "benq.com",
+   "salter.com",
+   "sparkfun.com",
+   "smartuk.net",
+   "sharpconsumer.com",
+   "lakeland.co.uk",
+   "woot.com",
+   "eufy.com",
+   "stihl.co.uk",
+   "richersounds.com",
+   "apple.com",
+   "shop.pimoroni.com",
+   "smappliance.com",
+   "dualit.com",
+   "macafeine.ca"
+  ],
+  "developmentItems": 75,
+  "checkHosts": 61,
+  "checkItems": 298,
+  "fixedAt": "2026-10-19T21:23:45.072Z",
+  "before": "annotation results"
+ }
 }

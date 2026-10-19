@@ -24,6 +24,12 @@ test('S87e B: a declared attribute is categorical, never a judgement; a judgemen
  assert.equal(steel.result.form,'categorical');assert.deepEqual(steel.result.categorical,{value:'stainless steel',scale:'nominal'});assert.equal(steel.result.judgement,undefined);
  const remote=fromDeclaration({declaration_id:'d2',product_id:'p',property_key:'remote control',value_json:'{"kind":"text","text":"Yes"}',locator:'dl',evidence_role:'retailer_declaration',method:'m'},null);
  assert.equal(remote.result.categorical!.scale,'boolean');
+ const price=fromDeclaration({declaration_id:'d4',product_id:'p',property_key:'price',value_json:'{"amount":55,"currency":"GBP","kind":"price"}',locator:'x',evidence_role:'retailer_declaration',method:'m'},null);
+ assert.equal(price.result.form,'quantity');assert.equal(price.result.quantity!.quantityKind.value,'price_or_cost');
+ const dims=fromDeclaration({declaration_id:'d5',product_id:'p',property_key:'size',value_json:'{"kind":"dimensions","numbers":[51,21],"unit":"mm"}',locator:'x',evidence_role:'retailer_declaration',method:'m'},null);
+ assert.deepEqual(dims.result.quantity!.components,[51,21]);
+ const count=fromDeclaration({declaration_id:'d6',product_id:'p',property_key:'speeds',value_json:'{"kind":"number","number":3}',locator:'x',evidence_role:'retailer_declaration',method:'m'},null);
+ assert.equal(checkStructure(count).valid,true,'a count without a stated unit can be stored');assert.equal(assessCompleteness(count).interpret.status,'incomplete');
  const q=fromQualitative270({observation_id:'q1',block_sha256:'b',block_index:1,product_id:'p',identity:'page_main_product_unverified',outcome:'crispness',dish:'chips',
   dish_from_heading:0,setting_adjusted:1,direction:'negative',strength:'hedged',basis:'first_person_cooking_test',reader_version:'v'},null);
  assert.equal(q.result.form,'judgement');assert.equal(q.result.judgement!.polarity,'negative');

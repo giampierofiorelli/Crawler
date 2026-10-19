@@ -37,7 +37,9 @@ export interface ObservationRecord {
  subjects:Subject[];
  assessed:{property:Slot<string>;objectOfInterest:Slot<string>;constraints:Constraint[];basis:Slot<string>;statistic:Slot<string>};
  result:{form:ResultForm;derivation:Derivation;
-  quantity?:{value:number|null;unit:Slot<string>;quantityKind:Slot<string>;approximate:boolean};
+  quantity?:{value:number|null;unit:Slot<string>;quantityKind:Slot<string>;approximate:boolean;
+   /** a stated interval (range), the components of a vector (W×H×D) or the offered alternatives (options) */
+   low?:number;high?:number;components?:number[]};
   categorical?:{value:string;scale:'nominal'|'ordinal'|'boolean'};
   judgement?:{polarity:'positive'|'negative'|'mixed'|'neutral';grade:Slot<string>;strength:Slot<'explicit'|'hedged'>};
   comparison?:{experiment:Slot<string>;task:Slot<string>;relation:Slot<'better'|'worse'|'equal'|'ordered'|'values_only'>;members:ComparisonMember[];reasons:string[]}};
@@ -63,7 +65,6 @@ const slotsOf=(o:ObservationRecord)=>[o.assessed.property,o.assessed.objectOfInt
 export const STRUCTURE:readonly Rule[]=[
  {id:'V1-one-result-form',path:'result',applies:()=>true,
   holds:o=>(['quantity','categorical','judgement','comparison'] as const).filter(f=>!!o.result[f]).length===1&&!!o.result[o.result.form],message:'exactly one result form, matching result.form'},
- {id:'V2-unit-with-value',path:'result.quantity.unit',applies:o=>o.result.form==='quantity'&&o.result.quantity?.value!==null,holds:o=>o.result.quantity!.unit.state!=='unknown',message:'a numeric value has a unit'},
  {id:'V3-inferred-names-rule',path:'*',applies:()=>true,holds:o=>slotsOf(o).every(s=>s.state!=='inferred'||!!s.rule)&&o.assessed.constraints.every(c=>c.state!=='inferred'||!!c.rule),
   message:'every inferred slot names the rule or knowledge item that supplied it'},
  {id:'V4-declaration-not-test',path:'observer.role',applies:o=>o.observationBasis.value==='declaration',holds:o=>o.observer.role!=='independent_test',message:'a declaration is never an independent test'},
@@ -228,17 +229,26 @@ export function comparativeJudgement(a:{subjects:{name:string;model?:string|null
  o.observationBasis=a.basis?stated(a.basis,a.evidence):unknown();
  o.observer={publisher:stated(a.publisher??hostOf(a.document),a.document),role:'independent_test'};o.provenance={document:a.document,evidence:a.evidence,readerVersion:null};return o;
 }
-/** declarations row: a declared value (manufacturer, retailer, editorial or reference), never a test. A quantity is a
- * quantity; a text is a CATEGORICAL value (nominal, or boolean for yes/no features) — a declared attribute, not a judgement. */
+/** declarations row: a declared value (manufacturer, retailer, editorial or reference), never a test. Numeric declarations
+ * (quantity, price, unitless number, range, dimensions, options) are quantities; text and yes/no declarations are
+ * CATEGORICAL values (nominal or boolean) — declared attributes, not judgements. */
 export function fromDeclaration(r:Record<string,unknown>,sourceUrl:string|null=null):ObservationRecord{
- const v=J(r.value_json) as {kind?:string;number?:unknown;unit?:unknown;text?:unknown;approximate?:unknown;value?:unknown}|null;
- const isQty=v?.kind==='quantity'&&typeof v.number==='number';const ev=String(r.locator??'')||null;
- const o=base('declarations',String(r.declaration_id),isQty?'quantity':'categorical');
+ const v=(J(r.value_json) as Record<string,unknown>|null)??{};const kind=String(v.kind??'');const ev=String(r.locator??'')||null;
+ const nums=Array.isArray(v.numbers)?(v.numbers as unknown[]).filter((x):x is number=>typeof x==='number'):[];
+ const numeric=['quantity','price','number','range','dimensions','options'].includes(kind);
+ const o=base('declarations',String(r.declaration_id),numeric?'quantity':'categorical');
  o.subjects=[{name:unknown(),model:unknown(),productId:stated(r.product_id as string,ev),level:'product',identity:'stated'}];
  o.assessed.property=stated(r.property_key as string,ev);if(r.component)o.assessed.objectOfInterest=stated(String(r.component),ev);
- if(isQty)o.result.quantity={value:v!.number as number,unit:typeof v!.unit==='string'?stated(v!.unit,ev):unknown(),quantityKind:unknown(),approximate:v!.approximate===true};
- else{const text=typeof v?.text==='string'?v.text:typeof v?.value==='boolean'?String(v.value):String(r.raw_value??'');
-  o.result.categorical={value:text,scale:v?.kind==='boolean'||/^(?:yes|no|true|false|✓|✗)$/i.test(text.trim())?'boolean':'nominal'};}
+ if(numeric){const unit=kind==='price'?(typeof v.currency==='string'?v.currency:null):typeof v.unit==='string'?v.unit:null;
+  const q:NonNullable<ObservationRecord['result']['quantity']>={value:typeof v.number==='number'?v.number:typeof v.amount==='number'?v.amount:null,
+   unit:unit?stated(unit,ev):unknown(),quantityKind:kind==='price'?stated('price_or_cost',ev):unknown(),approximate:v.approximate===true};
+  if(kind==='range'&&typeof v.min==='number'&&typeof v.max==='number'){q.low=v.min;q.high=v.max;}
+  if((kind==='dimensions'||kind==='options')&&nums.length)q.components=nums;
+  if(kind==='options')o.assessed.statistic=stated('available_options',ev);
+  o.result.quantity=q;}
+ else{const text=typeof v.text==='string'?v.text:typeof v.value==='boolean'?String(v.value):String(r.raw_value??'');
+  o.result.categorical={value:text,scale:kind==='boolean'||/^(?:yes|no|true|false|✓|✗)$/i.test(text.trim())?'boolean':'nominal'};
+  if(kind==='boolean'&&typeof v.qualifier==='string'&&v.qualifier)o.assessed.constraints.push({dimension:'qualifier',value:v.qualifier,state:'stated',evidence:ev});}
  o.observationBasis=stated<ObservationBasis>('declaration',ev);
  o.observer={publisher:stated(hostOf(sourceUrl),sourceUrl),role:ROLE[String(r.evidence_role)]??'unknown'};
  o.provenance={document:sourceUrl,evidence:ev,readerVersion:(r.method as string)??null};return o;
