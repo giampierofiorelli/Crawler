@@ -1,7 +1,7 @@
 {
  "schema": "pee.property-definitions.v1",
- "version": "pd.2",
- "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object.",
+ "version": "pd.3",
+ "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object. A property may declare a plausible SI range (plausibleSi; s, m, Pa, Hz, m3/s, dB): a value outside it is not attributed (SHACL-style value constraint). Object nouns name the measured object (acoustic output, audio path, obstacle), never the product class.",
  "sources": [
   {
    "id": "vim",
@@ -1079,6 +1079,10 @@
     "dw_pkg",
     "ap_pkg",
     "s87"
+   ],
+   "plausibleSi": [
+    1,
+    172800
    ]
   },
   {
@@ -1237,6 +1241,10 @@
     "iec_60704",
     "rfc_pkg",
     "sb_pkg"
+   ],
+   "plausibleSi": [
+    10,
+    130
    ]
   },
   {
@@ -1305,6 +1313,10 @@
     "smoke",
     "dust",
     "pollen"
+   ],
+   "plausibleSi": [
+    0.001,
+    2
    ]
   },
   {
@@ -1800,6 +1812,10 @@
     "vacuum",
     "robot",
     "fan"
+   ],
+   "plausibleSi": [
+    100,
+    50000
    ]
   },
   {
@@ -1992,6 +2008,10 @@
     "battery",
     "charge",
     "cordless"
+   ],
+   "plausibleSi": [
+    60,
+    172800
    ]
   },
   {
@@ -2088,6 +2108,10 @@
    "state": "supported",
    "sources": [
     "rfc_pkg"
+   ],
+   "plausibleSi": [
+    0,
+    0.2
    ]
   },
   {
@@ -2211,13 +2235,19 @@
    ],
    "objectNouns": [
     "bass",
-    "speaker",
-    "soundbar",
-    "subwoofer",
-    "audio",
-    "sound",
+    "treble",
     "response",
-    "treble"
+    "acoustic output",
+    "sound output",
+    "low end",
+    "highs",
+    "lows",
+    "mids",
+    "subwoofer"
+   ],
+   "plausibleSi": [
+    5,
+    40000
    ]
   },
   {
@@ -2279,10 +2309,13 @@
     "audio",
     "sound",
     "lip",
-    "speaker",
-    "soundbar",
-    "bluetooth",
-    "speakers"
+    "lip-sync",
+    "bluetooth audio",
+    "dialogue"
+   ],
+   "plausibleSi": [
+    0,
+    2
    ]
   },
   {
@@ -2771,6 +2804,104 @@
   {
    "version": "pd.2",
    "note": "S88 E4: robot floor cleaners and soundbars authored from owner packages 05 and 08 (supplement 01 only) BEFORE any document of these categories was read in S88; hash-sealed in evaluation/s88/e4-definitions-freeze.json"
+  },
+  {
+   "version": "pd.3",
+   "note": "S89 (owner review of S88): known objects (I-ADOPT object of interest: a value naming another concept's object is not this property's) and plausible SI ranges (SHACL-style value constraints); profile licence removed by default"
   }
- ]
+ ],
+ "knownObjects": {
+  "note": "Objects that are not the object of any defined property but recur next to numbers. A value whose own words name one of them, and none of the candidate property's object nouns, is not attributed to that property (it may belong to an undefined concept, which stays unknown).",
+  "objects": [
+   {
+    "id": "video_signal",
+    "nouns": [
+     "hdmi",
+     "4k",
+     "8k",
+     "fps",
+     "refresh",
+     "passthrough",
+     "pass-through",
+     "vrr",
+     "video",
+     "frame rate",
+     "resolution",
+     "hdr"
+    ],
+    "sources": [
+     "sb_pkg"
+    ]
+   },
+   {
+    "id": "product_body",
+    "nouns": [
+     "tall",
+     "wide",
+     "deep",
+     "dimensions",
+     "measures",
+     "weighs",
+     "weight",
+     "footprint",
+     "height of the robot",
+     "profile"
+    ],
+    "sources": [
+     "iadopt"
+    ]
+   },
+   {
+    "id": "commerce",
+    "nouns": [
+     "price",
+     "discount",
+     "off",
+     "deal",
+     "save",
+     "savings",
+     "sale",
+     "warranty",
+     "guarantee",
+     "subscription"
+    ],
+    "sources": [
+     "s87"
+    ]
+   },
+   {
+    "id": "time_span",
+    "nouns": [
+     "years",
+     "months",
+     "ago",
+     "since",
+     "launched",
+     "released",
+     "experience"
+    ],
+    "sources": [
+     "s87"
+    ]
+   },
+   {
+    "id": "display",
+    "nouns": [
+     "screen",
+     "tv",
+     "television",
+     "display",
+     "panel"
+    ],
+    "sources": [
+     "s87"
+    ]
+   }
+  ],
+  "state": "candidate",
+  "sources": [
+   "iadopt",
+   "s87"
+  ]
+ }
 }

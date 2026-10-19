@@ -20,19 +20,22 @@ function items(){const out=[];
   const k=Math.ceil(uniq.length/40)||1;
   uniq.filter((_,i)=>i%k===0).forEach((a,j)=>{const b=blocks[a.bi];
    out.push({id:`${p.tag}-${j}`,page:p.tag,host:new URL(p.url).hostname,category:p.category,title,value:a.value,unit:a.unit,surface:a.surface,
-    window:b.slice(Math.max(0,a.start-160),a.end+160),label:b.slice(Math.max(0,a.start-80),a.end+30),context:b.slice(0,600)});});}
+    window:b.slice(Math.max(0,a.start-160),a.end+160),label:b.slice(Math.max(0,a.start-80),a.end+30),valueAt:Math.min(80,a.start),context:b.slice(0,600)});});}
  return out;}
 if(cmd==='input'){const it=items();const f=join(ROOT,'e4-annotation-input.json');if(existsSync(f))throw Error(f+' exists');
  const defsLabels=PD.loadPropertyDefinitions(qk);
  writeFileSync(f,JSON.stringify({labels:{properties:[...defsLabels.properties.values()].map(p=>({id:p.id,meaning:`${p.label} (${p.form}; about: ${p.object})`})),dimensions:[...defsLabels.dimensions.values()].map(d=>({id:d.id,meaning:d.label}))},
   items:it.map(({id,category,title,value,unit,surface,window})=>({id,category,pageTitle:title,value,unit,surface,text:window}))},null,1));
  writeFileSync(join(ROOT,'e4-items.json'),JSON.stringify(it,null,1));console.log(it.length,'items',sha(readFileSync(f)));}
+// the value's offset in its label: the occurrence of its surface nearest the label's centre of construction (80 chars in)
+const locate=x=>{const occ=[];let i=-1;while((i=x.label.indexOf(String(x.surface),i+1))>=0)occ.push(i);return occ.length?occ.sort((a,b)=>Math.abs(a-80)-Math.abs(b-80))[0]:null;};
 const defsFor=arm=>{if(arm==='pd1'){const raw=execSync('git show 447ae33:engine/product-evidence-engine-v5.67-phase243/resources/property-definitions/property-definitions.v1.json',{cwd:new URL('..',import.meta.url).pathname});return PD.loadPropertyDefinitions(qk,JSON.parse(raw));}return PD.loadPropertyDefinitions(qk);};
 if(cmd==='run'){const f=join(ROOT,`e4-run-${LABEL}.json`);if(existsSync(f))throw Error(f+' exists: a run is made once');
- const it=JSON.parse(readFileSync(join(ROOT,'e4-items.json'),'utf8'));const NOLIC=ARM.endsWith('-nolicense');const defs=defsFor(ARM==='unitkind'?'pd2':ARM.replace('-nolicense',''));
- const rows=it.map(x=>{const o={value:x.value,unit:x.unit,label:x.label,context:x.context,category:x.category};
+ const it=JSON.parse(readFileSync(join(ROOT,'e4-items.json'),'utf8'));const NOLIC=ARM.endsWith('-nolicense');const LIC=ARM.endsWith('-license');const defs=defsFor(ARM==='unitkind'?'pd2':ARM.replace(/-(no)?license$/,''));
+ const rows=it.map(x=>{const o={value:x.value,unit:x.unit,label:x.label,context:x.context,category:x.category,valueAt:x.valueAt??locate(x)};
   if(ARM==='unitkind'){const r=I.attributeProperty(defs,qk,o);const c=r.value?[r.value,...r.alternatives]:r.alternatives;return {id:x.id,property:c.length===1?c[0]:null,conditions:[],basis:null};}
-  const r=I.interpretWithDefinitions(defs,qk,o,{profileLicense:!NOLIC});return {id:x.id,property:r.property.value,propertyState:r.property.state,conditions:r.conditions.filter(c=>c.dimension&&c.value).map(c=>({dimension:c.dimension,value:c.value})),basis:r.basis.value,missingDefining:r.missingDefining};});
+  // S89: arm pd2 uses the interpreter default (no licence since S89); S88 runs reproduce with pd1/pd2 + '-license'
+  const r=I.interpretWithDefinitions(defs,qk,o,LIC?{profileLicense:true}:NOLIC?{profileLicense:false}:{});return {id:x.id,property:r.property.value,propertyState:r.property.state,conditions:r.conditions.filter(c=>c.dimension&&c.value).map(c=>({dimension:c.dimension,value:c.value})),basis:r.basis.value,missingDefining:r.missingDefining};});
  writeFileSync(f,JSON.stringify({label:LABEL,arm:ARM,definitions:defs.identity,at:new Date().toISOString(),rows},null,1));console.log(LABEL,ARM,defs.identity,rows.filter(r=>r.property).length,'/',rows.length,'attributed');}
 if(cmd==='score'){const fr=JSON.parse(readFileSync(new URL('../evaluation/s88/e4-annotation-freeze.json',import.meta.url),'utf8'));const rb=readFileSync(join(ROOT,'e4-annotations.json'));
  if(sha(rb)!==fr.annotationsSha256)throw Error('reference does not match its seal');const ref=JSON.parse(rb).items;

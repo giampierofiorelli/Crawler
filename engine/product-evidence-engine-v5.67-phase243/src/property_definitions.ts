@@ -22,12 +22,12 @@ export interface ConditionDimension {id:string;qkAxis?:string;structure:typeof S
 export interface PropertyDefinition {id:string;label:string;form:'quantity'|'categorical'|'judgement';
  quantity?:{kinds:string[];metric?:string;nonQkUnits?:string[];countNouns?:string[]};
  judgement?:{aspect:string[];higherIsBetter:boolean};
- object:string;objectNouns?:string[];basis:{default:Basis;when:string;rule:string}|null;surface:[string,Lifecycle][];conditions:([string,Relevance]|[string,Relevance,{onlyForBasis:Basis}])[];
+ object:string;objectNouns?:string[];plausibleSi?:[number,number];basis:{default:Basis;when:string;rule:string}|null;surface:[string,Lifecycle][];conditions:([string,Relevance]|[string,Relevance,{onlyForBasis:Basis}])[];
  outcomes?:string[];state:Lifecycle;sources:string[]}
 export interface CategoryProfile {category:string;properties:string[];relevance:Record<string,Record<string,Relevance>>;state:Lifecycle;sources:string[]}
 export interface BasisCues {note:string;per_run:string[];per_period:string[];per_hour:string[];per_unit:string[];runNamed:string[];state:Lifecycle;sources:string[]}
 export interface NonQkUnitForms {note:string;currency:string[];currency_per_energy:string[];state:Lifecycle;sources:string[]}
-export interface DefinitionPack {schema:string;version:string;statement:string;sources:DefinitionSource[];basisCues:BasisCues;nonQkUnitForms:NonQkUnitForms;conditionDimensions:ConditionDimension[];properties:PropertyDefinition[];profiles:CategoryProfile[]}
+export interface DefinitionPack {schema:string;version:string;statement:string;sources:DefinitionSource[];basisCues:BasisCues;nonQkUnitForms:NonQkUnitForms;knownObjects?:{note:string;objects:{id:string;nouns:string[];sources:string[]}[];state:Lifecycle;sources:string[]};conditionDimensions:ConditionDimension[];properties:PropertyDefinition[];profiles:CategoryProfile[]}
 export interface PropertyDefinitions {pack:DefinitionPack;digest:string;identity:string;
  properties:Map<string,PropertyDefinition>;dimensions:Map<string,ConditionDimension>;profiles:Map<string,CategoryProfile>;
  /** QK kind -> properties whose quantity admits it */ byKind:Map<string,string[]>}
@@ -58,6 +58,8 @@ export function loadPropertyDefinitions(qk:QuantityKnowledge,pack?:unknown):Prop
   if(x.basis&&(!(BASES as readonly string[]).includes(x.basis.default)||!x.basis.rule))fail('basis of '+w);
   if(!x.surface.length)fail('surface of '+w);for(const [t,s] of x.surface)if(!t.trim()||!(LIFECYCLE as readonly string[]).includes(s))fail(`surface ${t} of ${w}`);
   const seen=new Set<string>();for(const [d,r,q] of x.conditions){if(q&&!(BASES as readonly string[]).includes(q.onlyForBasis))fail(`basis qualifier of ${d} in ${w}`);if(!dims.has(d))fail(`dimension ${d} of ${w}`);if(seen.has(d))fail(`duplicate dimension ${d} of ${w}`);seen.add(d);if(!(RELEVANCE as readonly string[]).includes(r))fail(`relevance of ${d} in ${w}`);}}
+ for(const x of p.properties)if(x.plausibleSi&&!(x.plausibleSi.length===2&&x.plausibleSi[0]<x.plausibleSi[1]))fail('plausible range of property '+x.id);
+ if(p.knownObjects){life(p.knownObjects,'known objects');for(const o of p.knownObjects.objects){if(!o.nouns.length)fail('known object '+o.id);for(const s0 of o.sources)if(!src.has(s0))fail(`source ${s0} of known object ${o.id}`);}}
  const props=new Map(p.properties.map(x=>[x.id,x]));const cats=new Set<string>();
  for(const c of p.profiles){const w='profile '+c.category;if(cats.has(c.category))fail('duplicate '+w);cats.add(c.category);life(c,w);
   for(const id of c.properties)if(!props.has(id))fail(`property ${id} of ${w}`);

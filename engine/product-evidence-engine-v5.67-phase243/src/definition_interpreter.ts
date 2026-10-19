@@ -12,6 +12,7 @@ import {hasPhrase,normText,parseUnit,typeQuantity,findQuantities,type QuantityKn
 import {applicableProperties,relevanceOf,type Basis,type ConditionDimension,type PropertyDefinition,type PropertyDefinitions,type Relevance} from './property_definitions.js';
 import {UNIT_LEXICON272,type PlanMeasurement272} from './phase272_extraction_plan.js';
 import {classifyCondition87} from './observation_model.js';
+import {observationRole86c,otherProductInClause86c,type ObservationRole86c} from './phase225_transient_test_probe.js';
 
 export const DEFINITION_INTERPRETER_VERSION='pee88.definition-interpreter.v1';
 export type SlotState='stated'|'inferred'|'ambiguous'|'unknown';
@@ -25,8 +26,14 @@ export interface DefinitionInterpretation {version:string;definitions:string;cat
  /** Defining dimensions of the attributed property the observation does not state (limits comparability, never identity). */
  missingDefining:string[];
  /** Condition texts no dimension types (kept, never dropped). */
- untyped:string[];basis:BasisSlot;object:{value:string|null;state:SlotState;rule:string|null}}
-export interface ObservationInput {value:number|null;unit:string;label?:string|null;context?:string|null;conditions?:readonly string[];category?:string|null}
+ untyped:string[];basis:BasisSlot;object:{value:string|null;state:SlotState;rule:string|null};
+ /** S89: evidential role and subject from document structure (S86c), kept apart from the property (never merged). */
+ role:{value:ObservationRole86c|null;reason:string|null};subject:'page_product'|'other_product'|'unresolved'}
+export interface ObservationInput {value:number|null;unit:string;label?:string|null;context?:string|null;conditions?:readonly string[];category?:string|null;
+ /** S89: offset of the value in the label; when given, a label term supports the value only if no other number lies between them. */
+ valueAt?:number|null;
+ /** S89: the printed value (to locate its end) and the page's product name (to tell another product's value). */
+ surface?:string|null;pageSubject?:string|null}
 
 const norm=(s:string|null|undefined)=>normText(String(s??'').replace(/_/g,' '));
 const has=(text:string,phrase:string)=>!!text&&hasPhrase(text,phrase);
@@ -45,6 +52,23 @@ export function kindsOf(qk:QuantityKnowledge,o:{value:number|null;unit:string;la
  return {kind:tq.kind.id,candidates:tq.kind.id?[tq.kind.id]:[...tq.kind.candidates]};
 }
 
+/** S89: the label as the value's own words: when the value's offset is known, keep only the span between the numbers that
+ * neighbour it (a term attaches to the nearest number, DocRED/SciREX-style local association). */
+export function ownWords(label:string,valueAt:number|null|undefined,qk?:QuantityKnowledge):string{
+ if(valueAt==null||valueAt<0||valueAt>label.length)return label;
+ // neighbours are other QUANTITIES (a number with a unit the pack knows), not any digit ("4K" is a word)
+ const nums=qk?findQuantities(qk,label).map(q=>[q.start,q.end] as const):[...label.matchAll(/\d+(?:[.,]\d+)?/g)].map(m=>[m.index!,m.index!+m[0].length] as const);
+ const self=nums.find(([a,b])=>a<=valueAt&&valueAt<b)??nums.find(([a])=>a>=valueAt);
+ if(!self)return label;
+ const before=nums.filter(([,b])=>b<=self[0]).at(-1),after=nums.find(([a])=>a>=self[1]);
+ // words between two quantities: a value owns the words after it up to the first clause break, and the words before it back
+ // to the last clause break; without a break the gap is split at its midpoint
+ const BREAK=/[,;:()\[\]–—]|\b(?:and|but|while|whereas|with|than|versus|vs|had|has|was|were|is|are|which|compared)\b/gi;
+ const cutIn=(a:number,b:number,last:boolean)=>{const seg=label.slice(a,b);const ms=[...seg.matchAll(BREAK)];if(!ms.length)return Math.round((a+b)/2);
+  const m=last?ms.at(-1)!:ms[0]!;return a+m.index!+(last?m[0].length:0);};
+ const from=before?cutIn(before[1],self[0],true):0,to=after?cutIn(self[1],after[0],false):label.length;
+ return label.slice(from,to);
+}
 function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,context:string,inProfile=false):{score:number;evidence:string[]}{
  const terms:[string,number][]=d.surface.map(([t,s])=>[t,s==='candidate'?0.5:1]);
  if(d.quantity?.metric)for(const t of qk.metrics.get(d.quantity.metric)?.terms??[])terms.push([t,1]);
@@ -54,27 +78,41 @@ function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,contex
  const objectNamed=!d.objectNouns?.length||d.objectNouns.some(n=>has(label,n)||has(context,n));
  // outside a profile that lists the property, the object must be named for any term (the category does not supply it)
  if(!objectNamed&&!inProfile)return {score:0,evidence:[]};
- for(const [t,w] of terms){if(w<1&&!objectNamed)continue;if(has(label,t)){score+=2*w;ev.push('label:'+t);}else if(has(context,t)){score+=w;ev.push('context:'+t);}}
+ const ownObject=!!d.objectNouns?.length&&d.objectNouns.some(n=>has(label,n));
+ // S89: support from the wider context alone needs the property's object in the value's own words
+ for(const [t,w] of terms){if(w<1&&!objectNamed)continue;if(has(label,t)){score+=2*w;ev.push('label:'+t);}else if(has(context,t)&&(ownObject||!d.objectNouns?.length&&!inProfile)){score+=w;ev.push('context:'+t);}}
  return {score,evidence:ev};
 }
 
 /** Attribution: the defined property a value reports. A unit kind alone only nominates candidates; a surface term of the
  * definition in the value's own label or context must support the choice. Equal support for two properties chooses neither. */
-/** opts.profileLicense (default true, the frozen S88 dev behaviour): a profile listing one property for the unit kind attributes
+/** opts.profileLicense (S89: default false; true only reproduces the refuted S88 dev rule): a profile listing one property for the unit kind attributes
  * without a term. E4 showed it is valid only for values already known to be results (it attributed every length on a robot page). */
 export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean}={}):PropertySlot{
- const label=norm(o.label),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
+ const fullLabel=norm(o.label);const label=norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
  const byUnit=pool.filter(d=>d.form==='quantity'&&(cls?d.quantity!.nonQkUnits?.includes(cls):(kk.candidates.some(k=>d.quantity!.kinds.includes(k))||(d.quantity!.countNouns??[]).some(n=>unitNoun===n))));
  const kind=kk.kind??(kk.candidates.length===1?kk.candidates[0]:null);
  if(!byUnit.length)return {value:null,state:'unknown',evidence:[],rule:kk.candidates.length||cls?'no_definition_admits_unit_kind':'unit_not_typed',alternatives:[],kind};
  const prof=o.category?defs.profiles.get(o.category):undefined;
- const scored=byUnit.map(d=>({d,...termScore(d,qk,label,context,!!prof?.properties.includes(d.id))})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
+ // S89: the value's own words name an object of another concept (and none of this property's object nouns): not this property
+ const otherObjects=(defs.pack.knownObjects?.objects??[]).filter(k=>k.nouns.some(n=>has(fullLabel,n))).map(k=>k.id);
+ const qkCompetitors=[...qk.metrics.values()].filter(m=>kk.candidates.includes(m.kind)&&m.terms.some(t=>has(label,t)));
+ const si=(()=>{const p=parseUnit(qk,String(o.unit??'').trim());return p&&o.value!==null?o.value*p.factor+(p.offset??0):null;})();
+ const admissible=(d:PropertyDefinition)=>{
+  if(d.plausibleSi&&si!==null&&(si<d.plausibleSi[0]||si>d.plausibleSi[1]))return false;
+  const ownObject=(d.objectNouns??[]).some(n=>has(label,n));
+  if(otherObjects.length&&!ownObject)return false;
+  if(qkCompetitors.some(m=>m.id!==d.quantity?.metric)&&!(d.quantity?.metric&&qkCompetitors.some(m=>m.id===d.quantity!.metric))&&!ownObject)return false;
+  return true;};
+ const rejected=byUnit.filter(d=>!admissible(d)).map(d=>d.id);
+ const scored=byUnit.filter(admissible).map(d=>({d,...termScore(d,qk,label,context,!!prof?.properties.includes(d.id))})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
+ if(!scored.length)return {value:null,state:'unknown',evidence:[],rule:'value_names_another_concept_or_outside_plausible_range',alternatives:rejected,kind};
  const top=scored[0];
  if(top.score<=0){
   // the category profile licenses a unit-kind attribution when it lists exactly one property admitting the unit
-  if(opts.profileLicense!==false&&byUnit.length===1&&o.category&&defs.profiles.get(o.category)?.properties.includes(byUnit[0].id))
+  if(opts.profileLicense===true&&byUnit.length===1&&o.category&&defs.profiles.get(o.category)?.properties.includes(byUnit[0].id))
    return {value:byUnit[0].id,state:'inferred',evidence:['profile:'+o.category],rule:'profile_single_property_for_unit_kind',alternatives:[],kind};
   return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};}
  const tied=scored.filter(s=>s.score===top.score);
@@ -149,7 +187,10 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
  const basis:BasisSlot=basis0.state!=='stated'&&unitPeriod(o.unit)?{value:'per_period',state:'stated',evidence:'unit:'+o.unit,rule:null}:basis0;
  if(d)for(const r of readings)if(r.dimension&&!r.relational)r.relevance=relevanceOf(defs,d.id,r.dimension,category,basis.value);
  const missingDefining=d?d.conditions.map(([x])=>x).filter(x=>relevanceOf(defs,d.id,x,category,basis.value)==='defining'&&!readings.some(r=>r.dimension===x&&r.value!==null&&!r.relational)):[];
- return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,
+ let role:{value:ObservationRole86c|null;reason:string|null}={value:null,reason:null};let subject:'page_product'|'other_product'|'unresolved'='unresolved';
+ if(o.valueAt!=null&&o.label){const end=o.valueAt+String(o.surface??o.value??'').length;const r=observationRole86c(o.label,o.valueAt,end,property.kind??'');role={value:r.role,reason:r.reason};
+  subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
+ return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};
 }
 

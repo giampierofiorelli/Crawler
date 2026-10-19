@@ -131,6 +131,12 @@ What Hi-Fi, Trusted Reviews and Tom's Guide.
 **Reading gap found.** The 8 rtings pages yield no items. Their test results are rendered from embedded script JSON, and
 the text reader sees 6 navigation blocks. This is a reading-stage gap, not addressed here.
 
+> **Correction (2026-10-20, S89).** The diagnosis above is wrong. The 8 rtings pages declare `"triggered_paywall": true`
+> and contain no test results at all, in the text or in any script. The gap is an access restriction, which PEE must never
+> bypass, not a reader limitation. A census of the 20 S88 and 12 S80 pages found no measurement that exists only inside
+> embedded data. The owner review of S88 relied on this wrong diagnosis.
+> Report: `docs/plans/s89-learning-definitions-and-independent-check.md`.
+
 ## 6. What carries over, and what does not (lessons with their status)
 
 | Lesson | Evidence | Status |
