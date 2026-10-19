@@ -400,13 +400,16 @@ export class KnowledgeStore246 {
   return retention;
  }
  /** Access outcomes feed reversible host suspension (403/429/robots refusals), never bypass. */
- recordAccess246(host:string,outcome:'ok'|'forbidden'|'rate_limited'|'robots_disallowed'|'error',at=new Date().toISOString()):{suspended:boolean}{
+ /** S85: 'robots_unknown' (a robots file that cannot be read as allowing PEE) is kept apart from an explicit refusal
+  * ('robots_disallowed', 'forbidden') and from a temporary 'error': it is fail-closed for the wave, but, like an error,
+  * it does not on its own suspend the host. */
+ recordAccess246(host:string,outcome:'ok'|'forbidden'|'rate_limited'|'robots_disallowed'|'robots_unknown'|'error',at=new Date().toISOString()):{suspended:boolean}{
   this.db.prepare('INSERT OR IGNORE INTO host_access(host) VALUES (?)').run(host);
   if(outcome==='ok')this.db.prepare('UPDATE host_access SET ok=ok+1,last_status=? WHERE host=?').run(outcome,host);
   else this.db.prepare('UPDATE host_access SET restricted=restricted+1,last_status=? WHERE host=?').run(outcome,host);
   const r=this.db.prepare('SELECT restricted,ok FROM host_access WHERE host=?').get(host) as {restricted:number;ok:number};
   // Two restrictions (or one robots refusal) suspend the host for 30 days; reversible, not an exclusion.
-  if(outcome==='robots_disallowed'||(outcome!=='ok'&&outcome!=='error'&&r.restricted>=2)){
+  if(outcome==='robots_disallowed'||(outcome!=='ok'&&outcome!=='error'&&outcome!=='robots_unknown'&&r.restricted>=2)){
    const until=new Date(Date.parse(at)+30*86400000).toISOString();
    this.db.prepare('UPDATE host_access SET suspended_until=?,reason=? WHERE host=?').run(until,outcome,host);
    this.event('host_suspended',{host,until,reason:outcome},at);

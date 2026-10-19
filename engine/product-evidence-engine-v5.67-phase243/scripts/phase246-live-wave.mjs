@@ -25,6 +25,8 @@ import {join,resolve} from 'node:path';
 import {restrictedHttpsTransport as T,RESEARCH_AGENT,PAGE_MAX_BYTES} from '../dist/src/approved_web_reader.js';
 import {publicRobotsDecision223} from '../dist/src/phase223_public_metadata_access.js';
 import {planBudgetedCategoryWave243} from '../dist/src/phase243_budgeted_category_search.js';
+import {readProtectedPolicyFile257,validateWavePolicy257,waveBudgetWithinPolicy257,waveRequestGate257} from '../dist/src/phase257_research_planning.js';
+import {readdirSync,statSync} from 'node:fs';
 
 const [cmd,...rest]=process.argv.slice(2);
 const F={};for(let i=0;i<rest.length;i++){if(rest[i].startsWith('--')){const k=rest[i].slice(2);F[k]=rest[i+1]&&!rest[i+1].startsWith('--')?rest[++i]:true;}}
@@ -38,13 +40,42 @@ const POLITENESS_MS=4000;
 // Phase268: an owner budget may raise (never lower) the per-host delay and cap the number of distinct hosts.
 const politenessMs=()=>Math.max(POLITENESS_MS,Number(S?.budget?.politenessMs??0));
 
+// S85 (owner: the policy must really be enforced before any further live acquisition). The policy file is read through
+// the protected reader (regular file outside any Git tree, owned by this user, not group/other-writable), validated, and
+// its digest kept; every request re-reads it and stops if it is missing, changed or expired, or if this wave plus the
+// requests earlier waves recorded under the same policy id would exceed the policy. Without a policy, no request is made.
+const policyDigest=p=>{try{return sha(readFileSync(p));}catch{return null;}};
+function priorSpentFor(policyId,self){
+ const roots=[join(homedir(),'.local/share/product-evidence-engine/private-eval'),process.env.PEE_PRIVATE_EVAL_DIR,'/home/user/pee-knowledge/private-eval'].filter(Boolean);
+ let n=0;const seen=new Set();
+ const walk=d=>{let es;try{es=readdirSync(d,{withFileTypes:true});}catch{return;}
+  for(const e of es){const f=join(d,e.name);if(e.isDirectory()){walk(f);continue;}if(!e.name.endsWith('.json')||resolve(f)===self)continue;
+   try{if(statSync(f).size>50_000_000)continue;const t=readFileSync(f,'utf8');if(!t.includes(policyId)||!t.includes('pee246.live-wave.v1'))continue;
+    const j=JSON.parse(t);const k=j.startedAt+'|'+(j.requests?.length??0);
+    if(j.schema==='pee246.live-wave.v1'&&j.policy?.policyId===policyId&&!seen.has(k)){seen.add(k);n+=j.requests?.length??0;}}catch{}}};
+ for(const r of roots)walk(r);return n;
+}
 if(cmd==='init'){
  if(S)throw Error('state exists; refusing to reset budgets');
- S={schema:'pee246.live-wave.v1',startedAt:now(),agent:RESEARCH_AGENT,budget:JSON.parse(F.budget),
-  ...(F.policy?{policy:JSON.parse(readFileSync(resolve(F.policy),'utf8'))}:{}),requests:[],hosts:{},robots:{},leads:[],plans:[],pages:[],stopReasons:[]};
+ const budget=JSON.parse(F.budget);let pol={};
+ if(F.policy){const path=resolve(F.policy);const policy=validateWavePolicy257(readProtectedPolicyFile257(path));
+  const bad=waveBudgetWithinPolicy257(budget,policy);if(bad.length)throw Error('wave budget exceeds the owner policy: '+bad.join(','));
+  budget.politenessMs=Math.max(Number(budget.politenessMs??0),policy.budget.politenessMs);
+  if(policy.budget.maxHosts!==undefined)budget.maxHosts=Math.min(Number(budget.maxHosts??policy.budget.maxHosts),policy.budget.maxHosts);
+  pol={policy,policyPath:path,policyDigest:policyDigest(path)};}
+ else console.error('no --policy: this state can be used offline only; every network command will refuse');
+ S={schema:'pee246.live-wave.v1',startedAt:now(),agent:RESEARCH_AGENT,budget,...pol,requests:[],hosts:{},robots:{},leads:[],plans:[],pages:[],stopReasons:[]};
  save();console.log(JSON.stringify(S.budget));process.exit(0);
 }
 if(!S)throw Error('run init first');
+const NETWORK=['robots','sitemap','links','fetch'].includes(cmd);
+let PRIOR_SPENT=0;
+if(NETWORK){
+ if(!S.policy||!S.policyPath)throw Error('no owner policy in this state: network commands refuse (init with --policy)');
+ validateWavePolicy257(readProtectedPolicyFile257(S.policyPath)); // re-validated now: expiry, shape, protected path
+ PRIOR_SPENT=priorSpentFor(S.policy.policyId,statePath);
+ console.error(`policy ${S.policy.policyId}: ${PRIOR_SPENT} requests recorded by earlier waves, ${S.requests.length} by this one, limit ${S.policy.budget.maxRequests}`);
+}
 
 const elapsed=()=>(Date.now()-Date.parse(S.startedAt))/1000;
 const bytesUsed=()=>S.requests.reduce((a,r)=>a+(r.bytes??0),0);
@@ -83,7 +114,9 @@ async function requestFollowing(url,purpose,maxBytes=PAGE_MAX_BYTES){
  return {blocked:'too_many_redirects',finalUrl:cur,redirects:chain};
 }
 async function request(url,purpose,maxBytes=PAGE_MAX_BYTES){
- const host=new URL(url).host;const block=budgetBlock(host);
+ const host=new URL(url).host;
+ const block=waveRequestGate257({policy:S.policy??null,policyDigestAtInit:S.policyDigest??null,policyDigestNow:S.policyPath?policyDigest(S.policyPath):null,
+  priorSpent:PRIOR_SPENT,requests:S.requests,host,now:new Date()})??budgetBlock(host);
  if(block){S.stopReasons.push({at:now(),url,reason:block});save();return {blocked:block};}
  await polite(host);
  const t0=Date.now();let r,err=null;
@@ -204,7 +237,9 @@ switch(cmd){
    const live=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
    SHADOW={sem,pl,tl,reg,store:new st.KnowledgeStore246(live)};}
   const out=[];
-  for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:h.suspended==='robots_deny'?'robots_disallowed':h.suspended==='http_429'?'rate_limited':h.suspended==='repeated_errors'?'error':'forbidden',at:h.lastAt??now()}});
+  // S85: a refusal, an unreadable robots file and a temporary error stay distinct statuses (were all 'forbidden')
+  const ACCESS={robots_deny:'robots_disallowed',robots_unknown:'robots_unknown',http_429:'rate_limited',http_401:'forbidden',http_403:'forbidden',repeated_errors:'error'};
+  for(const [host,h] of Object.entries(S.hosts))if(h.suspended)out.push({access:{host,outcome:ACCESS[h.suspended]??'error',at:h.lastAt??now()}});
   for(const p of S.pages){
    if(p.outcome!=='fetched'||!rawDir)continue;const f=join(rawDir,p.tag+'.html');if(!existsSync(f))continue;
    const b=readFileSync(f);if(sha(b)!==p.sha256)continue; // never trust bytes that do not match the receipt

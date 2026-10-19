@@ -182,3 +182,54 @@ export async function executeUnderPolicy257(args:{plan:ResearchPlan182;policyPat
  if(run.sourceRetrievalAttempts!==0)throw Error('phase257_invariant_broken: a source was read');
  return {run,policyRevision:policyRevision257(policy),executedAt:now.toISOString(),dryRunOnly:true,sourceReads:0,workerTasks:0,evidenceAdmitted:false,rankingAuthorized:false};
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// S85 (owner: before any further live acquisition, the owner policy must really be enforced; the comprehensive gate is
+// intervention D). The interim enforcement for the live wave (scripts/phase246-live-wave.mjs): the wave reads its
+// policy through readProtectedPolicyFile257, validates it here, and asks waveRequestGate257 before EVERY request. A wave
+// without a valid, unexpired, unchanged policy makes no request; its own budget can never exceed the policy's; spending
+// recorded under the same policy id by earlier waves counts against the policy total.
+export interface WavePolicyBudget257 {maxRequests:number;maxPerHost:number;maxHosts?:number;politenessMs:number;maxSeconds:number;maxBytes:number}
+export interface WavePolicy257 {policyId:string;revision:number;expiresAt:string;budget:WavePolicyBudget257;
+ /** requests the owner records as already spent under this policy (optional; the larger of this and the receipts counts) */
+ spent?:number}
+const POSITIVE=(x:unknown)=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
+/** End of the expiry day when the policy gives a date only (owner policies say "expires 2026-10-24"). */
+export function wavePolicyExpiry257(p:{expiresAt:string}):number{
+ return /^\d{4}-\d{2}-\d{2}$/.test(p.expiresAt)?Date.parse(p.expiresAt+'T23:59:59.999Z'):Date.parse(p.expiresAt);
+}
+export function validateWavePolicy257(raw:unknown,now:Date=new Date()):WavePolicy257{
+ const p=raw as Record<string,unknown>;
+ if(!p||typeof p!=='object')throw Error('wave_policy_invalid: not an object');
+ if(typeof p.policyId!=='string'||!/^[a-z0-9][a-z0-9_.:-]{2,80}$/i.test(p.policyId))throw Error('wave_policy_invalid: policyId');
+ if(typeof p.expiresAt!=='string'||!Number.isFinite(wavePolicyExpiry257(p as {expiresAt:string})))throw Error('wave_policy_invalid: expiresAt');
+ if(wavePolicyExpiry257(p as {expiresAt:string})<now.getTime())throw Error('wave_policy_expired: '+p.expiresAt);
+ const b=p.budget as Record<string,unknown>|undefined;
+ for(const k of ['maxRequests','maxPerHost','politenessMs','maxSeconds','maxBytes'])if(!b||!POSITIVE(b[k]))throw Error('wave_policy_invalid: budget.'+k);
+ if(b!.maxHosts!==undefined&&!POSITIVE(b!.maxHosts))throw Error('wave_policy_invalid: budget.maxHosts');
+ if(p.spent!==undefined&&!POSITIVE(p.spent))throw Error('wave_policy_invalid: spent');
+ return {policyId:p.policyId,revision:Number(p.revision??0),expiresAt:p.expiresAt,budget:b as unknown as WavePolicyBudget257,...(p.spent!==undefined?{spent:Number(p.spent)}:{})};
+}
+/** The wave's own budget must stay inside the policy: every limit at most the policy's, the delay at least the policy's. */
+export function waveBudgetWithinPolicy257(budget:Record<string,unknown>,p:WavePolicy257):string[]{
+ const bad:string[]=[];
+ for(const k of ['maxRequests','maxPerHost','maxSeconds','maxBytes'] as const)if(!POSITIVE(budget[k])||Number(budget[k])>p.budget[k])bad.push(k);
+ // an absent maxHosts is filled from the policy at init; a stated one may not exceed it
+ if(p.budget.maxHosts!==undefined&&budget.maxHosts!==undefined&&(!POSITIVE(budget.maxHosts)||Number(budget.maxHosts)>p.budget.maxHosts))bad.push('maxHosts');
+ if(budget.politenessMs!==undefined&&!POSITIVE(budget.politenessMs))bad.push('politenessMs');
+ return bad;
+}
+/** Asked before every request. null: the policy permits it; otherwise the reason it does not (the wave stops on it). */
+export function waveRequestGate257(a:{policy:WavePolicy257|null;policyDigestAtInit:string|null;policyDigestNow:string|null;
+ priorSpent:number;requests:readonly {host:string}[];host:string;now:Date}):string|null{
+ if(!a.policy||!a.policyDigestAtInit)return 'no_owner_policy';
+ if(!a.policyDigestNow)return 'owner_policy_missing';
+ if(a.policyDigestNow!==a.policyDigestAtInit)return 'owner_policy_changed';
+ if(wavePolicyExpiry257(a.policy)<a.now.getTime())return 'owner_policy_expired';
+ const spent=Math.max(a.priorSpent,a.policy.spent??0);
+ if(spent+a.requests.length>=a.policy.budget.maxRequests)return 'owner_policy_request_budget_exhausted';
+ if(a.requests.filter(r=>r.host===a.host).length>=a.policy.budget.maxPerHost)return 'owner_policy_per_host_budget_exhausted';
+ if(a.policy.budget.maxHosts!==undefined&&!a.requests.some(r=>r.host===a.host)&&new Set(a.requests.map(r=>r.host.replace(/^www\./,''))).size>=a.policy.budget.maxHosts)
+  return 'owner_policy_host_budget_exhausted';
+ return null;
+}
