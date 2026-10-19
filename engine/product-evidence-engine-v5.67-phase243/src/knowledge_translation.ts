@@ -279,11 +279,21 @@ export function deriveSufficiency(statements:readonly TranslatedStatement[],teac
 //    A limit qualifies what a value can show; it never excludes a product and never ranks (owner S74).
 export interface ProxyLimit {id:string;type:'not_sufficient'|'not_comparable';metrics:string[];kinds:string[];axes:{axis:string;value:string}[];words:string[];
  object:string;outcome:string|null;scope:string[];quote:string;source:string;line:number}
-export function proxyLimits(statements:readonly TranslatedStatement[],outcomeConcepts:readonly TaughtConcept[]=[]):ProxyLimit[]{
+/** The head of a subject phrase: what the statement is about. The last sentence, without an introductory phrase
+ * ("Without the source assumptions, coverage figures" -> "coverage figures"), cut before a preposition ("OLED burn-in in
+ * high-brightness imagery" -> "OLED burn-in"), as for the names of taught measurements. */
+export function subjectHead(text:string):string{
+ let t=text.split(/(?<=[.;:!?])\s+/).at(-1)??text;
+ const segs=t.split(/,\s+/);if(segs.length>1&&/^(?:without|with|when|if|unless|for|in|after|before|under|at|on|by|although|though|because|since|as|given)\b/i.test(segs[0]))t=segs.at(-1)!;
+ const i=(' '+t).search(/\s(?:by|at|per|for|with|across|under|in|on|over|during|from|of|without|versus|vs)\s/i);
+ // "kWh per 1000 hours": a unit's own denominator is part of the head
+ return (i>0&&!/\b(?:kwh|wh|w|l|m3|m³|db|dba|lm|nits?)$/i.test(t.slice(0,i-1).trim())?t.slice(0,i-1):t).trim();
+}
+export function proxyLimits(qk:QuantityKnowledge,statements:readonly TranslatedStatement[],outcomeConcepts:readonly TaughtConcept[]=[]):ProxyLimit[]{
  const out:ProxyLimit[]=[];
  for(const s of statements){if((s.type!=='not_sufficient'&&s.type!=='not_comparable')||s.selfCheck.length||!s.subject)continue;
-  const sub=s.subject;if(!sub.metrics.length&&!sub.kinds.length)continue;
-  out.push({id:s.id,type:s.type,metrics:sub.metrics,kinds:sub.kinds,axes:sub.axes,words:sub.untyped.filter(w=>w.length>3),object:s.object?.text??'',
+  const sub=typeSpan(qk,subjectHead(s.subject.text));if(!sub.metrics.length&&!sub.kinds.length)continue;
+  out.push({id:s.id,type:s.type,metrics:sub.metrics,kinds:sub.kinds,axes:s.subject.axes,words:sub.untyped.filter(w=>w.length>3),object:s.object?.text??'',
    outcome:s.object?identifyConcept(s.object.text,outcomeConcepts):null,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())],
    quote:s.quote,source:s.provenance.source,line:s.provenance.line});}
  return out;

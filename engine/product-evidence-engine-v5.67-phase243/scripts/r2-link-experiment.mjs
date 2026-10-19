@@ -96,7 +96,7 @@ for(const c of cats){const qs=KT.distinctionQuestions(desc[c]);acq[c]=KT.acquire
  descAcq[c]=views[c].measurements.map(m=>KL.describeMeasurement(qkAcq[c],m.concept,m.conditions));}
 // R3 cycle 2 (S74): proxy limits from the translated not_sufficient / not_comparable statements of each category's package;
 // an annotation on read values only (no link, force or ranking changes)
-const limits={};for(const c of cats)limits[c]=KT.proxyLimits(pkgDocs(c).flatMap(x=>KT.translateDocument(qk,x.md,{source:x.source}).statements),outcomeConcepts[c]);
+const limits={};for(const c of cats)limits[c]=KT.proxyLimits(qk,pkgDocs(c).flatMap(x=>KT.translateDocument(qk,x.md,{source:x.source}).statements),outcomeConcepts[c]);
 const ablate=(ds,what)=>ds.map(d=>what==='conditions'?{...d,fixed:[],axes:[]}:{...d,measurands:d.measurands.filter(m=>!m.metric||m.level==='head').map(m=>({...m,metric:null}))});
 // C2, reproduced from scripts/r1-integration-experiment.mjs
 const KINDS={energy:['energy','energy_per_event','periodic_energy_consumption'],power:['power'],sound:['sound_pressure_level','sound_power_level'],luminance:['luminance'],latency:['duration'],frequency:['frequency'],

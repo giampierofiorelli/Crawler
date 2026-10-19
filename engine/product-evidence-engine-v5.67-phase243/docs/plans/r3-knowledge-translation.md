@@ -172,3 +172,45 @@ clause fragments with an unresolved referent ("they", "it", "these results"), wh
   experimental (learning, transfer shown on one case family); lk.6 — experimental (inference).
 - **Residual omissions:** 45% of held-out units omitted in the first run; proposed methods, conflicts and compound
   procedures nearly untranslated; scope/applicability and status/certainty are the largest representational gaps.
+
+## 8. Cycle 2 (owner S74): consulting translated limits in reasoning, shadow only
+
+The owner asked that translated "not sufficient" and "not comparable" statements be used in reasoning, each keeping
+its scope of validity, without ranking consequences or exclusions, and shown to improve reasoning without new errors.
+
+**8a. Sufficiency of taught measurements (first run against a pre-existing reference).** `deriveSufficiency` reads a
+taught relation "measurement M bears on outcome O" as *informs only* when a self-checked not_sufficient statement's
+subject identifies M and its object identifies O; never "establishes" from silence. Frozen
+(`evaluation/r3/sufficiency-freeze.json`) and compared with the R1+ V1 blind verification (made before R3, without the
+translator): **0 derived** (`sufficiency-first.json`; 36 informs-only and 15 establishes relations all unresolved: no
+error, no benefit). A development change to concept identification (statement words, aliases, inverse frequency;
+`sufficiency-dev1.json`, development categories only) also derives 0. Cause, measured: the documents' 301 self-checked
+not_sufficient statements are almost never about the taught test designs; they are about what pages show (labels,
+nominal capacities, demonstrations, particle CADR, coverage figures). This consumer is kept (tested, no false
+derivation) but has no effect.
+
+**8b. Proxy limits on read values.** `proxyLimits` turns a statement whose subject is a typed quantity into a limit
+("a value of this quantity does not by itself establish …", with quote, line and scope); `applicableLimits` attaches it
+to a read value of that metric (or of that kind with a shared distinctive word), and not when the value states another
+value of an axis the statement names. Annotation only: links, forces and rankings unchanged (C7 → C8 transitions
+identical). Blind applicability judgement (one fresh-context judge, same model family; protocol `r3/limits/prompt.md`):
+
+| | pairs | applies | not about this value | outside scope | harmful |
+|---|---|---|---|---|---|
+| first run, unchanged (`limits-p272-r3l1.json`) | 173 | 24 | 149 | 0 | 0 |
+| after the subject-head rule, TUNED (`limits-r3l2-tuned.json`) | 21 | 19 | 2 | 0 | 0 |
+
+The first run's errors had three general causes: a quantity mentioned in passing ("OLED burn-in in high-brightness
+imagery"), two sentences merged into one subject, and an introductory phrase ("Without … actual CADR/room height,
+coverage figures"). The fix (`subjectHead`: the last sentence, without the introductory phrase, cut before a
+preposition, as for taught measurement names) removed 147 wrong attachments and 5 correct ones (a sentence whose head
+is the appliance, not the quantity). What applies now: particle CADR values qualified as not establishing gas (NO₂,
+second-hand smoke) protection; measured humidity reduction qualified as not proving mould removal or health effects.
+Remaining error: an air-fryer statement about "time to a fixed food mass loss" attached to cooking times by a shared
+word.
+
+**8c. What this shows.** PEE now uses knowledge it translated itself, with provenance and scope, on values it reads, at
+90% precision on a tuned set and with no harmful use; but on 19 attachments in 2 families. It does not yet produce more
+correct *conclusions* in the owner's sense: a limit qualifies a value, it does not decide anything. The binding
+constraint is identification: 85% of the documents' limit statements have a subject PEE cannot type (claims, labels,
+designs, product features), and taught concept names do not match document language.
