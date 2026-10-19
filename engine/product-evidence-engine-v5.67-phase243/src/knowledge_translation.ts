@@ -307,3 +307,18 @@ export function applicableLimits(limits:readonly ProxyLimit[],value:{metric:stri
   if(!l.metrics.length&&value.kind&&l.kinds.includes(value.kind)&&l.words.some(w=>have.has(stem(w))))out.push({limit:l,basis:'kind_and_word'});}
  return out;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// 6. Concept alignment (R3 cycle 3, owner S75): candidate retrieval is separate from validation of meaning.
+//    Retrieval is deliberately liberal (any shared distinctive word ranks a candidate); it decides nothing. Validation
+//    assigns a match type in the SKOS sense (exact, close, broader, narrower, related, none); only exact and close
+//    alignments may stand for the concept, and an unvalidated candidate is never an identity.
+export type MatchType='exact'|'close'|'broader'|'narrower'|'related'|'none';
+export interface ConceptCandidate {id:string;score:number;shared:string[]}
+export function retrieveConcepts(phrase:string,candidates:readonly {id:string;aliases?:readonly string[];statement?:string}[],k=5):ConceptCandidate[]{
+ const have=new Set(contentWords(phrase).map(stem));if(!have.size)return [];
+ const desc=candidates.map(c=>({id:c.id,name:new Set(contentWords(c.id).map(stem)),all:new Set([...contentWords(c.id),...contentWords((c.statement??'').split(/(?<=[.;:])\s/)[0]??''),...(c.aliases??[]).flatMap(a=>contentWords(a))].map(stem))}));
+ const df=new Map<string,number>();for(const d of desc)for(const w of d.all)df.set(w,(df.get(w)??0)+1);const idf=(w:string)=>Math.log(1+desc.length/(df.get(w)??1));
+ return desc.map(d=>{const shared=[...d.all].filter(w=>have.has(w));return {id:d.id,shared,score:shared.reduce((a,w)=>a+idf(w)*(d.name.has(w)?2:1),0)};})
+  .filter(x=>x.shared.length).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id)).slice(0,k);
+}
