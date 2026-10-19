@@ -12,6 +12,7 @@
  * cue words are generic English (per, at, in ... mode, number of) and document structure. */
 import {parseUnit,typeQuantity,hasPhrase,type QuantityKnowledge} from './quantity_knowledge.js';
 import {classifyCondition87,measurandBasis87} from './observation_model.js';
+import {SETTING1G} from './table_interpreter1g.js';
 
 export type Technique='A'|'B'|'C';
 export interface DeclarationContext {label:string;rawValue:string;valueJson:Record<string,unknown>|null;unit?:string|null;rowHeader?:string|null;colHeader?:string|null;
@@ -38,25 +39,33 @@ const unitInText=(qk:QuantityKnowledge,t:string|null|undefined):string|null=>{if
  for(const m of t.matchAll(/[([]\s*([^()[\]]{1,12}?)\s*[)\]]|\bin\s+([a-zA-Zµ°³²/]{1,10})\b/g)){const u=(m[1]??m[2]??'').trim();if(u&&parseUnit(qk,u))return u;}return null;};
 const kindOfUnit=(qk:QuantityKnowledge,unit:string,words:string)=>{const p=parseUnit(qk,unit);if(!p)return null;const t=typeQuantity(qk,{surface:`1 ${unit}`,value:1,unit:p},{labels:[words]});
  return t.kind.id?[t.kind.id]:t.kind.candidates;};
-// label qualifiers: parentheses that are not a unit, "at ...", "in ... mode"
+// qualifiers (it1): the modifiers of a label or a value — parentheses that are not a unit, prepositional phrases
+// (at, on, into, with, without, w/o) and "<word> mode" — are its conditions; the structure decides, not the words
 const qualifiers=(qk:QuantityKnowledge,label:string):string[]=>{const out:string[]=[];
- for(const m of label.matchAll(/\(([^()]{1,40})\)/g)){const x=m[1]!.trim();if(!parseUnit(qk,x))out.push(x);}
- for(const m of label.matchAll(/\b(?:at|@)\s+([^,;()]{1,30})/gi))out.push(m[1]!.trim());
- for(const m of label.matchAll(/\bin\s+([^,;()]{1,25}?\s+(?:mode|setting|programme|program|cycle))\b/gi))out.push(m[1]!.trim());
- return out;};
-// "<object> <kind word>": the words before a quantity-kind term name the part the value is about ("battery capacity")
-const objectOf=(qk:QuantityKnowledge,label:string):string|null=>{const words=qk.pack.kinds.flatMap(k=>[...(k.terms??[]),...(k.discriminators??[])]).filter(w=>w.length>3);
+ for(const m of label.matchAll(/\(([^()]{1,40})\)/g)){const x=m[1]!.trim();if(!parseUnit(qk,x)&&!/^[\dxX×\s]+$/.test(x)&&!/^[A-Za-z]{1,3}x[A-Za-z]{1,3}(?:x[A-Za-z]{1,3})?$/.test(x))out.push(x.replace(/\bw\/o\b/i,'without'));}
+ for(const m of label.matchAll(/\b(?:at|@|on|into|with|without|w\/o)\s+([^,;()]{1,30})/gi))out.push(m[0]!.replace(/\bw\/o\b/i,'without').trim());
+ for(const m of label.matchAll(/\b([A-Za-z][\w-]{1,20})\s+mode\b/gi))out.push(m[0]!.trim());
+ return [...new Set(out)];};
+// "<object> <property word>" (it1): the words before a quantity-kind term name the part the value is about ("battery
+// capacity", "steam boiler capacity"), unless they are themselves a unit, a kind term, a setting or mode, a condition or a
+// generic word for the whole product; packaging words (gross, packed, package, box, shipping) name the package
+const GENERIC_WHOLE=/^(?:unit|device|product|item|appliance|machine|model|overall|max(?:imum)?|min(?:imum)?|rated|total|net|typical|nominal|average|peak|approx\.?|standard)$/;
+const objectOf=(qk:QuantityKnowledge,label:string):string|null=>{
+ if(/\b(?:gross|packed|packaging|package|shipping|boxed|in the box)\b/i.test(label))return 'package';
+ const kindWords=qk.pack.kinds.flatMap(k=>[...(k.terms??[]),...(k.discriminators??[])]).map(w=>w.toLowerCase());const words=kindWords.filter(w=>w.length>3);
  const l=label.replace(/\([^)]*\)/g,' ').replace(/[:*]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
- for(const w of words.sort((a,b)=>b.length-a.length)){const i=l.indexOf(' '+w);if(i>0&&new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`).test(l)){const head=l.slice(0,i).trim();
-  if(head&&head.split(' ').length<=3&&!/^(?:max(?:imum)?|min(?:imum)?|rated|total|net|gross|typical|nominal|average|overall|peak|approx\.?|product|item)$/.test(head))return head;}}
+ for(const w of words.sort((a,b)=>b.length-a.length)){const i=l.indexOf(' '+w);if(i>0&&new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`).test(l)){
+  const head=l.slice(0,i).trim().split(' ').filter(t=>!parseUnit(qk,t)&&!kindWords.includes(t)&&!SETTING1G.test(t)&&!/^(?:mode|setting|consumption|level|output|input|on|off)$/.test(t)&&!GENERIC_WHOLE.test(t)).join(' ');
+  if(head&&head.split(' ').length<=3&&!/\bmode\b/.test(l.slice(0,i)))return head;return null;}}
  return null;};
-
 function signalsKind(qk:QuantityKnowledge,c:DeclarationContext,t:Technique):{kind:string|null;rule:string;from:string}[]{
  const v=c.valueJson??{};const vk=String(v.kind??'');const out:{kind:string|null;rule:string;from:string}[]=[];
  if(vk==='price'){out.push({kind:'price',rule:'value is a price (currency)',from:'value'});return out;}
  const unit=typeof v.unit==='string'?v.unit:c.unit??null;
  if(unit){const ks=kindOfUnit(qk,unit,c.label);if(ks?.length)out.push({kind:coarse(ks),rule:`QK unit ${unit}`,from:'value'});}
  if(!unit&&/\bnumber of\b|^(?:no\.?|count|qty) of\b/i.test(c.label))out.push({kind:'count',rule:'label counts items ("number of")',from:'label'});
+ // it1: a number followed by a plural noun that the unit knowledge does not know is a count ("60 rounds")
+ else if(!unit){const m=/^\s*~?\s*(?:approx\.?\s*)?\d+(?:[.,]\d+)?\s+([a-z]{3,}s)\b/i.exec(c.rawValue??'');if(m&&!parseUnit(qk,m[1]!))out.push({kind:'count',rule:`a number of ${m[1]} (not a unit)`,from:'value'});}
  if(t!=='A'&&!unit){for(const [f,txt] of [['label',c.label],['colHeader',c.colHeader],['rowHeader',c.rowHeader],['tableHeader',c.tableHeader]] as const){const u=unitInText(qk,txt);
   if(u){const ks=kindOfUnit(qk,u,c.label);if(ks?.length){out.push({kind:coarse(ks),rule:`QK unit ${u} stated in the ${f}`,from:f});break;}}}}
  if(t==='C'){// the label's kind words (QK kind terms) as an independent signal
@@ -74,11 +83,15 @@ export function reconstructDeclaration(qk:QuantityKnowledge,c:DeclarationContext
  // basis
  const unit=typeof v.unit==='string'?v.unit:'';
  const bases=texts.map(([f,x])=>x?{f,b:measurandBasis87(x,f==='label'?unit:'')}:null).filter((x):x is {f:string;b:ReturnType<typeof measurandBasis87>}=>!!x&&x.b.basis!=='none');
+ // it1: a duration a run lasts (run time, battery life, "minutes of cleaning") is per use: an extensive quantity of a run
+ const qkKind=r.quantityKind.value;
+ if(!bases.length&&form==='quantity'&&(qkKind==='duration'||/\bmin(?:ute)?s?\b|\bhours?\b/i.test(c.rawValue??''))&&/\b(?:run ?time|runtime|battery life|per charge|of (?:\w+ing)|cycle time|programme duration|program duration)\b/i.test(`${c.label} ${c.rawValue??''}`))
+  bases.push({f:'label',b:{basis:'per_task_or_cycle',cue:'duration of one run'}});
  if(form==='quantity'){const uniq=[...new Set(bases.map(x=>x.b.basis))];
   if(bases.length&&(t!=='C'||uniq.length===1)){const x=bases[0]!;const per=x.b.basis==='per_time_period'?(/h(?:our|r)?\b/.test(x.b.cue??'')?'per_hour':'per_year'):x.b.basis==='per_task_or_cycle'?'per_cycle_or_use':x.b.basis==='per_portion_or_unit'?'per_unit_or_portion':x.b.basis;
    r.basis=inf(per,`basis cue "${x.b.cue}"`,x.f);}}
  // constraints: qualifiers of the label (A), plus header and caption qualifiers (B, C), typed by structure (S87b)
- const qs:[string,string][]=qualifiers(qk,c.label).map(q=>['label',q]);
+ const qs:[string,string][]=[...qualifiers(qk,c.label).map(q=>['label',q] as [string,string]),...(c.rawValue?qualifiers(qk,c.rawValue).filter(q=>!/^\d/.test(q)).map(q=>['value',q] as [string,string]):[])];
  if(t!=='A')for(const [f,x] of texts.slice(1))if(x)for(const q of qualifiers(qk,x))qs.push([f,q]);
  for(const [f,q] of qs){const k=classifyCondition87(qk,q,null);if(k.class==='unclassified'||k.class==='identity'||k.class==='comparison_or_basis')continue;
   if(t==='C'&&k.class==='quantity'&&!k.kind)continue;
