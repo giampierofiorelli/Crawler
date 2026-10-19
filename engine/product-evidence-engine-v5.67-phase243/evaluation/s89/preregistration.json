@@ -1,0 +1,95 @@
+{
+ "schema": "pee.s89.preregistration.v1",
+ "at": "2026-10-19T22:56:33.344Z",
+ "question": "After the S88 review corrections and with definition learning, does the definition-driven interpreter attribute values in unseen categories on pages of publishers never seen, with fewer false attributions than S88 and than the unit-kind baseline; does a vocabulary learned from other publishers improve it; does the role slot beat the trivial all-measured baseline?",
+ "build": "ad9af88 (frozen before any page of this wave is fetched)",
+ "frozen": {
+  "resources/property-definitions/property-definitions.v1.json": "a8e358fe82453d827ef22cca0afb2f2cda85049b723bacaa617662eab90b2fae",
+  "src/property_definitions.ts": "7eb3c62f93f6e3fcd172dca2f736219cca2f9511d21b8c9b7d41370c38322fa6",
+  "src/definition_interpreter.ts": "55f1929a7e6c8f527aacdfc6f09429fd4dc692f83995587de3db77243dd158f9",
+  "src/definition_learning.ts": "e9fdd94054ec052e8edcbde2e91e63c1c5eec32b0d1b50dcfa12dd8ed3935c71",
+  "src/phase225_transient_test_probe.ts": "5ee998db5d62a4f29e209030d0c0d95c3fe4572c81d8d765d7c5194836ff94de",
+  "scripts/s88-e4.mjs": "035edad58acff42d6ddc627201b5f82673cae842262a990260f62d6028f01fa7",
+  "scripts/s89-learn.mjs": "f087d6046940b0b3eb466872866426471e1b8c51021b1d81376da2b48d3961ed"
+ },
+ "learnPages": {
+  "robot_floor_cleaners": [
+   "https://vacuumwars.com/ilife-v2-robot-vacuum-review/",
+   "https://vacuumwars.com/roborock-qrevo-curvx-review/",
+   "https://vacuumwars.com/ecovacs-deebot-t80s-omni-review/",
+   "https://vacuumwars.com/ecovacs-deebot-t90-pro-omni-review/",
+   "https://vacuumwars.com/roborock-q5-review/",
+   "https://www.techradar.com/home/robot-vacuums/mova-v70-ultra-complete-robot-vacuum-review",
+   "https://www.tomsguide.com/us/best-robot-vacuums,review-2000.html"
+  ],
+  "soundbars": [
+   "https://www.techradar.com/televisions/soundbars/the-best-soundbars-for-all-budgets",
+   "https://www.whathifi.com/tv-home-cinema/soundbars/we-tested-four-premium-dolby-atmos-soundbars-can-sony-lg-or-sony-defeat-sonos",
+   "https://www.whathifi.com/best-buys/home-cinema/best-soundbars",
+   "https://www.tomsguide.com/audio/soundbars/best-soundbars",
+   "https://www.tomsguide.com/audio/soundbars/i-test-audio-gear-for-a-living-and-this-is-the-dolby-atmos-soundbar-i-recommend-above-everything-else",
+   "https://www.trustedreviews.com/best/best-soundbar-3450266"
+  ]
+ },
+ "checkPages": {
+  "robot_floor_cleaners": [
+   "https://www.t3.com/home-living/vacuum-cleaners/dji-romo-p-review",
+   "https://www.t3.com/home-living/vacuum-cleaners/eufy-e20-robot-vacuum-cleaner",
+   "https://www.t3.com/home-living/vacuum-cleaners/eufy-omni-e25-robot-vacuum-cleaner-review-strong-suction-smart-mopping-and-minimal-effort",
+   "https://www.homesandgardens.com/solved/eufy-omni-c28-robot-vacuum-review",
+   "https://www.homesandgardens.com/solved/eufy-omni-e25-review",
+   "https://www.homesandgardens.com/solved/roomba-combo-r-10-max-robot-autowash-review",
+   "https://www.expertreviews.co.uk/home-garden/vacuums-cleaning/roborock-saros-20-review",
+   "https://www.expertreviews.co.uk/home-garden/vacuums-cleaning/eufy-robot-vacuum-e20-review",
+   "https://www.digitaltrends.com/home/best-robot-vacuum-and-mop-combo/"
+  ],
+  "soundbars": [
+   "https://www.soundandvision.com/content/samsung-hw-k950-soundbar-system-review-test-bench",
+   "https://www.soundandvision.com/content/focal-dimension-soundbar-system-review-test-bench",
+   "https://www.soundandvision.com/content/monitor-audio-asb-2-soundbar-test-bench",
+   "https://www.soundandvision.com/content/nakamichi-shockwafe-pro-71-soundbar-system-review-test-bench",
+   "https://www.soundandvision.com/content/paradigm-soundscape-soundbar-test-bench",
+   "https://www.soundandvision.com/content/yamaha-ysp-5600-soundbar-review-test-bench",
+   "https://www.soundandvision.com/content/vizio-s5451w-c2-soundbar-system-test-bench",
+   "https://www.homesandgardens.com/solved/bose-smart-soundbar-review",
+   "https://www.t3.com/tech/tvs/bose-smart-soundbar-review",
+   "https://www.t3.com/tech/soundbars/samsung-hw-qs90h-review",
+   "https://www.t3.com/tech/audio/sonos-arc-ultra-review",
+   "https://www.expertreviews.co.uk/technology/tvs-home-cinema/best-soundbars-soundbases",
+   "https://www.digitaltrends.com/home-theater/amazon-fire-tv-soundbar-review/"
+  ]
+ },
+ "publishersLearn": [
+  "vacuumwars.com",
+  "techradar.com",
+  "tomsguide.com",
+  "whathifi.com",
+  "trustedreviews.com"
+ ],
+ "publishersCheck": [
+  "t3.com",
+  "homesandgardens.com",
+  "expertreviews.co.uk",
+  "digitaltrends.com",
+  "soundandvision.com"
+ ],
+ "procedure": [
+  "fetch both sets under the standing policy (robots, reservations, no bypass)",
+  "learn a layer from the S88 pages + the learn set only; freeze it (hash)",
+  "build check items (same rule as S88 E4); blind Claude-agent reference of property, conditions, basis, role, subject; seal before any arm",
+  "run each arm once on the check items; first runs committed unchanged"
+ ],
+ "arms": {
+  "s88": "pd.2 + profile licence (the S88 behaviour, reproduction)",
+  "pd3": "pd.3 interpreter default (S89 principles), no learning",
+  "pd3learned": "pd.3 + the frozen learned layer",
+  "unitkind": "unit kind only",
+  "roleTrivial": "every value measured_by_publisher"
+ },
+ "metrics": [
+  "property: correct, wrong, abstained, false attributions, per category and publisher, worst group",
+  "role vs reference against the trivial baseline",
+  "learned terms used and their effect (four sets pd3 vs pd3learned)"
+ ],
+ "noLimit": "requests are governed by the standing policy rates, not by an experiment cap"
+}
