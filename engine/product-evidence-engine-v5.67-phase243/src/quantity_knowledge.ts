@@ -230,10 +230,24 @@ export function findQuantities(qk:QuantityKnowledge,text:string):FoundQuantity[]
   if(lists.length){const rest=findQuantitiesPlain(qk,text).filter(f=>!lists.some(l=>f.start<l.end&&f.end>l.start));return [...lists.flatMap(l=>l.items),...rest].sort((a,b)=>a.start-b.start);}}
  return findQuantitiesPlain(qk,text);
 }
+/** S85 (intervention A): a reporting basis written after the quantity ("12 litres a day", "0.5 kWh daily") is part of its
+ * unit. The words are the pack's own basisWords (until now read only in labels); the composed unit must parse and have a
+ * kind, otherwise the quantity is left as it was. A unit that already has a denominator is never given a second one. */
+function withBasis(qk:QuantityKnowledge,text:string,f:FoundQuantity):FoundQuantity{
+ if(f.unit.atoms.some(a=>a.exp<0))return f;
+ const words=Object.entries(qk.pack.language.en.basisWords??{}).sort((a,b)=>b[0].length-a[0].length);
+ const after=text.slice(f.end);
+ for(const [w,per] of words){const m=new RegExp('^\\s+'+esc(w)+'(?![\\p{L}\\p{N}])','iu').exec(after);if(!m)continue;
+  const atom=BASIS_ATOM[per];if(!atom)return f;const u=parseUnit(qk,f.unitSurface+'/'+atom);if(!u||!u.kinds.length)return f;
+  const end=f.end+m[0].length;return {...f,end,surface:text.slice(f.start,end),unit:{...u,surface:text.slice(f.start+f.surface.length-f.unitSurface.length,end).trim()},unitSurface:text.slice(f.start+f.surface.length-f.unitSurface.length,end).trim()};}
+ return f;
+}
 function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
  const out:FoundQuantity[]=[];let lastEnd=-1;
  for(const m of text.matchAll(NUM_RE)){const s=m.index!;if(s<lastEnd)continue;const j=s+m[0].length;let low:number|undefined,high:number|undefined;
-  const rg=/^\s?(?:-|–|—|to)\s?([-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/.exec(text.slice(j));
+  // S85: "between 3 and 5 litres" is a range like "3-5 litres" (only after "between": a bare "and" joins two quantities)
+  const between=/\bbetween\s+$/i.test(text.slice(Math.max(0,s-12),s));
+  const rg=(between?/^\s?(?:-|–|—|to|and)\s?([-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/:/^\s?(?:-|–|—|to)\s?([-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/).exec(text.slice(j));
   let rangeEnd=j;if(rg){low=toNum(m[0]);high=toNum(rg[1]);rangeEnd=j+rg[0].length;}
   // a unit spelled in letters may follow a hyphen ("a 2-inch hair", "a 30-minute run"); a hyphen before a digit is a range
   const tryAt=(k:number)=>{const after=text.slice(k);const lead=/^(?:\s|-(?=\p{L}{2}))?/u.exec(after)![0].length;const win=after.slice(lead,lead+48);
@@ -243,16 +257,17 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
     const next=win.slice(cand.length);
     // short symbols that are also English words ("in", "h", "g") need punctuation or the end after them, not another word
     const single=pu.atoms.length===1&&!pu.level?qk.pack.units.find(u=>u.id===pu!.atoms[0].id):null;
-    if(single&&single.standalone===false&&cand.length<=2&&/^\s+\p{L}/u.test(next))continue;
+    // (S85: a symbol with no letter, the inch mark in '10" steamer', is never an English word, so it may be followed by one)
+    if(single&&single.standalone===false&&cand.length<=2&&/\p{L}/u.test(cand)&&/^\s+\p{L}/u.test(next))continue;
     // "14.6 W x 9 H": a capital axis letter between numbers joined by x/× is a dimension axis, not a unit
     if(single&&cand.length===1&&(qk.pack.language.en.axisLetters??[]).includes(cand)&&(/^\s*[x×*]\s*\d/i.test(next)||/[x×*]\s*$/i.test(text.slice(Math.max(0,s-4),s))))continue;
     if(/^\p{L}/u.test(next))continue;
     return {unit:pu,start:k+lead,len:cand.length};}
    return null;};
   const r=rg?tryAt(rangeEnd):null;
-  if(rg&&r){out.push({start:s,end:r.start+r.len,surface:text.slice(s,r.start+r.len),value:null,low,high,unit:r.unit,unitSurface:text.slice(r.start,r.start+r.len)});lastEnd=r.start+r.len;continue;}
+  if(rg&&r){const f=withBasis(qk,text,{start:s,end:r.start+r.len,surface:text.slice(s,r.start+r.len),value:null,low,high,unit:r.unit,unitSurface:text.slice(r.start,r.start+r.len)});out.push(f);lastEnd=f.end;continue;}
   const u=tryAt(j);if(!u)continue;
-  out.push({start:s,end:u.start+u.len,surface:text.slice(s,u.start+u.len),value:toNum(m[0]),unit:u.unit,unitSurface:text.slice(u.start,u.start+u.len)});lastEnd=u.start+u.len;}
+  const f=withBasis(qk,text,{start:s,end:u.start+u.len,surface:text.slice(s,u.start+u.len),value:toNum(m[0]),unit:u.unit,unitSurface:text.slice(u.start,u.start+u.len)});out.push(f);lastEnd=f.end;}
  return out;
 }
 

@@ -152,7 +152,11 @@ test('typed link to taught measurements: a declared proxy never reaches the outc
 import {extractConstraints253} from '../src/phase253_request_constraints.js';
 test('Phase253 requests: a rate is never checked as a capacity (the knowledge reads the whole unit)', ()=>{
  for(const t of ['A dehumidifier that removes at least 12 L/day.','A dehumidifier that can extract at least 20 litres per day.','A kettle that boils at least 1.5 L per minute.']){
-  const ex=extractConstraints253(t);assert.equal(ex.constraints.length,0,t);assert.match(ex.unmapped[0].reason,/not a volume/);}
+  // S85 (intervention A, 2026-10-19): Phase253 no longer types quantities itself; a rate is not one of its kinds, so it
+  // makes no constraint and no unmapped entry, and the quantity knowledge's typed requirement states it (was: an unmapped
+  // "not a volume" entry from Phase253's own check)
+  const ex=extractConstraints253(t);assert.equal(ex.constraints.length,0,t);assert.equal(ex.unmapped.length,0,t);
+  const r=readQuantityRequirements(qk,t);assert.equal(r.length,1,t);assert.notEqual(r[0].quantity.kind.id,'volume',t);}
  // capacities, sizes, weights and powers are unchanged
  assert.deepEqual(extractConstraints253('A kettle of at least 1.5 litres, no wider than 20 cm, at least 2000 W.').constraints.map(c=>c.criterion),['capacity_min','width_max','power_min']);
  assert.deepEqual(extractConstraints253('A tumble dryer that takes at least 9 kg per load and weighs no more than 40 kg.').constraints.map(c=>c.criterion),['weight_max']);

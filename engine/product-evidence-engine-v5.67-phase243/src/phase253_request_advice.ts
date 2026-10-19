@@ -27,7 +27,7 @@ import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_compara
 import {applianceMentions270} from './phase270_comparative_results.js';
 import type {GoalAssessment253} from './phase253_advice_contract.js';
 import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
-import {readQuantityRequirements,readClassRequirements,evidenceNeed,type QuantityKnowledge,type QuantityRequirement} from './quantity_knowledge.js';
+import {loadQuantityKnowledge,readQuantityRequirements,readClassRequirements,evidenceNeed,type QuantityKnowledge,type QuantityRequirement} from './quantity_knowledge.js';
 import type {QuantityRequirement253} from './phase253_advice_contract.js';
 
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
@@ -55,8 +55,24 @@ const observedAt=(store:KnowledgeStore246,declarationId:string):string|null=>(st
 /** Stage 4: a source type inferred from host and declared brand (Phase253) is cited as inferred, not as asserted. */
 const sourceBasis=(store:KnowledgeStore246,declarationId:string):string|null=>(store.db.prepare('SELECT s.source_type_basis b FROM declarations d JOIN revisions r USING(revision_id) JOIN sources s USING(source_id) WHERE d.declaration_id=?').get(declarationId) as {b:string}|undefined)?.b??null;
 
+/** S85 (owner boundary check: "steam wand" and "high brew pressure" became scientific outcome needs). The store's concept
+ * kind decides: a 'mechanism' (how the product works: brew pressure, convection fan) and a 'task' named as equipment of
+ * the product ("with a steam wand") are features the user asks for, not outcomes to assess. They are kept, visible, as
+ * feature preferences; they never become outcome needs, research needs or checks. Need recognition is otherwise unchanged. */
+// "with a steam wand", "has a built-in grinder": a determiner or built-in/integrated is required, so a use ("struggles with
+// some doughs") is never read as equipment (S85 first run, r116)
+const FEATURE_CUE253=/(?:^|\s)(?:with|has|have|having|plus|including)\s+(?:a|an|the|built-in|integrated)\s*$/i;
+function featureConcepts253(text:string,concepts:readonly {id:string;matched:string;kind:string|null}[]):Set<string>{
+ const low=text.toLowerCase();const out=new Set<string>();
+ for(const c of concepts){if(c.kind==='mechanism'){out.add(c.id);continue;}
+  if(c.kind!=='task'||!c.matched)continue;const i=low.indexOf(c.matched.toLowerCase());if(i>0&&FEATURE_CUE253.test(low.slice(Math.max(0,i-40),i)))out.add(c.id);}
+ return out;
+}
 function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[]):Advice253{
- const j=runJourney248(text,store,registry);
+ const j0=runJourney248(text,store,registry);
+ const featureIds=featureConcepts253(text,j0.stages.need.concepts);
+ const features=j0.stages.need.concepts.filter(c=>featureIds.has(c.id));
+ const j:typeof j0={...j0,stages:{...j0.stages,need:{...j0.stages.need,concepts:j0.stages.need.concepts.filter(c=>!featureIds.has(c.id))}}};
  const ex=extractConstraints253(text);
  const category=j.stages.category.categoryId;
  const needs=j.stages.need.concepts.map(c=>c.id);
@@ -65,6 +81,9 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  const out:Advice253={schema:'pee253.advice.v1',text,target:{kind:j.stages.target.kind,category:j.stages.target.category,other:j.stages.target.other,basis:j.stages.target.basis},
   category,constraints:[],unmappedConstraints:ex.unmapped,needs,unresolved:[],response:'clarification',ordered:false,rankingAuthorized:false,
   shortlist:[],unknown:[],excluded:[],conflicts:[],questions:[],statements:[],limitations,researchPlan:[...j.researchPlan],unassessedObjectives:[]};
+ if(features.length){out.featurePreferences=features.map(c=>({id:c.id,matched:c.matched,kind:c.kind}));
+  out.statements.push(`Asked for as a feature: ${features.map(c=>`"${c.matched}"`).join(', ')}. ${features.length>1?'These are features':'This is a feature'} of the product, not an outcome PEE assesses; no product is checked or ordered by ${features.length>1?'them':'it'}.`);
+  for(const c of features)if(!out.unassessedObjectives.includes(c.matched))out.unassessedObjectives.push(c.matched);}
  const ri:AdviceResearchInputs253={targetKind:j.stages.target.kind,category,statedCriteria:[],pendingCriteria:[],performanceNeeds:[],unresolvedNeeds:[],productChecks:[],ineligible:[]};
  out.researchInputs=ri;
  ri.performanceNeeds=j.stages.need.concepts.filter(c=>!j.stages.requirements.factualRequirements.some(f=>f.conceptId===c.id)).map(c=>c.id);
@@ -305,7 +324,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
 /** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */
 function applyRequestCoverage80(out:Advice253,text:string,registry:readonly CategoryEntry248[]):void{
  const entry=registry.find(e=>e.id===out.category);
- const matched=[...(out.researchInputs?.needSpans??[]).map(n=>n.matched),...(entry?.aliases??[]),...((entry as {cues?:readonly string[]}|undefined)?.cues??[]),
+ const matched=[...(out.researchInputs?.needSpans??[]).map(n=>n.matched),...(out.featurePreferences??[]).map(f=>f.matched),...(entry?.aliases??[]),...((entry as {cues?:readonly string[]}|undefined)?.cues??[]),
   ...statedObjectives253(text)];
  const spans=[...out.constraints.map(c=>c.span),...out.unmappedConstraints.map(u=>u.span),...(out.quantityRequirements??[]).map(q=>q.span),
   ...(out.classRequirements??[]).map(c=>c.span)].filter((x):x is string=>typeof x==='string'&&x.length>0);
@@ -329,17 +348,26 @@ const kindText=(qk:QuantityKnowledge,r:QuantityRequirement)=>{const q=r.quantity
  * typed, stated as understood-but-not-checked, asked about when the quantity is ambiguous, and turned into evidence
  * needs (metric, defining method, comparability conditions). Nothing here checks, filters or orders products. */
 function applyQuantityRequirements253(out:Advice253,text:string,qk:QuantityKnowledge):void{
- const covered=[...out.constraints.map(c=>c.span),...out.unmappedConstraints.map(u=>u.span)].filter((s):s is string=>typeof s==="string").map(s=>({s,i:text.indexOf(s)})).filter(x=>x.i>=0);
- const reqs=readQuantityRequirements(qk,text).filter(r=>(r.bound!==null||r.quantity.low!==undefined)&&r.status!=='no_bound'&&
-  !covered.some(c=>c.i<r.end&&c.i+c.s.length>r.start)&&!/^[£$€]/.test(r.quantity.unit.surface));
+ // S85 (intervention A): only a checkable constraint covers a quantity. A span Phase253 could not map ("unclear which
+ // property", a rate that is not a capacity) no longer hides the quantity knowledge's typed reading of it: that reading
+ // replaces the unmapped entry, so one interpretation of the span is kept and none is silently discarded.
+ const at=(s:string)=>({s,i:text.indexOf(s)});const overlaps=(x:{s:string;i:number},r:{start:number;end:number})=>x.i>=0&&x.i<r.end&&x.i+x.s.length>r.start;
+ const covered=out.constraints.map(c=>c.span).filter((s):s is string=>typeof s==='string').map(at);
+ // a quantity with no bound is a requirement only when the knowledge names its measurand ("extracts 12 litres a day":
+ // moisture removal capacity); a bare quantity ("a 2 kg chicken", "15 bar") stays with the coverage check
+ const reqs=readQuantityRequirements(qk,text).filter(r=>(r.bound!==null||r.quantity.low!==undefined||(r.status==='no_bound'&&!!r.quantity.metric.id))&&
+  !covered.some(c=>overlaps(c,r))&&!/^[£$€]/.test(r.quantity.unit.surface));
  if(!reqs.length)return;
+ out.unmappedConstraints=out.unmappedConstraints.filter(u=>typeof u.span!=='string'||!reqs.some(r=>overlaps(at(u.span),r)));
  out.quantityRequirements=reqs.map((r):QuantityRequirement253=>{const q=r.quantity;const e=evidenceNeed(qk,q);
-  return {span:r.span,bound:r.bound??'range',value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{}),unit:q.unit.surface,kind:q.kind.id,kindCandidates:q.kind.candidates,
-   metric:q.metric.id,weighting:q.weighting,status:r.status==='typed'?'typed':'kind_ambiguous',evidence:{target:e.target,methods:e.methods,conditions:e.conditions,notEvidence:e.notEvidence},knowledge:qk.identity};});
+  return {span:r.span,bound:r.bound??(q.low!==undefined?'range':'unstated'),value:q.value,...(q.low!==undefined?{low:q.low,high:q.high}:{}),unit:q.unit.surface,kind:q.kind.id,kindCandidates:q.kind.candidates,
+   metric:q.metric.id,weighting:q.weighting,status:r.status==='kind_ambiguous'?'kind_ambiguous':'typed',evidence:{target:e.target,methods:e.methods,conditions:e.conditions,notEvidence:e.notEvidence},knowledge:qk.identity};});
  const i=out.statements.indexOf(NO_CHECKABLE253);
  if(i>=0)out.statements[i]='No requirement that PEE can check against retained declarations is stated yet.';
  out.statements.push(`Understood but not checked: ${reqs.map(r=>`"${r.span}" (${kindText(qk,r)})`).join('; ')}. PEE has no retained declarations it can compare with ${reqs.length>1?'these requirements':'this requirement'}, so the answer does not assess ${reqs.length>1?'them':'it'}.`);
  for(const r of reqs){if(!out.unassessedObjectives.includes(r.span))out.unassessedObjectives.push(r.span);if(r.question&&!out.questions.includes(r.question))out.questions.push(r.question);
+  // a stated measurand without a bound: ask, never assume which direction is wanted
+  if(r.bound===null&&r.quantity.low===undefined){const q=`Do you need at least or at most ${r.span} (${kindText(qk,r)})?`;if(!out.questions.includes(q))out.questions.push(q);}
   const e=evidenceNeed(qk,r.quantity);
   out.researchPlan.push(`need_evidence: ${e.target}${e.methods.length?` (defined by ${e.methods.join('; ')})`:''}${e.conditions.length?`; comparable only when ${e.conditions.join(', ')} ${e.conditions.length>1?'are':'is'} stated`:''}${e.notEvidence.length?`; not evidence of it: ${e.notEvidence.join(', ')}`:''}`);}
 }
@@ -353,9 +381,30 @@ function applyClassRequirements253(out:Advice253,text:string,qk:QuantityKnowledg
   if(r.note)out.statements.push(`"${r.span}": ${r.note}.`);
   else if(!r.scale&&r.candidates.length>1)out.questions.push(`Which label do you mean by "${r.span}"? ${r.candidates.map(c=>(qk.pack.scales??[]).find(s=>s.id===c)!.label).join(' and ')} use the same letters for different efficiencies.`);}
 }
+/** S85 (owner boundary check: "quiet dishwasher" lost its acoustic requirement). A quality the request asks of the product
+ * is read with the quantity knowledge's aspect vocabulary (noise: quiet, loud; reliability: reliable ...), not a new word
+ * list, and only where it qualifies the product asked for: before its name ("quiet dishwasher", "very reliable kettle") or
+ * predicated of it ("a dishwasher quiet enough", "a kettle that is reliable"). It becomes a stated objective, which the
+ * answer reports as not assessed unless evidence assesses it; it never filters or orders products. */
+let QK_ASPECTS253:{id:string;terms:string[]}[]|null=null;
+function aspectObjectives253(text:string,aliases:readonly string[]):string[]{
+ QK_ASPECTS253??=(loadQuantityKnowledge().pack.aspects??[]).filter(a=>a.id!=='other').map(a=>({id:a.id,terms:a.terms.filter(t=>/^[a-z]+$/.test(t))}));
+ const low=text.toLowerCase();const out:string[]=[];
+ const names=aliases.filter(a=>a.length>=3).map(a=>a.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).sort((a,b)=>b.length-a.length);if(!names.length)return out;
+ const N=`(?:${names.join('|')})s?`;
+ for(const a of QK_ASPECTS253)for(const t of a.terms){
+  const before=new RegExp(`\\b(?:(?:most|very|really|quite|super|extra)\\s+)?${t}\\s+(?:(?:and|or)\\s+[a-z-]+\\s+)?(?:[a-z-]+\\s+){0,1}${N}\\b`);
+  const after=new RegExp(`\\b${N}\\s+(?:(?:that|which)\\s+(?:is|are|'s|runs|stays)\\s+(?:very\\s+|really\\s+)?)?${t}\\b(?=\\s+enough|\\s*(?:[,.;!?]|$|\\s+and\\b|\\s+for\\b))`);
+  if(before.test(low)||after.test(low)){const ph=`${t} (${a.id.replace(/_/g,' ')})`;if(!out.some(o=>o.startsWith(t+' ')))out.push(ph);}}
+ return out;
+}
 function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
  const out=adviseCore253(text,store,registry);
- const ri=out.researchInputs;const perf=ri?.performanceNeeds??[];const objectives=statedObjectives253(text);
+ const ri=out.researchInputs;const perf=ri?.performanceNeeds??[];const stated=statedObjectives253(text);
+ const entry=out.category?registry.find(e=>e.id===out.category):undefined;
+ // an aspect word already inside a stated objective ("most reliable dishwasher") or a recognised need is not repeated
+ const objectives=[...stated,...aspectObjectives253(text,entry?.aliases??[]).filter(o=>{const w=o.split(' ')[0];
+  return !stated.some(x=>x.split(/\s+/).some(y=>y.startsWith(w)))&&!(ri?.performanceNeedSpans??[]).some(n=>n.matched.toLowerCase().includes(w));})];
  const assessed=new Set<string>();
  const rankable=!!opts.ranking&&!!out.category&&out.target.kind==='category'&&ri?.categoryBasis==='explicit_alias'&&perf.length>0&&
   (out.response==='positive_shortlist'||(out.response==='clarification'&&(ri?.statedCriteria.length??0)===0));
@@ -423,7 +472,7 @@ function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:r
  // Principle 8: an objective the answer does not assess stays explicit.
  const unassessedNeeds=perf.filter(id=>!assessed.has(id));
  const toks=(x:string)=>x.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
- out.unassessedObjectives=[...unassessedNeeds,...out.unresolved.filter(n=>!unassessedNeeds.includes(n)),...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
+ out.unassessedObjectives=[...(out.featurePreferences??[]).map(f=>f.matched),...unassessedNeeds,...out.unresolved.filter(n=>!unassessedNeeds.includes(n)),...objectives.filter(o=>!(ri?.performanceNeedSpans??[]).some(n=>assessed.has(n.id)&&toks(n.matched).every(w=>toks(o).includes(w))))];
  // Phase271: context needs (owned equipment, constraints) stay in the structure but are not called objectives in the text.
  const shown=out.unassessedObjectives.filter(o=>!CONTEXT_NEEDS269.has(o));
  if(shown.length&&out.response!=='out_of_scope')

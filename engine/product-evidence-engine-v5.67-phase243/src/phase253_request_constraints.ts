@@ -17,7 +17,6 @@ import type {Constraint253} from './phase253_advice_contract.js';
 import {loadQuantityKnowledge,findQuantities,type QuantityKnowledge} from './quantity_knowledge.js';
 // GK: the quantity knowledge says what the printed unit expresses; loaded once (the committed, validated pack).
 let QK253:QuantityKnowledge|null=null;const qk253=()=>QK253??=loadQuantityKnowledge();
-const KIND_OF_DIMENSION253:Record<string,string>={volume:'volume',length:'length',mass:'mass',power:'power',duration:'duration'};
 
 export interface RequestConstraint253 extends Constraint253 {
  bound:'min'|'max';property:'capacity'|'water_tank'|'width'|'height'|'depth'|'weight'|'power'|'battery_life'|'price';
@@ -25,9 +24,6 @@ export interface RequestConstraint253 extends Constraint253 {
  status:'stated_in_request'|'candidate';confidence:'clear'|'ambiguous';note:string|null}
 export interface ConstraintExtraction253 {constraints:RequestConstraint253[];unmapped:{span:string;reason:string}[]}
 
-const UNIT=String.raw`(litres?|liters?|ltrs?|l|ml|millilit(?:re|er)s?|quarts?|qt|cm|centimet(?:re|er)s?|mm|millimet(?:re|er)s?|inch(?:es)?|"|ft|feet|kg|kilos?|kilograms?|g|grams?|lbs?|oz|ounces?|w|watts?|kw|hours?|hrs?|h)`;
-const NUM=String.raw`(\d+(?:[.,]\d+)?)`;
-const QTY=new RegExp(String.raw`(?:between\s+${NUM}\s*(?:${UNIT}\s*)?(?:and|-|to)\s*|${NUM}\s*(?:-|to)\s*)?${NUM}\s*${UNIT}(?![a-z])(\s*\+)?`,'gi');
 const MIN_BEFORE=/(?:at least|minimum(?: of)?|min\.?|no less than|not less than|more than|over|above|bigger than|larger than|greater than|upwards of|longer than|at minimum)\s*$/;
 const MIN_AFTER=/^\s*(?:\+|or (?:more|bigger|larger|longer|above|higher)|minimum|min\b|at least)/;
 const MAX_BEFORE=/(?:at most|maximum(?: of)?|max\.?|no more than|not more than|less than|under|below|up to|no bigger than|no larger than|no wider than|no taller than|no higher than|no deeper than|no heavier than|smaller than|lighter than|narrower than|shorter than|within)\s*$/;
@@ -35,28 +31,31 @@ const MAX_AFTER=/^\s*(?:or (?:less|smaller|narrower|lighter|shorter|under)|max\b
 const SPACE=/\b(?:space|opening|gap|cupboard|shelf|alcove|cabinet|recess|nook|fits?|fit in|fit into|fit inside|fit under)\b/;
 const NEGATION=/\b(?:not|never|n't|no need|don't need|doesn't need|does not need|do not need|needn't)\b/;
 const BOUND_NEGATIONS=/\b(?:no|not) (?:more|less|bigger|larger|wider|taller|higher|deeper|heavier)\b/g;
-const unitOf=(u:string):string|null=>{const x=u.toLowerCase();
- if(/^quarts?$|^qt$/.test(x))return 'qt';if(/^ltrs?$/.test(x))return 'l';if(/^millilit/.test(x))return 'ml';if(/^centimet/.test(x))return 'cm';if(/^millimet/.test(x))return 'mm';
- if(/^kilos?$|^kilograms?$/.test(x))return 'kg';if(/^grams?$/.test(x))return 'g';if(/^ounces?$/.test(x))return 'oz';if(x==='feet')return 'ft';
+// S85 (intervention A): what a quantity IS (its unit and its kind) comes from the quantity knowledge only; this reader keeps
+// what is specific to checking a request against retained declarations: the bound, the property, the available space and
+// the criterion. The unit symbol it returns is the Phase245 declaration vocabulary the checks compare with.
+const unitOf=(u:string):string|null=>{const x=u.toLowerCase().trim();
+ if(/^quarts?$|^qt$/.test(x))return 'qt';if(/^ltrs?$|^lit(?:re|er)s?$/.test(x))return 'l';if(/^millilit/.test(x))return 'ml';if(/^centimet/.test(x))return 'cm';if(/^millimet/.test(x))return 'mm';
+ if(/^kilos?$|^kilograms?$/.test(x))return 'kg';if(/^grams?$/.test(x))return 'g';if(/^ounces?$/.test(x))return 'oz';if(x==='feet')return 'ft';if(x==='"'||/^inch(?:es)?$/.test(x))return 'in';
+ if(/^hours?$|^hrs?$/.test(x))return 'h';
  return canonicalUnit245(u);};
-const dimensionOf=(u:string):'volume'|'length'|'mass'|'power'|'duration'|null=>
- ['l','ml','qt'].includes(u)?'volume':['cm','mm','in','ft','m'].includes(u)?'length':['kg','g','lb','oz'].includes(u)?'mass':['W','kW'].includes(u)?'power':['h','min'].includes(u)?'duration':null;
+/** The quantity-knowledge kinds this reader can turn into a criterion (all others stay with the quantity requirements). */
+const DIMENSION_OF_KIND253:Record<string,'volume'|'length'|'mass'|'power'|'duration'>={volume:'volume',length:'length',mass:'mass',power:'power',duration:'duration'};
 const CRITERION:Record<string,string>={'capacity:min':'capacity_min','water_tank:min':'water_tank_capacity_min','width:max':'width_max','height:max':'height_max','depth:max':'depth_max','weight:max':'weight_max','power:min':'power_min','battery_life:min':'battery_life_min'};
 
 export function extractConstraints253(text:string):ConstraintExtraction253{
  const lower=text.toLowerCase().replace(/[’‘]/g,"'");
  const constraints:RequestConstraint253[]=[];const unmapped:{span:string;reason:string}[]=[];
- let m:RegExpExecArray|null;const re=new RegExp(QTY.source,'gi');
- while((m=re.exec(lower))){
-  // Groups: 1 low bound of 'between', 2 its unit, 3 low bound of 'X-Y', 4 the (last) number, 5 its unit, 6 a '+'.
-  const lowNum=m[1]??m[3]??null,mainNum=m[4],unitRaw=m[5],plus=!!m[6];
-  const unit=unitOf(unitRaw);if(!unit)continue;const dim=dimensionOf(unit);if(!dim)continue;
-  // GK (2026-10-18): "12 L/day" or "1.5 L per minute" is a rate, not a capacity. The unit the vocabulary matched may be
-  // only the start of a longer unit; the quantity knowledge reads the whole expression, and a quantity of another kind
-  // is never checked as this dimension (it stays explicit, as an unmapped requirement).
-  {const at=m.index+(m[0].length-m[0].trimStart().length);const full=findQuantities(qk253(),text.slice(at,at+m[0].length+40))[0];
-   if(full&&full.start===0&&full.unit.kinds.length&&!full.unit.kinds.includes(KIND_OF_DIMENSION253[dim])){
-    unmapped.push({span:full.surface,reason:`${full.surface} is a ${full.unit.kinds.map(k=>k.replace(/_/g,' ')).join(' or ')}, not a ${dim}: it is not checked as one`});re.lastIndex=Math.max(re.lastIndex,at+full.end);continue;}}
+ for(const f of findQuantities(qk253(),text)){
+  // one kind only: an ambiguous unit ("dB") or another kind (a rate "12 litres a day", a pressure) is not this reader's
+  const dim=f.unit.kinds.length===1?DIMENSION_OF_KIND253[f.unit.kinds[0]]??null:null;if(!dim)continue;
+  const unit=unitOf(f.unitSurface);
+  // a unit the declarations are never stated in ("5 years") was never a constraint here; a bounded one stays visible as a
+  // typed quantity requirement (applyQuantityRequirements253)
+  if(!unit)continue;
+  const m={index:f.start,0:text.slice(f.start,f.end)};
+  const between=/\bbetween\s+$/i.test(lower.slice(Math.max(0,f.start-12),f.start));
+  const lowNum=f.low!==undefined?String(f.low):null,mainNum=String(f.high??f.value);const plus=/^\s*\+/.test(text.slice(f.end));
   // Clause-local context: the words before the quantity back to the last sentence break, and a few words after.
   // A sentence break is punctuation followed by a space or the end, never a decimal point ("57.5").
   let clauseStart=0;for(const b of lower.slice(0,m.index).matchAll(/[.;!?\n](?=\s|$)/g))clauseStart=b.index!+1;
@@ -68,7 +67,7 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const range=lowNum!==null;
   // A range states a requirement only with "between" or a bound word; a bare "2000-2400W" may describe a label or
   // an owned product, so its inferred bound makes it a candidate to confirm, never a stated requirement.
-  const inferredBound=range&&bound===null&&m[1]===undefined;
+  const inferredBound=range&&bound===null&&!between;
   if(range&&bound===null)bound=dim==='volume'||dim==='power'||dim==='duration'?'min':'max';
   const space=SPACE.test(before)||/^\s*(?:\S+\s+){0,2}(?:space|opening|gap|cupboard|shelf|alcove|cabinet|recess)\b/.test(after);
   if(space&&bound===null)bound='max';
@@ -84,11 +83,11 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   else if(dim==='mass')property=/\b(?:weigh|weighs|weight|heavy|heavier|light|lighter|lightweight)\b/.test(ctx)?'weight':null;
   else if(dim==='power')property=bound==='min'||/\b(?:power|powerful|watt|watts|wattage)\b/.test(ctx)?'power':null;
   else if(dim==='duration')property=/\b(?:battery|playback|play time|playtime|listening|charge|charges|lasts?)\b/.test(ctx)?'battery_life':null;
-  const span0=text.slice(m.index,m.index+m[0].length).trim();
+  const span0=text.slice(m.index,m.index+m[0].length).trim();const spanFrom=between?m.index-lower.slice(0,m.index).match(/between\s+$/)![0].length:m.index;
   // Include the bound cue in the span when it is directly before the quantity ("at least 5 litres").
   const cue=(before.match(new RegExp(`(?:${MIN_BEFORE.source.replace(/\\s\*\$$/,'')}|${MAX_BEFORE.source.replace(/\\s\*\$$/,'')})\\s*$`))?.[0]??'');
   const tail=after.match(MAX_AFTER)?.[0]??after.match(MIN_AFTER)?.[0]??'';
-  const spanStart=m.index-cue.length;const span=text.slice(spanStart,m.index+m[0].length+tail.length).trim();
+  const spanStart=spanFrom-cue.length;const span=text.slice(spanStart,m.index+m[0].length+tail.length).trim();
   if(!property){if(dim==='length'||dim==='power'||dim==='volume')unmapped.push({span:span0,reason:`unclear which property ${unit} refers to`});continue;}
   const value=parseNumber245(range?(bound==='max'?mainNum:lowNum!):mainNum);
   if(value===null)continue;

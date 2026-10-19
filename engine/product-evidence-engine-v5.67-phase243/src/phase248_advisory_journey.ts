@@ -136,6 +136,9 @@ export interface PurchaseTarget253 {kind:'category'|'other'|'ambiguous'|'none';c
 const ANCHOR253=/(?:^| )(?:looking for|look for|looking at|shopping for|searching for|in the market for|recommendations? for|recommend(?:ed)?|suggestions? for|suggest|need|needs|want|wanted|buy|buying|purchase|purchasing|get|getting|choose|choosing|which|what|best|good|cheap|decent|replace(?: \S+){0,5} with|replacement for|upgrade to|switch to|considering|thinking of getting|alternatives? to)(?= |$)/g;
 const SKIP253=/^(?:(?:kind|type|sort|size|brand|make|model|style|set|pair|couple|piece) of |(?:a|an|the|some|any|new|another|second|replacement|good|great|decent|cheap|budget|quality|best|nice|simple|small|large|big) )+/;
 const BOUNDARY253=new Set(['for','to','that','which','who','with','without','in','on','of','from','under','over','so','because','and','or','but','i','me','my','we','our','you','your','they','them','their','he','she','his','her','its','us','is','are','was','were','be','been','can','could','should','will','would','than','vs','versus','as','at','by','if','when','while','it','this','these','those','there','do','does','did','have','has','had','suitable','compatible','capable','ideal','similar','like','please','also','too','now','then','just','not','no','into','onto','inside','around','about','one','ones','where','how','what','why','whose','enough','big','bigger','small','smaller','large','larger','compact','quiet','cheap','cheaper','decent','powerful','reliable','durable','light','lighter','heavy','safe','fast','quick','affordable','expensive','sized','easy','better','best','good','great','nice','ideal','perfect']);
+/** The evaluative adjectives of BOUNDARY253 (the same words, not a new list) and the degree words that grade them. */
+const PRENOMINAL253=new Set(['big','bigger','small','smaller','large','larger','compact','quiet','cheap','cheaper','decent','powerful','reliable','durable','light','lighter','heavy','safe','fast','quick','affordable','expensive','easy','better','best','good','great','nice','ideal','perfect']);
+const DEGREE253=/^(?:most|least|more|less|very|really|super|extra|quite)$/;
 const GENERIC_HEAD253=/^(?:way|ways|method|methods|technique|techniques|idea|ideas|option|options|one|ones|thing|things|something|anything|recommendation|recommendations|advice|model|models|brand|brands|type|types|kind|size|product|products|appliance|appliances|machine|machines|device|devices|feature|features|material|materials|place|time|help|info|information|budget|price|prices|deal|deals|setup|set|kit|stuff|equipment|gear|tips|tip|difference|differences|guide|review|reviews|answer|question|alternative|alternatives|replacement|upgrade|purchase)$/;
 export function purchaseTarget253(text:string,registry:readonly CategoryEntry248[],allowed?:ReadonlySet<string>):PurchaseTarget253{
  const phrases:{phrase:string;head:string;category:string|null;linked?:boolean}[]=[];
@@ -163,7 +166,12 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
    const replaced=replacing?seg.slice(0,st).replace(/^.*?replace/,''):'';
    for(let k=0;k<3&&rest;k++){
     rest=rest.replace(SKIP253,'');const toks=rest.split(' ');const np:string[]=[];let i=0;
-    for(;i<toks.length&&np.length<6;i++){if(BOUNDARY253.has(toks[i]))break;
+    for(;i<toks.length&&np.length<6;i++){
+     // S85 (owner boundary check: "most reliable dishwasher" was out of scope): before the head, an evaluative adjective
+     // of the boundary list ("quiet", "reliable"), with a degree word ("most", "very"), modifies the product; after it,
+     // the adjective still ends the phrase ("a dishwasher quiet enough").
+     if(!np.length&&(PRENOMINAL253.has(toks[i])||(DEGREE253.test(toks[i])&&PRENOMINAL253.has(toks[i+1]??''))))continue;
+     if(BOUNDARY253.has(toks[i]))break;
      // Reality check 2026-10-16: an article inside the phrase starts a new noun phrase, so the word before it is a verb
      // or preposition, not part of the purchase ("which espresso machine makes the best ..." names an espresso machine).
      if(np.length&&/^(?:a|an|the)$/.test(toks[i])){np.pop();break;}

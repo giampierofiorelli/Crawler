@@ -60,13 +60,15 @@ export interface Advice253 {
  /** GK (opt-in, quantity knowledge supplied): quantitative requirements the request states that the Phase253 constraint
   * reader does not cover, typed by the quantity knowledge. Understood, explicit, never checked or ranked here. */
  quantityRequirements?:QuantityRequirement253[];
+ /** S85: features the request asks of the product (a mechanism, or a task named as equipment): kept, never outcome needs */
+ featurePreferences?:{id:string;matched:string;kind:string|null}[];
  /** GK2 (opt-in): class requirements (energy or filter classes) typed against the knowledge's scales. */
  classRequirements?:ClassRequirement253[];
  /** S80 request coverage (principle 8): parts of the request PEE related to nothing it recognised, and numbers no
   * constraint consumed. Stated to the user and kept among the unassessed objectives; never interpreted further. */
  uninterpreted?:{span:string;reason:'not_interpreted'|'quantity_not_checked'}[];
 }
-export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range';value:number|null;low?:number;high?:number;unit:string;
+export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range'|'unstated';value:number|null;low?:number;high?:number;unit:string;
  kind:string|null;kindCandidates:string[];metric:string|null;weighting:string|null;status:'typed'|'kind_ambiguous';
  evidence:{target:string;methods:string[];conditions:string[];notEvidence:string[]};knowledge:string}
 export interface ClassRequirement253 {span:string;value:string;bound:'min'|'exact';scale:string|null;candidates:string[];note:string|null;knowledge:string}
