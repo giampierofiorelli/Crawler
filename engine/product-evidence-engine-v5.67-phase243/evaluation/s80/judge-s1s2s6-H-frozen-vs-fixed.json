@@ -1,0 +1,73 @@
+{
+ "schema": "pee.s80.judge-s1-s2-s6.v1",
+ "run": "H firstrun-frozen (0567e96) vs firstrun-fixed (59c96e4); judge blind to build",
+ "judge": "fresh-context agent, same model family; not independent human validation; blind to which answer is which build",
+ "requests": [
+  {
+   "id": "H1",
+   "build": "fixed",
+   "S1_goals": "partial",
+   "S2_evidence_needed": "partial",
+   "S6_decision": "partial",
+   "firstFailingStage": "S1",
+   "goalsMissedSilently": 1,
+   "goalsFlaggedNotInterpreted": 1,
+   "harmfulConclusions": 0
+  },
+  {
+   "id": "H1",
+   "build": "frozen",
+   "S1_goals": "fail",
+   "S2_evidence_needed": "partial",
+   "S6_decision": "partial",
+   "firstFailingStage": "S1",
+   "goalsMissedSilently": 2,
+   "goalsFlaggedNotInterpreted": 0,
+   "harmfulConclusions": 0
+  },
+  {
+   "id": "H2",
+   "build": "frozen",
+   "S1_goals": "partial",
+   "S2_evidence_needed": "partial",
+   "S6_decision": "pass",
+   "firstFailingStage": "S1",
+   "goalsMissedSilently": 2,
+   "goalsFlaggedNotInterpreted": 0,
+   "harmfulConclusions": 0
+  },
+  {
+   "id": "H2",
+   "build": "fixed",
+   "S1_goals": "partial",
+   "S2_evidence_needed": "partial",
+   "S6_decision": "pass",
+   "firstFailingStage": "S1",
+   "goalsMissedSilently": 0,
+   "goalsFlaggedNotInterpreted": 2,
+   "harmfulConclusions": 0
+  },
+  {
+   "id": "H3",
+   "build": "fixed",
+   "S1_goals": "partial",
+   "S2_evidence_needed": "pass",
+   "S6_decision": "partial",
+   "firstFailingStage": "S1",
+   "goalsMissedSilently": 2,
+   "goalsFlaggedNotInterpreted": 1,
+   "harmfulConclusions": 0
+  },
+  {
+   "id": "H3",
+   "build": "frozen",
+   "S1_goals": "partial",
+   "S2_evidence_needed": "pass",
+   "S6_decision": "partial",
+   "firstFailingStage": "S1",
+   "goalsMissedSilently": 3,
+   "goalsFlaggedNotInterpreted": 0,
+   "harmfulConclusions": 0
+  }
+ ]
+}
