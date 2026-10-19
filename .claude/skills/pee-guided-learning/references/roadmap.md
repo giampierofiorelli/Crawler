@@ -308,3 +308,4 @@ tests, principle 2).
   operational substitute; typed reversible integration; scoring rewards recovery as well as avoidance; graded
   evidential force instead of the binary S67 proposal; shadow only). R3 gains translation fidelity and completeness.
   Current step: R2.
+- 2026-10-19: R2 work (`r2-typed-link-and-evidential-force.md`): typed link lk.1 and graded force (KR, shadow). Dev (spent): correct links 13 → 56, wrong 21 → 2. Link-unused set s1cd, first run: wrong 46 (lexical) → 11, correct 74 (lexical) vs 56 (C3); 77 ambiguous (exclusive-candidate assumption 50; untyped SDR/HDR and aged filter 27). Exit tests pass. Recovery not yet at the lexical link's level: R2 continues.
