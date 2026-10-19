@@ -193,7 +193,9 @@ if(cmd==='load'){
  }finally{rmSync(dir,{recursive:true,force:true});}
 }else if(cmd==='status'){
  const m=existsSync(SNAP_MANIFEST)?JSON.parse(readFileSync(SNAP_MANIFEST,'utf8')):null;
+ const both=existsSync(LIVE_DB)&&existsSync(SNAP_DB);
  out({snapshot:m?{sha256:m.sha256,counts:m.counts,verifiedAt:m.verifiedAt}:null,live:existsSync(LIVE_DB)?LIVE_DB:null,
-  contentInSync:existsSync(LIVE_DB)&&existsSync(SNAP_DB)?fingerprint(LIVE_DB)===fingerprint(SNAP_DB):null,
+  contentInSync:both?fingerprint(LIVE_DB)===fingerprint(SNAP_DB):null,lineage:both?safeLineage(LIVE_DB,SNAP_DB):null,
+  snapshotCommit:existsSync(join(REPO,'.git'))?(()=>{try{return git('rev-parse','--short','HEAD');}catch{return null;}})():null,
   snapshotDir:SNAP,note:'the Stop and SessionEnd hooks run sync automatically; run it by hand with node scripts/knowledge-snapshot.mjs sync'});
 }else{console.error('usage: knowledge-snapshot.mjs load|save|sync|verify|status');process.exit(2);}
