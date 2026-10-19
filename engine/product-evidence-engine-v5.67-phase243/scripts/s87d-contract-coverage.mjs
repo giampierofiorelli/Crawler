@@ -11,12 +11,16 @@ const C=await import(new URL('../dist/src/observation_contract.js',import.meta.u
 const db=new DatabaseSync(arg('store'),{readOnly:true});
 const url=db.prepare('SELECT url FROM revisions WHERE revision_id=?');const u=id=>url.get(id)?.url??null;
 const tables={test_measurements265:C.fromTestMeasurement265,qualitative_observations270:C.fromQualitative270,comparative_results271:C.fromComparative271,declarations:C.fromDeclaration};
-const out={schema:'pee.s87d.contract-coverage.v1',contract:C.OBSERVATION_CONTRACT_VERSION,store:'read-only',tables:{}};
+const out={schema:'pee.s87d.contract-coverage.v2',contract:C.OBSERVATION_CONTRACT_VERSION,store:'read-only',
+ note:'v2 (S87e): structural validity and scientific completeness per purpose are separate; comparison sets are counted as records of their own',tables:{}};
+const account=(name,records)=>{const slots={},viol={},purposes={};let valid=0;
+ for(const o of records){for(const [k,s] of Object.entries(C.slotStates(o)))(slots[k]??={stated:0,inferred:0,unknown:0})[s]++;
+  const v=C.checkStructure(o);if(v.valid)valid++;for(const x of v.violations)viol[x.shape]=(viol[x.shape]??0)+1;
+  for(const [p,st] of Object.entries(C.assessCompleteness(o))){const b=purposes[p]??={complete:0,complete_with_inferences:0,incomplete:0,missing:{}};b[st.status]++;for(const m of st.missing)b.missing[m]=(b.missing[m]??0)+1;}}
+ out.tables[name]={records:records.length,structurallyValid:valid,violations:viol,completeness:purposes,slots};};
 for(const [t,f] of Object.entries(tables)){const rows=db.prepare(`SELECT * FROM ${t} WHERE state NOT LIKE 'superseded%'`).all();
- const slots={},shapes={};let conforms=0;
- for(const r of rows){const o=f(r,u(r.revision_id));for(const [k,s] of Object.entries(C.slotStates(o)))(slots[k]??={stated:0,inferred:0,unknown:0})[s]++;
-  const rep=C.checkShapes(o);if(rep.conforms)conforms++;for(const x of rep.results)shapes[x.shape]=(shapes[x.shape]??0)+1;}
- out.tables[t]={rows:rows.length,conforming:conforms,slots,shapeFindings:shapes};}
+ account(t,rows.map(r=>f(r,u(r.revision_id))));
+ if(t==='comparative_results271')account('comparative_results271:comparison_sets',C.comparisonsFromComparative271(rows,u));}
 // qualitative gold: can the existing table hold it? (its CHECKs admit 5 cooking outcomes, a dish, a cooking-test basis)
 const QOUT=new Set(['crispness','browning','evenness','doneness','moisture']);
 const gd=arg('qual-gold-dir');if(gd){const J=f=>JSON.parse(readFileSync(join(gd,f),'utf8'));const items=[];

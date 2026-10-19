@@ -1,0 +1,628 @@
+{
+ "schema": "pee.s87d.contract-coverage.v2",
+ "contract": "pee.observation.v0.3",
+ "store": "read-only",
+ "note": "v2 (S87e): structural validity and scientific completeness per purpose are separate; comparison sets are counted as records of their own",
+ "tables": {
+  "test_measurements265": {
+   "records": 12,
+   "structurallyValid": 12,
+   "violations": {},
+   "completeness": {
+    "interpret": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 12,
+     "missing": {
+      "assessed.property": 12
+     }
+    },
+    "describe_product": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 12,
+     "missing": {
+      "assessed.property": 12,
+      "subject.product": 4
+     }
+    },
+    "compare": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 12,
+     "missing": {
+      "assessed.property": 12,
+      "result.quantity.quantityKind": 12,
+      "procedure_or_experiment": 8,
+      "subject.product": 4
+     }
+    },
+    "decide": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 12,
+     "missing": {
+      "assessed.property": 12,
+      "subject.product": 12,
+      "uncertainty": 12
+     }
+    }
+   },
+   "slots": {
+    "subject.product": {
+     "stated": 0,
+     "inferred": 8,
+     "unknown": 4
+    },
+    "subject.model": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    },
+    "assessed.property": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    },
+    "assessed.objectOfInterest": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    },
+    "assessed.basis": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    },
+    "assessed.statistic": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    },
+    "assessed.constraints": {
+     "stated": 10,
+     "inferred": 0,
+     "unknown": 2
+    },
+    "observationBasis": {
+     "stated": 4,
+     "inferred": 8,
+     "unknown": 0
+    },
+    "procedure": {
+     "stated": 4,
+     "inferred": 0,
+     "unknown": 8
+    },
+    "uncertainty": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    },
+    "observer.publisher": {
+     "stated": 12,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observer.role": {
+     "stated": 12,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "provenance.evidence": {
+     "stated": 12,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.unit": {
+     "stated": 12,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.quantityKind": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 12
+    }
+   }
+  },
+  "qualitative_observations270": {
+   "records": 9,
+   "structurallyValid": 9,
+   "violations": {},
+   "completeness": {
+    "interpret": {
+     "complete": 9,
+     "complete_with_inferences": 0,
+     "incomplete": 0,
+     "missing": {}
+    },
+    "describe_product": {
+     "complete": 0,
+     "complete_with_inferences": 4,
+     "incomplete": 5,
+     "missing": {
+      "subject.product": 5
+     }
+    },
+    "compare": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 9,
+     "missing": {
+      "subject.product": 5,
+      "procedure_or_experiment": 9
+     }
+    },
+    "decide": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 9,
+     "missing": {
+      "subject.product": 9,
+      "uncertainty": 9
+     }
+    }
+   },
+   "slots": {
+    "subject.product": {
+     "stated": 0,
+     "inferred": 4,
+     "unknown": 5
+    },
+    "subject.model": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "assessed.property": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.objectOfInterest": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.basis": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "assessed.statistic": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "assessed.constraints": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "observationBasis": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "procedure": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "uncertainty": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "observer.publisher": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observer.role": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "provenance.evidence": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.grade": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 9
+    },
+    "result.strength": {
+     "stated": 9,
+     "inferred": 0,
+     "unknown": 0
+    }
+   }
+  },
+  "comparative_results271": {
+   "records": 87,
+   "structurallyValid": 87,
+   "violations": {},
+   "completeness": {
+    "interpret": {
+     "complete": 57,
+     "complete_with_inferences": 30,
+     "incomplete": 0,
+     "missing": {}
+    },
+    "describe_product": {
+     "complete": 52,
+     "complete_with_inferences": 27,
+     "incomplete": 8,
+     "missing": {
+      "subject.product": 8
+     }
+    },
+    "compare": {
+     "complete": 0,
+     "complete_with_inferences": 79,
+     "incomplete": 8,
+     "missing": {
+      "subject.product": 8
+     }
+    },
+    "decide": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 87,
+     "missing": {
+      "uncertainty": 87,
+      "subject.product": 8
+     }
+    }
+   },
+   "slots": {
+    "subject.product": {
+     "stated": 79,
+     "inferred": 0,
+     "unknown": 8
+    },
+    "subject.model": {
+     "stated": 72,
+     "inferred": 0,
+     "unknown": 15
+    },
+    "assessed.property": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.objectOfInterest": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.basis": {
+     "stated": 0,
+     "inferred": 87,
+     "unknown": 0
+    },
+    "assessed.statistic": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 87
+    },
+    "assessed.constraints": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observationBasis": {
+     "stated": 57,
+     "inferred": 30,
+     "unknown": 0
+    },
+    "procedure": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "uncertainty": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 87
+    },
+    "observer.publisher": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observer.role": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "provenance.evidence": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.unit": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.quantityKind": {
+     "stated": 87,
+     "inferred": 0,
+     "unknown": 0
+    }
+   }
+  },
+  "comparative_results271:comparison_sets": {
+   "records": 14,
+   "structurallyValid": 14,
+   "violations": {},
+   "completeness": {
+    "interpret": {
+     "complete": 0,
+     "complete_with_inferences": 14,
+     "incomplete": 0,
+     "missing": {}
+    },
+    "describe_product": {
+     "complete": 0,
+     "complete_with_inferences": 13,
+     "incomplete": 1,
+     "missing": {
+      "subject.product": 1
+     }
+    },
+    "compare": {
+     "complete": 0,
+     "complete_with_inferences": 14,
+     "incomplete": 0,
+     "missing": {}
+    },
+    "decide": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 14,
+     "missing": {
+      "uncertainty": 14,
+      "subject.product": 1
+     }
+    }
+   },
+   "slots": {
+    "subject.product": {
+     "stated": 13,
+     "inferred": 0,
+     "unknown": 1
+    },
+    "subject.model": {
+     "stated": 12,
+     "inferred": 0,
+     "unknown": 2
+    },
+    "assessed.property": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.objectOfInterest": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.basis": {
+     "stated": 0,
+     "inferred": 14,
+     "unknown": 0
+    },
+    "assessed.statistic": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 14
+    },
+    "assessed.constraints": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observationBasis": {
+     "stated": 0,
+     "inferred": 14,
+     "unknown": 0
+    },
+    "procedure": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "uncertainty": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 14
+    },
+    "observer.publisher": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observer.role": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "provenance.evidence": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "comparison.experiment": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "comparison.relation": {
+     "stated": 14,
+     "inferred": 0,
+     "unknown": 0
+    }
+   }
+  },
+  "declarations": {
+   "records": 2385,
+   "structurallyValid": 2385,
+   "violations": {},
+   "completeness": {
+    "interpret": {
+     "complete": 2385,
+     "complete_with_inferences": 0,
+     "incomplete": 0,
+     "missing": {}
+    },
+    "describe_product": {
+     "complete": 2385,
+     "complete_with_inferences": 0,
+     "incomplete": 0,
+     "missing": {}
+    },
+    "compare": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 2385,
+     "missing": {
+      "procedure_or_experiment": 2385,
+      "result.quantity.quantityKind": 560
+     }
+    },
+    "decide": {
+     "complete": 0,
+     "complete_with_inferences": 0,
+     "incomplete": 2385,
+     "missing": {
+      "uncertainty": 2385,
+      "observer.role": 800
+     }
+    }
+   },
+   "slots": {
+    "subject.product": {
+     "stated": 2385,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "subject.model": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 2385
+    },
+    "assessed.property": {
+     "stated": 2385,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "assessed.objectOfInterest": {
+     "stated": 12,
+     "inferred": 0,
+     "unknown": 2373
+    },
+    "assessed.basis": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 2385
+    },
+    "assessed.statistic": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 2385
+    },
+    "assessed.constraints": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 2385
+    },
+    "observationBasis": {
+     "stated": 2385,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "procedure": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 2385
+    },
+    "uncertainty": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 2385
+    },
+    "observer.publisher": {
+     "stated": 2385,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "observer.role": {
+     "stated": 1585,
+     "inferred": 0,
+     "unknown": 800
+    },
+    "provenance.evidence": {
+     "stated": 2385,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.unit": {
+     "stated": 560,
+     "inferred": 0,
+     "unknown": 0
+    },
+    "result.quantityKind": {
+     "stated": 0,
+     "inferred": 0,
+     "unknown": 560
+    }
+   }
+  }
+ },
+ "qualitativeGold": {
+  "note": "representable270: admitted by the CHECK constraints of qualitative_observations270 (5 cooking outcomes, a dish). The contract admits any property with a judgement.",
+  "byCategory": {
+   "air_fryers": {
+    "items": 124,
+    "representable270": 63,
+    "representableContract": 124
+   },
+   "dishwashers": {
+    "items": 37,
+    "representable270": 0,
+    "representableContract": 37
+   },
+   "air_purifiers": {
+    "items": 70,
+    "representable270": 0,
+    "representableContract": 70
+   },
+   "televisions": {
+    "items": 36,
+    "representable270": 0,
+    "representableContract": 36
+   },
+   "tumble_dryers": {
+    "items": 31,
+    "representable270": 0,
+    "representableContract": 31
+   },
+   "dehumidifiers": {
+    "items": 12,
+    "representable270": 0,
+    "representableContract": 12
+   }
+  },
+  "total": {
+   "items": 310,
+   "representable270": 63,
+   "representableContract": 310
+  }
+ }
+}
