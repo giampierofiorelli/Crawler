@@ -28,10 +28,12 @@ import {createHash} from 'node:crypto';
 import {compileRuleSet,evaluate,type CompiledProgram,type Fact,type Model,type RuleSet} from './knowledge_rules.js';
 import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
-import {relations247} from './phase247_category_relations.js';
+import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
+import {compareQuantities,findQuantities,loadQuantityKnowledge,type ComparisonResult} from './quantity_knowledge.js';
 
-/** lk.6 (R3, specificity); v1-v5 (lk.1-lk.5) stay loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v6.json';
+/** lk.7 (S81: condition concepts, comparability under the teaching, attribute proxies); v1-v6 (lk.1-lk.6) stay
+ * loadable to reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v7.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -56,6 +58,10 @@ export interface ForceOverlay {id:string;relations:Record<string,{support:string
  * of a requires_condition relation are conditions, not measurements (as in the extraction plan). A relation the
  * verification found not supported, or not found in the source, is left out; its force otherwise follows the verdict. */
 export function teachingView(store:KnowledgeStore246,category:string,overlay?:ForceOverlay|null):TeachingView{
+ // S81: with no overlay argument, the force comes from the store's own source-citing assessments (relation_assessments,
+ // S78). Before S81 a caller that passed none got 'unverified' for every relation although the store held the verdicts.
+ // Pass null for the pre-S81 view (no verdicts), or an overlay file to reproduce earlier runs.
+ if(overlay===undefined)overlay=storeForceOverlay(store,category);
  const items=store.categoryItems246(category);const rels=relations247(store,category);
  const byItem=new Map(items.map(i=>[i.itemId,i]));const ref=(r:string)=>r.startsWith('item:')?byItem.get(r.slice(5)):undefined;
  const concept=(i:NonNullable<ReturnType<typeof ref>>):TaughtConcept=>({id:i.concept!.id,statement:i.statement,aliases:i.concept!.aliases});
@@ -142,7 +148,9 @@ export interface LinkValue {id:string;quantity:TypedQuantity;product:string|null
  test?:string|null;
  /** S72: the identified procedure (protocol statement or named test procedure) the value was obtained with: it supports
   * compatibility, never identity. */
- protocol?:string|null}
+ protocol?:string|null;
+ /** S81: condition concepts the value's record states (taught condition id -> the record's description). */
+ states?:Readonly<Record<string,string>>}
 export type LinkStatus='linked'|'linked_condition_not_shown'|'linked_equivalent'|'ambiguous'|'member_only'|'no_taught_measurement'|'not_linked';
 export interface LinkResult {value:string;status:LinkStatus;measurements:string[];
  /** S69: the analytical sets the value is a member of (not exclusive, not evidence of the set's relationship) */
@@ -210,7 +218,12 @@ export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDesc
   if(v.source)I.value_source.push([v.id,v.source]);
   if(v.test&&v.source)I.value_test.push([v.id,v.source+'#'+v.test]);
   if(v.protocol&&v.source)I.value_protocol.push([v.id,v.source+'#'+v.protocol]);
-  const ok=observationKey(v);if(ok)I.observation.push([v.id,ok]);}
+  const ok=observationKey(v);if(ok)I.observation.push([v.id,ok]);
+  for(const [c,w] of Object.entries(v.states??{}))(I.value_states??=[]).push([v.id,c,w]);}
+ // S81: every taught requirement is a fact (condition concept), typed by the axes it names when the quantity knowledge
+ // is given; lk.6 saw only the requirements that happened to name an axis and treated the others as met
+ if(qk)for(const m of view.measurements)for(const c of m.conditions){const cc=conditionConcept(qk,c);
+  (I.requires_cond??=[]).push([m.concept.id,cc.id]);if(cc.identity)(I.identity_cond??=[]).push([cc.id]);for(const a of cc.axes)(I.cond_axis??=[]).push([cc.id,a]);}
  for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);if(d.qualifiers?.length)I.unread_qualifier.push([d.id]);
   for(const g of measurandGroups(d)){for(const k of g.kinds)I.group_kind.push([d.id,g.group,k]);for(const x of g.metrics)I.group_metric.push([d.id,g.group,x]);}
   for(const m of d.measurands){if(m.metric)I.measures_metric.push([d.id,m.metric,m.level]);
@@ -250,4 +263,173 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
   ...me.all('relationship_at_points').map(f=>({product:f.args[0],measurement:f.args[1],kind:'relationship_at_points' as const,axis:null,setting:null,basis:null,derivation:me.why(f)}))];
  const repeatedReports=ml.all('repeated_report').map(f=>[f.args[0],f.args[1]] as [string,string]).filter(([a,b])=>a<b);
  return {schema:'pee.r2.knowledge-link.v1',rules:`${R.version}:${R.digest.slice(0,12)}`,view:view.basis,descriptors,results,outcomes,relationships,repeatedReports,rankingInput:false};
+}
+
+// =====================================================================================================================
+// S81 (owner brief 2026-10-19, "make scientific knowledge operational"). The S81 trace and battery
+// (evaluation/s81) found that the acquired teaching reached the reasoning only in part:
+//  - requires_condition relations were checked only when the condition named a quantity-knowledge axis (21 of 79);
+//    every other requirement was treated as met: a conclusion from an absence over an incomplete record;
+//  - pairwise comparability (QK program `compare`) never consulted the teaching's requirements;
+//  - the 49 not_sufficient_for relations from DECLARED attributes (capacity, filter class, peak-brightness claims)
+//    were not available to any inference;
+//  - a caller of teachingView got 'unverified' force although the store held the source verdicts.
+// The functions below give the existing KR programs (link-rules v7: link, evidence, comparable) the whole teaching as
+// facts. They add no category rule and no vocabulary: what changes a conclusion is the knowledge in the store.
+// Shadow only: nothing here is written to the store or reaches a ranking.
+export const KR81_VERSION='kr81.1';
+
+/** The store's own source-citing sufficiency verdicts (relation_assessments, S78) as a force overlay. */
+export function storeForceOverlay(store:KnowledgeStore246,category:string):ForceOverlay{
+ const relations:ForceOverlay['relations']={};
+ for(const r of relations247(store,category))if(r.kind==='measured_by'){const s=sufficiencyOf247(store,r.relationId).state;
+  relations[r.relationId]={support:'supported',...(s==='established'?{sufficiency:'establishes'}:s==='informs_only'?{sufficiency:'informs_only'}:{})};}
+ return {id:'store:relation_assessments',relations};
+}
+
+/** A taught condition as a reasoning object. `identity`: it binds each result to its exact product (its name says
+ * identity, variant or model), so it is shown per result and never required to be equal across products. `axes`: the
+ * quantity-knowledge condition axes its name or statement names (a result stating them shows it). */
+export interface ConditionConcept {id:string;statement:string;identity:boolean;axes:string[]}
+const IDENTITY_NAME=/(?:^|_)(?:identity|variant|model)(?:_|$)/;
+export function conditionConcept(qk:QuantityKnowledge,c:TaughtConcept):ConditionConcept{
+ const text=c.id.replace(/_/g,' ')+' ; '+statementHead(c.statement);
+ const axes=[...qk.axes.values()].filter(a=>namedPhrases(text,[a.id.replace(/_/g,' ')]).size).map(a=>a.id).sort();
+ return {id:c.id,statement:statementHead(c.statement),identity:IDENTITY_NAME.test(c.id),axes};
+}
+
+/** A declared attribute the teaching marks not sufficient for an outcome (a not_sufficient_for relation from attr:). */
+export interface AttributeLimit {attribute:string;outcome:string;relation:string}
+const normAttr=(s:string)=>s.toLowerCase().replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
+export type KnowledgeAblation='conditions'|'proxies'|'assessments';
+/** Everything a category's teaching gives the reasoning, as one reproducible object. `ablate` removes one kind of
+ * knowledge (for knowledge-on/off experiments); `dropRelation` removes one relation (metamorphic tests). */
+export interface CategoryKnowledge {category:string;view:TeachingView;descriptors:MeasurementDescriptor[];attributeLimits:AttributeLimit[];
+ basis:TeachingView['basis']&{kr:string;ablated:KnowledgeAblation|null;dropped:string|null}}
+export function categoryKnowledge(store:KnowledgeStore246,category:string,opts:{qk?:QuantityKnowledge;ablate?:KnowledgeAblation|null;
+ dropRelation?:{from:string;to:string;kind:'measured_by'|'not_sufficient_for'}|null;overlay?:ForceOverlay|null}={}):CategoryKnowledge{
+ const qk=opts.qk??defaultQk();const ab=opts.ablate??null;const drop=opts.dropRelation??null;
+ const base=teachingView(store,category,ab==='assessments'?null:opts.overlay);
+ const measurements=base.measurements.map(m=>({...m,
+  outcomes:m.outcomes.filter(o=>!(drop?.kind==='measured_by'&&drop.from===m.concept.id&&drop.to===o.outcome)),
+  indirectFor:ab==='proxies'?[]:m.indirectFor.filter(o=>!(drop?.kind==='not_sufficient_for'&&drop.from===m.concept.id&&drop.to===o)),
+  conditions:ab==='conditions'?[]:m.conditions}));
+ const view:TeachingView={...base,measurements};
+ const items=new Map(store.categoryItems246(category).map(i=>['item:'+i.itemId,i]));
+ const attributeLimits=ab==='proxies'?[]:relations247(store,category).filter(r=>r.kind==='not_sufficient_for'&&r.from.startsWith('attr:')&&items.get(r.to)?.concept)
+  .map(r=>({attribute:normAttr(r.from.slice(5)),outcome:items.get(r.to)!.concept!.id,relation:r.relationId}))
+  .filter(a=>!(drop?.kind==='not_sufficient_for'&&normAttr(drop.from)===a.attribute&&drop.to===a.outcome));
+ return {category,view,descriptors:measurements.map(m=>describeMeasurement(qk,m.concept,m.conditions)),attributeLimits,
+  basis:{...view.basis,kr:KR81_VERSION,ablated:ab,dropped:drop?`${drop.kind}:${drop.from}->${drop.to}`:null}};
+}
+let qkDefault:QuantityKnowledge|null=null;
+function defaultQk():QuantityKnowledge{return qkDefault??=loadQuantityKnowledge();}
+
+/** A result or reading as the S81 reasoning takes it. `measurement`: the taught measurement when the record identifies it
+ * (a structured statement); otherwise the link program infers it from `quantity`. `axes` and `states`: the conditions
+ * the record states, as axis values and as condition concepts. */
+export interface ObservedValue {id:string;product:string|null;measurement?:string|null;quantity:TypedQuantity|null;
+ axes?:readonly (readonly [string,string])[];states?:Readonly<Record<string,string>>;source?:string|null;test?:string|null}
+const asLinkValue=(v:ObservedValue):LinkValue|null=>v.quantity?{id:v.id,quantity:withAxes(v.quantity,v.axes),product:v.product,source:v.source??null,test:v.test??null,states:v.states}:null;
+const withAxes=(q:TypedQuantity,axes?:ObservedValue['axes'])=>!axes?.length?q:{...q,conditions:[...q.conditions,...axes.filter(([a])=>!q.conditions.some(c=>c.axis===a)).map(([axis,value])=>({axis,value,raw:value,from:'labels' as const}))]};
+const onlyFor=(p:CompiledProgram,F:Record<string,(string|number)[][]>)=>Object.fromEntries(Object.entries(F).filter(([k])=>p.vocab.has(k)&&(p.vocab.get(k)!.role==='input'||!p.rules.some(r=>r.head.pred===k))));
+/** Input facts of the S81 programs for a set of values (the link facts, plus identified links and stated conditions). */
+function knowledgeFacts(qk:QuantityKnowledge,k:CategoryKnowledge,values:readonly ObservedValue[]):Record<string,(string|number)[][]>{
+ const lv=values.map(asLinkValue).filter((x):x is LinkValue=>!!x);
+ const I=linkFacts(k.view,k.descriptors,lv,qk);
+ const add=(p:string,row:(string|number)[])=>{(I[p]??=[]).push(row);};
+ for(const v of values){if(!v.quantity){add('value',[v.id]);if(v.product)add('value_product',[v.id,v.product]);
+   for(const [a,x] of v.axes??[])add('value_condition',[v.id,a,x]);for(const [c,w] of Object.entries(v.states??{}))add('value_states',[v.id,c,w]);}}
+ for(const key of Object.keys(I))I[key]=[...new Map(I[key].map(r=>[r.join('\u0001'),r])).values()];
+ return I;
+}
+export interface EvidenceUnderKnowledge {rules:string;knowledge:CategoryKnowledge['basis'];
+ results:{value:string;outcome:string;force:string;measurement:string;derivation:string[]}[];
+ /** outcome -> the forces the values bear on it (unverified reported as not_verified) */
+ byOutcome:Record<string,string[]>;
+ outcomes:OutcomeAssessment[];
+ /** per value: the required condition concepts its record does not show, by measurement */
+ conditionsNotShown:{value:string;measurement:string;condition:string}[];rankingInput:false}
+/** What each value is evidence of, under the teaching: the link (given or inferred), the force the source assessment
+ * gives it, every required condition shown or not, proxies as indirect only. Program `evidence` of link-rules v7. */
+export function evidenceUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,values:readonly ObservedValue[],opts:{rules?:RuleSet}={}):EvidenceUnderKnowledge{
+ const R=loadLinkRules(opts.rules);const link=R.rules.get('link')!,ev=R.rules.get('evidence')!;
+ const I=knowledgeFacts(qk,k,values);const known=new Set(k.view.measurements.map(m=>m.concept.id));
+ const given=values.filter(v=>v.measurement&&known.has(v.measurement));
+ const inferred=values.filter(v=>!v.measurement&&v.quantity);
+ let linkTo:(string|number)[][]=given.map(v=>[v.id,v.measurement!]);let assumes:(string|number)[][]=[];const pass:Record<string,(string|number)[][]>={member:[],member_group:[],identity_unknown:[]};
+ if(inferred.length){const ml=evaluate(link,onlyFor(link,I),{record:'the values and the teaching'});const ids=new Set(inferred.map(v=>v.id));
+  const p=(pred:string)=>ml.all(pred).map(f=>f.args).filter(a=>ids.has(String(a[0])));
+  linkTo=[...linkTo,...p('linked').map(a=>[a[0],a[1]]),...p('linked_equivalent')];assumes=p('linked').filter(a=>a[2]==='condition_not_shown').map(a=>[a[0],a[1]]);
+  pass.member=p('member');pass.member_group=p('member_group');pass.identity_unknown=p('identity_unknown');}
+ const me=evaluate(ev,onlyFor(ev,{...I,...pass,link_to:linkTo,assumes_condition:assumes,link_identified:given.map(v=>[v.id,v.measurement!])}),{record:'the values, their links and the teaching'});
+ const results=me.all('evidence_force').map(f=>({value:String(f.args[0]),outcome:String(f.args[1]),force:f.args[2]==='unverified'?'not_verified':String(f.args[2]),measurement:String(f.args[3]),derivation:me.why(f)}));
+ const byOutcome:Record<string,string[]>={};for(const r of results)(byOutcome[r.outcome]??=[]).push(r.force);
+ return {rules:`${R.version}:${R.digest.slice(0,12)}`,knowledge:k.basis,results,byOutcome,
+  outcomes:me.all('outcome_assessment').map(f=>({product:String(f.args[0]),outcome:String(f.args[1]),assessment:String(f.args[2]),derivation:me.why(f)})),
+  conditionsNotShown:me.all('cond_unshown').map(f=>({value:String(f.args[0]),measurement:String(f.args[1]),condition:String(f.args[2])})),rankingInput:false};
+}
+/** What declared attributes bear on under the teaching: indirect only, for the outcomes it marks them not sufficient
+ * for; nothing otherwise (rule EA1). Attribute names are matched as written, after case and separator normalisation. */
+export function attributeEvidence(k:CategoryKnowledge,declarations:readonly {id:string;product:string|null;attribute:string}[],opts:{rules?:RuleSet}={}):Pick<EvidenceUnderKnowledge,'results'|'byOutcome'|'rules'>{
+ const R=loadLinkRules(opts.rules);const ev=R.rules.get('evidence')!;
+ const F:Record<string,(string|number)[][]>={declares:declarations.map(d=>[d.id,normAttr(d.attribute)]),value_product:declarations.filter(d=>d.product).map(d=>[d.id,d.product!]),
+  attribute_indirect_for:k.attributeLimits.map(a=>[a.attribute,a.outcome])};
+ const me=evaluate(ev,onlyFor(ev,F),{record:'the declarations and the teaching'});
+ const results=me.all('evidence_force').map(f=>({value:String(f.args[0]),outcome:String(f.args[1]),force:String(f.args[2]),measurement:String(f.args[3]),derivation:me.why(f)}));
+ const byOutcome:Record<string,string[]>={};for(const r of results)(byOutcome[r.outcome]??=[]).push(r.force);
+ return {rules:`${R.version}:${R.digest.slice(0,12)}`,results,byOutcome};
+}
+
+/** How a condition's descriptions in two records relate. Same: equal after case and spacing, or equal axis values.
+ * Documented different: both name quantities of one kind with no value in common, or different named values of one
+ * axis. Otherwise the relation is unknown (different wording is not shown to be a different condition). */
+function describeCondition(qk:QuantityKnowledge,c:ConditionConcept,v:ObservedValue&{quantity:TypedQuantity}):string|null{
+ if(v.states?.[c.id]!=null)return v.states[c.id];
+ if(!c.axes.length)return null;const vals=c.axes.map(a=>v.quantity.conditions.find(x=>x.axis===a)?.value??null);
+ return vals.every(x=>x!=null)?vals.join(' ; '):null;
+}
+const normDesc=(s:string)=>s.toLowerCase().replace(/[^\p{L}\p{N}%.]+/gu,' ').replace(/\s+/g,' ').trim();
+function conditionRelation(qk:QuantityKnowledge,a:string,b:string):{same:boolean;distinct:string|null}{
+ if(normDesc(a)===normDesc(b))return {same:true,distinct:null};
+ const q=(s:string)=>{const m=new Map<string,Set<string>>();for(const f of findQuantities(qk,s)){if(f.value==null||f.unit.level)continue;const si=f.value*f.unit.factor+f.unit.offset;
+  for(const kd of f.unit.kinds)(m.get(kd)??m.set(kd,new Set()).get(kd)!).add(si.toPrecision(6));}return m;};
+ const qa=q(a),qb=q(b);
+ for(const [kd,va] of qa){const vb=qb.get(kd);if(vb&&![...va].some(x=>vb.has(x)))return {same:false,distinct:`different ${kd.replace(/_/g,' ')} (${[...va].join('/')} vs ${[...vb].join('/')}, SI)`};}
+ for(const ax of qk.axes.values())for(const [val,terms] of Object.entries(ax.values??{})){const ia=namedPhrases(a,terms).size>0,ib=namedPhrases(b,terms).size>0;
+  if(ia!==ib){const other=Object.entries(ax.values??{}).some(([v2,t2])=>v2!==val&&namedPhrases(ia?b:a,t2).size>0);if(other)return {same:false,distinct:`different ${ax.id.replace(/_/g,' ')} values`};}}
+ return {same:false,distinct:null};
+}
+export interface ComparisonUnderKnowledge {verdict:'comparable'|'not_comparable'|'unestablished';reason:string;reasons:string[];
+ /** every non-identity condition the teaching requires for the measurement, and its state across the two records */
+ conditions:{condition:string;state:string;detail:string|null}[];
+ qk:ComparisonResult;rules:string;knowledge:CategoryKnowledge['basis'];derivation:string[]}
+/** Whether two products' results of one taught measurement compare: the quantity-knowledge verdict first, then every
+ * non-identity condition the teaching requires (program `comparable` of link-rules v7). With no teaching for the
+ * measurement, the verdict is the quantity knowledge's. */
+export function compareUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,measurement:string,
+ a:ObservedValue&{quantity:TypedQuantity},b:ObservedValue&{quantity:TypedQuantity},opts:{rules?:RuleSet}={}):ComparisonUnderKnowledge{
+ const R=loadLinkRules(opts.rules);const prog=R.rules.get('comparable');if(!prog)throw Error('knowledge_link_rules_missing_program: comparable');
+ const qa=withAxes(a.quantity,a.axes),qb=withAxes(b.quantity,b.axes);
+ const qr=compareQuantities(qk,qa,qb);
+ const m=k.view.measurements.find(x=>x.concept.id===measurement);const conds=(m?.conditions??[]).map(c=>conditionConcept(qk,c));
+ const F:Record<string,(string|number)[][]>={value:[['a'],['b']],value_condition:[],value_states:[],pair_measurement:[[measurement]],requires_cond:[],identity_cond:[],cond_axis:[],
+  qk_verdict:[[qr.verdict==='comparable_within_source'?'comparable':qr.verdict,(qr.reasons[0]??'').replace(/\s+/g,'_')]],cond_same:[],cond_distinct:[]};
+ for(const [id,q,v] of [['a',qa,a],['b',qb,b]] as const){for(const c of q.conditions)F.value_condition.push([id,c.axis,c.value]);for(const [c,w] of Object.entries(v.states??{}))F.value_states.push([id,c,w]);}
+ const detail:Record<string,string|null>={};
+ for(const c of conds){F.requires_cond.push([measurement,c.id]);if(c.identity)F.identity_cond.push([c.id]);for(const x of c.axes)F.cond_axis.push([c.id,x]);
+  const da=describeCondition(qk,c,{...a,quantity:qa}),db=describeCondition(qk,c,{...b,quantity:qb});
+  if(da!=null&&db!=null){const rel=conditionRelation(qk,da,db);if(rel.same)F.cond_same.push([c.id]);if(rel.distinct){F.cond_distinct.push([c.id,rel.distinct.replace(/\s+/g,'_')]);detail[c.id]=rel.distinct;}}}
+ const model=evaluate(prog,onlyFor(prog,F),{record:`the records of the pair a (${a.product??'?'}) and b (${b.product??'?'})`});
+ const v=model.all('kverdict');if(!v.length)throw Error('comparable rules reached no verdict');
+ const x=String(v[0].args[0]);const verdict=x==='comparable'?'comparable':x==='not_comparable'?'not_comparable':'unestablished';
+ const conditions=model.all('kcond').map(f=>({condition:String(f.args[0]),state:String(f.args[1]),detail:detail[String(f.args[0])]??null})).sort((p,q)=>p.condition.localeCompare(q.condition));
+ return {verdict,reason:String(v[0].args[1]),reasons:v.map(f=>String(f.args[1])),conditions,qk:qr,rules:`${R.version}:${R.digest.slice(0,12)}`,knowledge:k.basis,derivation:v.flatMap(f=>model.why(f))};
+}
+/** The taught measurement a typed value is a result of, under the whole teaching (link program of v7: type, fixed
+ * conditions, and the required conditions the record states). 'ambiguous' and 'none' are answers, not failures. */
+export function linkUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,v:ObservedValue&{quantity:TypedQuantity}):{link:string;status:LinkStatus;derivation:string[]}{
+ const r=linkValues(qk,k.view,[asLinkValue(v)!],{descriptors:k.descriptors}).results[0];
+ const link=r.status==='ambiguous'?'ambiguous':['no_taught_measurement','not_linked','member_only'].includes(r.status)?'none':r.measurements.length===1?r.measurements[0]:'ambiguous';
+ return {link,status:r.status,derivation:r.derivation};
 }
