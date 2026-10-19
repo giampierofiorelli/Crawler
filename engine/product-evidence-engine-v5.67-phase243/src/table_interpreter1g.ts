@@ -59,7 +59,8 @@ const UNIT_RE=LEX.map(u=>u.re).sort((a,b)=>b.length-a.length).join('|');
 const unitOf=(printed:string)=>{const p=printed.toLowerCase().trim();for(const u of LEX)if(new RegExp('^(?:'+u.re+')$','i').test(p))return u;return null;};
 const DIM_WORDS:Record<string,readonly string[]>={...DIMENSION_WORDS272,area:['area','room','sq'],length:['length','width','height','depth','dimensions','distance'],
  currency:['price','cost','costs','rrp','msrp'],mass:[...DIMENSION_WORDS272.mass,'weighs'],rotation:['rpm','spin'],voltage:['voltage'],charge:['battery']};
-const SETTING=/\b(?:low|med(?:ium)?|high|max(?:imum)?|min(?:imum)?|turbo|boost|sleep|night|eco|auto(?:matic)?|standby|quiet|silent|normal|whisper)\b|\b(?:speed|fan(?: speed)?|level|setting|power level|stage)\s*[0-9ivx]+\b|^\s*[0-9]+\s*$/i;
+export const SETTING1G=/\b(?:low|med(?:ium)?|high|max(?:imum)?|min(?:imum)?|turbo|boost|sleep|night|eco|auto(?:matic)?|standby|quiet|silent|normal|whisper)\b|\b(?:speed|fan(?: speed)?|level|setting|power level|stage)\s*[0-9ivx]+\b|^\s*[0-9]+\s*$/i;
+const SETTING=SETTING1G;
 const PROPERTY_WORDS=/\b(?:weight|dimensions?|size|capacity|power|noise|volume|price|warranty|colou?rs?|filters?|type|features?|modes?|speeds?|rating|score|energy|consumption|airflow|coverage|brightness|resolution|ports?|connectivity|battery|runtime|time|temperature|material|model|brand|programmes?|settings?|cost|efficiency|accuracy|lag|refresh|hdr|sdr|range|controls?|display|app|sensor|timer|cadr|area|room)\b/i;
 /** Words that head a quantity name; a label holding one is a property even when it also names a setting ("Energy consumption eco"). */
 const PROPERTY_HEAD=/\b(?:weight|dimensions?|size|capacity|power|noise|volume|price|warranty|energy|consumption|airflow|brightness|resolution|battery|runtime|time|temperature|cost|efficiency|lag|latency|cadr|area|water|sound|extraction|rate|usage|draw)\b/i;

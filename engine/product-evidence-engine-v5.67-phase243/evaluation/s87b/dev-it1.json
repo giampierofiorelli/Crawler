@@ -1,0 +1,154 @@
+{
+ "schema": "pee.s87b.observation-eval.v1",
+ "scope": "dev",
+ "build": "see git",
+ "overall": {
+  "model": {
+   "conditions": 480,
+   "annotatedOther": 4,
+   "classified": 472,
+   "correct": 466,
+   "coverage": 0.983,
+   "precision": 0.987,
+   "accuracy": 0.971
+  },
+  "baseline": {
+   "conditions": 480,
+   "annotatedOther": 4,
+   "classified": 126,
+   "correct": 126,
+   "coverage": 0.263,
+   "precision": 1,
+   "accuracy": 0.263
+  },
+  "measurand": {
+   "observations": 204,
+   "kindCorrect": 197,
+   "kindProduced": 197,
+   "basisCorrect": 198,
+   "basisStated": 74,
+   "basisStatedCorrect": 68
+  }
+ },
+ "byGroup": {
+  "air_fryers @ which.co.uk": {
+   "model": {
+    "conditions": 149,
+    "annotatedOther": 0,
+    "classified": 149,
+    "correct": 149,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "baseline": {
+    "conditions": 149,
+    "annotatedOther": 0,
+    "classified": 0,
+    "correct": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "measurand": {
+    "observations": 44,
+    "kindCorrect": 44,
+    "kindProduced": 44,
+    "basisCorrect": 44,
+    "basisStated": 44,
+    "basisStatedCorrect": 44
+   }
+  },
+  "air_purifiers @ housefresh.com": {
+   "model": {
+    "conditions": 331,
+    "annotatedOther": 4,
+    "classified": 323,
+    "correct": 317,
+    "coverage": 0.976,
+    "precision": 0.981,
+    "accuracy": 0.958
+   },
+   "baseline": {
+    "conditions": 331,
+    "annotatedOther": 4,
+    "classified": 126,
+    "correct": 126,
+    "coverage": 0.381,
+    "precision": 1,
+    "accuracy": 0.381
+   },
+   "measurand": {
+    "observations": 160,
+    "kindCorrect": 153,
+    "kindProduced": 153,
+    "basisCorrect": 154,
+    "basisStated": 30,
+    "basisStatedCorrect": 24
+   }
+  }
+ },
+ "byCategory": {
+  "air_fryers": {
+   "model": {
+    "conditions": 149,
+    "annotatedOther": 0,
+    "classified": 149,
+    "correct": 149,
+    "coverage": 1,
+    "precision": 1,
+    "accuracy": 1
+   },
+   "baseline": {
+    "conditions": 149,
+    "annotatedOther": 0,
+    "classified": 0,
+    "correct": 0,
+    "coverage": 0,
+    "precision": null,
+    "accuracy": 0
+   },
+   "measurand": {
+    "observations": 44,
+    "kindCorrect": 44,
+    "kindProduced": 44,
+    "basisCorrect": 44,
+    "basisStated": 44,
+    "basisStatedCorrect": 44
+   }
+  },
+  "air_purifiers": {
+   "model": {
+    "conditions": 331,
+    "annotatedOther": 4,
+    "classified": 323,
+    "correct": 317,
+    "coverage": 0.976,
+    "precision": 0.981,
+    "accuracy": 0.958
+   },
+   "baseline": {
+    "conditions": 331,
+    "annotatedOther": 4,
+    "classified": 126,
+    "correct": 126,
+    "coverage": 0.381,
+    "precision": 1,
+    "accuracy": 0.381
+   },
+   "measurand": {
+    "observations": 160,
+    "kindCorrect": 153,
+    "kindProduced": 153,
+    "basisCorrect": 154,
+    "basisStated": 30,
+    "basisStatedCorrect": 24
+   }
+  }
+ },
+ "worstGroupConditions": [
+  "air_purifiers @ housefresh.com",
+  0.958,
+  0.381
+ ]
+}
