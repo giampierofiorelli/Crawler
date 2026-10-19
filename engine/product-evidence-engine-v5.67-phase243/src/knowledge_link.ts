@@ -29,7 +29,7 @@ import {compileRuleSet,evaluate,type CompiledProgram,type Fact,type Model,type R
 import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
-import {compareQuantities,findQuantities,loadQuantityKnowledge,type ComparisonResult} from './quantity_knowledge.js';
+import {compareQuantities,findQuantities,loadQuantityKnowledge,typeQuantity,type ComparisonResult} from './quantity_knowledge.js';
 
 /** lk.9 (S82 kr82.1: a condition is shown only whole; within-source scope kept; no-requirement verdict named);
  * lk.8 (S81: condition concepts, comparability under the teaching, attribute proxies); v1-v8 stay loadable to
@@ -512,21 +512,63 @@ export function readerConditionAxes(codes:readonly string[],rc:ReaderConditions=
 }
 
 // D28: the conditions a catalog dimension meets, derived from the records of its tests (ra.2 trusts the list a catalog
-// declares). A required condition is met for the dimension only when EVERY test's record shows it; a declared condition
-// the records do not show is reported, never accepted. Shadow: no ranking reads it (owner: design and experimental
-// verification authorised, not a change of public authorisations).
-export interface DerivedConditionsMet {measurement:string;required:string[];derived:string[];
- perTest:{test:string;notShown:string[]}[];declared:string[]|null;
- /** declared but not shown by every record */
+// declares). S83 (owner review of S82): validity is rebuilt PER OBSERVATION first (each required condition verified by
+// its own record, with where the record states it, and the method it was obtained with), then the usable observations
+// are grouped by what the comparable program says about each pair (documented differences are recorded as
+// incompatibilities); the conditions met are those verified by the largest group of mutually comparable observations.
+// Incomplete observations are set aside, not allowed to discard the complete ones (S82 required every record).
+// A declared condition the records do not show is reported, never accepted. Shadow: no ranking reads it.
+export interface ObservationValidity {test:string;method:string|null;
+ conditions:{condition:string;state:'verified'|'not_verifiable';from:string|null}[];
+ /** every condition the teaching requires for the measurement is verified by this observation's own record */
+ usable:boolean}
+export interface DerivedConditionsMet {measurement:string;required:string[];observations:ObservationValidity[];
+ /** usable observations in groups whose members compare with each other (largest first) */
+ groups:string[][];
+ /** documented differences between usable observations (not comparable as reported) */
+ incompatible:{a:string;b:string;conditions:string[]}[];
+ /** conditions verified by every member of the largest group: what the evidence that can be used together meets */
+ derived:string[];
+ declared:string[]|null;
+ /** declared but not derived */
  unsupported:string[];
- /** shown by every record but not declared */
+ /** derived but not declared */
  notDeclared:string[];rules:string;rankingInput:false}
 export function conditionsMetFromRecords(qk:QuantityKnowledge,k:CategoryKnowledge,measurement:string,tests:readonly ObservedValue[],declared?:readonly string[]|null):DerivedConditionsMet{
  const m=k.view.measurements.find(x=>x.concept.id===measurement);const required=(m?.conditions??[]).map(c=>c.id).sort();
  const ev=evidenceUnderKnowledge(qk,k,tests.map(t=>({...t,measurement})));
- const perTest=tests.map(t=>({test:t.id,notShown:ev.conditionsNotShown.filter(c=>c.value===t.id&&c.measurement===measurement).map(c=>c.condition).sort()}));
- const derived=tests.length&&m?required.filter(c=>perTest.every(p=>!p.notShown.includes(c))):[];
+ const concepts=new Map((m?.conditions??[]).map(c=>[c.id,conditionConcept(qk,c)]));
+ const fromOf=(t:ObservedValue,c:string)=>{if(t.states?.[c]!=null)return 'stated in the record';const cc=concepts.get(c);if(!cc)return null;
+  const q=t.quantity?withAxes(t.quantity,t.axes):null;const fs=cc.axes.map(a=>q?.conditions.find(x=>x.axis===a)?.from??(t.axes?.some(([x])=>x===a)?'record axis':null));
+  return fs.every(Boolean)?[...new Set(fs)].join(', '):null;};
+ const observations:ObservationValidity[]=tests.map(t=>{const ns=new Set(ev.conditionsNotShown.filter(c=>c.value===t.id&&c.measurement===measurement).map(c=>c.condition));
+  const conditions=required.map(c=>ns.has(c)?{condition:c,state:'not_verifiable' as const,from:null}:{condition:c,state:'verified' as const,from:fromOf(t,c)});
+  const q=t.quantity;const method=q?.protocol??q?.conditions.find(x=>x.axis==='method')?.value??null;
+  return {test:t.id,method,conditions,usable:!!m&&conditions.every(x=>x.state==='verified')};});
+ const usable=tests.filter(t=>observations.find(o=>o.test===t.id)!.usable);
+ const groups:ObservedValue[][]=[];const incompatible:DerivedConditionsMet['incompatible']=[];
+ for(const t of usable){let placed=false;
+  for(const g of groups){const a=g[0];if(!a.quantity||!t.quantity){continue;}
+   const r=compareUnderKnowledge(qk,k,measurement,a as ObservedValue&{quantity:TypedQuantity},t as ObservedValue&{quantity:TypedQuantity});
+   if(r.verdict==='comparable'){g.push(t);placed=true;break;}
+   if(r.verdict==='not_comparable')incompatible.push({a:a.id,b:t.id,conditions:r.conditions.filter(c=>c.state==='differs').map(c=>c.condition)});}
+  if(!placed)groups.push([t]);}
+ groups.sort((x,y)=>y.length-x.length||x[0].id.localeCompare(y[0].id));
+ const derived=groups.length?required.filter(c=>groups[0].every(t=>observations.find(o=>o.test===t.id)!.conditions.find(x=>x.condition===c)!.state==='verified')):[];
  const dec=declared?[...new Set(declared)].sort():null;
- return {measurement,required,derived,perTest,declared:dec,unsupported:(dec??[]).filter(c=>!derived.includes(c)),notDeclared:dec?derived.filter(c=>!dec.includes(c)):[],
-  rules:ev.rules,rankingInput:false};
+ return {measurement,required,observations,groups:groups.map(g=>g.map(t=>t.id)),incompatible,derived,declared:dec,
+  unsupported:(dec??[]).filter(c=>!derived.includes(c)),notDeclared:dec?derived.filter(c=>!dec.includes(c)):[],rules:ev.rules,rankingInput:false};
+}
+/** D28 on the operational records: the store's test measurements (test_measurements265) behind a catalog dimension, read
+ * with their reader codes (reader-conditions overlay): codes of the value's own sentence are 'conditions', codes of the
+ * document's protocol are 'context' (applicable to the value only as the reader scoped them). */
+export function conditionsMetFromStoreRecords(store:KnowledgeStore246,category:string,measurement:string,measurementIds:readonly string[],declared?:readonly string[]|null,opts:{qk?:QuantityKnowledge}={}):DerivedConditionsMet{
+ const qk=withReaderConditions(opts.qk??defaultQk());const k=categoryKnowledge(store,category,{qk});
+ const want=new Set(measurementIds);const rows=store.testMeasurements265().filter(r=>want.has(r.measurementId));
+ const tests:ObservedValue[]=rows.map(r=>{const f=findQuantities(qk,`${r.value} ${r.unit==='kwh'?'kWh':r.unit}`)[0];
+  const own=readerConditionAxes(r.conditionCodes??[]).axes,doc=readerConditionAxes(r.protocolCodes??[]).axes.filter(([a])=>!own.some(([x])=>x===a));
+  const q=f?typeQuantity(qk,{surface:f.surface,value:f.value,unit:f.unit},{}):null;
+  const quantity=q?{...q,conditions:[...q.conditions,...own.map(([axis,value])=>({axis,value,raw:value,from:'conditions' as const})),...doc.map(([axis,value])=>({axis,value,raw:value,from:'context' as const}))]}:null;
+  return {id:r.measurementId,product:r.productId,quantity,measurement,source:r.source?.url??null};});
+ return conditionsMetFromRecords(qk,k,measurement,tests,declared);
 }

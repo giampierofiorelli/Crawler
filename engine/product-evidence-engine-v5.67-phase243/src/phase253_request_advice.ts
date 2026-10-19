@@ -20,6 +20,7 @@ import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase25
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
 import {caveatsAbout} from './knowledge_statements.js';
+import {conditionsMetFromStoreRecords} from './knowledge_link.js';
 import type {StoredStatement} from './knowledge_statements.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
 import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_comparative_evidence.js';
@@ -254,6 +255,17 @@ export function outcomeAuthorisedRelease(k:NeedKnowledge269|undefined,d:Knowledg
  if(!a1.ok&&!VALIDATED_NEW_AUTHORISATIONS.some(v=>v.need===k?.need&&v.measure===measure))return {ok:false,reason:'new_authorisation_pending_validation'};
  return {ok:true};
 }
+/** S83 (D28, owner review of S82: design and experimental verification authorised, public authorisations unchanged).
+ * The conditions a dimension meets, derived from the store records of its original tests (per observation, then the
+ * largest group of usable observations that compare), and what ra.2 would decide with them. SHADOW: the decision above
+ * is unchanged; an authorisation the derived conditions would newly enable is reported as 'new_authorisation_shadow_only'. */
+function derivedConditions83(store:KnowledgeStore246,category:string,k:NeedKnowledge269|undefined,d:KnowledgeDimension181,measure:string,cat:ProductKnowledgeCatalog181,current:boolean):NonNullable<NonNullable<Advice253['authorisationTrace']>[number]['derivedConditions']>{
+ const ids=cat.originalTests.filter(t=>t.dimensionKey===d.key).map(t=>t.originalTestId);
+ const r=conditionsMetFromStoreRecords(store,category,measure,ids,d.conditionsMet??[]);
+ const a2=outcomeAuthorisedRa2(k,{...d,conditionsMet:r.derived},measure);
+ return {observations:r.observations.length,usable:r.observations.filter(o=>o.usable).length,derived:r.derived,declared:r.declared??[],unsupported:r.unsupported,notDeclared:r.notDeclared,
+  decisionWithDerived:a2.ok?(current?'authorised':'new_authorisation_shadow_only'):a2.reason};
+}
 /** Phase270 (owner brief §4): the policy revisions under which a catalog may be shown as a labelled partial comparison.
  * Restricted authorisation: comparison of raw quantities only, after catalog verification; never a recommendation. */
 export const PARTIAL_COMPARISON_POLICY270={policyRevisions:['pee268-energy-scoring:r2:partial-comparison-only'] as readonly string[],
@@ -355,7 +367,7 @@ function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:r
   out.authorisationTrace=[];
   const covered=spans.filter(n=>{const d=dims.get(n.id);if(!d)return false;const ms=dimensionMeasure269(d,mIds);
    const a1=outcomeAuthorised270(nk.get(n.id),d,ms),a2=outcomeAuthorisedRa2(nk.get(n.id),d,ms);const a=outcomeAuthorisedRelease(nk.get(n.id),d,ms);
-   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:'ra.2-restrict-only',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason,decision:a.ok?'authorised':a.reason});
+   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:'ra.2-restrict-only',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason,decision:a.ok?'authorised':a.reason,...(ms?{derivedConditions:derivedConditions83(store,out.category!,nk.get(n.id),d,ms,verified!,a.ok)}:{})});
    if(!a.ok)refused.push(`${n.id}: ${a.reason.replace(/_/g,' ')}`);return a.ok;});
   // Every stated outcome and every factual need must be assessed; otherwise no overall ranking (principle 8).
   const complete=covered.length===spans.length&&out.unresolved.length===0;

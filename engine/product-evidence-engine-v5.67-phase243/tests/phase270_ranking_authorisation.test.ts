@@ -229,3 +229,14 @@ test('S79 release rule: ra.2 only restricts; a pair ra.1 refused stays withheld 
  const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
  assert.equal(a.authorisationTrace![0].decidedBy,'ra.2-restrict-only');assert.equal(a.authorisationTrace![0].decision,'authorised');
 });
+
+test('S83 D28 shadow: conditions derived from the store records are traced beside the decision, which they never change',()=>{
+ const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
+ const tr=a.authorisationTrace![0];
+ // the catalog asserts its own condition; the store holds no original-test record that shows it
+ assert.deepEqual(tr.derivedConditions,{observations:0,usable:0,derived:[],declared:['same_beans_and_grind'],unsupported:['same_beans_and_grind'],notDeclared:[],
+  decisionWithDerived:'conditions_not_verified'});
+ assert.equal(tr.decision,'authorised','shadow only: the public decision is unchanged');assert.equal(a.rankingAuthorized,true);
+ const {derivedConditions:_,...rest}=tr;assert.deepEqual(rest,{need:'espresso_quality',dimension:'espresso_quality',measure:'espresso_sensory_assessment',
+  decidedBy:'ra.2-restrict-only',ra1:'authorised',ra2:'authorised',decision:'authorised'});
+});

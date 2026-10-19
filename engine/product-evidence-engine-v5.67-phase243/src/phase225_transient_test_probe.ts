@@ -43,10 +43,16 @@ export type ConditionCode225='setpoint_c'|'duration_1h'|'load_empty'|'from_cold'
  'conditions_from_block';
 const ALL_C=/\bboth (?:drawers|baskets|pans|zones|compartments)\b/i,ONE_C=/\b(?:a single (?:basket|drawer|pan|zone)|single (?:basket|drawer|pan|zone)|(?:the |one )(?:small|smaller|larger|large) (?:pan|basket|drawer)|one (?:basket|drawer|zone))\b/i;
 const HOUR=/\b(?:one|1|an|a full|full) hour(?:'s|’s)?\b|\bfor (?:an|one|1) hour\b/i;
+/** S83 (owner review of S82: fix Phase225 negation before its codes gain evidential weight). A condition word counts only
+ * where it states the condition: not as a verb ("empty the basket", "emptying") and not negated ("not empty", "no
+ * preheat needed", "without preheating", "skip the preheat"). Probe v3; v2 read every occurrence. */
+const NEGATED_BEFORE=/\b(?:no|not|never|without|skip|skips|skipped|skipping|isn't|wasn't|aren't|weren't|doesn't|don't|didn't|no need to|needn't|no longer)\s+(?:\w+\s+){0,2}$/i;
+const stated=(text:string,re:RegExp,verbAfter?:RegExp)=>{for(const m of text.matchAll(re)){const before=text.slice(Math.max(0,m.index!-40),m.index!);
+ const after=text.slice(m.index!+m[0].length,m.index!+m[0].length+12);if(NEGATED_BEFORE.test(before))continue;if(verbAfter&&verbAfter.test(after))continue;return true;}return false;};
 function codesOf(text:string,segment:string):{codes:ConditionCode225[];setpointC:number|null}{
  const c=new Set<ConditionCode225>();const sp=/\bat (\d{2,3})\s*°c\b/i.exec(text);
- if(sp)c.add('setpoint_c');if(HOUR.test(text))c.add('duration_1h');if(/\bempty\b/i.test(text))c.add('load_empty');
- if(/\bfrom cold\b/i.test(text))c.add('from_cold');if(/\bpreheat/i.test(text))c.add('includes_preheat');
+ if(sp)c.add('setpoint_c');if(HOUR.test(text))c.add('duration_1h');if(stated(text,/\bempty\b/gi,/^\s+(?:the|your|its|it|out|them|any)\b/i))c.add('load_empty');
+ if(/\bfrom cold\b/i.test(text))c.add('from_cold');if(stated(text,/\bpreheat\w*/gi))c.add('includes_preheat');
  if(/\b(?:power|energy|plug-in)\s+(?:meter|monitor)\b/i.test(text))c.add('power_meter');
  const segAll=ALL_C.test(segment),segOne=ONE_C.test(segment);
  if(segAll!==segOne){c.add(segAll?'all_compartments':'single_compartment');}

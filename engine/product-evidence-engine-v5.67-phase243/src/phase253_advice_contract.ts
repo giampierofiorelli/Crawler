@@ -48,7 +48,11 @@ export interface Advice253 {
   * directly or only through a proxy, and the resulting decision. A proxy never assesses an outcome. */
  goalAssessment?:GoalAssessment253;
  /** S78: for each catalog dimension considered for ranking, the decision of ra.2 (deciding) and of the legacy ra.1. */
- authorisationTrace?:{need:string;dimension:string;measure:string|null;decidedBy:'ra.1'|'ra.2-restrict-only';ra1:string;ra2:string;decision:string}[];
+ authorisationTrace?:{need:string;dimension:string;measure:string|null;decidedBy:'ra.1'|'ra.2-restrict-only';ra1:string;ra2:string;decision:string;
+  /** S83 (D28, SHADOW): the conditions the dimension's original test records verify (per observation, then the largest
+   * group of usable observations that compare), against what the catalog declares, and what ra.2 would decide with the
+   * derived conditions. Never the decision: a newly enabled authorisation is reported as shadow only. */
+  derivedConditions?:{observations:number;usable:number;derived:string[];declared:string[];unsupported:string[];notDeclared:string[];decisionWithDerived:string}}[];
  /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
   * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
  researchInputs?:AdviceResearchInputs253;

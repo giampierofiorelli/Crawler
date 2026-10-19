@@ -28,7 +28,8 @@ import type {SpecExtraction245} from './phase245_spec_extraction.js';
 
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
  * explicit header links). A change re-derives the measurements of a revision whose bytes are offered again. */
-export const TEST_LEAD_EXTRACTOR265='pee225-probe.v2+pee226-tables.v1+pee227-headers';
+/** S83: probe v3 (condition words negated or used as verbs no longer set a condition code); v2 readings stay as recorded. */
+export const TEST_LEAD_EXTRACTOR265='pee225-probe.v3+pee226-tables.v1+pee227-headers';
 /** Original roadmap Step 3 — versioned scientific reading. The code versions of the readers that run only with a plan:
  * the Phase272 guided pass of the Phase225 probe with the plan's condition-term filter and the comparison-cell
  * re-attribution (comparisonCells272), and the Step 1D-A2 semantic-document contract with its structured table reader.
