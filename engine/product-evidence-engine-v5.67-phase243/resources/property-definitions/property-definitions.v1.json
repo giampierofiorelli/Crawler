@@ -1,7 +1,7 @@
 {
  "schema": "pee.property-definitions.v1",
  "version": "pd.1",
- "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one.",
+ "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice.",
  "sources": [
   {
    "id": "vim",
@@ -45,7 +45,7 @@
   }
  ],
  "basisCues": {
-  "note": "Words that STATE the basis (LOINC time aspect) of an extensive value; a unit may state it too (QK kinds energy_per_event, periodic_*). runNamed: words that name a run, programme or task, which license a definition's default per_run basis as an inferred (indefinite null instantiation) slot.",
+  "note": "Words that STATE the basis (LOINC time aspect) of an extensive value; a unit may state it too (QK kinds energy_per_event, periodic_*). runNamed: words that name a run, programme or task, which license a definition's default per_run basis as an inferred (indefinite null instantiation) slot. A 'per' followed within two words by a runNamed word (per completed task) states per_run.",
   "per_run": [
    "per cycle",
    "per run",
@@ -106,7 +106,7 @@
   ]
  },
  "nonQkUnitForms": {
-  "note": "Unit classes the quantity-knowledge pack does not hold (S88 gap, recorded): currency and currency per energy.",
+  "note": "Unit classes the quantity-knowledge pack does not hold (S88 gap, recorded): currency and currency per energy. A currency form followed by a period (GBP/yr, £ per year) is currency with a per_period basis.",
   "currency": [
    "£",
    "€",
@@ -138,7 +138,7 @@
    "id": "operating_setting",
    "qkAxis": "fan_setting",
    "structure": "operating_setting",
-   "label": "operating setting, mode or speed of the appliance",
+   "label": "operating setting, mode or speed of the appliance (a drive level stated as a voltage is a setting)",
    "values": {
     "top": [
      "top speed",
@@ -180,6 +180,9 @@
    "sources": [
     "vim",
     "ap_pkg"
+   ],
+   "valueKinds": [
+    "voltage"
    ]
   },
   {
@@ -247,7 +250,10 @@
     "load",
     "place settings",
     "loaded",
-    "portion"
+    "portion",
+    "quantity",
+    "amount",
+    "portions"
    ],
    "state": "supported",
    "sources": [
@@ -399,7 +405,9 @@
     "down to",
     "from",
     "baseline",
-    "reach"
+    "reach",
+    "preheat",
+    "included"
    ],
    "state": "candidate",
    "sources": [
@@ -487,7 +495,10 @@
     "per week",
     "a week",
     "times a week",
-    "a year"
+    "a year",
+    "usage",
+    "x week",
+    "times per week"
    ],
    "state": "candidate",
    "sources": [
@@ -504,7 +515,10 @@
     "test",
     "method",
     "standard",
-    "protocol"
+    "protocol",
+    "derived",
+    "calculated",
+    "estimated from"
    ],
    "state": "supported",
    "sources": [
@@ -614,6 +628,10 @@
     [
      "electricity",
      "candidate"
+    ],
+    [
+     "energy",
+     "supported"
     ]
    ],
    "conditions": [
@@ -732,8 +750,8 @@
    "object": "one run",
    "basis": {
     "default": "per_run",
-    "when": "the duration names a run, programme, task or end point",
-    "rule": "a duration that a run lasts is per that run"
+    "when": "always",
+    "rule": "a run duration is by definition the duration of one run, task or programme (I-ADOPT: the run is the object; LOINC time aspect = the event)"
    },
    "surface": [
     [
@@ -774,6 +792,10 @@
     ],
     [
      "how long",
+     "candidate"
+    ],
+    [
+     "time",
      "candidate"
     ]
    ],
@@ -849,6 +871,10 @@
     ],
     [
      "standby power",
+     "supported"
+    ],
+    [
+     "power",
      "supported"
     ]
    ],
@@ -1119,6 +1145,14 @@
     ],
     [
      "a year",
+     "supported"
+    ],
+    [
+     "cost",
+     "supported"
+    ],
+    [
+     "costs to run",
      "supported"
     ]
    ],

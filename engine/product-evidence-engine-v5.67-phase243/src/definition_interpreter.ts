@@ -11,11 +11,14 @@
 import {hasPhrase,normText,parseUnit,typeQuantity,findQuantities,type QuantityKnowledge} from './quantity_knowledge.js';
 import {applicableProperties,relevanceOf,type Basis,type ConditionDimension,type PropertyDefinition,type PropertyDefinitions,type Relevance} from './property_definitions.js';
 import {UNIT_LEXICON272,type PlanMeasurement272} from './phase272_extraction_plan.js';
+import {classifyCondition87} from './observation_model.js';
 
 export const DEFINITION_INTERPRETER_VERSION='pee88.definition-interpreter.v1';
 export type SlotState='stated'|'inferred'|'ambiguous'|'unknown';
 export interface PropertySlot {value:string|null;state:SlotState;evidence:string[];rule:string|null;alternatives:string[];kind:string|null}
-export interface DimensionReading {dimension:string;structure:string;value:string|null;state:'stated'|'unknown';relevance:Relevance|null;evidence:string|null;from:'label'|'context'|'condition'|null}
+export interface DimensionReading {dimension:string|null;structure:string;value:string|null;state:'stated'|'unknown';relevance:Relevance|null;evidence:string|null;from:'label'|'context'|'condition'|null;
+ /** S88 it1: a relation over the condition (comparison, procedure state, identity) from the S87b structural principles. */
+ relational?:boolean}
 export interface BasisSlot {value:Basis|'none'|null;state:SlotState;evidence:string|null;rule:string|null}
 export interface DefinitionInterpretation {version:string;definitions:string;category:string|null;property:PropertySlot;
  conditions:DimensionReading[];
@@ -27,9 +30,13 @@ export interface ObservationInput {value:number|null;unit:string;label?:string|n
 
 const norm=(s:string|null|undefined)=>normText(String(s??'').replace(/_/g,' '));
 const has=(text:string,phrase:string)=>!!text&&hasPhrase(text,phrase);
+const PERIOD_RE=/^(.+?)\s*(?:\/|\bper\b|\ba\b)\s*(?:yr|year|annum|month|mo|week|wk|day)$/;
 const unitClass=(defs:PropertyDefinitions,unit:string):'currency'|'currency_per_energy'|null=>{const u=norm(unit);if(!u)return null;
  if(defs.pack.nonQkUnitForms.currency_per_energy.some(f=>u===f||u.endsWith(f)))return 'currency_per_energy';
- if(defs.pack.nonQkUnitForms.currency.some(f=>u===f))return 'currency';return null;};
+ const head=PERIOD_RE.exec(u)?.[1]??u;
+ if(defs.pack.nonQkUnitForms.currency.some(f=>head===f))return 'currency';return null;};
+/** A currency unit carrying a period ("GBP/yr") states a per_period basis. */
+const unitPeriod=(unit:string)=>PERIOD_RE.test(norm(unit));
 
 /** Quantity kinds the value's unit admits, narrowed by the pack's own typing of its labels (reuse of quantity knowledge). */
 export function kindsOf(qk:QuantityKnowledge,o:{value:number|null;unit:string;label?:string|null;context?:string|null}):{kind:string|null;candidates:string[]}{
@@ -58,7 +65,11 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  if(!byUnit.length)return {value:null,state:'unknown',evidence:[],rule:kk.candidates.length||cls?'no_definition_admits_unit_kind':'unit_not_typed',alternatives:[],kind};
  const scored=byUnit.map(d=>({d,...termScore(d,qk,label,context)})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
  const top=scored[0];
- if(top.score<=0)return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};
+ if(top.score<=0){
+  // the category profile licenses a unit-kind attribution when it lists exactly one property admitting the unit
+  if(byUnit.length===1&&o.category&&defs.profiles.get(o.category)?.properties.includes(byUnit[0].id))
+   return {value:byUnit[0].id,state:'inferred',evidence:['profile:'+o.category],rule:'profile_single_property_for_unit_kind',alternatives:[],kind};
+  return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};}
  const tied=scored.filter(s=>s.score===top.score);
  if(tied.length>1)return {value:null,state:'ambiguous',evidence:tied.flatMap(t=>t.evidence),rule:'equal_support',alternatives:tied.map(t=>t.d.id),kind};
  return {value:top.d.id,state:top.evidence.some(e=>e.startsWith('label:'))?'stated':'inferred',evidence:top.evidence,rule:top.evidence.some(e=>e.startsWith('label:'))?null:'term_in_context_only',alternatives:scored.slice(1).filter(s=>s.score>0).map(s=>s.d.id),kind};
@@ -80,16 +91,32 @@ export function typeCondition(defs:PropertyDefinitions,qk:QuantityKnowledge,text
  return null;
 }
 
+const RELATIONAL=new Set(['comparison_or_basis','procedure_state','identity']);
+/** S88 it1: layered condition typing. Structure comes from the category-free S87b principles (relation before object: a
+ * comparison, a procedure state or an identity statement is a relation, whatever setting it mentions); the dimension, its
+ * value and relevance come from the definitions. Either layer may type a condition the other cannot. */
+export function classifyConditionWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,text:string,measuredKind:string|null,property?:string|null,category?:string|null):
+ {structure:string|null;dimension:ConditionDimension|null;value:string|null;relational:boolean;via:string|null}{
+ const s=classifyCondition87(qk,String(text).replace(/_/g,' '),measuredKind);const d=typeCondition(defs,qk,text,property,category);
+ const cls=s.class==='unclassified'?null:s.class;
+ if(cls&&RELATIONAL.has(cls))return {structure:cls,dimension:d?.dimension??null,value:d?.via==='value'?d.value:null,relational:true,via:'structure'};
+ if(cls)return {structure:cls==='quantity'?'quantity':cls,dimension:d?.dimension??null,value:d?.value??null,relational:false,via:d?'both':'structure'};
+ return {structure:d?.dimension.structure??null,dimension:d?.dimension??null,value:d?.value??null,relational:false,via:d?'definitions':null};
+}
+
 /** The basis slot: stated by words or by the unit's kind; otherwise the definition's default as an inferred slot, only when a
  * run, programme or task is named; otherwise unknown. Intensive properties (no basis in the definition) have none. */
 export function basisOf(defs:PropertyDefinitions,d:PropertyDefinition|null,kind:string|null,label:string,context:string,namedRun:boolean):BasisSlot{
  const c=defs.pack.basisCues;const text=label+' | '+context;
  for(const b of ['per_run','per_period','per_hour','per_unit'] as const){const w=c[b].find(x=>has(text,x));if(w)return {value:b,state:'stated',evidence:w,rule:null};}
+ // 'per' + up to two words + a run noun ("per completed task") states the run as the basis
+ const perRun=new RegExp('\\bper (?:\\w+ ){0,2}(?:'+c.runNamed.map(w=>w.replace(/[^a-z ]/g,'')).join('|')+')s?\\b').exec(text);
+ if(perRun)return {value:'per_run',state:'stated',evidence:perRun[0],rule:null};
  if(kind==='energy_per_event'||kind==='volume_per_event')return {value:'per_run',state:'stated',evidence:'unit:'+kind,rule:null};
  if(kind?.startsWith('periodic_'))return {value:'per_period',state:'stated',evidence:'unit:'+kind,rule:null};
  if(!d)return {value:null,state:'unknown',evidence:null,rule:null};
  if(!d.basis)return {value:'none',state:'inferred',evidence:null,rule:'definition_is_intensive'};
- if(d.basis.default==='per_run'&&namedRun)return {value:'per_run',state:'inferred',evidence:null,rule:d.basis.rule};
+ if(d.basis.default==='per_run'&&(namedRun||d.basis.when==='always'))return {value:'per_run',state:'inferred',evidence:null,rule:d.basis.rule};
  return {value:null,state:'unknown',evidence:null,rule:'basis_not_stated_and_no_run_named'};
 }
 
@@ -98,18 +125,19 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
  const category=o.category??null;const label=norm(o.label),context=norm(o.context);
  const property=attributeProperty(defs,qk,o);const d=property.value?defs.properties.get(property.value)!:null;
  const readings:DimensionReading[]=[];const untyped:string[]=[];
- for(const c of o.conditions??[]){const r=typeCondition(defs,qk,c,d?.id,category);
-  if(!r){untyped.push(norm(c));continue;}
-  readings.push({dimension:r.dimension.id,structure:r.dimension.structure,value:r.value,state:'stated',relevance:d?relevanceOf(defs,d.id,r.dimension.id,category):null,evidence:norm(c),from:'condition'});}
+ for(const c of o.conditions??[]){const r=classifyConditionWithDefinitions(defs,qk,c,property.kind,d?.id,category);
+  if(!r.structure){untyped.push(norm(c));continue;}
+  readings.push({dimension:r.dimension?.id??null,structure:r.structure,value:r.value,state:'stated',relevance:d&&r.dimension&&!r.relational?relevanceOf(defs,d.id,r.dimension.id,category):null,evidence:norm(c),from:'condition',relational:r.relational});}
  // dimensions of the property stated in the value's own label or context (value phrases only: a cue alone states no value)
  if(d)for(const [dimId] of d.conditions){if(readings.some(r=>r.dimension===dimId))continue;const dim=defs.dimensions.get(dimId)!;
   for(const [src,text] of [['label',label],['context',context]] as const){const hit=Object.entries(dim.values).find(([,ph])=>ph.some(p=>has(text,p)));
    if(hit){readings.push({dimension:dimId,structure:dim.structure,value:hit[0],state:'stated',relevance:relevanceOf(defs,d.id,dimId,category),evidence:hit[1].find(p=>has(text,p))!,from:src});break;}}}
  const runWords=defs.pack.basisCues.runNamed;
- const namedRun=readings.some(r=>['programme','soil_or_task','load','end_point'].includes(r.dimension)&&r.value!==null)||runWords.some(w=>has(label,w)||has(context,w))||(o.conditions??[]).some(c=>runWords.some(w=>has(norm(c),w)));
- const basis=basisOf(defs,d,property.kind,label,context,namedRun);
- if(d)for(const r of readings)r.relevance=relevanceOf(defs,d.id,r.dimension,category,basis.value);
- const missingDefining=d?d.conditions.map(([x])=>x).filter(x=>relevanceOf(defs,d.id,x,category,basis.value)==='defining'&&!readings.some(r=>r.dimension===x&&r.value!==null)):[];
+ const namedRun=readings.some(r=>!!r.dimension&&['programme','soil_or_task','load','end_point'].includes(r.dimension)&&r.value!==null)||runWords.some(w=>has(label,w)||has(context,w))||(o.conditions??[]).some(c=>runWords.some(w=>has(norm(c),w)));
+ const basis0=basisOf(defs,d,property.kind,label,context,namedRun);
+ const basis:BasisSlot=basis0.state!=='stated'&&unitPeriod(o.unit)?{value:'per_period',state:'stated',evidence:'unit:'+o.unit,rule:null}:basis0;
+ if(d)for(const r of readings)if(r.dimension&&!r.relational)r.relevance=relevanceOf(defs,d.id,r.dimension,category,basis.value);
+ const missingDefining=d?d.conditions.map(([x])=>x).filter(x=>relevanceOf(defs,d.id,x,category,basis.value)==='defining'&&!readings.some(r=>r.dimension===x&&r.value!==null&&!r.relational)):[];
  return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};
 }
@@ -124,7 +152,7 @@ export function compareByDefinition(defs:PropertyDefinitions,a:DefinitionInterpr
  const p=a.property.value;const cat=a.category??b.category;const basis=a.basis.value??b.basis.value;const reasons:string[]=[];const caveats:string[]=[];let unknown=false;
  if(a.basis.value&&b.basis.value&&a.basis.value!==b.basis.value)return {verdict:'not_comparable',reasons:['basis '+a.basis.value+'≠'+b.basis.value],caveats};
  for(const [dim] of defs.properties.get(p)!.conditions){const r=relevanceOf(defs,p,dim,cat,basis);if(r==='irrelevant')continue;
-  const va=a.conditions.find(c=>c.dimension===dim)?.value??null,vb=b.conditions.find(c=>c.dimension===dim)?.value??null;
+  const val=(x:DefinitionInterpretation)=>x.conditions.find(c=>c.dimension===dim&&!c.relational)?.value??null;const va=val(a),vb=val(b);
   if(va!==null&&vb!==null&&normText(va)!==normText(vb)){if(r==='defining')return {verdict:'not_comparable',reasons:[`${dim}: ${va}≠${vb}`],caveats};caveats.push(`${dim} differs (influencing)`);continue;}
   if(r==='defining'&&(va===null||vb===null)){unknown=true;reasons.push(dim+' not stated');}}
  if(!unknown)return {verdict:'comparable',reasons:[],caveats};
