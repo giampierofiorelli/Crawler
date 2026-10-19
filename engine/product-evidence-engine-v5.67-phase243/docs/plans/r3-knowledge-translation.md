@@ -289,3 +289,37 @@ Next mechanisms, in order: (a) keep `related` as a first-class result that no co
 "such as" enumerations, headings over lists), each with provenance and a SKOS type, and score them on the sealed
 held-out reference; (c) concepts for the kinds of things mentions denote and the store lacks (features, claims,
 evidence types), which the representation gaps of §2 also point to.
+
+## 11. Cycle 3, continued: semantic-type check before identity
+
+**Step 1 (`related` first-class).** `alignConcept`/`alignWithType` return every candidate with a SKOS match type;
+`related` is never an identity, and the phrase stays `unresolved` when no candidate is identity-grade.
+
+**Step 2 measured before building (structure-based equivalence).** The general prose structures that state
+equivalence or hierarchy ("X such as A, B", "X (e.g. A)", "X, including A", acronyms in brackets) occur 11 times in
+~45 KB of development text, mostly noisy. The documents carry such knowledge implicitly (tables, context). Not built.
+
+**Semantic type (new).** `denotationOf` reads what a phrase refers to (measurement or test, outcome, condition, product
+feature, claim or label, source or evidence, other) from general role words (`denotation-cues.v1.json`, one
+development round) and QK typing; `alignWithType` (v1) lets a candidate become an identity only when its concept kind
+is compatible with that denotation. Frozen before the held-out run (`align-freeze.json`, `validatorFreeze`).
+
+| | side | identifications | correct | false (related / none) | identities missed | denotation correct |
+|---|---|---|---|---|---|---|
+| cycle-2 identifier | held-out (first run) | 21 | 3 | 14 / 4 | 16 of 19 | — |
+| v1 type-gated | development | 2 | 0 | 1 / 1 | 6 of 6 | 64 / 120 |
+| v1 type-gated | **held-out (first run)** | 6 | 2 | 4 / 0 | 16 of 19 | 54 / 120 (45%) |
+
+What this shows: checking semantic type removes 78% of false identities on unseen mentions (18 → 4) at the cost of
+one correct identity; precision rises from 14% to 33%, recall stays about 10%. The type recogniser itself is weak
+(45%: a component's specification read as a measurement, outcomes stated as verbs). With lexical evidence alone PEE
+cannot reach the true identities, which need equivalence and hierarchy knowledge ("aerosol" ≈ particles; dust ⊂
+allergen particles).
+
+Options for that recall limit, none chosen yet:
+1. a distributional similarity model trained only on the owner packages (no external dependency or service) as a
+   better retriever, with the type check and an explicit `unresolved` state as validation;
+2. a small local language model as a validator: a heavy dependency, needs owner authorisation (skill §2);
+3. not aligning to existing concepts at all where none fits: keep document concepts (features, claims, evidence types)
+   with typed `related` links, and make limits evidence-role aware (a limit on a declared value applies to
+   declarations, one on a measurement to measured values), which needs no identity.
