@@ -1,0 +1,142 @@
+{
+ "schema": "pee.s80.score-s3-s5.v1",
+ "run": {
+  "set": "D",
+  "label": "firstrun-frozen",
+  "build": "0567e96"
+ },
+ "pages": {
+  "s80-d1-a": {
+   "request": "D1",
+   "referenceValues": 20,
+   "byKind": {
+    "independent_test_measurement": 1,
+    "manufacturer_declaration": 6,
+    "not_a_result": 12,
+    "retailer_or_price": 1
+   },
+   "found": {
+    "independent_test_measurement": 1
+   },
+   "wrongProduct": 0,
+   "underClaim": 0,
+   "overClaim": 0,
+   "harmfulValidated": 0,
+   "peeReadings": 1,
+   "peeReadingsMatched": 1
+  },
+  "s80-d1-b": {
+   "request": "D1",
+   "referenceValues": 20,
+   "byKind": {
+    "independent_test_measurement": 3,
+    "estimate_or_calculation": 1,
+    "not_a_result": 8,
+    "manufacturer_declaration": 7,
+    "retailer_or_price": 1
+   },
+   "found": {
+    "independent_test_measurement": 1
+   },
+   "wrongProduct": 0,
+   "underClaim": 0,
+   "overClaim": 0,
+   "harmfulValidated": 0,
+   "peeReadings": 1,
+   "peeReadingsMatched": 1
+  },
+  "s80-d2-a": {
+   "request": "D2",
+   "referenceValues": 13,
+   "byKind": {
+    "independent_test_measurement": 3,
+    "estimate_or_calculation": 4,
+    "manufacturer_declaration": 5,
+    "retailer_or_price": 1
+   },
+   "found": {},
+   "wrongProduct": 0,
+   "underClaim": 0,
+   "overClaim": 0,
+   "harmfulValidated": 0,
+   "peeReadings": 0,
+   "peeReadingsMatched": 0
+  },
+  "s80-d2-b": {
+   "request": "D2",
+   "referenceValues": 18,
+   "byKind": {
+    "independent_test_measurement": 4,
+    "estimate_or_calculation": 6,
+    "manufacturer_declaration": 7,
+    "retailer_or_price": 1
+   },
+   "found": {},
+   "wrongProduct": 0,
+   "underClaim": 0,
+   "overClaim": 0,
+   "harmfulValidated": 0,
+   "peeReadings": 0,
+   "peeReadingsMatched": 0
+  },
+  "s80-d3-a": {
+   "request": "D3",
+   "referenceValues": 20,
+   "byKind": {
+    "independent_test_measurement": 13,
+    "manufacturer_declaration": 2,
+    "not_a_result": 2,
+    "retailer_or_price": 1,
+    "estimate_or_calculation": 2
+   },
+   "found": {
+    "independent_test_measurement": 1
+   },
+   "wrongProduct": 0,
+   "underClaim": 0,
+   "overClaim": 0,
+   "harmfulValidated": 0,
+   "peeReadings": 3,
+   "peeReadingsMatched": 1
+  },
+  "s80-d3-b": {
+   "request": "D3",
+   "referenceValues": 20,
+   "byKind": {
+    "independent_test_measurement": 14,
+    "estimate_or_calculation": 3,
+    "manufacturer_declaration": 2,
+    "retailer_or_price": 1
+   },
+   "found": {
+    "independent_test_measurement": 13
+   },
+   "wrongProduct": 0,
+   "underClaim": 12,
+   "overClaim": 0,
+   "harmfulValidated": 0,
+   "peeReadings": 22,
+   "peeReadingsMatched": 17
+  }
+ },
+ "totals": {
+  "ref:independent_test_measurement": 38,
+  "found:independent_test_measurement": 16,
+  "ref:manufacturer_declaration": 29,
+  "ref:not_a_result": 22,
+  "ref:retailer_or_price": 6,
+  "peeReadings": 27,
+  "peeReadingsMatched": 20,
+  "ref:estimate_or_calculation": 16,
+  "underClaim": 12
+ },
+ "summary": {
+  "S3_test_measurements_found": "16/38",
+  "S3_declarations_found": "0/29",
+  "S4_wrong_product_among_found": 0,
+  "S5_under_claims": 12,
+  "S5_over_claims": 0,
+  "S5_harmful_validated": 0,
+  "pee_readings_matching_a_reference_value": "20/27"
+ }
+}

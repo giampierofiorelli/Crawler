@@ -1,0 +1,37 @@
+{
+ "schema": "pee.s80.judge-s1-s2-s6.v1",
+ "run": "D firstrun-frozen (build 0567e96)",
+ "judge": "fresh-context agent, same model family; not independent human validation",
+ "requests": [
+  {
+   "id": "D1",
+   "S1_goals": "partial",
+   "goalsMissed": 3,
+   "goalsInvented": 0,
+   "S2_evidence_needed": "partial",
+   "S6_decision": "partial",
+   "firstFailingStage": "S1",
+   "harmfulConclusions": 1
+  },
+  {
+   "id": "D2",
+   "S1_goals": "fail",
+   "goalsMissed": 2,
+   "goalsInvented": 1,
+   "S2_evidence_needed": "fail",
+   "S6_decision": "fail",
+   "firstFailingStage": "S1",
+   "harmfulConclusions": 2
+  },
+  {
+   "id": "D3",
+   "S1_goals": "fail",
+   "goalsMissed": 3,
+   "goalsInvented": 0,
+   "S2_evidence_needed": "partial",
+   "S6_decision": "fail",
+   "firstFailingStage": "S1",
+   "harmfulConclusions": 1
+  }
+ ]
+}
