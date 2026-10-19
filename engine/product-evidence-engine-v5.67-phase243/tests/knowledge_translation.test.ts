@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {describeMeasurement} from '../src/knowledge_link.js';
-import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes} from '../src/knowledge_translation.js';
+import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues} from '../src/knowledge_translation.js';
 
 // R3 (owner S73): PEE's translator of teaching documents and its question-driven acquisition of condition axes.
 // Synthetic text written for these tests (T1: wiring, not evidence about the owner documents).
@@ -85,4 +85,22 @@ test('R3 acquisition: an enumerated field states the values of one condition', (
  const ps=acquireConditionAxes(qk,[{source:'d',md:'- filter_condition: new | aged | replaced | unknown'}],distinctionQuestions(two));
  assert.equal(ps.length,1);assert.equal(ps[0].axis,'acq_filter_condition');
  assert.deepEqual(Object.keys(ps[0].values).sort(),['aged','new','replaced','unknown']);
+});
+
+test('R3 kt-cues.2 a negated or prohibited statement renders with its negation (held-out fidelity review)', ()=>{
+ const tr=(t:string)=>translateDocument(qk,t,{source:'d'}).statements[0];
+ const a=tr('A purifier cannot ventilate a room.');assert.equal(a.type,'limitation');assert.match(a.rendered,/cannot ventilate/);assert.deepEqual(a.selfCheck,[]);
+ const b=tr('Fan speed is not airflow at the outlet.');assert.match(b.rendered,/is not airflow/);
+ const c=tr('Do not reject a filter on its label alone.');assert.match(c.rendered,/^Limitation: Do not reject/);assert.ok(!c.rendered.includes('unspecified'));
+ const m=tr('Weigh the basket before and after cooking.');assert.match(m.rendered,/^Method step: Weigh the basket/);
+ // the kt-cues.1 rendering dropped the word and inverted the meaning; the self-check catches that kind of loss
+ assert.deepEqual(renderSelfCheck('A purifier cannot ventilate a room.','Limitation: A purifier ventilate a room.'),['negation_lost']);
+ assert.deepEqual(renderSelfCheck('No device is made good by its fan alone.','Limitation: device is made good by its fan alone.'),['negation_lost']);
+ assert.equal(loadTranslationCues().cues.version,'kt-cues.2');
+});
+
+test('R3 kt-cues.2 questions and document metadata are not knowledge claims', ()=>{
+ const st=translateDocument(qk,['Source file: MASTER-RESEARCH.md','Release: 1.2.0 (documentary consolidation)','What do you want to drink most often?','2) "Do you already own a grinder?" when that changes the parts',
+  'Particle CADR: the clean air delivery rate for particles.'].join('\n\n'),{source:'d'}).statements;
+ assert.equal(st.length,1);assert.equal(st[0].type,'definition');assert.match(st[0].quote,/^Particle CADR/);
 });

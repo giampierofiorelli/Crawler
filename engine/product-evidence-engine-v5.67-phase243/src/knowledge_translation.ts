@@ -23,10 +23,13 @@ import {createHash} from 'node:crypto';
 import {findQuantities,namedPhrases,normText,parseUnit,type QuantityKnowledge} from './quantity_knowledge.js';
 import type {TaughtConcept} from './knowledge_link.js';
 
-export const TRANSLATION_CUES_FILE='translation-cues.v1.json';
+/** kt-cues.2 (R3 fidelity review): the split word is rendered; kt-cues.1 is kept for reproducing the held-out first run. */
+export const TRANSLATION_CUES_FILE='translation-cues.v2.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
-interface StatementTypeDef {type:string;meaning:string;display:string;patterns:string[]}
+interface StatementTypeDef {type:string;meaning:string;display:string;patterns:string[];
+ /** the subject may be absent (an instruction: "Do not ..."); it is then left out, not shown as unspecified */
+ optionalSubject?:boolean}
 export interface TranslationCues {schema:string;version:string;statementTypes:StatementTypeDef[];conditionCues:string[];contrastCues:string[];listSeparators:string[];
  tableHeaderRoles:Record<string,string[]>;statusMarkers:{status:string;cues:string[]}[];referencePattern:string}
 let cachedCues:{cues:TranslationCues;digest:string;compiled:{def:StatementTypeDef;res:RegExp[]}[]}|null=null;
@@ -98,6 +101,9 @@ export interface TranslatedStatement {id:string;type:string;
  status:string[];refs:string[];
  provenance:{source:string;line:number;headings:string[];block:DocBlock['kind'];header?:string};
  quote:string;rendered:string;
+ /** render-back self-check (R3): problems found by comparing the rendered sentence with the quote, e.g. a negation the
+  * rendering lost. A statement with a problem is kept for audit but must not be used as knowledge. */
+ selfCheck:string[];
  /** how the statement was recognised: a relation pattern, or the role of a table column */
  basis:'pattern'|'table_role';typedness:'typed'|'partly_typed'|'untyped'}
 export interface TranslationResult {schema:'pee.r3.translation.v1';cues:string;source:string;blocks:number;clauses:number;statements:TranslatedStatement[];
@@ -108,7 +114,13 @@ function statusOf(cues:TranslationCues,...texts:string[]):string[]{const t=texts
  for(const m of cues.statusMarkers)if(namedPhrases(t,m.cues).size)out.add(m.status);return [...out];}
 function refsOf(cues:TranslationCues,text:string):string[]{const re=new RegExp(cues.referencePattern,'g');const out=new Set<string>();
  for(const m of text.matchAll(re))for(const r of m[1].split(/\s*[,;]\s*/))out.add(r);return [...out];}
-const fill=(tpl:string,x:{subject?:string;object?:string})=>tpl.replace('{subject}',x.subject??'(unspecified)').replace('{object}',x.object??'(unspecified)').replace('{conditions}','');
+const fill=(tpl:string,x:{subject?:string;object?:string;verb?:string},optionalSubject=false)=>tpl.replace('{subject}',x.subject??(optionalSubject?'':'(unspecified)')).replace('{verb}',x.verb??'').replace('{object}',x.object??'(unspecified)').replace('{conditions}','').replace(/\s{2,}/g,' ').replace(/:\s+(\S)/,(m,c)=>': '+c);
+/** Negations and prohibitions: a rendered sentence must keep at least as many as its quote. */
+const NEGATORS=/\b(?:not|no|never|cannot|can't|don't|doesn't|isn't|aren't|won't|avoid|without|neither|nor)\b|n't\b/gi;
+const negations=(t:string)=>(t.match(NEGATORS)??[]).length;
+export function renderSelfCheck(quote:string,rendered:string):string[]{const out:string[]=[];if(negations(rendered)<negations(quote))out.push('negation_lost');return out;}
+/** Document metadata and questions are not knowledge claims. */
+const METADATA_VALUE=/^(?:https?:\/\/|www\.|\S+\.(?:md|pdf|json|zip|html?|txt)\b|v?\d+(?:\.\d+){1,3}\b|\d{1,2}\s+\w+\s+\d{4}\b|\d{4}-\d{2}-\d{2}\b)/i;
 const typedness=(...s:(TypedSpan|null)[]):TranslatedStatement['typedness']=>{const xs=s.filter((x):x is TypedSpan=>!!x);
  const t=xs.filter(x=>x.metrics.length||x.kinds.length||x.concepts.length||x.axes.length).length;return t===0?'untyped':t===xs.length?'typed':'partly_typed';};
 function headerRole(cues:TranslationCues,h:string):string|null{const n=normText(h);if(!n)return null;
@@ -123,7 +135,8 @@ const TABLE_ROLE_DISPLAY:Record<string,string>={quantitative_finding:'{subject} 
 export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:string;concepts?:readonly TaughtConcept[];range?:readonly {start:number;end:number}[];cues?:TranslationCues}):TranslationResult{
  const C=loadTranslationCues(opts.cues);const blocks=parseTeachingDocument(md,opts.range);const out:TranslatedStatement[]=[];let nClauses=0,unrec=0;
  const concepts=opts.concepts??[];const T=(s:string|undefined)=>s?typeSpan(qk,s.trim(),concepts):null;
- const push=(b:DocBlock,type:string,quote:string,sub:string|undefined,obj:string|undefined,basis:TranslatedStatement['basis'],header?:string)=>{
+ const push=(b:DocBlock,type:string,quote:string,sub:string|undefined,obj:string|undefined,basis:TranslatedStatement['basis'],header?:string,verb?:string)=>{
+  if(type==='definition'&&obj&&METADATA_VALUE.test(obj.trim())){unrec++;return;}
   const def=C.cues.statementTypes.find(d=>d.type===type);const subject=T(sub),object=T(obj);
   const parts=type==='composed_of'&&obj?obj.split(/,\s*|\s+(?:and|plus|\+)\s+/).map(p=>p.trim()).filter(p=>p.length>2).map(p=>T(p)!):[];
   const cue=C.cues.contrastCues.find(c=>new RegExp('(?:^|\\s)'+esc(c)+'(?:\\s|$)','i').test(quote));
@@ -131,8 +144,9 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
   const display=def?.display??TABLE_ROLE_DISPLAY[type]??'{subject}: {object}.';
   out.push({id:`${opts.source}:${b.line}:${out.length}`,type,subject,object,parts,contrast,status:statusOf(C.cues,quote,b.text,b.headings.at(-1)??''),refs:refsOf(C.cues,b.text),
    provenance:{source:opts.source,line:b.line,headings:b.headings,block:b.kind,...(header?{header}:{})},quote,
-   rendered:fill(display,{subject:subject?.text,object:object?.text}),basis,typedness:typedness(subject,object,...parts)});};
- const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){const m=re.exec(cl);if(m){push(b,def.type,cl,m.groups?.subject,m.groups?.object,'pattern',header);return true;}}return false;};
+   rendered:'',selfCheck:[],basis,typedness:typedness(subject,object,...parts)});
+  const st=out[out.length-1];st.rendered=fill(display,{subject:subject?.text,object:object?.text,verb},def?.optionalSubject);st.selfCheck=renderSelfCheck(quote,st.rendered);};
+ const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){const m=re.exec(cl);if(m){push(b,def.type,cl,m.groups?.subject,m.groups?.object,'pattern',header,m.groups?.verb);return true;}}return false;};
  for(const b of blocks){
   if(b.kind==='table_row'&&b.cells){
    const subj=b.cells.find(c=>headerRole(C.cues,c.header)==='subject')?.text??b.cells[0]?.text;
@@ -141,7 +155,10 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
     const q=findQuantities(qk,c.text).filter(f=>f.value!==null);if(q.length&&!headerRole(C.cues,c.header)){push(b,'quantitative_finding',`${subj} | ${c.header}: ${c.text}`,`${subj} (${c.header})`,c.text,'table_role',c.header);continue;}const role=headerRole(C.cues,c.header);const type=role?TABLE_ROLE_TYPE[role]:undefined;
     if(type)push(b,type,`${subj} | ${c.header}: ${c.text}`,subj,c.text,'table_role',c.header);else unrec++;}
    continue;}
-  for(const cl of clauses(b.text)){nClauses++;if(byPattern(b,cl))continue;
+  for(const cl of clauses(b.text)){nClauses++;
+   // a question asks for knowledge; it does not state it
+   if(cl.includes('?')){unrec++;continue;}
+   if(byPattern(b,cl))continue;
    // a quantitative finding: the clause states a value with a unit the quantity knowledge reads
    const q=findQuantities(qk,cl).filter(f=>f.value!==null);
    if(q.length){const at=q[0].start;push(b,'quantitative_finding',cl,cl.slice(0,at).trim()||undefined,cl.slice(at).trim(),'pattern');continue;}
