@@ -17,10 +17,12 @@ const pkgDocs0=dir=>readdirSync(join(PKGD,dir)).filter(f=>f.endsWith('.md')).map
 const pkgDocs=cat=>{const out=[];const w=x=>{if(!existsSync(x))return;for(const f of readdirSync(x)){const q=join(x,f);if(statSync(q).isDirectory()){if(!/archive/.test(f))w(q);}else if(f.endsWith('.md'))out.push({source:q.slice(PKGD.length+1),md:readFileSync(q,'utf8')});}};
  w(join(PKGD,PKG[cat]));return cat==='coffee_machines'?out.filter(x=>/COFFEE/.test(x.source)):cat==='dehumidifiers'?out.concat(pkgDocs0('PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES').filter(x=>/DEHUMID/.test(x.source))):out;};
 const C={};const inc=(k,n=1)=>C[k]=(C[k]??0)+n;const detail={};
-for(const cat of Object.keys(PKG)){const view=KL.teachingView(store,cat);
+const CATS=(process.env.R3_CATS??Object.keys(PKG).join(',')).split(',');
+for(const cat of CATS){const view=KL.teachingView(store,cat);
  const concepts=store.categoryItems246(cat).filter(i=>i.concept).map(i=>({id:i.concept.id,statement:i.statement,aliases:i.concept.aliases}));
  const statements=pkgDocs(cat).flatMap(d=>KT.translateDocument(qk,d.md,{source:d.source,concepts}).statements);
- const derived=KT.deriveSufficiency(statements,view);const byRel=new Map(derived.map(d=>[d.relation,d]));
+ const outcomeConcepts=store.categoryItems246(cat).filter(i=>i.concept?.kind==='outcome').map(i=>({id:i.concept.id,statement:i.statement,aliases:i.concept.aliases}));
+ const derived=KT.deriveSufficiency(statements,view,outcomeConcepts);const byRel=new Map(derived.map(d=>[d.relation,d]));
  inc(cat+':statements',statements.length);inc(cat+':not_sufficient',statements.filter(s=>s.type==='not_sufficient'&&!s.selfCheck.length).length);
  const rels=view.measurements.flatMap(m=>m.outcomes.map(o=>({...o,measurement:m.concept.id})));detail[cat]={derived,rels:[]};
  for(const r of rels){const ref=V1.relations[r.relation]?.sufficiency??'no_reference';const got=byRel.has(r.relation)?'informs_only':'unresolved';

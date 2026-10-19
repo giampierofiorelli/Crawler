@@ -240,19 +240,26 @@ export interface DerivedSufficiency {relation:string;measurement:string;outcome:
  evidence:{statement:string;source:string;line:number;quote:string;scope:string[]}[]}
 const contentWords=(s:string)=>[...new Set(normText(s.replace(/_/g,' ')).split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2&&!STOP.has(w)))];
 const stem=(w:string)=>w.slice(0,Math.max(4,Math.min(w.length,6)));
-/** The concept a phrase identifies: the unique best match by the share of the concept's words the phrase contains. */
-export function identifyConcept(phrase:string,candidates:readonly {id:string;aliases?:readonly string[]}[]):string|null{
- const have=new Set(contentWords(phrase).map(stem));let best:string|null=null,bestScore=0,tie=false;
- for(const c of candidates){const ws=contentWords(c.id);if(!ws.length)continue;
-  const alias=(c.aliases??[]).some(a=>namedPhrases(phrase,[a]).size>0);
-  const hit=ws.filter(w=>have.has(stem(w))).length;const score=alias?1:hit/ws.length;
-  if(!alias&&(hit<Math.min(2,ws.length)||score<0.5))continue;
-  if(score>bestScore){best=c.id;bestScore=score;tie=false;}else if(score===bestScore)tie=true;}
- return tie?null:best;
+/** The concept a phrase identifies: the unique clear best match. A concept is described by the words of its name, of the
+ * first sentence of its statement and of its aliases; a word shared by many candidates weighs less (inverse document
+ * frequency over the candidates). A match needs an alias, or two distinctive words of which one is from the name, and
+ * must lead the next candidate clearly; otherwise nothing is identified. */
+export function identifyConcept(phrase:string,candidates:readonly {id:string;aliases?:readonly string[];statement?:string}[]):string|null{
+ const have=new Set(contentWords(phrase).map(stem));if(!have.size)return null;
+ const desc=candidates.map(c=>{const name=new Set(contentWords(c.id).map(stem));const head=new Set(contentWords((c.statement??'').split(/(?<=[.;:])\s/)[0]??'').map(stem));
+  return {id:c.id,name,all:new Set([...name,...head]),alias:(c.aliases??[]).some(a=>namedPhrases(phrase,[a]).size>0)};});
+ const df=new Map<string,number>();for(const d of desc)for(const w of d.all)df.set(w,(df.get(w)??0)+1);
+ const n=desc.length;const idf=(w:string)=>Math.log(1+n/(df.get(w)??1));
+ const scored=desc.map(d=>{const hit=[...d.all].filter(w=>have.has(w));const nameHit=hit.filter(w=>d.name.has(w));
+  const ok=d.alias||(hit.length>=2&&nameHit.length>=1);return {id:d.id,ok,score:(d.alias?3:0)+hit.reduce((a,w)=>a+idf(w)*(d.name.has(w)?2:1),0)};})
+  .filter(x=>x.ok).sort((a,b)=>b.score-a.score);
+ if(!scored.length)return null;if(scored.length>1&&scored[0].score-scored[1].score<1)return null;
+ return scored[0].id;
 }
 const SCOPE_CUES=/\b(?:when|if|unless|under|at|for|during|only|except|provided)\b[^,;.]*/gi;
-export function deriveSufficiency(statements:readonly TranslatedStatement[],teaching:{measurements:readonly {concept:TaughtConcept;outcomes:readonly {outcome:string;relation:string}[]}[]}):DerivedSufficiency[]{
- const ms=teaching.measurements.map(m=>m.concept);const outcomes=[...new Map(teaching.measurements.flatMap(m=>m.outcomes).map(o=>[o.outcome,{id:o.outcome}])).values()];
+export function deriveSufficiency(statements:readonly TranslatedStatement[],teaching:{measurements:readonly {concept:TaughtConcept;outcomes:readonly {outcome:string;relation:string}[]}[]},outcomeConcepts:readonly TaughtConcept[]=[]):DerivedSufficiency[]{
+ const ms=teaching.measurements.map(m=>m.concept);const described=new Map(outcomeConcepts.map(c=>[c.id,c]));
+ const outcomes=[...new Set(teaching.measurements.flatMap(m=>m.outcomes.map(o=>o.outcome)))].map(id=>described.get(id)??{id});
  const out=new Map<string,DerivedSufficiency>();
  for(const s of statements){if(s.type!=='not_sufficient'||s.selfCheck.length||!s.subject||!s.object)continue;
   const m=identifyConcept(s.subject.text,ms),o=identifyConcept(s.object.text,outcomes);if(!m||!o)continue;
@@ -261,4 +268,32 @@ export function deriveSufficiency(statements:readonly TranslatedStatement[],teac
   d.evidence.push({statement:s.id,source:s.provenance.source,line:s.provenance.line,quote:s.quote,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())]});
   out.set(rel.relation,d);}
  return [...out.values()].sort((a,b)=>a.relation.localeCompare(b.relation));
+}
+
+//    Proxy limits (R3 cycle 2). The documents' not_sufficient / not_comparable statements mostly concern what a page
+//    shows (a label, a nominal capacity, a particle CADR, a coverage figure), not the taught test designs. A statement
+//    whose subject PEE can type as a quantity (metric or kind) becomes a limit: "a value of this quantity does not by
+//    itself establish <object>" (or is not comparable with it), with quote, provenance and scope. A limit applies to a read
+//    value when the value is of the subject's metric, or of its kind and the value's label shares a distinctive word of the
+//    subject; it does not apply when the value states another value of an axis the subject fixes (the statement's scope).
+//    A limit qualifies what a value can show; it never excludes a product and never ranks (owner S74).
+export interface ProxyLimit {id:string;type:'not_sufficient'|'not_comparable';metrics:string[];kinds:string[];axes:{axis:string;value:string}[];words:string[];
+ object:string;outcome:string|null;scope:string[];quote:string;source:string;line:number}
+export function proxyLimits(statements:readonly TranslatedStatement[],outcomeConcepts:readonly TaughtConcept[]=[]):ProxyLimit[]{
+ const out:ProxyLimit[]=[];
+ for(const s of statements){if((s.type!=='not_sufficient'&&s.type!=='not_comparable')||s.selfCheck.length||!s.subject)continue;
+  const sub=s.subject;if(!sub.metrics.length&&!sub.kinds.length)continue;
+  out.push({id:s.id,type:s.type,metrics:sub.metrics,kinds:sub.kinds,axes:sub.axes,words:sub.untyped.filter(w=>w.length>3),object:s.object?.text??'',
+   outcome:s.object?identifyConcept(s.object.text,outcomeConcepts):null,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())],
+   quote:s.quote,source:s.provenance.source,line:s.provenance.line});}
+ return out;
+}
+export function applicableLimits(limits:readonly ProxyLimit[],value:{metric:string|null;kind:string|null;conditions:readonly {axis:string;value:string}[];label:string}):{limit:ProxyLimit;basis:'metric'|'kind_and_word'}[]{
+ const have=new Set(contentWords(value.label).map(stem));const out:{limit:ProxyLimit;basis:'metric'|'kind_and_word'}[]=[];
+ for(const l of limits){
+  // scope: a value stated at another value of an axis the statement names is outside the statement
+  if(l.axes.some(a=>value.conditions.some(c=>c.axis===a.axis&&c.value!==a.value)))continue;
+  if(value.metric&&l.metrics.includes(value.metric)){out.push({limit:l,basis:'metric'});continue;}
+  if(!l.metrics.length&&value.kind&&l.kinds.includes(value.kind)&&l.words.some(w=>have.has(stem(w))))out.push({limit:l,basis:'kind_and_word'});}
+ return out;
 }

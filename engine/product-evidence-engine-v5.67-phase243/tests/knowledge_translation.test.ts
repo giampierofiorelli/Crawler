@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {describeMeasurement} from '../src/knowledge_link.js';
-import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency} from '../src/knowledge_translation.js';
+import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits} from '../src/knowledge_translation.js';
 
 // R3 (owner S73): PEE's translator of teaching documents and its question-driven acquisition of condition axes.
 // Synthetic text written for these tests (T1: wiring, not evidence about the owner documents).
@@ -126,4 +126,21 @@ test('R3 cycle 2: identification is the unique best match; a tie or a weak match
  assert.equal(identifyConcept('the noise',cs),null);
  assert.equal(identifyConcept('annual filter replacement cost',cs),'filter_cost');
  assert.equal(identifyConcept('mode speed noise',[{id:'sleep_mode_noise'},{id:'top_speed_noise'}]),null,'a tie');
+});
+
+test('R3 cycle 2: a typed not_sufficient statement is a proxy limit that qualifies matching values within its scope', ()=>{
+ const st=translateDocument(qk,['A particle CADR cannot establish protection from second-hand smoke gases.','Brand reputation does not establish reliability.'].join('\n\n'),{source:'d'}).statements;
+ const ls=proxyLimits(st);
+ assert.equal(ls.length,1,'only the statement whose subject is a typed quantity');assert.deepEqual(ls[0].metrics,['cadr']);
+ const v=(metric:string|null,kind:string|null,label:string,conditions:{axis:string;value:string}[]=[])=>({metric,kind,label,conditions});
+ assert.equal(applicableLimits(ls,v('cadr','volumetric_flow_rate','Smoke CADR')).length,1);
+ assert.equal(applicableLimits(ls,v('free_airflow','volumetric_flow_rate','Airflow')).length,0,'another metric of the same kind');
+ assert.equal(applicableLimits(ls,v(null,'power','Power')).length,0);
+ // scope: a statement about the sleep setting does not apply to a value stated at top speed
+ const sl=proxyLimits(translateDocument(qk,'A CADR at sleep mode cannot establish whole-room cleaning.',{source:'d'}).statements);
+ assert.equal(sl.length,1);assert.ok(sl[0].axes.some(a=>a.axis==='fan_setting'));
+ assert.equal(applicableLimits(sl,v('cadr','volumetric_flow_rate','CADR',[{axis:'fan_setting',value:'top'}])).length,0);
+ assert.equal(applicableLimits(sl,v('cadr','volumetric_flow_rate','CADR',[{axis:'fan_setting',value:'sleep'}])).length,1);
+ // a limit whose rendering failed the self-check is not used
+ assert.equal(proxyLimits(st.map(s=>({...s,selfCheck:['negation_lost']}))).length,0);
 });

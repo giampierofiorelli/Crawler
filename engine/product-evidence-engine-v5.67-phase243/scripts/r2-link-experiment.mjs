@@ -81,7 +81,9 @@ const sameProduct=(a,b)=>{const x=core(a),y=core(b);if(!x.size||!y.size)return f
 const near=(v,u,g)=>v!==null&&Math.abs(v-g.value)<=1e-9*Math.max(1,Math.abs(g.value))&&u===canon(g.unit);
 const store=new KnowledgeStore246(join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite'));
 const cats=[...new Set(SET.docs.map(d=>d.category))];
-const plans={},views={};for(const c of cats){plans[c]=compileExtractionPlan272(store,c,CATEGORY_REGISTRY250.find(e=>e.id===c)?.aliases??[],TAUGHT.filter(t=>t!==c));views[c]=KL.teachingView(store,c,overlay);}store.close();
+const plans={},views={};for(const c of cats){plans[c]=compileExtractionPlan272(store,c,CATEGORY_REGISTRY250.find(e=>e.id===c)?.aliases??[],TAUGHT.filter(t=>t!==c));views[c]=KL.teachingView(store,c,overlay);}
+// R3 cycle 2: outcome concepts, for the proxy limits translated from the owner packages
+const outcomeConcepts={};for(const c of cats)outcomeConcepts[c]=store.categoryItems246(c).filter(i=>i.concept?.kind==='outcome').map(i=>({id:i.concept.id,statement:i.statement,aliases:i.concept.aliases}));store.close();
 const desc={};for(const c of cats)desc[c]=views[c].measurements.map(m=>KL.describeMeasurement(qk,m.concept,m.conditions));
 const KT=await import(D+'knowledge_translation.js');const {readdirSync,statSync}=await import('node:fs');
 const PKGD=join(PE,'r1v/packages');const PKG={air_purifiers:'PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-COMPLETE-v1.2.0',televisions:'PEE-CATEGORY-RESEARCH-07-TELEVISIONS-COMPLETE-v1.0.0',air_fryers:'PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES/af',
@@ -92,6 +94,9 @@ const pkgDocs0=dir=>{const out=[];for(const f of readdirSync(join(PKGD,dir)))if(
 const acq={},qkAcq={},descAcq={};
 for(const c of cats){const qs=KT.distinctionQuestions(desc[c]);acq[c]=KT.acquireConditionAxes(qk,pkgDocs(c),qs);qkAcq[c]=KT.withAcquiredAxes(qk,acq[c],pk=>QK.loadQuantityKnowledge(pk));
  descAcq[c]=views[c].measurements.map(m=>KL.describeMeasurement(qkAcq[c],m.concept,m.conditions));}
+// R3 cycle 2 (S74): proxy limits from the translated not_sufficient / not_comparable statements of each category's package;
+// an annotation on read values only (no link, force or ranking changes)
+const limits={};for(const c of cats)limits[c]=KT.proxyLimits(pkgDocs(c).flatMap(x=>KT.translateDocument(qk,x.md,{source:x.source}).statements),outcomeConcepts[c]);
 const ablate=(ds,what)=>ds.map(d=>what==='conditions'?{...d,fixed:[],axes:[]}:{...d,measurands:d.measurands.filter(m=>!m.metric||m.level==='head').map(m=>({...m,metric:null}))});
 // C2, reproduced from scripts/r1-integration-experiment.mjs
 const KINDS={energy:['energy','energy_per_event','periodic_energy_consumption'],power:['power'],sound:['sound_pressure_level','sound_power_level'],luminance:['luminance'],latency:['duration'],frequency:['frequency'],
@@ -107,7 +112,7 @@ const LK2=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v2.js
 const LK3=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v3.json','utf8'));
 const LK4=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v4.json','utf8'));
 const LK5=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v5.json','utf8'));
-const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6','C7','C8s','C8','C8r','C8d'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
+const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6','C7','C8s','C8','C8r','C8d'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));C.L={};const inc=(a,k,n=1)=>C[a][k]=(C[a][k]??0)+n;const detail=[];
 /** one outcome per value and arm, in both directions */
 function score(ref,status,ms){
  const linkedSet=['linked','linked_condition_not_shown','linked_equivalent'].includes(status)?ms:[];
@@ -185,6 +190,9 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
    const s=['C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
    if(GOOD.has(s)&&prod==='correct'){inc(a,'decision_usable_correct');
     if(a.startsWith('C3')||['C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
+  { const q=m.r.q;const ap=KT.applicableLimits(limits[d.category],{metric:q.metric.id,kind:q.kind.id??q.kind.candidates[0]??null,conditions:q.conditions,label:m.r.text});
+   row.limits=ap.map(x=>({id:x.limit.id,type:x.limit.type,basis:x.basis,object:x.limit.object,outcome:x.limit.outcome,scope:x.limit.scope,quote:x.limit.quote,source:x.limit.source,line:x.limit.line}));row.text=m.r.text;
+   inc('L','values');if(ap.length){inc('L','values_with_limit');inc('L','limits_applied',ap.length);for(const x of ap)inc('L','basis_'+x.basis);}}
   detail.push(row);}}
 // both directions, per value: C3 against C2
 const cls=s=>GOOD.has(s)?'good':BAD.has(s)?'bad':'abstain';
@@ -197,7 +205,7 @@ const descriptorCensus=Object.fromEntries(cats.map(c=>[c,{measurements:desc[c].l
  withFixedConditions:desc[c].filter(x=>x.fixed.length).length,withAxes:desc[c].filter(x=>x.axes.length).length,withUntypedWords:desc[c].filter(x=>x.untyped.length).length}]));
 const pub={schema:'pee.r2.link-experiment.v1',label,generatedAt:new Date().toISOString(),set,
  tier:set==='af'?'Air-fryer test pages of Phases 268/270/271: link reference blind and sealed after the lk.4 build froze; never used to develop the link (the pages served Phase268-271 extraction development).':set==='p272'?'Phase272 untouched set: SPENT (R1 tuning and R2 diagnosis inspected its link reference). Development evidence; never held-out.':'Step 1C + 1D-B pages of taught categories: link reference blind and sealed after the build froze; the link mechanism was never developed on them; the pages served earlier reader development (not untouched documents).',
- rules:KL.loadLinkRules().version,forceOverlay:overlay.id,descriptorCensus,arms:C,c2ToC3:T,c3ToC4:T4,c4ToC5:T5,c5ToC6:T6,c7ToC8:T8,acquired:Object.fromEntries(cats.map(c=>[c,acq[c].map(p=>({axis:p.axis,values:Object.keys(p.values),answers:p.answers.length,evidence:p.evidence.length,structure:[...new Set(p.evidence.map(e=>e.structure))]}))]))};
+ rules:KL.loadLinkRules().version,proxyLimits:{perCategory:Object.fromEntries(cats.map(c=>[c,limits[c].length]))},forceOverlay:overlay.id,descriptorCensus,arms:C,c2ToC3:T,c3ToC4:T4,c4ToC5:T5,c5ToC6:T6,c7ToC8:T8,acquired:Object.fromEntries(cats.map(c=>[c,acq[c].map(p=>({axis:p.axis,values:Object.keys(p.values),answers:p.answers.length,evidence:p.evidence.length,structure:[...new Set(p.evidence.map(e=>e.structure))]}))]))};
 writeFileSync(OUT,JSON.stringify(pub,null,1)+'\n');mkdirSync(join(PE,'r2'),{recursive:true});
 writeFileSync(join(PE,'r2',`link-${label}.json`),JSON.stringify({...pub,descriptors:desc,detail},null,1)+'\n');
 for(const a of ARMS)console.log(a,JSON.stringify(C[a]));console.log('C2->C3',JSON.stringify(T));console.log('C3->C4',JSON.stringify(T4));console.log('C4->C5',JSON.stringify(T5));console.log('C7->C8',JSON.stringify(T8));console.log('C5->C6',JSON.stringify(T6));

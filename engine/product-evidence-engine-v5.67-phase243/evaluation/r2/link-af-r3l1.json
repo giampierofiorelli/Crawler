@@ -1,0 +1,175 @@
+{
+ "schema": "pee.r2.link-experiment.v1",
+ "label": "af-r3l1",
+ "generatedAt": "2026-10-19T09:00:00.417Z",
+ "set": "af",
+ "tier": "Air-fryer test pages of Phases 268/270/271: link reference blind and sealed after the lk.4 build froze; never used to develop the link (the pages served Phase268-271 extraction development).",
+ "rules": "lk.6",
+ "proxyLimits": {
+  "perCategory": {
+   "air_fryers": 8
+  }
+ },
+ "forceOverlay": "r2-relation-force.v1",
+ "descriptorCensus": {
+  "air_fryers": {
+   "measurements": 8,
+   "withHeadMeasurand": 3,
+   "withFixedConditions": 0,
+   "withAxes": 0,
+   "withUntypedWords": 8
+  }
+ },
+ "arms": {
+  "A": {
+   "gold_values": 64,
+   "found": 39,
+   "product_correct": 25,
+   "link_correct_no_link": 27,
+   "link_missed_no_candidate": 9,
+   "product_wrong": 6,
+   "product_missing": 8,
+   "link_wrong_link_where_none": 2,
+   "not_found_by_reader": 25,
+   "link_wrong_measurement": 1
+  },
+  "C1": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_wrong_link_where_none": 12,
+   "link_correct": 8,
+   "link_wrong_measurement": 2,
+   "link_correct_no_link": 1
+  },
+  "C2": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_wrong_link_where_none": 9,
+   "link_missed_ambiguous_ref_among": 8,
+   "link_wrong_measurement": 1,
+   "link_correct_no_link": 4,
+   "link_missed_ambiguous_ref_not_among": 1
+  },
+  "C3": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C3k": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C3m": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C4": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C5": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C6": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "test_identity_unknown": 21,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10,
+   "test_identity_known": 2
+  },
+  "C7": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "procedure_unknown": 21,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10,
+   "procedure_identified": 2
+  },
+  "C8s": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C8": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C8r": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "C8d": {
+   "gold_values": 64,
+   "not_found_by_reader": 41,
+   "found": 23,
+   "product_missing": 23,
+   "link_correct_none_reported_outside_teaching": 13,
+   "link_missed_ambiguous_ref_among": 10
+  },
+  "L": {
+   "values": 23,
+   "values_with_limit": 1,
+   "limits_applied": 1,
+   "basis_kind_and_word": 1
+  }
+ },
+ "c2ToC3": {
+  "bad->abstain": 10,
+  "abstain->abstain": 13
+ },
+ "c3ToC4": {
+  "abstain->abstain": 23
+ },
+ "c4ToC5": {
+  "abstain->abstain": 23
+ },
+ "c5ToC6": {
+  "abstain->abstain": 23
+ },
+ "c7ToC8": {
+  "abstain->abstain": 23
+ },
+ "acquired": {
+  "air_fryers": []
+ }
+}
