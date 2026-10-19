@@ -9,7 +9,7 @@ const label=process.argv[2];const OUT=`evaluation/s78/authorisation-census-${lab
 const D=new URL('../dist/src/',import.meta.url).href;const {KnowledgeStore246}=await import(D+'phase246_knowledge_store.js');const A=await import(D+'phase253_request_advice.js');
 const store=new KnowledgeStore246(join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite'));
 const cats=store.db.prepare("SELECT DISTINCT category_id FROM category_relations WHERE kind='measured_by' ORDER BY 1").all().map(r=>r.category_id);
-const out={schema:'pee.s78.authorisation-census.v1',label,generatedAt:new Date().toISOString(),rules:{ra1:'outcomeAuthorised270',ra2:'outcomeAuthorisedRa2 '+A.RANKING_AUTHORISATION_VERSION},
+const out={schema:'pee.s78.authorisation-census.v1',label,generatedAt:new Date().toISOString(),rules:{ra1:'outcomeAuthorised270',ra2:'outcomeAuthorisedRa2 '+A.RANKING_AUTHORISATION_VERSION,release:'outcomeAuthorisedRelease (S79: ra.2 restrict-only)'},
  note:'hypothetical scored dimension per (need, measurement); no product, no catalog; shows what each rule would accept',categories:{},totals:{}};
 const T=out.totals;const inc=(o,k)=>o[k]=(o[k]??0)+1;
 for(const c of cats){const items=store.categoryItems246(c);const needs=[...new Set(items.filter(i=>i.concept&&i.concept.kind!=='measurement').map(i=>i.concept.id))];
@@ -17,6 +17,7 @@ for(const c of cats){const items=store.categoryItems246(c);const needs=[...new S
  for(const k of A.needKnowledge269(store,c,needs)){for(const [m,info] of k.byMeasure){C.pairs++;inc(T,'pairs');
   const own={key:k.need,label:k.need,value:{kind:'boolean',value:true},methodId:'census',protocolVersion:'v',measureId:m,conditionsMet:[...info.conditions],weightUnits:{hard:1,high:1,normal:1,low:1}};
   const a1=A.outcomeAuthorised270(k,own,m),a2=A.outcomeAuthorisedRa2(k,own,m);
+  const a3=A.outcomeAuthorisedRelease?A.outcomeAuthorisedRelease(k,own,m):a2;const r3=a3.ok?'authorised':a3.reason;C.release??={};inc(C.release,r3);inc(T,'release:'+r3);
   const r1=a1.ok?'authorised':a1.reason,r2=a2.ok?'authorised':a2.reason;inc(C.ra1_own,r1);inc(C.ra2_own,r2);inc(T,'ra1:'+r1);inc(T,'ra2:'+r2);
   if(r1!==r2){C.disagree++;inc(T,'changed:'+r1+'->'+r2);}
   // pooled: ra.1 asks for every condition of every measurement of the need; with only this measurement's met, it refuses

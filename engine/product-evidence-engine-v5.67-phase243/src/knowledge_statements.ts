@@ -4,7 +4,8 @@
  * negation, causal and method statements, typed subjects and objects) is kept per statement with provenance (document
  * hash and line, never the quote), the translator version and the measured reliability of its statement type
  * (resources/knowledge-translation/statement-type-reliability.json). Rows are machine translated and unreviewed: the
- * schema forbids them as ranking inputs. Consumers read them as labelled caveats; conflicts (the same relation asserted
+ * schema forbids them as ranking inputs. They are internal: no consumer-facing answer shows them (S79) until their
+ * contextual applicability and factual relevance are validated; conflicts (the same relation asserted
  * and denied) are derived on reading, never resolved silently. */
 import {createHash} from 'node:crypto';import {readFileSync} from 'node:fs';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
@@ -61,7 +62,7 @@ export function statementsOf(store:KnowledgeStore246,categoryId:string,o:{types?
 export function statementsAbout(store:KnowledgeStore246,categoryId:string,conceptId:string,o:{types?:readonly string[];reliableOnly?:boolean;subjectOnly?:boolean}={}):StoredStatement[]{
  return statementsOf(store,categoryId,o).filter(s=>(o.subjectOnly?[s.subject]:[s.subject,s.object,...s.parts]).some(x=>x?.concepts.includes(conceptId)));
 }
-/** S78: caveats about a concept that may be shown to a consumer: reliable statement types that warn or delimit
+/** S78: candidate caveats about a concept (internal only since S79, see teachingCaveatsShadow): reliable statement types that warn or delimit
  * (limitation, not_sufficient, is_not), with the concept as the statement's SUBJECT (blind relevance check of 40
  * concept-statement links: any position 30 applies / 2 misleading; subject only 12 of 16 apply, 0 misleading;
  * evaluation/s78/caveat-link.json), one per distinct rendering. */

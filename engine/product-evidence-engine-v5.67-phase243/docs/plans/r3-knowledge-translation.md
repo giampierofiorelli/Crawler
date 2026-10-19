@@ -586,3 +586,24 @@ category nouns; it was replaced by the general form, with identical results on b
   are attributed by equipment class, not by product.
 - **Unresolved hypothesis:** a page-context evidence-role reference would decide the 17 values the local-text reference
   cannot judge.
+
+## 16. Release safety after the owner's S78 review (S79, 2026-10-19)
+
+Dated correction of §15.1 and §15.2 (owner review verbatim: skill `owner-s78-release-safety-review-2026-10-19.md`).
+
+1. **Ranking: ra.2 restrict-only.** §15.1 put ra.2 in production; it also authorised two pairs ra.1 had refused, on a
+   shadow over hypothetical dimensions, not on real signed catalogs. The deciding rule is now `outcomeAuthorisedRelease`:
+   ra.2's safeguards in full, and a pair ra.1 refused is withheld (`new_authorisation_pending_validation`) unless it is
+   listed in `VALIDATED_NEW_AUTHORISATIONS` with its validation record (empty). ra.1's acceptance alone is never enough.
+   Census on the live store (`evaluation/s78/authorisation-census-live-2.json`): 13 pairs authorised (all authorised by
+   both rules), 2 withheld pending validation, 36 refused as inform-only, 5 as not established. Every answer's
+   `authorisationTrace` records ra.1, ra.2 and the decision.
+2. **Research caveats internal.** §15.2 put machine-translated caveats into consumer answers while their scope and
+   conditions were stored but not checked when used, on a tuned 12/16 relevance sample. They are removed from the answer
+   (no field, no statement, no limitation); `teachingCaveatsShadow` returns them for internal evaluation only. A
+   "not reviewed" label is not validation. The S78 behaviour that stays user-visible is the per-measurement wording of
+   "What would answer this", which only restricts what an answer claims.
+3. **What validation would release them:** for a withheld pair, a real signed catalog whose dimension uses the
+   measurement, run through the full path, plus a source check of the sufficiency verdict; for caveats, a blind
+   applicability check against the user's stated situation (scope and conditions consumed by a rule), on requests not
+   used to build the linking rule.

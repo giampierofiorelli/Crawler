@@ -48,10 +48,7 @@ export interface Advice253 {
   * directly or only through a proxy, and the resulting decision. A proxy never assesses an outcome. */
  goalAssessment?:GoalAssessment253;
  /** S78: for each catalog dimension considered for ranking, the decision of ra.2 (deciding) and of the legacy ra.1. */
- /** S78: caveats from the category research about the stated needs and their measurements (machine-translated,
-  * unreviewed, never ranking input), with the source document and line. */
- teachingCaveats?:{concept:string;caveat:string;sourceDocument:string;line:number;type:string}[];
- authorisationTrace?:{need:string;dimension:string;measure:string|null;decidedBy:'ra.1'|'ra.2';ra1:string;ra2:string}[];
+ authorisationTrace?:{need:string;dimension:string;measure:string|null;decidedBy:'ra.1'|'ra.2-restrict-only';ra1:string;ra2:string;decision:string}[];
  /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
   * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
  researchInputs?:AdviceResearchInputs253;

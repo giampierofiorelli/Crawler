@@ -206,8 +206,24 @@ test('S78 ra.2: conditions are checked per measurement, never pooled across the 
  assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_empty_run'),{ok:false,reason:'known_proxy'});
  assert.deepEqual(outcomeAuthorisedRa2({proxies:[],byMeasure:new Map([['m',{sufficiency:'unassessed',conditions:[]}]])},d,'m'),{ok:false,reason:'sufficiency_not_established'});
  const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
- assert.equal(a.authorisationTrace![0].decidedBy,'ra.2');assert.equal(a.authorisationTrace![0].ra2,'authorised');
+ assert.equal(a.authorisationTrace![0].decidedBy,'ra.2-restrict-only');assert.equal(a.authorisationTrace![0].ra2,'authorised');
  const legacy=adviseFromRequest253(REQUEST,coffee(true,[]).s,CATEGORY_REGISTRY250,{ranking:{catalog:signed(panel(coffee(true,[]).ids)),authority},rankingAuthorisation:'ra.1'});
  assert.equal(legacy.authorisationTrace![0].ra1,'authorised');assert.equal(legacy.authorisationTrace![0].ra2,'sufficiency_not_established','the trace shows what ra.1 accepted without evidence');
 });
 
+
+test('S79 release rule: ra.2 only restricts; a pair ra.1 refused stays withheld until validated; ra.1 alone never authorises',async ()=>{
+ const {outcomeAuthorisedRelease,VALIDATED_NEW_AUTHORISATIONS}=await import('../src/phase253_request_advice.js');
+ assert.equal(VALIDATED_NEW_AUTHORISATIONS.length,0,'no newly enabled pair is validated yet');
+ const d={...panel({A1:'a1',B2:'b2'}).dimensions[0],conditionsMet:['same_food_load']};
+ const k=(suff:string)=>({need:'low_energy_use',kind:'outcome',relevant:['energy_per_cooking_task','crisp_panel'],proxies:[],conditions:['blinded_panel','same_food_load'],notes:new Map(),statements:new Map(),
+  byMeasure:new Map([['energy_per_cooking_task',{relationId:'r1',sufficiency:suff as 'established',conditions:['same_food_load']}],['crisp_panel',{relationId:'r2',sufficiency:'established' as const,conditions:['blinded_panel']}]])});
+ // ra.2 alone would authorise (own conditions met); ra.1 refused (pooled conditions): withheld
+ assert.deepEqual(outcomeAuthorisedRelease(k('established'),d,'energy_per_cooking_task'),{ok:false,reason:'new_authorisation_pending_validation'});
+ // both rules authorise: authorised
+ assert.deepEqual(outcomeAuthorisedRelease(k('established'),{...d,conditionsMet:['same_food_load','blinded_panel']},'energy_per_cooking_task'),{ok:true});
+ // ra.1 authorises but the source says the measurement only informs: refused (ra.1 alone is never enough)
+ assert.deepEqual(outcomeAuthorisedRelease(k('informs_only'),{...d,conditionsMet:['same_food_load','blinded_panel']},'energy_per_cooking_task'),{ok:false,reason:'sufficiency_only_informs'});
+ const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
+ assert.equal(a.authorisationTrace![0].decidedBy,'ra.2-restrict-only');assert.equal(a.authorisationTrace![0].decision,'authorised');
+});

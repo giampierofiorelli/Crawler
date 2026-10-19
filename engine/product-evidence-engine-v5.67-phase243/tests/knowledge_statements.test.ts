@@ -49,3 +49,9 @@ test('S78 caveats: only reliable warning types with the concept as subject, the 
  assert.ok(!c.some(x=>/golden chips/.test(x.rendered)),'crispness is the object there, not the subject');
  const order=c.map(x=>x.type);assert.deepEqual(order,[...order].sort((a,b)=>(a==='not_sufficient'?0:a==='is_not'?1:2)-(b==='not_sufficient'?0:b==='is_not'?1:2)));
 });
+test('S79: research caveats never enter a consumer answer; they are available only to internal evaluation',async ()=>{
+ const src=readFileSync(new URL('../../src/phase253_request_advice.ts',import.meta.url),'utf8');
+ assert.ok(!/teachingCaveats\s*=/.test(src)&&!/From the category research/.test(src),'no answer field or text carries research caveats');
+ const {teachingCaveatsShadow}=await import('../src/phase253_request_advice.js');assert.equal(typeof teachingCaveatsShadow,'function');
+ const contract=readFileSync(new URL('../../src/phase253_advice_contract.ts',import.meta.url),'utf8');assert.ok(!/teachingCaveats/.test(contract),'the answer contract has no caveat field');
+});

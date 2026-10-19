@@ -19,6 +19,7 @@ import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase25
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
 import {caveatsAbout} from './knowledge_statements.js';
+import type {StoredStatement} from './knowledge_statements.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
 import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_comparative_evidence.js';
 import {applianceMentions270} from './phase270_comparative_results.js';
@@ -219,10 +220,11 @@ export function outcomeAuthorised270(k:{relevant:readonly string[];proxies:reado
  * a measured_by relation from THIS measurement; an active source-citing assessment that it ESTABLISHES the outcome and
  * none that disagrees; every condition required for THIS measurement met; a score, not a raw quantity. */
 export const RANKING_AUTHORISATION_VERSION='ra.2';
-/** The rule that decides when the caller names none: ra.2 since the S78 shadow census (evaluation/s78/authorisation-census-live-1.json); ra.1 stays callable for comparison only. */
+/** The rule that decides when the caller names none: ra.2 since the S78 shadow census (evaluation/s78/authorisation-census-live-1.json),
+ * applied restrict-only since S79 (outcomeAuthorisedRelease); ra.1 stays callable for comparison only. */
 export const DEFAULT_RANKING_AUTHORISATION:'ra.1'|'ra.2'='ra.2';
 export type AuthorisationRefusal='no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_met'|'raw_quantity_not_a_score'|
- 'sufficiency_not_established'|'sufficiency_only_informs'|'sufficiency_contested';
+ 'sufficiency_not_established'|'sufficiency_only_informs'|'sufficiency_contested'|'new_authorisation_pending_validation';
 export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:ReadonlyMap<string,{sufficiency:string;conditions:readonly string[]}>}|undefined,d:KnowledgeDimension181,measure:string|null):
  {ok:true}|{ok:false;reason:AuthorisationRefusal}{
  if(d.valueKind==='raw_quantity_only')return {ok:false,reason:'raw_quantity_not_a_score'};
@@ -234,6 +236,18 @@ export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:Read
  if(m.sufficiency==='informs_only')return {ok:false,reason:'sufficiency_only_informs'};
  if(m.sufficiency!=='established')return {ok:false,reason:'sufficiency_not_established'};
  if(!m.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_met'};
+ return {ok:true};
+}
+/** S79 (owner release-safety review): the rule that decides in production. ra.2's safeguards apply in full, but ra.2 may
+ * only RESTRICT: a pair ra.1 refused (in S78's census, two pairs refused only because ra.1 pooled other measurements'
+ * conditions) is withheld until its sufficiency and its behaviour with real signed catalogs are specifically
+ * validated. The pairs so validated would be listed here, each with its validation record; none is yet. ra.1's own
+ * acceptance is never enough. */
+export const VALIDATED_NEW_AUTHORISATIONS:readonly {need:string;measure:string;validation:string}[]=[];
+export function outcomeAuthorisedRelease(k:NeedKnowledge269|undefined,d:KnowledgeDimension181,measure:string|null):{ok:true}|{ok:false;reason:AuthorisationRefusal}{
+ const a2=outcomeAuthorisedRa2(k,d,measure);if(!a2.ok)return a2;
+ const a1=outcomeAuthorised270(k,d,measure);
+ if(!a1.ok&&!VALIDATED_NEW_AUTHORISATIONS.some(v=>v.need===k?.need&&v.measure===measure))return {ok:false,reason:'new_authorisation_pending_validation'};
  return {ok:true};
 }
 /** Phase270 (owner brief §4): the policy revisions under which a catalog may be shown as a labelled partial comparison.
@@ -311,8 +325,8 @@ function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:r
   // S78: ra.2 decides; ra.1 is evaluated alongside and recorded (shadow trace), never used for the decision
   const legacy=(opts.rankingAuthorisation??DEFAULT_RANKING_AUTHORISATION)==='ra.1';out.authorisationTrace=[];
   const covered=spans.filter(n=>{const d=dims.get(n.id);if(!d)return false;const ms=dimensionMeasure269(d,mIds);
-   const a1=outcomeAuthorised270(nk.get(n.id),d,ms),a2=outcomeAuthorisedRa2(nk.get(n.id),d,ms);const a=legacy?a1:a2;
-   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:legacy?'ra.1':'ra.2',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason});
+   const a1=outcomeAuthorised270(nk.get(n.id),d,ms),a2=outcomeAuthorisedRa2(nk.get(n.id),d,ms);const a=legacy?a1:outcomeAuthorisedRelease(nk.get(n.id),d,ms);
+   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:legacy?'ra.1':'ra.2-restrict-only',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason,decision:a.ok?'authorised':a.reason});
    if(!a.ok)refused.push(`${n.id}: ${a.reason.replace(/_/g,' ')}`);return a.ok;});
   // Every stated outcome and every factual need must be assessed; otherwise no overall ranking (principle 8).
   const complete=covered.length===spans.length&&out.unresolved.length===0;
@@ -448,13 +462,20 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
  if(decision==='research'||decision==='partial_comparison'||decision==='no_purchase_check'){
   const need=know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)).map(statement).filter((x):x is string=>!!x);
   if(need.length)out.statements.push(`What would answer this: ${need.join('; ')}.`);
-  // S78: what the category research says about these needs and measurements, as labelled caveats (never ranking input)
-  const cav:NonNullable<Advice253['teachingCaveats']>=[];const shown=new Set<string>();
-  for(const k of know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)))for(const c of [k.need,...k.byMeasure.keys()])
-   for(const s of caveatsAbout(store,out.category!,c,1))if(!shown.has(s.rendered)&&cav.length<6){shown.add(s.rendered);cav.push({concept:c,caveat:s.rendered,sourceDocument:s.sourceDocument,line:s.line,type:s.type});}
-  if(cav.length){out.teachingCaveats=cav;out.limitations.push(`From the category research (translated by PEE, not reviewed): ${cav.map(c=>c.caveat.replace(/^Limitation: /,'')).join(' ')}`.slice(0,900));}
+  // S79: research caveats are NOT part of the answer (owner release-safety review): see teachingCaveatsShadow
   for(const k of know)for(const p of k.proxies)if(p.startsWith('attr:')&&!CONTEXT_NEEDS269.has(k.need))out.limitations.push(`Declared ${st(p.slice(5))} is not evidence of ${st(k.need)}: ${plain(k.notes.get(p))}`.slice(0,320));
  }
  return {decision,outcomes,...(partial?{partialComparison:partial}:{}),...(altComparison?{alternativeComparison:altComparison}:{})};
 }
 
+
+/** S79 (owner release-safety review): the research caveats PEE WOULD attach to an answer, for internal evaluation only.
+ * Machine-translated and unreviewed; their scope and applicability conditions are not yet checked against the user's
+ * situation, so they never enter an Advice253 (no field, no statement, no limitation). Callers are evaluation scripts. */
+export function teachingCaveatsShadow(store:KnowledgeStore246,advice:Advice253):{need:string;concept:string;caveat:StoredStatement}[]{
+ if(!advice.category)return [];const needs=(advice.goalAssessment?.outcomes??[]).filter(o=>o.coverage!=='context'&&o.coverage!=='assessed').map(o=>o.need);
+ const out:{need:string;concept:string;caveat:StoredStatement}[]=[];const shown=new Set<string>();
+ for(const k of needKnowledge269(store,advice.category,needs))for(const c of [k.need,...k.byMeasure.keys()])
+  for(const st of caveatsAbout(store,advice.category,c,1))if(!shown.has(st.rendered)){shown.add(st.rendered);out.push({need:k.need,concept:c,caveat:st});}
+ return out;
+}
