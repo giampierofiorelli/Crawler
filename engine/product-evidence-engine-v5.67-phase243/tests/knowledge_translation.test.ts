@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {describeMeasurement} from '../src/knowledge_link.js';
-import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues} from '../src/knowledge_translation.js';
+import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency} from '../src/knowledge_translation.js';
 
 // R3 (owner S73): PEE's translator of teaching documents and its question-driven acquisition of condition axes.
 // Synthetic text written for these tests (T1: wiring, not evidence about the owner documents).
@@ -103,4 +103,27 @@ test('R3 kt-cues.2 questions and document metadata are not knowledge claims', ()
  const st=translateDocument(qk,['Source file: MASTER-RESEARCH.md','Release: 1.2.0 (documentary consolidation)','What do you want to drink most often?','2) "Do you already own a grinder?" when that changes the parts',
   'Particle CADR: the clean air delivery rate for particles.'].join('\n\n'),{source:'d'}).statements;
  assert.equal(st.length,1);assert.equal(st[0].type,'definition');assert.match(st[0].quote,/^Particle CADR/);
+});
+
+test('R3 cycle 2: a not_sufficient statement makes a taught measurement inform an outcome only, with its quote and scope', ()=>{
+ const teach={measurements:[
+  {concept:concept('empty_run_energy'),outcomes:[{outcome:'energy_per_cooked_meal',relation:'r1'},{outcome:'standby_cost',relation:'r2'}]},
+  {concept:concept('cooking_energy_per_load'),outcomes:[{outcome:'energy_per_cooked_meal',relation:'r3'}]}]};
+ const st=translateDocument(qk,'## Energy\n\nEmpty-run energy does not establish energy per cooked meal when the basket is loaded.',{source:'d'}).statements;
+ const d=deriveSufficiency(st,teach);
+ assert.equal(d.length,1);assert.equal(d[0].relation,'r1');assert.equal(d[0].sufficiency,'informs_only');
+ assert.equal(d[0].evidence[0].line,3);assert.ok(d[0].evidence[0].scope.some(x=>/when the basket is loaded/.test(x)));assert.ok(d[0].evidence[0].scope.includes('Energy'));
+ // the affirmative sentence derives nothing (metamorphic), and silence derives nothing
+ assert.equal(deriveSufficiency(translateDocument(qk,'Empty-run energy establishes energy per cooked meal.',{source:'d'}).statements,teach).length,0);
+ assert.equal(deriveSufficiency([],teach).length,0);
+ // a statement whose rendering failed the self-check is not read
+ assert.equal(deriveSufficiency(st.map(s=>({...s,selfCheck:['negation_lost']})),teach).length,0);
+});
+
+test('R3 cycle 2: identification is the unique best match; a tie or a weak match decides nothing', ()=>{
+ const cs=[{id:'sleep_mode_noise'},{id:'top_speed_noise'},{id:'filter_cost'}];
+ assert.equal(identifyConcept('noise in sleep mode',cs),'sleep_mode_noise');
+ assert.equal(identifyConcept('the noise',cs),null);
+ assert.equal(identifyConcept('annual filter replacement cost',cs),'filter_cost');
+ assert.equal(identifyConcept('mode speed noise',[{id:'sleep_mode_noise'},{id:'top_speed_noise'}]),null,'a tie');
 });

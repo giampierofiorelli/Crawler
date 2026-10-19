@@ -226,3 +226,39 @@ export function withAcquiredAxes(qk:QuantityKnowledge,proposals:readonly AxisPro
  pack.conditionAxes=[...pack.conditionAxes,...proposals.map(p=>({id:p.axis,values:p.values,labelled:true,source:'r3_acquired'}))];
  return load(pack);
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// 5. Consulting translated statements (R3 cycle 2, owner S74): sufficiency of a taught measurement for an outcome.
+//    A teaching relation "M is measured by / bears on O" does not say whether M establishes O. A translated
+//    not_sufficient statement whose subject identifies M and whose object identifies O says that M informs O only.
+//    Identification is by the unique best word match among the category's taught measurements (subject) and outcomes
+//    (object); a tie or a weak match decides nothing. Only statements that pass the render-back self-check are read.
+//    Nothing is derived from silence: without a statement the sufficiency stays unresolved (never "establishes").
+//    Each derivation keeps its quote, provenance and scope (headings and the clause's own conditions): the statement
+//    holds where the document says it holds, and is evidence for the force of a link, never an exclusion of a product.
+export interface DerivedSufficiency {relation:string;measurement:string;outcome:string;sufficiency:'informs_only';
+ evidence:{statement:string;source:string;line:number;quote:string;scope:string[]}[]}
+const contentWords=(s:string)=>[...new Set(normText(s.replace(/_/g,' ')).split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2&&!STOP.has(w)))];
+const stem=(w:string)=>w.slice(0,Math.max(4,Math.min(w.length,6)));
+/** The concept a phrase identifies: the unique best match by the share of the concept's words the phrase contains. */
+export function identifyConcept(phrase:string,candidates:readonly {id:string;aliases?:readonly string[]}[]):string|null{
+ const have=new Set(contentWords(phrase).map(stem));let best:string|null=null,bestScore=0,tie=false;
+ for(const c of candidates){const ws=contentWords(c.id);if(!ws.length)continue;
+  const alias=(c.aliases??[]).some(a=>namedPhrases(phrase,[a]).size>0);
+  const hit=ws.filter(w=>have.has(stem(w))).length;const score=alias?1:hit/ws.length;
+  if(!alias&&(hit<Math.min(2,ws.length)||score<0.5))continue;
+  if(score>bestScore){best=c.id;bestScore=score;tie=false;}else if(score===bestScore)tie=true;}
+ return tie?null:best;
+}
+const SCOPE_CUES=/\b(?:when|if|unless|under|at|for|during|only|except|provided)\b[^,;.]*/gi;
+export function deriveSufficiency(statements:readonly TranslatedStatement[],teaching:{measurements:readonly {concept:TaughtConcept;outcomes:readonly {outcome:string;relation:string}[]}[]}):DerivedSufficiency[]{
+ const ms=teaching.measurements.map(m=>m.concept);const outcomes=[...new Map(teaching.measurements.flatMap(m=>m.outcomes).map(o=>[o.outcome,{id:o.outcome}])).values()];
+ const out=new Map<string,DerivedSufficiency>();
+ for(const s of statements){if(s.type!=='not_sufficient'||s.selfCheck.length||!s.subject||!s.object)continue;
+  const m=identifyConcept(s.subject.text,ms),o=identifyConcept(s.object.text,outcomes);if(!m||!o)continue;
+  const rel=teaching.measurements.find(x=>x.concept.id===m)?.outcomes.find(x=>x.outcome===o);if(!rel)continue;
+  const d=out.get(rel.relation)??{relation:rel.relation,measurement:m,outcome:o,sufficiency:'informs_only' as const,evidence:[]};
+  d.evidence.push({statement:s.id,source:s.provenance.source,line:s.provenance.line,quote:s.quote,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())]});
+  out.set(rel.relation,d);}
+ return [...out.values()].sort((a,b)=>a.relation.localeCompare(b.relation));
+}
