@@ -568,6 +568,22 @@
    "item": "outcomeAuthorised270 treats every 'measured_by' relation as establishing the outcome; source verification of 56 'measured_by' relations against the owner packages: 16 establish, 37 only inform, 3 unclear (evaluation/r1/relation-verification.json). Before ranking is unblocked the authority is graded (owner S68): direct evidence, partial contribution, indirect indicator, insufficient; a conclusion is authorised from the sufficiency of the whole evidence set, its conditions, the independence of its items and the user's need, never from one partial measure alone",
    "resolvedStatus": "open",
    "progress": "R2 (2026-10-19, docs/plans/r2-typed-link-and-evidential-force.md): graded force implemented in shadow (KR program evidence, lk.1: direct, partial, indirect, not verified, conditions not shown; outcome assessment by direct evidence or by every listed contribution). outcomeAuthorised270 unchanged while ranking is blocked"
+  },
+  {
+   "id": "D27",
+   "stage": "evidence_validation",
+   "since": "S81 (docs/plans/s81-knowledge-operational.md)",
+   "item": "The S81 reasoning (kr81.2, link-rules v8) checks every condition the teaching requires, but no reader records most of them: on the S80 pages (spent), of 153 conditions required for 63 linked values, 65 have no quantity-knowledge axis and need concept-level capture that no reader performs, 15 are typed but not stated, 38 typed and shown, 35 identity. The operational test-lead reader (Phase265) records conditions as protocol-specific codes (load_empty, duration_1h, setpoint_c, all_compartments) that the knowledge cannot consult, so the store rows cannot even be identified as empty-run or cooking-task energy (no load axis).",
+   "resolvedStatus": "open",
+   "progress": "S81: soundness fixed (a requirement PEE cannot check is no longer treated as met); capture not implemented"
+  },
+  {
+   "id": "D28",
+   "stage": "authorised_ranking",
+   "since": "S81",
+   "item": "ra.2 checks the conditions a measurement requires against KnowledgeDimension181.conditionsMet, a list the catalog itself declares; neither compileCatalog268 nor any reader derives it from the records of the original tests (which carry limitation codes, not condition states). The authorisation trusts a label instead of deriving what it permits (Phase265 lesson). kr81 can derive condition states from records, but catalogs do not carry them.",
+   "resolvedStatus": "open",
+   "progress": "S81: reported, not changed (shadow mechanism only; ranking rules are owner decisions)"
   }
  ],
  "authenticValidationRequirement": {

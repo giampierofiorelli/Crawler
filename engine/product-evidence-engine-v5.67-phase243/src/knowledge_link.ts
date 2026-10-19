@@ -268,8 +268,9 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
 // =====================================================================================================================
 // S81 (owner brief 2026-10-19, "make scientific knowledge operational"). The S81 trace and battery
 // (evaluation/s81) found that the acquired teaching reached the reasoning only in part:
-//  - requires_condition relations were checked only when the condition named a quantity-knowledge axis (21 of 79);
-//    every other requirement was treated as met: a conclusion from an absence over an incomplete record;
+//  - requires_condition relations were checked only when the condition named a quantity-knowledge axis (23 of 79);
+//    every other requirement (56 of 79 in the store) was treated as met: a conclusion from an absence over an
+//    incomplete record;
 //  - pairwise comparability (QK program `compare`) never consulted the teaching's requirements;
 //  - the 49 not_sufficient_for relations from DECLARED attributes (capacity, filter class, peak-brightness claims)
 //    were not available to any inference;
