@@ -38,13 +38,22 @@ let S=existsSync(statePath)?JSON.parse(readFileSync(statePath,'utf8')):null;
 const save=()=>writeFileSync(statePath,JSON.stringify(S,null,1));
 const POLITENESS_MS=4000;
 // Phase268: an owner budget may raise (never lower) the per-host delay and cap the number of distinct hosts.
-const politenessMs=()=>Math.max(POLITENESS_MS,Number(S?.budget?.politenessMs??0));
+// S87a: a host's delay is at least the policy's, its robots Crawl-delay (for this agent or *), and it doubles after a server
+// error or timeout (capped at 120 s): adaptive, per host, never shortened below the policy
+const politenessMs=(host)=>{const base=Math.max(POLITENESS_MS,Number(S?.budget?.politenessMs??0));if(!host)return base;
+ const cd=S?.robots?.[host]?.crawlDelayMs??0;const back=S?.hosts?.[host]?.backoffMs??0;return Math.min(120000,Math.max(base,cd,back));};
+function crawlDelayMs(body){if(!body)return 0;let applies=false,ms=0;
+ for(const raw of String(body).split(/\r?\n/)){const line=raw.replace(/#.*/,'').trim();if(!line)continue;const [k,...v]=line.split(':');const key=k.trim().toLowerCase(),val=v.join(':').trim();
+  if(key==='user-agent'){applies=val==='*'||RESEARCH_AGENT.toLowerCase().includes(val.toLowerCase());continue;}
+  if(applies&&key==='crawl-delay'){const n=Number(val);if(Number.isFinite(n)&&n>0)ms=Math.max(ms,Math.min(120,n)*1000);}}
+ return ms;}
 
 // S85 (owner: the policy must really be enforced before any further live acquisition). The policy file is read through
 // the protected reader (regular file outside any Git tree, owned by this user, not group/other-writable), validated, and
 // its digest kept; every request re-reads it and stops if it is missing, changed or expired, or if this wave plus the
 // requests earlier waves recorded under the same policy id would exceed the policy. Without a policy, no request is made.
 const policyDigest=p=>{try{return sha(readFileSync(p));}catch{return null;}};
+const PRIOR_RECENT=[];
 function priorSpentFor(policyId,self){
  const roots=[join(homedir(),'.local/share/product-evidence-engine/private-eval'),process.env.PEE_PRIVATE_EVAL_DIR,'/home/user/pee-knowledge/private-eval'].filter(Boolean);
  let n=0;const seen=new Set();
@@ -52,7 +61,9 @@ function priorSpentFor(policyId,self){
   for(const e of es){const f=join(d,e.name);if(e.isDirectory()){walk(f);continue;}if(!e.name.endsWith('.json')||resolve(f)===self)continue;
    try{if(statSync(f).size>50_000_000)continue;const t=readFileSync(f,'utf8');if(!t.includes(policyId)||!t.includes('pee246.live-wave.v1'))continue;
     const j=JSON.parse(t);const k=j.startedAt+'|'+(j.requests?.length??0);
-    if(j.schema==='pee246.live-wave.v1'&&j.policy?.policyId===policyId&&!seen.has(k)){seen.add(k);n+=j.requests?.length??0;}}catch{}}};
+    if(j.schema==='pee246.live-wave.v1'&&j.policy?.policyId===policyId&&!seen.has(k)){seen.add(k);n+=j.requests?.length??0;
+     // S87a: a standing policy counts rolling windows, so earlier requests travel with their time and host
+     for(const q of j.requests??[])PRIOR_RECENT.push({host:q.host,at:q.at});}}catch{}}};
  for(const r of roots)walk(r);return n;
 }
 if(cmd==='init'){
@@ -91,7 +102,7 @@ function budgetBlock(host){
  return null;
 }
 async function polite(host){
- const last=S.hosts[host]?.lastAt?Date.parse(S.hosts[host].lastAt):0;const d=politenessMs()-(Date.now()-last);
+ const last=S.hosts[host]?.lastAt?Date.parse(S.hosts[host].lastAt):0;const d=politenessMs(host)-(Date.now()-last);
  if(d>0)await new Promise(r=>setTimeout(r,d));
 }
 /** Same-site redirect policy: https only, same host or its www./bare twin, at most 3 hops. Each hop is a
@@ -116,7 +127,7 @@ async function requestFollowing(url,purpose,maxBytes=PAGE_MAX_BYTES){
 async function request(url,purpose,maxBytes=PAGE_MAX_BYTES){
  const host=new URL(url).host;
  const block=waveRequestGate257({policy:S.policy??null,policyDigestAtInit:S.policyDigest??null,policyDigestNow:S.policyPath?policyDigest(S.policyPath):null,
-  priorSpent:PRIOR_SPENT,requests:S.requests,host,now:new Date()})??budgetBlock(host);
+  priorSpent:PRIOR_SPENT,requests:S.requests,host,now:new Date(),priorRecent:PRIOR_RECENT})??budgetBlock(host);
  if(block){S.stopReasons.push({at:now(),url,reason:block});save();return {blocked:block};}
  await polite(host);
  const t0=Date.now();let r,err=null;
@@ -133,6 +144,8 @@ async function request(url,purpose,maxBytes=PAGE_MAX_BYTES){
  if(r?.retryAfter){h.retryAfter=r.retryAfter;const sec=/^\d+$/.test(r.retryAfter)?Number(r.retryAfter)*1000:Date.parse(r.retryAfter)-Date.now();
   h.retryAfterUntil=new Date(Date.now()+(Number.isFinite(sec)&&sec>0?sec:3600_000)).toISOString();S.stopReasons.push({at:rec.at,url,reason:'retry_after:'+r.retryAfter});}
  if(h.errors>=3&&!h.suspended){h.suspended='repeated_errors';S.stopReasons.push({at:rec.at,url,reason:'host_suspended_after_repeated_errors'});}
+ // S87a: adaptive back-off after a server error or a transport failure; reset by a success
+ if((r&&r.status>=500)||(!r&&!redirect))h.backoffMs=Math.min(120000,Math.max(10000,(h.backoffMs??0)*2));else if(r&&r.status<300)h.backoffMs=0;
  save();return {r,rec};
 }
 async function robotsFor(host){
@@ -142,7 +155,8 @@ async function robotsFor(host){
  // RFC 9309 2.3.1.2: robots.txt redirects may be followed; only a same-site chain ending at /robots.txt is accepted here.
  const endedAtRobots=x.redirects?.length&&new URL(x.finalUrl).pathname==='/robots.txt'&&sameSite(new URL(x.finalUrl).host,host);
  S.robots[host]={status:x.r?.status??null,finalUrl:endedAtRobots&&x.r?`https://${host}/robots.txt`:(x.r?.finalUrl??null),contentType:x.r?.contentType??null,
-  fetchedAt:x.rec?.at??now(),body:x.r?x.r.body:null,error:x.rec?.error??x.blocked??null,redirects:x.redirects??[]};save();
+  fetchedAt:x.rec?.at??now(),body:x.r?x.r.body:null,error:x.rec?.error??x.blocked??null,redirects:x.redirects??[],
+  crawlDelayMs:x.r&&x.r.status===200?crawlDelayMs(x.r.body):0};save();
  return S.robots[host];
 }
 async function allowed(url){
@@ -218,6 +232,13 @@ switch(cmd){
    const row={tag,url,finalUrl:x.finalUrl,redirects:x.redirects,role:F.role,category:F.category??null,sourceType:F['source-type']??'unknown',outcome:ok?'fetched':'http_'+(x.r?.status??'error'),
     httpStatus:x.r?.status??null,contentType:x.r?.contentType??null,bytes:x.rec.bytes,ms:x.rec.ms,fetchedAt:x.rec.at,sha256:x.r?sha(x.r.rawBytes):null};
    if(ok)writeFileSync(join(rawDir,tag+'.html'),x.r.rawBytes);
+   // S87a: the private page archive (content-addressed, outside any repository), only without a machine-readable reservation
+   if(ok&&S.policy?.pageArchive?.enabled){const {detectReservations249}=await import('../dist/src/phase249_retention_policy.js');
+    const h=new URL(x.finalUrl??url).host;const rb=S.robots[h]?.status===200?S.robots[h].body??null:null;const rs=detectReservations249(rb,Buffer.from(x.r.rawBytes).toString('utf8'));
+    const reserved=rs.contentSignalAiInput==='no'||rs.tdmReservation||rs.noaiMeta;
+    if(reserved)row.archive='withheld_reservation';else{const A=join(homedir(),'.local/share/product-evidence-engine/archive/pages');mkdirSync(A,{recursive:true});
+     const f=join(A,row.sha256+'.html');if(!existsSync(f))writeFileSync(f,x.r.rawBytes);
+     writeFileSync(join(A,'index.jsonl'),JSON.stringify({sha256:row.sha256,url:row.finalUrl??url,fetchedAt:row.fetchedAt,policyId:S.policy.policyId,reservations:rs})+'\n',{flag:'a'});row.archive='archived';}}
    S.pages.push(row);save();console.log(tag,row.outcome,row.bytes,row.ms+'ms',row.sha256?.slice(0,12));
   }
   break;}

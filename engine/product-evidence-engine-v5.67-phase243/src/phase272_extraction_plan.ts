@@ -145,12 +145,15 @@ export const dimensionOfUnit272=(unit:string)=>UNIT_LEXICON272.find(u=>u.unit===
 
 /** Shared AFTER-reading interpretation (every arm): the taught measurement a value most plausibly reports, from its unit's
  * dimension and the measurement's distinctive terms in the value's own text. Null: no taught measurement fits. */
-export function linkToMeasure272(plan:ExtractionPlan272,text:string,unit:string):{measureId:string;outcomes:string[]}|null{
+export function linkToMeasure272(plan:ExtractionPlan272,text:string,unit:string,opts:{outcomeless?:boolean;tieAbstains?:boolean}={}):{measureId:string;outcomes:string[]}|null{
  const d=dimensionOfUnit272(canonicalUnit272(unit)??unit);if(!d)return null;const ws=stems(words(text));const low=text.toLowerCase();
  let best:{m:PlanMeasurement272;s:number}|null=null;
- for(const m of plan.measurements){if(!m.dimensions.includes(d)||!m.outcomes.length)continue;
+ for(const m of plan.measurements){if(!m.dimensions.includes(d)||(!m.outcomes.length&&!opts.outcomeless))continue;
   const s=m.terms.filter(t=>ws.has(stem(t))||low.includes(t)).length+(DIMENSION_WORDS272[d].some(w=>ws.has(stem(w)))?1:0);
   if(s>0&&(!best||s>best.s||(s===best.s&&m.id<best.m.id)))best={m,s};}
+ // S87a (opt-in): equal word evidence for two measurements chooses neither (the id's alphabetical order is not evidence)
+ if(best&&opts.tieAbstains){const b=best;const tied=plan.measurements.filter(m=>m.id!==b.m.id&&m.dimensions.includes(d)&&(m.outcomes.length||opts.outcomeless)&&
+  m.terms.filter(t=>ws.has(stem(t))||low.includes(t)).length+(DIMENSION_WORDS272[d].some(w=>ws.has(stem(w)))?1:0)===b.s);if(tied.length)return null;}
  return best?{measureId:best.m.id,outcomes:best.m.outcomes}:null;
 }
 /** Shared AFTER-reading interpretation of a qualitative clause: the taught outcome whose terms or phrases it uses. */
@@ -215,7 +218,17 @@ export interface TypedLink272 {measureId:string|null;outcomes:string[];candidate
 /** Link a typed value to the taught measurement it reports. A value whose metric the knowledge declares not equivalent to
  * a measurement's metric (fan airflow vs CADR) never links to it; a value named by a taught proxy (attr:rated airflow) is
  * reported as a proxy for that outcome; an unresolved kind links only when every candidate kind leads to one measurement. */
-export function linkTypedToMeasure272(plan:ExtractionPlan272,measures:readonly TypedMeasure272[],q:TypedQuantity,text:string,qk:QuantityKnowledge):TypedLink272{
+/** S87a options (OFF by default; the readers keep the earlier behaviour):
+ *  - outcomeless: a taught measurement with no taught outcome is still a measurement; a value reporting it links to it
+ *    (with no outcome) instead of being forced onto a sibling that has one;
+ *  - scale: a measurement taught "per N units" (N > 1: "kWh per 100 eco cycles") is reported only by a value whose words
+ *    state the same N; a per-cycle value never links to a per-100-cycles measurement;
+ *  - tieAbstains: when the words support two measurements equally, the link abstains (earlier: alphabetical order chose). */
+export interface LinkOptions272 {outcomeless?:boolean;scale?:boolean;tieAbstains?:boolean}
+/** "per 100 eco cycles" in a measurement's name: the scale N (> 1) and its unit words; null when the name has none. */
+export function measureScale272(id:string):{n:number;of:string}|null{const m=/(?:^|_)per_(\d+)_([a-z_]+)$/.exec(id);const n=m?Number(m[1]):0;return m&&n>1?{n,of:m[2]!.replace(/_/g,' ')}:null;}
+export function linkTypedToMeasure272(plan:ExtractionPlan272,measures:readonly TypedMeasure272[],q:TypedQuantity,text:string,qk:QuantityKnowledge,opts:LinkOptions272={}):TypedLink272{
+ const scaleOk=(m:TypedMeasure272)=>{if(!opts.scale)return true;const sc=measureScale272(m.id);return !sc||new RegExp(`\\bper\\s+${sc.n}\\b|\\b${sc.n}\\s+(?:\\w+\\s+)?(?:cycles?|uses?|runs?|loads?|washes?|hours?|days?|years?)\\b`,'i').test(text);};
  const proxyFor=[...new Set(plan.proxies.filter(p=>hasPhrase(text,p.ref.slice(5).replace(/_/g,' '))).map(p=>p.outcome).filter(Boolean))].sort();
  const kinds=q.kind.id?[q.kind.id]:q.kind.candidates;const metric=q.metric.id;
  const blocked=new Set(metric?qk.metrics.get(metric)!.notEquivalentTo??[]:[]);
@@ -223,14 +236,14 @@ export function linkTypedToMeasure272(plan:ExtractionPlan272,measures:readonly T
  const dimOf=(ks:string[])=>ks.map(k=>qk.kinds.get(k)!.dim);
  const ratioFits=(m:TypedMeasure272)=>{if(!m.ratio)return true;const u=q.unit.dim;const eq=(x:Record<string,number|undefined>,y:Record<string,number|undefined>)=>[...new Set([...Object.keys(x),...Object.keys(y)])].every(k=>(x[k]??0)===(y[k]??0));
   return dimOf(m.ratio.numerator).some(n=>dimOf(m.ratio!.denominator).some(d=>{const r:Record<string,number>={},inv:Record<string,number>={};for(const k of new Set([...Object.keys(n),...Object.keys(d)])){r[k]=(n[k]??0)-(d[k]??0);inv[k]=-r[k];}return eq(u,r)||eq(u,inv);}));};
- const fits=measures.filter(m=>m.outcomes.length&&ratioFits(m)&&(m.ratio?true:!m.metrics.some(x=>blocked.has(x))&&(
+ const fits=measures.filter(m=>(m.outcomes.length||opts.outcomeless)&&scaleOk(m)&&ratioFits(m)&&(m.ratio?true:!m.metrics.some(x=>blocked.has(x))&&(
   metric&&m.metrics.length?(m.metrics.includes(metric)&&(!m.kinds.length||m.kinds.some(k=>kinds.includes(k))))
         :(m.kinds.some(k=>kinds.includes(k))||(!m.kinds.length&&m.metrics.some(x=>kinds.includes(qk.metrics.get(x)!.kind))&&!m.metrics.some(x=>qk.metrics.get(x)!.notEquivalentTo?.length))))));
  if(metric&&blocked.size&&!fits.length)return {measureId:null,outcomes:[],candidates:[],proxyFor,basis:`${metric} is not equivalent to ${[...blocked].join(', ')}: no taught measurement reports it`};
  if(!fits.length)return {measureId:null,outcomes:[],candidates:[],proxyFor,basis:'no taught measurement measures this quantity'};
  const restricted={...plan,measurements:plan.measurements.filter(m=>fits.some(f=>f.id===m.id))};
  const unitCanon=canonicalUnit272(q.unit.surface)??q.unit.surface;
- const byWords=linkToMeasure272(restricted,text,unitCanon);
+ const byWords=linkToMeasure272(restricted,text,unitCanon,{outcomeless:opts.outcomeless,tieAbstains:opts.tieAbstains});
  const ids=fits.map(f=>f.id);
  // words never settle what the knowledge leaves open: an unresolved kind with candidates of different kinds abstains
  if(!q.kind.id&&new Set(fits.map(f=>f.kinds.filter(k=>kinds.includes(k)).join('+'))).size>1)return {measureId:null,outcomes:[],candidates:ids,proxyFor,basis:`the value's kind is unresolved (${kinds.join(' or ')}) and the candidates measure different kinds`};

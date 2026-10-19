@@ -744,8 +744,10 @@ export function sameUnit(qk:QuantityKnowledge,a:string,b:string):boolean{
 }
 /** S86: the full typed quantity of a STORED observation (value, unit key, and the measurand its reader recorded, when that is
  * a metric id). The one place a consumer of stored rows types them (was re-parsed ad hoc by each consumer). */
-export function typeStoredQuantity(qk:QuantityKnowledge,r:{value:number|null;unit:string;dimension?:string|null}):TypedQuantity|null{
+export function typeStoredQuantity(qk:QuantityKnowledge,r:{value:number|null;unit:string;dimension?:string|null},
+ /** S87a (optional): the words a reading attached to the value (its clause or row label); the store keeps none */
+ labels:readonly string[]=[]):TypedQuantity|null{
  const p=parseUnit(qk,String(r.unit??'').trim());if(!p)return null;
  const m=r.dimension?qk.metrics.get(r.dimension):undefined;
- return typeQuantity(qk,{surface:`${r.value??''} ${r.unit}`.trim(),value:r.value,unit:p},{labels:m?[(m.terms??[])[0]??m.label]:[]});
+ return typeQuantity(qk,{surface:`${r.value??''} ${r.unit}`.trim(),value:r.value,unit:p},{labels:[...(m?[(m.terms??[])[0]??m.label]:[]),...labels.filter(Boolean)]});
 }

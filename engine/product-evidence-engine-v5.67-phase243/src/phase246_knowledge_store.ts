@@ -417,6 +417,12 @@ export class KnowledgeStore246 {
   }
   return {suspended:false};
  }
+ /** S87a: hosts whose access suspension is in force at asOf. A past restriction or an expired suspension is history, not an
+  * exclusion (discovery used to drop any host ever restricted, so one temporary 429 removed a source for good). */
+ activeSuspensions246(asOf=new Date().toISOString()):Set<string>{
+  return new Set((this.db.prepare('SELECT host,suspended_until FROM host_access WHERE suspended_until IS NOT NULL').all() as {host:string;suspended_until:string}[])
+   .filter(r=>Date.parse(r.suspended_until)>Date.parse(asOf)).map(r=>r.host));
+ }
  hostSuspended246(host:string,asOf=new Date().toISOString()):boolean{
   const r=this.db.prepare('SELECT suspended_until FROM host_access WHERE host=?').get(host) as {suspended_until:string|null}|undefined;
   return !!r?.suspended_until&&Date.parse(r.suspended_until)>Date.parse(asOf);

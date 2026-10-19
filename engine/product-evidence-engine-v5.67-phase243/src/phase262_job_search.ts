@@ -136,7 +136,8 @@ export async function searchForTarget262(a:{target:DiscoveryTarget261;plan:JobSe
   // A publisher is recognised only through a canonical source row for that host, not because a URL once mentioned it.
   for(const r of a.store.db.prepare('SELECT source_id,host,source_type,source_type_basis FROM sources ORDER BY source_id').all() as {source_id:string;host:string;source_type:string;source_type_basis:string}[])
    if(!publishers.has(r.host))publishers.set(r.host,r);
-  for(const r of a.store.db.prepare('SELECT host FROM host_access WHERE restricted>0 OR suspended_until IS NOT NULL').all() as {host:string}[])restricted.add(r.host);
+  // S87a: only a suspension in force restricts discovery (a past restriction or an expired suspension is not an exclusion)
+  for(const h of a.store.activeSuspensions246(undefined))restricted.add(h);
  }
  for(const lead of run.candidates){
   const url=lead.url;let host='';try{host=new URL(url).hostname;}catch{continue;}

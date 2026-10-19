@@ -192,8 +192,16 @@ export async function executeUnderPolicy257(args:{plan:ResearchPlan182;policyPat
 export interface WavePolicyBudget257 {maxRequests:number;maxPerHost:number;maxHosts?:number;politenessMs:number;maxSeconds:number;maxBytes:number}
 export interface WavePolicy257 {policyId:string;revision:number;expiresAt:string;budget:WavePolicyBudget257;
  /** requests the owner records as already spent under this policy (optional; the larger of this and the receipts counts) */
- spent?:number}
+ spent?:number;
+ /** S87a (owner decision 2026-10-19, internal research freedom): 'standing' replaces per-experiment totals with rolling 24-hour
+  * rates that protect the sources' stability (per host and overall); spending under the policy no longer accumulates
+  * towards a fixed ceiling, and expiresAt is the owner's review date. 'experiment' (default) keeps the earlier semantics. */
+ kind?:'experiment'|'standing';rates?:{perHostPerDay:number;perDay:number};
+ /** S87a: private, content-addressed page archive for reproducibility and re-reading; a page is archived only when no
+  * machine-readable reservation (Content-Signal ai-input=no, TDM reservation, noai) applies. Never in a public repository. */
+ pageArchive?:{enabled:boolean;honourReservations:true}}
 const POSITIVE=(x:unknown)=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
+const STRICT_POSITIVE=(x:unknown)=>typeof x==='number'&&Number.isFinite(x)&&x>0;
 /** End of the expiry day when the policy gives a date only (owner policies say "expires 2026-10-24"). */
 export function wavePolicyExpiry257(p:{expiresAt:string}):number{
  return /^\d{4}-\d{2}-\d{2}$/.test(p.expiresAt)?Date.parse(p.expiresAt+'T23:59:59.999Z'):Date.parse(p.expiresAt);
@@ -208,7 +216,14 @@ export function validateWavePolicy257(raw:unknown,now:Date=new Date()):WavePolic
  for(const k of ['maxRequests','maxPerHost','politenessMs','maxSeconds','maxBytes'])if(!b||!POSITIVE(b[k]))throw Error('wave_policy_invalid: budget.'+k);
  if(b!.maxHosts!==undefined&&!POSITIVE(b!.maxHosts))throw Error('wave_policy_invalid: budget.maxHosts');
  if(p.spent!==undefined&&!POSITIVE(p.spent))throw Error('wave_policy_invalid: spent');
- return {policyId:p.policyId,revision:Number(p.revision??0),expiresAt:p.expiresAt,budget:b as unknown as WavePolicyBudget257,...(p.spent!==undefined?{spent:Number(p.spent)}:{})};
+ if(p.kind!==undefined&&p.kind!=='experiment'&&p.kind!=='standing')throw Error('wave_policy_invalid: kind');
+ const r=p.rates as Record<string,unknown>|undefined;
+ if(p.kind==='standing'){if(!r||!STRICT_POSITIVE(r.perHostPerDay)||!STRICT_POSITIVE(r.perDay))throw Error('wave_policy_invalid: rates (a standing policy needs perHostPerDay and perDay)');
+  // site stability: a standing policy may not shorten the per-host delay below the engine's own floor
+  if(Number(b!.politenessMs)<4000)throw Error('wave_policy_invalid: budget.politenessMs below 4000 ms');}
+ return {policyId:p.policyId,revision:Number(p.revision??0),expiresAt:p.expiresAt,budget:b as unknown as WavePolicyBudget257,...(p.spent!==undefined?{spent:Number(p.spent)}:{}),
+  ...(p.kind==='standing'?{kind:'standing' as const,rates:{perHostPerDay:Number(r!.perHostPerDay),perDay:Number(r!.perDay)}}:{}),
+  ...(p.pageArchive&&typeof p.pageArchive==='object'?(()=>{const a=p.pageArchive as Record<string,unknown>;if(typeof a.enabled!=='boolean'||a.honourReservations!==true)throw Error('wave_policy_invalid: pageArchive (enabled boolean, honourReservations true)');return {pageArchive:{enabled:a.enabled,honourReservations:true as const}};})():{})};
 }
 /** The wave's own budget must stay inside the policy: every limit at most the policy's, the delay at least the policy's. */
 export function waveBudgetWithinPolicy257(budget:Record<string,unknown>,p:WavePolicy257):string[]{
@@ -221,11 +236,20 @@ export function waveBudgetWithinPolicy257(budget:Record<string,unknown>,p:WavePo
 }
 /** Asked before every request. null: the policy permits it; otherwise the reason it does not (the wave stops on it). */
 export function waveRequestGate257(a:{policy:WavePolicy257|null;policyDigestAtInit:string|null;policyDigestNow:string|null;
- priorSpent:number;requests:readonly {host:string}[];host:string;now:Date}):string|null{
+ priorSpent:number;requests:readonly {host:string;at?:string}[];host:string;now:Date;
+ /** S87a (standing policies): requests earlier waves recorded under the same policy, with their time and host */
+ priorRecent?:readonly {host:string;at:string}[]}):string|null{
  if(!a.policy||!a.policyDigestAtInit)return 'no_owner_policy';
  if(!a.policyDigestNow)return 'owner_policy_missing';
  if(a.policyDigestNow!==a.policyDigestAtInit)return 'owner_policy_changed';
  if(wavePolicyExpiry257(a.policy)<a.now.getTime())return 'owner_policy_expired';
+ if(a.policy.kind==='standing'&&a.policy.rates){
+  // rolling 24-hour windows over this wave and earlier waves under the same policy (a request without a time counts as recent)
+  const since=a.now.getTime()-86_400_000;const recent=[...(a.priorRecent??[]),...a.requests].filter(r=>!r.at||Date.parse(r.at)>=since);
+  const bare=(h:string)=>h.replace(/^www\./,'');
+  if(recent.length>=a.policy.rates.perDay)return 'owner_policy_daily_rate_reached';
+  if(recent.filter(r=>bare(r.host)===bare(a.host)).length>=a.policy.rates.perHostPerDay)return 'owner_policy_host_daily_rate_reached';
+  return null;}
  const spent=Math.max(a.priorSpent,a.policy.spent??0);
  if(spent+a.requests.length>=a.policy.budget.maxRequests)return 'owner_policy_request_budget_exhausted';
  if(a.requests.filter(r=>r.host===a.host).length>=a.policy.budget.maxPerHost)return 'owner_policy_per_host_budget_exhausted';

@@ -183,7 +183,8 @@ export async function discoverForTarget261(a:{target:DiscoveryTarget261;registry
  const observed=new Set<string>(),restricted=new Set<string>(),known=new Set<string>();
  if(a.store){
   for(const r of a.store.db.prepare('SELECT url FROM revisions').all() as {url:string}[]){try{observed.add(normalizeDiscoveryUrl192(r.url));}catch{observed.add(r.url);}}
-  for(const r of a.store.db.prepare('SELECT host FROM host_access WHERE restricted>0 OR suspended_until IS NOT NULL').all() as {host:string}[])restricted.add(r.host);
+  // S87a: only a suspension in force restricts discovery (a past restriction or an expired suspension is not an exclusion)
+  for(const h of a.store.activeSuspensions246(a.asOf))restricted.add(h);
   for(const r of a.store.db.prepare('SELECT host FROM sources').all() as {host:string}[])known.add(r.host);
  }
  let fixtureCalls=0;

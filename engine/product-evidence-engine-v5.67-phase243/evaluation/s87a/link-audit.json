@@ -1,0 +1,12 @@
+{
+ "schema": "pee.s87a.link-audit.v1",
+ "material": "S80 store copy with S86c configuration D readings (84 stored test rows, 12 spent pages). Development and diagnosis only; never held-out.",
+ "auditor": "Claude, manual reading of each linked row's reading window against the taught measurement name (private detail in pee-knowledge private-eval/s87a)",
+ "before": {"build": "assessment without the S87a linking corrections (assessment-s80-D.json, labels variant)", "linked": 54, "ambiguous": 1, "notLinked": 29, "linksJudgedWrong": 9,
+  "wrongFamilies": {"per_cycle_value_linked_to_per_100_cycles_measure": 6, "programme_not_stated_linked_to_eco_programme_measure": 2, "empty_run_energy_linked_to_cooking_task_energy_because_empty_run_has_no_taught_outcome": 1}},
+ "after": {"build": "assessment with linkFixes (assessment-s80-D-fix1.json, labels variant)", "linked": 34, "ambiguous": 25, "notLinked": 25, "linksJudgedWrong": 0,
+  "newlyCorrect": {"empty_run_energy_to_energy_empty_run": 1},
+  "movedToAmbiguous": {"bare_table_values_without_row_words": 10, "word_tie_between_two_taught_measures": 10, "cadr_values_now_typed_but_tied_between_cadr_measures": 4}},
+ "phase268Validated": 1,
+ "note": "Fewer links, none judged wrong: the corrections remove unjustified links and abstain where the words are tied or absent. Coverage is limited by what the reading passes on (bare table cells lose their row label) and by teaching that encodes a programme or scale inside a measurement name."
+}
