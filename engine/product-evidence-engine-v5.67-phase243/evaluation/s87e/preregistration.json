@@ -1,0 +1,66 @@
+{
+ "schema": "pee.s87e.preregistration.v1",
+ "at": "2026-10-19T21:20:55.145Z",
+ "question": "Can PEE reconstruct, from the original page context and general scientific knowledge, the observation-contract slots that the stored tables leave unknown, without adding category-specific rules and without introducing errors, on publishers not used to develop the method?",
+ "owner": "owner review of S87d (verbatim, owner-review-s87d-2026-10-19.md): experimental, reversible, no migration; measure declarations, quantitative tests, qualitative judgements and comparisons separately; keep explicit, inferred and undetermined apart; technique chosen by Claude among those studied in S87c",
+ "material": {
+  "declarations": {
+   "rows": 2385,
+   "pages": 121,
+   "hosts": 77,
+   "context": "page bytes retained locally for all rows; context recovered by locator245 (label, value, section, table header or caption, nearest headings, surrounding text)",
+   "slots": [
+    "quantityKind (quantity rows)",
+    "generic property",
+    "constraints/conditions in label or context",
+    "basis",
+    "procedure named",
+    "categorical scale (nominal|ordinal|boolean)"
+   ],
+   "reference": "blind annotation by a separate Claude agent of a host-stratified sample (up to 4 quantity + 2 categorical per host), sealed by hash before any reconstruction is run on it",
+   "split": "hosts ordered by sha256(host); development = the first hosts covering at least 20% of the sample; check = all other hosts"
+  },
+  "quantitativeTests": {
+   "rows": 84,
+   "pages": 10,
+   "publishers": [
+    "housefresh.com (68)",
+    "trustedreviews.com (15)",
+    "expertreviews.co.uk (1)"
+   ],
+   "context": "S80 raw pages; block by block_sha256/block_index",
+   "slots": [
+    "property (what was measured)",
+    "quantity kind",
+    "role (measured result vs declared spec vs test condition)",
+    "subject"
+   ],
+   "reference": "S86b blind page annotations (sealed in evaluation/s86b/page-reference-freeze.json), matched by page, value and unit",
+   "split": "development = trustedreviews.com; check = housefresh.com and expertreviews.co.uk",
+   "caveat": "S80 pages were spent by S86c development of the reader; the reconstruction method is new"
+  },
+  "qualitativeJudgements": {
+   "rows": 24,
+   "pages": 4,
+   "note": "small; descriptive only, against Phase269/272 gold where pages match"
+  },
+  "comparisons": {
+   "rows": 87,
+   "pages": 0,
+   "note": "no page bytes retained: reconstruction from documents not testable offline; structural only (S87e step 1 comparison sets)"
+  }
+ },
+ "techniques": {
+  "A": "knowledge typing of the value and its own label (QK typing; S87b structural classifier)",
+  "B": "A + document role filling by evidence rules (same element, table header/caption, section heading, method section, page product)",
+  "C": "B + combination of the available signals as abstaining labelling functions (majority vote with abstention on conflict; WRENCH/Snorkel baseline)"
+ },
+ "selection": "the technique is chosen on development groups only; then frozen (hash) and run once on check groups; first check run committed unchanged",
+ "metrics": "per type and slot: explicit recovered, inferred (with rule), undetermined; precision of produced values against the reference; coverage; errors introduced (a previously unknown slot made wrong); per host or publisher; worst group",
+ "constraints": [
+  "no store write",
+  "no operational change",
+  "no category-specific rules: any vocabulary used must be general (metrology, document structure) or come from knowledge data"
+ ],
+ "stopRule": "at most three reformulations on development data"
+}
