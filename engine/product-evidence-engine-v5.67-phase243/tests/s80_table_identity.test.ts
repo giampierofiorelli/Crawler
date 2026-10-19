@@ -27,3 +27,21 @@ test('S80 table identity (control): a real comparison of named products across t
   <tr><td>Weight</td><td>4.2 kg</td><td>7 kg</td></tr><tr><td>Noise</td><td>35 dB</td><td>41 dB</td></tr></table>`);
  const p=products(html);assert.ok(p.includes('Imaginary Air AX200'),JSON.stringify(p));
 });
+
+// S80: taxonomy and modifier class names are not region roles; real boilerplate blocks are still excluded.
+test('S80 regions: a review article classed "category-reviews" with a "has-share-float" wrapper keeps its spec table',()=>{
+ const html=`<html><head><script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Product',name:'Fictional Washer W1',brand:'Fictional'})}</script></head><body>
+  <h1>Fictional Washer W1 review</h1><article class="post category-reviews tag-dishwashers brands-fictional"><div class="post-content-wrap has-share-float">
+  <table><thead><tr><th></th><th>Fictional Washer W1</th></tr></thead><tbody><tr><th>Water consumption eco</th><td>7.1 litres</td></tr><tr><th>Energy consumption eco</th><td>0.77 kWh</td></tr></tbody></table>
+  </div></article></body></html>`;
+ const x=extractSpecifications245(html,'https://example.test/w1');
+ assert.ok(x.facts.some(f=>f.rawValue==='7.1 litres'),JSON.stringify(x.abstentions));
+});
+test('S80 regions (control): a customer-reviews block and a related-products block are still excluded',()=>{
+ const html=`<html><head><script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'Product',name:'Fictional Washer W1',brand:'Fictional'})}</script></head><body>
+  <h1>Fictional Washer W1</h1><table><tr><th>Width</th><td>60 cm</td></tr><tr><th>Height</th><td>85 cm</td></tr><tr><th>Depth</th><td>58 cm</td></tr></table>
+  <div class="reviews"><table><tr><th>Rating</th><td>4.5 stars</td></tr><tr><th>Noise</th><td>99 dB</td></tr><tr><th>Weight</th><td>99 kg</td></tr></table></div>
+  <section class="is-related-product related"><table><tr><th>Width</th><td>45 cm</td></tr><tr><th>Height</th><td>82 cm</td></tr><tr><th>Depth</th><td>55 cm</td></tr></table></section></body></html>`;
+ const x=extractSpecifications245(html,'https://example.test/w1');
+ assert.ok(x.facts.some(f=>f.rawValue==='60 cm'));assert.ok(!x.facts.some(f=>/99|45 cm/.test(f.rawValue??'')),JSON.stringify(x.facts.map(f=>f.rawValue)));
+});

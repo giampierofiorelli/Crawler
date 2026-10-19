@@ -272,6 +272,9 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  if(out.response!=='out_of_scope'&&out.category)applyRequestCoverage80(out,text,registry);
+ // S80: "the list is unordered" speaks about the shortlist; without one it contradicts an ordered partial comparison
+ // shown in the same answer (S80 first run, judge finding on D1).
+ if(!out.shortlist.length)out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
  return out;
 }
 /** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */

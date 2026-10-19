@@ -74,8 +74,16 @@ const DRAWER_TOKENS=new Set(['modal','popup','popover','drawer','sheet']);
 const SPEC_TOKENS=/^(?:spec|specs|specification|specifications|techspecs|technical|characteristics|productspecs)$/;
 const specDrawer=(n:Node245):boolean=>{let found=false;for(const d of walk245(n)){if(d.kind!=='element')continue;
  if([...tokensOf(d)].some(t=>SPEC_TOKENS.test(t))&&[...walk245(d)].some(x=>x.tag==='dl'||x.tag==='table'||x.tag==='ul')){found=true;break;}}return found;};
+/** S80: taxonomy class names ("category-reviews", "tag-air-purifiers", "brands-samsung", "product_type-dishwashers",
+ * written by blog engines on the post element) say what the content is ABOUT, not that a region is boilerplate. In the
+ * S80 first run "category-reviews" on a review site's <article> excluded the whole review, test-data table included. */
+const TAXONOMY_CLASS=/^(?:category|cat|tag|tags|topic|topics|type|status|format|post|brands?|product[_-]?type|post[_-]?cat|section|channel)[_-]/i;
+/** S80: state and modifier classes ("has-share-float", "with-sidebar", "no-ads"; not "is-", which themes also use for roles such as "is-related-product") describe a property of
+ * the element, not its role: "has-share-float" on the review's content wrapper excluded the content. */
+const MODIFIER_CLASS=/^(?:has|with|without|no|show|hide|enable|enabled|disable|disabled|supports?)[_-]/i;
 const tokensOf=(n:Node245)=>{
- const raw=`${n.attrs.class??''} ${n.attrs.id??''} ${n.attrs['data-testid']??''} ${n.attrs['aria-label']??''}`;
+ const cls=String(n.attrs.class??'').split(/\s+/).filter(c=>c&&!TAXONOMY_CLASS.test(c)&&!MODIFIER_CLASS.test(c)).join(' ');
+ const raw=`${cls} ${n.attrs.id??''} ${n.attrs['data-testid']??''} ${n.attrs['aria-label']??''}`;
  const out=new Set<string>();
  for(const w of raw.split(/[\s_\-:./]+|(?<=[a-z])(?=[A-Z])/)){const t=w.toLowerCase().replace(/\d+/g,'');if(t)out.add(t);}
  // Joined forms ("also-bought", "recently_viewed") are matched too.
@@ -356,7 +364,8 @@ const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative
 
 /** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
  * and re-derived per source revision. Bump on any behavioural change. */
-// spec-extractor-8 (S80): column headers that are settings of one product or sentence-case property labels never name products.
+// spec-extractor-8 (S80): column headers that are settings of one product or sentence-case property labels never name products;
+// taxonomy and modifier class names (category-reviews, has-share-float) are not region roles.
 export const SPEC_EXTRACTOR_VERSION='spec-extractor-8';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
