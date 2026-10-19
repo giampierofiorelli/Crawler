@@ -13,7 +13,7 @@ import json, os, sys, time, resource
 from pathlib import Path
 method, side, out = sys.argv[1], sys.argv[2], sys.argv[3]
 PE = Path(os.environ.get('PEE_PRIVATE_EVAL_DIR', Path.home() / '.local/share/product-evidence-engine/private-eval')) / 'r3/align'
-mentions = json.loads((PE / side / 'in.json').read_text())['mentions']
+mentions = json.loads((PE / side / 'in.json').read_text())['mentions'][:int(os.environ.get('LIMIT', '100000'))]
 import torch
 torch.set_num_threads(4)
 t0 = time.time()
@@ -47,7 +47,7 @@ if method == 'nli':
 else:
     from transformers import AutoTokenizer, AutoModelForCausalLM
     name = 'Qwen/Qwen2.5-1.5B-Instruct' if method == 'llm' else 'Qwen/Qwen2.5-0.5B-Instruct'
-    tok = AutoTokenizer.from_pretrained(name); model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=torch.bfloat16).eval()
+    tok = AutoTokenizer.from_pretrained(name); model = AutoModelForCausalLM.from_pretrained(name, dtype=torch.float32).eval()
     load = time.time() - t0
     opts = ['exact', 'close', 'broader', 'narrower', 'related', 'none']
     first = [tok.encode(' ' + o, add_special_tokens=False)[0] for o in opts]
