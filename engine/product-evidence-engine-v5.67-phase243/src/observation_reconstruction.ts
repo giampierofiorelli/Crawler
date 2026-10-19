@@ -13,6 +13,7 @@
 import {parseUnit,typeQuantity,hasPhrase,type QuantityKnowledge} from './quantity_knowledge.js';
 import {classifyCondition87,measurandBasis87} from './observation_model.js';
 import {SETTING1G} from './table_interpreter1g.js';
+import {observationRole86c} from './phase225_transient_test_probe.js';
 
 export type Technique='A'|'B'|'C';
 export interface DeclarationContext {label:string;rawValue:string;valueJson:Record<string,unknown>|null;unit?:string|null;rowHeader?:string|null;colHeader?:string|null;
@@ -109,4 +110,40 @@ export function reconstructDeclaration(qk:QuantityKnowledge,c:DeclarationContext
    else if(t==='C'&&/^[A-G]\+{0,3}$/.test(val)&&/\b(?:class|rating|grade)\b/i.test(c.label))r.categoricalScale=inf('ordinal','a graded class value','value');
    else r.categoricalScale=inf('nominal','non-graded text value','value');}}
  return r;
+}
+
+// ------------------------------------------------------------------------------------------- reported test values (S87e)
+export interface TestValueContext {value:number;unit:string;block:string;offset:number;
+ /** it1: when the value sits in a table cell, the row and column headers that carry its meaning (document role filling) */
+ rowHeader?:string|null;colHeader?:string|null}
+export interface TestValueReconstruction {role:Reconstructed<'measured_by_publisher'|'declared_spec'|'test_condition'|'other_quantity'>;quantityKind:Reconstructed<string>;
+ basis:Reconstructed<string>;property:Reconstructed<string>;constraints:{dimension:string;value:string}[]}
+const STOP=new Set(['the','a','an','of','and','or','to','in','on','at','for','with','was','were','is','are','be','been','it','its','this','that','which','just','about','around','only','also','than','then','took','used','using','took','recorded','measured','came','in at','under','over','up','my','our','we','i','had','has','have','after','before','so','but','around','roughly','approximately','approx']);
+/** Reconstruct the slots of a value a reader stored as a test measurement, from its own block of the page. */
+export function reconstructTestValue(qk:QuantityKnowledge,c:TestValueContext,t:Technique='C'):TestValueReconstruction{
+ const b=c.block;const at=Math.max(0,Math.min(c.offset,b.length));
+ // the sentence holding the value
+ const s0=Math.max(b.lastIndexOf('. ',at-1)+1,0);const e0=(()=>{const i=b.indexOf('. ',at);return i<0?b.length:i+1;})();const sent=b.slice(s0,e0);const start=at-s0;
+ const numLen=(/^[\d.,]+\s*[^\s,.;)]*/.exec(b.slice(at))?.[0].length)??String(c.value).length;
+ const ks=kindOfUnit(qk,c.unit,sent)??[];let kind=coarse(ks);
+ if(t==='C'){const hits=qk.pack.kinds.filter(k=>[...(k.discriminators??[])].some(w=>w.length>3&&hasPhrase(sent,w)));const lk=hits.length?coarse(hits.map(h=>h.id)):null;if(lk&&kind&&lk!==kind&&ks.length>1)kind=null;}
+ const role86=observationRole86c(sent,start,start+numLen,kind??'unknown');
+ const ROLE:Record<string,TestValueReconstruction['role']['value']>={measured_result:'measured_by_publisher',declared_spec:'declared_spec',certified_or_quoted:'declared_spec',programme_preset:'declared_spec',test_condition:'test_condition',derived:'other_quantity'};
+ const role=ROLE[role86.role]??null;
+ // it1: a value alone in a table cell takes its words from the row and column headers (the header bridge)
+ const hdr=[c.rowHeader,c.colHeader].filter((x):x is string=>!!x&&x.trim()!==b.trim()).join(' ; ');
+ const words4=sent.replace(/[\d.,]+/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(w=>/[a-z]{3,}/i.test(w)&&!parseUnit(qk,w)).length<2&&hdr?`${hdr} ${sent}`:sent;
+ let bs=measurandBasis87(words4,c.unit);
+ if(bs.basis==='none'&&kind==='duration'&&/\b(?:cycle|programme|program|wash|cook|run|to (?:\w+))\b/i.test(words4))bs={basis:'per_task_or_cycle',cue:'duration of one run'};
+ if(bs.basis==='none'&&kind==='energy'&&/\b(?:cycle|programme|program|wash|clean|cook|run|eco|standard|intensive|quick)\b/i.test(words4))bs={basis:'per_task_or_cycle',cue:'energy of one run'};
+ const basis=bs.basis==='none'?null:bs.basis==='per_task_or_cycle'?'per_cycle_or_use':bs.basis==='per_time_period'?'per_year':bs.basis;
+ // the property: content words just before the value in its clause, else the words of the metric the knowledge names
+ const head=sent.slice(0,start).split(/[,;:–—(]|\b(?:and|but|while|whereas)\b/).at(-1)??'';
+ const words=head.toLowerCase().replace(/[^a-z\s-]/g,' ').split(/\s+/).filter(w=>w&&!STOP.has(w)).slice(-4);
+ const tail=sent.slice(start+numLen).toLowerCase().replace(/[^a-z\s-]/g,' ').split(/\s+/).filter(w=>w&&!STOP.has(w)&&!parseUnit(qk,w)).slice(0,3);
+ const hw=hdr?hdr.toLowerCase().replace(/[^a-z\s-]/g,' ').split(/\s+/).filter(w=>w&&!STOP.has(w)).slice(0,5):[];
+ const prop=words.length?words.join(' '):hw.length&&words4!==sent?hw.join(' '):tail.length?tail.join(' '):null;
+ const cons:{dimension:string;value:string}[]=[];for(const q of qualifiers(qk,sent)){const k=classifyCondition87(qk,q,kind);if(!['unclassified','identity','comparison_or_basis'].includes(k.class))cons.push({dimension:k.class==='quantity'?`quantity:${k.kind}`:k.class,value:q});}
+ return {role:role?inf(role,'phase225 observationRole86c: '+role86.reason,'sentence'):und(),quantityKind:kind?inf(kind,`QK unit ${c.unit}`,'value'):und(),
+  basis:basis?inf(basis,`basis cue "${bs.cue}"`,'sentence'):und(),property:prop?inf(prop,'content words next to the value in its clause','sentence'):und(),constraints:cons};
 }

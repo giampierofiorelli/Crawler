@@ -1,0 +1,15 @@
+{
+ "schema": "pee.s87e.freeze-tests.v1",
+ "at": "2026-10-19T21:31:17.626Z",
+ "technique": "C with header bridge",
+ "files": {
+  "src/observation_reconstruction.ts": "2aacaea3acabf74808f39c962e1df2ca254bf0ed6142b5dc5b89d2ca865b0cfd",
+  "scripts/s87e-test-eval.mjs": "19edc2f0377001ee78a3400fa6937e91add24b82a26a18d82c3912c92242ac66"
+ },
+ "note": "src/observation_reconstruction.ts gained reconstructTestValue after the declarations check run; reconstructDeclaration is unchanged since evaluation/s87e/freeze.json (verify with git diff 301a6ec -- src/observation_reconstruction.ts: additions only below the declarations code and one import)",
+ "development": [
+  "it0",
+  "it1: a value alone in a table cell takes its words from the row and column headers"
+ ],
+ "caveat": "check pages (housefresh.com) were used to develop the S86c role control reused here"
+}
