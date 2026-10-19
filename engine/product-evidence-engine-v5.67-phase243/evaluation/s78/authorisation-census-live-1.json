@@ -1,0 +1,115 @@
+{
+ "schema": "pee.s78.authorisation-census.v1",
+ "label": "live-1",
+ "generatedAt": "2026-10-19T12:30:43.778Z",
+ "rules": {
+  "ra1": "outcomeAuthorised270",
+  "ra2": "outcomeAuthorisedRa2 ra.2"
+ },
+ "note": "hypothetical scored dimension per (need, measurement); no product, no catalog; shows what each rule would accept",
+ "categories": {
+  "air_fryers": {
+   "pairs": 8,
+   "ra1_own": {
+    "authorised": 8
+   },
+   "ra2_own": {
+    "sufficiency_only_informs": 2,
+    "authorised": 6
+   },
+   "ra1_pooledOnly": 0,
+   "disagree": 2
+  },
+  "air_purifiers": {
+   "pairs": 11,
+   "ra1_own": {
+    "authorised": 6,
+    "conditions_not_met": 5
+   },
+   "ra2_own": {
+    "authorised": 3,
+    "sufficiency_only_informs": 8
+   },
+   "ra1_pooledOnly": 5,
+   "disagree": 8
+  },
+  "coffee_machines": {
+   "pairs": 2,
+   "ra1_own": {
+    "authorised": 2
+   },
+   "ra2_own": {
+    "sufficiency_only_informs": 2
+   },
+   "ra1_pooledOnly": 0,
+   "disagree": 2
+  },
+  "dehumidifiers": {
+   "pairs": 2,
+   "ra1_own": {
+    "authorised": 2
+   },
+   "ra2_own": {
+    "sufficiency_only_informs": 2
+   },
+   "ra1_pooledOnly": 0,
+   "disagree": 2
+  },
+  "dishwashers": {
+   "pairs": 13,
+   "ra1_own": {
+    "authorised": 5,
+    "conditions_not_met": 8
+   },
+   "ra2_own": {
+    "authorised": 6,
+    "sufficiency_only_informs": 7
+   },
+   "ra1_pooledOnly": 8,
+   "disagree": 9
+  },
+  "televisions": {
+   "pairs": 15,
+   "ra1_own": {
+    "authorised": 10,
+    "conditions_not_met": 5
+   },
+   "ra2_own": {
+    "sufficiency_only_informs": 15
+   },
+   "ra1_pooledOnly": 5,
+   "disagree": 15
+  },
+  "toasters": {
+   "pairs": 0,
+   "ra1_own": {},
+   "ra2_own": {},
+   "ra1_pooledOnly": 0,
+   "disagree": 0
+  },
+  "tumble_dryers": {
+   "pairs": 5,
+   "ra1_own": {
+    "authorised": 5
+   },
+   "ra2_own": {
+    "sufficiency_not_established": 5
+   },
+   "ra1_pooledOnly": 0,
+   "disagree": 5
+  }
+ },
+ "totals": {
+  "pairs": 56,
+  "ra1:authorised": 38,
+  "ra2:sufficiency_only_informs": 36,
+  "changed:authorised->sufficiency_only_informs": 20,
+  "ra2:authorised": 15,
+  "ra1:conditions_not_met": 18,
+  "changed:conditions_not_met->sufficiency_only_informs": 16,
+  "ra1_refused_by_other_measurements_conditions": 18,
+  "changed:conditions_not_met->authorised": 2,
+  "ra2:sufficiency_not_established": 5,
+  "changed:authorised->sufficiency_not_established": 5
+ }
+}

@@ -55,7 +55,7 @@ export const LEXICAL_L252:readonly CategoryLesson250[]=[
 import {registryWithLessons250,applyLessons250,NEED_CRITERIA250} from './phase250_category_lessons.js';
 import type {CategoryEntry248} from './phase248_advisory_journey.js';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
-import {addRelation247} from './phase247_category_relations.js';
+import {addRelation247,assessRelation247} from './phase247_category_relations.js';
 
 export type TeachingBasis252='source_backed_observation'|'method_reference'|'instructor_hypothesis'|'independently_supported_relation';
 export interface TeachingSource252 {id:string;url:string;publisher:string;
@@ -78,6 +78,9 @@ export interface TaughtNeed252 extends NeedLesson250 {
  /** Phase269: measurements that look relevant but do not establish this outcome (e.g. a fixed-duration empty run for
   * energy per cooked meal): stored as 'not_sufficient_for' from the measurement to the need. */
  proxyMeasures?:readonly {measureId:string;statement:Taught252;note:Taught252}[];
+ /** S78: what the cited source says about whether the outcome method ESTABLISHES this outcome or only informs it.
+  * Recorded as a relation assessment; an instructor hypothesis or an uncited statement is never positive evidence. */
+ sufficiency?:{value:'establishes'|'informs_only';statement:Taught252};
 }
 export interface CategoryTeaching252 {
  categoryId:string;version:string;written:string;
@@ -278,8 +281,12 @@ export function applyTeaching252(store:KnowledgeStore246,teachings:readonly Cate
     for(const c of n.conditions??[]){const ci=store.categoryItems246(t.categoryId).find(i=>i.concept?.kind==='measurement'&&i.concept.id===c)?.itemId;
      if(!ci)throw Error('252_unknown_condition:'+c);rel(m,ci,'requires_condition',`${c} is required for comparable results of ${n.measureId??'this method'}`);}
     const before=store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number};
-    addRelation247(store,{categoryId:t.categoryId,from:'item:'+m,to:'item:'+target,kind:'measured_by',support:'hypothesis',qualification:`${n.outcome.basis}: ${n.outcome.text}`.slice(0,300).replace(/[<>\r\n]/g,' ')},at);
-    if((store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number}).c>before.c)relations++;}
+    const rid=addRelation247(store,{categoryId:t.categoryId,from:'item:'+m,to:'item:'+target,kind:'measured_by',support:'hypothesis',qualification:`${n.outcome.basis}: ${n.outcome.text}`.slice(0,300).replace(/[<>\r\n]/g,' ')},at);
+    if((store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number}).c>before.c)relations++;
+    if(n.sufficiency){const x=n.sufficiency.statement;
+     if(x.basis==='instructor_hypothesis'||!x.sources.length)throw Error('252_sufficiency_needs_cited_source:'+n.id);
+     assessRelation247(store,{relationId:rid,value:n.sufficiency.value,basis:'teaching_source_statement',assessor:'teaching:'+t.categoryId+':'+t.version,
+      citation:`${x.sources.join(' ')}: ${x.text}`.slice(0,400).replace(/[<>\r\n]/g,' ')},at);}}
    for(const p of n.proxies??[]){const before=store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number};
     addRelation247(store,{categoryId:t.categoryId,from:'attr:'+p.attribute.toLowerCase(),to:'item:'+target,kind:p.kind,support:'hypothesis',qualification:`${p.note.basis}: ${p.note.text}`.slice(0,300).replace(/[<>\r\n]/g,' ')},at);
     if((store.db.prepare('SELECT count(*) c FROM category_relations').get() as {c:number}).c>before.c)relations++;}

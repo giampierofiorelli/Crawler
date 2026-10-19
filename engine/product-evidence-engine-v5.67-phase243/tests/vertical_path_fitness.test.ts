@@ -7,6 +7,7 @@ import {seedCategoryHypotheses246} from '../src/phase246_category_seeds.js';
 import {CONCEPT_VOCABULARY248} from '../src/phase248_concept_vocabulary.js';
 import {CATEGORY_REGISTRY250} from '../src/phase248_category_registry.js';
 import {adviseFromRequest253,type RankingContext253} from '../src/phase253_request_advice.js';
+import {assessRelation247,relations247} from '../src/phase247_category_relations.js';
 import {canonicalJson180} from '../src/phase180_reviewed_first_answer.js';
 import type {ProductKnowledgeCatalog181} from '../src/phase181_dynamic_knowledge_ranking.js';
 import {testLeadsFromHtml265} from '../src/phase265_test_measurements.js';
@@ -28,7 +29,11 @@ function world(teach=true){
  for(const [id,al] of Object.entries(CONCEPT_VOCABULARY248.coffee_machines))s.addConceptAliases246('coffee_machines',id,al);
  // Phase270: the explicit policy that lets a measurement assess the taste outcome is the category teaching (the package's
  // 'measured_by' relation from a blind sensory assessment to espresso quality, and its comparability condition).
- if(teach){registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[COFFEE_TEACHING269],'2026-10-16T08:30:00.000Z');}
+ // S78: and positive, source-citing evidence that the assessment ESTABLISHES the outcome (a fictional source here).
+ if(teach){registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[COFFEE_TEACHING269],'2026-10-16T08:30:00.000Z');
+  const items=s.categoryItems246('coffee_machines');const ref=(id:string)=>'item:'+items.find(i=>i.concept?.id===id)!.itemId;
+  const rel=relations247(s,'coffee_machines').find(r=>r.kind==='measured_by'&&r.from===ref('espresso_sensory_assessment')&&r.to===ref('espresso_quality'))!;
+  assessRelation247(s,{relationId:rel.relationId,value:'establishes',basis:'teaching_source_statement',assessor:'fictional-source',citation:'fictional panel method page (test fixture)'},'2026-10-16T08:31:00.000Z');}
  const ids:Record<string,string>={};
  for(const [name,mpn,price] of MACHINES){
   const url=`https://maker-${mpn.toLowerCase()}.pee-vertical.test/p/${mpn}`;

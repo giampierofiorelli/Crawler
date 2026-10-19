@@ -47,6 +47,8 @@ export interface Advice253 {
   * knowledge), which proxies are rejected, which test conditions are required, whether supplied evidence assesses it
   * directly or only through a proxy, and the resulting decision. A proxy never assesses an outcome. */
  goalAssessment?:GoalAssessment253;
+ /** S78: for each catalog dimension considered for ranking, the decision of ra.2 (deciding) and of the legacy ra.1. */
+ authorisationTrace?:{need:string;dimension:string;measure:string|null;decidedBy:'ra.1'|'ra.2';ra1:string;ra2:string}[];
  /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
   * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
  researchInputs?:AdviceResearchInputs253;

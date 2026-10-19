@@ -74,7 +74,7 @@ test('r2: the proxy is shown separately as a partial comparison with raw values,
  assert.ok(a.statements.some(x=>/^Partial comparison only, not a recommendation/.test(x)&&/0\.402 kWh; variant not verified/.test(x)));
  assert.ok(a.statements.some(x=>/does not show the electricity needed to cook a meal/.test(x)));
  assert.ok(a.limitations.some(x=>/^Stratus Glass Air Fryer: the tester names the product without a model code/.test(x)));
- assert.ok(a.statements.some(x=>/^What would answer this: .*energy per cooking task \(compartments in use, completed doneness, same food load\)/.test(x)));
+ assert.ok(a.statements.some(x=>/^What would answer this: .*energy per cooking task \(compartments in use, completed doneness, same food load; whether it establishes it is not assessed\)/.test(x)));
  s.close();
 });
 

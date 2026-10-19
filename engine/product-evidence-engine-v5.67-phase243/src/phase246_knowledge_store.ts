@@ -39,7 +39,7 @@ import {classDecision249,QUALITATIVE_AMENDMENT270,type SourceClassPolicy249,type
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
 import {screenTestLead265,subjectAssociation265,reportedBy265,readingIdentity265,type TestLeadsInput265,type ReadingConfiguration265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=8;
+export const STORE_SCHEMA_VERSION246=9;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -281,6 +281,16 @@ const MIGRATIONS:string[]=[
    retention TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('current','superseded_by_revision','superseded_by_reader')), recorded_at TEXT NOT NULL,
    CHECK(measurand<>'cost' OR value_basis='derived_from_tariff'), CHECK(value IS NOT NULL));
   CREATE INDEX comparative_results271_experiment ON comparative_results271(experiment_key,task_index,measurand);`,
+ // v9 (S78): assessments of a category relation, journaled with their basis. 'sufficiency' says whether a measured_by
+ // relation ESTABLISHES its outcome or only informs it; ranking needs positive evidence (owner S78). An assessment is
+ // never a review receipt (support grades stay in category_relations) and never independent validation by itself.
+ `CREATE TABLE relation_assessments (assessment_id TEXT PRIMARY KEY, relation_id TEXT NOT NULL REFERENCES category_relations(relation_id),
+   aspect TEXT NOT NULL CHECK(aspect IN ('sufficiency')), value TEXT NOT NULL CHECK(value IN ('establishes','informs_only','unclear')),
+   basis TEXT NOT NULL CHECK(basis IN ('teaching_source_statement','blind_source_verification','reviewed_receipt')),
+   citation TEXT NOT NULL CHECK(length(citation) BETWEEN 3 AND 400), assessor TEXT NOT NULL, note TEXT,
+   independence TEXT NOT NULL CHECK(independence IN ('same_model_not_independent','human_reviewer')),
+   assessed_at TEXT NOT NULL, superseded_by TEXT REFERENCES relation_assessments(assessment_id));
+  CREATE INDEX relation_assessments_relation ON relation_assessments(relation_id,aspect);`,
 ];
 
 /** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */
@@ -1222,7 +1232,7 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271','relation_assessments']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
    if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
@@ -1260,7 +1270,7 @@ export class KnowledgeStore246 {
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
   category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
-  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id'};
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id',relation_assessments:'assessment_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
@@ -1280,6 +1290,8 @@ export class KnowledgeStore246 {
    if((t==='declarations'||t==='test_measurements265')&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    // Phase270: qualitative codes are kept under a private amendment that permits no publication.
    if(t==='qualitative_observations270'&&audience==='public')rows=[];
+   // S78: assessments cite owner research packages (private): never in a public destination
+   if(t==='relation_assessments'&&audience==='public')rows=[];
    if(t==='comparative_results271'&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    const body=rows.map(r=>canon(r)).join('\n')+(rows.length?'\n':'');
    const f=join(dir,t+'.ndjson');writeFileSync(f+'.tmp',body,{mode:0o600});renameSync(f+'.tmp',f);

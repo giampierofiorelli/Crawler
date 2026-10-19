@@ -17,7 +17,7 @@ import {createDecision177,applyDecisionAction177} from './phase177_decision_snap
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
-import {relations247} from './phase247_category_relations.js';
+import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
 import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_comparative_evidence.js';
 import {applianceMentions270} from './phase270_comparative_results.js';
@@ -157,11 +157,13 @@ function statedObjectives253(text:string):string[]{
 /** Phase269: what category knowledge says about each recognised need. Measurements are 'measurement' concept items;
  * 'measured_by' links a measurement to the outcome it establishes, 'not_sufficient_for' marks a proxy (a declared
  * attribute or a measurement), 'requires_condition' the test conditions without which results are not comparable. */
-interface NeedKnowledge269 {need:string;kind:string|null;relevant:string[];proxies:string[];conditions:string[];notes:Map<string,string>;statements:Map<string,string>}
+export interface NeedKnowledge269 {need:string;kind:string|null;relevant:string[];proxies:string[];conditions:string[];notes:Map<string,string>;statements:Map<string,string>;
+ /** S78: per measurement linked by measured_by: its relation, the assessed sufficiency, and ITS required conditions. */
+ byMeasure:Map<string,{relationId:string;sufficiency:'established'|'informs_only'|'unclear'|'contested'|'unassessed';conditions:string[]}>}
 /** Context needs (not outcomes): equipment already owned ('*_alternative', a naming contract of the teaching) and stated use. */
 // Phase271: '*_constraint' (an installation constraint such as cannot plumb) is context too, but not owned equipment.
 const CONTEXT_NEEDS269={has:(id:string)=>id.endsWith('_alternative')||id.endsWith('_constraint')||id==='single_compartment_use'};
-function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly string[]):NeedKnowledge269[]{
+export function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly string[]):NeedKnowledge269[]{
  const items=store.categoryItems246(category);const rels=relations247(store,category);
  const byRef=new Map(items.map(i=>['item:'+i.itemId,i]));
  const measureOf=(ref:string)=>{const i=byRef.get(ref);return i?.concept?.kind==='measurement'?i.concept.id:null;};
@@ -175,7 +177,14 @@ function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly
   const relevantRefs=new Set(items.filter(i=>i.concept?.kind==='measurement'&&relevant.includes(i.concept.id)).map(i=>'item:'+i.itemId));
   const conditions=[...new Set(rels.filter(r=>r.kind==='requires_condition'&&relevantRefs.has(r.from)).map(r=>measureOf(r.to)).filter((x):x is string=>!!x))].sort();
   const statements=new Map(items.filter(i=>i.concept?.kind==='measurement').map(i=>[i.concept!.id,i.statement.replace(/\s*\[[^\]]*\]\s*$/,'')]));
-  return {need,kind:items.find(i=>i.concept?.id===need)?.concept?.kind??null,relevant,proxies:proxies.sort(),conditions,notes,statements};
+  const byMeasure:NeedKnowledge269['byMeasure']=new Map();
+  for(const r of into.filter(r=>r.kind==='measured_by')){const m=measureOf(r.from);if(!m)continue;
+   const conds=[...new Set(rels.filter(x=>x.kind==='requires_condition'&&x.from===r.from).map(x=>measureOf(x.to)).filter((x):x is string=>!!x))].sort();
+   const prev=byMeasure.get(m);const suff=sufficiencyOf247(store,r.relationId).state;
+   // two measured_by relations for one measurement (two items of the same id): the weaker sufficiency holds
+   const rank={established:4,informs_only:2,unclear:1,unassessed:0,contested:-1} as const;
+   if(!prev||rank[suff]<rank[prev.sufficiency])byMeasure.set(m,{relationId:r.relationId,sufficiency:suff,conditions:[...new Set([...(prev?.conditions??[]),...conds])].sort()});}
+  return {need,kind:items.find(i=>i.concept?.id===need)?.concept?.kind??null,relevant,proxies:proxies.sort(),conditions,notes,statements,byMeasure};
  });
 }
 /** The measurement a catalog dimension carries: its key when it is a measurement concept, else the measurement of the
@@ -201,6 +210,31 @@ export function outcomeAuthorised270(k:{relevant:readonly string[];proxies:reado
  if(!k.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_met'};
  return {ok:true};
 }
+/** S78 ranking authorisation ra.2 (owner S78 §2: "a measured_by relationship must not automatically establish an
+ * outcome. Require positive evidence of sufficiency. Check experimental conditions per measurement"). Replaces ra.1
+ * (outcomeAuthorised270), which accepted any measured_by relation, including unassessed hypotheses and relations a blind
+ * source check found to inform only, and pooled the required conditions of every measurement relevant to the need.
+ * A dimension may assess an outcome only when ALL hold: category teaching for the need; a known measurement; not a proxy;
+ * a measured_by relation from THIS measurement; an active source-citing assessment that it ESTABLISHES the outcome and
+ * none that disagrees; every condition required for THIS measurement met; a score, not a raw quantity. */
+export const RANKING_AUTHORISATION_VERSION='ra.2';
+/** The rule that decides when the caller names none: ra.2 since the S78 shadow census (evaluation/s78/authorisation-census-live-1.json); ra.1 stays callable for comparison only. */
+export const DEFAULT_RANKING_AUTHORISATION:'ra.1'|'ra.2'='ra.2';
+export type AuthorisationRefusal='no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_met'|'raw_quantity_not_a_score'|
+ 'sufficiency_not_established'|'sufficiency_only_informs'|'sufficiency_contested';
+export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:ReadonlyMap<string,{sufficiency:string;conditions:readonly string[]}>}|undefined,d:KnowledgeDimension181,measure:string|null):
+ {ok:true}|{ok:false;reason:AuthorisationRefusal}{
+ if(d.valueKind==='raw_quantity_only')return {ok:false,reason:'raw_quantity_not_a_score'};
+ if(!k)return {ok:false,reason:'no_category_teaching'};
+ if(!measure)return {ok:false,reason:'unknown_measurement'};
+ if(k.proxies.includes(measure))return {ok:false,reason:'known_proxy'};
+ const m=k.byMeasure.get(measure);if(!m)return {ok:false,reason:'no_measured_by_relation'};
+ if(m.sufficiency==='contested')return {ok:false,reason:'sufficiency_contested'};
+ if(m.sufficiency==='informs_only')return {ok:false,reason:'sufficiency_only_informs'};
+ if(m.sufficiency!=='established')return {ok:false,reason:'sufficiency_not_established'};
+ if(!m.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_met'};
+ return {ok:true};
+}
 /** Phase270 (owner brief §4): the policy revisions under which a catalog may be shown as a labelled partial comparison.
  * Restricted authorisation: comparison of raw quantities only, after catalog verification; never a recommendation. */
 export const PARTIAL_COMPARISON_POLICY270={policyRevisions:['pee268-energy-scoring:r2:partial-comparison-only'] as readonly string[],
@@ -217,7 +251,7 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
  * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
  * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
  * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
-export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string}={}):Advice253{
+export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string;rankingAuthorisation?:'ra.1'|'ra.2'}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  return out;
@@ -254,7 +288,7 @@ function applyClassRequirements253(out:Advice253,text:string,qk:QuantityKnowledg
   if(r.note)out.statements.push(`"${r.span}": ${r.note}.`);
   else if(!r.scale&&r.candidates.length>1)out.questions.push(`Which label do you mean by "${r.span}"? ${r.candidates.map(c=>(qk.pack.scales??[]).find(s=>s.id===c)!.label).join(' and ')} use the same letters for different efficiencies.`);}
 }
-function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
+function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;rankingAuthorisation?:'ra.1'|'ra.2'}={}):Advice253{
  const out=adviseCore253(text,store,registry);
  const ri=out.researchInputs;const perf=ri?.performanceNeeds??[];const objectives=statedObjectives253(text);
  const assessed=new Set<string>();
@@ -273,7 +307,11 @@ function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:r
   const nk=new Map(needKnowledge269(store,out.category!,spans.map(n=>n.id)).filter(k=>k.kind!==null).map(k=>[k.need,k]));
   const mIds=new Set(store.categoryItems246(out.category!).filter(i=>i.concept?.kind==='measurement').map(i=>i.concept!.id));
   const refused:string[]=[];
-  const covered=spans.filter(n=>{const d=dims.get(n.id);if(!d)return false;const a=outcomeAuthorised270(nk.get(n.id),d,dimensionMeasure269(d,mIds));
+  // S78: ra.2 decides; ra.1 is evaluated alongside and recorded (shadow trace), never used for the decision
+  const legacy=(opts.rankingAuthorisation??DEFAULT_RANKING_AUTHORISATION)==='ra.1';out.authorisationTrace=[];
+  const covered=spans.filter(n=>{const d=dims.get(n.id);if(!d)return false;const ms=dimensionMeasure269(d,mIds);
+   const a1=outcomeAuthorised270(nk.get(n.id),d,ms),a2=outcomeAuthorisedRa2(nk.get(n.id),d,ms);const a=legacy?a1:a2;
+   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:legacy?'ra.1':'ra.2',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason});
    if(!a.ok)refused.push(`${n.id}: ${a.reason.replace(/_/g,' ')}`);return a.ok;});
   // Every stated outcome and every factual need must be assessed; otherwise no overall ranking (principle 8).
   const complete=covered.length===spans.length&&out.unresolved.length===0;
@@ -362,7 +400,10 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
   partial||(out.response==='ranked_recommendation'&&real.some(o=>o.coverage==='assessed'))?'partial_comparison':real.length||needs.some(n=>n.endsWith('_constraint'))?'research':'clarify';
  // What the answer says (concise; details stay in the structure).
  const st=(id:string)=>id.replace(/_/g,' ');
- const statement=(k:NeedKnowledge269)=>k.relevant.length?`for ${st(k.need)}, ${k.relevant.map(st).join(' or ')}${k.conditions.length?` (${k.conditions.map(st).join(', ')})`:''}`:null;
+// S78: each measurement with its own conditions, and what the sources say about it (establishes, or only informs)
+ const SUFF_TEXT:Record<string,string>={informs_only:'informs it but does not establish it',unclear:'whether it establishes it is unclear',contested:'sources disagree whether it establishes it',unassessed:'whether it establishes it is not assessed'};
+ const statement=(k:NeedKnowledge269)=>k.byMeasure.size?`for ${st(k.need)}, ${[...k.byMeasure.entries()].sort(([a],[b])=>a.localeCompare(b)).map(([m,i])=>{
+  const notes=[...(i.conditions.length?[i.conditions.map(st).join(', ')]:[]),...(SUFF_TEXT[i.sufficiency]?[SUFF_TEXT[i.sufficiency]]:[])];return st(m)+(notes.length?` (${notes.join('; ')})`:'');}).join(' or ')}`:null;
  const unit=(u:string)=>({kwh:'kWh',w:'W',minutes:'min'} as Record<string,string>)[u]??u;
  const plain=(q:string|undefined)=>(q??'').replace(/^[a-z_]+:\s*/,'').replace(/\s*Package [^.]*\.?\s*$/,'');
  // Phase270: the alternative is named by its taught statement (owned equipment, or a leak to repair), never assumed to

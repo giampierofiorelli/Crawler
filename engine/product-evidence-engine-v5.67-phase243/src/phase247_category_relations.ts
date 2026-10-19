@@ -61,6 +61,41 @@ export function reviewRelation247(store:KnowledgeStore246,relationId:string,to:'
  store.event('category_relation_reviewed',{relationId,to,reviewId:receipt.reviewId},receipt.reviewedAt);
  store.invalidate(['category:'+rel.category_id],'category_relation_reviewed');
 }
+export type Sufficiency247='establishes'|'informs_only'|'unclear';
+export type AssessmentBasis247='teaching_source_statement'|'blind_source_verification'|'reviewed_receipt';
+export interface RelationAssessmentInput247 {relationId:string;value:Sufficiency247;basis:AssessmentBasis247;citation:string;assessor:string;note?:string;
+ independence?:'same_model_not_independent'|'human_reviewer'}
+/** S78: records an assessment of whether a measured_by relation establishes its outcome (journaled, idempotent by content).
+ * A 'teaching_source_statement' or 'blind_source_verification' must cite where the source says so; a reviewed receipt
+ * is recorded by reviewRelation247, not here. A later assessment by the same basis and assessor supersedes the earlier. */
+export function assessRelation247(store:KnowledgeStore246,a:RelationAssessmentInput247,at=new Date().toISOString()):string{
+ const rel=store.db.prepare('SELECT category_id,kind FROM category_relations WHERE relation_id=?').get(a.relationId) as {category_id:string;kind:string}|undefined;
+ if(!rel)throw Error('247_unknown_relation');if(rel.kind!=='measured_by')throw Error('247_sufficiency_only_for_measured_by');
+ if(!['establishes','informs_only','unclear'].includes(a.value))throw Error('247_invalid_sufficiency');
+ if(!['teaching_source_statement','blind_source_verification'].includes(a.basis))throw Error('247_invalid_assessment_basis');
+ if(!a.citation||a.citation.trim().length<3||a.citation.length>400||/[<>\r\n]/.test(a.citation))throw Error('247_assessment_needs_citation');
+ if(!/^[a-z0-9][a-z0-9_.:-]{1,79}$/i.test(a.assessor))throw Error('247_invalid_assessor');
+ const independence=a.independence??'same_model_not_independent';
+ const id='ras_'+sha([a.relationId,'sufficiency',a.value,a.basis,a.citation,a.assessor].join('|')).slice(0,20);
+ if(store.db.prepare('SELECT 1 FROM relation_assessments WHERE assessment_id=?').get(id))return id;
+ store.db.exec('BEGIN IMMEDIATE');
+ try{
+  store.db.prepare('INSERT INTO relation_assessments VALUES (?,?,?,?,?,?,?,?,?,?,NULL)').run(id,a.relationId,'sufficiency',a.value,a.basis,a.citation,a.assessor,a.note?.slice(0,300)??null,independence,at);
+  store.db.prepare("UPDATE relation_assessments SET superseded_by=? WHERE relation_id=? AND aspect='sufficiency' AND basis=? AND assessor=? AND assessment_id<>? AND superseded_by IS NULL").run(id,a.relationId,a.basis,a.assessor,id);
+  store.event('category_relation_assessed',{relationId:a.relationId,assessmentId:id,aspect:'sufficiency',value:a.value,basis:a.basis},at);
+  store.invalidate(['category:'+rel.category_id],'category_relation_assessed');
+  store.db.exec('COMMIT');}catch(e){store.db.exec('ROLLBACK');throw e;}
+ return id;
+}
+/** S78: the current sufficiency of a measured_by relation from its active assessments. Positive only when some source-
+ * citing assessment says 'establishes' and none says otherwise; a disagreement is 'contested' (never establishes). */
+export function sufficiencyOf247(store:KnowledgeStore246,relationId:string):{state:'established'|'informs_only'|'unclear'|'contested'|'unassessed';assessments:{value:string;basis:string;citation:string;assessor:string}[]}{
+ const rows=store.db.prepare("SELECT value,basis,citation,assessor FROM relation_assessments WHERE relation_id=? AND aspect='sufficiency' AND superseded_by IS NULL ORDER BY assessment_id").all(relationId) as {value:string;basis:string;citation:string;assessor:string}[];
+ if(!rows.length)return {state:'unassessed',assessments:[]};
+ const v=new Set(rows.map(r=>r.value));
+ const state=v.size>1?'contested':v.has('establishes')?'established':v.has('informs_only')?'informs_only':'unclear';
+ return {state,assessments:rows};
+}
 /** Relations of a category whose item endpoints are active. Audit S77 (A2-F3): a relation of a retired or superseded
  * item stays in the table (history) but is no longer returned; consumers had shown such relations as raw refs and counted
  * them (4 dehumidifier relations). Attribute endpoints (`attr:`) are not items and are kept. */

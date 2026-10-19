@@ -9,7 +9,8 @@ import {CATEGORY_REGISTRY250} from '../src/phase248_category_registry.js';
 import {applyLessons250,ADOPTED_LESSONS250} from '../src/phase250_category_lessons.js';
 import {applyTeaching252,registerTeachingSources252} from '../src/phase252_category_teaching.js';
 import {COFFEE_TEACHING269,COFFEE_SOURCES269,AIR_FRYER_TEACHING269,RESEARCH_SOURCES269} from '../src/phase269_research_teaching.js';
-import {adviseFromRequest253,outcomeAuthorised270,type RankingContext253} from '../src/phase253_request_advice.js';
+import {adviseFromRequest253,outcomeAuthorised270,outcomeAuthorisedRa2,type RankingContext253} from '../src/phase253_request_advice.js';
+import {assessRelation247,relations247} from '../src/phase247_category_relations.js';
 import {canonicalJson180} from '../src/phase180_reviewed_first_answer.js';
 import {verifySignedCatalog181,dynamicKnowledgeAnswer181,type ProductKnowledgeCatalog181,type KnowledgeDimension181} from '../src/phase181_dynamic_knowledge_ranking.js';
 import {createDecision177,applyDecisionAction177} from '../src/phase177_decision_snapshot.js';
@@ -29,10 +30,16 @@ const signed=(c:ProductKnowledgeCatalog181,k=keys)=>({catalog:c,keyId:'panel_rev
 
 // ---- Coffee: the ranking path -------------------------------------------------------------------------------------
 const REQUEST='Which espresso machine makes the best-tasting traditional Italian espresso for under £600?';
-function coffee(teach=true){
+// S78: ranking needs positive evidence that the measurement ESTABLISHES the outcome. The fictional world records it as a
+// source-citing assessment of its espresso relation ('establishes' by default; tests vary it).
+type Suff=('establishes'|'informs_only')[];
+function coffee(teach=true,sufficiency:Suff=['establishes']){
  const s=new KnowledgeStore246(':memory:',CLASS);seedCategoryHypotheses246(s,'coffee_machines');
  for(const [id,al] of Object.entries(CONCEPT_VOCABULARY248.coffee_machines))s.addConceptAliases246('coffee_machines',id,al);
- if(teach){registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[COFFEE_TEACHING269],'2026-10-16T08:30:00.000Z');}
+ if(teach){registerTeachingSources252(COFFEE_SOURCES269);applyTeaching252(s,[COFFEE_TEACHING269],'2026-10-16T08:30:00.000Z');
+  const items=s.categoryItems246('coffee_machines');const ref=(id:string)=>'item:'+items.find(i=>i.concept?.id===id)!.itemId;
+  const rel=relations247(s,'coffee_machines').find(r=>r.kind==='measured_by'&&r.from===ref('espresso_sensory_assessment')&&r.to===ref('espresso_quality'))!;
+  sufficiency.forEach((v,i)=>assessRelation247(s,{relationId:rel.relationId,value:v,basis:'teaching_source_statement',assessor:'fictional-source-'+i,citation:'fictional panel method page, section 2 (test fixture)'},'2026-10-16T08:31:00.000Z'));}
  const ids:Record<string,string>={};
  for(const [name,mpn,price] of [['Aurora A1 Espresso Machine','A1',399],['Borealis B2 Espresso Machine','B2',549]] as const){
   const url=`https://maker-${mpn.toLowerCase()}.pee270.test/p/${mpn}`;
@@ -71,6 +78,10 @@ test('§2 negative: no ranking without positive evidence that the measurement es
   ['missing category teaching',bare,panel(bare.ids),''],
   ['no measurement→outcome relation (a known measurement of another outcome)',w,panel(w.ids,{measureId:'brew_temperature_stability',conditionsMet:['consecutive_shots','same_beans_and_grind']}),'no measured by relation'],
   ['missing essential experimental condition',w,panel(w.ids,{conditionsMet:[]}),'conditions not met'],
+  // S78: a measured_by relation alone never establishes the outcome
+  ['measured_by without any sufficiency assessment',coffee(true,[]),panel(coffee(true,[]).ids),'sufficiency not established'],
+  ['the source says the measurement only informs the outcome',coffee(true,['informs_only']),panel(coffee(true,['informs_only']).ids),'sufficiency only informs'],
+  ['sources disagree on sufficiency',coffee(true,['establishes','informs_only']),panel(coffee(true,['establishes','informs_only']).ids),'sufficiency contested'],
  ];
  for(const [why,world,cat,reason] of cases){
   const a=advise(world.s,{catalog:signed(cat),authority});
@@ -183,3 +194,20 @@ test('§10: owned equipment gives a no-purchase check that does not say "do not 
  assert.ok(a.statements.some(x=>/Buying may not be necessary/i.test(x)));
  s.close();
 });
+
+test('S78 ra.2: conditions are checked per measurement, never pooled across the need; ra.1 stays for comparison only',()=>{
+ const byMeasure=new Map([['energy_per_cooking_task',{sufficiency:'established',conditions:['same_food_load']}],['crisp_panel',{sufficiency:'established',conditions:['blinded_panel']}]]);
+ const k={proxies:['energy_empty_run'],byMeasure};
+ const d={...panel({A1:'a1',B2:'b2'}).dimensions[0],conditionsMet:['same_food_load']};
+ assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_per_cooking_task'),{ok:true},'the other measurement\'s blinded panel is not a condition of energy');
+ assert.deepEqual(outcomeAuthorised270({relevant:[...byMeasure.keys()],proxies:k.proxies,conditions:['blinded_panel','same_food_load']},d,'energy_per_cooking_task'),
+  {ok:false,reason:'conditions_not_met'},'ra.1 pooled the conditions (the defect ra.2 corrects)');
+ assert.deepEqual(outcomeAuthorisedRa2(k,{...d,conditionsMet:[]},'energy_per_cooking_task'),{ok:false,reason:'conditions_not_met'});
+ assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_empty_run'),{ok:false,reason:'known_proxy'});
+ assert.deepEqual(outcomeAuthorisedRa2({proxies:[],byMeasure:new Map([['m',{sufficiency:'unassessed',conditions:[]}]])},d,'m'),{ok:false,reason:'sufficiency_not_established'});
+ const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});
+ assert.equal(a.authorisationTrace![0].decidedBy,'ra.2');assert.equal(a.authorisationTrace![0].ra2,'authorised');
+ const legacy=adviseFromRequest253(REQUEST,coffee(true,[]).s,CATEGORY_REGISTRY250,{ranking:{catalog:signed(panel(coffee(true,[]).ids)),authority},rankingAuthorisation:'ra.1'});
+ assert.equal(legacy.authorisationTrace![0].ra1,'authorised');assert.equal(legacy.authorisationTrace![0].ra2,'sufficiency_not_established','the trace shows what ra.1 accepted without evidence');
+});
+
