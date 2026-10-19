@@ -1,0 +1,39 @@
+{
+ "schema": "pee.s80.withheld-pairs-verification.v1",
+ "date": "2026-10-19",
+ "owner": "S80 priority 2: 'verificare le due nuove autorizzazioni'",
+ "method": "the two (need, measurement) pairs the S79 release rule withholds (live store, outcomeAuthorisedRelease reason new_authorisation_pending_validation) were re-checked against the cited source text of the owner's research package 06 (household dishwashers v2.0.0, private); developer reading by Claude: same-model, not independent",
+ "pairs": [
+  {
+   "category": "dishwashers",
+   "need": "cleaning_soil_removal",
+   "measure": "residual_soil_score_by_soil_type",
+   "storedAssessment": {"value": "establishes", "basis": "blind_source_verification", "independence": "same_model_not_independent"},
+   "taughtConditions": ["load_and_soil_definition", "programme_identity", "water_hardness_and_detergent"],
+   "sourceChecked": ["NEW-RESEARCH/TEST-PROTOCOLS.md §4 Cleaning challenge (PROPOSED)", "NEW-RESEARCH/MASTER-RESEARCH.md §2 chemical pathway"],
+   "findings": [
+    "the protocol is labelled PROPOSED by the package, not a standard or a performed method",
+    "scope: the source says no single soil type measures 'clean' and that the soils and substrates each test covers must be recorded; a per-soil score establishes cleaning only for the soils it covers, a scope the stored 'establishes' verdict cannot express",
+    "missing conditions: the protocol's endpoint needs blinded scoring and replicated runs of each prespecified load; neither is a taught condition"
+   ],
+   "verdict": "remain_withheld",
+   "wouldRelease": "a source-backed sufficiency verdict restricted to the soils/substrates covered, replication and blinded scoring as required conditions, and a real signed catalog run through the full path"
+  },
+  {
+   "category": "dishwashers",
+   "need": "water_per_cycle_and_workload",
+   "measure": "litres_per_completed_workload",
+   "storedAssessment": {"value": "establishes", "basis": "blind_source_verification", "independence": "same_model_not_independent", "note": "Equation is an analytical approximation, not a standard"},
+   "taughtConditions": ["energy_boundary_hot_fill"],
+   "sourceChecked": ["NEW-RESEARCH/MASTER-RESEARCH.md §2.1 Equations for analytical reasoning (not universal product ratings)", "NEW-RESEARCH/TEST-PROTOCOLS.md §7 Resource metrology (PROPOSED)"],
+   "findings": [
+    "the measurement is an analytical compound (machine litres + manual rinsing/prewash/tank losses over a declared horizon), presented by the source as reasoning, not as an observed test result",
+    "the only taught condition (energy boundary of hot fill) concerns energy, not water; the defining conditions of the quantity (declared load and horizon, which manual steps are included) are not taught",
+    "no product in the store carries such a value; a ranking would need a test that reports it with its workload definition"
+   ],
+   "verdict": "remain_withheld",
+   "wouldRelease": "conditions corrected to the workload definition, a test source that reports the compound quantity, and a real signed catalog run through the full path"
+  }
+ ],
+ "effect": "no change to decisions: both pairs stay withheld (VALIDATED_NEW_AUTHORISATIONS stays empty); the findings are recorded for the teaching correction they imply"
+}

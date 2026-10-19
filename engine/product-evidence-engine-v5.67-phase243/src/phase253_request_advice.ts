@@ -266,7 +266,7 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
  * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
  * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
  * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
-export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string;rankingAuthorisation?:'ra.1'|'ra.2'}={}):Advice253{
+export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  return out;
@@ -303,7 +303,7 @@ function applyClassRequirements253(out:Advice253,text:string,qk:QuantityKnowledg
   if(r.note)out.statements.push(`"${r.span}": ${r.note}.`);
   else if(!r.scale&&r.candidates.length>1)out.questions.push(`Which label do you mean by "${r.span}"? ${r.candidates.map(c=>(qk.pack.scales??[]).find(s=>s.id===c)!.label).join(' and ')} use the same letters for different efficiencies.`);}
 }
-function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;rankingAuthorisation?:'ra.1'|'ra.2'}={}):Advice253{
+function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{
  const out=adviseCore253(text,store,registry);
  const ri=out.researchInputs;const perf=ri?.performanceNeeds??[];const objectives=statedObjectives253(text);
  const assessed=new Set<string>();
@@ -322,11 +322,13 @@ function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:r
   const nk=new Map(needKnowledge269(store,out.category!,spans.map(n=>n.id)).filter(k=>k.kind!==null).map(k=>[k.need,k]));
   const mIds=new Set(store.categoryItems246(out.category!).filter(i=>i.concept?.kind==='measurement').map(i=>i.concept!.id));
   const refused:string[]=[];
-  // S78: ra.2 decides; ra.1 is evaluated alongside and recorded (shadow trace), never used for the decision
-  const legacy=(opts.rankingAuthorisation??DEFAULT_RANKING_AUTHORISATION)==='ra.1';out.authorisationTrace=[];
+  // S78: ra.2 decides; ra.1 is evaluated alongside and recorded (shadow trace), never used for the decision.
+  // S80 (owner: never restore ra.1): the production entry point no longer accepts a rule choice; ra.1 stays callable
+  // directly (outcomeAuthorised270) for comparisons only.
+  out.authorisationTrace=[];
   const covered=spans.filter(n=>{const d=dims.get(n.id);if(!d)return false;const ms=dimensionMeasure269(d,mIds);
-   const a1=outcomeAuthorised270(nk.get(n.id),d,ms),a2=outcomeAuthorisedRa2(nk.get(n.id),d,ms);const a=legacy?a1:outcomeAuthorisedRelease(nk.get(n.id),d,ms);
-   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:legacy?'ra.1':'ra.2-restrict-only',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason,decision:a.ok?'authorised':a.reason});
+   const a1=outcomeAuthorised270(nk.get(n.id),d,ms),a2=outcomeAuthorisedRa2(nk.get(n.id),d,ms);const a=outcomeAuthorisedRelease(nk.get(n.id),d,ms);
+   out.authorisationTrace!.push({need:n.id,dimension:d.key,measure:ms,decidedBy:'ra.2-restrict-only',ra1:a1.ok?'authorised':a1.reason,ra2:a2.ok?'authorised':a2.reason,decision:a.ok?'authorised':a.reason});
    if(!a.ok)refused.push(`${n.id}: ${a.reason.replace(/_/g,' ')}`);return a.ok;});
   // Every stated outcome and every factual need must be assessed; otherwise no overall ranking (principle 8).
   const complete=covered.length===spans.length&&out.unresolved.length===0;
