@@ -31,9 +31,9 @@ import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
 import {compareQuantities,findQuantities,loadQuantityKnowledge,type ComparisonResult} from './quantity_knowledge.js';
 
-/** lk.7 (S81: condition concepts, comparability under the teaching, attribute proxies); v1-v6 (lk.1-lk.6) stay
- * loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v7.json';
+/** lk.8 (S81 kr81.2: condition concepts, comparability under the teaching, attribute proxies; lk.7's required-condition
+ * preference withdrawn on a counterexample); v1-v7 (lk.1-lk.7) stay loadable to reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v8.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -275,9 +275,10 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
 //    were not available to any inference;
 //  - a caller of teachingView got 'unverified' force although the store held the source verdicts.
 // The functions below give the existing KR programs (link-rules v7: link, evidence, comparable) the whole teaching as
-// facts. They add no category rule and no vocabulary: what changes a conclusion is the knowledge in the store.
+// facts (link-rules v8: link, evidence, comparable). They add no category rule and no vocabulary: what changes a
+// conclusion is the knowledge in the store.
 // Shadow only: nothing here is written to the store or reaches a ranking.
-export const KR81_VERSION='kr81.1';
+export const KR81_VERSION='kr81.2';
 
 /** The store's own source-citing sufficiency verdicts (relation_assessments, S78) as a force overlay. */
 export function storeForceOverlay(store:KnowledgeStore246,category:string):ForceOverlay{
