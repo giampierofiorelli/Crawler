@@ -1,0 +1,29 @@
+{
+ "schema": "pee.s87b.preregistration.v1",
+ "at": "2026-10-19T20:17:40.982Z",
+ "question": "Does a mechanism developed on two groups carry the meaning of observations (measurand, conditions) to categories and publishers it never saw, and to a category whose own teaching is withheld?",
+ "corpus": {
+  "sha256": "9afa41b6a20c00c3430578f1a6bcdc476dcbc5ca1574b6baf887dc0cef3a31ab",
+  "observations": 472,
+  "status": "gold sets of Phase270-272, Step 1C, Step 1D-B; spent by earlier phases, never held-out in absolute terms; independent of the S87b mechanism"
+ },
+ "development": [
+  "air_purifiers @ housefresh.com",
+  "air_fryers @ which.co.uk"
+ ],
+ "developmentRule": "only development-group observations are read (content and failures) while building; other groups are seen only as aggregate counts until the mechanism is frozen",
+ "check": "the other 12 category-publisher groups; plus every group with its own category teaching withheld (untaught state)",
+ "primaryMetrics": [
+  "condition representability (stated conditions carried by a typed axis)",
+  "measurand carried (taught measurement or general metric)",
+  "precision of produced axes on a blind sample, annotated by a separate agent before scoring"
+ ],
+ "report": "overall, per group, worst group, untaught state; coverage and precision together; development and check separately",
+ "baselineCensus": {
+  "script": "scripts/s87b-survival-census.mjs",
+  "scriptSha256": "76d35e6dd0a53d866d82e4cce5490e818aa43ab4be3b52e638c35d93015b524e",
+  "build": "8474eb3",
+  "detailSha256": "53883738881b82bb684519240b56924d544625d021c163d81bdfa002cce7658e"
+ },
+ "stopRule": "at most three reformulations on development data; then freeze and run check once; the first check run is committed unchanged"
+}
