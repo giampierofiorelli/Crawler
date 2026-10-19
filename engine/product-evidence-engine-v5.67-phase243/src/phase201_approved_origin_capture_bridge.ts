@@ -70,7 +70,10 @@ function primaryMatch(p:PrimaryOriginRegistry201|undefined,sourceUrl:string,asOf
   !url.username&&!url.password;}
  catch{return false;}
 }
-function signedByControlledCapture(s:Signed200<CaptureClaim200>,config:CaptureSigner201,day:string):boolean{
+/** Verifies a capture receipt against the protected trust-anchor policy: ed25519 key with role controlled_capture,
+ * active on the capture day, signature over the canonical capture message. Exported for direct testing; the capture
+ * path itself only signs during a real controlled HTTPS fetch. */
+export function signedByControlledCapture(s:Signed200<CaptureClaim200>,config:CaptureSigner201,day:string):boolean{
  if(!sig(s.signatureBase64Url)||!id(s.keyId)||!config.protectedPolicy||
   !Array.isArray(config.protectedPolicy.anchors))return false;
  const k=config.protectedPolicy.anchors.find(a=>a.keyId===s.keyId&&a.role==='controlled_capture'&&

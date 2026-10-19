@@ -5,7 +5,7 @@
  */
 import {lookup} from 'node:dns/promises';
 import {request} from 'node:https';
-import {request as httpRequest} from 'node:http';
+import {request as httpRequest,type IncomingMessage} from 'node:http';
 import {connect as tlsConnect} from 'node:tls';
 import type {Socket} from 'node:net';
 import type {WebCandidate,WebSourcePolicy,EvidenceAcquisitionPlan,EvidenceQueueItem,EvidenceProcessingResult} from './web_evidence_acquisition.js';
@@ -60,7 +60,7 @@ function secureUrl(raw:string):URL {
 }
 
 /** HTTPS_PROXY from the environment, if any. Only plain http:// proxies (CONNECT over TCP) are supported. */
-function configuredProxy(hostname:string):URL|null{
+export function configuredProxy(hostname:string):URL|null{
  const raw=process.env.HTTPS_PROXY??process.env.https_proxy;
  if(!raw)return null;
  const noProxy=(process.env.NO_PROXY??process.env.no_proxy??'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
@@ -70,7 +70,7 @@ function configuredProxy(hostname:string):URL|null{
  return proxy;
 }
 /** Opens a CONNECT tunnel to host:443 through the proxy and resolves with the raw tunnelled socket. */
-function connectTunnel(proxy:URL,hostname:string):Promise<Socket>{
+export function connectTunnel(proxy:URL,hostname:string):Promise<Socket>{
  return new Promise((resolve,reject)=>{
   const headers:Record<string,string>={Host:`${hostname}:443`};
   if(proxy.username)headers['Proxy-Authorization']='Basic '+Buffer.from(
@@ -83,6 +83,34 @@ function connectTunnel(proxy:URL,hostname:string):Promise<Socket>{
   });
   req.on('timeout',()=>req.destroy(Error('Proxy CONNECT timeout')));
   req.on('error',reject);req.end();
+ });
+}
+
+/** Response policy of the built-in transport: no redirects, identity encoding only, byte cap enforced on the
+ * declared length and on the streamed bytes. Exported so the refusals can be tested without network access. */
+export function consumeRestrictedResponse(res:IncomingMessage,finalUrl:string,maxBytes:number):Promise<SourceResponse>{
+ return new Promise((resolve,reject)=>{
+  // Redirects are never followed here. The target is reported so a caller can apply its own policy
+  // (same-site only, robots re-check, counted as a new request) and issue a separate request.
+  if((res.statusCode??0)>=300&& (res.statusCode??0)<400){res.resume();
+   const e=Object.assign(Error('Redirect denied'),{redirectStatus:res.statusCode,redirectLocation:typeof res.headers.location==='string'?res.headers.location.slice(0,2000):null});
+   reject(e);return;}
+  if(res.headers['content-encoding']&&res.headers['content-encoding']!=='identity'){
+    res.resume();reject(Error('Encoded response denied'));return;
+  }
+  const sizeHeader=Number(res.headers['content-length']??0);
+  if(sizeHeader>maxBytes){res.destroy();reject(Error('Byte cap exceeded'));return;}
+  let used=0;const chunks:Buffer[]=[];
+  res.on('data',(chunk:Buffer)=>{
+   used+=chunk.length;
+   if(used>maxBytes){res.destroy(Error('Byte cap exceeded'));return;}
+   chunks.push(chunk);
+  });
+  res.on('end',()=>{const rawBytes=Buffer.concat(chunks);resolve({status:res.statusCode??0,finalUrl,
+   contentType:String(res.headers['content-type']??''),rawBytes,body:rawBytes.toString('utf8'),
+   etag:String(res.headers.etag??''),lastModified:String(res.headers['last-modified']??''),
+   date:typeof res.headers.date==='string'?res.headers.date:null,retryAfter:typeof res.headers['retry-after']==='string'?res.headers['retry-after']:null});});
+  res.on('error',reject);
  });
 }
 
@@ -120,29 +148,7 @@ export const restrictedHttpsTransport:SourceTransport={
      // Direct path: pin the socket to the checked address. Node >=20 calls lookup with {all:true}
      // (autoSelectFamily), which expects an address array, so answer in whichever form was asked for.
      :{lookup:((_hostname:string,options:{all?:boolean},cb:(...a:unknown[])=>void)=>
-       options?.all?cb(null,[{address:pinned,family:4}]):cb(null,pinned,4)) as never,agent:false})},res=>{
-     // Redirects are never followed here. The target is reported so a caller can apply its own policy
-     // (same-site only, robots re-check, counted as a new request) and issue a separate request.
-     if((res.statusCode??0)>=300&& (res.statusCode??0)<400){res.resume();
-      const e=Object.assign(Error('Redirect denied'),{redirectStatus:res.statusCode,redirectLocation:typeof res.headers.location==='string'?res.headers.location.slice(0,2000):null});
-      reject(e);return;}
-     if(res.headers['content-encoding']&&res.headers['content-encoding']!=='identity'){
-       res.resume();reject(Error('Encoded response denied'));return;
-     }
-     const sizeHeader=Number(res.headers['content-length']??0);
-     if(sizeHeader>maxBytes){res.destroy();reject(Error('Byte cap exceeded'));return;}
-     let used=0;const chunks:Buffer[]=[];
-     res.on('data',(chunk:Buffer)=>{
-      used+=chunk.length;
-      if(used>maxBytes){res.destroy(Error('Byte cap exceeded'));return;}
-      chunks.push(chunk);
-     });
-     res.on('end',()=>{const rawBytes=Buffer.concat(chunks);resolve({status:res.statusCode??0,finalUrl:url.toString(),
-      contentType:String(res.headers['content-type']??''),rawBytes,body:rawBytes.toString('utf8'),
-      etag:String(res.headers.etag??''),lastModified:String(res.headers['last-modified']??''),
-      date:typeof res.headers.date==='string'?res.headers.date:null,retryAfter:typeof res.headers['retry-after']==='string'?res.headers['retry-after']:null});});
-     res.on('error',reject);
-    });
+       options?.all?cb(null,[{address:pinned,family:4}]):cb(null,pinned,4)) as never,agent:false})},res=>{consumeRestrictedResponse(res,url.toString(),maxBytes).then(resolve,reject);});
    req.on('timeout',()=>req.destroy(Error('Timeout')));
    req.on('error',e=>{tunnel?.destroy();reject(e);});req.end();
   });
