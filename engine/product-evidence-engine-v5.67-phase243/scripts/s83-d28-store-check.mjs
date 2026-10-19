@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /** S83 D28 on the real catalog: Phase268 validates the stored test rows and compiles the catalog it would sign; for each
- * catalog dimension, the conditions derived from its original-test records (per observation, S83) are set beside the
- * catalog's own declaration, the S82 all-or-nothing rule (ablation: a condition counts only if every record shows it)
- * and the per-observation rule without the reader-condition axes (ablation). Also asked of every taught measurement of
+ * catalog dimension, the conditions derived from its original-test records (per observation, S83: the dimension as
+ * compiled, and the largest comparable group of complete tests of two or more products) are set beside the catalog's
+ * own declaration and beside the same derivation without the reader-condition axes (ablation). Also asked of every taught measurement of
  * the category that requires conditions, so a record that does not show them is seen not to supply them. SHADOW: no
  * catalog is signed, no authorisation changes. Public output: counts and identifiers of conditions only, no values.
  * Usage: node scripts/s83-d28-store-check.mjs --out FILE */
@@ -21,9 +21,8 @@ const qk0=QK.loadQuantityKnowledge();const k0=KL.categoryKnowledge(store,categor
 const noReaders=(measurement,ids)=>{const want=new Set(ids);const tests=rows.filter(r=>want.has(r.measurementId)).map(r=>{const f=QK.findQuantities(qk0,`${r.value} ${r.unit==='kwh'?'kWh':r.unit}`)[0];
  return {id:r.measurementId,product:r.productId,quantity:f?QK.typeQuantity(qk0,{surface:f.surface,value:f.value,unit:f.unit},{}):null,measurement,source:null};});
  return KL.conditionsMetFromRecords(qk0,k0,measurement,tests,null);};
-const allOrNothing=r=>r.required.filter(c=>r.observations.length>0&&r.observations.every(o=>o.conditions.some(x=>x.condition===c&&x.state==='verified')));
 const summary=(r)=>({observations:r.observations.length,usable:r.observations.filter(o=>o.usable).length,groups:r.groups.map(g=>g.length),incompatiblePairs:r.incompatible.length,
- required:r.required,derived:r.derived,s82AllOrNothing:allOrNothing(r),
+ required:r.required,derived:r.derived,subset:r.subset&&{covered:r.subset.covered.length,setAside:r.subset.setAside.length,derived:r.subset.derived},
  perCondition:Object.fromEntries(r.required.map(c=>[c,Object.fromEntries(['verified','not_verifiable'].map(s=>[s,r.observations.filter(o=>o.conditions.some(x=>x.condition===c&&x.state===s)).length]))]))});
 const needs=[...new Set(store.categoryItems246(category).filter(i=>i.concept&&i.concept.kind!=='measurement').map(i=>i.concept.id))];
 const nk=A.needKnowledge269(store,category,needs);

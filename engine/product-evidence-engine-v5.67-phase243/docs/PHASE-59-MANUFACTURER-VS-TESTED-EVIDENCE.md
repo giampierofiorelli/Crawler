@@ -63,3 +63,8 @@ If **B has no independent battery test**, do not rank its 40h claim against A's 
 - An empirical user decision study: does clearly labelling “manufacturer claims” reduce confusion while keeping recommendations useful?
 
 **Status:** research design supported by primary expert sources; executable structural controls implemented. No live evidence feed or consumer-facing validated recommendation is asserted.
+
+> **2026-10-19 (S83, owner review of S82 condition 4):** `src/spec_test_evidence.ts` and its test were removed. The
+> module was marked DEPRECATED by Phase 60 (successor `src/technical_vs_independent.ts`), no source module, script or
+> evaluation imported it, and no replay uses it. Its last version is in commit `d305652` for anyone who needs to
+> reproduce Phase 59.

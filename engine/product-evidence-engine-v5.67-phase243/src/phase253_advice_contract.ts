@@ -52,7 +52,8 @@ export interface Advice253 {
   /** S83 (D28, SHADOW): the conditions the dimension's original test records verify (per observation, then the largest
    * group of usable observations that compare), against what the catalog declares, and what ra.2 would decide with the
    * derived conditions. Never the decision: a newly enabled authorisation is reported as shadow only. */
-  derivedConditions?:{observations:number;usable:number;derived:string[];declared:string[];unsupported:string[];notDeclared:string[];decisionWithDerived:string}}[];
+  derivedConditions?:{observations:number;usable:number;derived:string[];declared:string[];unsupported:string[];notDeclared:string[];decisionWithDerived:string;
+   subset?:{covered:number;setAside:number;derived:string[];decision:string}}}[];
  /** Phase254: the structured outcome behind the answer (keys, outcomes, codes, product ids; never declared values),
   * consumed by the research-gap bridge instead of parsing the human-readable reasons. */
  researchInputs?:AdviceResearchInputs253;

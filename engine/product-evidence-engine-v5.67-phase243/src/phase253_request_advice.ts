@@ -263,8 +263,11 @@ function derivedConditions83(store:KnowledgeStore246,category:string,k:NeedKnowl
  const ids=cat.originalTests.filter(t=>t.dimensionKey===d.key).map(t=>t.originalTestId);
  const r=conditionsMetFromStoreRecords(store,category,measure,ids,d.conditionsMet??[]);
  const a2=outcomeAuthorisedRa2(k,{...d,conditionsMet:r.derived},measure);
+ // the subset: what ra.2 would decide for a catalog restricted to the complete, comparable tests (reported, never applied)
+ const s2=r.subset&&r.subset.setAside.length?outcomeAuthorisedRa2(k,{...d,conditionsMet:r.subset.derived},measure):null;
  return {observations:r.observations.length,usable:r.observations.filter(o=>o.usable).length,derived:r.derived,declared:r.declared??[],unsupported:r.unsupported,notDeclared:r.notDeclared,
-  decisionWithDerived:a2.ok?(current?'authorised':'new_authorisation_shadow_only'):a2.reason};
+  decisionWithDerived:a2.ok?(current?'authorised':'new_authorisation_shadow_only'):a2.reason,
+  ...(r.subset&&s2?{subset:{covered:r.subset.covered.length,setAside:r.subset.setAside.length,derived:r.subset.derived,decision:s2.ok?'restricted_catalog_shadow_only':s2.reason}}:{})};
 }
 /** Phase270 (owner brief §4): the policy revisions under which a catalog may be shown as a labelled partial comparison.
  * Restricted authorisation: comparison of raw quantities only, after catalog verification; never a recommendation. */

@@ -16,12 +16,14 @@
  *    (named in the concept's head, or only mentioned in its statement), the condition values it fixes, and the
  *    condition axes its requirements name. Every element records the words it came from.
  * 2. **Inference with proofs.** The link and its evidential force are derived by the KR programs `link` and
- *    `evidence` (`resources/quantity-knowledge/link-rules.v6.json`, LINK_RULES_FILE; v1-v5 kept for replay), so every link, abstention and force carries its
+ *    `evidence` (the file named by LINK_RULES_FILE; older link-rules files are replay data only, see
+ *    `resources/quantity-knowledge/README.md`), so every link, abstention and force carries its
  *    derivation.
  *
  * What it does not do. It adds no recogniser and no category-specific rule. Taught words the quantity knowledge does not
- * type (e.g. "SDR" as a signal mode) are reported as untyped: a gap in the knowledge, never guessed. Shadow only: no
- * conclusion reaches the store, the ranking or the advice.
+ * type (e.g. "SDR" as a signal mode) are reported as untyped: a gap in the knowledge, never guessed. Nothing is written
+ * to the store and no ranking decision changes: on the advice path its conclusions appear only in the shadow
+ * `derivedConditions` trace (S83).
  */
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
@@ -282,10 +284,10 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
 //  - the 49 not_sufficient_for relations from DECLARED attributes (capacity, filter class, peak-brightness claims)
 //    were not available to any inference;
 //  - a caller of teachingView got 'unverified' force although the store held the source verdicts.
-// The functions below give the existing KR programs (link-rules v7: link, evidence, comparable) the whole teaching as
-// facts (link-rules v8: link, evidence, comparable). They add no category rule and no vocabulary: what changes a
+// The functions below give the existing KR programs (link, evidence, comparable of LINK_RULES_FILE) the whole teaching
+// as facts. They add no category rule and no vocabulary: what changes a
 // conclusion is the knowledge in the store.
-// Shadow only: nothing here is written to the store or reaches a ranking.
+// Nothing here is written to the store or changes a ranking decision (S83: the advice trace shows it as shadow).
 export const KR81_VERSION='kr82.1';
 
 /** The store's own source-citing sufficiency verdicts (relation_assessments, S78) as a force overlay. */
@@ -391,7 +393,7 @@ export interface EvidenceUnderKnowledge {rules:string;knowledge:CategoryKnowledg
  /** per value: the required condition concepts its record does not show, by measurement */
  conditionsNotShown:{value:string;measurement:string;condition:string}[];rankingInput:false}
 /** What each value is evidence of, under the teaching: the link (given or inferred), the force the source assessment
- * gives it, every required condition shown or not, proxies as indirect only. Program `evidence` of link-rules v7. */
+ * gives it, every required condition shown or not, proxies as indirect only. Program `evidence` of LINK_RULES_FILE. */
 export function evidenceUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,values:readonly ObservedValue[],opts:{rules?:RuleSet}={}):EvidenceUnderKnowledge{
  const R=loadLinkRules(opts.rules);const link=R.rules.get('link')!,ev=R.rules.get('evidence')!;
  const I=knowledgeFacts(qk,k,values);const known=new Set(k.view.measurements.map(m=>m.concept.id));
@@ -452,7 +454,7 @@ export interface ComparisonUnderKnowledge {verdict:'comparable'|'not_comparable'
  conditions:{condition:string;state:string;detail:string|null}[];
  qk:ComparisonResult;rules:string;knowledge:CategoryKnowledge['basis'];derivation:string[]}
 /** Whether two products' results of one taught measurement compare: the quantity-knowledge verdict first, then every
- * non-identity condition the teaching requires (program `comparable` of link-rules v7). With no teaching for the
+ * non-identity condition the teaching requires (program `comparable` of LINK_RULES_FILE). With no teaching for the
  * measurement, the verdict is the quantity knowledge's. */
 export function compareUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,measurement:string,
  a:ObservedValue&{quantity:TypedQuantity},b:ObservedValue&{quantity:TypedQuantity},opts:{rules?:RuleSet}={}):ComparisonUnderKnowledge{
@@ -515,8 +517,9 @@ export function readerConditionAxes(codes:readonly string[],rc:ReaderConditions=
 // declares). S83 (owner review of S82): validity is rebuilt PER OBSERVATION first (each required condition verified by
 // its own record, with where the record states it, and the method it was obtained with), then the usable observations
 // are grouped by what the comparable program says about each pair (documented differences are recorded as
-// incompatibilities); the conditions met are those verified by the largest group of mutually comparable observations.
-// Incomplete observations are set aside, not allowed to discard the complete ones (S82 required every record).
+// incompatibilities). Two answers are kept apart: what the dimension as compiled meets (every observation verifies the
+// condition, no documented difference), and what the largest comparable group of complete observations of two or more
+// products would meet if the others were set aside (incomplete observations never discard complete ones).
 // A declared condition the records do not show is reported, never accepted. Shadow: no ranking reads it.
 export interface ObservationValidity {test:string;method:string|null;
  conditions:{condition:string;state:'verified'|'not_verifiable';from:string|null}[];
@@ -527,8 +530,14 @@ export interface DerivedConditionsMet {measurement:string;required:string[];obse
  groups:string[][];
  /** documented differences between usable observations (not comparable as reported) */
  incompatible:{a:string;b:string;conditions:string[]}[];
- /** conditions verified by every member of the largest group: what the evidence that can be used together meets */
+ /** the dimension AS COMPILED (all its observations): conditions every observation verifies and no documented
+  * difference contradicts. What a catalog of these tests meets. */
  derived:string[];
+ /** S83 (owner: incomplete tests must not discard complete ones): the largest group of complete observations of two or
+  * more distinct products that compare (a condition of a comparison is never shown by one product's test alone), the
+  * conditions it verifies, and the observations it sets aside. What a catalog restricted to them would meet; null when
+  * no such group exists. */
+ subset:{covered:string[];setAside:string[];derived:string[]}|null;
  declared:string[]|null;
  /** declared but not derived */
  unsupported:string[];
@@ -554,9 +563,15 @@ export function conditionsMetFromRecords(qk:QuantityKnowledge,k:CategoryKnowledg
    if(r.verdict==='not_comparable')incompatible.push({a:a.id,b:t.id,conditions:r.conditions.filter(c=>c.state==='differs').map(c=>c.condition)});}
   if(!placed)groups.push([t]);}
  groups.sort((x,y)=>y.length-x.length||x[0].id.localeCompare(y[0].id));
- const derived=groups.length?required.filter(c=>groups[0].every(t=>observations.find(o=>o.test===t.id)!.conditions.find(x=>x.condition===c)!.state==='verified')):[];
+ // S83 battery regression (S2-K-af-1, S2-K-ap-1): one product's complete test cannot show a condition of comparing it.
+ const basis=groups.find(g=>new Set(g.map(t=>t.product??t.id)).size>=2)??null;
+ const verifiedBy=(ids:readonly string[],c:string)=>ids.length>0&&ids.every(id=>observations.find(o=>o.test===id)!.conditions.find(x=>x.condition===c)!.state==='verified');
+ const differs=new Set(incompatible.flatMap(x=>x.conditions));
+ const derived=required.filter(c=>!differs.has(c)&&verifiedBy(tests.map(t=>t.id),c));
+ const covered=basis?basis.map(t=>t.id):[];
+ const subset=basis?{covered,setAside:tests.map(t=>t.id).filter(x=>!covered.includes(x)),derived:required.filter(c=>verifiedBy(covered,c))}:null;
  const dec=declared?[...new Set(declared)].sort():null;
- return {measurement,required,observations,groups:groups.map(g=>g.map(t=>t.id)),incompatible,derived,declared:dec,
+ return {measurement,required,observations,groups:groups.map(g=>g.map(t=>t.id)),incompatible,derived,subset,declared:dec,
   unsupported:(dec??[]).filter(c=>!derived.includes(c)),notDeclared:dec?derived.filter(c=>!dec.includes(c)):[],rules:ev.rules,rankingInput:false};
 }
 /** D28 on the operational records: the store's test measurements (test_measurements265) behind a catalog dimension, read

@@ -171,21 +171,30 @@ test('S83 D28: validity per observation; incomplete observations are set aside, 
  const q2=withReaderConditions(qk);const f=store('air_fryers');const kf=categoryKnowledge(f,'air_fryers',{qk:q2});
  const t=(id:string,states:Record<string,string>,axes:[string,string][]=[])=>({id,product:id,quantity:null,states,axes});
  const full={compartments_in_use:'one drawer',same_food_load:'0.5 kg fries',completed_doneness:'golden'};
- const d=conditionsMetFromRecords(q2,kf,'energy_per_cooking_task',[t('A',full),t('B',{compartments_in_use:'one drawer',completed_doneness:'golden'})],
-  ['compartments_in_use','same_food_load','completed_doneness']);
- // S82 required every record and so derived only two conditions; S83 (owner review of S82): B is incomplete and set aside
- assert.deepEqual(d.observations.map(o=>[o.test,o.usable]),[['A',true],['B',false]]);
+ const q=(id:string,states:Record<string,string>)=>({id,product:id,quantity:tq('energy',[],null,id),states,axes:[] as [string,string][]});
+ const partial={compartments_in_use:'one drawer',completed_doneness:'golden'};
+ const d=conditionsMetFromRecords(q2,kf,'energy_per_cooking_task',[q('A',full),q('B',partial),q('C',full)],['compartments_in_use','same_food_load','completed_doneness']);
+ // S82 required every record and so derived only two conditions; S83 (owner review of S82): B is incomplete and set
+ // aside, the complete tests of two products are used together
+ assert.deepEqual(d.observations.map(o=>[o.test,o.usable]),[['A',true],['B',false],['C',true]]);
  assert.equal(d.observations[1].conditions.find(c=>c.condition==='same_food_load')!.state,'not_verifiable');
- assert.deepEqual(d.derived,['compartments_in_use','completed_doneness','same_food_load']);assert.deepEqual(d.unsupported,[]);assert.equal(d.rankingInput,false);
- // no usable observation: nothing derived, every declared condition unsupported
+ // the dimension as compiled holds B, so its food load is not shown for the dimension (S82's answer, kept) ...
+ assert.deepEqual([d.derived,d.unsupported],[['compartments_in_use','completed_doneness'],['same_food_load']]);
+ // ... and the complete tests of two products, used together with B set aside, show all three
+ assert.deepEqual(d.subset,{covered:['A','C'],setAside:['B'],derived:['compartments_in_use','completed_doneness','same_food_load']});assert.equal(d.rankingInput,false);
+ // S83 battery regression (S2-K-af-1): ONE product's complete test does not show a condition of comparing it with others
+ const one=conditionsMetFromRecords(q2,kf,'energy_per_cooking_task',[q('A',full),q('B',partial)],['compartments_in_use','same_food_load','completed_doneness']);
+ assert.deepEqual([one.derived,one.subset,one.unsupported],[['compartments_in_use','completed_doneness'],null,['same_food_load']]);
+ // no complete observation: no subset; the dimension shows only what its record shows; the declaration is unsupported
  const none=conditionsMetFromRecords(q2,kf,'energy_per_cooking_task',[t('B',{completed_doneness:'golden'})],['same_food_load']);
- assert.deepEqual([none.derived,none.unsupported],[[],['same_food_load']]);
+ assert.deepEqual([none.derived,none.subset,none.unsupported],[['completed_doneness'],null,['same_food_load']]);
  // two complete observations with a documented difference are not used together
  const e=(id:string,load:string)=>({id,product:id,quantity:tq('energy',[],null,id),states:{...full,same_food_load:load},axes:[] as [string,string][]});
  const g=conditionsMetFromRecords(q2,kf,'energy_per_cooking_task',[e('C','0.5 kg fries'),e('D','1 kg wings')]);
  assert.equal(g.groups.length,2);assert.deepEqual(g.incompatible.map(x=>x.conditions),[['same_food_load']]);
  // reader codes of the tests show the compartments condition (whole: the condition is about the compartments alone)
- const c=conditionsMetFromRecords(q2,kf,'two_zone_cooking_test',[t('A',{},readerConditionAxes(['all_compartments']).axes),t('B',{},readerConditionAxes(['all_compartments']).axes)],['compartments_in_use']);
+ const z=(id:string)=>({id,product:id,quantity:tq('energy',[],null,id),states:{},axes:readerConditionAxes(['all_compartments']).axes});
+ const c=conditionsMetFromRecords(q2,kf,'two_zone_cooking_test',[z('A'),z('B')],['compartments_in_use']);
  assert.deepEqual(c.derived,['compartments_in_use']);assert.deepEqual(c.unsupported,[]);
  // no tests: nothing is met
  assert.deepEqual(conditionsMetFromRecords(q2,kf,'two_zone_cooking_test',[],['compartments_in_use']).derived,[]);

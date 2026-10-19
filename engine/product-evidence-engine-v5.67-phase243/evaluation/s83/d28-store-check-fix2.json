@@ -1,0 +1,164 @@
+{
+ "schema": "pee.s83.d28-store-check.v1",
+ "category": "air_fryers",
+ "rows": 12,
+ "validated": 3,
+ "catalogTests": 3,
+ "dimensions": [
+  {
+   "dimension": "energy_empty_run",
+   "measure": "energy_empty_run",
+   "catalogDeclared": [],
+   "asCatalogMeasure": {
+    "observations": 3,
+    "usable": 3,
+    "groups": [
+     2,
+     1
+    ],
+    "incompatiblePairs": 0,
+    "required": [],
+    "derived": [],
+    "subset": {
+     "covered": 2,
+     "setAside": 1,
+     "derived": []
+    },
+    "perCondition": {},
+    "unsupported": [],
+    "notDeclared": []
+   },
+   "withoutReaderAxes": {
+    "observations": 3,
+    "usable": 3,
+    "groups": [
+     3
+    ],
+    "incompatiblePairs": 0,
+    "required": [],
+    "derived": [],
+    "subset": {
+     "covered": 3,
+     "setAside": 0,
+     "derived": []
+    },
+    "perCondition": {}
+   },
+   "askedAsOtherMeasurements": {
+    "batch_cooking_test": {
+     "observations": 3,
+     "usable": 0,
+     "groups": [],
+     "incompatiblePairs": 0,
+     "required": [
+      "same_food_load"
+     ],
+     "derived": [],
+     "subset": null,
+     "perCondition": {
+      "same_food_load": {
+       "verified": 0,
+       "not_verifiable": 3
+      }
+     }
+    },
+    "cooking_evenness_test": {
+     "observations": 3,
+     "usable": 0,
+     "groups": [],
+     "incompatiblePairs": 0,
+     "required": [
+      "completed_doneness",
+      "same_food_load"
+     ],
+     "derived": [],
+     "subset": null,
+     "perCondition": {
+      "completed_doneness": {
+       "verified": 0,
+       "not_verifiable": 3
+      },
+      "same_food_load": {
+       "verified": 0,
+       "not_verifiable": 3
+      }
+     }
+    },
+    "cooking_outcome_assessment": {
+     "observations": 3,
+     "usable": 0,
+     "groups": [],
+     "incompatiblePairs": 0,
+     "required": [
+      "completed_doneness",
+      "same_food_load"
+     ],
+     "derived": [],
+     "subset": null,
+     "perCondition": {
+      "completed_doneness": {
+       "verified": 0,
+       "not_verifiable": 3
+      },
+      "same_food_load": {
+       "verified": 0,
+       "not_verifiable": 3
+      }
+     }
+    },
+    "energy_per_cooking_task": {
+     "observations": 3,
+     "usable": 0,
+     "groups": [],
+     "incompatiblePairs": 0,
+     "required": [
+      "compartments_in_use",
+      "completed_doneness",
+      "same_food_load"
+     ],
+     "derived": [],
+     "subset": null,
+     "perCondition": {
+      "compartments_in_use": {
+       "verified": 2,
+       "not_verifiable": 1
+      },
+      "completed_doneness": {
+       "verified": 0,
+       "not_verifiable": 3
+      },
+      "same_food_load": {
+       "verified": 0,
+       "not_verifiable": 3
+      }
+     }
+    },
+    "two_zone_cooking_test": {
+     "observations": 3,
+     "usable": 2,
+     "groups": [
+      2
+     ],
+     "incompatiblePairs": 0,
+     "required": [
+      "compartments_in_use"
+     ],
+     "derived": [],
+     "subset": {
+      "covered": 2,
+      "setAside": 1,
+      "derived": [
+       "compartments_in_use"
+      ]
+     },
+     "perCondition": {
+      "compartments_in_use": {
+       "verified": 2,
+       "not_verifiable": 1
+      }
+     }
+    }
+   }
+  }
+ ]
+}

@@ -575,7 +575,7 @@
    "since": "S81 (docs/plans/s81-knowledge-operational.md)",
    "item": "The S81 reasoning (kr81.2, link-rules v8) checks every condition the teaching requires, but no reader records most of them: on the S80 pages (spent), of 153 conditions required for 63 linked values, 65 have no quantity-knowledge axis and need concept-level capture that no reader performs, 15 are typed but not stated, 38 typed and shown, 35 identity. The operational test-lead reader (Phase265) records conditions as protocol-specific codes (load_empty, duration_1h, setpoint_c, all_compartments) that the knowledge cannot consult, so the store rows cannot even be identified as empty-run or cooking-task energy (no load axis).",
    "resolvedStatus": "open",
-   "progress": "S81: soundness fixed (a requirement PEE cannot check is no longer treated as met); capture not implemented; S82: reader codes reach the reasoning through reader-conditions.v1 overlay axes (load, compartments): 4 of 8 store energy rows identified as empty run (shadow); setpoint/duration/negation and 1G setpoint labels still not typed"
+   "progress": "S81: soundness fixed (a requirement PEE cannot check is no longer treated as met); capture not implemented; S82: reader codes reach the reasoning through reader-conditions.v1 overlay axes (load, compartments): 4 of 8 store energy rows identified as empty run (shadow); setpoint/duration/negation and 1G setpoint labels still not typed; S83: Phase225 negation fixed before the codes gain weight (probe v3: 'empty' as a verb and negated empty/preheat no longer read as conditions; counterexamples in tests/s83_consolidation); the codes reach the ranking path only in the shadow derivedConditions trace; setpoint/duration and Phase271 result codes still outside the shared axes"
   },
   {
    "id": "D28",
@@ -583,7 +583,7 @@
    "since": "S81",
    "item": "ra.2 checks the conditions a measurement requires against KnowledgeDimension181.conditionsMet, a list the catalog itself declares; neither compileCatalog268 nor any reader derives it from the records of the original tests (which carry limitation codes, not condition states). The authorisation trusts a label instead of deriving what it permits (Phase265 lesson). kr81 can derive condition states from records, but catalogs do not carry them.",
    "resolvedStatus": "open",
-   "progress": "S81: reported, not changed (shadow mechanism only; ranking rules are owner decisions); S82: conditionsMetFromRecords derives met conditions from test records in shadow (owner: design and experimental verification authorised, public authorisations unchanged)"
+   "progress": "S81: reported, not changed (shadow mechanism only; ranking rules are owner decisions); S82: conditionsMetFromRecords derives met conditions from test records in shadow (owner: design and experimental verification authorised, public authorisations unchanged); S83: validity per observation (each required condition verified or not verifiable, with its origin); two answers kept apart: the dimension as compiled (every observation verifies, no documented difference) and the largest comparable group of complete tests of two or more products (incomplete tests never discard complete ones; one product's test never shows a comparison condition); traced on the ranking path as authorisationTrace.derivedConditions, shadow only (no public decision changed, VALIDATED_NEW_AUTHORISATIONS still empty); real catalog: 3 validated tests of one measurement that requires no condition, so no recovery is observable on real data yet"
   },
   {
    "id": "D29",
@@ -591,7 +591,7 @@
    "since": "S82 (docs/plans/s82-architecture-check.md)",
    "item": "The same teaching relation is read differently on the user path: requires_condition pooled per need in goalAssessment269 and comparativeEvidence271 (per measurement in ra.2 and knowledge_link); 'not met' / 'unmet' texts for conditions not recorded (ra.1/ra.2 reason, Phase271 comparable_with_unmet_conditions); Phase271 comparable on an empty condition list; Phase268 whole-appliance compartments never enforced; Phase225 condition regexes without negation; any measured_by read as establishing in goalAssessment269.relevantMeasures and the Phase248 journey.",
    "resolvedStatus": "open",
-   "progress": "S82: census and classification only; changes need owner decision (user-visible texts and authorisation paths)"
+   "progress": "S82: census and classification only; changes need owner decision (user-visible texts and authorisation paths); S83 (owner decision S83): requires_condition read per measurement on the user path (conditionsByMeasure; 19 wrongly pooled lists in 8 measure/outcome pairs on the 206 regression requests); three states verified / incompatible / not verifiable in Phase271 and the advice texts; refusal renamed conditions_not_verified; Phase225 negation fixed. Still open: Phase268 whole-appliance compartments default, relevantMeasures and the Phase248 journey reading any measured_by as establishing"
   }
  ],
  "authenticValidationRequirement": {
