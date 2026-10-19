@@ -25,9 +25,11 @@ export interface RequestConstraint253 extends Constraint253 {
 export interface ConstraintExtraction253 {constraints:RequestConstraint253[];unmapped:{span:string;reason:string}[]}
 
 const MIN_BEFORE=/(?:at least|minimum(?: of)?|min\.?|no less than|not less than|more than|over|above|bigger than|larger than|greater than|upwards of|longer than|at minimum)\s*$/;
-const MIN_AFTER=/^\s*(?:\+|or (?:more|bigger|larger|longer|above|higher)|minimum|min\b|at least)/;
+// S86b (capability audit, shared gap): the bound may follow the property word ("45 cm wide or less", "30 hours long minimum")
+const PROP_WORD=String.raw`(?:(?:wide|high|tall|deep|long|heavy|across)\s+)?`;
+const MIN_AFTER=new RegExp(String.raw`^\s*${PROP_WORD}(?:\+|or (?:more|bigger|larger|longer|above|higher)|minimum|min\b|at least)`);
 const MAX_BEFORE=/(?:at most|maximum(?: of)?|max\.?|no more than|not more than|less than|under|below|up to|no bigger than|no larger than|no wider than|no taller than|no higher than|no deeper than|no heavier than|smaller than|lighter than|narrower than|shorter than|within)\s*$/;
-const MAX_AFTER=/^\s*(?:or (?:less|smaller|narrower|lighter|shorter|under)|max\b|maximum|at most|or below)/;
+const MAX_AFTER=new RegExp(String.raw`^\s*${PROP_WORD}(?:or (?:less|smaller|narrower|lighter|shorter|under)|max\b|maximum|at most|or below)`);
 const SPACE=/\b(?:space|opening|gap|cupboard|shelf|alcove|cabinet|recess|nook|fits?|fit in|fit into|fit inside|fit under)\b/;
 const NEGATION=/\b(?:not|never|n't|no need|don't need|doesn't need|does not need|do not need|needn't)\b/;
 const BOUND_NEGATIONS=/\b(?:no|not) (?:more|less|bigger|larger|wider|taller|higher|deeper|heavier)\b/g;
@@ -58,8 +60,9 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const lowNum=f.low!==undefined?String(f.low):null,mainNum=String(f.high??f.value);const plus=/^\s*\+/.test(text.slice(f.end));
   // Clause-local context: the words before the quantity back to the last sentence break, and a few words after.
   // A sentence break is punctuation followed by a space or the end, never a decimal point ("57.5").
-  let clauseStart=0;for(const b of lower.slice(0,m.index).matchAll(/[.;!?\n](?=\s|$)/g))clauseStart=b.index!+1;
-  const before=lower.slice(Math.max(clauseStart,m.index-60),m.index);const after=lower.slice(m.index+m[0].length,m.index+m[0].length+40).split(/[.;!?\n](?=\s|$)/)[0];
+  // S86b (capability audit, shared gap): the dot of "min.", "max." or "approx." is not a sentence break
+  let clauseStart=0;for(const b of lower.slice(0,m.index).matchAll(/(?<!\b(?:min|max|approx|ca))[.;!?\n](?=\s|$)/g))clauseStart=b.index!+1;
+  const before=lower.slice(Math.max(clauseStart,m.index-60),m.index);const after=lower.slice(m.index+m[0].length,m.index+m[0].length+40).split(/(?<!\b(?:min|max|approx|ca))[.;!?\n](?=\s|$)/)[0];
   const ctx=before+' '+after;
   // Negated comparatives first: "no bigger than" is a maximum, "no less than" a minimum.
   let bound:'min'|'max'|null=/(?:no|not) (?:less|fewer|smaller|lower|shorter) than\s*$/.test(before)?'min':/(?:no|not) (?:more|bigger|larger|wider|taller|higher|deeper|heavier|longer) than\s*$/.test(before)?'max'
@@ -79,7 +82,7 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   else if(dim==='length'){
    // The word right after the quantity names it ("57.5 cm wide and 36.5 cm high"); otherwise the clause around it.
    const pick=(x:string)=>/^\s*(?:\S+\s+)?(?:wide|width|across|broad|wider)\b/.test(x)?'width':/^\s*(?:\S+\s+)?(?:tall|high|height|taller|higher)\b/.test(x)?'height':/^\s*(?:\S+\s+)?(?:deep|depth|deeper)\b/.test(x)?'depth':null;
-   property=pick(after)??(/\b(?:wide|wider|width|across|broad|narrower)\b/.test(before)?'width':/\b(?:tall|taller|high|higher|height)\b/.test(before)?'height':/\b(?:deep|deeper|depth)\b/.test(before)?'depth':null);}
+   property=pick(after)??(/\b(?:wide|wider|width|across|broad|narrower)\b/.test(before)?'width':/\b(?:tall|taller|high|higher|height|shorter)\b/.test(before)?'height':/\b(?:deep|deeper|depth)\b/.test(before)?'depth':null);}
   else if(dim==='mass')property=/\b(?:weigh|weighs|weight|heavy|heavier|light|lighter|lightweight)\b/.test(ctx)?'weight':null;
   else if(dim==='power')property=bound==='min'||/\b(?:power|powerful|watt|watts|wattage)\b/.test(ctx)?'power':null;
   else if(dim==='duration')property=/\b(?:battery|playback|play time|playtime|listening|charge|charges|lasts?)\b/.test(ctx)?'battery_life':null;

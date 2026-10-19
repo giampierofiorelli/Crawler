@@ -177,6 +177,9 @@ export function purchaseTarget253(text:string,registry:readonly CategoryEntry248
      if(np.length&&/^(?:a|an|the)$/.test(toks[i])){np.pop();break;}
      // Phase269 (development D7): after a category name, an adverb or a verb starts the predicate ("which air fryer
      // actually cooks ..."), not a longer noun phrase. Phase271 adds the verbs of development requests WD3 and PD2.
+     // S86b (capability audit, shared gap: "a dishwasher quieter than 44 dB(A)" and "a dishwasher using less than 1 kWh" were
+     // out of scope): after a category name, a comparative followed by "than" or an -ing verb starts the predicate too.
+     if(np.length&&categoryAt(np.join(' '))&&(toks[i+1]==='than'||/^[a-z]{2,}ing$/.test(toks[i])))break;
      if(np.length&&categoryAt(np.join(' '))&&(/ly$/.test(toks[i])||/^(?:cooks|makes|gives|uses|has|heats|browns|produces|works|runs|costs|keeps|lets|takes|needs|does|dries|gets)$/.test(toks[i])))break;
      np.push(toks[i]);}
     if(!np.length)break;

@@ -252,7 +252,8 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
   // a unit spelled in letters may follow a hyphen ("a 2-inch hair", "a 30-minute run"); a hyphen before a digit is a range
   const tryAt=(k:number)=>{const after=text.slice(k);const lead=/^(?:\s|-(?=\p{L}{2}))?/u.exec(after)![0].length;const win=after.slice(lead,lead+48);
    // candidate ends: every boundary in the window, longest first
-   const ends=[...new Set([...win.matchAll(/(?=[\s,;:)\]|])/g)].map(x=>x.index!).concat([win.length]))].filter(e=>e>0).sort((a,b)=>b-a);
+   // S86b (capability audit: "5 litres+" was read by the pre-S85 request reader, lost in S85): a '+' after the unit ends it
+   const ends=[...new Set([...win.matchAll(/(?=[\s,;:)\]|+])/g)].map(x=>x.index!).concat([win.length]))].filter(e=>e>0).sort((a,b)=>b-a);
    for(const e of ends){let cand=win.slice(0,e);let pu=parseUnit(qk,cand);if(!pu&&cand.endsWith('.')){cand=cand.slice(0,-1);pu=parseUnit(qk,cand);}if(!pu)continue;
     const next=win.slice(cand.length);
     // short symbols that are also English words ("in", "h", "g") need punctuation or the end after them, not another word
@@ -267,6 +268,12 @@ function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
   const r=rg?tryAt(rangeEnd):null;
   if(rg&&r){const f=withBasis(qk,text,{start:s,end:r.start+r.len,surface:text.slice(s,r.start+r.len),value:null,low,high,unit:r.unit,unitSurface:text.slice(r.start,r.start+r.len)});out.push(f);lastEnd=f.end;continue;}
   const u=tryAt(j);if(!u)continue;
+  // S86b (capability audit: lost in S85): "between 3 litres and 5 litres", the unit written after both numbers, is one range
+  if(between){const after=text.slice(u.start+u.len);const r2=/^\s?(?:-|–|—|to|and)\s?((?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/.exec(after);
+   if(r2){const k=u.start+u.len+r2[0].length;const u2=tryAt(k);
+    if(u2&&u2.start-k<=1&&text.slice(u2.start,u2.start+u2.len).toLowerCase()===text.slice(u.start,u.start+u.len).toLowerCase()){
+     const f=withBasis(qk,text,{start:s,end:u2.start+u2.len,surface:text.slice(s,u2.start+u2.len),value:null,low:toNum(m[0]),high:toNum(r2[1]),unit:u2.unit,unitSurface:text.slice(u2.start,u2.start+u2.len)});
+     out.push(f);lastEnd=f.end;continue;}}}
   const f=withBasis(qk,text,{start:s,end:u.start+u.len,surface:text.slice(s,u.start+u.len),value:toNum(m[0]),unit:u.unit,unitSurface:text.slice(u.start,u.start+u.len)});out.push(f);lastEnd=f.end;}
  return out;
 }
