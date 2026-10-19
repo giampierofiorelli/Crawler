@@ -248,3 +248,44 @@ retrieval from validated alignment with explicit match types (exact, close, broa
 against a blind sealed annotation that includes negative pairs sharing words; (ii) a consumer for the validated
 alignments that changes an interpretation, not just an annotation; (iii) richer representation for the status,
 compound-procedure and conflict losses.
+
+## 10. Cycle 3: candidate retrieval versus validated alignment (owner S75)
+
+**Reference.** 120 development and 120 held-out mentions (subjects and objects of translated statements), each with
+up to four candidates from a deliberately liberal retriever (`retrieveConcepts`) plus one control sharing no word;
+blind annotation of every candidate with a SKOS match type and of what each mention denotes (two fresh-context agents
+of the developer model family; protocol `r3/align/prompt.md`). The held-out annotation was sealed by hash before any
+validator existed (`evaluation/r3/align-freeze.json`).
+
+**What the mentions denote.** Development / held-out: measurement or test 24 / 27, outcome 17 / 22, condition 3 / 8,
+product feature 16 / 14, claim or label 9 / 5, source or evidence 13 / 17, other 38 / 27. Fewer than half are of the
+kinds the store has concepts for (measurements, outcomes, conditions); the rest have no concept to align to.
+
+**Identity is rare.** Of 393 / 382 retrieved candidates only 6 / 19 are exact or close; most share words and are
+`related` (79 / 86) or `none` (301 / 272).
+
+**Identifiers scored** (`align-*.json`; identity = exact or close):
+
+| Identifier | Side | identifications | correct | related only | none | identities missed |
+|---|---|---|---|---|---|---|
+| cycle-2 `identifyConcept` (frozen) | development | 14 | 1 | 8 | 5 | 5 of 6 |
+| v0 `alignConcept` (head word, aliases, kind) | development | 4 | 0 | 2 | 2 | 6 of 6 |
+| cycle-2 `identifyConcept`, first run | **held-out** | 21 | 3 (14%) | 14 | 4 | 16 of 19 |
+
+Findings:
+- **Lexical identification is not identification.** On the sealed held-out reference the cycle-2 identifier is right
+  in 3 of 21 identifications and turns `related` concepts into identities 14 times. The census's stage 3a ("identified
+  but not consulted", §9) therefore overstates what PEE identifies; it is a candidate count, not an alignment count.
+  Consumers of cycle 2 used it only where it decided nothing (`deriveSufficiency`: 0 derived) or as an informational
+  field (`proxyLimits.outcome`); no link, force or ranking depended on it.
+- **The real identities need equivalence and hierarchy knowledge**, not word overlap ("physical reduction of aerosol"
+  = fine-particle reduction; "dust defence" ⊂ allergen-particle reduction; "a clinical benefit" = clinical health
+  outcome). The documents hold such knowledge mostly implicitly (table rows listing members under a class, enumerated
+  examples), rarely as explicit definitions.
+- v0 (stricter lexical validation) is worse than abstaining on development; it is kept for its tests but not used.
+
+Next mechanisms, in order: (a) keep `related` as a first-class result that no consumer may read as identity;
+(b) acquire equivalence and broader/narrower relations from document structure (class rows and their members,
+"such as" enumerations, headings over lists), each with provenance and a SKOS type, and score them on the sealed
+held-out reference; (c) concepts for the kinds of things mentions denote and the store lacks (features, claims,
+evidence types), which the representation gaps of §2 also point to.

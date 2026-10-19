@@ -322,3 +322,22 @@ export function retrieveConcepts(phrase:string,candidates:readonly {id:string;al
  return desc.map(d=>{const shared=[...d.all].filter(w=>have.has(w));return {id:d.id,shared,score:shared.reduce((a,w)=>a+idf(w)*(d.name.has(w)?2:1),0)};})
   .filter(x=>x.shared.length).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id)).slice(0,k);
 }
+/** Validation (v0): a candidate stands for the phrase (exact or close) only when an alias of the concept is in the
+ * phrase, or the phrase's head word is a word of the concept's name and the phrase covers most of the name; a candidate
+ * sharing only modifiers or description words is `related`; otherwise `none`. A candidate whose kind contradicts what
+ * the sentence needs in that role (an outcome as the object of "does not establish") is at most `related`. The
+ * alignment is the unique identity-grade candidate; several or none leave the phrase unresolved. */
+export interface Alignment {concept:string|null;status:'aligned'|'unresolved';candidates:{id:string;match:MatchType}[]}
+export function alignConcept(phrase:string,pool:readonly {id:string;kind?:string;aliases?:readonly string[];statement?:string}[],ctx:{role?:'subject'|'object';statementType?:string}={}):Alignment{
+ const cands=retrieveConcepts(phrase,pool,5);const head=contentWords(subjectHead(phrase));const H=head.length?stem(head[head.length-1]):null;
+ const have=new Set(contentWords(phrase).map(stem));
+ const wantKind=ctx.role==='object'&&(ctx.statementType==='not_sufficient'||ctx.statementType==='bears_on_outcome')?'outcome':null;
+ const out:{id:string;match:MatchType}[]=cands.map(c=>{const p=pool.find(x=>x.id===c.id)!;const name=contentWords(p.id).map(stem);
+  const alias=(p.aliases??[]).some(a=>namedPhrases(phrase,[a]).size>0);
+  const covered=name.filter(w=>have.has(w)).length;
+  let match:MatchType=alias||(H!==null&&name.includes(H)&&covered>=Math.max(1,Math.ceil(name.length*0.6)))?'close':name.some(w=>have.has(w))||c.shared.length?'related':'none';
+  if(match==='close'&&wantKind&&p.kind&&p.kind!==wantKind)match='related';
+  return {id:c.id,match};});
+ const ids=out.filter(x=>x.match==='close'||x.match==='exact');
+ return {concept:ids.length===1?ids[0].id:null,status:ids.length===1?'aligned':'unresolved',candidates:out};
+}
