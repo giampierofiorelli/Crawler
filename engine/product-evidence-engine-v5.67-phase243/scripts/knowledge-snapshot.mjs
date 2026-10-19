@@ -5,8 +5,9 @@
  * Snapshot directory: $PEE_SNAPSHOT_DIR, else <clone of pee-knowledge next to Crawler>/snapshot
  * (/home/user/pee-knowledge/snapshot in cloud sessions). Never put the snapshot in the public Crawler repository.
  *
- *  node scripts/knowledge-snapshot.mjs load [--force 1]   restore snapshot → $PEE_KNOWLEDGE_DIR (no build needed;
- *                                                          skipped when a live store exists unless --force)
+ *  node scripts/knowledge-snapshot.mjs load [--force 1]   restore snapshot → $PEE_KNOWLEDGE_DIR (no build needed). With a
+ *                                                          live store: replaced only when its journal is behind the
+ *                                                          snapshot's; kept (and reported) when ahead or diverged
  *  node scripts/knowledge-snapshot.mjs save                verified backup of the live store → snapshot/ (needs a build)
  *  node scripts/knowledge-snapshot.mjs sync                if the live store's content differs from the snapshot (or a
  *                                                          snapshot commit is unpushed): save, commit and push
@@ -52,6 +53,32 @@ function fingerprint(file){
  }finally{db.close();}
  return h.digest('hex');
 }
+/** Journal lineage (S80 integrity fix). A container can keep an OLD live store (an earlier session's restore) while the
+ * snapshot moved on: 'load' used to skip whenever a live store existed, and 'sync' would then have saved that stale store
+ * over the newer snapshot. Lineage compares the content events (the journal minus 'backup_written') and schema versions:
+ *  same        identical content;
+ *  live_ahead  the live journal extends the snapshot's (unsaved work), schema not older;
+ *  live_behind the snapshot's journal extends the live one (stale container copy);
+ *  diverged    neither contains the other, or an older live schema claims to be ahead. */
+function journal(file){
+ const db=new DatabaseSync(file,{readOnly:true});
+ try{
+  const schema=db.prepare('PRAGMA user_version').get().user_version;
+  const events=db.prepare("SELECT at,kind,payload_json FROM events WHERE kind<>'backup_written' ORDER BY seq").all()
+   .map(r=>createHash('sha256').update(JSON.stringify([r.at,r.kind,r.payload_json])).digest('hex'));
+  return {schema,events};
+ }finally{db.close();}
+}
+const isPrefix=(a,b)=>a.length<=b.length&&a.every((x,i)=>x===b[i]);
+function lineage(liveFile,snapFile){
+ if(fingerprint(liveFile)===fingerprint(snapFile))return {relation:'same'};
+ const l=journal(liveFile),s=journal(snapFile);
+ const info={liveSchema:l.schema,snapshotSchema:s.schema,liveEvents:l.events.length,snapshotEvents:s.events.length};
+ if(isPrefix(s.events,l.events))return {relation:l.schema>=s.schema?'live_ahead':'diverged',...info};
+ if(isPrefix(l.events,s.events))return {relation:'live_behind',...info};
+ return {relation:'diverged',...info};
+}
+const safeLineage=(a,b)=>{try{return lineage(a,b);}catch(e){return {relation:'diverged',error:String(e?.message??e).slice(0,200)};}};
 /** Hashes of the files under a directory (safety notices), keyed by relative path. */
 function dirHashes(dir){
  if(!existsSync(dir))return '';
@@ -96,7 +123,16 @@ const fail=(reason,extra={})=>{out({synced:false,reason,...extra,
 if(cmd==='load'){
  if(!existsSync(SNAP_DB)){out({loaded:false,reason:'no_snapshot',expected:SNAP_DB,
   fix:'attach and clone the private repository giampierofiorelli/pee-knowledge to /home/user/pee-knowledge, then run this load again'});process.exit(0);}
- if(existsSync(LIVE_DB)&&!F.force){out({loaded:false,reason:'live_store_present',live:LIVE_DB});process.exit(0);}
+ let replacedBecause='forced';
+ if(existsSync(LIVE_DB)&&!F.force){
+  const lin=safeLineage(LIVE_DB,SNAP_DB);
+  if(lin.relation==='same'){out({loaded:false,reason:'live_store_same_as_snapshot',live:LIVE_DB});process.exit(0);}
+  if(lin.relation==='live_ahead'){out({loaded:false,reason:'live_store_has_unsaved_changes',live:LIVE_DB,...lin,
+   action:'run node scripts/knowledge-snapshot.mjs sync to save them'});process.exit(0);}
+  if(lin.relation==='diverged'){out({loaded:false,reason:'live_store_diverged_from_snapshot',live:LIVE_DB,...lin,
+   action:'NOT replaced and NOT synced: compare both stores; load --force 1 keeps the live file as .replaced-* and restores the snapshot'});process.exit(0);}
+  replacedBecause='live_store_behind_snapshot';
+ }
  const m=JSON.parse(readFileSync(SNAP_MANIFEST,'utf8'));
  if(sha(SNAP_DB)!==m.sha256){out({loaded:false,reason:'snapshot_hash_mismatch'});process.exit(1);}
  mkdirSync(LIVE_DIR,{recursive:true});
@@ -104,7 +140,7 @@ if(cmd==='load'){
   for(const x of ['-wal','-shm'])if(existsSync(LIVE_DB+x))renameSync(LIVE_DB+x,kept+x);}
  copyFileSync(SNAP_DB,LIVE_DB+'.tmp');renameSync(LIVE_DB+'.tmp',LIVE_DB);
  if(existsSync(SNAP_NOTICES))cpSync(SNAP_NOTICES,LIVE_NOTICES,{recursive:true});
- out({loaded:true,live:LIVE_DB,sha256:m.sha256,counts:m.counts});
+ out({loaded:true,live:LIVE_DB,sha256:m.sha256,counts:m.counts,replaced:replacedBecause});
 }else if(cmd==='save'){
  const r=await save();if(!r.saved){out(r);process.exit(1);}
  out({...r,next:'node scripts/knowledge-snapshot.mjs sync (commits and pushes pee-knowledge)'});
@@ -117,6 +153,11 @@ if(cmd==='load'){
  if(changed){
   // Another session pushed a newer snapshot: a binary store cannot be merged, so it is never overwritten silently.
   if(git('rev-list','--count','HEAD..origin/main')!=='0')fail('remote_snapshot_newer',{hint:'another session changed pee-knowledge; reconcile by hand (load --force would discard the local changes)'});
+  // S80: never save a live store that does not contain the snapshot's whole history over it (a stale container copy
+  // would otherwise replace newer knowledge).
+  if(existsSync(SNAP_DB)){const lin=safeLineage(LIVE_DB,SNAP_DB);
+   if(lin.relation==='live_behind')fail('live_store_behind_snapshot',{...lin,hint:'run node scripts/knowledge-snapshot.mjs load (restores the newer snapshot)'});
+   if(lin.relation==='diverged')fail('live_store_diverged_from_snapshot',{...lin,hint:'not saved: compare both stores before choosing one'});}
   const r=await save();if(!r.saved)fail(r.reason);
  }
  try{

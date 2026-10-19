@@ -127,6 +127,9 @@ Never claim to have read a file you have not opened. In reports, say which secti
 
 **Infrastructure**
 
+- **One Claude session per branch at a time** (owner S80). Parallel work goes on separate branches with controlled
+  integration. Before working, `git fetch` and check that no other session is pushing to the branch.
+
 - **One code repository:** `giampierofiorelli/Crawler`, which is public.
 - **Private SQLite store** in `$PEE_KNOWLEDGE_DIR`, with verified backup and restore.
   - Its persistent snapshot lives only in the **private** repository `giampierofiorelli/pee-knowledge`.

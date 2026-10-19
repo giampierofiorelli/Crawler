@@ -45,6 +45,8 @@ learning, transfer).
     - The Stop and SessionEnd hooks also run it.
     - It never overwrites a newer remote snapshot.
     - `verify` checks what a new session would restore.
+- **One Claude session per branch at a time** (owner S80). Parallel work goes on separate branches with controlled
+  integration.
 - **Confidential evaluation inputs:** in `$PEE_PRIVATE_EVAL_DIR`.
 - **Access rules:**
   - Never bypass robots rules, 403/429 responses or access controls.

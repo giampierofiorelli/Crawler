@@ -32,7 +32,7 @@ Sources:
 - the higher-order learning decision (`generalization-method.md` Part D, S58);
 - decision S63.
 
-**Current step: R3 — scientific knowledge consulted in reading, with translation fidelity and completeness (owner S68, S72). Read §3 R3 and the §4 checklist before any work.**
+**Current step: R3 — scientific knowledge consulted in reading, with translation fidelity and completeness (owner S68, S72); closing consolidation R3-C with exit criteria C1–C4 (owner S80). Read §3 R3, R3-C and the §4 checklist before any work.**
 
 ## 1. Destination
 
@@ -246,7 +246,38 @@ already translated (160 of 180 supported); it says nothing about what the docume
 - Methodological references, without imposing new frameworks: CommonKADS, Rosetta Statements, ORKG, NeOn.
 - Extend to other categories only afterwards.
 
-### R4 — Evidence linking across the whole document
+### R3-C — Consolidation and validation (owner S80, 2026-10-19; verbatim in `owner-r3-consolidation-2026-10-19.md`)
+
+R3 stays the current step. No feature expansion, no new categories, no LLM experiments, no new large methodological
+research, no tuning on the same data. Exit criteria, all measurable (proposed by Claude from the owner's four
+priorities; the owner reviews R3 closure):
+- **C1 integrity.** Store, code, knowledge and active rules are verifiably in sync:
+  - a session restores a live store that is behind the snapshot;
+  - `sync` never saves a stale or diverged store over a newer snapshot (tests);
+  - every evaluation run records the store schema and journal head, the snapshot commit and the active rule and
+    knowledge versions it used.
+- **C2 decision safety.** End-to-end tests on the request → advice path show three things:
+  - a withheld authorisation never orders products, whatever signed catalog is supplied;
+  - no machine-translated statement reaches any user-facing field;
+  - the two withheld pairs carry a recorded validation status.
+- **C3 independent end-to-end validation.** The setup:
+  - genuinely new realistic requests;
+  - a reference sealed before the run;
+  - a frozen build;
+  - live acquisition only within the authorised budget;
+  - the first run committed unchanged.
+
+  Scored per request and stage: goals understood; evidence needed; sources read; attribution; evidence classification
+  (valid measurement, commercial declaration, insufficient); decision (justified ranking or precise missing
+  evidence). The first failing stage is named.
+- **C4 generalisable improvement.** Corrections made after C3 improve the end-to-end outcome on new material held back
+  from diagnosis and fixing, with both builds run once, and add no new harmful conclusion. Otherwise R3 stays open
+  and the result is reported as it is.
+
+Source discovery is Claude's in C3: PEE has no configured search service (Phase223 needs an operator SearXNG
+endpoint). This is reported as a limit of the path, never as PEE capability.
+
+
 
 - Conditions, modes, methods and products are linked across sentences, headings and tables, with coreference.
 - Every link carries its location and confidence. References: DocRED, SciERC; ACOS and COQE serve as extraction
@@ -346,3 +377,4 @@ tests, principle 2).
 - 2026-10-19: S76 semantic-model experiment stopped. Fresh blind transfer reference (14 identities), first run: lexical 3/15 correct, v1 type-gated 1/4, NLI (deberta-v3-xsmall, concept->phrase) 4/15 with 7 related promoted, LLM Qwen2.5-1.5B 0/5. Costs NLI 0.1 s/pair 0.9 GB; LLM 1.5B 1.8 s/pair 9.3 GB. Criterion (clearly better identity recovery without promoting related) not met; no model integrated. R3 continues on extraction/representation and evidence-role reading.
 - 2026-10-19: S77 architecture audit (docs/plans/r3-knowledge-translation.md §14). Verified: 15 translator defects (fixed; held-out blind fidelity TUNED faithful 367→404, distorted 29→22, units captured 265→289), reader evidence class (role agreement 35→113 of 327, 17 undecidable assertions), Datalog string comparison, orphan relations; evaluation defects (LLM readout, reach table without proposed_method, delta-scorer chain, duplicate limit pairs, circular retrieval claim, several miscounts) corrected. LLM 1.5B re-run with valid readout: still 0 identities (S76 stands). Production ranking: every measured_by authorises and conditions are pooled (phase253_request_advice.ts:172,176): reported, not changed, owner decision. Constraints on R3: store cannot represent conditions/scope/status/negation; identity knowledge absent; same-model evaluation.
 - 2026-10-19: S78 (docs/plans/r3-knowledge-translation.md §15). Ranking authorisation ra.2 in production after a shadow census (ra.1 authorised 38 of 56 pairs incl. 20 inform-only and 5 unassessed; ra.2 15): store v9 relation_assessments (R1+ blind verification recorded: 16 establish, 37 inform only, 3 unclear); conditions per measurement. Store v10 knowledge_statements (6,118 translated statements, never ranking input) and labelled research caveats in advice (subject-only links, blind check 12/16 apply, 0 misleading; TUNED). Translator precision (held-out bad statements 66 -> 26 of 547, TUNED); attribution via prose-discovered names and model codes (s1cd correct 79 -> 93, wrong 5 -> 5; spent sets). Model experiments suspended. Bottleneck that remains: concept identity of document phrases.
+- 2026-10-19: owner decision S80: R3-C consolidation opened (exit criteria C1–C4 above); work moved to one session (the other told to stop); C1 defect found and fixed at once: a container kept a Phase249 v3 live store while the snapshot was v10 (load skipped any existing store; the Stop-hook sync would have saved the stale store over the snapshot). Lineage check on load and sync.
