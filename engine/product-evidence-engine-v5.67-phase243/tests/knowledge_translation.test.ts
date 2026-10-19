@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {describeMeasurement} from '../src/knowledge_link.js';
-import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits,subjectHead} from '../src/knowledge_translation.js';
+import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits,subjectHead,denotationOf,alignWithType,retrieveConcepts} from '../src/knowledge_translation.js';
 
 // R3 (owner S73): PEE's translator of teaching documents and its question-driven acquisition of condition axes.
 // Synthetic text written for these tests (T1: wiring, not evidence about the owner documents).
@@ -152,4 +152,17 @@ test('R3 cycle 2: a limit is about the head of its subject, not a quantity menti
  assert.equal(subjectHead('a particle-only CADR'),'a particle-only CADR');
  const ls=proxyLimits(qk,translateDocument(qk,'OLED burn-in in static high-brightness imagery does not imply the same effect in ordinary viewing.',{source:'d'}).statements);
  assert.equal(ls.length,0,'burn-in is not a luminance value');
+});
+
+test('R3 cycle 3: what a phrase denotes is checked before identity; retrieval decides nothing', ()=>{
+ assert.equal(denotationOf(qk,'the declared CADR on the box'),'claim_or_label');
+ assert.equal(denotationOf(qk,'a smoke CADR test'),'measurement_or_test');
+ assert.equal(denotationOf(qk,'independent laboratory studies'),'source_or_evidence');
+ assert.equal(denotationOf(qk,'the sleep mode'),'product_feature');
+ assert.equal(denotationOf(qk,'a clinical benefit'),'outcome');
+ const pool=[{id:'fine_particle_reduction',kind:'outcome',statement:'Lower fine particle levels in the room.'},{id:'particle_cadr_test',kind:'measurement',statement:'CADR for particles.'}];
+ assert.ok(retrieveConcepts('a declared particle CADR',pool).length>0,'retrieval is liberal');
+ // a declaration shares words with a measurement concept but is not that measurement
+ const a=alignWithType(qk,'a declared particle CADR',pool);assert.equal(a.status,'unresolved');assert.equal(a.denotes,'claim_or_label');
+ assert.ok(a.candidates.every(c=>c.match!=='close'&&c.match!=='exact'));
 });

@@ -341,3 +341,26 @@ export function alignConcept(phrase:string,pool:readonly {id:string;kind?:string
  const ids=out.filter(x=>x.match==='close'||x.match==='exact');
  return {concept:ids.length===1?ids[0].id:null,status:ids.length===1?'aligned':'unresolved',candidates:out};
 }
+
+// Semantic type (R3 cycle 3, owner S75): what a phrase refers to, checked before any identity alignment.
+export type Denotation='measurement_or_test'|'outcome'|'condition'|'product_feature'|'claim_or_label'|'source_or_evidence'|'other';
+interface DenotationCues {version:string;order:Exclude<Denotation,'other'>[];cues:Record<string,string[]>;compatibleKinds:Record<Denotation,string[]>}
+let cachedDn:DenotationCues|null=null;
+export function loadDenotationCues():DenotationCues{return cachedDn??=JSON.parse(readFileSync(new URL('../../resources/knowledge-translation/denotation-cues.v1.json',import.meta.url),'utf8'));}
+export function denotationOf(qk:QuantityKnowledge,phrase:string):Denotation{
+ const C=loadDenotationCues();const head=subjectHead(phrase);
+ for(const text of [head,phrase]){
+  const claim=namedPhrases(text,C.cues.claim_or_label).size>0;
+  const feature=namedPhrases(text,C.cues.product_feature).size>0;
+  for(const d of C.order){if(d==='measurement_or_test'&&!claim&&!feature){const t=typeSpan(qk,text);if(t.metrics.length||t.kinds.length)return d;}
+   if(namedPhrases(text,C.cues[d]).size)return d;}}
+ return 'other';
+}
+/** Validation v1: the retrieved candidate the cycle-2 identifier would pick becomes an identity only when its kind is
+ * compatible with what the phrase denotes; otherwise it is `related` and the phrase stays unresolved. */
+export function alignWithType(qk:QuantityKnowledge,phrase:string,pool:readonly {id:string;kind?:string;aliases?:readonly string[];statement?:string}[]):Alignment&{denotes:Denotation}{
+ const denotes=denotationOf(qk,phrase);const ok=new Set(loadDenotationCues().compatibleKinds[denotes]??[]);
+ const pick=identifyConcept(phrase,pool);const cands=retrieveConcepts(phrase,pool,5).map(c=>({id:c.id,match:'related' as MatchType}));
+ if(pick&&ok.has(pool.find(p=>p.id===pick)?.kind??'')){const i=cands.findIndex(c=>c.id===pick);if(i>=0)cands[i].match='close';else cands.unshift({id:pick,match:'close'});return {concept:pick,status:'aligned',candidates:cands,denotes};}
+ return {concept:null,status:'unresolved',candidates:cands,denotes};
+}
