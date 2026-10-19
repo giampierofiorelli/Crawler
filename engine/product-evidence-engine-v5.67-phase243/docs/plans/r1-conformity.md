@@ -181,3 +181,102 @@ Resolving it is an architecture question, for the owner (§6).
 3. **R3:** measure whether the teaching changes the newer readers' interpretation. This is the knowledge-isolation
    experiment of R1, repeated once the connection exists.
 4. **R5:** PEE's first own learning mechanism. Today it has none.
+
+## 7. R1 continued (owner review S66, 2026-10-19): are the inherited relations valid, and what is worth keeping?
+
+The owner's added exit criterion: inherited rules and knowledge are evaluated for correctness, utility, generality and
+consequences before reuse, the high-consequence ones first. §1–§6 above are unchanged.
+
+### 7.1 Source support of the inherited relations (`evaluation/r1/relation-verification.json`)
+
+**Method.** The store holds 193 decision relations (`measured_by`, `requires_condition`, `not_sufficient_for`).
+- 180 were checked by 4 fresh-context verifiers, each relation against the owner package it cites (ProVe-style source
+  support). The verifiers were blind to the readers.
+- 13 have no package (toasters, tumble dryers) and stay unverified.
+- The verdict files are private (`pee-knowledge/private-eval/r1v/relations/`); the public file holds counts and hashes.
+
+| | Supported | Partly | Not supported | Not found in the source |
+|---|---|---|---|---|
+| All 180 | 160 | 16 | 1 (televisions) | 3 (a CHOICE method: air fryers, coffee) |
+| `measured_by` (56) | 43 | 10 | 0 | 3 |
+| `requires_condition` (76) | 69 | 6 | 1 | 0 |
+| `not_sufficient_for` (48) | 48 | 0 | 0 | 0 |
+
+**Class:** general scientific principle 97, technical convention 50, method-specific 32, shortcut 1.
+
+**The finding with consequences: what a `measured_by` relation licenses.** Of the 56 `measured_by` relations:
+- 16 **establish** the outcome;
+- 37 only **inform** it (one relevant measurement among several, or a partial indicator);
+- 3 are unclear.
+
+`outcomeAuthorised270` (the ranking gate) treats every `measured_by` relation as establishing the outcome. Its comment
+says so. This is criterion 1 again ("no rule stronger than its evidence"), now in the knowledge, not in a rule.
+- **Consequence today: latent.** The `authorised_ranking` stage is blocked (no catalog ranks on the operational path).
+- **Before ranking is unblocked:** the gate must accept only relations verified as establishing. A relation that only
+  informs may support a labelled partial comparison, never a ranking.
+- Recorded as open debt D26 in `docs/architecture/vertical-contract.json`. Not changed now: the stage is blocked, and the
+  change belongs with the work that unblocks it.
+
+Many package methods are themselves marked PROPOSED by their authors (not validated procedures). A relation "supported"
+by such a method is supported as a proposal, not as an established procedure.
+
+### 7.2 The reversible integration experiment (`evaluation/r1/integration-*.json`)
+
+**Set:** the Phase272 untouched documents (163 reference values). They are **spent**, so this is diagnostic only. The
+link reference (which measurement each value belongs to, or none) was annotated blind and sealed before any arm ran
+(`link-reference-freeze.json`).
+
+| Arm | What runs | Values found | Product correct / wrong / missing | Link correct / wrong measurement / linked where none applies | Decision-usable and correct |
+|---|---|---|---|---|---|
+| A | older reader + teaching (extraction plan) | 67 | 52 / 15 / 0 | 27 / 12 / 13 | 17 |
+| B | newer reader, no teaching | **138** | **118** / 14 / 6 | — | — |
+| C1 | newer reader + the inherited lexical link | 138 | 118 / 14 / 6 | 33 / 11 / **23** | **27** |
+| C2 | newer reader + a typed link through a seam (the QK kind selects the measurement; taught terms only choose among candidates) | 138 | 118 / 14 / 6 | 13 / 8 / **2**; 79 left ambiguous | 12 |
+| C2v | C2 with only source-verified relations | identical to C2 | | | |
+| K | ablation: kind only, no teaching | 138 | 118 / 14 / 6 | 4 linked | — |
+
+**What it shows:**
+1. **The newer reader is the better reading base.** It finds twice as many values (138 vs 67) and attributes more of
+   them correctly (118 vs 52), with no teaching.
+2. **The inherited lexical link is a shortcut, not knowledge** (`linkToMeasure272`: one shared dimension word is
+   enough, ties broken alphabetically). Used on the newer reader it gives the most usable values (27), but it links 23
+   values to a measurement where the reference says none applies. That is the error that becomes false evidence.
+3. **The typed link is cautious.** It links almost nothing wrongly where none applies (2), but leaves 79 values
+   ambiguous: the taught measurements of a category are often several of one kind (for example two sound levels).
+   Telling them apart needs the condition and method knowledge the relations already hold, not more words.
+4. **Verification removed no link** (C2v = C2). The defects are in how knowledge is connected, not in the relations.
+5. **Without teaching, almost nothing is linked:** the kind alone (K) makes 4 links in all, against 33 correct with
+   the teaching (C1). The teaching's effect is real, and it is lost without a connection.
+
+**Exposure.** Some annotators' and verifiers' hand-back summaries mentioned reference details after the C2 design was
+written (for example: no cleaning-time measurement is taught for purifiers; TV brightness without SDR/HDR is
+ambiguous). No rule was written from them. Any later arm on this set is tuned.
+
+### 7.3 What is worth keeping (correctness, utility, generality, consequences)
+
+| Inherited element | Verdict | Reason |
+|---|---|---|
+| The teaching's relations | **keep, with provenance and verdict** | 160 of 180 supported; 1 not supported and 3 not found are marked |
+| `measured_by` as ranking authority | **restrict** (D26) | 37 of 56 only inform the outcome |
+| The lexical link (`linkToMeasure272`) | **do not migrate** | a shortcut; 23 links where none applies |
+| The older plan-guided reader | **keep running, do not retire now** | it feeds the store and the advice; diagnostic reference only |
+| The newer reader | **proposed reading base, through the seam** | more values, better attribution |
+
+**Not yet addressed: trade-off comparisons.** The owner noted that some comparisons across states are legitimate (each
+product at its highest setting; noise at the rated CADR point). kr.3 labels such pairs "not shown equal", which is a
+label, not a refusal, but no rule represents a declared cross-state comparison. That is an R2 question.
+
+### 7.4 R1 exit criteria: status
+
+| Criterion | Status |
+|---|---|
+| 1. Rules no stronger than the evidence, also in combination | met for the rules (§2); a knowledge-level overclaim found and recorded (§7.1, D26) |
+| 2. Knowledge, rules and hand-coded behaviour told apart | met (§1) |
+| 3. Effect of scientific knowledge, or why none | met (§4, and §7.2: 4 links without teaching, 33 correct with it) |
+| 4. True status of learning mechanisms | met (§5) |
+| 5. Inherited rules and knowledge evaluated before reuse | met proportionately: 180 relations source-checked, the lexical link and both readers measured; 13 relations without a package remain |
+
+**Proposal for the owner (architecture, R2):** make the newer reader the reading base and connect the teaching to it
+through the typed seam, using condition and method knowledge to resolve the ambiguous links. Do not migrate the lexical
+link. Keep the older reader as a diagnostic until the new path is shown, on unused documents, to match it on the
+request → advice path. Ranking authority moves to verified "establishes" relations when ranking is unblocked.

@@ -262,3 +262,7 @@ tests, principle 2).
   stacks.
 - 2026-10-18: owner review of R1 (S66). Added exit criterion: inherited rules and knowledge are validated before reuse;
   the reversible integration experiment A/B/C (+ ablation) decides the architecture. R1 continues.
+- 2026-10-19: R1 continued (S67, `r1-conformity.md` §7). 180 inherited relations source-checked; most `measured_by`
+  relations only inform their outcome (D26). Integration experiment: the newer reader is the better base; the lexical
+  link is a shortcut; the typed link is safe but leaves many values ambiguous. All five exit criteria answered. Awaiting
+  the owner's architecture decision before R2.
