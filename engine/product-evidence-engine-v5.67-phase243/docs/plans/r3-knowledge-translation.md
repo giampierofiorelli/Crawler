@@ -369,3 +369,47 @@ annotators' own type, 23 / 6 (26%); without type, 64 / 9 (14%). No threshold sep
 identity from a related concept (precision ≤ 33% at every setting tried). What remains possible without a semantic
 validator: consumers that need only `related` links (never decisions), the semantic-type guard (78% fewer false
 identities), and quantity-typed knowledge, which does work (proxy limits, acquired axes).
+
+## 13. Bounded semantic-model experiment (owner S76): stopped
+
+Shadow-only feasibility experiment, outside PEE (`scripts/r3-semantic/validate.py`, separate virtual environment and
+model cache outside the repositories; no weights committed; nothing produced enters the store, links or rankings).
+Candidates: an NLI cross-encoder (`cross-encoder/nli-deberta-v3-xsmall`, Apache-2.0, 71 M parameters) and small
+instruction LLMs (`Qwen2.5-0.5B-Instruct`, `Qwen2.5-1.5B-Instruct`, Apache-2.0), scoring each candidate concept; the
+decision rule (identity threshold, optional semantic-type check, unique identity or `unresolved`) lives in
+`scripts/r3-semantic-score.mjs`. Methods and thresholds were chosen on the two examined references only; a **fresh
+blind reference** (120 mentions, 396 candidates, from the transfer packages televisions, household dishwashers and
+dehumidifiers, never used for alignment) was annotated and sealed by hash before any model touched it
+(`align-freeze.json`, `transfer`), and the arms were frozen before its single first run (`transferRunFreeze`).
+
+**Development (examined references).**
+- NLI, first formulation (shared context in premise and hypothesis): 0 correct identities at every threshold (the
+  shared prefix inflates entailment). Variant c (phrase and concept description, no context): the concept-to-phrase
+  entailment separates real identities (median 0.83) from related (0.01) and unrelated (0.007) candidates on the 6
+  development identities; per mention, best development result 25% precision / 33% recall; on the held-out reference
+  (19 identities) 19% / 16%, no better than the lexical identifier (14% / 16%).
+- LLM 0.5B: 0 correct identities at every threshold. LLM 1.5B: 0 correct identities at every threshold; it scores
+  real identities lower (median 0.14) than hierarchical relations (0.51).
+
+**Fresh blind reference, first run (14 identities):**
+
+| Arm | identifications | correct | precision | recall | wrong: related promoted to identity |
+|---|---|---|---|---|---|
+| lexical identifier (cycle 2) | 15 | 3 | 20% | 21% | 8 |
+| type-gated alignment v1 | 4 | 1 | 25% | 7% | 1 |
+| NLI variant c, concept→phrase ≥ 0.7 | 15 | 4 | 27% | 29% | 7 |
+| LLM 1.5B, identity ≥ 0.5, type gate | 5 | 0 | 0% | 0% | 1 |
+
+Semantic type on new categories: 40 / 120 correct (33%).
+
+**Costs (CPU, 4 threads).** NLI: 0.10–0.13 s per pair, 0.9 GB memory, 283 MB weights. LLM 0.5B: 0.61 s per pair,
+3.3 GB. LLM 1.5B: 1.76 s per pair, 9.3 GB (float32; bfloat16 on CPU was far slower). Runtime environment 1.2 GB
+(PyTorch CPU and transformers). Free to download; not free to run: a 1.5B validator over a category's ~1,000 mentions
+with 3–5 candidates each is about 1.5–2.5 hours of CPU per run.
+
+**Decision (S76 criterion: a clearly better recovery of correct identities on fresh blind data without promoting
+related concepts to identities).** Not met. The best arm on fresh data (NLI) recovers 4 of 14 identities against 3 for
+the lexical identifier, and still promotes 7 related concepts to identity. The experiment is stopped; no model is
+integrated; the harness is kept for reproduction. R3 continues on the other established bottlenecks (§9): extraction
+and representation of status, compound procedures, expert judgements and conflicts; reading of the evidence role
+(declared or measured) of page values.
