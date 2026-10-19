@@ -212,6 +212,29 @@ or reused.
 - **Exit:** an ablation shows a gain attributable to knowledge, not to added words, on documents and categories not
   used to build it, with the complexity accounted for.
 
+**Consolidated R3 brief (owner, 2026-10-19, S73; verbatim in `owner-r3-brief-2026-10-19.md`).** Operative summary:
+- inventory the owner documents actually available (names, paths, versions); prefer air purifiers, coffee, air fryers;
+- source-first inventory of the documents' knowledge (mechanisms, physical/chemical relations, causal and conditional
+  claims, methods, compound procedures, quantitative evidence, expert judgements, limitations, conflicts,
+  applicability, consumer outcomes); compare with the store: correct / partial / distorted / missing /
+  represented-but-unused;
+- representational adequacy and genuine gaps, keeping principle / source observation / expert judgement / hypothesis /
+  verified evidence apart; teaching is never promoted to validated proof;
+- the smallest general mechanism **inside PEE** that acquires knowledge from documents with provenance, scope,
+  uncertainty and reversible validation, reusing QK/KR/WD/QE/FC and the store (Claude's manual inventory is not PEE's
+  capability);
+- fidelity in both directions (document → structure → checkable statement): omissions, distortions, unjustified
+  inference;
+- operational benefit by before/after and knowledge ablation, separating base-reader limits;
+- held-out sections or groups; same-model blind annotation is not independent human validation;
+- references: CommonKADS (domain / inference / task), Rosetta Statements (typed statements that render back to a
+  checkable sentence), ORKG (questions, methods, conditions, findings, comparability), NeOn (reuse, no duplicate
+  ontologies), Functional Basis, SAREF;
+- diagnostic cases (empty-run vs cooking energy, SDR/HDR, aged filter, compound cost) are tests of general mechanisms,
+  never category recognisers;
+- **success:** a reusable translation/consultation mechanism with a measured improvement beyond vocabulary, with
+  traceable, bounded conclusions. Shadow only; no acquisition; original sources not retrieved.
+
 **Translation fidelity and completeness are a core part of R3 (owner, 2026-10-19, S68).** R1 checked the relations
 already translated (160 of 180 supported); it says nothing about what the documents hold that was never translated
 (explanations, conditions of applicability, causal mechanisms, qualitative expert observations).
