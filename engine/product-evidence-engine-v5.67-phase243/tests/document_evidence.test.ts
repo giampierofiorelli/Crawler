@@ -125,3 +125,12 @@ test('audit S77 (A1-16): a review that declares its own test covers its narrativ
  assert.equal(at(plain,'15 minutes').evidenceClass,'unknown','no declared test on the page: the narrative alone does not say who measured');
  assert.equal(at(read(body,'','retailer'),'15 minutes').evidenceClass,'manufacturer_declared','a retailer page is never a test');
 });
+test('audit S78: products named only in prose by brand and model code are found; a code alone refers to its product; an opening "This"/"It" keeps values with the reviewed product', ()=>{
+ const body='<h1>Big TV comparison</h1><p>We compared the Hisense UR8 with the Samsung QN80H.</p><p>The QN80H registered 1,189 nits in Filmmaker Mode.</p><p>Measuring the UR8 in a 10% window, it clocked 2,087 nits.</p><nav><a>Samsung Z99X deals</a></nav>';
+ const r=read(body,'','editorial');
+ assert.deepEqual(r.products.map(p=>p.name??p).sort(),['Hisense UR8','Samsung QN80H'],'a name seen once in navigation is not a product of the page');
+ assert.equal(at(r,'1,189 nits').product,'Samsung QN80H');assert.equal(at(r,'2,087 nits').product,'Hisense UR8');
+ const rev=read('<h1>Acme P5 air purifier review</h1><h2>Acme P5</h2><p>This purifier cleared the room in 21 minutes, faster than the Brandx Q7 (30 minutes). The Brandx Q7 is pricier.</p>','','editorial');
+ assert.match(at(rev,'21 minutes').product??'',/^Acme P5/,'the opening "This" refers to the reviewed product');
+ assert.equal(read(body,'','retailer').products.some(p=>(p.name??p)==='Hisense UR8'),false,'no prose discovery on a retailer page');
+});

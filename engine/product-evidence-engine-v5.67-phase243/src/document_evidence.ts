@@ -136,7 +136,13 @@ function inventory(structured:readonly {name:string;source:string}[]):Inventory{
  const coreOf=(n:string)=>{const tk=words(n.replace(/[\/&|,(].*$/,''));const d=tk.findIndex(x=>/\d/.test(x));const c=d>=1?tk.slice(0,d+1):tk.slice(0,3);return c.length>=2&&c.length<tk.length?c.join(' '):null;};
  const cores=new Map<string,string[]>();for(const n of names){const c=coreOf(n.name);if(c)cores.set(normText(c),[...(cores.get(normText(c))??[]),n.name]);}
  const coreRe=[...cores].filter(([c,fs])=>fs.length===1&&!names.some(n=>normText(n.name)===c)).map(([,fs])=>({name:fs[0],full:coreOf(fs[0])!,re:mk(coreOf(fs[0])!)}));
- const re=[...names.map(n=>({name:n.name,full:n.name,re:mk(n.name)})),...coreRe,
+ // audit S78: the model code alone ("the QN80H registered", "the B5's 668 nits"), a token with letters and digits that is
+ // unique among the names; matched case-sensitively, never a size, resolution or year ("65-inch", "4K", "2025")
+ const codeOf=(n:string)=>words(n.replace(/[\/&|,(].*$/,'')).filter(t=>/[A-Za-z]/.test(t)&&/\d/.test(t)&&t.length>=2&&!/^\d+(?:-?(?:inch|in|cm|mm|l|kg|w|hz|k|p|gb|tb|mp|bar)|"|”)$/i.test(t)&&!/^[48]K$/i.test(t)&&!/^\d+(?:st|nd|rd|th)$/i.test(t));
+ const codes=new Map<string,string[]>();for(const n of names)for(const c of new Set(codeOf(n.name)))codes.set(c,[...(codes.get(c)??[]),n.name]);
+ const mkCase=(s:string)=>new RegExp('(?<![\\p{L}\\p{N}])'+esc(s)+'(?![\\p{L}\\p{N}])','gu');
+ const codeRe=[...codes].filter(([c,fs])=>new Set(fs).size===1&&!names.some(n=>normText(n.name)===normText(c))).map(([c,fs])=>({name:fs[0],full:c,re:mkCase(c)}));
+ const re=[...names.map(n=>({name:n.name,full:n.name,re:mk(n.name)})),...coreRe,...codeRe,
   ...[...short].filter(([s,fs])=>fs.length===1&&!names.some(n=>normText(n.name)===s)&&(/\d/.test(s)||/\s/.test(s))).map(([,fs])=>{const tk=words(fs[0]);return {name:fs[0],full:tk.slice(1).join(' '),re:mk(tk.slice(1).join(' '))};})]
   .sort((a,b)=>b.full.length-a.full.length);
  return {names,re};}
@@ -187,7 +193,11 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
   .filter(n=>n.name&&(n.source==='json-ld-product'?words(n.name).length<=10:!!headingProduct(n.name)));
  const known=[...structured.map(n=>n.name),...tableProducts];
  const fromHeadings=doc.headings.map(h=>headingProduct(h.text,known)).filter((x):x is string=>!!x).map(name=>({name,source:'heading'}));
- const inv=inventory([...structured,...tableProducts.map(name=>({name,source:'table'})),...fromHeadings]);
+ // audit S78: products the prose names but no structured name lists ("Samsung QN80H", "Hisense UR8"): a capitalised brand
+ // word and a model code (letters and digits, not a size or resolution), kept when the code recurs on the page outside
+ // navigation, header, footer and asides; never on a manufacturer or retailer page (its own catalogue names suffice)
+ const fromProse=opts.sourceType==='manufacturer'||opts.sourceType==='retailer'?[]:proseProducts(root,[...known,...fromHeadings.map(x=>x.name)]).map(name=>({name,source:'prose'}));
+ const inv=inventory([...structured,...tableProducts.map(name=>({name,source:'table'})),...fromHeadings,...fromProse]);
  const titleSeg=doc.names.find(n=>n.source==='title_segment')?.text??null;
  const h1=doc.headings.find(h=>h.level===1);
  const pageSubject=(doc.principal?cleanName(doc.principal):null)??(h1?headingProduct(h1.text,known):null)??(titleSeg?headingProduct(titleSeg,known):null);
@@ -242,6 +252,10 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
      else if(ofName(u.text,f,own,foreign)!==undefined){const o=ofName(u.text,f,own,foreign)!;product=o;basis=o?'sentence':'none';}
      else if(before.length||foreign.some(x=>x.end<=f.start)){const lastK=before.length?before[before.length-1].end:-1,lastF=Math.max(-1,...foreign.filter(x=>x.end<=f.start).map(x=>x.end));
       if(lastF>lastK){product=null;basis='none';}else{product=before[before.length-1].name;basis='sentence';}}
+     // audit S78: a sentence that opens by referring to the reviewed product ("This Xiaomi air purifier is faster (21
+     // minutes) than the Dyson BP06 (30 minutes)", "It hit 777 nits ... to the B5's 668 nits") gives its first values to
+     // that product, not to a product named after them
+     else if(pageSubject&&ANAPHOR_OPEN.test(u.text)&&!own.some(p=>p.start>=0&&p.end<=f.start)){product=pageSubject;basis='page';}
      else if(after.length&&new Set(after.map(p=>p.name)).size===1){product=after[0].name;basis='sentence';}
      else{const sp=sectionProduct(s.headings);if(sp){product=sp;basis=s.role==='pair'?'pair_section':'section';}else if(pageSubject){product=pageSubject;basis='page';}}}
     // audit S77 (A1-2): the value's own clause decides first ("the maker claims 12 L/day, but in our tests it extracted 9");
@@ -313,6 +327,23 @@ function ofName(text:string,f:FoundQuantity,known:readonly {name:string;start:nu
  const after=text.slice(f.end,f.end+40);const m=/^[^,;.\d]{0,24}?\b(?:of|for|from|by|on)\s+(?:the\s+|its\s+)?/i.exec(after);if(!m)return undefined;const at=f.end+m[0].length;
  const k=known.find(x=>x.start===at);if(k)return k.name;if(foreign.some(x=>x.start===at))return null;return undefined;}
 /** Capitalised names with a model code (letters and digits: EK5876, AF180UK, X50) not covered by a known mention. */
+/** audit S78: brand + model-code names in the body text (see readDocumentEvidence). A name is kept only if its code
+ * occurs at least twice in the body and no known name already contains that code. */
+const ANAPHOR_OPEN=/^\s*(?:This|Our|It|Its)\b/u;
+function proseProducts(root:Node245,known:readonly string[]):string[]{
+ const skip=new Set(['nav','header','footer','aside','form','button','select','script','style','noscript']);let body='';
+ const w=(n:Node245)=>{if(n.kind==='text'){body+=decodeEntities245(n.text);return;}if(skip.has(n.tag)||RAW.has(n.tag))return;if(!INLINE.has(n.tag))body+=' \n ';n.children.forEach(w);if(!INLINE.has(n.tag))body+=' \n ';};w(root);
+ const isCode=(t:string)=>/[A-Za-z]/.test(t)&&/\d/.test(t)&&t.length>=2&&!/^\d+(?:\.\d+)?(?:-?(?:inch|in|cm|mm|l|kg|w|kw|hz|k|p|gb|tb|mp|bar|db|nits?|mins?|h))?$/i.test(t)&&!/^[48]K$/i.test(t)&&!/^\d+(?:st|nd|rd|th)$/i.test(t);
+ const NOT_BRAND=/^(?:The|This|That|These|Those|In|On|At|Our|My|We|I|It|Its|A|An|And|But|Or|For|With|From|By|To|Of|As|If|When|While|Both|Each|All|Best|Top|Model|Version|Mode|Step|Table|Figure|Section|Part|Page|Level|Grade|Class|Type|Size|Top|Price|Under|Over|About|Fig|No)$/;
+ const re=/(?<![\p{L}\p{N}])([A-Z][\p{L}&+-]{1,20})[ \t]+([A-Za-z0-9][\p{L}\p{N}+-]{1,15})(?:[ \t]+([A-Z0-9][\p{L}\p{N}+-]{0,15}))?/gu;
+ const found=new Map<string,string>();let m;
+ while((m=re.exec(body))){const [,b,c,x]=m;if(NOT_BRAND.test(b)||!isCode(c))continue;
+  const name=x&&/[A-Z]{2,}|\d/.test(x)&&x.length<=6&&!/^(?:HDR|SDR|TV|OLED|LED|LCD|RGB|UK|US|EU)$/.test(x)?`${b} ${c} ${x}`:`${b} ${c}`;
+  if(!found.has(c))found.set(c,name);}
+ const out:string[]=[];
+ for(const [code,name] of found){const n=(body.match(new RegExp('(?<![\\p{L}\\p{N}])'+code.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![\\p{L}\\p{N}])','gu'))??[]).length;
+  if(n<2||known.some(k=>k.includes(code)))continue;out.push(name);}
+ return out;}
 export function foreignNames(text:string,known:readonly {start:number;end:number}[]):{start:number;end:number}[]{const out:{start:number;end:number}[]=[];
  const re=/(?<![\p{L}\p{N}])[A-Z][\p{L}’'&+-]*(?:\s+(?:[A-Z0-9][\p{L}\p{N}.+-]*))*/gu;let m;
  while((m=re.exec(text))){const tk=m[0].split(/\s+/);if(tk.length<2||!tk.some(x=>/[A-Za-z]/.test(x)&&/\d/.test(x)&&!/^\d+(?:\.\d+)?[a-zA-Z]{1,3}$/.test(x)))continue;
