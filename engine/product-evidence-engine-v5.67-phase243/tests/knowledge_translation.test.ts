@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {describeMeasurement} from '../src/knowledge_link.js';
-import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits,subjectHead,denotationOf,alignWithType,retrieveConcepts,documentConcepts,trainDistributional,wordSimilarity,phraseSimilarity} from '../src/knowledge_translation.js';
+import {translateDocument,parseTeachingDocument,distinctionQuestions,acquireConditionAxes,withAcquiredAxes,renderSelfCheck,loadTranslationCues,identifyConcept,deriveSufficiency,proxyLimits,applicableLimits,subjectHead,denotationOf,alignWithType,retrieveConcepts,documentConcepts,trainDistributional,wordSimilarity,phraseSimilarity,stem,clauses} from '../src/knowledge_translation.js';
 
 // R3 (owner S73): PEE's translator of teaching documents and its question-driven acquisition of condition axes.
 // Synthetic text written for these tests (T1: wiring, not evidence about the owner documents).
@@ -96,7 +96,7 @@ test('R3 kt-cues.2 a negated or prohibited statement renders with its negation (
  // the kt-cues.1 rendering dropped the word and inverted the meaning; the self-check catches that kind of loss
  assert.deepEqual(renderSelfCheck('A purifier cannot ventilate a room.','Limitation: A purifier ventilate a room.'),['negation_lost']);
  assert.deepEqual(renderSelfCheck('No device is made good by its fan alone.','Limitation: device is made good by its fan alone.'),['negation_lost']);
- assert.equal(loadTranslationCues().cues.version,'kt-cues.2');
+ assert.equal(loadTranslationCues().cues.version,'kt-cues.3');
 });
 
 test('R3 kt-cues.2 questions and document metadata are not knowledge claims', ()=>{
@@ -179,8 +179,8 @@ test('R3 cycle 3: a limit about declarations qualifies declared values only; one
  assert.equal(applicableLimits([meas],v('cadr','volumetric_flow_rate','CADR','manufacturer_declared')).length,0);
  // unknown role: not applied, and counted
  const sk={role:0};assert.equal(applicableLimits([meas],v('cadr','volumetric_flow_rate','CADR','unknown'),sk).length,0);assert.equal(sk.role,1);
- // a value with no evidence class given at all keeps the cycle-2 behaviour
- assert.equal(applicableLimits([meas],{metric:'cadr',kind:'volumetric_flow_rate',label:'CADR',conditions:[]}).length,1);
+ // audit S77: a value whose role is not given is not qualified by a role-restricted limit either
+ assert.equal(applicableLimits([meas],{metric:'cadr',kind:'volumetric_flow_rate',label:'CADR',conditions:[]}).length,0);
 });
 
 test('R3 cycle 3: document concepts keep what the store cannot name, with related links only', ()=>{
@@ -197,4 +197,43 @@ test('R3 cycle 3: distributional similarity from a corpus ranks related words; i
  assert.ok(wordSimilarity(m,'aerosol','smoke')>wordSimilarity(m,'aerosol','coffee'));
  assert.equal(wordSimilarity(m,'unknownword','dust'),0);
  assert.ok(phraseSimilarity(m,'dust particles','pollen particles')>phraseSimilarity(m,'dust particles','coffee grind'));
+});
+
+// Audit S77: regression tests for verified defects (inputs from the independent review A3).
+const tr=(t:string)=>translateDocument(qk,t,{source:'d'}).statements;
+test('audit S77: a negated or hedged relation keeps its polarity and hedge; a contrast in the object is two statements', ()=>{
+ const a=tr('High airflow does not increase filter life.');assert.equal(a.length,1);assert.equal(a[0].type,'increases');assert.equal(a[0].polarity,'negative');assert.deepEqual(a[0].selfCheck,[]);
+ assert.equal(tr('Noise does not depend on fan speed.')[0].polarity,'negative');
+ const h=tr('Humidity rarely affects drying time.')[0];assert.equal(h.polarity,'positive');assert.equal(h.hedge,'rarely');
+ const c=tr('Water hardness affects scale, not taste.');assert.deepEqual(c.map(x=>[x.object!.text,x.polarity]),[['scale','positive'],['taste','negative']]);assert.ok(c.every(x=>!x.selfCheck.length));
+ const n=tr('Brewing time affects neither taste nor strength.')[0];assert.equal(n.polarity,'negative');assert.deepEqual(n.selfCheck,[]);
+ // metamorphic: the affirmative is positive
+ assert.equal(tr('Higher airflow increases removal.')[0].polarity,'positive');
+});
+test('audit S77: a relation word in noun or adjective position is not a relation', ()=>{
+ for(const t of ['Noise limits apply at night.','Filter changes are needed every year.','Thermal power, air delivery and temperature control are interacting variables.','A different small model with lower rating may still cook its smaller load.','State of charge is shown on the display.'])
+  assert.ok(!tr(t).some(s=>['depends_on','increases','decreases','requires','method_step'].includes(s.type)),t);
+});
+test('audit S77: "A is B, not C" is a contrastive correction and a proxy limit when A is a typed quantity', ()=>{
+ const s=tr('Rated watts are an electrical specification, not proof of quality.');assert.equal(s[0].type,'is_not');assert.match(s[0].rendered,/not proof of quality/);
+ assert.equal(proxyLimits(qk,s).length,1);
+});
+test('audit S77: stemming joins inflections and keeps distinct words apart', ()=>{
+ for(const [a,b] of [['speeds','speed'],['drying','dry'],['measured','measure'],['modes','mode'],['heating','heat']])assert.equal(stem(a),stem(b),a);
+ for(const [a,b] of [['condenser','condensation'],['humidity','humidifier'],['contrast','contract']])assert.notEqual(stem(a),stem(b),a);
+});
+test('audit S77: heads keep "of" complements; decimals are values, not versions; abbreviations do not end sentences', ()=>{
+ assert.equal(subjectHead('The rate of moisture removal'),'The rate of moisture removal');
+ assert.equal(subjectHead('Conversely, removing odour'),'removing odour');
+ assert.equal(tr('Drying time: 2.5 hours per load.').length,1);
+ assert.deepEqual(clauses('Coverage (see Fig. 3) does not establish removal. Use a filter, e.g. HEPA.'),['Coverage (see Fig. 3) does not establish removal','Use a filter, e.g. HEPA']);
+});
+test('audit S77: a table header that states a relation is read with the row subject', ()=>{
+ const s=tr('| Measure | Does not establish |\n|---|---|\n| Particle CADR | gas removal |');
+ assert.ok(s.some(x=>x.type==='not_sufficient'&&!x.selfCheck.length&&/Particle CADR/.test(x.rendered)));
+});
+test('audit S77: condition acquisition is case-insensitive and keeps values never stated together apart', ()=>{
+ const two=['aged_filter_cadr','new_filter_cadr'].map(id=>describeMeasurement(qk,concept(id)));
+ const ps=acquireConditionAxes(qk,[{source:'d',md:'Compare new versus aged filters.\nFit HEPA/carbon filters.\n- Filter condition: new | aged'}],distinctionQuestions(two));
+ const merged=ps.find(p=>'hepa' in p.values&&'aged' in p.values);assert.equal(merged,undefined,'new/aged and hepa/carbon are not one axis');
 });

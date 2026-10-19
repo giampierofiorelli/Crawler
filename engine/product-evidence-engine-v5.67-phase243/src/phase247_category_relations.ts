@@ -61,8 +61,13 @@ export function reviewRelation247(store:KnowledgeStore246,relationId:string,to:'
  store.event('category_relation_reviewed',{relationId,to,reviewId:receipt.reviewId},receipt.reviewedAt);
  store.invalidate(['category:'+rel.category_id],'category_relation_reviewed');
 }
+/** Relations of a category whose item endpoints are active. Audit S77 (A2-F3): a relation of a retired or superseded
+ * item stays in the table (history) but is no longer returned; consumers had shown such relations as raw refs and counted
+ * them (4 dehumidifier relations). Attribute endpoints (`attr:`) are not items and are kept. */
 export function relations247(store:KnowledgeStore246,categoryId:string){
- return (store.db.prepare('SELECT * FROM category_relations WHERE category_id=? ORDER BY relation_id').all(categoryId) as Record<string,string>[]).map(r=>({
+ const active=new Set((store.db.prepare('SELECT item_id FROM category_items WHERE category_id=? AND superseded_by IS NULL').all(categoryId) as {item_id:string}[]).map(r=>'item:'+r.item_id));
+ const live=(ref:string)=>!ref.startsWith('item:')||active.has(ref);
+ return (store.db.prepare('SELECT * FROM category_relations WHERE category_id=? ORDER BY relation_id').all(categoryId) as Record<string,string>[]).filter(r=>live(r.from_ref)&&live(r.to_ref)).map(r=>({
   relationId:r.relation_id,from:r.from_ref,to:r.to_ref,kind:r.kind as RelationKind247,support:r.support as Support247,qualification:r.qualification,
   sourceRevisionIds:JSON.parse(r.source_revision_ids_json) as string[]}));
 }

@@ -24,7 +24,7 @@ import {findQuantities,namedPhrases,normText,parseUnit,type QuantityKnowledge} f
 import type {TaughtConcept} from './knowledge_link.js';
 
 /** kt-cues.2 (R3 fidelity review): the split word is rendered; kt-cues.1 is kept for reproducing the held-out first run. */
-export const TRANSLATION_CUES_FILE='translation-cues.v2.json';
+export const TRANSLATION_CUES_FILE='translation-cues.v3.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 interface StatementTypeDef {type:string;meaning:string;display:string;patterns:string[];
@@ -37,7 +37,7 @@ export function loadTranslationCues(c?:TranslationCues){
  if(!c&&cachedCues)return cachedCues;
  const src=c?JSON.stringify(c):readFileSync(new URL('../../resources/knowledge-translation/'+TRANSLATION_CUES_FILE,import.meta.url),'utf8');
  const cues=c??JSON.parse(src) as TranslationCues;
- const out={cues,digest:sha(src),compiled:cues.statementTypes.map(def=>({def,res:def.patterns.map(p=>new RegExp(p,'i'))}))};if(!c)cachedCues=out;return out;
+ const out={cues,digest:sha(src),compiled:cues.statementTypes.map(def=>({def,res:def.patterns.map(p=>new RegExp(p,'id'))}))};if(!c)cachedCues=out;return out;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -49,9 +49,9 @@ export function parseTeachingDocument(md:string,range?:readonly {start:number;en
  const inRange=(i:number)=>!range||range.some(r=>i+1>=r.start&&i+1<=r.end);
  const flush=()=>{if(para&&para.text.trim())blocks.push({kind:'paragraph',line:para.line,headings:[...heads],text:clean(para.text)});para=null;};
  lines.forEach((raw,i)=>{const l=raw.trimEnd();
-  const h=/^(#{1,6})\s+(.*)$/.exec(l);if(h){flush();header=null;heads.length=Math.min(heads.length,h[1].length-1);heads[h[1].length-1]=clean(h[2]);heads.length=h[1].length;return;}
+  const h=/^(#{1,6})\s+(.*)$/.exec(l);if(h){flush();header=null;heads.length=Math.min(heads.length,h[1].length-1);heads[h[1].length-1]=clean(h[2]);heads.length=h[1].length;for(let k=0;k<heads.length;k++)heads[k]??='';return;}
   if(!inRange(i)){flush();header=null;return;}
-  if(/^\s*\|/.test(l)){flush();const cells=l.trim().replace(/^\||\|$/g,'').split('|').map(c=>clean(c));
+  if(/^\s*\|/.test(l)){flush();const cells=l.trim().replace(/^\||\|$/g,'').replace(/\\\|/g,'\u0000').split('|').map(c=>clean(c.replace(/\u0000/g,'|')));
    if(cells.every(c=>/^:?-{2,}:?$/.test(c)))return;
    if(!header){header=cells;return;}
    blocks.push({kind:'table_row',line:i+1,headings:[...heads],text:cells.join(' | '),cells:cells.map((t,j)=>({header:header![j]??'',text:t}))});return;}
@@ -65,8 +65,11 @@ export function parseTeachingDocument(md:string,range?:readonly {start:number;en
 /** Clauses of a block's text: sentences (not at decimals or abbreviations), then "; " and ", but" splits. */
 export function clauses(text:string):string[]{
  const out:string[]=[];
- for(const s of text.split(/(?<=[.!?])\s+(?=[A-Z0-9“"(])/))for(const c of s.split(/;\s+|,\s+but\s+|\s+—\s+|\s+–\s+/))
-  {const t=c.replace(/^[\s:,(]+|[\s.:;,)]+$/g,'').trim();if(t.length>=8)out.push(t);}
+ // abbreviations do not end a sentence (audit S77 A3-9): protected before splitting, restored after
+ const ABBR=/\b(e\.g|i\.e|cf|vs|approx|fig|figs|no|nos|eq|ref|refs|sec|ch|vol|et al|etc)\.(?=\s)/gi;
+ const prot=text.replace(ABBR,m=>m.replace(/\./g,'\u2024'));
+ for(const s of prot.split(/(?<=[.!?])\s+(?=[A-Z0-9“"(])/))for(const c of s.split(/;\s+|,\s+but\s+|\s+—\s+|\s+–\s+/))
+  {const t=c.replace(/^[\s:,(]+|[\s.:;,)]+$/g,'').replace(/\u2024/g,'.').trim();if(t.length>=8)out.push(t);}
  return out;
 }
 
@@ -84,7 +87,8 @@ export function typeSpan(qk:QuantityKnowledge,text:string,concepts:readonly Taug
  for(const tok of normText(text).split(/\s+/)){if(tok.length<2||STOP.has(tok))continue;const u=parseUnit(qk,tok);if(u&&u.atoms.length&&u.kinds.length===1){units.push(u.expression);typed.add(tok);}}
  for(const c of concepts){const words=c.id.split('_').filter(w=>w.length>2&&!STOP.has(w));
   const phrases=[c.id.replace(/_/g,' '),...(c.aliases??[])];const h=namedPhrases(text,phrases);
-  if(h.size||(words.length>=2&&words.every(w=>new RegExp('\\b'+w+'\\w*\\b','i').test(text)))){cs.push(c.id);if(h.size)mark(h);else for(const w of words)typed.add(w);}}
+  const tw=new Set(normText(text).split(/[^\p{L}\p{N}]+/u).map(stem));
+  if(h.size||(words.length>=2&&words.every(w=>tw.has(stem(w))))){cs.push(c.id);if(h.size)mark(h);else for(const w of words)typed.add(w);}}
  const untyped=[...new Set(normText(text).split(/[^\p{L}\p{N}.-]+/u))].filter(w=>w.length>2&&!STOP.has(w)&&!typed.has(w)&&!/^\d/.test(w));
  return {text,metrics:[...new Set(metrics)],kinds:[...new Set(kinds)],axes,concepts:[...new Set(cs)],units:[...new Set(units)],untyped};
 }
@@ -101,6 +105,9 @@ export interface TranslatedStatement {id:string;type:string;
  status:string[];refs:string[];
  provenance:{source:string;line:number;headings:string[];block:DocBlock['kind'];header?:string};
  quote:string;rendered:string;
+ /** Audit S77 (MinIE-style annotations): the relation is asserted (positive) or denied (negative); a hedge ("may",
+  * "rarely") qualifies it. Read from the words around the relation word, never dropped. */
+ polarity:'positive'|'negative';hedge:string|null;
  /** render-back self-check (R3): problems found by comparing the rendered sentence with the quote, e.g. a negation the
   * rendering lost. A statement with a problem is kept for audit but must not be used as knowledge. */
  selfCheck:string[];
@@ -114,17 +121,25 @@ function statusOf(cues:TranslationCues,...texts:string[]):string[]{const t=texts
  for(const m of cues.statusMarkers)if(namedPhrases(t,m.cues).size)out.add(m.status);return [...out];}
 function refsOf(cues:TranslationCues,text:string):string[]{const re=new RegExp(cues.referencePattern,'g');const out=new Set<string>();
  for(const m of text.matchAll(re))for(const r of m[1].split(/\s*[,;]\s*/))out.add(r);return [...out];}
-const fill=(tpl:string,x:{subject?:string;object?:string;verb?:string},optionalSubject=false)=>tpl.replace('{subject}',x.subject??(optionalSubject?'':'(unspecified)')).replace('{verb}',x.verb??'').replace('{object}',x.object??'(unspecified)').replace('{conditions}','').replace(/\s{2,}/g,' ').replace(/:\s+(\S)/,(m,c)=>': '+c);
+const fill=(tpl:string,x:{subject?:string;object?:string;verb?:string;[k:string]:string|undefined},optionalSubject=false)=>tpl.replace(/\{(\w+)\}/g,(m,k)=>k==='subject'?(x.subject??(optionalSubject?'':'(unspecified)')):k==='object'?(x.object??'(unspecified)'):k==='conditions'?'':(x[k]??'')).replace(/\s{2,}/g,' ').replace(/:\s+(\S)/,(m,c)=>': '+c);
 /** Negations and prohibitions: a rendered sentence must keep at least as many as its quote. */
-const NEGATORS=/\b(?:not|no|never|cannot|can't|don't|doesn't|isn't|aren't|won't|avoid|without|neither|nor)\b|n't\b/gi;
+const NEGATORS=/\b(?:not|no|never|cannot|can't|don't|doesn't|isn't|aren't|won't|avoid|without|neither)\b|n't\b/gi;
 const negations=(t:string)=>(t.match(NEGATORS)??[]).length;
 export function renderSelfCheck(quote:string,rendered:string):string[]{const out:string[]=[];if(negations(rendered)<negations(quote))out.push('negation_lost');return out;}
+/** Audit S77 (A3-1, A3-2): relation statements carry polarity and hedge; a relation word in noun or adjective position
+ * is not a relation. */
+const RELATIONAL=new Set(['depends_on','increases','decreases','requires','measured_by','composed_of','method_step']);
+const NEG_TAIL=/\s+(?:(?:does|do|did|can|could|will|would|may|might|should|must|is|are|was|were)\s*(?:not|n't)|never|cannot|can't|won't|fails?\s+to|failed\s+to)$/i;
+const HEDGE_TAIL=/\s+(?:rarely|seldom|hardly|often|usually|sometimes|generally|typically|may|might|can|could|tends?\s+to)$/i;
+const NOUN_BEFORE=/^(?:a|an|the|with|of|for|and|or|no|any|its|their|this|that|these|those|lower|higher|greater|smaller)$/i;
+const NOUN_AFTER=/^(?:is|are|was|were|be|apply|applies|matter|matters|remain|remains|occur|occurs|exist|exists|need|needs|of|to|size|and|or|shown)$/i;
 /** Document metadata and questions are not knowledge claims. */
-const METADATA_VALUE=/^(?:https?:\/\/|www\.|\S+\.(?:md|pdf|json|zip|html?|txt)\b|v?\d+(?:\.\d+){1,3}\b|\d{1,2}\s+\w+\s+\d{4}\b|\d{4}-\d{2}-\d{2}\b)/i;
+// a decimal followed by a unit ("2.5 hours") is a value, not a version (audit S77 A3-6)
+const METADATA_VALUE=/^(?:https?:\/\/|www\.|\S+\.(?:md|pdf|json|zip|html?|txt)\b|v\d+(?:\.\d+)*\b|\d+\.\d+\.\d+\b|\d+\.\d+\s*(?:\(|$)|\d{1,2}\s+\w+\s+\d{4}\b|\d{4}-\d{2}-\d{2}\b)/i;
 const typedness=(...s:(TypedSpan|null)[]):TranslatedStatement['typedness']=>{const xs=s.filter((x):x is TypedSpan=>!!x);
  const t=xs.filter(x=>x.metrics.length||x.kinds.length||x.concepts.length||x.axes.length).length;return t===0?'untyped':t===xs.length?'typed':'partly_typed';};
 function headerRole(cues:TranslationCues,h:string):string|null{const n=normText(h);if(!n)return null;
- for(const [role,ws] of Object.entries(cues.tableHeaderRoles))if(ws.some(w=>n.includes(normText(w))))return role;return null;}
+ for(const [role,ws] of Object.entries(cues.tableHeaderRoles))if(namedPhrases(n,ws).size)return role;return null;}
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
 const TABLE_ROLE_TYPE:Record<string,string>={method:'measured_by',limitation:'limitation',applicability:'applicability',outcome:'bears_on_outcome'};
@@ -135,7 +150,7 @@ const TABLE_ROLE_DISPLAY:Record<string,string>={quantitative_finding:'{subject} 
 export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:string;concepts?:readonly TaughtConcept[];range?:readonly {start:number;end:number}[];cues?:TranslationCues}):TranslationResult{
  const C=loadTranslationCues(opts.cues);const blocks=parseTeachingDocument(md,opts.range);const out:TranslatedStatement[]=[];let nClauses=0,unrec=0;
  const concepts=opts.concepts??[];const T=(s:string|undefined)=>s?typeSpan(qk,s.trim(),concepts):null;
- const push=(b:DocBlock,type:string,quote:string,sub:string|undefined,obj:string|undefined,basis:TranslatedStatement['basis'],header?:string,verb?:string)=>{
+ const push=(b:DocBlock,type:string,quote:string,sub:string|undefined,obj:string|undefined,basis:TranslatedStatement['basis'],header?:string,verb?:string,ann:{polarity?:'positive'|'negative';hedge?:string|null;extra?:Record<string,string|undefined>;checkAgainst?:string}={})=>{
   if(type==='definition'&&obj&&METADATA_VALUE.test(obj.trim())){unrec++;return;}
   const def=C.cues.statementTypes.find(d=>d.type===type);const subject=T(sub),object=T(obj);
   const parts=type==='composed_of'&&obj?obj.split(/,\s*|\s+(?:and|plus|\+)\s+/).map(p=>p.trim()).filter(p=>p.length>2).map(p=>T(p)!):[];
@@ -144,13 +159,33 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
   const display=def?.display??TABLE_ROLE_DISPLAY[type]??'{subject}: {object}.';
   out.push({id:`${opts.source}:${b.line}:${out.length}`,type,subject,object,parts,contrast,status:statusOf(C.cues,quote,b.text,b.headings.at(-1)??''),refs:refsOf(C.cues,b.text),
    provenance:{source:opts.source,line:b.line,headings:b.headings,block:b.kind,...(header?{header}:{})},quote,
-   rendered:'',selfCheck:[],basis,typedness:typedness(subject,object,...parts)});
-  const st=out[out.length-1];st.rendered=fill(display,{subject:subject?.text,object:object?.text,verb},def?.optionalSubject);st.selfCheck=renderSelfCheck(quote,st.rendered);};
- const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){const m=re.exec(cl);if(m){push(b,def.type,cl,m.groups?.subject,m.groups?.object,'pattern',header,m.groups?.verb);return true;}}return false;};
+   rendered:'',polarity:ann.polarity??'positive',hedge:ann.hedge??null,selfCheck:[],basis,typedness:typedness(subject,object,...parts)});
+  const st=out[out.length-1];let r=fill(display,{subject:subject?.text,object:object?.text,verb,...(ann.extra??{})},def?.optionalSubject);
+  if(st.hedge)r=`(${st.hedge}) `+r;if(st.polarity==='negative')r='It is not the case that '+r.replace(/^Limitation: /,'');st.rendered=r;st.selfCheck=renderSelfCheck(ann.checkAgainst??quote,st.rendered);};
+ const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){const m=re.exec(cl);if(!m)continue;
+   const g=m.groups??{};const idx=(m as RegExpExecArray&{indices?:{groups?:Record<string,[number,number]|undefined>}}).indices?.groups??{};
+   if(RELATIONAL.has(def.type)){
+    // the group before the relation word and the one after it, whatever their roles
+    const order=(['subject','object'] as const).filter(k=>g[k]!==undefined&&idx[k]).sort((a,c)=>idx[a]![0]-idx[c]![0]);
+    const pre=order.length===2?order[0]:(order[0]&&idx[order[0]]![0]===0?order[0]:null),post=order.length===2?order[1]:(order[0]&&idx[order[0]]![0]>0?order[0]:null);
+    const lastPre=pre?(g[pre]!.trim().split(/\s+/).pop()??''):'',firstPost=post?(g[post]!.trim().split(/\s+/)[0]??''):'';
+    // a relation word in noun or adjective position is not a relation ("temperature control are", "with lower rating")
+    if((pre&&NOUN_BEFORE.test(lastPre))||(post&&NOUN_AFTER.test(firstPost)))continue;
+    let polarity:'positive'|'negative'='positive',hedge:string|null=null;const v:Record<string,string|undefined>={...g};
+    if(pre){const n=NEG_TAIL.exec(v[pre]!);if(n){polarity='negative';v[pre]=v[pre]!.slice(0,n.index).trim();}
+     const h=HEDGE_TAIL.exec(v[pre]!);if(h){hedge=h[0].trim().toLowerCase();v[pre]=v[pre]!.slice(0,h.index).trim();}}
+    if(post){const n=/^(?:neither|not|no)\s+/i.exec(v[post]!);if(n){polarity='negative';v[post]=v[post]!.slice(n[0].length).replace(/\s+nor\s+/gi,' or ');}}
+    // a contrast inside the object: "affects scale, not taste" is two statements, one of each polarity
+    const cx=post?/^(.*?)(?:,\s+(?:and\s+)?|\s+but\s+)not\s+(.+)$/i.exec(v[post]!):null;
+    if(cx&&post){push(b,def.type,cl,post==='subject'?cx[1]:v.subject,post==='object'?cx[1]:v.object,'pattern',header,v.verb,{polarity,hedge,checkAgainst:cl.replace(/(?:,\s+(?:and\s+)?|\s+but\s+)not\s+.+$/i,'')});
+     push(b,def.type,cl,post==='subject'?cx[2]:v.subject,post==='object'?cx[2]:v.object,'pattern',header,v.verb,{polarity:polarity==='positive'?'negative':'positive',hedge});return true;}
+    push(b,def.type,cl,v.subject,v.object,'pattern',header,v.verb,{polarity,hedge});return true;}
+   push(b,def.type,cl,g.subject,g.object,'pattern',header,g.verb,{extra:g});return true;}return false;};
  for(const b of blocks){
   if(b.kind==='table_row'&&b.cells){
    const subj=b.cells.find(c=>headerRole(C.cues,c.header)==='subject')?.text??b.cells[0]?.text;
    for(const c of b.cells){if(!c.text||c.text===subj)continue;nClauses++;
+    if(subj&&/\b(?:not|no|cannot|does|do|is|are|requires?|measured|depends|establish(?:es)?)\b/i.test(c.header)&&byPattern(b,`${subj} ${c.header.toLowerCase()} ${c.text}`,c.header))continue;
     if(byPattern(b,c.text,c.header))continue;
     const q=findQuantities(qk,c.text).filter(f=>f.value!==null);if(q.length&&!headerRole(C.cues,c.header)){push(b,'quantitative_finding',`${subj} | ${c.header}: ${c.text}`,`${subj} (${c.header})`,c.text,'table_role',c.header);continue;}const role=headerRole(C.cues,c.header);const type=role?TABLE_ROLE_TYPE[role]:undefined;
     if(type)push(b,type,`${subj} | ${c.header}: ${c.text}`,subj,c.text,'table_role',c.header);else unrec++;}
@@ -197,14 +232,16 @@ export function acquireConditionAxes(qk:QuantityKnowledge,docs:readonly {source:
  const add=(head:string,vals:string[],source:string,line:number,quote:string,structure:AxisProposal['evidence'][number]['structure'])=>{
   const vs=[...new Set(vals.map(v=>normText(v).replace(/[^a-z0-9 -]/g,'').trim()).filter(v=>v.length>=2&&v.length<=24&&!/^\d+$/.test(v)&&!HEADSET.has(v)&&!STOP.has(v)))];if(vs.length<2)return;
   const answers=vs.flatMap(v=>(wanted.get(v)??[]).map(m=>({measurement:m,word:v})));if(!answers.length)return;
-  const h=normText(head).replace(/[^a-z0-9_ ]/g,'').trim().replace(/\s+/g,'_');const axis=('acq_'+h).slice(0,40);
+  const h=normText(head).replace(/[^a-z0-9_ ]/g,'').trim().replace(/\s+/g,'_');let axis=('acq_'+h).slice(0,40);
+  // values never stated together are not one condition ("new versus aged filters" and "HEPA/carbon filters")
+  for(let k=2;found.has(axis)&&!vs.some(v=>Object.prototype.hasOwnProperty.call(found.get(axis)!.values,v.replace(/[^a-z0-9]+/g,'_')));k++)axis=('acq_'+h).slice(0,37)+'_'+k;
   const p=found.get(axis)??{axis,head:h,values:{},evidence:[],answers:[]};
   for(const v of vs)p.values[v.replace(/[^a-z0-9]+/g,'_')]=[v];p.evidence.push({source,line,quote:quote.slice(0,200),structure});
   for(const a of answers)if(!p.answers.some(x=>x.measurement===a.measurement&&x.word===a.word))p.answers.push(a);found.set(axis,p);};
  for(const d of docs)d.md.split('\n').forEach((raw,i)=>{const l=raw.replace(/[*`_]{2,}/g,'');
-  const en=/^\s*(?:[-*]\s*)?([a-z][a-z_]{2,40}):\s*([^|]{1,30}(?:\s\|\s[^|]{1,30}){1,})\s*$/.exec(l);
+  const en=/^\s*(?:[-*]\s*)?([a-z][a-z_ ]{2,40}):\s*([^|]{1,30}(?:\s\|\s[^|]{1,30}){1,})\s*$/i.exec(l);
   if(en)add(en[1],en[2].split(/\s\|\s/),d.source,i+1,l.trim(),'enumeration');
-  for(const m of l.matchAll(new RegExp(`\\b([A-Za-z0-9-]{2,14})((?:/[A-Za-z0-9-]{2,14}){1,3})\\s+(${HEADS})\\b`,'g')))
+  for(const m of l.matchAll(new RegExp(`\\b([A-Za-z0-9-]{2,14})((?:/[A-Za-z0-9-]{2,14}){1,3})\\s+(${HEADS})\\b`,'gi')))
    add(singular(m[3]),[m[1],...m[2].split('/').filter(Boolean)],d.source,i+1,m[0],'slash');
   for(const m of l.matchAll(new RegExp(`\\b([A-Za-z-]{3,15})\\s+(?:versus|vs\\.?)\\s+(?:[A-Za-z]+\\s+(?:or|and)\\s+)?(?:[A-Za-z]+\\s+)?([A-Za-z-]{3,15})\\s+(${HEADS})\\b`,'gi')))
    add(singular(m[3]),[m[1],m[2]],d.source,i+1,m[0],'contrast');});
@@ -238,8 +275,18 @@ export function withAcquiredAxes(qk:QuantityKnowledge,proposals:readonly AxisPro
 //    holds where the document says it holds, and is evidence for the force of a link, never an exclusion of a product.
 export interface DerivedSufficiency {relation:string;measurement:string;outcome:string;sufficiency:'informs_only';
  evidence:{statement:string;source:string;line:number;quote:string;scope:string[]}[]}
-const contentWords=(s:string)=>[...new Set(normText(s.replace(/_/g,' ')).split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2&&!STOP.has(w)))];
-const stem=(w:string)=>w.slice(0,Math.max(4,Math.min(w.length,6)));
+const contentTokens=(s:string)=>normText(s.replace(/_/g,' ')).split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>2&&!STOP.has(w));
+const contentWords=(s:string)=>[...new Set(contentTokens(s))];
+/** Audit S77 (A3-3): a light inflectional stemmer (plural, -ing, -ed); the earlier 6-letter prefix merged different
+ * words (condenser/condensation, humidity/humidifier) and split short inflections (fan speeds / fan speed). */
+export function stem(w:string):string{let x=w.toLowerCase();
+ if(x.length>4&&x.endsWith('ies'))x=x.slice(0,-3)+'y';
+ else if(x.length>4&&/(?:sses|shes|ches|xes)$/.test(x))x=x.slice(0,-2);
+ else if(x.length>3&&x.endsWith('s')&&!/(?:ss|us|is)$/.test(x))x=x.slice(0,-1);
+ if(x.length>5&&x.endsWith('ing'))x=x.slice(0,-3);else if(x.length>4&&x.endsWith('ed')&&!x.endsWith('eed'))x=x.slice(0,-2);
+ if(/([^aeiouls])\1$/.test(x))x=x.slice(0,-1);
+ if(x.length>4&&x.endsWith('e'))x=x.slice(0,-1);
+ return x;}
 /** The concept a phrase identifies: the unique clear best match. A concept is described by the words of its name, of the
  * first sentence of its statement and of its aliases; a word shared by many candidates weighs less (inverse document
  * frequency over the candidates). A match needs an alias, or two distinctive words of which one is from the name, and
@@ -256,7 +303,12 @@ export function identifyConcept(phrase:string,candidates:readonly {id:string;ali
  if(!scored.length)return null;if(scored.length>1&&scored[0].score-scored[1].score<1)return null;
  return scored[0].id;
 }
-const SCOPE_CUES=/\b(?:when|if|unless|under|at|for|during|only|except|provided)\b[^,;.]*/gi;
+const SCOPE_CUES=/\b(?:when|if|unless|under|at|for|during|only|except|provided|in|without|with)\b[^,;.]*/gi;
+const SUBORDINATE=/\b(?:when|if|unless|under|during|provided|except)\b[^,;.]*/gi;
+/** Audit S77 (A3-10): the scope of a statement: its heading, the conditions in its subject, and the subordinate
+ * conditions of its object ("... when the basket is loaded"); never a fragment of the relation itself. */
+function scopeOf(s:TranslatedStatement):string[]{
+ return [...s.provenance.headings.slice(-1).filter(Boolean),...((s.subject?.text??'').match(SCOPE_CUES)??[]),...((s.object?.text??'').match(SUBORDINATE)??[])].map(x=>x.trim());}
 export function deriveSufficiency(statements:readonly TranslatedStatement[],teaching:{measurements:readonly {concept:TaughtConcept;outcomes:readonly {outcome:string;relation:string}[]}[]},outcomeConcepts:readonly TaughtConcept[]=[]):DerivedSufficiency[]{
  const ms=teaching.measurements.map(m=>m.concept);const described=new Map(outcomeConcepts.map(c=>[c.id,c]));
  const outcomes=[...new Set(teaching.measurements.flatMap(m=>m.outcomes.map(o=>o.outcome)))].map(id=>described.get(id)??{id});
@@ -265,7 +317,7 @@ export function deriveSufficiency(statements:readonly TranslatedStatement[],teac
   const m=identifyConcept(s.subject.text,ms),o=identifyConcept(s.object.text,outcomes);if(!m||!o)continue;
   const rel=teaching.measurements.find(x=>x.concept.id===m)?.outcomes.find(x=>x.outcome===o);if(!rel)continue;
   const d=out.get(rel.relation)??{relation:rel.relation,measurement:m,outcome:o,sufficiency:'informs_only' as const,evidence:[]};
-  d.evidence.push({statement:s.id,source:s.provenance.source,line:s.provenance.line,quote:s.quote,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())]});
+  d.evidence.push({statement:s.id,source:s.provenance.source,line:s.provenance.line,quote:s.quote,scope:scopeOf(s)});
   out.set(rel.relation,d);}
  return [...out.values()].sort((a,b)=>a.relation.localeCompare(b.relation));
 }
@@ -284,21 +336,22 @@ export type LimitRole='declared'|'measured'|'any';
 const ROLE_WORDS_MEASURED=['measured','tested','independently measured','laboratory','lab-measured','metered'];
 /** Evidence classes of read values (document_evidence / 1G) by the role a limit can concern. */
 const VALUE_ROLE:Record<string,'declared'|'measured'|undefined>={manufacturer_declared:'declared',publisher_measured:'measured'};
-export interface ProxyLimit {id:string;type:'not_sufficient'|'not_comparable';appliesTo:LimitRole;denotes:Denotation;metrics:string[];kinds:string[];axes:{axis:string;value:string}[];words:string[];
+export interface ProxyLimit {id:string;type:'not_sufficient'|'not_comparable'|'is_not';appliesTo:LimitRole;denotes:Denotation;metrics:string[];kinds:string[];axes:{axis:string;value:string}[];words:string[];
  object:string;outcome:string|null;scope:string[];quote:string;source:string;line:number}
 /** The head of a subject phrase: what the statement is about. The last sentence, without an introductory phrase
  * ("Without the source assumptions, coverage figures" -> "coverage figures"), cut before a preposition ("OLED burn-in in
  * high-brightness imagery" -> "OLED burn-in"), as for the names of taught measurements. */
 export function subjectHead(text:string):string{
- let t=text.split(/(?<=[.;:!?])\s+/).at(-1)??text;
+ let t=(text.split(/(?<=[.;:!?])\s+/).at(-1)??text).replace(/^(?:conversely|however|therefore|thus|hence|moreover|furthermore|similarly|likewise|instead|also|but|and|so),?\s+/i,'');
  const segs=t.split(/,\s+/);if(segs.length>1&&/^(?:without|with|when|if|unless|for|in|after|before|under|at|on|by|although|though|because|since|as|given)\b/i.test(segs[0]))t=segs.at(-1)!;
- const i=(' '+t).search(/\s(?:by|at|per|for|with|across|under|in|on|over|during|from|of|without|versus|vs)\s/i);
+ // "of" complements stay in the head ("the rate of moisture removal", "reduction of aerosol"; audit S77 A3-4)
+ const i=(' '+t).search(/\s(?:by|at|per|for|with|across|under|in|on|over|during|from|without|versus|vs)\s/i);
  // "kWh per 1000 hours": a unit's own denominator is part of the head
  return (i>0&&!/\b(?:kwh|wh|w|l|m3|m³|db|dba|lm|nits?)$/i.test(t.slice(0,i-1).trim())?t.slice(0,i-1):t).trim();
 }
 export function proxyLimits(qk:QuantityKnowledge,statements:readonly TranslatedStatement[],outcomeConcepts:readonly TaughtConcept[]=[]):ProxyLimit[]{
  const out:ProxyLimit[]=[];
- for(const s of statements){if((s.type!=='not_sufficient'&&s.type!=='not_comparable')||s.selfCheck.length||!s.subject)continue;
+ for(const s of statements){if((s.type!=='not_sufficient'&&s.type!=='not_comparable'&&s.type!=='is_not')||s.selfCheck.length||!s.subject)continue;
   const sub=typeSpan(qk,subjectHead(s.subject.text));if(!sub.metrics.length&&!sub.kinds.length)continue;
   const denotes=denotationOf(qk,s.subject.text);
   // a role restricts a limit only when its subject states it ("advertised litres", "a measured CADR"); a quantity alone
@@ -306,7 +359,7 @@ export function proxyLimits(qk:QuantityKnowledge,statements:readonly TranslatedS
   const C=loadDenotationCues();const said=(d:string)=>namedPhrases(subjectHead(s.subject!.text),C.cues[d]).size>0;
   const appliesTo:LimitRole=said('claim_or_label')?'declared':namedPhrases(subjectHead(s.subject.text),ROLE_WORDS_MEASURED).size?'measured':'any';
   out.push({id:s.id,type:s.type,appliesTo,denotes,metrics:sub.metrics,kinds:sub.kinds,axes:s.subject.axes,words:sub.untyped.filter(w=>w.length>3),object:s.object?.text??'',
-   outcome:s.object?identifyConcept(s.object.text,outcomeConcepts):null,scope:[...s.provenance.headings.slice(-1),...(s.quote.match(SCOPE_CUES)??[]).map(x=>x.trim())],
+   outcome:s.object?identifyConcept(s.object.text,outcomeConcepts):null,scope:scopeOf(s),
    quote:s.quote,source:s.provenance.source,line:s.provenance.line});}
  return out;
 }
@@ -316,7 +369,7 @@ export function applicableLimits(limits:readonly ProxyLimit[],value:{metric:stri
  for(const l of limits){
   // evidence role: a limit about declarations does not qualify a measured value, nor the reverse; when the value's role
   // is unknown such a limit is not applied (counted), since applying it could misdescribe what the value is
-  if(l.appliesTo!=='any'&&value.evidenceClass!==undefined&&role!==l.appliesTo){if(skipped&&!role)skipped.role++;continue;}
+  if(l.appliesTo!=='any'&&role!==l.appliesTo){if(skipped&&!role)skipped.role++;continue;}
   // scope: a value stated at another value of an axis the statement names is outside the statement
   if(l.axes.some(a=>value.conditions.some(c=>c.axis===a.axis&&c.value!==a.value)))continue;
   if(value.metric&&l.metrics.includes(value.metric)){out.push({limit:l,basis:'metric'});continue;}
@@ -372,6 +425,7 @@ export function denotationOf(qk:QuantityKnowledge,phrase:string):Denotation{
  for(const text of [head,phrase]){
   const claim=namedPhrases(text,C.cues.claim_or_label).size>0;
   const feature=namedPhrases(text,C.cues.product_feature).size>0;
+  const first=contentWords(text)[0];if(first&&namedPhrases(first,C.cues.outcome).size&&!namedPhrases(text,C.cues.claim_or_label).size)return 'outcome';
   for(const d of C.order){if(d==='measurement_or_test'&&!claim&&!feature){const t=typeSpan(qk,text);if(t.metrics.length||t.kinds.length)return d;}
    if(namedPhrases(text,C.cues[d]).size)return d;}}
  return 'other';
@@ -407,7 +461,7 @@ export function documentConcepts(qk:QuantityKnowledge,statements:readonly Transl
 //    identity (HANS): it may only rank candidates; validation (semantic type, explicit unresolved state) still decides.
 export interface DistributionalModel {vocab:number;vectors:Map<string,Map<string,number>>;norms:Map<string,number>}
 export function trainDistributional(texts:readonly string[],opts:{window?:number;minCount?:number}={}):DistributionalModel{
- const W=opts.window??5,min=opts.minCount??3;const docs=texts.map(t=>contentWords(t).map(stem));
+ const W=opts.window??5,min=opts.minCount??3;const docs=texts.map(t=>contentTokens(t).map(stem));
  const count=new Map<string,number>();for(const d of docs)for(const w of d)count.set(w,(count.get(w)??0)+1);
  const keep=(w:string)=>(count.get(w)??0)>=min;const co=new Map<string,Map<string,number>>();let total=0;
  for(const d of docs){const ws=d.filter(keep);for(let i=0;i<ws.length;i++)for(let j=Math.max(0,i-W);j<Math.min(ws.length,i+W+1);j++){if(i===j)continue;
