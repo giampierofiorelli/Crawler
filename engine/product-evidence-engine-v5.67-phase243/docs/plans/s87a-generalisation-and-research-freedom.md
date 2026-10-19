@@ -193,3 +193,71 @@ Therefore:
 - **the owner is asked to confirm it** (or to set different rates) before it is used.
 
 Until then, the pre-registered S86d independent validation stays blocked.
+
+## 10. Correction after the owner review (2026-10-19)
+
+The owner review is kept verbatim in `.claude/skills/pee-guided-learning/references/owner-review-s87a-2026-10-19.md`.
+Claude checked its figures against the private detail. The review is right on every point below. These corrections
+supersede the corresponding claims above; the sections above are kept as written.
+
+**1. Coverage loss was not reported (supersedes §0 "precision rose" and §6 as a summary).**
+
+Of the 54 earlier links, 20 changed:
+- 6 were wrong, the per-cycle kWh values linked to the per-100-cycles measure. They are now ambiguous.
+- 13 were plausible choices and are now ambiguous:
+  - 8 air-purifier power-per-speed values, which fit both `cadr_noise_power_curve` and `mode_power_and_tco`;
+  - 5 bare litre values.
+- 1 was corrected: the empty-run energy.
+
+On my own (non-independent) audit, links that are correct or plausible went from about 45 to 34. S87a showed that the
+mechanism is **more cautious**. It did **not** show that PEE understands more correct information. Recall fell.
+
+**2. `compare_within_source` is too weak (supersedes the §0 and §6 within-source counts as a comparability claim).**
+
+It requires only another product from the same host, with the same measurement and unit. It does not check:
+- that the protocol is the same;
+- the instrument;
+- the conditions;
+- the test date or version.
+
+The 21 rows are *candidates* for within-source comparison, not validated comparisons.
+
+**3. `compare_across_sources` is a prerequisite only.** It checks that the required conditions are stated. It does not
+check that a concrete second-source observation exists, nor that the two methods are equivalent. The single row is a
+*potential* cross-source comparison.
+
+**4. First-hand status is inferred from cues.** It rests on the source class plus a list of reading cues. It does not
+verify that the method was performed and described sufficiently.
+
+**5. Explicit lists remain.** `TAUGHT87` (six categories) and `FIRST_HAND` (reading cues) are explicit lists. Nothing
+here learns new categories or new kinds of evidence.
+
+**6. The Phase249 per-host cap was misclassified (supersedes the §9 row "external, legal").**
+- UK and EU database right distinguishes substantial from insubstantial extraction, including repeated and systematic
+  extraction of insubstantial parts.
+- It sets **no** cap of 25 products per site.
+- The 25 is a **PEE prudential rule** designed to stay well inside that distinction. It is not a legal threshold.
+- It should be audited like the other self-imposed restrictions: what risk it covers, and what a justified rule would
+  be.
+
+**7. The first brief was addressed mainly as diagnosis, and that is not enough (supersedes §2 and §4 as findings).**
+- §2 maps known methods onto known PEE problems. It is not a literature study, and it does not compare algorithms
+  experimentally.
+- §4's "no new inference engine is needed" is a **hypothesis**, not a result.
+- Not done:
+  - an inventory of the rules and vocabularies that actually operate;
+  - a semantic check of the taught translations and relations;
+  - an experimental comparison with alternative methods;
+  - evidence that one representation improves several modules;
+  - recovery on new categories or documents.
+
+**8. Status.** S87a is partly successful. The diagnosis stands. The general capability that is missing is still open,
+and R3 is not closed.
+
+The owner's proposed direction comes next. It asks for:
+- a general model of a scientific observation;
+- a mathematical measurement of how much information survives each module boundary;
+- a comparison of the existing representations with scientifically grounded alternatives;
+- then the most promising option, chosen and tested by Claude.
+
+Activating the standing research policy is a separate operational question.
