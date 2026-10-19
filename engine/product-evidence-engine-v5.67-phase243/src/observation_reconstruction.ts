@@ -73,7 +73,10 @@ function signalsKind(qk:QuantityKnowledge,c:DeclarationContext,t:Technique):{kin
   const hits=qk.pack.kinds.filter(k=>[...(k.discriminators??[]),...(k.terms??[])].some(w=>w.length>3&&hasPhrase(c.label,w)));if(hits.length)out.push({kind:coarse(hits.map(h=>h.id)),rule:'QK kind terms in the label',from:'label'});}
  return out;
 }
-export function reconstructDeclaration(qk:QuantityKnowledge,c:DeclarationContext,t:Technique):DeclarationReconstruction{
+/** Options. `rejectedObjectRule` re-enables the object-of-interest rule that S87e REJECTED on unseen hosts (18 right, 30 wrong of
+ * 48); it exists only to reproduce the committed first run and is never on by default. */
+export interface ReconstructionOptions {rejectedObjectRule?:boolean}
+export function reconstructDeclaration(qk:QuantityKnowledge,c:DeclarationContext,t:Technique,opts:ReconstructionOptions={}):DeclarationReconstruction{
  const v=c.valueJson??{};const vk=String(v.kind??'');const form=NUMERIC.has(vk)?'quantity':'categorical';
  const r:DeclarationReconstruction={technique:t,form,quantityKind:und(),basis:und(),constraints:[],objectOfInterest:und(),procedure:und(),categoricalScale:und()};
  const texts:[string,string|null|undefined][]=t==='A'?[['label',c.label]]:[['label',c.label],['colHeader',c.colHeader],['rowHeader',c.rowHeader],['tableHeader',c.tableHeader],['tableCaption',c.tableCaption]];
@@ -98,7 +101,8 @@ export function reconstructDeclaration(qk:QuantityKnowledge,c:DeclarationContext
   if(t==='C'&&k.class==='quantity'&&!k.kind)continue;
   r.constraints.push({dimension:k.class==='quantity'?`quantity:${k.kind}`:k.class,value:q,from:f});}
  // object of interest
- const obj=objectOf(qk,c.label);if(obj)r.objectOfInterest=inf(obj,'words before a QK kind term in the label','label');
+ // object of interest: REJECTED on unseen hosts (S87e); left undetermined unless the reproduction option is set
+ if(opts.rejectedObjectRule){const obj=objectOf(qk,c.label);if(obj)r.objectOfInterest=inf(obj,'REJECTED rule: words before a QK kind term in the label','label');}
  // named procedure: a standard designation in the label (A) or headers/caption (B, C)
  for(const [f,x] of texts){const m=x?STANDARD.exec(x):null;if(m){r.procedure=inf(m[0],'standard designation pattern',f);break;}}
  if(r.procedure.state==='undetermined')for(const m of qk.pack.methods??[])if(m.terms.some(w=>w.length>4&&texts.some(([,x])=>x&&hasPhrase(x,w)))){r.procedure=inf(m.id,'QK method terms','label');break;}

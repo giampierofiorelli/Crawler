@@ -161,3 +161,38 @@ promoted only through the knowledge lifecycle.
 - `src/observation_reconstruction.ts` gained the test-value function after the declarations check run. The declarations
   code is unchanged (diff from 301a6ec shows additions only).
 - Nothing is stored and nothing operational reads these modules. Full suite: 4,869 passed.
+
+## 8. Corrections after the owner review (2026-10-19)
+
+The review is preserved verbatim in `.claude/skills/pee-guided-learning/references/owner-review-s87e-2026-10-19.md`. All
+three code findings were confirmed in the code and corrected. The sections above stay as written; these points supersede
+them where they differ.
+
+1. **The rejected object rule was still active** (`reconstructDeclaration` called `objectOf`).
+   - It is now off by default (`ReconstructionOptions.rejectedObjectRule`), and a test asserts this.
+   - The option exists only to reproduce the committed first run.
+   - With the default, the check run produces no object of interest: 0 right, 0 wrong
+     (`evaluation/s87e/check-default-after-review.json`).
+2. **The condition scoring double-counted.**
+   - Several produced conditions could be credited to the same annotated one.
+   - Scorer v2 matches one to one.
+   - Re-scored on the unchanged first-run outputs (`check-firstrun-rescored-v2.json`): **3 correct of 10 produced (30%
+     precision, not "6 of 10"); coverage 3 of 24 (12.5%).**
+3. **The role of the evidence did not improve.**
+   - On the 69 check rows the role result equals the trivial "all measured" baseline.
+   - The 6 declared or quoted values are missed.
+   - Unit interpretation cannot compensate for a wrong origin of the evidence; this stays an open problem.
+4. **Over-general conclusion (supersedes §0.3 and §6).**
+   - S87e shows that *these particular phrase rules*, developed on this material, generalise poorly.
+   - It does not show that linguistic or symbolic approaches in general are inadequate. The methods studied in S87c
+     (frame roles, document-level relations, weak supervision with measured signal accuracy) remain candidates.
+5. **Uncertainty is not a veto.**
+   - In the contract (`assessCompleteness`), a missing numeric uncertainty no longer makes `decide` incomplete.
+   - It is reported as `uncertainty_unknown_judge_by_purpose`. Sufficiency depends on the kind of evidence and the
+     consumer's goal.
+6. **The header bridge is unconfirmed.** The 1/6 → 6/6 basis recovery is development evidence only; the check pages
+   contained no such table cells.
+7. **Knowledge is more than a dictionary.** Putting vocabulary in the database is not enough on its own. The next step's
+   measurable goal, in the owner's words, is that one scientific definition helps PEE recognise, interpret, store and
+   reuse information without rewriting its logic per category. Conditions, objects, bases and roles are measured
+   separately, including qualitative observations.

@@ -18,6 +18,7 @@ test('S87e A: structural validity and scientific completeness are separate repor
  const c=assessCompleteness(o);
  assert.equal(c.interpret.status,'incomplete');assert.ok(c.interpret.missing.includes('assessed.property'),'nobody knows what was measured');
  assert.equal(c.decide.status,'incomplete');assert.deepEqual(c.compare.notAssessed,['condition_relevance']);
+ assert.ok(!c.decide.missing.includes('uncertainty'),'a missing numeric uncertainty is not a veto');assert.ok(c.decide.notAssessed.includes('uncertainty_unknown_judge_by_purpose'));
 });
 test('S87e B: a declared attribute is categorical, never a judgement; a judgement keeps its polarity',()=>{
  const steel=fromDeclaration({declaration_id:'d1',product_id:'p',property_key:'material',value_json:'{"kind":"text","text":"stainless steel"}',locator:'dl',evidence_role:'manufacturer_declaration',method:'m'},null);

@@ -20,7 +20,9 @@ test('S87e declarations: conditions are the label\'s modifiers; scales come from
  assert.equal(reconstructDeclaration(qk,decl('Remote control','Yes',{kind:'boolean',value:true}),'C').categoricalScale.value,'boolean');
  const plain=reconstructDeclaration(qk,decl('Colour','Red',{kind:'text',text:'Red'}),'C');
  assert.equal(plain.basis.state,'undetermined');assert.equal(plain.procedure.state,'undetermined');assert.deepEqual(plain.constraints,[]);
- assert.equal(reconstructDeclaration(qk,decl('Gross weight','5 kg',{kind:'quantity',number:5,unit:'kg'}),'C').objectOfInterest.value,'package');
+ const gross=decl('Gross weight','5 kg',{kind:'quantity',number:5,unit:'kg'});
+ assert.equal(reconstructDeclaration(qk,gross,'C').objectOfInterest.state,'undetermined','the rejected object rule is off by default');
+ assert.equal(reconstructDeclaration(qk,gross,'C',{rejectedObjectRule:true}).objectOfInterest.value,'package','only for reproducing the first run');
 });
 test('S87e test values: a value alone in a table cell takes its basis and property from the row header',()=>{
  const bare=reconstructTestValue(qk,{value:0.9,unit:'kWh',block:'0.9 kWh',offset:0},'C');

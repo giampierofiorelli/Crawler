@@ -101,9 +101,12 @@ export function assessCompleteness(o:ObservationRecord):Record<Purpose,PurposeSt
   ...(q&&q.quantityKind.state==='unknown'?[['result.quantity.quantityKind',q.quantityKind] as [string,Slot<unknown>]]:[]),
   ['procedure_or_experiment',o.procedure.state!=='unknown'?o.procedure:o.result.comparison?.experiment??unknown()]]);
  const decide=need([...interpretEntries(o),['subject.product',s0&&s0.level==='product'?(s0.identity==='stated'?'stated':'unknown'):'unknown'],
-  ['observer.role',o.observer.role==='unknown'?'unknown':'stated'],['uncertainty',o.uncertainty]]);
+  ['observer.role',o.observer.role==='unknown'?'unknown':'stated']]);
  const st=(x:{missing:string[];inf:string[]},notAssessed:string[]=[]):PurposeStatus=>({status:x.missing.length?'incomplete':x.inf.length?'complete_with_inferences':'complete',missing:x.missing,inferred:x.inf,notAssessed});
- return {interpret:st(interpret),describe_product:st(describe),compare:st(compare,['condition_relevance']),decide:st(decide,['condition_relevance','sufficiency_for_need'])};
+ // S87e review: a missing numeric uncertainty is not a veto; whether the evidence suffices depends on the kind of evidence and
+ // the consumer's goal (GUM 3.1.3; GRADE), so it is reported as not assessed here, never as a missing slot
+ const decideNA=['condition_relevance','sufficiency_for_need',...(o.uncertainty.state==='unknown'?['uncertainty_unknown_judge_by_purpose']:[])];
+ return {interpret:st(interpret),describe_product:st(describe),compare:st(compare,['condition_relevance']),decide:st(decide,decideNA)};
 }
 function interpretEntries(o:ObservationRecord):[string,Slot<unknown>|SlotState|boolean][]{
  return [['assessed.property',o.assessed.property],['observationBasis',o.observationBasis],...(o.result.quantity?[['result.quantity.unit',o.result.quantity.unit] as [string,Slot<unknown>]]:[])];

@@ -10,12 +10,16 @@ const D=new URL('../dist/src/',import.meta.url).href;const QK=await import(D+'qu
 const qk=QK.loadQuantityKnowledge();const dir=arg('dir');const J=f=>JSON.parse(readFileSync(join(dir,f),'utf8'));
 const pre=JSON.parse(readFileSync(new URL('../evaluation/s87e/preregistration.json',import.meta.url),'utf8'));const DEV=new Set(pre.declarationSplit.developmentHosts);
 const ctx=new Map(J('declaration-context.json').map(c=>[c.id,c]));const key=J('annotation-key.json');const ann=J('annotations-blind.json').items;
-const scope=arg('scope')??'dev';
+const scope=arg('scope')??'dev';const reproduce=process.argv.includes('--reproduce-first-run');
+// one-to-one matching (S87e review): each annotated condition can be credited to at most one produced condition
+const match1to1=(prod,ann)=>{const adj=prod.map(x=>ann.map((y,j)=>overlap(x.value,`${y.value}`)?j:-1).filter(j=>j>=0));const own=new Array(ann.length).fill(-1);
+ const tryk=(i,seen)=>{for(const j of adj[i]){if(seen.has(j))continue;seen.add(j);if(own[j]<0||tryk(own[j],seen)){own[j]=i;return true;}}return false;};
+ let n=0;for(let i=0;i<prod.length;i++)if(tryk(i,new Set()))n++;return n;};
 const toks=s=>new Set(String(s??'').toLowerCase().replace(/[^a-z0-9.%°]+/g,' ').split(' ').filter(w=>w.length>1));
 const overlap=(a,b)=>{const A=toks(a),B=toks(b);if(!A.size||!B.size)return false;let n=0;for(const x of A)if(B.has(x))n++;return n/Math.min(A.size,B.size)>=0.5;};
 const rows=[];
 for(const k of key){const isDev=DEV.has(k.host);if(scope==='dev'&&!isDev||scope==='check'&&isDev)continue;const c=ctx.get(k.ref);const a=ann[k.id];if(!c||!a)continue;
- for(const t of ['A','B','C']){const r=R.reconstructDeclaration(qk,c,t);rows.push({id:k.id,host:k.host,t,a,r});}}
+ for(const t of ['A','B','C']){const r=R.reconstructDeclaration(qk,c,t,{rejectedObjectRule:reproduce});rows.push({id:k.id,host:k.host,t,a,r});}}
 const S=(rs)=>{const s={items:rs.length,form:{correct:0,wrong:0,notAProperty:0},
  quantityKind:{annotated:0,produced:0,correct:0,wrong:0},basis:{annotated:0,produced:0,correct:0,wrong:0,falsePositive:0},
  constraints:{annotatedItems:0,annotated:0,produced:0,correct:0,matchedAnnotated:0},objectOfInterest:{annotated:0,produced:0,correct:0,wrong:0},
@@ -27,14 +31,13 @@ const S=(rs)=>{const s={items:rs.length,form:{correct:0,wrong:0,notAProperty:0},
   if(a.form==='quantity'){const ab=['none','unclear'].includes(a.basis)?null:a.basis;if(ab)s.basis.annotated++;
    if(r.basis.value){s.basis.produced++;if(!ab)s.basis.falsePositive++;else if(r.basis.value===ab)s.basis.correct++;else s.basis.wrong++;}}
   const ac=a.constraints??[];if(ac.length)s.constraints.annotatedItems++;s.constraints.annotated+=ac.length;s.constraints.produced+=r.constraints.length;
-  for(const x of r.constraints)if(ac.some(y=>overlap(x.value,`${y.value}`)))s.constraints.correct++;
-  for(const y of ac)if(r.constraints.some(x=>overlap(x.value,`${y.value}`)))s.constraints.matchedAnnotated++;
+  const m=match1to1(r.constraints,ac);s.constraints.correct+=m;s.constraints.matchedAnnotated+=m;
   if(a.objectOfInterest)s.objectOfInterest.annotated++;
   if(r.objectOfInterest.value){s.objectOfInterest.produced++;if(a.objectOfInterest&&overlap(r.objectOfInterest.value,a.objectOfInterest))s.objectOfInterest.correct++;else s.objectOfInterest.wrong++;}
   if(a.procedureNamed)s.procedure.annotated++;if(r.procedure.value){s.procedure.produced++;if(!a.procedureNamed)s.procedure.falsePositive++;}
   if(a.form==='categorical'&&r.form==='categorical'&&a.categoricalScale){s.categoricalScale.annotated++;if(r.categoricalScale.value){s.categoricalScale.produced++;if(r.categoricalScale.value===a.categoricalScale)s.categoricalScale.correct++;else s.categoricalScale.wrong++;}}}
  return s;};
-const out={schema:'pee.s87e.reconstruct-eval.v1',scope,note:'declarations; blind Claude-agent reference; strict scoring (no post hoc equivalences)',techniques:{}};
+const out={schema:'pee.s87e.reconstruct-eval.v2',scope,reproduceFirstRun:reproduce,note:'declarations; blind Claude-agent reference; strict scoring; v2: one-to-one condition matching (correct = matched pairs)',techniques:{}};
 for(const t of ['A','B','C']){const rs=rows.filter(r=>r.t===t);const hosts=[...new Set(rs.map(r=>r.host))];
  const byHost=Object.fromEntries(hosts.map(h=>[h,S(rs.filter(r=>r.host===h))]));
  const kindAcc=Object.entries(byHost).filter(([,v])=>v.quantityKind.annotated>=3).map(([h,v])=>[h,+(v.quantityKind.correct/v.quantityKind.annotated).toFixed(2)]).sort((x,y)=>x[1]-y[1]);
