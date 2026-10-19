@@ -1,0 +1,894 @@
+{
+ "schema": "pee.s81.battery-run.v1",
+ "arm": "Ks",
+ "build": "/home/user/s81-before/engine/product-evidence-engine-v5.67-phase243",
+ "battery": "e695650258db9fd2b6c8b5a8e805201d9d7eaa5693c53e53afd0e62aab45c234",
+ "units": 55,
+ "summary": {
+  "correct": 27,
+  "over_claim": 10,
+  "unjustified_abstention": 15,
+  "wrong": 3
+ },
+ "byLayer": {
+  "R": {
+   "correct": 11,
+   "over_claim": 4,
+   "unjustified_abstention": 5,
+   "wrong": 3
+  },
+  "A": {
+   "correct": 1,
+   "over_claim": 0,
+   "unjustified_abstention": 9,
+   "wrong": 0
+  },
+  "C": {
+   "correct": 9,
+   "over_claim": 6,
+   "unjustified_abstention": 0,
+   "wrong": 0
+  },
+  "I": {
+   "correct": 6,
+   "over_claim": 0,
+   "unjustified_abstention": 1,
+   "wrong": 0
+  }
+ },
+ "totals": {
+  "all:correct": 27,
+  "R:correct": 11,
+  "P2_sufficiency:correct": 9,
+  "P4_conditions:correct": 8,
+  "cat:televisions:correct": 6,
+  "all:over_claim": 10,
+  "R:over_claim": 4,
+  "P4_conditions:over_claim": 4,
+  "cat:televisions:over_claim": 2,
+  "cat:dishwashers:correct": 4,
+  "cat:dishwashers:over_claim": 2,
+  "all:unjustified_abstention": 15,
+  "R:unjustified_abstention": 5,
+  "P2_sufficiency:unjustified_abstention": 5,
+  "P4_conditions:unjustified_abstention": 4,
+  "cat:dishwashers:unjustified_abstention": 4,
+  "all:wrong": 3,
+  "R:wrong": 3,
+  "P4_conditions:wrong": 3,
+  "cat:dishwashers:wrong": 1,
+  "cat:air_purifiers:correct": 4,
+  "cat:air_purifiers:over_claim": 3,
+  "cat:air_fryers:unjustified_abstention": 4,
+  "cat:air_fryers:wrong": 1,
+  "P3_proxy:correct": 3,
+  "cat:air_fryers:correct": 5,
+  "cat:coffee_machines:correct": 2,
+  "cat:dehumidifiers:correct": 3,
+  "cat:tumble_dryers:wrong": 1,
+  "cat:tumble_dryers:correct": 3,
+  "A:unjustified_abstention": 9,
+  "P3_proxy:unjustified_abstention": 9,
+  "cat:televisions:unjustified_abstention": 2,
+  "cat:air_purifiers:unjustified_abstention": 2,
+  "cat:coffee_machines:unjustified_abstention": 1,
+  "cat:dehumidifiers:unjustified_abstention": 2,
+  "A:correct": 1,
+  "C:correct": 9,
+  "P5_comparability:correct": 9,
+  "C:over_claim": 6,
+  "P5_comparability:over_claim": 6,
+  "cat:air_fryers:over_claim": 1,
+  "cat:coffee_machines:over_claim": 1,
+  "cat:tumble_dryers:over_claim": 1,
+  "I:correct": 6,
+  "P1_type:correct": 6,
+  "I:unjustified_abstention": 1,
+  "P1_type:unjustified_abstention": 1
+ },
+ "metamorphic": [],
+ "results": [
+  {
+   "id": "R2-tv-1",
+   "layer": "R",
+   "category": "televisions",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "bright_room_visibility": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-tv-2",
+   "layer": "R",
+   "category": "televisions",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "bright_room_visibility": "partial"
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "R2-tv-3",
+   "layer": "R",
+   "category": "televisions",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "bright_room_visibility": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-tv-4",
+   "layer": "R",
+   "category": "televisions",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "wide_seating_consistency": "partial"
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "R2-dw-1",
+   "layer": "R",
+   "category": "dishwashers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "noise_and_acoustic_events": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-dw-2",
+   "layer": "R",
+   "category": "dishwashers",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "noise_and_acoustic_events": "partial"
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "R2-dw-3",
+   "layer": "R",
+   "category": "dishwashers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "drying_by_material": "unresolved"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "R2-dw-4",
+   "layer": "R",
+   "category": "dishwashers",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "usable_capacity_geometry": "unresolved"
+   },
+   "score": [
+    "wrong"
+   ]
+  },
+  {
+   "id": "R2-dw-5",
+   "layer": "R",
+   "category": "dishwashers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "hygiene_sanitisation": "unresolved"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "R2-ap-1",
+   "layer": "R",
+   "category": "air_purifiers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "gas_odour_reduction": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-ap-2",
+   "layer": "R",
+   "category": "air_purifiers",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "gas_odour_reduction": "partial"
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "R2-ap-3",
+   "layer": "R",
+   "category": "air_purifiers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "room_coverage_distribution": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-ap-4",
+   "layer": "R",
+   "category": "air_purifiers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "allergen_particle_reduction": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-af-1",
+   "layer": "R",
+   "category": "air_fryers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "cooking_results": "unresolved",
+    "crisp_texture": "unresolved"
+   },
+   "score": [
+    "unjustified_abstention",
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "R2-af-2",
+   "layer": "R",
+   "category": "air_fryers",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "batch_capacity": "unresolved"
+   },
+   "score": [
+    "wrong"
+   ]
+  },
+  {
+   "id": "R2-af-3",
+   "layer": "R",
+   "category": "air_fryers",
+   "principle": [
+    "P2_sufficiency"
+   ],
+   "got": {
+    "cleaning_effort": "unresolved"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "R2-af-4",
+   "layer": "R",
+   "category": "air_fryers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "low_energy_use": "indirect",
+    "cooking_results": "indirect"
+   },
+   "score": [
+    "correct",
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-cm-1",
+   "layer": "R",
+   "category": "coffee_machines",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "espresso_quality": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-dh-1",
+   "layer": "R",
+   "category": "dehumidifiers",
+   "principle": [
+    "P2_sufficiency",
+    "P4_conditions"
+   ],
+   "got": {
+    "moisture_removal": "partial"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "R2-td-1",
+   "layer": "R",
+   "category": "tumble_dryers",
+   "principle": [
+    "P4_conditions"
+   ],
+   "got": {
+    "sound_outcome": "not_verified"
+   },
+   "score": [
+    "wrong"
+   ]
+  },
+  {
+   "id": "R2-td-2",
+   "layer": "R",
+   "category": "tumble_dryers",
+   "principle": [
+    "P2_sufficiency"
+   ],
+   "got": {
+    "duration_outcome": "not_verified"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "A2-tv-1",
+   "layer": "A",
+   "category": "televisions",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "gaming_responsiveness": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-tv-2",
+   "layer": "A",
+   "category": "televisions",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "dark_room_cinema_picture": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-ap-1",
+   "layer": "A",
+   "category": "air_purifiers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "quiet_night_operation": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-ap-2",
+   "layer": "A",
+   "category": "air_purifiers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "gas_odour_reduction": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-dw-1",
+   "layer": "A",
+   "category": "dishwashers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "drying_by_material": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-dw-2",
+   "layer": "A",
+   "category": "dishwashers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "water_per_cycle_and_workload": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-cm-1",
+   "layer": "A",
+   "category": "coffee_machines",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "shot_consistency": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-dh-1",
+   "layer": "A",
+   "category": "dehumidifiers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "low_energy_use": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-af-1",
+   "layer": "A",
+   "category": "air_fryers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "cleaning_effort": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  },
+  {
+   "id": "A2-af-2",
+   "layer": "A",
+   "category": "air_fryers",
+   "principle": [
+    "P3_proxy"
+   ],
+   "got": {
+    "cooking_results": "none"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-tv-1",
+   "layer": "C",
+   "category": "televisions",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-tv-2",
+   "layer": "C",
+   "category": "televisions",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "not_comparable",
+    "reasons": [
+     "window size named differently (10 % vs 2 %); not shown to be the same state or different states"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-tv-3",
+   "layer": "C",
+   "category": "televisions",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-dw-1",
+   "layer": "C",
+   "category": "dishwashers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-dw-2",
+   "layer": "C",
+   "category": "dishwashers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-dw-3",
+   "layer": "C",
+   "category": "dishwashers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "C2-ap-1",
+   "layer": "C",
+   "category": "air_purifiers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "C2-ap-2",
+   "layer": "C",
+   "category": "air_purifiers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "C2-af-1",
+   "layer": "C",
+   "category": "air_fryers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "C2-af-2",
+   "layer": "C",
+   "category": "air_fryers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-cm-1",
+   "layer": "C",
+   "category": "coffee_machines",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "C2-dh-1",
+   "layer": "C",
+   "category": "dehumidifiers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-dh-2",
+   "layer": "C",
+   "category": "dehumidifiers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "not_comparable",
+    "reasons": [
+     "inlet air state named differently (20 C 60 % RH vs 30 C 80 % RH); not shown to be the same state or different states"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "C2-td-1",
+   "layer": "C",
+   "category": "tumble_dryers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "over_claim"
+   ]
+  },
+  {
+   "id": "C2-td-2",
+   "layer": "C",
+   "category": "tumble_dryers",
+   "principle": [
+    "P5_comparability"
+   ],
+   "got": {
+    "verdict": "comparable",
+    "reasons": [
+     "same quantity, metric and conditions"
+    ]
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-ap-1",
+   "layer": "I",
+   "category": "air_purifiers",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "mode_power_and_tco"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-dw-1",
+   "layer": "I",
+   "category": "dishwashers",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "ambiguous"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-tv-1",
+   "layer": "I",
+   "category": "televisions",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "eotf_tracking_and_colour_accuracy"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-cm-1",
+   "layer": "I",
+   "category": "coffee_machines",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "brew_temperature_stability"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-td-1",
+   "layer": "I",
+   "category": "tumble_dryers",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "temperature_per_completed_task"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-af-1",
+   "layer": "I",
+   "category": "air_fryers",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "usable_cooking_area"
+   },
+   "score": [
+    "correct"
+   ]
+  },
+  {
+   "id": "I2-dh-1",
+   "layer": "I",
+   "category": "dehumidifiers",
+   "principle": [
+    "P1_type"
+   ],
+   "got": {
+    "link": "none"
+   },
+   "score": [
+    "unjustified_abstention"
+   ]
+  }
+ ]
+}
