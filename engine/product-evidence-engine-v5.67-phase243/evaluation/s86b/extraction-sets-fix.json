@@ -1,0 +1,1479 @@
+{
+ "schema": "pee.s86b.extraction-capability-sets.v1",
+ "old": "/home/user/wt-c9648e7/engine/product-evidence-engine-v5.67-phase243",
+ "new": "/home/user/Crawler/engine/product-evidence-engine-v5.67-phase243",
+ "counts": {
+  "only_old": 0,
+  "only_new": 18,
+  "both": 97,
+  "neither": 17
+ },
+ "typedCorrectly": {
+  "old": 0,
+  "new": 94
+ },
+ "byGroup": {
+  "screen:unit": {
+   "both": 40,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 0
+  },
+  "screen:declared": {
+   "both": 18,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 0
+  },
+  "screen:mismatch": {
+   "both": 10,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 0
+  },
+  "screen:new_unit": {
+   "both": 2,
+   "only_old": 0,
+   "only_new": 9,
+   "neither": 1
+  },
+  "table:header_unit": {
+   "both": 16,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 2
+  },
+  "table:cell_unit": {
+   "both": 0,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 6
+  },
+  "table:contradiction": {
+   "both": 2,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 0
+  },
+  "table:unsafe": {
+   "both": 1,
+   "only_old": 0,
+   "only_new": 1,
+   "neither": 0
+  },
+  "table:new_header": {
+   "both": 1,
+   "only_old": 0,
+   "only_new": 8,
+   "neither": 2
+  },
+  "prose:measured": {
+   "both": 4,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 6
+  },
+  "prose:not_result": {
+   "both": 3,
+   "only_old": 0,
+   "only_new": 0,
+   "neither": 0
+  }
+ },
+ "sets": {
+  "only_old": [],
+  "only_new": [
+   {
+    "id": "x069",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "L/day",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x071",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "m³/min",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x072",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "kWh/annum",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x073",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "Pa",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x074",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "bar",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x075",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "dB(C)",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x076",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "lux",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x077",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "rpm",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x078",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "kg/h",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "correct"
+   },
+   {
+    "id": "x108",
+    "group": "table:unsafe",
+    "probe": {
+     "header": "Rated power (W)",
+     "cell": "1450"
+    },
+    "old": "false_accept",
+    "new": "correct"
+   },
+   {
+    "id": "x109",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Noise (dB(A))",
+     "cell": "52"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x110",
+    "group": "table:new_header",
+    "probe": {
+     "header": "CADR (m³/h)",
+     "cell": "310"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x111",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Airflow (m3/h)",
+     "cell": "420"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x112",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Extraction (L/day)",
+     "cell": "12"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x116",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Weight (grams)",
+     "cell": "196"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x117",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Weight (lb)",
+     "cell": "4"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x118",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Capacity (ml)",
+     "cell": "500"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   },
+   {
+    "id": "x119",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Capacity (quarts)",
+     "cell": "5"
+    },
+    "old": "no_candidate",
+    "new": "correct"
+   }
+  ],
+  "both": [
+   {
+    "id": "x001",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "mm",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x002",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "cm",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x003",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "kg",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x004",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "g",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x005",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "l",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x006",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "litre",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x007",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "litres",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x008",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "liter",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x009",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "liters",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x010",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "db",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x011",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "dba",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x012",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "db(a)",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x013",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "decibel",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x014",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "decibels",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x015",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "%",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x016",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "minute",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x017",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "minutes",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x018",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "mins",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x019",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "min",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x020",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "hour",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x021",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "hours",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x022",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "hrs",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x023",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "second",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x024",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "seconds",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x025",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "ms",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x026",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "w",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x027",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "watt",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x028",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "watts",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x029",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "kwh",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x030",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "wh",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x031",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "mah",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x032",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "°c",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x033",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "nits",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x034",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "cd/m2",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x035",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "cd/m²",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x036",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "cfm",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x037",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "m3/h",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x038",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "m³/h",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x039",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "hz",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x040",
+    "group": "screen:unit",
+    "probe": {
+     "unit": "ml",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x041",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "g",
+     "value": 12,
+     "declared": "mass"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x042",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "kg",
+     "value": 12,
+     "declared": "mass"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x043",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "l",
+     "value": 12,
+     "declared": "mass"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x044",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "l",
+     "value": 12,
+     "declared": "volume"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x045",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "kg",
+     "value": 12,
+     "declared": "volume"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x046",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "db",
+     "value": 12,
+     "declared": "noise"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x047",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "dba",
+     "value": 12,
+     "declared": "noise"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x048",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "w",
+     "value": 12,
+     "declared": "noise"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x049",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "ms",
+     "value": 12,
+     "declared": "duration"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x050",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "seconds",
+     "value": 12,
+     "declared": "duration"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x051",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "minutes",
+     "value": 12,
+     "declared": "duration"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x052",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "hours",
+     "value": 12,
+     "declared": "duration"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x053",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "kwh",
+     "value": 12,
+     "declared": "duration"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x054",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "mm",
+     "value": 12,
+     "declared": "length"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x055",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "cm",
+     "value": 12,
+     "declared": "length"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x056",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "g",
+     "value": 12,
+     "declared": "length"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x057",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "w",
+     "value": 12,
+     "declared": "power"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x058",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "kwh",
+     "value": 12,
+     "declared": "power"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x059",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "kwh",
+     "value": 12,
+     "declared": "energy"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x060",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "wh",
+     "value": 12,
+     "declared": "energy"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x061",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "w",
+     "value": 12,
+     "declared": "energy"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x062",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "nits",
+     "value": 12,
+     "declared": "luminance"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x063",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "db",
+     "value": 12,
+     "declared": "luminance"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x064",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "cfm",
+     "value": 12,
+     "declared": "airflow"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x065",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "m3/h",
+     "value": 12,
+     "declared": "airflow"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x066",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "kg",
+     "value": 12,
+     "declared": "airflow"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x067",
+    "group": "screen:declared",
+    "probe": {
+     "unit": "hz",
+     "value": 12,
+     "declared": "frequency"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x068",
+    "group": "screen:mismatch",
+    "probe": {
+     "unit": "w",
+     "value": 12,
+     "declared": "frequency"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x079",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "pence",
+     "value": 12,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x080",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "stars",
+     "value": 4,
+     "declared": null
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x081",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Weight (g)",
+     "cell": "196"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x082",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Weight (kg)",
+     "cell": "4.2"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x083",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Thickness (mm)",
+     "cell": "12"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x084",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Height (cm)",
+     "cell": "32"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x085",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Capacity (l)",
+     "cell": "4.5"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x086",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Capacity (litres)",
+     "cell": "4.5"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x087",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Capacity (liters)",
+     "cell": "4.5"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x088",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Noise (db)",
+     "cell": "52"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x089",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Noise (dBA)",
+     "cell": "52"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x091",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Response time (ms)",
+     "cell": "35"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x092",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Boil time (seconds)",
+     "cell": "150"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x093",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Run time (minutes)",
+     "cell": "42"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x094",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Runtime (hours)",
+     "cell": "6"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x095",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Power (W)",
+     "cell": "1450"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x096",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Power (watts)",
+     "cell": "1450"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x097",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Energy (kWh)",
+     "cell": "0.82"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x105",
+    "group": "table:contradiction",
+    "probe": {
+     "header": "Measured time (W)",
+     "cell": "12"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x106",
+    "group": "table:contradiction",
+    "probe": {
+     "header": "Weight (W)",
+     "cell": "12"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x107",
+    "group": "table:unsafe",
+    "probe": {
+     "header": "Manufacturer claimed noise (dB)",
+     "cell": "48"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x113",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Energy per cycle (kWh)",
+     "cell": "0.82"
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x120",
+    "group": "prose:measured",
+    "probe": {
+     "text": "We measured 58 dB(A) at one metre on the top setting."
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x121",
+    "group": "prose:measured",
+    "probe": {
+     "text": "In our test it used 0.82 kWh over the cycle."
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x125",
+    "group": "prose:measured",
+    "probe": {
+     "text": "In our test it extracted 12 litres a day at 30°C and 80% RH."
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x128",
+    "group": "prose:measured",
+    "probe": {
+     "text": "In our test it boiled 1 litre in 150 seconds."
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x130",
+    "group": "prose:not_result",
+    "probe": {
+     "text": "The manufacturer claims 52 dB(A)."
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x131",
+    "group": "prose:not_result",
+    "probe": {
+     "text": "It is rated at 1700 W."
+    },
+    "old": "correct",
+    "new": "correct"
+   },
+   {
+    "id": "x132",
+    "group": "prose:not_result",
+    "probe": {
+     "text": "We measured from 1 m away."
+    },
+    "old": "correct",
+    "new": "correct"
+   }
+  ],
+  "neither": [
+   {
+    "id": "x070",
+    "group": "screen:new_unit",
+    "probe": {
+     "unit": "l/24h",
+     "value": 12,
+     "declared": null
+    },
+    "old": "unit_not_recognised",
+    "new": "unit_not_recognised"
+   },
+   {
+    "id": "x090",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Battery remaining (%)",
+     "cell": "80"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x098",
+    "group": "table:header_unit",
+    "probe": {
+     "header": "Battery (mAh)",
+     "cell": "5000"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x099",
+    "group": "table:cell_unit",
+    "probe": {
+     "header": "Weight",
+     "cell": "196 g"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x100",
+    "group": "table:cell_unit",
+    "probe": {
+     "header": "Capacity",
+     "cell": "4.5 l"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x101",
+    "group": "table:cell_unit",
+    "probe": {
+     "header": "Noise",
+     "cell": "52 dBA"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x102",
+    "group": "table:cell_unit",
+    "probe": {
+     "header": "Run time",
+     "cell": "42 minutes"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x103",
+    "group": "table:cell_unit",
+    "probe": {
+     "header": "Power",
+     "cell": "1450 W"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x104",
+    "group": "table:cell_unit",
+    "probe": {
+     "header": "Energy",
+     "cell": "0.82 kWh"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x114",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Pressure (bar)",
+     "cell": "9"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x115",
+    "group": "table:new_header",
+    "probe": {
+     "header": "Brightness (nits)",
+     "cell": "650"
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x122",
+    "group": "prose:measured",
+    "probe": {
+     "text": "We measured 196 g of chips after the cycle."
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x123",
+    "group": "prose:measured",
+    "probe": {
+     "text": "Our test took 42 minutes to dry the load."
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x124",
+    "group": "prose:measured",
+    "probe": {
+     "text": "We measured a CADR of 310 m³/h in our chamber."
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x126",
+    "group": "prose:measured",
+    "probe": {
+     "text": "We measured 650 nits of peak brightness."
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x127",
+    "group": "prose:measured",
+    "probe": {
+     "text": "We recorded 9 bar of pump pressure in our test."
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   },
+   {
+    "id": "x129",
+    "group": "prose:measured",
+    "probe": {
+     "text": "Our meter read 1450 W during the test."
+    },
+    "old": "no_candidate",
+    "new": "no_candidate"
+   }
+  ]
+ }
+}

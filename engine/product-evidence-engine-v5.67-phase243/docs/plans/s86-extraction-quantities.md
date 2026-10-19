@@ -81,6 +81,7 @@ Publisher identity alone no longer makes a value a first-hand result. Within a t
 - **The two sound levels.** I checked both against the page text: "I recorded a noise level reading of 63dB" and "I measured the dishwasher at just 48.5dB". Neither states a weighting, so `dB` unspecified is correct.
 - By convention, a tester's meter reading is a sound pressure level. QK does not encode that convention, and no instrument was recorded, so the kind stays open rather than assumed.
 - **These pages are too few, and too thin in quantities, to show recovery.** They contain no CADR, airflow, rate or comparative tables.
+  - *Correction (2026-10-19, S86b):* this is wrong. A blind reference of the same pages holds 125 measured results, including CADR, noise, energy and comparison lists. The readers found 7 because candidate finding misses them. See `s86b-capability-preservation-and-recovery.md` §2.3.
 
 **Store rows, typed on read [R]** (`evaluation/s86/stored-typing.json`; nothing rewritten):
 

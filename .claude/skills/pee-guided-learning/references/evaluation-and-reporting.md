@@ -115,3 +115,35 @@ Always give denominators. Report each of these:
 After the report, update `current-state.md` in this skill when a phase changes the baseline: date, HEAD, numbers,
 open problems and new modules. Add a row to `decisions-and-supersessions.md` when an owner decision or verified fact
 overtakes an earlier one.
+
+## 7. Capability preservation for every merge (owner rule, 2026-10-19, S86b; permanent)
+
+Source: `owner-s87-capability-preservation-2026-10-19.md` ("Introdurrei una regola permanente"). It applies to every
+integration: vocabularies, request understanding, page reading, research and learning.
+
+Before a merge of two mechanisms counts as done:
+
+1. **Generate probes from both mechanisms**, from every alternative of each one's own vocabularies, cues and structures,
+   not from examples you happen to think of. Write the expected answer as the meaning, before any run, and seal it by
+   hash or commit.
+2. **Run old, new and combined builds** (old builds in `git worktree`s) and report four sets:
+   - **only old:** capabilities at risk;
+   - **only new:** capabilities to add to the shared mechanism;
+   - **both:** duplicates to consolidate;
+   - **neither:** shared gaps.
+3. **Verify old capabilities are correct**, not just present. A wrong old answer is not a capability to keep.
+4. **A non-empty "only old" set means the merge is not finished.** Restore the capability in the shared mechanism, or
+   record why it was wrong.
+5. **Measure on real material at each stage separately:**
+   - present on the page or in the request (a blind reference, sealed before the run);
+   - candidate;
+   - interpreted correctly;
+   - rejected, with the reason;
+   - attributed and stored.
+
+   This separates recogniser, interpretation, attribution and over-restriction failures.
+6. **Report whether the gain reaches the user.** State the operational path it reaches, or the missing link.
+
+Spent material diagnoses. Generalisation needs new, authorised material.
+
+Worked example: `docs/plans/s86b-capability-preservation-and-recovery.md`. Scripts: `scripts/s86b-*`.

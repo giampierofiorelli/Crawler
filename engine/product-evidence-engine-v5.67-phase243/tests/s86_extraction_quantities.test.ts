@@ -72,3 +72,20 @@ test('S86 comparative: a sentence quoting the maker or a test not done gives no 
  const prose=comparativeResults270(`<html><body>${base}<p>The manufacturer claims chips in 15 minutes in the air fryer compared with 25 minutes in the oven.</p></body></html>`);
  assert.equal(prose.results.length,0);
 });
+
+test('S86b capability audit: a rated (declared) column is never read as a measured result; restored request capabilities',async()=>{
+ const html=make(table(['Rated power (W)','Measured power (W)'],[['Sample Purifier P1','1450','1380']]));
+ const leads=screened(html).filter(r=>r.ok).map(r=>r.ok?r.lead.value:null);
+ assert.deepEqual(leads,[1380],'the rated column is a declaration');
+ const {extractConstraints253}=await import('../src/phase253_request_constraints.js');
+ const c=(t:string)=>extractConstraints253(t).constraints.map(x=>[x.criterion,x.value,x.bound,x.status]);
+ assert.deepEqual(c('An air fryer with a capacity of 5 litres+'),[['capacity_min',5,'min','stated_in_request']]);
+ assert.deepEqual(c('An air fryer between 3 litres and 5 litres'),[['capacity_min',3,'min','stated_in_request']]);
+ assert.deepEqual(c('A dishwasher 45 cm wide or less'),[['width_max',45,'max','stated_in_request']]);
+ assert.deepEqual(c('An air fryer with a capacity min. 5 litres please'),[['capacity_min',5,'min','stated_in_request']]);
+ // counterexample: different units never join into one range
+ assert.deepEqual(c('a capacity between 3 litres and 5 kg').filter(x=>x[0]==='capacity_min').map(x=>x[1]),[3]);
+ const {purchaseTarget253}=await import('../src/phase248_advisory_journey.js');const {CATEGORY_REGISTRY250}=await import('../src/phase248_category_registry.js');
+ assert.equal(purchaseTarget253('A dishwasher quieter than 44 dB(A)',CATEGORY_REGISTRY250).category,'dishwashers');
+ assert.equal(purchaseTarget253('A dishwasher using less than 1 kWh',CATEGORY_REGISTRY250).category,'dishwashers');
+});

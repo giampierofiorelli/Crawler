@@ -22,7 +22,7 @@ for(const f of readdirSync(join(P,'raw')).sort()){const b=readFileSync(join(P,'r
  const opts={category:cat};if(PLAN){opts.plan=PLAN.compileExtractionPlan272(STORE,cat,REG.find(e=>e.id===cat)?.aliases??[],TAUGHT.filter(t=>t!==cat));}
  if(SEM){opts.semantics=SEM.readDocumentSemantics1D2(html,o.url);opts.tableLessons=LESSONS;}
  const tl=T265.testLeadsFromHtml265(html,o.url,o.sha256,x,opts);const blocks=textBlocks225(html,{maxBlocks:1500}).blocks;
- const page=x?.subject??null;
+ const page=T265.pageProductLead265?T265.pageProductLead265(x):null; // (first run read a non-existent field: every attribution came out unresolved)
  const cands=tl.probe.candidates.map(c=>{const s=T265.screenTestLead265(c,{url:o.url,sha256:o.sha256});
   const assoc=s.ok&&T265.subjectAssociation265?T265.subjectAssociation265(s.lead,page):null;
   return {blockIndex:c.blockIndex,valueOffset:c.valueOffset,value:c.value,unit:c.unit,methodCue:c.methodCue,subject:c.subject?.name??null,subjectAssignment:c.subjectAssignment,

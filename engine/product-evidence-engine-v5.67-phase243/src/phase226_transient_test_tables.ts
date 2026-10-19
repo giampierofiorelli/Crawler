@@ -21,7 +21,8 @@ const attribute=(attrs:string,name:string):string|null=>{
 };
 interface Cell{tag:'th'|'td';attrs:string;content:string;value:string;}
 const tableHeaders=/\b(?:measured?|weight|mass|volume|capacity|noise|runtime|duration|thickness|height|width|length|power|energy|time|force)\b/i;
-const unsafeHeader=/\b(?:advertised|manufacturer|stated|quoted|claimed|price|retail|rating|star|specification|msrp|list price|target)\b/i;
+// S86b (capability audit, shared safety gap): "Rated power (W)" passed (the list had "rating" but not "rated")
+const unsafeHeader=/\b(?:advertised|manufacturer|stated|quoted|claimed|price|retail|rating|rated|star|specification|msrp|list price|target)\b/i;
 const methodCue=/\b(?:we (?:tested|measured|recorded|timed|weighed)|our (?:test|tests|measurements|testing)|during our testing|in our lab)\b/i;
 const explicitMethod=/\b(?:we (?:tested|measured|recorded|timed|weighed)|our (?:test|tests|measurements)|during our testing|in our lab)\b/i;
 const noTest=/\b(?:did not test|not tested|didn't test|not measured|not our test|according to|manufacturer|advertised|press release|third.party|other reviewers)\b/i;

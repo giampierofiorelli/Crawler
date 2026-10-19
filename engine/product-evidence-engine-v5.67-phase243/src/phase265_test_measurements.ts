@@ -32,7 +32,8 @@ import type {SpecExtraction245} from './phase245_spec_extraction.js';
 /** S83: probe v3 (condition words negated or used as verbs no longer set a condition code); v2 readings stay as recorded. */
 // S86: probe v4 (clause-level declaration screen, dB(A)), tables v2 (units and header measurands read by the quantity
 // knowledge), comparative screens, shared typing at the screen (stored units are the knowledge's canonical expressions)
-export const TEST_LEAD_EXTRACTOR265='pee225-probe.v4+pee226-tables.v2+pee227-headers';
+// S86b: tables v3 (a "rated" column is a declaration, never read)
+export const TEST_LEAD_EXTRACTOR265='pee225-probe.v4+pee226-tables.v3+pee227-headers';
 /** Original roadmap Step 3 — versioned scientific reading. The code versions of the readers that run only with a plan:
  * the Phase272 guided pass of the Phase225 probe with the plan's condition-term filter and the comparison-cell
  * re-attribution (comparisonCells272), and the Step 1D-A2 semantic-document contract with its structured table reader.
