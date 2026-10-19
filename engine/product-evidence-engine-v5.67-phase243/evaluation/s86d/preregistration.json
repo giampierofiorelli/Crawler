@@ -1,0 +1,27 @@
+{
+ "schema": "pee.s86d.preregistration.v1",
+ "written": "2026-10-19, before any independent page is selected or fetched",
+ "status": "BLOCKED: no active owner policy authorises these requests (see report section 1); nothing has been fetched",
+ "candidate": {"id": "D", "configuration": "guided86c, all five S86c controls on (role, subject, repeats, boundary, structure)", "code": "src identical to commit ec9d4bb; hashes and per-category reading identities in freeze.json"},
+ "comparators": {"B": "operational default reading (no plan): the production path", "C": "plan-guided reading without controls (S86b): diagnostic only"},
+ "notAPrimaryCandidate": "configuration E (subject decided by the Step 1D-A entity inventory) was prototyped on the spent pages and rejected before any fresh data (report section 4); it is not run",
+ "sample": {
+  "pages": "24 (minimum 18 if the budget or eligible pages run out; stop rule: no replacement after a page is read except documented technical failure)",
+  "strata": {"U_unseen_publishers": ">= 16 pages from >= 4 hosts absent from the 72 hosts PEE examined before (freeze.json leakageExclusion)", "S_seen_publishers_unseen_pages": "<= 8 pages from the S80 hosts (trustedreviews, expertreviews, housefresh), never one of the 239 excluded URLs: separates template generalisation from content generalisation"},
+  "categories": "the six taught categories (air fryers, coffee machines, dehumidifiers, dishwashers, air purifiers, televisions), 4 pages each; coffee machines and dehumidifiers compile only 2 measurements each, so their recall measures teaching depth as much as the reader",
+  "layouts": ">= 6 comparison or roundup pages (several products), >= 6 pages with result tables, >= 6 single-product prose reviews",
+  "selection": "per (host, category) cell: one web-search query 'site:{host} {category noun} review tested'; results in rank order; the first eligible result (HTML review of products the publisher states it tested; not in the exclusion list; not paywalled) is taken; the full ranked list and each eligibility decision are logged and hashed BEFORE any page request"
+ },
+ "acquisition": {"requests": "<= 40 in total (pages, robots.txt, redirects and retries count)", "hosts": "<= 8", "perHost": "<= 6", "politenessSeconds": 5, "gate": "scripts/phase246-live-wave.mjs with --policy under the S85 wave gate; robots, 403/429, Retry-After and Content-Signal honoured", "retention": "page bytes private (private-eval), never committed; live store untouched (store copies only)"},
+ "reference": {"protocol": "s86b ANNOTATION-PROTOCOL.md (sha256 in freeze.json)", "annotators": "Claude agents given only worksheets of the visible page text (scripts/s86d-worksheets.py): blind to the implementation and its outputs, NOT independent human validation", "agreement": "25% of pages annotated twice by different agents: role agreement (Cohen kappa) and subject agreement reported; disagreements adjudicated by a third agent before scoring", "sealed": "hash of all annotations committed before the first reading"},
+ "primaryEndpoints": {
+  "E1_recovery": "correct stored results (measured result stored on the reviewed product, or another product's result stored unresolved), D vs B, per page; page-bootstrap 95% interval (2000 resamples, seed 86)",
+  "E2_false_evidence": "share of D's stored rows that are not measured results; target point <= 5% and bootstrap upper <= 10%",
+  "E3_wrong_product": "share of D's stored rows that are another product's result on the reviewed product; target point <= 2% and bootstrap upper <= 5%",
+  "E4_legacy": "only-old set (B correct, D not) = 0; any member is investigated and reported"
+ },
+ "secondary": ["every endpoint per stratum, category, publisher and layout", "role classification of set-aside observations against the reference", "correctly unresolved observations", "duplicate rows", "record-bound truncation", "downstream: Phase268 validation refusals of D's stored rows"],
+ "scoring": "scripts/s86d-page-score.mjs (scorer v2.1: first mentions, one-to-one anchored matching, value-only matches never credited); every pairing of D and B audited by hand",
+ "interpretation": "Targets met in stratum U support considering admission (and expose the downstream gate as the next obstacle); met only in S indicates template overfitting; E3 failure on unseen publishers points to the missing product-versus-feature distinction (report section 4). Thresholds are reference points, read with their intervals, not proof of general capability.",
+ "afterTheFirstRun": "the first run is committed unchanged; any change made after inspecting these pages is development on them, and a further claim of generalisation needs new pages"
+}

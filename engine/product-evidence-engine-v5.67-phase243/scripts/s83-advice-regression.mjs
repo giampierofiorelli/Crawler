@@ -24,7 +24,8 @@ if(process.argv.includes('--diff')){
 const BUILD=arg('build')??process.cwd();const D=join(BUILD,'dist/src/');
 const {KnowledgeStore246}=await import(D+'phase246_knowledge_store.js');const {adviseFromRequest253}=await import(D+'phase253_request_advice.js');
 const {CATEGORY_REGISTRY250}=await import(D+'phase248_category_registry.js');const QK=await import(D+'quantity_knowledge.js');
-const live=join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite');
+// S86d: PEE_KNOWLEDGE_DIR selects a store (e.g. a store copy with an experiment's readings); default the live store
+const live=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
 const dir=mkdtempSync(join(homedir(),'.cache-s83-'));const copy=join(dir,'store.sqlite');copyFileSync(live,copy);
 const store=new KnowledgeStore246(copy);const qk=QK.loadQuantityKnowledge();
 const texts=[];for(const f of SETS){const j=JSON.parse(readFileSync(join('evaluation',f),'utf8'));

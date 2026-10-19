@@ -1,0 +1,33 @@
+{
+ "schema": "pee.s86d.downstream.v1",
+ "store": "store copy",
+ "policy": {
+  "id": "pee268-test-evidence-validation",
+  "protocols": [
+   {
+    "id": "er_energy_1h_empty_200c_v1",
+    "measurand": "appliance_energy_one_hour_empty",
+    "unit": "kwh"
+   }
+  ],
+  "qualifiedPublishers": [
+   {
+    "host": "www.expertreviews.co.uk",
+    "qualifiedFor": [
+     "appliance_energy_one_hour_empty"
+    ]
+   }
+  ]
+ },
+ "totals": {
+  "refused:measurand_not_in_protocol": 1,
+  "refused:publisher_not_qualified": 5,
+  "rows": 7,
+  "rows:on_page_product": 7,
+  "typed_kind:duration": 2,
+  "typed_kind:energy": 2,
+  "typed_kind:sound_pressure_level": 2,
+  "typed_kind:volume": 1,
+  "validated": 1
+ }
+}
