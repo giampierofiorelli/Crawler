@@ -1,0 +1,68 @@
+{
+ "schema": "pee.s88.preregistration.v1",
+ "at": "2026-10-19T22:18:49.706Z",
+ "question": "Does one declarative property definition, consumed by reading, attribution, interpretation and comparability, recover the meaning of observations (property, condition dimensions, basis) better than the current mechanisms, in categories whose definitions were not written for them?",
+ "build": "6923dc0",
+ "definitions": {
+  "identity": "pd.1:576b26a6f9ee3bb3",
+  "sha256": "0cf6ee503030af6a2a32177eb83e1270082a12e6af0f351e2fcc0a1b59b2d263"
+ },
+ "interpreter": {
+  "file": "src/definition_interpreter.ts",
+  "sha256": "b9f1526d9e732e5f074cb653dcfc769ecec55418f18eb93c30d84d6d7510685f"
+ },
+ "experiments": {
+  "E1": {
+   "material": "S87b corpus (472 observations, 922 conditions) with the sealed S87b blind annotation (condition classes, measurand kind and basis)",
+   "status": "spent: used by S87b (dev and first check run); never held-out. Definitions author (Claude) had seen S87b aggregate results.",
+   "compare": [
+    "definition interpreter (dimension.structure)",
+    "S87b observation model (interpretObservation87)",
+    "QK axis baseline"
+   ],
+   "metrics": [
+    "condition class accuracy, coverage, precision",
+    "basis agreement"
+   ]
+  },
+  "E2": {
+   "material": "same 472 observations; NEW blind Claude-agent reference of property attribution (definition label set or none) and condition dimension (or none), sealed before any scoring",
+   "inputSha256": "e3b404966cc8df1d7272ceb42016edb604a20cb729d4b9f647e4aacc4b443350",
+   "metrics": [
+    "property: correct, wrong, abstained, false attribution where the reference says none",
+    "dimension per condition: one-to-one accuracy",
+    "four-set rule vs S87b class mechanism at class level"
+   ]
+  },
+  "E3": {
+   "material": "12 retained S80 pages, S86b sealed page reference (125 measured results)",
+   "compare": [
+    "taught plan (compileExtractionPlan272)",
+    "plan whose measurements are compiled from definitions (definitionPlanMeasurements), outcomes inherited"
+   ],
+   "metrics": [
+    "S86c scorer: measured results recovered, false readings"
+   ]
+  },
+  "E4": {
+   "material": "unseen categories: definitions authored from owner packages BEFORE their documents are read; fresh pages under the research policy (robots, rights, private retention)",
+   "metrics": [
+    "as E2 on a new sealed reference"
+   ]
+  }
+ },
+ "groups": {
+  "development": [
+   "air_purifiers @ housefresh.com",
+   "air_fryers @ which.co.uk"
+  ],
+  "categoriesWithoutProfile": [
+   "air_fryers",
+   "televisions",
+   "tumble_dryers",
+   "dehumidifiers"
+  ],
+  "report": "overall, per category, per group, worst group; development and check separately"
+ },
+ "stopRule": "at most three reformulations of definitions or interpreter on development groups; then freeze and run check once; first check runs committed unchanged"
+}
