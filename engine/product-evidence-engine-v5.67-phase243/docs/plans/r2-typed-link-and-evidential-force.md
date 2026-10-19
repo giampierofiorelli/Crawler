@@ -178,3 +178,46 @@ sources are methodological references; Claude did not fetch them:
   filter" is untyped.
 - **Errors in reading names stay visible in the descriptors,** not hidden. "Sound power label dB" reads "power" as
   electrical power.
+
+## 6. lk.3: provenance, shown compatibility, capped force (owner review S70, 2026-10-19)
+
+The owner's code review found three weaknesses in lk.2. §5 is unchanged; lk.2 stays loadable.
+
+| Owner finding | lk.3 (`link-rules.v3.json`) |
+|---|---|
+| `observationKey` used product, property, value and conditions only. Two laboratories measuring 20 W would become one observation. | The key now starts with the **source document** (`LinkValue.source`). A value with no source or no product is always its own observation. One figure printed twice in one document is still one observation; equal numbers from two sources are two observations, and they can corroborate. |
+| `aligned_point` read "no explicit method clash" as compatibility. | Compatibility must be **shown**: by one source's protocol (`same_document`), or by every source stating the same method (`stated_method`). Different values of a closed axis are documented incompatible. Different free-text values (two method descriptions, a filter state) are neither equal nor different: `compatibility_not_shown`, with no relationship and no force. That keeps R1's "unknown is not different" in both directions. |
+| A single wattage kept direct force on energy cost. | A direct relation through a measurement whose translation is **incomplete** (its name holds words PEE cannot type, such as "tco") is **capped at partial** (`capped`). Incomplete knowledge never authorises a direct conclusion. Writing the procedures down is R3; R2 only stops the overclaim. |
+
+**Tests (15).** In addition to the earlier ones:
+- equal numbers from two sources are two observations and corroborate; one figure printed twice in a source is one;
+- members from two sources without a shared method give `compatibility_not_shown`; with a shared stated method they
+  give an aligned point;
+- a filter state in different words gives `compatibility_not_shown`; a different challenge pollutant gives no point;
+- capping;
+- a shape check: every rule granting direct force carries `not incomplete(M)`.
+
+**Results (development and tuned only: no new validation).** Links are identical to lk.2: lk.3 changes only what they
+license.
+
+| | p272 (spent): lk.2 → lk.3 | s1cd (tuned): lk.2 → lk.3 |
+|---|---|---|
+| Correct and usable values carrying direct force | 1 → 0 | 20 → 0 (all through `mode_power_and_tco`) |
+| Aligned points | 1 → 0 | 1 → 0 |
+| Repeated reports within one document | 2 → 2 | 0 → 0 |
+
+**Notes on the results:**
+- **The only aligned point lk.2 found rested on a value read at two settings at once** ("4.4 W in sleep mode to 45.9 W
+  at top speed" gave one value both settings). lk.3 sees the conflict and rejects the point.
+- **The cross-source merging risk was real in the code, not in these results.** Every document is its own source, and no
+  two documents produced an identical key.
+- **After lk.3, no value on either set reaches direct force.** That follows from incomplete translations. It is the
+  gap R3 is meant to close, and it is now visible instead of hidden.
+
+**On the 117 links (owner's remark).** They are not one homogeneous count. The like-for-like comparison with the
+lexical link (74) is:
+- 50 values linked to their single measurement, plus 11 to an equivalent set (61 in all);
+- 56 values that reach their reference measurement as members of an analytical set, a weaker claim.
+
+**Independent validation.** Still none for lk.2 or lk.3. Next: assess what the held material can still show, before any
+request for a targeted acquisition.

@@ -30,8 +30,8 @@ import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantit
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
 
-/** lk.2 (owner S69); link-rules.v1.json (lk.1) stays loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v2.json';
+/** lk.3 (owner review S70); link-rules.v1.json (lk.1) and v2 (lk.2, S69) stay loadable to reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v3.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -130,7 +130,9 @@ export function loadLinkRules(rs?:RuleSet):{rules:Map<string,CompiledProgram>;ve
 }
 
 /** A value the newer reader found, as the link needs it. */
-export interface LinkValue {id:string;quantity:TypedQuantity;product:string|null}
+export interface LinkValue {id:string;quantity:TypedQuantity;product:string|null;
+ /** S70: the source document (and, when known, the test) the value comes from: an observation's provenance */
+ source?:string|null}
 export type LinkStatus='linked'|'linked_condition_not_shown'|'linked_equivalent'|'ambiguous'|'member_only'|'no_taught_measurement'|'not_linked';
 export interface LinkResult {value:string;status:LinkStatus;measurements:string[];
  /** S69: the analytical sets the value is a member of (not exclusive, not evidence of the set's relationship) */
@@ -147,7 +149,9 @@ export interface OutcomeAssessment {product:string;outcome:string;assessment:str
 export interface LinkReading {schema:'pee.r2.knowledge-link.v1';rules:string;view:TeachingView['basis'];descriptors:MeasurementDescriptor[];
  results:LinkResult[];outcomes:OutcomeAssessment[];
  /** S69: relationships of analytical sets supported by aligned observations (a point at one setting, or two or more points) */
- relationships:{product:string;measurement:string;kind:'aligned_point'|'relationship_at_points';axis:string|null;setting:string|null;derivation:string[]}[];
+ relationships:{product:string;measurement:string;kind:'aligned_point'|'relationship_at_points'|'compatibility_not_shown';axis:string|null;setting:string|null;
+  /** S70: how compatibility is shown: same_document (one source's protocol) or stated_method */
+  basis:string|null;derivation:string[]}[];
  /** S69: values that report the same observation */
  repeatedReports:[string,string][];
  /** shadow only: never stored, never a ranking input */
@@ -165,29 +169,32 @@ export function measurandGroups(d:MeasurementDescriptor):{group:string;kinds:str
   g.kinds.add(m.kind);if(m.metric)g.metrics.add(m.metric);g.from.add(m.from);}
  return gs.map(g=>({group:[...g.from].sort().join('+'),kinds:[...g.kinds].sort(),metrics:[...g.metrics].sort()}));
 }
-/** S69: the identity of an original observation: product, measured property, value and conditions. Two values with the
- * same identity (a table and the prose repeating it) are one observation; an unattributed value is its own. */
+/** S69/S70: the identity of an original observation is its provenance: the source document, product, measured
+ * property, value and conditions. One figure printed twice in one document (a table and the prose) is one observation;
+ * the same number from two sources is two observations. A value without a known source or product is its own. */
 export function observationKey(v:LinkValue):string{const q=v.quantity;
- if(!v.product)return 'unattributed:'+v.id;
+ if(!v.source||!v.product)return 'unique:'+v.id;
  const prop=q.metric.id??q.kind.id??q.kind.candidates.join('|');const val=q.si?.value??q.value;
- return [v.product,prop,String(val),q.conditions.map(c=>c.axis+'='+c.value).sort().join(';')].join('\u0001');
+ return [v.source,v.product,prop,String(val),q.conditions.map(c=>c.axis+'='+c.value).sort().join(';')].join('\u0001');
 }
 /** The input facts of the `link` program for a set of values and descriptors (exported for tests and the census). */
-export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDescriptor[],values:readonly LinkValue[]):Record<string,(string|number)[][]>{
- const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],observation:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
+export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDescriptor[],values:readonly LinkValue[],qk?:QuantityKnowledge):Record<string,(string|number)[][]>{
+ const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],observation:[],incomplete:[],closed_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
  for(const v of values){const q=v.quantity;I.value.push([v.id]);
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)I.value_kind.push([v.id,k]);
   if(q.metric.id)I.value_metric.push([v.id,q.metric.id]);
   for(const c of q.conditions)I.value_condition.push([v.id,c.axis,c.value]);
   for(const a of q.missingConditions)I.value_missing.push([v.id,a]);
   if(v.product)I.value_product.push([v.id,v.product]);
+  if(v.source)I.value_source.push([v.id,v.source]);
   I.observation.push([v.id,observationKey(v)]);}
- for(const d of descriptors){I.measurement.push([d.id]);
+ for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);
   for(const g of measurandGroups(d)){for(const k of g.kinds)I.group_kind.push([d.id,g.group,k]);for(const x of g.metrics)I.group_metric.push([d.id,g.group,x]);}
   for(const m of d.measurands){if(m.metric)I.measures_metric.push([d.id,m.metric,m.level]);
    if(!m.metric||m.level==='head')I.measures.push([d.id,m.kind,m.level]);}
   for(const f of d.fixed)I.fixes.push([d.id,f.axis,f.value]);for(const a of d.axes)I.requires_axis.push([d.id,a.axis]);}
  for(const m of view.measurements){for(const o of m.outcomes)I.leads_to.push([m.concept.id,o.outcome,o.force]);for(const o of m.indirectFor)I.indirect_for.push([m.concept.id,o]);}
+ if(qk)for(const a of qk.axes.values())if(Object.keys(a.values??{}).length)I.closed_axis.push([a.id]);
  for(const k of Object.keys(I))I[k]=[...new Map(I[k].map(r=>[r.join('\u0001'),r])).values()];
  return I;
 }
@@ -196,7 +203,7 @@ export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDesc
 export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonly LinkValue[],opts:{rules?:RuleSet;descriptors?:MeasurementDescriptor[]}={}):LinkReading{
  const R=loadLinkRules(opts.rules);const link=R.rules.get('link'),ev=R.rules.get('evidence');if(!link||!ev)throw Error('knowledge_link_rules_missing_program');
  const descriptors=opts.descriptors??view.measurements.map(m=>describeMeasurement(qk,m.concept,m.conditions));
- const I=linkFacts(view,descriptors,values);
+ const I=linkFacts(view,descriptors,values,qk);
  // a rule version receives only the facts its vocabulary declares (lk.1 reproduces earlier runs)
  const only=(p:CompiledProgram,F:Record<string,(string|number)[][]>)=>Object.fromEntries(Object.entries(F).filter(([k])=>p.vocab.has(k)&&(p.vocab.get(k)!.role==='input'||!p.rules.some(r=>r.head.pred===k))));
  const ml=evaluate(link,only(link,I),{record:'the values and the teaching view'});
@@ -214,8 +221,9 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
   const shown:Fact[]=[...linked,...eq,...amb,...mem,...none].slice(0,3);
   return {value:v.id,status,measurements,memberships:mem.map(f=>f.args[1]).sort(),observation:observationKey(v),evidence,decidingAxes,derivation:shown.flatMap(f=>ml.why(f))};});
  const outcomes:OutcomeAssessment[]=me.all('outcome_assessment').map(f=>({product:f.args[0],outcome:f.args[1],assessment:f.args[2],derivation:me.why(f)}));
- const relationships=[...me.all('aligned_point').map(f=>({product:f.args[0],measurement:f.args[1],kind:'aligned_point' as const,axis:f.args[2],setting:f.args[3],derivation:me.why(f)})),
-  ...me.all('relationship_at_points').map(f=>({product:f.args[0],measurement:f.args[1],kind:'relationship_at_points' as const,axis:null,setting:null,derivation:me.why(f)}))];
+ const relationships=[...me.all('aligned_point').map(f=>({product:f.args[0],measurement:f.args[1],kind:'aligned_point' as const,axis:f.args[2],setting:f.args[3],basis:f.args[4]??null,derivation:me.why(f)})),
+  ...me.all('compatibility_not_shown').map(f=>({product:f.args[0],measurement:f.args[1],kind:'compatibility_not_shown' as const,axis:f.args[2],setting:f.args[3],basis:null,derivation:me.why(f)})),
+  ...me.all('relationship_at_points').map(f=>({product:f.args[0],measurement:f.args[1],kind:'relationship_at_points' as const,axis:null,setting:null,basis:null,derivation:me.why(f)}))];
  const repeatedReports=ml.all('repeated_report').map(f=>[f.args[0],f.args[1]] as [string,string]).filter(([a,b])=>a<b);
  return {schema:'pee.r2.knowledge-link.v1',rules:`${R.version}:${R.digest.slice(0,12)}`,view:view.basis,descriptors,results,outcomes,relationships,repeatedReports,rankingInput:false};
 }
