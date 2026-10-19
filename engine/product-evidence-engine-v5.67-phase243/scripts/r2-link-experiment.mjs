@@ -9,6 +9,9 @@
  *   C3   lk.1: taught measurements translated into typed descriptors; link and force by the KR programs link/evidence
  *   C3k  ablation: C3 with the descriptors' condition values and axes removed (what conditions decide)
  *   C3m  ablation: C3 with metrics removed (kinds only: what metrics decide)
+ *   C8s  lk.6 (R3): the most specific consistent candidate, no acquired knowledge
+ *   C8   lk.6 + condition axes PEE acquired from the category's owner package (knowledge_translation.acquireConditionAxes),
+ *        used both in reading the page and in describing the taught measurements; C8r reading only; C8d descriptors only
  *   C7   lk.5 (owner review S72): the reader's procedure identity (protocol, named test) is a compatibility basis
  *        (same_protocol), never an observation identity; no run identity is supplied, so identity stays unknown
  *   C6   lk.4 (owner review S71): positive compatibility only (one identified test, or a shared stated method, with every
@@ -80,6 +83,15 @@ const store=new KnowledgeStore246(join(homedir(),'.local/share/product-evidence-
 const cats=[...new Set(SET.docs.map(d=>d.category))];
 const plans={},views={};for(const c of cats){plans[c]=compileExtractionPlan272(store,c,CATEGORY_REGISTRY250.find(e=>e.id===c)?.aliases??[],TAUGHT.filter(t=>t!==c));views[c]=KL.teachingView(store,c,overlay);}store.close();
 const desc={};for(const c of cats)desc[c]=views[c].measurements.map(m=>KL.describeMeasurement(qk,m.concept,m.conditions));
+const KT=await import(D+'knowledge_translation.js');const {readdirSync,statSync}=await import('node:fs');
+const PKGD=join(PE,'r1v/packages');const PKG={air_purifiers:'PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-COMPLETE-v1.2.0',televisions:'PEE-CATEGORY-RESEARCH-07-TELEVISIONS-COMPLETE-v1.0.0',air_fryers:'PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES/af',
+ coffee_machines:'PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES',dishwashers:'PEE-CATEGORY-RESEARCH-06-HOUSEHOLD-DISHWASHERS-COMPLETE-v2.0.0',dehumidifiers:'PEE-DEHUMIDIFIERS-RESTORED-SOURCES-R01-R39'};
+const pkgDocs=cat=>{const out=[];const w=x=>{if(!existsSync(x))return;for(const f of readdirSync(x)){const q=join(x,f);if(statSync(q).isDirectory()){if(!/archive/.test(f))w(q);}else if(f.endsWith('.md'))out.push({source:q.slice(PKGD.length+1),md:readFileSync(q,'utf8')});}};
+ if(PKG[cat])w(join(PKGD,PKG[cat]));return cat==='coffee_machines'?out.filter(x=>/COFFEE/.test(x.source)):cat==='dehumidifiers'?out.concat(pkgDocs0('PEE-THREE-SCIENTIFIC-RESEARCH-PACKAGES').filter(x=>/DEHUMID/.test(x.source))):out;};
+const pkgDocs0=dir=>{const out=[];for(const f of readdirSync(join(PKGD,dir)))if(f.endsWith('.md'))out.push({source:dir+'/'+f,md:readFileSync(join(PKGD,dir,f),'utf8')});return out;};
+const acq={},qkAcq={},descAcq={};
+for(const c of cats){const qs=KT.distinctionQuestions(desc[c]);acq[c]=KT.acquireConditionAxes(qk,pkgDocs(c),qs);qkAcq[c]=KT.withAcquiredAxes(qk,acq[c],pk=>QK.loadQuantityKnowledge(pk));
+ descAcq[c]=views[c].measurements.map(m=>KL.describeMeasurement(qkAcq[c],m.concept,m.conditions));}
 const ablate=(ds,what)=>ds.map(d=>what==='conditions'?{...d,fixed:[],axes:[]}:{...d,measurands:d.measurands.filter(m=>!m.metric||m.level==='head').map(m=>({...m,metric:null}))});
 // C2, reproduced from scripts/r1-integration-experiment.mjs
 const KINDS={energy:['energy','energy_per_event','periodic_energy_consumption'],power:['power'],sound:['sound_pressure_level','sound_power_level'],luminance:['luminance'],latency:['duration'],frequency:['frequency'],
@@ -94,7 +106,8 @@ const LK1=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v1.js
 const LK2=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v2.json','utf8'));
 const LK3=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v3.json','utf8'));
 const LK4=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v4.json','utf8'));
-const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6','C7'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
+const LK5=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v5.json','utf8'));
+const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6','C7','C8s','C8','C8r','C8d'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
 /** one outcome per value and arm, in both directions */
 function score(ref,status,ms){
  const linkedSet=['linked','linked_condition_not_shown','linked_equivalent'].includes(status)?ms:[];
@@ -113,10 +126,11 @@ function score4(ref,status,ms,mem){const linkedSet=['linked','linked_condition_n
  return status==='ambiguous'?(ms.includes(ref)?'missed_ambiguous_ref_among':'missed_ambiguous_ref_not_among'):'missed_no_candidate';}
 const GOOD=new Set(['correct','correct_in_equivalent_set','correct_via_membership']);const BAD=new Set(['wrong_measurement','wrong_link_where_none','link_on_ambiguous_reference','wrong_membership','wrong_membership_where_none']);
 for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl??p.url;const gq=SET.gold.filter(g=>g.doc===d.tag);
- const doc=WD.readDocumentEvidence(html,qk,{sourceType:'independent_review'});const seg=new Map(doc.segments.map(s=>[s.id,s]));
- const lb=[...doc.quantities.filter(q=>!q.identifierPart&&q.quantity).map(q=>{const s=seg.get(q.segment);const u=WD.sentences(s.text).find(u=>q.start>=u.start&&q.end<=u.start+u.text.length);
+ const readNew=qkx=>{const doc=WD.readDocumentEvidence(html,qkx,{sourceType:'independent_review'});const seg=new Map(doc.segments.map(s=>[s.id,s]));
+ return [...doc.quantities.filter(q=>!q.identifierPart&&q.quantity).map(q=>{const s=seg.get(q.segment);const u=WD.sentences(s.text).find(u=>q.start>=u.start&&q.end<=u.start+u.text.length);
    return {value:q.quantity.value,unit:canon(q.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:q.quantity,product:q.product,text:[s.label??'',u?.text??s.text,s.headings.at(-1)??''].join(' '),rawUnit:q.surface};}),
-  ...doc.tables.tables.flatMap(tb=>tb.observations.filter(o=>o.quantity).map(o=>({value:o.quantity.value,unit:canon(o.unitSurface??o.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:o.quantity,product:o.product,text:o.property.join(' '),rawUnit:o.surface})))];
+  ...doc.tables.tables.flatMap(tb=>tb.observations.filter(o=>o.quantity).map(o=>({value:o.quantity.value,unit:canon(o.unitSurface??o.surface.replace(/^[^A-Za-z°%µ]*/,'')),q:o.quantity,product:o.product,text:o.property.join(' '),rawUnit:o.surface})))];};
+ const lb=readNew(qk);const lb8=qkAcq[d.category]===qk?lb:readNew(qkAcq[d.category]);
  // arm A: the older reader with its plan (as R1)
  const {blocks}=textBlocks225(html,{maxBlocks:1500});const x=tl.testDocumentSubject268(spec.extractSpecifications245(html,url),p.sourceType);
  const t=tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:d.category,plan:plans[d.category]});
@@ -131,6 +145,9 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
  for(const g of gq){let i=lb.findIndex((r,k)=>!used.has(k)&&near(r.value,r.unit,g)&&sameProduct(g.subject,r.product));if(i<0)i=lb.findIndex((r,k)=>!used.has(k)&&near(r.value,r.unit,g));
   if(i<0){for(const a of ARMS.filter(a=>a!=='A')){inc(a,'gold_values');inc(a,'not_found_by_reader');}continue;}used.add(i);matched.push({g,r:lb[i],id:'v'+matched.length});}
  const values=matched.map(m=>({id:m.id,quantity:m.r.q,product:m.r.product,source:d.tag}));
+ const used8=new Set();const values8=matched.map(m=>{let i=lb8.findIndex((r,k)=>!used8.has(k)&&near(r.value,r.unit,m.g)&&r.product===m.r.product);if(i<0)i=lb8.findIndex((r,k)=>!used8.has(k)&&near(r.value,r.unit,m.g));
+  if(i>=0)used8.add(i);return {id:m.id,quantity:i>=0?lb8[i].q:m.r.q,product:m.r.product,source:d.tag};});
+ const P8=xs=>xs.map(x=>({...x,test:null,protocol:KL.readerProcedureIdentity(x.quantity)}));
  const runs={C3:KL.linkValues(qk,views[d.category],values,{descriptors:desc[d.category]}),C3k:KL.linkValues(qk,views[d.category],values,{descriptors:ablate(desc[d.category],'conditions')}),
   C3m:KL.linkValues(qk,views[d.category],values,{descriptors:ablate(desc[d.category],'metrics')})};
  for(const a of ['C3','C3k','C3m'])runs[a]=KL.linkValues(qk,views[d.category],values,{rules:LK1,descriptors:a==='C3'?desc[d.category]:ablate(desc[d.category],a==='C3k'?'conditions':'metrics')});
@@ -139,7 +156,11 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
  const values6=values.map(x=>({...x,test:KL.readerTestIdentity(x.quantity)}));
  runs.C6=KL.linkValues(qk,views[d.category],values6,{rules:LK4,descriptors:desc[d.category]});
  const values7=values.map(x=>({...x,test:null,protocol:KL.readerProcedureIdentity(x.quantity)}));
- runs.C7=KL.linkValues(qk,views[d.category],values7,{descriptors:desc[d.category]});
+ runs.C7=KL.linkValues(qk,views[d.category],values7,{rules:LK5,descriptors:desc[d.category]});
+ runs.C8s=KL.linkValues(qk,views[d.category],P8(values),{descriptors:desc[d.category]});
+ runs.C8=KL.linkValues(qkAcq[d.category],views[d.category],P8(values8),{descriptors:descAcq[d.category]});
+ runs.C8r=KL.linkValues(qkAcq[d.category],views[d.category],P8(values8),{descriptors:desc[d.category]});
+ runs.C8d=KL.linkValues(qkAcq[d.category],views[d.category],P8(values),{descriptors:descAcq[d.category]});
  for(const x of runs.C7.relationships)inc('C7',x.kind+(x.basis?':'+x.basis:''));for(const _ of runs.C7.repeatedReports)inc('C7','repeated_reports');
  for(const x of values7)inc('C7',x.protocol?'procedure_identified':'procedure_unknown');for(const o of runs.C7.outcomes)inc('C7','outcome_'+o.assessment);for(const r of runs.C7.results)for(const e of r.evidence)inc('C7','force_'+e.force);
  for(const x of runs.C6.relationships)inc('C6',x.kind+(x.basis?':'+x.basis:''));for(const _ of runs.C6.repeatedReports)inc('C6','repeated_reports');
@@ -160,22 +181,23 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
   for(const a of ARMS.filter(a=>a!=='A')){inc(a,'gold_values');inc(a,'found');inc(a,'product_'+prod);let status,ms,ev=[];
    if(a==='C1'){const l=linkToMeasure272(plans[d.category],m.r.text,m.r.rawUnit.replace(/^[^A-Za-z°%µ]*/,''))?.measureId??null;status=l?'linked':'not_linked';ms=l?[l]:[];}
    else if(a==='C2'){const t=typedLink(plans[d.category],m.r.q,m.r.text);status=t.status==='linked'?'linked':t.status;ms=t.ms;}
-   else{const r=runs[a].results.find(x=>x.value===m.id);status=r.status;ms=r.measurements;ev=r.evidence;var mem=r.memberships??[];if(['C3','C4','C5','C6','C7'].includes(a))row[a]={status,ms,mem,deciding:r.decidingAxes,evidence:ev,derivation:r.derivation.slice(0,12)};}
-   const s=['C4','C5','C6','C7'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
+   else{const r=runs[a].results.find(x=>x.value===m.id);status=r.status;ms=r.measurements;ev=r.evidence;var mem=r.memberships??[];if(['C3','C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a))row[a]={status,ms,mem,deciding:r.decidingAxes,evidence:ev,derivation:r.derivation.slice(0,12)};}
+   const s=['C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
    if(GOOD.has(s)&&prod==='correct'){inc(a,'decision_usable_correct');
-    if(a.startsWith('C3')||['C4','C5','C6','C7'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
+    if(a.startsWith('C3')||['C4','C5','C6','C7','C8s','C8','C8r','C8d'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
   detail.push(row);}}
 // both directions, per value: C3 against C2
 const cls=s=>GOOD.has(s)?'good':BAD.has(s)?'bad':'abstain';
 const T={};for(const r of detail){const k=cls(r.C2_score)+'->'+cls(r.C3_score);T[k]=(T[k]??0)+1;}
 const T4={};for(const r of detail){const k=cls(r.C3_score)+'->'+cls(r.C4_score);T4[k]=(T4[k]??0)+1;}
 const T5={};for(const r of detail){const k=cls(r.C4_score)+'->'+cls(r.C5_score);T5[k]=(T5[k]??0)+1;}
+const T8={};for(const r of detail){const k=cls(r.C7_score)+'->'+cls(r.C8_score);T8[k]=(T8[k]??0)+1;}
 const T6={};for(const r of detail){const k=cls(r.C5_score)+'->'+cls(r.C6_score);T6[k]=(T6[k]??0)+1;}
 const descriptorCensus=Object.fromEntries(cats.map(c=>[c,{measurements:desc[c].length,withHeadMeasurand:desc[c].filter(x=>x.measurands.some(m=>m.level==='head')).length,
  withFixedConditions:desc[c].filter(x=>x.fixed.length).length,withAxes:desc[c].filter(x=>x.axes.length).length,withUntypedWords:desc[c].filter(x=>x.untyped.length).length}]));
 const pub={schema:'pee.r2.link-experiment.v1',label,generatedAt:new Date().toISOString(),set,
  tier:set==='af'?'Air-fryer test pages of Phases 268/270/271: link reference blind and sealed after the lk.4 build froze; never used to develop the link (the pages served Phase268-271 extraction development).':set==='p272'?'Phase272 untouched set: SPENT (R1 tuning and R2 diagnosis inspected its link reference). Development evidence; never held-out.':'Step 1C + 1D-B pages of taught categories: link reference blind and sealed after the build froze; the link mechanism was never developed on them; the pages served earlier reader development (not untouched documents).',
- rules:KL.loadLinkRules().version,forceOverlay:overlay.id,descriptorCensus,arms:C,c2ToC3:T,c3ToC4:T4,c4ToC5:T5,c5ToC6:T6};
+ rules:KL.loadLinkRules().version,forceOverlay:overlay.id,descriptorCensus,arms:C,c2ToC3:T,c3ToC4:T4,c4ToC5:T5,c5ToC6:T6,c7ToC8:T8,acquired:Object.fromEntries(cats.map(c=>[c,acq[c].map(p=>({axis:p.axis,values:Object.keys(p.values),answers:p.answers.length,evidence:p.evidence.length,structure:[...new Set(p.evidence.map(e=>e.structure))]}))]))};
 writeFileSync(OUT,JSON.stringify(pub,null,1)+'\n');mkdirSync(join(PE,'r2'),{recursive:true});
 writeFileSync(join(PE,'r2',`link-${label}.json`),JSON.stringify({...pub,descriptors:desc,detail},null,1)+'\n');
-for(const a of ARMS)console.log(a,JSON.stringify(C[a]));console.log('C2->C3',JSON.stringify(T));console.log('C3->C4',JSON.stringify(T4));console.log('C4->C5',JSON.stringify(T5));console.log('C5->C6',JSON.stringify(T6));
+for(const a of ARMS)console.log(a,JSON.stringify(C[a]));console.log('C2->C3',JSON.stringify(T));console.log('C3->C4',JSON.stringify(T4));console.log('C4->C5',JSON.stringify(T5));console.log('C7->C8',JSON.stringify(T8));console.log('C5->C6',JSON.stringify(T6));

@@ -1,0 +1,41 @@
+{
+ "schema": "pee.r3.translator-freeze.v1",
+ "frozenAt": "2026-10-19T08:28:55.968Z",
+ "note": "Frozen before the held-out first run of the translator (scripts/r3-translate.mjs heldout-first --side heldout) and before any held-out fidelity judgement. Development results on the dev sections and the R2 value sets (p272, s1cd, af) are tuned.",
+ "files": [
+  {
+   "file": "src/knowledge_translation.ts",
+   "sha256": "8651d6ac41ee58f87ce845606969afaac193296822c81e9fc53f716ef4a17ad2"
+  },
+  {
+   "file": "resources/knowledge-translation/translation-cues.v1.json",
+   "sha256": "60e0914a8d59bbf989083bfae64ba85dde1d77d4b96a5e989bbb7e6853aab351"
+  },
+  {
+   "file": "src/knowledge_link.ts",
+   "sha256": "7c6a0a69c63ccf9452e1fb19013392f748ea86dd927fa7257a3703802e8aa572"
+  },
+  {
+   "file": "resources/quantity-knowledge/link-rules.v6.json",
+   "sha256": "d530c6bc0c2c09679e88271a11f3251f071d1a577bd36e068715b9bd7ab0e070"
+  },
+  {
+   "file": "src/quantity_knowledge.ts",
+   "sha256": "640f584d211ca377464492e46ab0c8f8bacc05e6871474253c52a4f478e26282"
+  },
+  {
+   "file": "scripts/r3-translate.mjs",
+   "sha256": "4a414a6513856eb1888b19108ff10f7766f625d6beb5b4f81bfeaefa4d20a880"
+  },
+  {
+   "file": "scripts/r3-fidelity.mjs",
+   "sha256": "c77f4597ad2ccb9aafd3cf73369af335089f6a426535ef81a64607ed12982dbf"
+  },
+  {
+   "file": "scripts/r2-link-experiment.mjs",
+   "sha256": "ef4cee0dea613c08291f5dcc4ac09b100616243530c7b881b411e77f5b0fe2ef"
+  }
+ ],
+ "fidelityPrompt": "be154b5d50f63a1e91e197dc5040ab53159683b49d0493c0bc30864303c9415d",
+ "inventoryFreeze": "955cdaaa6f7fdf79be6413fd854c8c64a5def6529310da6c60c030669b37828c"
+}

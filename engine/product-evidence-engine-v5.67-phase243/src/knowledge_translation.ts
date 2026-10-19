@@ -116,7 +116,7 @@ function headerRole(cues:TranslationCues,h:string):string|null{const n=normText(
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
 const TABLE_ROLE_TYPE:Record<string,string>={method:'measured_by',limitation:'limitation',applicability:'applicability',outcome:'bears_on_outcome'};
-const TABLE_ROLE_DISPLAY:Record<string,string>={measured_by:'{subject} is measured by {object}.',limitation:'For {subject}, the document warns: {object}.',
+const TABLE_ROLE_DISPLAY:Record<string,string>={quantitative_finding:'{subject} {object}.',measured_by:'{subject} is measured by {object}.',limitation:'For {subject}, the document warns: {object}.',
  applicability:'For {subject}, applicability: {object}.',bears_on_outcome:'{subject} bears on: {object}.'};
 
 /** Translate a teaching document (or some of its line ranges) into typed statements. */
@@ -137,9 +137,75 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
   if(b.kind==='table_row'&&b.cells){
    const subj=b.cells.find(c=>headerRole(C.cues,c.header)==='subject')?.text??b.cells[0]?.text;
    for(const c of b.cells){if(!c.text||c.text===subj)continue;nClauses++;
-    if(byPattern(b,c.text,c.header))continue;const role=headerRole(C.cues,c.header);const type=role?TABLE_ROLE_TYPE[role]:undefined;
+    if(byPattern(b,c.text,c.header))continue;
+    const q=findQuantities(qk,c.text).filter(f=>f.value!==null);if(q.length&&!headerRole(C.cues,c.header)){push(b,'quantitative_finding',`${subj} | ${c.header}: ${c.text}`,`${subj} (${c.header})`,c.text,'table_role',c.header);continue;}const role=headerRole(C.cues,c.header);const type=role?TABLE_ROLE_TYPE[role]:undefined;
     if(type)push(b,type,`${subj} | ${c.header}: ${c.text}`,subj,c.text,'table_role',c.header);else unrec++;}
    continue;}
-  for(const cl of clauses(b.text)){nClauses++;if(!byPattern(b,cl))unrec++;}}
+  for(const cl of clauses(b.text)){nClauses++;if(byPattern(b,cl))continue;
+   // a quantitative finding: the clause states a value with a unit the quantity knowledge reads
+   const q=findQuantities(qk,cl).filter(f=>f.value!==null);
+   if(q.length){const at=q[0].start;push(b,'quantitative_finding',cl,cl.slice(0,at).trim()||undefined,cl.slice(at).trim(),'pattern');continue;}
+   unrec++;}}
  return {schema:'pee.r3.translation.v1',cues:`${C.cues.version}:${C.digest.slice(0,12)}`,source:opts.source,blocks:blocks.length,clauses:nClauses,statements:out,unrecognised:unrec};
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// 4. Question-driven acquisition of condition axes (R3). The question comes from PEE's own teaching: words in the names
+//    of taught measurements that the quantity knowledge cannot type (e.g. two luminance measurements that differ only by
+//    "sdr" and "hdr"). The answer comes from the documents: a structure that states those words as alternative values of
+//    one condition. Three general structures, no category words:
+//    - an enumerated field:        filter_condition: new | aged | replaced | unknown
+//    - slash alternatives + head:  SDR/HDR state, slow/fast mode
+//    - an explicit contrast + head: new versus aged filters
+//    A proposal is kept only when it answers a question (one of its values is such a word) and has at least two values.
+//    It is a reversible proposal with provenance; nothing is stored.
+export interface AxisProposal {axis:string;head:string;values:Record<string,string[]>;
+ evidence:{source:string;line:number;quote:string;structure:'enumeration'|'slash'|'contrast'}[];
+ answers:{measurement:string;word:string}[]}
+const HEADS='state|states|mode|modes|format|formats|condition|conditions|setting|settings|load|loads|signal|signals|filter|filters|programme|programmes|program|programs|cycle|cycles|window|windows|run|runs|range|ranges|level|levels';
+/** A question of the teaching: two taught measurements of the same measurand that differ by words PEE cannot type. */
+export interface DistinctionQuestion {a:string;b:string;wordsA:string[];wordsB:string[]}
+export function distinctionQuestions(descriptors:readonly {id:string;measurands:{kind:string;metric:string|null;level:string}[];untyped:string[]}[]):DistinctionQuestion[]{
+ const key=(d:typeof descriptors[number])=>new Set(d.measurands.filter(m=>m.level==='head').map(m=>m.metric??m.kind));const out:DistinctionQuestion[]=[];
+ for(let i=0;i<descriptors.length;i++)for(let j=i+1;j<descriptors.length;j++){const A=descriptors[i],B=descriptors[j];const ka=key(A),kb=key(B);
+  if(![...ka].some(k=>kb.has(k)))continue;const wa=A.untyped.filter(w=>!B.untyped.includes(w)),wb=B.untyped.filter(w=>!A.untyped.includes(w));
+  if(wa.length||wb.length)out.push({a:A.id,b:B.id,wordsA:wa,wordsB:wb});}
+ return out;
+}
+export function acquireConditionAxes(qk:QuantityKnowledge,docs:readonly {source:string;md:string}[],questions:readonly DistinctionQuestion[]):AxisProposal[]{
+ const wanted=new Map<string,string[]>();for(const q of questions){for(const w of q.wordsA)wanted.set(w,[...(wanted.get(w)??[]),q.a]);for(const w of q.wordsB)wanted.set(w,[...(wanted.get(w)??[]),q.b]);}
+ const found=new Map<string,AxisProposal>();
+ const singular=(h:string)=>h.endsWith('ss')?h:h.replace(/s$/,'');
+ const HEADSET=new Set(HEADS.split('|'));
+ const add=(head:string,vals:string[],source:string,line:number,quote:string,structure:AxisProposal['evidence'][number]['structure'])=>{
+  const vs=[...new Set(vals.map(v=>normText(v).replace(/[^a-z0-9 -]/g,'').trim()).filter(v=>v.length>=2&&v.length<=24&&!/^\d+$/.test(v)&&!HEADSET.has(v)&&!STOP.has(v)))];if(vs.length<2)return;
+  const answers=vs.flatMap(v=>(wanted.get(v)??[]).map(m=>({measurement:m,word:v})));if(!answers.length)return;
+  const h=normText(head).replace(/[^a-z0-9_ ]/g,'').trim().replace(/\s+/g,'_');const axis=('acq_'+h).slice(0,40);
+  const p=found.get(axis)??{axis,head:h,values:{},evidence:[],answers:[]};
+  for(const v of vs)p.values[v.replace(/[^a-z0-9]+/g,'_')]=[v];p.evidence.push({source,line,quote:quote.slice(0,200),structure});
+  for(const a of answers)if(!p.answers.some(x=>x.measurement===a.measurement&&x.word===a.word))p.answers.push(a);found.set(axis,p);};
+ for(const d of docs)d.md.split('\n').forEach((raw,i)=>{const l=raw.replace(/[*`_]{2,}/g,'');
+  const en=/^\s*(?:[-*]\s*)?([a-z][a-z_]{2,40}):\s*([^|]{1,30}(?:\s\|\s[^|]{1,30}){1,})\s*$/.exec(l);
+  if(en)add(en[1],en[2].split(/\s\|\s/),d.source,i+1,l.trim(),'enumeration');
+  for(const m of l.matchAll(new RegExp(`\\b([A-Za-z0-9-]{2,14})((?:/[A-Za-z0-9-]{2,14}){1,3})\\s+(${HEADS})\\b`,'g')))
+   add(singular(m[3]),[m[1],...m[2].split('/').filter(Boolean)],d.source,i+1,m[0],'slash');
+  for(const m of l.matchAll(new RegExp(`\\b([A-Za-z-]{3,15})\\s+(?:versus|vs\\.?)\\s+(?:[A-Za-z]+\\s+(?:or|and)\\s+)?(?:[A-Za-z]+\\s+)?([A-Za-z-]{3,15})\\s+(${HEADS})\\b`,'gi')))
+   add(singular(m[3]),[m[1],m[2]],d.source,i+1,m[0],'contrast');});
+ for(const p of found.values())if(qk.axes.has(p.axis))found.delete(p.axis);
+ // keep an axis only when it answers a distinction completely: each side that has distinguishing words gets a value of
+ // the axis (SDR vs HDR). A one-sided answer ("aged" against a measurement that names no filter state) would make PEE
+ // assume the other value when a page states none, which R2 forbids.
+ for(const p of found.values()){const vals=new Set(Object.values(p.values).flat());
+  const complete=questions.filter(q=>{const ha=q.wordsA.some(w=>vals.has(w)),hb=q.wordsB.some(w=>vals.has(w));return (ha||hb)&&(ha||!q.wordsA.length)&&(hb||!q.wordsB.length);});
+  if(!complete.length)found.delete(p.axis);else p.answers=p.answers.filter(a=>complete.some(q=>q.a===a.measurement||q.b===a.measurement));}
+ return [...found.values()].sort((a,b)=>a.axis.localeCompare(b.axis));
+}
+/** A quantity knowledge extended with acquired axes (a reversible overlay: the pack file is unchanged). Acquired axes
+ * are closed lists; they are not operating conditions unless the knowledge says so. */
+export function withAcquiredAxes(qk:QuantityKnowledge,proposals:readonly AxisProposal[],load:(pack:unknown)=>QuantityKnowledge):QuantityKnowledge{
+ if(!proposals.length)return qk;
+ const pack=JSON.parse(JSON.stringify(qk.pack));pack.version=pack.version+'+acq';
+ pack.sources=[...pack.sources,{id:'r3_acquired',title:'R3: condition axes acquired by PEE from the owner teaching documents (proposals, reversible)',url:null,use:'condition axes answering questions of the teaching',licence:'owner research (private)'}];
+ pack.conditionAxes=[...pack.conditionAxes,...proposals.map(p=>({id:p.axis,values:p.values,labelled:true,source:'r3_acquired'}))];
+ return load(pack);
 }

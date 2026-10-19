@@ -30,8 +30,8 @@ import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantit
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
 
-/** lk.5 (owner review S72); v1-v4 (lk.1-lk.4) stay loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v5.json';
+/** lk.6 (R3, specificity); v1-v5 (lk.1-lk.5) stay loadable to reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v6.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -80,7 +80,9 @@ export interface Measurand {kind:string;metric:string|null;level:'head'|'body';f
 export interface MeasurementDescriptor {id:string;measurands:Measurand[];fixed:{axis:string;value:string;from:string}[];
  axes:{axis:string;from:string}[];
  /** words of the concept's name that the quantity knowledge does not type: what the teaching says and PEE cannot read */
- untyped:string[]}
+ untyped:string[];
+ /** R3: the untyped words of the measurand part (before by/at/per...): qualifiers of what is measured, not axes it varies over */
+ qualifiers:string[]}
 
 /** "<measurand> by|at|per <conditions>": what precedes the first such word names what is measured. */
 const HEAD_SPLIT=/\s(?:by|at|per|for|with|across|under|versus|vs|in|on|over)\s/;
@@ -117,7 +119,9 @@ export function describeMeasurement(qk:QuantityKnowledge,c:TaughtConcept,conditi
  // a metric's own required conditions belong to its values (TypedQuantity.missingConditions), not to the measurement:
  // a CADR needs its pollutant, the sound level measured in the same programme does not
  const untyped=[...new Set(normText(c.id.replace(/_/g,' ')).split(/\s+/))].filter(w=>w.length>1&&!STOP.has(w)&&!typed.has(w));
- return {id:c.id,measurands,fixed,axes,untyped};
+ const measurandWords=new Set(normText(measurandPart).split(/[\s;]+/));
+ const qualifiers=untyped.filter(w=>measurandWords.has(w));
+ return {id:c.id,measurands,fixed,axes,untyped,qualifiers};
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -196,7 +200,7 @@ export function readerProcedureIdentity(q:TypedQuantity):string|null{
 export const readerTestIdentity=readerProcedureIdentity;
 /** The input facts of the `link` program for a set of values and descriptors (exported for tests and the census). */
 export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDescriptor[],values:readonly LinkValue[],qk?:QuantityKnowledge):Record<string,(string|number)[][]>{
- const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],value_test:[],value_protocol:[],observation:[],incomplete:[],closed_axis:[],operating_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
+ const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],value_test:[],value_protocol:[],observation:[],incomplete:[],unread_qualifier:[],closed_axis:[],operating_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
  for(const v of values){const q=v.quantity;I.value.push([v.id]);
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)I.value_kind.push([v.id,k]);
   if(q.metric.id)I.value_metric.push([v.id,q.metric.id]);
@@ -207,7 +211,7 @@ export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDesc
   if(v.test&&v.source)I.value_test.push([v.id,v.source+'#'+v.test]);
   if(v.protocol&&v.source)I.value_protocol.push([v.id,v.source+'#'+v.protocol]);
   const ok=observationKey(v);if(ok)I.observation.push([v.id,ok]);}
- for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);
+ for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);if(d.qualifiers?.length)I.unread_qualifier.push([d.id]);
   for(const g of measurandGroups(d)){for(const k of g.kinds)I.group_kind.push([d.id,g.group,k]);for(const x of g.metrics)I.group_metric.push([d.id,g.group,x]);}
   for(const m of d.measurands){if(m.metric)I.measures_metric.push([d.id,m.metric,m.level]);
    if(!m.metric||m.level==='head')I.measures.push([d.id,m.kind,m.level]);}

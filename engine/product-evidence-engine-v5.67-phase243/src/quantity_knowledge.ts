@@ -31,7 +31,10 @@ export interface AxisDef {id:string;valueKind?:string;
  /** WD (qk.2.3): a composite condition read from several quantities together (inlet air state = temperature and relative humidity). */
  valueKinds?:string[];
  /** WD (qk.2.3): an operating condition a judgement can be made under (a speed, a programme, a floor). */
- operatingCondition?:boolean;cues?:string[];values?:Record<string,string[]>;freeText?:string[];source:string}
+ operatingCondition?:boolean;
+ /** R3: a condition read from the value's own labels and conditions, like an operating condition, though it is not one
+  * (an axis PEE acquired from a teaching document, such as a filter state). No default-pack axis sets it. */
+ labelled?:boolean;cues?:string[];values?:Record<string,string[]>;freeText?:string[];source:string}
 export interface MetricDef {id:string;label:string;kind:string;terms:string[];
  /** WD (qk.2.3): the basis the metric is conventionally reported per (a dehumidifier capacity per day), when a value prints none. */
  conventionalBasis?:{per:string;source:string;note?:string};unitless?:boolean;definedBy?:{method:string;source:string}[];requires:string[];notEquivalentTo?:string[];derivedFrom?:string[];note?:string;source:string}
@@ -425,7 +428,7 @@ export function typeQuantity(qk:QuantityKnowledge,q:{surface:string;value:number
  for(const a of required){const axis=qk.axes.get(a)!;scan(axis,labels,'labels');scan(axis,conds,'conditions');if(axis.valueKind&&!conditions.some(c=>c.axis===a))scan(axis,context,'context');}
  // WD (tuned on the KV pages): an operating condition the value's own words state (a floor, a speed, a programme) is part
  // of its record whether or not the knowledge requires it for the metric: a carpet pickup and a hard-floor pickup are two tests.
- for(const axis of qk.pack.conditionAxes)if(axis.operatingCondition&&!required.includes(axis.id)){scan(axis,labels,'labels');scan(axis,conds,'conditions');}
+ for(const axis of qk.pack.conditionAxes)if((axis.operatingCondition||axis.labelled)&&!required.includes(axis.id)){scan(axis,labels,'labels');scan(axis,conds,'conditions');}
  // The method a value was produced under, and the conditions that method fixes (v2): named in the labels or the context.
  const methods=(qk.pack.methods??[]).filter(m=>(metricId?m.measures.includes(metricId):m.measures.some(x=>kind&&qk.metrics.get(x)!.kind===kind))&&hit(all,m.terms).length);
  if(methods.length===1&&!conditions.some(c=>c.axis==='method')){const m=methods[0];conditions.push({axis:'method',value:m.id,raw:hit(all,m.terms)[0],from:labels.some(l=>m.terms.some(t=>hasPhrase(l,t)))?'labels':'context'});

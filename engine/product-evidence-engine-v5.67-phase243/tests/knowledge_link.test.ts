@@ -49,9 +49,12 @@ test('R2 link: the metric level is the most specific; a value of another metric 
 test('R2 link: a candidate that would assume an unstated condition is not preferred; changing the mode changes the link (metamorphic)', ()=>{
  const top=linkValues(qk,PURIFIER,[v('a',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['fan_setting','top'],['challenge_pollutant','dust']]})]);
  assert.deepEqual(res(top,'a').measurements,['particle_cadr_by_pollutant_and_mode']);
- // the same value at sleep: both candidates assume nothing and lead to different outcomes -> ambiguous, not guessed
+ // the same value at sleep: lk.6 chooses the candidate whose fixed conditions (sleep, dust) the value states
  const sleep=linkValues(qk,PURIFIER,[v('a',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['fan_setting','sleep'],['challenge_pollutant','dust']]})]);
- assert.equal(res(sleep,'a').status,'ambiguous');assert.deepEqual(res(sleep,'a').measurements,['particle_cadr_by_pollutant_and_mode','pollen_dust_cadr_at_sleep_mode']);
+ assert.equal(res(sleep,'a').status,'linked');assert.deepEqual(res(sleep,'a').measurements,['pollen_dust_cadr_at_sleep_mode']);
+ // lk.1-lk.5 left it ambiguous (reproduction)
+ const lk5=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v5.json',import.meta.url),'utf8'));
+ assert.equal(res(linkValues(qk,PURIFIER,[v('a',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['fan_setting','sleep'],['challenge_pollutant','dust']]})],{rules:lk5}),'a').status,'ambiguous');
  // with no other candidate, the link assumes the unstated condition and cannot assess
  const only=linkValues(qk,view([PURIFIER.measurements[1]]),[v('a',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['challenge_pollutant','dust']]})]);
  assert.equal(res(only,'a').status,'linked_condition_not_shown');
@@ -66,7 +69,11 @@ test('R2 link: competing candidates with the same consequences are immaterial; w
  const r2=linkValues(qk,diff,[v('a',{kind:'volumetric_flow_rate',metric:'cadr'}),v('b',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['challenge_pollutant','smoke']]})]);
  // 'a' states no pollutant: only cadr_a assumes nothing
  assert.deepEqual(res(r2,'a').measurements,['cadr_a']);
- assert.equal(res(r2,'b').status,'ambiguous');
+ // 'b' states smoke: lk.6 chooses the candidate that fixes smoke
+ assert.deepEqual(res(r2,'b').measurements,['smoke_cadr_b']);
+ // two candidates that both fit what the value states, with different consequences, stay ambiguous
+ const both=view([meas('cadr_a',[['o1','partial']]),meas('cadr_c',[['o2','partial']])]);
+ assert.equal(res(linkValues(qk,both,[v('b',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['challenge_pollutant','smoke']]})]),'b').status,'ambiguous');
  // a value stating no pollutant against two candidates that both fix one: the deciding axis is named
  const fixed=view([meas('smoke_cadr_x',[['o1','partial']]),meas('dust_cadr_y',[['o2','partial']])]);
  const r3=linkValues(qk,fixed,[v('c',{kind:'volumetric_flow_rate',metric:'cadr'})]);
@@ -109,11 +116,11 @@ test('R2 metamorphic: renaming the product keeps every link and force; removing 
 });
 
 test('R2 rules: no link without a candidate, no direct or partial force without its conditions (shape over the rule set)', ()=>{
- const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v5.json',import.meta.url),'utf8')) as RuleSet;
+ const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v6.json',import.meta.url),'utf8')) as RuleSet;
  loadLinkRules(rs);
  const rules=rs.programs.flatMap(p=>p.rules);
  for(const r of rules.filter(r=>/^linked(_equivalent)?\(/.test(r.rule)))assert.match(r.rule,/:- (chosen|assumed)\(/,r.id);
- for(const r of rules.filter(r=>/^(chosen|assumed)\(/.test(r.rule)))assert.match(r.rule,/(preferred|cand)\(/,r.id);
+ for(const r of rules.filter(r=>/^(chosen|assumed)\(/.test(r.rule)))assert.match(r.rule,/(best_pref|preferred|cand|partition_member)\(/,r.id);
  assert.match(rules.find(r=>r.id==='E4')!.rule,/conditions_ok\(V,M\)/);
  // S70: no rule grants direct force through a measurement PEE cannot fully read
  for(const r of rules.filter(r=>/^(evidence_force\(V,O,direct|set_evidence\(P,O,direct)/.test(r.rule)))assert.match(r.rule,/not incomplete\(M\)/,r.id);
@@ -270,4 +277,51 @@ test('S72 one procedure supports compatibility but is never one observation: two
  // a run identity, when known, still identifies: the same run reported twice is one
  const run=linkValues(qk,CURVE,[pr(at('w2','power','speed 2'),'protocol:p','run-7'),pr(at('w2b','power','speed 2'),'protocol:p','run-7')]);
  assert.deepEqual(run.repeatedReports,[['w2','w2b']]);
+});
+
+// R3: the most specific consistent candidate.
+test('R3 lk.6 a candidate whose fixed condition the value states is chosen over one that fixes nothing; without the condition both stay', ()=>{
+ const t=view([meas('sleep_cadr_by_pollutant',[['o1','partial']]),meas('cadr_by_pollutant',[['o2','partial']])]);
+ // a hand-made descriptor fixing fan_setting=sleep on the first measurement
+ const ds=t.measurements.map(m=>describeMeasurement(qk,m.concept,m.conditions));
+ assert.ok(ds[0].fixed.some(f=>f.axis==='fan_setting'&&f.value==='sleep'));
+ const atSleep=linkValues(qk,t,[v('c',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['fan_setting','sleep'],['challenge_pollutant','smoke']]})]);
+ assert.deepEqual(res(atSleep,'c').measurements,['sleep_cadr_by_pollutant']);
+ const none=linkValues(qk,t,[v('c',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['challenge_pollutant','smoke']]})]);
+ assert.deepEqual(res(none,'c').measurements,['cadr_by_pollutant']); // the sleep one would assume an unstated condition
+});
+
+test('R3 lk.6 an unstated axis that partitions the candidates is the deciding question, not a reason to pick a third candidate', ()=>{
+ const t=view([meas('sleep_cadr_by_pollutant',[['o1','partial']]),meas('max_speed_cadr_by_pollutant',[['o2','partial']]),meas('cadr_by_pollutant',[['o3','partial']])]);
+ const r=linkValues(qk,t,[v('c',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['challenge_pollutant','smoke']]})]);
+ assert.equal(res(r,'c').status,'ambiguous');assert.deepEqual(res(r,'c').decidingAxes,['fan_setting']);
+ assert.deepEqual([...res(r,'c').measurements].sort(),['max_speed_cadr_by_pollutant','sleep_cadr_by_pollutant']);
+ // stating the axis decides (metamorphic)
+ const s2=linkValues(qk,t,[v('c',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['challenge_pollutant','smoke'],['fan_setting','top']]})]);
+ assert.deepEqual(res(s2,'c').measurements,['max_speed_cadr_by_pollutant']);
+});
+
+test('R3 lk.6 a candidate that contradicts a stated condition neither partitions nor is chosen; one candidate fixing two values is no partition', ()=>{
+ // dev review: a top-speed value was linked to the sleep-mode dust/pollen CADR because its two pollutant values "partitioned"
+ const r=linkValues(qk,PURIFIER,[v('a',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['fan_setting','top']]})]);
+ assert.notDeepEqual(res(r,'a').measurements,['pollen_dust_cadr_at_sleep_mode']);
+ assert.ok(!res(r,'a').measurements.includes('pollen_dust_cadr_at_sleep_mode'));
+ assert.ok(!(res(r,'a').decidingAxes??[]).includes('challenge_pollutant'));
+});
+
+test('R3 lk.6 candidates an unstated axis partitions stay ambiguous even when their consequences are equal', ()=>{
+ const t=view([meas('sleep_cadr_by_pollutant',[['o1','partial']]),meas('max_speed_cadr_by_pollutant',[['o1','partial']])]);
+ const r=linkValues(qk,t,[v('c',{kind:'volumetric_flow_rate',metric:'cadr'})]);
+ assert.equal(res(r,'c').status,'ambiguous');assert.deepEqual(res(r,'c').decidingAxes,['fan_setting']);
+});
+
+test('R3 lk.6 a condition match does not choose a candidate whose name PEE cannot fully type', ()=>{
+ // dev review: a measured eco-programme energy was linked to the EU-label per-100-cycles measurement on "eco" alone
+ const t=view([meas('eu_label_kwh_per_100_eco_cycles',[['o1','partial']]),meas('wall_plug_kwh_per_programme',[['o2','partial']])]);
+ const r=linkValues(qk,t,[v('e',{kind:'energy',conditions:[['programme','eco']]})]);
+ assert.notEqual(res(r,'e').status,'linked');
+ // a fully typed candidate is still chosen by its matched condition (metamorphic control)
+ const t2=view([meas('pollen_dust_cadr_at_sleep_mode',[['o1','partial']]),meas('particle_cadr_by_pollutant_and_mode',[['o2','partial']])]);
+ const r2=linkValues(qk,t2,[v('s',{kind:'volumetric_flow_rate',metric:'cadr',conditions:[['fan_setting','sleep'],['challenge_pollutant','dust']]})]);
+ assert.deepEqual(res(r2,'s').measurements,['pollen_dust_cadr_at_sleep_mode']);
 });
