@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import {mkdtempSync,readFileSync} from 'node:fs';import {tmpdir} from 'node:os';import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {KnowledgeStore246,type SourceInput246} from '../src/phase246_knowledge_store.js';
-import {extractSpecifications245} from '../src/phase245_spec_extraction.js';
+import {extractSpecifications245,SPEC_EXTRACTOR_VERSION} from '../src/phase245_spec_extraction.js';
 import {researchJobFromGap182} from '../src/phase182_gap_research_orchestrator.js';
 import {validateResearchPolicy257} from '../src/phase257_research_planning.js';
 import {planSearchQueries223,searchCandidateUrls223,type SearchConfig223} from '../src/phase223_search_discovery.js';
@@ -34,7 +34,7 @@ const page=(name:string,extra:Record<string,unknown>)=>`<!doctype html><html><he
 function store(){
  const s=new KnowledgeStore246(dbPath());
  const ingest=(url:string,html:string,source:SourceInput246)=>s.ingestObservation246({source,url,sha256:sha(html),bytes:html.length,httpStatus:200,fetchedAt:AT,runId:'run_262',
-  extractorVersion:'spec-extractor-7',extraction:extractSpecifications245(html,url),categoryHypotheses:['air_fryers']});
+  extractorVersion:SPEC_EXTRACTOR_VERSION,extraction:extractSpecifications245(html,url),categoryHypotheses:['air_fryers']});
  // A product with an exact GTIN on a retained manufacturer page (values retained), and one with only a shop name (metadata only).
  const a=ingest(`https://${MAKER}/p/fryer-${GTIN}`,page('Vortex Crisp Fryer',{gtin13:GTIN}),{sourceId:'src_maker',host:MAKER,sourceType:'manufacturer',sourceTypeBasis:'operator_asserted',policy:approved(MAKER)});
  const b=ingest(`https://${SHOP}/item/family-fryer`,page('Vortex Family Air Fryer',{}),{sourceId:'src_shop',host:SHOP,sourceType:'retailer',sourceTypeBasis:'operator_asserted'});

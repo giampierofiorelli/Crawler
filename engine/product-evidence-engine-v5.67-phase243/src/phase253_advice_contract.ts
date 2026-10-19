@@ -57,6 +57,9 @@ export interface Advice253 {
  quantityRequirements?:QuantityRequirement253[];
  /** GK2 (opt-in): class requirements (energy or filter classes) typed against the knowledge's scales. */
  classRequirements?:ClassRequirement253[];
+ /** S80 request coverage (principle 8): parts of the request PEE related to nothing it recognised, and numbers no
+  * constraint consumed. Stated to the user and kept among the unassessed objectives; never interpreted further. */
+ uninterpreted?:{span:string;reason:'not_interpreted'|'quantity_not_checked'}[];
 }
 export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range';value:number|null;low?:number;high?:number;unit:string;
  kind:string|null;kindCandidates:string[];metric:string|null;weighting:string|null;status:'typed'|'kind_ambiguous';
@@ -67,6 +70,8 @@ export interface AdviceResearchInputs253 {
  performanceNeeds:string[];unresolvedNeeds:string[];
  /** 2026-10-16: the words that stated each performance need, and how the category was established (for the ranking step). */
  performanceNeedSpans?:{id:string;matched:string}[];categoryBasis?:string;
+ /** S80: the words every recognised need (performance, factual or context) was matched on. */
+ needSpans?:{id:string;matched:string}[];
  productChecks:{productId:string;outcome:'meets_all'|'fails'|'unknown';criteria:{key:string;outcome:'meets'|'fails'|'unknown';code:string}[]}[];
  ineligible:{productId:string;code:'product_line'}[];
 }

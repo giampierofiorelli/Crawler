@@ -198,6 +198,17 @@ export function interpretTableGrid245(g:TableGrid245):TableInterpretation245{
  const pointerHeaders=headerTexts.length>=2&&headerTexts.every(t=>PRICE.test(t.trim())||/^(?:this item|this product|current item|current product)$/i.test(t.trim()));
  if(pointerHeaders)reasons.push('price_or_pointer_header_row');
  if(cornerEmpty||headerCols>0||codesAcross||pointerHeaders){
+  // S80 (symmetric to the row-key guard below): column headers that are settings or levels of one product ("SPEED 1",
+  // "Level 2", "Low", "Sleep") or a single sentence-case column label ("Minimum lifespan") do not name products. In the
+  // S80 first run such headers became product identities in the store ("SPEED 1".."SPEED 5", "Minimum lifespan").
+  const SETTING=/^(?:(?:fan\s+)?(?:speed|level|mode|setting|stage|step|position|power level|program(?:me)?)\s*[#:]?\s*\d+[a-z]?|low|medium|med|high|max(?:imum)?|min(?:imum)?|turbo|boost|sleep|night|auto(?:matic)?|eco|silent|quiet|normal|standard|off|on|1st|2nd|3rd|\d+(?:st|nd|rd|th)\s+(?:speed|setting|level))$/i;
+  const valueHeaders=headerTexts.map(t=>t.trim()).filter(Boolean);
+  if(valueHeaders.length>=1&&valueHeaders.every(t=>SETTING.test(t)))
+   return {mode:'unsupported',readings:[],reasons:['column_header_not_product_identity']};
+  // every header a sentence-case phrase ("Minimum lifespan", "Price per 2-pack", "Estimated yearly cost"): property
+  // labels across the columns (components or uses in the rows), not product names
+  if(cornerEmpty&&!codesAcross&&valueHeaders.length>=1&&valueHeaders.every(t=>/^[A-Z][a-z]+(?:\s+(?:[a-z][a-z-]*|\d[\w-]*))+$/.test(t)))
+   return {mode:'unsupported',readings:[],reasons:['column_header_not_product_identity']};
   // ---- products in columns: column header path = [product, ...variant levels]; row label = property.
   const firstValueCol=Math.max(1,headerCols);
   // Comparison widgets often put prices or "This item" in the header row and the product names in a body

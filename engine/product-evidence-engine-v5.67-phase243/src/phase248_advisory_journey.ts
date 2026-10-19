@@ -76,6 +76,9 @@ const PRODUCT_WORDS=new Set(['machine','maker','fryer','air','airfryer','toaster
  * concept's own descriptions (its aliases and the statements of items carrying it), within one category.
  * Requires two distinct overlapping need words, or one alias word that is rare in the category. */
 export const DESCRIBED_THRESHOLD248=2.2;
+/** S80: negators whose scope excludes words from need inference, and the words that end that scope. */
+const NEGATORS80=new Set(['not','no','never','without','nor','neither','none','hardly','barely',"don't","doesn't","isn't","won't","can't",'dont','doesnt','isnt','wont','cant']);
+const CLAUSE80=new Set(['and','but','or','while','whilst','which','that','because','so','although','though']);
 function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string[],registry:readonly CategoryEntry248[]){
  const out:{key:string;alias:string;start:number;end:number}[]=[];
  // Phase250 (development, after set 3): on long requests the paraphrase overlap mostly fired by chance (real sets and
@@ -86,7 +89,13 @@ function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string
  // stemming, so "machines", "makers", "toasters" and "blenders" (stems machin, mak, toast, blend) slipped through
  // and produced chance need matches ("machin+hard+long" -> limescale).
  const productWord=(w:string)=>PRODUCT_WORDS.has(w)||PRODUCT_WORDS.has(w.replace(/s$/,''))||PRODUCT_WORDS.has(w.replace(/es$/,''));
- const reqTokens=new Set(t.split(' ').filter(w=>w&&!STOP.has(w)&&!productWord(w)).map(stem).filter(w=>w.length>=3&&!PRODUCT_WORDS.has(w)&&!catWords.has(w)));
+ // S80: words inside the scope of a negation ("without using a lot of water", "not too loud") are never positive
+ // evidence for a need: in the S80 first run "proper+without+wat" inferred a drying need from "without using a lot of
+ // water". The scope runs from the negator to the next clause boundary, over at most four content words.
+ const ws=t.split(' ');const negated=new Set<number>();
+ for(let i=0;i<ws.length;i++)if(NEGATORS80.has(ws[i])){let content=0;negated.add(i);
+  for(let k=i+1;k<ws.length&&content<4;k++){if(CLAUSE80.has(ws[k]))break;negated.add(k);if(!STOP.has(ws[k]))content++;}}
+ const reqTokens=new Set(ws.filter((w,i)=>w&&!negated.has(i)&&!STOP.has(w)&&!productWord(w)).map(stem).filter(w=>w.length>=3&&!PRODUCT_WORDS.has(w)&&!catWords.has(w)));
  for(const c of cats){
   const items=store.categoryItems246(c).filter(i=>i.concept);
   const docs=new Map<string,{alias:Set<string>;text:Set<string>;kind:string}>();

@@ -9,6 +9,7 @@
  * This is not a second recommendation engine: every check is decideAdvice249's. A specification shortlist says which
  * known products' declarations meet the stated limits; it is not a quality ranking and not the whole market.
  */
+import {requestCoverage80} from './request_coverage80.js';
 import {createHash} from 'node:crypto';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {runJourney248,type CategoryEntry248} from './phase248_advisory_journey.js';
@@ -68,6 +69,7 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  ri.performanceNeeds=j.stages.need.concepts.filter(c=>!j.stages.requirements.factualRequirements.some(f=>f.conceptId===c.id)).map(c=>c.id);
  ri.performanceNeedSpans=j.stages.need.concepts.filter(c=>ri.performanceNeeds.includes(c.id)).map(c=>({id:c.id,matched:c.matched}));
  ri.categoryBasis=j.stages.category.basis;
+ ri.needSpans=j.stages.need.concepts.map(c=>({id:c.id,matched:c.matched}));
  // 1. What is being bought.
  if(j.stages.target.kind==='other'){out.response='out_of_scope';
   out.statements.push(`You seem to be looking for ${j.stages.target.other}; the ${category??'product'} mentioned is context. PEE holds no knowledge or products for ${j.stages.target.other}.`);
@@ -269,7 +271,27 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
 export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
+ if(out.response!=='out_of_scope'&&out.category)applyRequestCoverage80(out,text,registry);
  return out;
+}
+/** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */
+function applyRequestCoverage80(out:Advice253,text:string,registry:readonly CategoryEntry248[]):void{
+ const entry=registry.find(e=>e.id===out.category);
+ const matched=[...(out.researchInputs?.needSpans??[]).map(n=>n.matched),...(entry?.aliases??[]),...((entry as {cues?:readonly string[]}|undefined)?.cues??[]),
+  ...statedObjectives253(text)];
+ const spans=[...out.constraints.map(c=>c.span),...out.unmappedConstraints.map(u=>u.span),...(out.quantityRequirements??[]).map(q=>q.span),
+  ...(out.classRequirements??[]).map(c=>c.span)].filter((x):x is string=>typeof x==='string'&&x.length>0);
+ const values=[...out.constraints.map(c=>c.value),...(out.quantityRequirements??[]).flatMap(q=>[q.value,q.low,q.high])].filter((v):v is number=>typeof v==='number');
+ const u=requestCoverage80(text,{matched,spans,values});if(!u.length)return;
+ out.uninterpreted=u;
+ for(const x of u)if(!out.unassessedObjectives.includes(x.span))out.unassessedObjectives.push(x.span);
+ const i=out.statements.indexOf(NO_CHECKABLE253);
+ if(i>=0)out.statements[i]='No requirement that PEE can check against retained declarations is stated yet.';
+ const q=u.filter(x=>x.reason==='quantity_not_checked'),n=u.filter(x=>x.reason==='not_interpreted');
+ // at most four parts in the text (long requests carry background); every part stays in out.uninterpreted
+ const list=(a:typeof u)=>a.slice(0,4).map(x=>`"${x.span}"`).join(', ')+(a.length>4?` and ${a.length-4} other part${a.length>5?'s':''}`:'');
+ if(n.length)out.statements.push(`Not interpreted: ${list(n)}. PEE could not relate ${n.length>1?'these parts':'this part'} of your request to anything it can check, so this answer does not take ${n.length>1?'them':'it'} into account.`);
+ if(q.length)out.statements.push(`Stated but not checked: ${list(q)}. PEE did not read ${q.length>1?'these quantities':'this quantity'} as a requirement it can check, so this answer does not apply ${q.length>1?'them':'it'}.`);
 }
 const NO_CHECKABLE253='No checkable requirement is stated yet, so no product can be checked against your needs.';
 const kindText=(qk:QuantityKnowledge,r:QuantityRequirement)=>{const q=r.quantity;const k=q.metric.id?qk.metrics.get(q.metric.id)!.label:(q.kind.id?q.kind.id:q.kind.candidates.join(' or ')).replace(/_/g,' ');

@@ -356,7 +356,8 @@ const shape=(x:Node245)=>x.tag+'('+elementChildren245(x).filter(c=>!isDecorative
 
 /** Identifies the extraction rules; stored with every derived declaration so a rule change can be traced
  * and re-derived per source revision. Bump on any behavioural change. */
-export const SPEC_EXTRACTOR_VERSION='spec-extractor-7';
+// spec-extractor-8 (S80): column headers that are settings of one product or sentence-case property labels never name products.
+export const SPEC_EXTRACTOR_VERSION='spec-extractor-8';
 export function extractSpecifications245(html:string,sourceUrl:string):SpecExtraction245{
  const started=performance.now();
  if(typeof html!=='string'||html.length>PAGE_MAX_BYTES)throw Error('245_html_size');
