@@ -1,0 +1,73 @@
+{
+ "schema": "pee.r1.relation-verification.v1",
+ "sealedAt": "2026-10-19",
+ "method": "4 fresh-context verifiers, blind to readers; each relation checked against the owner package it cites (ProVe-style source support)",
+ "files": [
+  {
+   "file": "verdict-air_fryers.json",
+   "sha256": "ccf011292e3d35df4f6b59a9053a7d9ee031ad69921df907cd1a84f978dfbb40",
+   "n": 26
+  },
+  {
+   "file": "verdict-air_purifiers.json",
+   "sha256": "1861be20ebd8e7aed5506236efb151a87a9cce23aefa7fe3d02cc287995c730b",
+   "n": 40
+  },
+  {
+   "file": "verdict-coffee_machines.json",
+   "sha256": "e48705de17559a0f4e7090998bd98177ce53260c1703811eabd44b244087c6af",
+   "n": 12
+  },
+  {
+   "file": "verdict-dehumidifiers.json",
+   "sha256": "395ed21412426a76e0d1943c2c4d5380dd24806045a7e3e1f197202ff311a495",
+   "n": 10
+  },
+  {
+   "file": "verdict-dishwashers.json",
+   "sha256": "6d232369552bdcbe12ecaec352bee43cecdfe16fa535e29ac74aa1e42627c41b",
+   "n": 45
+  },
+  {
+   "file": "verdict-televisions.json",
+   "sha256": "a121e4544125c04ff714560ce0dd750b4a9ed5314fa6ab487e92860a6cabcbf7",
+   "n": 47
+  }
+ ],
+ "counts": {
+  "checked": 180,
+  "support": {
+   "supported": 160,
+   "not_found": 3,
+   "partially_supported": 16,
+   "not_supported": 1
+  },
+  "byKind": {
+   "measured_by": {
+    "supported": 43,
+    "not_found": 3,
+    "partially_supported": 10
+   },
+   "not_sufficient_for": {
+    "supported": 48
+   },
+   "requires_condition": {
+    "supported": 69,
+    "partially_supported": 6,
+    "not_supported": 1
+   }
+  },
+  "measuredBySufficiency": {
+   "informs_only": 37,
+   "establishes": 16,
+   "unclear": 3
+  },
+  "class": {
+   "general_scientific_principle": 97,
+   "method_specific": 32,
+   "technical_convention": 50,
+   "shortcut": 1
+  },
+  "withoutPackage": 13
+ }
+}
