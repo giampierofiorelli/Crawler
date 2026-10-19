@@ -118,3 +118,63 @@ that metrics decide 24 links (gamut coverage); fixed conditions decide almost no
 4. Type the untyped decisive words (SDR/HDR, aged filter). This is knowledge translation, and belongs to R3.
 
 Each change needs a new first run on data not used to build it.
+
+## 5. lk.2: one observation, several analytical uses (owner clarification S69, 2026-10-19)
+
+The owner's text is preserved verbatim in the skill: `references/owner-r2-multi-use-clarification-2026-10-19.md`. Its
+sources are methodological references; Claude did not fetch them:
+- DOE 10 CFR 430 Appendix FF;
+- HouseFresh;
+- Consumer Reports;
+- W3C SOSA/SSN;
+- NIST on correlated measurements.
+
+§1–§4 above are unchanged. lk.1 stays loadable and reproduces its runs.
+
+### What changed (rules `link-rules.v2.json`, lk.2; general, no category rule)
+
+| Owner distinction | Representation |
+|---|---|
+| 1. Original observation (property, unit, product, source, method, conditions) | `observation(V,O)`: product, property, value and conditions. One figure printed twice is **one** observation (`repeated_report`). |
+| 2. Membership of analytical sets | A taught measurement of several measurand groups (CADR + noise + power) is an **analytical set**. A value *describes* at most one single measurement, and may be a *member* of every compatible set (L31–L39). A member alone carries only `component_only`. |
+| 3. Derived relationships | `aligned_point`: every group of the set has a member for the same product at the same value of the axis the set requires, and no two stated methods clash. One physical run is not required. `relationship_at_points`: two or more aligned points, a partial relationship, never "every setting". |
+| 4. Sufficient conclusions | A set's force applies only at an aligned point, bounded to its setting. Two contributions that share an observation are `dependent`, and never count as independent corroboration. |
+
+### Tests (the owner's four distinctions, plus the earlier ones; 12 in all)
+- One power value describes "power per mode" and is a member of the curve.
+- A lone power value establishes no point, no curve and no outcome of the curve.
+- Noise at another setting, or a different stated method, gives no aligned point. Two aligned points give a partial
+  relationship. Another product's value never completes a point.
+- A CADR observation used by a single measurement and by a set point leaves the outcome "partial contributions only".
+  The same figure printed twice is one observation.
+
+### Results (both TUNED or spent: development evidence, never independent validation)
+
+| | p272 (spent) C3 → C4 | s1cd (tuned: diagnosed after its first run) C3 → C4 |
+|---|---|---|
+| Correct: single measurement / equivalent set / via membership | 56/0/0 → 38/5/19 (62 in all) | 56/0/0 → 50/11/56 (117 in all; lexical link 74) |
+| Wrong where none applies | 2 → 2 | 11 → 11 |
+| Ambiguous, reference measurement among the candidates | 28 → 22 | 77 → 16 |
+| A set's force without an aligned point (**unjustified**) | 6 → **0** | 22 → **0** |
+| Aligned points found | 1 | 1 |
+| Correct and usable for decisions | 52 → 56 | 24 → 47 |
+
+**Reading the table:**
+- **What changed most is avoidance, not reach.** lk.1 let a lone noise value carry the curve's "direct" force on quiet
+  night operation (6 and 22 cases). lk.2 removes every such case, and still links each value to its analyses.
+- **On p272, 10 power values** are now linked where the R1 reference says "ambiguous". That reference asked for one
+  measurement per value. Under S69 both uses are legitimate (power per mode, and membership of the curve), so these are
+  not counted as errors, but they are reported.
+- **No independent validation of lk.2 exists yet.** s1cd was spent by its first run and the diagnosis. Validating lk.2
+  needs pages of taught categories with composite measurements that were never used. Held data offer none that are
+  suitable: the remaining unused pages are air fryers, or manufacturer table cells. A new set needs the owner's
+  authorisation for acquisition.
+
+### Remaining limits, recorded
+- **A single wattage still gets "direct" force on "energy cost".** The `mode_power_and_tco` measurement is a procedure:
+  watts per mode, plus standby, filters and tariff. Its name types only "power" ("tco" is untyped). Translating
+  procedures is R3 work.
+- **"Equivalent set" links ignore untyped words.** Two CADR measurements count as one choice for decisions, but "aged
+  filter" is untyped.
+- **Errors in reading names stay visible in the descriptors,** not hidden. "Sound power label dB" reads "power" as
+  electrical power.

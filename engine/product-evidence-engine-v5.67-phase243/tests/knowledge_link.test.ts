@@ -74,7 +74,7 @@ test('R2 link: competing candidates with the same consequences are immaterial; w
 
 test('R2 evidence: graded force (direct, partial, indirect, conditions not shown) and what it allows per outcome', ()=>{
  const t=view([meas('mode_power_and_tco',[['energy_cost','direct']],{conditions:[PAIRING]}),
-  meas('room_volume_equivalent_ach',[['room_coverage','partial']],{indirectFor:['clean_breathing_zone']})]);
+  meas('equivalent_ach',[['room_coverage','partial']],{indirectFor:['clean_breathing_zone']})]);
  const r=linkValues(qk,t,[v('p',{kind:'power',conditions:[['fan_setting','sleep']]}),v('np',{kind:'power'},'Acme P2'),v('ach',{kind:'air_change_rate',conditions:[['fan_setting','top']]})]);
  assert.deepEqual(res(r,'p').evidence.map(e=>e.force),['direct']);
  assert.deepEqual(res(r,'np').evidence.map(e=>e.force),['conditions_not_shown']);
@@ -115,4 +115,55 @@ test('R2 rules: no link without a candidate, no direct or partial force without 
  for(const r of rules.filter(r=>/^(chosen|assumed)\(/.test(r.rule)))assert.match(r.rule,/(preferred|cand)\(/,r.id);
  assert.match(rules.find(r=>r.id==='E4')!.rule,/conditions_ok\(V,M\)/);
  for(const r of rules.filter(r=>/^outcome_assessment\(P,O,(direct_evidence|all_listed_contributions)\)/.test(r.rule)))assert.doesNotMatch(r.rule,/indirect|conditions_not_shown/,r.id);
+});
+
+// S69 (owner, 2026-10-19): one observation, several analytical uses; a set's relationship needs aligned observations.
+const CURVE=view([meas('mode_power_and_tco',[['energy_cost','direct']],{conditions:[PAIRING]}),
+ meas('cadr_noise_power_curve',[['quiet_night_operation','direct']],{conditions:[PAIRING]}),
+ meas('particle_cadr_by_pollutant_and_mode',[['fine_particle_reduction','partial']])]);
+const at=(id:string,kind:string,setting:string,extra:Partial<Parameters<typeof q>[0]>={},product='Acme P1')=>v(id,{...extra,kind,conditions:[['fan_setting',setting],...(extra.conditions??[])],...(kind==='volumetric_flow_rate'?{metric:'cadr'}:{})},product);
+const CADR=(id:string,s:string,more:[string,string][]=[])=>at(id,'volumetric_flow_rate',s,{conditions:[['challenge_pollutant','smoke'],...more]});
+
+test('S69 one observation, several legitimate uses: it describes one measurement and is a member of a compatible set', ()=>{
+ const r=linkValues(qk,CURVE,[at('w2','power','speed 2')]);
+ const w=res(r,'w2');
+ assert.equal(w.status,'linked');assert.deepEqual(w.measurements,['mode_power_and_tco']);assert.deepEqual(w.memberships,['cadr_noise_power_curve']);
+ assert.deepEqual(w.evidence.map(e=>e.measurement+':'+e.force).sort(),['cadr_noise_power_curve:component_only','mode_power_and_tco:direct']);
+});
+
+test('S69 a standalone power value cannot establish a curve or the outcome the curve bears on', ()=>{
+ const r=linkValues(qk,CURVE,[at('w2','power','speed 2')]);
+ assert.deepEqual(r.relationships,[]);
+ assert.equal(r.outcomes.find(o=>o.outcome==='quiet_night_operation'),undefined);
+ assert.equal(r.outcomes.find(o=>o.outcome==='energy_cost')?.assessment,'direct_evidence');
+});
+
+test('S69 aligned observations support a point; incompatible settings or methods do not; two points support a partial relationship', ()=>{
+ const aligned=linkValues(qk,CURVE,[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2')]);
+ assert.deepEqual(aligned.relationships.map(x=>x.kind+':'+x.setting),['aligned_point:speed 2']);
+ assert.equal(aligned.outcomes.find(o=>o.outcome==='quiet_night_operation')?.assessment,'direct_evidence');
+ // incompatible operating conditions: the noise was measured at another setting
+ const off=linkValues(qk,CURVE,[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n3','sound_pressure_level','speed 3')]);
+ assert.deepEqual(off.relationships,[]);assert.equal(off.outcomes.find(o=>o.outcome==='quiet_night_operation'),undefined);
+ // compatible setting, incompatible methods
+ const meth=linkValues(qk,CURVE,[at('w2','power','speed 2',{conditions:[['method','lab a']]}),CADR('c2','speed 2',[['method','lab b']]),at('n2','sound_pressure_level','speed 2')]);
+ assert.deepEqual(meth.relationships,[]);
+ // two aligned points: a partial relationship across settings (never "every setting")
+ const two=linkValues(qk,CURVE,[at('w1','power','speed 1'),CADR('c1','speed 1'),at('n1','sound_pressure_level','speed 1'),at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2')]);
+ assert.ok(two.relationships.some(x=>x.kind==='relationship_at_points'&&x.measurement==='cadr_noise_power_curve'));
+ // the same products' points are per product: another product's noise does not complete Acme's point
+ const other=linkValues(qk,CURVE,[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2',{},'Zeta Z9')]);
+ assert.deepEqual(other.relationships,[]);
+});
+
+test('S69 repeated use of one observation is not independent corroboration; one observation reported twice is one', ()=>{
+ // outcome o: a single measurement and a set both contribute, and both use the same CADR observation
+ const t=view([meas('particle_cadr_x',[['o','partial']]),meas('cadr_power_set_y',[['o','partial']],{conditions:[PAIRING]})]);
+ const shared=linkValues(qk,t,[CADR('c2','speed 2'),at('w2','power','speed 2')]);
+ assert.ok(shared.relationships.some(x=>x.kind==='aligned_point'));
+ assert.equal(shared.outcomes.find(o=>o.outcome==='o')?.assessment,'partial_contributions');
+ // the same figure printed in a table and in prose: one observation
+ const twice=linkValues(qk,CURVE,[at('w2','power','speed 2'),at('w2b','power','speed 2')]);
+ assert.deepEqual(twice.repeatedReports,[['w2','w2b']]);
+ assert.equal(res(twice,'w2').observation,res(twice,'w2b').observation);
 });

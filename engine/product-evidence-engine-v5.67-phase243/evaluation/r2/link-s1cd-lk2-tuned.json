@@ -1,0 +1,157 @@
+{
+ "schema": "pee.r2.link-experiment.v1",
+ "label": "s1cd-lk2-tuned",
+ "generatedAt": "2026-10-19T07:03:18.911Z",
+ "set": "s1cd",
+ "tier": "Step 1C + 1D-B pages of taught categories: link reference blind and sealed after the build froze; the link mechanism was never developed on them; the pages served earlier reader development (not untouched documents).",
+ "rules": "lk.2",
+ "forceOverlay": "r2-relation-force.v1",
+ "descriptorCensus": {
+  "televisions": {
+   "measurements": 15,
+   "withHeadMeasurand": 5,
+   "withFixedConditions": 0,
+   "withAxes": 7,
+   "withUntypedWords": 14
+  },
+  "air_purifiers": {
+   "measurements": 11,
+   "withHeadMeasurand": 9,
+   "withFixedConditions": 1,
+   "withAxes": 7,
+   "withUntypedWords": 10
+  },
+  "air_fryers": {
+   "measurements": 8,
+   "withHeadMeasurand": 3,
+   "withFixedConditions": 0,
+   "withAxes": 0,
+   "withUntypedWords": 8
+  },
+  "dehumidifiers": {
+   "measurements": 2,
+   "withHeadMeasurand": 1,
+   "withFixedConditions": 0,
+   "withAxes": 0,
+   "withUntypedWords": 2
+  }
+ },
+ "arms": {
+  "A": {
+   "gold_values": 191,
+   "not_found_by_reader": 79,
+   "found": 112,
+   "product_wrong": 72,
+   "link_correct": 59,
+   "product_correct": 16,
+   "decision_usable_correct": 8,
+   "product_missing": 24,
+   "link_wrong_measurement": 21,
+   "link_wrong_link_where_none": 11,
+   "link_missed_no_candidate": 16,
+   "link_correct_no_link": 5
+  },
+  "C1": {
+   "gold_values": 191,
+   "found": 166,
+   "product_missing": 82,
+   "link_correct": 74,
+   "not_found_by_reader": 25,
+   "link_wrong_measurement": 30,
+   "product_correct": 79,
+   "decision_usable_correct": 16,
+   "link_wrong_link_where_none": 16,
+   "product_wrong": 5,
+   "link_correct_no_link": 17,
+   "link_missed_no_candidate": 29
+  },
+  "C2": {
+   "gold_values": 191,
+   "found": 166,
+   "product_missing": 82,
+   "link_missed_ambiguous_ref_among": 119,
+   "not_found_by_reader": 25,
+   "link_correct": 7,
+   "product_correct": 79,
+   "link_wrong_measurement": 7,
+   "link_correct_no_link": 22,
+   "product_wrong": 5,
+   "link_wrong_link_where_none": 11
+  },
+  "C3": {
+   "gold_values": 191,
+   "found": 166,
+   "product_missing": 82,
+   "link_missed_ambiguous_ref_among": 77,
+   "not_found_by_reader": 25,
+   "product_correct": 79,
+   "set_force_without_aligned_point_UNJUSTIFIED": 22,
+   "set_force_on_aligned_point": 1,
+   "link_correct_none_reported_outside_teaching": 22,
+   "link_correct": 56,
+   "decision_usable_correct": 24,
+   "decision_usable_force_conditions_not_shown": 24,
+   "product_wrong": 5,
+   "link_wrong_link_where_none": 11
+  },
+  "C3k": {
+   "gold_values": 191,
+   "found": 166,
+   "product_missing": 82,
+   "link_missed_ambiguous_ref_among": 77,
+   "not_found_by_reader": 25,
+   "product_correct": 79,
+   "link_correct_none_reported_outside_teaching": 22,
+   "link_correct": 56,
+   "decision_usable_correct": 24,
+   "decision_usable_force_direct": 3,
+   "product_wrong": 5,
+   "decision_usable_force_conditions_not_shown": 21,
+   "link_wrong_link_where_none": 11
+  },
+  "C3m": {
+   "gold_values": 191,
+   "found": 166,
+   "product_missing": 82,
+   "link_missed_ambiguous_ref_among": 77,
+   "not_found_by_reader": 25,
+   "product_correct": 79,
+   "link_correct_none_reported_outside_teaching": 22,
+   "link_correct": 56,
+   "decision_usable_correct": 24,
+   "decision_usable_force_conditions_not_shown": 24,
+   "product_wrong": 5,
+   "link_wrong_link_where_none": 11
+  },
+  "C4": {
+   "gold_values": 191,
+   "found": 166,
+   "product_missing": 82,
+   "link_missed_ambiguous_ref_among": 16,
+   "not_found_by_reader": 25,
+   "product_correct": 79,
+   "aligned_point": 1,
+   "link_correct_none_reported_outside_teaching": 22,
+   "link_correct_via_membership": 56,
+   "decision_usable_correct": 47,
+   "link_correct_in_equivalent_set": 11,
+   "link_correct": 50,
+   "product_wrong": 5,
+   "link_wrong_link_where_none": 11
+  }
+ },
+ "c2ToC3": {
+  "abstain->abstain": 87,
+  "good->abstain": 7,
+  "bad->abstain": 5,
+  "abstain->good": 54,
+  "bad->good": 2,
+  "bad->bad": 11
+ },
+ "c3ToC4": {
+  "abstain->abstain": 38,
+  "good->good": 56,
+  "abstain->good": 61,
+  "bad->bad": 11
+ }
+}
