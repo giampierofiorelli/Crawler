@@ -98,8 +98,8 @@ export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
 export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v3.json';
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
 /** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
-/** kr.3 (R1, 2026-10-18): a difference of conditions only when documented or definitional; rules.v2.json kept for reproduction. */
-export const DEFAULT_KNOWLEDGE_RULES='rules.v3.json';
+/** kr.4 (S82): two differently named conditions with no documented relation are unestablished, not not_comparable; kr.3 (R1, 2026-10-18): a difference of conditions only when documented or definitional; rules.v2/v3 kept for reproduction. */
+export const DEFAULT_KNOWLEDGE_RULES='rules.v4.json';
 export function loadQuantityKnowledge(pack?:unknown,rules?:unknown):QuantityKnowledge{
  const raw=pack??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_QUANTITY_PACK,import.meta.url),'utf8'));
  const ruleSet=(rules??JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+DEFAULT_KNOWLEDGE_RULES,import.meta.url),'utf8'))) as RuleSet;

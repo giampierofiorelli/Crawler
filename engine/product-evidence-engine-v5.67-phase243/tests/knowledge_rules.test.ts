@@ -92,7 +92,11 @@ test('KV P2: within-source comparability is between products of one test; one pr
 test('KR kr.3 (R1): a difference of conditions is concluded only when documented or definitional; otherwise not shown equal', ()=>{
  const qk=loadQuantityKnowledge();const t=(s:string,labels:string[])=>typeQuantity(qk,findQuantities(qk,s)[0],{labels});
  const reason=(a:string[],b:string[])=>{const c=compareQuantities(qk,t('250 m³/h',a),t('300 m³/h',b));return {v:c.verdict,r:c.reasons.join('; '),rules:c.rules};};
- const sl=reason(['CADR','Sleep mode'],['CADR','Speed 1']);assert.equal(sl.v,'not_comparable');assert.match(sl.r,/not shown to be the same state or different states/);assert.ok(sl.rules.includes('F10b'));
+ // kr.4 (S82, owner review of S81: a condition not documented is not a condition different): an unknown relation leaves
+ // comparability unestablished; kr.3 gave it the not_comparable verdict (reproduced below with rules.v3)
+ const sl=reason(['CADR','Sleep mode'],['CADR','Speed 1']);assert.equal(sl.v,'comparable_conditions_unestablished');assert.match(sl.r,/not shown to be the same state or different states/);assert.ok(sl.rules.includes('F10b'));
+ const qk3=loadQuantityKnowledge(undefined,JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/rules.v3.json',import.meta.url),'utf8')));
+ assert.equal(compareQuantities(qk3,typeQuantity(qk3,findQuantities(qk3,'250 m³/h')[0],{labels:['CADR','Sleep mode']}),typeQuantity(qk3,findQuantities(qk3,'300 m³/h')[0],{labels:['CADR','Speed 1']})).verdict,'not_comparable','kr.3 reproduces');
  const rk=reason(['CADR','Speed 1'],['CADR','Speed 3']);assert.equal(rk.v,'not_comparable');assert.match(rk.r,/^different fan setting/);assert.ok(rk.rules.includes('F10'));
  const ex=reason(['CADR','Lowest speed'],['CADR','Top speed']);assert.ok(ex.rules.includes('F10'),'highest vs lowest: different by definition');
  const s4=reason(['CADR','Speed 4'],['CADR','Top speed']);assert.ok(s4.rules.includes('F10b'),'speed 4 may or may not be the top speed');

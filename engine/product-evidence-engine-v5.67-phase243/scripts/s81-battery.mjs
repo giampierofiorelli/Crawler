@@ -19,7 +19,7 @@ const D=join(BUILD,'dist/src/');
 const BAT=readFileSync(arg('battery')??'evaluation/s81/battery.json','utf8');const B=JSON.parse(BAT);
 const {KnowledgeStore246}=await import(D+'phase246_knowledge_store.js');const KL=await import(D+'knowledge_link.js');const QK=await import(D+'quantity_knowledge.js');
 const KR=await import(D+'knowledge_rules.js');const {sufficiencyOf247,relations247}=await import(D+'phase247_category_relations.js');
-const qk=QK.loadQuantityKnowledge();
+const qk=QK.loadQuantityKnowledge();const qk0=qk;
 const store=new KnowledgeStore246(process.env.PEE_KNOWLEDGE_FILE??join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite'));
 
 // ---- typed quantities as the reader states them (kind, metric, stated axes; missing = the metric's own requirements not stated)
@@ -47,6 +47,16 @@ const currentEngine=(arm)=>{
   return out;};
  return {name:arm,evidence,attribute:()=>({}),
   compare:(cat,meas,a,b)=>{const r=QK.compareQuantities(qk,tq(a.q,a.product),tq(b.q,b.product));return {verdict:mapVerdict(r.verdict),reasons:r.reasons};},
+  // current code: reader codes are not consulted; a catalog's declared conditions are what ranking trusts
+  row:(c)=>{const r=c.row;const f=QK.findQuantities(qk,`${r.value} ${r.unit==='kwh'?'kWh':r.unit}`)[0];const q=QK.typeQuantity(qk,{surface:f.surface,value:f.value,unit:f.unit},{});
+   if(!c.measurement){const x=KL.linkValues(qk,view(c.category),[{id:'v',quantity:q,product:'P',source:'doc',test:null}]).results[0];
+    return {link:x.status==='ambiguous'?'ambiguous':['no_taught_measurement','not_linked','member_only'].includes(x.status)?'none':x.measurements.length===1?x.measurements[0]:'ambiguous'};}
+   const V=view(c.category);const ds=V.measurements.map(m=>KL.describeMeasurement(qk,m.concept,m.conditions));const tm=V.measurements.find(m=>m.concept.id===c.measurement);
+   const axes=new Set(ds.find(d=>d.id===c.measurement)?.axes.map(a=>a.axis)??[]);const req=(tm?.conditions??[]).map(x=>x.id).sort();
+   // pre-S81: a requirement was checked only through its axis; untyped ones counted as shown
+   const typed=(tm?.conditions??[]).filter(x=>[...axes].some(a=>KL.statementHead(x.statement).toLowerCase().includes(a.replace(/_/g,' ')))).map(x=>x.id);
+   return {shown:req.filter(x=>!typed.includes(x)),notShown:typed.sort()};},
+  derive:(c)=>({derived:[...c.declared].sort(),unsupported:[]}),
   link:(cat,v)=>{const V=view(cat);const r=KL.linkValues(qk,V,[{id:'v',quantity:tq(v.q,v.product),product:v.product,source:'doc',test:null}]).results[0];
    return r.status==='ambiguous'?'ambiguous':r.status==='no_taught_measurement'||r.status==='not_linked'||r.status==='member_only'?'none':r.measurements.length===1?r.measurements[0]:'ambiguous';}};
 };
@@ -54,13 +64,24 @@ const mapVerdict=v=>v==='comparable'||v==='comparable_within_source'?'comparable
 
 // ---- the S81 engine (arm K+ and its ablations), when the build provides it
 const plusEngine=(arm)=>{if(!KL.evidenceUnderKnowledge)return null;
- const ablate=arm.startsWith('K+-')?arm.slice(3):null;
- const know=cat=>KL.categoryKnowledge(store,cat,{ablate});
+ // S82: K+ uses the reader-condition axes when the build has them; K+-readers is the ablation without them
+ const noReaders=arm==='K+-readers';const ablate=arm.startsWith('K+-')&&!noReaders?arm.slice(3):null;
+ const qk=KL.withReaderConditions&&!noReaders?KL.withReaderConditions(qk0):qk0;
+ const know=cat=>KL.categoryKnowledge(store,cat,{qk,ablate});
+ const rowValue=(c)=>{const r=c.row;const f=QK.findQuantities(qk,`${r.value} ${r.unit==='kwh'?'kWh':r.unit}`)[0];const q=QK.typeQuantity(qk,{surface:f.surface,value:f.value,unit:f.unit},{});
+  const ax=KL.readerConditionAxes&&!noReaders?KL.readerConditionAxes(r.codes).axes:[];return {id:'v',product:'P',quantity:q,axes:ax,measurement:c.measurement??null};};
  return {name:arm,
   evidence:(cat,vals)=>KL.evidenceUnderKnowledge(qk,know(cat),vals.map(v=>({id:v.id,product:v.product,measurement:v.m,quantity:v.q?tq(v.q,v.product):null,axes:v.axes??[],states:v.states??{}}))).byOutcome,
   attribute:(cat,vals)=>KL.attributeEvidence(know(cat),vals.map(v=>({id:v.id,product:v.product,attribute:v.attr}))).byOutcome,
   compare:(cat,meas,a,b)=>{const r=KL.compareUnderKnowledge(qk,know(cat),meas,...[a,b].map(x=>({id:x.id,product:x.product,quantity:tq(x.q,x.product),states:x.states??{}})));return {verdict:r.verdict,reasons:r.reasons,conditions:r.conditions};},
-  link:(cat,v)=>KL.linkUnderKnowledge(qk,know(cat),{id:'v',product:v.product,quantity:tq(v.q,v.product),states:v.states??{}}).link};
+  link:(cat,v)=>KL.linkUnderKnowledge(qk,know(cat),{id:'v',product:v.product,quantity:tq(v.q,v.product),states:v.states??{}}).link,
+  row:(c)=>{const k=know(c.category);const v=rowValue(c);if(!c.measurement){const q=v.quantity;return {link:KL.linkUnderKnowledge(qk,k,{...v,quantity:{...q,conditions:[...q.conditions,...v.axes.map(([axis,value])=>({axis,value,raw:value,from:'labels'}))]}}).link};}
+   const e=KL.evidenceUnderKnowledge(qk,k,[v]);const req=(k.view.measurements.find(m=>m.concept.id===c.measurement)?.conditions??[]).map(x=>x.id).sort();
+   const ns=e.conditionsNotShown.map(x=>x.condition).sort();return {shown:req.filter(x=>!ns.includes(x)),notShown:ns};},
+  derive:(c)=>{const k=know(c.category);const tests=c.tests.map((t,i)=>({id:'t'+i,product:t.product,quantity:null,states:t.states??{},
+    axes:[...(t.axes??[]),...(t.codes&&KL.readerConditionAxes&&!noReaders?KL.readerConditionAxes(t.codes).axes:[])]}));
+   if(!KL.conditionsMetFromRecords)return {derived:[...c.declared].sort(),unsupported:[]};
+   const d=KL.conditionsMetFromRecords(qk,k,c.measurement,tests,c.declared);return {derived:d.derived,unsupported:d.unsupported};}};
 };
 const engine=ARM.startsWith('K+')?plusEngine(ARM):currentEngine(ARM);
 if(!engine)throw Error('arm '+ARM+' needs a build that exports the S81 mechanism');
@@ -77,6 +98,11 @@ for(const c of B.cases){let got,score;
   score=Object.entries(c.gold.outcomes).map(([o,g])=>classify(got[o],g));if(extra.length){score.push('over_claim');got.__extra=extra;}}
  else if(c.layer==='C'){const r=engine.compare(c.category,c.measurement,c.values[0],c.values[1]);got=r;const g=c.gold.verdict;
   score=[r.verdict===g?'correct':r.verdict==='comparable'?'over_claim':r.verdict==='unestablished'?'unjustified_abstention':'wrong'];}
+ else if(c.layer==='D'){const r=engine.row(c);got=r;const g=c.gold;const eq=(a,b)=>JSON.stringify([...(a??[])].sort())===JSON.stringify([...(b??[])].sort());
+  if(g.link){const l=r.link;score=[l===g.link?'correct':(g.link==='ambiguous'||g.link==='none')&&l!=='ambiguous'&&l!=='none'?'over_claim':(l==='ambiguous'||l==='none')?'unjustified_abstention':'wrong'];}
+  else{const over=(r.shown??[]).some(x=>!g.shown.includes(x)),under=g.shown.some(x=>!(r.shown??[]).includes(x));score=[eq(r.shown,g.shown)?'correct':over?'over_claim':under?'unjustified_abstention':'wrong'];}}
+ else if(c.layer==='K'){const r=engine.derive(c);got=r;const g=c.gold;const over=r.derived.some(x=>!g.derived.includes(x)),under=g.derived.some(x=>!r.derived.includes(x));
+  score=[!over&&!under?'correct':over?'over_claim':'unjustified_abstention'];}
  else {const l=engine.link(c.category,c.values[0]);got={link:l};const g=c.gold.link;
   score=[l===g?'correct':(g==='ambiguous'||g==='none')&&l!=='ambiguous'&&l!=='none'?'over_claim':(l==='ambiguous'||l==='none')?'unjustified_abstention':'wrong'];}
  results.push({id:c.id,layer:c.layer,category:c.category,principle:c.principle,got,score});}
@@ -96,7 +122,7 @@ for(const r of results)for(const s of r.score){add('all:'+s);add(r.layer+':'+s);
 const units=results.reduce((n,r)=>n+r.score.length,0);
 const out={schema:'pee.s81.battery-run.v1',arm:ARM,build:BUILD,battery:createHash('sha256').update(BAT).digest('hex'),units,
  summary:{correct:T['all:correct']??0,over_claim:T['all:over_claim']??0,unjustified_abstention:T['all:unjustified_abstention']??0,wrong:T['all:wrong']??0},
- byLayer:Object.fromEntries(['R','A','C','I'].map(l=>[l,{correct:T[l+':correct']??0,over_claim:T[l+':over_claim']??0,unjustified_abstention:T[l+':unjustified_abstention']??0,wrong:T[l+':wrong']??0}])),
+ byLayer:Object.fromEntries(['R','A','C','I','D','K'].map(l=>[l,{correct:T[l+':correct']??0,over_claim:T[l+':over_claim']??0,unjustified_abstention:T[l+':unjustified_abstention']??0,wrong:T[l+':wrong']??0}])),
  totals:T,metamorphic:meta,results};
 if(OUT)writeFileSync(OUT,JSON.stringify(out,null,1)+'\n');
 console.log(JSON.stringify({arm:ARM,units,summary:out.summary,byLayer:out.byLayer,metamorphic:meta.map(m=>[m.id,m.pass])}));

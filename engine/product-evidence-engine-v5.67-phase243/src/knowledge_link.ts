@@ -31,9 +31,10 @@ import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
 import {compareQuantities,findQuantities,loadQuantityKnowledge,type ComparisonResult} from './quantity_knowledge.js';
 
-/** lk.8 (S81 kr81.2: condition concepts, comparability under the teaching, attribute proxies; lk.7's required-condition
- * preference withdrawn on a counterexample); v1-v7 (lk.1-lk.7) stay loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v8.json';
+/** lk.9 (S82 kr82.1: a condition is shown only whole; within-source scope kept; no-requirement verdict named);
+ * lk.8 (S81: condition concepts, comparability under the teaching, attribute proxies); v1-v8 stay loadable to
+ * reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v9.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -92,6 +93,8 @@ export interface MeasurementDescriptor {id:string;measurands:Measurand[];fixed:{
 
 /** "<measurand> by|at|per <conditions>": what precedes the first such word names what is measured. */
 const HEAD_SPLIT=/\s(?:by|at|per|for|with|across|under|versus|vs|in|on|over)\s/;
+/** S82: nouns that name the act of testing ("empty run", "cooking test"); they qualify no measurand. */
+const PROCEDURE_NOUNS=new Set(['run','runs','test','tests','trial','trials','task','tasks','assessment','assessments']);
 const STOP=new Set(['and','or','the','a','an','of','to','vs','versus','by','at','per','for','with','in','on','over','under','across','plus']);
 /** The first sentence of a teaching statement, without the "Condition:" prefix and the source tail. */
 export function statementHead(s:string):string{return (s.replace(/^Condition:\s*/,'').split(/(?<=[.;])\s|\s\[|\sPackage\s/)[0]??s).trim();}
@@ -124,7 +127,8 @@ export function describeMeasurement(qk:QuantityKnowledge,c:TaughtConcept,conditi
   for(const k of conditions){const hit=namedPhrases(k.id.replace(/_/g,' ')+' ; '+statementHead(k.statement),[a.id.replace(/_/g,' ')]);if(hit.size)need(a.id,`requires_condition:${k.id}`);}}
  // a metric's own required conditions belong to its values (TypedQuantity.missingConditions), not to the measurement:
  // a CADR needs its pollutant, the sound level measured in the same programme does not
- const untyped=[...new Set(normText(c.id.replace(/_/g,' ')).split(/\s+/))].filter(w=>w.length>1&&!STOP.has(w)&&!typed.has(w));
+ // S82: generic procedure nouns name the act of testing, not what is measured or under what: never an untyped part
+ const untyped=[...new Set(normText(c.id.replace(/_/g,' ')).split(/\s+/))].filter(w=>w.length>1&&!STOP.has(w)&&!typed.has(w)&&!PROCEDURE_NOUNS.has(w));
  const measurandWords=new Set(normText(measurandPart).split(/[\s;]+/));
  const qualifiers=untyped.filter(w=>measurandWords.has(w));
  return {id:c.id,measurands,fixed,axes,untyped,qualifiers};
@@ -223,12 +227,15 @@ export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDesc
  // S81: every taught requirement is a fact (condition concept), typed by the axes it names when the quantity knowledge
  // is given; lk.6 saw only the requirements that happened to name an axis and treated the others as met
  if(qk)for(const m of view.measurements)for(const c of m.conditions){const cc=conditionConcept(qk,c);
-  (I.requires_cond??=[]).push([m.concept.id,cc.id]);if(cc.identity)(I.identity_cond??=[]).push([cc.id]);for(const a of cc.axes)(I.cond_axis??=[]).push([cc.id,a]);}
+  (I.requires_cond??=[]).push([m.concept.id,cc.id]);if(cc.identity)(I.identity_cond??=[]).push([cc.id]);for(const a of cc.axes)(I.cond_axis??=[]).push([cc.id,a]);
+  if(cc.axes.length&&!cc.whole)(I.cond_partial??=[]).push([cc.id]);}
  for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);if(d.qualifiers?.length)I.unread_qualifier.push([d.id]);
   for(const g of measurandGroups(d)){for(const k of g.kinds)I.group_kind.push([d.id,g.group,k]);for(const x of g.metrics)I.group_metric.push([d.id,g.group,x]);}
   for(const m of d.measurands){if(m.metric)I.measures_metric.push([d.id,m.metric,m.level]);
    if(!m.metric||m.level==='head')I.measures.push([d.id,m.kind,m.level]);}
-  for(const f of d.fixed)I.fixes.push([d.id,f.axis,f.value]);for(const a of d.axes)I.requires_axis.push([d.id,a.axis]);}
+  for(const f of d.fixed)I.fixes.push([d.id,f.axis,f.value]);for(const a of d.axes){I.requires_axis.push([d.id,a.axis]);
+   // S82: an axis named by a required condition is checked through that condition when the record states it as a concept
+   const via=/^requires_condition:(.+)$/.exec(a.from);if(via)(I.requires_axis_via??=[]).push([d.id,a.axis,via[1]]);}}
  for(const m of view.measurements){for(const o of m.outcomes)I.leads_to.push([m.concept.id,o.outcome,o.force]);for(const o of m.indirectFor)I.indirect_for.push([m.concept.id,o]);}
  if(qk)for(const a of qk.axes.values()){if(Object.keys(a.values??{}).length)I.closed_axis.push([a.id]);if(a.operatingCondition)I.operating_axis.push([a.id]);}
  for(const k of Object.keys(I))I[k]=[...new Map(I[k].map(r=>[r.join('\u0001'),r])).values()];
@@ -279,7 +286,7 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
 // facts (link-rules v8: link, evidence, comparable). They add no category rule and no vocabulary: what changes a
 // conclusion is the knowledge in the store.
 // Shadow only: nothing here is written to the store or reaches a ranking.
-export const KR81_VERSION='kr81.2';
+export const KR81_VERSION='kr82.1';
 
 /** The store's own source-citing sufficiency verdicts (relation_assessments, S78) as a force overlay. */
 export function storeForceOverlay(store:KnowledgeStore246,category:string):ForceOverlay{
@@ -290,14 +297,45 @@ export function storeForceOverlay(store:KnowledgeStore246,category:string):Force
 }
 
 /** A taught condition as a reasoning object. `identity`: it binds each result to its exact product (its name says
- * identity, variant or model), so it is shown per result and never required to be equal across products. `axes`: the
+ * variant or model), so it is shown per result and never required to be equal across products. `axes`: the
  * quantity-knowledge condition axes its name or statement names (a result stating them shows it). */
-export interface ConditionConcept {id:string;statement:string;identity:boolean;axes:string[]}
-const IDENTITY_NAME=/(?:^|_)(?:identity|variant|model)(?:_|$)/;
+export interface ConditionConcept {id:string;statement:string;identity:boolean;axes:string[];
+ /** S82 (owner review of S81): whether its axes cover the WHOLE condition. A condition whose statement names more than
+  * its axes (the dishwasher acoustic condition names the programme among quantity, distance, room and installation) is
+  * only partly typed: stating its axes shows a component, never the condition. `residue`: the statement's content
+  * words no axis, value, quantity term or requirement word accounts for (the same test as a measurement's untyped
+  * words). */
+ whole:boolean;residue:string[];
+ /** S82: values the teaching enumerates for the condition's axis ("the exact programme (eco, auto, quick, intensive,
+  * sanitise)"): distinct members of one enumeration are documented-different states. */
+ enumerated:string[]}
+// S82: an identity condition binds a result to its exact product: its name says variant or model. "identity" alone is
+// not enough: programme_identity is the exact programme, a condition of the result (kr81 typed it as product identity).
+const IDENTITY_NAME=/(?:^|_)(?:variant|model)(?:_|$)/;
+/** English words that frame a requirement (compare, record, state, every, same...): never a component of a condition. */
+const REQUIREMENT_WORDS=new Set(('a an the of to for and or with in on at by from as is are be been being must should every each all any only when same both its their this that these those than '+
+ 'so not no it they there which while compare compared comparison comparisons measured measure measurement measurements result results value values number numbers performance '+
+ 'record recorded records state stated states name named keep store tie bind need needs use using used include included including match matched matching eg e g such example whether '+
+ 'whose kept attached separate separately apply applies exact').split(/\s+/));
+const typedTermWords=new WeakMap<QuantityKnowledge,Set<string>>();
+function quantityTermWords(qk:QuantityKnowledge):Set<string>{let s=typedTermWords.get(qk);if(s)return s;s=new Set();
+ for(const m of qk.metrics.values())for(const t of m.terms)for(const w of normText(t).split(/\s+/))s.add(w);
+ for(const k of qk.kinds.values())for(const t of k.terms??[])for(const w of normText(t).split(/\s+/))s.add(w);
+ typedTermWords.set(qk,s);return s;}
 export function conditionConcept(qk:QuantityKnowledge,c:TaughtConcept):ConditionConcept{
- const text=c.id.replace(/_/g,' ')+' ; '+statementHead(c.statement);
+ const head=statementHead(c.statement);const text=c.id.replace(/_/g,' ')+' ; '+head;
  const axes=[...qk.axes.values()].filter(a=>namedPhrases(text,[a.id.replace(/_/g,' ')]).size).map(a=>a.id).sort();
- return {id:c.id,statement:statementHead(c.statement),identity:IDENTITY_NAME.test(c.id),axes};
+ const covered=new Set(quantityTermWords(qk));const valueTerms:string[]=[];
+ for(const id of axes){const ax=qk.axes.get(id)!;for(const w of id.split('_'))covered.add(w);for(const t of ax.cues??[])for(const w of normText(t).split(/\s+/))covered.add(w);
+  for(const ts of Object.values(ax.values??{}))for(const t of ts){valueTerms.push(normText(t));for(const w of normText(t).split(/\s+/))covered.add(w);}}
+ // an enumeration in parentheses that holds a known value of the condition's axis lists values of that axis
+ // ("the exact programme (eco, auto, quick, intensive, sanitise)"); one that holds none lists components ("the same food
+ // (state, cut, starting temperature)"), which stay part of the condition
+ const enumerated:string[]=[];
+ for(const m of head.matchAll(/\(([^)]*)\)/g)){const members=m[1].split(/,|\band\b|\bor\b/).map(x=>normText(x).trim()).filter(Boolean);
+  if(members.some(x=>valueTerms.includes(x))){for(const x of members){enumerated.push(x);for(const w of x.split(/\s+/))covered.add(w);}}}
+ const residue=axes.length?[...new Set(normText(head).split(/[^a-z0-9]+/).filter(w=>w.length>1&&!/^\d+$/.test(w)&&!REQUIREMENT_WORDS.has(w)&&!covered.has(w)))]:[];
+ return {id:c.id,statement:head,identity:IDENTITY_NAME.test(c.id),axes,whole:axes.length>0&&!residue.length,residue,enumerated:[...new Set(enumerated)]};
 }
 
 /** A declared attribute the teaching marks not sufficient for an outcome (a not_sufficient_for relation from attr:). */
@@ -392,17 +430,24 @@ function describeCondition(qk:QuantityKnowledge,c:ConditionConcept,v:ObservedVal
  return vals.every(x=>x!=null)?vals.join(' ; '):null;
 }
 const normDesc=(s:string)=>s.toLowerCase().replace(/[^\p{L}\p{N}%.]+/gu,' ').replace(/\s+/g,' ').trim();
-function conditionRelation(qk:QuantityKnowledge,a:string,b:string):{same:boolean;distinct:string|null}{
+function conditionRelation(qk:QuantityKnowledge,a:string,b:string,enumerated:readonly string[]=[]):{same:boolean;distinct:string|null}{
  if(normDesc(a)===normDesc(b))return {same:true,distinct:null};
+ // S82: the teaching enumerates distinct states of the condition; two records naming different members of it differ
+ const named=(x:string)=>enumerated.filter(e=>namedPhrases(x,[e]).size);const ea=named(a),eb=named(b);
+ if(ea.length&&eb.length&&!ea.some(e=>eb.includes(e)))return {same:false,distinct:`different enumerated states (${ea.join('/')} vs ${eb.join('/')})`};
  const q=(s:string)=>{const m=new Map<string,Set<string>>();for(const f of findQuantities(qk,s)){if(f.value==null||f.unit.level)continue;const si=f.value*f.unit.factor+f.unit.offset;
   for(const kd of f.unit.kinds)(m.get(kd)??m.set(kd,new Set()).get(kd)!).add(si.toPrecision(6));}return m;};
  const qa=q(a),qb=q(b);
  for(const [kd,va] of qa){const vb=qb.get(kd);if(vb&&![...va].some(x=>vb.has(x)))return {same:false,distinct:`different ${kd.replace(/_/g,' ')} (${[...va].join('/')} vs ${[...vb].join('/')}, SI)`};}
- for(const ax of qk.axes.values())for(const [val,terms] of Object.entries(ax.values??{})){const ia=namedPhrases(a,terms).size>0,ib=namedPhrases(b,terms).size>0;
-  if(ia!==ib){const other=Object.entries(ax.values??{}).some(([v2,t2])=>v2!==val&&namedPhrases(ia?b:a,t2).size>0);if(other)return {same:false,distinct:`different ${ax.id.replace(/_/g,' ')} values`};}}
+ // a value's canonical name counts as one of its terms ("top" for top speed, turbo...)
+ const termsOf=(v:string,ts:readonly string[])=>[v.replace(/_/g,' '),...ts];
+ for(const ax of qk.axes.values())for(const [val,terms] of Object.entries(ax.values??{})){const ia=namedPhrases(a,termsOf(val,terms)).size>0,ib=namedPhrases(b,termsOf(val,terms)).size>0;
+  if(ia!==ib){const other=Object.entries(ax.values??{}).some(([v2,t2])=>v2!==val&&namedPhrases(ia?b:a,termsOf(v2,t2)).size>0);if(other)return {same:false,distinct:`different ${ax.id.replace(/_/g,' ')} values`};}}
  return {same:false,distinct:null};
 }
 export interface ComparisonUnderKnowledge {verdict:'comparable'|'not_comparable'|'unestablished';reason:string;reasons:string[];
+ /** S82: a comparable verdict's scope (the quantity knowledge may limit it to one presented test); null otherwise. */
+ scope:'general'|'within_one_presented_test'|null;
  /** every non-identity condition the teaching requires for the measurement, and its state across the two records */
  conditions:{condition:string;state:string;detail:string|null}[];
  qk:ComparisonResult;rules:string;knowledge:CategoryKnowledge['basis'];derivation:string[]}
@@ -416,17 +461,18 @@ export function compareUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,m
  const qr=compareQuantities(qk,qa,qb);
  const m=k.view.measurements.find(x=>x.concept.id===measurement);const conds=(m?.conditions??[]).map(c=>conditionConcept(qk,c));
  const F:Record<string,(string|number)[][]>={value:[['a'],['b']],value_condition:[],value_states:[],pair_measurement:[[measurement]],requires_cond:[],identity_cond:[],cond_axis:[],
-  qk_verdict:[[qr.verdict==='comparable_within_source'?'comparable':qr.verdict,(qr.reasons[0]??'').replace(/\s+/g,'_')]],cond_same:[],cond_distinct:[]};
+  qk_verdict:[[qr.verdict,(qr.reasons[0]??'').replace(/\s+/g,'_')]],cond_same:[],cond_distinct:[]};
  for(const [id,q,v] of [['a',qa,a],['b',qb,b]] as const){for(const c of q.conditions)F.value_condition.push([id,c.axis,c.value]);for(const [c,w] of Object.entries(v.states??{}))F.value_states.push([id,c,w]);}
  const detail:Record<string,string|null>={};
  for(const c of conds){F.requires_cond.push([measurement,c.id]);if(c.identity)F.identity_cond.push([c.id]);for(const x of c.axes)F.cond_axis.push([c.id,x]);
   const da=describeCondition(qk,c,{...a,quantity:qa}),db=describeCondition(qk,c,{...b,quantity:qb});
-  if(da!=null&&db!=null){const rel=conditionRelation(qk,da,db);if(rel.same)F.cond_same.push([c.id]);if(rel.distinct){F.cond_distinct.push([c.id,rel.distinct.replace(/\s+/g,'_')]);detail[c.id]=rel.distinct;}}}
+  if(da!=null&&db!=null){const rel=conditionRelation(qk,da,db,c.enumerated);if(rel.same)F.cond_same.push([c.id]);if(rel.distinct){F.cond_distinct.push([c.id,rel.distinct.replace(/\s+/g,'_')]);detail[c.id]=rel.distinct;}}}
  const model=evaluate(prog,onlyFor(prog,F),{record:`the records of the pair a (${a.product??'?'}) and b (${b.product??'?'})`});
  const v=model.all('kverdict');if(!v.length)throw Error('comparable rules reached no verdict');
- const x=String(v[0].args[0]);const verdict=x==='comparable'?'comparable':x==='not_comparable'?'not_comparable':'unestablished';
+ const x=String(v[0].args[0]);const verdict=x==='comparable'||x==='comparable_within_source'?'comparable':x==='not_comparable'?'not_comparable':'unestablished';
+ const scope:ComparisonUnderKnowledge['scope']=x==='comparable_within_source'?'within_one_presented_test':x==='comparable'?'general':null;
  const conditions=model.all('kcond').map(f=>({condition:String(f.args[0]),state:String(f.args[1]),detail:detail[String(f.args[0])]??null})).sort((p,q)=>p.condition.localeCompare(q.condition));
- return {verdict,reason:String(v[0].args[1]),reasons:v.map(f=>String(f.args[1])),conditions,qk:qr,rules:`${R.version}:${R.digest.slice(0,12)}`,knowledge:k.basis,derivation:v.flatMap(f=>model.why(f))};
+ return {verdict,scope,reason:String(v[0].args[1]),reasons:v.map(f=>String(f.args[1])),conditions,qk:qr,rules:`${R.version}:${R.digest.slice(0,12)}`,knowledge:k.basis,derivation:v.flatMap(f=>model.why(f))};
 }
 /** The taught measurement a typed value is a result of, under the whole teaching (link program of v7: type, fixed
  * conditions, and the required conditions the record states). 'ambiguous' and 'none' are answers, not failures. */
@@ -434,4 +480,53 @@ export function linkUnderKnowledge(qk:QuantityKnowledge,k:CategoryKnowledge,v:Ob
  const r=linkValues(qk,k.view,[asLinkValue(v)!],{descriptors:k.descriptors}).results[0];
  const link=r.status==='ambiguous'?'ambiguous':['no_taught_measurement','not_linked','member_only'].includes(r.status)?'none':r.measurements.length===1?r.measurements[0]:'ambiguous';
  return {link,status:r.status,derivation:r.derivation};
+}
+
+// =====================================================================================================================
+// S82 (owner review of S81): the minimal links the architecture check called for. Both are shadow only.
+// D27: the operational test-lead reader (Phase225/265) records conditions as its own codes, which the reasoning could not
+// consult. They are declared, as data, as values of quantity-knowledge condition axes (reader-conditions.v1.json),
+// added as a reversible overlay the way acquired axes are (knowledge_translation.withAcquiredAxes); the default pack
+// and every other reader are unchanged. What a recorded code then concludes comes from the teaching (which measurement
+// fixes the load, which condition names the compartments), not from the code table.
+export const READER_CONDITIONS_FILE='reader-conditions.v1.json';
+export interface ReaderConditions {schema:string;version:string;statement:string;source:{id:string;title:string;url:string|null;use:string;licence:string};
+ axes:{id:string;values:Record<string,string[]>;cues?:string[];labelled?:boolean}[];codes:Record<string,{axis:string;value:string}>;unmapped:Record<string,string>}
+let rcDefault:ReaderConditions|null=null;
+export function readerConditions():ReaderConditions{
+ return rcDefault??=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/'+READER_CONDITIONS_FILE,import.meta.url),'utf8')) as ReaderConditions;}
+const rcOverlay=new WeakMap<QuantityKnowledge,QuantityKnowledge>();
+/** The quantity knowledge with the reader-condition axes added (axes the pack already has are not replaced). */
+export function withReaderConditions(qk:QuantityKnowledge,rc:ReaderConditions=readerConditions()):QuantityKnowledge{
+ const hit=rc===rcDefault?rcOverlay.get(qk):undefined;if(hit)return hit;
+ const pack=JSON.parse(JSON.stringify(qk.pack));pack.version=pack.version+'+'+rc.version;
+ if(!pack.sources.some((s:{id:string})=>s.id===rc.source.id))pack.sources.push(rc.source);
+ for(const a of rc.axes)if(!pack.conditionAxes.some((x:{id:string})=>x.id===a.id))pack.conditionAxes.push({...a,source:rc.source.id});
+ const out=loadQuantityKnowledge(pack,null);if(rc===rcDefault)rcOverlay.set(qk,out);return out;
+}
+/** The typed conditions a set of reader codes records; codes the file does not map are returned as unmapped. */
+export function readerConditionAxes(codes:readonly string[],rc:ReaderConditions=readerConditions()):{axes:[string,string][];unmapped:string[]}{
+ const axes:[string,string][]=[];const unmapped:string[]=[];
+ for(const c of codes){const m=rc.codes[c];if(m){if(!axes.some(([a,v])=>a===m.axis&&v===m.value))axes.push([m.axis,m.value]);}else unmapped.push(c);}
+ return {axes,unmapped};
+}
+
+// D28: the conditions a catalog dimension meets, derived from the records of its tests (ra.2 trusts the list a catalog
+// declares). A required condition is met for the dimension only when EVERY test's record shows it; a declared condition
+// the records do not show is reported, never accepted. Shadow: no ranking reads it (owner: design and experimental
+// verification authorised, not a change of public authorisations).
+export interface DerivedConditionsMet {measurement:string;required:string[];derived:string[];
+ perTest:{test:string;notShown:string[]}[];declared:string[]|null;
+ /** declared but not shown by every record */
+ unsupported:string[];
+ /** shown by every record but not declared */
+ notDeclared:string[];rules:string;rankingInput:false}
+export function conditionsMetFromRecords(qk:QuantityKnowledge,k:CategoryKnowledge,measurement:string,tests:readonly ObservedValue[],declared?:readonly string[]|null):DerivedConditionsMet{
+ const m=k.view.measurements.find(x=>x.concept.id===measurement);const required=(m?.conditions??[]).map(c=>c.id).sort();
+ const ev=evidenceUnderKnowledge(qk,k,tests.map(t=>({...t,measurement})));
+ const perTest=tests.map(t=>({test:t.id,notShown:ev.conditionsNotShown.filter(c=>c.value===t.id&&c.measurement===measurement).map(c=>c.condition).sort()}));
+ const derived=tests.length&&m?required.filter(c=>perTest.every(p=>!p.notShown.includes(c))):[];
+ const dec=declared?[...new Set(declared)].sort():null;
+ return {measurement,required,derived,perTest,declared:dec,unsupported:(dec??[]).filter(c=>!derived.includes(c)),notDeclared:dec?derived.filter(c=>!dec.includes(c)):[],
+  rules:ev.rules,rankingInput:false};
 }

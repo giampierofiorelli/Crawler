@@ -121,3 +121,61 @@ test('S81 metamorphic: renaming products changes nothing; removing the only supp
  assert.equal(evidenceUnderKnowledge(qk,dropped,v).byOutcome.ownership_cost_energy,undefined);
  assert.equal(compareUnderKnowledge(qk,k,'mode_power_and_tco',pair('A','power',[['fan_setting','sleep']]),pair('B','power',[['fan_setting','top']])).verdict,'not_comparable');
 });
+
+// ---------------------------------------------------------------------------------------------------------------------
+// S82 (owner review of S81): whole conditions, "not documented is not different", reader conditions (D27), conditions
+// derived from records (D28). Same synthetic structured records over the code-held teaching.
+import {withReaderConditions,readerConditionAxes,conditionsMetFromRecords,conditionConcept} from '../src/knowledge_link.js';
+
+test('S82 a condition is shown only whole: an axis named among other components shows a component, never the condition',()=>{
+ const s=store('dishwashers');const k=know(s,'dishwashers');
+ const acoustic=k.view.measurements.flatMap(m=>m.conditions).find(c=>c.id==='acoustic_quantity_and_position')!;
+ const cc=conditionConcept(qk,acoustic);assert.deepEqual(cc.axes,['programme']);assert.equal(cc.whole,false);assert.ok(cc.residue.length>0);
+ const programme=conditionConcept(qk,k.view.measurements.flatMap(m=>m.conditions).find(c=>c.id==='programme_identity')!);
+ assert.equal(programme.whole,true,'the enumerated programmes are values of the programme axis');assert.ok(programme.enumerated.includes('intensive'));
+ // the held-back over-claim of S81: programme and method stated, acoustic condition not shown
+ const r=evidenceUnderKnowledge(qk,k,[val('v','W',{m:'in_situ_sound_pressure_time_trace',axes:[['programme','eco']]})]);
+ assert.ok(r.conditionsNotShown.some(c=>c.condition==='acoustic_quantity_and_position'));
+ assert.ok(!(r.byOutcome.noise_and_acoustic_events??[]).some(f=>f==='direct'||f==='partial'));
+});
+
+test('S82 not documented is not different: comparison, identification and the quantity knowledge keep the distinction',()=>{
+ const s=store('dishwashers');const k=know(s,'dishwashers');
+ const st={energy_boundary_hot_fill:'cold fill',method_version_and_jurisdiction:'EN 60436:2020'};
+ // enumerated states named differently: documented different (the teaching lists them as distinct programmes)
+ const d=compareUnderKnowledge(qk,k,'wall_plug_kwh_per_programme',pair('A','energy',[['programme','eco']],{...st,programme_identity:'Eco'}),pair('B','energy',[['programme','intensive 70']],{...st,programme_identity:'Intensive 70'}));
+ assert.equal(d.verdict,'not_comparable');assert.match(d.conditions.find(c=>c.condition==='programme_identity')!.detail??'',/enumerated/);
+ // one record silent: unestablished, never not comparable
+ const u=compareUnderKnowledge(qk,k,'wall_plug_kwh_per_programme',pair('A','energy',[['programme','eco']],{...st,programme_identity:'Eco'}),pair('B','energy',[],st));
+ assert.equal(u.verdict,'unestablished');
+ // identification: an energy reading with no load stated is not shown to be a cooking task rather than an empty run
+ const f=store('air_fryers');const kf=categoryKnowledge(f,'air_fryers',{qk:withReaderConditions(qk)});
+ const e={...val('v','F',{q:tq('energy')}),quantity:tq('energy')};
+ assert.equal(linkUnderKnowledge(withReaderConditions(qk),kf,e).link,'ambiguous');
+});
+
+test('S82 D27: reader condition codes reach the reasoning; the empty load identifies the empty run (ablation: without the axes, undecided)',()=>{
+ const q2=withReaderConditions(qk);const f=store('air_fryers');const kf=categoryKnowledge(f,'air_fryers',{qk:q2});
+ const {axes,unmapped}=readerConditionAxes(['setpoint_c','duration_1h','load_empty','all_compartments','power_meter']);
+ assert.deepEqual(axes,[['load','empty'],['compartments','all']]);assert.deepEqual(unmapped,['setpoint_c','duration_1h','power_meter']);
+ const energy=(ax:[string,string][])=>({...val('v','F',{q:tq('energy',ax)}),quantity:tq('energy',ax)});
+ assert.equal(linkUnderKnowledge(q2,kf,energy(axes)).link,'energy_empty_run');
+ assert.equal(linkUnderKnowledge(q2,kf,energy([['compartments','all']])).link,'ambiguous','compartments alone do not tell the procedures apart');
+ // ablation: the same algorithm without the reader axes cannot read the code; without the teaching it has nothing to link
+ assert.equal(linkUnderKnowledge(qk,know(f,'air_fryers'),energy([])).link,'ambiguous');
+ // and as evidence: the empty run is a proxy, whatever is recorded
+ assert.deepEqual(evidenceUnderKnowledge(q2,kf,[{...energy(axes),measurement:null}]).byOutcome.low_energy_use,['indirect']);
+});
+
+test('S82 D28: a dimension meets a condition only when every test record shows it; a declaration is not evidence',()=>{
+ const q2=withReaderConditions(qk);const f=store('air_fryers');const kf=categoryKnowledge(f,'air_fryers',{qk:q2});
+ const t=(id:string,states:Record<string,string>,axes:[string,string][]=[])=>({id,product:id,quantity:null,states,axes});
+ const d=conditionsMetFromRecords(q2,kf,'energy_per_cooking_task',[t('A',{compartments_in_use:'one drawer',same_food_load:'0.5 kg fries',completed_doneness:'golden'}),t('B',{compartments_in_use:'one drawer',completed_doneness:'golden'})],
+  ['compartments_in_use','same_food_load','completed_doneness']);
+ assert.deepEqual(d.derived,['compartments_in_use','completed_doneness']);assert.deepEqual(d.unsupported,['same_food_load']);assert.equal(d.rankingInput,false);
+ // reader codes of the tests show the compartments condition (whole: the condition is about the compartments alone)
+ const c=conditionsMetFromRecords(q2,kf,'two_zone_cooking_test',[t('A',{},readerConditionAxes(['all_compartments']).axes),t('B',{},readerConditionAxes(['all_compartments']).axes)],['compartments_in_use']);
+ assert.deepEqual(c.derived,['compartments_in_use']);assert.deepEqual(c.unsupported,[]);
+ // no tests: nothing is met
+ assert.deepEqual(conditionsMetFromRecords(q2,kf,'two_zone_cooking_test',[],['compartments_in_use']).derived,[]);
+});

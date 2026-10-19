@@ -12,7 +12,7 @@ const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/
 const typed=(k:QuantityKnowledge,surface:string,ctx:Parameters<typeof typeQuantity>[2]={})=>{const f=findQuantities(k,surface)[0];assert.ok(f,'no quantity in '+surface);return typeQuantity(k,f,ctx);};
 
 test('pack: validated, sourced and identified by its digest; UCUM is recorded as not used', ()=>{
- assert.match(qk.identity,/^qk\.2\.4\+kr\.3:[0-9a-f]{16}$/);
+ assert.match(qk.identity,/^qk\.2\.4\+kr\.4:[0-9a-f]{16}$/);
  const p=rawPack();assert.ok(p.sources.find(s=>s.id==='ucum_not_used')!.use.includes('NOT incorporated'));
  for(const k of p.kinds)assert.ok(p.sources.some(s=>s.id===k.source));
  const bad=rawPack();bad.metrics[0].kind='no_such_kind';assert.throws(()=>loadQuantityKnowledge(bad),/quantity_knowledge_invalid/);
