@@ -504,3 +504,85 @@ so they wait for an owner decision.
   solved; ranking stays on signed catalogs and taught `measured_by` relations, with the two stricter rules of §14.5 as
   the next owner decision; concept alignment for new categories needs taught equivalences or owner-reviewed mappings,
   not a model.
+
+## 15. Engineering priorities after S77 (owner S78, 2026-10-19)
+
+Model experiments are suspended (S78 §1); the harness and the S76/S77 findings stay. All judgements here are by
+fresh-context agents of the developer model family, blind to the mechanism: same-model annotation, not independent
+validation. Every reference used was examined before: every after-change figure is development evidence (TUNED). No new
+external material was acquired.
+
+### 15.1 Ranking authorisation corrected (S78 §2): ra.2 in production
+
+| Finding (verified) | Class | Correction |
+|---|---|---|
+| `outcomeAuthorised270` accepted any `measured_by` relation as establishing the outcome, including unassessed hypotheses (58 of 63 relations are hypotheses) | unsupported inference in production | ra.2 (`outcomeAuthorisedRa2`) needs an active, source-citing assessment that the relation ESTABLISHES the outcome and none that disagrees |
+| Conditions of every measurement of a need were required of each (pooled) | bug | conditions are those of the dimension's own measurement |
+| Support grades and the review gate existed but no consumer read them | architectural gap | store v9 `relation_assessments` (journaled, basis and citation, never public); teaching may declare sufficiency only with a cited source |
+
+Shadow census before the switch (`evaluation/s78/authorisation-census-live-1.json`, live store, 56 outcome-measurement
+pairs, a hypothetical scored dimension each): ra.1 authorised 38, of which 20 on relations the blind source check found
+to inform only and 5 on never-assessed relations, and refused 18 only because of other measurements' conditions; ra.2
+authorises 15 (13 of ra.1's, plus 2 ra.1 wrongly refused). Hand check of the refusals: coffee taste is refused because
+the need bundles taste with "little effort" and sensory assessment covers taste only; tumble dryers were never verified.
+Scope caveat: "clinical trial establishes clinical outcome" holds at population level, not for a named product. ra.1
+stays callable and every answer carries an `authorisationTrace` of both rules. Visible change on real requests: "What
+would answer this" now names each measurement with its own conditions and what the sources say ("consumer lab cleaning
+drying score (...; informs it but does not establish it) or residual soil score by soil type (...)").
+
+### 15.2 Representation and operational use of translated knowledge (S78 §4, §8)
+
+Store v10 `knowledge_statements`: 6,118 statements from 28 owner documents with polarity, hedge, the document's status
+labels, scope, typed subject/object/parts, provenance (document hash and line, never the quote), translator version and
+the measured reliability of the statement type (`resources/knowledge-translation/statement-type-reliability.json`).
+Rows can never be ranking input (schema CHECK) and never reach a public export. Conflicts (the same relation asserted
+and denied) are derived on reading; none found in the current translation.
+
+Use in decisions: the advice shows at most one research caveat per need or measurement, of the reliable warning types
+(limitation, not_sufficient, is_not) with the concept as subject, labelled "translated by PEE, not reviewed". Blind link
+check, first run on 40 sampled concept-statement links (`evaluation/s78/caveat-link.json`): any position 30 apply, 9
+related, 1 not about, 2 misleading; subject-only 12 of 16 apply, 0 misleading. Subject-only was chosen after seeing the
+sample (TUNED). Examples now shown: crisp chips -> "'as crispy' is a culinary description, not matched instrumented
+testing"; two foods at once -> "A dual-zone demonstration does not establish independent zone accuracy, equivalent
+doneness or full-meal capacity". Coverage limit: only ~2% of statements have a subject typed to a taught concept; most
+needs get no caveat (identity, not translation, is the bottleneck there).
+
+### 15.3 Reading: translator precision (S78 §5) and attribution (S78 §6)
+
+| Measure | Before S78 | After S78 | Tier |
+|---|---|---|---|
+| Held-out statements distorted + unjustified (blind) | 66 (audit3) | 26 of 547 | TUNED |
+| Held-out units distorted / omitted | 22 / 314 | 5 / 322 | TUNED |
+| `depends_on` bad | 47% | 0% (16) | TUNED |
+| s1cd product attribution correct / missing / wrong | 79 / 82 / 5 | 93 / 68 / 5 | development (spent) |
+| p272 product attribution correct / missing / wrong | 118 / 6 / 14 | 124 / 0 / 14 | development (spent) |
+| Usable decisions C8 p272 / s1cd | 62 / 48 | 63 / 52 | development (spent) |
+| Experience replays s1a / s1b | unchanged | unchanged (no lost success added) | regression check |
+
+Translator corrections (general, no lexical category lists): ambiguous noun/verb words need syntactic evidence to be
+relation verbs; questions are not claims; the leftmost main verb wins; modals the pattern consumed are hedges; code
+blocks, bibliographic sections and recurring record fields are not knowledge; "verification/evidence needed" columns
+are requirements (kt-cues.4). Cost: 8 more held-out units omitted (precision over coverage). Attribution corrections:
+brand + model-code names found in the page body; a model code alone refers to its product when unique; a sentence
+opening with This/Our/It gives its first values to the reviewed product. A first version of that last rule listed
+category nouns; it was replaced by the general form, with identical results on both sets.
+
+### 15.4 Evaluation infrastructure (S78 §9)
+
+- The experience replay opened the live store with historical builds, which refuse a newer schema: `--frozen-store`
+  gives historical builds a pre-S78 copy (from the private repository's history); the build under test reads the live store.
+- The translation reach table, the fidelity delta chain and the limits counts were corrected in §14.
+- The air-fryer link set reports every value "missing" a product: its values come from comparative tables (an air
+  fryer against an oven), which the comparative-results reader handles, not the document reader. Recorded, not changed.
+
+### 15.5 Verified, not yet validated, unresolved
+
+- **Verified and corrected:** ranking authorisation (ra.2); pooled conditions; translator noun/verb, question, record
+  and bibliographic errors; attribution of model-code and prose-named products; replay schema incompatibility.
+- **Not yet validated (no untouched data available):** translator fidelity after correction; attribution gains; caveat
+  relevance beyond the 40-link sample.
+- **Architectural limits that remain:** identity of document phrases with taught concepts (~2% of statements linked);
+  conditions and scope of translated statements are stored but no reasoning rule consumes them yet; comparative tables
+  are attributed by equipment class, not by product.
+- **Unresolved hypothesis:** a page-context evidence-role reference would decide the 17 values the local-text reference
+  cannot judge.

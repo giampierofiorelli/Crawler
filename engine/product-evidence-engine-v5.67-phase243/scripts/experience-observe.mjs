@@ -79,7 +79,7 @@ const frozenDigests=()=>{try{return JSON.parse(readFileSync(resolve('evaluation/
 export async function observeCase(c,dist,opts={}){
  const M=await load(dist);if(!M)return {unobservable:'build not available: '+dist};
  if(c.kind==='request'){
-  const s=new M.store.KnowledgeStore246(LIVE);try{const a=M.advice.adviseFromRequest253(c.item.text,s,M.reg.CATEGORY_REGISTRY250);
+  const s=new M.store.KnowledgeStore246(opts.store??LIVE);try{const a=M.advice.adviseFromRequest253(c.item.text,s,M.reg.CATEGORY_REGISTRY250);
    return {observation:{status:'responded',response:a.response,category:a.category??null},meta:{}};}finally{s.close();}}
  const dir=join(PRIV,c.source.evaluation);const wave=join(dir,'wave.json');const raw=join(dir,'raw',c.source.docTag+'.html');
  if(!existsSync(wave)||!existsSync(raw))return {unobservable:'page bytes or wave receipt missing'};
@@ -87,7 +87,7 @@ export async function observeCase(c,dist,opts={}){
  if(!p||sha(b)!==p.sha256||p.sha256!==c.source.docSha256)return {unobservable:'page bytes do not match the receipt'};
  if(!M.plan)return {unobservable:'build has no extraction plan (arm B not defined for it)'};
  const html=b.toString('utf8'),url=p.finalUrl??p.url;
- const s=new M.store.KnowledgeStore246(LIVE);let plan;try{plan=M.plan.compileExtractionPlan272(s,c.category,M.reg.CATEGORY_REGISTRY250.find(e=>e.id===c.category)?.aliases??[],TAUGHT.filter(t=>t!==c.category));}finally{s.close();}
+ const s=new M.store.KnowledgeStore246(opts.store??LIVE);let plan;try{plan=M.plan.compileExtractionPlan272(s,c.category,M.reg.CATEGORY_REGISTRY250.find(e=>e.id===c.category)?.aliases??[],TAUGHT.filter(t=>t!==c.category));}finally{s.close();}
  const planDigest=plan.compiledFrom.digest;const meta={planDigest,planFrozen:frozenDigests()[c.category]===planDigest};
  const x=M.tl.testDocumentSubject268(M.spec.extractSpecifications245(html,url),p.sourceType);const page=x?.mainProduct?.name??null;
  if(c.kind==='quantitative_value'){
@@ -138,7 +138,7 @@ export async function documentLeads(dist,doc,opts={}){
  if(!p||sha(b)!==p.sha256||(doc.docSha256&&p.sha256!==doc.docSha256))return {unobservable:'page bytes do not match the receipt'};
  if(!M.plan)return {unobservable:'build has no extraction plan'};
  const html=b.toString('utf8'),url=p.finalUrl??p.url;
- const s=new M.store.KnowledgeStore246(LIVE);let plan;try{plan=M.plan.compileExtractionPlan272(s,doc.category,M.reg.CATEGORY_REGISTRY250.find(e=>e.id===doc.category)?.aliases??[],TAUGHT.filter(t=>t!==doc.category));}finally{s.close();}
+ const s=new M.store.KnowledgeStore246(opts.store??LIVE);let plan;try{plan=M.plan.compileExtractionPlan272(s,doc.category,M.reg.CATEGORY_REGISTRY250.find(e=>e.id===doc.category)?.aliases??[],TAUGHT.filter(t=>t!==doc.category));}finally{s.close();}
  const x=M.tl.testDocumentSubject268(M.spec.extractSpecifications245(html,url),p.sourceType??'independent_original_test');
  let cands=M.tl.testLeadsFromHtml265(html,url,p.sha256,x,{category:doc.category,plan}).probe.candidates;
  if(opts.policy==='ambiguity_preserving'){const deep=M.blocks.textBlocks225(html,{maxBlocks:1500}).blocks;const ms=M.tl.documentMentions272?M.tl.documentMentions272(html):[];cands=cands.map(l=>ambiguityPreserving(l,deep,ms));}

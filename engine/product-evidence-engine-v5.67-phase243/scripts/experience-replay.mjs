@@ -18,7 +18,10 @@ import {observeCase,buildIdentity,MATCHING_RULE_DIGEST,sameProduct as sameProduc
 const {replayVerdict,summariseReplay,recurringPatterns}=await import(resolve('dist/src/experience_cases.js'));
 const A=process.argv.slice(2);const label=A[0];if(!/^[a-z0-9-]{3,40}$/.test(label??''))throw Error('usage: LABEL [--current DIST] [--inject-fault ID]');
 const opt=k=>{const i=A.indexOf(k);return i>0?A[i+1]:null;};
-const CURRENT=resolve(opt('--current')??'dist/src');const FAULT=opt('--inject-fault');const POLICY=opt('--policy');
+const CURRENT=resolve(opt('--current')??'dist/src');
+// S78: a historical build cannot open a store of a newer schema; --frozen-store names a copy of the store as it was
+// before the schema change (read by the historical build only; the build under test reads the live store)
+const FROZEN_STORE=opt('--frozen-store');const FAULT=opt('--inject-fault');const POLICY=opt('--policy');
 const SETS={step1a:['pilot-cases.json','pilot-index.json'],step1b:['step1b-cases.json','step1b-index.json']};const SETNAME=opt('--set')??'step1a';
 if(!SETS[SETNAME])throw Error('unknown set '+SETNAME);
 const REPO=process.env.PEE_KNOWLEDGE_REPO??'/home/user/pee-knowledge';const SET=join(REPO,'private-eval/experience/',SETS[SETNAME][0]);
@@ -41,7 +44,7 @@ const rows=[];
 for(const c of S.cases){
  let frozen=null,current=null,reason=null,meta={};
  const hb=c.source.historicalBuild.path;if(c.kind!=='request'&&existsSync(hb)&&!provenance.historicalBuilds[c.source.historicalBuild.commit])provenance.historicalBuilds[c.source.historicalBuild.commit]=buildIdentity(hb);
- if(c.kind!=='request'&&existsSync(hb)){const r=await observeCase(c,hb);if(r.observation)frozen=r.observation;else reason='frozen: '+r.unobservable;}
+ if(c.kind!=='request'&&existsSync(hb)){const r=await observeCase(c,hb,FROZEN_STORE?{store:FROZEN_STORE}:{});if(r.observation)frozen=r.observation;else reason='frozen: '+r.unobservable;}
  const r=await observeCase(c,CURRENT,POLICY?{policy:POLICY}:{});if(r.observation){current=r.observation;meta=r.meta??{};}else reason=(reason?reason+'; ':'')+'current: '+r.unobservable;
  if(FAULT===c.id&&current)current={status:'absent'};
  // Same-value siblings: another gold item of the document with the same value and unit. A fallback (other-subject) lead
