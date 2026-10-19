@@ -14,7 +14,7 @@
  * Transient: values, codes and block hashes only; no sentence is kept.
  */
 import {createHash} from 'node:crypto';
-import {textBlocks225} from './phase225_transient_test_probe.js';
+import {textBlocks225,NEGATED_METHOD225,SECONDARY_SOURCE225,declaredInClause225} from './phase225_transient_test_probe.js';
 
 export type ApplianceClass270='air_fryer'|'oven'|'grill'|'microwave'|'hob'|'slow_cooker'|'halogen_oven'|'deep_fat_fryer';
 export interface ComparativeResult270 {
@@ -110,7 +110,9 @@ export const applianceMentions270=(text:string)=>[...text.matchAll(CLASS_RE)].ma
 const mentions=(text:string)=>{const all=[...text.matchAll(CLASS_RE)].map(m=>({cls:classOf(m[0]),at:m.index!,end:m.index!+m[0].length,
  than:/\bthan\s+(?:the\s+|an?\s+|your\s+|my\s+)?$/i.test(text.slice(Math.max(0,m.index!-14),m.index!))}));return all.some(m=>!m.than)?all.filter(m=>!m.than):all;};
 
-export function comparativeResults270(html:string,opts:{testedClass?:ApplianceClass270}={}):{results:ComparativeResult270[];gated:boolean}{
+export function comparativeResults270(html:string,opts:{testedClass?:ApplianceClass270}={}):{results:ComparativeResult270[];gated:boolean;
+ /** S86: values of sentences or clauses that quote another source, state a declaration or a test not done */
+ declaredSkipped?:number}{
  // Navigation-heavy pages hold the article after hundreds of menu blocks (the CHOICE page: 1,084 blocks, article after
  // the probe's 380-block bound), so this reader reads up to 1,500.
  const {blocks,tags=[]}=textBlocks225(html,{splitLineBreaks:true,maxBlocks:1500});
@@ -132,7 +134,7 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
   if(named.length===1)return {subject:{name:named[0].name,model:named[0].model,sku:null},subjectAssignment:cls===tested&&!named[0].model?'document_tested_product':'class_row_resolved_by_document_appliance_list'};
   return {subject:null,subjectAssignment:'appliance_class_only'};
  };
- const out:ComparativeResult270[]=[];const seen=new Set<string>(),seenAny=new Set<string>();let task=0;
+ const out:ComparativeResult270[]=[];const seen=new Set<string>(),seenAny=new Set<string>();let task=0;let declaredSkipped=0;
  const push=(cls:ApplianceClass270|'several',h:Hit,form:ComparativeResult270['form'],block:string,bi:number,extra:('includes_preheat')[]=[],rowLabel?:string)=>{
   // A list or table value is one result per task; a prose value repeating any earlier result is not a new one.
   const who=resolve(cls,rowLabel);const any=[cls,who.subject?.name??'',h.dimension,h.value,h.unit].join('|'),key=any+'|'+task;
@@ -161,6 +163,8 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
   const line=/^\s*([A-Za-z][A-Za-z -]{2,40}?)\s*(?:–|—|-|:)\s+(.{3,160})$/.exec(b);
   if(line&&mentions(line[1]).length===1&&line[1].length<=40){
    const cls=mentions(line[1])[0].cls;const hs=values(line[2]);
+   // S86: a list line that quotes another source, a test not done or a declaration is not this tester's result
+   if(hs.length&&(SECONDARY_SOURCE225.test(b)||NEGATED_METHOD225.test(b)||declaredInClause225(line[2]))){declaredSkipped+=hs.length;return;}
    const pre=/including\s+(?:\d+|[a-z]+)\s*min(?:ute)?s?\s+preheat/i.test(line[2]);
    const kept=hs.filter(h=>!/including\s*$/i.test(line[2].slice(Math.max(0,h.at-12),h.at)));
    if(kept.length){for(const h of kept)push(cls,h,'line_list',b,bi,pre?['includes_preheat']:[]);return;}
@@ -168,6 +172,9 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
   if(b.length>900)return;
   for(const sent of b.split(/(?<=[.!?])\s+(?=[A-Z£])/)){
    if(HYPOTHETICAL.test(sent))continue;
+   // S86 (owner: a test publisher's page also quotes the maker and mentions methods it did not perform): a sentence that
+   // reports another source or a test not done gives no comparative result (the probe's own screens, shared)
+   if(SECONDARY_SOURCE225.test(sent)||NEGATED_METHOD225.test(sent)){declaredSkipped++;continue;}
    // A prose result names its own task when the heading does not ("We could cook four medium potatoes …").
    const sentenceTask=taskLabel271(sent);if(sentenceTask)label=sentenceTask;
    if(label&&REDUCED.test(sent))reducedTasks.add(label);
@@ -175,6 +182,8 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
    const clauses=sent.split(/\b(?=compared (?:to|with)\b|\bwhereas\b|\bwhile\b|\bbut\b|\bversus\b|\bvs\.?\s)/i);
    for(const c of clauses){
     const hs=values(c);if(!hs.length)continue;const ms=mentions(c);
+    // S86: a clause that states a declaration ("the maker claims chips in 15 minutes") is not this tester's result
+    if(declaredInClause225(c)){declaredSkipped+=hs.length;continue;}
     for(const h of hs){
      // Cost and energy need a cooking context in the clause (not a price "sells for £149.99").
      if(/\b(?:priced|costs? (?:from|between)|rrp)\b/i.test(c))continue;
@@ -191,8 +200,8 @@ export function comparativeResults270(html:string,opts:{testedClass?:ApplianceCl
  });
  // Comparative evidence names at least two appliance classes with results; otherwise this reader yields nothing (a
  // single-product review is the Phase225 probe's job).
- if(new Set(out.map(x=>x.appliance).filter(a=>a!=='several')).size<2)return {results:[],gated:true};
+ if(new Set(out.map(x=>x.appliance).filter(a=>a!=='several')).size<2)return {results:[],gated:true,declaredSkipped};
  for(const r of out){const c=new Set(r.conditionCodes);if(r.taskLabel&&reducedTasks.has(r.taskLabel)){c.delete('same_food_load');c.add('quantity_reduced');}
   if(r.taskLabel&&gradedTasks.has(r.taskLabel))c.add('quality_assessed_same_task');(r as {conditionCodes:readonly ComparativeCondition270[]}).conditionCodes=[...c].sort();}
- return {results:out.slice(0,80),gated:true};
+ return {results:out.slice(0,80),gated:true,declaredSkipped};
 }

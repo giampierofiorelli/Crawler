@@ -665,6 +665,8 @@ export class KnowledgeStore246 {
    {name:o.extraction.mainProduct.name,model:o.extraction.mainProduct.identifiers.model??o.extraction.mainProduct.identifiers.mpn??null,sku:o.extraction.mainProduct.identifiers.sku??null}:
    main&&main.name?{name:main.name,model:main.declared_model,sku:(JSON.parse(main.identifiers_json) as Record<string,string>).sku??null}:null;
   const role=declarationRole246(o.source.sourceType);const by=reportedBy265(o.source.sourceType);
+  // S86: values the readers set aside as declared or quoted (not this publisher's measurements) are counted with the rejections
+  if(t.probe.declaredValuesSkipped86)out.rejected.declared_value_not_measured=t.probe.declaredValuesSkipped86;
   for(const c of cands){
    const r=screenTestLead265(c,{url:o.url,sha256:o.sha256});
    if(!r.ok){out.rejected[r.reason]=(out.rejected[r.reason]??0)+1;continue;}

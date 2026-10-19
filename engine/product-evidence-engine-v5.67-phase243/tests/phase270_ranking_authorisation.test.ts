@@ -264,3 +264,11 @@ test('S85 sufficiency: a same-model assessment alone does not establish a relati
  const io=coffee(true,['informs_only']);const r2=relations247(io.s,'coffee_machines').find(r=>r.kind==='measured_by')!;
  assert.equal(sufficiencyOf247(io.s,r2.relationId).rankingBasis,null);
 });
+
+test('S86: an independent reviewer\'s sufficiency assessment is not product evidence; ranking still needs a verified signed catalog of original tests',()=>{
+ const w=coffee();// the relation's 'establishes' comes from an independent assessor (a ranking basis since S85)
+ for(const r of [null,{catalog:null,authority},{catalog:signed(panel(w.ids),rogue),authority}] as (RankingContext253|null)[]){
+  const a=advise(w.s,r);assert.equal(a.rankingAuthorized,false);assert.notEqual(a.response,'ranked_recommendation');}
+ // the same relation with a verified catalog ranks (control)
+ assert.equal(advise(w.s,{catalog:signed(panel(w.ids)),authority}).response,'ranked_recommendation');
+});

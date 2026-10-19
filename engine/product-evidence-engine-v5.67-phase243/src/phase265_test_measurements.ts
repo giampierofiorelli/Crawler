@@ -20,6 +20,7 @@ import type {TestCandidate225,TestProbe225,ConditionCode225} from './phase225_tr
 import {comparativeResults270,type ComparativeResult270,type ApplianceClass270} from './phase270_comparative_results.js';
 import {probeTransientTestContent225,textBlocks225,type ProductMention272} from './phase225_transient_test_probe.js';
 import {createHash} from 'node:crypto';
+import {loadQuantityKnowledge,typeObservedValue,type QuantityKnowledge,type ObservedQuantity} from './quantity_knowledge.js';
 import {TEST_CONTEXT272,planContentDigest272,type ExtractionPlan272} from './phase272_extraction_plan.js';
 import {structuredTableLeads1D2,type DocumentSemantics1D2} from './document_semantics.js';
 import {tableLedger1E,ledgerTableLeads1E,cellDeclarationEvidence1E,type TableLessonId1E} from './table_ledger1e.js';
@@ -29,7 +30,9 @@ import type {SpecExtraction245} from './phase245_spec_extraction.js';
 /** Version of the lead extraction the store records per measurement (Phase225 prose + Phase226 tables + Phase227
  * explicit header links). A change re-derives the measurements of a revision whose bytes are offered again. */
 /** S83: probe v3 (condition words negated or used as verbs no longer set a condition code); v2 readings stay as recorded. */
-export const TEST_LEAD_EXTRACTOR265='pee225-probe.v3+pee226-tables.v1+pee227-headers';
+// S86: probe v4 (clause-level declaration screen, dB(A)), tables v2 (units and header measurands read by the quantity
+// knowledge), comparative screens, shared typing at the screen (stored units are the knowledge's canonical expressions)
+export const TEST_LEAD_EXTRACTOR265='pee225-probe.v4+pee226-tables.v2+pee227-headers';
 /** Original roadmap Step 3 — versioned scientific reading. The code versions of the readers that run only with a plan:
  * the Phase272 guided pass of the Phase225 probe with the plan's condition-term filter and the comparison-cell
  * re-attribution (comparisonCells272), and the Step 1D-A2 semantic-document contract with its structured table reader.
@@ -162,9 +165,11 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
  // one named product becomes the page subject, several leave each value to its own clause.
  if(opts.plan)lead=planPageSubject272(lead,mentions) as typeof lead;
  const tested=({air_fryers:'air_fryer',ovens:'oven',microwaves:'microwave',slow_cookers:'slow_cooker',halogen_ovens:'halogen_oven'} as Record<string,ApplianceClass270>)[opts.category??''];
- const comparative=comparativeResults270(html,{testedClass:tested}).results;
+ const cmp=comparativeResults270(html,{testedClass:tested});const comparative=cmp.results;
  const probe=probeTransientTestContent225(html,url,{documentSha256:sha256,productLeads:lead?[lead]:[],
   ...(opts.plan?{plan:opts.plan,mentions}:{}),...(opts.exploratory?{exploratory:true}:{})});
+ // S86: declared or quoted values the probe and the comparative reader set aside travel with the reading (journaled at ingest)
+ {const n=(probe.declaredValuesSkipped86??0)+(cmp.declaredSkipped??0);if(n)probe.declaredValuesSkipped86=n;}
  if(opts.plan){const cells=comparisonCells272(html);if(cells.size){const deep=textBlocks225(html,{maxBlocks:1500}).blocks;
   probe.candidates=probe.candidates.map(c=>{const cell=cells.get((deep[c.blockIndex]??'').trim());if(cell===undefined)return c;
    return cell?{...c,subject:{name:cell.name,model:null,sku:null},subjectAssignment:'clause_named_model_unverified' as const}:{...c,subject:null,subjectAssignment:'multiple_models_unresolved' as const};});}}
@@ -193,16 +198,16 @@ export function testLeadsFromHtml265(html:string,url:string,sha256:string,x:Spec
   ...(cfg?{readingConfiguration:cfg,comparativeReaderVersion:TEST_LEAD_EXTRACTOR265}:{}),...(tl7Dropped||tl5Attached?{shadowDiagnostics:{...(tl7Dropped?{tl7DroppedBlockReaderLeads:tl7Dropped}:{}),...(tl5Attached?{tl5ConditionsAttached:tl5Attached}:{})}}:{})};
 }
 
-const UNITS:Readonly<Record<string,string>>={mm:'mm',cm:'cm',kg:'kg',g:'g',l:'l',litre:'l',litres:'l',liter:'l',liters:'l',db:'db',dba:'dba',
- '%':'%',minute:'minutes',minutes:'minutes',hour:'hours',hours:'hours',second:'seconds',seconds:'seconds',ms:'ms',w:'w',watt:'w',watts:'w',
- kwh:'kwh',mah:'mah','°c':'°c',
- // Phase272: units of the generic physical lexicon (src/phase272_extraction_plan.ts) that plan-guided reading may report.
- decibel:'db',decibels:'db','db(a)':'db',nits:'nits','cd/m2':'nits','cd/m²':'nits',cfm:'cfm','m3/h':'m3/h','m³/h':'m3/h',hz:'hz',wh:'wh',ml:'ml',mins:'minutes',min:'minutes',hrs:'hours'};
-export const normalizeUnit265=(u:string):string|null=>UNITS[String(u).toLowerCase()]??null;
-/** Units a publisher-declared dimension can be expressed in; anything else is a mismatch, never a conversion. */
-const DIMENSION_UNITS:Readonly<Record<string,readonly string[]>>={mass:['g','kg'],volume:['l'],noise:['db','dba'],
- duration:['ms','seconds','minutes','hours'],length:['mm','cm'],power:['w'],energy:['kwh','wh'],
- luminance:['nits'],airflow:['cfm','m3/h'],frequency:['hz']};
+// S86 (intervention A, extraction slice): what a lead's unit and measurand ARE comes from the quantity knowledge only (was a
+// local unit table and a table of units per publisher dimension). The stored unit is the knowledge's canonical expression
+// ("kWh", "dBA", "m^3/h", "L/day"), so the A-weighting, the time denominator and m³/h-vs-CFM survive storage; earlier
+// rows keep their keys ("kwh") and compare through sameUnit. A unit the knowledge does not read is not recognised.
+let QK265:QuantityKnowledge|null=null;const qk265=()=>QK265??=loadQuantityKnowledge();
+export const normalizeUnit265=(u:string):string|null=>{const t=typeObservedValue(qk265(),{value:null,unit:u});return t.status==='unit_not_recognised'?null:t.unit;};
+/** The kinds a publisher's declared dimension admits: a quantity-knowledge metric (its kind) or kind id. Readers before S86
+ * declared a coarse word; 'noise' and 'airflow' are the two that are not kind ids. */
+const declaredKinds265=(d:string):string[]=>{const qk=qk265();const m=qk.metrics.get(d);if(m)return [m.kind];if(qk.kinds.has(d))return [d];
+ return d==='noise'?['sound_pressure_level','sound_power_level']:d==='airflow'?['volumetric_flow_rate']:[];};
 const TOKEN=/^[a-z0-9 .°%]{1,40}$/;
 const CODES:readonly ConditionCode225[]=['setpoint_c','duration_1h','load_empty','from_cold','all_compartments','single_compartment','includes_preheat','power_meter','conditions_from_block'];
 const codesOk=(x:unknown)=>x===undefined||(Array.isArray(x)&&x.length<=CODES.length&&x.every(c=>CODES.includes(c)));
@@ -215,6 +220,8 @@ export function reportedBy265(t:SourceKind265):'manufacturer'|'test_publisher_op
 }
 export interface ScreenedLead265 {
  leadId:string;blockSha256:string;blockIndex:number;valueOffset:number;value:number;unit:string;
+ /** S86: the shared typing of the value (not stored as such: derivable from unit, dimension and condition) */
+ quantity?:ObservedQuantity;
  dimension:string;dimensionBasis:'publisher_table_header'|'not_established';
  targetScope:'compartment_unspecified'|'whole_product_unspecified'|'not_established';
  condition:string|null;instrument:string|null;methodCue:TestCandidate225['methodCue'];
@@ -235,10 +242,13 @@ export function screenTestLead265(c:TestCandidate225,rev:{url:string;sha256:stri
   !codesOk(c.conditionCodes)||!codesOk(c.documentProtocolCodes)||(c.setpointC!==undefined&&c.setpointC!==null&&!(Number.isInteger(c.setpointC)&&c.setpointC>=20&&c.setpointC<=400))||
   !['page_context_unverified','multiple_models_unresolved','not_identified','table_row_declared_model_unverified','clause_named_model_unverified'].includes(c.subjectAssignment)||
   (c.condition!==null&&!TOKEN.test(String(c.condition)))||(c.instrument!==null&&!TOKEN.test(String(c.instrument))))return {ok:false,reason:'malformed_lead'};
- const unit=normalizeUnit265(c.unit);if(!unit)return {ok:false,reason:'unit_not_recognised'};
  const declared=c.publisherDeclaredDimension&&c.publisherDeclaredDimension!=='other'?c.publisherDeclaredDimension:null;
- if(declared&&!(DIMENSION_UNITS[declared]??[]).includes(unit))return {ok:false,reason:'unit_dimension_mismatch'};
- return {ok:true,lead:{leadId:c.id,blockSha256:c.blockSha256,blockIndex:c.blockIndex,valueOffset:c.valueOffset,value:c.value,unit,
+ const qk=qk265();const metric=declared&&qk.metrics.has(declared)?declared:null;
+ const quantity=typeObservedValue(qk,{value:c.value,unit:c.unit,labels:[...(metric?(qk.metrics.get(metric)!.terms??[]).slice(0,1):[]),...(c.condition?[c.condition]:[]),...(c.instrument?[c.instrument]:[])]});
+ if(quantity.status==='unit_not_recognised')return {ok:false,reason:'unit_not_recognised'};
+ const unit=quantity.unit;
+ if(declared&&!declaredKinds265(declared).some(k=>quantity.kinds.includes(k)))return {ok:false,reason:'unit_dimension_mismatch'};
+ return {ok:true,lead:{leadId:c.id,blockSha256:c.blockSha256,blockIndex:c.blockIndex,valueOffset:c.valueOffset,value:c.value,unit,quantity,
   dimension:declared??'not_established',dimensionBasis:declared?'publisher_table_header':'not_established',
   targetScope:c.publisherDeclaredTargetScope??'not_established',condition:c.condition,instrument:c.instrument,methodCue:c.methodCue,
   subjectAssignment:c.subjectAssignment,subject:c.subject,conditionCodes:[...(c.conditionCodes??[])],protocolCodes:[...(c.documentProtocolCodes??[])],

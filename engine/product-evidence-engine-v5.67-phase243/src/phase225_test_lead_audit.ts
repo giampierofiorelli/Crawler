@@ -47,7 +47,7 @@ export function auditTestLeads225(...observations:readonly (Observation222|null)
       !['page_context_unverified','multiple_models_unresolved','not_identified','table_row_declared_model_unverified'].includes(c.subjectAssignment)||
       (c.subjectAssignment==='table_row_declared_model_unverified'&&
        (c.subject===null||c.methodCue!=='bounded_table_result_with_local_method'||
-       !['mass','volume','noise','duration','length','power','energy','other'].includes(c.publisherDeclaredDimension??'')||
+       !/^[a-z][a-z0-9_]{1,48}$/.test(c.publisherDeclaredDimension??'')||
        !['compartment_unspecified','whole_product_unspecified'].includes(c.publisherDeclaredTargetScope??'')))||
       (c.subject!==null&&!receipt.productLeads.some(p=>p.name===c.subject?.name&&p.model===c.subject?.model&&p.sku===c.subject?.sku)))
       throw Error('phase225_claim_promoted_or_scope_mismatch');

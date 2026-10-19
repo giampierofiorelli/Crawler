@@ -44,7 +44,8 @@ test('1. an explicit publisher-reported measurement survives closing and reopeni
  assert.deepEqual(after,before,'identical after reopening');
  const m=after[0];
  assert.equal(m.productId,r.productIds[0]);assert.equal(m.subjectAssociation,'page_main_product_unverified');
- assert.deepEqual([m.value,m.unit,m.condition,m.instrument,m.methodCue],[61,'db','20 °c','sound meter','test_section_with_method_cue']);
+ // S86 (2026-10-19): stored units are the quantity knowledge's canonical keys (were the Phase265 table's lowercase spellings); same unit, same value
+ assert.deepEqual([m.value,m.unit,m.condition,m.instrument,m.methodCue],[61,'dB','20 °c','sound meter','test_section_with_method_cue']);
  assert.deepEqual([m.dimension,m.dimensionBasis,m.targetScope],['not_established','not_established','not_established'],'a prose figure does not establish what was measured');
  assert.deepEqual([m.reportedBy,m.evidenceRole,m.independence,m.verification,m.market,m.exactVariantVerified],
   ['test_publisher_operator_asserted','test_publisher_declaration_unreviewed','not_established','unreviewed','unknown',false]);

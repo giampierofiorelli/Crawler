@@ -22,5 +22,6 @@ test('S83 Phase225 probe v3: negated conditions and "empty" as a verb are not co
   ['duration_1h','power_meter','setpoint_c']);
 });
 test('S83: stored rows name the probe version that read their codes',()=>{
- assert.match(TEST_LEAD_EXTRACTOR265,/^pee225-probe\.v3\+/);
+ // S86: probe v4 (S83 introduced v3)
+ assert.match(TEST_LEAD_EXTRACTOR265,/^pee225-probe\.v4\+/);
 });

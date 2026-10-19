@@ -710,3 +710,35 @@ export function readClassRequirements(qk:QuantityKnowledge,text:string,ctx:{prod
   out.push({span:m[0].trim(),value:v,bound:m[1]||m[5]?'min':'exact',scale:t.scale,candidates:t.candidates,note});}
  return out;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// S86 (owner: one scientific representation for the quantities PEE reads in requests AND in pages). The typing of one
+// observed value as an extraction reader reports it: value, unit surface, and the labels that are the value's own (a
+// table header, the measurand term of its clause). The unit is kept as the knowledge's canonical expression, so what the
+// printed unit says (A-weighting, a time denominator, m³/h vs CFM) survives storage; the kind and metric are what the
+// unit and labels establish, never what the surrounding page makes plausible. Not typed: an explicit status and reason.
+export interface ObservedQuantity {unit:string;kinds:string[];kind:string|null;metric:string|null;weighting:string|null;per:string|null;
+ status:'typed'|'kind_ambiguous'|'unit_not_recognised';reason:string|null}
+export function typeObservedValue(qk:QuantityKnowledge,v:{value:number|null;unit:string;labels?:readonly string[]}):ObservedQuantity{
+ const surface=String(v.unit??'').trim();const p=surface?parseUnit(qk,surface):null;
+ if(!p)return {unit:surface,kinds:[],kind:null,metric:null,weighting:null,per:null,status:'unit_not_recognised',reason:`"${surface}" is not a unit the quantity knowledge reads`};
+ const labels=(v.labels??[]).filter((x):x is string=>typeof x==='string'&&x.trim().length>0);
+ const q=typeQuantity(qk,{surface:`${v.value??''} ${surface}`.trim(),value:v.value,unit:p},{labels});
+ const den=p.atoms.find(a=>a.exp<0)?.id??null;
+ const kind=q.kind.id;const metric=q.metric.id;
+ // the stored key must read back as the same unit: the canonical expression when it does, the printed form otherwise ("%")
+ const back=parseUnit(qk,p.expression);const key=back&&back.expression===p.expression?p.expression:surface;
+ return {unit:key,kinds:[...p.kinds],kind,metric,weighting:p.level?.weighting??null,per:den,status:kind?'typed':'kind_ambiguous',
+  reason:kind?null:`the unit allows ${q.kind.candidates.map(k=>k.replace(/_/g,' ')).join(' or ')} and the value's own labels do not decide`};
+}
+/** S86: two unit keys denote the same unit (stored keys from earlier readers, "kwh", and canonical ones, "kWh", compare). */
+export function sameUnit(qk:QuantityKnowledge,a:string,b:string):boolean{
+ if(a===b)return true;const x=parseUnit(qk,a),y=parseUnit(qk,b);return !!x&&!!y&&x.expression===y.expression;
+}
+/** S86: the full typed quantity of a STORED observation (value, unit key, and the measurand its reader recorded, when that is
+ * a metric id). The one place a consumer of stored rows types them (was re-parsed ad hoc by each consumer). */
+export function typeStoredQuantity(qk:QuantityKnowledge,r:{value:number|null;unit:string;dimension?:string|null}):TypedQuantity|null{
+ const p=parseUnit(qk,String(r.unit??'').trim());if(!p)return null;
+ const m=r.dimension?qk.metrics.get(r.dimension):undefined;
+ return typeQuantity(qk,{surface:`${r.value??''} ${r.unit}`.trim(),value:r.value,unit:p},{labels:m?[(m.terms??[])[0]??m.label]:[]});
+}

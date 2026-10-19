@@ -5,6 +5,7 @@
 import {PAGE_MAX_BYTES} from './approved_web_reader.js';
 import {createHash} from 'node:crypto';
 import type {TestCandidate225} from './phase225_transient_test_probe.js';
+import {loadQuantityKnowledge,typeObservedValue,type QuantityKnowledge} from './quantity_knowledge.js';
 import {safeMetadataUrl75} from './phase75_source_discovery.js';
 const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 const entities=(s:string)=>s.replace(/&#(x[0-9a-f]+|\d+);|&(amp|lt|gt|quot|apos|nbsp);/gi,(_m,n:string|undefined,k:string|undefined)=>{
@@ -25,14 +26,24 @@ const methodCue=/\b(?:we (?:tested|measured|recorded|timed|weighed)|our (?:test|
 const explicitMethod=/\b(?:we (?:tested|measured|recorded|timed|weighed)|our (?:test|tests|measurements)|during our testing|in our lab)\b/i;
 const noTest=/\b(?:did not test|not tested|didn't test|not measured|not our test|according to|manufacturer|advertised|press release|third.party|other reviewers)\b/i;
 const measuredUnit=/\b(g|kg|mm|cm|l|litres?|liters?|db(?:a)?|%|ms|seconds?|minutes?|hours?|w|watts?|kwh|mah)\b/i;
-const headerUnit=/\((g|kg|mm|cm|l|litres?|liters?|db(?:a)?|%|ms|seconds?|minutes?|hours?|w|watts?|kwh|mah)\)\s*$/i;
-const normalizeUnit=(s:string)=>({grams:'g',gram:'g',litre:'l',litres:'l',liter:'l',liters:'l',watts:'w',watt:'w',second:'seconds',minute:'minutes',hour:'hours'} as Record<string,string>)[s.toLowerCase()]??s.toLowerCase();
-const dimension=(heading:string):NonNullable<TestCandidate225['publisherDeclaredDimension']>=>
+// S86: header and cell units are read by the quantity knowledge (were a closed list, so a "(m³/h)", "(CFM)" or "(dB(A))"
+// column was never read); the header's measurand is what the knowledge's metric terms or the unit's single kind establish
+// ("CADR (m³/h)" is cadr, "Max airflow (m³/h)" free_airflow, "Weight (kg)" mass). The coarse heading words below remain
+// only where the knowledge leaves the kind open (a "Noise (dB)" column: pressure or power level).
+let QK226:QuantityKnowledge|null=null;const qk226=()=>QK226??=loadQuantityKnowledge();
+const headerUnit=/\(([^()]{1,12}(?:\([a-z]\))?)\)\s*$/i;
+const normalizeUnit=(s:string):string|null=>{const t=typeObservedValue(qk226(),{value:null,unit:s});return t.status==='unit_not_recognised'?null:t.unit;};
+// The publisher's heading is its declaration of what the column measures: a metric the knowledge names wins; otherwise the
+// heading's own word (it may contradict the unit, "Measured time (W)", and the screen then withholds the value); only a
+// heading that names nothing takes the unit's single kind (S86, first test run: the unit had silently overridden the word).
+const measurandOf226=(heading:string,unit:string):string=>{const t=typeObservedValue(qk226(),{value:null,unit,labels:[heading]});
+ if(t.metric)return t.metric;const word=dimension(heading);return word!=='other'?word:t.kind??'other';};
+const dimension=(heading:string):string=>
  /\b(?:mass|weight)\b/i.test(heading)?'mass':/\b(?:volume|capacity)\b/i.test(heading)?'volume':
  /\bnoise\b/i.test(heading)?'noise':/\b(?:runtime|duration|time)\b/i.test(heading)?'duration':
  /\b(?:thickness|height|width|length)\b/i.test(heading)?'length':
  /\bpower\b/i.test(heading)?'power':/\benergy\b/i.test(heading)?'energy':'other';
-const singleValue=/^\s*(\d{1,7}(?:\.\d{1,3})?)\s*(g|kg|mm|cm|l|litres?|liters?|db(?:a)?|%|ms|seconds?|minutes?|hours?|w|watts?|kwh|mah)?\s*$/i;
+const singleValue=/^\s*(\d{1,7}(?:\.\d{1,3})?)\s*([^\d\s][^\s]{0,11})?\s*$/i;
 export interface TableProbe226{
  schema:'pee226.table-probe.v1'; candidates:readonly TestCandidate225[];
  examinedTables:number;acceptedTableCells:number;skippedAmbiguousTables:number;
@@ -100,8 +111,10 @@ export function probeTransientTestTables226(html:string,sourceUrl:string,opts:{d
    out.skippedAmbiguousTables++;continue;
   }
   const columns=headers.slice(1).map((h,i)=>{
-   if(unsafeHeader.test(h.value)||!tableHeaders.test(h.value))return null;
-   const unit=headerUnit.exec(h.value)?.[1];return unit?{index:i+1,unit:normalizeUnit(unit),label:h.value}:null;
+   const unit=headerUnit.exec(h.value)?.[1];const u=unit?normalizeUnit(unit):null;
+   // a measurement header: a measurement word, or a metric the knowledge names ("CADR (m³/h)"); never a declared value
+   if(unsafeHeader.test(h.value)||!(tableHeaders.test(h.value)||(u&&typeObservedValue(qk226(),{value:null,unit:u,labels:[h.value]}).metric)))return null;
+   return u?{index:i+1,unit:u,label:h.value}:null;
   });
   if(columns.every(x=>x===null)) {out.skippedAmbiguousTables++;continue;}
   let ambiguous=false;
@@ -153,7 +166,7 @@ export function probeTransientTestTables226(html:string,sourceUrl:string,opts:{d
     const id=hash(JSON.stringify([sourceUrl,blockSha256,valueOffset,value,unit,subject]));
     staged.push({id,sourceUrl,documentSha256:opts.documentSha256??null,blockSha256,blockIndex,valueOffset,
      value,unit,instrument:null,condition:null,
-     publisherDeclaredDimension:dimension(col.label),
+     publisherDeclaredDimension:measurandOf226(col.label,col.unit),
      publisherDeclaredTargetScope:/\b(?:compartment|section)\b/i.test(col.label)?'compartment_unspecified':'whole_product_unspecified',
      methodCue:'bounded_table_result_with_local_method',
      subject,subjectAssignment:'table_row_declared_model_unverified',

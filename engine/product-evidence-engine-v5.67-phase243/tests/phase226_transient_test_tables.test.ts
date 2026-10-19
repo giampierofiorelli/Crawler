@@ -40,7 +40,9 @@ test('units must be explicitly present and match, no implicit conversion or infe
  assert.equal(setup(make(table(row('AX11','196'),heads))).tableResults226,0);
  assert.equal(setup(make(table(row('AX11','0.2 kg')))).tableResults226,0);
  assert.equal(setup(make(table(row('AX11','196 g')))).tableResults226,1);
- assert.equal(setup(make(table(row('AX11','196 grams')))).tableResults226,0);
+ // S86 (2026-10-19): "196 grams" under a "(g)" header is the same unit, read by the quantity knowledge (no conversion); it
+ // was refused before only because the closed unit list lacked "grams". A different unit (0.2 kg above) is still refused.
+ assert.equal(setup(make(table(row('AX11','196 grams')))).tableResults226,1);
 });
 test('model match is exact; AX11 does not automatically match AX110 or other page products',()=>{
  assert.equal(setup(make(table(row('AX110','196')))).tableResults226,0);
@@ -72,7 +74,8 @@ test('compartment capacity cannot be substituted with total product volume',()=>
  const rows='<tr><th scope="row">BT9</th><td>18</td><td>60</td></tr>';
  const a=setup(make(table(rows,heads)),ps);
  assert.equal(a.tableResults226,1);assert.equal(a.candidates[0].value,18);
- assert.equal(a.candidates[0].unit,'l');
+ // S86 (2026-10-19): stored units are the quantity knowledge's canonical keys (were the Phase265 table's lowercase spellings); same unit, same value
+ assert.equal(a.candidates[0].unit,'L');
  assert.equal(a.candidates[0].publisherDeclaredDimension,'volume');
  assert.equal(a.candidates[0].publisherDeclaredTargetScope,'compartment_unspecified');
 });

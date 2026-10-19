@@ -24,10 +24,21 @@ const fragment=(v:string)=>decode(v.replace(/<[^>]{0,1800}>/g,' ').replace(/\s+/
 const urlOk=(v:string)=>{try{const u=new URL(v);return safeMetadataUrl75(v,u.hostname);}catch{return false;}};
 // Phase265: the unit ends at a non-alphanumeric character, not at a word boundary: "80 %" followed by a space has no
 // word boundary after '%' and was never matched.
+// S86: "52 dB(A)" keeps its A-weighting (was read as "52 dB").
 // Phase268: a number never starts inside another number ("2,000W" was read as 0 W); thousands separators are read.
-const candidateNumeric=/(?<![\d.,])(\d{1,3}(?:,\d{3})+(?:\.\d{1,3})?|\d{1,7}(?:\.\d{1,3})?)\s*(mm|cm|kg|g|litres?|liters?|l|db(?:a)?|%|minutes?|hours?|seconds?|ms|watts?|w|kwh|mah|°c)(?![a-z0-9])/gi;
-const negated= /\b(?:did not test|was not tested|have not tested|not measured|no measurements|not yet tested|planned to test|we will test|didn't test)\b/i;
-const secondary=/\b(?:manufacturer (?:claims|states|reports|says)|advertised|marketing (?:material|claims)|press release|according to the manufacturer|specification sheet|quoted by|other reviewers measured|competitor|rather than the tested)\b/i;
+const candidateNumeric=/(?<![\d.,])(\d{1,3}(?:,\d{3})+(?:\.\d{1,3})?|\d{1,7}(?:\.\d{1,3})?)\s*(mm|cm|kg|g|litres?|liters?|l|db(?:\(a\)|a)?|%|minutes?|hours?|seconds?|ms|watts?|w|kwh|mah|°c)(?![a-z0-9])/gi;
+/** S86: exported so the comparative reader (Phase270) applies the same screens to its sentences. */
+export const NEGATED_METHOD225=/\b(?:did not test|was not tested|have not tested|not measured|no measurements|not yet tested|planned to test|we will test|didn't test)\b/i;
+export const SECONDARY_SOURCE225=/\b(?:manufacturer (?:claims|states|reports|says)|advertised|marketing (?:material|claims)|press release|according to the manufacturer|specification sheet|quoted by|other reviewers measured|competitor|rather than the tested)\b/i;
+const negated=NEGATED_METHOD225,secondary=SECONDARY_SOURCE225;
+/** S86 (owner: a test publisher's page also quotes specifications). Does this clause present its value as a declaration?
+ * The shared DECLARATION_CUE272 must occur, and nothing after its last occurrence may be the tester reporting a result
+ * ("the claimed 52 dB" is declared; "claimed 52 dB, but we measured 58 dB" leaves 58 dB to the tester). */
+export function declaredInClause225(clause:string):boolean{
+ let last=-1;for(const m of clause.matchAll(new RegExp(DECLARATION_CUE272.source,'gi')))last=m.index!+m[0].length;
+ if(last<0)return false;const rest=clause.slice(last);
+ return !/\b(?:we|I)\s+(?:measured|recorded|timed|found|got|saw|clocked|metered|logged|weighed|tested|cooked|used)\b|\b(?:our|my)\s+(?:test|tests|measurements?|readings?|meter|lab)\b/i.test(rest);
+}
 // Phase268: single named testers write in the first person singular ("I measured", "in my tests", "in tests").
 const claimedMethod=/\b(?:(?:we|I) (?:tested|measured|recorded|timed|weighed)|(?:our|my) (?:[a-z]+ ){0,2}(?:test|tests|measurements|testing)|in tests\b|during (?:our )?testing|in (?:our|the) (?:lab|test)|test (?:method|protocol|procedure|results)|measured (?:using|with)|was (?:tested|measured) (?:with|using))\b/i;
 const numericReported=/\b(?:(?:we|I) (?:measured|recorded|timed|weighed|found)|(?:our|my) (?:test|tests|measurements) (?:recorded|showed|found|gave|yielded)|during (?:our )?testing|in (?:(?:our|the|my) (?:[a-z]+ ){0,2})?tests?)\b/i;
@@ -90,7 +101,9 @@ export interface TestCandidate225 {
  blockSha256:string;blockIndex:number;valueOffset:number;
  value:number;unit:string;instrument:string|null;condition:string|null;
  /** Table-header interpretation only; not an independently verified measurand. */
- publisherDeclaredDimension?:'mass'|'volume'|'noise'|'duration'|'length'|'power'|'energy'|'other';
+ /** S86: a quantity-knowledge metric or kind id the publisher's header establishes, or a coarse heading word (pre-S86
+  * readers: 'noise', 'airflow' …), or 'other' */
+ publisherDeclaredDimension?:string;
  publisherDeclaredTargetScope?:'compartment_unspecified'|'whole_product_unspecified';
  methodCue:'first_person_test_statement'|'test_section_with_method_cue'|'bounded_table_result_with_local_method'|'energy_result_with_document_protocol'|
   /** Phase272: accepted because the category's extraction plan names this unit's dimension and a taught term in the value's
@@ -119,6 +132,9 @@ export interface TestProbe225 {
  planDigest272?:string;
  /** Phase272 exploratory pass: numbers with a generic unit and a generic reporting cue that no accepted candidate covers.
   * RESEARCH LEADS ONLY: never candidates, never stored as measurements, never ranking input. */
+ /** S86 (owner: a test publisher's page also quotes specifications): values of a test sentence whose own clause states a
+  * declaration ("its claimed 52 dB", "rated at 1,700W") are not test leads; counted here, never stored as measured. */
+ declaredValuesSkipped86?:number;
  exploratoryLeads272?:readonly {value:number;unit:string;blockIndex:number;blockSha256:string;subject:{name:string;model:string|null;sku:string|null}|null;status:'exploratory_research_lead'}[];
  }
 /** Phase272: a product the document names (brand + model code from its headline or headings); per-value attribution only. */
@@ -223,6 +239,10 @@ export function probeTransientTestContent225(html:string,sourceUrl:string,opts:{
    // Ambient temperatures explicitly introduced as test conditions are not outcome measures.
    if(m[2].toLowerCase()==='°c'&&/\b(?:at|under)\s*$/i.test(line.slice(Math.max(0,m.index!-12),m.index!)))continue;
    const unit=m[2].toLowerCase();
+   // S86: the value's own clause (back to a comma, semicolon, dash or "but/while/whereas/than" in its sentence) states a
+   // declaration (the shared DECLARATION_CUE272 of the guided reader): a quoted specification, not this publisher's result.
+   {const head=line.slice(Math.max(0,m.index!-120),m.index!);const clause=head.split(/[,;:()–—]|\b(?:but|while|whereas|than|versus|vs\.?)\b|(?<=[.!?])\s+/i).at(-1)??head;
+    if(declaredInClause225(clause)){out.declaredValuesSkipped86=(out.declaredValuesSkipped86??0)+1;continue;}}
    // Codes come from the value's own sentence; the compartment from its own clause when the sentence has several values.
    let off=0;const sent=sentences.find(x=>{const hit=m.index!>=off&&m.index!<off+x.length+1;if(!hit)off+=x.length+1;return hit;})??line;
    // Clauses are split between values of the same unit only (a setpoint or a rated power is not a second result).

@@ -63,9 +63,10 @@ test('same source, same plan: no duplicate observations, no supersession, nothin
 });
 test('same source, revised plan: a distinct version; values the new plan does not read stop being current; the source revision is unchanged',()=>{
  const {s,ingest,current}=store();const a=leads(PA),b=leads(PB);
- const r1=ingest(a);assert.deepEqual(current(),['160 seconds','3 minutes','61 db']);
+ // S86 (2026-10-19): stored units are the quantity knowledge's canonical keys (were the Phase265 table's lowercase spellings); same unit, same value
+ const r1=ingest(a);assert.deepEqual(current(),['160 s','3 min','61 dB']);
  const r2=ingest(b);assert.equal(r2.revisionId,r1.revisionId,'a plan change is not a new source revision');
- assert.deepEqual(current(),['160 seconds','61 db'],'the minute value was read only by plan A');
+ assert.deepEqual(current(),['160 s','61 dB'],'the minute value was read only by plan A');
  assert.ok(s.testMeasurements265().every(t=>t.extractorVersion===b.extractorVersion));
  assert.deepEqual(s.testMeasurements265({includeSuperseded:true}).filter(t=>t.state!=='current').map(t=>[t.value,t.state,t.extractorVersion]),[[3,'superseded_by_extractor',a.extractorVersion]]);
 });

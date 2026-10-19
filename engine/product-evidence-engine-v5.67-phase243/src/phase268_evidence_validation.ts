@@ -17,6 +17,9 @@ import type {ProductKnowledgeCatalog181,KnowledgeDimension181,OriginalTest181,Pr
 type Limitation181=(typeof TEST_LIMITATIONS181)[number];
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {createHash} from 'node:crypto';
+import {loadQuantityKnowledge,sameUnit,type QuantityKnowledge} from './quantity_knowledge.js';
+let QK268:QuantityKnowledge|null=null;const qk268=()=>QK268??=loadQuantityKnowledge();
+const catalogUnit268=(u:string)=>u.toLowerCase().replace(/\^/g,'').replace(/\//g,'_per_').replace(/[^a-z0-9_.:-]/g,'');
 
 type Row265=ReturnType<KnowledgeStore246['testMeasurements265']>[number];
 export interface Protocol268 {
@@ -123,7 +126,8 @@ export function validateTestMeasurements268(rows:readonly Row265[],product:(id:s
   if(r.value===null||!['facts_retained','facts_retained_class_policy'].includes(r.retention))why.push('not_retained');
   if(r.source.sourceType!=='independent_original_test'||r.reportedBy!=='test_publisher_operator_asserted')why.push('not_a_test_publisher_source');
   const pub=policy.qualifiedPublishers.find(p=>p.host===r.source.host);
-  const proto=pub?policy.protocols.find(p=>p.unit===r.unit&&pub.qualifiedFor.includes(p.measurand)):undefined;
+  // S86: units compare through the quantity knowledge (a stored 'kwh' from earlier readers and 'kWh' are the same unit)
+  const proto=pub?policy.protocols.find(p=>sameUnit(qk268(),p.unit,r.unit)&&pub.qualifiedFor.includes(p.measurand)):undefined;
   if(!pub)why.push('publisher_not_qualified');else if(!proto)why.push('measurand_not_in_protocol');
   const p=r.productId?product(r.productId):null;
   if(!r.productId||!p||r.subjectAssociation!=='page_main_product_unverified')why.push('subject_unresolved');
@@ -183,7 +187,8 @@ export function compileCatalog268(v:ValidationRun268,scoring:ScoringPolicy268,ar
    sourceUrl:m.source.url,observedAt:m.source.fetchedAt.replace(/\.\d+Z$/,'Z'),
    // Phase269: exact-variant scope only when the tested subject's own model code identifies it.
    scope:m.identityConfidence==='model_code_in_tested_subject'?'exact_variant_original_professional_test':'named_product_original_professional_test',
-   ...(d.mode==='raw_quantity_only'?{measured:{value:m.value,unit:m.unit,direction:'lower_is_better' as const},limitations:[...m.limitationCodes]}:{})});
+   // S86: the signed catalog (Phase181) names units as lowercase identifiers; the store's canonical key ("kWh") is written in that form
+   ...(d.mode==='raw_quantity_only'?{measured:{value:m.value,unit:catalogUnit268(m.unit),direction:'lower_is_better' as const},limitations:[...m.limitationCodes]}:{})});
   const p=products.get(m.productId)??{variantId:m.productId,name:m.productName,observations:[]};
   products.set(m.productId,{...p,observations:[...p.observations,{dimensionKey:d.key,valuePoints:points268(m.value,d),hardOutcome:'pass',evidenceId:id}]});
  }

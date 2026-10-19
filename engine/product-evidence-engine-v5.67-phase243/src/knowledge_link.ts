@@ -31,7 +31,7 @@ import {compileRuleSet,evaluate,type CompiledProgram,type Fact,type Model,type R
 import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantity} from './quantity_knowledge.js';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247,sufficiencyOf247} from './phase247_category_relations.js';
-import {compareQuantities,findQuantities,loadQuantityKnowledge,typeQuantity,type ComparisonResult} from './quantity_knowledge.js';
+import {compareQuantities,findQuantities,loadQuantityKnowledge,typeQuantity,typeStoredQuantity,type ComparisonResult} from './quantity_knowledge.js';
 
 /** lk.9 (S82 kr82.1: a condition is shown only whole; within-source scope kept; no-requirement verdict named);
  * lk.8 (S81: condition concepts, comparability under the teaching, attribute proxies); v1-v8 stay loadable to
@@ -580,9 +580,10 @@ export function conditionsMetFromRecords(qk:QuantityKnowledge,k:CategoryKnowledg
 export function conditionsMetFromStoreRecords(store:KnowledgeStore246,category:string,measurement:string,measurementIds:readonly string[],declared?:readonly string[]|null,opts:{qk?:QuantityKnowledge}={}):DerivedConditionsMet{
  const qk=withReaderConditions(opts.qk??defaultQk());const k=categoryKnowledge(store,category,{qk});
  const want=new Set(measurementIds);const rows=store.testMeasurements265().filter(r=>want.has(r.measurementId));
- const tests:ObservedValue[]=rows.map(r=>{const f=findQuantities(qk,`${r.value} ${r.unit==='kwh'?'kWh':r.unit}`)[0];
+ const tests:ObservedValue[]=rows.map(r=>{
   const own=readerConditionAxes(r.conditionCodes??[]).axes,doc=readerConditionAxes(r.protocolCodes??[]).axes.filter(([a])=>!own.some(([x])=>x===a));
-  const q=f?typeQuantity(qk,{surface:f.surface,value:f.value,unit:f.unit},{}):null;
+  // S86: the shared typing of stored observations (was an ad hoc "kwh" -> "kWh" re-parse here)
+  const q=typeStoredQuantity(qk,{value:r.value,unit:r.unit,dimension:r.dimension});
   const quantity=q?{...q,conditions:[...q.conditions,...own.map(([axis,value])=>({axis,value,raw:value,from:'conditions' as const})),...doc.map(([axis,value])=>({axis,value,raw:value,from:'context' as const}))]}:null;
   return {id:r.measurementId,product:r.productId,quantity,measurement,source:r.source?.url??null};});
  return conditionsMetFromRecords(qk,k,measurement,tests,declared);
