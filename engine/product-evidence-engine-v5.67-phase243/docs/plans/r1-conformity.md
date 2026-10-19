@@ -280,3 +280,19 @@ label, not a refusal, but no rule represents a declared cross-state comparison. 
 through the typed seam, using condition and method knowledge to resolve the ambiguous links. Do not migrate the lexical
 link. Keep the older reader as a diagnostic until the new path is shown, on unused documents, to match it on the
 request → advice path. Ranking authority moves to verified "establishes" relations when ranking is unblocked.
+
+### 7.5 Owner review, 2026-10-19 (dated note; §7.1–§7.4 above are unchanged)
+
+Decision S68; verbatim text in the skill (`references/owner-r1-review-r2-authorisation-2026-10-19.md`). R1 is complete.
+What it corrects in this section:
+- **§7.1 and the proposal:** "ranking authority only from relations verified as establishing" is replaced by a graded
+  force: direct evidence, partial contribution, indirect indicator, insufficient. A partial measure (energy use for
+  real-use efficiency) may contribute to an assessment that combines several measures and observations. Authorisation
+  depends on the sufficiency of the whole set, its conditions, its independence and the user's need.
+- **§7.1, limit:** the verifiers compared relations with the owner's packages, not with the original studies. The 160
+  of 180 measure fidelity to the material supplied, not independent scientific validation.
+- **§7.2:** C2 is not better in every dimension. Decision-usable correct values fall from 27 (C1) to 12 (C2). Among the
+  79 ambiguous values, justified abstentions and missed uses of held knowledge must be told apart.
+- **§7.3:** the newer reader is the architectural reference base for integration, not yet the operational substitute.
+- **Not measured by R1:** how much of the documents' scientific content was never translated (R3).
+

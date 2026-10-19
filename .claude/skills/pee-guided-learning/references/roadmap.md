@@ -32,7 +32,7 @@ Sources:
 - the higher-order learning decision (`generalization-method.md` Part D, S58);
 - decision S63.
 
-**Current step: R1 — conformity verification (no new features). Read §3 R1 and the §4 checklist before any work.**
+**Current step: R2 — justified inference layer and typed, reversible integration on the newer reader (shadow only; owner S68). Read §3 R2 and the §4 checklist before any work.**
 
 ## 1. Destination
 
@@ -83,7 +83,7 @@ learning as software.
 Each step names its exit criteria. A later step does not start before the earlier one exits, unless the owner decides
 otherwise.
 
-### R1 — Conformity verification against the existing skill (CURRENT)
+### R1 — Conformity verification against the existing skill (COMPLETE: owner review 2026-10-19, S68)
 
 **Owner (2026-10-18):** "non manderei ancora Claude a sviluppare un'altra serie di funzionalità": first verify the
 existing architecture and the demonstrated capabilities.
@@ -175,6 +175,33 @@ or reused.
     the conclusion; changing a mode changes the result's conditions;
   - no unexplained regression in the equivalence replays.
 
+**Owner authorisation and conditions (2026-10-19, S68; verbatim in `owner-r1-review-r2-authorisation-2026-10-19.md`).**
+- **The newer reader is the architectural reference base for the integration, not yet the operational substitute** for
+  the older one. The older reader stays available for comparison and operational continuity until the newer one is
+  shown to preserve the needed capabilities along the whole request → advice path.
+- **Typed, reversible integration** reusing QK, KR, WD and the teaching already in the store. The older lexical link is
+  not carried over wholesale.
+- **Ambiguity is resolved with knowledge:** methods, conditions and scientific relations, never by inventing
+  equivalences or attributions. Among the values left ambiguous (79 in C2), tell apart justified abstentions from
+  missed uses of knowledge PEE already holds.
+- **Scoring rewards both directions:** fewer wrong inferences *and* more correct conclusions recovered. Lowering false
+  positives by abstaining more is not success.
+- **Graded evidential force, not a binary** (supersedes the S67 proposal that only "establishing" relations may
+  authorise a ranking). Tell apart:
+  - direct evidence of an outcome;
+  - a partial contribution to assessing it (several measures and observations together may assess it);
+  - an indirect indicator only;
+  - insufficient evidence.
+  A conclusion is authorised only after checking the sufficiency of the whole evidence set, its conditions, the
+  independence of its items and the user's specific need. The `measured_by` authority (D26) is corrected this way
+  before any use in rankings.
+- **Shadow only:** no automatic transfer of new conclusions into the store or the rankings.
+- **Principle:** PEE must use the scientific knowledge it holds correctly, and also recognise the knowledge it lacks,
+  the knowledge not yet translated, and the knowledge that is only partly sufficient.
+- **Fixed condition:** R2 must not become another system of specific recognisers. It improves general mechanisms, and
+  keeps the ability to recover valid knowledge, not only to avoid wrong knowledge.
+- **Not in R2:** the full translation of the scientific documents (R3).
+
 ### R3 — Scientific knowledge consulted in reading
 
 - Taught outcomes, `measured_by`, methods and facets generate interpretation hypotheses. The text verifies them;
@@ -184,6 +211,17 @@ or reused.
   names.
 - **Exit:** an ablation shows a gain attributable to knowledge, not to added words, on documents and categories not
   used to build it, with the complexity accounted for.
+
+**Translation fidelity and completeness are a core part of R3 (owner, 2026-10-19, S68).** R1 checked the relations
+already translated (160 of 180 supported); it says nothing about what the documents hold that was never translated
+(explanations, conditions of applicability, causal mechanisms, qualitative expert observations).
+- Use material already held. Start with two or three documents of different knowledge types: one dominated by
+  physical phenomena, one by chemical processes, one rich in qualitative observations.
+- Measure translation fidelity, the relations lost, and above all how much the knowledge improves PEE's behaviour.
+- Ask whether PEE can acquire that knowledge through a general procedure, so acquisition becomes a capability of PEE
+  and not a task Claude repeats per category.
+- Methodological references, without imposing new frameworks: CommonKADS, Rosetta Statements, ORKG, NeOn.
+- Extend to other categories only afterwards.
 
 ### R4 — Evidence linking across the whole document
 
@@ -266,3 +304,7 @@ tests, principle 2).
   relations only inform their outcome (D26). Integration experiment: the newer reader is the better base; the lexical
   link is a shortcut; the typed link is safe but leaves many values ambiguous. All five exit criteria answered. Awaiting
   the owner's architecture decision before R2.
+- 2026-10-19: owner review (S68): R1 complete; R2 authorised with conditions (the newer reader as reference base, not
+  operational substitute; typed reversible integration; scoring rewards recovery as well as avoidance; graded
+  evidential force instead of the binary S67 proposal; shadow only). R3 gains translation fidelity and completeness.
+  Current step: R2.
