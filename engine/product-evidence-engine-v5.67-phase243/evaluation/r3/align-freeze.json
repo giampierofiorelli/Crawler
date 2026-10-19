@@ -35,5 +35,49 @@
   "mentions": 120,
   "candidates": 396,
   "note": "fresh blind reference from the transfer packages (televisions, household dishwashers, dehumidifiers), never used to build or tune alignment; sealed before any semantic model or threshold was run on it (S76)"
+ },
+ "transferRunFreeze": {
+  "frozenAt": "2026-10-19T10:52:33.584Z",
+  "note": "configurations chosen on the examined dev and held-out references only, before any run on the sealed transfer reference",
+  "arms": [
+   {
+    "arm": "identify",
+    "what": "cycle-2 lexical identifier"
+   },
+   {
+    "arm": "align1",
+    "what": "type-gated alignment v1"
+   },
+   {
+    "arm": "nlic",
+    "what": "cross-encoder/nli-deberta-v3-xsmall, variant c, rule concept->phrase entailment >= 0.7, no type gate"
+   },
+   {
+    "arm": "llm",
+    "what": "Qwen/Qwen2.5-1.5B-Instruct label probabilities, identity >= 0.5, type gate"
+   }
+  ],
+  "files": [
+   {
+    "file": "scripts/r3-semantic/validate.py",
+    "sha256": "70f68d1d142a0cb1ab5856989921214b6de120b681427fecbaa6d2b2c58325c6"
+   },
+   {
+    "file": "scripts/r3-semantic-score.mjs",
+    "sha256": "e2a48740ead01fe6e178079b1c5bc1c881216dd632eadb17adcb288f8c0b6102"
+   },
+   {
+    "file": "scripts/r3-align-score.mjs",
+    "sha256": "8be37095452992e1d1dd79b25c111bdb41151808536432f50d2b5363478096e8"
+   },
+   {
+    "file": "src/knowledge_translation.ts",
+    "sha256": "8397f6e1765a664981f792fe3a6014ddafdbb0df59e552a22d0288ca15333e21"
+   },
+   {
+    "file": "resources/knowledge-translation/denotation-cues.v1.json",
+    "sha256": "b82b2faf4205d46a8a80a960ac7b7c7689f174f019e95cba19891a6b5dc99fa7"
+   }
+  ]
  }
 }

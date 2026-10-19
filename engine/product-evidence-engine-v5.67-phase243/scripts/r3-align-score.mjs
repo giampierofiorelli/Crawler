@@ -1,10 +1,10 @@
 /** R3 cycle 3: score a concept identifier against a sealed blind alignment reference (counts only).
  *   node scripts/r3-align-score.mjs dev|heldout identify|align0 LABEL */
 import {readFileSync,writeFileSync,existsSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
-const [side,which,label]=process.argv.slice(2);const OUT=`evaluation/r3/align-${side}-${which}-${label}.json`;if(!label||existsSync(OUT))throw Error('usage: dev|heldout identify|align0|align1 LABEL');
+const [side,which,label]=process.argv.slice(2);const OUT=`evaluation/r3/align-${side}-${which}-${label}.json`;if(!label||existsSync(OUT))throw Error('usage: dev|heldout|transfer identify|align0|align1 LABEL');
 const PE=join(process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval'),'r3/align');
 const sha=f=>createHash('sha256').update(readFileSync(f)).digest('hex');
-if(side==='heldout'){const fz=JSON.parse(readFileSync('evaluation/r3/align-freeze.json','utf8'));if(sha(join(PE,'heldout/out.json'))!==fz.heldout.annotation)throw Error('reference changed');}
+if(side==='heldout'||side==='transfer'){const fz=JSON.parse(readFileSync('evaluation/r3/align-freeze.json','utf8'));if(sha(join(PE,side,'out.json'))!==fz[side].annotation)throw Error('reference changed');}
 const D=new URL('../dist/src/',import.meta.url).href;const KT=await import(D+'knowledge_translation.js');const {KnowledgeStore246}=await import(D+'phase246_knowledge_store.js');
 const store=new KnowledgeStore246(join(homedir(),'.local/share/product-evidence-engine/knowledge/pee246.sqlite'));
 const inp=JSON.parse(readFileSync(join(PE,side,'in.json'),'utf8')).mentions,ref=new Map(JSON.parse(readFileSync(join(PE,side,'out.json'),'utf8')).mentions.map(x=>[x.mention,x]));
