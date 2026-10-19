@@ -16,7 +16,7 @@
  *    (named in the concept's head, or only mentioned in its statement), the condition values it fixes, and the
  *    condition axes its requirements name. Every element records the words it came from.
  * 2. **Inference with proofs.** The link and its evidential force are derived by the KR programs `link` and
- *    `evidence` (`resources/quantity-knowledge/link-rules.v1.json`), so every link, abstention and force carries its
+ *    `evidence` (`resources/quantity-knowledge/link-rules.v6.json`, LINK_RULES_FILE; v1-v5 kept for replay), so every link, abstention and force carries its
  *    derivation.
  *
  * What it does not do. It adds no recogniser and no category-specific rule. Taught words the quantity knowledge does not

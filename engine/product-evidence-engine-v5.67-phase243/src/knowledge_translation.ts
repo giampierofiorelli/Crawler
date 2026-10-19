@@ -131,15 +131,19 @@ export function renderSelfCheck(quote:string,rendered:string):string[]{const out
 const RELATIONAL=new Set(['depends_on','increases','decreases','requires','measured_by','composed_of','method_step']);
 const NEG_TAIL=/\s+(?:(?:does|do|did|can|could|will|would|may|might|should|must|is|are|was|were)\s*(?:not|n't)|never|cannot|can't|won't|fails?\s+to|failed\s+to)$/i;
 const HEDGE_TAIL=/\s+(?:rarely|seldom|hardly|often|usually|sometimes|generally|typically|may|might|can|could|tends?\s+to)$/i;
-const NOUN_BEFORE=/^(?:a|an|the|with|of|for|and|or|no|any|its|their|this|that|these|those|lower|higher|greater|smaller)$/i;
+// demonstratives are left out: "that requires", "this depends" are a pronoun and a verb
+const NOUN_BEFORE=/^(?:a|an|the|with|of|for|and|or|no|any|its|their|lower|higher|greater|smaller)$/i;
 const NOUN_AFTER=/^(?:is|are|was|were|be|apply|applies|matter|matters|remain|remains|occur|occurs|exist|exists|need|needs|of|to|size|and|or|shown)$/i;
 /** Document metadata and questions are not knowledge claims. */
 // a decimal followed by a unit ("2.5 hours") is a value, not a version (audit S77 A3-6)
 const METADATA_VALUE=/^(?:https?:\/\/|www\.|\S+\.(?:md|pdf|json|zip|html?|txt)\b|v\d+(?:\.\d+)*\b|\d+\.\d+\.\d+\b|\d+\.\d+\s*(?:\(|$)|\d{1,2}\s+\w+\s+\d{4}\b|\d{4}-\d{2}-\d{2}\b)/i;
 const typedness=(...s:(TypedSpan|null)[]):TranslatedStatement['typedness']=>{const xs=s.filter((x):x is TypedSpan=>!!x);
  const t=xs.filter(x=>x.metrics.length||x.kinds.length||x.concepts.length||x.axes.length).length;return t===0?'untyped':t===xs.length?'typed':'partly_typed';};
-function headerRole(cues:TranslationCues,h:string):string|null{const n=normText(h);if(!n)return null;
- for(const [role,ws] of Object.entries(cues.tableHeaderRoles))if(namedPhrases(n,ws).size)return role;return null;}
+// audit S77: whole words compared by inflectional stem ("Risks and limitations", "traps", "Evidence PEE needs"); the first
+// whole-word version lost plural headers (held-out reach 289 -> 273)
+const stemmed=(t:string)=>' '+(normText(t).match(/[a-z0-9]+/g)??[]).map(stem).join(' ')+' ';
+function headerRole(cues:TranslationCues,h:string):string|null{const n=stemmed(h);if(!n.trim())return null;
+ for(const [role,ws] of Object.entries(cues.tableHeaderRoles))if(ws.some(w=>n.includes(stemmed(w))))return role;return null;}
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
 const TABLE_ROLE_TYPE:Record<string,string>={method:'measured_by',limitation:'limitation',applicability:'applicability',outcome:'bears_on_outcome'};
@@ -161,16 +165,23 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
    provenance:{source:opts.source,line:b.line,headings:b.headings,block:b.kind,...(header?{header}:{})},quote,
    rendered:'',polarity:ann.polarity??'positive',hedge:ann.hedge??null,selfCheck:[],basis,typedness:typedness(subject,object,...parts)});
   const st=out[out.length-1];let r=fill(display,{subject:subject?.text,object:object?.text,verb,...(ann.extra??{})},def?.optionalSubject);
+  // audit S77: "by itself" only when the source says it (blind judges: a plain "does not establish" was weakened)
+  if(type==='not_sufficient'&&!/\b(?:by itself|by themselves|alone|on (?:its|their) own|itself|themselves)\b/i.test(quote))r=r.replace(/ by itself /,' ');
   if(st.hedge)r=`(${st.hedge}) `+r;if(st.polarity==='negative')r='It is not the case that '+r.replace(/^Limitation: /,'');st.rendered=r;st.selfCheck=renderSelfCheck(ann.checkAgainst??quote,st.rendered);};
- const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){const m=re.exec(cl);if(!m)continue;
-   const g=m.groups??{};const idx=(m as RegExpExecArray&{indices?:{groups?:Record<string,[number,number]|undefined>}}).indices?.groups??{};
+ const byPattern=(b:DocBlock,cl:string,header?:string)=>{for(const {def,res} of C.compiled)for(const re of res){
+  // a relation word rejected by the noun guard is masked and the pattern tried again, so a later relation word in the
+  // same clause is still found ("temperature control are interacting variables")
+  let probe=cl;for(let attempt=0;attempt<4;attempt++){const m=re.exec(probe);if(!m)break;
+   const idx=(m as RegExpExecArray&{indices?:{groups?:Record<string,[number,number]|undefined>}}).indices?.groups??{};
+   const g:Record<string,string|undefined>={};for(const [k,v] of Object.entries(m.groups??{}))g[k]=v===undefined?undefined:idx[k]?cl.slice(idx[k]![0],idx[k]![1]):v;
    if(RELATIONAL.has(def.type)){
     // the group before the relation word and the one after it, whatever their roles
     const order=(['subject','object'] as const).filter(k=>g[k]!==undefined&&idx[k]).sort((a,c)=>idx[a]![0]-idx[c]![0]);
     const pre=order.length===2?order[0]:(order[0]&&idx[order[0]]![0]===0?order[0]:null),post=order.length===2?order[1]:(order[0]&&idx[order[0]]![0]>0?order[0]:null);
     const lastPre=pre?(g[pre]!.trim().split(/\s+/).pop()??''):'',firstPost=post?(g[post]!.trim().split(/\s+/)[0]??''):'';
     // a relation word in noun or adjective position is not a relation ("temperature control are", "with lower rating")
-    if((pre&&NOUN_BEFORE.test(lastPre))||(post&&NOUN_AFTER.test(firstPost)))continue;
+    if((pre&&NOUN_BEFORE.test(lastPre))||(post&&NOUN_AFTER.test(firstPost))){
+     const a=pre?idx[pre]![1]:0,z=post?idx[post]![0]:probe.length;if(z<=a)break;probe=probe.slice(0,a)+probe.slice(a,z).replace(/[A-Za-z]/g,'q')+probe.slice(z);continue;}
     let polarity:'positive'|'negative'='positive',hedge:string|null=null;const v:Record<string,string|undefined>={...g};
     if(pre){const n=NEG_TAIL.exec(v[pre]!);if(n){polarity='negative';v[pre]=v[pre]!.slice(0,n.index).trim();}
      const h=HEDGE_TAIL.exec(v[pre]!);if(h){hedge=h[0].trim().toLowerCase();v[pre]=v[pre]!.slice(0,h.index).trim();}}
@@ -180,7 +191,7 @@ export function translateDocument(qk:QuantityKnowledge,md:string,opts:{source:st
     if(cx&&post){push(b,def.type,cl,post==='subject'?cx[1]:v.subject,post==='object'?cx[1]:v.object,'pattern',header,v.verb,{polarity,hedge,checkAgainst:cl.replace(/(?:,\s+(?:and\s+)?|\s+but\s+)not\s+.+$/i,'')});
      push(b,def.type,cl,post==='subject'?cx[2]:v.subject,post==='object'?cx[2]:v.object,'pattern',header,v.verb,{polarity:polarity==='positive'?'negative':'positive',hedge});return true;}
     push(b,def.type,cl,v.subject,v.object,'pattern',header,v.verb,{polarity,hedge});return true;}
-   push(b,def.type,cl,g.subject,g.object,'pattern',header,g.verb,{extra:g});return true;}return false;};
+   push(b,def.type,cl,g.subject,g.object,'pattern',header,g.verb,{extra:g});return true;}}return false;};
  for(const b of blocks){
   if(b.kind==='table_row'&&b.cells){
    const subj=b.cells.find(c=>headerRole(C.cues,c.header)==='subject')?.text??b.cells[0]?.text;

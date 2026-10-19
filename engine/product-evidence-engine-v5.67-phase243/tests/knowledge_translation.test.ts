@@ -237,3 +237,14 @@ test('audit S77: condition acquisition is case-insensitive and keeps values neve
  const ps=acquireConditionAxes(qk,[{source:'d',md:'Compare new versus aged filters.\nFit HEPA/carbon filters.\n- Filter condition: new | aged'}],distinctionQuestions(two));
  const merged=ps.find(p=>'hepa' in p.values&&'aged' in p.values);assert.equal(merged,undefined,'new/aged and hepa/carbon are not one axis');
 });
+test('audit S77 (regression of the first fix): plural table headers keep their role; a relative "that" before a verb is not a determiner', ()=>{
+ const s=tr('| Technology | Risks and limitations |\n|---|---|\n| UV-C lamp | ozone and lamp exposure risks |');
+ assert.ok(s.some(x=>x.type==='limitation'&&/UV-C lamp/.test(x.rendered)),'"limitations" is the limitation role');
+ assert.ok(tr('Whole-bird geometry and drippings that require separate testing.').some(x=>x.type==='requires'));
+ // a rejected relation word does not hide a later one in the same clause
+ assert.ok(tr('Filter control knob placement affects reach.').some(x=>x.type==='depends_on'&&/reach/.test(x.object?.text??'')));
+});
+test('audit S77: "by itself" is rendered only when the source says it', ()=>{
+ assert.ok(tr('Particle CADR does not establish gas removal.').some(x=>x.type==='not_sufficient'&&!/by itself/.test(x.rendered)));
+ assert.ok(tr('Particle CADR does not by itself establish gas removal.').some(x=>x.type==='not_sufficient'&&/by itself/.test(x.rendered)));
+});

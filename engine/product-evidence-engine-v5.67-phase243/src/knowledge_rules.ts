@@ -92,7 +92,8 @@ export interface Absence {pred:string;pattern:(Const|null)[];inputPredicate:bool
 export interface Fact {pred:string;args:Const[];rule:string|null;bindings:Record<string,Const>|null;premises:Fact[];absences?:Absence[]}
 const key=(p:string,a:readonly Const[])=>p+'('+a.join('\u0001')+')';
 const num=(x:Const)=>/^-?\d+(?:\.\d+)?$/.test(x)?Number(x):null;
-const cmp=(op:string,a:Const,b:Const)=>{if(op==='=')return a===b;if(op==='!=')return a!==b;const x=num(a),y=num(b);if(x===null||y===null)return op==='<'?a<b:a>b;return op==='<'?x<y:x>y;};
+const cmp=(op:string,a:Const,b:Const)=>{if(op==='=')return a===b;if(op==='!=')return a!==b;const x=num(a),y=num(b);if(x===null||y===null){const c=String(a).localeCompare(String(b),'en',{numeric:true});return op==='<'?c<0:c>0;}// audit S77: "s10" > "s9" (was code-unit order)
+ return op==='<'?x<y:x>y;};
 export class Model {
  private byPred=new Map<string,Map<string,Fact>>();
  constructor(readonly program:CompiledProgram,readonly record:string='record'){}

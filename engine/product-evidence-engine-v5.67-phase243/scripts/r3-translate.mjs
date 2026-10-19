@@ -23,6 +23,10 @@ const COMPAT={limitation:['limitation','not_sufficient','not_comparable','applic
  mechanism:['depends_on','increases','decreases'],physical_relation:['depends_on','increases','decreases','composed_of'],chemical_relation:['depends_on','increases','decreases'],
  compound_procedure:['composed_of','measured_by','method_step'],applicability:['applicability','not_comparable','limitation','requires'],definition:['composed_of','measured_by','definition'],
  quantitative_evidence:['quantitative_finding'],expert_judgement:['bears_on_outcome','limitation','not_sufficient'],consumer_outcome:['bears_on_outcome'],conflict:['not_comparable'],source_observation:['measured_by','limitation','quantitative_finding']};
+// audit S77 (A4-3): proposed_method (79 inventory units) and hypothesis (3) had no compatible statement type, so they could
+// never be reached, nor could the new is_not statements (kt-cues.3); R3_COMPAT=v1 reproduces the first table
+if(process.env.R3_COMPAT!=='v1'){COMPAT.proposed_method=COMPAT.experimental_method;COMPAT.hypothesis=['depends_on','increases','decreases','not_sufficient'];
+ for(const t of ['definition','limitation','applicability','conflict'])COMPAT[t]=[...COMPAT[t],'is_not'];}
 const C={};const inc=(k,n=1)=>C[k]=(C[k]??0)+n;const detail={};
 for(const [cat,d] of Object.entries(split.docs)){const md=readFileSync(join(PE,'r1v/packages',d.file),'utf8');
  const items=store.categoryItems246(cat).filter(i=>i.concept);const concepts=items.map(i=>({id:i.concept.id,statement:i.statement,aliases:i.concept.aliases}));
@@ -36,7 +40,7 @@ for(const [cat,d] of Object.entries(split.docs)){const md=readFileSync(join(PE,'
  inc('statements_supported',supported.filter(Boolean).length);for(const s of r.statements){inc('stype:'+s.type);inc('typed:'+s.typedness);}
  detail[cat]={statements:r.statements,reachedUnits:units.filter((u,i)=>reached[i]).map(u=>u.id)};}
 store.close();
-const pub={schema:'pee.r3.translate.v1',label,side,generatedAt:new Date().toISOString(),cues:KT.loadTranslationCues().cues.version,
+const pub={schema:'pee.r3.translate.v1',label,side,generatedAt:new Date().toISOString(),cues:KT.loadTranslationCues().cues.version,compat:process.env.R3_COMPAT==='v1'?'v1':'v2',
  tier:side==='dev'?'development sections (the translator is built on them)':'held-out sections (sealed split; inventory sealed before the translator was frozen)',counts:C};
 writeFileSync(OUT,JSON.stringify(pub,null,1)+'\n');mkdirSync(join(PE,'r3/runs'),{recursive:true});writeFileSync(join(PE,'r3/runs',`translate-${label}.json`),JSON.stringify({...pub,detail},null,1)+'\n');
 const k=Object.keys(C).filter(x=>!x.includes(':')).map(x=>x+'='+C[x]).join(' ');console.log(k);

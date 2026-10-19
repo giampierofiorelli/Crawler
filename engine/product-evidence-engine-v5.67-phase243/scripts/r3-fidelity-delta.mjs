@@ -14,8 +14,12 @@ const key=s=>s.quote+'\u0000'+s.type+'\u0000'+s.rendered;const dir=join(PE,'fide
 const out={schema:'pee.r3.fidelity.v1',label:nw,base,side:B.side,generatedAt:new Date().toISOString(),tuned:true,
  judges:'changed items: fresh-context agents of the developer model family, blind to the translator; unchanged items carry over the base judgements; not independent human validation',categories:{}};
 for(const cat of Object.keys(B.detail)){const units=JSON.parse(readFileSync(join(PE,'inventory',`${cat}-${B.side}.json`),'utf8')).units;
- const bi=JSON.parse(readFileSync(join(PE,'fidelity',base,`in-${cat}.json`),'utf8')),bo=JSON.parse(readFileSync(join(PE,'fidelity',base,`out-${cat}.json`),'utf8'));
- const baseSt=new Map(A.detail[cat].statements.map(s=>[key(s),s.id]));const bj=new Map(bo.statements.map(x=>[x.id,x]));const bu=new Map(bo.units.map(x=>[x.unit,x]));
+ // audit S77 (A4): a base that is itself a delta carries its own base's judgements (chain resolved by statement key)
+ const judged=(lab)=>{const o=JSON.parse(readFileSync(join(PE,'fidelity',lab,`out-${cat}.json`),'utf8'));const pf=`evaluation/r3/fidelity-${lab}.json`;
+  const prev=existsSync(pf)&&JSON.parse(readFileSync(pf,'utf8')).base?judged(JSON.parse(readFileSync(pf,'utf8')).base):{st:new Map(),un:new Map()};
+  const R=run(lab).detail[cat].statements;const byId=new Map(o.statements.map(x=>[x.id,x]));
+  for(const st of R){const x=byId.get(st.id);if(x)prev.st.set(key(st),x);}for(const u of o.units)prev.un.set(u.unit,u);return prev;};
+ const J=judged(base);const baseSt=new Map(A.detail[cat].statements.map(s=>[key(s),key(s)]));const bj=J.st;const bu=J.un;
  const stmts=B.detail[cat].statements;const changed=stmts.filter(s=>!baseSt.has(key(s)));
  const at=(d,u)=>{const [a,b]=span(u);return d.statements.filter(s=>s.provenance.line>=a&&s.provenance.line<=b).map(s=>s.type+'|'+s.rendered).sort().join('\n');};
  const chU=units.filter(u=>at(A.detail[cat],u)!==at(B.detail[cat],u));

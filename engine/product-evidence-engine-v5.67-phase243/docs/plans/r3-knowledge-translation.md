@@ -413,3 +413,94 @@ the lexical identifier, and still promotes 7 related concepts to identity. The e
 integrated; the harness is kept for reproduction. R3 continues on the other established bottlenecks (§9): extraction
 and representation of status, compound procedures, expert judgements and conflicts; reading of the evidence role
 (declared or measured) of page values.
+
+## 14. Architecture audit (owner S77, 2026-10-19): findings, corrections, measured effects
+
+Scope: the whole chain behind the R3 alignment results (owner documents → translation → concept representation →
+identity validation → store → retrieval → link and evidence → consumers), legacy components included. Method: read
+the execution paths actually used (versions, files, defaults), trace authentic failures (U1 particle CADR limit, U2
+air-fryer power and capacity), re-run the committed scorers, and re-derive counts. No external material, no new owner
+attachment, no new model experiment except one re-run whose earlier conclusion rested on a defective readout (§14.4).
+All judgements below are by fresh-context agents of the developer model family, blind to the mechanism: same-model
+annotation, **not** independent validation. Every held-out set used here was already examined: all after-change
+figures on it are **TUNED**.
+
+### 14.1 Classification of verified findings
+
+| # | Area | Finding | Class | Action |
+|---|---|---|---|---|
+| T1–T15 | Translator (`knowledge_translation.ts`) | lost negation and hedges in relations; "A is B, not C" (452 occurrences in the packages, 40 translated) unread; a relation word in noun position read as a verb ("temperature control are …" → `depends_on`); subject heads dropping "of" complements; decimals read as versions; abbreviations ending sentences; header roles by substring; table headers stating a relation ignored; case-sensitive condition acquisition merging disjoint value sets; role-restricted limits applied to values of unknown role | bugs | fixed (kt-cues.3, tests); measured §14.2 |
+| T16 | Translator, first fix | whole-word header roles lost plural headers ("Risks and limitations", "traps"); the noun guard stopped at the first rejected relation word and treated relative "that" as a determiner | regression introduced by the audit itself, found by the held-out reach drop 289 → 273 | fixed: stem-based header roles, masked retry, demonstratives removed |
+| T17 | Translator rendering | `not_sufficient` always rendered "does not *by itself* establish", weakening a plain "does not establish" (4 partials in the blind check) | bug | fixed after the check (rendering only; not re-judged) |
+| Q1–Q15 | Reader / quantity knowledge | value-level evidence class decided by sentence and headings before the value's own clause; generic words naming specific metrics ("energy label", "brightness", "latency"); hyphen/space phrase mismatch; recurring cost read as an estimate without cost context; narrow first-person test cues; narrative test reports on a page that declares its own test left `unknown` (1G row-order layout, /24h, P1e conditions, noise kind, short units: recorded, not changed) | bugs and missing capability | evidence class, qk.2.4, hyphen, cost context, page-level test rule fixed; rest recorded |
+| S1 | Production ranking `outcomeAuthorised270` (`phase253_request_advice.ts:172`) | every `measured_by` relation authorises ranking, including the 36 the store qualifies as informing only | unsupported inference in production | **not changed** (ranking protected): owner decision needed, proposal §14.5 |
+| S2 | same, `:176` | required conditions pooled across all measurements relevant to the need, so one measurement's conditions bind another's | architectural limitation | not changed, owner decision |
+| S3 | `relations247` | relations whose `item:` endpoint was superseded stayed active (dehumidifiers 10 → 6) | bug | fixed earlier in the audit |
+| S4–S9 | Store | duplicate concept ids; concept-less items dropped by `teachingView`; no representation for conditions, scope, status, negation, procedures, conflicts; attribute endpoints unvalidated; relation kinds no consumer reads | architectural limitations / missing capabilities | recorded; they bound what translation can ever deliver to the store |
+| S10 | Datalog engine (`knowledge_rules.ts`) | `<`/`>` on non-numbers compared code units ("s10" < "s9") | bug | fixed (numeric-aware collation; ISO dates unchanged) |
+| S11 | Documentation | `knowledge_link.ts` header named link-rules v1 (v6 runs); 14 scripts hard-code the store path | stale documentation / fragility | header fixed; paths recorded |
+| E1 | S76 LLM arm (`validate.py`) | label readout took only the first token of the lowercase forms: "narrower" was the token "n", capitalised answers ("Exact", the usual first word of a reply) were discarded | evaluation defect | fixed (full-sequence readout over four surface forms); re-run §14.4 |
+| E2 | Reach metric (`r3-translate.mjs`) | `proposed_method` (79 units) and `hypothesis` (3) had no compatible statement type; `is_not` none | evaluation defect: §4 and later reach figures understate | fixed (`compat v2`; `R3_COMPAT=v1` reproduces the old table) |
+| E3 | Fidelity delta scorer | a base that is itself a delta did not carry its own base's judgements | evaluation defect (would have shown 713 items "missing") | fixed (chain resolved) |
+| E4 | Limits judgement | the same (category, value, limit) recurs across sets; the tuned file was written by hand | evaluation defect | per-distinct counts; `carry` mode writes the tuned file |
+| E5 | Alignment references | candidates were retrieved lexically before annotation, so "22/25 in top 3" measures the retriever against its own candidates (circular); recall denominators omit identities the retriever never proposed | evaluation defect / unsupported claim | corrected below; not re-run |
+| E6 | Reported numbers | C7 → C8 changed 28 decisions, not 12 (C8d filter axis 16); align1 on transfer made 5 identifications (1 correct, 20%), not 4 (25%); decision_usable on s1cd +1, not +6; funnel stage 1b is co-location, not judgement; freezes are checked by scorers, not at run time; NLI variant was not recorded in outputs | reporting errors | corrected here; NLI variant and LLM readout now recorded |
+
+Earlier sections are not rewritten: these rows are the dated correction notes for §4, §5, §9, §10, §12 and §13.
+
+### 14.2 Measured effects of the corrections
+
+| Measure | Before | After | Tier |
+|---|---|---|---|
+| Held-out translation, blind fidelity (577 statements; only changed items re-judged, 51) | faithful 367, partial 106, distorted 29, unjustified 47 | faithful 404, partial 107, distorted 22, unjustified 44 | TUNED, same-model judges |
+| Held-out units (740), blind coverage | captured 265, omitted 332, distorted 28 | captured 289, omitted 314, distorted 22 | TUNED, same-model judges |
+| Held-out reach, old table / corrected table | 289 / — | 287 / 343 | mechanical, development measure |
+| Development reach, old table / corrected table | 479 / — | 502 / 520 | development |
+| Evidence role of 327 page values vs sealed blind reference (local text only) | agree 35, missed measured 79, asserted where text cannot tell 78 | agree 113, missed measured 0, asserted 95, wrong 2 (unchanged) | development (spent pages) |
+| Link outcomes p272 / s1cd / af | — | unchanged on every arm | development |
+| Proxy limits, per distinct (category, value, limit) | 14 of 56 apply (25%) | 12 of 28 apply (43%), 8 true but trivial, 7 not about the value, 0 harmful | first run / TUNED |
+
+The 17 values newly asserted as publisher measurements (95 − 78) are on pages that declare their own test; the
+reference annotator saw only the value's sentence, so it could not tell. They are plausible but not validated: a
+page-context reference would be needed to score them.
+
+### 14.3 What the audit establishes about the alignment failures
+
+The repeated alignment failures were not only model limitations. Of the four ingredients the S76 decision rested on,
+one was defective (LLM readout, E1), one overstated (retrieval circularity, E5), and the translator feeding the
+mentions had 15 defects that removed or distorted knowledge before any alignment (T1–T15). The NLI result (4 of 14
+fresh identities, 7 related concepts promoted) is unaffected by these defects and stands.
+
+### 14.4 The S76 LLM arm re-run with a valid readout (development reference only)
+
+Qwen2.5-1.5B on the 393 development pairs, labels scored by full-sequence probability over four surface forms
+(`LLM_READOUT=seq`, recorded in the output). The six labels now carry a median 95.5% of the next-token probability, so
+the first readout's loss was real but small. Result unchanged: 0 correct identities at every threshold, with or without
+the type gate; the model still scores real identities (median 0.10) below hierarchical relations (0.42). Cost 3.2 s per
+pair. The S76 conclusion therefore stands on a valid measurement; a transfer re-run is not justified and was not made.
+
+### 14.5 Proposal for the owner (production ranking; not implemented)
+
+`outcomeAuthorised270` should count a `measured_by` relation as establishing an outcome only when its qualification
+does not say it merely informs (36 relations in the store today), and should check required conditions per
+measurement, not pooled across the need. Both make ranking stricter, never looser; both change production behaviour,
+so they wait for an owner decision.
+
+### 14.6 Outcome
+
+- **Trustworthy (verified on authentic material in this audit):** the KR engine and the lk.6 link program (derivations
+  re-derived; one comparison bug fixed); the reader's typed quantities and attribution on the R2 sets (link outcomes
+  unchanged by every correction); the translator's statement provenance and render-back self-check; the sealed blind
+  references and their hash checks.
+- **Not yet validated:** translator fidelity after the corrections (TUNED: the held-out sections were examined); the
+  page-level evidence-role rule (17 values the reference cannot decide); proxy-limit applicability (TUNED, 28 distinct
+  pairs); every alignment arm on new categories beyond the single transfer first run.
+- **What actually constrains R3:** (1) the store cannot represent conditions, scope, status, negation, procedures or
+  conflicts (S6), so faithful translation cannot reach reasoning; (2) identity knowledge (equivalence, hierarchy) is
+  absent: neither lexical, distributional nor the tested small models supply it; (3) 314 of 740 held-out units are
+  still omitted (practitioner judgements, compound procedures, causal claims); (4) evaluation rests on same-model
+  annotation.
+- **Consequences for the MVP:** advice can use translated limits only as labelled caveats (shadow) until (1) is
+  solved; ranking stays on signed catalogs and taught `measured_by` relations, with the two stricter rules of §14.5 as
+  the next owner decision; concept alignment for new categories needs taught equivalences or owner-reviewed mappings,
+  not a model.
