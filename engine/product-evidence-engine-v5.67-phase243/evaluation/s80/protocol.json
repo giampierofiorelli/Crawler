@@ -1,0 +1,58 @@
+{
+ "schema": "pee.s80.e2e-protocol.v1",
+ "committedBefore": "any request to the hosts below; any reading of these pages by PEE; any reference annotation",
+ "owner": "S80 (skill references/owner-r3-consolidation-2026-10-19.md): priority 3 independent end-to-end validation, priority 4 targeted fixes; exit criteria C3 and C4 (roadmap R3-C)",
+ "frozenBuild": {"commit": "0567e96", "srcTree": "c0acf6daeab895677f1d45b2e53cca63795cb65d", "resourcesTree": "9bec96bfa703f4b3d051bafe2d01d24cccb44648",
+  "rule": "every first run executes a git worktree of this commit; harness scripts may be added later but only call existing operational functions and never change algorithms or knowledge resources"},
+ "sets": {
+  "D": "diagnostic: run once on the frozen build (first run, committed unchanged); its failures guide the S80-4 fixes",
+  "H": "held back: pages fetched with D but their reference is sealed and NO PEE output on them is produced or looked at until the S80-4 fixes are committed; then run once with the frozen build and once with the fixed build (C4)"
+ },
+ "requests": [
+  {"id": "D1", "set": "D", "category": "air_fryers", "author": "owner (translated to English by Claude)", "text": "I want an air fryer that cooks two foods well at the same time, and uses less electricity than a conventional oven."},
+  {"id": "D2", "set": "D", "category": "dishwashers", "author": "Claude", "text": "Which dishwasher gets baked-on dishes properly clean on a short programme without using a lot of water?"},
+  {"id": "D3", "set": "D", "category": "air_purifiers", "author": "Claude", "text": "I need an air purifier for a 25 square metre bedroom that is quiet enough to sleep with and actually removes smoke particles."},
+  {"id": "H1", "set": "H", "category": "air_fryers", "author": "Claude", "text": "I live alone and want a compact air fryer that makes crispy chips without heating up the whole kitchen like the oven does."},
+  {"id": "H2", "set": "H", "category": "dishwashers", "author": "Claude", "text": "We're a family of four with an open-plan kitchen: which dishwasher dries plastic containers properly and is quiet while running?"},
+  {"id": "H3", "set": "H", "category": "air_purifiers", "author": "Claude", "text": "Which air purifier is best for hay fever in a 40 m² living room, for under £300?"}
+ ],
+ "sources": [
+  {"request": "D1", "tag": "s80-d1-a", "url": "https://www.trustedreviews.com/reviews/haier-i-master-series-3-flex-double-drawer-air-fryer"},
+  {"request": "D1", "tag": "s80-d1-b", "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/bosch-series-6-double-stack-air-fryer-mafd661b0g-review"},
+  {"request": "D2", "tag": "s80-d2-a", "url": "https://www.trustedreviews.com/reviews/samsung-series-6-waterjet-clean-dw60dg760fslu4"},
+  {"request": "D2", "tag": "s80-d2-b", "url": "https://www.trustedreviews.com/reviews/hisense-hi9-hs693a90adbx"},
+  {"request": "D3", "tag": "s80-d3-a", "url": "https://housefresh.com/levoit-vital-100-review/"},
+  {"request": "D3", "tag": "s80-d3-b", "url": "https://housefresh.com/smart-air-sa600-review/"},
+  {"request": "H1", "tag": "s80-h1-a", "url": "https://www.trustedreviews.com/reviews/ninja-crispi"},
+  {"request": "H1", "tag": "s80-h1-b", "url": "https://www.expertreviews.co.uk/home-garden/small-appliances/air-fryers/instant-pot-vortex-compact-5l-air-fryer-review"},
+  {"request": "H2", "tag": "s80-h2-a", "url": "https://www.trustedreviews.com/reviews/lg-truesteam-quadwash-df455hms-freestanding-dishwasher"},
+  {"request": "H2", "tag": "s80-h2-b", "url": "https://www.trustedreviews.com/reviews/aeg-comfortlift-integrated-dishwasher"},
+  {"request": "H3", "tag": "s80-h3-a", "url": "https://housefresh.com/coway-airmega-prox-review/"},
+  {"request": "H3", "tag": "s80-h3-b", "url": "https://housefresh.com/coway-airmega-300-review/"}
+ ],
+ "sourceSelection": {
+  "by": "Claude (PEE has no configured search service: Phase223 needs an operator SearXNG endpoint). This is a limit of the path, reported as such, never as PEE capability.",
+  "how": "web search restricted to the three hosts; selection on result titles and URLs. The search tool also returned short summaries of some pages' content, so the selection was not blind to content (recorded).",
+  "novelty": "every URL is absent from the store and from every committed or private evaluation file (982 URLs checked); products absent from the store's 200 products by name and model (one candidate, Instant Vortex Plus Dual Drawer, and one Ninja AF300 page were replaced for that reason)"
+ },
+ "budget": {"hosts": ["www.trustedreviews.com", "www.expertreviews.co.uk", "housefresh.com"], "maxHosts": 3, "maxRequests": 20, "planned": "3 robots.txt + 12 pages = 15 (3 spare for redirects or a failure)", "maxPerHost": 8, "politenessMs": 5000},
+ "stopOn": ["robots disallow or unavailable", "robots Content-Signal ai-input=no", "HTTP 401/403/429 (host suspended, never retried)", "paywall, login or CAPTCHA"],
+ "retention": "page bytes only in the private evaluation directory (never Git); PEE's own ingestion only into a COPY of the store; nothing ingested into the live store during S80-3",
+ "reference": {
+  "author": "a fresh-context agent of the developer model family, given the page text and the requests, never any PEE output: same-model annotation, NOT independent human validation",
+  "sealed": "SHA-256 of the reference file committed before the first run of the set it covers",
+  "perRequest": ["goals the user wants (outcomes and stated limits)", "evidence that would establish each goal, and known proxies", "correct decision type given the evidence on the pages: justified ranking | labelled partial comparison | precise missing evidence"],
+  "perPage": ["reviewed product and exact model", "sampled values: printed text, product, kind (independent test measurement | manufacturer or retailer declaration | estimate or calculation | not a result: setting, price, tariff, range, hypothetical)", "test conditions stated for each measurement"]
+ },
+ "stages": {
+  "S1_goals": "needs and limits recognised vs reference (recall, precision)",
+  "S2_evidence_needed": "the advice names the measurements that would establish each goal and rejects the reference's proxies",
+  "S3_reading": "reference values found by PEE's readers on the pages (sampled recall)",
+  "S4_attribution": "found values attributed to the correct product (wrong-product count)",
+  "S5_classification": "found values classified as the reference does (measurement vs declaration vs not a result); validation accepts only valid measurements",
+  "S6_decision": "decision type equals the reference's; when no ranking, the stated missing evidence matches the reference's"
+ },
+ "firstFailingStage": "per request, the earliest stage below the reference",
+ "tiers": "T2 authentic controlled: authentic pages, real components, store copy, any catalog signed with an ephemeral evaluation key; requests 5 of 6 and sources chosen by Claude, reference by the same model family: not author-independent",
+ "c4": "after S80-4 fixes: H run once with the frozen build and once with the fixed build; success = a better end-to-end outcome on H by the stage scores, with no new wrong-product attribution and no new unjustified conclusion; otherwise R3 stays open and the result is reported as it is"
+}
