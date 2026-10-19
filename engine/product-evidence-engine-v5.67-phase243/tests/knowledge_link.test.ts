@@ -13,7 +13,8 @@ const q=(o:{kind?:string|null;candidates?:string[];metric?:string|null;condition
  metric:{id:o.metric??null,candidates:[],basis:[]},weighting:null,reference:null,
  conditions:(o.conditions??[]).map(([axis,value])=>({axis,value,raw:value,from:'labels' as const})),missingConditions:o.missing??[],unresolved:[],knowledge:'test',
  source:null,protocol:null,cohort:null,product:null,contextScope:null});
-const v=(id:string,o:Parameters<typeof q>[0],product='Acme P1',source='doc-1'):LinkValue=>({id,quantity:q(o),product,source});
+// S71: by default a value comes from one identified test of its source; tests that need otherwise say so
+const v=(id:string,o:Parameters<typeof q>[0],product='Acme P1',source='doc-1',test:string|null='test-1'):LinkValue=>({id,quantity:q(o),product,source,test});
 const concept=(id:string,statement='Measured as stated.')=>({id,statement,aliases:[]});
 type M=TeachingView['measurements'][number];
 const meas=(id:string,outcomes:[string,'direct'|'partial'|'unverified'][],extra:Partial<M>={}):M=>({concept:concept(id),outcomes:outcomes.map(([outcome,force])=>({outcome,force,relation:'r_'+id+'_'+outcome})),indirectFor:[],conditions:[],...extra});
@@ -108,7 +109,7 @@ test('R2 metamorphic: renaming the product keeps every link and force; removing 
 });
 
 test('R2 rules: no link without a candidate, no direct or partial force without its conditions (shape over the rule set)', ()=>{
- const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v3.json',import.meta.url),'utf8')) as RuleSet;
+ const rs=JSON.parse(readFileSync(new URL('../../resources/quantity-knowledge/link-rules.v4.json',import.meta.url),'utf8')) as RuleSet;
  loadLinkRules(rs);
  const rules=rs.programs.flatMap(p=>p.rules);
  for(const r of rules.filter(r=>/^linked(_equivalent)?\(/.test(r.rule)))assert.match(r.rule,/:- (chosen|assumed)\(/,r.id);
@@ -142,7 +143,7 @@ test('S69 a standalone power value cannot establish a curve or the outcome the c
 
 test('S69 aligned observations support a point; incompatible settings or methods do not; two points support a partial relationship', ()=>{
  const aligned=linkValues(qk,CURVE,[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2')]);
- assert.deepEqual(aligned.relationships.map(x=>x.kind+':'+x.setting+':'+x.basis),['aligned_point:speed 2:same_document']);
+ assert.deepEqual(aligned.relationships.map(x=>x.kind+':'+x.setting+':'+x.basis),['aligned_point:speed 2:same_test']);
  assert.equal(aligned.outcomes.find(o=>o.outcome==='quiet_night_operation')?.assessment,'direct_evidence');
  // incompatible operating conditions: the noise was measured at another setting
  const off=linkValues(qk,CURVE,[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n3','sound_pressure_level','speed 3')]);
@@ -198,10 +199,60 @@ test('S70 an aligned point needs shown compatibility: one source, or a method st
  assert.deepEqual(clash.relationships,[]);
 });
 
-test('S70 a direct relation through a measurement PEE cannot fully read is capped at partial', ()=>{
+test('S70/S71 a direct relation through a measurement PEE cannot fully read has unresolved force, not partial', ()=>{
  const t=view([meas('mode_power_and_tco',[['energy_cost','direct']],{conditions:[PAIRING]})]);
  const r=linkValues(qk,t,[at('w2','power','speed 2')]);
  assert.ok(r.descriptors[0].untyped.includes('tco'));
- assert.deepEqual(res(r,'w2').evidence.map(e=>e.force),['partial']);
- assert.equal(r.outcomes.find(o=>o.outcome==='energy_cost')?.assessment,'partial_contributions');
+ assert.deepEqual(res(r,'w2').evidence.map(e=>e.force),['unresolved']);
+ assert.equal(r.outcomes.find(o=>o.outcome==='energy_cost')?.assessment,'force_unresolved');
+});
+
+// S71 (owner review, 2026-10-19): positive compatibility; test identity; unresolved versus verified partial force.
+const noTest=(x:LinkValue):LinkValue=>({...x,test:null});
+test('S71 sharing a document is not a common protocol: without an identified test or a shared stated method there is no point', ()=>{
+ const vals=[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2')];
+ const none=linkValues(qk,CURVE,vals.map(noTest));
+ assert.deepEqual(none.relationships.map(x=>x.kind),['compatibility_not_shown']);
+ assert.equal(none.outcomes.find(o=>o.outcome==='quiet_night_operation'),undefined);
+ // no source at all: still no compatibility (missing information is never compatibility)
+ const nosrc=linkValues(qk,CURVE,vals.map(x=>({...x,source:null,test:null})));
+ assert.deepEqual(nosrc.relationships.map(x=>x.kind),['compatibility_not_shown']);
+ // positive: one identified test; metamorphic: renaming the source keeps the verdict, removing one test id withdraws it
+ assert.deepEqual(linkValues(qk,CURVE,vals).relationships.map(x=>x.kind+':'+x.basis),['aligned_point:same_test']);
+ assert.deepEqual(linkValues(qk,CURVE,vals.map(x=>({...x,source:'other-doc'}))).relationships.map(x=>x.kind+':'+x.basis),['aligned_point:same_test']);
+ assert.deepEqual(linkValues(qk,CURVE,[noTest(vals[0]),vals[1],vals[2]]).relationships.map(x=>x.kind),['compatibility_not_shown']);
+ // two tests of one document are not one protocol, unless they state the same method
+ assert.deepEqual(linkValues(qk,CURVE,[vals[0],{...vals[1],test:'test-2'},vals[2]]).relationships.map(x=>x.kind),['compatibility_not_shown']);
+ const m=(x:LinkValue,t:string):LinkValue=>({...x,test:t,quantity:{...x.quantity,conditions:[...x.quantity.conditions,{axis:'method',value:'aham ac-1',raw:'AHAM AC-1',from:'labels'}]}});
+ assert.deepEqual(linkValues(qk,CURVE,[m(vals[0],'t1'),m(vals[1],'t2'),m(vals[2],'t3')]).relationships.map(x=>x.kind+':'+x.basis),['aligned_point:stated_method']);
+});
+
+test('S71 every condition the set requires must be stated by every member', ()=>{
+ const t=view([meas('cadr_noise_power_by_fan_setting',[['quiet_night_operation','direct']],{conditions:[PAIRING,concept('distance_stated','Condition: noise is reported at a stated measurement distance.')]})]);
+ const vals=[at('w2','power','speed 2'),CADR('c2','speed 2'),at('n2','sound_pressure_level','speed 2')];
+ assert.deepEqual(linkValues(qk,t,vals).relationships.map(x=>x.kind),['compatibility_not_shown']);
+ const all=vals.map(x=>({...x,quantity:{...x.quantity,conditions:[...x.quantity.conditions,{axis:'measurement_distance',value:'1 m',raw:'1 m',from:'labels' as const}]}}));
+ assert.deepEqual(linkValues(qk,t,all).relationships.map(x=>x.kind),['aligned_point']);
+});
+
+test('S71 observation identity comes from the test: two tests with one number are two; one test reported twice is one; unknown is neither', ()=>{
+ const twoTests=linkValues(qk,CURVE,[at('w2','power','speed 2'),{...at('w2b','power','speed 2'),test:'test-2'}]);
+ assert.deepEqual(twoTests.repeatedReports,[]);assert.notEqual(res(twoTests,'w2').observation,res(twoTests,'w2b').observation);
+ const oneTest=linkValues(qk,CURVE,[at('w2','power','speed 2'),at('w2b','power','speed 2')]);
+ assert.deepEqual(oneTest.repeatedReports,[['w2','w2b']]);
+ const unknown=linkValues(qk,CURVE,[noTest(at('w2','power','speed 2')),noTest(at('w2b','power','speed 2'))]);
+ assert.deepEqual(unknown.repeatedReports,[]);assert.equal(res(unknown,'w2').observation,null);
+ // contributions resting on unknown identities are not a complete set (independence not established)
+ const t=view([meas('particle_cadr_x',[['o','partial']]),meas('power_by_fan_setting',[['o','partial']],{conditions:[PAIRING]})]);
+ assert.equal(linkValues(qk,t,[CADR('c2','speed 2'),{...at('w2','power','speed 2'),source:'doc-2'}]).outcomes.find(o=>o.outcome==='o')?.assessment,'all_listed_contributions');
+ assert.equal(linkValues(qk,t,[noTest(CADR('c2','speed 2')),{...at('w2','power','speed 2'),source:'doc-2'}]).outcomes.find(o=>o.outcome==='o')?.assessment,'partial_contributions');
+});
+
+test('S71 verified partial stays partial; unresolved never becomes direct; a complete translation keeps direct (metamorphic)', ()=>{
+ const part=linkValues(qk,view([meas('mode_power_and_tco',[['energy_cost','partial']],{conditions:[PAIRING]})]),[at('w2','power','speed 2')]);
+ assert.deepEqual(res(part,'w2').evidence.map(e=>e.force),['partial']);
+ const unres=linkValues(qk,view([meas('mode_power_and_tco',[['energy_cost','direct']],{conditions:[PAIRING]})]),[at('w2','power','speed 2')]);
+ assert.ok(!unres.outcomes.some(o=>o.assessment==='direct_evidence'));
+ const typed=linkValues(qk,view([meas('power_by_fan_setting',[['energy_cost','direct']],{conditions:[PAIRING]})]),[at('w2','power','speed 2')]);
+ assert.equal(typed.outcomes.find(o=>o.outcome==='energy_cost')?.assessment,'direct_evidence');
 });

@@ -30,8 +30,8 @@ import {namedPhrases,normText,parseUnit,type QuantityKnowledge,type TypedQuantit
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {relations247} from './phase247_category_relations.js';
 
-/** lk.3 (owner review S70); link-rules.v1.json (lk.1) and v2 (lk.2, S69) stay loadable to reproduce earlier runs. */
-export const LINK_RULES_FILE='link-rules.v3.json';
+/** lk.4 (owner review S71); v1 (lk.1), v2 (lk.2, S69) and v3 (lk.3, S70) stay loadable to reproduce earlier runs. */
+export const LINK_RULES_FILE='link-rules.v4.json';
 const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 
 /** A teaching concept as the store holds it: its id (the concept's name), its statement and aliases. */
@@ -131,14 +131,17 @@ export function loadLinkRules(rs?:RuleSet):{rules:Map<string,CompiledProgram>;ve
 
 /** A value the newer reader found, as the link needs it. */
 export interface LinkValue {id:string;quantity:TypedQuantity;product:string|null;
- /** S70: the source document (and, when known, the test) the value comes from: an observation's provenance */
- source?:string|null}
+ /** S70: the source document the value comes from */
+ source?:string|null;
+ /** S71: the identified test (experiment) the value comes from, within its source, when the reader knows it (a named test,
+  * the protocol statement that covers it). Absent = unknown, never assumed. */
+ test?:string|null}
 export type LinkStatus='linked'|'linked_condition_not_shown'|'linked_equivalent'|'ambiguous'|'member_only'|'no_taught_measurement'|'not_linked';
 export interface LinkResult {value:string;status:LinkStatus;measurements:string[];
  /** S69: the analytical sets the value is a member of (not exclusive, not evidence of the set's relationship) */
  memberships:string[];
- /** S69: the original observation the value reports (shared by repeated reports) */
- observation:string;
+ /** S69/S71: the original observation the value reports (shared by repeated reports); null = identity unknown */
+ observation:string|null;
  /** what the value bears on: outcome, force (direct, partial, unverified, indirect, conditions_not_shown), measurement */
  evidence:{outcome:string;force:string;measurement:string}[];
  /** for an ambiguity: condition axes that would decide it and the value does not state; empty = nothing in the
@@ -169,17 +172,24 @@ export function measurandGroups(d:MeasurementDescriptor):{group:string;kinds:str
   g.kinds.add(m.kind);if(m.metric)g.metrics.add(m.metric);g.from.add(m.from);}
  return gs.map(g=>({group:[...g.from].sort().join('+'),kinds:[...g.kinds].sort(),metrics:[...g.metrics].sort()}));
 }
-/** S69/S70: the identity of an original observation is its provenance: the source document, product, measured
- * property, value and conditions. One figure printed twice in one document (a table and the prose) is one observation;
- * the same number from two sources is two observations. A value without a known source or product is its own. */
-export function observationKey(v:LinkValue):string{const q=v.quantity;
- if(!v.source||!v.product)return 'unique:'+v.id;
+/** S69-S71: the identity of an original observation (SOSA/SSN: the act of observation, not its numerical result). It is
+ * established only from an identified test within a known source: then one test reported twice (a table and the prose)
+ * is one observation, and two tests with the same number are two. Without a test identity it is null: neither
+ * equivalence nor independence is assumed. */
+export function observationKey(v:LinkValue):string|null{const q=v.quantity;
+ if(!v.source||!v.product||!v.test)return null;
  const prop=q.metric.id??q.kind.id??q.kind.candidates.join('|');const val=q.si?.value??q.value;
- return [v.source,v.product,prop,String(val),q.conditions.map(c=>c.axis+'='+c.value).sort().join(';')].join('\u0001');
+ return [v.source,v.test,v.product,prop,String(val),q.conditions.map(c=>c.axis+'='+c.value).sort().join(';')].join('\u0001');
+}
+/** S71: the test identity a reading supplies for a value, when it has one: the protocol statement that covers the value
+ * (QK), or the named test the reader attached as its method ("our particle removal test"). Never the page alone. */
+export function readerTestIdentity(q:TypedQuantity):string|null{
+ if(q.protocol)return 'protocol:'+q.protocol;const m=q.conditions.find(c=>c.axis==='method'&&/\b(?:test|tests|testing|benchmark|trial)\b/.test(c.value));
+ return m?'named_test:'+m.value:null;
 }
 /** The input facts of the `link` program for a set of values and descriptors (exported for tests and the census). */
 export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDescriptor[],values:readonly LinkValue[],qk?:QuantityKnowledge):Record<string,(string|number)[][]>{
- const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],observation:[],incomplete:[],closed_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
+ const I:Record<string,(string|number)[][]>={value:[],value_kind:[],value_metric:[],value_condition:[],value_missing:[],value_product:[],value_source:[],value_test:[],observation:[],incomplete:[],closed_axis:[],operating_axis:[],measurement:[],measures:[],measures_metric:[],group_kind:[],group_metric:[],fixes:[],requires_axis:[],leads_to:[],indirect_for:[]};
  for(const v of values){const q=v.quantity;I.value.push([v.id]);
   for(const k of q.kind.id?[q.kind.id]:q.kind.candidates)I.value_kind.push([v.id,k]);
   if(q.metric.id)I.value_metric.push([v.id,q.metric.id]);
@@ -187,14 +197,15 @@ export function linkFacts(view:TeachingView,descriptors:readonly MeasurementDesc
   for(const a of q.missingConditions)I.value_missing.push([v.id,a]);
   if(v.product)I.value_product.push([v.id,v.product]);
   if(v.source)I.value_source.push([v.id,v.source]);
-  I.observation.push([v.id,observationKey(v)]);}
+  if(v.test&&v.source)I.value_test.push([v.id,v.source+'#'+v.test]);
+  const ok=observationKey(v);if(ok)I.observation.push([v.id,ok]);}
  for(const d of descriptors){I.measurement.push([d.id]);if(d.untyped.length)I.incomplete.push([d.id]);
   for(const g of measurandGroups(d)){for(const k of g.kinds)I.group_kind.push([d.id,g.group,k]);for(const x of g.metrics)I.group_metric.push([d.id,g.group,x]);}
   for(const m of d.measurands){if(m.metric)I.measures_metric.push([d.id,m.metric,m.level]);
    if(!m.metric||m.level==='head')I.measures.push([d.id,m.kind,m.level]);}
   for(const f of d.fixed)I.fixes.push([d.id,f.axis,f.value]);for(const a of d.axes)I.requires_axis.push([d.id,a.axis]);}
  for(const m of view.measurements){for(const o of m.outcomes)I.leads_to.push([m.concept.id,o.outcome,o.force]);for(const o of m.indirectFor)I.indirect_for.push([m.concept.id,o]);}
- if(qk)for(const a of qk.axes.values())if(Object.keys(a.values??{}).length)I.closed_axis.push([a.id]);
+ if(qk)for(const a of qk.axes.values()){if(Object.keys(a.values??{}).length)I.closed_axis.push([a.id]);if(a.operatingCondition)I.operating_axis.push([a.id]);}
  for(const k of Object.keys(I))I[k]=[...new Map(I[k].map(r=>[r.join('\u0001'),r])).values()];
  return I;
 }
@@ -209,6 +220,7 @@ export function linkValues(qk:QuantityKnowledge,view:TeachingView,values:readonl
  const ml=evaluate(link,only(link,I),{record:'the values and the teaching view'});
  const pass=(m:Model,pred:string)=>m.all(pred).map(f=>f.args);
  const me=evaluate(ev,only(ev,{...I,member:pass(ml,'member'),member_group:pass(ml,'member_group'),
+  identity_unknown:pass(ml,'identity_unknown'),
   link_to:[...pass(ml,'linked').map(a=>[a[0],a[1]]),...pass(ml,'linked_equivalent')],assumes_condition:pass(ml,'linked').filter(a=>a[2]==='condition_not_shown').map(a=>[a[0],a[1]])}),
   {record:'the links and the teaching view'});
  const results:LinkResult[]=values.map(v=>{const linked=ml.match('linked',[v.id,null,null]),eq=ml.match('linked_equivalent',[v.id,null]),amb=ml.match('ambiguous',[v.id,null]);

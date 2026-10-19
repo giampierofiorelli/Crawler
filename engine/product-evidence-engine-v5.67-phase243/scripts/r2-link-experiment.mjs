@@ -9,6 +9,9 @@
  *   C3   lk.1: taught measurements translated into typed descriptors; link and force by the KR programs link/evidence
  *   C3k  ablation: C3 with the descriptors' condition values and axes removed (what conditions decide)
  *   C3m  ablation: C3 with metrics removed (kinds only: what metrics decide)
+ *   C6   lk.4 (owner review S71): positive compatibility only (one identified test, or a shared stated method, with every
+ *        required condition stated); observation identity only from an identified test; unresolved force (not partial)
+ *        through an incompletely translated measurement. The test identity comes from the reader (readerTestIdentity).
  *   C5   lk.3 (owner review S70): observation identity by provenance; aligned points need shown compatibility; direct
  *        force capped at partial through a measurement whose translation is incomplete
  *   C4   lk.2 (owner S69): one observation, several analytical uses (a value describes one measurement and may be a member
@@ -20,18 +23,34 @@
  *         and a blind link reference annotated after this build was frozen (evaluation/r2/freeze-s1cd.json). The link
  *         mechanism was never developed on them; the pages were used before to develop other readers (attribution,
  *         tables), so they are not untouched documents.
- *   node scripts/r2-link-experiment.mjs LABEL --set p272|s1cd  -> evaluation/r2/link-LABEL.json (counts),
+ *   af    the air-fryer test pages of Phases 268 (held-out), 270 and 271 with their sealed value references, and a blind
+ *         link reference annotated after the lk.4 build froze (evaluation/r2/freeze-af.json). Never used for the link.
+ *   node scripts/r2-link-experiment.mjs LABEL --set p272|s1cd|af  -> evaluation/r2/link-LABEL.json (counts),
  *                                                               private detail in $PE/r2/link-LABEL.json
  */
 import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
 const args=process.argv.slice(2);const label=args[0];const set=args[args.indexOf('--set')+1];
-const OUT=`evaluation/r2/link-${label}.json`;if(!label||existsSync(OUT)||!['p272','s1cd'].includes(set))throw Error('usage: LABEL (new) --set p272|s1cd');
+const OUT=`evaluation/r2/link-${label}.json`;if(!label||existsSync(OUT)||!['p272','s1cd','af'].includes(set))throw Error('usage: LABEL (new) --set p272|s1cd|af');
 const sha=b=>createHash('sha256').update(b).digest('hex');const D=new URL('../dist/src/',import.meta.url).href;
 const PE=process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval');
 const TAUGHT=['air_fryers','coffee_machines','dehumidifiers','dishwashers','air_purifiers','televisions'];
 // a set: documents (tag, category, html, sourceType), gold values (id, doc, value, unit, subject), the link reference and its freeze
 let SET;
-if(set==='p272'){const DIR=join(PE,'phase272');const fz=JSON.parse(readFileSync('evaluation/r1/link-reference-freeze.json','utf8'));
+/** Set af: the air-fryer test pages of Phases 268 (held-out), 270 and 271, with their sealed value references. */
+function afSet(PE){const docs=[],gold=[];
+ const add=(dir,tag,vals)=>{const W=JSON.parse(readFileSync(join(PE,dir,'wave.json'),'utf8'));const page=(W.pages??[]).find(p=>p.tag===tag)??{tag,url:'',sourceType:'independent_original_test',sha256:''};
+  if(!existsSync(join(PE,dir,'raw',tag+'.html'))||!vals.length)return;
+  docs.push({tag,category:'air_fryers',html:()=>readFileSync(join(PE,dir,'raw',tag+'.html'),'utf8'),page});gold.push(...vals);};
+ for(const dir of ['phase270','phase271']){const G=JSON.parse(readFileSync(join(PE,dir,'untouched-extraction-gold.json'),'utf8'));
+  const vs=G.quantitative.map((v,i)=>({id:`${dir}:q${i+1}`,doc:v.doc,value:v.value,unit:v.unit,subject:v.subject,conditions:[...(v.conditions??[]),...(v.food?['food '+v.food]:[])],note:String(v.measurand??'').replace(/_/g,' ')}));
+  for(const t of [...new Set(vs.map(v=>v.doc))])add(dir,t,vs.filter(v=>v.doc===t));}
+ const H=JSON.parse(readFileSync(join(PE,'phase268','gold-heldout.json'),'utf8'));
+ for(const d of H.documents)add('phase268',d.tag,d.measurements.map((m,i)=>({id:`phase268:${d.tag}:${i+1}`,doc:d.tag,value:m.value,unit:m.unit,subject:d.subject,conditions:m.conditions??[],note:String(m.measurand??'')})));
+ return {docs,gold};}
+if(set==='af'){const fz=JSON.parse(readFileSync('evaluation/r2/freeze-af.json','utf8'));if(!fz.reference)throw Error('af link reference not sealed yet');
+ for(const f of fz.reference.files)if(sha(readFileSync(join(PE,'r2/links-af',f.file)))!==f.sha256)throw Error('link reference changed: '+f.file);
+ SET={...afSet(PE),links:fz.reference.files.filter(f=>/^gold-/.test(f.file)).flatMap(f=>JSON.parse(readFileSync(join(PE,'r2/links-af',f.file),'utf8')).links)};}
+else if(set==='p272'){const DIR=join(PE,'phase272');const fz=JSON.parse(readFileSync('evaluation/r1/link-reference-freeze.json','utf8'));
  for(const f of fz.files)if(sha(readFileSync(join(PE,'r1v/links',f.file)))!==f.sha256)throw Error('link reference changed: '+f.file);
  const G=JSON.parse(readFileSync(join(DIR,'gold-untouched.json'),'utf8'));const W=JSON.parse(readFileSync(join(DIR,'wave.json'),'utf8'));
  SET={docs:G.documents.map(d=>({tag:d.tag,category:d.category,html:()=>readFileSync(join(DIR,'raw',d.tag+'.html'),'utf8'),page:W.pages.find(x=>x.tag===d.tag)})),
@@ -71,7 +90,8 @@ function typedLink(plan,q,text){const ks=q.kind.id?[q.kind.id]:q.kind.candidates
  if(sc[0].s>0&&sc[0].s>(sc[1]?.s??0))return {status:'linked',ms:[sc[0].m.id]};return {status:'ambiguous',ms:cands.map(m=>m.id)};}
 const LK1=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v1.json','utf8'));
 const LK2=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v2.json','utf8'));
-const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
+const LK3=JSON.parse(readFileSync('resources/quantity-knowledge/link-rules.v3.json','utf8'));
+const ARMS=['A','C1','C2','C3','C3k','C3m','C4','C5','C6'];const C=Object.fromEntries(ARMS.map(a=>[a,{}]));const inc=(a,k)=>C[a][k]=(C[a][k]??0)+1;const detail=[];
 /** one outcome per value and arm, in both directions */
 function score(ref,status,ms){
  const linkedSet=['linked','linked_condition_not_shown','linked_equivalent'].includes(status)?ms:[];
@@ -112,35 +132,43 @@ for(const d of SET.docs){const p=d.page;const html=d.html();const url=p.finalUrl
   C3m:KL.linkValues(qk,views[d.category],values,{descriptors:ablate(desc[d.category],'metrics')})};
  for(const a of ['C3','C3k','C3m'])runs[a]=KL.linkValues(qk,views[d.category],values,{rules:LK1,descriptors:a==='C3'?desc[d.category]:ablate(desc[d.category],a==='C3k'?'conditions':'metrics')});
  runs.C4=KL.linkValues(qk,views[d.category],values,{rules:LK2,descriptors:desc[d.category]});
- runs.C5=KL.linkValues(qk,views[d.category],values,{descriptors:desc[d.category]});
+ runs.C5=KL.linkValues(qk,views[d.category],values,{rules:LK3,descriptors:desc[d.category]});
+ const values6=values.map(x=>({...x,test:KL.readerTestIdentity(x.quantity)}));
+ runs.C6=KL.linkValues(qk,views[d.category],values6,{descriptors:desc[d.category]});
+ for(const x of runs.C6.relationships)inc('C6',x.kind+(x.basis?':'+x.basis:''));for(const _ of runs.C6.repeatedReports)inc('C6','repeated_reports');
+ for(const x of values6)inc('C6',x.test?'test_identity_known':'test_identity_unknown');
+ for(const o of runs.C6.outcomes)inc('C6','outcome_'+o.assessment);for(const o of runs.C5.outcomes)inc('C5','outcome_'+o.assessment);
+ for(const r of runs.C6.results)for(const e of r.evidence)inc('C6','force_'+e.force);for(const r of runs.C5.results)for(const e of r.evidence)inc('C5','force_'+e.force);
  for(const x of runs.C5.relationships)inc('C5',x.kind+(x.basis?':'+x.basis:''));for(const _ of runs.C5.repeatedReports)inc('C5','repeated_reports');
  for(const x of runs.C4.relationships)inc('C4',x.kind);
  // S69: a set's force (direct, partial, unverified) carried by a value without an aligned point is an unjustified conclusion
  const sets=new Set(desc[d.category].filter(x=>KL.measurandGroups(x).length>1).map(x=>x.id));
  const alignedAt=new Set(runs.C4.relationships.filter(x=>x.kind==='aligned_point').map(x=>x.product+'|'+x.measurement+'|'+x.setting));
  const alignedAt5=new Set(runs.C5.relationships.filter(x=>x.kind==='aligned_point').map(x=>x.product+'|'+x.measurement+'|'+x.setting));
- for(const a of ['C3','C4','C5'])for(const r of runs[a].results){const v=values.find(x=>x.id===r.value);
+ const alignedAt6=new Set(runs.C6.relationships.filter(x=>x.kind==='aligned_point').map(x=>x.product+'|'+x.measurement+'|'+x.setting));
+ for(const a of ['C3','C4','C5','C6'])for(const r of runs[a].results){const v=values.find(x=>x.id===r.value);
   for(const e of r.evidence.filter(e=>sets.has(e.measurement)&&['direct','partial','unverified'].includes(e.force))){
-   const ok=v.quantity.conditions.some(c=>(a==='C5'?alignedAt5:alignedAt).has(v.product+'|'+e.measurement+'|'+c.value));inc(a,ok?'set_force_on_aligned_point':'set_force_without_aligned_point_UNJUSTIFIED');}}for(const _ of runs.C4.repeatedReports)inc('C4','repeated_reports');
+   const ok=v.quantity.conditions.some(c=>(a==='C6'?alignedAt6:a==='C5'?alignedAt5:alignedAt).has(v.product+'|'+e.measurement+'|'+c.value));inc(a,ok?'set_force_on_aligned_point':'set_force_without_aligned_point_UNJUSTIFIED');}}for(const _ of runs.C4.repeatedReports)inc('C4','repeated_reports');
  for(const m of matched){const ref=LG.get(m.g.id)?.measurement??'missing';const prod=!m.r.product?'missing':sameProduct(m.g.subject,m.r.product)?'correct':'wrong';const row={id:m.g.id,cat:d.category,ref,product:prod,subject:m.r.product,conds:m.r.q.conditions.map(c=>c.axis+'='+c.value)};
   for(const a of ARMS.filter(a=>a!=='A')){inc(a,'gold_values');inc(a,'found');inc(a,'product_'+prod);let status,ms,ev=[];
    if(a==='C1'){const l=linkToMeasure272(plans[d.category],m.r.text,m.r.rawUnit.replace(/^[^A-Za-z°%µ]*/,''))?.measureId??null;status=l?'linked':'not_linked';ms=l?[l]:[];}
    else if(a==='C2'){const t=typedLink(plans[d.category],m.r.q,m.r.text);status=t.status==='linked'?'linked':t.status;ms=t.ms;}
-   else{const r=runs[a].results.find(x=>x.value===m.id);status=r.status;ms=r.measurements;ev=r.evidence;var mem=r.memberships??[];if(a==='C3'||a==='C4'||a==='C5')row[a]={status,ms,mem,deciding:r.decidingAxes,evidence:ev,derivation:r.derivation.slice(0,12)};}
-   const s=(a==='C4'||a==='C5')?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
+   else{const r=runs[a].results.find(x=>x.value===m.id);status=r.status;ms=r.measurements;ev=r.evidence;var mem=r.memberships??[];if(['C3','C4','C5','C6'].includes(a))row[a]={status,ms,mem,deciding:r.decidingAxes,evidence:ev,derivation:r.derivation.slice(0,12)};}
+   const s=['C4','C5','C6'].includes(a)?score4(ref,status,ms,mem):score(ref,status,ms);inc(a,'link_'+s);row[a+'_score']=s;
    if(GOOD.has(s)&&prod==='correct'){inc(a,'decision_usable_correct');
-    if(a.startsWith('C3')||a==='C4'||a==='C5'){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
+    if(a.startsWith('C3')||['C4','C5','C6'].includes(a)){const f=ev.filter(e=>ms.includes(e.measurement)||(a.startsWith('C3')?false:(mem??[]).includes(e.measurement))).map(e=>e.force);inc(a,'decision_usable_force_'+(f.includes('direct')?'direct':f.includes('partial')?'partial':f.includes('unverified')?'unverified':f.includes('unresolved')?'unresolved':f.includes('conditions_not_shown')?'conditions_not_shown':f.includes('indirect')?'indirect':f.includes('component_only')?'component_only':'no_outcome'));}}}
   detail.push(row);}}
 // both directions, per value: C3 against C2
 const cls=s=>GOOD.has(s)?'good':BAD.has(s)?'bad':'abstain';
 const T={};for(const r of detail){const k=cls(r.C2_score)+'->'+cls(r.C3_score);T[k]=(T[k]??0)+1;}
 const T4={};for(const r of detail){const k=cls(r.C3_score)+'->'+cls(r.C4_score);T4[k]=(T4[k]??0)+1;}
 const T5={};for(const r of detail){const k=cls(r.C4_score)+'->'+cls(r.C5_score);T5[k]=(T5[k]??0)+1;}
+const T6={};for(const r of detail){const k=cls(r.C5_score)+'->'+cls(r.C6_score);T6[k]=(T6[k]??0)+1;}
 const descriptorCensus=Object.fromEntries(cats.map(c=>[c,{measurements:desc[c].length,withHeadMeasurand:desc[c].filter(x=>x.measurands.some(m=>m.level==='head')).length,
  withFixedConditions:desc[c].filter(x=>x.fixed.length).length,withAxes:desc[c].filter(x=>x.axes.length).length,withUntypedWords:desc[c].filter(x=>x.untyped.length).length}]));
 const pub={schema:'pee.r2.link-experiment.v1',label,generatedAt:new Date().toISOString(),set,
- tier:set==='p272'?'Phase272 untouched set: SPENT (R1 tuning and R2 diagnosis inspected its link reference). Development evidence; never held-out.':'Step 1C + 1D-B pages of taught categories: link reference blind and sealed after the build froze; the link mechanism was never developed on them; the pages served earlier reader development (not untouched documents).',
- rules:KL.loadLinkRules().version,forceOverlay:overlay.id,descriptorCensus,arms:C,c2ToC3:T,c3ToC4:T4,c4ToC5:T5};
+ tier:set==='af'?'Air-fryer test pages of Phases 268/270/271: link reference blind and sealed after the lk.4 build froze; never used to develop the link (the pages served Phase268-271 extraction development).':set==='p272'?'Phase272 untouched set: SPENT (R1 tuning and R2 diagnosis inspected its link reference). Development evidence; never held-out.':'Step 1C + 1D-B pages of taught categories: link reference blind and sealed after the build froze; the link mechanism was never developed on them; the pages served earlier reader development (not untouched documents).',
+ rules:KL.loadLinkRules().version,forceOverlay:overlay.id,descriptorCensus,arms:C,c2ToC3:T,c3ToC4:T4,c4ToC5:T5,c5ToC6:T6};
 writeFileSync(OUT,JSON.stringify(pub,null,1)+'\n');mkdirSync(join(PE,'r2'),{recursive:true});
 writeFileSync(join(PE,'r2',`link-${label}.json`),JSON.stringify({...pub,descriptors:desc,detail},null,1)+'\n');
-for(const a of ARMS)console.log(a,JSON.stringify(C[a]));console.log('C2->C3',JSON.stringify(T));console.log('C3->C4',JSON.stringify(T4));console.log('C4->C5',JSON.stringify(T5));
+for(const a of ARMS)console.log(a,JSON.stringify(C[a]));console.log('C2->C3',JSON.stringify(T));console.log('C3->C4',JSON.stringify(T4));console.log('C4->C5',JSON.stringify(T5));console.log('C5->C6',JSON.stringify(T6));
