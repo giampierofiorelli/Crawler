@@ -21,6 +21,6 @@ for(const c of cats){const items=store.categoryItems246(c);const needs=[...new S
   const r1=a1.ok?'authorised':a1.reason,r2=a2.ok?'authorised':a2.reason;inc(C.ra1_own,r1);inc(C.ra2_own,r2);inc(T,'ra1:'+r1);inc(T,'ra2:'+r2);
   if(r1!==r2){C.disagree++;inc(T,'changed:'+r1+'->'+r2);}
   // pooled: ra.1 asks for every condition of every measurement of the need; with only this measurement's met, it refuses
-  if(a1.ok===false&&a1.reason==='conditions_not_met'){C.ra1_pooledOnly++;inc(T,'ra1_refused_by_other_measurements_conditions');}}}
+  if(a1.ok===false&&(a1.reason==='conditions_not_met'||a1.reason==='conditions_not_verified')){C.ra1_pooledOnly++;inc(T,'ra1_refused_by_other_measurements_conditions');}}}
  out.categories[c]=C;}
 store.close();mkdirSync('evaluation/s78',{recursive:true});writeFileSync(OUT,JSON.stringify(out,null,1)+'\n');console.log(JSON.stringify(out.totals));

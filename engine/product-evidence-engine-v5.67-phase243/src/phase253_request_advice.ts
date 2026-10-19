@@ -205,13 +205,13 @@ function dimensionMeasure269(d:KnowledgeDimension181,measureIds:ReadonlySet<stri
  * score at all (raw quantities never rank). The explicit policy behind any ranking is therefore the category teaching
  * ('measured_by' and 'requires_condition' relations, cited to their sources) plus the signed catalog. */
 export function outcomeAuthorised270(k:{relevant:readonly string[];proxies:readonly string[];conditions:readonly string[]}|undefined,d:KnowledgeDimension181,measure:string|null):
- {ok:true}|{ok:false;reason:'no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_met'|'raw_quantity_not_a_score'}{
+ {ok:true}|{ok:false;reason:'no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_verified'|'raw_quantity_not_a_score'}{
  if(d.valueKind==='raw_quantity_only')return {ok:false,reason:'raw_quantity_not_a_score'};
  if(!k)return {ok:false,reason:'no_category_teaching'};
  if(!measure)return {ok:false,reason:'unknown_measurement'};
  if(k.proxies.includes(measure))return {ok:false,reason:'known_proxy'};
  if(!k.relevant.includes(measure))return {ok:false,reason:'no_measured_by_relation'};
- if(!k.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_met'};
+ if(!k.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_verified'};
  return {ok:true};
 }
 /** S78 ranking authorisation ra.2 (owner S78 §2: "a measured_by relationship must not automatically establish an
@@ -225,7 +225,7 @@ export const RANKING_AUTHORISATION_VERSION='ra.2';
 /** The rule that decides when the caller names none: ra.2 since the S78 shadow census (evaluation/s78/authorisation-census-live-1.json),
  * applied restrict-only since S79 (outcomeAuthorisedRelease); ra.1 stays callable for comparison only. */
 export const DEFAULT_RANKING_AUTHORISATION:'ra.1'|'ra.2'='ra.2';
-export type AuthorisationRefusal='no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_met'|'raw_quantity_not_a_score'|
+export type AuthorisationRefusal='no_category_teaching'|'unknown_measurement'|'no_measured_by_relation'|'known_proxy'|'conditions_not_verified'|'raw_quantity_not_a_score'|
  'sufficiency_not_established'|'sufficiency_only_informs'|'sufficiency_contested'|'new_authorisation_pending_validation';
 export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:ReadonlyMap<string,{sufficiency:string;conditions:readonly string[]}>}|undefined,d:KnowledgeDimension181,measure:string|null):
  {ok:true}|{ok:false;reason:AuthorisationRefusal}{
@@ -237,7 +237,9 @@ export function outcomeAuthorisedRa2(k:{proxies:readonly string[];byMeasure:Read
  if(m.sufficiency==='contested')return {ok:false,reason:'sufficiency_contested'};
  if(m.sufficiency==='informs_only')return {ok:false,reason:'sufficiency_only_informs'};
  if(m.sufficiency!=='established')return {ok:false,reason:'sufficiency_not_established'};
- if(!m.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_met'};
+ // S83: a required condition the catalog does not show is NOT VERIFIED (was 'conditions_not_met'): the refusal stands,
+ // but the absence of a record is never stated as a failure of the products
+ if(!m.conditions.every(c=>(d.conditionsMet??[]).includes(c)))return {ok:false,reason:'conditions_not_verified'};
  return {ok:true};
 }
 /** S79 (owner release-safety review): the rule that decides in production. ra.2's safeguards apply in full, but ra.2 may
@@ -418,10 +420,10 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
  const dims=(cat?.dimensions??[]).map(d=>({d,m:dimensionMeasure269(d,mIds)}));
  const single=needs.includes('single_compartment_use');
  const outcomes:GoalAssessment253['outcomes']=know.map(k=>{
-  if(CONTEXT_NEEDS269.has(k.need))return {need:k.need,coverage:'context',relevantMeasures:[],rejectedProxies:[],requiredConditions:[],incomparable:[]};
+  if(CONTEXT_NEEDS269.has(k.need))return {need:k.need,coverage:'context',relevantMeasures:[],rejectedProxies:[],conditionsByMeasure:[],incomparable:[]};
   const proxyDims=dims.filter(x=>x.m&&k.proxies.includes(x.m)).map(x=>x.m!);
   return {need:k.need,coverage:assessed.has(k.need)?'assessed':proxyDims.length?'proxy_only':'unassessed',relevantMeasures:k.relevant,rejectedProxies:k.proxies,
-   requiredConditions:k.conditions,incomparable:[...new Set(proxyDims)],...(assessed.has(k.need)?{assessedBy:dims.filter(x=>x.d.key===k.need).map(x=>x.m??x.d.key)}:{})};});
+   conditionsByMeasure:[...k.byMeasure.entries()].sort(([a],[b])=>a.localeCompare(b)).map(([measure,i])=>({measure,conditions:[...i.conditions]})),incomparable:[...new Set(proxyDims)],...(assessed.has(k.need)?{assessedBy:dims.filter(x=>x.d.key===k.need).map(x=>x.m??x.d.key)}:{})};});
  const real=outcomes.filter(o=>o.coverage!=='context');
  // The proxy metric to show separately, when its tested configuration does not contradict the user's stated use.
  const proxy=dims.find(x=>x.m&&x.d.valueKind==='raw_quantity_only'&&PARTIAL_COMPARISON_POLICY270.protocolVersions.includes(x.d.protocolVersion)&&real.some(o=>o.incomparable.includes(x.m!)));
@@ -463,19 +465,24 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
  let altComparison:GoalAssessment253['alternativeComparison'];
  if(askedClass)for(const o of real){
   const m=o.relevantMeasures.find(x=>COMPARATIVE_MEASURES271[x]);if(!m)continue;
-  const ev=comparativeEvidence271(store,m,askedClass,o.requiredConditions);if(!ev||!ev.experiments)continue;
-  // Conditions no comparable group satisfies (the best evidence available, not the union of every group's gaps).
-  const usable=ev.groups.filter(g=>g.comparableWithinExperiment);
-  const missing=o.requiredConditions.filter(c=>(usable.length?usable:ev.groups).every(g=>g.conditionsMissing.includes(c)));
-  o.comparativeEvidence={measure:m,experiments:ev.experiments,sameClassComparable:ev.sameClassComparable,crossClass:ev.crossClass,conditionsMissing:missing};
-  if(!ev.sameClassComparable)out.statements.push(`Original test evidence for ${st(m)} exists (${ev.experiments} experiment${ev.experiments>1?'s':''}), but no experiment measures two ${st(askedClass)}s under the same conditions, so it cannot show which ${st(askedClass)} uses less${missing.length?`; not recorded: ${missing.map(st).join(', ')}`:''}.`);
+  // S83: the conditions of THIS measurement (per measurement, not pooled per need), each verified, incompatible or not
+  // verifiable in the evidence; one not verifiable is a gap in the record, never a failure of the product
+  const conds=o.conditionsByMeasure.find(x=>x.measure===m)?.conditions??[];
+  const ev=comparativeEvidence271(store,m,askedClass,conds);if(!ev||!ev.experiments)continue;
+  // Conditions no comparable group verifies (the best evidence available, not the union of every group's gaps).
+  const usable=ev.groups.filter(g=>g.comparableWithinExperiment);const base=usable.length?usable:ev.groups;
+  const stateIn=(g:typeof ev.groups[number],c:string)=>g.conditions.find(x=>x.condition===c)?.state;
+  const notVerifiable=conds.filter(c=>base.every(g=>stateIn(g,c)!=='verified')&&!base.every(g=>stateIn(g,c)==='incompatible'));
+  const incompatible=conds.filter(c=>base.length>0&&base.every(g=>stateIn(g,c)==='incompatible'));
+  o.comparativeEvidence={measure:m,experiments:ev.experiments,sameClassComparable:ev.sameClassComparable,crossClass:ev.crossClass,conditionsNotVerifiable:notVerifiable,conditionsIncompatible:incompatible};
+  if(!ev.sameClassComparable)out.statements.push(`Original test evidence for ${st(m)} exists (${ev.experiments} experiment${ev.experiments>1?'s':''}), but no experiment measures two ${st(askedClass)}s under the same conditions, so it cannot show which ${st(askedClass)} uses less${notVerifiable.length?`; not verifiable from the records: ${notVerifiable.map(st).join(', ')}`:''}.`);
   // The user's own alternative (named in the request): within-experiment comparisons with that equipment class only.
   if(decision==='no_purchase_check'){
    const alts=new Set(applianceMentions270(out.text).map(x=>x.cls).filter(c=>c!==askedClass));
    for(const g of ev.groups.filter(g=>g.comparableWithinExperiment)){
     const a=g.items.find(i=>i.equipmentClass===askedClass),b=g.items.find(i=>alts.has(i.equipmentClass as never));if(!a||!b)continue;
     (altComparison??=[]).push({host:g.host,url:g.url,task:g.task,measure:m,asked:{subject:a.subject,identity:a.identity,value:a.value,unit:a.unit},
-     alternative:{equipmentClass:b.equipmentClass,subject:b.subject,identity:b.identity,value:b.value,unit:b.unit},conditionsMissing:g.conditionsMissing});}
+     alternative:{equipmentClass:b.equipmentClass,subject:b.subject,identity:b.identity,value:b.value,unit:b.unit},conditionsNotVerifiable:g.conditions.filter(x=>x.state==='not_verifiable').map(x=>x.condition)});}
    if(alts.size&&!altComparison)out.statements.push(`No retained experiment compares a ${st(askedClass)} with the ${[...alts].map(st).join(' or ')} you have.`);
   }
  }
@@ -484,8 +491,8 @@ function goalAssessment269(store:KnowledgeStore246,out:Advice253,assessed:Readon
   const a=altComparison[0];
   out.statements.push(`Original test evidence (${byHost.join(', ')}; publisher-reported, not reviewed by PEE): for the same dishes, the ${st(askedClass!)} tested${a.asked.subject?` (${a.asked.subject})`:''} used ${altComparison.map(c=>`${c.asked.value} ${u(c.asked.unit)} against ${c.alternative.value} ${u(c.alternative.unit)} for ${c.task?st(c.task):'one dish'}`).join('; ')} in the ${st(a.alternative.equipmentClass)} tested${a.alternative.subject?` (${a.alternative.subject})`:''}. This is one ${st(askedClass!)} against one ${st(a.alternative.equipmentClass)} in one experiment; whether it holds for your ${st(a.alternative.equipmentClass)} is not established.`);
   // Phase272 (owner review §9): comparable within the experiment is not the same as every essential condition met.
-  const unmet=[...new Set(altComparison.flatMap(c=>c.conditionsMissing))];
-  if(unmet.length)out.statements.push(`These results are comparable only within that experiment (same task and food load); the experiment does not record ${unmet.map(st).join(', ')}, which the comparison requires, so it is a conditional comparison, not an established one.`);}
+  const unverifiable=[...new Set(altComparison.flatMap(c=>c.conditionsNotVerifiable))];
+  if(unverifiable.length)out.statements.push(`These results are comparable only within that experiment (same task and food load); the experiment does not record ${unverifiable.map(st).join(', ')}, which the comparison requires, so it is a conditional comparison, not an established one.`);}
  if(decision==='research'||decision==='partial_comparison'||decision==='no_purchase_check'){
   const need=know.filter(k=>!CONTEXT_NEEDS269.has(k.need)&&!assessed.has(k.need)).map(statement).filter((x):x is string=>!!x);
   if(need.length)out.statements.push(`What would answer this: ${need.join('; ')}.`);

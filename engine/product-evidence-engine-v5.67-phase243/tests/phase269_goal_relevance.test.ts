@@ -58,7 +58,8 @@ test('a proxy never ranks: even a catalog that labels the empty-run metric as th
  assert.notEqual(a.response,'ranked_recommendation');assert.equal(a.ordered,false);
  const e=a.goalAssessment!.outcomes.find(o=>o.need==='low_energy_use')!;
  assert.deepEqual([e.coverage,e.relevantMeasures,e.rejectedProxies.includes('energy_empty_run'),e.incomparable],['proxy_only',['energy_per_cooking_task'],true,['energy_empty_run']]);
- assert.deepEqual(e.requiredConditions,['compartments_in_use','completed_doneness','same_food_load']);
+ // S83: conditions per measurement (were pooled per need)
+ assert.deepEqual(e.conditionsByMeasure,[{measure:'energy_per_cooking_task',conditions:['compartments_in_use','completed_doneness','same_food_load']}]);
  assert.ok(a.unassessedObjectives.includes('low_energy_use')&&a.unassessedObjectives.includes('cooking_results'));
  // Phase270: without the teaching, the same catalog no longer ranks: absence of category knowledge is not permission
  // (Phase269 still ranked here; that permissive rule is the defect the owner review identified).

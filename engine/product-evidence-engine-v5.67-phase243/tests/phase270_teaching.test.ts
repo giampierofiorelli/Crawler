@@ -34,7 +34,7 @@ test('the development recognition gaps close through teaching, with the taught m
  assert.ok(!ask(before,U4).needs.includes('cook_two_foods_simultaneously'));
  const u4=ask(after,U4);assert.ok(u4.needs.includes('cook_two_foods_simultaneously'));
  const o=u4.goalAssessment!.outcomes.find(x=>x.need==='cook_two_foods_simultaneously')!;
- assert.deepEqual([o.relevantMeasures,o.requiredConditions,o.coverage],[['two_zone_cooking_test'],['compartments_in_use'],'unassessed']);
+ assert.deepEqual([o.relevantMeasures,o.conditionsByMeasure,o.coverage],[['two_zone_cooking_test'],[{measure:'two_zone_cooking_test',conditions:['compartments_in_use']}],'unassessed']);
  assert.ok(!ask(before,U6).needs.includes('low_energy_use'));assert.ok(ask(after,U6).needs.includes('low_energy_use'));
  const c2=ask(after,C2);assert.ok(c2.needs.includes('espresso_quality'));
  assert.deepEqual(c2.goalAssessment!.outcomes.find(x=>x.need==='espresso_quality')!.relevantMeasures,['espresso_sensory_assessment']);
@@ -46,7 +46,7 @@ test('dehumidifiers: package-B teaching registers the category; every lesson is 
  const a=ask(s,'My bedroom smells damp. Which dehumidifier should I get?');
  assert.equal(a.category,'dehumidifiers');assert.ok(a.needs.includes('moisture_removal'));
  const o=a.goalAssessment!.outcomes.find(x=>x.need==='moisture_removal')!;
- assert.deepEqual([o.relevantMeasures,o.rejectedProxies,o.requiredConditions],[['removal_at_room_conditions'],['attr:capacity'],['matched_temperature_humidity']]);
+ assert.deepEqual([o.relevantMeasures,o.rejectedProxies,o.conditionsByMeasure],[['removal_at_room_conditions'],['attr:capacity'],[{measure:'removal_at_room_conditions',conditions:['matched_temperature_humidity']}]]);
  assert.ok(a.unassessedObjectives.includes('moisture_removal'));assert.notEqual(a.response,'ranked_recommendation');
  const items=s.categoryItems246('dehumidifiers').filter(i=>i.provenance==='assistant_authored_unreviewed'&&i.section!=='user_goals');
  assert.ok(items.length>=8);assert.ok(items.every(i=>/Awaiting source verification|register \(R01-R37\) is missing/.test(i.statement)),'every lesson says its references are unverified');
@@ -62,7 +62,7 @@ test('Phase271: the restored R01-R39 register replaces "awaiting source verifica
  assert.ok(active.every(i=>!/Awaiting source verification/.test(i.statement)));
  assert.ok(active.filter(i=>i.provenance==='assistant_authored_unreviewed').every(i=>/not re-verified by PEE|not reopened by PEE/.test(i.statement)),'no lesson claims PEE verified a source');
  const a=ask(s,'My bedroom smells damp. Which dehumidifier should I get?');const o=a.goalAssessment!.outcomes.find(x=>x.need==='moisture_removal')!;
- assert.deepEqual([o.relevantMeasures,o.rejectedProxies,o.requiredConditions],[['removal_at_room_conditions'],['attr:capacity'],['matched_temperature_humidity']]);
+ assert.deepEqual([o.relevantMeasures,o.rejectedProxies,o.conditionsByMeasure],[['removal_at_room_conditions'],['attr:capacity'],[{measure:'removal_at_room_conditions',conditions:['matched_temperature_humidity']}]]);
  assert.deepEqual(upgradeDehumidifierProvenance271(s,'2026-10-17T12:00:00.000Z').retired,0,'idempotent');
  s.close();
 });

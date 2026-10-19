@@ -55,8 +55,10 @@ test('comparability: within one experiment and task only; a reduced load and a r
  const ev=comparativeEvidence271(s,'energy_per_cooking_task','air_fryer',COND)!;
  assert.equal(ev.experiments,1,'the same experiment republished is one experiment');assert.ok(ev.duplicatesIgnored>0);
  const chicken=ev.groups.find(g=>g.task==='chicken')!,cake=ev.groups.find(g=>g.task==='cake')!;
- assert.equal(chicken.comparableWithinExperiment,true);assert.deepEqual(chicken.conditionsMissing,['compartments_in_use']);
- assert.equal(chicken.comparability,'comparable_with_unmet_conditions','structurally comparable, but a required condition is not recorded');assert.equal(cake.comparability,'not_comparable');
+ assert.equal(chicken.comparableWithinExperiment,true);assert.deepEqual(chicken.conditions.filter(c=>c.state==='not_verifiable').map(c=>c.condition),['compartments_in_use']);
+ // S83: three states; an unrecorded condition is not verifiable (was 'unmet'), a reduced load is a documented incompatibility
+ assert.equal(chicken.comparability,'comparable_conditions_not_verifiable','structurally comparable, but a required condition is not recorded');assert.equal(cake.comparability,'not_comparable');
+ assert.equal(cake.conditions.find(c=>c.condition==='same_food_load')!.state,'incompatible');
  assert.deepEqual([cake.comparableWithinExperiment,cake.reasons],[false,['load_not_matched']]);
  assert.equal(ev.sameClassComparable,0);assert.equal(ev.crossClass,1);
  assert.ok(chicken.items.every(i=>i.unit==='kwh'),'energy groups carry energy only (never cost or time)');

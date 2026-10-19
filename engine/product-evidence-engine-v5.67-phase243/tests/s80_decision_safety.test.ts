@@ -71,7 +71,7 @@ test('S80 C2-A: a withheld authorisation (ra.2 would accept, ra.1 refused) never
  const w=world({secondMeasure:true,establishes:true});
  const a=adviseFromRequest253(REQUEST,w.s,CATEGORY_REGISTRY250,{ranking:ctx(catalog(w.ids,['same_beans_and_grind']))});
  const tr=a.authorisationTrace!.find(t=>t.measure==='espresso_sensory_assessment')!;
- assert.equal(tr.ra2,'authorised');assert.equal(tr.ra1,'conditions_not_met');assert.equal(tr.decision,'new_authorisation_pending_validation');
+ assert.equal(tr.ra2,'authorised');assert.equal(tr.ra1,'conditions_not_verified');assert.equal(tr.decision,'new_authorisation_pending_validation');
  assert.equal(a.rankingAuthorized,false);assert.equal(a.ordered,false);assert.notEqual(a.response,'ranked_recommendation');
  assert.equal(a.ranked??null,null);
  assert.ok(a.unassessedObjectives.some(o=>/best-tasting/.test(o)),'the taste objective stays explicitly unassessed');

@@ -77,7 +77,7 @@ test('§2 negative: no ranking without positive evidence that the measurement es
   ['unknown catalog method (no measureId, no protocol)',w,panel(w.ids,{measureId:undefined}),'unknown measurement'],
   ['missing category teaching',bare,panel(bare.ids),''],
   ['no measurement→outcome relation (a known measurement of another outcome)',w,panel(w.ids,{measureId:'brew_temperature_stability',conditionsMet:['consecutive_shots','same_beans_and_grind']}),'no measured by relation'],
-  ['missing essential experimental condition',w,panel(w.ids,{conditionsMet:[]}),'conditions not met'],
+  ['missing essential experimental condition',w,panel(w.ids,{conditionsMet:[]}),'conditions not verified'],
   // S78: a measured_by relation alone never establishes the outcome
   ['measured_by without any sufficiency assessment',coffee(true,[]),panel(coffee(true,[]).ids),'sufficiency not established'],
   ['the source says the measurement only informs the outcome',coffee(true,['informs_only']),panel(coffee(true,['informs_only']).ids),'sufficiency only informs'],
@@ -201,8 +201,8 @@ test('S78 ra.2: conditions are checked per measurement, never pooled across the 
  const d={...panel({A1:'a1',B2:'b2'}).dimensions[0],conditionsMet:['same_food_load']};
  assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_per_cooking_task'),{ok:true},'the other measurement\'s blinded panel is not a condition of energy');
  assert.deepEqual(outcomeAuthorised270({relevant:[...byMeasure.keys()],proxies:k.proxies,conditions:['blinded_panel','same_food_load']},d,'energy_per_cooking_task'),
-  {ok:false,reason:'conditions_not_met'},'ra.1 pooled the conditions (the defect ra.2 corrects)');
- assert.deepEqual(outcomeAuthorisedRa2(k,{...d,conditionsMet:[]},'energy_per_cooking_task'),{ok:false,reason:'conditions_not_met'});
+  {ok:false,reason:'conditions_not_verified'},'ra.1 pooled the conditions (the defect ra.2 corrects)');
+ assert.deepEqual(outcomeAuthorisedRa2(k,{...d,conditionsMet:[]},'energy_per_cooking_task'),{ok:false,reason:'conditions_not_verified'});
  assert.deepEqual(outcomeAuthorisedRa2(k,d,'energy_empty_run'),{ok:false,reason:'known_proxy'});
  assert.deepEqual(outcomeAuthorisedRa2({proxies:[],byMeasure:new Map([['m',{sufficiency:'unassessed',conditions:[]}]])},d,'m'),{ok:false,reason:'sufficiency_not_established'});
  const w=coffee();const a=advise(w.s,{catalog:signed(panel(w.ids)),authority});

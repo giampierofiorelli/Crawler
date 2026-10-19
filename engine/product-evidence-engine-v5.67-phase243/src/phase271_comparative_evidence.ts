@@ -7,24 +7,34 @@
  *  - results of different experiments are never compared (their protocols are not established as equivalent);
  *  - a duplicate experiment (same content republished) counts once;
  *  - a cost is tariff-derived and never stands for energy; duration, energy and cost stay separate;
- *  - the taught conditions are checked against the result's codes; an unrecorded condition stays missing.
+ *  - the taught conditions are checked against the result's codes, each in one of three states (S83, owner review of
+ *    S82): verified (every result of the group records it), incompatible (a result records a relevant difference, e.g. a
+ *    reduced load against "the same food load"), or not verifiable (not recorded, or PEE cannot read it yet). A condition
+ *    that cannot be verified is never read as a failure of the product.
  * Nothing here ranks: it states which comparisons the evidence supports (e.g. "air fryer X vs oven Y") and which it does
  * not (e.g. "air fryer X vs air fryer Z").
  */
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 
-/** How a taught measurement is represented by comparative results: the measurand, and which result codes satisfy which
- * taught condition (conditions with no code are never satisfied by this evidence). */
-export const COMPARATIVE_MEASURES271:Readonly<Record<string,{measurand:'duration'|'energy'|'cost';conditionCodes:Readonly<Record<string,string>>}>>={
- energy_per_cooking_task:{measurand:'energy',conditionCodes:{same_food_load:'same_food_load',completed_doneness:'quality_assessed_same_task'}},
+/** How a taught measurement is represented by comparative results: the measurand, which result codes verify which taught
+ * condition, and (S83) which codes document an incompatibility with it. A condition with no code cannot be verified
+ * from this evidence (state not_verifiable), never failed. */
+export const COMPARATIVE_MEASURES271:Readonly<Record<string,{measurand:'duration'|'energy'|'cost';conditionCodes:Readonly<Record<string,string>>;incompatibleCodes?:Readonly<Record<string,string>>}>>={
+ energy_per_cooking_task:{measurand:'energy',conditionCodes:{same_food_load:'same_food_load',completed_doneness:'quality_assessed_same_task'},
+  incompatibleCodes:{same_food_load:'quantity_reduced'}},
 };
+/** S83: the state of one taught condition of the measurement for one group of results, with what decided it. */
+export type ConditionState271='verified'|'incompatible'|'not_verifiable';
 export interface ComparativeGroup271 {
  experimentKey:string;host:string;url:string;task:string|null;measurand:string;
  items:{equipmentClass:string;subject:string|null;identity:string;value:number;unit:string;valueBasis:string}[];
- comparableWithinExperiment:boolean;reasons:string[];conditionsMet:string[];conditionsMissing:string[];
+ comparableWithinExperiment:boolean;reasons:string[];
+ /** S83: every condition the teaching requires for THIS measurement, in one of three states, with its basis */
+ conditions:{condition:string;state:ConditionState271;basis:string}[];
  /** Phase272 (owner review §9): "comparable" is structural (one experiment, one task, matched load, distinct appliances);
-  * it is not the same as every taught essential condition being met. 'comparable_with_unmet_conditions' says so. */
- comparability:'comparable'|'comparable_with_unmet_conditions'|'not_comparable';
+  * it is not the same as every taught essential condition being verified. S83: 'comparable_conditions_not_verifiable'
+  * says so (was 'comparable_with_unmet_conditions', which read an unrecorded condition as unmet). */
+ comparability:'comparable'|'comparable_conditions_not_verifiable'|'not_comparable';
 }
 export interface ComparativeEvidence271 {
  measure:string;groups:ComparativeGroup271[];experiments:number;duplicatesIgnored:number;
@@ -50,11 +60,15 @@ export function comparativeEvidence271(store:KnowledgeStore246,measure:string,eq
   if(g.some(r=>r.equipment_class==='several'||r.identity==='ambiguous'))reasons.push('ambiguous_subject');
   if(new Set(g.map(r=>r.equipment_class+'|'+(r.subject_name??''))).size<2)reasons.push('single_appliance');
   const codes=new Set(g.flatMap(r=>r.condition_codes).filter(c=>g.every(r=>r.condition_codes.includes(c))));
-  const met=conditions.filter(c=>spec.conditionCodes[c]&&codes.has(spec.conditionCodes[c]));
+  const anyCode=new Set(g.flatMap(r=>r.condition_codes));
+  const states=conditions.map(c=>{const inc=spec.incompatibleCodes?.[c],ver=spec.conditionCodes[c];
+   if(inc&&anyCode.has(inc))return {condition:c,state:'incompatible' as const,basis:`a result records ${inc.replace(/_/g,' ')}`};
+   if(ver&&codes.has(ver))return {condition:c,state:'verified' as const,basis:`every result records ${ver.replace(/_/g,' ')}`};
+   return {condition:c,state:'not_verifiable' as const,basis:ver?`not recorded by every result (${ver.replace(/_/g,' ')})`:'PEE reads no record of this condition in comparative results'};});
   out.push({experimentKey:g[0].experiment_key,host:g[0].host,url:g[0].url,task:g[0].task_label,measurand:spec.measurand,
    items:g.map(r=>({equipmentClass:r.equipment_class,subject:r.subject_name,identity:r.identity,value:r.value,unit:r.unit,valueBasis:r.value_basis})),
-   comparableWithinExperiment:!reasons.length,reasons,conditionsMet:met,conditionsMissing:conditions.filter(c=>!met.includes(c)),
-   comparability:reasons.length?'not_comparable':met.length===conditions.length?'comparable':'comparable_with_unmet_conditions'});
+   comparableWithinExperiment:!reasons.length,reasons,conditions:states,
+   comparability:reasons.length||states.some(x=>x.state==='incompatible')?'not_comparable':states.every(x=>x.state==='verified')?'comparable':'comparable_conditions_not_verifiable'});
  }
  out.sort((a,b)=>a.experimentKey.localeCompare(b.experimentKey)||String(a.task).localeCompare(String(b.task)));
  const sameClass=(g:ComparativeGroup271)=>g.comparableWithinExperiment&&new Set(g.items.filter(i=>i.equipmentClass===equipmentClass&&i.subject).map(i=>i.subject)).size>=2;

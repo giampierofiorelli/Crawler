@@ -60,7 +60,7 @@ function observed(a,j){
  const g=a.goalAssessment??null;
  if(g)return {category:a.category,decision:g.decision,needs:a.needs,unassessed:a.unassessedObjectives,
   measures:Object.fromEntries(g.outcomes.map(o=>[o.need,o.relevantMeasures])),proxies:Object.fromEntries(g.outcomes.map(o=>[o.need,o.rejectedProxies])),
-  conditions:[...new Set(g.outcomes.flatMap(o=>o.requiredConditions))],incomparable:g.outcomes.some(o=>o.incomparable.length>0),
+  conditions:[...new Set(g.outcomes.flatMap(o=>(o.conditionsByMeasure??[]).flatMap(x=>x.conditions)))],incomparable:g.outcomes.some(o=>o.incomparable.length>0),
   assessedVia:Object.fromEntries(g.outcomes.filter(o=>o.coverage==='assessed').map(o=>[o.need,o.assessedBy??[]]))};
  const proxies={};for(const c of j.stages.requirements.cautions)if(c.kind==='not_sufficient_for')(proxies[c.conceptId]??=[]).push('attr:'+c.attribute);
  const decision=a.response==='ranked_recommendation'?'ranking':a.response==='clarification'&&a.questions.length?'clarify':'research';
