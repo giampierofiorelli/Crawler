@@ -60,7 +60,9 @@ function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,contex
 
 /** Attribution: the defined property a value reports. A unit kind alone only nominates candidates; a surface term of the
  * definition in the value's own label or context must support the choice. Equal support for two properties chooses neither. */
-export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput):PropertySlot{
+/** opts.profileLicense (default true, the frozen S88 dev behaviour): a profile listing one property for the unit kind attributes
+ * without a term. E4 showed it is valid only for values already known to be results (it attributed every length on a robot page). */
+export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean}={}):PropertySlot{
  const label=norm(o.label),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
@@ -72,7 +74,7 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  const top=scored[0];
  if(top.score<=0){
   // the category profile licenses a unit-kind attribution when it lists exactly one property admitting the unit
-  if(byUnit.length===1&&o.category&&defs.profiles.get(o.category)?.properties.includes(byUnit[0].id))
+  if(opts.profileLicense!==false&&byUnit.length===1&&o.category&&defs.profiles.get(o.category)?.properties.includes(byUnit[0].id))
    return {value:byUnit[0].id,state:'inferred',evidence:['profile:'+o.category],rule:'profile_single_property_for_unit_kind',alternatives:[],kind};
   return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};}
  const tied=scored.filter(s=>s.score===top.score);
@@ -130,9 +132,9 @@ export function basisOf(defs:PropertyDefinitions,d:PropertyDefinition|null,kind:
 }
 
 /** Interpret one observation with the definitions: attribution, conditions with relevance, missing defining dimensions, basis. */
-export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput):DefinitionInterpretation{
+export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean}={}):DefinitionInterpretation{
  const category=o.category??null;const label=norm(o.label),context=norm(o.context);
- const property=attributeProperty(defs,qk,o);const d=property.value?defs.properties.get(property.value)!:null;
+ const property=attributeProperty(defs,qk,o,opts);const d=property.value?defs.properties.get(property.value)!:null;
  const readings:DimensionReading[]=[];const untyped:string[]=[];
  for(const c of o.conditions??[]){const r=classifyConditionWithDefinitions(defs,qk,c,property.kind,d?.id,category);
   if(!r.structure){untyped.push(norm(c));continue;}

@@ -29,10 +29,10 @@ if(cmd==='input'){const it=items();const f=join(ROOT,'e4-annotation-input.json')
  writeFileSync(join(ROOT,'e4-items.json'),JSON.stringify(it,null,1));console.log(it.length,'items',sha(readFileSync(f)));}
 const defsFor=arm=>{if(arm==='pd1'){const raw=execSync('git show 447ae33:engine/product-evidence-engine-v5.67-phase243/resources/property-definitions/property-definitions.v1.json',{cwd:new URL('..',import.meta.url).pathname});return PD.loadPropertyDefinitions(qk,JSON.parse(raw));}return PD.loadPropertyDefinitions(qk);};
 if(cmd==='run'){const f=join(ROOT,`e4-run-${LABEL}.json`);if(existsSync(f))throw Error(f+' exists: a run is made once');
- const it=JSON.parse(readFileSync(join(ROOT,'e4-items.json'),'utf8'));const defs=defsFor(ARM==='unitkind'?'pd2':ARM);
+ const it=JSON.parse(readFileSync(join(ROOT,'e4-items.json'),'utf8'));const NOLIC=ARM.endsWith('-nolicense');const defs=defsFor(ARM==='unitkind'?'pd2':ARM.replace('-nolicense',''));
  const rows=it.map(x=>{const o={value:x.value,unit:x.unit,label:x.label,context:x.context,category:x.category};
   if(ARM==='unitkind'){const r=I.attributeProperty(defs,qk,o);const c=r.value?[r.value,...r.alternatives]:r.alternatives;return {id:x.id,property:c.length===1?c[0]:null,conditions:[],basis:null};}
-  const r=I.interpretWithDefinitions(defs,qk,o);return {id:x.id,property:r.property.value,propertyState:r.property.state,conditions:r.conditions.filter(c=>c.dimension&&c.value).map(c=>({dimension:c.dimension,value:c.value})),basis:r.basis.value,missingDefining:r.missingDefining};});
+  const r=I.interpretWithDefinitions(defs,qk,o,{profileLicense:!NOLIC});return {id:x.id,property:r.property.value,propertyState:r.property.state,conditions:r.conditions.filter(c=>c.dimension&&c.value).map(c=>({dimension:c.dimension,value:c.value})),basis:r.basis.value,missingDefining:r.missingDefining};});
  writeFileSync(f,JSON.stringify({label:LABEL,arm:ARM,definitions:defs.identity,at:new Date().toISOString(),rows},null,1));console.log(LABEL,ARM,defs.identity,rows.filter(r=>r.property).length,'/',rows.length,'attributed');}
 if(cmd==='score'){const fr=JSON.parse(readFileSync(new URL('../evaluation/s88/e4-annotation-freeze.json',import.meta.url),'utf8'));const rb=readFileSync(join(ROOT,'e4-annotations.json'));
  if(sha(rb)!==fr.annotationsSha256)throw Error('reference does not match its seal');const ref=JSON.parse(rb).items;
