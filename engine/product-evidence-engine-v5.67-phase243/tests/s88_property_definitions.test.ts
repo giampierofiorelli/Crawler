@@ -30,7 +30,12 @@ test('S88 relevance: a profile overrides it; a basis-qualified condition defines
 test('S88 attribution: a unit kind only nominates; a definition term must support; equal support chooses none',()=>{
  assert.equal(attributeProperty(defs,qk,{value:0.8,unit:'kWh',label:'energy use'}).value,'energy_consumption');
  const life=attributeProperty(defs,qk,{value:8,unit:'hours',label:'battery life'});
- assert.equal(life.value,null);assert.deepEqual(life.alternatives,['run_duration'],'kind nominated, no term supports it');
+ assert.equal(life.value,'battery_runtime','pd.2 defines battery runtime; not a run duration');
+ const cycle=attributeProperty(defs,qk,{value:8,unit:'hours',label:'warranty'});
+ assert.equal(cycle.value,null);assert.ok(cycle.alternatives.includes('run_duration'),'kind nominated, no term supports it');
+ // outside its profile a property needs its object named: a TV's gamut coverage is not a robot's floor coverage
+ assert.equal(attributeProperty(defs,qk,{value:95,unit:'%',label:'DCI-P3 gamut coverage',category:'televisions'}).value,null);
+ assert.equal(attributeProperty(defs,qk,{value:98,unit:'%',label:'coverage',category:'robot_floor_cleaners'}).value,'coverage');
  assert.equal(attributeProperty(defs,qk,{value:2000,unit:'nits',label:'peak brightness'}).rule,'no_definition_admits_unit_kind');
  assert.equal(attributeProperty(defs,qk,{value:30,unit:'£',label:'running cost'}).value,'running_cost');
 });

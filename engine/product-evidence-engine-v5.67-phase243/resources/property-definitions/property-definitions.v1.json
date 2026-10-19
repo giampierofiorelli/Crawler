@@ -1,7 +1,7 @@
 {
  "schema": "pee.property-definitions.v1",
- "version": "pd.1",
- "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present.",
+ "version": "pd.2",
+ "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object.",
  "sources": [
   {
    "id": "vim",
@@ -42,6 +42,16 @@
    "id": "s87",
    "kind": "pee_evaluation",
    "title": "S87b-S87e measurements and blind adjudication (structure of observations; linker conflicts from bundled concepts)"
+  },
+  {
+   "id": "rfc_pkg",
+   "kind": "owner_package",
+   "title": "PEE-CATEGORY-RESEARCH-05 robot floor cleaners v1.0.0, supplement 01 (physics, measurement design)"
+  },
+  {
+   "id": "sb_pkg",
+   "kind": "owner_package",
+   "title": "PEE-CATEGORY-RESEARCH-08 soundbars v1.0.0, supplement 01 (acoustics, signal engineering, test design)"
   }
  ],
  "basisCues": {
@@ -167,6 +177,33 @@
     "auto": [
      "auto",
      "automatic"
+    ],
+    "eco": [
+     "eco mode",
+     "quiet mode setting",
+     "silent mode"
+    ],
+    "standard": [
+     "standard mode",
+     "normal mode",
+     "balanced mode"
+    ],
+    "game": [
+     "game mode",
+     "gaming mode"
+    ],
+    "movie": [
+     "movie mode",
+     "cinema mode"
+    ],
+    "music": [
+     "music mode"
+    ],
+    "dialogue": [
+     "dialogue mode",
+     "voice mode",
+     "speech mode",
+     "clear voice"
     ]
    },
    "cues": [
@@ -178,8 +215,10 @@
    ],
    "state": "supported",
    "sources": [
-    "vim",
-    "ap_pkg"
+    "ap_pkg",
+    "rfc_pkg",
+    "sb_pkg",
+    "vim"
    ],
    "valueKinds": [
     "voltage"
@@ -418,7 +457,33 @@
    "id": "soil_or_task",
    "structure": "sample_or_challenge",
    "label": "soil type or task processed (food, stain, dish)",
-   "values": {},
+   "values": {
+    "fine_dust": [
+     "fine dust",
+     "flour",
+     "talc"
+    ],
+    "sand": [
+     "sand"
+    ],
+    "hair": [
+     "hair",
+     "pet hair"
+    ],
+    "cereal": [
+     "cereal",
+     "rice",
+     "oats",
+     "crumbs"
+    ],
+    "stain": [
+     "coffee",
+     "chocolate",
+     "dried stain",
+     "mud",
+     "clay"
+    ]
+   },
    "cues": [
     "soil",
     "stain",
@@ -431,7 +496,8 @@
    ],
    "state": "candidate",
    "sources": [
-    "dw_pkg"
+    "dw_pkg",
+    "rfc_pkg"
    ]
   },
   {
@@ -579,6 +645,181 @@
    "sources": [
     "vim",
     "s87"
+   ]
+  },
+  {
+   "id": "floor_type",
+   "qkAxis": "floor_type",
+   "structure": "sample_or_challenge",
+   "label": "floor surface the robot cleans (hard floor, carpet pile, crevices)",
+   "values": {
+    "hard_floor": [
+     "hard floor",
+     "hard floors",
+     "tile",
+     "tiles",
+     "laminate",
+     "hardwood",
+     "wood floor",
+     "vinyl"
+    ],
+    "carpet": [
+     "carpet",
+     "rug",
+     "low pile",
+     "medium pile",
+     "high pile",
+     "deep pile",
+     "low-pile",
+     "high-pile"
+    ],
+    "crevice": [
+     "crevice",
+     "crevices",
+     "grout",
+     "cracks"
+    ],
+    "edge": [
+     "edge",
+     "edges",
+     "corner",
+     "corners",
+     "along the wall"
+    ]
+   },
+   "cues": [
+    "floor",
+    "surface"
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "connection",
+   "structure": "operating_setting",
+   "label": "input connection or audio path (HDMI eARC/ARC, optical, Bluetooth, Wi-Fi)",
+   "values": {
+    "hdmi_earc": [
+     "earc",
+     "hdmi earc"
+    ],
+    "hdmi_arc": [
+     "hdmi arc",
+     "arc"
+    ],
+    "optical": [
+     "optical",
+     "toslink"
+    ],
+    "bluetooth": [
+     "bluetooth"
+    ],
+    "wifi": [
+     "wi-fi",
+     "wifi",
+     "airplay",
+     "chromecast"
+    ],
+    "hdmi": [
+     "hdmi input",
+     "hdmi passthrough"
+    ]
+   },
+   "cues": [
+    "connection",
+    "input",
+    "connected"
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "room_correction",
+   "structure": "procedure_state",
+   "label": "room correction or calibration state of the speaker",
+   "values": {
+    "on": [
+     "room correction on",
+     "after calibration",
+     "calibrated",
+     "room eq on",
+     "with room correction"
+    ],
+    "off": [
+     "room correction off",
+     "without room correction",
+     "uncalibrated",
+     "before calibration"
+    ]
+   },
+   "cues": [
+    "room correction",
+    "calibration",
+    "room eq"
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "response_tolerance",
+   "structure": "method_or_protocol",
+   "label": "tolerance or reference that defines a frequency limit (±3 dB, -6 dB)",
+   "values": {
+    "db3": [
+     "-3 db",
+     "±3 db",
+     "+/-3 db",
+     "3 db down"
+    ],
+    "db6": [
+     "-6 db",
+     "±6 db",
+     "6 db down"
+    ],
+    "db10": [
+     "-10 db",
+     "10 db down"
+    ]
+   },
+   "cues": [
+    "tolerance",
+    "down"
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "listening_position",
+   "structure": "sample_or_challenge",
+   "label": "listening or measuring position relative to the speaker (on-axis, off-axis, seat)",
+   "values": {
+    "on_axis": [
+     "on-axis",
+     "on axis"
+    ],
+    "off_axis": [
+     "off-axis",
+     "off axis",
+     "side seat",
+     "sofa end"
+    ]
+   },
+   "cues": [
+    "axis",
+    "seat",
+    "position"
+   ],
+   "state": "candidate",
+   "sources": [
+    "sb_pkg"
    ]
   }
  ],
@@ -945,6 +1186,22 @@
     [
      "quiet",
      "candidate"
+    ],
+    [
+     "max volume",
+     "supported"
+    ],
+    [
+     "loudness",
+     "supported"
+    ],
+    [
+     "spl",
+     "supported"
+    ],
+    [
+     "max spl",
+     "supported"
     ]
    ],
    "conditions": [
@@ -975,9 +1232,11 @@
    ],
    "state": "supported",
    "sources": [
-    "iec_60704",
+    "ap_pkg",
     "dw_pkg",
-    "ap_pkg"
+    "iec_60704",
+    "rfc_pkg",
+    "sb_pkg"
    ]
   },
   {
@@ -1487,6 +1746,862 @@
    "sources": [
     "ap_pkg"
    ]
+  },
+  {
+   "id": "suction_pressure",
+   "label": "suction pressure",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "pressure"
+    ],
+    "metric": "robot_suction_pressure"
+   },
+   "object": "fan and intake of the robot",
+   "basis": null,
+   "surface": [
+    [
+     "suction",
+     "supported"
+    ],
+    [
+     "suction power",
+     "supported"
+    ],
+    [
+     "pa",
+     "supported"
+    ],
+    [
+     "kpa",
+     "supported"
+    ],
+    [
+     "pascals",
+     "supported"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ],
+   "objectNouns": [
+    "suction",
+    "vacuum",
+    "robot",
+    "fan"
+   ]
+  },
+  {
+   "id": "debris_pickup",
+   "label": "debris pickup (share of soil recovered)",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "ratio"
+    ],
+    "metric": "robot_debris_pickup"
+   },
+   "object": "soil laid on a floor",
+   "objectNouns": [
+    "debris",
+    "dust",
+    "hair",
+    "sand",
+    "crumbs",
+    "dirt",
+    "cereal",
+    "rice",
+    "soil",
+    "flour"
+   ],
+   "basis": {
+    "default": "per_run",
+    "when": "always",
+    "rule": "pickup is the share recovered in one cleaning run or pass (package 05 §3: per soil type, per pass)"
+   },
+   "surface": [
+    [
+     "pickup",
+     "supported"
+    ],
+    [
+     "picked up",
+     "supported"
+    ],
+    [
+     "debris",
+     "supported"
+    ],
+    [
+     "collected",
+     "candidate"
+    ],
+    [
+     "removed",
+     "candidate"
+    ],
+    [
+     "recovered",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "floor_type",
+     "defining"
+    ],
+    [
+     "soil_or_task",
+     "defining"
+    ],
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "coverage",
+   "label": "coverage (share of eligible floor area traversed)",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "ratio"
+    ]
+   },
+   "object": "eligible floor area of a room",
+   "objectNouns": [
+    "area",
+    "floor",
+    "room",
+    "map"
+   ],
+   "basis": {
+    "default": "per_run",
+    "when": "always",
+    "rule": "coverage is the share traversed in one mission (package 05 §2)"
+   },
+   "surface": [
+    [
+     "coverage",
+     "supported"
+    ],
+    [
+     "covered",
+     "supported"
+    ],
+    [
+     "area covered",
+     "supported"
+    ],
+    [
+     "missed",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "battery_runtime",
+   "label": "battery runtime on one charge",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "duration"
+    ]
+   },
+   "object": "battery charge of a cordless device",
+   "basis": {
+    "default": "per_unit",
+    "when": "always",
+    "rule": "a runtime is per full charge (package 05 §2: mission duration under a mode)"
+   },
+   "surface": [
+    [
+     "battery life",
+     "supported"
+    ],
+    [
+     "on a charge",
+     "supported"
+    ],
+    [
+     "per charge",
+     "supported"
+    ],
+    [
+     "on a single charge",
+     "supported"
+    ],
+    [
+     "battery",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "floor_type",
+     "influencing"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ],
+   "objectNouns": [
+    "battery",
+    "charge",
+    "cordless"
+   ]
+  },
+  {
+   "id": "battery_capacity",
+   "label": "battery capacity",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "electric_charge",
+     "energy"
+    ]
+   },
+   "object": "battery",
+   "basis": null,
+   "surface": [
+    [
+     "battery capacity",
+     "supported"
+    ],
+    [
+     "battery",
+     "supported"
+    ],
+    [
+     "mah",
+     "supported"
+    ]
+   ],
+   "conditions": [
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "obstacle_height",
+   "label": "climbable obstacle or threshold height",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "length"
+    ]
+   },
+   "object": "obstacle, threshold or rug edge",
+   "objectNouns": [
+    "obstacle",
+    "threshold",
+    "step",
+    "sill",
+    "rug",
+    "edge",
+    "bump",
+    "cable",
+    "climb"
+   ],
+   "basis": null,
+   "surface": [
+    [
+     "climb",
+     "supported"
+    ],
+    [
+     "climbs",
+     "supported"
+    ],
+    [
+     "obstacle",
+     "supported"
+    ],
+    [
+     "threshold",
+     "supported"
+    ],
+    [
+     "clearance",
+     "candidate"
+    ],
+    [
+     "height",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "cleaned_area",
+   "label": "area cleaned (per charge or per run)",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "area"
+    ]
+   },
+   "object": "floor",
+   "basis": {
+    "default": "per_run",
+    "when": "always",
+    "rule": "an area cleaned is per mission or per charge"
+   },
+   "surface": [
+    [
+     "cleaned",
+     "supported"
+    ],
+    [
+     "cleans up to",
+     "supported"
+    ],
+    [
+     "coverage area",
+     "supported"
+    ],
+    [
+     "area",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "candidate",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "frequency_response",
+   "label": "frequency response limit (low or high frequency extension)",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "frequency"
+    ]
+   },
+   "object": "acoustic output of the speaker system",
+   "basis": null,
+   "surface": [
+    [
+     "frequency response",
+     "supported"
+    ],
+    [
+     "low-frequency extension",
+     "supported"
+    ],
+    [
+     "bass extension",
+     "supported"
+    ],
+    [
+     "extends down to",
+     "supported"
+    ],
+    [
+     "low-bass",
+     "candidate"
+    ],
+    [
+     "bass",
+     "candidate"
+    ],
+    [
+     "hz",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "response_tolerance",
+     "defining"
+    ],
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "room_correction",
+     "defining"
+    ],
+    [
+     "listening_position",
+     "influencing"
+    ],
+    [
+     "measurement_distance",
+     "influencing"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ],
+   "objectNouns": [
+    "bass",
+    "speaker",
+    "soundbar",
+    "subwoofer",
+    "audio",
+    "sound",
+    "response",
+    "treble"
+   ]
+  },
+  {
+   "id": "audio_latency",
+   "label": "audio latency or audio-video offset",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "duration"
+    ]
+   },
+   "object": "audio path from input to sound",
+   "basis": null,
+   "surface": [
+    [
+     "latency",
+     "supported"
+    ],
+    [
+     "lag",
+     "supported"
+    ],
+    [
+     "lip sync",
+     "supported"
+    ],
+    [
+     "lip-sync",
+     "supported"
+    ],
+    [
+     "delay",
+     "supported"
+    ],
+    [
+     "a/v sync",
+     "supported"
+    ]
+   ],
+   "conditions": [
+    [
+     "connection",
+     "defining"
+    ],
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ],
+   "objectNouns": [
+    "audio",
+    "sound",
+    "lip",
+    "speaker",
+    "soundbar",
+    "bluetooth",
+    "speakers"
+   ]
+  },
+  {
+   "id": "amplifier_power",
+   "label": "amplifier output power rating",
+   "form": "quantity",
+   "quantity": {
+    "kinds": [
+     "power"
+    ]
+   },
+   "object": "amplifier channels (a rating, not sound produced)",
+   "basis": null,
+   "surface": [
+    [
+     "output power",
+     "supported"
+    ],
+    [
+     "amplifier",
+     "supported"
+    ],
+    [
+     "rms",
+     "supported"
+    ],
+    [
+     "total power",
+     "supported"
+    ],
+    [
+     "peak power",
+     "supported"
+    ],
+    [
+     "watts of power",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "method",
+     "defining"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "dialogue_clarity",
+   "label": "dialogue clarity",
+   "form": "judgement",
+   "judgement": {
+    "aspect": [
+     "dialogue",
+     "voices",
+     "speech",
+     "vocals",
+     "intelligib",
+     "clarity"
+    ],
+    "higherIsBetter": true
+   },
+   "object": "speech in programme sound",
+   "basis": null,
+   "surface": [
+    [
+     "dialogue",
+     "supported"
+    ],
+    [
+     "voices",
+     "supported"
+    ],
+    [
+     "speech",
+     "supported"
+    ],
+    [
+     "clarity",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "listening_position",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "bass_quality",
+   "label": "bass quality",
+   "form": "judgement",
+   "judgement": {
+    "aspect": [
+     "bass",
+     "low end",
+     "boomy",
+     "rumble",
+     "thump",
+     "subwoofer"
+    ],
+    "higherIsBetter": true
+   },
+   "object": "low-frequency output",
+   "basis": null,
+   "surface": [
+    [
+     "bass",
+     "supported"
+    ],
+    [
+     "low end",
+     "supported"
+    ],
+    [
+     "subwoofer",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "room_correction",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "spatial_immersion",
+   "label": "spatial immersion (surround and height effects)",
+   "form": "judgement",
+   "judgement": {
+    "aspect": [
+     "atmos",
+     "surround",
+     "height",
+     "immersive",
+     "spatial",
+     "soundstage",
+     "envelop"
+    ],
+    "higherIsBetter": true
+   },
+   "object": "spatial sound in the listening room",
+   "basis": null,
+   "surface": [
+    [
+     "surround",
+     "supported"
+    ],
+    [
+     "atmos",
+     "supported"
+    ],
+    [
+     "immersive",
+     "supported"
+    ],
+    [
+     "soundstage",
+     "supported"
+    ],
+    [
+     "height",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "operating_setting",
+     "defining"
+    ],
+    [
+     "listening_position",
+     "defining"
+    ],
+    [
+     "connection",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  },
+  {
+   "id": "navigation_performance",
+   "label": "navigation and obstacle avoidance",
+   "form": "judgement",
+   "judgement": {
+    "aspect": [
+     "obstacle",
+     "avoid",
+     "navigation",
+     "mapping",
+     "stuck",
+     "bump",
+     "collid",
+     "cables",
+     "socks"
+    ],
+    "higherIsBetter": true
+   },
+   "object": "robot moving through a home",
+   "basis": null,
+   "surface": [
+    [
+     "navigation",
+     "supported"
+    ],
+    [
+     "obstacle",
+     "supported"
+    ],
+    [
+     "avoidance",
+     "supported"
+    ],
+    [
+     "mapping",
+     "supported"
+    ],
+    [
+     "stuck",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "floor_type",
+     "influencing"
+    ],
+    [
+     "method",
+     "influencing"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "id": "mopping_performance",
+   "label": "mopping result",
+   "form": "judgement",
+   "judgement": {
+    "aspect": [
+     "mop",
+     "mopping",
+     "stain",
+     "streak",
+     "smear",
+     "wet"
+    ],
+    "higherIsBetter": true
+   },
+   "object": "hard floor after wet cleaning",
+   "basis": {
+    "default": "per_run",
+    "when": "always",
+    "rule": "a mopping result is the outcome of one run (package 05 §4)"
+   },
+   "surface": [
+    [
+     "mopping",
+     "supported"
+    ],
+    [
+     "mop",
+     "supported"
+    ],
+    [
+     "stains",
+     "candidate"
+    ],
+    [
+     "streaks",
+     "candidate"
+    ]
+   ],
+   "conditions": [
+    [
+     "floor_type",
+     "defining"
+    ],
+    [
+     "soil_or_task",
+     "defining"
+    ],
+    [
+     "operating_setting",
+     "defining"
+    ]
+   ],
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
   }
  ],
  "profiles": [
@@ -1568,6 +2683,94 @@
     "dw_pkg",
     "eu_2019_2017"
    ]
+  },
+  {
+   "category": "robot_floor_cleaners",
+   "properties": [
+    "suction_pressure",
+    "debris_pickup",
+    "coverage",
+    "battery_runtime",
+    "battery_capacity",
+    "obstacle_height",
+    "cleaned_area",
+    "capacity",
+    "sound_level",
+    "energy_consumption",
+    "run_duration",
+    "electrical_power",
+    "navigation_performance",
+    "mopping_performance",
+    "cleaning_performance",
+    "noise_experience"
+   ],
+   "relevance": {
+    "run_duration": {
+     "challenge_pollutant": "irrelevant",
+     "room_volume": "irrelevant",
+     "programme": "irrelevant",
+     "load": "irrelevant"
+    },
+    "sound_level": {
+     "programme": "irrelevant"
+    },
+    "energy_consumption": {
+     "programme": "irrelevant",
+     "load": "irrelevant",
+     "room_volume": "irrelevant"
+    },
+    "electrical_power": {
+     "programme": "irrelevant"
+    },
+    "cleaning_performance": {
+     "programme": "irrelevant"
+    }
+   },
+   "state": "supported",
+   "sources": [
+    "rfc_pkg"
+   ]
+  },
+  {
+   "category": "soundbars",
+   "properties": [
+    "sound_level",
+    "frequency_response",
+    "audio_latency",
+    "electrical_power",
+    "amplifier_power",
+    "energy_consumption",
+    "dialogue_clarity",
+    "bass_quality",
+    "spatial_immersion"
+   ],
+   "relevance": {
+    "sound_level": {
+     "programme": "irrelevant"
+    },
+    "electrical_power": {
+     "programme": "irrelevant"
+    },
+    "energy_consumption": {
+     "programme": "irrelevant",
+     "load": "irrelevant",
+     "room_volume": "irrelevant"
+    }
+   },
+   "state": "supported",
+   "sources": [
+    "sb_pkg"
+   ]
+  }
+ ],
+ "history": [
+  {
+   "version": "pd.1",
+   "note": "air purifiers and dishwashers (development); S88 fix1"
+  },
+  {
+   "version": "pd.2",
+   "note": "S88 E4: robot floor cleaners and soundbars authored from owner packages 05 and 08 (supplement 01 only) BEFORE any document of these categories was read in S88; hash-sealed in evaluation/s88/e4-definitions-freeze.json"
   }
  ]
 }

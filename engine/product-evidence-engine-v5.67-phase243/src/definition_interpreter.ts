@@ -45,13 +45,15 @@ export function kindsOf(qk:QuantityKnowledge,o:{value:number|null;unit:string;la
  return {kind:tq.kind.id,candidates:tq.kind.id?[tq.kind.id]:[...tq.kind.candidates]};
 }
 
-function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,context:string):{score:number;evidence:string[]}{
+function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,context:string,inProfile=false):{score:number;evidence:string[]}{
  const terms:[string,number][]=d.surface.map(([t,s])=>[t,s==='candidate'?0.5:1]);
  if(d.quantity?.metric)for(const t of qk.metrics.get(d.quantity.metric)?.terms??[])terms.push([t,1]);
  for(const n of d.quantity?.countNouns??[])terms.push([n,1]);
  let score=0;const ev:string[]=[];
  // fix1: a candidate (generic) term supports the property only together with a noun naming its object of interest
  const objectNamed=!d.objectNouns?.length||d.objectNouns.some(n=>has(label,n)||has(context,n));
+ // outside a profile that lists the property, the object must be named for any term (the category does not supply it)
+ if(!objectNamed&&!inProfile)return {score:0,evidence:[]};
  for(const [t,w] of terms){if(w<1&&!objectNamed)continue;if(has(label,t)){score+=2*w;ev.push('label:'+t);}else if(has(context,t)){score+=w;ev.push('context:'+t);}}
  return {score,evidence:ev};
 }
@@ -65,7 +67,8 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  const byUnit=pool.filter(d=>d.form==='quantity'&&(cls?d.quantity!.nonQkUnits?.includes(cls):(kk.candidates.some(k=>d.quantity!.kinds.includes(k))||(d.quantity!.countNouns??[]).some(n=>unitNoun===n))));
  const kind=kk.kind??(kk.candidates.length===1?kk.candidates[0]:null);
  if(!byUnit.length)return {value:null,state:'unknown',evidence:[],rule:kk.candidates.length||cls?'no_definition_admits_unit_kind':'unit_not_typed',alternatives:[],kind};
- const scored=byUnit.map(d=>({d,...termScore(d,qk,label,context)})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
+ const prof=o.category?defs.profiles.get(o.category):undefined;
+ const scored=byUnit.map(d=>({d,...termScore(d,qk,label,context,!!prof?.properties.includes(d.id))})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
  const top=scored[0];
  if(top.score<=0){
   // the category profile licenses a unit-kind attribution when it lists exactly one property admitting the unit
