@@ -221,3 +221,89 @@ lexical link (74) is:
 
 **Independent validation.** Still none for lk.2 or lk.3. Next: assess what the held material can still show, before any
 request for a targeted acquisition.
+
+## 7. lk.4: positive compatibility, test identity, unresolved force (owner review S71, 2026-10-19)
+
+The owner's text is preserved verbatim in the skill: `references/owner-r2-lk3-review-2026-10-19.md`. §1–§6 are
+unchanged. lk.1–lk.3 stay loadable, and every earlier run reproduces.
+
+### What is implemented (`link-rules.v4.json`, lk.4; general, no category rule)
+
+| Requirement | lk.4 |
+|---|---|
+| 1. Compatibility must be positively supported | An aligned point needs one of two bases: `same_test` (every member comes from one identified test) or `stated_method` (every member states the same method). In both cases every member must also state every condition the set requires (`axis_unstated`). A shared document, or a missing source, is never compatibility; the result is `compatibility_not_shown`. Points align only on operating axes; other required conditions must only be stated. |
+| 2. Observation identity from the test | `observationKey` is null unless the value's test is identified (`LinkValue.test`; from the reader: `readerTestIdentity`, the covering protocol statement or the named test). Two tests with the same number are two observations; one test reported twice is one; unknown identity gives `identity_unknown`. A set of contributions resting on an unknown identity has `independence_not_established` and is never complete. |
+| 3. Unresolved versus verified partial | A direct relation through a measurement whose translation is incomplete gives force `unresolved` and assessment `force_unresolved`: an explicit abstention. A relation verified as partial stays partial. Neither becomes direct. A fully translated measurement keeps direct force. |
+
+**Tests (19).** Positive, negative and metamorphic cases:
+- same document with no test: no point; no source: no point; one identified test: point;
+- renaming the source keeps the verdict; removing one test identity withdraws the point;
+- two tests of one document: no point, unless every member states the same method;
+- a required condition unstated: no point;
+- two tests with one number are two observations; one test twice is one; unknown is neither;
+- unknown identity keeps a set incomplete;
+- verified partial stays partial; unresolved is never direct; a complete translation stays direct;
+- a shape check: every rule granting direct force carries `not incomplete(M)`.
+
+### What the runs show
+
+Development (p272, spent) and tuned (s1cd): links are identical to lk.3. Only the forces and assessments change.
+
+| | p272 lk.3 → lk.4 | s1cd lk.3 → lk.4 |
+|---|---|---|
+| Values with an identified test (from the reader) | — → 20 of 138 | — → 36 of 166 |
+| Forces partial / unresolved | 41 / 0 → 29 / 12 | 51 / 0 → 3 / 48 |
+| Outcomes "partial contributions" / "force unresolved" | 13 / 0 → 10 / 3 | 5 / 0 → 0 / 5 |
+| Aligned points | 0 → 0 | 0 → 0 |
+
+**Reading the table:**
+- **Most of lk.3's "partial" forces on s1cd were capped direct relations (48 of 51).** They are now unresolved.
+- **No valid conclusion was recovered and no new one was licensed.** lk.4 only makes the abstentions explicit and
+  correctly named. It recovers nothing, because these documents rarely identify their tests (most values have no test
+  identity).
+
+**New set af (first run, unchanged, `link-af-first.json`).** The set is the air-fryer test pages of Phases
+268/270/271, 64 values:
+- the value references were sealed earlier;
+- a blind link reference was annotated after lk.4 froze (`freeze-af.json`);
+- the link was never developed on these pages.
+
+This is the first first-run evidence on lk.4.
+
+| Arm | Values found | Correct links | Wrong links (measurement / where none applies) | Abstentions: outside the teaching / ambiguous |
+|---|---|---|---|---|
+| A older reader + lexical link | 39 | 0 | 1 / 2 | — / — |
+| C1 newer reader + lexical link | 23 | 8 | 2 / 12 | — / — |
+| C2 R1 seam | 23 | 0 | 1 / 9 | — / 9 |
+| **C6 lk.4** | 23 | **0** | **0 / 0** | **13 / 10** |
+
+**Justified abstentions, stated explicitly:**
+- **13 values** the teaching does not cover (cooking times, costs), reported as outside the teaching. All 13 are
+  correct.
+- **10 energy values** are ambiguous between "energy, empty run" and "energy per cooking task". The two lead to
+  different outcomes, and what tells them apart ("empty", "with food") is a word the knowledge does not type. The
+  abstention is justified by the knowledge PEE holds; it is a translation gap for R3.
+
+On this set lk.4 makes no error where the lexical link makes 14, but it also recovers none of the 8 the lexical link
+gets right. A further limit is the newer reader itself: it finds 23 of 64 values here, the older reader 39, and none of
+the 23 has a product (these are roundup and article pages). The demonstration is therefore narrow: correct avoidance
+and abstention, on 23 values of one category.
+
+### What remains unverified
+- **Whether the forces are correct.** No reference grades force: the force grades follow from the verified relations
+  and the rules, and no independent reference has checked them.
+- **Positive compatibility on real data.** No aligned point appears on any set, so the positive path is shown only in
+  tests.
+- **The independence of sources across documents** (two publishers reporting the same laboratory figure). Identity
+  comes only from the test, and documents rarely name it.
+- **Whether lk.4 recovers valid conclusions on unused data.** On af it recovers none, and that cost has to be weighed
+  against the 14 errors it avoids.
+
+### Assessment of existing materials (before any acquisition)
+- **All held authentic pages of taught categories have now been used:** to develop the link (p272); for its first runs
+  (s1cd, af); or they are manufacturer table cells (KV) and duplicates (FC).
+- **What remains is narrow:** robot vacuums (untaught) and the Phase268 operational pages, whose test results are
+  behind a paywall boundary.
+- **Independent validation beyond af** therefore needs new pages: taught categories with composite measurements and
+  identified tests (purifiers, televisions, dishwashers). That would be a targeted request for testing pages, distinct
+  from re-researching the scientific sources. It needs the owner's authorisation; it is not requested here.
