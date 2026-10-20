@@ -1,0 +1,60 @@
+{
+ "schema": "pee.r3p.preregistration.v1",
+ "date": "2026-10-20",
+ "owner": "Authorisation R3-P 2026-10-20 (verbatim in .claude/skills/pee-guided-learning/references/owner-r3p-authorisation-2026-10-20.md)",
+ "committedBefore": "any evaluation material of R3-P is written or collected, any annotation, and any R3-P code change",
+ "baselineBuild": {"commit": "35fb8f4", "why": "S103 code (identical src to the S103 freeze 8cc7ccf; later commits are documents and evaluation files only)"},
+ "leakageRule": "The implementer (the main Claude session) never reads the evaluation texts, references or annotations before the first runs of the frozen build are committed. Writing, screening, annotation and adjudication are done by separate Claude agents with fresh context that see no PEE code, tests, rule files or output. Development uses only spent material (S103 part A requests, S100-S103 check pages, Phase249-253 request sets, Phase269 teaching set, the 206 regression requests, unit fixtures).",
+ "stage1_negation": {
+  "question": "Does one shared mechanism for clause boundaries, negation scope, polarity and contrast remove inverse constraints and negated-cue errors on new material, without new harmful interpretations?",
+  "material": {
+   "requests": "40 new shopper messages written by an independent Claude agent from the brief below; Claude-authored (tier T1-independent-author), never presented as real-user evidence",
+   "requestBrief": "Write 40 realistic English messages a shopper might send to a buying adviser about one household appliance or consumer device each (vary the categories). About two thirds must contain negation or contrast affecting what they want: negated limits ('nothing over', 'not more than', 'no bigger than', 'not less than', 'never above'), negated needs ('I don't need more than', 'it doesn't have to be', 'no need for'), indifference ('noise doesn't bother me', 'not fussed about'), rejected features ('I don't want wifi'), contrasts ('not X but Y', 'rather than', 'instead of'), double negatives, negation that does NOT touch the limit ('I'm not sure, but at least 4 litres'). The rest are controls with plain limits, strict and inclusive. Write naturally; do not label or explain.",
+   "documents": "30 short review passages (simple HTML: paragraphs, sometimes a small table with an introducing sentence), written by a second independent Claude agent; synthetic document text (tier T1-synthetic-document), never presented as authentic pages",
+   "documentBrief": "Write 30 short passages (1-4 sentences, or an introducing sentence plus a small table of 2-5 rows) in the style of product reviews and test reports, each containing one to four numbers with units about a named product. Vary who produced each number and how the text says so, including negation and contrast of the source: 'our measurements, not the manufacturer's figures', 'the maker claims X, but we measured Y', 'we did not test this; the spec sheet lists', 'not independently verified', 'these are not our numbers', 'unlike the claimed', 'rather than the rated', tables introduced by such sentences, method descriptions with negation ('we did not use the eco mode'), and passages where a manufacturer claim is negated without any measurement being reported. Include plain positive controls. Do not label or explain."
+  },
+  "reference": "a third independent Claude agent annotates blind: for requests, the S103 request guide (evaluation/s103/request-annotation-guide.md, unchanged) plus a stance section (evaluation/r3p/negation-request-guide.md); for documents, evaluation/r3p/negation-document-guide.md (role, nature, provenance per number, from the S100 guide sections 2 and 5). The reference is hashed and the hash committed before any PEE run on the material.",
+  "builds": ["35fb8f4 (S103 baseline)", "the R3-P stage-1 freeze (commit recorded when made)"],
+  "metrics": [
+   "requests (S103 scorer, scripts/s103-request-check.mjs logic): limits detected, handling exact, harmful applied (a limit applied that the reference does not apply, including an inverted side), limits read with the wrong side, closure agreement, missed apply limits",
+   "stances: aspects the reference marks indifferent, rejected or negated that become a need, objective or applied constraint (harmful); aspects marked wanted that are lost",
+   "documents (the gated reading path scientific_reading98.readPage98 on each passage as a page): role, nature and provenance precision among decided, abstentions; harmful: a negated manufacturer claim read as a declared value of the product, or a value read as a publisher measurement only because a claim was negated (no measurement cue in the reference)",
+   "regressions on spent material: S103 part A requests, the S100/S101/S103 check sets, the 206 regression requests (decisions changed)"
+  ],
+  "stopRules": ["first runs committed unchanged; no tuning on the material", "if harmful request errors or harmful document readings are higher than with the S103 build, report a regression; the mechanism does not replace the old readers on that path"]
+ },
+ "stage3_needs": {
+  "question": "Does PEE understand users' goals better when its existing scientific knowledge is connected to request interpretation (arm B) than without (arm A), in one build with one negation foundation; can knowledge-derived candidates (C-lite) propose useful links in shadow?",
+  "categories": {"main": ["air_purifiers", "coffee_machines (incl. coffee_grinders)", "dishwashers"], "transfer": "dehumidifiers (held out: none of its requests, real or authored, is used in development; reported separately)"},
+  "material": {
+   "real": "Stack Exchange API only (api.stackexchange.com via the container proxy; site pages never fetched). Script scripts/phase252-collect-requests.mjs with --protocol evaluation/r3p/needs-protocol.json --salt r3p. Licence CC BY-SA per case, attribution kept. Excluded: every question id present in this repository's evaluation, scripts and docs. Screening by an independent Claude agent with the Phase251 screening rule (excluded only for: no licence; not about choosing, buying or replacing a product; non-English; duplicate). At most 12 per category; a shortfall is reported, never filled with other material.",
+   "authored": "12 per main category and 6 for the transfer category, written by an independent Claude agent from the brief in evaluation/r3p/needs-protocol.json; Claude-authored (T1), labelled as such"
+  },
+  "reference": "two independent blind Claude-agent annotations with evaluation/r3p/needs-annotation-guide.md (label catalogue of outcome and environment concepts per category, read from the store, plus other:<words>); disagreements adjudicated by a third agent from the request text and the guide only; merged reference hashed and committed before any PEE run on the material",
+  "arms": {
+   "S103": "35fb8f4: reported separately, never in the A/B/C comparison",
+   "A": "the R3-P stage-2 freeze with the knowledge switch off",
+   "B": "the same build with the knowledge switch on",
+   "C-lite": "the same build, switch on, plus the knowledge-derived candidate links generated before the freeze, evaluated in shadow (what would change if admitted); candidates never change decisions, rankings or exclusions"
+  },
+  "metrics": [
+   "expressed needs correctly understood (recall, precision)",
+   "inferred needs: the reference's defensible inferred needs found; needs PEE infers that the reference marks neither expressed, inferred nor acceptable (invented)",
+   "missed needs",
+   "negation, indifference, correction, preference and scenario handling (needs or limits created from negated or indifferent aspects are harmful)",
+   "feature vs outcome: a requested feature read as the outcome being met, or a feature treated as evidence",
+   "clarification questions about aspects the reference lists",
+   "research and evidence plan: entries naming a measurement or condition of a correctly found need",
+   "harmful applied constraints and improper exclusions (an exclusion caused by an inferred need is a stop condition)",
+   "uncovered request content listed in the trace (no silent loss)",
+   "each category separately; the transfer category separately; real and authored material separately"
+  ],
+  "provenanceOfImprovements": "every B-only correct need is classified by its path: existing relation or statement, engineered new relation (written by Claude during R3-P, with source), or C-lite candidate",
+  "stopRules": [
+   "first runs committed unchanged; later runs are labelled and never replace them",
+   "any improper exclusion attributable to an inferred need: stop, B stays off",
+   "if B has more invented needs than correct new needs, or more harmful errors than A, no improvement is claimed and B stays experimental",
+   "no production promotion: the switch stays off in operational answers whatever the result"
+  ]
+ }
+}

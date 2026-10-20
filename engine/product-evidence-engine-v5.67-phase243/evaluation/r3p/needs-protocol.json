@@ -1,0 +1,25 @@
+{
+ "schema": "pee.r3p.needs-protocol.v1",
+ "registered": "2026-10-20, with evaluation/r3p/preregistration.json, before any candidate is collected or read",
+ "collection": {
+  "source": "Stack Exchange API only (api.stackexchange.com via the container proxy); site pages are never fetched (robots.txt Disallow: /). CC BY-SA attribution per case; evaluation use only.",
+  "script": "node scripts/phase252-collect-requests.mjs --protocol evaluation/r3p/needs-protocol.json --salt r3p --exclude <ids file> --out <private file> (NODE_USE_ENV_PROXY=1)",
+  "max_requests": 40,
+  "strata": {
+   "air_purifiers": [["diy", "air purifier"], ["lifehacks", "air purifier"], ["health", "air purifier"], ["parenting", "air purifier"], ["diy", "HEPA filter room"]],
+   "coffee_machines": [["coffee", "espresso machine buy"], ["coffee", "grinder recommend"], ["coffee", "which machine"], ["coffee", "looking for"], ["coffee", "upgrade"]],
+   "dishwashers": [["diy", "dishwasher buy"], ["diy", "dishwasher which"], ["diy", "new dishwasher"], ["lifehacks", "dishwasher"]],
+   "dehumidifiers": [["diy", "dehumidifier buy"], ["diy", "dehumidifier which"], ["diy", "dehumidifier size"]]
+  },
+  "eligibility_title_regex": "\\b(buy|buying|purchas|recommend|which|looking for|choos|worth|should i (?:get|buy)|best|what (?:kind|type|size|features)|alternative|vs\\.?|versus|or a |upgrade|replac|need a|good)",
+  "excluded_ids": "every Stack Exchange question id present in this repository (evaluation/, scripts/, docs/) at the commit of this file",
+  "order": "eligible candidates of a stratum ordered by sha256('r3p:<question_id>') ascending; the first ones passing screening fill the quota",
+  "quota": {"air_purifiers": 12, "coffee_machines": 12, "dishwashers": 12, "dehumidifiers": 6},
+  "screening": "by an independent Claude agent: a candidate is excluded only for: no licence field; not a question about choosing, buying or replacing a product of the stratum's category (a repair of an owned item, a technique, a recipe); non-English; duplicate of an included question. Every exclusion recorded with its reason. Inclusion never depends on whether PEE's knowledge covers the product.",
+  "privacy": "public posts under CC BY-SA; author display name and link kept for attribution; no other personal data collected"
+ },
+ "authored": {
+  "author": "one independent Claude agent (fresh context), given only the brief below; it sees no PEE code, tests, rules, knowledge or output",
+  "brief": "Write 42 realistic English messages a shopper might send to a buying adviser: 12 about air purifiers, 12 about coffee machines or coffee grinders, 12 about dishwashers, 6 about dehumidifiers. Write the way ordinary people do: describe their home, their routine, their problems and what they hope for, often without technical words (for example 'I'm a light sleeper', 'my flat is tiny', 'we have a dog', 'I want coffee like in an Italian bar', 'the old one left the glasses cloudy'). Vary: some state clear requirements or numbers, some only preferences, some ask for a feature by name (for example 'sleep mode', 'auto mode', 'a milk frother'), some describe two situations, some include negation or indifference ('noise doesn't bother me'), some are vague or ask whether they need the product at all. Do not label or explain."
+ }
+}

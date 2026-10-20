@@ -1,0 +1,186 @@
+{
+ "schema": "pee.r3p.needs-labels.v1",
+ "statement": "Outcome and environment concepts per category as stored in the live knowledge store on 2026-10-20 (category_items, concept_kind outcome or environment). All are proposed_unverified teaching (assistant_authored_unreviewed); used here only as the annotation vocabulary.",
+ "categories": {
+  "air_purifiers": [
+   {
+    "kind": "outcome",
+    "id": "allergen_particle_reduction",
+    "description": "Lower airborne pollen, dust and pet-dander particles."
+   },
+   {
+    "kind": "outcome",
+    "id": "clinical_health_outcome",
+    "description": "Requested health endpoint (fewer infections, asthma attacks, symptoms) — needs clinical evidence, not CADR."
+   },
+   {
+    "kind": "outcome",
+    "id": "fine_particle_reduction",
+    "description": "Lower indoor fine particles and smoke (PM2.5, traffic, wildfire, cooking aerosol)."
+   },
+   {
+    "kind": "outcome",
+    "id": "gas_odour_reduction",
+    "description": "Remove specific gases, VOCs and odours."
+   },
+   {
+    "kind": "outcome",
+    "id": "ownership_cost_energy",
+    "description": "Low total running cost, energy use, filter cost and waste."
+   },
+   {
+    "kind": "outcome",
+    "id": "quiet_night_operation",
+    "description": "Adequate cleaning at a noise level tolerable during sleep."
+   },
+   {
+    "kind": "outcome",
+    "id": "room_coverage_distribution",
+    "description": "Clean air delivered to the actual occupied room(s) and zones."
+   },
+   {
+    "kind": "environment",
+    "id": "cooker_extraction_alternative",
+    "description": "Cooking fumes and NO2 from a gas hob need a ducted extractor venting outdoors."
+   },
+   {
+    "kind": "environment",
+    "id": "moisture_mould_remediation_alternative",
+    "description": "Damp or visible mould needs the moisture source fixed and remediation (dehumidifiers are a separate category); a purifier does not fix it."
+   },
+   {
+    "kind": "environment",
+    "id": "source_control_alternative",
+    "description": "Remove or reduce the emission source (smoking, paint, sprays, new furniture) first."
+   },
+   {
+    "kind": "environment",
+    "id": "ventilation_alternative",
+    "description": "Stuffy air or high CO2 needs outdoor-air ventilation, not recirculating filtration; buying may be unnecessary."
+   }
+  ],
+  "coffee_machines": [
+   {
+    "kind": "outcome",
+    "id": "ease_of_use",
+    "description": "Make coffee with little effort, skill or attention."
+   },
+   {
+    "kind": "outcome",
+    "id": "espresso_quality",
+    "description": "Make espresso-based drinks with good taste and little effort."
+   },
+   {
+    "kind": "outcome",
+    "id": "low_maintenance",
+    "description": "Get reliable, repeatable coffee with low routine maintenance."
+   },
+   {
+    "kind": "outcome",
+    "id": "shot_consistency",
+    "description": "Relevant outcomes: brew temperature accuracy and stability, shot-to-shot consistency, extraction yield or TDS where measured, milk texture, warm-up time and noise."
+   },
+   {
+    "kind": "environment",
+    "id": "batch_capacity",
+    "description": "Make enough coffee for several people or an office."
+   },
+   {
+    "kind": "environment",
+    "id": "moka_alternative",
+    "description": "Already owns a moka pot or another brewer that may meet the need, so buying may be unnecessary."
+   },
+   {
+    "kind": "environment",
+    "id": "ongoing_costs",
+    "description": "Ongoing costs (beans versus capsules, filters, descaler), counter space and whether a separate grinder is needed constrain the choice."
+   }
+  ],
+  "coffee_grinders": [
+   {
+    "kind": "outcome",
+    "id": "grind_consistency",
+    "description": "Grind coffee to an even particle size."
+   },
+   {
+    "kind": "outcome",
+    "id": "low_noise",
+    "description": "Grind quietly."
+   },
+   {
+    "kind": "environment",
+    "id": "portability",
+    "description": "Grind away from home: travel, camping or work."
+   }
+  ],
+  "dishwashers": [
+   {
+    "kind": "outcome",
+    "id": "cleaning_soil_removal",
+    "description": "Food-soil removal (washing) to a defined endpoint, by soil type and dish material."
+   },
+   {
+    "kind": "outcome",
+    "id": "drying_by_material",
+    "description": "Drying endpoint per material (ceramic, glass, steel, plastic) and towel time."
+   },
+   {
+    "kind": "outcome",
+    "id": "energy_per_cycle_and_workload",
+    "description": "Electricity per programme cycle and per completed household workload."
+   },
+   {
+    "kind": "outcome",
+    "id": "hygiene_sanitisation",
+    "description": "Verified sanitisation of a specific certified cycle (distinct from cleaning and sterilising)."
+   },
+   {
+    "kind": "outcome",
+    "id": "noise_and_acoustic_events",
+    "description": "Noise: label sound power vs in-room sound pressure and transient events (pump, beeps)."
+   },
+   {
+    "kind": "outcome",
+    "id": "usable_capacity_geometry",
+    "description": "Usable capacity: which real plates, bowls, pots and trays physically fit with spray clearance."
+   },
+   {
+    "kind": "outcome",
+    "id": "water_per_cycle_and_workload",
+    "description": "Water per cycle and per completed workload, incl. pre-rinse and handwash leftovers."
+   },
+   {
+    "kind": "environment",
+    "id": "cannot_plumb_constraint",
+    "description": "Cannot plumb an inlet or must not drill (renting): a tank-fed or countertop unit with reversible connections may fit, only if a lawful drain route exists."
+   },
+   {
+    "kind": "environment",
+    "id": "handwashing_alternative",
+    "description": "A small workload (a few cups or plates) may be met by efficient handwashing, so buying may be unnecessary."
+   }
+  ],
+  "dehumidifiers": [
+   {
+    "kind": "outcome",
+    "id": "low_energy_use",
+    "description": "Use little electricity for the moisture removed."
+   },
+   {
+    "kind": "outcome",
+    "id": "moisture_removal",
+    "description": "Remove enough moisture to keep the room at a safe humidity."
+   },
+   {
+    "kind": "environment",
+    "id": "cold_room_use",
+    "description": "Will run in a cold room, where removal and defrost differ from warm test points."
+   },
+   {
+    "kind": "environment",
+    "id": "leak_or_structural_alternative",
+    "description": "There may be a leak, rain penetration or structural damp: repair and ventilation come before any appliance."
+   }
+  ]
+ }
+}

@@ -277,6 +277,21 @@ priorities; the owner reviews R3 closure):
 Source discovery is Claude's in C3: PEE has no configured search service (Phase223 needs an operator SearXNG
 endpoint). This is reported as a limit of the path, never as PEE capability.
 
+### R3-P — Experimental pilot: negation foundation and knowledge-guided needs (owner 2026-10-20; verbatim in `owner-r3p-authorisation-2026-10-20.md`)
+
+An explicitly experimental work package beside R3-C. It does not change R3-C's restrictions, does not redefine R4
+(within-document evidence linking) and does not renumber later steps.
+- **Stage 1:** one typed mechanism for clause boundaries, negation scope, polarity and contrast, shared by request and
+  document readers, with proposition negation kept apart from requirement negation; evaluated on new sealed material
+  against S103.
+- **Stage 2:** a knowledge-path switch in one build. Arm A: switch off. Arm B: existing scientific knowledge connects
+  user contexts to scientific objectives through typed, attributable relations. Arm C-lite: knowledge-derived candidate
+  relations admitted as experimental, shadow only.
+- **Stage 3:** preregistered evaluation on licensed real consumer wording (Phase251 protocol) plus fresh agent-authored
+  requests, blind references, first runs unchanged; categories air purifiers, coffee machines/grinders, dishwashers.
+- **Never:** an inferred need as a hard exclusion; production ranking; unreviewed knowledge treated as validated.
+- **Exit:** the consolidated report answering the owner's seven questions. No claim that R3, R4 or R5 is complete.
+
 ### R4 — Evidence linking across the whole document
 
 <!-- S85 (owner decision 8, 2026-10-19): heading restored as it was before commit 842550d removed it by accident; requirements and order unchanged. -->
@@ -413,3 +428,4 @@ tests, principle 2).
 - 2026-10-20: S102 rule lifecycle, declarative governance and user intent (owner review of S100; audit `docs/plans/s102-rule-ownership-audit.md`, report `docs/plans/s102-rule-lifecycle.md`). Rule lifecycle (active / under review / superseded / retired, with reason, consumers and evidence; superseded and retired rules never executed; invariants protected) in `knowledge_rules` and in the contract for imperative rules and historical guards; rederivation when rules, definitions or QK change; IR7 closed for leads; the statement introducing a table reaches the shared decision (1G table_context); the request bound and conflicting limits decided under the shared policy (request-semantics rq.1; 0 of 206 answers changed). Development (spent, fixed scorer): reviewed-product values correctly linked 78 -> 97 (S99 98) at S100 precision. S100 check sets (held out from S102 tuning): level with S100. Kind: governance, inference. Maturity: gated. R3 open.
 - 2026-10-20: S103 rule admission, static analysis and request semantics (owner authorisation 2026-10-20; report `docs/plans/s103-rule-admission.md`). Admission records and invariant governance; named contests verified by a static analyser with declared coverage; request semantics rq.2 (intervals, strict/inclusive, force, correction, object, scenario, combination; RQ08 superseded); one bound reader; fast-check property and scoped metamorphic tests. Independent first runs: 40 Claude-authored requests (harmful 7 vs 8, closure 45/47 vs 29/45); 6 new table pages (no change, table introductions not shown working). D31: RQ08 and INVARIANT_GOV resolved; NEG_BOUND, HEDGE_AFTER, BUDGET_READER, REQ_VOCAB, INTRO_NEG, SCORER_PAIR, OS_ADMISSION added. Kind: governance, inference. Maturity: gated. R3 open.
 - 2026-10-20: owner review of S103 and the brainstorming memo; read-only dependency study `docs/plans/post-s103-need-pilot-dependencies.md` for the shared negation mechanism and the knowledge-driven need-understanding pilot (A/B/C). Five owner decisions open, including where the pilot sits on the roadmap (R3-C forbids feature expansion). R3 open.
+- 2026-10-20: R3-P opened (owner authorisation, verbatim `owner-r3p-authorisation-2026-10-20.md`): negation foundation, then the knowledge-guided needs pilot A/B/C-lite. Experimental; R3-C unchanged; R4 meaning unchanged.
