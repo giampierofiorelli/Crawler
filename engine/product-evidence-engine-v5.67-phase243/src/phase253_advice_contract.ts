@@ -73,6 +73,8 @@ export interface Advice253 {
  /** S80 request coverage (principle 8): parts of the request PEE related to nothing it recognised, and numbers no
   * constraint consumed. Stated to the user and kept among the unassessed objectives; never interpreted further. */
  uninterpreted?:{span:string;reason:'not_interpreted'|'quantity_not_checked'}[];
+ /** R3-P (experimental pilot, opt-in): the need interpretation; never read by any decision */
+ needInterpretation?:import('./need_interpretation.js').NeedInterpretation;
 }
 export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range'|'unstated';value:number|null;low?:number;high?:number;unit:string;
  kind:string|null;kindCandidates:string[];metric:string|null;weighting:string|null;status:'typed'|'kind_ambiguous';

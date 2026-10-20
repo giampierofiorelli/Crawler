@@ -9,6 +9,8 @@
  * This is not a second recommendation engine: every check is decideAdvice249's. A specification shortlist says which
  * known products' declarations meet the stated limits; it is not a quality ranking and not the whole market.
  */
+import type {CompiledProgram} from './knowledge_rules.js';
+import {interpretNeeds} from './need_interpretation.js';
 import {stanceAt} from './language_scope.js';
 import {requestCoverage80} from './request_coverage80.js';
 import {createHash} from 'node:crypto';
@@ -180,7 +182,11 @@ const OBJECTIVE253=/\b(best[- ]tasting|tastiest|good[- ]tasting|great[- ]tasting
 const OBJECTIVE_STOP=/^(?:for|under|over|with|that|which|i|you|we|in|on|at|to|and|or|than|below|around|within|my|can|is|are|of)$/i;
 function statedObjectives253(text:string):string[]{
  const out:string[]=[];
- for(const m of text.matchAll(OBJECTIVE253)){const words=(m[2]??'').trim().split(/\s+/).filter(Boolean);const kept:string[]=[];
+ for(const m of text.matchAll(OBJECTIVE253)){
+  // R3-P (after the stage-1 first run, sealed request n10: "It doesn't have to be the quietest dishwasher"): an objective the
+  // request negates or is indifferent to is not stated; the shared scope (src/language_scope.ts) decides
+  if(stanceAt(text,m.index!,m.index!+m[1].length))continue;
+  const words=(m[2]??'').trim().split(/\s+/).filter(Boolean);const kept:string[]=[];
   for(const w of words){if(OBJECTIVE_STOP.test(w))break;kept.push(w);}
   // "best way", "best type", "best option" ask for advice in general, not for a product outcome.
   if(!kept.length||/^(?:way|ways|type|types|kind|kinds|option|options|choice|choices|thing|things|one|ones|idea|ideas|method|methods|place|time|approach|solution|advice|deal|deals|value|price|brand|brands)$/i.test(kept[0]))continue;
@@ -323,7 +329,11 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
  * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
 export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string;
  /** S98 (gated): attach the stored scientific readings of the considered products (no decision effect) */
- scientific98?:boolean}={}):Advice253{
+ scientific98?:boolean;
+ /** R3-P (experimental pilot): attach the need interpretation (src/need_interpretation.ts). knowledgeGuided switches the
+  * scientific-knowledge path on (arm B); candidates are the admitted experimental C-lite rules (shadow). Never changes any
+  * other field of the answer: inferred needs are never constraints, exclusions, ranking inputs or statements. */
+ needInterpretation?:{knowledgeGuided:boolean;candidates?:CompiledProgram|null}}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  if(opts.scientific98&&out.response!=='out_of_scope'){const ids=[...out.shortlist,...out.unknown,...out.excluded].map(x=>x.productId);
@@ -332,6 +342,8 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  // S80: "the list is unordered" speaks about the shortlist; without one it contradicts an ordered partial comparison
  // shown in the same answer (S80 first run, judge finding on D1).
  if(!out.shortlist.length)out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
+ if(opts.needInterpretation){const words=registry.find(r=>r.id===out.category)?.aliases??[];
+  out.needInterpretation=interpretNeeds(text,out,store,{knowledgeGuided:opts.needInterpretation.knowledgeGuided,qk:opts.quantityKnowledge??undefined,categoryWords:words,candidates:opts.needInterpretation.candidates??null});}
  return out;
 }
 /** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */
