@@ -87,6 +87,9 @@ const nu=u=>{const p=u?QK.parseUnit(qk,String(u).trim()):null;return p?p.express
 const valueOf=r=>{if(r.subject_table==='document_quantity')return {v:r.value,u:r.unit};if(r.subject_table==='test_measurements265'){const t=ON.db.prepare('SELECT value,unit FROM test_measurements265 WHERE measurement_id=?').get(r.subject_id);return {v:t?.value,u:t?.unit};}
  const d=ON.db.prepare('SELECT value_json FROM declarations WHERE declaration_id=?').get(r.subject_id);const v=d?JSON.parse(d.value_json):null;return {v:v?.number??v?.min??null,u:v?.unit??null};};
 const byPage=new Map();for(const r of retrieved){const x=valueOf(r);const k=urlRev.get(r.revision_id);(byPage.get(k)??byPage.set(k,[]).get(k)).push({...r,v:x.v,u:nu(x.u)});}
+// S102: the rows of one page are scored in a fixed order (observation key, then subject id), never in storage order: the
+// first row that matches a reference value used to depend on the reading ids, which change with the interpreter identity
+for(const rows of byPage.values())rows.sort((a,b)=>String(a.observation_key??a.subject_id).localeCompare(String(b.observation_key??b.subject_id))||String(a.subject_id).localeCompare(String(b.subject_id)));
 const roleOfRow=r=>r.statement_role??(r.nature==='measured'||r.nature==='calculated'?'result':r.nature==='declared'?'specification':r.nature==='condition'?'condition':'unresolved');
 const REF_ROLE={declared_spec:'specification',measured_by_publisher:'result',test_condition:'condition',quoted_other_source:'specification',specification:'specification',result:'result',setting:'condition',
  threshold:'threshold',norm:'norm',target:'target',condition:'condition'};

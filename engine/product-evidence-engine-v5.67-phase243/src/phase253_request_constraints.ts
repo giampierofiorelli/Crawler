@@ -14,9 +14,19 @@
 import {canonicalUnit245,parseNumber245} from './phase245_value_normalizer.js';
 import {composeQuestion125} from './phase125_compositional_dialogue_frame.js';
 import type {Constraint253} from './phase253_advice_contract.js';
-import {loadQuantityKnowledge,findQuantities,type QuantityKnowledge} from './quantity_knowledge.js';
+import {loadQuantityKnowledge,findQuantities,quantityBound,type QuantityKnowledge} from './quantity_knowledge.js';
+import {readFileSync} from 'node:fs';
+import {compileRuleSet,evaluate,decide,type RuleSet,type CompiledProgram} from './knowledge_rules.js';
 // GK: the quantity knowledge says what the printed unit expresses; loaded once (the committed, validated pack).
 let QK253:QuantityKnowledge|null=null;const qk253=()=>QK253??=loadQuantityKnowledge();
+/** S102 (owner review of S100): the bound of a stated requirement and conflicts between stated requirements are decided by
+ * the shared decision policy (knowledge_rules decide; resources/request-semantics/request-semantics.v1.json). The program
+ * concludes requirement states only, never product facts. */
+export const REQUEST_SEMANTICS_FILE='request-semantics.v1.json';
+let RQ:{program:CompiledProgram;version:string}|null=null;
+export function requestSemanticsRules():{program:CompiledProgram;version:string}{
+ if(RQ)return RQ;const raw=JSON.parse(readFileSync(new URL('../../resources/request-semantics/'+REQUEST_SEMANTICS_FILE,import.meta.url),'utf8')) as RuleSet;
+ const program=compileRuleSet(raw).get('request_requirements');if(!program)throw Error('request_requirements: program missing');return RQ={program,version:raw.version};}
 
 export interface RequestConstraint253 extends Constraint253 {
  bound:'min'|'max';property:'capacity'|'water_tank'|'width'|'height'|'depth'|'weight'|'power'|'battery_life'|'price';
@@ -71,9 +81,21 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   // A range states a requirement only with "between" or a bound word; a bare "2000-2400W" may describe a label or
   // an owned product, so its inferred bound makes it a candidate to confirm, never a stated requirement.
   const inferredBound=range&&bound===null&&!between;
-  if(range&&bound===null)bound=dim==='volume'||dim==='power'||dim==='duration'?'min':'max';
   const space=SPACE.test(before)||/^\s*(?:\S+\s+){0,2}(?:space|opening|gap|cupboard|shelf|alcove|cabinet|recess)\b/.test(after);
-  if(space&&bound===null)bound='max';
+  // S102: the local reading and the shared (quantity-knowledge) reading of the bound are two claims of equal authority;
+  // the space convention is context; a bare range presumes a bound. Disagreement leaves the requirement undecided.
+  const shared=quantityBound(qk253(),text,f.start,f.end,f.unit.kinds).bound;
+  const rangeDefault:'min'|'max'=dim==='volume'||dim==='power'||dim==='duration'?'min':'max';
+  const facts:{reading:string[][];space:string[][];range_inferred:string[][]}={reading:[],space:[],range_inferred:[]};
+  if(bound)facts.reading.push(['q',`local`,bound]);if(shared)facts.reading.push(['q','shared',shared]);
+  if(space)facts.space.push(['q']);if(range&&!between)facts.range_inferred.push(['q',rangeDefault]);
+  const dec=decide(evaluate(requestSemanticsRules().program,facts)).find(d=>d.field==='bound')??null;
+  const boundConflict=!!dec?.conflict;
+  const localBound=bound;
+  bound=dec?.value as 'min'|'max'|null??(boundConflict?localBound??shared:null);
+  // a range stated with "between" has the kind's bound; a bare range only a presumption (asked)
+  if(range&&bound===null){bound=rangeDefault;}
+  const inferredBound2=range&&!between&&!dec?.value&&!boundConflict;
   const negated=NEGATION.test(before.replace(BOUND_NEGATIONS,' '));
   let property:RequestConstraint253['property']|null=null;
   // Reality check 2026-10-16: a volume said of a water tank or reservoir is the tank's, not the product's capacity
@@ -97,10 +119,10 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const eff=bound??(property==='capacity'||property==='water_tank'?'min':null);
   const criterion=eff?CRITERION[`${property}:${eff}`]:undefined;
   if(!criterion){unmapped.push({span,reason:`no checkable criterion for a ${bound??'unbounded'} ${property}`});continue;}
-  const clear=!!bound&&!negated&&!inferredBound;
+  const clear=!!bound&&!negated&&!inferredBound2&&!boundConflict;
   constraints.push({criterion,value,unit,bound:eff!,property,describes:space?'available_space':'product',span,start:spanStart,end:spanStart+span.length,
    status:clear?'stated_in_request':'candidate',confidence:clear?'clear':'ambiguous',
-   note:property==='power'?'declared power may be rated input or output power; compared as each source declares it':space?'the product must fit inside the space you described; clearances are not added':null});
+   note:boundConflict?'the request\'s words read both as a minimum and as a maximum: please confirm which':property==='power'?'declared power may be rated input or output power; compared as each source declares it':space?'the product must fit inside the space you described; clearances are not added':null});
   if(range)unmapped.push({span,reason:`the ${criterion.endsWith('_min')?'upper':'lower'} limit of the range has no checkable criterion`});
  }
  // Budget: the Phase125 reading (anchored currency limits).
@@ -110,5 +132,11 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const span=i>=0?text.slice(i-cue.length,i+text.slice(i).search(/\d(?![\d.,])/)+1).trim():`${budget.currency} ${amount}`;
   constraints.push({criterion:'budget_max',value:budget.max,unit:budget.currency.toLowerCase(),bound:'max',property:'price',describes:'product',span,start:i,end:i+span.length,
    status:'stated_in_request',confidence:'clear',note:'prices are checked only against retained price declarations in the same currency, which may be out of date'});}
+ // S102: two different stated limits for one criterion contradict each other (the last one used to win silently): neither
+ // is a confirmed requirement; both are asked
+ const stated=constraints.filter(c=>c.status==='stated_in_request');
+ if(stated.length>1){const m=evaluate(requestSemanticsRules().program,{stated_limit:stated.map(c=>[c.criterion,String(c.value)])});
+  const conflicting=new Set(m.all('limit_conflict').map(f=>f.args[0]));
+  for(const c of constraints)if(conflicting.has(c.criterion)&&c.status==='stated_in_request'){c.status='candidate';c.confidence='ambiguous';c.note='the request states different limits for this criterion: please confirm which applies';}}
  return {constraints,unmapped};
 }

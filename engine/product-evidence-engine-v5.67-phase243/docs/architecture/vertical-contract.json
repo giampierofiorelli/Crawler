@@ -704,6 +704,44 @@
       "scripts/s99-check.mjs items"
      ],
      "verification": "the units are taught with their kinds, or reported as an explicit coverage gap per page"
+    },
+    {
+     "id": "RQC",
+     "what": "request coverage runs only when a category was resolved and the answer is in scope; clarification answers report nothing uncovered",
+     "consumers": [
+      "src/phase253_request_advice.ts"
+     ],
+     "verification": "a clarification answer lists the uncovered parts of the request"
+    },
+    {
+     "id": "NEG",
+     "what": "five negation vocabularies with different scopes on the request path; the QK pack's evaluation.negators unused",
+     "consumers": [
+      "phase248_advisory_journey",
+      "phase253_request_constraints",
+      "request_coverage80"
+     ],
+     "verification": "one declarative negation scope; 'not looking for anything bigger than 30 cm' read the same by need inference, constraints and coverage"
+    },
+    {
+     "id": "APP",
+     "what": "criterion applicability is global (a TV can get capacity_min)",
+     "consumers": [
+      "phase249_decision",
+      "phase250_category_lessons"
+     ],
+     "verification": "applicability declared per category; a criterion that does not apply becomes an unassessed objective, never an exclusion"
+    },
+    {
+     "id": "CLAUSE",
+     "what": "seven clause-boundary definitions with different word sets",
+     "consumers": [
+      "definition_interpreter",
+      "observation_semantics",
+      "phase225",
+      "document_evidence"
+     ],
+     "verification": "one shared clause function; the same sentence splits identically everywhere"
     }
    ]
   }
@@ -973,7 +1011,7 @@
    {
     "file": "resources/scientific-reading/observation-semantics.v1.json",
     "program": "observation_semantics",
-    "version": "os.2",
+    "version": "os.3",
     "decides": [
      "role",
      "nature",
@@ -998,7 +1036,32 @@
      "tests/s88_property_definitions.test.ts",
      "tests/s89_definition_learning.test.ts",
      "tests/s100_rule_governance.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [
+      "own-word cutting",
+      "plausibility arithmetic"
+     ],
+     "policy": [
+      "break words",
+      "band regex",
+      "candidate weight",
+      "QK-competitor veto",
+      "profile licence",
+      "object rules (S89)"
+     ],
+     "invariant": [
+      "ties abstain"
+     ]
+    },
+    "lifecycle": {
+     "state": "under_review",
+     "since": "2026-10-20",
+     "reason": "the S89 object rules stay in production while the S98 replacement (objectInSentence, objectResolution, objectLicence) is reachable only from scripts; needs an evaluation before any change",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR2",
@@ -1009,7 +1072,28 @@
     "tier": "explicit",
     "tests": [
      "tests/s99_observation_identity.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [
+      "sentence window"
+     ],
+     "policy": [
+      "comparison-section veto",
+      "name distance",
+      "anaphor"
+     ],
+     "invariant": [
+      "a role that is not a value has no product"
+     ]
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "active. S102 tried to stop reading the page title as a section role here (for consistency with the cue path) and reverted it: a title announcing a comparison is document-level evidence that protects against linking other products' values to the page product (other-product links 4 -> 7 in development)",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR3",
@@ -1021,7 +1105,24 @@
     "tests": [
      "tests/quantity_knowledge.test.ts",
      "tests/s99_observation_identity.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [
+      "'(no) X than' parse"
+     ],
+     "policy": [
+      "bound word lists (in the QK pack)"
+     ],
+     "invariant": []
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "shared with the request path since S102 (request_semantics program)",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR4",
@@ -1032,7 +1133,26 @@
     "tier": "explicit",
     "tests": [
      "tests/s98_operational_path.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [
+      "union, dedup"
+     ],
+     "policy": [
+      "union without source precedence (F6)"
+     ],
+     "invariant": [
+      "conflicting condition values reported"
+     ]
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "F6 open in D31",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR5",
@@ -1044,7 +1164,24 @@
     "tests": [
      "tests/s99_observation_identity.test.ts",
      "tests/s100_rule_governance.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [],
+     "policy": [
+      "14 ordered early returns"
+     ],
+     "invariant": [
+      "a missing element is never equivalence"
+     ]
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "the return order is the policy; candidate for a decision program (F7/F9)",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR6",
@@ -1055,7 +1192,27 @@
     "tier": "constraint",
     "tests": [
      "tests/s99_observation_identity.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [
+      "locator prefix",
+      "text window"
+     ],
+     "policy": [
+      "unverified lead text counted as the same occurrence (LTU)"
+     ],
+     "invariant": [
+      "the same value is not the same observation"
+     ]
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "audited in S102 (docs/plans/s102-rule-ownership-audit.md)",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR7",
@@ -1066,7 +1223,22 @@
     "tier": "constraint",
     "tests": [
      "tests/s99_observation_identity.test.ts"
-    ]
+    ],
+    "class": {
+     "algorithmic": [],
+     "policy": [],
+     "invariant": [
+      "a product link only from a stated subject"
+     ]
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "S102: a lead's product link follows its reading's subject (the gap found by the S102 audit is closed)",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
    },
    {
     "id": "IR8",
@@ -1078,8 +1250,259 @@
     "tests": [
      "tests/quantity_knowledge.test.ts",
      "tests/s100_rule_governance.test.ts"
+    ],
+    "class": {
+     "algorithmic": [
+      "m:ss / h:mm compounds",
+      "clock times"
+     ],
+     "policy": [],
+     "invariant": []
+    },
+    "lifecycle": {
+     "state": "active",
+     "since": "2026-10-20",
+     "reason": "audited in S102 (docs/plans/s102-rule-ownership-audit.md)",
+     "evidence": [
+      "docs/plans/s102-rule-ownership-audit.md"
+     ]
+    }
+   }
+  ],
+  "lifecycle": {
+   "note": "S102 (owner review of S100: 'Existing rules must be revisable, not historically authoritative'). Every declarative rule may carry lifecycle {state, since, reason, supersededBy, consumers, evidence} (src/knowledge_rules.ts RuleLifecycle); superseded and retired rules stay in the file and are never executed; a rule marked invariant cannot be superseded or retired by a lifecycle entry. Every imperative entry below states its class and lifecycle. A change of any rule program, the definitions, the quantity knowledge or the reader re-derives stored readings (reading identity and revision derivation key).",
+   "states": [
+    "active",
+    "under_review",
+    "superseded",
+    "retired"
+   ],
+   "classes": {
+    "algorithmic": "parsing, structure recognition, arithmetic: stays in code",
+    "policy": "vocabulary, precedence, exclusion, exception, threshold: declarative where technically appropriate",
+    "invariant": "safety, evidence integrity, provenance, authorisation: explicitly protected by tests"
+   }
+  },
+  "historicalGuards": [
+   {
+    "id": "G1",
+    "origin": "S89",
+    "file": "src/definition_interpreter.ts",
+    "function": "termScore",
+    "what": "a label term supports a value only when no other number lies between them",
+    "state": "superseded",
+    "supersededBy": "S100 same-kind rule in ownWords",
+    "since": "2026-10-20",
+    "reason": "numbers of another kind (a price, a time) between term and value blocked correct attributions",
+    "evidence": [
+     "tests/s100_rule_governance.test.ts",
+     "evaluation/s100/integrity-dev-s100-it2.json"
+    ]
+   },
+   {
+    "id": "G2",
+    "origin": "S89",
+    "file": "src/definition_interpreter.ts",
+    "function": "termScore",
+    "what": "outside a profile the object must be named; a context term needs its own object",
+    "state": "under_review",
+    "since": "2026-10-20",
+    "reason": "S98 objectInSentence, S93 objectResolution and S97 objectLicence may subsume it but are reachable only from scripts; evaluate before change",
+    "evidence": [
+     "docs/plans/s102-rule-ownership-audit.md"
+    ]
+   },
+   {
+    "id": "G3",
+    "origin": "S90",
+    "file": "src/definition_interpreter.ts",
+    "function": "attributeProperty",
+    "what": "band_of_another_measurement early return",
+    "state": "under_review",
+    "since": "2026-10-20",
+    "reason": "untested; same-kind own words and record roles may subsume it",
+    "evidence": [
+     "docs/plans/s102-rule-ownership-audit.md"
+    ]
+   },
+   {
+    "id": "G4",
+    "origin": "S86c",
+    "file": "src/phase225_transient_test_probe.ts",
+    "function": "observationRole86c",
+    "what": "approximation and generic early returns suppress the measuring-verb cue",
+    "state": "under_review",
+    "since": "2026-10-20",
+    "reason": "under the shared decision they should be separate cues, not vetoes",
+    "evidence": [
+     "docs/plans/s102-rule-ownership-audit.md"
+    ]
+   },
+   {
+    "id": "G5",
+    "origin": "S99",
+    "file": "src/scientific_reading98.ts",
+    "function": "readDocumentQuantity98",
+    "what": "comparison-section subject veto",
+    "state": "under_review",
+    "since": "2026-10-20",
+    "reason": "1G row subjects may subsume it; no test",
+    "evidence": [
+     "docs/plans/s102-rule-ownership-audit.md"
+    ]
+   },
+   {
+    "id": "G6",
+    "origin": "1G GL4",
+    "file": "src/table_interpreter1g.ts",
+    "function": "contextLinks",
+    "what": "a linked statement must share a dimension with the table",
+    "state": "active",
+    "since": "2026-10-20",
+    "reason": "S102 narrows its effect: the statement that introduces a table is read as table context through a separate ladder level (table_context), whatever its words; GL4 still applies to other linked statements",
+    "evidence": [
+     "tests/s102_rule_lifecycle.test.ts"
+    ]
+   },
+   {
+    "id": "G7",
+    "origin": "S92",
+    "file": "resources/scientific-reading/observation-semantics.v1.json",
+    "function": "OS11, OS12",
+    "what": "the episodic situation type decides result/measured",
+    "state": "retired",
+    "since": "2026-10-20",
+    "reason": "8 of 15 correct on spent material",
+    "evidence": [
+     "evaluation/s100/integrity-dev-s100-it1.json"
     ]
    }
-  ]
+  ],
+  "requestPath": {
+   "note": "S102 audit (docs/plans/s102-rule-ownership-audit.md §3). Requests express goals, preferences and constraints; documents express claims and observations: the request program concludes requirement states, never product facts.",
+   "programs": [
+    {
+     "file": "resources/request-semantics/request-semantics.v1.json",
+     "program": "request_requirements",
+     "decides": [
+      "bound",
+      "requirement_state"
+     ],
+     "consumer": "src/phase253_request_advice.ts applyQuantityRequirements253 and adviseCore253",
+     "tests": [
+      "tests/s102_rule_lifecycle.test.ts"
+     ]
+    }
+   ],
+   "imperative": [
+    {
+     "id": "RQ1",
+     "file": "src/phase248_advisory_journey.ts",
+     "function": "runJourney248",
+     "decides": "category",
+     "class": "policy (vocabulary, precedence) + algorithmic (matching)",
+     "lifecycle": {
+      "state": "active",
+      "since": "2026-10-20",
+      "reason": "ambiguity already abstains and asks"
+     },
+     "tests": [
+      "tests/phase248_advisory_journey.test.ts"
+     ]
+    },
+    {
+     "id": "RQ2",
+     "file": "src/phase248_advisory_journey.ts",
+     "function": "purchaseTarget253",
+     "decides": "purchase target",
+     "class": "algorithmic + policy (three buying-verb lists)",
+     "lifecycle": {
+      "state": "under_review",
+      "since": "2026-10-20",
+      "reason": "overrides an explicit category alias; three different verb lists"
+     },
+     "tests": [
+      "tests/phase253_advice.test.ts"
+     ]
+    },
+    {
+     "id": "RQ3",
+     "file": "src/phase248_advisory_journey.ts, src/phase253_request_constraints.ts",
+     "function": "negation (five scopes)",
+     "decides": "negation",
+     "class": "policy",
+     "lifecycle": {
+      "state": "under_review",
+      "since": "2026-10-20",
+      "reason": "five vocabularies; the QK pack's evaluation.negators unused; candidate for one declarative negation-scope rule"
+     },
+     "tests": [
+      "tests/s80_request_coverage.test.ts",
+      "tests/phase248_advisory_journey.test.ts"
+     ]
+    },
+    {
+     "id": "RQ4",
+     "file": "src/phase253_request_constraints.ts",
+     "function": "extractConstraints253",
+     "decides": "bound of a requirement (local reading)",
+     "class": "policy",
+     "lifecycle": {
+      "state": "active",
+      "since": "2026-10-20",
+      "reason": "S102: no longer overrides the shared reading; both readings are claims of the request_requirements decision"
+     },
+     "tests": [
+      "tests/s102_rule_lifecycle.test.ts"
+     ]
+    },
+    {
+     "id": "RQ5",
+     "file": "src/phase253_request_advice.ts",
+     "function": "adviseCore253",
+     "decides": "a stated requirement becomes hard",
+     "class": "invariant",
+     "lifecycle": {
+      "state": "active",
+      "since": "2026-10-20",
+      "reason": "only a stated, bounded, non-negated, non-conflicting requirement becomes hard (S102 adds non-conflicting)"
+     },
+     "tests": [
+      "tests/s102_rule_lifecycle.test.ts",
+      "tests/s85_safety_and_quantities.test.ts"
+     ]
+    },
+    {
+     "id": "RQ6",
+     "file": "src/phase249_decision.ts, src/phase250_category_lessons.ts",
+     "function": "SPEC_CRITERIA249, NEED_CRITERIA250",
+     "decides": "criterion applicability",
+     "class": "policy",
+     "lifecycle": {
+      "state": "under_review",
+      "since": "2026-10-20",
+      "reason": "global tables: every criterion applies to every category"
+     },
+     "tests": [
+      "tests/phase249_decision.test.ts"
+     ]
+    },
+    {
+     "id": "RQ7",
+     "file": "src/request_coverage80.ts",
+     "function": "requestCoverage80",
+     "decides": "unrecognised parts are reported",
+     "class": "invariant + algorithmic",
+     "lifecycle": {
+      "state": "active",
+      "since": "2026-10-20",
+      "reason": "runs only when a category was resolved (D31 RQC)"
+     },
+     "tests": [
+      "tests/s80_request_coverage.test.ts"
+     ]
+    }
+   ]
+  }
  }
 }

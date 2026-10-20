@@ -1,6 +1,6 @@
 {
  "schema": "pee.knowledge-rules.v1",
- "version": "os.2",
+ "version": "os.3",
  "statement": "S100 (owner review of S99, 2026-10-20; verbatim in .claude/skills/pee-guided-learning/references/owner-review-s99-rule-governance-2026-10-20.md): the statement role, nature and provenance of an observation are decided once, by claims from typed evidence cues about that occurrence and its context, under the precedence policy of knowledge_rules.ts (constraint > explicit > inherited; narrowest scope; equal-level disagreement abstains; defaults are presumptions). Which extractor found the value is a presumption only. Cue readers in src/observation_semantics.ts emit the cues.",
  "vocabulary": [
   {
@@ -90,6 +90,44 @@
      "rule": "claim(O,nature,measured,explicit,clause) :- cue(O,observation_verb,clause).",
      "statement": "a verb reporting what the product did (\"it lasted 48 minutes\"): nature measured.",
      "source": "S91 positive role evidence (definition_interpreter.ts roleEvidence)"
+    },
+    {
+     "id": "OS11",
+     "rule": "claim(O,role,result,explicit,clause) :- cue(O,episodic,clause).",
+     "statement": "the value's clause reports an event (finite past tense, not passive): role result.",
+     "source": "S92 situation type (situationTypeOf)",
+     "lifecycle": {
+      "state": "retired",
+      "since": "2026-10-20",
+      "reason": "S100 development on spent S89-S99 material: the S92 situation type 'episodic' decided 15 statement roles, 8 correctly. An event reading of a verb is not evidence that a value was measured.",
+      "consumers": [
+       "src/scientific_reading98.ts (all quantity readers)"
+      ],
+      "evidence": [
+       "evaluation/s100/integrity-dev-s100-it0.json",
+       "evaluation/s100/integrity-dev-s100-it1.json",
+       "docs/plans/s100-rule-governance.md"
+      ]
+     }
+    },
+    {
+     "id": "OS12",
+     "rule": "claim(O,nature,measured,explicit,clause) :- cue(O,episodic,clause).",
+     "statement": "the value's clause reports an event (finite past tense, not passive): nature measured.",
+     "source": "S92 situation type (situationTypeOf)",
+     "lifecycle": {
+      "state": "retired",
+      "since": "2026-10-20",
+      "reason": "S100 development on spent S89-S99 material: the S92 situation type 'episodic' decided 15 statement roles, 8 correctly. An event reading of a verb is not evidence that a value was measured.",
+      "consumers": [
+       "src/scientific_reading98.ts (all quantity readers)"
+      ],
+      "evidence": [
+       "evaluation/s100/integrity-dev-s100-it0.json",
+       "evaluation/s100/integrity-dev-s100-it1.json",
+       "docs/plans/s100-rule-governance.md"
+      ]
+     }
     },
     {
      "id": "OS13",
@@ -768,6 +806,10 @@
   {
    "version": "os.2",
    "note": "S100 development (spent S89-S99 material): the S92 situation type 'episodic' decided 15 roles, 8 correctly; an event reading of a verb is not evidence that a value was measured. Rules OS11 and OS12 removed. Page titles are no longer read as section headings, and a calculation cue needs a calculation operator (reader changes, same rules)."
+  },
+  {
+   "version": "os.3",
+   "note": "S102 (owner review of S100): rule lifecycle. OS11 and OS12 return to the file as retired rules with their reason and evidence instead of being deleted; retired rules are never executed. No change of decisions."
   }
  ]
 }

@@ -23,7 +23,17 @@ export type Const=string;
 interface Term {v?:string;c?:Const}
 interface Atom {pred:string;args:Term[]}
 type Literal={kind:'pos';atom:Atom}|{kind:'neg';atom:Atom}|{kind:'cmp';op:'='|'!='|'<'|'>';l:Term;r:Term};
-export interface RuleDef {id:string;rule:string;statement:string;source:string;explain?:string}
+/** S102 (owner review of S100, 2026-10-20: "A rule introduced or approved during an earlier phase is not automatically
+ * still valid"): the lifecycle of a rule. A rule without one is active. Superseded and retired rules are kept in the file
+ * (their history and evidence) but never executed; under_review rules run and are reported. A rule marked `invariant`
+ * (safety, provenance, evidence integrity) cannot be superseded or retired by a lifecycle entry: that needs an owner
+ * decision and a change of the invariant itself. */
+export type RuleState='active'|'under_review'|'superseded'|'retired';
+export interface RuleLifecycle {state:RuleState;since:string;reason:string;
+ /** the rule that replaces it (superseded only) */ supersededBy?:string;
+ /** consumers affected by the change */ consumers?:string[];
+ /** regression evidence: tests, evaluation files or reports */ evidence?:string[]}
+export interface RuleDef {id:string;rule:string;statement:string;source:string;explain?:string;lifecycle?:RuleLifecycle;invariant?:boolean}
 export interface PredicateDef {name:string;args:string[];meaning:string;role:'input'|'derived'|'constant'}
 export interface ProgramDef {id:string;statement:string;rules:RuleDef[];constants?:string[];
  /** S100: the program decides single-valued fields by defeasible claims (see DecisionDef). */
@@ -52,7 +62,9 @@ export interface DecisionDef {predicate:string;
  contested:{field:string;tier:Tier;scopes:string[];values:string[];why:string}[]}
 export interface RuleSet {schema:string;version:string;statement:string;vocabulary:PredicateDef[];programs:ProgramDef[]}
 interface Rule {id:string;head:Atom;body:Literal[];def:RuleDef}
-export interface CompiledProgram {id:string;rules:Rule[];strata:Rule[][];constants:Atom[];vocab:Map<string,PredicateDef>;decision?:DecisionDef|null}
+export interface CompiledProgram {id:string;rules:Rule[];strata:Rule[][];constants:Atom[];vocab:Map<string,PredicateDef>;decision?:DecisionDef|null;
+ /** S102: every rule of the program with its lifecycle state (superseded and retired rules are listed, not executed) */
+ lifecycle:{rule:string;state:RuleState;invariant:boolean;lifecycle:RuleLifecycle|null}[]}
 
 const fail=(m:string):never=>{throw new Error('knowledge_rules_invalid: '+m);};
 
@@ -88,7 +100,19 @@ export function compileRuleSet(rs:RuleSet):Map<string,CompiledProgram>{
  for(const pd of rs.programs){
   const ids=new Set<string>();
   const check=(a:Atom,where:string)=>{const d=vocab.get(a.pred);if(!d)fail(`undeclared predicate ${a.pred} in ${where}`);if(d!.args.length!==a.args.length)fail(`${a.pred} has arity ${d!.args.length}, used with ${a.args.length} in ${where}`);};
-  const rules:Rule[]=pd.rules.map(def=>{if(ids.has(def.id))fail('duplicate rule '+def.id);ids.add(def.id);if(!def.statement)fail('rule without statement '+def.id);
+  // S102: lifecycle checks; only active and under_review rules are compiled for execution
+  {const all=new Set<string>();for(const d of pd.rules){if(all.has(d.id))fail('duplicate rule '+d.id);all.add(d.id);}}
+  const life=new Map(pd.rules.map(d=>[d.id,d.lifecycle?.state??'active']));
+  for(const d of pd.rules){const l=d.lifecycle;if(!l)continue;
+   if(!['active','under_review','superseded','retired'].includes(l.state))fail(`rule ${d.id}: unknown lifecycle state ${l.state}`);
+   if(!/^\d{4}-\d{2}-\d{2}$/.test(l.since??'')||!l.reason)fail(`rule ${d.id}: a lifecycle entry needs a date and a reason`);
+   if((l.state==='superseded'||l.state==='retired')&&!(l.evidence?.length))fail(`rule ${d.id}: ${l.state} without regression evidence`);
+   if((l.state==='superseded'||l.state==='retired')&&d.invariant)fail(`rule ${d.id} is an invariant: it cannot be ${l.state} by a lifecycle entry (owner decision required)`);
+   if(l.state==='superseded'){if(!l.supersededBy)fail(`rule ${d.id}: superseded without a successor`);
+    const st=life.get(l.supersededBy!);if(!st)fail(`rule ${d.id}: successor ${l.supersededBy} does not exist`);
+    if(st==='superseded'||st==='retired')fail(`rule ${d.id}: successor ${l.supersededBy} is itself ${st}`);}}
+  const lifecycle=pd.rules.map(d=>({rule:d.id,state:(d.lifecycle?.state??'active') as RuleState,invariant:!!d.invariant,lifecycle:d.lifecycle??null}));
+  const rules:Rule[]=pd.rules.filter(d=>{const st=d.lifecycle?.state??'active';return st==='active'||st==='under_review';}).map(def=>{if(ids.has(def.id))fail('duplicate rule '+def.id);ids.add(def.id);if(!def.statement)fail('rule without statement '+def.id);
    const {head,body}=parseRuleText(def.rule);check(head,def.id);for(const l of body)if(l.kind!=='cmp')check(l.atom,def.id);
    const hd=vocab.get(head.pred)!;if(hd.role!=='derived')fail(`rule ${def.id} derives ${head.pred}, which is not a derived predicate`);
    const bound=new Set(body.flatMap(l=>l.kind==='pos'?vars(l.atom.args):[]));
@@ -105,7 +129,7 @@ export function compileRuleSet(rs:RuleSet):Map<string,CompiledProgram>{
     if(need>st.get(r.head.pred)!){st.set(r.head.pred,need);changed=true;}}}
   const n=Math.max(0,...st.values());const strata:Rule[][]=Array.from({length:n+1},()=>[]);for(const r of rules)strata[st.get(r.head.pred)!].push(r);
   if(pd.decision)checkDecision(pd.id,pd.decision,rules,vocab);
-  out.set(pd.id,{id:pd.id,rules,strata,constants,vocab,decision:pd.decision??null});}
+  out.set(pd.id,{id:pd.id,rules,strata,constants,vocab,decision:pd.decision??null,lifecycle});}
  return out;
 }
 

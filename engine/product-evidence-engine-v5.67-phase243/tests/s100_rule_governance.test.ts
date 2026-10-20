@@ -39,7 +39,8 @@ test('duplicate rules are rejected', ()=>{
 
 test('every cue kind is declared, produced by a registered reader, and used by a rule', ()=>{
  const declared=new Set(RULES.cueKinds);const produced=new Set(CUE_READERS.flatMap(r=>r.kinds));
- const used=new Set(RULES.programs[0].rules.flatMap(r=>[...r.rule.matchAll(/cue\(O,([a-z_]+),/g)].map(m=>m[1])));
+ // S102: superseded and retired rules are history, not execution
+ const used=new Set(RULES.programs[0].rules.filter(r=>!['superseded','retired'].includes(r.lifecycle?.state??'active')).flatMap(r=>[...r.rule.matchAll(/cue\(O,([a-z_]+),/g)].map(m=>m[1])));
  for(const k of declared)assert.ok(produced.has(k),`cue ${k} is declared but no registered reader produces it`);
  for(const k of produced)assert.ok(declared.has(k),`reader cue ${k} is not declared`);
  for(const k of used)assert.ok(declared.has(k),`rule uses undeclared cue ${k}`);

@@ -499,7 +499,10 @@ export class KnowledgeStore246 {
   if(!o||!/^https:\/\//.test(o.url)||!hex64(o.sha256)||!iso(o.fetchedAt)||!Number.isInteger(o.httpStatus)||
    !/^[a-z0-9_.:-]{1,80}$/i.test(o.runId)||!shortText(o.extractorVersion,80))throw Error('246_invalid_observation');
   // S98: with typed readings enabled, the interpreter version is part of the derivation, so a new interpreter re-derives
-  const sci98=this.storage.scientificReadings98===true&&o.scientific98?{decl:new Map(o.scientific98.declarations.map(d=>[d.key,d.reading])),version:o.scientific98.interpreter.reader}:null;
+  // S102: the derivation key names the reader, its rule programs, the definitions and the quantity knowledge, so already-seen
+  // bytes are re-derived when any of them changes (it used to name the reader only)
+  const sci98=this.storage.scientificReadings98===true&&o.scientific98?{decl:new Map(o.scientific98.declarations.map(d=>[d.key,d.reading])),
+   version:[o.scientific98.interpreter.reader,o.scientific98.interpreter.definitions,o.scientific98.interpreter.quantityKnowledge].join('|')}:null;
   const derivationVersion=o.extractorVersion+'+'+IDENTITY_RULES246+(sci98?'+'+sci98.version:'');
   return this.tx(()=>{
    const retention=this.registerSource(o.source,o.fetchedAt);
@@ -772,7 +775,8 @@ export class KnowledgeStore246 {
      l.targetScope,l.condition,l.instrument,l.methodCue,role,by,retention,expires,o.fetchedAt,JSON.stringify(l.conditionCodes),JSON.stringify(l.protocolCodes),l.setpointC);
    if(Number(res.changes)){out.persisted++;if(pid)out.associated++;else out.unresolved++;}else out.alreadyStored++;
    if(this.storage.scientificReadings98===true&&o.scientific98){const r=o.scientific98.leads.find(x=>x.leadId===l.leadId)?.reading;
-    if(r)this.insertReading98(o,revisionId,'test_measurements265',mid,pid,pid?'as_subject_row':'subject_unresolved',r,retention,expires);}
+    // S102 (IR7): the reading's product link follows its subject; a threshold, norm, target or condition is no product's value
+    if(r){const lp=r.subject?.value==='none'?null:pid;this.insertReading98(o,revisionId,'test_measurements265',mid,lp,lp?'as_subject_row':'subject_unresolved',r,retention,expires);}}
   }
   if(out.persisted||otherVersion||Object.keys(out.rejected).length)this.event('test_measurements_ingested',{revisionId,extractorVersion:t.extractorVersion,offered:out.offered,
    persisted:out.persisted,associated:out.associated,unresolved:out.unresolved,alreadyStored:out.alreadyStored,supersededByExtractor:otherVersion,

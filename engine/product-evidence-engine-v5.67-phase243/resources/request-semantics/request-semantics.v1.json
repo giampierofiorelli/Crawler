@@ -1,0 +1,166 @@
+{
+ "schema": "pee.knowledge-rules.v1",
+ "version": "rq.1",
+ "statement": "S102 (owner review of S100: 'Reuse the shared rule-governance principles wherever scientifically and architecturally appropriate. However, user requests express goals, preferences and constraints; source documents express factual claims and observations.'). Decisions about the REQUIREMENTS a request states, under the same precedence policy as the observation semantics (knowledge_rules decide). This program concludes requirement states only, never product facts.",
+ "vocabulary": [
+  {
+   "name": "reading",
+   "args": [
+    "requirement",
+    "reader",
+    "bound"
+   ],
+   "meaning": "a reader of the request found this bound for the requirement: reader 'local' (the request-constraint reader) or 'shared' (the quantity knowledge's bound words, also used to read documents)",
+   "role": "input"
+  },
+  {
+   "name": "space",
+   "args": [
+    "requirement"
+   ],
+   "meaning": "the requirement is said of an available space (a cupboard, an opening): what must fit is at most its size",
+   "role": "input"
+  },
+  {
+   "name": "range_inferred",
+   "args": [
+    "requirement",
+    "bound"
+   ],
+   "meaning": "a bare range with no bound word: the bound is inferred from the kind (a presumption only)",
+   "role": "input"
+  },
+  {
+   "name": "stated_limit",
+   "args": [
+    "criterion",
+    "value"
+   ],
+   "meaning": "a requirement stated in the request for this criterion with this value",
+   "role": "input"
+  },
+  {
+   "name": "claim",
+   "args": [
+    "object",
+    "field",
+    "value",
+    "tier",
+    "scope"
+   ],
+   "meaning": "the evidence supports this value of this field (S100 decision predicate)",
+   "role": "derived"
+  },
+  {
+   "name": "limit_conflict",
+   "args": [
+    "criterion"
+   ],
+   "meaning": "the request states two different limits for one criterion: neither is a confirmed requirement",
+   "role": "derived"
+  }
+ ],
+ "programs": [
+  {
+   "id": "request_requirements",
+   "statement": "The bound of a stated requirement and conflicts between stated requirements. Two readers that disagree about a bound, or two different limits for one criterion, leave the requirement undecided: it becomes a candidate with a question, never a hard exclusion.",
+   "rules": [
+    {
+     "id": "RQ01",
+     "rule": "claim(C,bound,min,explicit,phrase) :- reading(C,local,min).",
+     "statement": "the request-constraint reader found a minimum",
+     "source": "src/phase253_request_constraints.ts"
+    },
+    {
+     "id": "RQ02",
+     "rule": "claim(C,bound,max,explicit,phrase) :- reading(C,local,max).",
+     "statement": "the request-constraint reader found a maximum",
+     "source": "src/phase253_request_constraints.ts"
+    },
+    {
+     "id": "RQ03",
+     "rule": "claim(C,bound,min,explicit,phrase) :- reading(C,shared,min).",
+     "statement": "the quantity knowledge's bound words read a minimum",
+     "source": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en"
+    },
+    {
+     "id": "RQ04",
+     "rule": "claim(C,bound,max,explicit,phrase) :- reading(C,shared,max).",
+     "statement": "the quantity knowledge's bound words read a maximum",
+     "source": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en"
+    },
+    {
+     "id": "RQ05",
+     "rule": "claim(C,bound,max,inherited,clause) :- space(C).",
+     "statement": "a size said of an available space is an upper limit for what must fit (convention)",
+     "source": "src/phase253_request_constraints.ts SPACE"
+    },
+    {
+     "id": "RQ06",
+     "rule": "claim(C,bound,min,default,phrase) :- range_inferred(C,min).",
+     "statement": "a bare range of a capacity, power or duration presumes a minimum (presumption: asked, never applied)",
+     "source": "src/phase253_request_constraints.ts"
+    },
+    {
+     "id": "RQ07",
+     "rule": "claim(C,bound,max,default,phrase) :- range_inferred(C,max).",
+     "statement": "a bare range of another kind presumes a maximum (presumption: asked, never applied)",
+     "source": "src/phase253_request_constraints.ts"
+    },
+    {
+     "id": "RQ08",
+     "rule": "limit_conflict(K) :- stated_limit(K,V1), stated_limit(K,V2), V1 != V2.",
+     "statement": "two different limits stated for one criterion contradict each other",
+     "source": "S102 audit (docs/plans/s102-rule-ownership-audit.md: the last limit used to win silently)",
+     "invariant": true
+    }
+   ],
+   "decision": {
+    "predicate": "claim",
+    "scopes": [
+     "phrase",
+     "clause",
+     "request"
+    ],
+    "fields": {
+     "bound": [
+      "min",
+      "max"
+     ]
+    },
+    "contested": [
+     {
+      "field": "bound",
+      "tier": "explicit",
+      "scopes": [
+       "phrase"
+      ],
+      "values": [
+       "min",
+       "max"
+      ],
+      "why": "the two readers of the request can disagree about a bound (different word lists): the requirement is undecided and asked, never applied"
+     },
+     {
+      "field": "bound",
+      "tier": "default",
+      "scopes": [
+       "phrase"
+      ],
+      "values": [
+       "min",
+       "max"
+      ],
+      "why": "presumptions are only reported"
+     }
+    ]
+   }
+  }
+ ],
+ "history": [
+  {
+   "version": "rq.1",
+   "note": "S102: first request decision program (bound of a requirement, conflicting limits)."
+  }
+ ]
+}

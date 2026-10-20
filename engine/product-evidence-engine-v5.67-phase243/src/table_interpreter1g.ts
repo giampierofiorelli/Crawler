@@ -485,10 +485,17 @@ function classify(x:Ctx,cell:SourceCell1F,e:Element1G,labels:SourceCell1F[],dime
   return only('price','value','a currency amount without a cost-of-use label');}
  if(e.kind==='text'||e.kind==='boolean')return only('categorical','value','a categorical value');
  const levels:{level:string;text:string}[]=[{level:'cell',text:cellText},{level:'labels',text:labelText},
-  {level:'table_heading_caption',text:[x.t.caption?.normalisedText??'',x.t.context.headingPath.at(-1)?.decodedText??''].join(' | ')}];
+  {level:'table_heading_caption',text:[x.t.caption?.normalisedText??'',x.t.context.headingPath.at(-1)?.decodedText??''].join(' | ')},
+  // S102 (owner review of S100: "the statement that introduces a table should contribute to the interpretation of its rows"):
+  // the text that introduces the table (the two blocks just before it in its section) is read with the same cues as a
+  // caption, one level below it; it is evidence about the table whatever dimensions it names (GL4 applies to other links)
+  {level:'table_context',text:x.t.context.before.slice(-2).map(b=>b.decodedText).join(' | ')}];
  for(const L of levels){const m=TEST_CUE.test(L.text)||TEST_CONTEXT272.test(L.text),d=DECLARATION_CUE272.test(L.text)||SPEC_CUE.test(L.text),c=CERT_CUE.test(L.text),s=(x.L.has('GL5_recurrence_qualifies_costs')?EXPLICIT_ESTIMATE:ESTIMATE_CUE).test(L.text);// recurrence (per month, /day) qualifies costs only, handled with the value
   const found:[EvidenceClass1G,string][]=[];if(c)found.push(['nominal_certified','certification term']);if(d&&!c)found.push(['manufacturer_declared','declaration or specification term']);
   if(s)found.push(['derived_or_estimated','estimate or calculation term']);if(m)found.push(['publisher_measured','test or measurement term']);
+  // S102: an introduction that names more than one kind of evidence is not decisive at its level: the linked statements
+  // (each read with the dimensions it names) decide
+  if(L.level==='table_context'&&found.length>1)continue;
   const where=L.level.replace(/_/g,' ');
   if(found.length===1)return only(found[0][0],L.level,`${found[0][1]} in the ${where}`);
   if(found.length>1){const cls=found.map(f=>f[0]);const est=cls.length===2&&cls.includes('derived_or_estimated')&&cls.includes('publisher_measured');
@@ -512,7 +519,8 @@ function inheritParallelLinks(result:TableInterpretation1G[],doc:DocumentModel1G
  const parent=(t:TableInterpretation1G)=>{const bi=doc.tableBlock.get(t.table);return bi===undefined?null:doc.blocks[bi].sectionPath.slice(0,-1).join('/');};
  for(const t of result){if(t.context.some(l=>l.applies))continue;const s=sig(t);if(!s)continue;
   const twin=result.find(u=>u!==t&&u.context.some(l=>l.applies)&&sig(u)===s&&parent(u)===parent(t)&&Math.abs(u.table-t.table)<=2);if(!twin)continue;
-  const linked=twin.observations.filter(o=>numeric(o)&&o.evidence.level?.startsWith('linked_'));if(!linked.length)continue;
+  // S102: the twin's evidence may come from its introducing statement (table_context) as well as from a linked statement
+  const linked=twin.observations.filter(o=>numeric(o)&&(o.evidence.level?.startsWith('linked_')||o.evidence.level==='table_context'));if(!linked.length)continue;
   const classes=new Set(linked.map(o=>o.evidence.class));if(classes.size!==1)continue;const cls=[...classes][0];
   // S93: the inherited value keeps the twin's originating statements, so its provenance stays verifiable
   const links=[...new Set(linked.flatMap(o=>o.methodLinks))];

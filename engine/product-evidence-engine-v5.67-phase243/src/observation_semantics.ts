@@ -68,7 +68,10 @@ export function clauseOf(sent:string,start:number,end:number):{text:string;head:
   if(!/\b(?:we|i|our|my|measured|tested|recorded|got|claimed|claims|rated|says|states)\b/i.test(inner)){
    const outer=clauseOf(sent,open,open);const close=sent.indexOf(')',end);const tail=close<0?sent.slice(end):sent.slice(end,close);
    return {text:outer.head+'('+inner+sent.slice(start,end)+tail+')',head:outer.head+'('+inner,tail};}}
- const head=sent.slice(0,start).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although)\b/i).at(-1)??'';
+ // S102: a clause that ends with a colon introduces what follows ("when measuring its noise level (from 1 m): around 60 dB",
+ // "Noise: measured 41 dB"), so it stays in the value's clause; a colon still ends the clause after the value
+ // and a closed parenthetical before the value is an aside within the clause, not a boundary
+ const head=sent.slice(0,start).replace(/\([^()]*\)/g,' ').split(/[;()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although)\b/i).at(-1)??'';
  const tail=sent.slice(end).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although|which)\b/i)[0]??'';
  return {text:head+sent.slice(start,end)+tail,head,tail};
 }
@@ -82,7 +85,7 @@ export const CUE_READERS:{reader:string;kinds:string[];scope:string[];statement:
  {reader:'sentenceCues',kinds:['sentence_test_context','sentence_declaration'],scope:['sentence'],statement:'test or declaration statements in the value\'s sentence outside its clause'},
  {reader:'tableCellCues',kinds:['cell_test_term','cell_declaration_term','cell_cert_term','cell_estimate_term','header_test_term','header_declaration_term','header_cert_term','header_estimate_term',
   'table_test_term','table_declaration_term','table_cert_term','table_estimate_term','section_test_term','section_declaration_term','section_cert_term','section_estimate_term'],scope:['cell','header','table','section'],
-  statement:'the 1G evidence ladder of the value\'s table cell (cell, labels, caption or heading, linked statements)'},
+  statement:'the 1G evidence ladder of the value\'s table cell (cell, labels, caption or heading, the statement introducing the table, linked statements)'},
  {reader:'headerProvenanceCues',kinds:['header_test_term','header_declaration_term'],scope:['header'],statement:'a column header that states who produced the values ("Claimed", "Measured")'},
  {reader:'sectionHeadingCues',kinds:['section_test_term','section_declaration_term'],scope:['section'],statement:'the role a section heading announces (pd documentSections)'},
  {reader:'calculationEvidenceCues',kinds:['calculation_output'],scope:['clause'],statement:'S93 reads the value as a calculation output, and the clause states a calculation operator (not a word that names the property)'},
@@ -142,7 +145,7 @@ export function sentenceCues(text:string,start:number,end:number):Cue[]{
 /** The 1G evidence of a table cell (class and level), as cues at the scope of its level. */
 export function tableCellCues(evidence:{class:string;level:string|null;support:string[]}|null):Cue[]{
  if(!evidence||!evidence.level)return [];
- const scope=evidence.level==='cell'?'cell':evidence.level==='labels'?'header':evidence.level==='table_heading_caption'?'table':evidence.level.startsWith('linked_')?'section':null;
+ const scope=evidence.level==='cell'?'cell':evidence.level==='labels'?'header':evidence.level==='table_heading_caption'||evidence.level==='table_context'?'table':evidence.level.startsWith('linked_')?'section':null;
  if(!scope)return [];
  const term:Record<string,string>={publisher_measured:'test_term',manufacturer_declared:'declaration_term',nominal_certified:'cert_term',derived_or_estimated:'estimate_term'};
  if(evidence.class==='disputed'){const out:Cue[]=[];for(const s of evidence.support){const k=/test or measurement/.test(s)?'test_term':/certification/.test(s)?'cert_term':/declaration|specification/.test(s)?'declaration_term':/estimate|calculation/.test(s)?'estimate_term':null;

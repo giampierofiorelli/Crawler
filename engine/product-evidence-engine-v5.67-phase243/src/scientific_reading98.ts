@@ -23,12 +23,14 @@ import {withReaderConditions,readerConditionAxes} from './knowledge_link.js';
 import type {Fact245} from './phase245_spec_extraction.js';
 import type {ScreenedLead265} from './phase265_test_measurements.js';
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
-import {decideSemantics,clauseCues,sentenceCues,tableCellCues,headerProvenanceCues,sectionHeadingCues,calculationEvidenceCues,recordCues,leadMethodCues,documentCues,type Cue,type ObservationSemantics} from './observation_semantics.js';
+import {observationSemanticsRules,decideSemantics,clauseCues,sentenceCues,tableCellCues,headerProvenanceCues,sectionHeadingCues,calculationEvidenceCues,recordCues,leadMethodCues,documentCues,type Cue,type ObservationSemantics} from './observation_semantics.js';
 /** S100: what the page offers as evidence beyond one observation's words (its source type, the 1G evidence of table cells,
  * the reader blocks of Phase265 leads). */
-export interface PageEvidence100 {sourceType:string|null;cellEvidence:(locator:string|null)=>{class:string;level:string|null;support:string[]}|null;blocks:readonly string[]|null}
+export interface PageEvidence100 {sourceType:string|null;cellEvidence:(locator:string|null)=>{class:string;level:string|null;support:string[]}|null;blocks:readonly string[]|null;
+ /** S102: the page's text segments at an element locator (a Phase245 row read from prose is read in its own sentence) */
+ segmentsAt?:(locator:string|null)=>readonly {text:string;role:string}[]}
 
-export const SCIENTIFIC_READER98='sr100.1';
+export const SCIENTIFIC_READER98='sr102.1';
 /** S99 (owner review of S98, 2026-10-20, verbatim in owner-review-s98-semantic-integrity-2026-10-20.md): the role of the
  * statement a value sits in, decided before the value is attributed to a product. A result was obtained (measured or
  * calculated); a specification is a maker's or certifier's stated value; a threshold is a bound with no product claim
@@ -65,7 +67,7 @@ export interface ScientificReading98 {
  resultBasis:string|null;object:string|null;source:SourceIdentity99|null;
  /** S100: how role, nature and provenance were decided (deciding tier, scope and rules, conflicts, presumptions) */
  /** S100: the shared decision per field and the evidence it was decided from (cue kind@scope: why) */
- semantics?:{decisions:ObservationSemantics['decisions'];cues:string[]};
+ semantics?:{decisions:ObservationSemantics['decisions'];cues:string[];version?:string};
 }
 export interface ScientificContext98 {qk:QuantityKnowledge;defs:PropertyDefinitions;identity:{reader:string;definitions:string;quantityKnowledge:string}}
 let cached:ScientificContext98|null=null;
@@ -75,7 +77,9 @@ export function scientificContext98():ScientificContext98{
  if(cached)return cached;
  const qk0=loadQuantityKnowledge();const qk=withReaderConditions(qk0);const pd=loadPropertyDefinitions(qk);
  const defs=withAcquiredDefinitions(qk,pd.pack,metricEntities(qk,pd),{rows:false,metrics:true,transferConditions:true,sourceId:'s98_qk_metrics'}).defs;
- return cached={qk,defs,identity:{reader:SCIENTIFIC_READER98,definitions:defs.identity,quantityKnowledge:qk.identity}};
+ // S102 (rule lifecycle, rederivation): the interpreter identity names every rule source that decides a reading (the reader,
+ // the observation-semantics program, the document reader); a change of any of them supersedes the stored readings
+ return cached={qk,defs,identity:{reader:SCIENTIFIC_READER98+'+'+observationSemanticsRules().version+'+'+DOCUMENT_EVIDENCE_VERSION,definitions:defs.identity,quantityKnowledge:qk.identity}};
 }
 /** Canonical id of a definition dimension: its QK axis, or 'pd:<id>'. */
 export function canonicalDimension98(defs:PropertyDefinitions,dimension:string):string{return defs.dimensions.get(dimension)?.qkAxis??'pd:'+dimension;}
@@ -150,7 +154,11 @@ export function readDeclaration98(ctx:ScientificContext98,f:Fact245,category:str
  if(provHeader)cues.push(...headerProvenanceCues(f.product.name!));
  if(f.section)cues.push(...sectionHeadingCues(ctx.defs,[f.section]));
  if(!inTable&&at>=0){const line=f.property+': '+raw;const off=f.property.length+2+at;
-  cues.push(...clauseCues(ctx.qk,ctx.defs,line,off,off+numLen,v.unit??'',{dim:qi.interp.property.kind??'',propertyStated:qi.interp.property.state==='stated'}));}
+  // S102: a row Phase245 read from a prose sentence is read in that sentence, with the same cues as any prose value
+  const num=raw.slice(at,at+numLen);const sent=(page?.segmentsAt?.(f.locator??null)??[]).find(sg=>sg.role.endsWith('sentence')&&sg.text.includes(num));
+  const src=sent?{text:sent.text,start:sent.text.indexOf(num)}:{text:line,start:off};
+  cues.push(...clauseCues(ctx.qk,ctx.defs,src.text,src.start,src.start+numLen,v.unit??'',{dim:qi.interp.property.kind??'',propertyStated:qi.interp.property.state==='stated'}));
+  if(sent)cues.push(...sentenceCues(src.text,src.start,src.start+numLen));}
  const sem=decideSemantics(dedupeCues(cues));const m=fromSemantics(sem,b);
  // the row's product as Phase245 states it; a provenance header ("Claimed", "Measured") read as a product is no product
  const subject:SubjectReading99=provHeader?{value:'unresolved',name:null,basis:'provenance_header_not_a_product'}:
@@ -160,7 +168,7 @@ export function readDeclaration98(ctx:ScientificContext98,f:Fact245,category:str
   {statement:m.statement,subject:subj,provenance:m.provenance,source:{reader:'phase245',key:key??declarationKey98(f),locator:f.locator?.slice(-200)??null,offset:null}});
  return {...r,semantics:semRecord(sem)};
 }
-const semRecord=(sem:ObservationSemantics)=>({decisions:sem.decisions,cues:sem.cues.map(c=>c.kind+'@'+c.scope+': '+c.why)});
+const semRecord=(sem:ObservationSemantics)=>({decisions:sem.decisions,cues:sem.cues.map(c=>c.kind+'@'+c.scope+': '+c.why),version:sem.version});
 const dedupeCues=(cs:readonly Cue[])=>cs.filter((c,i)=>cs.findIndex(d=>d.kind===c.kind&&d.scope===c.scope)===i);
 /** A screened Phase265 test-result lead: a publisher-reported measurement with its reader codes and method cue; the label
  * is the publisher's dimension (a QK metric's label when the reader typed one) and the lead's own condition text. The
@@ -198,7 +206,7 @@ export function readQualitative98(_ctx:ScientificContext98,q:QualitativeObservat
 export const reading98Digest=(r:ScientificReading98)=>createHash('sha256').update(JSON.stringify(r)).digest('hex');
 
 // ---------------- the page through the shared path ----------------
-import {readDocumentEvidence,type SegmentQuantity,type Segment} from './document_evidence.js';
+import {readDocumentEvidence,DOCUMENT_EVIDENCE_VERSION,type SegmentQuantity,type Segment} from './document_evidence.js';
 import {textBlocks225} from './phase225_transient_test_probe.js';
 import {acquireTables1F} from './table_acquisition1f.js';
 import {TEST_CONTEXT272} from './phase272_extraction_plan.js';
@@ -218,6 +226,8 @@ export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity
  const label=prefix+text.slice(winStart,Math.min(sentEnd,at+len+60));const valueAt=prefix.length+(at-winStart);
  const unit=q.quantity.unit.expression;const conds=q.quantity.conditions.map(c=>c.raw).filter(Boolean);
  const sc=ctx.defs.pack.documentSections;let sectionRole:StructuralContext['sectionRole']=null;
+ // S102: the page title stays here: a title that announces a comparison ("X vs Y") is document-level evidence that the
+ // page's values belong to several products (dropping it linked 3 other products' values to the page product in development)
  if(sc)for(const h of [...seg.headings].reverse()){const t=h.toLowerCase();if(sc.specification.some(c=>has99(t,c))){sectionRole='specification';break;}if(sc.comparison.some(c=>has99(t,c))){sectionRole='comparison';break;}if(sc.test.some(c=>has99(t,c))){sectionRole='test';break;}}
  const structure:StructuralContext={container:seg.role==='pair'||seg.role==='embedded_pair'?'label_value':'prose',label:seg.label,section:seg.headings.at(-1)??null,sectionRole,tableContext:null,documentTests,sectionHeadingLine:null};
  const o:QuantityObservation={value:q.quantity.value,unit,label,context:seg.headings.slice(-2).join(' | '),conditions:conds,category,valueAt,surface:q.surface,pageSubject,frame:seg.headings.join(' | '),structure};
@@ -280,7 +290,8 @@ export function readPage98(html:string,url:string,sha256:string,x:SpecExtraction
   for(const t of de.tables.tables){const a=byIndex.get(t.table);if(!a)continue;
    for(const ob of t.observations){const c=a.cells[ob.cell];if(!c||c.gridRow===null||c.gridCol===null)continue;const k=a.locator+'@r'+c.gridRow+'c'+c.gridCol;if(!cellEv.has(k))cellEv.set(k,ob.evidence);}}}catch{/* tables unreadable: no cell evidence */}
  const blocks0=textBlocks225(html).blocks;
- const page:PageEvidence100={sourceType,cellEvidence:loc=>loc?cellEv.get(loc)??null:null,blocks:blocks0};
+ const segAt=new Map<string,{text:string;role:string}[]>();for(const sg of de.segments){if(sg.region==='boilerplate'||sg.duplicateOf)continue;(segAt.get(sg.locator)??segAt.set(sg.locator,[]).get(sg.locator)!).push({text:sg.text,role:sg.role});}
+ const page:PageEvidence100={sourceType,cellEvidence:loc=>loc?cellEv.get(loc)??null:null,blocks:blocks0,segmentsAt:loc=>loc?segAt.get(loc.replace(/@r\d+c\d+$/,''))??[]:[]};
  for(const f of x?.facts??[]){const key=declarationKey98(f);const r=readDeclaration98(ctx,f,category,key,page);if(!r)continue;out.declarations.push({key,reading:r});out.counts.declarations++;
   const v=f.value as {number?:number;min?:number;unit?:string};if(v.unit)taken.push({value:v.number??v.min??NaN,unit:nu(v.unit),locator:(f.locator??'').replace(/@r\d+c\d+$/,'')||null,window:null,kind:'declaration'});}
  // a lead's own block text (the probe's default blocks), verified by its hash, gives the occurrence's text window
