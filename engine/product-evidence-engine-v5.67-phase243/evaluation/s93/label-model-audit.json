@@ -1,0 +1,746 @@
+{
+ "schema": "pee.s93.label-model-audit.v1",
+ "note": "estimatedAccuracy: FlyingSquid on the same items without gold; measuredAccuracy: against the blind reference where the signal votes. Development (S89-S91) is spent material; S92 is the spent first-run check",
+ "development": {
+  "set": "S89-S91 (spent)",
+  "items": 338,
+  "measured": 134,
+  "declared": 204,
+  "signals": [
+   {
+    "signal": "A0_with_reason",
+    "votes": 150,
+    "coverage": 0.444,
+    "measuredAccuracy": 0.807,
+    "estimatedAccuracy": 0.7342,
+    "votesMeasured": 58,
+    "votesDeclared": 92
+   },
+   {
+    "signal": "A1_local_evidence",
+    "votes": 153,
+    "coverage": 0.453,
+    "measuredAccuracy": 0.784,
+    "estimatedAccuracy": 0.6781,
+    "votesMeasured": 41,
+    "votesDeclared": 112
+   },
+   {
+    "signal": "table_links",
+    "votes": 48,
+    "coverage": 0.142,
+    "measuredAccuracy": 0.813,
+    "estimatedAccuracy": 0.5,
+    "votesMeasured": 22,
+    "votesDeclared": 26
+   },
+   {
+    "signal": "co_occurrence",
+    "votes": 22,
+    "coverage": 0.065,
+    "measuredAccuracy": 0.636,
+    "estimatedAccuracy": 0.757,
+    "votesMeasured": 16,
+    "votesDeclared": 6
+   },
+   {
+    "signal": "bridge",
+    "votes": 47,
+    "coverage": 0.139,
+    "measuredAccuracy": 0.681,
+    "estimatedAccuracy": 0.99,
+    "votesMeasured": 38,
+    "votesDeclared": 9
+   },
+   {
+    "signal": "situation",
+    "votes": 81,
+    "coverage": 0.24,
+    "measuredAccuracy": 0.84,
+    "estimatedAccuracy": 0.7847,
+    "votesMeasured": 45,
+    "votesDeclared": 36
+   },
+   {
+    "signal": "wd_class",
+    "votes": 243,
+    "coverage": 0.719,
+    "measuredAccuracy": 0.506,
+    "estimatedAccuracy": 0.6066,
+    "votesMeasured": 202,
+    "votesDeclared": 41
+   },
+   {
+    "signal": "A0_default",
+    "votes": 146,
+    "coverage": 0.432,
+    "measuredAccuracy": 0.384,
+    "estimatedAccuracy": 0.6824,
+    "votesMeasured": 146,
+    "votesDeclared": 0
+   }
+  ],
+  "pairs": [
+   {
+    "a": "wd_class",
+    "b": "A0_default",
+    "bothVote": 116,
+    "observedAgreementProduct": 0.219,
+    "impliedByAccuracies": -0.001,
+    "excess": 0.22,
+    "givenClass": {
+     "measured": {
+      "n": 42,
+      "agree": 0.952,
+      "phi": null
+     },
+     "declared": {
+      "n": 74,
+      "agree": 0.743,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "A1_local_evidence",
+    "bothVote": 103,
+    "observedAgreementProduct": 0.263,
+    "impliedByAccuracies": 0.07,
+    "excess": 0.193,
+    "givenClass": {
+     "measured": {
+      "n": 37,
+      "agree": 0.946,
+      "phi": 0.89
+     },
+     "declared": {
+      "n": 66,
+      "agree": 0.924,
+      "phi": 0.678
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "table_links",
+    "bothVote": 42,
+    "observedAgreementProduct": 0.089,
+    "impliedByAccuracies": 0.024,
+    "excess": 0.065,
+    "givenClass": {
+     "measured": {
+      "n": 15,
+      "agree": 0.933,
+      "phi": 0.853
+     },
+     "declared": {
+      "n": 27,
+      "agree": 0.815,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "bridge",
+    "b": "wd_class",
+    "bothVote": 42,
+    "observedAgreementProduct": 0.059,
+    "impliedByAccuracies": 0,
+    "excess": 0.059,
+    "givenClass": {
+     "measured": {
+      "n": 23,
+      "agree": 0.826,
+      "phi": -0.095
+     },
+     "declared": {
+      "n": 19,
+      "agree": 0.632,
+      "phi": -0.16
+     }
+    }
+   },
+   {
+    "a": "bridge",
+    "b": "A0_default",
+    "bothVote": 20,
+    "observedAgreementProduct": 0.053,
+    "impliedByAccuracies": -0.005,
+    "excess": 0.058,
+    "givenClass": {
+     "measured": {
+      "n": 10,
+      "agree": 1,
+      "phi": null
+     },
+     "declared": {
+      "n": 10,
+      "agree": 0.9,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "situation",
+    "b": "wd_class",
+    "bothVote": 65,
+    "observedAgreementProduct": 0.05,
+    "impliedByAccuracies": 0.001,
+    "excess": 0.049,
+    "givenClass": {
+     "measured": {
+      "n": 34,
+      "agree": 0.941,
+      "phi": null
+     },
+     "declared": {
+      "n": 31,
+      "agree": 0.29,
+      "phi": -0.022
+     }
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "table_links",
+    "bothVote": 32,
+    "observedAgreementProduct": 0.059,
+    "impliedByAccuracies": 0.023,
+    "excess": 0.036,
+    "givenClass": {
+     "measured": {
+      "n": 5,
+      "agree": 0.8,
+      "phi": null
+     },
+     "declared": {
+      "n": 27,
+      "agree": 0.815,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "wd_class",
+    "bothVote": 87,
+    "observedAgreementProduct": 0.021,
+    "impliedByAccuracies": 0.002,
+    "excess": 0.018,
+    "givenClass": {
+     "measured": {
+      "n": 27,
+      "agree": 0.963,
+      "phi": null
+     },
+     "declared": {
+      "n": 60,
+      "agree": 0.35,
+      "phi": 0.029
+     }
+    }
+   },
+   {
+    "a": "co_occurrence",
+    "b": "wd_class",
+    "bothVote": 22,
+    "observedAgreementProduct": 0.018,
+    "impliedByAccuracies": 0,
+    "excess": 0.018,
+    "givenClass": {
+     "measured": {
+      "n": 12,
+      "agree": 0.75,
+      "phi": -0.135
+     },
+     "declared": {
+      "n": 10,
+      "agree": 0.5,
+      "phi": -0.089
+     }
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "bridge",
+    "bothVote": 21,
+    "observedAgreementProduct": 0.027,
+    "impliedByAccuracies": 0.013,
+    "excess": 0.014,
+    "givenClass": {
+     "measured": {
+      "n": 12,
+      "agree": 0.833,
+      "phi": -0.091
+     },
+     "declared": {
+      "n": 9,
+      "agree": 0.556,
+      "phi": 0.316
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "bridge",
+    "bothVote": 15,
+    "observedAgreementProduct": 0.027,
+    "impliedByAccuracies": 0.014,
+    "excess": 0.013,
+    "givenClass": {
+     "measured": {
+      "n": 13,
+      "agree": 0.846,
+      "phi": null
+     },
+     "declared": null
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "situation",
+    "bothVote": 33,
+    "observedAgreementProduct": 0.056,
+    "impliedByAccuracies": 0.044,
+    "excess": 0.012,
+    "givenClass": {
+     "measured": {
+      "n": 22,
+      "agree": 0.773,
+      "phi": -0.103
+     },
+     "declared": {
+      "n": 11,
+      "agree": 0.818,
+      "phi": 0.389
+     }
+    }
+   },
+   {
+    "a": "bridge",
+    "b": "situation",
+    "bothVote": 16,
+    "observedAgreementProduct": 0.018,
+    "impliedByAccuracies": 0.008,
+    "excess": 0.01,
+    "givenClass": {
+     "measured": {
+      "n": 13,
+      "agree": 0.769,
+      "phi": -0.123
+     },
+     "declared": null
+    }
+   },
+   {
+    "a": "co_occurrence",
+    "b": "situation",
+    "bothVote": 12,
+    "observedAgreementProduct": 0.012,
+    "impliedByAccuracies": 0.003,
+    "excess": 0.009,
+    "givenClass": {
+     "measured": {
+      "n": 9,
+      "agree": 0.778,
+      "phi": null
+     },
+     "declared": null
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "co_occurrence",
+    "bothVote": 11,
+    "observedAgreementProduct": -0.003,
+    "impliedByAccuracies": 0.005,
+    "excess": -0.008,
+    "givenClass": {
+     "measured": {
+      "n": 6,
+      "agree": 0.667,
+      "phi": null
+     },
+     "declared": {
+      "n": 5,
+      "agree": 0.2,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "table_links",
+    "b": "wd_class",
+    "bothVote": 15,
+    "observedAgreementProduct": 0.009,
+    "impliedByAccuracies": 0.001,
+    "excess": 0.008,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 12,
+      "agree": 0.5,
+      "phi": 0.333
+     }
+    }
+   },
+   {
+    "a": "co_occurrence",
+    "b": "bridge",
+    "bothVote": 11,
+    "observedAgreementProduct": 0.009,
+    "impliedByAccuracies": 0.001,
+    "excess": 0.008,
+    "givenClass": {
+     "measured": {
+      "n": 8,
+      "agree": 0.75,
+      "phi": 0.333
+     },
+     "declared": null
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "A0_default",
+    "bothVote": 29,
+    "observedAgreementProduct": -0.033,
+    "impliedByAccuracies": -0.026,
+    "excess": -0.007,
+    "givenClass": {
+     "measured": {
+      "n": 11,
+      "agree": 0.545,
+      "phi": null
+     },
+     "declared": {
+      "n": 18,
+      "agree": 0.167,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "situation",
+    "bothVote": 38,
+    "observedAgreementProduct": 0.036,
+    "impliedByAccuracies": 0.042,
+    "excess": -0.006,
+    "givenClass": {
+     "measured": {
+      "n": 24,
+      "agree": 0.792,
+      "phi": -0.114
+     },
+     "declared": {
+      "n": 14,
+      "agree": 0.429,
+      "phi": -0.4
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "co_occurrence",
+    "bothVote": 11,
+    "observedAgreementProduct": 0.009,
+    "impliedByAccuracies": 0.005,
+    "excess": 0.004,
+    "givenClass": {
+     "measured": {
+      "n": 8,
+      "agree": 0.75,
+      "phi": null
+     },
+     "declared": null
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "wd_class",
+    "bothVote": 104,
+    "observedAgreementProduct": 0.006,
+    "impliedByAccuracies": 0.002,
+    "excess": 0.004,
+    "givenClass": {
+     "measured": {
+      "n": 32,
+      "agree": 0.813,
+      "phi": -0.077
+     },
+     "declared": {
+      "n": 72,
+      "agree": 0.375,
+      "phi": 0.181
+     }
+    }
+   },
+   {
+    "a": "situation",
+    "b": "A0_default",
+    "bothVote": 34,
+    "observedAgreementProduct": -0.018,
+    "impliedByAccuracies": -0.016,
+    "excess": -0.001,
+    "givenClass": {
+     "measured": {
+      "n": 13,
+      "agree": 0.846,
+      "phi": null
+     },
+     "declared": {
+      "n": 21,
+      "agree": 0.143,
+      "phi": null
+     }
+    }
+   }
+  ],
+  "fittedNotes": []
+ },
+ "check": {
+  "set": "S92 check (spent after its first run)",
+  "items": 108,
+  "measured": 6,
+  "declared": 102,
+  "signals": [
+   {
+    "signal": "A0_with_reason",
+    "votes": 54,
+    "coverage": 0.5,
+    "measuredAccuracy": 0.963,
+    "estimatedAccuracy": 0.8814,
+    "votesMeasured": 5,
+    "votesDeclared": 49
+   },
+   {
+    "signal": "A1_local_evidence",
+    "votes": 60,
+    "coverage": 0.556,
+    "measuredAccuracy": 0.933,
+    "estimatedAccuracy": 0.765,
+    "votesMeasured": 7,
+    "votesDeclared": 53
+   },
+   {
+    "signal": "table_links",
+    "votes": 0,
+    "coverage": 0,
+    "measuredAccuracy": null,
+    "estimatedAccuracy": 0.5,
+    "votesMeasured": 0,
+    "votesDeclared": 0
+   },
+   {
+    "signal": "co_occurrence",
+    "votes": 5,
+    "coverage": 0.046,
+    "measuredAccuracy": 0.6,
+    "estimatedAccuracy": 0.99,
+    "votesMeasured": 2,
+    "votesDeclared": 3
+   },
+   {
+    "signal": "bridge",
+    "votes": 16,
+    "coverage": 0.148,
+    "measuredAccuracy": 0.563,
+    "estimatedAccuracy": 0.8004,
+    "votesMeasured": 7,
+    "votesDeclared": 9
+   },
+   {
+    "signal": "situation",
+    "votes": 27,
+    "coverage": 0.25,
+    "measuredAccuracy": 0.778,
+    "estimatedAccuracy": 0.7525,
+    "votesMeasured": 9,
+    "votesDeclared": 18
+   },
+   {
+    "signal": "wd_class",
+    "votes": 77,
+    "coverage": 0.713,
+    "measuredAccuracy": 0.169,
+    "estimatedAccuracy": 0.6832,
+    "votesMeasured": 69,
+    "votesDeclared": 8
+   },
+   {
+    "signal": "A0_default",
+    "votes": 32,
+    "coverage": 0.296,
+    "measuredAccuracy": 0.031,
+    "estimatedAccuracy": 0.5801,
+    "votesMeasured": 32,
+    "votesDeclared": 0
+   }
+  ],
+  "pairs": [
+   {
+    "a": "A0_with_reason",
+    "b": "A1_local_evidence",
+    "bothVote": 50,
+    "observedAgreementProduct": 0.444,
+    "impliedByAccuracies": 0.223,
+    "excess": 0.222,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 47,
+      "agree": 0.979,
+      "phi": 0.699
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "wd_class",
+    "bothVote": 35,
+    "observedAgreementProduct": -0.12,
+    "impliedByAccuracies": -0.219,
+    "excess": 0.098,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 32,
+      "agree": 0.25,
+      "phi": 0.124
+     }
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "wd_class",
+    "bothVote": 41,
+    "observedAgreementProduct": -0.139,
+    "impliedByAccuracies": -0.227,
+    "excess": 0.088,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 38,
+      "agree": 0.263,
+      "phi": 0.149
+     }
+    }
+   },
+   {
+    "a": "wd_class",
+    "b": "A0_default",
+    "bothVote": 24,
+    "observedAgreementProduct": 0.204,
+    "impliedByAccuracies": 0.131,
+    "excess": 0.073,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 23,
+      "agree": 0.957,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "situation",
+    "b": "wd_class",
+    "bothVote": 27,
+    "observedAgreementProduct": -0.009,
+    "impliedByAccuracies": -0.066,
+    "excess": 0.056,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 24,
+      "agree": 0.417,
+      "phi": 0.258
+     }
+    }
+   },
+   {
+    "a": "situation",
+    "b": "A0_default",
+    "bothVote": 11,
+    "observedAgreementProduct": -0.009,
+    "impliedByAccuracies": -0.039,
+    "excess": 0.029,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 11,
+      "agree": 0.455,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "A0_with_reason",
+    "b": "situation",
+    "bothVote": 12,
+    "observedAgreementProduct": 0.093,
+    "impliedByAccuracies": 0.064,
+    "excess": 0.028,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 9,
+      "agree": 0.889,
+      "phi": null
+     }
+    }
+   },
+   {
+    "a": "bridge",
+    "b": "wd_class",
+    "bothVote": 12,
+    "observedAgreementProduct": -0.019,
+    "impliedByAccuracies": -0.009,
+    "excess": -0.01,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 10,
+      "agree": 0.4,
+      "phi": -0.333
+     }
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "situation",
+    "bothVote": 12,
+    "observedAgreementProduct": 0.074,
+    "impliedByAccuracies": 0.067,
+    "excess": 0.007,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 9,
+      "agree": 0.778,
+      "phi": -0.125
+     }
+    }
+   },
+   {
+    "a": "A1_local_evidence",
+    "b": "bridge",
+    "bothVote": 11,
+    "observedAgreementProduct": 0.009,
+    "impliedByAccuracies": 0.009,
+    "excess": 0,
+    "givenClass": {
+     "measured": null,
+     "declared": {
+      "n": 9,
+      "agree": 0.556,
+      "phi": -0.25
+     }
+    }
+   }
+  ],
+  "fittedNotes": []
+ }
+}
