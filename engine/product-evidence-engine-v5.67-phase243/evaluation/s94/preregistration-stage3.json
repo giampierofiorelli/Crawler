@@ -1,0 +1,21 @@
+{
+ "schema": "pee.s94.preregistration.v1",
+ "stage": "3 of 3: controlled Qwen re-evaluation",
+ "at": "2026-10-20",
+ "owner": "owner review of S93, verbatim in .claude/skills/pee-guided-learning/references/owner-review-s93-2026-10-20.md",
+ "writtenBefore": "any model is run in S94",
+ "question": "Given the Stage 1 and Stage 2 baselines, does a small local instruction model (Qwen2.5-1.5B-Instruct, S77 full-sequence readout) recognise concept identities better when it receives PEE's structured scientific information than with the S76 input, and does any gain justify its cost?",
+ "shadowOnly": "scripts/r3-semantic/validate.py runs in a separate virtual environment outside the repositories; weights in a cache outside the repositories; nothing it produces enters the store, links or rankings; no paid API, no fine-tuning, no production dependency",
+ "arms": {
+  "llmS76": "Qwen2.5-1.5B-Instruct, S76 input (sentence, phrase, concept name, kind, description), LLM_READOUT=seq",
+  "llmStruct": "the same model and readout, plus PEE's structured information per pair (phrase semantic type and quantity typing; concept quantity typing and up to five graph relations; type compatibility, quantity check, lexical anchor, name coverage, distributional relatedness labelled as not identity)",
+  "llm05Struct": "Qwen2.5-0.5B-Instruct with the structured input, for cost information only, on the S76 transfer examples"
+ },
+ "decisionRule": "the S76 frozen rule, unchanged: identity when p(exact)+p(close) >= 0.5 and not below the hierarchical, related or none mass, with the semantic-type gate; a mention is aligned only to a unique identity candidate. Also reported without the gate",
+ "material": {
+  "transfer": "the S76 frozen transfer examples (120 mentions, 396 candidates, 14 identities): the same examples as S76, as the owner asked; examined once in S76",
+  "s94": "the new sealed reference of Stage 2 (120 mentions, 622 candidates, 11 identities); used once by the Stage 2 arms, never by a model"
+ },
+ "costs": "load time, seconds per pair, maximum resident memory, threads (4 CPU threads)",
+ "stopRule": "if llmStruct does not recover more correct identities than the best non-generative arm (lexical identifier, type gate, Stage 2 hybrid) on both sets without more related-to-identity promotions, the model is not justified; no further prompt tuning"
+}

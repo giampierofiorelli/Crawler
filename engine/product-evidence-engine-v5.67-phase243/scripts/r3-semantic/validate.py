@@ -62,11 +62,24 @@ else:
               'Answer with one word: exact (same concept), close (nearly the same, interchangeable here), broader (the concept is more general '
               'than what the phrase refers to), narrower (the concept is more specific), related (associated but not the same thing), '
               'none (unrelated or only sharing words). Shared words are not evidence of identity.')
+    # S94 Stage 3: LLM_INPUT=structured adds PEE's structured scientific information (structured.json, built by
+    # scripts/s94-align.mjs structured SIDE): the phrase's semantic type and quantity typing, the concept's kind, quantity
+    # typing and graph relations, the lexical anchor and the distributional relatedness. Default: the S76 input, unchanged.
+    INPUT = os.environ.get('LLM_INPUT', 's76')
+    ST = json.loads((PE / side / 'structured.json').read_text())['mentions'] if INPUT == 'structured' else {}
     for m in mentions:
         for c in m['candidates']:
             user = (f'Sentence: "{short(m["quote"], 400)}"\nPhrase: "{m["text"]}"\n'
-                    f'Concept: {label(c["concept"])} ({c["kind"]}): {short(c["description"], 300)}\n'
-                    'How does the concept relate to what the phrase refers to in this sentence? One word.')
+                    f'Concept: {label(c["concept"])} ({c["kind"]}): {short(c["description"], 300)}\n')
+            if INPUT == 'structured':
+                sm = ST[m['mention']]; sc = sm['candidates'][c['concept']]
+                user += (f'Phrase analysis: refers to a {sm["denotes"].replace("_", " ")}; quantity kinds: {", ".join(sm["kinds"]) or "none"}; metrics: {", ".join(sm["metrics"]) or "none"}.\n'
+                         f'Concept analysis: quantity kinds: {", ".join(sc["kinds"]) or "none"}; metrics: {", ".join(sc["metrics"]) or "none"}; '
+                         f'graph relations: {"; ".join(sc["relations"]) or "none"}.\n'
+                         f'Checks: concept kind {"compatible" if sc["denotationCompatible"] else "not compatible"} with what the phrase refers to; '
+                         f'quantity typing {sc["quantity"]}; lexical anchor {sc["anchor"] or "none"}; name coverage {sc["coverage"]}; '
+                         f'distributional relatedness {sc["similarity"]} (relatedness is not identity).\n')
+            user += 'How does the concept relate to what the phrase refers to in this sentence? One word.'
             msgs = [{'role': 'system', 'content': sysmsg}, {'role': 'user', 'content': user}]
             enc = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors='pt', return_dict=True)
             with torch.no_grad():
@@ -94,5 +107,5 @@ elapsed = time.time() - t0
 cost = {'model': name, 'load_seconds': round(load, 1), 'total_seconds': round(elapsed, 1), 'pairs': len(rows),
         'seconds_per_pair': round((elapsed - load) / max(1, len(rows)), 3), 'max_rss_mb': round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024),
         'threads': torch.get_num_threads(), 'device': 'cpu'}
-Path(out).write_text(json.dumps({'method': method, 'side': side, 'readout': os.environ.get('LLM_READOUT', 'seq') if method != 'nli' else None, 'nli_variant': os.environ.get('NLI_VARIANT', 'a') if method == 'nli' else None, 'cost': cost, 'rows': rows}, indent=1) + '\n')
+Path(out).write_text(json.dumps({'method': method, 'side': side, 'input': os.environ.get('LLM_INPUT', 's76'), 'readout': os.environ.get('LLM_READOUT', 'seq') if method != 'nli' else None, 'nli_variant': os.environ.get('NLI_VARIANT', 'a') if method == 'nli' else None, 'cost': cost, 'rows': rows}, indent=1) + '\n')
 print(json.dumps(cost))

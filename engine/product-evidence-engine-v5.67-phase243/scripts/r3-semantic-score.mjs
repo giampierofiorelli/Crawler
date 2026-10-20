@@ -7,6 +7,7 @@ const a=process.argv.slice(2);const [method,side,tauS]=a;const gate=a.includes('
 const PE=join(process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval'),'r3');
 if(side==='transfer'){const fz=JSON.parse(readFileSync('evaluation/r3/align-freeze.json','utf8'));const h=createHash('sha256').update(readFileSync(join(PE,'align/transfer/out.json'))).digest('hex');
  if(!fz.transfer||fz.transfer.annotation!==h)throw Error('transfer reference not sealed or changed');}
+if(side==='s94'){const fz=JSON.parse(readFileSync('evaluation/s94/align-freeze.json','utf8'));const h=createHash('sha256').update(readFileSync(join(PE,'align/s94/out.json'))).digest('hex');if(fz.annotation!==h)throw Error('s94 reference changed');}
 const D=new URL('../dist/src/',import.meta.url).href;const QK=await import(D+'quantity_knowledge.js');const KT=await import(D+'knowledge_translation.js');const qk=QK.loadQuantityKnowledge();
 const sc=JSON.parse(readFileSync(join(PE,'semantic',`${method}-${side}.json`),'utf8'));
 const inp=JSON.parse(readFileSync(join(PE,'align',side,'in.json'),'utf8')).mentions,ref=new Map(JSON.parse(readFileSync(join(PE,'align',side,'out.json'),'utf8')).mentions.map(x=>[x.mention,x]));

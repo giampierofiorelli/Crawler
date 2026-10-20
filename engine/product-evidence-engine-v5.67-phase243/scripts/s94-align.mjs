@@ -36,6 +36,15 @@ if(cmd==='input'){const dir=join(R3,'align','s94');const f=join(dir,'in.json');i
  mkdirSync(dir,{recursive:true});writeFileSync(join(dir,'retrieval.json'),JSON.stringify({corpus,mentions:out.map(o=>({mention:o.mention,lexical:o._lex,vector:o._vec,control:o._control}))},null,1)+'\n');
  writeFileSync(f,JSON.stringify({mentions:out.map(({_lex,_vec,_control,...o})=>o)},null,1)+'\n');
  console.log('mentions',out.length,'candidates',out.reduce((a,o)=>a+o.candidates.length,0),'vector-only candidates',out.reduce((a,o)=>a+o._vec.filter(v=>!o._lex.includes(v)).length,0),JSON.stringify(corpus));}
+if(cmd==='structured'){const dir=join(R3,'align',SIDE);const inp=JSON.parse(readFileSync(join(dir,'in.json'),'utf8')).mentions;const out={};
+ for(const m of inp){const pool=poolOf(m.category);const r=KT.alignHybrid(qk,m.text,pool,{model,graph:true,anchor:'word',relatedSimilarity:0.4});const tp=KT.typeSpan(qk,m.text);const cs={};
+  for(const c of m.candidates){const node=pool.find(x=>x.id===c.concept);const hc=r.candidates.find(x=>x.id===c.concept);const tc=KT.typeSpan(qk,[c.concept.replace(/_/g,' '),...(node?.aliases??[])].join(' . '));
+   const sim=hc?.similarity??0;const one=KT.alignHybrid(qk,m.text,[node],{model,graph:true}).candidates[0];
+   cs[c.concept]={kinds:tc.kinds,metrics:tc.metrics,relations:(node?.neighbors??[]).slice(0,5).map(n=>n.relation.replace(/_/g,' ')+' '+n.id.replace(/_/g,' ')),
+    denotationCompatible:(one??hc)?.checks.denotation??false,quantity:(one??hc)?.checks.quantity??'untyped',anchor:(one??hc)?.checks.anchor??null,coverage:(one??hc)?.checks.coverage??0,
+    similarity:+(KT.vectorRetrieve(model,m.text,[node],1,true)[0]?.similarity??sim).toFixed(2)};}
+  out[m.mention]={denotes:r.denotes,kinds:tp.kinds,metrics:tp.metrics,candidates:cs};}
+ writeFileSync(join(dir,'structured.json'),JSON.stringify({builtFrom:'scripts/s94-align.mjs structured (no reference read)',mentions:out},null,1)+'\n');console.log(SIDE,'structured',Object.keys(out).length);}
 if(cmd==='score'){const dir=join(R3,'align',SIDE);const outF=`evaluation/s94/align-${SIDE}-${LABEL}.json`;if(process.argv.includes('--out')&&existsSync(outF))throw Error('exists '+outF);
  if(SIDE==='heldout'||SIDE==='transfer'){const fz=JSON.parse(readFileSync('evaluation/r3/align-freeze.json','utf8'));if(shaF(join(dir,'out.json'))!==fz[SIDE].annotation)throw Error('reference changed');}
  if(SIDE==='s94'){const fz=JSON.parse(readFileSync('evaluation/s94/align-freeze.json','utf8'));if(shaF(join(dir,'out.json'))!==fz.annotation)throw Error('reference changed');}
