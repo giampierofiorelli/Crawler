@@ -114,6 +114,10 @@ Of 55 values S99 had right and S100 lost (11 gained), the evidence behind each:
 | Group | n | Evidence on the page | Verdict |
 |---|---|---|---|
 | Phase245 rows with only the extractor presumption | 18 | 10 are table rows under the heading "Data sheet …" ("data sheet" is missing from the specification vocabulary); 8 are prose sentences that Phase245 read as rows, whose sentence the reader never sees ("Ecovacs claims a suction power of up to 30,000 Pa") | **evidence present, unused** |
+
+*Correction (2026-10-20, after inspection):* the 8 "prose rows" are table rows too, under the same "Data sheet …" headings. The
+scorer matched the prose reference item to the same value in the table. pd.10 resolves all 18. The prose-sentence path
+(§5 item 4) stays as a general mechanism, but this material does not exercise it.
 | decided correctly, linked to a named product instead of the page product | 14 | product names written differently from the page title (subject identity) | subject, not semantics (IR2) |
 | prose with only the page-level test presumption | 9 | 2 have a governing lead-in before a colon ("when measuring its noise level (from 1 m): around 60 dB"); others state a value with no cue ("a disappointingly low 1500 Pa") | partly present (colon lead-in); partly insufficient |
 | prose with no evidence | 9 | label:value lists under "The techy stuff", "Product spec:", "Spec:"; 1 lists under a page-level heading only | headings present; "spec" and "techy stuff" not recognised as heading words when written with punctuation or informally (partly vocabulary, partly insufficient) |

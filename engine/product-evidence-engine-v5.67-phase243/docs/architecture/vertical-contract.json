@@ -607,7 +607,7 @@
    "since": "S100 (docs/plans/s100-rule-governance.md)",
    "item": "Rule-governance residuals found by the S100 rule-interaction audit and not yet moved under the shared decision policy. Each conflict names the consumers it affects and the check that will show it resolved.",
    "resolvedStatus": "open",
-   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain. Development (spent S89-S99): role precision 87% (S99 85%), nature 81% (S99 63%), false product values 45 (S99 59), at the cost of coverage (reviewed-product values correctly linked 81, S99 98). Independent checks (s100: 7 pages, 4 new publishers; s101 table addendum: 4 pages, 2 new publishers): all preregistered stop rules hold; S100 becomes the gated reading. B1 (publisher table results read as specifications) was not exercised by the sealed references; outside them, the StorageReview measured leaderboard (17 rows) was read as specifications by S99 and left unresolved by S100.",
+   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain. Development (spent S89-S99): role precision 87% (S99 85%), nature 81% (S99 63%), false product values 45 (S99 59), at the cost of coverage (reviewed-product values correctly linked 81, S99 98). Independent checks (s100: 7 pages, 4 new publishers; s101 table addendum: 4 pages, 2 new publishers): all preregistered stop rules hold; S100 becomes the gated reading. B1 (publisher table results read as specifications) was not exercised by the sealed references; outside them, the StorageReview measured leaderboard (17 rows) was read as specifications by S99 and left unresolved by S100. S102: rule lifecycle (knowledge_rules), rederivation on any rule/definition/QK change, IR7 closed for leads, introducing statements of tables (1G table_context), colon lead-ins, the request bound and limit conflicts under the shared policy (request-semantics rq.1). Development (spent, fixed scorer): reviewed-product values correctly linked 78 -> 97 (S99 98) with role precision 87% and nature 85%; S100 checks (held out from S102 development): no new error, one more abstention.",
    "conflicts": [
     {
      "id": "F5",
@@ -742,6 +742,30 @@
       "document_evidence"
      ],
      "verification": "one shared clause function; the same sentence splits identically everywhere"
+    },
+    {
+     "id": "WITHA",
+     "what": "'with a' is a declaration cue (pd evidenceCues.declaration): once a closed parenthetical no longer splits the clause it meets measurement statements ('checking their levels with a sound-pressure-level (SPL) meter showed ... 80dB') and the role becomes a conflict",
+     "consumers": [
+      "observation_semantics clauseCues"
+     ],
+     "verification": "a measurement statement naming its instrument with 'with a' decides result; a possession 'comes with a 3 L tank' stays specification"
+    },
+    {
+     "id": "INTRO_VOCAB",
+     "what": "an introduction that names a test only through its object ('failed the bootbench', 'the current boot leaderboard') carries no cue word: the S102 introduction mechanism reads it but nothing in it is evidence",
+     "consumers": [
+      "table_interpreter1g table_context"
+     ],
+     "verification": "benchmark-result introductions are recognised through general vocabulary (e.g. 'results', 'scores', 'ranking of our tests'), never a phrase rule; the StorageReview leaderboard rows decide result"
+    },
+    {
+     "id": "ATTR",
+     "what": "the S92 'attributive' cue fires on 'We measured the noise of the KT5 as 61 dB' next to the measuring verb: conflict and abstention",
+     "consumers": [
+      "observation_semantics clauseCues (situationTypeOf)"
+     ],
+     "verification": "an 'as <value>' complement of a measuring verb is not attributive; OS13/OS14 lifecycle reviewed with development evidence"
     }
    ]
   }
