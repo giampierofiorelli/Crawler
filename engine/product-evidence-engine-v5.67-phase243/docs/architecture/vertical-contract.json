@@ -599,7 +599,7 @@
    "since": "S97 (docs/plans/s97-causal-architecture-audit.md)",
    "item": "The S88-S96 reading line (property definitions pd.5, definition_interpreter, definition_learning, scientific_entities, document_evidence qualitative evidence, table_interpreter1g relations, QK conditions, methods, relations and aspects beyond single words) is reachable only from evaluation scripts: neither the store-writing path (phase246-live-wave observations: Phase245 specifications, Phase225/226/265 test leads, Phase269/270 qualitative codes) nor adviseFromRequest253 imports it. QK typed conditions are computed in typeObservedValue and discarded before storage; knowledge_statements (6118 rows) are read only by the uncalled teachingCaveatsShadow; qualitative_observations270 has no reader; comparative_results271 rows never link a product. Nine phases of reading improvements were measured on a parallel harness and never reached a stored row or an answer; this was not listed as debt until S97.",
    "resolvedStatus": "open",
-   "progress": "S97: causal audit and shadow counterfactuals only (owner review 2026-10-20). Integration needs an owner decision: which reader becomes the single operational reader, and which fields the store must keep."
+   "progress": "S97: causal audit and shadow counterfactuals only (owner review 2026-10-20). Integration needs an owner decision: which reader becomes the single operational reader, and which fields the store must keep. S98 (owner decision 2026-10-20): one shared scientific reading path (scientific_reading98) for the operational extractors' observations, persisted in store v11 scientific_readings98 and read by the user path (Advice253.scientificEvidence98); both gated. The registry scientificCapabilities lists every scientific module with status, consumer and validation; tests/s98_integration_fitness.test.ts fails when a capability is unregistered, claimed operational without runtime reachability, or shadow without naming this debt."
   }
  ],
  "authenticValidationRequirement": {
@@ -610,5 +610,231 @@
    "T3_operational": "authentic evidence through the operational path under authorised policy and authority"
   },
   "since": "Phase268 (owner brief 2026-10-16)"
+ },
+ "scientificCapabilities": {
+  "note": "S98 (owner decision 2026-10-20, item 8): every module with a scientific capability is registered with its integration status, a named consumer and a validation. 'operational' must be reachable at runtime (type-only imports excluded) from the operational entries; 'gated' from a gated entry; anything else is 'shadow' and must name its integration debt. tests/s98_integration_fitness.test.ts enforces this.",
+  "operationalEntries": [
+   "phase253_request_advice.ts",
+   "phase246_knowledge_store.ts",
+   "phase245_spec_extraction.ts",
+   "phase265_test_measurements.ts",
+   "phase269_qualitative_observations.ts",
+   "phase249_retention_policy.ts"
+  ],
+  "gatedEntries": [
+   {
+    "module": "scientific_reading98.ts",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)"
+   },
+   {
+    "module": "scientific_evidence98.ts",
+    "gate": "adviseFromRequest253 opts.scientific98"
+   }
+  ],
+  "modules": [
+   {
+    "module": "quantity_knowledge.ts",
+    "status": "operational",
+    "consumer": "phase253_request_constraints (units, kinds), phase226 measurand typing, phase265 typeObservedValue",
+    "validation": [
+     "tests/quantity_knowledge.test.ts"
+    ]
+   },
+   {
+    "module": "knowledge_rules.ts",
+    "status": "operational",
+    "consumer": "quantity_knowledge kind and compare programs",
+    "validation": [
+     "tests/quantity_knowledge.test.ts"
+    ]
+   },
+   {
+    "module": "knowledge_link.ts",
+    "status": "operational",
+    "consumer": "phase253 derivedConditions83 (ranking trace only) and the S98 reader-condition axes",
+    "validation": [
+     "tests/s98_operational_path.test.ts"
+    ]
+   },
+   {
+    "module": "document_semantics.ts",
+    "status": "operational",
+    "consumer": "phase265 plan-guided reading (only with a plan)",
+    "validation": [
+     "tests/document_semantics.test.ts"
+    ]
+   },
+   {
+    "module": "knowledge_statements.ts",
+    "status": "shadow",
+    "consumer": "none on any path: read only by the uncalled teachingCaveatsShadow",
+    "validation": [
+     "tests/knowledge_statements.test.ts"
+    ],
+    "integrationDebt": "D30"
+   },
+   {
+    "module": "scientific_reading98.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "phase246_knowledge_store ingestObservation246 -> scientific_readings98",
+    "validation": [
+     "tests/s98_operational_path.test.ts",
+     "tests/s98_integration_fitness.test.ts"
+    ]
+   },
+   {
+    "module": "scientific_evidence98.ts",
+    "status": "gated",
+    "gate": "adviseFromRequest253 opts.scientific98",
+    "consumer": "Advice253.scientificEvidence98 (no decision effect)",
+    "validation": [
+     "tests/s98_operational_path.test.ts",
+     "tests/s98_integration_fitness.test.ts"
+    ]
+   },
+   {
+    "module": "definition_interpreter.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "scientific_reading98 (property, conditions, missing defining conditions)",
+    "validation": [
+     "tests/s98_operational_path.test.ts",
+     "tests/s98_integration_fitness.test.ts",
+     "tests/s96_scientific_entities.test.ts"
+    ]
+   },
+   {
+    "module": "property_definitions.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "scientific_reading98 via definition_interpreter",
+    "validation": [
+     "tests/s98_operational_path.test.ts",
+     "tests/s98_integration_fitness.test.ts"
+    ]
+   },
+   {
+    "module": "scientific_entities.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "scientific_reading98 (QK-metric candidate definitions with transferred conditions)",
+    "validation": [
+     "tests/s96_scientific_entities.test.ts",
+     "tests/s98_operational_path.test.ts",
+     "tests/s98_integration_fitness.test.ts"
+    ]
+   },
+   {
+    "module": "document_evidence.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "scientific_reading98 readPage98 (prose quantities: product, role, typing)",
+    "validation": [
+     "tests/s98_operational_path.test.ts",
+     "tests/s98_integration_fitness.test.ts",
+     "tests/document_evidence.test.ts"
+    ]
+   },
+   {
+    "module": "knowledge_translation.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "scientific_entities (typeSpan, teaching parser)",
+    "validation": [
+     "tests/s96_scientific_entities.test.ts"
+    ]
+   },
+   {
+    "module": "table_interpreter1g.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "definition_interpreter document relations (imported); table relations not yet passed by scientific_reading98",
+    "validation": [
+     "tests/s94_table_relations.test.ts"
+    ]
+   },
+   {
+    "module": "table_interpreter1g_knowledge.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "document_evidence (QK-typed table reading)",
+    "validation": [
+     "tests/s94_table_relations.test.ts"
+    ]
+   },
+   {
+    "module": "table_interpreter1g_lessons.ts",
+    "status": "gated",
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "consumer": "table_interpreter1g lessons",
+    "validation": [
+     "tests/s94_table_relations.test.ts"
+    ]
+   },
+   {
+    "module": "definition_learning.ts",
+    "status": "shadow",
+    "consumer": "evaluation scripts s89-s96 only (learned definitions never reach a reader)",
+    "validation": [
+     "tests/s89_definition_learning.test.ts",
+     "tests/s93_provenance_learning.test.ts"
+    ],
+    "integrationDebt": "D30"
+   },
+   {
+    "module": "evidence_assessment.ts",
+    "status": "shadow",
+    "consumer": "scripts/s87a-assess.mjs only",
+    "validation": [],
+    "integrationDebt": "D30",
+    "validationMissing": true
+   },
+   {
+    "module": "observation_contract.ts",
+    "status": "shadow",
+    "consumer": "evaluation scripts only",
+    "validation": [
+     "tests/s87d_observation_contract.test.ts"
+    ],
+    "integrationDebt": "D30"
+   },
+   {
+    "module": "observation_model.ts",
+    "status": "shadow",
+    "consumer": "evaluation scripts only",
+    "validation": [
+     "tests/s87b_observation_model.test.ts"
+    ],
+    "integrationDebt": "D30"
+   },
+   {
+    "module": "observation_reconstruction.ts",
+    "status": "shadow",
+    "consumer": "evaluation scripts only",
+    "validation": [
+     "tests/s87e_reconstruction.test.ts"
+    ],
+    "integrationDebt": "D30"
+   },
+   {
+    "module": "product_facts.ts",
+    "status": "shadow",
+    "consumer": "evaluation scripts only",
+    "validation": [
+     "tests/product_facts.test.ts"
+    ],
+    "integrationDebt": "D30"
+   },
+   {
+    "module": "qualitative_needs.ts",
+    "status": "shadow",
+    "consumer": "tests only",
+    "validation": [
+     "tests/document_evidence.test.ts"
+    ],
+    "integrationDebt": "D30"
+   }
+  ]
  }
 }

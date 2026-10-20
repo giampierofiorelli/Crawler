@@ -27,7 +27,7 @@ export interface PropertyDefinition {id:string;label:string;form:'quantity'|'cat
 export interface CategoryProfile {category:string;properties:string[];relevance:Record<string,Record<string,Relevance>>;state:Lifecycle;sources:string[]}
 export interface BasisCues {note:string;per_run:string[];per_period:string[];per_hour:string[];per_unit:string[];runNamed:string[];state:Lifecycle;sources:string[]}
 export interface NonQkUnitForms {note:string;currency:string[];currency_per_energy:string[];state:Lifecycle;sources:string[]}
-export interface DefinitionPack {schema:string;version:string;statement:string;sources:DefinitionSource[];basisCues:BasisCues;nonQkUnitForms:NonQkUnitForms;evidenceCues?:{note:string;declaration:string[];measurement?:string[];state:Lifecycle;sources:string[]};documentSections?:{note:string;specification:string[];test:string[];comparison:string[];state:Lifecycle;sources:string[]};knownObjects?:{note:string;objects:{id:string;nouns:string[];sources:string[]}[];state:Lifecycle;sources:string[]};conditionDimensions:ConditionDimension[];properties:PropertyDefinition[];profiles:CategoryProfile[]}
+export interface DefinitionPack {schema:string;version:string;statement:string;sources:DefinitionSource[];basisCues:BasisCues;nonQkUnitForms:NonQkUnitForms;evidenceCues?:{note:string;declaration:string[];measurement?:string[];state:Lifecycle;sources:string[]};documentSections?:{note:string;specification:string[];test:string[];comparison:string[];state:Lifecycle;sources:string[]};knownObjects?:{note:string;objects:{id:string;nouns:string[];sources:string[];metrics?:string[]}[];state:Lifecycle;sources:string[]};conditionDimensions:ConditionDimension[];properties:PropertyDefinition[];profiles:CategoryProfile[]}
 export interface PropertyDefinitions {pack:DefinitionPack;digest:string;identity:string;
  properties:Map<string,PropertyDefinition>;dimensions:Map<string,ConditionDimension>;profiles:Map<string,CategoryProfile>;
  /** QK kind -> properties whose quantity admits it */ byKind:Map<string,string[]>}
@@ -61,7 +61,7 @@ export function loadPropertyDefinitions(qk:QuantityKnowledge,pack?:unknown):Prop
  for(const x of p.properties)if(x.plausibleSi&&!(x.plausibleSi.length===2&&x.plausibleSi[0]<x.plausibleSi[1]))fail('plausible range of property '+x.id);
  if(p.evidenceCues){life(p.evidenceCues,'evidence cues');if(!p.evidenceCues.declaration.length)fail('evidence cues');}
  if(p.documentSections){life(p.documentSections,'document sections');for(const k of ['specification','test','comparison'] as const)if(!p.documentSections[k]?.length)fail('document sections '+k);}
- if(p.knownObjects){life(p.knownObjects,'known objects');for(const o of p.knownObjects.objects){if(!o.nouns.length)fail('known object '+o.id);for(const s0 of o.sources)if(!src.has(s0))fail(`source ${s0} of known object ${o.id}`);}}
+ if(p.knownObjects){life(p.knownObjects,'known objects');for(const o of p.knownObjects.objects){if(!o.nouns.length)fail('known object '+o.id);for(const m of o.metrics??[])if(!qk.metrics.has(m))fail(`metric ${m} of known object ${o.id}`);for(const s0 of o.sources)if(!src.has(s0))fail(`source ${s0} of known object ${o.id}`);}}
  const props=new Map(p.properties.map(x=>[x.id,x]));const cats=new Set<string>();
  for(const c of p.profiles){const w='profile '+c.category;if(cats.has(c.category))fail('duplicate '+w);cats.add(c.category);life(c,w);
   for(const id of c.properties)if(!props.has(id))fail(`property ${id} of ${w}`);

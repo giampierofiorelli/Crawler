@@ -47,6 +47,8 @@ export interface Advice253 {
   * knowledge), which proxies are rejected, which test conditions are required, whether supplied evidence assesses it
   * directly or only through a proxy, and the resulting decision. A proxy never assesses an outcome. */
  goalAssessment?:GoalAssessment253;
+ /** S98 (gated, opts.scientific98): the stored scientific readings of the considered products; no decision effect, never ranking */
+ scientificEvidence98?:import('./scientific_evidence98.js').ScientificEvidence98;
  /** S78: for each catalog dimension considered for ranking, the decision of ra.2 (deciding) and of the legacy ra.1. */
  authorisationTrace?:{need:string;dimension:string;measure:string|null;decidedBy:'ra.1'|'ra.2-restrict-only';ra1:string;ra2:string;decision:string;
   /** S83 (D28, SHADOW): the conditions the dimension's original test records verify (per observation, then the largest

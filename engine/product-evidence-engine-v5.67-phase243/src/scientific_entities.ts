@@ -102,8 +102,10 @@ export function acquireEntities(qk:QuantityKnowledge,docs:readonly {source:strin
  * definition already names (metric or related metric) is that property (reuse, no duplicate). */
 export function metricEntities(qk:QuantityKnowledge,existing?:PropertyDefinitions):EntityRecord[]{
  return [...qk.metrics.values()].map(m=>{const prop=existing?[...existing.properties.values()].find(p=>p.quantity?.metric===m.id||(p.quantity?.relatedMetrics??[]).includes(m.id))?.id??null:null;
+  // S98: the object of interest is stated when a known object of the definitions names this metric (pd.6), else unknown
+  const owner=existing?.pack.knownObjects?.objects.find(k=>(k.metrics??[]).includes(m.id))?.id??null;
   return {id:'ent_qk_'+m.id,class:'property' as const,name:m.label,terms:m.terms.map(normText),definition:m.note?{value:m.note,status:'stated' as const}:{value:null,status:'unknown' as const},
-   quantity:{kinds:[m.kind],metrics:[m.id],units:[],status:'typed' as const},object:{value:null,status:'unknown' as const},
+   quantity:{kinds:[m.kind],metrics:[m.id],units:[],status:'typed' as const},object:owner?{value:owner,status:'stated' as const}:{value:null,status:'unknown' as const},
    conditions:m.requires.map(a=>({term:a,axis:qk.axes.has(a)?a:null})),
    method:m.definedBy?.length?{value:m.definedBy.map(x=>x.method).join(' | '),status:'stated' as const}:{value:null,status:'unknown' as const},notEstablished:[],
    provenance:{source:'quantity_knowledge:'+m.source,line:0,header:'metric'},state:'qk_metric' as const,
@@ -117,6 +119,8 @@ export interface OverlayOptions {/** typed rows of the teaching tables */rows?:b
   * metric-backed candidates receive that object's nouns as their object of interest. The statement itself is knowledge to be
   * reviewed: S97 measures what it would change */
  objectOwners?:Readonly<Record<string,readonly string[]>>;
+ /** S98 (gated, off): pass the object of interest a record STATES (pd.6 known-object metrics) into the candidate */
+ statedObjects?:boolean;
  /** when given, only these entity ids become candidates (E2: validated by earlier documents) */only?:ReadonlySet<string>;sourceId?:string}
 /** Typed property entities that no existing definition covers become CANDIDATE property definitions in the existing pack: one
  * representation, read by the existing attribution and interpretation. A metric-backed candidate names its metric, so the
@@ -138,7 +142,9 @@ export function withAcquiredDefinitions(qk:QuantityKnowledge,pack:DefinitionPack
     dim={id:'qkaxis_'+ax,qkAxis:ax,structure:a.operatingCondition?'operating_setting':'comparison_or_basis',label:ax.replace(/_/g,' '),values:a.values??{},cues:[...(a.cues??[]),...(a.freeText??[])],
      ...(a.valueKind&&qk.kinds.has(a.valueKind)?{valueKinds:[a.valueKind]}:{}),state:'candidate',sources:[sourceId]};p.conditionDimensions.push(dim);}
    if(!conds.some(c=>c[0]===dim!.id))conds.push([dim.id,'defining']);}
-  const owner=metric?Object.entries(o.objectOwners??{}).find(([,ms])=>ms.includes(metric))?.[0]:undefined;
+  // S98: a stated object reaches the candidate only with statedObjects (gated: the S89 attribution rules use object nouns in
+  // four places with different strengths; stating objects without a single object-evidence model loses correct readings)
+  const owner=(o.statedObjects===true&&e.object.status==='stated'?e.object.value:null)??(metric?Object.entries(o.objectOwners??{}).find(([,ms])=>ms.includes(metric))?.[0]:undefined);
   const nouns=owner?(p.knownObjects?.objects.find(k=>k.id===owner)?.nouns??[]):[];
   p.properties.push({id,label:e.name,form:'quantity',quantity:{kinds:e.quantity.kinds,...(metric?{metric}:{}),...(related.length?{relatedMetrics:related}:{})},object:owner??'unstated',...(nouns.length?{objectNouns:[...nouns]}:{}),basis:null,
    surface:terms.map(t=>[t,'candidate']),conditions:conds,state:'candidate',sources:[sourceId]});

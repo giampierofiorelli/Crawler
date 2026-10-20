@@ -385,7 +385,7 @@ export function ownWords(label:string,valueAt:number|null|undefined,qk?:Quantity
  const from=before?cutIn(before[1],self[0],true):0,to=after?cutIn(self[1],after[0],false):label.length;
  return label.slice(from,to);
 }
-function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,context:string,inProfile=false):{score:number;evidence:string[]}{
+function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,context:string,inProfile=false,sentence:string|null=null):{score:number;evidence:string[]}{
  const terms:[string,number][]=d.surface.map(([t,s])=>[t,s==='candidate'?0.5:1]);
  if(d.quantity?.metric)for(const t of qk.metrics.get(d.quantity.metric)?.terms??[])terms.push([t,1]);
  for(const n of d.quantity?.countNouns??[])terms.push([n,1]);
@@ -393,8 +393,11 @@ function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,contex
  // fix1: a candidate (generic) term supports the property only together with a noun naming its object of interest
  const objectNamed=!d.objectNouns?.length||d.objectNouns.some(n=>has(label,n)||has(context,n));
  // outside a profile that lists the property, the object must be named for any term (the category does not supply it)
- if(!objectNamed&&!inProfile)return {score:0,evidence:[]};
- const ownObject=!!d.objectNouns?.length&&d.objectNouns.some(n=>has(label,n));
+ // S98 (with sentence object evidence): a stated object disambiguates and excludes; it does not oblige the page to name it
+ // when a definite term of the property (weight 1: its own or its QK metric's term) is used. Generic candidate terms still
+ // need the object (fix1, below)
+ if(!objectNamed&&!inProfile&&sentence===null)return {score:0,evidence:[]};
+ const ownObject=!!d.objectNouns?.length&&d.objectNouns.some(n=>has(label,n)||(sentence!==null&&has(sentence,n)));
  // S89: support from the wider context alone needs the property's object in the value's own words
  for(const [t,w] of terms){if(w<1&&!objectNamed)continue;if(has(label,t)){score+=2*w;ev.push('label:'+t);}else if(has(context,t)&&(ownObject||!d.objectNouns?.length&&!inProfile)){score+=w;ev.push('context:'+t);}}
  return {score,evidence:ev};
@@ -417,7 +420,11 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  /** S97 C3 (counterfactual, shadow): a definition whose stated object nouns the value's sentence names owns that object
   * (the known-object block does not reject it), and when no term decides, the single admissible definition of the unit's
   * kind whose object the sentence names is inferred (rule object_licence). Off by default. */
- objectLicence?:boolean}={}):PropertySlot{
+ objectLicence?:boolean;
+ /** S98 (owner decision: fix the S89 object conflicts at their cause): a definition that STATES its object nouns may take
+  * them from the value's sentence, not only from its own words, both against the known-object block and for the support of
+  * its terms (termScore). Definitions without stated objects are unchanged; an unstated object is never inferred. */
+ objectInSentence?:boolean}={}):PropertySlot{
  const sl=o.structure?.label?norm(o.structure.label)+' | ':'';const fullLabel=sl+norm(o.label);const label=sl+norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
@@ -436,7 +443,10 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  const admissible=(d:PropertyDefinition)=>{
   if(d.plausibleSi&&si!==null&&(si<d.plausibleSi[0]||si>d.plausibleSi[1]))return false;
   const ownObject=(d.objectNouns??[]).some(n=>has(label,n))||(opts.ownTermObject===true&&d.surface.some(([t])=>has(label,norm(t))))||(opts.objectLicence===true&&(d.objectNouns??[]).some(n=>has(sentence,n)));
-  if(otherObjects.length&&!ownObject)return false;
+  // S98: sentence-level object evidence lifts only the known-object block; overriding a competing metric that the value's
+  // own words name still needs the object in those own words
+  const ownObjectInSentence=ownObject||(opts.objectInSentence===true&&(d.objectNouns??[]).some(n=>has(sentence,n)));
+  if(otherObjects.length&&!ownObjectInSentence)return false;
   if(qkCompetitors.some(m=>!subsumes(d,m.id))&&!qkCompetitors.some(m=>subsumes(d,m.id))&&!ownObject)return false;
   return true;};
  // S90: a value that bounds the range of a DIFFERENT quantity just before it ("+8 dB from 200 Hz to 10 kHz") is that
@@ -445,7 +455,7 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
   if(m){const prev=findQuantities(qk,before.slice(0,m.index)).at(-1);if(prev&&!prev.unit.kinds.some(k=>kk.candidates.includes(k)))
    return {value:null,state:'unknown',evidence:[],rule:'band_of_another_measurement',alternatives:byUnit.map(d=>d.id),kind};}}
  const rejected=byUnit.filter(d=>!admissible(d)).map(d=>d.id);
- const scored=byUnit.filter(admissible).map(d=>({d,...termScore(d,qk,label,context,!!prof?.properties.includes(d.id))})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
+ const scored=byUnit.filter(admissible).map(d=>({d,...termScore(d,qk,label,context,!!prof?.properties.includes(d.id),opts.objectInSentence===true?sentence:null)})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
  if(!scored.length)return {value:null,state:'unknown',evidence:[],rule:'value_names_another_concept_or_outside_plausible_range',alternatives:rejected,kind};
  const top=scored[0];
  if(top.score<=0){

@@ -24,6 +24,7 @@ import {conditionsMetFromStoreRecords} from './knowledge_link.js';
 import type {StoredStatement} from './knowledge_statements.js';
 import {protocolOfMethod268} from './phase268_evidence_validation.js';
 import {comparativeEvidence271,COMPARATIVE_MEASURES271} from './phase271_comparative_evidence.js';
+import {scientificEvidence98} from './scientific_evidence98.js';
 import {applianceMentions270} from './phase270_comparative_results.js';
 import type {GoalAssessment253} from './phase253_advice_contract.js';
 import type {TrustedRankingAuthority180} from './phase180_reviewed_first_answer.js';
@@ -312,9 +313,13 @@ const LIMITATION_TEXT269:Record<string,string>={identity_by_product_name_only:'t
  * performance needs that a reviewed catalog dimension covers are confirmed from the request's own words and ranked by
  * the existing Phase181 engine, restricted to the products that passed every stated factual check. Without one, or when
  * Phase181 holds every candidate, the answer stays a specification answer and says which objectives it does not assess. */
-export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string}={}):Advice253{
+export function adviseFromRequest253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null;quantityKnowledge?:QuantityKnowledge|null;date?:string;
+ /** S98 (gated): attach the stored scientific readings of the considered products (no decision effect) */
+ scientific98?:boolean}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
+ if(opts.scientific98&&out.response!=='out_of_scope'){const ids=[...out.shortlist,...out.unknown,...out.excluded].map(x=>x.productId);
+  if(ids.length&&store.schemaVersion()>=11)out.scientificEvidence98=scientificEvidence98(store,ids);}
  if(out.response!=='out_of_scope'&&out.category)applyRequestCoverage80(out,text,registry);
  // S80: "the list is unordered" speaks about the shortlist; without one it contradicts an ordered partial comparison
  // shown in the same answer (S80 first run, judge finding on D1).
