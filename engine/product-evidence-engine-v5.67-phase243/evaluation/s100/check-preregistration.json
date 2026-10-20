@@ -40,5 +40,15 @@
  "reportedNotGated": [
   "abstentions and coverage (reviewed-product values correctly stored and linked), which the development run showed falling (S99 98, S100 81 of 603): reported as a cost, not hidden"
  ],
- "notClaimed": "no ranking, no recommendation, no promotion of any definition; R3 stays open; development figures on spent material are never reported as independent"
+ "notClaimed": "no ranking, no recommendation, no promotion of any definition; R3 stays open; development figures on spent material are never reported as independent",
+ "addendumTables": {
+  "at": "2026-10-20",
+  "writtenBefore": "any fetch of the supplementary pages, after the first run of the main check",
+  "why": "the 7 main-check pages contain no HTML table (figures are images or scripts), so the table blocker B1 was not exercised: it held only vacuously. The main first run stays committed unchanged and is reported as such.",
+  "material": "3-5 pages with HTML tables of the publisher's own measurements, from publishers never used: lygte-info.dk (battery and charger tests: rated against measured capacity tables), storagereview.com (SSD reviews: specification tables and measured benchmark tables); fallbacks: servethehome.com, hardwarecanucks.com. Same wave script, policy and refusal rules",
+  "items": "scripts/s99-check.mjs items --wave s101/wave (same procedure; table rows are text blocks)",
+  "reference": "the same guide (S100 GUIDE.md with §7 on tables), two new blind annotators and a blind adjudicator; sealed in evaluation/s101/check-annotation-freeze.json before any run",
+  "builds": "s100 8f982dc and s99 2032a3a, same runner (--wave s101/wave --out s101)",
+  "stopRules": "S1-S5 as above; B1 is the primary measure of this addendum. The adoption decision requires S1-S5 on BOTH checks; if B1 fails here, S100 is not adopted and the table rule is documented"
+ }
 }
