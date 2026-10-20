@@ -5,6 +5,8 @@
   {"commit": "78deb0ed7ad187bd856a365e1dac48453a0193c0", "file": "engine/product-evidence-engine-v5.67-phase243/evaluation/phase270/gen-eval-set.json", "line": 29, "valueDigest": "a8541fda74e7",
    "reason": "request G8 is a generic consumer question comparing pump pressures; it names no product and was not derived from the store; the frozen set cannot be edited (its SHA-256 is recorded in the baseline and after runs)", "reviewedAt": "2026-10-17"},
   {"commit": "13abd27534a2ce4bd2e8dcc1a9834ece5ba398fb", "file": "engine/product-evidence-engine-v5.67-phase243/tests/phase270_comparative_results.test.ts", "line": 22, "valueDigest": "8ae209570f00",
-   "reason": "a fictional price in a synthetic test fixture coincided with a retained price of a product named only 'Air Fryer'; the fixture price was changed in the next commit", "reviewedAt": "2026-10-17"}
+   "reason": "a fictional price in a synthetic test fixture coincided with a retained price of a product named only 'Air Fryer'; the fixture price was changed in the next commit", "reviewedAt": "2026-10-17"},
+  {"commit": "6e03e078611b79bc9519f563ad0548f82bcefc0a", "file": "engine/product-evidence-engine-v5.67-phase243/evaluation/r3p/negation/requests.json", "line": 11, "valueDigest": "229a695aed4f",
+   "reason": "request n10 was written blind by an independent Claude agent from the R3-P brief (a generic limit for a dishwasher); it names no product and was not derived from the store; the sealed file cannot be edited (its SHA-256 is recorded in evaluation/r3p/negation-freeze.json before the first runs)", "reviewedAt": "2026-10-20"}
  ]
 }
