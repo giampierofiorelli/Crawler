@@ -1,0 +1,67 @@
+{
+ "schema": "pee.s100.check-annotation-freeze.v1",
+ "check": "S100 table addendum (evaluation/s100/check-preregistration.json addendumTables)",
+ "at": "2026-10-20",
+ "sealedBefore": "any run of any build on these pages",
+ "items": 62,
+ "referenceSha256": "8818c8dbfe40ef125607dff70438973302f2977cfd69a7bedf463123510bd4a9",
+ "itemsSha256": "112c38e301a8928137edfe1f43c90ce6b1448072fda455a0ee147013d8bc56a5",
+ "guideSha256": "9410220bfafefaf662ecaddafbf2dcd3fb5423d6d98d50707dd8aa24923ca563",
+ "annotationASha256": "e1a901f88f928b5fe31fbd4ddd1a0999c3f44f38a8a66c6312830f4b606e68c2",
+ "annotationBSha256": "4749fcf31c80e8b7d4b4546648d081f8b70a24d5387100f1810407254daac2a1",
+ "adjudicationSha256": "64e571c69529205ccbd1e81995ece0a29bf4ab05eca17b8409c73adf5a4434c2",
+ "agreementBeforeAdjudication": {
+  "property": "61/62",
+  "role": "60/62",
+  "bound": "62/62",
+  "subject": "58/62",
+  "nature": "58/62",
+  "provenance": "60/62",
+  "conditionAxes": "56/62"
+ },
+ "adjudication": {
+  "disputedItems": 15,
+  "disputedFields": 19,
+  "choseA": 9,
+  "choseB": 10,
+  "other": 0,
+  "noFittingLabelChecked": 31,
+  "noFittingLabelResolved": {
+   "no_fitting_label": 27,
+   "none": 4
+  }
+ },
+ "counts": {
+  "property": {
+   "none": 23,
+   "no_fitting_label": 27,
+   "battery_capacity": 9,
+   "battery_runtime": 1,
+   "electrical_power": 2
+  },
+  "role": {
+   "specification": 18,
+   "result": 16,
+   "other": 10,
+   "condition": 18
+  },
+  "subject": {
+   "reviewed_product": 38,
+   "none": 23,
+   "other_product": 1
+  },
+  "nature": {
+   "declared": 20,
+   "measured": 16,
+   "other": 5,
+   "condition": 18,
+   "calculated": 3
+  },
+  "bound": {
+   "none": 61,
+   "max": 1
+  }
+ },
+ "material": "4 pages, 2 publishers never used (StorageReview 2 SSD reviews with a maker specifications table and a measured results table; Lygte 2 power-bank tests); 6 requests",
+ "limits": "Claude-agent annotators and adjudicator; the measured results tables report IOPS, not a quantity-knowledge unit, so the preregistered item procedure sampled no row of them: B1 is exercised only by specification-table rows"
+}
