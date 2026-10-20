@@ -84,3 +84,60 @@ if(cmd==='qual-dev'){const W=join(PE,'s94/wave');const wave=JSON.parse(readFileS
  for(const p of wave.pages.filter(p=>p.outcome==='fetched')){const html=readFileSync(join(W,'raw',p.tag+'.html'),'utf8');const its=qualItems(html,p.url,1000);const pr=qualPredict(html,its);
   its.forEach((it,i)=>{n++;if(pr.Q0[i].length)q0++;if(pr.Q1[i].length)q1++;const nw=pr.Q1[i].filter(x=>!pr.Q0[i].includes(x));if(nw.length)added.push(nw.join(',')+' | '+it.text.slice(0,140));});}
  console.log('sentences',n,'with aspect Q0',q0,'Q1',q1);for(const a of added)console.log(a);}
+
+// ---- independent check (added after the freeze; arms unchanged)
+const ROOT=join(PE,'s96/wave');const waveOf=()=>JSON.parse(readFileSync(join(ROOT,'wave.json'),'utf8'));
+const pagesOf=()=>waveOf().pages.filter(p=>p.outcome==='fetched'&&p.role==='heldout_eval');
+const htmlOf=p=>{const b=readFileSync(join(ROOT,'raw',p.tag+'.html'));if(sha(b)!==p.sha256)throw Error('bytes differ '+p.tag);return b.toString('utf8');};
+// amendment 1 (evaluation/s96/amendment-1.json, before any annotation or run): a page's text lines come from whichever existing
+// reader finds more quantities, the regex block reader (S89-S94 rule) or the DOM segment reader (unclosed <p> paragraphs)
+const nQ=bs=>bs.reduce((n,b)=>n+QK.findQuantities(qk,b).filter(q=>q.value!==null||q.low!==undefined).length,0);
+function blocksOf(html){const a=textBlocks225(html,{maxBlocks:3000}).blocks;const r=DE.readDocumentEvidence(html,qk,{});const b=r.segments.filter(s=>s.region!=='boilerplate'&&!s.duplicateOf).map(s=>s.text);
+ return nQ(b)>nQ(a)?{reader:'dom_segments',blocks:b}:{reader:'blocks225',blocks:a};}
+function itemsFor(){const out=[];
+ for(const p of pagesOf()){const html=htmlOf(p);const {blocks,reader}=blocksOf(html);const title=(/<title[^>]*>([^<]*)<\/title>/i.exec(html)?.[1]??'').replace(/\s+/g,' ').trim().slice(0,140);
+  const all=[];blocks.forEach((bl,bi)=>{for(const q of QK.findQuantities(qk,bl)){if(q.value===null&&q.low===undefined)continue;all.push({bi,start:q.start,end:q.end,surface:q.surface,value:q.value??q.low,unit:q.unitSurface});}});
+  const seen=new Set();const uniq=all.filter(a=>{const k=blocks[a.bi].slice(Math.max(0,a.start-60),a.end+30);if(seen.has(k))return false;seen.add(k);return true;});
+  const k=Math.ceil(uniq.length/40)||1;
+  uniq.filter((_,i)=>i%k===0).forEach((a,j)=>{const bl=blocks[a.bi];const ls=Math.max(0,a.start-80);
+   out.push({id:`${p.tag}-${j}`,reader,bi:a.bi,start:a.start,page:p.tag,host:new URL(p.url).hostname,category:p.category,title,pageSubject:title.split(/[|:–-]/)[0].replace(/\b(review|tested|test bench|best)\b.*$/i,'').trim()||null,
+    value:a.value,unit:a.unit,surface:a.surface,window:bl.slice(Math.max(0,a.start-160),a.end+160),label:bl.slice(ls,a.end+30),valueAt:a.start-ls,context:bl.slice(0,600)});});}
+ return out;}
+if(cmd==='items'){const it=itemsFor();writeFileSync(noOverwrite(join(ROOT,'check-items.json')),JSON.stringify(it,null,1));
+ const q=pagesOf().flatMap(p=>qualItems(htmlOf(p),p.url).map((x,j)=>({id:`${p.tag}-q${j}`,page:p.tag,category:p.category,...x})));writeFileSync(noOverwrite(join(ROOT,'check-qual-items.json')),JSON.stringify(q,null,1));
+ console.log(it.length,'values',q.length,'sentences',JSON.stringify(Object.fromEntries([...new Set(it.map(x=>x.category+' @ '+x.host))].map(g=>[g,it.filter(x=>x.category+' @ '+x.host===g).length]))));}
+if(cmd==='input'){const it=JSON.parse(readFileSync(join(ROOT,'check-items.json'),'utf8'));const q=JSON.parse(readFileSync(join(ROOT,'check-qual-items.json'),'utf8'));const dir=join(ROOT,'annotation');mkdirSync(join(dir,'pages'),{recursive:true});
+ for(const p of pagesOf()){const {blocks}=blocksOf(htmlOf(p));writeFileSync(noOverwrite(join(dir,'pages',p.tag+'.txt')),blocks.map((b,i)=>`L${i}: ${b.replace(/\s+/g,' ')}`).join('\n'));}
+ // the union label set with each label's stated meaning; the order mixes existing and candidate labels (sorted by id) so that the source of a label is not signalled
+ const E1=SE.withAcquiredDefinitions(qk,defs0.pack,entities);const ent=new Map([...E1.byEntity].map(([e,p])=>[p,entities.find(x=>x.id===e)]));
+ const meaning=p=>{const e=ent.get(p.id);const m=p.quantity?.metric?qk.metrics.get(p.quantity.metric):null;
+  return `${p.label} (${p.form}${p.quantity?.kinds?.length?'; kind: '+p.quantity.kinds.join('/'):''}${p.object&&p.object!=='unstated'?'; about: '+p.object:''})`+(e?.definition.value?' - '+e.definition.value:m?.note?' - '+m.note:'')+(p.surface.length?' [also called: '+p.surface.map(s=>s[0]).slice(0,6).join(', ')+']':'');};
+ const A=qualArms();const aspects=(A.Q1.pack.aspects??[]).map(a=>{const e=entities.find(x=>a.id.endsWith(x.id.slice(-6))&&a.id.startsWith('acq_'));return {id:a.id,meaning:a.terms.slice(0,8).join(', ')+(e?.definition.value?' - '+e.definition.value:'')};}).sort((x,y)=>x.id.localeCompare(y.id));
+ const f=noOverwrite(join(dir,'items.json'));
+ writeFileSync(f,JSON.stringify({labels:{properties:[...E1.defs.properties.values()].sort((a,b)=>a.id.localeCompare(b.id)).map(p=>({id:p.id,meaning:meaning(p)})),aspects},
+  items:it.map(x=>({id:x.id,page:x.page,category:x.category,pageTitle:x.title,line:x.bi,value:x.value,unit:x.unit,surface:x.surface,text:x.window})),
+  sentences:q.map(x=>({id:x.id,page:x.page,category:x.category,text:x.text}))},null,1));console.log(it.length,'values',q.length,'sentences',sha(readFileSync(f)));}
+// ---- check run and score (reference sealed in evaluation/s96/annotation-freeze.json before any run)
+const refOf=()=>{const fz=JSON.parse(readFileSync(pub('annotation-freeze.json'),'utf8'));const f=join(ROOT,'annotation','annotations.json');const b=readFileSync(f);
+ if(sha(b)!==fz.annotationsSha256)throw Error('reference does not match its seal');return JSON.parse(b);};
+if(cmd==='run'){if(!LABEL)throw Error('LABEL');const ref=refOf();const it=JSON.parse(readFileSync(join(ROOT,'check-items.json'),'utf8'));
+ const acceptOf=x=>{const r=ref.values[x.id];if(!r)throw Error('unannotated '+x.id);return [r.property,...(r.alsoAcceptable&&r.property!=='none'?[r.alsoAcceptable]:[])];};
+ const {rows:rs,ms}=runItems(it,acceptOf);for(const r of rs){r.role=ref.values[r.id].role;r.concept=ref.values[r.id].concept;}
+ const t0=process.hrtime.bigint();const qi=JSON.parse(readFileSync(join(ROOT,'check-qual-items.json'),'utf8'));const qrows=[];
+ for(const p of pagesOf()){const its=qi.filter(x=>x.page===p.tag);if(!its.length)continue;const pr=qualPredict(htmlOf(p),its);its.forEach((x,i)=>{const r=ref.sentences[x.id];if(!r)throw Error('unannotated '+x.id);qrows.push({id:x.id,category:x.category,ref:r.aspect,also:r.alsoAcceptable??null,Q0:pr.Q0[i],Q1:pr.Q1[i]});});}
+ const qms=Number(process.hrtime.bigint()-t0)/1e6;
+ writeFileSync(noOverwrite(join(PE,'s96',`check-${LABEL}-detail.json`)),JSON.stringify({validatedEntities:arms().E2.validated,rows:rs,qrows,ms,qms},null,1));console.log('rows',rs.length,'sentences',qrows.length);}
+if(cmd==='score'){if(!LABEL)throw Error('LABEL');refOf();const d=JSON.parse(readFileSync(join(PE,'s96',`check-${LABEL}-detail.json`),'utf8'));const rs=d.rows;
+ const HP={inputLag:/input lag|latency|delay/i,responseTime:/response time|pixel response|transition/i,brightness:/bright|luminance|nits/i,refresh:/refresh|hz/i};
+ const hard=Object.fromEntries(Object.entries(HP).map(([k,re])=>[k,pack(rs.filter(r=>re.test(r.concept??'')))]));
+ const results=pack(rs.filter(r=>r.role==='result'||r.role==='specification'));
+ const qs=a=>{const pos=d.qrows.filter(r=>r.ref!=='not_assessment'&&!r.ref.startsWith('other:')),neg=d.qrows.filter(r=>r.ref==='not_assessment'||r.ref.startsWith('other:'));const hit=r=>r[a].includes(r.ref)||(r.also&&r[a].includes(r.also));
+  return {sentences:d.qrows.length,refAspect:pos.length,found:pos.filter(hit).length,wrongOnly:pos.filter(r=>r[a].length&&!hit(r)).length,missed:pos.filter(r=>!r[a].length).length,refOtherOrNone:neg.length,falseAspect:neg.filter(r=>r[a].length).length,
+   refAcquiredAspect:pos.filter(r=>r.ref.startsWith('acq_')).length,foundAcquired:pos.filter(r=>r.ref.startsWith('acq_')&&hit(r)).length};};
+ const qByCat=Object.fromEntries([...new Set(d.qrows.map(r=>r.category))].map(c=>{const save=d.qrows;d.qrows=save.filter(r=>r.category===c);const o={Q0:qs('Q0'),Q1:qs('Q1')};d.qrows=save;return [c,o];}));
+ const out={schema:'pee.s96.check-score.v1',label:LABEL,reference:JSON.parse(readFileSync(pub('annotation-freeze.json'),'utf8')).annotationsSha256,teaching,...armInfo(),
+  overall:pack(rs),byCategory:byCat(rs),resultsAndSpecificationsOnly:results,hardPairs:hard,qualitative:{Q0:qs('Q0'),Q1:qs('Q1'),byCategory:qByCat},
+  resources:{msPerValueAllArms:+(d.ms/rs.length).toFixed(2),msPerPageBothQualArms:+(d.qms/new Set(d.qrows.map(r=>r.id.split('-q')[0])).size).toFixed(1)}};
+ writeFileSync(noOverwrite(pub(`check-${LABEL}.json`)),JSON.stringify(out,null,1)+'\n');
+ for(const a of ARMS)console.log(a.padEnd(4),JSON.stringify(out.overall[a]));for(const [c,v] of Object.entries(out.byCategory))console.log(c,JSON.stringify(Object.fromEntries(ARMS.map(a=>[a,[v[a].correct,v[a].wrong,v[a].falseAttribution]]))));
+ console.log('qual',JSON.stringify(out.qualitative.Q0),'\n    ',JSON.stringify(out.qualitative.Q1));}

@@ -1,0 +1,9 @@
+{
+ "schema": "pee.s96.amendment.v1",
+ "id": 1,
+ "at": "2026-10-20",
+ "writtenBefore": "any annotation of the check and any arm run on it (the first item files were deleted unannotated)",
+ "finding": "the regex block reader of the S89-S94 item rule (textBlocks225) reads no article text on the four Home Cinema Choice pages: they write unclosed <p> paragraphs (valid HTML); 0 quantities against 42 for the DOM segment reader (readDocumentEvidence). On table-heavy pages the regex reader finds more (DisplayNinja 135 against 99)",
+ "change": "the text lines of each page (items, their windows and labels, and the annotator's page text) come from whichever of the two existing readers finds more quantities on that page; the choice depends on the page only, never on an arm. Arms, thresholds and metrics unchanged",
+ "debt": "textBlocks225 drops unclosed paragraphs: an existing reader defect, recorded for the report, not fixed in S96"
+}
