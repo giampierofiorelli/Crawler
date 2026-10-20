@@ -558,25 +558,33 @@ export function compareQuantities(qk:QuantityKnowledge,a:TypedQuantity,b:TypedQu
 export interface QuantityRequirement {span:string;start:number;end:number;bound:'min'|'max'|null;boundCue:string|null;quantity:TypedQuantity;
  /** typed: kind and bound known; kind_ambiguous: the unit can express several quantities; no_bound: a quantity without a limit */
  status:'typed'|'kind_ambiguous'|'no_bound';question:string|null}
+/** The bound a quantity's own words put on it ("at least 30 cm", "under 45 dB", "no wider than 60 cm", "40 dB or less"):
+ * 'min', 'max' or null, with the cue. Generic English bound words and the kinds' comparatives are data in the pack. Shared
+ * by request requirements and (S99) document statements, where a bounded value is a limit, never a point result. */
+export function quantityBound(qk:QuantityKnowledge,text:string,start:number,end:number,kindIds:readonly string[]):{bound:'min'|'max'|null;cue:string|null;before:string;after:string}{
+ const lang=qk.pack.language.en;
+ let cs=0;for(const b of text.slice(0,start).matchAll(/[.;!?\n](?=\s|$)/g))cs=b.index!+1;
+ const before=text.slice(Math.max(cs,start-70),start);const after=text.slice(end,end+40).split(/[.;!?\n](?=\s|$)|,/)[0];
+ const lb=normText(before),la=normText(after);
+ const ends=(ph:string)=>new RegExp('(?:^|[^\\p{L}])'+esc(normText(ph))+'\\s*$','u').test(lb);
+ const starts=(ph:string)=>ph==='+'?/^\s*\+/.test(after):new RegExp('^\\s*'+esc(normText(ph))+'(?![\\p{L}])','u').test(la);
+ const kinds=kindIds.map(k=>qk.kinds.get(k)).filter((k):k is NonNullable<typeof k>=>!!k);
+ let bound:'min'|'max'|null=null,cue:string|null=null;
+ for(const k of kinds)for(const [b,ws] of Object.entries(k.comparatives??{}))for(const w of ws as string[])if(!bound&&ends(w)){bound=b as 'min'|'max';cue=w;}
+ // "wider than 30 cm" is a minimum, "no wider than 30 cm" a maximum; the word lists are English data in the pack
+ const cmp=/(?:^|[^\p{L}])((?:(no|not) )?(\p{L}+) than)\s*$/u.exec(lb);
+ if(!bound&&cmp){const w=cmp[3];const inc=lang.increaseComparatives.includes(w),dec=lang.decreaseComparatives.includes(w);
+  if(inc||dec){const up=inc!==!!cmp[2];bound=up?'min':'max';cue=cmp[1];}}
+ for(const w of [...lang.min,...lang.max].sort((a,b)=>b.length-a.length))if(!bound&&ends(w)){bound=lang.min.includes(w)?'min':'max';cue=w;}
+ for(const w of [...lang.minAfter,...lang.maxAfter])if(!bound&&starts(w)){bound=lang.minAfter.includes(w)?'min':'max';cue=w;}
+ return {bound,cue,before,after};
+}
 /** Every quantity a request states with a known unit, its bound and what it is a requirement on. Generic English bound
  * words and the kinds' comparatives come from the pack; the property is the metric or kind the words name. */
 export function readQuantityRequirements(qk:QuantityKnowledge,text:string):QuantityRequirement[]{
- const lang=qk.pack.language.en;const out:QuantityRequirement[]=[];
+ const out:QuantityRequirement[]=[];
  for(const f of findQuantities(qk,text)){
-  let cs=0;for(const b of text.slice(0,f.start).matchAll(/[.;!?\n](?=\s|$)/g))cs=b.index!+1;
-  const before=text.slice(Math.max(cs,f.start-70),f.start);const after=text.slice(f.end,f.end+40).split(/[.;!?\n](?=\s|$)|,/)[0];
-  const lb=normText(before),la=normText(after);
-  const ends=(ph:string)=>new RegExp('(?:^|[^\\p{L}])'+esc(normText(ph))+'\\s*$','u').test(lb);
-  const starts=(ph:string)=>ph==='+'?/^\s*\+/.test(after):new RegExp('^\\s*'+esc(normText(ph))+'(?![\\p{L}])','u').test(la);
-  const kinds=f.unit.kinds.map(k=>qk.kinds.get(k)!);
-  let bound:'min'|'max'|null=null,cue:string|null=null;
-  for(const k of kinds)for(const [b,ws] of Object.entries(k.comparatives??{}))for(const w of ws as string[])if(!bound&&ends(w)){bound=b as 'min'|'max';cue=w;}
-  // "wider than 30 cm" is a minimum, "no wider than 30 cm" a maximum; the word lists are English data in the pack
-  const cmp=/(?:^|[^\p{L}])((?:(no|not) )?(\p{L}+) than)\s*$/u.exec(lb);
-  if(!bound&&cmp){const w=cmp[3];const inc=lang.increaseComparatives.includes(w),dec=lang.decreaseComparatives.includes(w);
-   if(inc||dec){const up=inc!==!!cmp[2];bound=up?'min':'max';cue=cmp[1];}}
-  for(const w of [...lang.min,...lang.max].sort((a,b)=>b.length-a.length))if(!bound&&ends(w)){bound=lang.min.includes(w)?'min':'max';cue=w;}
-  for(const w of [...lang.minAfter,...lang.maxAfter])if(!bound&&starts(w)){bound=lang.minAfter.includes(w)?'min':'max';cue=w;}
+  const {bound,cue,before,after}=quantityBound(qk,text,f.start,f.end,f.unit.kinds);
   // the requirement's own words: the clause before the quantity (back to a comma or "and") and the words right after it
   const own=before.split(/,|\band\b|\bwith\b|\bthat\b/).at(-1)??before;
   const q=typeQuantity(qk,{surface:f.surface,value:f.value,low:f.low,high:f.high,unit:f.unit},{labels:[own,after]});

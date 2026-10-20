@@ -1,6 +1,6 @@
 {
  "schema": "pee.property-definitions.v1",
- "version": "pd.6",
+ "version": "pd.7",
  "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object. A property may declare a plausible SI range (plausibleSi; s, m, Pa, Hz, m3/s, dB): a value outside it is not attributed (SHACL-style value constraint). Object nouns name the measured object (acoustic output, audio path, obstacle), never the product class. A property may subsume QK metrics (relatedMetrics): those are not competing concepts.",
  "sources": [
   {
@@ -2829,6 +2829,10 @@
   {
    "version": "pd.6",
    "note": "S98 (owner decision 2026-10-20): known objects may state the QK metrics whose object of interest they are (I-ADOPT object stated, never inferred from a name). 'display' is the object of the five display metrics (peak luminance, refresh rate, input lag, colour gamut coverage, colour error), which are display metrics by their QK definition. The S89 note 'not the object of any defined property' becomes a derived condition: a known object owned by a loaded definition is that definition's object, not another concept's."
+  },
+  {
+   "version": "pd.7",
+   "note": "S99 (owner review of S98, 2026-10-20): statementRoles (norm and target cues of a value's clause) so that a value a standard or a test target states is never read as the product's result; bounds come from the shared quantity-knowledge bound words."
   }
  ],
  "knownObjects": {
@@ -3062,6 +3066,103 @@
    "came in at",
    "logged",
    "metered"
+  ]
+ },
+ "statementRoles": {
+  "note": "S99 (owner review 2026-10-20, verbatim in owner-review-s98-semantic-integrity-2026-10-20.md): the role of the statement a value sits in, decided before the value is attributed to a product. A measured quantity value (VIM 2.10) is not a specification limit or a maximum permissible value (VIM 4.26): a value a standard, regulation or guideline sets (norm) and a value a test or a buyer aims at (target) are never the product's result. Cues are matched in the value's own clause only. A bound ('under 45 dB', 'at least 30 cm') comes from the quantity knowledge's bound words (shared with request requirements). Words that state a recommendation about the product itself ('recommended room size') are deliberately absent: they describe the product, not a norm. pd.7 rev (S99 dev it2): norm cues are phrases that name an external rule ('the standard', 'requirements', 'a guideline'), never when a mode, setting or level word follows ('standard mode'); a bounded value with positive evidence of a result or specification is a bounded result or specification of the product, and a threshold is a bound in a generic or sufficiency claim ('anything under 45 dB', 'quiet enough').",
+  "norm": [
+   "standard",
+   "an industry standard",
+   "industry standard",
+   "standards",
+   "requirement",
+   "requirements",
+   "required by",
+   "regulation",
+   "regulations",
+   "regulatory limit",
+   "guideline",
+   "guidelines",
+   "legal limit",
+   "limit set by",
+   "limits set by",
+   "rule of thumb",
+   "criteria",
+   "to qualify",
+   "qualifies as",
+   "is considered",
+   "are considered",
+   "counts as",
+   "certification requires",
+   "recommended by"
+  ],
+  "target": [
+   "target",
+   "targets",
+   "aim for",
+   "aims for",
+   "aiming for",
+   "aimed for",
+   "goal",
+   "objective",
+   "ideally",
+   "should be",
+   "should stay",
+   "should not exceed",
+   "needs to be",
+   "need to be",
+   "look for",
+   "we wanted",
+   "set out to"
+  ],
+  "state": "candidate",
+  "sources": [
+   "vim",
+   "s87"
+  ],
+  "notNormAfter": [
+   "mode",
+   "modes",
+   "setting",
+   "settings",
+   "speed",
+   "speeds",
+   "program",
+   "programme",
+   "cycle",
+   "level",
+   "version",
+   "edition",
+   "model",
+   "models",
+   "fit",
+   "size",
+   "sizes",
+   "package",
+   "option",
+   "feature",
+   "features",
+   "equipment",
+   "accessory",
+   "accessories",
+   "filter",
+   "plan",
+   "warranty",
+   "obstacle",
+   "obstacles"
+  ],
+  "threshold": [
+   "anything",
+   "everything",
+   "any model",
+   "any unit",
+   "all models",
+   "most models",
+   "enough",
+   "or less",
+   "or lower",
+   "or more",
+   "or higher"
   ]
  }
 }

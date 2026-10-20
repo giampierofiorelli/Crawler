@@ -47,9 +47,12 @@ export function declarationKey246(f:{section:string|null;propertyKey:string;valu
 export interface ScientificReadingRow98 {reading_id:string;revision_id:string;subject_table:'declarations'|'test_measurements265'|'document_quantity';subject_id:string;
  product_id:string|null;product_association:string;interpreter_version:string;definitions_identity:string;qk_identity:string;form:string;value:number|null;unit:string|null;
  kind:string|null;kind_status:string;metric:string|null;property_id:string|null;property_state:string;property_rule:string|null;definition_state:string|null;
- nature:string;nature_basis:string;knowledge_state:string;evidence_role:string;retention:string;expires_at:string|null;state:string;ranking_input:number;recorded_at:string}
+ nature:string;nature_basis:string;knowledge_state:string;evidence_role:string;retention:string;expires_at:string|null;state:string;ranking_input:number;recorded_at:string;
+ /** S99 (v12): the observation's identity and meaning, kept from source to store */
+ statement_role:string|null;bound:string|null;statement_cue:string|null;statement_basis:string|null;subject_value:string|null;subject_name:string|null;subject_basis:string|null;
+ provenance:string|null;result_basis:string|null;object:string|null;source_reader:string|null;observation_key:string|null;source_locator:string|null;source_offset:number|null}
 const normName246=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-export const STORE_SCHEMA_VERSION246=11;
+export const STORE_SCHEMA_VERSION246=12;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -338,6 +341,24 @@ const MIGRATIONS:string[]=[
    ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0), recorded_at TEXT NOT NULL);
   CREATE INDEX scientific_readings98_subject ON scientific_readings98(subject_table,subject_id,state);
   CREATE INDEX scientific_readings98_product ON scientific_readings98(product_id,property_id,state);`,
+ // v12 (S99, owner review of S98 2026-10-20): every reading keeps its observation's identity and meaning from source to
+ // store: the statement role (result, specification, threshold, norm, target, condition, judgement) and bound, whose value
+ // it is and on what evidence, who produced it, the result's basis and object, and which reader found it where (locator and
+ // offset; no text). A product is linked only when the reading's subject is stated.
+ `ALTER TABLE scientific_readings98 ADD COLUMN statement_role TEXT CHECK(statement_role IS NULL OR statement_role IN ('result','specification','threshold','norm','target','condition','judgement','unresolved'));
+  ALTER TABLE scientific_readings98 ADD COLUMN bound TEXT CHECK(bound IS NULL OR bound IN ('min','max'));
+  ALTER TABLE scientific_readings98 ADD COLUMN statement_cue TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN statement_basis TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN subject_value TEXT CHECK(subject_value IS NULL OR subject_value IN ('page_product','named_product','other_product','none','unresolved'));
+  ALTER TABLE scientific_readings98 ADD COLUMN subject_name TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN subject_basis TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN provenance TEXT CHECK(provenance IS NULL OR provenance IN ('publisher','manufacturer','third_party','unresolved'));
+  ALTER TABLE scientific_readings98 ADD COLUMN result_basis TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN object TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN source_reader TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN observation_key TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN source_locator TEXT;
+  ALTER TABLE scientific_readings98 ADD COLUMN source_offset INTEGER;`,
 ];
 
 /** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */
@@ -654,8 +675,11 @@ export class KnowledgeStore246 {
    // S98: quantities the structural document reader found that no extractor captured, kept only when interpreted to a
    // defined property, under the same retention as test values; the product is linked only on exact name identity
    if(sci98&&keep&&(!kinds||kinds.includes('quantity'))){const mainName=x&&!x.mainProduct.ambiguous?x.mainProduct.name:null;
-    for(const d of o.scientific98!.document){const own=d.product&&d.productBasis!=='none'?d.product:null;
-     const pid=own&&mainName&&normName246(own)===normName246(mainName)?mainId:own&&named.has(own)?named.get(own)??null:null;
+    for(const d of o.scientific98!.document){const sj=d.reading.subject;
+     // S99: the product comes from the reading's stated subject only: the page product when the source states it, a product
+     // the page's tables name when the clause names exactly that product; never for a threshold, norm, target or condition
+     const pid=sj.value==='page_product'&&mainName?mainId:sj.value==='named_product'&&sj.name&&named.has(sj.name)?named.get(sj.name)??null:
+      sj.value==='named_product'&&sj.name&&mainName&&normName246(sj.name)===normName246(mainName)?mainId:null;
      const assoc=!pid?'subject_unresolved':pid===mainId?'page_main_product_unverified':'named_product_unverified';
      this.insertReading98(o,revisionId,'document_quantity','dq_'+d.key,pid,assoc,d.reading,effective,expires,d.value,d.unit);}}
    const q270=o.qualitative270?this.applyQualitative270(o,revisionId,mainId,keep&&effective==='facts_retained_class_policy',effective):undefined;
@@ -910,22 +934,26 @@ export class KnowledgeStore246 {
   const id='sr_'+sha(subjectTable+'|'+subjectId+'|'+v).slice(0,24);
   const res=this.db.prepare(`INSERT INTO scientific_readings98(reading_id,revision_id,subject_table,subject_id,product_id,product_association,interpreter_version,definitions_identity,qk_identity,
     form,value,unit,kind,kind_status,metric,property_id,property_state,property_rule,definition_state,conditions_json,missing_conditions_json,conflicting_conditions_json,method_json,
-    nature,nature_basis,knowledge_state,evidence_role,retention,expires_at,state,recorded_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?)
+    nature,nature_basis,knowledge_state,evidence_role,retention,expires_at,state,recorded_at,
+    statement_role,bound,statement_cue,statement_basis,subject_value,subject_name,subject_basis,provenance,result_basis,object,source_reader,observation_key,source_locator,source_offset)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(reading_id) DO UPDATE SET state='current',product_id=excluded.product_id,product_association=excluded.product_association,retention=excluded.retention,expires_at=excluded.expires_at
     WHERE scientific_readings98.state<>'current'`).run(id,revisionId,subjectTable,subjectId,productId,association,v,sci.interpreter.definitions,sci.interpreter.quantityKnowledge,
     r.form,value,unit,r.quantity?.kind??null,r.quantity?.kindStatus??'not_recognised',r.quantity?.metric??null,r.property.id,r.property.state,r.property.rule,r.property.definitionState,
-    canon(r.conditions),canon(r.missing),canon(r.conflicts),canon(r.method),r.nature,r.natureBasis,r.knowledgeState,declarationRole246(o.source.sourceType),retention,expires,o.fetchedAt);
+    canon(r.conditions),canon(r.missing),canon(r.conflicts),canon(r.method),r.nature,r.natureBasis,r.knowledgeState,declarationRole246(o.source.sourceType),retention,expires,o.fetchedAt,
+    r.statement?.role??null,r.statement?.bound??null,r.statement?.cue??null,r.statement?.basis??null,r.subject?.value??null,r.subject?.name??null,r.subject?.basis??null,r.provenance??null,
+    r.resultBasis??null,r.object??null,r.source?.reader??null,r.source?.key??null,r.source?.locator??null,r.source?.offset??null);
   return Number(res.changes)>0;
  }
  /** S98: the current typed readings, optionally of one product or property, with their subject rows still current. */
  scientificReadings98(filter:{productId?:string;propertyId?:string}={}){
-  const rows=this.db.prepare(`SELECT r.* FROM scientific_readings98 r WHERE r.state='current'
+  const rows=this.db.prepare(`SELECT r.*,(SELECT v.source_id FROM revisions v WHERE v.revision_id=r.revision_id) AS source_id FROM scientific_readings98 r WHERE r.state='current'
     AND (? IS NULL OR r.product_id=?) AND (? IS NULL OR r.property_id=?)
     AND (r.subject_table='document_quantity'
      OR (r.subject_table='declarations' AND EXISTS (SELECT 1 FROM declarations d WHERE d.declaration_id=r.subject_id AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor','expired_pending_rights')))
      OR (r.subject_table='test_measurements265' AND EXISTS (SELECT 1 FROM test_measurements265 t WHERE t.measurement_id=r.subject_id AND t.state='current')))
     ORDER BY r.reading_id`).all(filter.productId??null,filter.productId??null,filter.propertyId??null,filter.propertyId??null) as Record<string,unknown>[];
-  return rows.map(r=>({...(r as unknown as ScientificReadingRow98),conditions:JSON.parse(String(r.conditions_json)) as ScientificReading98['conditions'],missing:JSON.parse(String(r.missing_conditions_json)) as string[],
+  return rows.map(r=>({...(r as unknown as ScientificReadingRow98&{source_id:string}),conditions:JSON.parse(String(r.conditions_json)) as ScientificReading98['conditions'],missing:JSON.parse(String(r.missing_conditions_json)) as string[],
    conflicts:JSON.parse(String(r.conflicting_conditions_json)) as string[],method:JSON.parse(String(r.method_json)) as ScientificReading98['method']}));
  }
  purgeExpired246(asOf=new Date().toISOString()):number{

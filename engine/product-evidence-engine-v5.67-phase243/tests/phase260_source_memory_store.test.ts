@@ -50,7 +50,7 @@ const screen=(f:F,o:Partial<ScreeningDecision193>={},hash=PAGE_A):ScreeningDecis
  retainedCandidateVariantIds:[],...o});
 
 test('1-3. a permitted annotation persists, survives close and reopen, and is recovered without a rebuild',()=>{
- const f=fixture();assert.equal(f.s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(STORE_SCHEMA_VERSION246,11,'v5 (Phase265) test_measurements265, v6 (Phase268) condition codes, v7 (Phase270) qualitative codes, v8 (Phase271) comparative results, v9 (S78) relation assessments, v10 (S78) knowledge statements, v11 (S98) scientific readings');
+ const f=fixture();assert.equal(f.s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(STORE_SCHEMA_VERSION246,12,'v5 (Phase265) test_measurements265, v6 (Phase268) condition codes, v7 (Phase270) qualitative codes, v8 (Phase271) comparative results, v9 (S78) relation assessments, v10 (S78) knowledge statements, v11 (S98) scientific readings, v12 (S99) observation identity and meaning of each reading');
  assert.equal(descriptorWithMemory260(f.s,f.revA,f.prodA).descriptor.language,'und');
  const r=recordSourceMemory260(f.s,ann(f));assert.equal(r.status,'recorded');assert.equal(r.basis,'operator_annotation','no verifier: an operator claim, not a verified fact');
  f.s.close();
