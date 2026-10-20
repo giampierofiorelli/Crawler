@@ -607,7 +607,7 @@
    "since": "S100 (docs/plans/s100-rule-governance.md)",
    "item": "Rule-governance residuals found by the S100 rule-interaction audit and not yet moved under the shared decision policy. Each conflict names the consumers it affects and the check that will show it resolved.",
    "resolvedStatus": "open",
-   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain.",
+   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain. Development (spent S89-S99): role precision 87% (S99 85%), nature 81% (S99 63%), false product values 45 (S99 59), at the cost of coverage (reviewed-product values correctly linked 81, S99 98). Independent checks (s100: 7 pages, 4 new publishers; s101 table addendum: 4 pages, 2 new publishers): all preregistered stop rules hold; S100 becomes the gated reading. B1 (publisher table results read as specifications) was not exercised by the sealed references; outside them, the StorageReview measured leaderboard (17 rows) was read as specifications by S99 and left unresolved by S100.",
    "conflicts": [
     {
      "id": "F5",
@@ -686,6 +686,24 @@
       "observation_semantics clauseCues"
      ],
      "verification": "a fixture 'the on-board sensor showed 12 µg/m³' is not a publisher result"
+    },
+    {
+     "id": "TCX",
+     "what": "a table whose only evidence of being a test result is the sentence that introduces it ('Here is the current boot leaderboard', after 'failed the bootbench') gets no cue: no reader reads the statement preceding a table, so S100 abstains where the publisher's measurements are stated",
+     "consumers": [
+      "scientific_reading98 readDeclaration98",
+      "table_interpreter1g linked statements"
+     ],
+     "verification": "a fixture with a measured table introduced only by a test sentence yields result/measured; a specification table introduced by 'the maker lists' yields specification"
+    },
+    {
+     "id": "UNIT",
+     "what": "quantities in units the quantity knowledge lacks (IOPS, latency in ms for storage) are not typed, so they are not checkable items and get no property",
+     "consumers": [
+      "quantity_knowledge",
+      "scripts/s99-check.mjs items"
+     ],
+     "verification": "the units are taught with their kinds, or reported as an explicit coverage gap per page"
     }
    ]
   }
