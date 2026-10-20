@@ -1,0 +1,206 @@
+{
+ "schema": "pee.s95.align-score.v1",
+ "side": "s95",
+ "label": "firstrun",
+ "corpus": {
+  "files": 89,
+  "paragraphs": 6316,
+  "vocabulary": 6331,
+  "digest": "f4f9699c596ef8126537e63a4061fc252109202632bffbeef5f213549f408ba2"
+ },
+ "config": {
+  "anchor": "strong"
+ },
+ "tier": "first run against the new sealed blind reference",
+ "arms": {
+  "identify": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 29,
+   "correct": 5,
+   "relatedPromoted": 14,
+   "hierarchyPromoted": 3,
+   "noneOrUnannotatedPromoted": 7,
+   "missed": 15,
+   "hierarchy": {
+    "predicted": 0,
+    "correct": 0,
+    "unannotated": 0
+   },
+   "incompatibleOnIdentity": 0,
+   "incompatiblePredicted": 0,
+   "relatedPredicted": 0,
+   "relatedCorrect": 0,
+   "retrieval": {
+    "identitiesLexical": 0,
+    "identitiesVector": 0,
+    "identitiesMultiview": 0,
+    "identitiesEither": 0
+   },
+   "precision": 0.172,
+   "recall": 0.25
+  },
+  "align1": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 14,
+   "correct": 3,
+   "relatedPromoted": 4,
+   "hierarchyPromoted": 2,
+   "noneOrUnannotatedPromoted": 5,
+   "missed": 17,
+   "hierarchy": {
+    "predicted": 0,
+    "correct": 0,
+    "unannotated": 0
+   },
+   "incompatibleOnIdentity": 0,
+   "incompatiblePredicted": 0,
+   "relatedPredicted": 0,
+   "relatedCorrect": 0,
+   "retrieval": {
+    "identitiesLexical": 0,
+    "identitiesVector": 0,
+    "identitiesMultiview": 0,
+    "identitiesEither": 0
+   },
+   "precision": 0.214,
+   "recall": 0.15
+  },
+  "H94": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 2,
+   "correct": 0,
+   "relatedPromoted": 2,
+   "hierarchyPromoted": 0,
+   "noneOrUnannotatedPromoted": 0,
+   "missed": 20,
+   "hierarchy": {
+    "predicted": 47,
+    "correct": 1,
+    "unannotated": 4
+   },
+   "incompatibleOnIdentity": 1,
+   "incompatiblePredicted": 118,
+   "relatedPredicted": 571,
+   "relatedCorrect": 157,
+   "retrieval": {
+    "identitiesLexical": 0,
+    "identitiesVector": 0,
+    "identitiesMultiview": 0,
+    "identitiesEither": 0
+   },
+   "precision": 0,
+   "recall": 0
+  },
+  "MV": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 19,
+   "correct": 3,
+   "relatedPromoted": 12,
+   "hierarchyPromoted": 2,
+   "noneOrUnannotatedPromoted": 2,
+   "missed": 17,
+   "hierarchy": {
+    "predicted": 0,
+    "correct": 0,
+    "unannotated": 0
+   },
+   "incompatibleOnIdentity": 3,
+   "incompatiblePredicted": 120,
+   "relatedPredicted": 884,
+   "relatedCorrect": 163,
+   "retrieval": {
+    "identitiesLexical": 17,
+    "identitiesVector": 15,
+    "identitiesMultiview": 18,
+    "identitiesEither": 18
+   },
+   "precision": 0.158,
+   "recall": 0.15
+  },
+  "MV-noviews": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 15,
+   "correct": 3,
+   "relatedPromoted": 9,
+   "hierarchyPromoted": 1,
+   "noneOrUnannotatedPromoted": 2,
+   "missed": 17,
+   "hierarchy": {
+    "predicted": 0,
+    "correct": 0,
+    "unannotated": 0
+   },
+   "incompatibleOnIdentity": 3,
+   "incompatiblePredicted": 235,
+   "relatedPredicted": 763,
+   "relatedCorrect": 129,
+   "retrieval": {
+    "identitiesLexical": 0,
+    "identitiesVector": 0,
+    "identitiesMultiview": 0,
+    "identitiesEither": 0
+   },
+   "precision": 0.2,
+   "recall": 0.15
+  },
+  "MV-norerank": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 43,
+   "correct": 6,
+   "relatedPromoted": 23,
+   "hierarchyPromoted": 1,
+   "noneOrUnannotatedPromoted": 13,
+   "missed": 14,
+   "hierarchy": {
+    "predicted": 0,
+    "correct": 0,
+    "unannotated": 0
+   },
+   "incompatibleOnIdentity": 3,
+   "incompatiblePredicted": 119,
+   "relatedPredicted": 861,
+   "relatedCorrect": 154,
+   "retrieval": {
+    "identitiesLexical": 0,
+    "identitiesVector": 0,
+    "identitiesMultiview": 0,
+    "identitiesEither": 0
+   },
+   "precision": 0.14,
+   "recall": 0.3
+  },
+  "ID+MV": {
+   "mentions": 228,
+   "referenceIdentities": 20,
+   "decided": 14,
+   "correct": 3,
+   "relatedPromoted": 7,
+   "hierarchyPromoted": 3,
+   "noneOrUnannotatedPromoted": 1,
+   "missed": 17,
+   "hierarchy": {
+    "predicted": 0,
+    "correct": 0,
+    "unannotated": 0
+   },
+   "incompatibleOnIdentity": 3,
+   "incompatiblePredicted": 120,
+   "relatedPredicted": 889,
+   "relatedCorrect": 167,
+   "retrieval": {
+    "identitiesLexical": 0,
+    "identitiesVector": 0,
+    "identitiesMultiview": 0,
+    "identitiesEither": 0
+   },
+   "precision": 0.214,
+   "recall": 0.15
+  }
+ }
+}

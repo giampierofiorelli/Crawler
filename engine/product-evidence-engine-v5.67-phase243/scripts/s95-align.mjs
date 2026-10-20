@@ -47,14 +47,14 @@ if(cmd==='score'){const dir=join(R3,'align',SIDE);const outF=`evaluation/s95/ali
  if(SIDE==='s94'){const fz=JSON.parse(readFileSync('evaluation/s94/align-freeze.json','utf8'));if(shaF(join(dir,'out.json'))!==fz.annotation)throw Error('reference changed');}
  if(SIDE==='s95'){const fz=JSON.parse(readFileSync('evaluation/s95/align-freeze.json','utf8'));if(shaF(join(dir,'out.json'))!==fz.annotation)throw Error('reference changed');}
  const inp=JSON.parse(readFileSync(join(dir,'in.json'),'utf8')).mentions,ref=new Map(JSON.parse(readFileSync(join(dir,'out.json'),'utf8')).mentions.map(x=>[x.mention,x]));
- const MC=JSON.parse(process.env.S95_MV??'{}');const ARMS={identify:null,align1:null,H94:{model,graph:true,anchor:'word',relatedSimilarity:0.4},MV:{mv:true,...MC},'MV-noviews':{mv:true,...MC,views:'name'},'MV-norerank':{mv:true,...MC,rerank:false}};
+ const MC=JSON.parse(process.env.S95_MV??'{}');const ARMS={identify:null,align1:null,H94:{model,graph:true,anchor:'word',relatedSimilarity:0.4},MV:{mv:true,...MC},'MV-noviews':{mv:true,...MC,views:'name'},'MV-norerank':{mv:true,...MC,rerank:false},'ID+MV':{mv:true,...MC,confirmIdentify:true}};
  const res={};const detail=[];
  for(const [arm,cfg] of Object.entries(ARMS)){const C={mentions:0,referenceIdentities:0,decided:0,correct:0,relatedPromoted:0,hierarchyPromoted:0,noneOrUnannotatedPromoted:0,missed:0,
    hierarchy:{predicted:0,correct:0,unannotated:0},incompatibleOnIdentity:0,incompatiblePredicted:0,relatedPredicted:0,relatedCorrect:0,retrieval:{identitiesLexical:0,identitiesVector:0,identitiesMultiview:0,identitiesEither:0}};
   for(const m of inp){const a=ref.get(m.mention);const pool=poolOf(m.category);const gold=Object.entries(a.matches).filter(([,v])=>v==='exact'||v==='close').map(([k])=>k);C.mentions++;if(gold.length)C.referenceIdentities++;
    let pick=null,cands=[];
    if(arm==='identify')pick=KT.identifyConcept(m.text,pool);else if(arm==='align1')pick=KT.alignWithType(qk,m.text,pool).concept;
-   else{const r=cfg.mv?KT.alignMultiView(qk,model,m.text,m.quote??'',pool,props,{k:5,...cfg}):KT.alignHybrid(qk,m.text,pool,cfg);pick=r.concept;cands=r.candidates;
+   else{const r=cfg.mv?KT.alignMultiView(qk,model,m.text,m.quote??'',pool,props,{k:5,...cfg,...(cfg.confirmIdentify?{confirm:KT.identifyConcept(m.text,pool)}:{})}):KT.alignHybrid(qk,m.text,pool,cfg);pick=r.concept;cands=r.candidates;
     for(const c of cands){const g=a.matches[c.id];if(c.relation==='broader'||c.relation==='narrower'){C.hierarchy.predicted++;if(g===undefined)C.hierarchy.unannotated++;else if(g===c.relation)C.hierarchy.correct++;}
      if(c.relation==='incompatible'){C.incompatiblePredicted++;if(g==='exact'||g==='close')C.incompatibleOnIdentity++;}
      if(c.relation==='related'){C.relatedPredicted++;if(g==='related'||g==='broader'||g==='narrower')C.relatedCorrect++;}}

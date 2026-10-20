@@ -543,7 +543,9 @@ const words=(id:string)=>id.replace(/[_-]+/g,' ');
  * names of its graph neighbours with the relation (OWL2Vec*'s walks, depth one). */
 export function conceptDocument(c:ConceptNode,graph=false):string{
  return [words(c.id),...(c.aliases??[]),(c.statement??'').split(/(?<=[.;:])\s/)[0]??'',...(graph?(c.neighbors??[]).map(n=>words(n.relation)+' '+words(n.id)):[])].join(' . ');}
-function textVector(m:DistributionalModel,text:string):Map<string,number>{const v=new Map<string,number>();
+const tvCache=new WeakMap<DistributionalModel,Map<string,Map<string,number>>>();
+function textVector(m:DistributionalModel,text:string):Map<string,number>{let cm=tvCache.get(m);if(!cm){cm=new Map();tvCache.set(m,cm);}const hit=cm.get(text);if(hit)return hit;const r=textVector0(m,text);if(cm.size<200000)cm.set(text,r);return r;}
+function textVector0(m:DistributionalModel,text:string):Map<string,number>{const v=new Map<string,number>();
  for(const w of contentWords(text).map(stem)){const x=m.vectors.get(w);const n=m.norms.get(w)||1;if(!x)continue;for(const [k,y] of x)v.set(k,(v.get(k)??0)+y/n);}return v;}
 function cosine(a:Map<string,number>,b:Map<string,number>):number{let d=0,na=0,nb=0;for(const [k,x] of a){na+=x*x;const y=b.get(k);if(y)d+=x*y;}for(const y of b.values())nb+=y*y;return na&&nb?d/Math.sqrt(na*nb):0;}
 export function vectorRetrieve(m:DistributionalModel,phrase:string,pool:readonly ConceptNode[],k=5,graph=false):{id:string;similarity:number}[]{
@@ -603,12 +605,17 @@ function viewsOf(qk:QuantityKnowledge,id:string,kind:string|null,name:string,des
  const text=normText(name+' . '+description.split(/(?<=[.;:])\s/)[0]);
  const properties=props.filter(p=>p.surface.some(([t])=>{const n=normText(t);return n.length>=4&&hasPhrase(text,n);})&&(!quantity.kinds.length||!p.quantity?.kinds.length||p.quantity.kinds.some(k=>quantity.kinds.includes(k)))).map(p=>p.id);
  return {id,kind,name,description,nameStems:nameWords.map(stem),quantity,object,conditions:td.axes,relations:[...relations],properties};}
+const viewCache=new WeakMap<object,ConceptViews>();
 export function conceptViews(qk:QuantityKnowledge,c:ConceptNode,props:readonly PropertyLike[]=[]):ConceptViews{
+ const hit=viewCache.get(c);if(hit)return hit;const v=conceptViews0(qk,c,props);viewCache.set(c,v);return v;}
+function conceptViews0(qk:QuantityKnowledge,c:ConceptNode,props:readonly PropertyLike[]):ConceptViews{
  return viewsOf(qk,c.id,c.kind??null,[words(c.id),...(c.aliases??[])].join(' . '),(c.statement??'').replace(/\s*\[[^\]]*\]\s*$/,'').split(/(?<=[.;:])\s/)[0]??'',c.neighbors??[],props);}
 export function mentionViews(qk:QuantityKnowledge,text:string,quote:string,props:readonly PropertyLike[]=[]):ConceptViews{return viewsOf(qk,'mention',null,text,quote,[],props);}
 export interface MultiViewCandidate {id:string;score:number;views:Record<string,number>;checks:{quantityClash:boolean;propertyClash:boolean;differentObject:boolean;anchor:'alias'|'name_word'|'object'|null};relation:HybridRelation}
 export interface MultiViewAlignment {concept:string|null;status:'aligned'|'unresolved';candidates:MultiViewCandidate[]}
-export interface MultiViewOptions {k?:number;views?:'all'|'name';rerank?:boolean;margin?:number;minScore?:number;objectSimilarity?:number}
+export interface MultiViewOptions {k?:number;views?:'all'|'name';rerank?:boolean;margin?:number;minScore?:number;objectSimilarity?:number;
+ /** it1: 'strong' needs an alias, two shared name words, or 60% of the name covered (lexical evidence the vector cannot supply) */ anchor?:'any'|'strong';
+ /** it2: confirm a lexical pick: it stands only when it is the multi-view first choice and passes the clash checks */ confirm?:string|null}
 export function multiViewScore(m:DistributionalModel,men:ConceptViews,c:ConceptViews,opts:MultiViewOptions={}):Pick<MultiViewCandidate,'score'|'views'|'checks'>{
  const v:Record<string,number>={};const cos=(a:string,b:string)=>a.trim()&&b.trim()?cosine(textVector(m,a),textVector(m,b)):0;
  v.name=cos(men.name,c.name);if(c.description)v.description=cos(men.name,c.description);
@@ -625,8 +632,8 @@ export function multiViewScore(m:DistributionalModel,men:ConceptViews,c:ConceptV
  const quantityClash=clash(men.quantity.kinds,c.quantity.kinds)||clash(men.quantity.metrics,c.quantity.metrics);
  const propertyClash=men.properties.length>0&&c.properties.length>0&&!men.properties.some(p=>c.properties.includes(p));
  const differentObject=men.object.length>0&&c.object.length>0&&objMatch===0;
- const alias=false;const nameWord=men.nameStems.some(w=>c.nameStems.includes(w));
- return {score:+score.toFixed(4),views:Object.fromEntries(Object.entries(v).map(([a,b])=>[a,+b.toFixed(3)])),checks:{quantityClash,propertyClash,differentObject,anchor:alias?'alias':nameWord?'name_word':objMatch>0?'object':null}};}
+ const alias=false;const shared=c.nameStems.filter(w=>men.nameStems.includes(w));const nameWord=opts.anchor==='strong'?shared.length>=2||c.nameStems.length>0&&shared.length/c.nameStems.length>=0.6:shared.length>0;
+ return {score:+score.toFixed(4),views:Object.fromEntries(Object.entries(v).map(([a,b])=>[a,+b.toFixed(3)])),checks:{quantityClash,propertyClash,differentObject,anchor:alias?'alias':nameWord?'name_word':opts.anchor!=='strong'&&objMatch>0?'object':null}};}
 export function alignMultiView(qk:QuantityKnowledge,m:DistributionalModel,text:string,quote:string,pool:readonly ConceptNode[],props:readonly PropertyLike[]=[],opts:MultiViewOptions={}):MultiViewAlignment{
  const men=mentionViews(qk,text,quote,props);
  const scored=pool.map(c=>{const cv=conceptViews(qk,c,props);const s=multiViewScore(m,men,cv,opts);
@@ -636,6 +643,9 @@ export function alignMultiView(qk:QuantityKnowledge,m:DistributionalModel,text:s
  for(const c of scored){const blocked=c.checks.quantityClash||c.checks.propertyClash||c.checks.differentObject;
   c.relation=c.checks.quantityClash||c.checks.propertyClash?'incompatible':c.score>=min*0.5||c.checks.anchor?'related':'none';void blocked;}
  let pick:MultiViewCandidate|null=null;
+ if(opts.confirm!==undefined){const ok=scored.filter(c=>!c.checks.quantityClash&&!c.checks.propertyClash&&!c.checks.differentObject);
+  pick=opts.confirm&&ok[0]?.id===opts.confirm?ok[0]:null;if(pick)pick.relation='identity';
+  return {concept:pick?.id??null,status:pick?'aligned':'unresolved',candidates:scored};}
  if(opts.rerank===false){const [a,b]=scored;if(a&&a.score>=min&&a.score-(b?.score??0)>=margin)pick=a;}
  else{const ok=scored.filter(c=>!c.checks.quantityClash&&!c.checks.propertyClash&&!c.checks.differentObject&&c.checks.anchor);
   const [a,b]=ok;if(a&&a.score>=min&&a.score-(b?.score??0)>=margin)pick=a;}
