@@ -245,6 +245,16 @@ function withBasis(qk:QuantityKnowledge,text:string,f:FoundQuantity):FoundQuanti
 function findQuantitiesPlain(qk:QuantityKnowledge,text:string):FoundQuantity[]{
  const out:FoundQuantity[]=[];let lastEnd=-1;
  for(const m of text.matchAll(NUM_RE)){const s=m.index!;if(s<lastEnd)continue;const j=s+m[0].length;let low:number|undefined,high:number|undefined;
+  // S100 (rule audit F1): a compound time "29:30 mins", "1:20 h", "1:05:30 hours" is ONE duration; a number right after
+  // "digit:" is part of one and never a quantity of its own; a bare "29:30" (a clock time?) is not read
+  if(/\d:$/.test(text.slice(Math.max(0,s-2),s)))continue;
+  const tm=/^(\d{1,3}):([0-5]\d)(?::([0-5]\d))?\s?([A-Za-z.]+)/.exec(text.slice(s));
+  if(tm){const unitSurf=tm[4].replace(/\.$/,'');const u=parseUnit(qk,unitSurf);
+   if(u&&u.kinds.includes('duration')){const a=+tm[1],b=+tm[2],c=tm[3]!==undefined?+tm[3]:null;const hours=/^h/i.test(unitSurf),secs=/^s/i.test(unitSurf);
+    const value=secs?null:hours?a+b/60+(c??0)/3600:c===null?a+b/60:a*60+b+c/60;
+    if(value!==null){const end=s+tm[1].length+1+tm[2].length+(tm[3]!==undefined?3:0)+tm[0].slice(tm[1].length+1+tm[2].length+(tm[3]!==undefined?3:0)).indexOf(tm[4])+tm[4].replace(/\.$/,'').length;
+     out.push({start:s,end,surface:text.slice(s,end),value:Math.round(value*10000)/10000,unit:u,unitSurface:unitSurf});lastEnd=end;continue;}}
+   continue;}
   // S85: "between 3 and 5 litres" is a range like "3-5 litres" (only after "between": a bare "and" joins two quantities)
   const between=/\bbetween\s+$/i.test(text.slice(Math.max(0,s-12),s));
   const rg=(between?/^\s?(?:-|–|—|to|and)\s?([-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/:/^\s?(?:-|–|—|to)\s?([-−]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)/).exec(text.slice(j));

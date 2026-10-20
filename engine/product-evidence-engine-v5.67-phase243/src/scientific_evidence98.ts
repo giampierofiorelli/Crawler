@@ -25,12 +25,17 @@ const VALUE_ROLES=new Set(['result','specification']);
 /** Whether two results of one property can be compared, from what both state. */
 export function compareReadings98(a:Row,b:Row):{verdict:ComparisonVerdict98;reason:string}{
  // S99: only values of a product compare; a bound is a limit, not a point value (rows before v12 carry no role: unknown)
- for(const r of [a,b]){if(r.statement_role!=null&&!VALUE_ROLES.has(r.statement_role))return {verdict:'not_comparable',reason:'statement_role_'+r.statement_role};
+ for(const r of [a,b]){if(r.statement_role!=null&&r.statement_role!=='unresolved'&&!VALUE_ROLES.has(r.statement_role))return {verdict:'not_comparable',reason:'statement_role_'+r.statement_role};
   if(r.bound)return {verdict:'not_comparable',reason:'bound_not_a_point_value'};}
+ // S100 (rule audit): an undecided role or nature, or a basis, kind or object one side states and the other does not, is
+ // never agreement ("a missing element is never equivalence")
+ for(const r of [a,b]){if(r.statement_role==='unresolved')return {verdict:'conditions_unestablished',reason:'statement_role_undecided'};
+  if(r.nature==='unresolved')return {verdict:'conditions_unestablished',reason:'nature_undecided'};}
  if(a.nature!==b.nature)return {verdict:'not_comparable',reason:'different_nature'};
  if(a.kind&&b.kind&&a.kind!==b.kind)return {verdict:'not_comparable',reason:'different_kind'};
  if(a.result_basis&&b.result_basis&&a.result_basis!==b.result_basis)return {verdict:'not_comparable',reason:'different_basis'};
  if(a.object&&b.object&&a.object!==b.object)return {verdict:'not_comparable',reason:'different_object'};
+ for(const [f,x,y] of [['kind',a.kind,b.kind],['basis',a.result_basis,b.result_basis],['object',a.object,b.object]] as const)if(!!x!==!!y)return {verdict:'conditions_unestablished',reason:f+'_stated_on_one_side_only'};
  if(a.conflicts.length||b.conflicts.length)return {verdict:'conditions_unestablished',reason:'conflicting_conditions'};
  const explicit=(r:Row)=>new Map(r.conditions.filter(c=>c.value!==null&&c.state==='explicit').map(c=>[c.id,c.value!]));
  const ea=explicit(a),eb=explicit(b);

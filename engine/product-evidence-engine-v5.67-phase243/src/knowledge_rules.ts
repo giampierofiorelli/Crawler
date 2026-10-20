@@ -25,10 +25,34 @@ interface Atom {pred:string;args:Term[]}
 type Literal={kind:'pos';atom:Atom}|{kind:'neg';atom:Atom}|{kind:'cmp';op:'='|'!='|'<'|'>';l:Term;r:Term};
 export interface RuleDef {id:string;rule:string;statement:string;source:string;explain?:string}
 export interface PredicateDef {name:string;args:string[];meaning:string;role:'input'|'derived'|'constant'}
-export interface ProgramDef {id:string;statement:string;rules:RuleDef[];constants?:string[]}
+export interface ProgramDef {id:string;statement:string;rules:RuleDef[];constants?:string[];
+ /** S100: the program decides single-valued fields by defeasible claims (see DecisionDef). */
+ decision?:DecisionDef}
+/** S100 (owner review of S99, 2026-10-20: rule governance). A program that decides single-valued fields of an object (a
+ * statement role, a nature, a provenance) does so through one CLAIM predicate claim(Object, Field, Value, Tier, Scope):
+ * rules do not overwrite one another; each rule states what its evidence supports, with how much authority (Tier) and
+ * about how much of the document (Scope). One precedence policy, written once here, decides (defeasible logic with a
+ * superiority relation; a DMN priority hit policy with conflict detection):
+ *  - tiers: constraint > explicit (evidence about this occurrence) > inherited (context: a heading, a caption, a section,
+ *    the source) > default (a presumption);
+ *  - a constraint is never defeated; two constraints that disagree are a conflict;
+ *  - otherwise the highest tier with claims decides, and within it the NARROWEST scope with claims (the scopes are listed
+ *    narrowest first); a statement about the occurrence outranks its context, a cell outranks its table heading;
+ *  - claims that disagree at the deciding tier and scope are a CONFLICT: the field is undecided (abstention) and the
+ *    conflict is reported, never settled by rule order;
+ *  - a default never decides: it is reported as a presumption and the field stays undecided.
+ * Governance at load time: every rule concluding a claim states a constant field, value and tier; fields and values are
+ * declared; and a field whose rules can conclude different values at the same tier and scope must be declared CONTESTED
+ * with those values and a reason, so a new rule that silently contradicts existing ones fails to load. */
+export const TIERS=['constraint','explicit','inherited','default'] as const;export type Tier=typeof TIERS[number];
+export interface DecisionDef {predicate:string;
+ /** scope names, narrowest first */ scopes:string[];
+ /** field -> admissible values */ fields:Record<string,string[]>;
+ /** groups where different values meet at one tier and scope, resolved by abstention; values must be listed */
+ contested:{field:string;tier:Tier;scopes:string[];values:string[];why:string}[]}
 export interface RuleSet {schema:string;version:string;statement:string;vocabulary:PredicateDef[];programs:ProgramDef[]}
 interface Rule {id:string;head:Atom;body:Literal[];def:RuleDef}
-export interface CompiledProgram {id:string;rules:Rule[];strata:Rule[][];constants:Atom[];vocab:Map<string,PredicateDef>}
+export interface CompiledProgram {id:string;rules:Rule[];strata:Rule[][];constants:Atom[];vocab:Map<string,PredicateDef>;decision?:DecisionDef|null}
 
 const fail=(m:string):never=>{throw new Error('knowledge_rules_invalid: '+m);};
 
@@ -80,7 +104,8 @@ export function compileRuleSet(rs:RuleSet):Map<string,CompiledProgram>{
    for(const r of rules)for(const l of r.body){if(l.kind==='cmp'||!preds.has(l.atom.pred))continue;const need=(st.get(l.atom.pred)!)+(l.kind==='neg'?1:0);
     if(need>st.get(r.head.pred)!){st.set(r.head.pred,need);changed=true;}}}
   const n=Math.max(0,...st.values());const strata:Rule[][]=Array.from({length:n+1},()=>[]);for(const r of rules)strata[st.get(r.head.pred)!].push(r);
-  out.set(pd.id,{id:pd.id,rules,strata,constants,vocab});}
+  if(pd.decision)checkDecision(pd.id,pd.decision,rules,vocab);
+  out.set(pd.id,{id:pd.id,rules,strata,constants,vocab,decision:pd.decision??null});}
  return out;
 }
 
@@ -141,4 +166,59 @@ export function explain(m:Model,f:Fact):string{
  return tpl.replace(/\{@([a-z_]+)\(([^)]*)\)\}/g,(_,pred:string,args:string)=>{const pat=args.split(',').map(s=>s.trim()).map(s=>s==='*'?null:/^[A-Z]/.test(s)?b[s]??null:s);
    return m.match(pred,pat).map(x=>x.args.at(-1)).join('/')||'unknown';})
   .replace(/\{([A-Z][A-Za-z0-9_]*)\}/g,(_,v:string)=>String(b[v]??v));
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// S100: defeasible decisions (see DecisionDef)
+/** What one claim rule can conclude, from its head: the rule registry entry of a decision program. */
+export interface ClaimRule {rule:string;field:string;value:string;tier:Tier;scope:string|null;statement:string;source:string}
+function claimHead(r:Rule):{field:string;value:string;tier:Tier;scope:string|null}{
+ const [,f,v,t,sc]=r.head.args;
+ if(!f.c||!v.c||!t.c)fail(`claim rule ${r.id} must state a constant field, value and tier`);
+ return {field:f.c!,value:v.c!,tier:t.c! as Tier,scope:sc.c??null};}
+function checkDecision(id:string,d:DecisionDef,rules:Rule[],vocab:Map<string,PredicateDef>){
+ const pd=vocab.get(d.predicate);if(!pd||pd.role!=='derived'||pd.args.length!==5)fail(`decision predicate ${d.predicate} of ${id} must be a derived predicate of arity 5 (object, field, value, tier, scope)`);
+ if(!d.scopes?.length)fail(`decision of ${id} declares no scopes`);
+ const claims=rules.filter(r=>r.head.pred===d.predicate).map(r=>({r,...claimHead(r)}));
+ for(const c of claims){if(!(TIERS as readonly string[]).includes(c.tier))fail(`claim rule ${c.r.id}: unknown tier ${c.tier}`);
+  if(!d.fields[c.field])fail(`claim rule ${c.r.id}: undeclared field ${c.field}`);if(!d.fields[c.field].includes(c.value))fail(`claim rule ${c.r.id}: value ${c.value} not admissible for ${c.field}`);
+  if(c.scope!==null&&!d.scopes.includes(c.scope))fail(`claim rule ${c.r.id}: undeclared scope ${c.scope}`);}
+ // duplicate rules (same head and body) are always an error
+ const sig=(r:Rule)=>JSON.stringify([r.head,r.body]);const seen=new Map<string,string>();
+ for(const r of rules){const k=sig(r);if(seen.has(k))fail(`rules ${seen.get(k)} and ${r.id} are duplicates`);seen.set(k,r.id);}
+ // contradictions: different values of one field at one tier and a shared (or variable) scope must be declared contested
+ for(const a of claims)for(const b of claims){if(a.r.id>=b.r.id||a.field!==b.field||a.tier!==b.tier||a.value===b.value)continue;
+  if(a.scope!==null&&b.scope!==null&&a.scope!==b.scope)continue;
+  const ok=d.contested.some(g=>g.field===a.field&&g.tier===a.tier&&g.values.includes(a.value)&&g.values.includes(b.value)&&
+   (a.scope===null||g.scopes.includes(a.scope))&&(b.scope===null||g.scopes.includes(b.scope)));
+  if(!ok)fail(`claim rules ${a.r.id} (${a.field}=${a.value}) and ${b.r.id} (${a.field}=${b.value}) can contradict at tier ${a.tier}, scope ${a.scope??b.scope??'any'}: declare the contest (values, scopes, reason) or change a rule`);}
+}
+/** The registry of a decision program: every claim rule with what it can conclude. */
+export function claimRules(p:CompiledProgram):ClaimRule[]{
+ if(!p.decision)return [];
+ return p.rules.filter(r=>r.head.pred===p.decision!.predicate).map(r=>({rule:r.id,...claimHead(r),statement:r.def.statement,source:r.def.source}));}
+export interface Decision {object:string;field:string;value:string|null;tier:Tier|null;scope:string|null;
+ /** the claims that decided (same value) */ by:string[];
+ /** disagreement at the deciding level: the field is undecided */ conflict:{values:string[];rules:string[]}|null;
+ /** a default that would apply, reported, never decided */ presumption:string|null;
+ /** claims outranked by the deciding level */ defeated:{rule:string;value:string;tier:Tier;scope:string}[]}
+/** Decide every (object, field) from the claim facts of a model (the precedence policy of DecisionDef). */
+export function decide(m:Model):Decision[]{
+ const d=m.program.decision;if(!d)fail(`program ${m.program.id} declares no decision`);
+ const rank=(s:string)=>{const i=d!.scopes.indexOf(s);if(i<0)fail(`claim with undeclared scope ${s}`);return i;};
+ const groups=new Map<string,Fact[]>();for(const f of m.all(d!.predicate)){const k=f.args[0]+'\u0001'+f.args[1];(groups.get(k)??groups.set(k,[]).get(k)!).push(f);}
+ const out:Decision[]=[];
+ for(const fs of groups.values()){const [object,field]=fs[0].args;const tierOf=(f:Fact)=>f.args[3] as Tier;
+  const base:Decision={object,field,value:null,tier:null,scope:null,by:[],conflict:null,presumption:null,defeated:[]};
+  const defaults=fs.filter(f=>tierOf(f)==='default');const dv=[...new Set(defaults.map(f=>f.args[2]))];base.presumption=dv.length===1?dv[0]:null;
+  const level=(['constraint','explicit','inherited'] as Tier[]).find(t=>fs.some(f=>tierOf(f)===t));
+  if(!level){base.defeated=[];out.push(base);continue;}
+  const atTier=fs.filter(f=>tierOf(f)===level);
+  const narrow=level==='constraint'?null:Math.min(...atTier.map(f=>rank(f.args[4])));
+  const deciding=narrow===null?atTier:atTier.filter(f=>rank(f.args[4])===narrow);
+  const values=[...new Set(deciding.map(f=>f.args[2]))];
+  const defeated=fs.filter(f=>!deciding.includes(f)&&tierOf(f)!=='default').map(f=>({rule:f.rule??'given',value:f.args[2],tier:tierOf(f),scope:f.args[4]}));
+  if(values.length===1)out.push({...base,value:values[0],tier:level,scope:narrow===null?deciding[0].args[4]:d!.scopes[narrow],by:[...new Set(deciding.map(f=>f.rule??'given'))],defeated});
+  else out.push({...base,tier:level,scope:narrow===null?null:d!.scopes[narrow],conflict:{values:values.sort(),rules:[...new Set(deciding.map(f=>f.rule??'given'))]},defeated});}
+ return out;
 }

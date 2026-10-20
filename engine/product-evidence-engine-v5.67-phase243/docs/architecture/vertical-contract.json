@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "2026-10-19",
+ "updated": "2026-10-20",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -600,6 +600,94 @@
    "item": "The S88-S96 reading line (property definitions pd.5, definition_interpreter, definition_learning, scientific_entities, document_evidence qualitative evidence, table_interpreter1g relations, QK conditions, methods, relations and aspects beyond single words) is reachable only from evaluation scripts: neither the store-writing path (phase246-live-wave observations: Phase245 specifications, Phase225/226/265 test leads, Phase269/270 qualitative codes) nor adviseFromRequest253 imports it. QK typed conditions are computed in typeObservedValue and discarded before storage; knowledge_statements (6118 rows) are read only by the uncalled teachingCaveatsShadow; qualitative_observations270 has no reader; comparative_results271 rows never link a product. Nine phases of reading improvements were measured on a parallel harness and never reached a stored row or an answer; this was not listed as debt until S97.",
    "resolvedStatus": "open",
    "progress": "S97: causal audit and shadow counterfactuals only (owner review 2026-10-20). Integration needs an owner decision: which reader becomes the single operational reader, and which fields the store must keep. S98 (owner decision 2026-10-20): one shared scientific reading path (scientific_reading98) for the operational extractors' observations, persisted in store v11 scientific_readings98 and read by the user path (Advice253.scientificEvidence98); both gated. The registry scientificCapabilities lists every scientific module with status, consumer and validation; tests/s98_integration_fitness.test.ts fails when a capability is unregistered, claimed operational without runtime reachability, or shadow without naming this debt. S98 validation: spent S89-S96 (post hoc) 380 correct / 33 wrong / 50 false, rollback tables identical; independent check on 7 new pages (evaluation/s98/check-firstrun.json) 19 of 60 typed vs 0 baseline, 14 false under the sealed reference, 0 of 206 decisions changed. Kept gated (owner stop rule: false attributions); blockers in docs/plans/s98-operational-knowledge-path.md section 6. The debt stays open until the gated path is promoted or the shadow modules are integrated or retired. S99 (owner review of S98): the shared reading keeps each observation identity and meaning into store v12 (statement role, bound, stated subject, provenance, basis, object, observation key and source locator); scripts/s99-integrity.mjs shows 0 fields changed between reading and store and 0 product links without a stated subject on spent and new pages. Independent check (evaluation/s99/integrity-check-firstrun-s99.json): preregistered stop rules hold, correctness equal to S98; the S99 reader is the gated reading. Residual causes in docs/plans/s99-semantic-integrity.md section 4. Still gated, never a decision input."
+  },
+  {
+   "id": "D31",
+   "stage": "authentic_evidence",
+   "since": "S100 (docs/plans/s100-rule-governance.md)",
+   "item": "Rule-governance residuals found by the S100 rule-interaction audit and not yet moved under the shared decision policy. Each conflict names the consumers it affects and the check that will show it resolved.",
+   "resolvedStatus": "open",
+   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain.",
+   "conflicts": [
+    {
+     "id": "F5",
+     "what": "two vocabularies for the fan setting condition (QK axis and property-definition dimension) with different value sets",
+     "consumers": [
+      "scientific_reading98 conditionsOf",
+      "scientific_evidence98 compareReadings98"
+     ],
+     "verification": "one canonical axis id per condition; a fixture stating 'turbo' and 'max' yields the same canonical value in both paths"
+    },
+    {
+     "id": "F6",
+     "what": "required conditions are the union of the definition's and the QK metric's lists, with no precedence between them",
+     "consumers": [
+      "scientific_reading98 conditionsOf",
+      "Advice253.scientificEvidence98"
+     ],
+     "verification": "each required condition carries its source and a declared precedence; a test where the two disagree reports the disagreement"
+    },
+    {
+     "id": "F7_F9",
+     "what": "comparators decided in several places; the KR compare program returns verdicts[0] when several verdicts are derived",
+     "consumers": [
+      "quantity_knowledge compare (verdicts[0])",
+      "scientific_evidence98 compareReadings98",
+      "phase253 request constraints"
+     ],
+     "verification": "compare becomes a decision program (or reports a conflict); a test with two derived verdicts yields a conflict, not the first"
+    },
+    {
+     "id": "F8",
+     "what": "method codes can leak into conditions (a method step read as a test condition)",
+     "consumers": [
+      "scientific_reading98 conditionsOf"
+     ],
+     "verification": "a fixture with a method step and no condition records no condition"
+    },
+    {
+     "id": "F11",
+     "what": "other precedences still decided by code order (subject decision, property attribution fallbacks)",
+     "consumers": [
+      "scientific_reading98 readDocumentQuantity98",
+      "definition_interpreter attributeProperty"
+     ],
+     "verification": "each listed in interpretationRules.imperative moves to a decision program or documents its order with a test of the alternative order"
+    },
+    {
+     "id": "F12",
+     "what": "duplicate cue lists (declaration, test, certification) in six modules (phase225, phase265, phase272, table_interpreter1g, property definitions, observation_semantics readers)",
+     "consumers": [
+      "all readers"
+     ],
+     "verification": "one cue source per kind; a test fails if a cue word appears in two lists with different meanings"
+    },
+    {
+     "id": "P245",
+     "what": "Phase245 turns provenance headers ('Claimed', 'Measured') into products in the products table; the readings no longer link them, the extraction still creates them",
+     "consumers": [
+      "phase246 products",
+      "Advice253"
+     ],
+     "verification": "a page with Claimed/Measured columns creates no product named after a header"
+    },
+    {
+     "id": "LTU",
+     "what": "leadTextUnverified suppresses Phase265 leads whose text cannot be verified, without a recorded reason in the reading",
+     "consumers": [
+      "scientific_reading98 readTestLead98"
+     ],
+     "verification": "every suppressed lead is counted with its reason"
+    },
+    {
+     "id": "INS",
+     "what": "instrument nouns ('meter', 'sensor') are not cues: a value read by the product's own sensor is not distinguished from a publisher measurement",
+     "consumers": [
+      "observation_semantics clauseCues"
+     ],
+     "verification": "a fixture 'the on-board sensor showed 12 µg/m³' is not a publisher result"
+    }
+   ]
   }
  ],
  "authenticValidationRequirement": {
@@ -683,6 +771,16 @@
      "tests/s98_integration_fitness.test.ts",
      "tests/s99_observation_identity.test.ts"
     ]
+   },
+   {
+    "module": "observation_semantics.ts",
+    "status": "gated",
+    "consumer": "scientific_reading98 readDeclaration98, readTestLead98 and readDocumentQuantity98 (statement role, nature and provenance of every observation)",
+    "validation": [
+     "tests/s100_rule_governance.test.ts",
+     "tests/s99_observation_identity.test.ts"
+    ],
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)"
    },
    {
     "module": "scientific_evidence98.ts",
@@ -836,6 +934,132 @@
      "tests/document_evidence.test.ts"
     ],
     "integrationDebt": "D30"
+   }
+  ]
+ },
+ "interpretationRules": {
+  "note": "S100 (owner review of S99, 2026-10-20, verbatim in .claude/skills/pee-guided-learning/references/owner-review-s99-rule-governance-2026-10-20.md): every rule that decides the scientific meaning of an observation is either a declarative rule of a decision program (knowledge_rules.decide applies the one precedence policy) or an imperative rule registered here with what it decides, its scope, its tier and its tests. tests/s100_rule_governance.test.ts enforces the registry; a new contradicting declarative rule fails to load.",
+  "policy": {
+   "module": "src/knowledge_rules.ts",
+   "function": "decide",
+   "text": "Claims carry a tier (constraint > explicit > inherited > default) and a scope (value < cell < clause < header < row < sentence < table < section < document < source). The highest tier present decides; within it the narrowest scope decides. Claims that disagree at the deciding tier and scope are a conflict: the field stays undecided and the conflict is reported (never settled by rule order). A default is only a presumption: it is reported and never decides. The most specific rule does not win by being specific: an explicit statement about the occurrence outranks inherited context at any scope, and inherited context of a narrower scope outranks a wider one.",
+   "loadTimeChecks": [
+    "every claim rule states a constant field, value and tier",
+    "fields, values and scopes are declared",
+    "duplicate rules are rejected",
+    "rules that can conclude different values of one field at one tier and scope must be declared in a contested group (values, scopes, reason)",
+    "every cue kind used by a rule is declared and produced by a registered reader (CUE_READERS)"
+   ]
+  },
+  "programs": [
+   {
+    "file": "resources/scientific-reading/observation-semantics.v1.json",
+    "program": "observation_semantics",
+    "version": "os.1",
+    "decides": [
+     "role",
+     "nature",
+     "provenance"
+    ],
+    "consumer": "src/scientific_reading98.ts (all three readers)",
+    "tests": [
+     "tests/s100_rule_governance.test.ts",
+     "tests/s99_observation_identity.test.ts"
+    ]
+   }
+  ],
+  "imperative": [
+   {
+    "id": "IR1",
+    "file": "src/definition_interpreter.ts",
+    "function": "attributeProperty",
+    "decides": "the property a value is about (label term, competing concepts, known-object veto)",
+    "scope": "clause (known-object veto, S100; was sentence) and the value's own words (neighbouring quantities delimit a term only when they share a kind with the value, S100)",
+    "tier": "explicit",
+    "tests": [
+     "tests/s88_property_definitions.test.ts","tests/s89_definition_learning.test.ts",
+     "tests/s100_rule_governance.test.ts"
+    ]
+   },
+   {
+    "id": "IR2",
+    "file": "src/scientific_reading98.ts",
+    "function": "readDocumentQuantity98",
+    "decides": "the subject of a prose value (page product, named product, other product, none, unresolved)",
+    "scope": "clause, then section heading, then the page's own title statement",
+    "tier": "explicit",
+    "tests": [
+     "tests/s99_observation_identity.test.ts"
+    ]
+   },
+   {
+    "id": "IR3",
+    "file": "src/quantity_knowledge.ts",
+    "function": "quantityBound",
+    "decides": "the bound of a value (min, max, none)",
+    "scope": "value",
+    "tier": "explicit",
+    "tests": [
+     "tests/quantity_knowledge.test.ts",
+     "tests/s99_observation_identity.test.ts"
+    ]
+   },
+   {
+    "id": "IR4",
+    "file": "src/scientific_reading98.ts",
+    "function": "conditionsOf",
+    "decides": "required and stated conditions of a reading (union of the property definition's and the QK metric's requirements)",
+    "scope": "property",
+    "tier": "explicit",
+    "tests": [
+     "tests/s98_operational_path.test.ts"
+    ]
+   },
+   {
+    "id": "IR5",
+    "file": "src/scientific_evidence98.ts",
+    "function": "compareReadings98",
+    "decides": "comparability of two readings (comparable, within source, conditions unestablished, not comparable)",
+    "scope": "pair",
+    "tier": "constraint",
+    "tests": [
+     "tests/s99_observation_identity.test.ts",
+     "tests/s100_rule_governance.test.ts"
+    ]
+   },
+   {
+    "id": "IR6",
+    "file": "src/scientific_reading98.ts",
+    "function": "readPage98",
+    "decides": "observation identity (occurrence and segment) and duplicates across extractors",
+    "scope": "occurrence",
+    "tier": "constraint",
+    "tests": [
+     "tests/s99_observation_identity.test.ts"
+    ]
+   },
+   {
+    "id": "IR7",
+    "file": "src/phase246_knowledge_store.ts",
+    "function": "ingestObservation246",
+    "decides": "the product a stored reading is linked to (only from a stated page or named subject)",
+    "scope": "reading",
+    "tier": "constraint",
+    "tests": [
+     "tests/s99_observation_identity.test.ts"
+    ]
+   },
+   {
+    "id": "IR8",
+    "file": "src/quantity_knowledge.ts",
+    "function": "findQuantitiesPlain",
+    "decides": "which numbers are quantities (compound m:ss / h:mm durations are one value; bare clock times are not quantities)",
+    "scope": "value",
+    "tier": "constraint",
+    "tests": [
+     "tests/quantity_knowledge.test.ts",
+     "tests/s100_rule_governance.test.ts"
+    ]
    }
   ]
  }

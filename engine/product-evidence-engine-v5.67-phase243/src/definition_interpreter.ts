@@ -373,9 +373,14 @@ export function kindsOf(qk:QuantityKnowledge,o:{value:number|null;unit:string;la
 export function ownWords(label:string,valueAt:number|null|undefined,qk?:QuantityKnowledge):string{
  if(valueAt==null||valueAt<0||valueAt>label.length)return label;
  // neighbours are other QUANTITIES (a number with a unit the pack knows), not any digit ("4K" is a word)
- const nums=qk?findQuantities(qk,label).map(q=>[q.start,q.end] as const):[...label.matchAll(/\d+(?:[.,]\d+)?/g)].map(m=>[m.index!,m.index!+m[0].length] as const);
- const self=nums.find(([a,b])=>a<=valueAt&&valueAt<b)??nums.find(([a])=>a>=valueAt);
- if(!self)return label;
+ const found=qk?findQuantities(qk,label):null;
+ const all=found?found.map(q=>[q.start,q.end,q.unit.kinds] as const):[...label.matchAll(/\d+(?:[.,]\d+)?/g)].map(m=>[m.index!,m.index!+m[0].length,[] as string[]] as const);
+ const self0=all.find(([a,b])=>a<=valueAt&&valueAt<b)??all.find(([a])=>a>=valueAt);
+ if(!self0)return label;
+ // S100 (rule audit, S89 rule too strict): a term belongs to the nearest value OF ITS KIND; a quantity of another kind between
+ // them ("took the room from 500 µg/m³ to 5 µg/m³ in 27 minutes") does not take the term away
+ const kinds=new Set(self0[2]);const nums=all.filter(n=>n===self0||!kinds.size||!n[2].length||n[2].some(k=>kinds.has(k))).map(n=>[n[0],n[1]] as const);
+ const self=[self0[0],self0[1]] as const;
  const before=nums.filter(([,b])=>b<=self[0]).at(-1),after=nums.find(([a])=>a>=self[1]);
  // words between two quantities: a value owns the words after it up to the first clause break, and the words before it back
  // to the last clause break; without a break the gap is split at its midpoint
@@ -436,7 +441,13 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  // the value's own sentence (not the whole window) decides whether it names another concept's object
  const raw=String(o.label??'');const at=o.valueAt??-1;
  const sentence=at>=0?norm(raw.slice(Math.max(0,raw.slice(0,at).search(/[^.!?]*$/)),at+(raw.slice(at).search(/[.!?](\s|$)/)+1||raw.length-at))):fullLabel;
- const otherObjects=(defs.pack.knownObjects?.objects??[]).filter(k=>k.nouns.some(n=>has(sentence,n))).map(k=>k.id);
+ // S100 (rule audit: the veto read the whole sentence while its exemption read only the value's words): another concept's
+ // object vetoes a property only when it is named in the value's own CLAUSE ("in off mode it draws 0.5 W" names no object of
+ // the power value; "the remote's 1.5 m cable" does)
+ const clause=(()=>{if(at<0)return fullLabel;const ss=Math.max(0,raw.slice(0,at).search(/[^.!?]*$/));const sent=raw.slice(ss);const p=at-ss;
+  const head=sent.slice(0,p).split(/[;:()–—]|,\s|\b(?:but|while|whereas|although)\b/i).at(-1)??'';const tail=sent.slice(p).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although|which)\b/i)[0]??'';
+  return norm(head+tail);})();
+ const otherObjects=(defs.pack.knownObjects?.objects??[]).filter(k=>k.nouns.some(n=>has(clause,n))).map(k=>k.id);
  const qkCompetitors=[...qk.metrics.values()].filter(m=>kk.candidates.includes(m.kind)&&m.terms.some(t=>has(label,t)));
  const subsumes=(d:PropertyDefinition,m:string)=>d.quantity?.metric===m||(d.quantity?.relatedMetrics??[]).includes(m);
  const si=(()=>{const p=parseUnit(qk,String(o.unit??'').trim());return p&&o.value!==null?o.value*p.factor+(p.offset??0):null;})();

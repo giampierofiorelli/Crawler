@@ -23,8 +23,12 @@ import {withReaderConditions,readerConditionAxes} from './knowledge_link.js';
 import type {Fact245} from './phase245_spec_extraction.js';
 import type {ScreenedLead265} from './phase265_test_measurements.js';
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
+import {decideSemantics,clauseCues,sentenceCues,tableCellCues,headerProvenanceCues,sectionHeadingCues,recordCues,leadMethodCues,documentCues,type Cue,type ObservationSemantics} from './observation_semantics.js';
+/** S100: what the page offers as evidence beyond one observation's words (its source type, the 1G evidence of table cells,
+ * the reader blocks of Phase265 leads). */
+export interface PageEvidence100 {sourceType:string|null;cellEvidence:(locator:string|null)=>{class:string;level:string|null;support:string[]}|null;blocks:readonly string[]|null}
 
-export const SCIENTIFIC_READER98='sr99.1';
+export const SCIENTIFIC_READER98='sr100.1';
 /** S99 (owner review of S98, 2026-10-20, verbatim in owner-review-s98-semantic-integrity-2026-10-20.md): the role of the
  * statement a value sits in, decided before the value is attributed to a product. A result was obtained (measured or
  * calculated); a specification is a maker's or certifier's stated value; a threshold is a bound with no product claim
@@ -59,6 +63,8 @@ export interface ScientificReading98 {
  /** S99: statement role, subject, who produced the value, the result's basis (per run, per period) and object of interest */
  statement:StatementReading99;subject:SubjectReading99;provenance:'publisher'|'manufacturer'|'third_party'|'unresolved';
  resultBasis:string|null;object:string|null;source:SourceIdentity99|null;
+ /** S100: how role, nature and provenance were decided (deciding tier, scope and rules, conflicts, presumptions) */
+ semantics?:ObservationSemantics['decisions'];
 }
 export interface ScientificContext98 {qk:QuantityKnowledge;defs:PropertyDefinitions;identity:{reader:string;definitions:string;quantityKnowledge:string}}
 let cached:ScientificContext98|null=null;
@@ -118,30 +124,64 @@ function boundOf(ctx:ScientificContext98,text:string,start:number,end:number,uni
  const u=unit?parseUnit(ctx.qk,unit.trim()):null;if(!u)return {bound:null,cue:null};
  const b=quantityBound(ctx.qk,text,start,end,u.kinds);return {bound:b.bound,cue:b.cue};
 }
-/** A Phase245 specification declaration: a declared value of the row's product; its label is the declaration's own property
- * label. A bound in the printed value ("up to 120 min") is kept: a bounded specification is not a point value. */
-export function readDeclaration98(ctx:ScientificContext98,f:Fact245,category:string|null,key?:string):ScientificReading98|null{
+/** S100: role, nature and provenance from the shared decision (observation_semantics); the bound is the value's own. */
+function fromSemantics(sem:ObservationSemantics,b:{bound:'min'|'max'|null;cue:string|null}):{statement:StatementReading99;nature:ScientificReading98['nature'];natureBasis:string;provenance:ScientificReading98['provenance']}{
+ const d=(f:string)=>sem.decisions.find(x=>x.field===f);const why=(f:string)=>{const x=d(f);return !x?'no_evidence':x.value?`${x.tier}/${x.scope}:${x.by.join('+')}`:x.conflict?`conflict:${x.conflict.join('|')}@${x.tier}/${x.scope}`:`presumption_only:${x.presumption}`;};
+ return {statement:{role:sem.role,bound:b.bound,cue:b.cue,basis:'semantics:'+why('role')},nature:sem.nature,natureBasis:'semantics:'+why('nature'),provenance:sem.provenance};
+}
+/** A Phase245 declaration: a value found in a specification-like row or line. What it IS (a maker's specification, the
+ * publisher's measurement, a calculation) is decided from its evidence: the 1G ladder of its table cell, a column header
+ * that states who produced the values, its section heading, the source type; that Phase245 found it is a presumption only.
+ * A bound in the printed value ("up to 120 min") is kept: a bounded value is not a point value. */
+export function readDeclaration98(ctx:ScientificContext98,f:Fact245,category:string|null,key?:string,page?:PageEvidence100):ScientificReading98|null{
  const v=f.value as {kind:string;number?:number;min?:number;unit?:string};
  if(v.kind!=='quantity'&&v.kind!=='range')return null;
  const o:QuantityObservation={value:v.kind==='range'?v.min??null:v.number??null,unit:v.unit??'',label:f.property,context:f.section??'',conditions:[],category};
- const raw=String(f.rawValue??'');const at=raw.search(/\d/);const b=at>=0?boundOf(ctx,raw,at,at+(/^[\d.,]+/.exec(raw.slice(at))?.[0].length??1),v.unit??''):{bound:null,cue:null};
- return assemble(ctx,o,interpretQuantity(ctx,o),'declared','specification_declaration',{codes:[],cue:null,instrumentStated:false},
-  {statement:{role:'specification',bound:b.bound,cue:b.cue,basis:'phase245_specification_row'},subject:{value:'page_product',name:null,basis:'phase245_row_identity'},
-   provenance:'manufacturer',source:{reader:'phase245',key:key??declarationKey98(f),locator:f.locator?.slice(-200)??null,offset:null}});
+ const raw=String(f.rawValue??'');const at=raw.search(/\d/);const numLen=at>=0?(/^[\d.,]+/.exec(raw.slice(at))?.[0].length??1):0;
+ const b=at>=0?boundOf(ctx,raw,at,at+numLen,v.unit??''):{bound:null,cue:null};
+ const qi=interpretQuantity(ctx,o);
+ // evidence about this row: the 1G ladder of its table cell, a column header naming who produced the values, its section
+ // heading, the source type; a label:value line outside a table is also read as a clause ("Noise: measured 41 dB")
+ const cues:Cue[]=[...documentCues({sourceType:page?.sourceType??null,extractor:'phase245'})];
+ const inTable=/@r\d+c\d+$/.test(f.locator??'');
+ if(inTable)cues.push(...tableCellCues(page?.cellEvidence(f.locator??null)??null));
+ const provHeader=f.product.ref==='named'&&!!f.product.name&&headerProvenanceCues(f.product.name).length>0;
+ if(provHeader)cues.push(...headerProvenanceCues(f.product.name!));
+ if(f.section)cues.push(...sectionHeadingCues(ctx.defs,[f.section]));
+ if(!inTable&&at>=0){const line=f.property+': '+raw;const off=f.property.length+2+at;
+  cues.push(...clauseCues(ctx.qk,ctx.defs,line,off,off+numLen,v.unit??'',{dim:qi.interp.property.kind??'',propertyStated:qi.interp.property.state==='stated'}));}
+ const sem=decideSemantics(dedupeCues(cues));const m=fromSemantics(sem,b);
+ // the row's product as Phase245 states it; a provenance header ("Claimed", "Measured") read as a product is no product
+ const subject:SubjectReading99=provHeader?{value:'unresolved',name:null,basis:'provenance_header_not_a_product'}:
+  f.product.ref==='main'?{value:'page_product',name:f.product.name??null,basis:'phase245_row_main'}:f.product.ref==='named'&&f.product.name?{value:'named_product',name:f.product.name,basis:'phase245_row_named'}:{value:'unresolved',name:null,basis:'phase245_row_'+f.product.ref};
+ const subj=['threshold','norm','target','condition'].includes(m.statement.role)?{value:'none' as const,name:null,basis:'statement_role:'+m.statement.role}:subject;
+ const r=assemble(ctx,o,qi,m.nature,m.natureBasis,{codes:[],cue:null,instrumentStated:false},
+  {statement:m.statement,subject:subj,provenance:m.provenance,source:{reader:'phase245',key:key??declarationKey98(f),locator:f.locator?.slice(-200)??null,offset:null}});
+ return {...r,semantics:sem.decisions};
 }
+const dedupeCues=(cs:readonly Cue[])=>cs.filter((c,i)=>cs.findIndex(d=>d.kind===c.kind&&d.scope===c.scope)===i);
 /** A screened Phase265 test-result lead: a publisher-reported measurement with its reader codes and method cue; the label
  * is the publisher's dimension (a QK metric's label when the reader typed one) and the lead's own condition text. The
  * Phase265 screen already refuses bounds, thresholds, hypotheticals and declarations, so a lead is a result. */
-export function readTestLead98(ctx:ScientificContext98,l:ScreenedLead265,category:string|null):ScientificReading98{
+export function readTestLead98(ctx:ScientificContext98,l:ScreenedLead265,category:string|null,page?:PageEvidence100):ScientificReading98{
  const dimLabel=ctx.qk.metrics.get(l.dimension)?.label??(l.dimension==='not_established'?'':l.dimension.replace(/_/g,' '));
  const codes=[...l.conditionCodes,...l.protocolCodes];
  const o:QuantityObservation={value:l.value,unit:l.unit,label:[dimLabel,l.condition??''].filter(Boolean).join(' '),context:'',conditions:l.condition?[l.condition]:[],category,codes};
+ const qi=interpretQuantity(ctx,o);
+ // evidence: the method cue that admitted the lead (at its scope) and the lead's own sentence, read as any prose value;
+ // that Phase265 screened it is a presumption only
+ const cues:Cue[]=[...leadMethodCues(l.methodCue),...documentCues({sourceType:page?.sourceType??null,extractor:'phase265'})];
+ const line=page?.blocks?.[l.blockIndex]??null;
+ if(line&&l.valueOffset<line.length){const len=(/^[\d.,]+/.exec(line.slice(l.valueOffset))?.[0].length)??1;
+  cues.push(...clauseCues(ctx.qk,ctx.defs,line,l.valueOffset,l.valueOffset+len,l.unit,{dim:qi.interp.property.kind??'',propertyStated:qi.interp.property.state==='stated'}),...sentenceCues(line,l.valueOffset,l.valueOffset+len));}
+ const sem=decideSemantics(dedupeCues(cues));const m=fromSemantics(sem,{bound:null,cue:null});
  const sa=l.subjectAssignment;
- const subj:SubjectReading99=sa==='page_context_unverified'&&l.subject?{value:'page_product',name:l.subject.name,basis:'phase265_'+sa}:
+ const subj0:SubjectReading99=sa==='page_context_unverified'&&l.subject?{value:'page_product',name:l.subject.name,basis:'phase265_'+sa}:
   (sa==='table_row_declared_model_unverified'||sa==='clause_named_model_unverified')&&l.subject?{value:'named_product',name:l.subject.name,basis:'phase265_'+sa}:{value:'unresolved',name:null,basis:'phase265_'+sa};
- return assemble(ctx,o,interpretQuantity(ctx,o),'measured','publisher_test_lead:'+l.methodCue,{codes:[...new Set(codes)].sort(),cue:l.methodCue,instrumentStated:!!l.instrument},
-  {statement:{role:'result',bound:null,cue:null,basis:'phase265_screened_result'},subject:subj,provenance:'publisher',
-   source:{reader:'phase265',key:l.leadId,locator:'block:'+l.blockIndex,offset:l.valueOffset}});
+ const subj=['threshold','norm','target','condition'].includes(m.statement.role)?{value:'none' as const,name:null,basis:'statement_role:'+m.statement.role}:subj0;
+ const r=assemble(ctx,o,qi,m.nature,m.natureBasis,{codes:[...new Set(codes)].sort(),cue:l.methodCue,instrumentStated:!!l.instrument},
+  {statement:m.statement,subject:subj,provenance:m.provenance,source:{reader:'phase265',key:l.leadId,locator:'block:'+l.blockIndex,offset:l.valueOffset}});
+ return {...r,semantics:sem.decisions};
 }
 /** A Phase269 qualitative code: a judgement, never a measurement. */
 export function readQualitative98(_ctx:ScientificContext98,q:QualitativeObservation269,_i=0):ScientificReading98{
@@ -157,48 +197,17 @@ export const reading98Digest=(r:ScientificReading98)=>createHash('sha256').updat
 // ---------------- the page through the shared path ----------------
 import {readDocumentEvidence,type SegmentQuantity,type Segment} from './document_evidence.js';
 import {textBlocks225} from './phase225_transient_test_probe.js';
+import {acquireTables1F} from './table_acquisition1f.js';
 import {TEST_CONTEXT272} from './phase272_extraction_plan.js';
 import {screenTestLead265,type TestLeadsInput265} from './phase265_test_measurements.js';
 import type {SpecExtraction245} from './phase245_spec_extraction.js';
-const NATURE:Record<string,ScientificReading98['nature']>={publisher_measured:'measured',manufacturer_declared:'declared',nominal_certified:'declared',derived_or_estimated:'calculated'};
 const has99=(text:string,cue:string)=>new RegExp('(?:^|[^\\p{L}\\p{N}])'+cue.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![\\p{L}\\p{N}])','u').test(text.toLowerCase());
-/** The value's own clause in its sentence (clause breaks: punctuation and contrastive conjunctions). */
-function clauseOf(sent:string,start:number,end:number):string{
- const head=sent.slice(0,start).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although)\b/i).at(-1)??'';const tail=sent.slice(end).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although|which)\b/i)[0]??'';
- return head+sent.slice(start,end)+tail;
-}
-/** S99: the statement role of a value in its sentence. Norm and target cues of the value's own clause come first (data in the
- * definitions pack); then a bound (shared quantity-knowledge bound words): a bounded value a maker states is a bounded
- * specification, a bounded value the publisher reports with an event verb a bounded result, any other bound a threshold;
- * otherwise the evidential role the interpreter found from positive evidence (S91-S93). Never a default to 'result'. */
-export function statementRole99(ctx:ScientificContext98,sent:string,start:number,end:number,unit:string,role:{value:string|null;reason:string|null},fallbackClass:string|null):StatementReading99{
- const clause=clauseOf(sent,start,end);const cues=ctx.defs.pack.statementRoles;
- // a norm cue names an external rule; followed by a mode, setting or level word it names the product's own mode ("standard mode")
- const after=new Set(cues?.notNormAfter??[]);
- const normHit=(c:string)=>{const re=new RegExp('(?:^|[^\\p{L}\\p{N}])'+c.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![\\p{L}\\p{N}])\\s*([\\p{L}]+)?','gu');
-  for(const m of clause.toLowerCase().matchAll(re))if(!m[1]||!after.has(m[1]))return true;return false;};
- const norm=cues?.norm.find(normHit);if(norm)return {role:'norm',...boundOf(ctx,sent,start,end,unit),basis:'norm_cue:'+norm};
- const target=cues?.target.find(c=>has99(clause,c));if(target)return {role:'target',...boundOf(ctx,sent,start,end,unit),basis:'target_cue:'+target};
- const b=boundOf(ctx,sent,start,end,unit);const r=role.value;
- const mapped:StatementRole99|null=r==='measured_result'||r==='derived'?'result':r==='declared_spec'||r==='certified_or_quoted'?'specification':r==='test_condition'||r==='programme_preset'?'condition':null;
- const fromClass:StatementRole99|null=fallbackClass==='publisher_measured'||fallbackClass==='derived_or_estimated'?'result':fallbackClass==='manufacturer_declared'||fallbackClass==='nominal_certified'?'specification':null;
- if(b.bound){
-  // a generic or sufficiency claim ("anything under 45 dB", "quiet enough") states a threshold, not a product's value
-  const generic=(cues?.threshold??[]).find(c=>has99(clause,c));
-  if(generic)return {role:'threshold',...b,basis:'bound_in_generic_claim:'+generic};
-  if(mapped==='specification'||mapped==='result')return {role:mapped,...b,basis:'bounded_'+mapped+':'+(role.reason??'')};
-  if(fromClass)return {role:fromClass,...b,basis:'bounded_'+fromClass+':document_class:'+fallbackClass};
-  return {role:'unresolved',...b,basis:'bound_without_role_evidence'};}
- if(mapped)return {role:mapped,bound:null,cue:null,basis:'evidence_role:'+(role.reason??'')};
- if(fromClass)return {role:fromClass,bound:null,cue:null,basis:'document_class:'+fallbackClass};
- return {role:'unresolved',bound:null,cue:null,basis:'no_positive_evidence'};
-}
 const normName99=(x:string)=>x.toLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 /** A quantity the structural document reader found in prose or a label:value line (document_evidence), read in its own
  * sentence: the interpreter gets the value's position, the page product and the section structure, so the evidential role
  * (S91 positive evidence, S92 situation type), the nature and provenance (S93) and the clause's other product (S86c) are
  * those of this occurrence. A number that is part of a product or model name is not a quantity of the product. */
-export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity,seg:Segment,pageSubject:string|null,documentTests:boolean,category:string|null,url='',pageNames:readonly string[]=pageSubject?[pageSubject]:[]):ScientificReading98|null{
+export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity,seg:Segment,pageSubject:string|null,documentTests:boolean,category:string|null,url='',pageNames:readonly string[]=pageSubject?[pageSubject]:[],sourceType:string|null=null):ScientificReading98|null{
  if(q.identifierPart||!q.quantity||q.quantity.value===null)return null;
  const text=seg.text;const at=q.start;const len=String(q.surface).length;
  const sentStart=Math.max(0,text.slice(0,at).search(/[^.!?]*$/));let sentEnd=text.slice(at+len).search(/[.!?](?:\s|$)/);sentEnd=sentEnd<0?text.length:at+len+sentEnd+1;
@@ -210,24 +219,19 @@ export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity
  const structure:StructuralContext={container:seg.role==='pair'||seg.role==='embedded_pair'?'label_value':'prose',label:seg.label,section:seg.headings.at(-1)??null,sectionRole,tableContext:null,documentTests,sectionHeadingLine:null};
  const o:QuantityObservation={value:q.quantity.value,unit,label,context:seg.headings.slice(-2).join(' | '),conditions:conds,category,valueAt,surface:q.surface,pageSubject,frame:seg.headings.join(' | '),structure};
  const qi=interpretQuantity(ctx,o);const it=qi.interp;
- // the Phase225 sentence cue that makes a value a test setting does not decide alone when the definitions state the value's
- // own property ("at 3 litres, the dust bag holds…", "a running time of 180 minutes in Quiet mode")
- const conditionCue=it.role.value==='test_condition'||it.role.value==='programme_preset';
- const role=conditionCue&&it.property.state==='stated'?{value:null,reason:'condition_cue_with_stated_property:'+(it.role.reason??'')}:it.role;
- // document_evidence classes a sentence 'publisher_measured' by a page-level default on pages that report tests (audit S77):
- // a document default is not the value's own evidence, so it counts only when the value's block carries a test cue itself
+ // S100: evidence of this occurrence (its clause, its sentence, its record, its section heading, the source, the page-level
+ // test default as a presumption) decided by the shared rules; S93's calculation reading is a clause cue
  const localTest=TEST_CONTEXT272.test(seg.text)||/\b(?:I|we) (?:tested|measured|timed|recorded|weighed|metered)\b/i.test(seg.text);
- const docClass=q.evidenceClass==='publisher_measured'&&!localTest?null:q.evidenceClass;
- const statement=q.recordRole==='condition'?{role:'condition' as const,bound:null,cue:null,basis:'document_record_condition'}:statementRole99(ctx,label,valueAt,valueAt+len,unit,role,docClass);
- // nature: the clause's own evidence (S93) first; the document class only when the clause has none; a statement that is
- // not a value of the product (threshold, norm, target) has no nature of a result
- const ev=it.evidence;let nature:ScientificReading98['nature'];let natureBasis:string;
- if(statement.role==='condition'){nature='condition';natureBasis='condition:'+statement.basis;}
- else if(statement.role==='threshold'||statement.role==='norm'||statement.role==='target'){nature='unresolved';natureBasis='statement_role:'+statement.role;}
- else if(ev&&ev.nature!=='unresolved'&&ev.nature!=='condition'){nature=ev.nature;natureBasis='clause_evidence:'+ev.reason;}
- else if(statement.role==='specification'){nature='declared';natureBasis='statement_role:specification:'+statement.basis;}
- else if(statement.role==='result'){nature=NATURE[docClass??'']==='calculated'?'calculated':'measured';natureBasis='statement_role:result:'+statement.basis;}
- else {nature='unresolved';natureBasis='document_evidence:'+q.evidenceClass+':no_clause_evidence';}
+ const cues:Cue[]=[...clauseCues(ctx.qk,ctx.defs,label,valueAt,valueAt+len,unit,{dim:it.property.kind??'',propertyStated:it.property.state==='stated'}),
+  ...sentenceCues(label,valueAt,valueAt+len),...recordCues(q.recordRole),...sectionHeadingCues(ctx.defs,seg.headings),
+  ...documentCues({sourceType:sourceType??null,pageTestsDefault:q.evidenceClass==='publisher_measured'&&!localTest})];
+ // S93's aggregate words ("at least", "minimum") are also the quantity knowledge's bound words: a value its own words bound is
+ // a bound, not the output of a statistic (rule overlap resolved here, registered in the contract)
+ const bnd=boundOf(ctx,label,valueAt,valueAt+len,unit);
+ if(it.evidence?.nature==='calculated'&&!(bnd.bound&&/^calculation_output:(?:nearest|evidence|)/.test(it.evidence.reason)&&/\b(?:least|most|minimum|maximum|max|min)\b/i.test(label.slice(Math.max(0,valueAt-40),valueAt))))
+  cues.push({kind:'calculation_output',scope:'clause',why:'S93 calculation output: '+it.evidence.reason});
+ const sem=decideSemantics(dedupeCues(cues));const m=fromSemantics(sem,bnd);
+ const statement=m.statement;const nature=m.nature,natureBasis=m.natureBasis;
  // subject: never a product for a statement that is not a value of one; another product named in the clause is never the
  // page's; otherwise the product the source states (sentence, embedded item, section heading, anaphor to the page product)
  const mains=new Set(pageNames.map(normName99));const main=pageSubject?normName99(pageSubject):null;const own=q.product&&q.productBasis!=='none'?q.product:null;
@@ -240,10 +244,10 @@ export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity
  else if(own&&main&&isPage(own))subject=sectionRole==='comparison'&&q.productBasis!=='sentence'?{value:'unresolved',name:null,basis:'comparison_section'}:{value:'page_product',name:own,basis:'stated_'+q.productBasis};
  else if(own)subject={value:'named_product',name:own,basis:'stated_'+q.productBasis};
  else subject={value:'unresolved',name:null,basis:'not_stated'};
- const provenance:ScientificReading98['provenance']=ev?.provenance??(statement.role==='specification'?'manufacturer':statement.role==='result'?'publisher':'unresolved');
- return assemble(ctx,o,qi,nature,natureBasis,{codes:[],cue:null,instrumentStated:false},{statement,subject,provenance,
+ const provenance=m.provenance;
+ return {...assemble(ctx,o,qi,nature,natureBasis,{codes:[],cue:null,instrumentStated:false},{statement,subject,provenance,
   // identity: the segment (one element can hold several segments, each with its own offsets), its element and the offset
-  source:{reader:'document_evidence',key:createHash('sha256').update(url+'|'+seg.id+'|'+seg.locator+'|'+(seg.embedded?.path??'')+'|'+q.start).digest('hex').slice(0,24),locator:seg.locator.slice(-200),offset:q.start}});
+  source:{reader:'document_evidence',key:createHash('sha256').update(url+'|'+seg.id+'|'+seg.locator+'|'+(seg.embedded?.path??'')+'|'+q.start).digest('hex').slice(0,24),locator:seg.locator.slice(-200),offset:q.start}}),semantics:sem.decisions};
 }
 export interface PageReading98 {interpreter:ScientificContext98['identity'];
  declarations:{key:string;reading:ScientificReading98}[];leads:{leadId:string;reading:ScientificReading98}[];
@@ -267,17 +271,25 @@ export function readPage98(html:string,url:string,sha256:string,x:SpecExtraction
  // units compare in the quantity knowledge's canonical form ('nits' and 'cd/m²' are one unit)
  const nu=(u:string)=>{const p=u?parseUnit(ctx.qk,u.trim()):null;return p?p.expression:u.replace(/\s+/g,'').toLowerCase();};const nt=(t:string)=>t.replace(/\s+/g,' ').trim().toLowerCase();
  type Taken={value:number;unit:string;locator:string|null;window:string|null;kind:'declaration'|'lead'};const taken:Taken[]=[];
- for(const f of x?.facts??[]){const key=declarationKey98(f);const r=readDeclaration98(ctx,f,category,key);if(!r)continue;out.declarations.push({key,reading:r});out.counts.declarations++;
+ // S100: page evidence for every reader: the 1G evidence ladder of each table cell (by table locator and grid position, the
+ // form of Phase245 locators), the reader blocks of Phase265 leads, the source type
+ const de=readDocumentEvidence(html,ctx.qk,{sourceType});const cellEv=new Map<string,{class:string;level:string|null;support:string[]}>();
+ try{const acq=acquireTables1F(html);const byIndex=new Map(acq.tables.map(t=>[t.index,t]));
+  for(const t of de.tables.tables){const a=byIndex.get(t.table);if(!a)continue;
+   for(const ob of t.observations){const c=a.cells[ob.cell];if(!c||c.gridRow===null||c.gridCol===null)continue;const k=a.locator+'@r'+c.gridRow+'c'+c.gridCol;if(!cellEv.has(k))cellEv.set(k,ob.evidence);}}}catch{/* tables unreadable: no cell evidence */}
+ const blocks0=textBlocks225(html).blocks;
+ const page:PageEvidence100={sourceType,cellEvidence:loc=>loc?cellEv.get(loc)??null:null,blocks:blocks0};
+ for(const f of x?.facts??[]){const key=declarationKey98(f);const r=readDeclaration98(ctx,f,category,key,page);if(!r)continue;out.declarations.push({key,reading:r});out.counts.declarations++;
   const v=f.value as {number?:number;min?:number;unit?:string};if(v.unit)taken.push({value:v.number??v.min??NaN,unit:nu(v.unit),locator:(f.locator??'').replace(/@r\d+c\d+$/,'')||null,window:null,kind:'declaration'});}
  // a lead's own block text (the probe's default blocks), verified by its hash, gives the occurrence's text window
- let blocks:string[]|null=null;
+ let blocks:readonly string[]|null=blocks0;
  for(const c of leads?.probe.candidates??[]){const sc=screenTestLead265(c,{url,sha256});if(!sc.ok)continue;
-  out.leads.push({leadId:sc.lead.leadId,reading:readTestLead98(ctx,sc.lead,category)});out.counts.leads++;
+  out.leads.push({leadId:sc.lead.leadId,reading:readTestLead98(ctx,sc.lead,category,page)});out.counts.leads++;
   blocks??=textBlocks225(html).blocks;const b=blocks[sc.lead.blockIndex];
   const lines=b?[b,...b.split(/\n+/)]:[];const line=lines.find(l=>createHash('sha256').update(l).digest('hex')===sc.lead.blockSha256)??null;
   const win=line?nt(line.slice(Math.max(0,sc.lead.valueOffset-30),sc.lead.valueOffset+12)):null;
   taken.push({value:sc.lead.value,unit:nu(sc.lead.unit),locator:null,window:win,kind:'lead'});}
- const de=readDocumentEvidence(html,ctx.qk,{sourceType});const segs=new Map(de.segments.map(s=>[s.id,s]));
+ const segs=new Map(de.segments.map(s=>[s.id,s]));
  const pageSubject=x&&!x.mainProduct.ambiguous&&x.mainProduct.name?x.mainProduct.name:de.pageSubject;
  // the page's own subject as the document states it (title, h1, principal entity): the same statement, not a similar name
  const pageNames=[pageSubject,de.pageSubject].filter((v):v is string=>!!v);
@@ -290,7 +302,7 @@ export function readPage98(html:string,url:string,sha256:string,x:SpecExtraction
    if(same.some(t=>t.kind==='lead'&&t.window===null))out.counts.identity.leadTextUnverified++;
    if(occurrence){out.counts.identity.sameOccurrence++;skip('already_extracted');continue;}
    out.counts.identity.sameValueOtherOccurrence++;}
-  const r=readDocumentQuantity98(ctx,q,s,pageSubject,documentTests,category,url,pageNames);if(!r){skip('not_read');continue;}
+  const r=readDocumentQuantity98(ctx,q,s,pageSubject,documentTests,category,url,pageNames,sourceType);if(!r){skip('not_read');continue;}
   if(!r.property.id||(r.property.state!=='stated'&&r.property.state!=='inferred')){skip('no_defined_property');continue;}
   out.document.push({key:r.source!.key,value:q.quantity.value,unit,product:r.subject.name,productBasis:r.subject.basis,
    evidenceClass:q.evidenceClass,locator:s.locator.slice(-200),reading:r});out.counts.documentKept++;}

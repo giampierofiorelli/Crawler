@@ -3,7 +3,8 @@ import {mkdtempSync} from 'node:fs';import {tmpdir} from 'node:os';import {join}
 import {KnowledgeStore246,DEFAULT_STORAGE_POLICY246,type ObservationInput246,type ScientificReadingRow98} from '../src/phase246_knowledge_store.js';
 import {extractSpecifications245} from '../src/phase245_spec_extraction.js';
 import {testLeadsFromHtml265} from '../src/phase265_test_measurements.js';
-import {readPage98,scientificContext98,statementRole99} from '../src/scientific_reading98.js';
+import {readPage98,scientificContext98} from '../src/scientific_reading98.js';
+import {clauseCues,decideSemantics} from '../src/observation_semantics.js';
 import {compareReadings98} from '../src/scientific_evidence98.js';
 import type {WebSourcePolicy} from '../src/web_evidence_acquisition.js';
 
@@ -56,18 +57,13 @@ test('every field of a reading reaches the store unchanged, and the product link
  assert.ok(measured!.conditions.some(c=>c.id==='window_size'&&c.state==='explicit'));assert.equal(measured!.product_association,'page_main_product_unverified');
  s.close();});
 
-test('statement roles: a bound without a product claim is a threshold; a norm cue makes a norm; a maker\'s bounded value is a bounded specification', ()=>{
- const ctx=scientificContext98();const at=(t:string,v:string)=>[t.indexOf(v),t.indexOf(v)+v.length] as const;
- let t='Air purifiers under 45 dB are quiet enough for a bedroom.';let [a,b]=at(t,'45 dB');
- assert.equal(statementRole99(ctx,t,a,b,'dB',{value:'measured_result',reason:'no_other_role'},null).role,'threshold');
- t='The 44 dB quietness standard applies to dishwashers.';[a,b]=at(t,'44 dB');
- assert.equal(statementRole99(ctx,t,a,b,'dB',{value:'measured_result',reason:'no_other_role'},null).role,'norm');
- t='The battery is rated for up to 120 minutes.';[a,b]=at(t,'120 minutes');
- const r=statementRole99(ctx,t,a,b,'minutes',{value:'declared_spec',reason:'evidence:clause:rated'},null);assert.equal(r.role,'specification');assert.equal(r.bound,'max');
- t='We measured 38 dB at the lowest speed.';[a,b]=at(t,'38 dB');
- assert.equal(statementRole99(ctx,t,a,b,'dB',{value:'measured_result',reason:'evidence:measuring_verb'},null).role,'result');
- t='The panel has a refresh rate of 240 Hz.';[a,b]=at(t,'240 Hz');
- assert.equal(statementRole99(ctx,t,a,b,'Hz',{value:'unresolved',reason:'no_positive_evidence'},null).role,'unresolved','no default to result');});
+test('statement roles (S100: decided by the shared rules from clause cues): a generic bound is a threshold, a norm a norm, a maker\'s bounded value a specification', ()=>{
+ const ctx=scientificContext98();const role=(t:string,v:string,unit:string)=>{const a=t.indexOf(v);return decideSemantics(clauseCues(ctx.qk,ctx.defs,t,a,a+v.length,unit,{dim:'',propertyStated:false})).role;};
+ assert.equal(role('Anything under 45 dB is quiet enough for a bedroom.','45 dB','dB'),'threshold');
+ assert.equal(role('The 44 dB quietness standard applies to dishwashers.','44 dB','dB'),'norm');
+ assert.equal(role('The battery is rated for up to 120 minutes.','120 minutes','minutes'),'specification');
+ assert.equal(role('We measured 38 dB at the lowest speed.','38 dB','dB'),'result');
+ assert.equal(role('The panel refresh rate is 240 Hz.','240 Hz','Hz'),'unresolved','no default to result');});
 
 test('comparability needs role, bound, basis, object and method to agree, not only stated conditions', ()=>{
  const base:Partial<ScientificReadingRow98>&{conditions:{id:string;value:string|null;state:string}[];missing:string[];conflicts:string[]}={

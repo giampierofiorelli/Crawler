@@ -50,9 +50,10 @@ export interface ScientificReadingRow98 {reading_id:string;revision_id:string;su
  nature:string;nature_basis:string;knowledge_state:string;evidence_role:string;retention:string;expires_at:string|null;state:string;ranking_input:number;recorded_at:string;
  /** S99 (v12): the observation's identity and meaning, kept from source to store */
  statement_role:string|null;bound:string|null;statement_cue:string|null;statement_basis:string|null;subject_value:string|null;subject_name:string|null;subject_basis:string|null;
- provenance:string|null;result_basis:string|null;object:string|null;source_reader:string|null;observation_key:string|null;source_locator:string|null;source_offset:number|null}
+ provenance:string|null;result_basis:string|null;object:string|null;source_reader:string|null;observation_key:string|null;source_locator:string|null;source_offset:number|null;
+ /** S100 (v13) */ semantics_json:string|null}
 const normName246=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-export const STORE_SCHEMA_VERSION246=12;
+export const STORE_SCHEMA_VERSION246=13;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -359,6 +360,9 @@ const MIGRATIONS:string[]=[
   ALTER TABLE scientific_readings98 ADD COLUMN observation_key TEXT;
   ALTER TABLE scientific_readings98 ADD COLUMN source_locator TEXT;
   ALTER TABLE scientific_readings98 ADD COLUMN source_offset INTEGER;`,
+ // v13 (S100, owner review of S99: rule governance): how role, nature and provenance were decided (deciding tier, scope and
+ // rules; a conflict and its values; a presumption that decided nothing), so every stored meaning can be traced to its rules
+ `ALTER TABLE scientific_readings98 ADD COLUMN semantics_json TEXT;`,
 ];
 
 /** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */
@@ -666,7 +670,9 @@ export class KnowledgeStore246 {
      .run(did,revisionId,pid,vid,f.property,f.propertyKey,canon(f.value),f.rawValue.slice(0,120),f.section,f.component,f.method,f.locator.slice(-200),
       canon(f.flags),role,effective,'extracted_unverified',expires);
     if(Number(res.changes))retained++;
-    if(sci98){const r=sci98.decl.get(declarationKey246(f));if(r)this.insertReading98(o,revisionId,'declarations',did,pid,'as_subject_row',r,effective,expires);}
+    // S100: the reading's product follows its stated subject (a provenance header read as a product, or a threshold, links none)
+    if(sci98){const r=sci98.decl.get(declarationKey246(f));if(r){const own=r.subject?.value==='page_product'||r.subject?.value==='named_product';
+     this.insertReading98(o,revisionId,'declarations',did,own?pid:null,own?'as_subject_row':'subject_unresolved',r,effective,expires);}}
    }
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
    const tm=o.testLeads?this.applyTestLeads265(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective,
@@ -930,19 +936,21 @@ export class KnowledgeStore246 {
  private insertReading98(o:ObservationInput246,revisionId:string,subjectTable:'declarations'|'test_measurements265'|'document_quantity',subjectId:string,
   productId:string|null,association:string,r:ScientificReading98,retention:string,expires:string|null,value:number|null=null,unit:string|null=null):boolean{
   const sci=o.scientific98!;const v=sci.interpreter.reader;
-  this.db.prepare("UPDATE scientific_readings98 SET state='superseded_by_interpreter' WHERE subject_table=? AND subject_id=? AND interpreter_version<>? AND state='current'").run(subjectTable,subjectId,v);
-  const id='sr_'+sha(subjectTable+'|'+subjectId+'|'+v).slice(0,24);
+  // S100 (rule audit): a reading is superseded when the reader, the definitions or the quantity knowledge it was read with change
+  this.db.prepare("UPDATE scientific_readings98 SET state='superseded_by_interpreter' WHERE subject_table=? AND subject_id=? AND (interpreter_version<>? OR definitions_identity<>? OR qk_identity<>?) AND state='current'")
+   .run(subjectTable,subjectId,v,sci.interpreter.definitions,sci.interpreter.quantityKnowledge);
+  const id='sr_'+sha(subjectTable+'|'+subjectId+'|'+v+'|'+sci.interpreter.definitions+'|'+sci.interpreter.quantityKnowledge).slice(0,24);
   const res=this.db.prepare(`INSERT INTO scientific_readings98(reading_id,revision_id,subject_table,subject_id,product_id,product_association,interpreter_version,definitions_identity,qk_identity,
     form,value,unit,kind,kind_status,metric,property_id,property_state,property_rule,definition_state,conditions_json,missing_conditions_json,conflicting_conditions_json,method_json,
     nature,nature_basis,knowledge_state,evidence_role,retention,expires_at,state,recorded_at,
-    statement_role,bound,statement_cue,statement_basis,subject_value,subject_name,subject_basis,provenance,result_basis,object,source_reader,observation_key,source_locator,source_offset)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    statement_role,bound,statement_cue,statement_basis,subject_value,subject_name,subject_basis,provenance,result_basis,object,source_reader,observation_key,source_locator,source_offset,semantics_json)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(reading_id) DO UPDATE SET state='current',product_id=excluded.product_id,product_association=excluded.product_association,retention=excluded.retention,expires_at=excluded.expires_at
     WHERE scientific_readings98.state<>'current'`).run(id,revisionId,subjectTable,subjectId,productId,association,v,sci.interpreter.definitions,sci.interpreter.quantityKnowledge,
     r.form,value,unit,r.quantity?.kind??null,r.quantity?.kindStatus??'not_recognised',r.quantity?.metric??null,r.property.id,r.property.state,r.property.rule,r.property.definitionState,
     canon(r.conditions),canon(r.missing),canon(r.conflicts),canon(r.method),r.nature,r.natureBasis,r.knowledgeState,declarationRole246(o.source.sourceType),retention,expires,o.fetchedAt,
     r.statement?.role??null,r.statement?.bound??null,r.statement?.cue??null,r.statement?.basis??null,r.subject?.value??null,r.subject?.name??null,r.subject?.basis??null,r.provenance??null,
-    r.resultBasis??null,r.object??null,r.source?.reader??null,r.source?.key??null,r.source?.locator??null,r.source?.offset??null);
+    r.resultBasis??null,r.object??null,r.source?.reader??null,r.source?.key??null,r.source?.locator??null,r.source?.offset??null,r.semantics?canon(r.semantics):null);
   return Number(res.changes)>0;
  }
  /** S98: the current typed readings, optionally of one product or property, with their subject rows still current. */
