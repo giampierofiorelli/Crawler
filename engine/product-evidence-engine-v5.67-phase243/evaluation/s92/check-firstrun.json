@@ -1,0 +1,6200 @@
+{
+ "schema": "pee.s92.check-score.v1",
+ "label": "firstrun",
+ "reference": "9466401730d3e13dd28f68ba523ffb86d85a9168d89495c9568cae6676adb626",
+ "freeze": "f41eddcaff39ca672085a62eb72c3b5c6f6a5df9191cfc38b9accae1f8a22b40",
+ "arms": [
+  "A0",
+  "A1",
+  "B",
+  "B2",
+  "C",
+  "C1",
+  "D",
+  "Ddev",
+  "D2",
+  "D2dev"
+ ],
+ "reference_counts": {
+  "items": 191,
+  "property": 116,
+  "roles": {
+   "measured_by_publisher": 6,
+   "declared_spec": 102,
+   "quoted_other_source": 1,
+   "test_condition": 0,
+   "other": 7
+  },
+  "withEvidenceLine": 78
+ },
+ "role": {
+  "all": {
+   "A0": {
+    "annotated": 116,
+    "correct": 53,
+    "abstained": 11,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 40,
+      "correct": 4,
+      "precision": 0.1,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 49,
+      "correct": 49,
+      "precision": 1,
+      "coverage": 0.931,
+      "recall": 0.48,
+      "abstained": 7
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.714,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA1": {
+     "gained": 5,
+     "lost": 8
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 47,
+     "evidenceReachesReferenceLine": 17,
+     "referenceLineElsewhere": 31,
+     "reachedElsewhere": 1
+    }
+   },
+   "A1": {
+    "annotated": 116,
+    "correct": 56,
+    "abstained": 39,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 8,
+      "correct": 3,
+      "precision": 0.375,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 53,
+      "correct": 53,
+      "precision": 1,
+      "coverage": 0.686,
+      "recall": 0.52,
+      "abstained": 32
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.429,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 8,
+     "lost": 5
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 49,
+     "evidenceReachesReferenceLine": 19,
+     "referenceLineElsewhere": 31,
+     "reachedElsewhere": 1
+    }
+   },
+   "B": {
+    "annotated": 116,
+    "correct": 56,
+    "abstained": 39,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 8,
+      "correct": 3,
+      "precision": 0.375,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 53,
+      "correct": 53,
+      "precision": 1,
+      "coverage": 0.686,
+      "recall": 0.52,
+      "abstained": 32
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.429,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 8,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 49,
+     "evidenceReachesReferenceLine": 19,
+     "referenceLineElsewhere": 31,
+     "reachedElsewhere": 1
+    }
+   },
+   "B2": {
+    "annotated": 116,
+    "correct": 56,
+    "abstained": 39,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 8,
+      "correct": 3,
+      "precision": 0.375,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 53,
+      "correct": 53,
+      "precision": 1,
+      "coverage": 0.686,
+      "recall": 0.52,
+      "abstained": 32
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.429,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 8,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 49,
+     "evidenceReachesReferenceLine": 19,
+     "referenceLineElsewhere": 31,
+     "reachedElsewhere": 1
+    }
+   },
+   "C": {
+    "annotated": 116,
+    "correct": 58,
+    "abstained": 38,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 7,
+      "correct": 3,
+      "precision": 0.429,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 55,
+      "correct": 55,
+      "precision": 1,
+      "coverage": 0.706,
+      "recall": 0.539,
+      "abstained": 30
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.286,
+      "recall": 0,
+      "abstained": 5
+     }
+    },
+    "vsA0": {
+     "gained": 10,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 2,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 50,
+     "evidenceReachesReferenceLine": 20,
+     "referenceLineElsewhere": 31,
+     "reachedElsewhere": 1
+    }
+   },
+   "C1": {
+    "annotated": 116,
+    "correct": 65,
+    "abstained": 25,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 13,
+      "correct": 3,
+      "precision": 0.231,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 62,
+      "correct": 62,
+      "precision": 1,
+      "coverage": 0.824,
+      "recall": 0.608,
+      "abstained": 18
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.429,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 15,
+     "lost": 3
+    },
+    "vsA1": {
+     "gained": 9,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 54,
+     "evidenceReachesReferenceLine": 22,
+     "referenceLineElsewhere": 33,
+     "reachedElsewhere": 1
+    }
+   },
+   "D": {
+    "annotated": 116,
+    "correct": 61,
+    "abstained": 11,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 32,
+      "correct": 4,
+      "precision": 0.125,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 57,
+      "correct": 57,
+      "precision": 1,
+      "coverage": 0.931,
+      "recall": 0.559,
+      "abstained": 7
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.714,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 9,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 54,
+     "evidenceReachesReferenceLine": 21,
+     "referenceLineElsewhere": 34,
+     "reachedElsewhere": 1
+    }
+   },
+   "Ddev": {
+    "annotated": 116,
+    "correct": 57,
+    "abstained": 6,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 38,
+      "correct": 3,
+      "precision": 0.079,
+      "coverage": 0.667,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 56,
+      "correct": 54,
+      "precision": 0.964,
+      "coverage": 0.98,
+      "recall": 0.529,
+      "abstained": 2
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.714,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 7,
+     "lost": 3
+    },
+    "vsA1": {
+     "gained": 7,
+     "lost": 6
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 48,
+     "evidenceReachesReferenceLine": 17,
+     "referenceLineElsewhere": 32,
+     "reachedElsewhere": 1
+    }
+   },
+   "D2": {
+    "annotated": 116,
+    "correct": 65,
+    "abstained": 22,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 16,
+      "correct": 3,
+      "precision": 0.188,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 62,
+      "correct": 62,
+      "precision": 1,
+      "coverage": 0.853,
+      "recall": 0.608,
+      "abstained": 15
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.429,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 13,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 11,
+     "lost": 2
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 55,
+     "evidenceReachesReferenceLine": 21,
+     "referenceLineElsewhere": 35,
+     "reachedElsewhere": 1
+    }
+   },
+   "D2dev": {
+    "annotated": 116,
+    "correct": 66,
+    "abstained": 22,
+    "allMeasured": 6,
+    "allDeclared": 102,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 6,
+      "predicted": 15,
+      "correct": 3,
+      "precision": 0.2,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 102,
+      "predicted": 63,
+      "correct": 63,
+      "precision": 1,
+      "coverage": 0.853,
+      "recall": 0.618,
+      "abstained": 15
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 16,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 7,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.429,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 14,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 11,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 55,
+     "evidenceReachesReferenceLine": 21,
+     "referenceLineElsewhere": 35,
+     "reachedElsewhere": 1
+    }
+   }
+  },
+  "stick_vacuums": {
+   "A0": {
+    "annotated": 58,
+    "correct": 17,
+    "abstained": 6,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 22,
+      "correct": 1,
+      "precision": 0.045,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 16,
+      "correct": 16,
+      "precision": 1,
+      "coverage": 0.94,
+      "recall": 0.32,
+      "abstained": 3
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.6,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 4
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 14,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 11,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 58,
+    "correct": 21,
+    "abstained": 20,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 20,
+      "correct": 20,
+      "precision": 1,
+      "coverage": 0.68,
+      "recall": 0.4,
+      "abstained": 16
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.4,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 58,
+    "correct": 21,
+    "abstained": 20,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 20,
+      "correct": 20,
+      "precision": 1,
+      "coverage": 0.68,
+      "recall": 0.4,
+      "abstained": 16
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.4,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 58,
+    "correct": 21,
+    "abstained": 20,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 20,
+      "correct": 20,
+      "precision": 1,
+      "coverage": 0.68,
+      "recall": 0.4,
+      "abstained": 16
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.4,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 58,
+    "correct": 21,
+    "abstained": 22,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 2,
+      "correct": 1,
+      "precision": 0.5,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 20,
+      "correct": 20,
+      "precision": 1,
+      "coverage": 0.66,
+      "recall": 0.4,
+      "abstained": 17
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.2,
+      "recall": 0,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 58,
+    "correct": 26,
+    "abstained": 12,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 7,
+      "correct": 1,
+      "precision": 0.143,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 25,
+      "correct": 25,
+      "precision": 1,
+      "coverage": 0.84,
+      "recall": 0.5,
+      "abstained": 8
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.4,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 9,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 5,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 19,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 13,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 58,
+    "correct": 20,
+    "abstained": 9,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 16,
+      "correct": 1,
+      "precision": 0.063,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 19,
+      "correct": 19,
+      "precision": 1,
+      "coverage": 0.88,
+      "recall": 0.38,
+      "abstained": 6
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.6,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 58,
+    "correct": 17,
+    "abstained": 5,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 20,
+      "correct": 0,
+      "precision": 0,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 19,
+      "correct": 17,
+      "precision": 0.895,
+      "coverage": 0.96,
+      "recall": 0.34,
+      "abstained": 2
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.6,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 3
+    },
+    "vsA1": {
+     "gained": 1,
+     "lost": 5
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 12,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 10,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 58,
+    "correct": 25,
+    "abstained": 11,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 9,
+      "correct": 1,
+      "precision": 0.111,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 24,
+      "correct": 24,
+      "precision": 1,
+      "coverage": 0.86,
+      "recall": 0.48,
+      "abstained": 7
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.4,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 8,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 5,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 19,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 13,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 58,
+    "correct": 26,
+    "abstained": 11,
+    "allMeasured": 2,
+    "allDeclared": 50,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 50,
+      "predicted": 25,
+      "correct": 25,
+      "precision": 1,
+      "coverage": 0.86,
+      "recall": 0.5,
+      "abstained": 7
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 5,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.4,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 9,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 5,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 19,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 13,
+     "reachedElsewhere": 0
+    }
+   }
+  },
+  "robot_floor_cleaners": {
+   "A0": {
+    "annotated": 58,
+    "correct": 36,
+    "abstained": 5,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 18,
+      "correct": 3,
+      "precision": 0.167,
+      "coverage": 0.75,
+      "recall": 0.75,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 33,
+      "correct": 33,
+      "precision": 1,
+      "coverage": 0.923,
+      "recall": 0.635,
+      "abstained": 4
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 5,
+     "lost": 4
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 33,
+     "evidenceReachesReferenceLine": 14,
+     "referenceLineElsewhere": 20,
+     "reachedElsewhere": 1
+    }
+   },
+   "A1": {
+    "annotated": 58,
+    "correct": 35,
+    "abstained": 19,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 2,
+      "precision": 0.5,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 33,
+      "correct": 33,
+      "precision": 1,
+      "coverage": 0.692,
+      "recall": 0.635,
+      "abstained": 16
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 5
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 33,
+     "evidenceReachesReferenceLine": 15,
+     "referenceLineElsewhere": 19,
+     "reachedElsewhere": 1
+    }
+   },
+   "B": {
+    "annotated": 58,
+    "correct": 35,
+    "abstained": 19,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 2,
+      "precision": 0.5,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 33,
+      "correct": 33,
+      "precision": 1,
+      "coverage": 0.692,
+      "recall": 0.635,
+      "abstained": 16
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 33,
+     "evidenceReachesReferenceLine": 15,
+     "referenceLineElsewhere": 19,
+     "reachedElsewhere": 1
+    }
+   },
+   "B2": {
+    "annotated": 58,
+    "correct": 35,
+    "abstained": 19,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 2,
+      "precision": 0.5,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 33,
+      "correct": 33,
+      "precision": 1,
+      "coverage": 0.692,
+      "recall": 0.635,
+      "abstained": 16
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 33,
+     "evidenceReachesReferenceLine": 15,
+     "referenceLineElsewhere": 19,
+     "reachedElsewhere": 1
+    }
+   },
+   "C": {
+    "annotated": 58,
+    "correct": 37,
+    "abstained": 16,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 5,
+      "correct": 2,
+      "precision": 0.4,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 35,
+      "correct": 35,
+      "precision": 1,
+      "coverage": 0.75,
+      "recall": 0.673,
+      "abstained": 13
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 2,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 34,
+     "evidenceReachesReferenceLine": 16,
+     "referenceLineElsewhere": 19,
+     "reachedElsewhere": 1
+    }
+   },
+   "C1": {
+    "annotated": 58,
+    "correct": 39,
+    "abstained": 13,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 6,
+      "correct": 2,
+      "precision": 0.333,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 37,
+      "correct": 37,
+      "precision": 1,
+      "coverage": 0.808,
+      "recall": 0.712,
+      "abstained": 10
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 3
+    },
+    "vsA1": {
+     "gained": 4,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 35,
+     "evidenceReachesReferenceLine": 16,
+     "referenceLineElsewhere": 20,
+     "reachedElsewhere": 1
+    }
+   },
+   "D": {
+    "annotated": 58,
+    "correct": 41,
+    "abstained": 2,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 16,
+      "correct": 3,
+      "precision": 0.188,
+      "coverage": 0.75,
+      "recall": 0.75,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 38,
+      "correct": 38,
+      "precision": 1,
+      "coverage": 0.981,
+      "recall": 0.731,
+      "abstained": 1
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 5,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 38,
+     "evidenceReachesReferenceLine": 17,
+     "referenceLineElsewhere": 22,
+     "reachedElsewhere": 1
+    }
+   },
+   "Ddev": {
+    "annotated": 58,
+    "correct": 40,
+    "abstained": 1,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 18,
+      "correct": 3,
+      "precision": 0.167,
+      "coverage": 0.75,
+      "recall": 0.75,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 37,
+      "correct": 37,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.712,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 36,
+     "evidenceReachesReferenceLine": 15,
+     "referenceLineElsewhere": 22,
+     "reachedElsewhere": 1
+    }
+   },
+   "D2": {
+    "annotated": 58,
+    "correct": 40,
+    "abstained": 11,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 38,
+      "correct": 38,
+      "precision": 1,
+      "coverage": 0.846,
+      "recall": 0.731,
+      "abstained": 8
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 5,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 36,
+     "evidenceReachesReferenceLine": 15,
+     "referenceLineElsewhere": 22,
+     "reachedElsewhere": 1
+    }
+   },
+   "D2dev": {
+    "annotated": 58,
+    "correct": 40,
+    "abstained": 11,
+    "allMeasured": 4,
+    "allDeclared": 52,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 4,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 52,
+      "predicted": 38,
+      "correct": 38,
+      "precision": 1,
+      "coverage": 0.846,
+      "recall": 0.731,
+      "abstained": 8
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 2,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 5,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 36,
+     "evidenceReachesReferenceLine": 15,
+     "referenceLineElsewhere": 22,
+     "reachedElsewhere": 1
+    }
+   }
+  },
+  "stick_vacuums @ www.nbcnews.com": {
+   "A0": {
+    "annotated": 15,
+    "correct": 1,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 5,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 0.9,
+      "recall": 0.1,
+      "abstained": 1
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 0,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 15,
+    "correct": 2,
+    "abstained": 7,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 2,
+      "correct": 2,
+      "precision": 1,
+      "coverage": 0.6,
+      "recall": 0.2,
+      "abstained": 4
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 15,
+    "correct": 2,
+    "abstained": 7,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 2,
+      "correct": 2,
+      "precision": 1,
+      "coverage": 0.6,
+      "recall": 0.2,
+      "abstained": 4
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 15,
+    "correct": 2,
+    "abstained": 7,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 2,
+      "correct": 2,
+      "precision": 1,
+      "coverage": 0.6,
+      "recall": 0.2,
+      "abstained": 4
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 15,
+    "correct": 2,
+    "abstained": 7,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 2,
+      "correct": 2,
+      "precision": 1,
+      "coverage": 0.6,
+      "recall": 0.2,
+      "abstained": 4
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 15,
+    "correct": 4,
+    "abstained": 5,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 0.8,
+      "recall": 0.4,
+      "abstained": 2
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 2,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 3,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 15,
+    "correct": 2,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 2,
+      "correct": 2,
+      "precision": 1,
+      "coverage": 0.8,
+      "recall": 0.2,
+      "abstained": 2
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 15,
+    "correct": 2,
+    "abstained": 2,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 5,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 2,
+      "correct": 2,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.2,
+      "abstained": 0
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 0,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 15,
+    "correct": 4,
+    "abstained": 5,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 0.8,
+      "recall": 0.4,
+      "abstained": 2
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 2,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 3,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 15,
+    "correct": 4,
+    "abstained": 5,
+    "allMeasured": 0,
+    "allDeclared": 10,
+    "perClass": {
+     "declared_spec": {
+      "reference": 10,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 0.8,
+      "recall": 0.4,
+      "abstained": 2
+     },
+     "quoted_other_source": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 6,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.25,
+      "recall": 0,
+      "abstained": 3
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 2,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 3,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   }
+  },
+  "stick_vacuums @ www.realhomes.com": {
+   "A0": {
+    "annotated": 43,
+    "correct": 16,
+    "abstained": 3,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 17,
+      "correct": 1,
+      "precision": 0.059,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.95,
+      "recall": 0.375,
+      "abstained": 2
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 3
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 14,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 11,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 43,
+    "correct": 19,
+    "abstained": 13,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 18,
+      "correct": 18,
+      "precision": 1,
+      "coverage": 0.7,
+      "recall": 0.45,
+      "abstained": 12
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 15,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 43,
+    "correct": 19,
+    "abstained": 13,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 18,
+      "correct": 18,
+      "precision": 1,
+      "coverage": 0.7,
+      "recall": 0.45,
+      "abstained": 12
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 15,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 43,
+    "correct": 19,
+    "abstained": 13,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 18,
+      "correct": 18,
+      "precision": 1,
+      "coverage": 0.7,
+      "recall": 0.45,
+      "abstained": 12
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 15,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 43,
+    "correct": 19,
+    "abstained": 15,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 2,
+      "correct": 1,
+      "precision": 0.5,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 18,
+      "correct": 18,
+      "precision": 1,
+      "coverage": 0.675,
+      "recall": 0.45,
+      "abstained": 13
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 15,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 43,
+    "correct": 22,
+    "abstained": 7,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 7,
+      "correct": 1,
+      "precision": 0.143,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 21,
+      "correct": 21,
+      "precision": 1,
+      "coverage": 0.85,
+      "recall": 0.525,
+      "abstained": 6
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 3,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 43,
+    "correct": 18,
+    "abstained": 5,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 13,
+      "correct": 1,
+      "precision": 0.077,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 17,
+      "correct": 17,
+      "precision": 1,
+      "coverage": 0.9,
+      "recall": 0.425,
+      "abstained": 4
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 15,
+     "evidenceReachesReferenceLine": 3,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 43,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 15,
+      "correct": 0,
+      "precision": 0,
+      "coverage": 0.5,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 17,
+      "correct": 15,
+      "precision": 0.882,
+      "coverage": 0.95,
+      "recall": 0.375,
+      "abstained": 2
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 2,
+     "lost": 3
+    },
+    "vsA1": {
+     "gained": 1,
+     "lost": 5
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 11,
+     "evidenceReachesReferenceLine": 1,
+     "referenceLineElsewhere": 10,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 43,
+    "correct": 21,
+    "abstained": 6,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 9,
+      "correct": 1,
+      "precision": 0.111,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 20,
+      "correct": 20,
+      "precision": 1,
+      "coverage": 0.875,
+      "recall": 0.5,
+      "abstained": 5
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 5,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 3,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 43,
+    "correct": 22,
+    "abstained": 6,
+    "allMeasured": 2,
+    "allDeclared": 40,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 2,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "coverage": 0.5,
+      "recall": 0.5,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 40,
+      "predicted": 21,
+      "correct": 21,
+      "precision": 1,
+      "coverage": 0.875,
+      "recall": 0.525,
+      "abstained": 5
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 8,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 3,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 16,
+     "evidenceReachesReferenceLine": 4,
+     "referenceLineElsewhere": 12,
+     "reachedElsewhere": 0
+    }
+   }
+  },
+  "robot_floor_cleaners @ products.newsnationnow.com": {
+   "A0": {
+    "annotated": 18,
+    "correct": 14,
+    "abstained": 1,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 14,
+      "correct": 14,
+      "precision": 1,
+      "coverage": 0.941,
+      "recall": 0.824,
+      "abstained": 1
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 12,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 6,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.882,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.882,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 18,
+    "correct": 15,
+    "abstained": 3,
+    "allMeasured": 0,
+    "allDeclared": 17,
+    "perClass": {
+     "declared_spec": {
+      "reference": 17,
+      "predicted": 15,
+      "correct": 15,
+      "precision": 1,
+      "coverage": 0.882,
+      "recall": 0.882,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 1,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 7,
+     "reachedElsewhere": 0
+    }
+   }
+  },
+  "robot_floor_cleaners @ www.the-ambient.com": {
+   "A0": {
+    "annotated": 21,
+    "correct": 10,
+    "abstained": 3,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 10,
+      "correct": 3,
+      "precision": 0.3,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.833,
+      "recall": 0.389,
+      "abstained": 3
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 5,
+     "lost": 3
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 9,
+     "evidenceReachesReferenceLine": 6,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 1
+    }
+   },
+   "A1": {
+    "annotated": 21,
+    "correct": 8,
+    "abstained": 11,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 2,
+      "precision": 0.667,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 6,
+      "correct": 6,
+      "precision": 1,
+      "coverage": 0.444,
+      "recall": 0.333,
+      "abstained": 10
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 5
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 8,
+     "evidenceReachesReferenceLine": 7,
+     "referenceLineElsewhere": 2,
+     "reachedElsewhere": 1
+    }
+   },
+   "B": {
+    "annotated": 21,
+    "correct": 8,
+    "abstained": 11,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 2,
+      "precision": 0.667,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 6,
+      "correct": 6,
+      "precision": 1,
+      "coverage": 0.444,
+      "recall": 0.333,
+      "abstained": 10
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 8,
+     "evidenceReachesReferenceLine": 7,
+     "referenceLineElsewhere": 2,
+     "reachedElsewhere": 1
+    }
+   },
+   "B2": {
+    "annotated": 21,
+    "correct": 8,
+    "abstained": 11,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 2,
+      "precision": 0.667,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 6,
+      "correct": 6,
+      "precision": 1,
+      "coverage": 0.444,
+      "recall": 0.333,
+      "abstained": 10
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 8,
+     "evidenceReachesReferenceLine": 7,
+     "referenceLineElsewhere": 2,
+     "reachedElsewhere": 1
+    }
+   },
+   "C": {
+    "annotated": 21,
+    "correct": 10,
+    "abstained": 8,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 4,
+      "correct": 2,
+      "precision": 0.5,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 8,
+      "correct": 8,
+      "precision": 1,
+      "coverage": 0.611,
+      "recall": 0.444,
+      "abstained": 7
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 5,
+     "lost": 5
+    },
+    "vsA1": {
+     "gained": 2,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 9,
+     "evidenceReachesReferenceLine": 8,
+     "referenceLineElsewhere": 2,
+     "reachedElsewhere": 1
+    }
+   },
+   "C1": {
+    "annotated": 21,
+    "correct": 12,
+    "abstained": 5,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 5,
+      "correct": 2,
+      "precision": 0.4,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 10,
+      "correct": 10,
+      "precision": 1,
+      "coverage": 0.778,
+      "recall": 0.556,
+      "abstained": 4
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 5,
+     "lost": 3
+    },
+    "vsA1": {
+     "gained": 4,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 10,
+     "evidenceReachesReferenceLine": 8,
+     "referenceLineElsewhere": 3,
+     "reachedElsewhere": 1
+    }
+   },
+   "D": {
+    "annotated": 21,
+    "correct": 14,
+    "abstained": 1,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 8,
+      "correct": 3,
+      "precision": 0.375,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 11,
+      "correct": 11,
+      "precision": 1,
+      "coverage": 0.944,
+      "recall": 0.611,
+      "abstained": 1
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 13,
+     "evidenceReachesReferenceLine": 9,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 1
+    }
+   },
+   "Ddev": {
+    "annotated": 21,
+    "correct": 13,
+    "abstained": 0,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 10,
+      "correct": 3,
+      "precision": 0.3,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 10,
+      "correct": 10,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.556,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 3,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 11,
+     "evidenceReachesReferenceLine": 7,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 1
+    }
+   },
+   "D2": {
+    "annotated": 21,
+    "correct": 13,
+    "abstained": 3,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 6,
+      "correct": 2,
+      "precision": 0.333,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 11,
+      "correct": 11,
+      "precision": 1,
+      "coverage": 0.889,
+      "recall": 0.611,
+      "abstained": 2
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 11,
+     "evidenceReachesReferenceLine": 7,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 1
+    }
+   },
+   "D2dev": {
+    "annotated": 21,
+    "correct": 13,
+    "abstained": 3,
+    "allMeasured": 3,
+    "allDeclared": 18,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 3,
+      "predicted": 6,
+      "correct": 2,
+      "precision": 0.333,
+      "coverage": 0.667,
+      "recall": 0.667,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 18,
+      "predicted": 11,
+      "correct": 11,
+      "precision": 1,
+      "coverage": 0.889,
+      "recall": 0.611,
+      "abstained": 2
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 4,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 6,
+     "lost": 1
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 11,
+     "evidenceReachesReferenceLine": 7,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 1
+    }
+   }
+  },
+  "robot_floor_cleaners @ www.nbcnews.com": {
+   "A0": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 2,
+    "correct": 1,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 1,
+    "perClass": {
+     "declared_spec": {
+      "reference": 1,
+      "predicted": 1,
+      "correct": 1,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 1,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 1,
+     "reachedElsewhere": 0
+    }
+   }
+  },
+  "robot_floor_cleaners @ www.realhomes.com": {
+   "A0": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 5,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.583,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 5,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.583,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 0,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 5,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 0.583,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 12,
+    "correct": 7,
+    "abstained": 4,
+    "allMeasured": 0,
+    "allDeclared": 12,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 12,
+      "predicted": 7,
+      "correct": 7,
+      "precision": 1,
+      "coverage": 0.667,
+      "recall": 0.583,
+      "abstained": 4
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 7,
+     "evidenceReachesReferenceLine": 2,
+     "referenceLineElsewhere": 5,
+     "reachedElsewhere": 0
+    }
+   }
+  },
+  "robot_floor_cleaners @ www.livingetc.com": {
+   "A0": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "A1": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "B": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "B2": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "C": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "C1": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "D": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "Ddev": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   },
+   "D2dev": {
+    "annotated": 5,
+    "correct": 4,
+    "abstained": 1,
+    "allMeasured": 1,
+    "allDeclared": 4,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 4,
+      "predicted": 4,
+      "correct": 4,
+      "precision": 1,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 0,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "linkedMethod": {
+     "correctWithReferenceLine": 4,
+     "evidenceReachesReferenceLine": 0,
+     "referenceLineElsewhere": 4,
+     "reachedElsewhere": 0
+    }
+   }
+  }
+ },
+ "property": {
+  "all": {
+   "base": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E0_inductive": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E0_transductive": {
+    "refPositive": 116,
+    "correct": 56,
+    "wrong": 28,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E1_inductive": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E1_transductive": {
+    "refPositive": 116,
+    "correct": 56,
+    "wrong": 28,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E2_inductive": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E2_transductive": {
+    "refPositive": 116,
+    "correct": 56,
+    "wrong": 28,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E3_inductive": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   },
+   "E3_transductive": {
+    "refPositive": 116,
+    "correct": 56,
+    "wrong": 28,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20
+   }
+  },
+  "stick_vacuums": {
+   "base": {
+    "refPositive": 58,
+    "correct": 17,
+    "wrong": 25,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E0_inductive": {
+    "refPositive": 58,
+    "correct": 17,
+    "wrong": 25,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E0_transductive": {
+    "refPositive": 58,
+    "correct": 16,
+    "wrong": 26,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E1_inductive": {
+    "refPositive": 58,
+    "correct": 17,
+    "wrong": 25,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E1_transductive": {
+    "refPositive": 58,
+    "correct": 16,
+    "wrong": 26,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E2_inductive": {
+    "refPositive": 58,
+    "correct": 17,
+    "wrong": 25,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E2_transductive": {
+    "refPositive": 58,
+    "correct": 16,
+    "wrong": 26,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E3_inductive": {
+    "refPositive": 58,
+    "correct": 17,
+    "wrong": 25,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   },
+   "E3_transductive": {
+    "refPositive": 58,
+    "correct": 16,
+    "wrong": 26,
+    "abstained": 16,
+    "refNone": 44,
+    "falseAttribution": 13
+   }
+  },
+  "robot_floor_cleaners": {
+   "base": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E0_inductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E0_transductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E1_inductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E1_transductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E2_inductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E2_transductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E3_inductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   },
+   "E3_transductive": {
+    "refPositive": 58,
+    "correct": 40,
+    "wrong": 2,
+    "abstained": 16,
+    "refNone": 31,
+    "falseAttribution": 7
+   }
+  },
+  "stick_vacuums @ www.nbcnews.com": {
+   "base": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E0_inductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E0_transductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E1_inductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E1_transductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E2_inductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E2_transductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E3_inductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   },
+   "E3_transductive": {
+    "refPositive": 15,
+    "correct": 2,
+    "wrong": 9,
+    "abstained": 4,
+    "refNone": 22,
+    "falseAttribution": 2
+   }
+  },
+  "stick_vacuums @ www.realhomes.com": {
+   "base": {
+    "refPositive": 43,
+    "correct": 15,
+    "wrong": 16,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E0_inductive": {
+    "refPositive": 43,
+    "correct": 15,
+    "wrong": 16,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E0_transductive": {
+    "refPositive": 43,
+    "correct": 14,
+    "wrong": 17,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E1_inductive": {
+    "refPositive": 43,
+    "correct": 15,
+    "wrong": 16,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E1_transductive": {
+    "refPositive": 43,
+    "correct": 14,
+    "wrong": 17,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E2_inductive": {
+    "refPositive": 43,
+    "correct": 15,
+    "wrong": 16,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E2_transductive": {
+    "refPositive": 43,
+    "correct": 14,
+    "wrong": 17,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E3_inductive": {
+    "refPositive": 43,
+    "correct": 15,
+    "wrong": 16,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   },
+   "E3_transductive": {
+    "refPositive": 43,
+    "correct": 14,
+    "wrong": 17,
+    "abstained": 12,
+    "refNone": 22,
+    "falseAttribution": 11
+   }
+  },
+  "robot_floor_cleaners @ products.newsnationnow.com": {
+   "base": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E0_inductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E0_transductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E1_inductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E1_transductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E2_inductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E2_transductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E3_inductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   },
+   "E3_transductive": {
+    "refPositive": 18,
+    "correct": 15,
+    "wrong": 1,
+    "abstained": 2,
+    "refNone": 9,
+    "falseAttribution": 1
+   }
+  },
+  "robot_floor_cleaners @ www.the-ambient.com": {
+   "base": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E0_inductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E0_transductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E1_inductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E1_transductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E2_inductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E2_transductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E3_inductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   },
+   "E3_transductive": {
+    "refPositive": 21,
+    "correct": 13,
+    "wrong": 0,
+    "abstained": 8,
+    "refNone": 2,
+    "falseAttribution": 1
+   }
+  },
+  "robot_floor_cleaners @ www.nbcnews.com": {
+   "base": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E0_inductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E0_transductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E1_inductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E1_transductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E2_inductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E2_transductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E3_inductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   },
+   "E3_transductive": {
+    "refPositive": 2,
+    "correct": 1,
+    "wrong": 0,
+    "abstained": 1,
+    "refNone": 4,
+    "falseAttribution": 1
+   }
+  },
+  "robot_floor_cleaners @ www.realhomes.com": {
+   "base": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E0_inductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E0_transductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E1_inductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E1_transductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E2_inductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E2_transductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E3_inductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E3_transductive": {
+    "refPositive": 12,
+    "correct": 8,
+    "wrong": 1,
+    "abstained": 3,
+    "refNone": 8,
+    "falseAttribution": 2
+   }
+  },
+  "robot_floor_cleaners @ www.livingetc.com": {
+   "base": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E0_inductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E0_transductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E1_inductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E1_transductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E2_inductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E2_transductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E3_inductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   },
+   "E3_transductive": {
+    "refPositive": 5,
+    "correct": 3,
+    "wrong": 0,
+    "abstained": 2,
+    "refNone": 8,
+    "falseAttribution": 2
+   }
+  }
+ },
+ "learning": {
+  "E0_inductive": {
+   "terms": 44,
+   "supported": 11,
+   "distributional": 0,
+   "proposals": 26
+  },
+  "E0_transductive": {
+   "terms": 53,
+   "supported": 21,
+   "distributional": 0,
+   "proposals": 30
+  },
+  "E1_inductive": {
+   "terms": 44,
+   "supported": 11,
+   "distributional": 0,
+   "proposals": 26
+  },
+  "E1_transductive": {
+   "terms": 53,
+   "supported": 21,
+   "distributional": 0,
+   "proposals": 30
+  },
+  "E2_inductive": {
+   "terms": 52,
+   "supported": 11,
+   "distributional": 8,
+   "proposals": 26
+  },
+  "E2_transductive": {
+   "terms": 60,
+   "supported": 21,
+   "distributional": 7,
+   "proposals": 30
+  },
+  "E3_inductive": {
+   "terms": 52,
+   "supported": 11,
+   "distributional": 8,
+   "proposals": 26
+  },
+  "E3_transductive": {
+   "terms": 60,
+   "supported": 21,
+   "distributional": 7,
+   "proposals": 30
+  }
+ },
+ "kgInduction": {
+  "referenceTechnicalOutsideDefinitions": 68,
+  "byCategory": {
+   "stick_vacuums": {
+    "values": 39,
+    "covered": 5
+   },
+   "robot_floor_cleaners": {
+    "values": 29,
+    "covered": 5
+   }
+  },
+  "coveredByAProposal": 10,
+  "distinctReferenceConcepts": 24,
+  "proposals": 30,
+  "pairs": {
+   "sameReferenceConcept": 260,
+   "ofWhichSameProposal": 11,
+   "sameProposal": 11,
+   "ofWhichSameReferenceConcept": 11
+  }
+ }
+}
