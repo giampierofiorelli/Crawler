@@ -25,6 +25,9 @@ const QK=await import(D+'quantity_knowledge.js');const qk=QK.loadQuantityKnowled
 const CLASS={...DEFAULT_STORAGE_POLICY246,policyVersion:'pee249-class-policy',classPolicy:FACTUAL_CLASS_POLICY249};
 const live=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
 const storeFile=join(OUTD,`store-${LABEL}.sqlite`);for(const x of [storeFile,storeFile+'-wal',storeFile+'-shm'])rmSync(x,{force:true});copyFileSync(live,storeFile);
+// a check run scores only against the reference sealed before it
+if(SET==='check'){const fz=JSON.parse(readFileSync(new URL('../evaluation/s99/check-annotation-freeze.json',import.meta.url),'utf8'));
+ if(sha(readFileSync(join(PE,'s99/wave/annotation/reference.json')))!==fz.referenceSha256)throw Error('the reference does not match its seal');}
 const ON=new KnowledgeStore246(storeFile,{...CLASS,scientificReadings98:true});
 const TYPE={independent_test_or_review:'independent_original_test',independent_test:'independent_original_test'};
 const WAVES=SET==='dev'?[['s89','annotations.json'],['s90','annotations.json'],['s91','annotations.json'],['s92','annotation/annotations.json'],['s93','annotation/annotations.json'],
@@ -79,34 +82,45 @@ const valueOf=r=>{if(r.subject_table==='document_quantity')return {v:r.value,u:r
  const d=ON.db.prepare('SELECT value_json FROM declarations WHERE declaration_id=?').get(r.subject_id);const v=d?JSON.parse(d.value_json):null;return {v:v?.number??v?.min??null,u:v?.unit??null};};
 const byPage=new Map();for(const r of retrieved){const x=valueOf(r);const k=urlRev.get(r.revision_id);(byPage.get(k)??byPage.set(k,[]).get(k)).push({...r,v:x.v,u:nu(x.u)});}
 const roleOfRow=r=>r.statement_role??(r.nature==='measured'||r.nature==='calculated'?'result':r.nature==='declared'?'specification':r.nature==='condition'?'condition':'unresolved');
-const REF_ROLE={declared_spec:'specification',measured_by_publisher:'result',test_condition:'condition',quoted_other_source:'specification',specification:'specification',result:'result',setting:'condition'};
+const REF_ROLE={declared_spec:'specification',measured_by_publisher:'result',test_condition:'condition',quoted_other_source:'specification',specification:'specification',result:'result',setting:'condition',
+ threshold:'threshold',norm:'norm',target:'target',condition:'condition'};
 const REF_NATURE={declared:'declared',calculated:'calculated',condition:'condition',measured:'measured',measured_by_publisher:'measured',declared_by_maker:'declared',calculated_by_publisher:'calculated'};
 const key=existsSync(join(PE,'s96/dev-key.json'))?JSON.parse(readFileSync(join(PE,'s96/dev-key.json'),'utf8')).accept:{};
 const accepts=(acc,id)=>acc.some(a=>a===id||id&&a.startsWith('acq_')&&id.startsWith(a+'_'));
 const Z=()=>({items:0,property:{refPositive:0,correct:0,wrong:0,notStored:0,refNone:0,falseStored:0},
  role:{compared:0,agree:0,confusion:{}},nature:{compared:0,agree:0,confusion:{}},subject:{reviewed:0,reviewedLinked:0,other:0,otherLinked:0,none:0,noneLinked:0},
- storedNoneByRole:{},falseProductValue:0,refNoneStoredAsNonValue:0});
+ storedNoneByRole:{},falseProductValue:0,refNoneStoredAsNonValue:0,labelGap:{items:0,storedWithProperty:0},bound:{compared:0,agree:0},productValue:{reference:0,storedLinkedCorrect:0}});
 const correctness={};const detail=[];
 for(const [S,f] of WAVES){const W=join(PE,S);if(!existsSync(join(W,f)))continue;const j=JSON.parse(readFileSync(join(W,f),'utf8'));const ref=j.values??j.items??j;
  const its=JSON.parse(readFileSync(join(W,'check-items.json'),'utf8'));const items=(Array.isArray(its)?its:its.items).filter(x=>ref[x.id]);const C=correctness[S]=Z();
  for(const x of items){const r=ref[x.id];C.items++;
   const acc=S==='s94/wave'?(key[String(r.concept??'').toLowerCase()]??[r.property??'none']):[r.property??'none',...(Array.isArray(r.alsoAcceptable)?r.alsoAcceptable:r.alsoAcceptable&&r.property!=='none'?[r.alsoAcceptable]:[])];
+  // S99 reference: a value of a property no label covers is neither 'none' nor a listed property
+  if(r.property==='no_fitting_label'){C.labelGap.items++;const u0=urlOf.get(S+':'+x.page);const c0=(byPage.get(u0)??[]).filter(z=>z.v!==null&&z.v!==undefined&&Math.abs(Number(z.v)-Number(x.value))<1e-9&&z.u===nu(x.unit)&&z.property_id);
+   if(c0.length)C.labelGap.storedWithProperty++;}
+  // is the number a value OF a product, by the reference? (a result or specification of a named or reviewed product)
+  const refProductValue=r.property!=='none'&&(!r.role||['result','specification','declared_spec','measured_by_publisher','quoted_other_source'].includes(r.role))&&r.subject!=='none';
   const url=urlOf.get(S+':'+x.page);const cand=(byPage.get(url)??[]).filter(z=>z.v!==null&&z.v!==undefined&&Math.abs(Number(z.v)-Number(x.value))<1e-9&&z.u===nu(x.unit));
   const withProp=cand.filter(z=>z.property_id);const ok=withProp.find(z=>accepts(acc,z.property_id));const hit=ok??withProp[0]??null;
+  const storedAsProductValue=withProp.some(z=>['result','specification'].includes(roleOfRow(z))&&z.product_id);
   if(acc.includes('none')){C.property.refNone++;if(withProp.length){C.property.falseStored++;const k=roleOfRow(withProp[0]);C.storedNoneByRole[k]=(C.storedNoneByRole[k]??0)+1;
     // what matters for a product: a value the reference says is not a property value, stored as a value of a product
-    if(withProp.some(z=>['result','specification'].includes(roleOfRow(z))&&z.product_id))C.falseProductValue++;else C.refNoneStoredAsNonValue++;}}
-  else{C.property.refPositive++;if(ok)C.property.correct++;else if(withProp.length)C.property.wrong++;else C.property.notStored++;}
+    if(storedAsProductValue)C.falseProductValue++;else C.refNoneStoredAsNonValue++;}}
+  else if(r.property==='no_fitting_label'){}
+  else{if(!refProductValue&&storedAsProductValue)C.falseProductValue++;C.property.refPositive++;if(ok)C.property.correct++;else if(withProp.length)C.property.wrong++;else C.property.notStored++;}
   const rr=REF_ROLE[r.role];if(hit&&rr){C.role.compared++;const got=roleOfRow(hit);if(got===rr)C.role.agree++;const k=rr+'->'+got;C.role.confusion[k]=(C.role.confusion[k]??0)+1;}
+  if(hit&&r.bound){C.bound.compared++;if((hit.bound??'none')===r.bound)C.bound.agree++;}
+  if(refProductValue&&r.property!=='no_fitting_label'&&r.subject==='reviewed_product'){C.productValue.reference++;const okz=ok&&['result','specification'].includes(roleOfRow(ok))&&ok.product_id&&ok.product_id===mainOfRev.get(ok.revision_id);if(okz)C.productValue.storedLinkedCorrect++;}
   const rn=REF_NATURE[r.nature];if(hit&&rn){C.nature.compared++;if(hit.nature===rn)C.nature.agree++;const k=rn+'->'+hit.nature;C.nature.confusion[k]=(C.nature.confusion[k]??0)+1;}
   if(hit){const main=mainOfRev.get(hit.revision_id)??null;const linked=!!hit.product_id&&hit.product_id===main;
    if(r.subject==='reviewed_product'){C.subject.reviewed++;if(linked)C.subject.reviewedLinked++;}else if(r.subject==='other_product'){C.subject.other++;if(linked)C.subject.otherLinked++;}
    else if(r.subject==='none'){C.subject.none++;if(hit.product_id)C.subject.noneLinked++;}}
-  detail.push({set:S,id:x.id,accept:acc,ref:{role:r.role??null,nature:r.nature??null,subject:r.subject??null},
+  detail.push({set:S,id:x.id,accept:acc,ref:{property:r.property??null,role:r.role??null,bound:r.bound??null,nature:r.nature??null,subject:r.subject??null},
    stored:withProp.map(z=>({p:z.property_id,role:roleOfRow(z),bound:z.bound??null,n:z.nature,nb:z.nature_basis,sv:z.subject_value??null,sb:z.subject_basis??null,a:z.product_association,sr:z.statement_basis??null}))});}}
 const total=Z();for(const C of Object.values(correctness)){total.items+=C.items;for(const g of ['property','subject'])for(const [k,v] of Object.entries(C[g]))total[g][k]+=v;
  for(const g of ['role','nature']){total[g].compared+=C[g].compared;total[g].agree+=C[g].agree;for(const [k,v] of Object.entries(C[g].confusion))total[g].confusion[k]=(total[g].confusion[k]??0)+v;}
- for(const [k,v] of Object.entries(C.storedNoneByRole))total.storedNoneByRole[k]=(total.storedNoneByRole[k]??0)+v;total.falseProductValue+=C.falseProductValue;total.refNoneStoredAsNonValue+=C.refNoneStoredAsNonValue;}
+ for(const [k,v] of Object.entries(C.storedNoneByRole))total.storedNoneByRole[k]=(total.storedNoneByRole[k]??0)+v;total.falseProductValue+=C.falseProductValue;total.refNoneStoredAsNonValue+=C.refNoneStoredAsNonValue;
+ for(const g of ['labelGap','bound','productValue'])for(const [k,v] of Object.entries(C[g]))total[g][k]+=v;}
 // ---------------- comparability on the user path ----------------
 const prods=[...new Set(retrieved.map(r=>r.product_id).filter(Boolean))];const ev=EV.scientificEvidence98(ON,prods);
 const verdicts={};const reasons={};for(const p of ev.properties){for(const [k,v] of Object.entries(p.comparisons))verdicts[k]=(verdicts[k]??0)+v;for(const [k,v] of Object.entries(p.reasons))reasons[k]=(reasons[k]??0)+v;}
