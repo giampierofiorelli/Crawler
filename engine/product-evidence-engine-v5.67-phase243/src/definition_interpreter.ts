@@ -14,7 +14,7 @@ import {UNIT_LEXICON272,TEST_CONTEXT272,type PlanMeasurement272} from './phase27
 import {classifyCondition87} from './observation_model.js';
 import {observationRole86c,otherProductInClause86c,type ObservationRole86c} from './phase225_transient_test_probe.js';
 import type {DocumentSemantics1D2} from './document_semantics.js';
-import {blockKind1G,dimensionsIn1G,cellElements1G,type DocumentModel1G,type Observation1G} from './table_interpreter1g.js';
+import {blockKind1G,dimensionsIn1G,cellElements1G,statedParameters1G,isCalculationText1G,type DocumentModel1G,type Observation1G} from './table_interpreter1g.js';
 import {sentences} from './document_evidence.js';
 
 export const DEFINITION_INTERPRETER_VERSION='pee88.definition-interpreter.v1';
@@ -31,12 +31,16 @@ export interface DefinitionInterpretation {version:string;definitions:string;cat
  /** Condition texts no dimension types (kept, never dropped). */
  untyped:string[];basis:BasisSlot;object:{value:string|null;state:SlotState;rule:string|null};
  /** S89: evidential role and subject from document structure (S86c), kept apart from the property (never merged). */
- role:{value:ObservationRole86c|null;reason:string|null};subject:'page_product'|'other_product'|'unresolved'}
+ role:{value:ObservationRole86c|null;reason:string|null};subject:'page_product'|'other_product'|'unresolved';
+ /** S93: provenance and nature of the result, with the originating statements (roleModel 'links' and provenance: true) */
+ evidence?:EvidenceReading}
 export interface ObservationInput {value:number|null;unit:string;label?:string|null;context?:string|null;conditions?:readonly string[];category?:string|null;
  /** S89: offset of the value in the label; when given, a label term supports the value only if no other number lies between them. */
  valueAt?:number|null;
  /** S89: the printed value (to locate its end) and the page's product name (to tell another product's value). */
  surface?:string|null;pageSubject?:string|null;
+ /** S93: the document frame of the value (page title and section headings), where the object of interest may be named */
+ frame?:string|null;
  /** S90: what the document's structure says about the value (Step 1D-A2 semantics, reused): its structural label (table
   * headers, the label of a "label: value" line), its container and the role its section or table announces. */
  structure?:StructuralContext|null}
@@ -56,7 +60,11 @@ export interface StructuralContext {container:'table_cell'|'label_value'|'prose'
  * are typed by the 1G document model (blockKind1G); the quantity a statement names by dimensionsIn1G. `rank` is the
  * distance (smaller is nearer); `pointer` locates the statement. */
 export interface EvidenceLink {role:'measured'|'declared'|'derived';relation:'co_occurrence'|'bridge'|'table_link'|'table_structure'|'parallel_table';
- scope:'neighbour_sentence'|'same_section'|'ancestor_section'|'method_section'|'table';rank:number;pointer:string}
+ scope:'neighbour_sentence'|'same_section'|'ancestor_section'|'method_section'|'table';rank:number;pointer:string;
+ /** S93 (owner review of S92 §1): the originating statement(s) of the link, verifiable on the page: the 1G document block
+  * (and sentence) that states the method, the declaration or the calculation; for a table value, the statements 1G linked
+  * to its cell, not the cell. Empty for a link that rests on the table's own structure (headings, labels). */
+ statements?:{locator:string;block:number;sentence:number|null}[]}
 /** The page-level readings a value's links are selected from: the 1G document model and, for table cells, the 1G table
  * observations (with GL11/GL12 when the caller asks for them). */
 export interface DocumentRelations {model:DocumentModel1G;tableObservations?:readonly Observation1G[]}
@@ -64,7 +72,10 @@ const KIND_ROLE={method:'measured',declaration:'declared',estimate:'derived'} as
 const RANK={neighbour1:2,neighbour2:2.5,tableStructure:1,tableLinkSame:2.5,tableLinkAncestor:3,parallel:3,sameSection:3,ancestorSection:4,tableLinkMethod:5,methodSection:5};
 /** S92: select the evidence links of one value. `container` is the value's 1D-A2 container: table observations are
  * consulted only for a table cell, sentences and sections only for text. */
-export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStart:number,surface:string,value:number|null,container:StructuralContext['container'],use:{tables?:boolean;prose?:boolean}={tables:true,prose:true}):EvidenceLink[]{
+export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStart:number,surface:string,value:number|null,container:StructuralContext['container'],use:{tables?:boolean;prose?:boolean;
+ /** S93: 'argument' chooses, among the candidate statements of a scope, the one that shares most with the value (quantity,
+  * product, instrument, then proximity: EIDER/SciREX evidence selection); S92 took the first in document order */
+ selection?:'first'|'argument';subject?:string|null;instrumentTerms?:readonly string[]}={tables:true,prose:true}):EvidenceLink[]{
  const out:EvidenceLink[]=[];const nm=(x:string)=>x.replace(/\s+/g,' ').trim().toLowerCase();
  const dims=[...new Set([...dimensionsIn1G(surface),...cellElements1G(surface).map(e=>e.dimension).filter((d):d is string=>!!d)])];
  if(container==='table_cell'){if(!use.tables)return out;
@@ -72,7 +83,8 @@ export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStar
   for(const o of cand){const c=o.evidence.class,l=o.evidence.level??'';const role=c==='publisher_measured'?'measured':c==='manufacturer_declared'||c==='nominal_certified'?'declared':c==='derived_or_estimated'?'derived':null;if(!role)continue;
    const [relation,scope,rank]:[EvidenceLink['relation'],EvidenceLink['scope'],number]=l==='linked_same_section'?['table_link','same_section',RANK.tableLinkSame]:l==='linked_ancestor_section'?['table_link','ancestor_section',RANK.tableLinkAncestor]:
     l==='linked_method_section'?['table_link','method_section',RANK.tableLinkMethod]:l==='linked_parallel_table'?['parallel_table','table',RANK.parallel]:['table_structure','table',RANK.tableStructure];
-   out.push({role,relation,scope,rank,pointer:`table ${o.table} cell ${o.cell} (${l})`});}
+   const tb=rel.model.tableBlock.get(o.table)??0;const st=use.selection==='argument'?bestStatements(rel,o.methodLinks,dims,tb,use):o.methodLinks;
+   out.push({role,relation,scope,rank,pointer:`table ${o.table} cell ${o.cell} (${l})`,statements:st.map(bi=>({locator:rel.model.blocks[bi]?.locator??'',block:bi,sentence:null}))});}
   return out;}
  if(!use.prose)return out;
  const lo=Math.max(0,valueStart-30),snip=nm(blockText.slice(lo,valueStart+surface.length+15)),core=nm(blockText.slice(Math.max(0,valueStart-10),valueStart+surface.length+5));
@@ -82,14 +94,62 @@ export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStar
  // co-occurrence: a typed statement in a neighbouring sentence; beyond the next sentence it must name the value's quantity
  for(let j=Math.max(0,si-2);j<=Math.min(ss.length-1,si+2);j++){if(j===si)continue;const k=blockKind1G(ss[j].text);if(k==='other')continue;const d=Math.abs(j-si);
   if(d===2&&!dimensionsIn1G(ss[j].text).some(x=>dims.includes(x)))continue;
-  out.push({role:KIND_ROLE[k],relation:'co_occurrence',scope:'neighbour_sentence',rank:d===1?RANK.neighbour1:RANK.neighbour2,pointer:`${b.locator} sentence ${j}`});}
+  out.push({role:KIND_ROLE[k],relation:'co_occurrence',scope:'neighbour_sentence',rank:d===1?RANK.neighbour1:RANK.neighbour2,pointer:`${b.locator} sentence ${j}`,statements:[{locator:b.locator,block:b.index,sentence:j}]});}
  // bridge: a typed statement elsewhere that names the value's quantity, by section scope (nearest of each scope)
  if(dims.length){const own=b.sectionPath.join('/');const seen=new Set<string>();
+  const cands:{c:typeof b;scope:EvidenceLink['scope']}[]=[];
   for(const c of rel.model.blocks){if(c===b||!c.text||c.kind==='other'||!c.dimensions.some(x=>dims.includes(x)))continue;const cp=c.sectionPath.join('/');
    const scope:EvidenceLink['scope']|null=cp===own?'same_section':cp&&own.startsWith(cp+'/')||!cp&&own?'ancestor_section':c.sectionPath.some(i=>rel.model.headings[i]?.isMethodHeading)?'method_section':null;
-   if(!scope||seen.has(scope+c.kind))continue;seen.add(scope+c.kind);
-   out.push({role:KIND_ROLE[c.kind],relation:'bridge',scope,rank:scope==='same_section'?RANK.sameSection:scope==='ancestor_section'?RANK.ancestorSection:RANK.methodSection,pointer:c.locator});}}
+   if(scope)cands.push({c,scope});}
+  for(const scope of ['same_section','ancestor_section','method_section'] as const)for(const kind of ['method','declaration','estimate'] as const){
+   const group=cands.filter(x=>x.scope===scope&&x.c.kind===kind);if(!group.length||seen.has(scope+kind))continue;seen.add(scope+kind);
+   const pick=use.selection==='argument'?rel.model.blocks[bestStatements(rel,group.map(x=>x.c.index),dims,b.index,use)[0]]:group[0].c;
+   out.push({role:KIND_ROLE[kind],relation:'bridge',scope,rank:scope==='same_section'?RANK.sameSection:scope==='ancestor_section'?RANK.ancestorSection:RANK.methodSection,pointer:pick.locator,statements:[{locator:pick.locator,block:pick.index,sentence:null}]});}}
  return out;
+}
+/** S93: argument-based choice among candidate statements (EIDER: evidence first; SciREX: n-ary arguments across sections):
+ * a statement scores by the value's quantities it names, the page subject it names, an instrument it names, then by
+ * proximity to the value's block. Returns the best block (ties all kept, in document order). */
+function bestStatements(rel:DocumentRelations,blocks:readonly number[],dims:readonly string[],at:number,use:{subject?:string|null;instrumentTerms?:readonly string[]}):number[]{
+ if(blocks.length<=1)return [...blocks];
+ const subj=(use.subject??'').toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>=4);
+ const score=(bi:number)=>{const c=rel.model.blocks[bi];if(!c)return -1e9;const t=c.text.toLowerCase();
+  return 2*c.dimensions.filter(d=>dims.includes(d)).length+(subj.some(w=>t.includes(w))?1:0)+((use.instrumentTerms??[]).some(w=>hasPhrase(normText(t),w))?1:0)-Math.abs(bi-at)/50;};
+ const sc=blocks.map(bi=>({bi,s:score(bi)}));const best=Math.max(...sc.map(x=>x.s));return sc.filter(x=>x.s===best).map(x=>x.bi);
+}
+/** S93 (owner review of S92 §2): provenance (who produced the value) and nature (what kind of result it is) are separate.
+ * A calculation keeps its provenance and never becomes a measurement; its assumptions (tariff, hours of use) stay
+ * identifiable. The nature is calculated when the value is the output of a calculation: a cost or a per-period quantity
+ * in a calculation context (a calculation cue in its sentence, or a linked calculation statement), or a value an
+ * estimate or calculation word governs directly ("an estimated 30 kWh"). Inputs of a calculation keep their own nature. */
+export interface EvidenceReading {provenance:'publisher'|'manufacturer'|'third_party'|'unresolved';nature:'measured'|'calculated'|'declared'|'condition'|'unresolved';
+ statements:{locator:string;block:number;sentence:number|null;relation:string}[];
+ calculation:{assumptions:{kind:string;text:string;from:'sentence'|'linked_statement'}[];inputsFromPublisher:boolean}|null;reason:string}
+const GOVERNED_CALC=/\b(?:estimated|calculated|projected|works out (?:at|to)|comes to|equates to|which means|results? in)\s+(?:an?\s+|about\s+|around\s+|roughly\s+|just\s+(?:over|under)\s+)?$/i;
+const PER_PERIOD_AFTER=/^\s*(?:\/\s*|per\s+|a\s+|an\s+|each\s+)(?:year|yr|month|mo|week|day|annum)\b|^\s*(?:annually|yearly|monthly)\b/i;
+export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:string|null},o:{unit:string;label:string;valueAt:number;surface:string},links:readonly EvidenceLink[],rel:DocumentRelations|null,opts:{currency:boolean;periodUnit:boolean}):EvidenceReading{
+ const end=o.valueAt+o.surface.length;const sentStart=o.label.slice(0,o.valueAt).search(/[^.!?]*$/);const sentence=o.label.slice(sentStart,end)+(o.label.slice(end).split(/[.!?](?:\s|$)/)[0]??'');
+ const before=o.label.slice(Math.max(0,o.valueAt-40),o.valueAt),after=o.label.slice(end,end+20);
+ const perPeriod=opts.periodUnit||PER_PERIOD_AFTER.test(after);const calcLinks=links.filter(l=>l.role==='derived');
+ const output=GOVERNED_CALC.test(before)||(opts.currency||perPeriod)&&(isCalculationText1G(sentence)||calcLinks.length>0);
+ const top=links.length?Math.min(...links.map(l=>l.rank)):Infinity;
+ const localDecision=/^nearest:/.test(role.reason??'')?!(role.reason??'').replace(/^nearest:/,'').split('+').some(p=>/^(?:co_occurrence|bridge|table_link|table_structure|parallel_table):/.test(p)):/^evidence:/.test(role.reason??'');
+ const statements=localDecision?[{locator:'own_sentence',block:-1,sentence:null,relation:'local'}]:links.filter(l=>l.rank===top).flatMap(l=>(l.statements??[]).map(s=>({...s,relation:l.relation})));
+ const publisherInputs=links.some(l=>l.role==='measured')||/\b(?:we|our|i|my)\b/i.test(sentence);
+ const assumptions=[...statedParameters1G(sentence).map(p=>({...p,from:'sentence' as const})),
+  ...(rel?calcLinks.flatMap(l=>(l.statements??[]).flatMap(s=>statedParameters1G(rel.model.blocks[s.block]?.text??'').map(p=>({...p,from:'linked_statement' as const})))):[])]
+  .filter(p=>p.kind==='tariff'||p.kind==='usage').filter((p,i,a)=>a.findIndex(q=>q.text===p.text)===i);
+ const r=role.value;const why=role.reason??'';
+ if(r==='certified_or_quoted')return {provenance:'third_party',nature:'declared',statements,calculation:null,reason:why};
+ if(r==='test_condition'||r==='programme_preset')return {provenance:'publisher',nature:'condition',statements,calculation:null,reason:why};
+ if(output){const prov=r==='declared_spec'?'manufacturer':publisherInputs||r==='measured_result'?'publisher':'unresolved';
+  return {provenance:prov,nature:'calculated',statements,calculation:{assumptions,inputsFromPublisher:publisherInputs},reason:'calculation_output:'+why};}
+ if(r==='declared_spec')return {provenance:'manufacturer',nature:'declared',statements,calculation:null,reason:why};
+ // a value decided only by calculation statements, and not their output, is not thereby a measurement
+ const onlyCalc=/^nearest:/.test(why)&&why.replace(/^nearest:/,'').split('+').every(p=>p.endsWith(':derived'));
+ if(r==='measured_result'&&onlyCalc)return {provenance:'publisher',nature:'unresolved',statements,calculation:null,reason:'calculation_context_not_output:'+why};
+ if(r==='measured_result')return {provenance:'publisher',nature:'measured',statements,calculation:null,reason:why};
+ return {provenance:'unresolved',nature:'unresolved',statements,calculation:null,reason:why};
 }
 /** S92 it1: the situation type of the value's clause (Friedrich et al. 2016, situation entity types), from grammar only:
  * an attributive measure phrase ("a 3L dust bag": the value modifies a noun) states a stable attribute of an object; an
@@ -271,7 +331,12 @@ function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,contex
  * definition in the value's own label or context must support the choice. Equal support for two properties chooses neither. */
 /** opts.profileLicense (S89: default false; true only reproduces the refuted S88 dev rule): a profile listing one property for the unit kind attributes
  * without a term. E4 showed it is valid only for values already known to be results (it attributed every length on a robot page). */
-export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean}={}):PropertySlot{
+export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean;
+ /** S93 (owner review of S92: "autonomia con una carica" vs "durata di un'attività"): a property is its quantity AND its
+  * object of interest (I-ADOPT). When the term chosen belongs to a property whose object the definitions leave generic,
+  * and the value's sentence or its document frame names the object of another property of the same kind, the object
+  * decides. No vocabulary is added: only the definitions' objects. */
+ objectResolution?:boolean}={}):PropertySlot{
  const sl=o.structure?.label?norm(o.structure.label)+' | ':'';const fullLabel=sl+norm(o.label);const label=sl+norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
@@ -309,6 +374,10 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
   return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};}
  const tied=scored.filter(s=>s.score===top.score);
  if(tied.length>1)return {value:null,state:'ambiguous',evidence:tied.flatMap(t=>t.evidence),rule:'equal_support',alternatives:tied.map(t=>t.d.id),kind};
+ if(opts.objectResolution){const frame=norm(o.frame);const objEv=(d:PropertyDefinition)=>(d.objectNouns??[]).some(n=>has(sentence,n))?2:(d.objectNouns??[]).some(n=>has(frame,n))?1:0;
+  if(!(top.d.objectNouns??[]).length&&objEv(top.d)===0){const sameKind=byUnit.filter(admissible).filter(d=>d!==top.d&&d.quantity?.kinds.some(k=>top.d.quantity?.kinds.includes(k))&&objEv(d)>0).sort((a,b)=>objEv(b)-objEv(a));
+   if(sameKind.length&&(sameKind.length===1||objEv(sameKind[0])>objEv(sameKind[1]))){const p=sameKind[0];const noun=(p.objectNouns??[]).find(n=>has(sentence,n)||has(frame,n));
+    return {value:p.id,state:'inferred',evidence:[...top.evidence,'object:'+noun+(objEv(p)===2?'@sentence':'@frame')],rule:'object_of_the_value',alternatives:[top.d.id],kind};}}}
  return {value:top.d.id,state:top.evidence.some(e=>e.startsWith('label:'))?'stated':'inferred',evidence:top.evidence,rule:top.evidence.some(e=>e.startsWith('label:'))?null:'term_in_context_only',alternatives:scored.slice(1).filter(s=>s.score>0).map(s=>s.d.id),kind};
 }
 
@@ -364,7 +433,11 @@ export function basisOf(defs:PropertyDefinitions,d:PropertyDefinition|null,kind:
 /** Interpret one observation with the definitions: attribution, conditions with relevance, missing defining dimensions, basis. */
 export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean;roleModel?:'s90'|'evidence'|'links';
  /** S92 it1: add the grammatical situation type of the value's clause as sentence-level evidence */
- situation?:boolean}={}):DefinitionInterpretation{
+ situation?:boolean;
+ /** S93: report provenance and nature separately (needs roleModel 'links'); `relations` gives the page model for assumptions */
+ provenance?:boolean;relations?:DocumentRelations|null;
+ /** S93: the object of the value decides between same-kind properties (see attributeProperty) */
+ objectResolution?:boolean}={}):DefinitionInterpretation{
  const category=o.category??null;const label=norm(o.label),context=norm(o.context);
  const property=attributeProperty(defs,qk,o,opts);const d=property.value?defs.properties.get(property.value)!:null;
  const readings:DimensionReading[]=[];const untyped:string[]=[];
@@ -393,7 +466,10 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
     if(stp==='episodic')ev.measured.push('situation_episodic');if(stp==='attributive')ev.declared.push('situation_attributive');}
    role=opts.roleModel==='links'?roleFromLinks(ev,o.structure?.links??[]):roleFromEvidence(ev);}
   subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
- return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,
+ let evidence:EvidenceReading|undefined;
+ if(opts.provenance&&opts.roleModel==='links'&&o.valueAt!=null&&o.label)evidence=provenanceAndNature(role,{unit:o.unit,label:o.label,valueAt:o.valueAt,surface:String(o.surface??o.value??'')},o.structure?.links??[],opts.relations??null,
+  {currency:unitClass(defs,o.unit)!==null,periodUnit:unitPeriod(o.unit)||basis.value==='per_period'});
+ return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,evidence,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};
 }
 

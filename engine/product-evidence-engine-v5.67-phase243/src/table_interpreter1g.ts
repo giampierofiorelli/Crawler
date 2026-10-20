@@ -461,6 +461,13 @@ function observations(x:Ctx,h:Hypothesis1G):Observation1G[]{
 // Context conditions (document structure, not a prose reader): explicit test parameters in method statements linked to the table.
 const PARAMETERS:RegExp[]=[/(?:[£$€]\s?\d+(?:\.\d+)?|\d+(?:\.\d+)?\s?p)\s?(?:per|\/)\s?kwh/gi,/\b\d+\s?(?:hours?|hrs?|h)\s(?:a|per)\s(?:day|week)\b|\b24\/7\b/gi,
  /\bat (?:a distance of )?\d+(?:\.\d+)?\s?(?:m|cm|ft|feet|metres?|meters?)\b/gi,/\bat \d+\s?°\s?[cf]\b/gi,/\b\d[\d,]*\s?(?:cu\.? ?ft|cubic feet|sq\.? ?ft|square feet|m²|m2|m³|m3)\s(?:test )?room\b/gi,/\b(?:[A-Z][a-z]+ ){1,2}[Mm]ode\b/g];
+/** S93: the parameters a statement states (an electricity tariff, hours of use, a distance, a temperature, a room size, a
+ * mode), with the 1G patterns; used to keep a calculation's assumptions identifiable. */
+export function statedParameters1G(text:string):{kind:'tariff'|'usage'|'distance'|'temperature'|'room'|'mode';text:string}[]{
+ const kinds=['tariff','usage','distance','temperature','room','mode'] as const;const out:{kind:typeof kinds[number];text:string}[]=[];
+ PARAMETERS.forEach((re,i)=>{for(const m of text.matchAll(new RegExp(re.source,re.flags)))out.push({kind:kinds[i],text:m[0].trim()});});return out;}
+/** S93: a statement that announces a calculation or estimate (1G cue), and a cost or recurrence context. */
+export const isCalculationText1G=(t:string)=>EXPLICIT_ESTIMATE.test(t)||RECURRENCE.test(t)&&COST_CONTEXT.test(t);
 function contextConditions(x:Ctx,productNames:string[],dims:string[]):{text:string;source:string}[]{
  const out:{text:string;source:string}[]=[];void productNames;
  for(const l of x.context.filter(l=>l.applies&&l.sharedDimensions.some(d=>dims.includes(d)))){const t=x.doc.blocks[l.block].text;
@@ -507,7 +514,9 @@ function inheritParallelLinks(result:TableInterpretation1G[],doc:DocumentModel1G
   const twin=result.find(u=>u!==t&&u.context.some(l=>l.applies)&&sig(u)===s&&parent(u)===parent(t)&&Math.abs(u.table-t.table)<=2);if(!twin)continue;
   const linked=twin.observations.filter(o=>numeric(o)&&o.evidence.level?.startsWith('linked_'));if(!linked.length)continue;
   const classes=new Set(linked.map(o=>o.evidence.class));if(classes.size!==1)continue;const cls=[...classes][0];
-  for(const o of t.observations)if(numeric(o)&&o.evidence.class==='unknown')o.evidence={class:cls,level:'linked_parallel_table',support:[`twin table ${twin.table} (same quantity signature, same parent section) is ${cls} by a linked statement`],contradictions:[]};}
+  // S93: the inherited value keeps the twin's originating statements, so its provenance stays verifiable
+  const links=[...new Set(linked.flatMap(o=>o.methodLinks))];
+  for(const o of t.observations)if(numeric(o)&&o.evidence.class==='unknown'){o.evidence={class:cls,level:'linked_parallel_table',support:[`twin table ${twin.table} (same quantity signature, same parent section) is ${cls} by a linked statement`],contradictions:[]};o.methodLinks=links;}}
 }
 /** Interpret every table of a document. Tables outside the limits or not completely acquired are listed, never dropped. */
 export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly InterpreterLessonId1G[];text?:TextModel1G}={}):DocumentInterpretation1G{
