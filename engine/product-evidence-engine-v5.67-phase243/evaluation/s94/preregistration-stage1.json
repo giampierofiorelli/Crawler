@@ -1,0 +1,28 @@
+{
+ "schema": "pee.s94.preregistration.v1",
+ "stage": "1 of 3: joint table and document inference",
+ "at": "2026-10-20",
+ "owner": "owner review of S93 and consolidated instruction, verbatim in .claude/skills/pee-guided-learning/references/owner-review-s93-2026-10-20.md",
+ "roadmapStep": "R3 / R3-C (unchanged; R3 stays open)",
+ "writtenBefore": "any Stage 1 arm is scored; the relation code was probed only for coverage counts on the S93 raw pages (tables fitted, rows typed), never against a reference",
+ "question": "Does whole-table inference (one hypothesis per column, verified by arithmetic; statistic rows; row subjects) recover the calculated values, their inputs and the exact product of each row that S93's sentence-level rules missed, without new false calculations?",
+ "references": ["Limaye, Sarawagi, Chakrabarti 2010 (collective annotation of tables)", "Zhang 2017 TableMiner+ (iterative whole-table inference with context)", "Zhang et al. 2020 Sato (column types in the context of the table)", "Wang et al. 2021 TUTA (tree-based cell dependencies)"],
+ "mechanism": {
+  "relative_difference": "a percentage column explained, row by row, by ONE formula and ONE reference value v0; each row's printed precision bounds v0 (interval stabbing); at least 3 rows and 60% of the column; the best formula must beat the others. Inputs: the row's own value cell and the reference row. No words",
+  "statistic_over_set": "a row whose label begins with a statistic (average, mean, median, minimum, maximum, range, total) or states n=: its values are calculated over a set",
+  "row_subject": "the row label against the document's principal product: every principal name token present = reviewed product; statistic label = set; another proper name = other product",
+  "comparative_prose": "(arm T1c only) a percentage in a comparative construction (higher/lower/... than, relative to, compared with, delta) is a relative difference: closed-class English grammar"
+ },
+ "arms": {
+  "C1": "S92 rules (frozen baseline, as in the S93 check)",
+  "R1": "S93 frozen (provenance x nature, argument links)",
+  "T1": "R1 + table relations (relative difference, statistic rows, row subjects)",
+  "T1c": "T1 + comparative prose",
+  "T1-noarith": "ablation: T1 without the relative-difference fit",
+  "T1-nostat": "ablation: T1 without statistic rows"
+ },
+ "development": "SPENT material only: the S93 check (462 values; its first run is committed unchanged in evaluation/s93/check-firstrun.json) and the S93 development reference (S89+S91, 293 values). At most three reformulations, then freeze",
+ "independentCheck": "after the freeze, on a new wave (never-examined pages, at least one never-taught category), with a blind reference sealed by hash before any arm runs; reported as first run unchanged (Stage 4 of S94)",
+ "metrics": ["nature correct over technical values", "calculated: precision, recall", "false calculations on reference measured/declared values", "provenance correct", "links reaching the reference evidence line, and lines per value", "inputs found: an input or assumption text on a reference assumption line", "row subject: reviewed vs other product, on reference values with subject reviewed_product or other_product (set counts as other product)", "abstentions"],
+ "stopRule": "if T1 does not raise calculated recall on the S93 laptops without lowering nature-correct overall, Stage 1 records a negative result and stops"
+}
