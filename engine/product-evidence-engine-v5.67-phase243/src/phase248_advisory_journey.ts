@@ -7,6 +7,7 @@
  * so the honest outputs today are clarification, scoped guidance and a research plan.
  * Deterministic for the same text and store state. English-first.
  */
+import {negationAt,scopeVocabulary,stanceAt} from './language_scope.js';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
 import {type SafetyNotice248,matchNotice248,categorySafetyProfile248} from './phase248_safety_notices.js';
 import {relations247} from './phase247_category_relations.js';
@@ -76,9 +77,8 @@ const PRODUCT_WORDS=new Set(['machine','maker','fryer','air','airfryer','toaster
  * concept's own descriptions (its aliases and the statements of items carrying it), within one category.
  * Requires two distinct overlapping need words, or one alias word that is rare in the category. */
 export const DESCRIBED_THRESHOLD248=2.2;
-/** S80: negators whose scope excludes words from need inference, and the words that end that scope. */
-const NEGATORS80=new Set(['not','no','never','without','nor','neither','none','hardly','barely',"don't","doesn't","isn't","won't","can't",'dont','doesnt','isnt','wont','cant']);
-const CLAUSE80=new Set(['and','but','or','while','whilst','which','that','because','so','although','though']);
+// R3-P: the S80 negator and clause-word sets (NEGATORS80, CLAUSE80) are retired into the shared scope (src/language_scope.ts,
+// vocabulary in the quantity-knowledge pack language.en.scope).
 function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string[],registry:readonly CategoryEntry248[]){
  const out:{key:string;alias:string;start:number;end:number}[]=[];
  // Phase250 (development, after set 3): on long requests the paraphrase overlap mostly fired by chance (real sets and
@@ -93,8 +93,8 @@ function describedConcepts(t:string,store:KnowledgeStore246,cats:readonly string
  // evidence for a need: in the S80 first run "proper+without+wat" inferred a drying need from "without using a lot of
  // water". The scope runs from the negator to the next clause boundary, over at most four content words.
  const ws=t.split(' ');const negated=new Set<number>();
- for(let i=0;i<ws.length;i++)if(NEGATORS80.has(ws[i])){let content=0;negated.add(i);
-  for(let k=i+1;k<ws.length&&content<4;k++){if(CLAUSE80.has(ws[k]))break;negated.add(k);if(!STOP.has(ws[k]))content++;}}
+ // R3-P: the scope is the shared one (src/language_scope.ts): a word is negated when a negator governs it
+ {let pos=0;const sv=scopeVocabulary();for(let i=0;i<ws.length;i++){if(ws[i]&&(sv.negators.includes(ws[i])||/n't$/.test(ws[i])||negationAt(t,pos,sv)))negated.add(i);pos+=ws[i].length+1;}}
  const reqTokens=new Set(ws.filter((w,i)=>w&&!negated.has(i)&&!STOP.has(w)&&!productWord(w)).map(stem).filter(w=>w.length>=3&&!PRODUCT_WORDS.has(w)&&!catWords.has(w)));
  for(const c of cats){
   const items=store.categoryItems246(c).filter(i=>i.concept);
@@ -342,8 +342,11 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  // Phase252 (development): a need the user says they do not care about or do not need ("not bothered about
  // noise-cancelling", "not looking for wireless or noise-cancelling", "ANC doesn't matter") is not a need. Indifference
  // markers only: "don't want cold spots" or "no more cold spots" still express a need.
- const indifferent=(h:{start:number;end:number})=>h.start>=0&&(/(?:^| )(?:not bothered (?:about|by|with)|(?:don't|dont|do not) (?:care|need|mind)(?: about| for)?|not (?:looking for|interested in|fussed about)|no need for)(?: \S+){0,4} ?$/.test(t.slice(Math.max(0,h.start-70),h.start).trimEnd()+' ')
-  ||/^(?: \S+){0,2} (?:doesn't|doesnt|does not|don't|dont|do not) matter\b|^(?: \S+){0,2} (?:is|are) not (?:a )?(?:requirement|must|necessary|needed|important)\b|^(?: \S+){0,2} not (?:needed|required|necessary|important)\b/.test(t.slice(h.end,h.end+60)));
+ // R3-P: the Phase252 indifference patterns are retired into the shared scope: a need is set aside when its clause is
+ // indifferent to it ("noise doesn't bother me", "ANC doesn't matter", "not fussed about wifi") or a negated requirement
+ // governs it ("I don't need X", "no need for X"); a negated wish ("don't want cold spots") still expresses a need.
+ const indifferent=(h:{start:number;end:number})=>{if(h.start<0)return false;const st=stanceAt(t,h.start,h.end);
+  return st?.stance==='indifferent'||(st?.stance==='negated'&&st.kind==='requirement');};
  const exactHits=longestMatches(t,conceptEntries,true).filter(h=>!modifiesProduct(h));
  // A paraphrase of a need the user has set aside everywhere it is named is set aside too.
  const setAside=new Set(exactHits.filter(h=>h.start>=0).map(h=>h.key).filter(k=>exactHits.filter(h=>h.key===k&&h.start>=0).every(indifferent)));

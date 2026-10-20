@@ -121,7 +121,9 @@ test('request: an agreed bound stays a stated requirement; two different limits 
  assert.deepEqual(C('A kettle of at least 1.5 litres and a toaster of at least 1.5 litres'),['capacity_min=1.5:stated_in_request','capacity_min=1.5:implied'],'the same limit twice is not a conflict');
  assert.deepEqual(C('A 2000-2400W kettle'),['power_min=2000:candidate'],'a bare range presumes a bound: asked, never applied');
  assert.deepEqual(C('a dehumidifier between 3 and 5 litres'),['capacity_min=3:stated_in_request','capacity_max=5:stated_in_request'],'"between" states both ends (S103)');
- assert.deepEqual(C('I do not need at least 5 litres'),['capacity_min=5:candidate'],'a negated requirement is never stated');
+ // R3-P (2026-10-20, owner authorisation R3-P): a negated requirement is read by the shared scope (src/language_scope.ts): the
+ // side is negated and the limit is a preference (reported, never applied); before R3-P it was a candidate with the side unchanged
+ assert.deepEqual(C('I do not need at least 5 litres'),['capacity_max=5:preference'],'a negated requirement is never stated');
  assert.deepEqual(C('something nice for the kitchen'),[],'an unknown request states no requirement');});
 
 // S103 (D31/F12): the local reader (RQ01/RQ02) is superseded; one bound reader remains, so a local reading no longer counts

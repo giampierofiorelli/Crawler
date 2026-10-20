@@ -12,7 +12,8 @@ const rawPack=():QuantityPack=>JSON.parse(readFileSync(new URL('../../resources/
 const typed=(k:QuantityKnowledge,surface:string,ctx:Parameters<typeof typeQuantity>[2]={})=>{const f=findQuantities(k,surface)[0];assert.ok(f,'no quantity in '+surface);return typeQuantity(k,f,ctx);};
 
 test('pack: validated, sourced and identified by its digest; UCUM is recorded as not used', ()=>{
- assert.match(qk.identity,/^qk\.2\.5\+kr\.4:[0-9a-f]{16}$/,'S103: qk.2.5 (the bound words of the retired Phase253 local reader)');
+ // R3-P (2026-10-20): qk.2.6 adds language.en.scope (negation, clause and contrast vocabulary of src/language_scope.ts)
+ assert.match(qk.identity,/^qk\.2\.6\+kr\.4:[0-9a-f]{16}$/,'R3-P: qk.2.6 (the shared scope vocabulary)');
  const p=rawPack();assert.ok(p.sources.find(s=>s.id==='ucum_not_used')!.use.includes('NOT incorporated'));
  for(const k of p.kinds)assert.ok(p.sources.some(s=>s.id===k.source));
  const bad=rawPack();bad.metrics[0].kind='no_such_kind';assert.throws(()=>loadQuantityKnowledge(bad),/quantity_knowledge_invalid/);

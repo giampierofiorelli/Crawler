@@ -9,6 +9,7 @@
  * This is not a second recommendation engine: every check is decideAdvice249's. A specification shortlist says which
  * known products' declarations meet the stated limits; it is not a quality ranking and not the whole market.
  */
+import {stanceAt} from './language_scope.js';
 import {requestCoverage80} from './request_coverage80.js';
 import {createHash} from 'node:crypto';
 import type {KnowledgeStore246} from './phase246_knowledge_store.js';
@@ -398,16 +399,22 @@ function applyClassRequirements253(out:Advice253,text:string,qk:QuantityKnowledg
  * list, and only where it qualifies the product asked for: before its name ("quiet dishwasher", "very reliable kettle") or
  * predicated of it ("a dishwasher quiet enough", "a kettle that is reliable"). It becomes a stated objective, which the
  * answer reports as not assessed unless evidence assesses it; it never filters or orders products. */
-let QK_ASPECTS253:{id:string;terms:string[]}[]|null=null;
+let QK_ASPECTS253:{id:string;terms:string[];negative?:string[]}[]|null=null;
 function aspectObjectives253(text:string,aliases:readonly string[]):string[]{
- QK_ASPECTS253??=(loadQuantityKnowledge().pack.aspects??[]).filter(a=>a.id!=='other').map(a=>({id:a.id,terms:a.terms.filter(t=>/^[a-z]+$/.test(t))}));
+ QK_ASPECTS253??=(loadQuantityKnowledge().pack.aspects??[]).filter(a=>a.id!=='other').map(a=>({id:a.id,terms:a.terms.filter(t=>/^[a-z]+$/.test(t)),negative:a.negative??[]}));
  const low=text.toLowerCase();const out:string[]=[];
  const names=aliases.filter(a=>a.length>=3).map(a=>a.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).sort((a,b)=>b.length-a.length);if(!names.length)return out;
  const N=`(?:${names.join('|')})s?`;
  for(const a of QK_ASPECTS253)for(const t of a.terms){
   const before=new RegExp(`\\b(?:(?:most|very|really|quite|super|extra)\\s+)?${t}\\s+(?:(?:and|or)\\s+[a-z-]+\\s+)?(?:[a-z-]+\\s+){0,1}${N}\\b`);
   const after=new RegExp(`\\b${N}\\s+(?:(?:that|which)\\s+(?:is|are|'s|runs|stays)\\s+(?:very\\s+|really\\s+)?)?${t}\\b(?=\\s+enough|\\s*(?:[,.;!?]|$|\\s+and\\b|\\s+for\\b))`);
-  if(before.test(low)||after.test(low)){const ph=`${t} (${a.id.replace(/_/g,' ')})`;if(!out.some(o=>o.startsWith(t+' ')))out.push(ph);}}
+  const hit=before.exec(low)??after.exec(low);
+  if(hit){
+   // R3-P: the shared scope (src/language_scope.ts): an aspect the request is indifferent to, or a negated quality, is not an
+   // objective ("a quiet dishwasher? noise doesn't bother me"); a negated negative quality still is ("not a loud kettle")
+   const ti=hit.index+hit[0].search(new RegExp(`\\b${t}\\b`));const st=ti>=hit.index?stanceAt(text,ti,ti+t.length):null;
+   if(st?.stance==='indifferent'||(st?.stance==='negated'&&!(a.negative??[]).includes(t)))continue;
+   const ph=`${t} (${a.id.replace(/_/g,' ')})`;if(!out.some(o=>o.startsWith(t+' ')))out.push(ph);}}
  return out;
 }
 function adviseFromRequestBase253(text:string,store:KnowledgeStore246,registry:readonly CategoryEntry248[],opts:{ranking?:RankingContext253|null}={}):Advice253{

@@ -11,6 +11,7 @@
  * A desired limit is never a measurement or a declaration. Power is compared as declared: the request does not say
  * whether rated input or output power is meant, so a power constraint carries that caution.
  */
+import {negationAt} from './language_scope.js';
 import {canonicalUnit245,parseNumber245} from './phase245_value_normalizer.js';
 import {composeQuestion125} from './phase125_compositional_dialogue_frame.js';
 import type {Constraint253} from './phase253_advice_contract.js';
@@ -52,8 +53,8 @@ export interface ConstraintExtraction253 {constraints:RequestConstraint253[];unm
 // S103 (D31/F12): the bound words of this reader (MIN_BEFORE, MIN_AFTER, MAX_BEFORE, MAX_AFTER, the property word before an
 // after-bound) are retired into the quantity-knowledge pack (qk.2.5); one bound reader, shared with documents, reads them.
 const SPACE=/\b(?:space|opening|gap|cupboard|shelf|alcove|cabinet|recess|nook|fits?|fit in|fit into|fit inside|fit under)\b/;
-const NEGATION=/\b(?:not|never|n't|no need|don't need|doesn't need|does not need|do not need|needn't)\b/;
-const BOUND_NEGATIONS=/\b(?:no|not) (?:more|less|bigger|larger|wider|taller|higher|deeper|heavier)\b/g;
+// R3-P (owner authorisation 2026-10-20): the local NEGATION and BOUND_NEGATIONS patterns are retired; negation scope and its
+// kind (proposition or requirement) come from the shared mechanism (src/language_scope.ts), through quantityBound.
 // S85 (intervention A): what a quantity IS (its unit and its kind) comes from the quantity knowledge only; this reader keeps
 // what is specific to checking a request against retained declarations: the bound, the property, the available space and
 // the criterion. The unit symbol it returns is the Phase245 declaration vocabulary the checks compare with.
@@ -70,7 +71,7 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
  const lower=text.toLowerCase().replace(/[’‘]/g,"'");
  const constraints:RequestConstraint253[]=[];const unmapped:{span:string;reason:string}[]=[];
  // S103: what the readers saw for each constraint (parallel to constraints)
- const meta:{stated:boolean;elliptic:'hedge'|'correction'|'alternative'|null}[]=[];
+ const meta:{stated:boolean;elliptic:'hedge'|'correction'|'alternative'|null;negatedNeed?:boolean}[]=[];
  for(const f of findQuantities(qk253(),text)){
   // one kind only: an ambiguous unit ("dB") or another kind (a rate "12 litres a day", a pressure) is not this reader's
   const dim=f.unit.kinds.length===1?DIMENSION_OF_KIND253[f.unit.kinds[0]]??null:null;if(!dim)continue;
@@ -102,7 +103,11 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   // a range stated with "between" has the kind's bound; a bare range only a presumption (asked)
   if(range&&bound===null){bound=rangeDefault;}
   const inferredBound2=range&&!between&&!dec?.value&&!boundConflict;
-  const negated=NEGATION.test(before.replace(BOUND_NEGATIONS,' '));
+  // R3-P: a negated bound word is already read by quantityBound (the side flips). A requirement negation ("I don't need more
+  // than 6 L") says what would be enough, never what is excluded: a preference, reported and never applied. A negator that
+  // governs the quantity itself without a bound word leaves the limit unclear (asked).
+  const negatedNeed=sq.negation?.kind==='requirement';
+  const negated=negatedNeed||(!sq.negation&&!!negationAt(text,f.start));
   let property:RequestConstraint253['property']|null=null;
   // Reality check 2026-10-16: a volume said of a water tank or reservoir is the tank's, not the product's capacity
   // ("a water tank of at least 1.5 litres"); read as product capacity it was checked against boiler capacities.
@@ -119,7 +124,8 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const pw=(qk253().pack.language.en.boundPropertyWords??[]).join('|');const cueRe=sq.cue?sq.cue.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'):null;
   const cue=cueRe?(new RegExp(`(?:^|[^\\p{L}])(${cueRe}\\s*)$`,'iu').exec(before)?.[1]??''):'';
   const tail=cueRe&&!cue?(new RegExp(`^\\s*(?:(?:${pw})\\s+)?${cueRe}(?![\\p{L}])`,'iu').exec(after)?.[0]??''):'';
-  const spanStart=spanFrom-cue.length;const span=text.slice(spanStart,m.index+m[0].length+tail.length).trim();
+  // R3-P: a negated bound keeps its negator in the span ("no taller than 35 cm", "nothing over 6 L")
+  const spanStart=sq.negation&&sq.negation.start<spanFrom-cue.length?sq.negation.start:spanFrom-cue.length;const span=text.slice(spanStart,m.index+m[0].length+tail.length).trim();
   if(!property){if(dim==='length'||dim==='power'||dim==='volume')unmapped.push({span:span0,reason:`unclear which property ${unit} refers to`});continue;}
   const clear=!!bound&&!negated&&!inferredBound2&&!boundConflict;
   const note=boundConflict?'the request\'s words read both as a minimum and as a maximum: please confirm which':property==='power'?'declared power may be rated input or output power; compared as each source declares it':space?'the product must fit inside the space you described; clearances are not added':null;
@@ -135,8 +141,11 @@ export function extractConstraints253(text:string):ConstraintExtraction253{
   const eff=bound??(property==='capacity'||property==='water_tank'?'min':null);
   const criterion=eff?CRITERION[`${property}:${eff}`]:undefined;
   if(!criterion){unmapped.push({span,reason:`no checkable criterion for a ${bound??'unbounded'} ${property}`});continue;}
-  const cl=closureOf253(sq.cue??'');
-  constraints.push(mk(criterion,value,eff!,cl??'inclusive',cl?'word':space?'space':'default'));meta.push({stated:clear,elliptic:null});
+  // R3-P: the negation of a bound inverts its closure: not(more than 6) is at most 6, not(under 6) is at least 6
+  const cl0=closureOf253(sq.cue??'');const cl=cl0&&sq.negation?(cl0==='strict'?'inclusive':'strict'):cl0;
+  const c0=mk(criterion,value,eff!,cl??'inclusive',cl?'word':space?'space':'default');
+  if(negatedNeed){c0.status='preference';c0.note=`a negated need ("${sq.negation!.negator} … ${sq.cue}"): it says what would be enough, not what is excluded; reported, never used to exclude a product`;}
+  constraints.push(c0);meta.push({stated:clear,elliptic:null,negatedNeed});
   if(range)unmapped.push({span,reason:`the ${criterion.endsWith('_min')?'upper':'lower'} limit of the range has no checkable criterion`});
  }
  // Budget: the Phase125 reading (anchored currency limits).
@@ -176,7 +185,7 @@ const MAX_WORD253=/^(?:at most|maximum(?: of)?|max\.?|no more than|not more than
 const FOLLOW253=/^\s*(?:$|[,.;!?)]|(?:for|if|when|and|but|please|then|instead|tops|max|min|at|in|on|as|so|or|would|should|is|thanks?)\b)/i;
 function desc253(c:RequestConstraint253):string{const w=c.bound==='min'?(c.closure==='strict'?'more than':'at least'):(c.closure==='strict'?'less than':'at most');
  return `${w} ${c.value} ${c.unit} (${c.property.replace('_',' ')})`;}
-function resolveRequestLimits253(text:string,cs:RequestConstraint253[],meta:{stated:boolean;elliptic:'hedge'|'correction'|'alternative'|null}[],unmapped:{span:string;reason:string}[]){
+function resolveRequestLimits253(text:string,cs:RequestConstraint253[],meta:{stated:boolean;elliptic:'hedge'|'correction'|'alternative'|null;negatedNeed?:boolean}[],unmapped:{span:string;reason:string}[]){
  const V=requestSemanticsRules().vocabulary.intent;
  // 1. Elliptical limits: a bare number after a hedge, correction or alternative word refers back to the previous limit
  const starts=new Set(findQuantities(qk253(),text).map(q=>q.start));
@@ -219,10 +228,10 @@ function resolveRequestLimits253(text:string,cs:RequestConstraint253[],meta:{sta
  cs.forEach((_,i)=>{if(meta[i].stated)ff.stated_bound.push([ids[i]]);if(hedge.has(i))ff.hedge.push([ids[i]]);});
  for(const [e,l] of corrected)ff.corrected_by.push([ids[e],ids[l]]);
  const fd=decide(evaluate(requestSemanticsRules().program,ff));
- cs.forEach((c,i)=>{c.force=(fd.find(d=>d.object===ids[i]&&d.field==='force')?.value??null) as RequestConstraint253['force'];});
+ cs.forEach((c,i)=>{c.force=(fd.find(d=>d.object===ids[i]&&d.field==='force')?.value??null) as RequestConstraint253['force'];if(meta[i]?.negatedNeed)c.force='preference';});
  for(const [e,l] of corrected){cs[e].relations.push({kind:'corrected_by',with:l});cs[l].relations.push({kind:'corrects',with:e});}
  cs.forEach(c=>{if(c.force==='superseded'){c.status='superseded';c.note=`replaced by your later "${cs[c.relations.find(r=>r.kind==='corrected_by')!.with].span}"`;}
-  else if(c.force==='preference'){c.status='preference';c.note='a preference: reported, never used to exclude a product';}});
+  else if(c.force==='preference'){c.status='preference';if(!c.note?.startsWith('a negated need'))c.note='a preference: reported, never used to exclude a product';}});
  // 4. Combination (request_combination); only clear, mandatory limits combine or contradict
  const cf:Record<string,string[][]>={mandatory:[],preference:[],frame:[],limit:[]};
  cs.forEach((c,i)=>{if(c.force==='requirement'&&c.status==='stated_in_request')cf.mandatory.push([ids[i]]);if(c.force==='preference')cf.preference.push([ids[i]]);

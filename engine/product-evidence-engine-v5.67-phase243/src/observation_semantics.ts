@@ -15,6 +15,7 @@
  * Every cue kind is produced by one registered reader below (CUE_READERS); the fitness tests check that the rules use only
  * declared cues and that every reader's cues are covered by rules.
  */
+import {maskNegated} from './language_scope.js';
 import {readFileSync} from 'node:fs';
 import {compileRuleSet,evaluate,decide,claimRules,type RuleSet,type CompiledProgram,type Decision,type ClaimRule} from './knowledge_rules.js';
 import {observationRole86c} from './phase225_transient_test_probe.js';
@@ -105,9 +106,17 @@ export function valueReferenceCues(defs:PropertyDefinitions,sent:string,start:nu
   if(new RegExp('\\b(?:a|the)\\s+'+esc(n)+'\\s+of\\s*$').test(before))return [{kind,scope:'value',why:'"'+n+' of" value'}];}
  return [];
 }
+/** R3-P: the sentence with every test, declaration and certification cue that a negator governs blanked out (same length). */
+function unnegatedCues(defs:PropertyDefinitions|null,sent:string):string{
+ const words=(ws:readonly string[]|undefined)=>ws?.length?[new RegExp('(?:^|[^\\p{L}\\p{N}])(?:'+ws.map(esc).join('|')+')(?![\\p{L}\\p{N}])','iu')]:[];
+ return maskNegated(sent,[DECLARATION_CUE272,DECLARED_BODY272,...words(defs?.pack.evidenceCues?.declaration)],undefined,[TEST_CONTEXT272,...words(defs?.pack.evidenceCues?.measurement)]).text;
+}
 /** Cues of the value's own clause. `dim`: the unit's dimension (S86c conditions depend on it). */
 export function clauseCues(qk:QuantityKnowledge,defs:PropertyDefinitions,text:string,start:number,end:number,unit:string,o:{dim:string;propertyStated:boolean}):Cue[]{
- const s=sentenceOf(text,start,end);const sent=s.text;const cl=clauseOf(sent,s.start,s.end);const clause=cl.text;const out:Cue[]=[];
+ // R3-P: cues a negator governs are not cues ("our measurements, not the manufacturer's figures": no maker claim); the shared
+ // scope (src/language_scope.ts) blanks them out, keeping offsets. A denied claim is never read as a measurement either:
+ // only positive measurement cues count.
+ const s=sentenceOf(text,start,end);const sent=unnegatedCues(defs,s.text);const cl=clauseOf(sent,s.start,s.end);const clause=cl.text;const out:Cue[]=[];
  const push=(kind:string,why:string,scope='clause')=>{if(!out.some(c=>c.kind===kind&&c.scope===scope))out.push({kind,scope,why});};
  if(o.propertyStated)push('own_property_stated','the definitions state the value\'s own property in its words','value');
  const r=observationRole86c(sent,s.start,s.end,o.dim);
@@ -137,7 +146,7 @@ export function clauseCues(qk:QuantityKnowledge,defs:PropertyDefinitions,text:st
 }
 /** Test or declaration statements in the value's sentence but outside its clause (context, not evidence about it). */
 export function sentenceCues(text:string,start:number,end:number):Cue[]{
- const s=sentenceOf(text,start,end);const cl=clauseOf(s.text,s.start,s.end);const rest=s.text.replace(cl.text,' ');const out:Cue[]=[];
+ const s0=sentenceOf(text,start,end);const s={...s0,text:unnegatedCues(null,s0.text)};const cl=clauseOf(s.text,s.start,s.end);const rest=s.text.replace(cl.text,' ');const out:Cue[]=[];
  if(TEST_CONTEXT272.test(rest)&&!TEST_CONTEXT272.test(cl.text))out.push({kind:'sentence_test_context',scope:'sentence',why:'test statement elsewhere in the sentence'});
  if(DECLARATION_CUE272.test(rest)&&!DECLARATION_CUE272.test(cl.text))out.push({kind:'sentence_declaration',scope:'sentence',why:'declaration elsewhere in the sentence'});
  return out;

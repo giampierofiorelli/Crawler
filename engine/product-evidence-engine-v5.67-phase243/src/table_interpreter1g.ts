@@ -26,6 +26,7 @@
  *     linked method or declaration statements in structural scope with a compatible quantity, page method sections);
  *     conflicting evidence at that level gives "disputed". Structure is never taken as proof of scientific validity.
  * Limits (explicit): tables with 2-30 rows and 2-12 columns whose acquisition is complete; others are listed with a reason. */
+import {maskNegated} from './language_scope.js';
 import {createHash} from 'node:crypto';
 import {acquireTables1F,decodeHtml5Text1F,type TableAcquisition1F,type SourceCell1F} from './table_acquisition1f.js';
 import {parseHtml245,walk245,locator245,type Node245} from './phase245_html_dom.js';
@@ -162,7 +163,11 @@ const BLOCK_TAGS=new Set(['p','li','dt','dd','blockquote','figcaption','pre','su
 // audit S77 (A1-1): a recurrence ("per day", "per cycle") makes an estimate only for a cost; for litres or kWh it is
 // the reporting basis of a measured or declared value
 const COST_CONTEXT=/\b(?:costs?|price|bill|spend|tariff|pence|cents?)\b|[£$€]/i;
-const blockKind=(t:string):Block1G['kind']=>(EXPLICIT_ESTIMATE.test(t)||(RECURRENCE.test(t)&&COST_CONTEXT.test(t)))&&/\b(?:we|i|our)\b/i.test(t)?'estimate':TEST_CONTEXT272.test(t)||(/\b(?:we|i)\b/i.test(t)&&TEST_CUE.test(t))?'method':DECLARATION_CUE272.test(t)?'declaration':'other';
+// R3-P: a test or declaration cue that a negator governs ("not what manufacturers claim", "we did not test") is not a cue
+// (shared scope, src/language_scope.ts); the block is classified on the text with the negated cues blanked out
+const unnegated1G=(t:string)=>maskNegated(t,[DECLARATION_CUE272],undefined,[TEST_CONTEXT272,TEST_CUE]).text;
+const blockKind=(t0:string):Block1G['kind']=>{const t=unnegated1G(t0);return blockKindRaw(t);};
+const blockKindRaw=(t:string):Block1G['kind']=>(EXPLICIT_ESTIMATE.test(t)||(RECURRENCE.test(t)&&COST_CONTEXT.test(t)))&&/\b(?:we|i|our)\b/i.test(t)?'estimate':TEST_CONTEXT272.test(t)||(/\b(?:we|i)\b/i.test(t)&&TEST_CUE.test(t))?'method':DECLARATION_CUE272.test(t)?'declaration':'other';
 /** WD: the 1G block classification (method, declaration, estimate, other), shared with the whole-document reader. */
 export const blockKind1G=(t:string):Block1G['kind']=>blockKind(t);
 export const isMethodHeading1G=(t:string)=>METHOD_HEAD.test(t);
@@ -490,7 +495,8 @@ function classify(x:Ctx,cell:SourceCell1F,e:Element1G,labels:SourceCell1F[],dime
   // the text that introduces the table (the two blocks just before it in its section) is read with the same cues as a
   // caption, one level below it; it is evidence about the table whatever dimensions it names (GL4 applies to other links)
   {level:'table_context',text:x.t.context.before.slice(-2).map(b=>b.decodedText).join(' | ')}];
- for(const L of levels){const m=TEST_CUE.test(L.text)||TEST_CONTEXT272.test(L.text),d=DECLARATION_CUE272.test(L.text)||SPEC_CUE.test(L.text),c=CERT_CUE.test(L.text),s=(x.L.has('GL5_recurrence_qualifies_costs')?EXPLICIT_ESTIMATE:ESTIMATE_CUE).test(L.text);// recurrence (per month, /day) qualifies costs only, handled with the value
+ for(const L0 of levels){const L={level:L0.level,text:maskNegated(L0.text,[DECLARATION_CUE272,SPEC_CUE,CERT_CUE],undefined,[TEST_CUE,TEST_CONTEXT272]).text};// R3-P: negated cues are not cues
+  const m=TEST_CUE.test(L.text)||TEST_CONTEXT272.test(L.text),d=DECLARATION_CUE272.test(L.text)||SPEC_CUE.test(L.text),c=CERT_CUE.test(L.text),s=(x.L.has('GL5_recurrence_qualifies_costs')?EXPLICIT_ESTIMATE:ESTIMATE_CUE).test(L.text);// recurrence (per month, /day) qualifies costs only, handled with the value
   const found:[EvidenceClass1G,string][]=[];if(c)found.push(['nominal_certified','certification term']);if(d&&!c)found.push(['manufacturer_declared','declaration or specification term']);
   if(s)found.push(['derived_or_estimated','estimate or calculation term']);if(m)found.push(['publisher_measured','test or measurement term']);
   // S102: an introduction that names more than one kind of evidence is not decisive at its level: the linked statements

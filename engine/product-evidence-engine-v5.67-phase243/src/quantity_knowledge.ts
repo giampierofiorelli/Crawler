@@ -15,6 +15,7 @@
  * What it never is: product evidence, a permission, or a ranking. Every result says what was established, from which
  * words or unit, and what stays unresolved. The pack's digest is part of any reading identity that uses it.
  */
+import {negationAt,scopeVocabulary} from './language_scope.js';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {compileRuleSet,evaluate,explain,type RuleSet,type CompiledProgram,type Model,type Fact} from './knowledge_rules.js';
@@ -60,6 +61,8 @@ export interface QuantityPack {schema:string;version:string;statement:string;dim
  language:{en:{min:string[];minAfter:string[];max:string[];maxAfter:string[];perWords:string[];exponentWords:Record<string,number>;increaseComparatives:string[];decreaseComparatives:string[];
   labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[];
   /** S103: property words that may stand between a quantity and its bound word ("40 cm wide or less") */ boundPropertyWords?:string[];
+  /** R3-P: clause boundaries, negation scope, polarity and contrast (read by src/language_scope.ts) */
+  scope?:{negators:string[];notNegating:string[];requirementWords:string[];contrastMarkers:string[];indifferencePredicates:string[];scopeEnders:string[];adjunctPrepositions?:string[];adjunctNote?:string;maxScopeWords:number};
   evaluation?:{positive:string[];negative:string[];negators:string[];hedges:string[];reportedBy:string[]};
   qualitative?:{observationVerbs:string[];testCues:string[];experienceCues:string[];inferenceCues:string[];claimCues:string[];causeMarkers:string[];comparativeCues:string[];testMaterials:string[];environmentCues:string[]}}}}
 /** QE (qk.2.3): an observable descriptor (a whine, residue left, uneven browning), on an aspect and a facet. */
@@ -574,7 +577,11 @@ export interface QuantityRequirement {span:string;start:number;end:number;bound:
 /** The bound a quantity's own words put on it ("at least 30 cm", "under 45 dB", "no wider than 60 cm", "40 dB or less"):
  * 'min', 'max' or null, with the cue. Generic English bound words and the kinds' comparatives are data in the pack. Shared
  * by request requirements and (S99) document statements, where a bounded value is a limit, never a point result. */
-export function quantityBound(qk:QuantityKnowledge,text:string,start:number,end:number,kindIds:readonly string[]):{bound:'min'|'max'|null;cue:string|null;before:string;after:string}{
+export interface BoundNegation {negator:string;kind:'proposition'|'requirement';/** offset of the negator in the text */start:number}
+export function quantityBound(qk:QuantityKnowledge,text:string,start:number,end:number,kindIds:readonly string[]):{bound:'min'|'max'|null;cue:string|null;before:string;after:string;
+ /** R3-P: the negator that governs the bound word, if any; the returned bound is then the negated one ("nothing over 6 L":
+  * max; "I don't need more than 6 L": max, and the negation is a requirement negation the reader must not apply as hard) */
+ negation:BoundNegation|null}{
  const lang=qk.pack.language.en;
  // S103 (D31/F12, one bound reader): the dot of "min.", "max.", "approx." or "ca." is not a sentence break (fix carried over from
  // the retired Phase253 local reader, S86b)
@@ -588,20 +595,27 @@ export function quantityBound(qk:QuantityKnowledge,text:string,start:number,end:
  const kinds=kindIds.map(k=>qk.kinds.get(k)).filter((k):k is NonNullable<typeof k>=>!!k);
  let bound:'min'|'max'|null=null,cue:string|null=null;
  for(const k of kinds)for(const [b,ws] of Object.entries(k.comparatives??{}))for(const w of ws as string[])if(!bound&&ends(w)){bound=b as 'min'|'max';cue=w;}
- // "wider than 30 cm" is a minimum, "no wider than 30 cm" a maximum; the word lists are English data in the pack
- const cmp=/(?:^|[^\p{L}])((?:(no|not) )?(\p{L}+) than)\s*$/u.exec(lb);
- if(!bound&&cmp){const w=cmp[3];const inc=lang.increaseComparatives.includes(w),dec=lang.decreaseComparatives.includes(w);
-  if(inc||dec){const up=inc!==!!cmp[2];bound=up?'min':'max';cue=cmp[1];}}
+ // "wider than 30 cm" is a minimum; the word lists are English data in the pack. R3-P: "no wider than 30 cm" is no longer a
+ // special case here: the shared negation scope (src/language_scope.ts) negates the comparative like any other bound word
+ const cmp=/(?:^|[^\p{L}])((\p{L}+) than)\s*$/u.exec(lb);
+ if(!bound&&cmp){const w=cmp[2];const inc=lang.increaseComparatives.includes(w),dec=lang.decreaseComparatives.includes(w);
+  if(inc||dec){bound=inc?'min':'max';cue=cmp[1];}}
  for(const w of [...lang.min,...lang.max].sort((a,b)=>b.length-a.length))if(!bound&&ends(w)){bound=lang.min.includes(w)?'min':'max';cue=w;}
+ let negation:BoundNegation|null=null;
+ // R3-P: a bound word before the quantity may be governed by a negator ("nothing over 6 L", "never above 30 dB"); the shared
+ // scope decides, on the original text, at the bound word's own position
+ if(bound&&cue){const ci=before.toLowerCase().replace(/[’‘]/g,"'").lastIndexOf(cue.toLowerCase());
+  // a pack without its own scope vocabulary (an older or test pack) reads English with the default pack's
+  if(ci>=0){const n=negationAt(text,start-before.length+ci,lang.scope??scopeVocabulary());if(n){negation={negator:n.negator,kind:n.kind,start:n.start};bound=bound==='min'?'max':'min';}}}
  for(const w of [...lang.minAfter,...lang.maxAfter])if(!bound&&starts(w)){bound=lang.minAfter.includes(w)?'min':'max';cue=w;}
- return {bound,cue,before,after};
+ return {bound,cue,before,after,negation};
 }
 /** Every quantity a request states with a known unit, its bound and what it is a requirement on. Generic English bound
  * words and the kinds' comparatives come from the pack; the property is the metric or kind the words name. */
 export function readQuantityRequirements(qk:QuantityKnowledge,text:string):QuantityRequirement[]{
  const out:QuantityRequirement[]=[];
  for(const f of findQuantities(qk,text)){
-  const {bound,cue,before,after}=quantityBound(qk,text,f.start,f.end,f.unit.kinds);
+  const {bound,cue,before,after,negation}=quantityBound(qk,text,f.start,f.end,f.unit.kinds);
   // the requirement's own words: the clause before the quantity (back to a comma or "and") and the words right after it
   const own=before.split(/,|\band\b|\bwith\b|\bthat\b/).at(-1)??before;
   const q=typeQuantity(qk,{surface:f.surface,value:f.value,low:f.low,high:f.high,unit:f.unit},{labels:[own,after]});
@@ -610,7 +624,8 @@ export function readQuantityRequirements(qk:QuantityKnowledge,text:string):Quant
   if(status==='kind_ambiguous'&&q.kind.candidates.length>1){const ds=q.kind.candidates.map(k=>qk.kinds.get(k)!);
    question=`Does "${f.surface}" mean ${ds.map(k=>k.plain??k.id.replace(/_/g,' ')).join(', or ')}? They are different quantities and are not compared with each other.`;}
   const ci=cue?before.toLowerCase().lastIndexOf(cue.toLowerCase()):-1;
-  const start=ci>=0?f.start-(before.length-ci):f.start;
+  // R3-P: a negated bound keeps its negator in the span ("no more than 1.5 sones")
+  const start0=ci>=0?f.start-(before.length-ci):f.start;const start=negation&&negation.start<start0?negation.start:start0;
   out.push({span:text.slice(start,f.end).trim(),start,end:f.end,bound,boundCue:cue,quantity:q,status,question});}
  return out;
 }

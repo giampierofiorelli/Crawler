@@ -14,7 +14,7 @@
  * Public output: counts only (evaluation/s99/integrity-LABEL.json); per-item detail stays private. */
 import {readFileSync,writeFileSync,existsSync,mkdirSync,copyFileSync,rmSync} from 'node:fs';import {join,resolve} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
 const args=process.argv.slice(2);const LABEL=args[0];if(!LABEL||LABEL.startsWith('--'))throw Error('LABEL');
-const opt=k=>{const i=args.indexOf('--'+k);return i>0?args[i+1]:null;};const SET=opt('set')??'dev';const OUT=opt('out')??'s99';if(!/^s\d+$/.test(OUT))throw Error('--out sNN');const ADVICE=args.includes('--advice');
+const opt=k=>{const i=args.indexOf('--'+k);return i>0?args[i+1]:null;};const SET=opt('set')??'dev';const OUT=opt('out')??'s99';if(!/^(?:s\d+|r3p)$/.test(OUT))throw Error('--out sNN|r3p');const ADVICE=args.includes('--advice');
 const BUILD=resolve(opt('build')??new URL('..',import.meta.url).pathname);const D='file://'+join(BUILD,'dist/src/');
 const PE=process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval');const OUTD=join(PE,OUT);mkdirSync(OUTD,{recursive:true});
 const PUB=new URL('../evaluation/'+OUT+'/',import.meta.url).pathname;mkdirSync(PUB,{recursive:true});

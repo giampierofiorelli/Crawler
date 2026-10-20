@@ -1,6 +1,6 @@
 {
  "schema": "pee.quantity-knowledge.v1",
- "version": "qk.2.5",
+ "version": "qk.2.6",
  "statement": "Typed scientific knowledge about quantities: what a quantity is (kind, dimension), how it is expressed (units and their properties), which quantities are defined by a method (metrics) and which conditions make results comparable. General physics and metrology, never product facts. Written in PEE's own words; facts only, no third-party text reproduced. v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion. qk.2.5 (S103): the bound words of the retired Phase253 local request reader are pack data (one bound reader for requests and documents).",
  "dimensionBasis": [
   "L",
@@ -2749,7 +2749,118 @@
     "heavy",
     "across"
    ],
-   "boundWordNote": "S103: 'min' after a number is not a bound word: it is also the symbol of the minute ('40 min.'), and readers that pass the number's span alone would read the unit as a minimum (found on spent S89-S99 pages: 7 run times). 'min' before a number ('min. 5 litres') stays a bound word."
+   "boundWordNote": "S103: 'min' after a number is not a bound word: it is also the symbol of the minute ('40 min.'), and readers that pass the number's span alone would read the unit as a minimum (found on spent S89-S99 pages: 7 run times). 'min' before a number ('min. 5 litres') stays a bound word.",
+   "scope": {
+    "statement": "R3-P (owner authorisation 2026-10-20): one English vocabulary for clause boundaries, negation scope, polarity and contrast, read by src/language_scope.ts for requests and documents alike. A negator governs the words after it in its own clause, over at most maxScopeWords words, and stops at a number, a clause boundary or a contrast marker. A negator followed by a requirement word before the governed words negates the requirement ('I don't need more than 6 L': 6 L is enough), not the proposition ('nothing over 6 L': at most 6 L). English, not physics; stated per word.",
+    "negators": [
+     "not",
+     "no",
+     "never",
+     "nothing",
+     "none",
+     "neither",
+     "nor",
+     "without",
+     "nobody",
+     "cannot",
+     "n't"
+    ],
+    "notNegating": [
+     "not only",
+     "not just",
+     "no doubt",
+     "nothing but",
+     "not least",
+     "no matter",
+     "not sure",
+     "no idea",
+     "not to mention",
+     "no later than",
+     "no sooner"
+    ],
+    "requirementWords": [
+     "need",
+     "needs",
+     "needed",
+     "require",
+     "requires",
+     "required",
+     "have to",
+     "has to",
+     "must",
+     "necessary",
+     "essential",
+     "necessarily"
+    ],
+    "contrastMarkers": [
+     "but",
+     "however",
+     "although",
+     "though",
+     "whereas",
+     "yet",
+     "instead",
+     "rather than",
+     "instead of",
+     "unlike",
+     "except",
+     "while"
+    ],
+    "indifferencePredicates": [
+     "bother",
+     "bothers",
+     "bothered",
+     "matter",
+     "matters",
+     "care",
+     "mind",
+     "fussed",
+     "concern",
+     "concerned",
+     "worry",
+     "worried",
+     "issue",
+     "problem",
+     "important",
+     "priority",
+     "big deal",
+     "dealbreaker",
+     "deal breaker",
+     "looking for",
+     "interested in",
+     "necessary",
+     "needed",
+     "required",
+     "a requirement",
+     "a must"
+    ],
+    "scopeEnders": [
+     "and",
+     "because",
+     "so",
+     "which",
+     "who",
+     "that",
+     "when",
+     "if",
+     "since"
+    ],
+    "adjunctPrepositions": [
+     "from",
+     "by",
+     "with",
+     "in",
+     "on",
+     "at",
+     "during",
+     "after",
+     "before",
+     "for",
+     "using"
+    ],
+    "adjunctNote": "Documents only (maskNegated): a cue inside a prepositional adjunct names the source or setting of the statement, not the negated predicate (\"we did not notice any noise from our unit\" is still the publisher's observation of its unit); a preposition right after the negator is inside the scope (\"not from the manufacturer\"). Requests keep the plain scope (\"I don't want a model with wifi\" rejects wifi).",
+    "maxScopeWords": 6
+   }
   }
  },
  "methods": [
