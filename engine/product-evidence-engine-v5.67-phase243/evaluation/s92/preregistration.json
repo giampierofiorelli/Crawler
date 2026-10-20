@@ -1,0 +1,68 @@
+{
+ "schema": "pee.s92.preregistration.v1",
+ "at": "2026-10-20",
+ "owner": "owner review of S91, verbatim in .claude/skills/pee-guided-learning/references/owner-review-s91-2026-10-20.md",
+ "roadmapStep": "R3 / R3-C (unchanged; R3 stays open)",
+ "question": "On PEE's own pages, which algorithm family links a value to the statement that establishes where it comes from (the publisher's method or test, a manufacturer declaration, a calculation) across sentences, tables and sections, and so decides its evidence role with provenance; and do the non-generative R3 mechanisms (semantic-type gating, PPMI distributional proposals, document concepts) let the learning mechanism acquire concepts that improve attribution and carry to a never-taught category?",
+ "programmeNames": {
+  "served": {
+   "domain_generalization": "the check uses never-seen publishers and a never-taught category",
+   "ontology_learning_kg_induction": "arm family E: concepts and typed relations induced from documents, validated against the definitions",
+   "continual_learning": "every arm is also scored on the spent S89-S91 sets for property attribution and role: capability lost is reported, not only capability gained",
+   "transfer_learning": "the document-relation mechanism is category-independent; its transfer is measured on the never-taught category"
+  },
+  "notServed": {
+   "meta_learning": "not addressed in S92",
+   "active_curriculum_selection": "not addressed in S92",
+   "qualitative_judgements": "aspect-based opinion extraction is outside S92 (owner list, not the owner's first priority)",
+   "full_path": "S92 is shadow; the benefit on the request-to-advice path is not measured here and no capability is called demonstrated on the full path"
+  }
+ },
+ "diagnosisBeforeDesign": {
+  "file": "evaluation/s92/diagnosis-1g-vs-reference.json",
+  "material": "spent S89-S91 check sets",
+  "findings": [
+   "The definition interpreter reads Step 1D-A2 structure but never consults the 1G table interpreter, whose contextLinks/classify already link method statements to result tables (reuse gap).",
+   "Of 134 reference measured values, 32 are table cells (1G: 10 publisher_measured via a linked method statement, 13 derived_or_estimated, 3 disputed, 4 manufacturer_declared, 2 unknown) and 102 are prose or label lines that no document link reaches.",
+   "1G calls measured inputs 'derived' when a calculation statement shares their section (power draw beside a running-cost estimate): input and output of a calculation are not told apart.",
+   "1G links a method statement only in the same section: a parallel results table in a sibling section inherits nothing.",
+   "In prose the statement establishing a measurement is usually a neighbouring sentence of the same paragraph (cross-sentence co-occurrence)."
+  ]
+ },
+ "arms": {
+  "role": {
+   "A0": "S90 role model (roleModel 's90'), code at 843927c: reference",
+   "A1": "S91 positive-evidence model, code at 843927c: reference",
+   "B": "explicit document link reusing 1G: the 1G evidence class and its method links (ContextLink1G) are consulted for table-cell values, as structure-level evidence of the positive-evidence model",
+   "C": "evidence selection over the document (EIDER / SciREX / DocRED, S87c C §6.2): statements are typed with the existing cue sets (method or test, declaration, calculation, quotation); a value is linked to a statement by three general relations: co-occurrence (same sentence, then neighbouring sentences of the same block), bridge (the statement names the value's property or quantity kind, from the definitions and QK, or an instrument of that kind, within the same or an ancestor section or a methodology section), and structural parallel (a sibling table or block with the same header signature inherits the links of its twin). The nearest link decides (minimal span); a tie of opposite roles at the same distance abstains; a calculation output takes the provenance of its inputs. Every decision carries its evidence pointer and fill type",
+   "D": "label model (Snorkel family, S87c D §1.4): the signals of A0, A1, B and the three C relations as labelling functions; accuracies estimated without gold by the FlyingSquid triplet method on the unlabelled development items, weighted vote, a selective-abstention margin fixed on development",
+   "lightweightModel": "a lightweight joint HTML and text model is run only if B-D are insufficient; not run in S92 unless recorded by an amendment"
+  },
+  "learning": {
+   "E0": "S90 learning mechanism (lexical n-grams, uncertainty states), unchanged",
+   "E1": "E0 + semantic-type gating (denotationOf / alignWithType, R3 dn.1) informed by the definitions: a term whose denotation is a condition, a claim or a source never becomes a property's surface term",
+   "E2": "E1 + PPMI distributional proposals (trainDistributional, R3 option 1) over the learning text: candidate terms near a property's terms, admitted only through the existing purity and specificity checks",
+   "E3": "E2 + document concepts / knowledge-graph induction (documentConcepts, R3 option 3b): recurring unaligned noun phrases next to values of one quantity kind become proposed concepts with typed relations to existing properties (same kind: related; object nouns), never used for attribution until verified"
+  }
+ },
+ "material": {
+  "development": "spent S89, S90, S91 check sets (375 values with a reference role, 951 values in all); runs on them are TUNED",
+  "check": "a new wave fetched under the standing internal research policy: publishers never used by PEE; one category with definitions and one never taught (no definitions profile, no owner package); pages rich in original measurements and specification pages; page list recorded by amendment before any fetch"
+ },
+ "reference": "blind Claude-agent annotation of each value with the page's line-numbered visible text: property (or none), role (S86b protocol), subject, the line of the statement establishing how the value was obtained (or none), and for values outside the definitions a short concept name; sealed by hash before any arm runs",
+ "metrics": [
+  "per role: reference, predicted, correct, precision, coverage, recall, abstentions; beside the trivial baselines",
+  "linked method: for values the reference ties to a statement, whether the arm's evidence pointer reaches that statement (same line or block)",
+  "provenance: share of decisions carrying an evidence pointer, by fill type",
+  "errors introduced and results lost against A0 and A1",
+  "property attribution (correct, wrong, abstained, false) for continual-learning regression; conditions",
+  "learning: learned terms and proposals per arm; attribution on the check with each learned layer; induced concepts on the never-taught category: coverage of reference out-of-definition values and pairwise agreement with the reference concept names",
+  "all by category and by publisher group"
+ ],
+ "rules": [
+  "at most three reformulations of B, C, D and E on development, then freeze by hash before the check pages are fetched",
+  "the check reference is sealed by hash before any arm runs; first runs are committed unchanged; later runs are labelled TUNED",
+  "no per-publisher recogniser; no new term list as a fix for a development error; no LLM",
+  "shadow only: no store migration, no ranking"
+ ]
+}
