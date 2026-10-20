@@ -27,14 +27,17 @@ const CLASS={...DEFAULT_STORAGE_POLICY246,policyVersion:'pee249-class-policy',cl
 const live=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
 const storeFile=join(OUTD,`store-${LABEL}.sqlite`);for(const x of [storeFile,storeFile+'-wal',storeFile+'-shm'])rmSync(x,{force:true});copyFileSync(live,storeFile);
 // a check run scores only against the reference sealed before it
-if(SET!=='dev'){const fz=JSON.parse(readFileSync(new URL('../evaluation/s99/check-annotation-freeze.json',import.meta.url),'utf8'));
- if(sha(readFileSync(join(PE,'s99/wave/annotation/reference.json')))!==fz.referenceSha256)throw Error('the reference does not match its seal');}
+// S100: --wave sNN/wave names the check wave; its seal is evaluation/<sNN>/check-annotation-freeze.json
+const CHECK=opt('wave')??'s99/wave';if(!/^s\d+\/wave$/.test(CHECK))throw Error('--wave sNN/wave');
+const sealOf=w=>new URL('../evaluation/'+w.split('/')[0]+'/check-annotation-freeze.json',import.meta.url);
+for(const w of SET==='dev'?[]:SET==='dev100'?['s99/wave']:[CHECK]){const fz=JSON.parse(readFileSync(sealOf(w),'utf8'));
+ if(sha(readFileSync(join(PE,w,'annotation/reference.json')))!==fz.referenceSha256)throw Error('the reference of '+w+' does not match its seal');}
 const ON=new KnowledgeStore246(storeFile,{...CLASS,scientificReadings98:true});
 const TYPE={independent_test_or_review:'independent_original_test',independent_test:'independent_original_test'};
 const DEV=[['s89','annotations.json'],['s90','annotations.json'],['s91','annotations.json'],['s92','annotation/annotations.json'],['s93','annotation/annotations.json'],
  ['s94/wave','annotation/annotations.json'],['s96/wave','annotation/annotations.json'],['s98/wave','annotation/annotations.json']];
 // dev100 (S100): the S99 check wave is spent after its first run and joins the development material
-const WAVES=SET==='dev'?DEV:SET==='dev100'?[...DEV,['s99/wave','annotation/reference.json']]:SET==='check'?[['s99/wave','annotation/reference.json']]:(()=>{throw Error('--set dev|dev100|check');})();
+const WAVES=SET==='dev'?DEV:SET==='dev100'?[...DEV,['s99/wave','annotation/reference.json']]:SET==='check'?[[CHECK,'annotation/reference.json']]:(()=>{throw Error('--set dev|dev100|check');})();
 const urlOf=new Map();const outputs=new Map();const counts={pages:0,declarations:0,leads:0,documentQuantities:0,documentKept:0,documentSkipped:{},identity:{}};const ms=[];
 for(const [S] of WAVES){const W=join(PE,S);const w=JSON.parse(readFileSync(join(W,'wave.json'),'utf8'));
  for(const p of w.pages.filter(p=>p.outcome==='fetched'&&(SET!=='check'||p.role==='heldout_eval'))){const f=join(W,'raw',p.tag+'.html');if(!existsSync(f))continue;const b=readFileSync(f);if(sha(b)!==p.sha256)continue;
@@ -92,7 +95,7 @@ const key=existsSync(join(PE,'s96/dev-key.json'))?JSON.parse(readFileSync(join(P
 const accepts=(acc,id)=>acc.some(a=>a===id||id&&a.startsWith('acq_')&&id.startsWith(a+'_'));
 const Z=()=>({items:0,property:{refPositive:0,correct:0,wrong:0,notStored:0,refNone:0,falseStored:0},
  role:{compared:0,agree:0,confusion:{}},nature:{compared:0,agree:0,confusion:{}},subject:{reviewed:0,reviewedLinked:0,other:0,otherLinked:0,none:0,noneLinked:0},
- storedNoneByRole:{},falseProductValue:0,refNoneStoredAsNonValue:0,labelGap:{items:0,storedWithProperty:0},bound:{compared:0,agree:0},productValue:{reference:0,storedLinkedCorrect:0}});
+ roleByReader:{},storedNoneByRole:{},falseProductValue:0,refNoneStoredAsNonValue:0,labelGap:{items:0,storedWithProperty:0},bound:{compared:0,agree:0},productValue:{reference:0,storedLinkedCorrect:0}});
 const correctness={};const detail=[];
 for(const [S,f] of WAVES){const W=join(PE,S);if(!existsSync(join(W,f)))continue;const j=JSON.parse(readFileSync(join(W,f),'utf8'));const ref=j.values??j.items??j;
  const its=JSON.parse(readFileSync(join(W,'check-items.json'),'utf8'));const items=(Array.isArray(its)?its:its.items).filter(x=>ref[x.id]);const C=correctness[S]=Z();
@@ -112,6 +115,8 @@ for(const [S,f] of WAVES){const W=join(PE,S);if(!existsSync(join(W,f)))continue;
   else if(r.property==='no_fitting_label'){}
   else{if(!refProductValue&&storedAsProductValue)C.falseProductValue++;C.property.refPositive++;if(ok)C.property.correct++;else if(withProp.length)C.property.wrong++;else C.property.notStored++;}
   const rr=REF_ROLE[r.role];if(hit&&rr){C.role.compared++;const got=roleOfRow(hit);if(got===rr)C.role.agree++;const k=rr+'->'+got;C.role.confusion[k]=(C.role.confusion[k]??0)+1;}
+  // S100: the same per reader (Phase245 rows, Phase265 leads, prose): the extractor must not decide the meaning
+  if(hit&&rr){const rd=hit.source_reader??'unknown';const g=C.roleByReader[rd]??={compared:0,agree:0,confusion:{}};g.compared++;const got=roleOfRow(hit);if(got===rr)g.agree++;const k=rr+'->'+got;g.confusion[k]=(g.confusion[k]??0)+1;}
   if(hit&&r.bound){C.bound.compared++;if((hit.bound??'none')===r.bound)C.bound.agree++;}
   if(refProductValue&&r.property!=='no_fitting_label'&&r.subject==='reviewed_product'){C.productValue.reference++;const okz=ok&&['result','specification'].includes(roleOfRow(ok))&&ok.product_id&&ok.product_id===mainOfRev.get(ok.revision_id);if(okz)C.productValue.storedLinkedCorrect++;}
   const rn=REF_NATURE[r.nature];if(hit&&rn){C.nature.compared++;if(hit.nature===rn)C.nature.agree++;const k=rn+'->'+hit.nature;C.nature.confusion[k]=(C.nature.confusion[k]??0)+1;}
@@ -122,7 +127,8 @@ for(const [S,f] of WAVES){const W=join(PE,S);if(!existsSync(join(W,f)))continue;
    stored:withProp.map(z=>({p:z.property_id,role:roleOfRow(z),bound:z.bound??null,n:z.nature,nb:z.nature_basis,sv:z.subject_value??null,sb:z.subject_basis??null,a:z.product_association,sr:z.statement_basis??null}))});}}
 const total=Z();for(const C of Object.values(correctness)){total.items+=C.items;for(const g of ['property','subject'])for(const [k,v] of Object.entries(C[g]))total[g][k]+=v;
  for(const g of ['role','nature']){total[g].compared+=C[g].compared;total[g].agree+=C[g].agree;for(const [k,v] of Object.entries(C[g].confusion))total[g].confusion[k]=(total[g].confusion[k]??0)+v;}
- for(const [k,v] of Object.entries(C.storedNoneByRole))total.storedNoneByRole[k]=(total.storedNoneByRole[k]??0)+v;total.falseProductValue+=C.falseProductValue;total.refNoneStoredAsNonValue+=C.refNoneStoredAsNonValue;
+ for(const [k,v] of Object.entries(C.storedNoneByRole))total.storedNoneByRole[k]=(total.storedNoneByRole[k]??0)+v;
+ for(const [rd,g] of Object.entries(C.roleByReader)){const t=total.roleByReader[rd]??={compared:0,agree:0,confusion:{}};t.compared+=g.compared;t.agree+=g.agree;for(const [k,v] of Object.entries(g.confusion))t.confusion[k]=(t.confusion[k]??0)+v;}total.falseProductValue+=C.falseProductValue;total.refNoneStoredAsNonValue+=C.refNoneStoredAsNonValue;
  for(const g of ['labelGap','bound','productValue'])for(const [k,v] of Object.entries(C[g]))total[g][k]+=v;}
 // ---------------- comparability on the user path ----------------
 const prods=[...new Set(retrieved.map(r=>r.product_id).filter(Boolean))];const ev=EV.scientificEvidence98(ON,prods);
@@ -139,7 +145,7 @@ if(ADVICE){const {adviseFromRequest253}=await import(D+'phase253_request_advice.
   if((a1.goalAssessment?.decision??null)!==(a2.goalAssessment?.decision??null)||a1.response!==a2.response)advice.decisionChanged++;if(JSON.stringify(a1.shortlist)!==JSON.stringify(a2.shortlist))advice.shortlistChanged++;
   const e=a2.scientificEvidence98;if(e&&e.properties.length){advice.withScientificEvidence++;for(const p of e.properties)for(const [k,v] of Object.entries(p.comparisons))advice.verdicts[k]=(advice.verdicts[k]??0)+v;}}}
 const out={schema:'pee.s99.integrity.v1',label:LABEL,set:SET,build:opt('build')?'other build (--build)':'working tree',reader:SR.SCIENTIFIC_READER98,
- material:SET==='dev'?'spent S89-S96 waves and the S98 check (post hoc; never independent)':SET==='dev100'?'spent S89-S96 waves, the S98 check and the S99 check (post hoc; never independent)':'sealed S99 check wave',
+ material:SET==='dev'?'spent S89-S96 waves and the S98 check (post hoc; never independent)':SET==='dev100'?'spent S89-S96 waves, the S98 check and the S99 check (post hoc; never independent)':'sealed check wave '+CHECK,
  reading:{...counts,msPerPage:+(ms.reduce((a,b)=>a+b,0)/Math.max(1,ms.length)).toFixed(0)},preservation:v12?preservation:'not measurable: build without observation keys (pre-v12)',
  correctness:{total,bySet:correctness},census,comparability:{verdicts,reasons},advice};
 writeFileSync(noOverwrite(join(PUB,`integrity-${LABEL}.json`)),JSON.stringify(out,null,1)+'\n');writeFileSync(join(OUTD,`integrity-${LABEL}-detail.json`),JSON.stringify(detail));

@@ -3,10 +3,11 @@
  * purifier reviews, Best Cordless Vacuum Guide stick vacuum reviews, an Oransi CADR explainer), read through the operational
  * path and scored against a blind, double-annotated and adjudicated reference sealed before the run.
  *   items | input        check items and the blind annotator input (private-eval/s99/wave)
- *   (the run: scripts/s99-integrity.mjs LABEL --set check [--build DIR], after the reference is sealed) */
+ *   (the run: scripts/s99-integrity.mjs LABEL --set check [--build DIR], after the reference is sealed)
+ * S100: --wave s100/wave reads another check wave with the same item and input procedure. */
 import {readFileSync,writeFileSync,existsSync,mkdirSync,copyFileSync,rmSync} from 'node:fs';import {join} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
-const [cmd,LABEL]=process.argv.slice(2);const sha=b=>createHash('sha256').update(b).digest('hex');
-const PE=process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval');const ROOT=join(PE,'s99/wave');
+const argv=process.argv.slice(2);const [cmd,LABEL]=argv;const wi=argv.indexOf('--wave');const WAVE=wi>0?argv[wi+1]:'s99/wave';if(!/^s\d+\/wave$/.test(WAVE))throw Error('--wave sNN/wave');const sha=b=>createHash('sha256').update(b).digest('hex');
+const PE=process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval');const ROOT=join(PE,WAVE);
 const D=new URL('../dist/src/',import.meta.url).href;const QK=await import(D+'quantity_knowledge.js');const SR=await import(D+'scientific_reading98.js');
 const {textBlocks225}=await import(D+'phase225_transient_test_probe.js');const DE=await import(D+'document_evidence.js');
 const qk=QK.loadQuantityKnowledge();const noOverwrite=f=>{if(existsSync(f))throw Error(f+' exists: never overwritten');return f;};

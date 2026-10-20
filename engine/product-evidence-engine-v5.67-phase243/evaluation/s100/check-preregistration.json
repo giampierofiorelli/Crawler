@@ -1,0 +1,44 @@
+{
+ "schema": "pee.s100.check-preregistration.v1",
+ "at": "2026-10-20",
+ "owner": "owner review of S99 and 'PEE — Next R3 Step: Rule Governance and Operational Semantic Correction' (verbatim in .claude/skills/pee-guided-learning/references/owner-review-s99-rule-governance-2026-10-20.md): 'Validate first with regression baselines and controlled tests on existing material, then with an independent evaluation on genuinely unseen documents. Keep S99's operational gates and ranking restrictions intact.'",
+ "writtenBefore": "any fetch of the check pages, any annotation and any run on them",
+ "builds": {
+  "s100": "commit 8f982dc (reader sr100.1, rules os.2, definitions pd.9; frozen after development it0-it2 on spent S89-S99 material: two of three reformulations used)",
+  "s99": "commit 2032a3a (reader sr99.1), the current gated reading",
+  "s98": "commit 3e953ef (reader sr98.1), for continuity",
+  "runner": "scripts/s99-integrity.mjs LABEL --set check --wave s100/wave --out s100 [--build DIR]: the same script for every build"
+ },
+ "material": {
+  "plan": "about six to eight pages never examined by PEE from at least three publishers never used (none of the 73 hosts of earlier waves), chosen to contain the S99 blocker: publisher test-result TABLES next to maker specification tables or claims, prose that states a claim and a result in one sentence, and a maker page. Candidates in order: smartairfilters.com (air purifier tests with measured tables), stereophile.com (loudspeaker and amplifier reviews: maker specifications and a separate Measurements section), a maker's product or explainer page (levoit.com, coway, blueair), then soundstage network or cleanairkits if a candidate refuses. Fetched only through scripts/phase246-live-wave.mjs under the standing policy; robots refusals, AI-agent refusals, Content-Signal ai-input=no and 403/429 are recorded and never bypassed",
+  "items": "scripts/s99-check.mjs items --wave s100/wave: every quantity with a QK unit in the page's text blocks (the reader that finds more quantities), deduplicated, evenly sampled, at most 20 per page; table rows are text blocks and are sampled like prose"
+ },
+ "reference": {
+  "definitions": "the S99 shared annotation guide (private-eval/s99/wave/annotation/GUIDE.md), unchanged, with its hard examples from SPENT pages; plus one paragraph for tables written before annotation: 'A value in a table takes the role the table, its column header or its section states (a Measurements table of the reviewer: result; a manufacturer's specifications table: specification); the table's position on the page does not decide it.'",
+  "annotators": "two blind Claude agents annotate every item independently (no system output, no PEE code)",
+  "adjudication": "a third blind agent resolves every disagreement and checks every no_fitting_label; the merged reference is sealed by SHA-256 in evaluation/s100/check-annotation-freeze.json before any run",
+  "agreement": "inter-annotator agreement per field is reported before adjudication"
+ },
+ "metrics": {
+  "preservation": "as S99 (fields changed between reading and store; product links without a stated subject)",
+  "attribution": "as S99 (correct, wrong, not stored; false product values; label gaps)",
+  "statementRole": "precision among decided readings and abstentions, overall AND per reader (Phase245 rows, Phase265 leads, prose)",
+  "blocker": "B1: reference results read from table rows (Phase245) stored as specifications; B2: reference specifications stored as results (any reader)",
+  "nature": "precision among decided readings and abstentions",
+  "subject": "as S99",
+  "comparability": "verdicts of cross-product pairs with reasons",
+  "advice": "206 regression requests: decisions and shortlists unchanged with the gated consumer on"
+ },
+ "stopRules": {
+  "S1_integrity": "any reading field changed between reading and store, or any product link without a stated subject: S100 is not adopted",
+  "S2_no_new_false_attribution": "S100 may not produce more false product values, nor link more other-product or no-product values to the reviewed product, than S99 on these pages",
+  "S3_role_and_nature": "precision among decided readings must not be lower than S99's for statement role and for nature; abstentions are reported separately",
+  "S4_advice": "0 of 206 decisions changed",
+  "S5_blocker": "B1 must be lower than S99's when S99's is above 0, and 0 when S99's is 0; B2 must not exceed S99's",
+  "outcome": "if S1-S5 hold, the S100 reader replaces the S99 reader as the GATED operational reading; otherwise the S99 reader stays and the failing rule is documented. In every case the path stays disabled for decisions and ranking, and S99's operational gates stay as they are."
+ },
+ "reportedNotGated": [
+  "abstentions and coverage (reviewed-product values correctly stored and linked), which the development run showed falling (S99 98, S100 81 of 603): reported as a cost, not hidden"
+ ],
+ "notClaimed": "no ranking, no recommendation, no promotion of any definition; R3 stays open; development figures on spent material are never reported as independent"
+}
