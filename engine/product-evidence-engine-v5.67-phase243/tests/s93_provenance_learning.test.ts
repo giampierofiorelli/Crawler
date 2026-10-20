@@ -3,7 +3,7 @@ import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {loadPropertyDefinitions} from '../src/property_definitions.js';
 import {documentModel1G} from '../src/table_interpreter1g.js';
 import {evidenceLinksOf,interpretWithDefinitions,attributeProperty} from '../src/definition_interpreter.js';
-import {learnFromDocuments,proposeDefinitions,withLearnedDefinitions} from '../src/definition_learning.js';
+import {learnFromDocuments,proposeDefinitions,semanticRelation,withLearnedDefinitions} from '../src/definition_learning.js';
 
 // S93 (owner review of S92): provenance apart from nature, verifiable statements, object of the value, learning cycle.
 // Every text is invented for this test.
@@ -41,13 +41,23 @@ test('S93 the object of the value decides between properties of one kind (runtim
  assert.equal(attributeProperty(defs,qk,{...o,frame:'Dishwasher review'},{objectResolution:true}).value,'run_duration','no object named: unchanged');
 });
 
-test('S93 learning cycle: a concept weakly explained by a generic term is proposed, verified and becomes a narrower candidate definition',()=>{
+test('S93 learning cycle: a concept weakly explained by a generic term is proposed, verified and becomes a candidate definition',()=>{
  const doc=(i:number,pub:string,v:number,label:string)=>({docId:'d'+i,publisher:pub,category:'stick_vacuums',value:v,unit:'hours',label,valueAt:label.indexOf(String(v)),surface:v+' hours'});
  const obs=[doc(1,'a.com',3,'the charging time is 3 hours from empty'),doc(2,'b.com',4,'the charging time is 4 hours from empty'),doc(3,'c.com',5,'its charging time is 5 hours')];
  const layer=learnFromDocuments(defs,qk,obs,undefined,{relations:true,strongSeeds:true});const props=proposeDefinitions(defs,layer);
  const p=props.find(x=>x.terms.includes('charging time'));assert.ok(p,JSON.stringify(layer.proposals.map(x=>x.term)));
- assert.deepEqual(p!.verification.failed,[]);assert.ok(p!.relations.some(r=>r.relation==='narrower_than'&&r.property==='run_duration'));
+ assert.deepEqual(p!.verification.failed,[]);const rd=p!.relations.find(r=>r.property==='run_duration');
+ assert.ok(!rd||rd.relation!=='narrower_than','S94: a shared head word never makes a hierarchy '+JSON.stringify(rd));
  const learned=withLearnedDefinitions(qk,defs.pack,props);const def=learned.properties.get(p!.id)!;assert.equal(def.state,'candidate');
  assert.equal(attributeProperty(learned,qk,{value:6,unit:'hours',label:'the charging time is 6 hours',valueAt:24,surface:'6 hours'}).value,p!.id,'the new definition reaches later readings');
  assert.ok(learnFromDocuments(defs,qk,obs,undefined,{relations:true}).proposals.every(x=>!x.term.includes('charging time')),'without strong seeds the generic term blocks the concept');
+});
+
+test('S94 relations follow I-ADOPT: lexical head sharing is unverified; hierarchy needs the same kind and an object the property names',()=>{
+ const obstacle=defs.properties.get('obstacle_height')!,run=defs.properties.get('run_duration')!;
+ assert.equal(semanticRelation(obstacle as never,'length',['robot'])!.relation,'different_object','robot height is not a kind of obstacle height');
+ assert.equal(semanticRelation(obstacle as never,'length',['threshold'])!.relation,'narrower_than','threshold height names the property object');
+ assert.equal(semanticRelation(run as never,'duration',['charging'])!.relation,'shares_head_term','object undefined: lexical only');
+ assert.equal(semanticRelation(obstacle as never,'duration',['threshold']),null,'another kind: no relation');
+ assert.ok([obstacle,run].every(d=>semanticRelation(d as never,d.quantity!.kinds[0],['x'])!.verified===false));
 });

@@ -145,8 +145,22 @@ export function withLearned(qk:QuantityKnowledge,pack:DefinitionPack,layer:Learn
 // S93 (owner review of S92): the learning cycle. An induced concept becomes a candidate DEFINITION only after a
 // verification without gold, and as a definition it reaches every reader (attribution, interpretation, comparison).
 export interface DefinitionProposal {id:string;label:string;kind:string;terms:string[];object:string;objectNouns:string[];plausibleSi:[number,number];
- relations:{property:string;relation:'same_kind'|'contains_property_term'|'narrower_than'}[];denotes:string|null;
+ relations:LearnedRelation[];denotes:string|null;
  verification:{publishers:number;docs:number;occurrences:number;log10Spread:number;passed:string[];failed:string[]}}
+/** S94 (owner review of S93): a relation between a learned concept and an existing property. A shared head word is lexical
+ * evidence only ('shares_head_term', never a hierarchy). Following I-ADOPT, a property is its quantity kind AND its object
+ * of interest: 'narrower_than' needs the same kind and an object the property's own definition names; a same-kind property
+ * whose definition names other objects is a 'different_object' (neither identical nor broader). No relation is verified
+ * here: every one stays a candidate until checked on later documents. */
+export interface LearnedRelation {property:string;relation:'same_kind'|'contains_property_term'|'shares_head_term'|'different_object'|'narrower_than';basis?:string;verified?:false}
+export function semanticRelation(d:{id:string;object?:string|null;objectNouns?:readonly string[];quantity?:{kinds:readonly string[]}|null},kind:string,modifiers:readonly string[]):LearnedRelation|null{
+ if(!d.quantity?.kinds.includes(kind))return null;
+ const own=new Set([...(d.objectNouns??[]),...String(d.object??'').toLowerCase().split(/[^a-z]+/).filter(w=>w.length>=4)].map(w=>stem(w)));
+ const mods=modifiers.map(w=>stem(w.toLowerCase()));
+ if(!d.objectNouns?.length)return {property:d.id,relation:'shares_head_term',basis:'object_of_property_not_defined',verified:false};
+ if(mods.some(m=>own.has(m)))return {property:d.id,relation:'narrower_than',basis:'same_kind_and_object_named_by_the_definition',verified:false};
+ return {property:d.id,relation:'different_object',basis:'same_kind_other_object',verified:false};
+}
 export const PROMOTION_THRESHOLDS={minPublishers:2,minDocs:2,minOccurrences:3,maxLog10Spread:1.5};
 /** Group the layer's proposals by consolidated key (head stem and kind) and verify each group: independent publishers,
  * documents, occurrences, one quantity kind, coherent magnitudes (the values of one concept agree within 1.5 decades),
@@ -161,17 +175,19 @@ export function proposeDefinitions(defs:PropertyDefinitions,layer:LearnedLayer,t
   const denotes=ps[0].denotes??null;const passed:string[]=[],failed:string[]=[];
   (pubs.size>=th.minPublishers?passed:failed).push('publishers');(docs.size>=th.minDocs?passed:failed).push('documents');(occ>=th.minOccurrences?passed:failed).push('occurrences');
   (spread<=th.maxLog10Spread?passed:failed).push('magnitude_coherence');(denotes&&['condition','claim_or_label','source_or_evidence'].includes(denotes)?failed:passed).push('denotes_a_quantity');
-  // the whole phrase must be new; a head that an existing property names makes the concept NARROWER than it (a
-  // knowledge-graph relation), not a duplicate ("charging time" under the generic "time")
+  // the whole phrase must be new (S93 also made a head named by a property a NARROWER concept; superseded in S94: a
+  // shared head word is lexical evidence, not a hierarchy, e.g. charging time is not a kind of run duration)
   const terms=[...new Set(ps.map(p=>p.term))];
   ([...defs.properties.values()].some(d=>d.surface.some(([t])=>terms.includes(normText(t))))?failed:passed).push('phrase_not_an_existing_term');
-  const broader=[...defs.properties.values()].filter(d=>d.quantity?.kinds.includes(kind)&&d.surface.some(([t])=>normText(t)===head)).map(d=>d.id);
+  // S94: a property named by the head word is only lexically related; hierarchy needs the I-ADOPT object check
+  const mods0=label.split(' ').slice(0,-1).filter(w=>w.length>=3&&!/\d/.test(w));
+  const headRel=[...defs.properties.values()].filter(d=>d.surface.some(([t])=>normText(t)===head)).map(d=>semanticRelation(d as never,kind,mods0)).filter((r):r is LearnedRelation=>!!r);
   // a quantity concept varies across products: a single repeated value is a fixed phrase, not a measured concept
   (new Set(si.map(x=>x.toFixed(2))).size>=2?passed:failed).push('values_vary');
   const mods=label.split(' ').slice(0,-1).filter(w=>w.length>=4&&!/\d/.test(w));
   const id='learned_'+key.replace(/@.*/,'').replace(/[^a-z0-9]+/g,'_')+'_'+kind.replace(/[^a-z0-9]+/g,'_');
   out.push({id,label,kind,terms,object:label,objectNouns:mods.length?mods:[head],plausibleSi:si.length?[10**(Math.min(...si)-1),10**(Math.max(...si)+1)]:[0,1],
-   relations:[...(ps[0].relations??[]),...broader.map(b=>({property:b,relation:'narrower_than' as const}))],denotes,verification:{publishers:pubs.size,docs:docs.size,occurrences:occ,log10Spread:+spread.toFixed(3),passed,failed}});}
+   relations:[...(ps[0].relations??[]).filter(r=>!headRel.some(h=>h.property===r.property)),...headRel],denotes,verification:{publishers:pubs.size,docs:docs.size,occurrences:occ,log10Spread:+spread.toFixed(3),passed,failed}});}
  return out;
 }
 /** Add verified proposals to a definition pack as CANDIDATE properties (never decision-usable); the pack is loaded and
