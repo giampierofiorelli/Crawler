@@ -85,6 +85,10 @@ Role baselines: trivial "all measured" gets 5 of 82; majority "all declared" get
 4. **Precision across categories and publishers is now stable.** Two independent checks (S89, S90) on 9 never-seen
    publishers both give about 80% precision; the unit-kind baseline gives 36% and 51%.
 
+   > **Correction (2026-10-20, owner review of S90).** The publisher count above is wrong. The groups actually evaluated
+   > are 4 in S89 (T3, Homes & Gardens, Expert Reviews, Sound & Vision; Digital Trends returned no usable page) and 4 in
+   > S90, so 8 in total, not 9.
+
 ## 5. Status
 
 | Capability | Maturity | Kind |

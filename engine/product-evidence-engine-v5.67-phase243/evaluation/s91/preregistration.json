@@ -1,0 +1,65 @@
+{
+ "schema": "pee.s91.preregistration.v1",
+ "at": "2026-10-20T01:31:31.353Z",
+ "question": "On documents rich in original measurements from never-seen publishers: does the positive-evidence role model recognise original measurements and declarations separately (precision, coverage, abstention per role) better than the S90 model and the trivial baselines; is property attribution precision kept; does the learned layer help?",
+ "frozen": {
+  "resources/property-definitions/property-definitions.v1.json": "af326a46d41477e11431eb0d613230bef13e58c4fcac2ac0ba74555a912f0bc7",
+  "src/property_definitions.ts": "9b42211ebaaac293aabed58471f3d65c41e9b3776a8a2eb57b30f2a55a8182b0",
+  "src/definition_interpreter.ts": "26f7bd30031e9c869fe7d00f7345a0bd7c55b23584b901308d90cc0738d1e610",
+  "src/definition_learning.ts": "6a11691c32aca596da4f3c7055fd33be2b5d947cbd8bdbe0b6dd55e843d18378",
+  "src/document_semantics.ts": "58b36a439a757f2bc41a9ae06061dc9103b6965ca110bc07100cf2786d47fb4b",
+  "src/phase225_transient_test_probe.ts": "5ee998db5d62a4f29e209030d0c0d95c3fe4572c81d8d765d7c5194836ff94de",
+  "src/phase272_extraction_plan.ts": "f0f629af6554457f97d4ebcabf159a9343e7db90292813a57d41999a3a9d742f",
+  "scripts/s91-role-eval.mjs": "847fa1386dd8d1bdfe6c758261cc500e6bbefa06a825d3e61096d460c091e5cd"
+ },
+ "learnedLayer": "evaluation/s90/learned-layer-freeze.json (S90 layer, unchanged)",
+ "checkPages": {
+  "air_purifiers": [
+   "https://moderncastle.com/air-purifiers/airdoctor-5500-review/",
+   "https://moderncastle.com/air-purifiers/medify-ma-40-review/",
+   "https://moderncastle.com/air-purifiers/xiaomi-smart-air-purifier-pro-4-review/",
+   "https://moderncastle.com/air-purifiers/alen-breathesmart-45i-review/",
+   "https://www.airpurifierfirst.com/buying-guides/best-air-purifier-to-buy/",
+   "https://www.airpurifierfirst.com/buying-guides/best-air-purifiers-for-vocs/"
+  ],
+  "robot_floor_cleaners": [
+   "https://moderncastle.com/robot-vacuums/eufy-x9-pro-review/",
+   "https://moderncastle.com/robot-vacuums/ecovacs-deebot-x2-omni-review/",
+   "https://moderncastle.com/robot-vacuums/roborock-q8-max-review/",
+   "https://smartrobotreviews.com/reviews/dreame-d9-review.html",
+   "https://smartrobotreviews.com/s/robot-vacuums/best-robot-vacuum-for-carpets-2022/"
+  ],
+  "soundbars": [
+   "https://www.erinsaudiocorner.com/loudspeakers/bose_tv_speaker_soundbar/"
+  ],
+  "speakers": [
+   "https://www.erinsaudiocorner.com/loudspeakers/kef_ls60/",
+   "https://www.erinsaudiocorner.com/loudspeakers/klipsch_rp_600m_ii/",
+   "http://archimago.blogspot.com/2020/10/pspinorama-measurements-kef-ls50.html"
+  ]
+ },
+ "categories": {
+  "air_purifiers": "profile from development (pd.1)",
+  "robot_floor_cleaners": "profile authored from package 05 (S88)",
+  "soundbars": "profile authored from package 08 (S88)",
+  "speakers": "no profile: shared definitions only"
+ },
+ "arms": {
+  "s91": "positive-evidence role model (default)",
+  "s90role": "same build, role model of S90 (roleModel s90)",
+  "s91learned": "s91 + S90 learned layer",
+  "unitkind": "unit kind only",
+  "roleAllMeasured": "trivial",
+  "roleAllDeclared": "trivial"
+ },
+ "metrics": [
+  "per role: reference, predicted, precision, coverage, recall, abstained",
+  "property: correct, wrong, abstained, false attributions; per category and publisher"
+ ],
+ "procedure": [
+  "fetch under the standing policy",
+  "items by the S88-S90 rule",
+  "blind Claude-agent reference sealed before any arm",
+  "each arm once; first runs committed unchanged"
+ ]
+}

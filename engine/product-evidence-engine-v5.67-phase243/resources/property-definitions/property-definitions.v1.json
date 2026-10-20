@@ -1,6 +1,6 @@
 {
  "schema": "pee.property-definitions.v1",
- "version": "pd.4",
+ "version": "pd.5",
  "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object. A property may declare a plausible SI range (plausibleSi; s, m, Pa, Hz, m3/s, dB): a value outside it is not attributed (SHACL-style value constraint). Object nouns name the measured object (acoustic output, audio path, obstacle), never the product class. A property may subsume QK metrics (relatedMetrics): those are not competing concepts.",
  "sources": [
   {
@@ -2821,6 +2821,10 @@
   {
    "version": "pd.4",
    "note": "S90 (owner review of S89): document sections as knowledge (which headings announce specifications, the publisher's own tests, comparisons or quoted sources); the evidence role of a value is inherited from its structure first"
+  },
+  {
+   "version": "pd.5",
+   "note": "S91 (owner review of S90): measurement cues as data (observation verbs); the evidence role comes from positive evidence for each class, never from a default"
   }
  ],
  "knownObjects": {
@@ -2978,7 +2982,7 @@
   ]
  },
  "evidenceCues": {
-  "note": "Provenance cues in the value's own clause. A clause that attributes a capability or component to the product (has, equipped with, boasts, rated) without a measuring verb describes a specification (a declaration); measuring verbs are the S86c classifier's. Only applied when the sentence classifier found no other role.",
+  "note": "Provenance cues in the value's own clause. A clause that attributes a capability or component to the product (has, equipped with, boasts, rated) without a measuring verb describes a specification (a declaration); measuring verbs are the S86c classifier's. Only applied when the sentence classifier found no other role. Measurement cues: verbs that report what the product did in use (lasted, completed, maxed); combined with the instrument dimension and the document's own testing they are positive evidence of an original measurement.",
   "declaration": [
    "has",
    "have",
@@ -3003,12 +3007,50 @@
    "up to",
    "official",
    "officially",
-   "according to"
+   "according to",
+   "produces",
+   "delivers",
+   "adds",
+   "sports",
+   "gets",
+   "provides",
+   "is rated",
+   "rated for",
+   "spec",
+   "specs",
+   "stated",
+   "listed"
   ],
   "state": "candidate",
   "sources": [
    "s87",
    "iadopt"
+  ],
+  "measurement": [
+   "maxed",
+   "maxed out",
+   "peaked",
+   "lasted",
+   "completed",
+   "finished",
+   "took",
+   "ran for",
+   "managed",
+   "reached",
+   "dropped",
+   "recorded",
+   "measured",
+   "registered",
+   "hit",
+   "clocked",
+   "cleaned",
+   "covered",
+   "mapped",
+   "averaged",
+   "topped out",
+   "came in at",
+   "logged",
+   "metered"
   ]
  }
 }

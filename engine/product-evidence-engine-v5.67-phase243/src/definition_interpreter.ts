@@ -10,7 +10,7 @@
  * No category-specific branch: a category only selects a profile from the data. Shadow: no operational caller. */
 import {hasPhrase,normText,parseUnit,typeQuantity,findQuantities,type QuantityKnowledge} from './quantity_knowledge.js';
 import {applicableProperties,relevanceOf,type Basis,type ConditionDimension,type PropertyDefinition,type PropertyDefinitions,type Relevance} from './property_definitions.js';
-import {UNIT_LEXICON272,type PlanMeasurement272} from './phase272_extraction_plan.js';
+import {UNIT_LEXICON272,TEST_CONTEXT272,type PlanMeasurement272} from './phase272_extraction_plan.js';
 import {classifyCondition87} from './observation_model.js';
 import {observationRole86c,otherProductInClause86c,type ObservationRole86c} from './phase225_transient_test_probe.js';
 import type {DocumentSemantics1D2} from './document_semantics.js';
@@ -39,7 +39,11 @@ export interface ObservationInput {value:number|null;unit:string;label?:string|n
   * headers, the label of a "label: value" line), its container and the role its section or table announces. */
  structure?:StructuralContext|null}
 export interface StructuralContext {container:'table_cell'|'label_value'|'prose';label:string|null;section:string|null;
- sectionRole:'specification'|'test'|'comparison'|null;tableContext:'test'|'specification'|'unknown'|null}
+ sectionRole:'specification'|'test'|'comparison'|null;tableContext:'test'|'specification'|'unknown'|null;
+ /** S91: the value sits under a methodology heading (Step 1D-A2), and the page type the document announces. */
+ methodSection?:boolean;pageType?:string|null;
+ /** S91: the document reports its own testing somewhere (first-person test context in any block). */
+ documentTests?:boolean}
 
 /** S90: the structural context of a value in reader block `bi` (textBlocks225 order, as Step 1D-A2 aligns it). The section
  * role comes from the heading path, innermost first, matched against the definitions' document-section cues (data). */
@@ -58,7 +62,55 @@ export function structuralContextOf(defs:PropertyDefinitions,sem:DocumentSemanti
  if(lv&&valueStart>=lv[0].length-1&&valueStart<=lv[0].length+40)return {container:'label_value',label:lv[1].trim(),section,sectionRole,tableContext:null};
  return {container:'prose',label:null,section,sectionRole,tableContext:null};
 }
-/** S90: the evidence role inherited from structure first, then the sentence (S86c). */
+/** S91: the documentary context of a value — structural label, container, section and its role, table context, methodology
+ * section, page type — one object carried to the definitions (owner review of S90). */
+export function documentContextOf(defs:PropertyDefinitions,sem:DocumentSemantics1D2,blockTexts:readonly string[],bi:number,valueStart:number):StructuralContext{
+ const base=structuralContextOf(defs,sem,blockTexts,bi,valueStart);const b=sem.blocks[bi];
+ return {...base,methodSection:b?.sectionRole==='methodology'||(b?.sectionRole==='test_results'&&base.sectionRole===null)?true:false,pageType:sem.pageType?.kind??null,
+  documentTests:blockTexts.some(t=>TEST_CONTEXT272.test(t))};
+}
+/** S91: who states a value, from cues in its own clause: the manufacturer (declared), the publisher's own testing (first-person
+ * test context or a measuring verb), or nobody identifiable. Positive evidence only; no default. */
+export interface RoleEvidence {measured:string[];declared:string[];quoted:boolean;condition:boolean}
+export function roleEvidence(structure:StructuralContext|null|undefined,sentence:{role:ObservationRole86c;reason:string}|null,clause:string,sentenceText:string,declarationCues:readonly string[],k:{measurementCues?:readonly string[];instrument?:ConditionDimension|null;setting?:ConditionDimension|null;procedure?:readonly ConditionDimension[]}={}):RoleEvidence{
+ const ev:RoleEvidence={measured:[],declared:[],quoted:sentence?.role==='certified_or_quoted',condition:sentence?.role==='test_condition'||sentence?.role==='programme_preset'};
+ const firstPerson=/\b(?:i|we|my|our|us)\b/i;
+ if(sentence?.role==='measured_result'&&sentence.reason==='measuring_verb')ev.measured.push('measuring_verb');
+ if(TEST_CONTEXT272.test(clause))ev.measured.push('test_context_in_clause');else if(TEST_CONTEXT272.test(sentenceText))ev.measured.push('test_context_in_sentence');
+ if(structure?.tableContext==='test')ev.measured.push('test_table');
+ if((structure?.sectionRole==='test'||structure?.methodSection)&&firstPerson.test(sentenceText))ev.measured.push('test_section_first_person');
+ const st=norm(sentenceText),cl=norm(clause);
+ // an instrument of the definitions' instrument dimension named in the value's sentence
+ if(k.instrument&&(Object.values(k.instrument.values).flat().some(v=>has(st,v))||k.instrument.cues.some(c=>has(st,c))))ev.measured.push('instrument_in_sentence');
+ // a verb reporting what the product did in use, in the value's clause
+ const ov=(k.measurementCues??[]).find(c=>has(cl,c));if(ov)ev.measured.push('observation_verb:'+ov);
+ // a document that reports its own testing, and a value stated under a specific operating setting
+ if(structure?.documentTests&&k.setting&&Object.values(k.setting.values).flat().some(v=>has(cl,v)))ev.measured.push('tested_document_setting');
+ // in a test section, a condition of a measurement procedure (tolerance, distance) stated in the clause
+ if((structure?.sectionRole==='test'||structure?.methodSection)&&(k.procedure??[]).some(dm=>Object.values(dm.values).flat().some(v=>has(cl,v))))ev.measured.push('test_section_procedure_condition');
+ if(sentence?.role==='declared_spec')ev.declared.push('declaration_cue:'+sentence.reason);
+ if(structure&&structure.container!=='prose'&&(structure.tableContext==='specification'||structure.sectionRole==='specification'))ev.declared.push('specification_'+structure.container);
+ if(structure?.container==='label_value'&&structure.sectionRole!=='test'&&!structure.methodSection)ev.declared.push('label_value_outside_tests');
+ const decl=declarationCues.find(c=>has(norm(clause),c));if(decl&&!ev.measured.includes('measuring_verb'))ev.declared.push('clause:'+decl);
+ return ev;
+}
+/** S91: the role from positive evidence. Quoted and test conditions keep the sentence's reading; otherwise the class with
+ * evidence wins, a measuring verb or first-person test context outweighing a generic capability cue; without evidence the
+ * role stays unresolved (an abstention, never "measured by default"). */
+/** Locality of each kind of evidence: the clause (3) outranks the sentence or the structure around the value (2), which
+ * outranks the section or the document (1). */
+const LOCALITY:Record<string,number>={measuring_verb:3,observation_verb:3,test_context_in_clause:3,instrument_in_sentence:2,test_context_in_sentence:2,test_table:2,
+ test_section_first_person:1,tested_document_setting:1,test_section_procedure_condition:1,declaration_cue:3,clause:3,specification_table_cell:2,specification_label_value:2,label_value_outside_tests:1};
+const locality=(e:string)=>LOCALITY[e.split(':')[0]]??1;
+export function roleFromEvidence(ev:RoleEvidence):{value:ObservationRole86c|null;reason:string|null}{
+ if(ev.quoted)return {value:'certified_or_quoted',reason:'quoted'};
+ if(ev.condition)return {value:'test_condition',reason:'condition'};
+ const m=Math.max(0,...ev.measured.map(locality)),d=Math.max(0,...ev.declared.map(locality));
+ if(m>d)return {value:'measured_result',reason:'evidence:'+ev.measured.join('+')+(d?' over '+ev.declared.join('+'):'')};
+ if(d>m)return {value:'declared_spec',reason:'evidence:'+ev.declared.join('+')+(m?' over '+ev.measured.join('+'):'')};
+ return {value:'unresolved',reason:m?'conflicting_evidence_same_locality':'no_positive_evidence'};
+}
+/** S90: the evidence role inherited from structure first, then the sentence (S86c). Kept for reproduction of S90 runs. */
 export function roleFrom(structure:StructuralContext|null|undefined,sentence:{role:ObservationRole86c;reason:string}|null,clause?:{text:string;declarationCues:readonly string[]}):{value:ObservationRole86c|null;reason:string|null}{
  const st=structure;const sr=sentence;
  // a clause that attributes a capability to the product without a measuring verb declares it
@@ -222,7 +274,7 @@ export function basisOf(defs:PropertyDefinitions,d:PropertyDefinition|null,kind:
 }
 
 /** Interpret one observation with the definitions: attribution, conditions with relevance, missing defining dimensions, basis. */
-export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean}={}):DefinitionInterpretation{
+export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean;roleModel?:'s90'|'evidence'}={}):DefinitionInterpretation{
  const category=o.category??null;const label=norm(o.label),context=norm(o.context);
  const property=attributeProperty(defs,qk,o,opts);const d=property.value?defs.properties.get(property.value)!:null;
  const readings:DimensionReading[]=[];const untyped:string[]=[];
@@ -240,7 +292,13 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
  if(d)for(const r of readings)if(r.dimension&&!r.relational)r.relevance=relevanceOf(defs,d.id,r.dimension,category,basis.value);
  const missingDefining=d?d.conditions.map(([x])=>x).filter(x=>relevanceOf(defs,d.id,x,category,basis.value)==='defining'&&!readings.some(r=>r.dimension===x&&r.value!==null&&!r.relational)):[];
  let role:{value:ObservationRole86c|null;reason:string|null}={value:null,reason:null};let subject:'page_product'|'other_product'|'unresolved'='unresolved';
- if(o.valueAt!=null&&o.label){const end=o.valueAt+String(o.surface??o.value??'').length;const r=observationRole86c(o.label,o.valueAt,end,property.kind??'');const head=o.label.slice(0,o.valueAt).split(/[.!?;]\s/).at(-1)??'';role=roleFrom(o.structure,r,{text:head,declarationCues:defs.pack.evidenceCues?.declaration??[]});
+ if(o.valueAt!=null&&o.label){const end=o.valueAt+String(o.surface??o.value??'').length;const r=observationRole86c(o.label,o.valueAt,end,property.kind??'');const head=o.label.slice(0,o.valueAt).split(/[.!?;]\s/).at(-1)??'';
+  if(opts.roleModel==='s90')role=roleFrom(o.structure,r,{text:head,declarationCues:defs.pack.evidenceCues?.declaration??[]});
+  else{const tail=o.label.slice(end).split(/[.!?;]\s/)[0]??'';const clauseHead=head.split(/[,;()–—]|\b(?:but|while|whereas|than)\b/i).at(-1)??head;
+   const clause=clauseHead+o.label.slice(o.valueAt,end)+(tail.split(/[,;()–—]|\b(?:but|while|whereas|than)\b/i)[0]??'');
+   role=roleFromEvidence(roleEvidence(o.structure,r,clause,head+o.label.slice(o.valueAt,end)+tail,defs.pack.evidenceCues?.declaration??[],
+    {measurementCues:defs.pack.evidenceCues?.measurement??[],instrument:defs.dimensions.get('instrument')??null,setting:defs.dimensions.get('operating_setting')??null,
+     procedure:['response_tolerance','measurement_distance','acoustic_quantity'].map(x=>defs.dimensions.get(x)).filter((x):x is ConditionDimension=>!!x)}));}
   subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
  return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};
