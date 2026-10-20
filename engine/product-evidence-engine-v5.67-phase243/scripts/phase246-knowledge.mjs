@@ -54,7 +54,9 @@ const dbPath=resolve(flags.db??join(defaultKnowledgeDir246(),'pee246.sqlite'));
 const {FACTUAL_CLASS_POLICY249}=await import('../dist/src/phase249_retention_policy.js');
 const CLASS_DEFAULT={...DEFAULT_STORAGE_POLICY246,policyVersion:'pee249-class-policy',classPolicy:FACTUAL_CLASS_POLICY249};
 const sp=flags['storage-policy']??process.env.PEE_STORAGE_POLICY??'class';
-const storage=sp==='class'?CLASS_DEFAULT:sp==='deny'?DEFAULT_STORAGE_POLICY246:JSON.parse(readFileSync(sp,'utf8'));
+const storage0=sp==='class'?CLASS_DEFAULT:sp==='deny'?DEFAULT_STORAGE_POLICY246:JSON.parse(readFileSync(sp,'utf8'));
+// S98 (gated): '--scientific98' also stores the typed scientific readings the observations carry (scientific_readings98)
+const storage=flags.scientific98?{...storage0,scientificReadings98:true}:storage0;
 const sha=b=>createHash('sha256').update(b).digest('hex');
 // Operator-reviewed rights policies (WebSourcePolicy per host). Absent by default: nothing is self-granted.
 const rights=flags.rights?JSON.parse(readFileSync(resolve(flags.rights),'utf8')):{};

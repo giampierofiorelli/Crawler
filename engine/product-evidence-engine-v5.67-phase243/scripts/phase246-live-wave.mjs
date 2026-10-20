@@ -278,6 +278,11 @@ switch(cmd){
     yield:{tag:p.tag,role:p.role,mainProduct:x.mainProduct.name,ambiguousMain:x.mainProduct.ambiguous,declarations:x.facts.length,
      heldBack:x.ambiguous.length,variants:x.variants.length,extractMs:Date.now()-t0}});
    out.at(-1).yield.testLeads=out.at(-1).observation.testLeads.probe.candidates.length;
+   // S98 (--scientific98, gated): the same transient bytes through the shared scientific interpretation path; the store keeps
+   // the readings only when its storage policy enables them
+   if(F.scientific98&&p.role!=='method_reference'){const SR=await import('../dist/src/scientific_reading98.js');const ob=out.at(-1).observation;
+    ob.scientific98=SR.readPage98(b.toString('utf8'),p.finalUrl??p.url,p.sha256,x,ob.testLeads,ob.qualitative270?.observations??[],p.category&&p.category!=='mixed'?p.category:null,p.sourceType??null);
+    out.at(-1).yield.scientific98=ob.scientific98.counts;}
    if(SHADOW&&p.role!=='method_reference'&&SHADOW.reg.CATEGORY_REGISTRY250.some(e=>e.id===p.category)){const html=b.toString('utf8'),u=p.finalUrl??p.url;
     const d=SHADOW.sem.readDocumentSemantics1D2(html,u);const plan=SHADOW.pl.compileExtractionPlan272(SHADOW.store,p.category,SHADOW.reg.CATEGORY_REGISTRY250.find(e=>e.id===p.category)?.aliases??[],[]);
     const c=SHADOW.tl.testLeadsFromHtml265(html,u,p.sha256,x,{category:p.category,plan,semantics:d}).probe.candidates.filter(k=>k.methodCue==='structured_table_measurement_term');

@@ -39,7 +39,17 @@ import {classDecision249,QUALITATIVE_AMENDMENT270,type SourceClassPolicy249,type
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
 import {screenTestLead265,subjectAssociation265,reportedBy265,readingIdentity265,type TestLeadsInput265,type ReadingConfiguration265} from './phase265_test_measurements.js';
 
-export const STORE_SCHEMA_VERSION246=10;
+import type {PageReading98,ScientificReading98} from './scientific_reading98.js';
+/** S98: the key of a Phase245 declaration within its revision (scientific_reading98.declarationKey98 derives the same). */
+export function declarationKey246(f:{section:string|null;propertyKey:string;value:unknown;variant:string|null;product:{ref:string;name:string|null}}):string{
+ return createHash('sha256').update(JSON.stringify([f.section,f.propertyKey,f.value,f.variant,f.product.ref,f.product.name])).digest('hex').slice(0,24);}
+/** S98: a stored reading as read back (columns of scientific_readings98). */
+export interface ScientificReadingRow98 {reading_id:string;revision_id:string;subject_table:'declarations'|'test_measurements265'|'document_quantity';subject_id:string;
+ product_id:string|null;product_association:string;interpreter_version:string;definitions_identity:string;qk_identity:string;form:string;value:number|null;unit:string|null;
+ kind:string|null;kind_status:string;metric:string|null;property_id:string|null;property_state:string;property_rule:string|null;definition_state:string|null;
+ nature:string;nature_basis:string;knowledge_state:string;evidence_role:string;retention:string;expires_at:string|null;state:string;ranking_input:number;recorded_at:string}
+const normName246=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+export const STORE_SCHEMA_VERSION246=11;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -65,6 +75,8 @@ export interface StoragePolicy246 {
  /** Local-only cache for declarations whose rights are not yet reviewed. Off by default. Never exported
   * unless explicitly requested, never promoted, expires automatically. */
  localPendingRightsCache:{enabled:boolean;expiresAfterDays:number};
+ /** S98: write the typed scientific reading of each kept observation (scientific_readings98). Off unless set (gated). */
+ scientificReadings98?:boolean;
  /** Whether category-level aggregate patterns may be derived from declarations that are not retained. */
  deriveAggregatesFromUnretainedDeclarations:boolean;
  /** Phase249 source-class policy for factual observations (private, capped). Absent = per-source grants only. */
@@ -305,6 +317,27 @@ const MIGRATIONS:string[]=[
    ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0),
    state TEXT NOT NULL CHECK(state IN ('current','superseded_by_translator')), recorded_at TEXT NOT NULL);
   CREATE INDEX knowledge_statements_category ON knowledge_statements(category_id,type,state);`,
+ // v11 (S98, owner decision 2026-10-20): the typed scientific reading of each extracted observation (one operational
+ // interpretation path). A reading annotates a row the store already keeps (a declaration, a test measurement) and holds
+ // only ids, codes and states; a quantity the structural document reader found in prose (subject_table
+ // 'document_quantity') has no other row, so its value and unit are kept here under the same retention as test values.
+ // Conditions use QK axis ids; explicit, inferred, missing and conflicting conditions stay apart. Written only when the
+ // storage policy enables it (gated); never a ranking input; superseded when a newer interpreter reads the same subject.
+ `CREATE TABLE scientific_readings98 (reading_id TEXT PRIMARY KEY, revision_id TEXT NOT NULL REFERENCES revisions(revision_id),
+   subject_table TEXT NOT NULL CHECK(subject_table IN ('declarations','test_measurements265','document_quantity')), subject_id TEXT NOT NULL,
+   product_id TEXT REFERENCES products(product_id), product_association TEXT NOT NULL CHECK(product_association IN ('as_subject_row','page_main_product_unverified','named_product_unverified','subject_unresolved')),
+   interpreter_version TEXT NOT NULL, definitions_identity TEXT NOT NULL, qk_identity TEXT NOT NULL,
+   form TEXT NOT NULL CHECK(form IN ('quantity','judgement','categorical')), value REAL, unit TEXT,
+   kind TEXT, kind_status TEXT NOT NULL CHECK(kind_status IN ('typed','ambiguous','not_recognised')), metric TEXT,
+   property_id TEXT, property_state TEXT NOT NULL CHECK(property_state IN ('stated','inferred','ambiguous','unknown')), property_rule TEXT, definition_state TEXT,
+   conditions_json TEXT NOT NULL, missing_conditions_json TEXT NOT NULL, conflicting_conditions_json TEXT NOT NULL, method_json TEXT NOT NULL,
+   nature TEXT NOT NULL CHECK(nature IN ('measured','declared','calculated','condition','unresolved')), nature_basis TEXT NOT NULL,
+   knowledge_state TEXT NOT NULL CHECK(knowledge_state IN ('candidate','verified_for_purpose','uncertain','excluded')),
+   evidence_role TEXT NOT NULL, retention TEXT NOT NULL, expires_at TEXT,
+   state TEXT NOT NULL CHECK(state IN ('current','superseded_by_interpreter','expired_pending_rights')),
+   ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0), recorded_at TEXT NOT NULL);
+  CREATE INDEX scientific_readings98_subject ON scientific_readings98(subject_table,subject_id,state);
+  CREATE INDEX scientific_readings98_product ON scientific_readings98(product_id,property_id,state);`,
 ];
 
 /** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */
@@ -325,6 +358,9 @@ export interface ObservationInput246 {
  /** Phase270: qualitative outcome codes from the same transient bytes (qualitativeObservations269), kept only under the
   * pee249 v2 amendment. */
  qualitative270?:{readerVersion:string;observations:readonly QualitativeObservation269[]}|null;
+ /** S98: the shared scientific reading of this page (scientific_reading98.readPage98), stored only when the storage policy
+  * enables scientificReadings98. */
+ scientific98?:PageReading98|null;
 }
 export interface IngestResult246 {revisionId:string;newRevision:boolean;rederived?:boolean;retention:RetentionClass246;
  productIds:string[];variantIds:string[];declarationsSeen:number;declarationsRetained:number;
@@ -437,7 +473,9 @@ export class KnowledgeStore246 {
  ingestObservation246(o:ObservationInput246):IngestResult246{
   if(!o||!/^https:\/\//.test(o.url)||!hex64(o.sha256)||!iso(o.fetchedAt)||!Number.isInteger(o.httpStatus)||
    !/^[a-z0-9_.:-]{1,80}$/i.test(o.runId)||!shortText(o.extractorVersion,80))throw Error('246_invalid_observation');
-  const derivationVersion=o.extractorVersion+'+'+IDENTITY_RULES246;
+  // S98: with typed readings enabled, the interpreter version is part of the derivation, so a new interpreter re-derives
+  const sci98=this.storage.scientificReadings98===true&&o.scientific98?{decl:new Map(o.scientific98.declarations.map(d=>[d.key,d.reading])),version:o.scientific98.interpreter.reader}:null;
+  const derivationVersion=o.extractorVersion+'+'+IDENTITY_RULES246+(sci98?'+'+sci98.version:'');
   return this.tx(()=>{
    const retention=this.registerSource(o.source,o.fetchedAt);
    if(retention==='blocked'){this.event('observation_blocked',{url:o.url,sourceId:o.source.sourceId},o.fetchedAt);
@@ -607,11 +645,19 @@ export class KnowledgeStore246 {
      .run(did,revisionId,pid,vid,f.property,f.propertyKey,canon(f.value),f.rawValue.slice(0,120),f.section,f.component,f.method,f.locator.slice(-200),
       canon(f.flags),role,effective,'extracted_unverified',expires);
     if(Number(res.changes))retained++;
+    if(sci98){const r=sci98.decl.get(declarationKey246(f));if(r)this.insertReading98(o,revisionId,'declarations',did,pid,'as_subject_row',r,effective,expires);}
    }
    this.db.prepare('UPDATE revisions SET declarations_retained=? WHERE revision_id=?').run(retained,revisionId);
    const tm=o.testLeads?this.applyTestLeads265(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective,
     !keep?(classReason??effective):kinds&&!kinds.includes('quantity')?'value_kind_not_retained':null,expires):undefined;
    if(o.testLeads)this.applyComparative271(o,revisionId,mainId,keep&&(!kinds||kinds.includes('quantity')),effective);
+   // S98: quantities the structural document reader found that no extractor captured, kept only when interpreted to a
+   // defined property, under the same retention as test values; the product is linked only on exact name identity
+   if(sci98&&keep&&(!kinds||kinds.includes('quantity'))){const mainName=x&&!x.mainProduct.ambiguous?x.mainProduct.name:null;
+    for(const d of o.scientific98!.document){const own=d.product&&d.productBasis!=='none'?d.product:null;
+     const pid=own&&mainName&&normName246(own)===normName246(mainName)?mainId:own&&named.has(own)?named.get(own)??null:null;
+     const assoc=!pid?'subject_unresolved':pid===mainId?'page_main_product_unverified':'named_product_unverified';
+     this.insertReading98(o,revisionId,'document_quantity','dq_'+d.key,pid,assoc,d.reading,effective,expires,d.value,d.unit);}}
    const q270=o.qualitative270?this.applyQualitative270(o,revisionId,mainId,keep&&effective==='facts_retained_class_policy',effective):undefined;
    this.db.prepare('INSERT OR IGNORE INTO sightings VALUES (?,?,?)').run(revisionId,o.fetchedAt,o.runId);
    for(const pid of priorLinks)if(!this.db.prepare('SELECT 1 FROM product_sources WHERE product_id=?').get(pid)){
@@ -695,6 +741,8 @@ export class KnowledgeStore246 {
     .run(mid,revisionId,l.leadId,t.extractorVersion,l.blockSha256,l.blockIndex,l.valueOffset,pid,assoc,l.subjectAssignment,l.value,l.unit,l.dimension,l.dimensionBasis,
      l.targetScope,l.condition,l.instrument,l.methodCue,role,by,retention,expires,o.fetchedAt,JSON.stringify(l.conditionCodes),JSON.stringify(l.protocolCodes),l.setpointC);
    if(Number(res.changes)){out.persisted++;if(pid)out.associated++;else out.unresolved++;}else out.alreadyStored++;
+   if(this.storage.scientificReadings98===true&&o.scientific98){const r=o.scientific98.leads.find(x=>x.leadId===l.leadId)?.reading;
+    if(r)this.insertReading98(o,revisionId,'test_measurements265',mid,pid,pid?'as_subject_row':'subject_unresolved',r,retention,expires);}
   }
   if(out.persisted||otherVersion||Object.keys(out.rejected).length)this.event('test_measurements_ingested',{revisionId,extractorVersion:t.extractorVersion,offered:out.offered,
    persisted:out.persisted,associated:out.associated,unresolved:out.unresolved,alreadyStored:out.alreadyStored,supersededByExtractor:otherVersion,
@@ -854,12 +902,40 @@ export class KnowledgeStore246 {
     measurements:v.map(m=>({measurementId:m.measurementId,value:m.value,host:m.source.host,reportedBy:m.reportedBy,revisionId:m.revisionId}))};});
  }
  /** Removes expired local pending-rights declarations; metadata and receipts stay. */
+ /** S98: persist one typed reading for a kept subject row; an older interpreter's reading of the same subject is superseded. */
+ private insertReading98(o:ObservationInput246,revisionId:string,subjectTable:'declarations'|'test_measurements265'|'document_quantity',subjectId:string,
+  productId:string|null,association:string,r:ScientificReading98,retention:string,expires:string|null,value:number|null=null,unit:string|null=null):boolean{
+  const sci=o.scientific98!;const v=sci.interpreter.reader;
+  this.db.prepare("UPDATE scientific_readings98 SET state='superseded_by_interpreter' WHERE subject_table=? AND subject_id=? AND interpreter_version<>? AND state='current'").run(subjectTable,subjectId,v);
+  const id='sr_'+sha(subjectTable+'|'+subjectId+'|'+v).slice(0,24);
+  const res=this.db.prepare(`INSERT INTO scientific_readings98(reading_id,revision_id,subject_table,subject_id,product_id,product_association,interpreter_version,definitions_identity,qk_identity,
+    form,value,unit,kind,kind_status,metric,property_id,property_state,property_rule,definition_state,conditions_json,missing_conditions_json,conflicting_conditions_json,method_json,
+    nature,nature_basis,knowledge_state,evidence_role,retention,expires_at,state,recorded_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'current',?)
+    ON CONFLICT(reading_id) DO UPDATE SET state='current',product_id=excluded.product_id,product_association=excluded.product_association,retention=excluded.retention,expires_at=excluded.expires_at
+    WHERE scientific_readings98.state<>'current'`).run(id,revisionId,subjectTable,subjectId,productId,association,v,sci.interpreter.definitions,sci.interpreter.quantityKnowledge,
+    r.form,value,unit,r.quantity?.kind??null,r.quantity?.kindStatus??'not_recognised',r.quantity?.metric??null,r.property.id,r.property.state,r.property.rule,r.property.definitionState,
+    canon(r.conditions),canon(r.missing),canon(r.conflicts),canon(r.method),r.nature,r.natureBasis,r.knowledgeState,declarationRole246(o.source.sourceType),retention,expires,o.fetchedAt);
+  return Number(res.changes)>0;
+ }
+ /** S98: the current typed readings, optionally of one product or property, with their subject rows still current. */
+ scientificReadings98(filter:{productId?:string;propertyId?:string}={}){
+  const rows=this.db.prepare(`SELECT r.* FROM scientific_readings98 r WHERE r.state='current'
+    AND (? IS NULL OR r.product_id=?) AND (? IS NULL OR r.property_id=?)
+    AND (r.subject_table='document_quantity'
+     OR (r.subject_table='declarations' AND EXISTS (SELECT 1 FROM declarations d WHERE d.declaration_id=r.subject_id AND d.state NOT IN ('superseded_by_revision','superseded_by_extractor','expired_pending_rights')))
+     OR (r.subject_table='test_measurements265' AND EXISTS (SELECT 1 FROM test_measurements265 t WHERE t.measurement_id=r.subject_id AND t.state='current')))
+    ORDER BY r.reading_id`).all(filter.productId??null,filter.productId??null,filter.propertyId??null,filter.propertyId??null) as Record<string,unknown>[];
+  return rows.map(r=>({...(r as unknown as ScientificReadingRow98),conditions:JSON.parse(String(r.conditions_json)) as ScientificReading98['conditions'],missing:JSON.parse(String(r.missing_conditions_json)) as string[],
+   conflicts:JSON.parse(String(r.conflicting_conditions_json)) as string[],method:JSON.parse(String(r.method_json)) as ScientificReading98['method']}));
+ }
  purgeExpired246(asOf=new Date().toISOString()):number{
   const n=Number(this.db.prepare("UPDATE declarations SET state='expired_pending_rights',value_json='null',raw_value='' WHERE retention='local_pending_rights_review' AND expires_at<=? AND state!='expired_pending_rights'").run(asOf).changes);
   if(n)this.event('pending_rights_declarations_expired',{count:n},asOf);
   const m=Number(this.db.prepare("UPDATE test_measurements265 SET state='expired_pending_rights',value=NULL WHERE retention='local_pending_rights_review' AND expires_at<=? AND state!='expired_pending_rights'").run(asOf).changes);
   if(m)this.event('pending_rights_test_measurements_expired',{count:m},asOf);
-  return n+m;
+  const k=Number(this.db.prepare("UPDATE scientific_readings98 SET state='expired_pending_rights',value=NULL WHERE retention='local_pending_rights_review' AND expires_at<=? AND state!='expired_pending_rights'").run(asOf).changes);
+  if(k)this.event('pending_rights_scientific_readings_expired',{count:k},asOf);
+  return n+m+k;
  }
 
  // ---------------- product knowledge reads and reviews ----------------
@@ -1263,9 +1339,9 @@ export class KnowledgeStore246 {
  export246(opts:{includePendingRights?:boolean}={}){
   const tables:Record<string,unknown[]>={};
   for(const t of ['sources','revisions','sightings','products','variants','product_sources','declarations','category_items','category_versions',
-   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271','relation_assessments','knowledge_statements']){
+   'derived_nodes','derived_edges','host_access','research_gaps','events','product_keys','revision_properties','category_relations','test_measurements265','qualitative_observations270','comparative_results271','relation_assessments','knowledge_statements','scientific_readings98']){
    let rows=this.db.prepare(`SELECT * FROM ${t}`).all() as Record<string,unknown>[];
-   if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
+   if((t==='declarations'||t==='test_measurements265'||t==='scientific_readings98')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
    tables[t]=rows;
   }
   const body={schema:'pee246.knowledge-export.v1',storeSchemaVersion:this.schemaVersion(),storagePolicy:this.storage,
@@ -1301,7 +1377,7 @@ export class KnowledgeStore246 {
  private static readonly TABLE_KEYS:Record<string,string>={sources:'source_id',revisions:'revision_id',sightings:'revision_id,seen_at,run_id',
   products:'product_id',variants:'variant_id',product_sources:'product_id,revision_id,role',declarations:'declaration_id',category_items:'item_id',
   category_versions:'category_id,version',derived_nodes:'node_id',derived_edges:'dep_key,node_id',host_access:'host',research_gaps:'gap_id',events:'seq',
-  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id',relation_assessments:'assessment_id',knowledge_statements:'statement_id'};
+  product_keys:'key',revision_properties:'revision_id,product_id,property_key',category_relations:'relation_id',test_measurements265:'measurement_id',qualitative_observations270:'observation_id',comparative_results271:'result_id',relation_assessments:'assessment_id',knowledge_statements:'statement_id',scientific_readings98:'reading_id'};
  /** Diff-friendly export: one NDJSON file per table, rows in primary-key order, canonical JSON, plus a manifest
   * with per-file SHA-256. Re-exporting an unchanged store reproduces identical files, so a git history of
   * these files shows exactly which knowledge changed. Pending-rights values are excluded unless requested. */
@@ -1317,7 +1393,9 @@ export class KnowledgeStore246 {
   const files:Record<string,{rows:number;sha256:string}>={};
   for(const [t,key] of Object.entries(KnowledgeStore246.TABLE_KEYS)){
    let rows=this.db.prepare(`SELECT * FROM ${t} ORDER BY ${key}`).all() as Record<string,unknown>[];
-   if((t==='declarations'||t==='test_measurements265')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
+   if((t==='declarations'||t==='test_measurements265'||t==='scientific_readings98')&&!opts.includePendingRights)rows=rows.filter(r=>r.retention==='facts_retained'||r.retention==='facts_retained_class_policy');
+   // S98: typed readings derive from private retained values: never in a public destination
+   if(t==='scientific_readings98'&&audience==='public')rows=[];
    if((t==='declarations'||t==='test_measurements265')&&audience==='public')rows=rows.filter(r=>r.retention==='facts_retained'&&publishable.has(revSource.get(r.revision_id as string)??''));
    // Phase270: qualitative codes are kept under a private amendment that permits no publication.
    if(t==='qualitative_observations270'&&audience==='public')rows=[];
