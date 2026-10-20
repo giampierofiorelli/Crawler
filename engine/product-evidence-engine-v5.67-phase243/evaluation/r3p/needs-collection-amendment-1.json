@@ -1,0 +1,7 @@
+{
+ "schema": "pee.r3p.needs-collection-amendment.v1",
+ "date": "2026-10-20T18:52Z",
+ "written": "after the first collection run stopped and before any collected text was read by anyone (the implementer saw only the request log: statuses, item counts, quota)",
+ "event": "The first run (13 API requests) stopped on HTTP 429. The anonymous daily quota of the shared proxy address was nearly spent before the run (quota_remaining 8 at the first request) and reached -1 after 9 requests; three further requests returned 400 and one 429. Strata air_purifiers (5 queries) and coffee_machines (4 of 5 queries) were collected; dishwashers and dehumidifiers were not.",
+ "amendment": "The 429 is honoured: no request before the daily quota resets (00:00 UTC). After the reset, the remaining queries are collected once, with the same script, salt and exclusions, through evaluation/r3p/needs-protocol-resume.json, which lists only the uncollected queries (coffee 'upgrade', the dishwasher and dehumidifier queries). Ids already collected in the first run are added to the exclusions so that no question appears twice. If the resumed run is refused again, the shortfall is reported and never filled with other material."
+}
