@@ -766,6 +766,24 @@
       "observation_semantics clauseCues (situationTypeOf)"
      ],
      "verification": "an 'as <value>' complement of a measuring verb is not attributive; OS13/OS14 lifecycle reviewed with development evidence"
+    },
+    {
+     "id": "RQ08",
+     "what": "owner review of S102 (verbatim owner-review-s102-2026-10-20.md): RQ08 treats two different limits for one criterion as a conflict. Wrong in general: two mandatory minima for the same object combine (the stricter applies); 'at least 4, preferably 6' is a requirement plus a preference; 'at least 4, actually make it 6' is a correction; limits for different objects are distinct requirements; only incompatible limits (min above max) for the same property, object and conditions contradict. RQ08 compares criterion and number only, and is marked invariant, which protects a wrong concept. The current behaviour abstains (asks) and never excludes, so it is safe but loses information.",
+     "consumers": [
+      "src/phase253_request_constraints.ts extractConstraints253",
+      "resources/request-semantics/request-semantics.v1.json"
+     ],
+     "verification": "constraint semantics distinguish mandatory requirement, preference, correction (later statement replaces earlier), object and condition; the four owner examples decide 6 L mandatory / 4 L required + 6 L preferred / contradiction / two requirements; RQ08 superseded through its lifecycle with an owner decision (it is an invariant)"
+    },
+    {
+     "id": "REDERIVE_SWEEP",
+     "what": "rederivation happens when a revision is processed again under a new interpreter, definitions or QK identity; no process sweeps the whole store to re-derive every stored reading after a change",
+     "consumers": [
+      "src/phase246_knowledge_store.ts",
+      "scripts/phase246-knowledge.mjs"
+     ],
+     "verification": "a store-wide re-derivation (from retained revisions) reports, after a rule or definition change, how many readings were re-derived, superseded or could not be re-read (bytes not retained)"
     }
    ]
   }
