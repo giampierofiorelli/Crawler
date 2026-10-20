@@ -60,6 +60,14 @@ const esc=(x:string)=>x.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const hasWord=(text:string,cue:string)=>new RegExp('(?:^|[^\\p{L}\\p{N}])'+esc(cue)+'(?![\\p{L}\\p{N}])','u').test(text.toLowerCase());
 /** The value's own clause in its sentence (clause breaks: punctuation, sentence ends and contrastive conjunctions). */
 export function clauseOf(sent:string,start:number,end:number):{text:string;head:string;tail:string}{
+ // a value inside a parenthetical that restates or qualifies the phrase before it ("a 5,000mAh battery (72Wh)", "(around
+ // 45 x 44 cm, ~10kg)") belongs to the enclosing clause; a parenthetical with its own statement ("(we measured 32 min)") is
+ // its own clause
+ const before=sent.slice(0,start);const open=before.lastIndexOf('(');
+ if(open>=0&&before.indexOf(')',open)<0){const inner=before.slice(open+1);
+  if(!/\b(?:we|i|our|my|measured|tested|recorded|got|claimed|claims|rated|says|states)\b/i.test(inner)){
+   const outer=clauseOf(sent,open,open);const close=sent.indexOf(')',end);const tail=close<0?sent.slice(end):sent.slice(end,close);
+   return {text:outer.head+'('+inner+sent.slice(start,end)+tail+')',head:outer.head+'('+inner,tail};}}
  const head=sent.slice(0,start).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although)\b/i).at(-1)??'';
  const tail=sent.slice(end).split(/[;:()–—]|[.!?](?:\s|$)|,\s|\b(?:but|while|whereas|although|which)\b/i)[0]??'';
  return {text:head+sent.slice(start,end)+tail,head,tail};
@@ -69,7 +77,7 @@ const sentenceOf=(text:string,start:number,end:number)=>{const s=Math.max(0,text
 /** The registry of cue readers: which cue kinds each emits (checked by tests/s100_rule_governance.test.ts). */
 export const CUE_READERS:{reader:string;kinds:string[];scope:string[];statement:string}[]=[
  {reader:'valueReferenceCues',kinds:['value_norm_reference','value_threshold_reference'],scope:['value'],statement:'the value modifies a reference noun (pd statementRoles.referenceNouns)'},
- {reader:'clauseCues',kinds:['measuring_verb','first_person_test','observation_verb','episodic','attributive','declaration_verb','maker_claim','certified','condition_setting',
+ {reader:'clauseCues',kinds:['measuring_verb','first_person_test','observation_verb','attributive','declaration_verb','maker_claim','certified','condition_setting',
   'calculation_output','target_cue','norm_cue','generic_threshold','own_property_stated'],scope:['clause','value'],statement:'cues of the value\'s own clause (S86c, S91, S92, S93 readers and pd statementRoles)'},
  {reader:'sentenceCues',kinds:['sentence_test_context','sentence_declaration'],scope:['sentence'],statement:'test or declaration statements in the value\'s sentence outside its clause'},
  {reader:'tableCellCues',kinds:['cell_test_term','cell_declaration_term','cell_cert_term','cell_estimate_term','header_test_term','header_declaration_term','header_cert_term','header_estimate_term',
@@ -77,6 +85,7 @@ export const CUE_READERS:{reader:string;kinds:string[];scope:string[];statement:
   statement:'the 1G evidence ladder of the value\'s table cell (cell, labels, caption or heading, linked statements)'},
  {reader:'headerProvenanceCues',kinds:['header_test_term','header_declaration_term'],scope:['header'],statement:'a column header that states who produced the values ("Claimed", "Measured")'},
  {reader:'sectionHeadingCues',kinds:['section_test_term','section_declaration_term'],scope:['section'],statement:'the role a section heading announces (pd documentSections)'},
+ {reader:'calculationEvidenceCues',kinds:['calculation_output'],scope:['clause'],statement:'S93 reads the value as a calculation output, and the clause states a calculation operator (not a word that names the property)'},
  {reader:'recordCues',kinds:['record_condition'],scope:['row'],statement:'the quantity knowledge\'s record rule makes the value a condition of another value of its record'},
  {reader:'leadMethodCues',kinds:['first_person_test','section_test_term','header_test_term','document_test_protocol','table_test_term'],scope:['clause','section','header','document','table'],statement:'the method cue that admitted a Phase265 lead, at the scope it was read'},
  {reader:'documentCues',kinds:['source_maker','page_tests_default','extractor_specification_row','extractor_test_lead'],scope:['source','document','value'],statement:'the source type, the page-level test default and the extractor presumptions (defaults never decide)'},
@@ -111,7 +120,7 @@ export function clauseCues(qk:QuantityKnowledge,defs:PropertyDefinitions,text:st
  const meas=(defs.pack.evidenceCues?.measurement??[]).find(c=>hasWord(clause,c));if(meas)push('observation_verb','observation verb "'+meas+'"');
  // a declaration verb counts only when it governs the value: in the clause head, before the value
  const decl=(defs.pack.evidenceCues?.declaration??[]).find(c=>hasWord(cl.head,c));if(decl)push('declaration_verb','declaration verb "'+decl+'" before the value');
- const st=situationTypeOf(sent,s.start,s.end);if(st==='episodic')push('episodic','the clause reports an event');if(st==='attributive')push('attributive','the value modifies a noun as an attribute');
+ const st=situationTypeOf(sent,s.start,s.end);if(st==='attributive')push('attributive','the value modifies a noun as an attribute');
  const sr=defs.pack.statementRoles;
  if(sr){const notAfter=new Set(sr.notNormAfter??[]);
   // a norm noun as the head of its phrase: not followed by a mode, setting or level word, nor by a number (an adjective use)
@@ -156,6 +165,16 @@ export function sectionHeadingCues(defs:PropertyDefinitions,headings:readonly st
   if(spec)return [{kind:'section_declaration_term',scope:'section',why:'heading "'+h+'"'}];
   if(test)return [{kind:'section_test_term',scope:'section',why:'heading "'+h+'"'}];}
  return [];
+}
+/** S93's calculation reading of a value, as evidence only when the text states a calculation: a statistic over values
+ * (average, mean, median), a governing calculation verb, a table derivation or a comparative percentage. A qualifier that
+ * names the property ("maximum power", "total power output", "lowest setting") is not an operation. */
+const CALC_OPERATOR=/\b(?:average|averaged|mean|median|on average|in total|altogether|estimated|calculated|projected|works out|comes to|equates to|which means|results? in|adds up to)\b/i;
+export function calculationEvidenceCues(evidence:{nature:string;reason:string}|null|undefined,before:string):Cue[]{
+ if(evidence?.nature!=='calculated')return [];
+ const structural=/^calculation_output:(?:table_derivation|comparative):/.test(evidence.reason);
+ if(!structural&&!CALC_OPERATOR.test(before.slice(-60)))return [];
+ return [{kind:'calculation_output',scope:'clause',why:'S93 calculation output ('+evidence.reason+')'+(structural?'':' with a calculation operator')}];
 }
 export function recordCues(recordRole:string|null):Cue[]{return recordRole==='condition'?[{kind:'record_condition',scope:'row',why:'quantity-knowledge record rule'}]:[];}
 /** The method cue that admitted a Phase265 lead, at the scope where it was read. */

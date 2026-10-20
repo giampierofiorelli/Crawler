@@ -1,6 +1,6 @@
 {
  "schema": "pee.property-definitions.v1",
- "version": "pd.8",
+ "version": "pd.9",
  "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object. A property may declare a plausible SI range (plausibleSi; s, m, Pa, Hz, m3/s, dB): a value outside it is not attributed (SHACL-style value constraint). Object nouns name the measured object (acoustic output, audio path, obstacle), never the product class. A property may subsume QK metrics (relatedMetrics): those are not competing concepts.",
  "sources": [
   {
@@ -2837,6 +2837,10 @@
   {
    "version": "pd.8",
    "note": "S100 (owner review of S99, rule governance): reference nouns for the value-scope reference relation; threshold and norm cue lists no longer duplicate the quantity knowledge's bound words or name judgements (rule audit findings F2, F3). Statement roles are decided by the observation_semantics rules, not by cue order."
+  },
+  {
+   "version": "pd.9",
+   "note": "S100 development (spent S89-S99 material): 'performance', 'battery life' and 'noise' name aspects, not tests; as section words they announced a publisher test over declared values (12 of 26 section-decided roles wrong). They no longer count as test headings."
   }
  ],
  "knownObjects": {
@@ -2966,7 +2970,6 @@
    "tested",
    "testing",
    "results",
-   "performance",
    "benchmark",
    "benchmarks",
    "measurements",
@@ -2979,9 +2982,7 @@
    "in use",
    "real-world",
    "vacuuming tests",
-   "mopping tests",
-   "battery life",
-   "noise"
+   "mopping tests"
   ],
   "comparison": [
    "compare",

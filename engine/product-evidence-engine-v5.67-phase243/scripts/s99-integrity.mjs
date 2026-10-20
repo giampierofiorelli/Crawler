@@ -9,14 +9,15 @@
  *    and its retrieved row (by observation key; v12 builds only), and the stored product link with the reading's subject;
  *  - correctness at the source, against the sealed references of the material (property, statement role, nature, subject).
  * Material: 'dev' = the SPENT S89-S96 waves and the S98 check (post hoc, never independent); 'check' = a sealed S99 wave.
- *   node scripts/s99-integrity.mjs LABEL [--build DIR] [--set dev|check] [--advice]
+ *   node scripts/s99-integrity.mjs LABEL [--build DIR] [--set dev|dev100|check] [--out s99|s100] [--advice]
+ * S100: --set dev100 adds the spent S99 check wave; --out writes evaluation/<out>/ and private-eval/<out>/.
  * Public output: counts only (evaluation/s99/integrity-LABEL.json); per-item detail stays private. */
 import {readFileSync,writeFileSync,existsSync,mkdirSync,copyFileSync,rmSync} from 'node:fs';import {join,resolve} from 'node:path';import {homedir} from 'node:os';import {createHash} from 'node:crypto';
 const args=process.argv.slice(2);const LABEL=args[0];if(!LABEL||LABEL.startsWith('--'))throw Error('LABEL');
-const opt=k=>{const i=args.indexOf('--'+k);return i>0?args[i+1]:null;};const SET=opt('set')??'dev';const ADVICE=args.includes('--advice');
+const opt=k=>{const i=args.indexOf('--'+k);return i>0?args[i+1]:null;};const SET=opt('set')??'dev';const OUT=opt('out')??'s99';if(!/^s\d+$/.test(OUT))throw Error('--out sNN');const ADVICE=args.includes('--advice');
 const BUILD=resolve(opt('build')??new URL('..',import.meta.url).pathname);const D='file://'+join(BUILD,'dist/src/');
-const PE=process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval');const OUTD=join(PE,'s99');mkdirSync(OUTD,{recursive:true});
-const PUB=new URL('../evaluation/s99/',import.meta.url).pathname;mkdirSync(PUB,{recursive:true});
+const PE=process.env.PEE_PRIVATE_EVAL_DIR??join(homedir(),'.local/share/product-evidence-engine/private-eval');const OUTD=join(PE,OUT);mkdirSync(OUTD,{recursive:true});
+const PUB=new URL('../evaluation/'+OUT+'/',import.meta.url).pathname;mkdirSync(PUB,{recursive:true});
 const noOverwrite=f=>{if(existsSync(f))throw Error(f+' exists: never overwritten');return f;};
 const {KnowledgeStore246,DEFAULT_STORAGE_POLICY246}=await import(D+'phase246_knowledge_store.js');const {FACTUAL_CLASS_POLICY249,detectReservations249}=await import(D+'phase249_retention_policy.js');
 const {extractSpecifications245,SPEC_EXTRACTOR_VERSION}=await import(D+'phase245_spec_extraction.js');const {testLeadsFromHtml265,testDocumentSubject268}=await import(D+'phase265_test_measurements.js');
@@ -26,15 +27,17 @@ const CLASS={...DEFAULT_STORAGE_POLICY246,policyVersion:'pee249-class-policy',cl
 const live=join(process.env.PEE_KNOWLEDGE_DIR??join(homedir(),'.local/share/product-evidence-engine/knowledge'),'pee246.sqlite');
 const storeFile=join(OUTD,`store-${LABEL}.sqlite`);for(const x of [storeFile,storeFile+'-wal',storeFile+'-shm'])rmSync(x,{force:true});copyFileSync(live,storeFile);
 // a check run scores only against the reference sealed before it
-if(SET==='check'){const fz=JSON.parse(readFileSync(new URL('../evaluation/s99/check-annotation-freeze.json',import.meta.url),'utf8'));
+if(SET!=='dev'){const fz=JSON.parse(readFileSync(new URL('../evaluation/s99/check-annotation-freeze.json',import.meta.url),'utf8'));
  if(sha(readFileSync(join(PE,'s99/wave/annotation/reference.json')))!==fz.referenceSha256)throw Error('the reference does not match its seal');}
 const ON=new KnowledgeStore246(storeFile,{...CLASS,scientificReadings98:true});
 const TYPE={independent_test_or_review:'independent_original_test',independent_test:'independent_original_test'};
-const WAVES=SET==='dev'?[['s89','annotations.json'],['s90','annotations.json'],['s91','annotations.json'],['s92','annotation/annotations.json'],['s93','annotation/annotations.json'],
- ['s94/wave','annotation/annotations.json'],['s96/wave','annotation/annotations.json'],['s98/wave','annotation/annotations.json']]:[['s99/wave','annotation/reference.json']];
+const DEV=[['s89','annotations.json'],['s90','annotations.json'],['s91','annotations.json'],['s92','annotation/annotations.json'],['s93','annotation/annotations.json'],
+ ['s94/wave','annotation/annotations.json'],['s96/wave','annotation/annotations.json'],['s98/wave','annotation/annotations.json']];
+// dev100 (S100): the S99 check wave is spent after its first run and joins the development material
+const WAVES=SET==='dev'?DEV:SET==='dev100'?[...DEV,['s99/wave','annotation/reference.json']]:SET==='check'?[['s99/wave','annotation/reference.json']]:(()=>{throw Error('--set dev|dev100|check');})();
 const urlOf=new Map();const outputs=new Map();const counts={pages:0,declarations:0,leads:0,documentQuantities:0,documentKept:0,documentSkipped:{},identity:{}};const ms=[];
 for(const [S] of WAVES){const W=join(PE,S);const w=JSON.parse(readFileSync(join(W,'wave.json'),'utf8'));
- for(const p of w.pages.filter(p=>p.outcome==='fetched'&&(SET==='dev'||p.role==='heldout_eval'))){const f=join(W,'raw',p.tag+'.html');if(!existsSync(f))continue;const b=readFileSync(f);if(sha(b)!==p.sha256)continue;
+ for(const p of w.pages.filter(p=>p.outcome==='fetched'&&(SET!=='check'||p.role==='heldout_eval'))){const f=join(W,'raw',p.tag+'.html');if(!existsSync(f))continue;const b=readFileSync(f);if(sha(b)!==p.sha256)continue;
   const html=b.toString('utf8');const url=p.finalUrl??p.url;const host=new URL(url).host;const st=TYPE[p.sourceType]??p.sourceType??'unknown';urlOf.set(S+':'+p.tag,url);
   const cat=p.category&&p.category!=='mixed'?p.category:null;
   const x=testDocumentSubject268(extractSpecifications245(html,url),st);const robots=w.robots?.[host]?.status===200?w.robots[host].body??null:null;
@@ -136,7 +139,7 @@ if(ADVICE){const {adviseFromRequest253}=await import(D+'phase253_request_advice.
   if((a1.goalAssessment?.decision??null)!==(a2.goalAssessment?.decision??null)||a1.response!==a2.response)advice.decisionChanged++;if(JSON.stringify(a1.shortlist)!==JSON.stringify(a2.shortlist))advice.shortlistChanged++;
   const e=a2.scientificEvidence98;if(e&&e.properties.length){advice.withScientificEvidence++;for(const p of e.properties)for(const [k,v] of Object.entries(p.comparisons))advice.verdicts[k]=(advice.verdicts[k]??0)+v;}}}
 const out={schema:'pee.s99.integrity.v1',label:LABEL,set:SET,build:opt('build')?'other build (--build)':'working tree',reader:SR.SCIENTIFIC_READER98,
- material:SET==='dev'?'spent S89-S96 waves and the S98 check (post hoc; never independent)':'sealed S99 check wave',
+ material:SET==='dev'?'spent S89-S96 waves and the S98 check (post hoc; never independent)':SET==='dev100'?'spent S89-S96 waves, the S98 check and the S99 check (post hoc; never independent)':'sealed S99 check wave',
  reading:{...counts,msPerPage:+(ms.reduce((a,b)=>a+b,0)/Math.max(1,ms.length)).toFixed(0)},preservation:v12?preservation:'not measurable: build without observation keys (pre-v12)',
  correctness:{total,bySet:correctness},census,comparability:{verdicts,reasons},advice};
 writeFileSync(noOverwrite(join(PUB,`integrity-${LABEL}.json`)),JSON.stringify(out,null,1)+'\n');writeFileSync(join(OUTD,`integrity-${LABEL}-detail.json`),JSON.stringify(detail));

@@ -1,6 +1,6 @@
 {
  "schema": "pee.knowledge-rules.v1",
- "version": "os.1",
+ "version": "os.2",
  "statement": "S100 (owner review of S99, 2026-10-20; verbatim in .claude/skills/pee-guided-learning/references/owner-review-s99-rule-governance-2026-10-20.md): the statement role, nature and provenance of an observation are decided once, by claims from typed evidence cues about that occurrence and its context, under the precedence policy of knowledge_rules.ts (constraint > explicit > inherited; narrowest scope; equal-level disagreement abstains; defaults are presumptions). Which extractor found the value is a presumption only. Cue readers in src/observation_semantics.ts emit the cues.",
  "vocabulary": [
   {
@@ -90,18 +90,6 @@
      "rule": "claim(O,nature,measured,explicit,clause) :- cue(O,observation_verb,clause).",
      "statement": "a verb reporting what the product did (\"it lasted 48 minutes\"): nature measured.",
      "source": "S91 positive role evidence (definition_interpreter.ts roleEvidence)"
-    },
-    {
-     "id": "OS11",
-     "rule": "claim(O,role,result,explicit,clause) :- cue(O,episodic,clause).",
-     "statement": "the value's clause reports an event (finite past tense, not passive): role result.",
-     "source": "S92 situation type (situationTypeOf)"
-    },
-    {
-     "id": "OS12",
-     "rule": "claim(O,nature,measured,explicit,clause) :- cue(O,episodic,clause).",
-     "statement": "the value's clause reports an event (finite past tense, not passive): nature measured.",
-     "source": "S92 situation type (situationTypeOf)"
     },
     {
      "id": "OS13",
@@ -742,7 +730,6 @@
   "condition_setting",
   "declaration_verb",
   "document_test_protocol",
-  "episodic",
   "extractor_specification_row",
   "extractor_test_lead",
   "first_person_test",
@@ -772,5 +759,15 @@
   "target_cue",
   "value_norm_reference",
   "value_threshold_reference"
+ ],
+ "history": [
+  {
+   "version": "os.1",
+   "note": "S100 first formulation (88 rules)."
+  },
+  {
+   "version": "os.2",
+   "note": "S100 development (spent S89-S99 material): the S92 situation type 'episodic' decided 15 roles, 8 correctly; an event reading of a verb is not evidence that a value was measured. Rules OS11 and OS12 removed. Page titles are no longer read as section headings, and a calculation cue needs a calculation operator (reader changes, same rules)."
+  }
  ]
 }

@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';import {createHash} from 'node:crypto';
 import {compileRuleSet,evaluate,decide,claimRules,TIERS,type RuleSet} from '../src/knowledge_rules.js';
-import {observationSemanticsRules,observationClaimRules,decideSemantics,CUE_READERS,clauseCues,tableCellCues,headerProvenanceCues,documentCues,type Cue} from '../src/observation_semantics.js';
+import {observationSemanticsRules,observationClaimRules,decideSemantics,CUE_READERS,clauseCues,clauseOf,calculationEvidenceCues,tableCellCues,headerProvenanceCues,documentCues,type Cue} from '../src/observation_semantics.js';
 import {readPage98,scientificContext98} from '../src/scientific_reading98.js';
 import {extractSpecifications245} from '../src/phase245_spec_extraction.js';
 import {testLeadsFromHtml265} from '../src/phase265_test_measurements.js';
@@ -20,7 +20,7 @@ const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
 // ---------------------------------------------------------------------------------------------------------------------
 // Governance at load time
 test('the observation-semantics program loads and every claim rule states field, value, tier and a declared scope', ()=>{
- const {program,version}=observationSemanticsRules();assert.equal(version,'os.1');
+ const {program,version}=observationSemanticsRules();assert.match(version,/^os\.\d+$/);
  const rs=observationClaimRules();assert.ok(rs.length>=80);
  const d=program.decision!;for(const r of rs){assert.ok((TIERS as readonly string[]).includes(r.tier),r.rule);assert.ok(d.fields[r.field].includes(r.value),r.rule);assert.ok(r.scope&&d.scopes.includes(r.scope),r.rule);assert.ok(r.statement.length>10,r.rule);}});
 
@@ -214,3 +214,25 @@ test('decide: constraint beats explicit, explicit beats inherited, and the narro
  assert.equal(run('stated_green','must_black').value,'black');
  const d=run('usually_red');assert.equal(d.value,null);assert.equal(d.presumption,'red');
  assert.ok(run('wide_red','narrow_blue').defeated.some(x=>x.rule==='T1'));});
+
+test('a qualifier that names the property is not a calculation; a statistic or a calculation verb is', ()=>{
+ const ev={nature:'calculated',reason:'calculation_output:nearest:specification_label_value'};
+ assert.deepEqual(calculationEvidenceCues(ev,'Total power output: '),[]);
+ assert.deepEqual(calculationEvidenceCues(ev,'this bot has '),[]);
+ assert.deepEqual(calculationEvidenceCues(ev,'Maximum power: '),[]);
+ assert.equal(calculationEvidenceCues(ev,'across five runs it averaged ').length,1);
+ assert.equal(calculationEvidenceCues(ev,'which works out to ').length,1);
+ assert.equal(calculationEvidenceCues({nature:'calculated',reason:'calculation_output:table_derivation:x'},'').length,1);
+ assert.deepEqual(calculationEvidenceCues({nature:'measured',reason:'x'},'average of '),[]);});
+
+test('metamorphic: the page title is not a section heading; a section heading is', ()=>{
+ const body=(h2:string)=>`<!doctype html><html><head><title>Acme R1 review</title></head><body><main><h1>Acme R1 review: tested for a month</h1>${h2}<ul><li>Suction 2700 Pa on the carpet setting</li></ul></main></body></html>`;
+ const role=(h:string)=>{const s=readPage98(h,PAGE_URL,sha(h),extractSpecifications245(h,PAGE_URL),null,[],'robot_floor_cleaners','independent_original_test');return s.document.find(d=>d.value===2700)?.reading.statement.role;};
+ assert.equal(role(body('')),'unresolved','a page title saying "tested" does not make every value a test result');
+ assert.equal(role(body('<h2>Specifications</h2>')),'specification');
+ assert.equal(role(body('<h2>How we tested</h2>')),'result');});
+
+test('a value restated in parentheses keeps the clause it qualifies; a parenthetical statement is its own clause', ()=>{
+ assert.equal(clauseOf('The robot is equipped with a 5,000mAh battery (72Wh), which lasts.',47,51).head.includes('equipped with'),true);
+ assert.equal(role('The robot is equipped with a 5,000mAh battery (72Wh), which lasts.','72Wh','Wh').role,'specification');
+ assert.equal(role('The maker claims 40 minutes (we measured 32 minutes) of runtime.','32 minutes','minutes').role,'result');});

@@ -1,0 +1,627 @@
+{
+ "schema": "pee.s99.integrity.v1",
+ "label": "dev-s98",
+ "set": "dev100",
+ "build": "other build (--build)",
+ "reader": "sr98.1",
+ "material": "spent S89-S96 waves, the S98 check and the S99 check (post hoc; never independent)",
+ "reading": {
+  "pages": 124,
+  "declarations": 1222,
+  "leads": 47,
+  "documentQuantities": 5816,
+  "documentKept": 813,
+  "documentSkipped": {
+   "no_defined_property": 3956,
+   "already_extracted": 365,
+   "boilerplate_or_duplicate": 363,
+   "not_a_point_value": 183,
+   "product_name_part": 136
+  },
+  "identity": {},
+  "msPerPage": 1411
+ },
+ "preservation": "not measurable: build without observation keys (pre-v12)",
+ "correctness": {
+  "total": {
+   "items": 2376,
+   "property": {
+    "refPositive": 967,
+    "correct": 412,
+    "wrong": 36,
+    "notStored": 519,
+    "refNone": 1386,
+    "falseStored": 66
+   },
+   "role": {
+    "compared": 343,
+    "agree": 150,
+    "confusion": {
+     "specification->result": 134,
+     "result->result": 51,
+     "specification->unresolved": 29,
+     "specification->specification": 99,
+     "result->unresolved": 14,
+     "condition->result": 6,
+     "condition->specification": 2,
+     "condition->unresolved": 3,
+     "result->specification": 4,
+     "threshold->result": 1
+    }
+   },
+   "nature": {
+    "compared": 157,
+    "agree": 50,
+    "confusion": {
+     "declared->measured": 65,
+     "measured->measured": 29,
+     "condition->measured": 23,
+     "declared->declared": 21,
+     "calculated->measured": 3,
+     "declared->unresolved": 2,
+     "measured->declared": 9,
+     "measured->calculated": 2,
+     "measured->unresolved": 3
+    }
+   },
+   "subject": {
+    "reviewed": 383,
+    "reviewedLinked": 193,
+    "other": 46,
+    "otherLinked": 12,
+    "none": 5,
+    "noneLinked": 4
+   },
+   "storedNoneByRole": {
+    "result": 53,
+    "unresolved": 7,
+    "specification": 6
+   },
+   "falseProductValue": 77,
+   "refNoneStoredAsNonValue": 36,
+   "labelGap": {
+    "items": 28,
+    "storedWithProperty": 4
+   },
+   "bound": {
+    "compared": 21,
+    "agree": 19
+   },
+   "productValue": {
+    "reference": 603,
+    "storedLinkedCorrect": 130
+   }
+  },
+  "bySet": {
+   "s89": {
+    "items": 341,
+    "property": {
+     "refPositive": 109,
+     "correct": 37,
+     "wrong": 5,
+     "notStored": 67,
+     "refNone": 232,
+     "falseStored": 9
+    },
+    "role": {
+     "compared": 42,
+     "agree": 22,
+     "confusion": {
+      "specification->result": 18,
+      "result->result": 15,
+      "specification->unresolved": 2,
+      "specification->specification": 7
+     }
+    },
+    "nature": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "subject": {
+     "reviewed": 38,
+     "reviewedLinked": 31,
+     "other": 2,
+     "otherLinked": 1,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {
+     "result": 9
+    },
+    "falseProductValue": 5,
+    "refNoneStoredAsNonValue": 4,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 90,
+     "storedLinkedCorrect": 27
+    }
+   },
+   "s90": {
+    "items": 208,
+    "property": {
+     "refPositive": 82,
+     "correct": 39,
+     "wrong": 8,
+     "notStored": 35,
+     "refNone": 126,
+     "falseStored": 2
+    },
+    "role": {
+     "compared": 46,
+     "agree": 10,
+     "confusion": {
+      "specification->result": 35,
+      "specification->specification": 10,
+      "result->unresolved": 1
+     }
+    },
+    "nature": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "subject": {
+     "reviewed": 44,
+     "reviewedLinked": 12,
+     "other": 2,
+     "otherLinked": 0,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {
+     "result": 2
+    },
+    "falseProductValue": 0,
+    "refNoneStoredAsNonValue": 2,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 74,
+     "storedLinkedCorrect": 5
+    }
+   },
+   "s91": {
+    "items": 402,
+    "property": {
+     "refPositive": 180,
+     "correct": 88,
+     "wrong": 0,
+     "notStored": 92,
+     "refNone": 222,
+     "falseStored": 2
+    },
+    "role": {
+     "compared": 88,
+     "agree": 58,
+     "confusion": {
+      "specification->result": 21,
+      "result->result": 24,
+      "specification->specification": 34,
+      "result->unresolved": 7,
+      "specification->unresolved": 1,
+      "condition->result": 1
+     }
+    },
+    "nature": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "subject": {
+     "reviewed": 88,
+     "reviewedLinked": 39,
+     "other": 0,
+     "otherLinked": 0,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {
+     "result": 2
+    },
+    "falseProductValue": 1,
+    "refNoneStoredAsNonValue": 1,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 151,
+     "storedLinkedCorrect": 39
+    }
+   },
+   "s92": {
+    "items": 191,
+    "property": {
+     "refPositive": 116,
+     "correct": 67,
+     "wrong": 16,
+     "notStored": 33,
+     "refNone": 75,
+     "falseStored": 17
+    },
+    "role": {
+     "compared": 95,
+     "agree": 28,
+     "confusion": {
+      "specification->result": 57,
+      "specification->unresolved": 7,
+      "specification->specification": 25,
+      "result->result": 3,
+      "result->unresolved": 1,
+      "condition->result": 2
+     }
+    },
+    "nature": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "subject": {
+     "reviewed": 87,
+     "reviewedLinked": 37,
+     "other": 8,
+     "otherLinked": 0,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {
+     "result": 11,
+     "unresolved": 5,
+     "specification": 1
+    },
+    "falseProductValue": 6,
+    "refNoneStoredAsNonValue": 12,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 99,
+     "storedLinkedCorrect": 23
+    }
+   },
+   "s93": {
+    "items": 462,
+    "property": {
+     "refPositive": 119,
+     "correct": 10,
+     "wrong": 0,
+     "notStored": 109,
+     "refNone": 343,
+     "falseStored": 0
+    },
+    "role": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "nature": {
+     "compared": 10,
+     "agree": 4,
+     "confusion": {
+      "declared->measured": 6,
+      "measured->measured": 4
+     }
+    },
+    "subject": {
+     "reviewed": 9,
+     "reviewedLinked": 9,
+     "other": 1,
+     "otherLinked": 0,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {},
+    "falseProductValue": 0,
+    "refNoneStoredAsNonValue": 0,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 94,
+     "storedLinkedCorrect": 9
+    }
+   },
+   "s94/wave": {
+    "items": 240,
+    "property": {
+     "refPositive": 117,
+     "correct": 88,
+     "wrong": 1,
+     "notStored": 28,
+     "refNone": 123,
+     "falseStored": 17
+    },
+    "role": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "nature": {
+     "compared": 97,
+     "agree": 20,
+     "confusion": {
+      "condition->measured": 22,
+      "declared->declared": 5,
+      "calculated->measured": 2,
+      "declared->measured": 51,
+      "measured->measured": 15,
+      "declared->unresolved": 2
+     }
+    },
+    "subject": {
+     "reviewed": 71,
+     "reviewedLinked": 32,
+     "other": 30,
+     "otherLinked": 10,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {
+     "result": 17
+    },
+    "falseProductValue": 48,
+    "refNoneStoredAsNonValue": 8,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 7,
+     "storedLinkedCorrect": 0
+    }
+   },
+   "s96/wave": {
+    "items": 229,
+    "property": {
+     "refPositive": 131,
+     "correct": 51,
+     "wrong": 3,
+     "notStored": 77,
+     "refNone": 98,
+     "falseStored": 3
+    },
+    "role": {
+     "compared": 51,
+     "agree": 21,
+     "confusion": {
+      "specification->unresolved": 19,
+      "result->unresolved": 2,
+      "result->result": 5,
+      "specification->specification": 16,
+      "condition->result": 2,
+      "condition->specification": 2,
+      "specification->result": 2,
+      "condition->unresolved": 3
+     }
+    },
+    "nature": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "subject": {
+     "reviewed": 0,
+     "reviewedLinked": 0,
+     "other": 0,
+     "otherLinked": 0,
+     "none": 0,
+     "noneLinked": 0
+    },
+    "storedNoneByRole": {
+     "result": 1,
+     "unresolved": 2
+    },
+    "falseProductValue": 8,
+    "refNoneStoredAsNonValue": 2,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 0,
+     "storedLinkedCorrect": 0
+    }
+   },
+   "s98/wave": {
+    "items": 192,
+    "property": {
+     "refPositive": 60,
+     "correct": 19,
+     "wrong": 0,
+     "notStored": 41,
+     "refNone": 132,
+     "falseStored": 14
+    },
+    "role": {
+     "compared": 0,
+     "agree": 0,
+     "confusion": {}
+    },
+    "nature": {
+     "compared": 30,
+     "agree": 15,
+     "confusion": {
+      "measured->declared": 5,
+      "declared->declared": 9,
+      "measured->calculated": 2,
+      "measured->measured": 6,
+      "declared->measured": 7,
+      "calculated->measured": 1
+     }
+    },
+    "subject": {
+     "reviewed": 28,
+     "reviewedLinked": 16,
+     "other": 2,
+     "otherLinked": 1,
+     "none": 3,
+     "noneLinked": 2
+    },
+    "storedNoneByRole": {
+     "result": 9,
+     "specification": 5
+    },
+    "falseProductValue": 7,
+    "refNoneStoredAsNonValue": 7,
+    "labelGap": {
+     "items": 0,
+     "storedWithProperty": 0
+    },
+    "bound": {
+     "compared": 0,
+     "agree": 0
+    },
+    "productValue": {
+     "reference": 48,
+     "storedLinkedCorrect": 16
+    }
+   },
+   "s99/wave": {
+    "items": 111,
+    "property": {
+     "refPositive": 53,
+     "correct": 13,
+     "wrong": 3,
+     "notStored": 37,
+     "refNone": 35,
+     "falseStored": 2
+    },
+    "role": {
+     "compared": 21,
+     "agree": 11,
+     "confusion": {
+      "result->specification": 4,
+      "specification->result": 1,
+      "specification->specification": 7,
+      "result->result": 4,
+      "condition->result": 1,
+      "result->unresolved": 3,
+      "threshold->result": 1
+     }
+    },
+    "nature": {
+     "compared": 20,
+     "agree": 11,
+     "confusion": {
+      "measured->declared": 4,
+      "declared->measured": 1,
+      "declared->declared": 7,
+      "measured->measured": 4,
+      "condition->measured": 1,
+      "measured->unresolved": 3
+     }
+    },
+    "subject": {
+     "reviewed": 18,
+     "reviewedLinked": 17,
+     "other": 1,
+     "otherLinked": 0,
+     "none": 2,
+     "noneLinked": 2
+    },
+    "storedNoneByRole": {
+     "result": 2
+    },
+    "falseProductValue": 2,
+    "refNoneStoredAsNonValue": 0,
+    "labelGap": {
+     "items": 28,
+     "storedWithProperty": 4
+    },
+    "bound": {
+     "compared": 21,
+     "agree": 19
+    },
+    "productValue": {
+     "reference": 40,
+     "storedLinkedCorrect": 11
+    }
+   }
+  }
+ },
+ "census": {
+  "readings": 1288,
+  "byRole": {
+   "result": 563,
+   "specification": 644,
+   "unresolved": 81
+  },
+  "byNature": {
+   "measured": 556,
+   "declared": 644,
+   "unresolved": 81,
+   "calculated": 7
+  },
+  "bySubject": {
+   "n/a": 1288
+  },
+  "byAssociation": {
+   "page_main_product_unverified": 259,
+   "as_subject_row": 552,
+   "subject_unresolved": 477
+  },
+  "bounded": 0
+ },
+ "comparability": {
+  "verdicts": {
+   "comparable": 373,
+   "conditions_unestablished": 2701,
+   "not_comparable": 3942
+  },
+  "reasons": {
+   "different_nature": 3750,
+   "conditions_stated_and_equal_or_none_required": 373,
+   "missing_fan_setting": 1122,
+   "missing_challenge_pollutant": 806,
+   "different_fan_setting": 144,
+   "different_challenge_pollutant": 15,
+   "missing_pd:filter_condition": 24,
+   "missing_programme": 4,
+   "different_signal_mode": 17,
+   "missing_signal_mode": 6,
+   "missing_window_size": 79,
+   "different_window_size": 16,
+   "conflicting_conditions": 69,
+   "missing_pd:end_point": 23,
+   "missing_pd:acoustic_quantity": 18,
+   "missing_measurement_distance": 550
+  }
+ },
+ "advice": null
+}

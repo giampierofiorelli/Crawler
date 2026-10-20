@@ -39,7 +39,9 @@ export type SegmentLocation='paragraph'|'list'|'definition_list'|'card'|'caption
 export interface Segment {id:string;role:SegmentRole;location:SegmentLocation;tag:string;locator:string;
  /** for embedded data: the source (json-ld, next-data, next-flight, application/json) and the JSON path */
  embedded?:{source:string;path:string};
- label:string|null;text:string;headings:string[];region:'subject'|'boilerplate';products:{name:string;start:number;end:number}[];
+ label:string|null;text:string;headings:string[];
+ /** S100: the level of each heading (1 = the page title) */
+ headingLevels?:number[];region:'subject'|'boilerplate';products:{name:string;start:number;end:number}[];
  /** an embedded text that repeats visible text */
  duplicateOf:string|null}
 export interface SegmentQuantity {id:string;segment:string;record:string;start:number;end:number;surface:string;quantity:TypedQuantity|null;
@@ -209,7 +211,7 @@ export function readDocumentEvidence(html:string,qk:QuantityKnowledge,opts:{sour
  const author=authorOf(root);const len=textLengths(root);const total=Math.max(1,len.get([...walk245(root)].find(x=>x.tag==='body')??root)??1);
  // ---- visible segments, in document order, with their section headings
  const segs:Segment[]=[];let stack:{level:number;text:string}[]=[];const consumed=new Set<Node245>();let k=0;
- const push=(s:Omit<Segment,'id'|'products'|'duplicateOf'>)=>{const id='s'+(k++);segs.push({...s,id,products:s.region==='boilerplate'?[]:mentions(inv,s.text),duplicateOf:null});};
+ const push=(s:Omit<Segment,'id'|'products'|'duplicateOf'>)=>{const id='s'+(k++);segs.push({...s,headingLevels:s.headings.length?stack.map(x=>x.level):[],id,products:s.region==='boilerplate'?[]:mentions(inv,s.text),duplicateOf:null});};
  for(const n of walk245(root)){if(n.kind!=='element'||RAW.has(n.tag)||n.tag==='table'||inside(n,a=>RAW.has(a.tag)||a.tag==='table'))continue;
   const h=/^h([1-6])$/.exec(n.tag);if(h){const L=+h[1];stack=stack.filter(x=>x.level<L);stack.push({level:L,text:fullText(n)});continue;}
   if(INLINE.has(n.tag)||consumed.has(n)||inside(n,a=>/^h[1-6]$/.test(a.tag)))continue;

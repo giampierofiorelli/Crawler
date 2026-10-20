@@ -23,7 +23,7 @@ import {withReaderConditions,readerConditionAxes} from './knowledge_link.js';
 import type {Fact245} from './phase245_spec_extraction.js';
 import type {ScreenedLead265} from './phase265_test_measurements.js';
 import type {QualitativeObservation269} from './phase269_qualitative_observations.js';
-import {decideSemantics,clauseCues,sentenceCues,tableCellCues,headerProvenanceCues,sectionHeadingCues,recordCues,leadMethodCues,documentCues,type Cue,type ObservationSemantics} from './observation_semantics.js';
+import {decideSemantics,clauseCues,sentenceCues,tableCellCues,headerProvenanceCues,sectionHeadingCues,calculationEvidenceCues,recordCues,leadMethodCues,documentCues,type Cue,type ObservationSemantics} from './observation_semantics.js';
 /** S100: what the page offers as evidence beyond one observation's words (its source type, the 1G evidence of table cells,
  * the reader blocks of Phase265 leads). */
 export interface PageEvidence100 {sourceType:string|null;cellEvidence:(locator:string|null)=>{class:string;level:string|null;support:string[]}|null;blocks:readonly string[]|null}
@@ -64,7 +64,8 @@ export interface ScientificReading98 {
  statement:StatementReading99;subject:SubjectReading99;provenance:'publisher'|'manufacturer'|'third_party'|'unresolved';
  resultBasis:string|null;object:string|null;source:SourceIdentity99|null;
  /** S100: how role, nature and provenance were decided (deciding tier, scope and rules, conflicts, presumptions) */
- semantics?:ObservationSemantics['decisions'];
+ /** S100: the shared decision per field and the evidence it was decided from (cue kind@scope: why) */
+ semantics?:{decisions:ObservationSemantics['decisions'];cues:string[]};
 }
 export interface ScientificContext98 {qk:QuantityKnowledge;defs:PropertyDefinitions;identity:{reader:string;definitions:string;quantityKnowledge:string}}
 let cached:ScientificContext98|null=null;
@@ -157,8 +158,9 @@ export function readDeclaration98(ctx:ScientificContext98,f:Fact245,category:str
  const subj=['threshold','norm','target','condition'].includes(m.statement.role)?{value:'none' as const,name:null,basis:'statement_role:'+m.statement.role}:subject;
  const r=assemble(ctx,o,qi,m.nature,m.natureBasis,{codes:[],cue:null,instrumentStated:false},
   {statement:m.statement,subject:subj,provenance:m.provenance,source:{reader:'phase245',key:key??declarationKey98(f),locator:f.locator?.slice(-200)??null,offset:null}});
- return {...r,semantics:sem.decisions};
+ return {...r,semantics:semRecord(sem)};
 }
+const semRecord=(sem:ObservationSemantics)=>({decisions:sem.decisions,cues:sem.cues.map(c=>c.kind+'@'+c.scope+': '+c.why)});
 const dedupeCues=(cs:readonly Cue[])=>cs.filter((c,i)=>cs.findIndex(d=>d.kind===c.kind&&d.scope===c.scope)===i);
 /** A screened Phase265 test-result lead: a publisher-reported measurement with its reader codes and method cue; the label
  * is the publisher's dimension (a QK metric's label when the reader typed one) and the lead's own condition text. The
@@ -171,7 +173,8 @@ export function readTestLead98(ctx:ScientificContext98,l:ScreenedLead265,categor
  // evidence: the method cue that admitted the lead (at its scope) and the lead's own sentence, read as any prose value;
  // that Phase265 screened it is a presumption only
  const cues:Cue[]=[...leadMethodCues(l.methodCue),...documentCues({sourceType:page?.sourceType??null,extractor:'phase265'})];
- const line=page?.blocks?.[l.blockIndex]??null;
+ // the lead's value offset is in the block line its hash names (a block can hold several lines)
+ const b=page?.blocks?.[l.blockIndex]??null;const line=b?[b,...b.split(/\n+/)].find(x=>createHash('sha256').update(x).digest('hex')===l.blockSha256)??null:null;
  if(line&&l.valueOffset<line.length){const len=(/^[\d.,]+/.exec(line.slice(l.valueOffset))?.[0].length)??1;
   cues.push(...clauseCues(ctx.qk,ctx.defs,line,l.valueOffset,l.valueOffset+len,l.unit,{dim:qi.interp.property.kind??'',propertyStated:qi.interp.property.state==='stated'}),...sentenceCues(line,l.valueOffset,l.valueOffset+len));}
  const sem=decideSemantics(dedupeCues(cues));const m=fromSemantics(sem,{bound:null,cue:null});
@@ -181,7 +184,7 @@ export function readTestLead98(ctx:ScientificContext98,l:ScreenedLead265,categor
  const subj=['threshold','norm','target','condition'].includes(m.statement.role)?{value:'none' as const,name:null,basis:'statement_role:'+m.statement.role}:subj0;
  const r=assemble(ctx,o,qi,m.nature,m.natureBasis,{codes:[...new Set(codes)].sort(),cue:l.methodCue,instrumentStated:!!l.instrument},
   {statement:m.statement,subject:subj,provenance:m.provenance,source:{reader:'phase265',key:l.leadId,locator:'block:'+l.blockIndex,offset:l.valueOffset}});
- return {...r,semantics:sem.decisions};
+ return {...r,semantics:semRecord(sem)};
 }
 /** A Phase269 qualitative code: a judgement, never a measurement. */
 export function readQualitative98(_ctx:ScientificContext98,q:QualitativeObservation269,_i=0):ScientificReading98{
@@ -223,13 +226,12 @@ export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity
  // test default as a presumption) decided by the shared rules; S93's calculation reading is a clause cue
  const localTest=TEST_CONTEXT272.test(seg.text)||/\b(?:I|we) (?:tested|measured|timed|recorded|weighed|metered)\b/i.test(seg.text);
  const cues:Cue[]=[...clauseCues(ctx.qk,ctx.defs,label,valueAt,valueAt+len,unit,{dim:it.property.kind??'',propertyStated:it.property.state==='stated'}),
-  ...sentenceCues(label,valueAt,valueAt+len),...recordCues(q.recordRole),...sectionHeadingCues(ctx.defs,seg.headings),
+  ...sentenceCues(label,valueAt,valueAt+len),...recordCues(q.recordRole),
+  // the page title (a level-1 heading) is a statement about the whole page, not a section heading
+  ...sectionHeadingCues(ctx.defs,seg.headings.filter((_,i)=>(seg.headingLevels?.[i]??2)>1)),
   ...documentCues({sourceType:sourceType??null,pageTestsDefault:q.evidenceClass==='publisher_measured'&&!localTest})];
- // S93's aggregate words ("at least", "minimum") are also the quantity knowledge's bound words: a value its own words bound is
- // a bound, not the output of a statistic (rule overlap resolved here, registered in the contract)
  const bnd=boundOf(ctx,label,valueAt,valueAt+len,unit);
- if(it.evidence?.nature==='calculated'&&!(bnd.bound&&/^calculation_output:(?:nearest|evidence|)/.test(it.evidence.reason)&&/\b(?:least|most|minimum|maximum|max|min)\b/i.test(label.slice(Math.max(0,valueAt-40),valueAt))))
-  cues.push({kind:'calculation_output',scope:'clause',why:'S93 calculation output: '+it.evidence.reason});
+ cues.push(...calculationEvidenceCues(it.evidence,label.slice(0,valueAt)));
  const sem=decideSemantics(dedupeCues(cues));const m=fromSemantics(sem,bnd);
  const statement=m.statement;const nature=m.nature,natureBasis=m.natureBasis;
  // subject: never a product for a statement that is not a value of one; another product named in the clause is never the
@@ -247,7 +249,7 @@ export function readDocumentQuantity98(ctx:ScientificContext98,q:SegmentQuantity
  const provenance=m.provenance;
  return {...assemble(ctx,o,qi,nature,natureBasis,{codes:[],cue:null,instrumentStated:false},{statement,subject,provenance,
   // identity: the segment (one element can hold several segments, each with its own offsets), its element and the offset
-  source:{reader:'document_evidence',key:createHash('sha256').update(url+'|'+seg.id+'|'+seg.locator+'|'+(seg.embedded?.path??'')+'|'+q.start).digest('hex').slice(0,24),locator:seg.locator.slice(-200),offset:q.start}}),semantics:sem.decisions};
+  source:{reader:'document_evidence',key:createHash('sha256').update(url+'|'+seg.id+'|'+seg.locator+'|'+(seg.embedded?.path??'')+'|'+q.start).digest('hex').slice(0,24),locator:seg.locator.slice(-200),offset:q.start}}),semantics:semRecord(sem)};
 }
 export interface PageReading98 {interpreter:ScientificContext98['identity'];
  declarations:{key:string;reading:ScientificReading98}[];leads:{leadId:string;reading:ScientificReading98}[];
