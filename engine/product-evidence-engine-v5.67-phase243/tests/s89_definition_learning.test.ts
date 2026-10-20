@@ -32,10 +32,11 @@ test('S89 role and subject are separate slots, never merged into the property',(
  assert.equal(r.property.value,'sound_level');assert.equal(r.role.value,'declared_spec');
 });
 
-test('S89 learning: a term is learned only across independent publishers; it then reaches every consumer',()=>{
+test('S89/S90 learning: one source teaches a candidate, independent publishers a supported term; it reaches every consumer',()=>{
  const doc=(i:number,pub:string,label:string)=>({docId:'d'+i,publisher:pub,category:'robot_floor_cleaners',value:90,unit:'%',label,valueAt:label.indexOf('90'),surface:'90%'});
  const seedsOnePub=[doc(1,'a.com','debris pickup in the sandbox trial 90%'),doc(2,'a.com','debris pickup in the sandbox trial 90%')];
- assert.equal(learnFromDocuments(defs,qk,seedsOnePub).terms.length,0,'one publisher: a template, not vocabulary');
+ const one=learnFromDocuments(defs,qk,seedsOnePub).terms;
+ assert.ok(one.length>0&&one.every(t=>t.state==='candidate'),'one publisher teaches only candidates (S90: uncertainty state, not refusal)');
  const obs=[doc(1,'a.com','debris pickup in the sandbox trial 90%'),doc(2,'b.com','debris pickup on the sandbox trial 90%')];
  const layer=learnFromDocuments(defs,qk,obs);
  assert.ok(layer.terms.some(t=>t.property==='debris_pickup'&&t.term==='sandbox trial'&&t.state==='supported'),JSON.stringify(layer.terms));

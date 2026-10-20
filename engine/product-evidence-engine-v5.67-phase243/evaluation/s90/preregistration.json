@@ -1,0 +1,92 @@
+{
+ "schema": "pee.s90.preregistration.v1",
+ "at": "2026-10-20T00:16:51.287Z",
+ "question": "With the document structure connected to the definitions (labels and evidence role inherited from tables, label-value lines and sections) and a vocabulary learned with uncertainty states, does the interpreter recover more correct values without losing precision on never-seen publishers, does the role beat the trivial baseline, and do learned terms help on unseen documents?",
+ "frozen": {
+  "resources/property-definitions/property-definitions.v1.json": "dfdf32ab15cbffefe9468685bd6ecfd44346899c838263120da775138d561ce4",
+  "src/property_definitions.ts": "cff95b87a28f409ae240114c99d7a835370dd5e3deda570308c97a5eda3bcbbc",
+  "src/definition_interpreter.ts": "858da4b55f3a2ce9ac19aa5c63ed6f8926e2e82dac1a597e1370b8b08cd85a6c",
+  "src/definition_learning.ts": "6a11691c32aca596da4f3c7055fd33be2b5d947cbd8bdbe0b6dd55e843d18378",
+  "src/document_semantics.ts": "58b36a439a757f2bc41a9ae06061dc9103b6965ca110bc07100cf2786d47fb4b",
+  "src/phase225_transient_test_probe.ts": "5ee998db5d62a4f29e209030d0c0d95c3fe4572c81d8d765d7c5194836ff94de",
+  "scripts/s90-structure-eval.mjs": "0a876a91452349ab60fbc65a7f653091b3f60404a6897541bac2fbb249e4ad6d",
+  "scripts/s90-learn.mjs": "01671a7e0071815037ab06b372747244bbf1f95530f9533e895a9fcdad8bf08d"
+ },
+ "learnedLayer": {
+  "schema": "pee.s90.learned-freeze.v1",
+  "sealedAt": "2026-10-20T00:16:34.891Z",
+  "layerSha256": "8f7a569f8e8cfe73ac1ccf7f83347b9d5b62651b9a769abf9ddbbf275a7c6ec8",
+  "learnedFrom": {
+   "definitions": "pd.4:91cb257f17c5775f",
+   "observations": 852,
+   "documents": 44,
+   "digest": "eb49eda8bec4d97268e6b104e73c0dd1e6fb7b769f2927397c269cf5cc4b3720"
+  },
+  "terms": {
+   "supported": 7,
+   "candidate": 19
+  },
+  "termsByProperty": {
+   "battery_runtime": 2,
+   "capacity": 5,
+   "debris_pickup": 5,
+   "electrical_power": 2,
+   "frequency_response": 1,
+   "obstacle_height": 2,
+   "run_duration": 1,
+   "sound_level": 2,
+   "suction_pressure": 6
+  },
+  "proposals": 10
+ },
+ "checkPages": {
+  "robot_floor_cleaners": [
+   "https://www.stuff.tv/review/roborock-saros-z70-review/",
+   "https://www.techadvisor.com/article/723240/ecovacs-deebot-x1-omni-review.html",
+   "https://www.techadvisor.com/article/2347647/aeno-robot-vacuum-rc2s-review.html",
+   "https://www.pocket-lint.com/smart-home/reviews/roborock/148055-roborock-s6-robot-vacuum-cleaner-review/",
+   "https://www.pocket-lint.com/smart-home/reviews/ecovacs/149388-ecovacs-deebot-ozmo-950-review-robot-vacuum/",
+   "https://www.engadget.com/home/smart-home/best-robot-vacuums-130010426.html",
+   "https://www.engadget.com/home/smart-home/best-budget-robot-vacuums-133030847.html",
+   "https://hometheaterreview.com/product/roborock-qrevo-pro-robot-vacuum-and-mop/",
+   "https://www.stuff.tv/features/best-robot-vacuum-cleaners/",
+   "https://www.techadvisor.com/article/724333/best-robot-vacuum-cleaners-2.html"
+  ],
+  "soundbars": [
+   "https://www.audioholics.com/soundbar-and-satellite-speaker-reviews/kef-xio-soundbar",
+   "https://www.audioholics.com/soundbar-and-satellite-speaker-reviews/energy-power-bar-pre",
+   "https://www.audioholics.com/soundbar-and-satellite-speaker-reviews/5-1-speaker-shootout",
+   "https://hometheaterreview.com/hisense-ht-saturn-review-the-wireless-home-theater-that-almost-gets-everything-right/",
+   "https://hometheaterreview.com/the-best-soundbars-of-2026-15-picks-that-actually-upgrade-your-tv/",
+   "https://www.engadget.com/audio/speakers/sony-bravia-theater-bar-5-review-a-basic-tv-sound-booster-140000192.html",
+   "https://www.engadget.com/home/home-theater/sony-bravia-theater-bar-6-review-great-sound-greater-frustration-144512450.html",
+   "https://www.pocket-lint.com/sony-ht-a7000-review/",
+   "https://www.pocket-lint.com/bose-smart-ultra-soundbar-review/",
+   "https://www.stuff.tv/review/bluesound-pulse-cinema-mini-review/",
+   "https://www.stuff.tv/review/i-had-my-doubts-about-marshalls-first-soundbar-but-the-dolby-atmos-equipped-heston-120-blew-me-away/"
+  ]
+ },
+ "publishersNeverSeen": [
+  "stuff.tv",
+  "techadvisor.com",
+  "pocket-lint.com",
+  "engadget.com",
+  "hometheaterreview.com",
+  "audioholics.com"
+ ],
+ "arms": {
+  "s89": "S89 interpreter code (commit 6d35176) with pd.3: the previous step",
+  "pd4": "S90 interpreter, pd.4, no structure, no learning",
+  "pd4structure": "S90 with structure",
+  "pd4structureLearned": "S90 with structure and the frozen learned layer",
+  "unitkind": "unit kind only",
+  "roleTrivial": "all measured"
+ },
+ "procedure": [
+  "fetch under the standing policy (robots, reservations, no bypass)",
+  "items by the S88/S89 rule",
+  "blind Claude-agent reference (property, conditions, basis, role, subject) sealed before any arm",
+  "each arm once; first runs committed unchanged"
+ ],
+ "note": "The S89 check pages are spent (development of S90); none of the six check publishers was used in S88, S89 or S90 development."
+}

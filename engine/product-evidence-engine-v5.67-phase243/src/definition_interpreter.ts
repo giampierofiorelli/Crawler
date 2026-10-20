@@ -13,6 +13,7 @@ import {applicableProperties,relevanceOf,type Basis,type ConditionDimension,type
 import {UNIT_LEXICON272,type PlanMeasurement272} from './phase272_extraction_plan.js';
 import {classifyCondition87} from './observation_model.js';
 import {observationRole86c,otherProductInClause86c,type ObservationRole86c} from './phase225_transient_test_probe.js';
+import type {DocumentSemantics1D2} from './document_semantics.js';
 
 export const DEFINITION_INTERPRETER_VERSION='pee88.definition-interpreter.v1';
 export type SlotState='stated'|'inferred'|'ambiguous'|'unknown';
@@ -33,7 +34,49 @@ export interface ObservationInput {value:number|null;unit:string;label?:string|n
  /** S89: offset of the value in the label; when given, a label term supports the value only if no other number lies between them. */
  valueAt?:number|null;
  /** S89: the printed value (to locate its end) and the page's product name (to tell another product's value). */
- surface?:string|null;pageSubject?:string|null}
+ surface?:string|null;pageSubject?:string|null;
+ /** S90: what the document's structure says about the value (Step 1D-A2 semantics, reused): its structural label (table
+  * headers, the label of a "label: value" line), its container and the role its section or table announces. */
+ structure?:StructuralContext|null}
+export interface StructuralContext {container:'table_cell'|'label_value'|'prose';label:string|null;section:string|null;
+ sectionRole:'specification'|'test'|'comparison'|null;tableContext:'test'|'specification'|'unknown'|null}
+
+/** S90: the structural context of a value in reader block `bi` (textBlocks225 order, as Step 1D-A2 aligns it). The section
+ * role comes from the heading path, innermost first, matched against the definitions' document-section cues (data). */
+export function structuralContextOf(defs:PropertyDefinitions,sem:DocumentSemantics1D2,blockTexts:readonly string[],bi:number,valueStart:number):StructuralContext{
+ const b=sem.blocks[bi];const cues=defs.pack.documentSections;
+ const headings=(b?.headingPath??[]).map(i=>blockTexts[i]??'').filter(Boolean);
+ let sectionRole:StructuralContext['sectionRole']=null;let section:string|null=headings.at(-1)??null;
+ if(cues)for(const h of [...headings].reverse()){const t=norm(h);
+  if(cues.specification.some(c=>has(t,c))){sectionRole='specification';section=h;break;}
+  if(cues.comparison.some(c=>has(t,c))){sectionRole='comparison';section=h;break;}
+  if(cues.test.some(c=>has(t,c))){sectionRole='test';section=h;break;}}
+ if(b?.cell){const t=sem.tables.find(x=>x.index===b.cell!.table);const cell=t?.cells.find(c=>c.blockIndex===bi);
+  const label=[...(cell?.rowLabels??[]),...(cell?.colLabels??[])].filter(x=>x&&x.length<=80).join(' | ')||null;
+  return {container:'table_cell',label,section,sectionRole,tableContext:t?.context??'unknown'};}
+ const text=blockTexts[bi]??'';const lv=/^\s*([A-Za-z][^:\n]{1,48}):\s*/.exec(text);
+ if(lv&&valueStart>=lv[0].length-1&&valueStart<=lv[0].length+40)return {container:'label_value',label:lv[1].trim(),section,sectionRole,tableContext:null};
+ return {container:'prose',label:null,section,sectionRole,tableContext:null};
+}
+/** S90: the evidence role inherited from structure first, then the sentence (S86c). */
+export function roleFrom(structure:StructuralContext|null|undefined,sentence:{role:ObservationRole86c;reason:string}|null,clause?:{text:string;declarationCues:readonly string[]}):{value:ObservationRole86c|null;reason:string|null}{
+ const st=structure;const sr=sentence;
+ // a clause that attributes a capability to the product without a measuring verb declares it
+ const declClause=!!clause&&sr?.role==='measured_result'&&sr.reason==='no_other_role'&&clause.declarationCues.some(c=>has(norm(clause.text),c));
+ if(st){
+  const declared=st.tableContext==='specification'||st.sectionRole==='specification';
+  const tested=st.tableContext==='test'||st.sectionRole==='test';
+  if(st.container!=='prose'){
+   if(sr&&(sr.role==='certified_or_quoted'||sr.role==='test_condition'))return {value:sr.role,reason:'sentence:'+sr.reason};
+   if(declared&&!tested)return {value:'declared_spec',reason:'structure:specification_'+st.container};
+   if(tested)return {value:'measured_result',reason:'structure:test_'+st.container};
+   if(st.container==='label_value')return {value:'declared_spec',reason:'structure:label_value_outside_tests'};}
+  if(sr&&sr.role==='measured_result'&&sr.reason==='no_other_role'&&declared)return {value:'declared_spec',reason:'structure:specification_section'};
+  if(sr&&sr.role==='unresolved'&&sr.reason==='approximate_value'&&tested)return {value:'measured_result',reason:'structure:approximate_in_test_section'};}
+ if(declClause&&st?.sectionRole!=='test')return {value:'declared_spec',reason:'clause:declaration_cue'};
+ if(declClause&&!st)return {value:'declared_spec',reason:'clause:declaration_cue'};
+ return sr?{value:sr.role,reason:sr.reason}:{value:null,reason:null};
+}
 
 const norm=(s:string|null|undefined)=>normText(String(s??'').replace(/_/g,' '));
 const has=(text:string,phrase:string)=>!!text&&hasPhrase(text,phrase);
@@ -89,7 +132,7 @@ function termScore(d:PropertyDefinition,qk:QuantityKnowledge,label:string,contex
 /** opts.profileLicense (S89: default false; true only reproduces the refuted S88 dev rule): a profile listing one property for the unit kind attributes
  * without a term. E4 showed it is valid only for values already known to be results (it attributed every length on a robot page). */
 export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean}={}):PropertySlot{
- const fullLabel=norm(o.label);const label=norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
+ const sl=o.structure?.label?norm(o.structure.label)+' | ':'';const fullLabel=sl+norm(o.label);const label=sl+norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
  const byUnit=pool.filter(d=>d.form==='quantity'&&(cls?d.quantity!.nonQkUnits?.includes(cls):(kk.candidates.some(k=>d.quantity!.kinds.includes(k))||(d.quantity!.countNouns??[]).some(n=>unitNoun===n))));
@@ -97,15 +140,24 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  if(!byUnit.length)return {value:null,state:'unknown',evidence:[],rule:kk.candidates.length||cls?'no_definition_admits_unit_kind':'unit_not_typed',alternatives:[],kind};
  const prof=o.category?defs.profiles.get(o.category):undefined;
  // S89: the value's own words name an object of another concept (and none of this property's object nouns): not this property
- const otherObjects=(defs.pack.knownObjects?.objects??[]).filter(k=>k.nouns.some(n=>has(fullLabel,n))).map(k=>k.id);
+ // the value's own sentence (not the whole window) decides whether it names another concept's object
+ const raw=String(o.label??'');const at=o.valueAt??-1;
+ const sentence=at>=0?norm(raw.slice(Math.max(0,raw.slice(0,at).search(/[^.!?]*$/)),at+(raw.slice(at).search(/[.!?](\s|$)/)+1||raw.length-at))):fullLabel;
+ const otherObjects=(defs.pack.knownObjects?.objects??[]).filter(k=>k.nouns.some(n=>has(sentence,n))).map(k=>k.id);
  const qkCompetitors=[...qk.metrics.values()].filter(m=>kk.candidates.includes(m.kind)&&m.terms.some(t=>has(label,t)));
+ const subsumes=(d:PropertyDefinition,m:string)=>d.quantity?.metric===m||(d.quantity?.relatedMetrics??[]).includes(m);
  const si=(()=>{const p=parseUnit(qk,String(o.unit??'').trim());return p&&o.value!==null?o.value*p.factor+(p.offset??0):null;})();
  const admissible=(d:PropertyDefinition)=>{
   if(d.plausibleSi&&si!==null&&(si<d.plausibleSi[0]||si>d.plausibleSi[1]))return false;
   const ownObject=(d.objectNouns??[]).some(n=>has(label,n));
   if(otherObjects.length&&!ownObject)return false;
-  if(qkCompetitors.some(m=>m.id!==d.quantity?.metric)&&!(d.quantity?.metric&&qkCompetitors.some(m=>m.id===d.quantity!.metric))&&!ownObject)return false;
+  if(qkCompetitors.some(m=>!subsumes(d,m.id))&&!qkCompetitors.some(m=>subsumes(d,m.id))&&!ownObject)return false;
   return true;};
+ // S90: a value that bounds the range of a DIFFERENT quantity just before it ("+8 dB from 200 Hz to 10 kHz") is that
+ // quantity's band (its condition), not a result of its own
+ if(at>0){const before=raw.slice(Math.max(0,at-60),at);const m=/(?:from|between|over)\s+(?:[\d.,]+\s*[^\s\d]+\s+(?:to|and|–|-)\s+)?$/i.exec(before);
+  if(m){const prev=findQuantities(qk,before.slice(0,m.index)).at(-1);if(prev&&!prev.unit.kinds.some(k=>kk.candidates.includes(k)))
+   return {value:null,state:'unknown',evidence:[],rule:'band_of_another_measurement',alternatives:byUnit.map(d=>d.id),kind};}}
  const rejected=byUnit.filter(d=>!admissible(d)).map(d=>d.id);
  const scored=byUnit.filter(admissible).map(d=>({d,...termScore(d,qk,label,context,!!prof?.properties.includes(d.id))})).sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
  if(!scored.length)return {value:null,state:'unknown',evidence:[],rule:'value_names_another_concept_or_outside_plausible_range',alternatives:rejected,kind};
@@ -188,7 +240,7 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
  if(d)for(const r of readings)if(r.dimension&&!r.relational)r.relevance=relevanceOf(defs,d.id,r.dimension,category,basis.value);
  const missingDefining=d?d.conditions.map(([x])=>x).filter(x=>relevanceOf(defs,d.id,x,category,basis.value)==='defining'&&!readings.some(r=>r.dimension===x&&r.value!==null&&!r.relational)):[];
  let role:{value:ObservationRole86c|null;reason:string|null}={value:null,reason:null};let subject:'page_product'|'other_product'|'unresolved'='unresolved';
- if(o.valueAt!=null&&o.label){const end=o.valueAt+String(o.surface??o.value??'').length;const r=observationRole86c(o.label,o.valueAt,end,property.kind??'');role={value:r.role,reason:r.reason};
+ if(o.valueAt!=null&&o.label){const end=o.valueAt+String(o.surface??o.value??'').length;const r=observationRole86c(o.label,o.valueAt,end,property.kind??'');const head=o.label.slice(0,o.valueAt).split(/[.!?;]\s/).at(-1)??'';role=roleFrom(o.structure,r,{text:head,declarationCues:defs.pack.evidenceCues?.declaration??[]});
   subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
  return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};

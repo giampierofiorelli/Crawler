@@ -1,7 +1,7 @@
 {
  "schema": "pee.property-definitions.v1",
- "version": "pd.3",
- "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object. A property may declare a plausible SI range (plausibleSi; s, m, Pa, Hz, m3/s, dB): a value outside it is not attributed (SHACL-style value constraint). Object nouns name the measured object (acoustic output, audio path, obstacle), never the product class.",
+ "version": "pd.4",
+ "statement": "Declarative definitions of observable properties (I-ADOPT: property + object of interest + constraints; VIM: measurand vs influence quantity; LOINC: basis/time aspect as identity). One definition is consumed by reading (plan), interpretation (contract slots), attribution (which property a value reports) and evaluation (which conditions decide comparability). Properties and condition dimensions are shared across product categories; a category profile only says which properties apply and which conditions DEFINE the measurand there. Quantity kinds, metrics and units come from the quantity-knowledge pack. Written in PEE's own words; no third-party text reproduced. Every entry carries a lifecycle state (candidate | supported | verified | decision_usable) and its sources. A condition may define the measurand only for one basis (onlyForBasis): the usage pattern defines a periodic figure, not a per-run one. Attribution: a unit kind alone attributes only when the category profile lists exactly one property admitting it (the profile licenses it); otherwise a definition term must support the choice. A definition may name its object nouns (I-ADOPT object of interest); a candidate surface term supports the property only when one of them is present. Outside the categories whose profile lists a property, the value's own words must name the property's object (object nouns); inside them the category supplies the object. A property may declare a plausible SI range (plausibleSi; s, m, Pa, Hz, m3/s, dB): a value outside it is not attributed (SHACL-style value constraint). Object nouns name the measured object (acoustic output, audio path, obstacle), never the product class. A property may subsume QK metrics (relatedMetrics): those are not competing concepts.",
  "sources": [
   {
    "id": "vim",
@@ -1158,6 +1158,9 @@
     "kinds": [
      "sound_pressure_level",
      "sound_power_level"
+    ],
+    "relatedMetrics": [
+     "eu_label_noise_emission"
     ]
    },
    "object": "appliance in a stated state",
@@ -1255,6 +1258,9 @@
     "metric": "cadr",
     "kinds": [
      "volumetric_flow_rate"
+    ],
+    "relatedMetrics": [
+     "free_airflow"
     ]
    },
    "object": "appliance",
@@ -1499,6 +1505,9 @@
     "countNouns": [
      "place settings",
      "place setting"
+    ],
+    "relatedMetrics": [
+     "tank_capacity"
     ]
    },
    "object": "appliance or its container",
@@ -2808,6 +2817,10 @@
   {
    "version": "pd.3",
    "note": "S89 (owner review of S88): known objects (I-ADOPT object of interest: a value naming another concept's object is not this property's) and plausible SI ranges (SHACL-style value constraints); profile licence removed by default"
+  },
+  {
+   "version": "pd.4",
+   "note": "S90 (owner review of S89): document sections as knowledge (which headings announce specifications, the publisher's own tests, comparisons or quoted sources); the evidence role of a value is inherited from its structure first"
   }
  ],
  "knownObjects": {
@@ -2902,6 +2915,100 @@
   "sources": [
    "iadopt",
    "s87"
+  ]
+ },
+ "documentSections": {
+  "note": "Words in a section heading that announce what the section's values are. A value in a specification section is a declaration unless its own sentence states a measurement; a value in a test section is the publisher's own result unless its sentence states otherwise. Document structure, not property knowledge; kept as data so a correction propagates.",
+  "specification": [
+   "specification",
+   "specifications",
+   "specs",
+   "spec sheet",
+   "key specs",
+   "tech specs",
+   "technical specifications",
+   "key features",
+   "features",
+   "at a glance",
+   "in the box",
+   "what's in the box",
+   "product details",
+   "details",
+   "price and availability",
+   "price & availability"
+  ],
+  "test": [
+   "test",
+   "tests",
+   "tested",
+   "testing",
+   "results",
+   "performance",
+   "benchmark",
+   "benchmarks",
+   "measurements",
+   "measured",
+   "how i tested",
+   "how we tested",
+   "how we test",
+   "test bench",
+   "lab",
+   "in use",
+   "real-world",
+   "vacuuming tests",
+   "mopping tests",
+   "battery life",
+   "noise"
+  ],
+  "comparison": [
+   "compare",
+   "compares",
+   "comparison",
+   "versus",
+   "vs",
+   "alternatives",
+   "how does it compare",
+   "should you buy",
+   "competition"
+  ],
+  "state": "candidate",
+  "sources": [
+   "s87",
+   "iadopt"
+  ]
+ },
+ "evidenceCues": {
+  "note": "Provenance cues in the value's own clause. A clause that attributes a capability or component to the product (has, equipped with, boasts, rated) without a measuring verb describes a specification (a declaration); measuring verbs are the S86c classifier's. Only applied when the sentence classifier found no other role.",
+  "declaration": [
+   "has",
+   "have",
+   "with a",
+   "equipped with",
+   "comes with",
+   "boasts",
+   "packs",
+   "features",
+   "featuring",
+   "offers",
+   "houses",
+   "housing",
+   "includes",
+   "rated",
+   "rated at",
+   "claimed",
+   "claims",
+   "promises",
+   "advertised",
+   "quoted at",
+   "up to",
+   "official",
+   "officially",
+   "according to"
+  ],
+  "state": "candidate",
+  "sources": [
+   "s87",
+   "iadopt"
   ]
  }
 }
