@@ -1,0 +1,1264 @@
+{
+ "schema": "pee.s103.request-check.v1",
+ "label": "firstrun-s103",
+ "build": "/tmp/claude-0/-home-user/bd9afe5f-596c-54bb-82da-d49f2aed691c/scratchpad/wt-8cc7ccf",
+ "referenceSha256": "0673eaad95a61328dfeea12129ca492d86bd8abe0eac6547e597295309b66340",
+ "tier": "T1-independent-author (Claude-authored requests, blind Claude reference)",
+ "totals": {
+  "ref:limits": 116,
+  "ref:inScope": 81,
+  "ref:inScope:apply": 63,
+  "detected": 47,
+  "handling:apply->report": 1,
+  "missedApply:reportedWhenApply": 1,
+  "closure:agree": 45,
+  "missed": 34,
+  "missed:apply": 26,
+  "ref:inScope:report": 8,
+  "handling:report->apply": 4,
+  "harmful:appliedWhenNot": 6,
+  "extra": 3,
+  "extra:applied": 1,
+  "response:positive_shortlist": 2,
+  "ref:outOfScope": 35,
+  "ref:inScope:ask": 10,
+  "handling:ask->report": 1,
+  "notApplied:agree": 4,
+  "response:clarification": 17,
+  "handling:apply->apply": 32,
+  "handling:exact": 35,
+  "response:justified_abstention": 4,
+  "response:out_of_scope": 16,
+  "handling:ask->ask": 2,
+  "justifiedAbstention": 2,
+  "closure:disagree": 2,
+  "handling:report->report": 1,
+  "handling:apply->ask": 4,
+  "overCautious:askedWhenApply": 4,
+  "handling:ask->apply": 2,
+  "response:no_purchase_check": 1
+ },
+ "rows": [
+  {
+   "id": "q01",
+   "text": "at least 4 litres",
+   "crit": "capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "report",
+   "status": "implied",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q01",
+   "text": "nothing over 6L",
+   "crit": "capacity_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q01",
+   "text": "Under £100 ideally",
+   "crit": "budget_max",
+   "ref": "report",
+   "refKind": "preference",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q01",
+   "text": "over 6L",
+   "crit": "capacity_min",
+   "ref": null,
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q01",
+   "response": "positive_shortlist"
+  },
+  {
+   "id": "q02",
+   "text": "Budget about $40-60",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q02",
+   "text": "Budget about $40-60",
+   "crit": "budget_max",
+   "ref": "ask",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "report",
+   "status": "preference",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q02",
+   "response": "clarification"
+  },
+  {
+   "id": "q03",
+   "text": "fits a 45cm gap",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q03",
+   "text": "quieter than 44 dB",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q03",
+   "text": "don't want to spend more than €550",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q03",
+   "response": "justified_abstention"
+  },
+  {
+   "id": "q04",
+   "text": "a 12 litre dehumidifier",
+   "ref": "report",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q04",
+   "text": "20L would be better",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q04",
+   "text": "Max £250 either way",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q04",
+   "text": "12 litre",
+   "crit": "capacity_min",
+   "ref": null,
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q04",
+   "text": "20L",
+   "crit": "capacity_min",
+   "ref": null,
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q04",
+   "response": "positive_shortlist"
+  },
+  {
+   "id": "q05",
+   "text": "under 30 dB on the lowest setting",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q05",
+   "response": "clarification"
+  },
+  {
+   "id": "q06",
+   "text": "must fit under my sofa which is 9cm off the floor",
+   "crit": "height_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q06",
+   "text": "battery at least 120 minutes",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q06",
+   "text": "under $300",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q06",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q07",
+   "text": "under 2.5kg if there is such a thing",
+   "crit": "weight_max",
+   "ref": "report",
+   "refKind": "preference",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q07",
+   "text": "Runtime 40 min+",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q07",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q08",
+   "text": "Water tank of 1.5 litres or more",
+   "crit": "water_tank_capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q08",
+   "text": "no taller than 38 cm",
+   "crit": "height_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q08",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q09",
+   "text": "20 to 25 litres",
+   "crit": "capacity_min",
+   "ref": "ask",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q09",
+   "text": "20 to 25 litres",
+   "crit": "capacity_max",
+   "ref": "ask",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q09",
+   "text": "800W is fine",
+   "crit": "power_min",
+   "ref": "report",
+   "refKind": "preference",
+   "got": null
+  },
+  {
+   "id": "q09",
+   "text": "definitely not over £80",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q09",
+   "response": "clarification"
+  },
+  {
+   "id": "q10",
+   "text": "60cm wide ... must be smaller than that",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q10",
+   "text": "185cm high ... must be smaller than that",
+   "crit": "height_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q10",
+   "text": "we'd like at least 300 litres total",
+   "crit": "capacity_min",
+   "ref": "report",
+   "refKind": "preference",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q10",
+   "text": "Around 700 quid",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q10",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q11",
+   "text": "9kg minimum",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q11",
+   "text": "10 would be better",
+   "ref": "report",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q11",
+   "text": "if it still fits 60x60",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q11",
+   "text": "if it still fits 60x60",
+   "crit": "depth_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q11",
+   "text": "Spin 1400rpm",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q11",
+   "response": "clarification"
+  },
+  {
+   "id": "q12",
+   "text": "battery 30 hours plus",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q12",
+   "text": "weight below 250 g ideally",
+   "crit": "weight_max",
+   "ref": "report",
+   "refKind": "preference",
+   "got": null
+  },
+  {
+   "id": "q12",
+   "text": "would rather stay below $350",
+   "crit": "budget_max",
+   "ref": "report",
+   "refKind": "preference",
+   "refClosure": "strict",
+   "got": "report",
+   "status": "preference",
+   "closure": "strict"
+  },
+  {
+   "id": "q12",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q13",
+   "text": "15+ hours battery",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q13",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q14",
+   "text": "14 inch",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q14",
+   "text": "under 1.4 kg",
+   "crit": "weight_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q14",
+   "text": "at least 16GB RAM",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q14",
+   "text": "10 hours battery",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q14",
+   "text": "£800 tops",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q14",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q15",
+   "text": "27\"",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q15",
+   "text": "1440p",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q15",
+   "text": "144Hz or more",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q15",
+   "text": "Under 300 euros",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q15",
+   "text": "4K",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q15",
+   "text": "at 60Hz",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q15",
+   "response": "clarification"
+  },
+  {
+   "id": "q16",
+   "text": "under 100Wh I think?",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q16",
+   "text": "charge my laptop at 65W",
+   "crit": "power_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q16",
+   "text": "20000mAh-ish",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q16",
+   "response": "clarification"
+  },
+  {
+   "id": "q17",
+   "text": "2-slice",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q17",
+   "response": "clarification"
+  },
+  {
+   "id": "q18",
+   "text": "8kg",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q18",
+   "text": "door has to open fully in a 62cm deep alcove",
+   "crit": "depth_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q18",
+   "text": "can't go beyond £600",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q18",
+   "response": "clarification"
+  },
+  {
+   "id": "q19",
+   "text": "at least 1000W",
+   "crit": "power_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q19",
+   "text": "jug 1.5L",
+   "crit": "capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q19",
+   "text": "Total budget for both is about $150",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q19",
+   "response": "justified_abstention"
+  },
+  {
+   "id": "q20",
+   "text": "under 50 pounds",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q20",
+   "response": "clarification"
+  },
+  {
+   "id": "q21",
+   "text": "at least 2 weeks",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q21",
+   "text": "Not more than 80€",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q21",
+   "response": "clarification"
+  },
+  {
+   "id": "q22",
+   "text": "shouldn't be wider than the TV (about 123 cm)",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q22",
+   "text": "can't be taller than 6cm",
+   "crit": "height_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q22",
+   "text": "Sub included if it's under £400",
+   "crit": "budget_max",
+   "ref": "ask",
+   "refKind": "alternative",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q22",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q23",
+   "text": "about 1L uncooked / 5.5 cups",
+   "crit": "capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q23",
+   "text": "I was going to say under $100",
+   "crit": "budget_max",
+   "ref": "report",
+   "refKind": "replaced",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q23",
+   "text": "I'd go to $200 for a good induction one",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q23",
+   "response": "justified_abstention"
+  },
+  {
+   "id": "q24",
+   "text": "work in temps down to -15°C",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q24",
+   "text": "Capacity 200-250 litres",
+   "crit": "capacity_min",
+   "ref": "ask",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q24",
+   "text": "Capacity 200-250 litres",
+   "crit": "capacity_max",
+   "ref": "ask",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q24",
+   "text": "fit in 90 cm width",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q24",
+   "response": "clarification"
+  },
+  {
+   "id": "q25",
+   "text": "less than 1.5kg with battery",
+   "crit": "weight_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "ask",
+   "status": "candidate",
+   "closure": "strict"
+  },
+  {
+   "id": "q25",
+   "text": "18V",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q25",
+   "text": "under £120 including a battery and charger",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q25",
+   "response": "clarification"
+  },
+  {
+   "id": "q26",
+   "text": "7 inch screen",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q26",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q27",
+   "text": "cools a 25 m2 room",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q27",
+   "text": "under 52 dB",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q27",
+   "text": "uses less than 1kW",
+   "crit": "power_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q27",
+   "text": "costs less than €300",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q27",
+   "response": "clarification"
+  },
+  {
+   "id": "q28",
+   "text": "50 L or less",
+   "crit": "capacity_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q28",
+   "text": "below 35 dB",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q28",
+   "text": "max 50 cm wide",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q28",
+   "response": "clarification"
+  },
+  {
+   "id": "q29",
+   "text": "2400W or more",
+   "crit": "power_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q29",
+   "text": "at least 300ml water tank",
+   "crit": "water_tank_capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q29",
+   "text": "I'd pay up to £60",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q29",
+   "text": "If so budget goes to £150",
+   "crit": "budget_max",
+   "ref": "ask",
+   "refKind": "alternative",
+   "got": null
+  },
+  {
+   "id": "q29",
+   "response": "clarification"
+  },
+  {
+   "id": "q30",
+   "text": "Range at least 20 km real-world",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q30",
+   "text": "weight under 15kg",
+   "crit": "weight_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q30",
+   "text": "top speed 25 km/h",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q30",
+   "text": "Around $600-800",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q30",
+   "text": "Around $600-800",
+   "crit": "budget_max",
+   "ref": "ask",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q30",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q31",
+   "text": "Between 3.5 and 6.5 litres",
+   "crit": "capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q31",
+   "text": "Between 3.5 and 6.5 litres, nothing bigger",
+   "crit": "capacity_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q31",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q32",
+   "text": "under $70",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q32",
+   "response": "clarification"
+  },
+  {
+   "id": "q33",
+   "text": "at least 2000 W",
+   "crit": "power_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q33",
+   "text": "under 500 g",
+   "crit": "weight_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q33",
+   "text": "Below £50 if possible",
+   "crit": "budget_max",
+   "ref": "report",
+   "refKind": "preference",
+   "got": null
+  },
+  {
+   "id": "q33",
+   "text": "otherwise up to £90",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q33",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q34",
+   "text": "wall is about 3 m from the sofa",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q34",
+   "text": "want 100\" image",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q34",
+   "text": "Fan noise under 30dB",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q34",
+   "text": "1080p minimum",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q34",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q35",
+   "text": "at least 7 days battery",
+   "crit": "battery_life_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q35",
+   "text": "no more than 40g",
+   "crit": "weight_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q35",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q36",
+   "text": "Tank 2L or bigger",
+   "crit": "water_tank_capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q36",
+   "text": "under 45 dB",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q36",
+   "text": "about £200",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q36",
+   "response": "justified_abstention"
+  },
+  {
+   "id": "q37",
+   "text": "4-slice toaster",
+   "ref": "apply",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q37",
+   "text": "the kettle 1.7 litres",
+   "crit": "capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "ask",
+   "status": "candidate",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q37",
+   "text": "Both together under £70",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "strict",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "strict"
+  },
+  {
+   "id": "q37",
+   "response": "clarification"
+  },
+  {
+   "id": "q38",
+   "text": "under 2 kg",
+   "crit": "weight_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "got": null
+  },
+  {
+   "id": "q38",
+   "text": "My budget is 50 to 100 dollars",
+   "ref": "ask",
+   "scope": "out",
+   "got": null
+  },
+  {
+   "id": "q38",
+   "text": "My budget is 50 to 100 dollars",
+   "crit": "budget_max",
+   "ref": "ask",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q38",
+   "response": "out_of_scope"
+  },
+  {
+   "id": "q39",
+   "text": "Range cooker 90cm",
+   "crit": "width_max",
+   "ref": "ask",
+   "refKind": "alternative",
+   "got": null
+  },
+  {
+   "id": "q39",
+   "text": "I could make 100cm fit",
+   "crit": "width_max",
+   "ref": "apply",
+   "refKind": "alternative",
+   "got": null
+  },
+  {
+   "id": "q39",
+   "text": "The main oven should be 70L+",
+   "crit": "capacity_min",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q39",
+   "text": "Up to £1500",
+   "crit": "budget_max",
+   "ref": "apply",
+   "refKind": "requirement",
+   "refClosure": "inclusive",
+   "got": "apply",
+   "status": "stated_in_request",
+   "closure": "inclusive"
+  },
+  {
+   "id": "q39",
+   "response": "no_purchase_check"
+  },
+  {
+   "id": "q40",
+   "response": "out_of_scope"
+  }
+ ]
+}
