@@ -1,0 +1,1168 @@
+{
+ "annotator": "r3p-neg-blind-1",
+ "requests": [
+  {
+   "id": "n01",
+   "limits": [
+    {
+     "text": "Nothing over £250",
+     "property": "price",
+     "side": "max",
+     "value": 250,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "at least 20 litres a day",
+     "property": "other:extraction rate",
+     "side": "min",
+     "value": 20,
+     "unit": "litres/day",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n02",
+   "limits": [
+    {
+     "text": "I don't need more than 1.5 litres capacity",
+     "property": "capacity",
+     "side": "max",
+     "value": 1.5,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "Negated need: 1.5 L is enough, larger not forbidden."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "boil speed",
+     "stance": "wanted",
+     "text": "Something quick to boil"
+    }
+   ]
+  },
+  {
+   "id": "n03",
+   "limits": [
+    {
+     "text": "budget around 300",
+     "property": "price",
+     "side": "max",
+     "value": 300,
+     "unit": "",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Approximate budget ('around'); no currency stated."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "noise",
+     "stance": "indifferent",
+     "text": "noise doesnt bother me at all"
+    }
+   ]
+  },
+  {
+   "id": "n04",
+   "limits": [
+    {
+     "text": "8kg drum minimum",
+     "property": "capacity",
+     "side": "min",
+     "value": 8,
+     "unit": "kg",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Drum load capacity in kg."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "wifi",
+     "stance": "rejected",
+     "text": "I really don't want wifi"
+    },
+    {
+     "aspect": "app",
+     "stance": "rejected",
+     "text": "any app nonsense"
+    },
+    {
+     "aspect": "energy rating",
+     "stance": "wanted",
+     "text": "A rated energy if possible"
+    }
+   ]
+  },
+  {
+   "id": "n05",
+   "limits": [
+    {
+     "text": "ideally 8L or more total",
+     "property": "capacity",
+     "side": "min",
+     "value": 8,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "'ideally' marks a preference."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "small basket",
+     "stance": "rejected",
+     "text": "Not a tiny basket one"
+    },
+    {
+     "aspect": "dual drawer",
+     "stance": "required",
+     "text": "a proper dual drawer"
+    }
+   ]
+  },
+  {
+   "id": "n06",
+   "limits": [
+    {
+     "text": "Under $400",
+     "property": "price",
+     "side": "max",
+     "value": 400,
+     "unit": "USD",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n07",
+   "limits": [
+    {
+     "text": "no taller than 180cm",
+     "property": "height",
+     "side": "max",
+     "value": 180,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "width",
+     "stance": "indifferent",
+     "text": "Width isn't an issue"
+    }
+   ]
+  },
+  {
+   "id": "n08",
+   "limits": [],
+   "stances": [
+    {
+     "aspect": "bean to cup",
+     "stance": "required",
+     "text": "bean to cup rather than pods"
+    },
+    {
+     "aspect": "pods",
+     "stance": "rejected",
+     "text": "bean to cup rather than pods"
+    },
+    {
+     "aspect": "milk frothing",
+     "stance": "indifferent",
+     "text": "I'm not fussed about milk frothing"
+    }
+   ]
+  },
+  {
+   "id": "n09",
+   "limits": [
+    {
+     "text": "Runtime not less than 40 minutes on normal mode",
+     "property": "battery_life",
+     "side": "min",
+     "value": 40,
+     "unit": "minutes",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Runtime on normal mode."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n10",
+   "limits": [
+    {
+     "text": "I'd rather it wasn't above 46 dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 46,
+     "unit": "dB",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "'I'd rather' marks a preference."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "being the quietest",
+     "stance": "indifferent",
+     "text": "It doesn't have to be the quietest dishwasher on the market"
+    }
+   ]
+  },
+  {
+   "id": "n11",
+   "limits": [
+    {
+     "text": "Max weight 1.4kg",
+     "property": "weight",
+     "side": "max",
+     "value": 1.4,
+     "unit": "kg",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "at least 16GB RAM",
+     "property": "other:RAM",
+     "side": "min",
+     "value": 16,
+     "unit": "GB",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n12",
+   "limits": [
+    {
+     "text": "at least 4 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 4,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "'I'm not sure' does not change the limit."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n13",
+   "limits": [
+    {
+     "text": "it should never go above 30dB on sleep mode",
+     "property": "other:noise",
+     "side": "max",
+     "value": 30,
+     "unit": "dB",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Sleep mode noise; room size ~15 sq m describes use, not a limit."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n14",
+   "limits": [
+    {
+     "text": "Don't want to spend more than 700 euros",
+     "property": "price",
+     "side": "max",
+     "value": 700,
+     "unit": "EUR",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "heat pump",
+     "stance": "required",
+     "text": "heat pump instead of condenser"
+    },
+    {
+     "aspect": "condenser",
+     "stance": "rejected",
+     "text": "heat pump instead of condenser"
+    }
+   ]
+  },
+  {
+   "id": "n15",
+   "limits": [
+    {
+     "text": "between 20 and 25 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 20,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "between 20 and 25 litres",
+     "property": "capacity",
+     "side": "max",
+     "value": 25,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Budget up to £120 inclusive",
+     "property": "price",
+     "side": "max",
+     "value": 120,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "solo",
+     "stance": "required",
+     "text": "solo"
+    },
+    {
+     "aspect": "grill",
+     "stance": "rejected",
+     "text": "no grill"
+    }
+   ]
+  },
+  {
+   "id": "n16",
+   "limits": [
+    {
+     "text": "brightness can't be below 3000 lumens",
+     "property": "other:brightness",
+     "side": "min",
+     "value": 3000,
+     "unit": "lumens",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "4K resolution",
+     "stance": "indifferent",
+     "text": "There's no need for a 4K projector in my case, 1080p is fine"
+    }
+   ]
+  },
+  {
+   "id": "n17",
+   "limits": [
+    {
+     "text": "isn't at least 65 inches",
+     "property": "other:screen size",
+     "side": "min",
+     "value": 65,
+     "unit": "inches",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Double negation: will not buy below 65 in, so at least 65 in required."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "price",
+     "stance": "wanted",
+     "text": "I wouldn't say I don't care about price — I do"
+    }
+   ]
+  },
+  {
+   "id": "n18",
+   "limits": [
+    {
+     "text": "Battery life of 20 hours or more",
+     "property": "battery_life",
+     "side": "min",
+     "value": 20,
+     "unit": "hours",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "waterproof",
+     "stance": "required",
+     "text": "waterproof IP67"
+    }
+   ]
+  },
+  {
+   "id": "n19",
+   "limits": [
+    {
+     "text": "I don't want anything bigger than 60cm wide",
+     "property": "width",
+     "side": "max",
+     "value": 60,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Real upper limit (tight gap), not a negated need."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "pyrolytic",
+     "stance": "indifferent",
+     "text": "Doesn't need to be pyrolytic either"
+    }
+   ]
+  },
+  {
+   "id": "n20",
+   "limits": [
+    {
+     "text": "under 600 dollars",
+     "property": "price",
+     "side": "max",
+     "value": 600,
+     "unit": "USD",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "screen 6.1 inches or smaller",
+     "property": "other:screen size",
+     "side": "max",
+     "value": 6.1,
+     "unit": "inches",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n21",
+   "limits": [
+    {
+     "text": "Not one of those £200 ones",
+     "property": "price",
+     "side": "max",
+     "value": 200,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "report",
+     "note": "Rejects £200 products; redundant given the stricter 'below £60'. Could also be read as describing a rejected product type rather than a limit."
+    },
+    {
+     "text": "keep it below £60",
+     "property": "price",
+     "side": "max",
+     "value": 60,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "app",
+     "stance": "rejected",
+     "text": "Not one of those £200 ones with an app"
+    },
+    {
+     "aspect": "pressure sensor",
+     "stance": "wanted",
+     "text": "Pressure sensor would be nice though"
+    }
+   ]
+  },
+  {
+   "id": "n22",
+   "limits": [
+    {
+     "text": "budget is not more than 350",
+     "property": "price",
+     "side": "max",
+     "value": 350,
+     "unit": "",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "No currency stated."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "refresh rate",
+     "stance": "indifferent",
+     "text": "Refresh rate is not something I care about"
+    },
+    {
+     "aspect": "colour accuracy",
+     "stance": "wanted",
+     "text": "colour accuracy matters more"
+    }
+   ]
+  },
+  {
+   "id": "n23",
+   "limits": [
+    {
+     "text": "200 litres or more",
+     "property": "capacity",
+     "side": "min",
+     "value": 200,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n24",
+   "limits": [
+    {
+     "text": "Strictly less than 250 pounds",
+     "property": "price",
+     "side": "max",
+     "value": 250,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "over-ear",
+     "stance": "required",
+     "text": "over-ear"
+    },
+    {
+     "aspect": "ANC",
+     "stance": "required",
+     "text": "ANC"
+    },
+    {
+     "aspect": "weight",
+     "stance": "indifferent",
+     "text": "Weight doesn't really matter to me"
+    }
+   ]
+  },
+  {
+   "id": "n25",
+   "limits": [
+    {
+     "text": "no taller than about a metre",
+     "property": "height",
+     "side": "max",
+     "value": 1,
+     "unit": "m",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Approximate ('about'); 'a metre' = 1 m."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "tower fan",
+     "stance": "wanted",
+     "text": "I'd like a tower fan"
+    },
+    {
+     "aspect": "upright fan",
+     "stance": "rejected",
+     "text": "Rather than a big upright fan"
+    },
+    {
+     "aspect": "remote",
+     "stance": "indifferent",
+     "text": "I don't need a remote"
+    }
+   ]
+  },
+  {
+   "id": "n26",
+   "limits": [
+    {
+     "text": "at least 1000W motor",
+     "property": "power",
+     "side": "min",
+     "value": 1000,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "jug at least 1.5L",
+     "property": "capacity",
+     "side": "min",
+     "value": 1.5,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n27",
+   "limits": [
+    {
+     "text": "Can't go above £150",
+     "property": "price",
+     "side": "max",
+     "value": 150,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "gaming router",
+     "stance": "rejected",
+     "text": "Not looking for a gaming router"
+    },
+    {
+     "aspect": "reliability",
+     "stance": "wanted",
+     "text": "just something reliable"
+    },
+    {
+     "aspect": "Wi-Fi 7",
+     "stance": "indifferent",
+     "text": "don't need Wi-Fi 7"
+    }
+   ]
+  },
+  {
+   "id": "n28",
+   "limits": [
+    {
+     "text": "not more than 500g ideally",
+     "property": "weight",
+     "side": "max",
+     "value": 500,
+     "unit": "g",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "'ideally' marks a preference."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "heaviness",
+     "stance": "rejected",
+     "text": "isn't heavy"
+    },
+    {
+     "aspect": "wattage",
+     "stance": "indifferent",
+     "text": "Wattage, I couldn't care less"
+    }
+   ]
+  },
+  {
+   "id": "n29",
+   "limits": [
+    {
+     "text": "4 zones",
+     "property": "other:cooking zones",
+     "side": "min",
+     "value": 4,
+     "unit": "zones",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Count of zones; could be meant as exactly 4."
+    },
+    {
+     "text": "budget under 500",
+     "property": "price",
+     "side": "max",
+     "value": 500,
+     "unit": "",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "No currency stated."
+    },
+    {
+     "text": "exactly 60cm wide",
+     "property": "width",
+     "side": "min",
+     "value": 60,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "'exactly' = min and max 60 cm."
+    },
+    {
+     "text": "exactly 60cm wide",
+     "property": "width",
+     "side": "max",
+     "value": 60,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "'exactly' = min and max 60 cm."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n30",
+   "limits": [
+    {
+     "text": "a load no smaller than 9kg",
+     "property": "capacity",
+     "side": "min",
+     "value": 9,
+     "unit": "kg",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Load capacity in kg."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "sensor",
+     "stance": "indifferent",
+     "text": "I'm not against a dryer with a sensor but it's not essential"
+    }
+   ]
+  },
+  {
+   "id": "n31",
+   "limits": [
+    {
+     "text": "I don't need more than 8GB",
+     "property": "other:storage",
+     "side": "max",
+     "value": 8,
+     "unit": "GB",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "Negated need: 8 GB is enough, more not forbidden."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "backlit-only",
+     "stance": "rejected",
+     "text": "not backlit-only"
+    },
+    {
+     "aspect": "warm light",
+     "stance": "required",
+     "text": "I want warm light"
+    }
+   ]
+  },
+  {
+   "id": "n32",
+   "limits": [
+    {
+     "text": "Bowl of 5 litres or more",
+     "property": "capacity",
+     "side": "min",
+     "value": 5,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "a motor of 800W minimum",
+     "property": "power",
+     "side": "min",
+     "value": 800,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Max £400",
+     "property": "price",
+     "side": "max",
+     "value": 400,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n33",
+   "limits": [
+    {
+     "text": "Spin speed shouldn't be under 1400rpm",
+     "property": "other:spin speed",
+     "side": "min",
+     "value": 1400,
+     "unit": "rpm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "washer dryer combo",
+     "stance": "required",
+     "text": "Washer dryer combo, not a separate pair"
+    },
+    {
+     "aspect": "separate pair",
+     "stance": "rejected",
+     "text": "not a separate pair"
+    },
+    {
+     "aspect": "smart features",
+     "stance": "indifferent",
+     "text": "no smart features needed"
+    }
+   ]
+  },
+  {
+   "id": "n34",
+   "limits": [
+    {
+     "text": "Lawn is about 800 m², so it needs to cover that",
+     "property": "other:coverage area",
+     "side": "min",
+     "value": 800,
+     "unit": "m²",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Lawn size becomes a limit because the mower must cover it; approximate ('about')."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "noise",
+     "stance": "indifferent",
+     "text": "I don't mind if the robot mower is loud"
+    }
+   ]
+  },
+  {
+   "id": "n35",
+   "limits": [
+    {
+     "text": "screen of 10 inches at most",
+     "property": "other:screen size",
+     "side": "max",
+     "value": 10,
+     "unit": "inches",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "price up to and including 250",
+     "property": "price",
+     "side": "max",
+     "value": 250,
+     "unit": "",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "No currency stated."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n36",
+   "limits": [
+    {
+     "text": "wouldn't take a smartwatch with less than two days of battery",
+     "property": "battery_life",
+     "side": "min",
+     "value": 2,
+     "unit": "days",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "Rejects under two days, so two days acceptable."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n37",
+   "limits": [
+    {
+     "text": "cooling capacity 9000 BTU or above",
+     "property": "other:cooling capacity",
+     "side": "min",
+     "value": 9000,
+     "unit": "BTU",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "20m2 room describes use, not a limit."
+    },
+    {
+     "text": "I'd rather it not exceed 52 dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 52,
+     "unit": "dB",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "'I'd rather' marks a preference."
+    }
+   ],
+   "stances": []
+  },
+  {
+   "id": "n38",
+   "limits": [
+    {
+     "text": "Bowl not smaller than 3 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 3,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "spiralizers",
+     "stance": "rejected",
+     "text": "not interested in spiralizers"
+    },
+    {
+     "aspect": "gadget attachments",
+     "stance": "rejected",
+     "text": "any of those gadget attachments"
+    },
+    {
+     "aspect": "slicing and grating",
+     "stance": "required",
+     "text": "just slicing and grating"
+    }
+   ]
+  },
+  {
+   "id": "n39",
+   "limits": [
+    {
+     "text": "under 150 quid",
+     "property": "price",
+     "side": "max",
+     "value": 150,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "tank of at least 1.2 L",
+     "property": "water_tank",
+     "side": "min",
+     "value": 1.2,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "steam generator",
+     "stance": "required",
+     "text": "Iron with a steam generator"
+    }
+   ]
+  },
+  {
+   "id": "n40",
+   "limits": [
+    {
+     "text": "Nothing above 200",
+     "property": "price",
+     "side": "max",
+     "value": 200,
+     "unit": "",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "No currency stated."
+    }
+   ],
+   "stances": [
+    {
+     "aspect": "colour",
+     "stance": "indifferent",
+     "text": "Colour isn't needed"
+    },
+    {
+     "aspect": "mono laser",
+     "stance": "required",
+     "text": "a mono laser rather than inkjet"
+    },
+    {
+     "aspect": "inkjet",
+     "stance": "rejected",
+     "text": "rather than inkjet"
+    },
+    {
+     "aspect": "subscription-only ink",
+     "stance": "rejected",
+     "text": "I dont want one that only works with their subscription ink"
+    }
+   ]
+  }
+ ]
+}
