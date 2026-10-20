@@ -1,0 +1,42 @@
+{
+ "schema": "pee.s103.preregistration.v1",
+ "date": "2026-10-20",
+ "owner": "Authorisation 2026-10-20 (verbatim in .claude/skills/pee-guided-learning/references/owner-rule-admission-authorisation-2026-10-20.md), item 7: 'After freezing the implementation, evaluate genuinely new user requests and new document/table evidence against preregistered references. Report correctness, coverage, justified abstentions, false product attribution, meaningful downstream effects and regressions separately. Keep previously examined material clearly labelled as development or retrospective validation.' Item 6: 'validate it [the table-introduction problem] using tables with clearly established measurement/specification provenance.'",
+ "committedBefore": "any request of part A is written; any page of part B is fetched; any annotation; any PEE run on this material",
+ "frozenBuild": {"commit": "8cc7ccf", "rule": "first runs execute this commit (git worktree); scoring scripts may be added later but call only existing operational functions; no algorithm, rule or knowledge resource changes before the first runs are committed unchanged"},
+ "comparisonBuild": {"commit": "dce8a3a", "why": "S102 final build, to report what S103 changed on the same new material (regressions and gains)"},
+ "partA_requests": {
+  "what": "new buying requests stating numeric limits, read by extractConstraints253 and adviseFromRequest253",
+  "author": "one independent Claude agent (fresh context), given only the brief below; it never sees PEE code, tests, rule files or output. These requests are Claude-authored, not written by real users: reported as such (tier T1-independent-author), never as real-user evidence.",
+  "brief": "Write 40 realistic English messages a shopper might send to a buying adviser about one household appliance or consumer device (any category, including ones an adviser may not know), each naturally stating zero to four numeric limits (sizes, capacities, power, weight, battery life, noise, price). Vary the wording freely, as real people write: include plain requirements, preferences, changes of mind, alternatives depending on the situation, limits for more than one product, limits that cannot all be met, ranges, exclusive and inclusive wording, mixed units, and a few messages with no limit. Do not label or explain them.",
+  "reference": "a second independent Claude agent annotates every limit with the guide evaluation/s103/request-annotation-guide.md (committed with this file), seeing only the requests and the guide; its reference is hashed and the hash committed (evaluation/s103/request-reference-freeze.json) before any PEE run",
+  "metrics": [
+   "detection: reference limits on a checkable property found by PEE (same property, side and value in base units) / all such limits; limits PEE reads that the reference does not contain",
+   "handling: for each detected limit, applied (hard) vs not applied, against the reference's expected handling; harmful errors counted separately: a limit applied that the reference says must not be applied (preference, replaced, unconfirmed alternative, contradicted, other product); a limit not applied that the reference says applies",
+   "justified abstention: limits PEE asks about where the reference says ask; over-cautious: asked where the reference says apply (reported apart from errors)",
+   "closure: strict vs inclusive agreement on detected limits",
+   "out of scope: limits on properties PEE has no criterion for (noise, battery in hours for unknown categories, ...): counted as coverage gaps, not semantic errors",
+   "downstream: answer type (response) of adviseFromRequest253 on the live store copy, S102 vs S103 build"
+  ]
+ },
+ "partB_tables": {
+  "what": "pages never used by PEE with numeric tables whose provenance the page states (a test or measurement by the publisher, or a maker's specification), read through the operational path (scripts/s99-integrity.mjs --set check --wave s103/wave)",
+  "selection": "candidate pages found by web search, chosen from search snippets only (never read with PEE before fetching), at least 3 publishers not in the exclusion list (the 46 hosts of the S89-S102 waves and every host of the live store); up to 10 pages; robots, refusals, reservations and the AI-agent rules of the standing policy honoured; nothing bypassed",
+  "budget": "at most 30 requests including robots files, at most 6 per host, through scripts/phase246-live-wave.mjs with the standing policy",
+  "items": "scripts/s99-check.mjs items/input --wave s103/wave (the S99/S100 procedure, unchanged)",
+  "reference": "two independent blind Claude-agent annotations with the S100 guide (sections 1-7, unchanged), disagreements adjudicated from the page text, merged reference hashed and committed (evaluation/s103/check-annotation-freeze.json) before any run",
+  "metrics": [
+   "statement role: precision among decided, abstentions, on table items and on all items",
+   "nature and provenance precision among decided",
+   "property: correct / wrong / not stored",
+   "false product attribution: values of other products or of no product linked to the reviewed product",
+   "table introductions: number of items whose role was decided by the introducing statement (evidence level table_context) and their precision",
+   "S102 build vs S103 build on the same items"
+  ]
+ },
+ "stopRules": [
+  "first runs are committed unchanged; no tuning on this material; any later change is a new, labelled run",
+  "if harmful request errors or false product attribution are higher with S103 than with S102, report it as a regression and do not claim improvement",
+  "if fewer than 3 never-used publishers can be fetched within the budget, report the shortfall; do not widen the budget"
+ ]
+}
