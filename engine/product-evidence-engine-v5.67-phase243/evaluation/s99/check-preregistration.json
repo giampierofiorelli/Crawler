@@ -1,0 +1,39 @@
+{
+ "schema": "pee.s99.check-preregistration.v1",
+ "at": "2026-10-20",
+ "owner": "owner review of S98 (verbatim in .claude/skills/pee-guided-learning/references/owner-review-s98-semantic-integrity-2026-10-20.md): 'accompagnato da test di regressione, una verifica indipendente e condizioni di arresto'; 'definizioni scientifiche condivise prima dell'annotazione, esempi difficili e una verifica indipendente dei disaccordi. Non è necessario annotare migliaia di esempi: pochi casi affidabili sono più utili di molti casi ambigui'",
+ "writtenBefore": "any fetch of the check pages, any annotation and any run",
+ "builds": {
+  "s99": "commit 2032a3a (reader sr99.1, frozen after development iteration it3 on spent material; three reformulations used)",
+  "s98": "commit 3e953ef (reader sr98.1), the baseline, run by the same script (scripts/s99-integrity.mjs --build)"
+ },
+ "material": {
+  "plan": "about six pages never examined by PEE from three publishers never used: BreatheSafeAir (air purifier reviews that state a maker's claim next to the reviewer's own measurement, fan speeds and distances), Best Cordless Vacuum Guide (stick vacuum reviews with measured water lift, airflow and runtime against advertised values), Oransi (a maker's CADR explainer stating norms and limits). Fetched only through scripts/phase246-live-wave.mjs under the standing policy; robots refusals, AI-agent refusals and 403/429 are recorded and never bypassed",
+  "items": "every quantity with a QK unit in the page's text blocks (the reader that finds more quantities), deduplicated, evenly sampled, at most 20 per page: few reliable cases rather than many ambiguous ones"
+ },
+ "reference": {
+  "definitions": "a shared annotation guide (private-eval/s99/wave/annotation/GUIDE.md) written before annotation: the property labels with their meanings, the condition axes, and definitions of statement role (result, specification, threshold, norm, target, condition, other), bound (min, max, none), subject (reviewed product, other product, none, unclear) and nature (measured, declared, calculated, condition, other), with hard examples taken from SPENT pages (paraphrased; never from the check pages)",
+  "labelGaps": "'no_fitting_label' is distinct from 'none': an annotator who finds no label for a real property value says so, and the adjudicator checks it against the label list (the S98 dishwasher error)",
+  "annotators": "two blind Claude agents annotate every item independently (they see no system output and no PEE code)",
+  "adjudication": "a third blind agent resolves every field on which the two disagree, against the page text and the guide, recording the reason; agreed fields are kept, and the adjudicator also checks every 'no_fitting_label'. The merged reference is sealed by SHA-256 in evaluation/s99/check-annotation-freeze.json before any run",
+  "agreement": "inter-annotator agreement per field is reported before adjudication"
+ },
+ "metrics": {
+  "preservation": "per field, readings whose stored row differs from the reading (identity, property, role, bound, subject, nature, provenance, conditions, missing conditions, method, source locator and offset); stored product links without a stated subject; unstored readings classified by retention",
+  "attribution": "reference values with a property: stored with the correct property, a wrong property, not stored; reference none: stored with a property, and stored as a value (result or specification) linked to a product (false product value)",
+  "statementRole": "precision among decided readings and abstentions, per role; thresholds, norms and targets read as product values",
+  "nature": "precision among decided readings and abstentions",
+  "subject": "reviewed-product values linked to the reviewed product; other-product and no-product values linked to it (false)",
+  "conditions": "stated condition axes recorded explicitly",
+  "comparability": "verdicts of cross-product pairs, with reasons",
+  "advice": "206 regression requests: decisions and shortlists unchanged with the gated consumer on"
+ },
+ "stopRules": {
+  "S1_integrity": "any reading field changed between reading and store, or any product link without a stated subject: S99 is not adopted; the cause is a blocker",
+  "S2_no_new_false_attribution": "S99 may not produce more false product values, nor link more other-product or no-product values to the reviewed product, than S98 on these pages",
+  "S3_role_and_nature": "precision among decided readings must not be lower than S98's for statement role and for nature; abstentions are reported separately and are not errors",
+  "S4_advice": "0 of 206 decisions changed",
+  "outcome": "if S1-S4 hold, the S99 reader replaces the S98 reader as the GATED operational reading; otherwise the S98 reader stays and the failing rule is documented. In every case the path stays disabled for decisions and ranking (owner: 'S98 rimane disattivato per le decisioni')"
+ },
+ "notClaimed": "no ranking, no recommendation, no promotion of any definition; R3 stays open; development figures on spent material are never reported as independent"
+}
