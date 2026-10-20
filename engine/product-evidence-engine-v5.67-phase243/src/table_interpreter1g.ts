@@ -490,11 +490,25 @@ function classify(x:Ctx,cell:SourceCell1F,e:Element1G,labels:SourceCell1F[],dime
  const linked=x.context.filter(l=>l.applies&&l.sharedDimensions.some(d=>dims.includes(d)));
  for(const scope of ['same_section','ancestor_section','method_section'] as const){const ls=linked.filter(l=>l.scope===scope);if(!ls.length)continue;
   const kinds=new Set(ls.map(l=>l.kind));const mixed=kinds.size>1&&!(kinds.size===2&&kinds.has('estimate')&&kinds.has('method'));
-  const cls:EvidenceClass1G=mixed?'disputed':kinds.has('estimate')?'derived_or_estimated':kinds.has('method')?'publisher_measured':'manufacturer_declared';
+  // GL11: an input of a calculation that a method statement names keeps the method's provenance
+  const input=x.L.has('GL11_calculation_inputs_keep_method')&&!mixed&&kinds.has('estimate')&&kinds.has('method')&&ls.some(l=>l.kind==='method'&&l.sharedDimensions.some(d=>dims.includes(d)));
+  const cls:EvidenceClass1G=mixed?'disputed':input?'publisher_measured':kinds.has('estimate')?'derived_or_estimated':kinds.has('method')?'publisher_measured':'manufacturer_declared';
   return {evidence:{class:cls,level:'linked_'+scope,support:ls.map(l=>`${l.kind} statement (${l.locator}) naming ${l.sharedDimensions.join(', ')}`),contradictions:mixed?['statements of different kinds in the same scope']:[]},links:ls.map(l=>l.block)};}
  return {evidence:{class:'unknown',level:null,support:[],contradictions:[]},links:[]};
 }
 
+/** GL12: nearest-instance inheritance between twin tables (same quantity signature, same parent section). A table with no
+ * applicable statement link takes, for its unknown values, the linked class of its twin; the level names the inheritance. */
+function inheritParallelLinks(result:TableInterpretation1G[],doc:DocumentModel1G){
+ const numeric=(o:Observation1G)=>['quantity','range','bound','number'].includes(o.kind)&&!!o.dimension;
+ const sig=(t:TableInterpretation1G)=>[...new Set(t.observations.filter(numeric).map(o=>o.property.join('/')+'@'+o.dimension))].sort().join('|');
+ const parent=(t:TableInterpretation1G)=>{const bi=doc.tableBlock.get(t.table);return bi===undefined?null:doc.blocks[bi].sectionPath.slice(0,-1).join('/');};
+ for(const t of result){if(t.context.some(l=>l.applies))continue;const s=sig(t);if(!s)continue;
+  const twin=result.find(u=>u!==t&&u.context.some(l=>l.applies)&&sig(u)===s&&parent(u)===parent(t)&&Math.abs(u.table-t.table)<=2);if(!twin)continue;
+  const linked=twin.observations.filter(o=>numeric(o)&&o.evidence.level?.startsWith('linked_'));if(!linked.length)continue;
+  const classes=new Set(linked.map(o=>o.evidence.class));if(classes.size!==1)continue;const cls=[...classes][0];
+  for(const o of t.observations)if(numeric(o)&&o.evidence.class==='unknown')o.evidence={class:cls,level:'linked_parallel_table',support:[`twin table ${twin.table} (same quantity signature, same parent section) is ${cls} by a linked statement`],contradictions:[]};}
+}
 /** Interpret every table of a document. Tables outside the limits or not completely acquired are listed, never dropped. */
 export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly InterpreterLessonId1G[];text?:TextModel1G}={}):DocumentInterpretation1G{
  const lessons=[...(opts.lessons??activeInterpreterLessons1G())].sort();const L:Lessons=new Set(lessons);
@@ -510,5 +524,6 @@ export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly In
   for(const r of result){if(r.status!=='interpreted'||!r.selected)continue;const runner=r.alternatives.find(a=>!a.hypothesis.layout&&roleKey(a.hypothesis)!==roleKey(r.selected!.hypothesis));
    if(runner&&r.selected.support-runner.support<2)continue;for(const o of r.observations)if(o.product&&o.productSource!=='document')next.add(o.product);}
   if([...next].every(n=>learned.includes(n)))break;learned=[...next];}
+ if(L.has('GL12_parallel_tables_inherit_links'))inheritParallelLinks(result,doc);
  return {schema:'pee.table-interpretation.v1g',version,lessons,readingIdentity:version+'+lessons:'+interpreterLessonsDigest1G(lessons),limits:LIMITS1G,passes,tables:result,documentEntitiesLearned:learned};
 }

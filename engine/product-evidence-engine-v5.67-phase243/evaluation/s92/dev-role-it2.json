@@ -1,0 +1,2469 @@
+{
+ "schema": "pee.s92.role-eval.v1",
+ "definitions": "pd.5:61c4e37a1893ba61",
+ "arms": [
+  "A0",
+  "A1",
+  "B",
+  "B2",
+  "C",
+  "C1",
+  "D",
+  "D2"
+ ],
+ "overall": {
+  "A0": {
+   "annotated": 375,
+   "abstained": 34,
+   "correct": 181,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 224,
+     "correct": 101,
+     "precision": 0.451,
+     "coverage": 0.896,
+     "recall": 0.754,
+     "abstained": 14
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 100,
+     "correct": 76,
+     "precision": 0.76,
+     "coverage": 0.926,
+     "recall": 0.373,
+     "abstained": 15
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.92,
+     "recall": 0.16,
+     "abstained": 2
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.75,
+     "recall": 0,
+     "abstained": 3
+    }
+   },
+   "vsA1": {
+    "gained": 96,
+    "lost": 39
+   },
+   "decidedBy": {
+    "clause:declaration_cue": 27,
+    "no_other_role": 155,
+    "structure:approximate_in_test_section": 28,
+    "structure:specification_section": 15,
+    "setting_or_condition_cue": 17,
+    "measuring_verb": 23,
+    "structure:specification_table_cell": 49,
+    "declaration_cue_in_clause": 7,
+    "structure:test_label_value": 3,
+    "structure:test_table_cell": 15,
+    "structure:label_value_outside_tests": 2
+   }
+  },
+  "A1": {
+   "annotated": 375,
+   "abstained": 179,
+   "correct": 124,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 57,
+     "correct": 31,
+     "precision": 0.544,
+     "coverage": 0.425,
+     "recall": 0.231,
+     "abstained": 77
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 122,
+     "correct": 89,
+     "precision": 0.73,
+     "coverage": 0.534,
+     "recall": 0.436,
+     "abstained": 95
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.8,
+     "recall": 0.16,
+     "abstained": 5
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.833,
+     "recall": 0,
+     "abstained": 2
+    }
+   },
+   "vsA0": {
+    "gained": 39,
+    "lost": 96
+   },
+   "decidedBy": {
+    "evidence:clause": 64,
+    "evidence:tested_document_setting": 9,
+    "evidence:observation_verb": 8,
+    "condition": 17,
+    "evidence:measuring_verb": 23,
+    "observation_verb:measured": 14,
+    "tested_document_setting": 6,
+    "evidence:test_context_in_clause": 7,
+    "test_section_first_person": 7,
+    "evidence:specification_table_cell": 49,
+    "clause:up to": 2,
+    "evidence:declaration_cue": 7,
+    "evidence:test_context_in_sentence": 2,
+    "observation_verb:cleaned": 3,
+    "observation_verb:took": 2,
+    "clause:claims": 3,
+    "observation_verb:lasted": 2,
+    "instrument_in_sentence": 7,
+    "test_context_in_clause": 2,
+    "clause:packs": 1,
+    "clause:with a": 1,
+    "evidence:test_table": 3,
+    "evidence:label_value_outside_tests": 2,
+    "clause:features": 1,
+    "evidence:test_section_first_person": 3,
+    "evidence:instrument_in_sentence": 2
+   }
+  },
+  "B": {
+   "annotated": 375,
+   "abstained": 170,
+   "correct": 135,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 73,
+     "correct": 47,
+     "precision": 0.644,
+     "coverage": 0.537,
+     "recall": 0.351,
+     "abstained": 62
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 115,
+     "correct": 84,
+     "precision": 0.73,
+     "coverage": 0.51,
+     "recall": 0.412,
+     "abstained": 100
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.8,
+     "recall": 0.16,
+     "abstained": 5
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.75,
+     "recall": 0,
+     "abstained": 3
+    }
+   },
+   "vsA0": {
+    "gained": 39,
+    "lost": 85
+   },
+   "vsA1": {
+    "gained": 16,
+    "lost": 5
+   },
+   "decidedBy": {
+    "clause:packs": 3,
+    "clause:housing": 1,
+    "clause:has": 12,
+    "clause:with a": 9,
+    "tested_document_setting": 9,
+    "clause:produces": 7,
+    "observation_verb:completed": 2,
+    "condition": 17,
+    "measuring_verb": 23,
+    "observation_verb:measured": 14,
+    "test_context_in_clause": 9,
+    "specification_table_cell": 41,
+    "table_structure:table": 27,
+    "clause:up to": 19,
+    "observation_verb:took": 4,
+    "clause:gets": 1,
+    "declaration_cue:declaration_cue_in_clause": 7,
+    "test_context_in_sentence": 2,
+    "observation_verb:cleaned": 4,
+    "observation_verb:maxed": 1,
+    "clause:claims": 3,
+    "observation_verb:lasted": 2,
+    "clause:have": 4,
+    "clause:boasts": 1,
+    "test_table": 3,
+    "instrument_in_sentence": 3,
+    "table_link:same_section": 14,
+    "table_link:ancestor_section": 2,
+    "clause:rated": 10,
+    "clause:features": 1,
+    "label_value_outside_tests": 1,
+    "clause:offers": 1,
+    "test_section_first_person": 3,
+    "observation_verb:covered": 2
+   }
+  },
+  "B2": {
+   "annotated": 375,
+   "abstained": 170,
+   "correct": 135,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 73,
+     "correct": 47,
+     "precision": 0.644,
+     "coverage": 0.537,
+     "recall": 0.351,
+     "abstained": 62
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 115,
+     "correct": 84,
+     "precision": 0.73,
+     "coverage": 0.51,
+     "recall": 0.412,
+     "abstained": 100
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.8,
+     "recall": 0.16,
+     "abstained": 5
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.75,
+     "recall": 0,
+     "abstained": 3
+    }
+   },
+   "vsA0": {
+    "gained": 39,
+    "lost": 85
+   },
+   "vsA1": {
+    "gained": 16,
+    "lost": 5
+   },
+   "decidedBy": {
+    "clause:packs": 3,
+    "clause:housing": 1,
+    "clause:has": 12,
+    "clause:with a": 9,
+    "tested_document_setting": 9,
+    "clause:produces": 7,
+    "observation_verb:completed": 2,
+    "condition": 17,
+    "measuring_verb": 23,
+    "observation_verb:measured": 14,
+    "test_context_in_clause": 9,
+    "specification_table_cell": 41,
+    "table_structure:table": 27,
+    "clause:up to": 19,
+    "observation_verb:took": 4,
+    "clause:gets": 1,
+    "declaration_cue:declaration_cue_in_clause": 7,
+    "test_context_in_sentence": 2,
+    "observation_verb:cleaned": 4,
+    "observation_verb:maxed": 1,
+    "clause:claims": 3,
+    "observation_verb:lasted": 2,
+    "clause:have": 4,
+    "clause:boasts": 1,
+    "test_table": 3,
+    "instrument_in_sentence": 3,
+    "table_link:same_section": 14,
+    "table_link:ancestor_section": 2,
+    "clause:rated": 10,
+    "clause:features": 1,
+    "label_value_outside_tests": 1,
+    "clause:offers": 1,
+    "test_section_first_person": 3,
+    "observation_verb:covered": 2
+   }
+  },
+  "C": {
+   "annotated": 375,
+   "abstained": 143,
+   "correct": 154,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 95,
+     "correct": 62,
+     "precision": 0.653,
+     "coverage": 0.649,
+     "recall": 0.463,
+     "abstained": 47
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 120,
+     "correct": 88,
+     "precision": 0.733,
+     "coverage": 0.564,
+     "recall": 0.431,
+     "abstained": 89
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.84,
+     "recall": 0.16,
+     "abstained": 4
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.75,
+     "recall": 0,
+     "abstained": 3
+    }
+   },
+   "vsA0": {
+    "gained": 43,
+    "lost": 70
+   },
+   "vsA1": {
+    "gained": 35,
+    "lost": 5
+   },
+   "decidedBy": {
+    "clause:packs": 3,
+    "clause:housing": 1,
+    "clause:has": 12,
+    "clause:with a": 9,
+    "tested_document_setting": 8,
+    "bridge:ancestor_section": 1,
+    "clause:produces": 7,
+    "observation_verb:completed": 2,
+    "condition": 17,
+    "measuring_verb": 23,
+    "observation_verb:measured": 14,
+    "test_context_in_clause": 9,
+    "specification_table_cell": 41,
+    "table_structure:table": 27,
+    "clause:up to": 19,
+    "observation_verb:took": 4,
+    "bridge:same_section": 18,
+    "clause:gets": 1,
+    "declaration_cue:declaration_cue_in_clause": 7,
+    "test_context_in_sentence": 2,
+    "co_occurrence:neighbour_sentence": 10,
+    "observation_verb:cleaned": 4,
+    "observation_verb:maxed": 1,
+    "clause:claims": 3,
+    "observation_verb:lasted": 2,
+    "clause:have": 4,
+    "clause:boasts": 1,
+    "test_table": 3,
+    "instrument_in_sentence": 3,
+    "table_link:same_section": 14,
+    "table_link:ancestor_section": 2,
+    "bridge:method_section": 1,
+    "clause:rated": 10,
+    "clause:features": 1,
+    "label_value_outside_tests": 1,
+    "clause:offers": 1,
+    "observation_verb:covered": 2,
+    "test_section_first_person": 2
+   }
+  },
+  "C1": {
+   "annotated": 375,
+   "abstained": 112,
+   "correct": 179,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 104,
+     "correct": 70,
+     "precision": 0.673,
+     "coverage": 0.746,
+     "recall": 0.522,
+     "abstained": 34
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 142,
+     "correct": 105,
+     "precision": 0.739,
+     "coverage": 0.647,
+     "recall": 0.515,
+     "abstained": 72
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.88,
+     "recall": 0.16,
+     "abstained": 3
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.75,
+     "recall": 0,
+     "abstained": 3
+    }
+   },
+   "vsA0": {
+    "gained": 60,
+    "lost": 62
+   },
+   "vsA1": {
+    "gained": 61,
+    "lost": 6
+   },
+   "decidedBy": {
+    "clause:packs": 3,
+    "situation_attributive": 24,
+    "clause:housing": 1,
+    "clause:has": 12,
+    "clause:with a": 9,
+    "tested_document_setting": 6,
+    "bridge:ancestor_section": 1,
+    "clause:produces": 7,
+    "observation_verb:completed": 2,
+    "condition": 17,
+    "measuring_verb": 23,
+    "observation_verb:measured": 14,
+    "test_context_in_clause": 9,
+    "specification_table_cell": 41,
+    "table_structure:table": 27,
+    "clause:up to": 19,
+    "observation_verb:took": 4,
+    "bridge:same_section": 15,
+    "clause:gets": 1,
+    "declaration_cue:declaration_cue_in_clause": 7,
+    "situation_episodic": 21,
+    "test_context_in_sentence": 2,
+    "co_occurrence:neighbour_sentence": 5,
+    "observation_verb:cleaned": 4,
+    "observation_verb:maxed": 1,
+    "clause:claims": 3,
+    "observation_verb:lasted": 2,
+    "clause:have": 4,
+    "clause:boasts": 1,
+    "test_table": 3,
+    "instrument_in_sentence": 3,
+    "table_link:same_section": 14,
+    "table_link:ancestor_section": 2,
+    "clause:rated": 10,
+    "clause:features": 1,
+    "label_value_outside_tests": 1,
+    "clause:offers": 1,
+    "observation_verb:covered": 2
+   }
+  },
+  "D": {
+   "annotated": 375,
+   "abstained": 19,
+   "correct": 200,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 227,
+     "correct": 109,
+     "precision": 0.48,
+     "coverage": 0.97,
+     "recall": 0.813,
+     "abstained": 4
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 112,
+     "correct": 87,
+     "precision": 0.777,
+     "coverage": 0.936,
+     "recall": 0.426,
+     "abstained": 13
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 1,
+     "recall": 0.16,
+     "abstained": 0
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.833,
+     "recall": 0,
+     "abstained": 2
+    }
+   },
+   "vsA0": {
+    "gained": 22,
+    "lost": 3
+   },
+   "vsA1": {
+    "gained": 102,
+    "lost": 26
+   },
+   "decidedBy": {}
+  },
+  "D2": {
+   "annotated": 375,
+   "abstained": 90,
+   "correct": 197,
+   "baselineAllMeasured": 134,
+   "baselineAllDeclared": 204,
+   "perClass": {
+    "measured_by_publisher": {
+     "reference": 134,
+     "predicted": 113,
+     "correct": 72,
+     "precision": 0.637,
+     "coverage": 0.739,
+     "recall": 0.537,
+     "abstained": 35
+    },
+    "declared_spec": {
+     "reference": 204,
+     "predicted": 155,
+     "correct": 121,
+     "precision": 0.781,
+     "coverage": 0.75,
+     "recall": 0.593,
+     "abstained": 51
+    },
+    "test_condition": {
+     "reference": 25,
+     "predicted": 17,
+     "correct": 4,
+     "precision": 0.235,
+     "coverage": 0.92,
+     "recall": 0.16,
+     "abstained": 2
+    },
+    "other": {
+     "reference": 12,
+     "predicted": 0,
+     "correct": 0,
+     "precision": null,
+     "coverage": 0.833,
+     "recall": 0,
+     "abstained": 2
+    }
+   },
+   "vsA0": {
+    "gained": 54,
+    "lost": 38
+   },
+   "vsA1": {
+    "gained": 78,
+    "lost": 5
+   },
+   "decidedBy": {
+    "label_model:-A0_with_reason -A1_local_evidence score -9.1902": 36,
+    "label_model:-situation score -2.8387": 14,
+    "label_model:-A0_with_reason -A1_local_evidence -situation score -12.0289": 3,
+    "label_model:-A0_with_reason score -4.5951": 16,
+    "label_model:-A1_local_evidence -situation score -7.4338": 2,
+    "label_model:": 112,
+    "A0_with_reason score 4.5951": 9,
+    "A0_with_reason ": 54,
+    "A1_local_evidence ": 29,
+    "bridge score 10.4877": 3,
+    "A1_local_evidence score 4.5951": 6,
+    "condition": 17,
+    "bridge ": 11,
+    "situation score 13.3264": 3,
+    "A1_local_evidence -co_occurrence -bridge ": 1,
+    "situation score 10.0375": 1,
+    "label_model:-A0_with_reason -A1_local_evidence -table_links score -9.1902": 26,
+    "situation score 7.4338": 7,
+    "bridge score 5.8926": 2,
+    "bridge score 1.2975": 13,
+    "label_model:-A1_local_evidence ": 10,
+    "bridge score -3.2976": 3,
+    "label_model:-A1_local_evidence score -4.5951": 23,
+    "situation score 2.8387": 13,
+    "co_occurrence score 0.6939": 1,
+    "A1_local_evidence score 9.1902": 13,
+    "A1_local_evidence -co_occurrence ": 1,
+    "situation score 12.6325": 1,
+    "label_model:-co_occurrence ": 2,
+    "situation score 3.4423": 1,
+    "label_model:-A0_with_reason ": 2,
+    "situation score 4.1362": 2,
+    "label_model:-A1_local_evidence -bridge score -5.8926": 3,
+    "situation score 12.0289": 9,
+    "label_model:-bridge score -1.2975": 1,
+    "A0_with_reason -A1_local_evidence ": 1,
+    "co_occurrence ": 8,
+    "situation score 3.5326": 1,
+    "situation score -1.7564": 4,
+    "A1_local_evidence -situation score 6.3515": 3,
+    "label_model:-A0_with_reason -A1_local_evidence ": 12,
+    "co_occurrence -situation score -11.335": 1,
+    "co_occurrence score -8.4963": 1,
+    "co_occurrence score -3.9012": 3,
+    "situation score -6.3515": 2,
+    "situation score 12.7228": 3,
+    "label_model:-A0_with_reason -situation score -7.4338": 2,
+    "bridge -situation score 3.0539": 2,
+    "table_links score -9.1902": 7,
+    "bridge -situation score -1.5412": 1,
+    "table_links score 4.5951": 10,
+    "situation score 9.4252": 2,
+    "label_model:-A0_with_reason -co_occurrence score -5.289": 1,
+    "label_model:-A0_with_reason -bridge -situation score -8.7313": 1,
+    "label_model:-A1_local_evidence -bridge ": 1,
+    "situation score -3.0539": 1,
+    "bridge score -7.8927": 1,
+    "co_occurrence -situation score -2.1448": 1,
+    "co_occurrence -bridge score 3.9915": 1,
+    "A0_with_reason -situation score 1.7564": 1,
+    "label_model:-A1_local_evidence -co_occurrence ": 1,
+    "bridge score -3.9915": 1,
+    "bridge score 0.6036": 1,
+    "bridge score 6.5865": 1,
+    "situation score 14.0203": 1,
+    "A1_local_evidence -situation score -2.8387": 1,
+    "situation score 8.7313": 1,
+    "A1_local_evidence -situation score 1.7564": 2
+   }
+  }
+ },
+ "bySet": {
+  "s89": {
+   "A0": {
+    "annotated": 113,
+    "abstained": 12,
+    "correct": 60,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 65,
+      "correct": 38,
+      "precision": 0.585,
+      "coverage": 0.836,
+      "recall": 0.691,
+      "abstained": 9
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 27,
+      "correct": 20,
+      "precision": 0.741,
+      "coverage": 0.979,
+      "recall": 0.426,
+      "abstained": 1
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 0.9,
+      "recall": 0.2,
+      "abstained": 1
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA1": {
+     "gained": 32,
+     "lost": 6
+    },
+    "decidedBy": {
+     "clause:declaration_cue": 8,
+     "no_other_role": 47,
+     "structure:approximate_in_test_section": 3,
+     "structure:specification_section": 3,
+     "setting_or_condition_cue": 9,
+     "measuring_verb": 13,
+     "structure:specification_table_cell": 14,
+     "declaration_cue_in_clause": 2,
+     "structure:test_label_value": 2
+    }
+   },
+   "A1": {
+    "annotated": 113,
+    "abstained": 56,
+    "correct": 34,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 23,
+      "correct": 14,
+      "precision": 0.609,
+      "coverage": 0.418,
+      "recall": 0.255,
+      "abstained": 32
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 25,
+      "correct": 18,
+      "precision": 0.72,
+      "coverage": 0.511,
+      "recall": 0.383,
+      "abstained": 23
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 0.9,
+      "recall": 0.2,
+      "abstained": 1
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 32
+    },
+    "decidedBy": {
+     "evidence:clause": 9,
+     "evidence:tested_document_setting": 3,
+     "evidence:observation_verb": 4,
+     "condition": 9,
+     "evidence:measuring_verb": 13,
+     "observation_verb:measured": 8,
+     "tested_document_setting": 6,
+     "evidence:test_context_in_clause": 2,
+     "test_section_first_person": 2,
+     "evidence:specification_table_cell": 14,
+     "clause:up to": 1,
+     "evidence:declaration_cue": 2,
+     "evidence:test_context_in_sentence": 1,
+     "observation_verb:cleaned": 3,
+     "observation_verb:took": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1,
+     "instrument_in_sentence": 5
+    }
+   },
+   "B": {
+    "annotated": 113,
+    "abstained": 56,
+    "correct": 34,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 23,
+      "correct": 14,
+      "precision": 0.609,
+      "coverage": 0.418,
+      "recall": 0.255,
+      "abstained": 32
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 25,
+      "correct": 18,
+      "precision": 0.72,
+      "coverage": 0.511,
+      "recall": 0.383,
+      "abstained": 23
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 0.9,
+      "recall": 0.2,
+      "abstained": 1
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 32
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "decidedBy": {
+     "clause:packs": 1,
+     "clause:housing": 1,
+     "clause:has": 2,
+     "clause:with a": 1,
+     "tested_document_setting": 3,
+     "clause:produces": 1,
+     "observation_verb:completed": 2,
+     "condition": 9,
+     "measuring_verb": 13,
+     "observation_verb:measured": 8,
+     "test_context_in_clause": 2,
+     "specification_table_cell": 13,
+     "table_structure:table": 11,
+     "clause:up to": 3,
+     "observation_verb:took": 2,
+     "clause:gets": 1,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "test_context_in_sentence": 1,
+     "observation_verb:cleaned": 3,
+     "observation_verb:maxed": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1
+    }
+   },
+   "B2": {
+    "annotated": 113,
+    "abstained": 56,
+    "correct": 34,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 23,
+      "correct": 14,
+      "precision": 0.609,
+      "coverage": 0.418,
+      "recall": 0.255,
+      "abstained": 32
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 25,
+      "correct": 18,
+      "precision": 0.72,
+      "coverage": 0.511,
+      "recall": 0.383,
+      "abstained": 23
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 0.9,
+      "recall": 0.2,
+      "abstained": 1
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 6,
+     "lost": 32
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 0
+    },
+    "decidedBy": {
+     "clause:packs": 1,
+     "clause:housing": 1,
+     "clause:has": 2,
+     "clause:with a": 1,
+     "tested_document_setting": 3,
+     "clause:produces": 1,
+     "observation_verb:completed": 2,
+     "condition": 9,
+     "measuring_verb": 13,
+     "observation_verb:measured": 8,
+     "test_context_in_clause": 2,
+     "specification_table_cell": 13,
+     "table_structure:table": 11,
+     "clause:up to": 3,
+     "observation_verb:took": 2,
+     "clause:gets": 1,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "test_context_in_sentence": 1,
+     "observation_verb:cleaned": 3,
+     "observation_verb:maxed": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1
+    }
+   },
+   "C": {
+    "annotated": 113,
+    "abstained": 47,
+    "correct": 41,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 30,
+      "correct": 20,
+      "precision": 0.667,
+      "coverage": 0.527,
+      "recall": 0.364,
+      "abstained": 26
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 27,
+      "correct": 19,
+      "precision": 0.704,
+      "coverage": 0.553,
+      "recall": 0.404,
+      "abstained": 21
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 1,
+      "recall": 0.2,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 8,
+     "lost": 27
+    },
+    "vsA1": {
+     "gained": 7,
+     "lost": 0
+    },
+    "decidedBy": {
+     "clause:packs": 1,
+     "clause:housing": 1,
+     "clause:has": 2,
+     "clause:with a": 1,
+     "tested_document_setting": 2,
+     "bridge:ancestor_section": 1,
+     "clause:produces": 1,
+     "observation_verb:completed": 2,
+     "condition": 9,
+     "measuring_verb": 13,
+     "observation_verb:measured": 8,
+     "test_context_in_clause": 2,
+     "specification_table_cell": 13,
+     "table_structure:table": 11,
+     "clause:up to": 3,
+     "observation_verb:took": 2,
+     "bridge:same_section": 8,
+     "clause:gets": 1,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "test_context_in_sentence": 1,
+     "co_occurrence:neighbour_sentence": 2,
+     "observation_verb:cleaned": 3,
+     "observation_verb:maxed": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1
+    }
+   },
+   "C1": {
+    "annotated": 113,
+    "abstained": 35,
+    "correct": 52,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 37,
+      "correct": 25,
+      "precision": 0.676,
+      "coverage": 0.618,
+      "recall": 0.455,
+      "abstained": 21
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 32,
+      "correct": 25,
+      "precision": 0.781,
+      "coverage": 0.702,
+      "recall": 0.532,
+      "abstained": 14
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 1,
+      "recall": 0.2,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 15,
+     "lost": 23
+    },
+    "vsA1": {
+     "gained": 18,
+     "lost": 0
+    },
+    "decidedBy": {
+     "clause:packs": 1,
+     "situation_attributive": 6,
+     "clause:housing": 1,
+     "clause:has": 2,
+     "clause:with a": 1,
+     "tested_document_setting": 2,
+     "bridge:ancestor_section": 1,
+     "clause:produces": 1,
+     "observation_verb:completed": 2,
+     "condition": 9,
+     "measuring_verb": 13,
+     "observation_verb:measured": 8,
+     "test_context_in_clause": 2,
+     "specification_table_cell": 13,
+     "table_structure:table": 11,
+     "clause:up to": 3,
+     "observation_verb:took": 2,
+     "bridge:same_section": 8,
+     "clause:gets": 1,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "situation_episodic": 7,
+     "test_context_in_sentence": 1,
+     "co_occurrence:neighbour_sentence": 1,
+     "observation_verb:cleaned": 3,
+     "observation_verb:maxed": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1
+    }
+   },
+   "D": {
+    "annotated": 113,
+    "abstained": 6,
+    "correct": 66,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 69,
+      "correct": 42,
+      "precision": 0.609,
+      "coverage": 0.927,
+      "recall": 0.764,
+      "abstained": 4
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 29,
+      "correct": 22,
+      "precision": 0.759,
+      "coverage": 0.957,
+      "recall": 0.468,
+      "abstained": 2
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 1,
+      "recall": 0.2,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 7,
+     "lost": 1
+    },
+    "vsA1": {
+     "gained": 36,
+     "lost": 4
+    },
+    "decidedBy": {}
+   },
+   "D2": {
+    "annotated": 113,
+    "abstained": 28,
+    "correct": 56,
+    "baselineAllMeasured": 55,
+    "baselineAllDeclared": 47,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 55,
+      "predicted": 39,
+      "correct": 24,
+      "precision": 0.615,
+      "coverage": 0.6,
+      "recall": 0.436,
+      "abstained": 22
+     },
+     "declared_spec": {
+      "reference": 47,
+      "predicted": 37,
+      "correct": 30,
+      "precision": 0.811,
+      "coverage": 0.872,
+      "recall": 0.638,
+      "abstained": 6
+     },
+     "test_condition": {
+      "reference": 10,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "coverage": 1,
+      "recall": 0.2,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 14,
+     "lost": 18
+    },
+    "vsA1": {
+     "gained": 23,
+     "lost": 1
+    },
+    "decidedBy": {
+     "label_model:-A0_with_reason -A1_local_evidence score -9.1902": 6,
+     "label_model:-situation score -2.8387": 6,
+     "label_model:-A0_with_reason -A1_local_evidence -situation score -12.0289": 2,
+     "label_model:-A0_with_reason score -4.5951": 5,
+     "label_model:-A1_local_evidence -situation score -7.4338": 2,
+     "label_model:": 37,
+     "A0_with_reason score 4.5951": 3,
+     "A0_with_reason ": 15,
+     "A1_local_evidence ": 12,
+     "bridge score 10.4877": 1,
+     "A1_local_evidence score 4.5951": 2,
+     "condition": 9,
+     "bridge ": 6,
+     "situation score 13.3264": 3,
+     "A1_local_evidence -co_occurrence -bridge ": 1,
+     "situation score 10.0375": 1,
+     "label_model:-A0_with_reason -A1_local_evidence -table_links score -9.1902": 12,
+     "situation score 7.4338": 3,
+     "bridge score 5.8926": 1,
+     "bridge score 1.2975": 6,
+     "label_model:-A1_local_evidence ": 1,
+     "bridge score -3.2976": 1,
+     "label_model:-A1_local_evidence score -4.5951": 1,
+     "situation score 2.8387": 6,
+     "co_occurrence score 0.6939": 1,
+     "A1_local_evidence score 9.1902": 6,
+     "A1_local_evidence -co_occurrence ": 1,
+     "situation score 12.6325": 1,
+     "label_model:-co_occurrence ": 1,
+     "situation score 3.4423": 1,
+     "label_model:-A0_with_reason ": 1,
+     "situation score 4.1362": 1,
+     "label_model:-A1_local_evidence -bridge score -5.8926": 1,
+     "situation score 12.0289": 3,
+     "label_model:-bridge score -1.2975": 1
+    }
+   }
+  },
+  "s90": {
+   "A0": {
+    "annotated": 82,
+    "abstained": 11,
+    "correct": 32,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 41,
+      "correct": 3,
+      "precision": 0.073,
+      "coverage": 0.6,
+      "recall": 0.6,
+      "abstained": 2
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 29,
+      "correct": 29,
+      "precision": 1,
+      "coverage": 0.905,
+      "recall": 0.392,
+      "abstained": 7
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA1": {
+     "gained": 12,
+     "lost": 11
+    },
+    "decidedBy": {
+     "structure:specification_section": 6,
+     "structure:approximate_in_test_section": 3,
+     "structure:specification_table_cell": 11,
+     "no_other_role": 32,
+     "structure:test_label_value": 1,
+     "measuring_verb": 2,
+     "clause:declaration_cue": 9,
+     "declaration_cue_in_clause": 3,
+     "setting_or_condition_cue": 1,
+     "structure:test_table_cell": 3
+    }
+   },
+   "A1": {
+    "annotated": 82,
+    "abstained": 43,
+    "correct": 31,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 6,
+      "correct": 1,
+      "precision": 0.167,
+      "coverage": 0.4,
+      "recall": 0.2,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 32,
+      "correct": 30,
+      "precision": 0.938,
+      "coverage": 0.486,
+      "recall": 0.405,
+      "abstained": 38
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 11,
+     "lost": 12
+    },
+    "decidedBy": {
+     "evidence:clause": 18,
+     "evidence:specification_table_cell": 11,
+     "evidence:measuring_verb": 2,
+     "test_context_in_clause": 1,
+     "evidence:declaration_cue": 3,
+     "clause:packs": 1,
+     "condition": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1,
+     "evidence:test_context_in_clause": 1,
+     "clause:with a": 1,
+     "evidence:test_table": 3,
+     "instrument_in_sentence": 1
+    }
+   },
+   "B": {
+    "annotated": 82,
+    "abstained": 44,
+    "correct": 30,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 6,
+      "correct": 1,
+      "precision": 0.167,
+      "coverage": 0.4,
+      "recall": 0.2,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 31,
+      "correct": 29,
+      "precision": 0.935,
+      "coverage": 0.473,
+      "recall": 0.392,
+      "abstained": 39
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 11,
+     "lost": 13
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "decidedBy": {
+     "clause:up to": 8,
+     "clause:have": 2,
+     "specification_table_cell": 10,
+     "table_structure:table": 9,
+     "clause:has": 3,
+     "clause:with a": 4,
+     "measuring_verb": 2,
+     "test_context_in_clause": 2,
+     "clause:packs": 2,
+     "declaration_cue:declaration_cue_in_clause": 3,
+     "clause:boasts": 1,
+     "condition": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1,
+     "test_table": 3,
+     "instrument_in_sentence": 1
+    }
+   },
+   "B2": {
+    "annotated": 82,
+    "abstained": 44,
+    "correct": 30,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 6,
+      "correct": 1,
+      "precision": 0.167,
+      "coverage": 0.4,
+      "recall": 0.2,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 31,
+      "correct": 29,
+      "precision": 0.935,
+      "coverage": 0.473,
+      "recall": 0.392,
+      "abstained": 39
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 11,
+     "lost": 13
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "decidedBy": {
+     "clause:up to": 8,
+     "clause:have": 2,
+     "specification_table_cell": 10,
+     "table_structure:table": 9,
+     "clause:has": 3,
+     "clause:with a": 4,
+     "measuring_verb": 2,
+     "test_context_in_clause": 2,
+     "clause:packs": 2,
+     "declaration_cue:declaration_cue_in_clause": 3,
+     "clause:boasts": 1,
+     "condition": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1,
+     "test_table": 3,
+     "instrument_in_sentence": 1
+    }
+   },
+   "C": {
+    "annotated": 82,
+    "abstained": 40,
+    "correct": 30,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 10,
+      "correct": 1,
+      "precision": 0.1,
+      "coverage": 0.4,
+      "recall": 0.2,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 31,
+      "correct": 29,
+      "precision": 0.935,
+      "coverage": 0.527,
+      "recall": 0.392,
+      "abstained": 35
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 11,
+     "lost": 13
+    },
+    "vsA1": {
+     "gained": 0,
+     "lost": 1
+    },
+    "decidedBy": {
+     "clause:up to": 8,
+     "clause:have": 2,
+     "specification_table_cell": 10,
+     "table_structure:table": 9,
+     "bridge:same_section": 3,
+     "clause:has": 3,
+     "co_occurrence:neighbour_sentence": 1,
+     "clause:with a": 4,
+     "measuring_verb": 2,
+     "test_context_in_clause": 2,
+     "clause:packs": 2,
+     "declaration_cue:declaration_cue_in_clause": 3,
+     "clause:boasts": 1,
+     "condition": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1,
+     "test_table": 3,
+     "instrument_in_sentence": 1
+    }
+   },
+   "C1": {
+    "annotated": 82,
+    "abstained": 30,
+    "correct": 39,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 12,
+      "correct": 3,
+      "precision": 0.25,
+      "coverage": 1,
+      "recall": 0.6,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 39,
+      "correct": 36,
+      "precision": 0.923,
+      "coverage": 0.622,
+      "recall": 0.486,
+      "abstained": 28
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 18,
+     "lost": 11
+    },
+    "vsA1": {
+     "gained": 9,
+     "lost": 1
+    },
+    "decidedBy": {
+     "clause:up to": 8,
+     "clause:have": 2,
+     "specification_table_cell": 10,
+     "table_structure:table": 9,
+     "bridge:same_section": 3,
+     "situation_attributive": 8,
+     "clause:has": 3,
+     "situation_episodic": 3,
+     "clause:with a": 4,
+     "measuring_verb": 2,
+     "test_context_in_clause": 2,
+     "clause:packs": 2,
+     "declaration_cue:declaration_cue_in_clause": 3,
+     "clause:boasts": 1,
+     "condition": 1,
+     "clause:claims": 1,
+     "observation_verb:lasted": 1,
+     "test_table": 3,
+     "instrument_in_sentence": 1
+    }
+   },
+   "D": {
+    "annotated": 82,
+    "abstained": 3,
+    "correct": 39,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 44,
+      "correct": 5,
+      "precision": 0.114,
+      "coverage": 1,
+      "recall": 1,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 34,
+      "correct": 34,
+      "precision": 1,
+      "coverage": 0.986,
+      "recall": 0.459,
+      "abstained": 1
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 7,
+     "lost": 0
+    },
+    "vsA1": {
+     "gained": 14,
+     "lost": 6
+    },
+    "decidedBy": {}
+   },
+   "D2": {
+    "annotated": 82,
+    "abstained": 24,
+    "correct": 45,
+    "baselineAllMeasured": 5,
+    "baselineAllDeclared": 74,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 5,
+      "predicted": 13,
+      "correct": 3,
+      "precision": 0.231,
+      "coverage": 0.8,
+      "recall": 0.6,
+      "abstained": 1
+     },
+     "declared_spec": {
+      "reference": 74,
+      "predicted": 44,
+      "correct": 42,
+      "precision": 0.955,
+      "coverage": 0.716,
+      "recall": 0.568,
+      "abstained": 21
+     },
+     "test_condition": {
+      "reference": 0,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0,
+      "coverage": null,
+      "recall": null,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.333,
+      "recall": 0,
+      "abstained": 2
+     }
+    },
+    "vsA0": {
+     "gained": 15,
+     "lost": 2
+    },
+    "vsA1": {
+     "gained": 17,
+     "lost": 3
+    },
+    "decidedBy": {
+     "label_model:-A0_with_reason score -4.5951": 8,
+     "label_model:-A1_local_evidence score -4.5951": 5,
+     "label_model:-A0_with_reason -A1_local_evidence -table_links score -9.1902": 7,
+     "label_model:": 13,
+     "bridge score 1.2975": 3,
+     "label_model:-situation score -2.8387": 6,
+     "A0_with_reason -A1_local_evidence ": 1,
+     "situation score 2.8387": 3,
+     "co_occurrence ": 2,
+     "situation score 3.5326": 1,
+     "label_model:-A1_local_evidence ": 4,
+     "situation score -1.7564": 2,
+     "bridge score -3.2976": 1,
+     "A0_with_reason ": 5,
+     "A1_local_evidence -situation score 6.3515": 1,
+     "label_model:-A0_with_reason -A1_local_evidence ": 4,
+     "co_occurrence -situation score -11.335": 1,
+     "co_occurrence score -8.4963": 1,
+     "co_occurrence score -3.9012": 1,
+     "condition": 1,
+     "situation score -6.3515": 1,
+     "A1_local_evidence ": 2,
+     "situation score 12.7228": 1,
+     "label_model:-A0_with_reason -A1_local_evidence score -9.1902": 7,
+     "label_model:-A0_with_reason -situation score -7.4338": 2,
+     "bridge -situation score 3.0539": 1,
+     "label_model:-A0_with_reason -A1_local_evidence -situation score -12.0289": 1,
+     "table_links score -9.1902": 1,
+     "A1_local_evidence score 9.1902": 3
+    }
+   }
+  },
+  "s91": {
+   "A0": {
+    "annotated": 180,
+    "abstained": 11,
+    "correct": 89,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 118,
+      "correct": 60,
+      "precision": 0.508,
+      "coverage": 0.959,
+      "recall": 0.811,
+      "abstained": 3
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 44,
+      "correct": 27,
+      "precision": 0.614,
+      "coverage": 0.916,
+      "recall": 0.325,
+      "abstained": 7
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.933,
+      "recall": 0.133,
+      "abstained": 1
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA1": {
+     "gained": 52,
+     "lost": 22
+    },
+    "decidedBy": {
+     "structure:specification_table_cell": 24,
+     "no_other_role": 76,
+     "structure:test_table_cell": 12,
+     "structure:approximate_in_test_section": 22,
+     "clause:declaration_cue": 10,
+     "setting_or_condition_cue": 7,
+     "measuring_verb": 8,
+     "structure:label_value_outside_tests": 2,
+     "structure:specification_section": 6,
+     "declaration_cue_in_clause": 2
+    }
+   },
+   "A1": {
+    "annotated": 180,
+    "abstained": 80,
+    "correct": 59,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 28,
+      "correct": 16,
+      "precision": 0.571,
+      "coverage": 0.432,
+      "recall": 0.216,
+      "abstained": 42
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 65,
+      "correct": 41,
+      "precision": 0.631,
+      "coverage": 0.59,
+      "recall": 0.494,
+      "abstained": 34
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.733,
+      "recall": 0.133,
+      "abstained": 4
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 22,
+     "lost": 52
+    },
+    "decidedBy": {
+     "evidence:specification_table_cell": 24,
+     "evidence:clause": 37,
+     "evidence:test_context_in_sentence": 1,
+     "condition": 7,
+     "evidence:measuring_verb": 8,
+     "observation_verb:took": 1,
+     "test_section_first_person": 5,
+     "evidence:label_value_outside_tests": 2,
+     "clause:features": 1,
+     "evidence:test_context_in_clause": 4,
+     "observation_verb:measured": 6,
+     "test_context_in_clause": 1,
+     "evidence:observation_verb": 4,
+     "evidence:tested_document_setting": 6,
+     "evidence:declaration_cue": 2,
+     "clause:claims": 1,
+     "clause:up to": 1,
+     "instrument_in_sentence": 1,
+     "evidence:test_section_first_person": 3,
+     "evidence:instrument_in_sentence": 2
+    }
+   },
+   "B": {
+    "annotated": 180,
+    "abstained": 70,
+    "correct": 71,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 44,
+      "correct": 32,
+      "precision": 0.727,
+      "coverage": 0.635,
+      "recall": 0.432,
+      "abstained": 27
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 59,
+      "correct": 37,
+      "precision": 0.627,
+      "coverage": 0.542,
+      "recall": 0.446,
+      "abstained": 38
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.733,
+      "recall": 0.133,
+      "abstained": 4
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.875,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 22,
+     "lost": 40
+    },
+    "vsA1": {
+     "gained": 16,
+     "lost": 4
+    },
+    "decidedBy": {
+     "specification_table_cell": 18,
+     "clause:has": 7,
+     "table_link:same_section": 14,
+     "table_structure:table": 7,
+     "clause:produces": 6,
+     "test_context_in_sentence": 1,
+     "condition": 7,
+     "measuring_verb": 8,
+     "observation_verb:took": 2,
+     "table_link:ancestor_section": 2,
+     "clause:with a": 4,
+     "clause:rated": 10,
+     "clause:features": 1,
+     "label_value_outside_tests": 1,
+     "test_context_in_clause": 5,
+     "observation_verb:measured": 6,
+     "observation_verb:cleaned": 1,
+     "tested_document_setting": 6,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "clause:claims": 1,
+     "clause:up to": 8,
+     "clause:have": 2,
+     "clause:offers": 1,
+     "test_section_first_person": 3,
+     "observation_verb:covered": 2,
+     "instrument_in_sentence": 2
+    }
+   },
+   "B2": {
+    "annotated": 180,
+    "abstained": 70,
+    "correct": 71,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 44,
+      "correct": 32,
+      "precision": 0.727,
+      "coverage": 0.635,
+      "recall": 0.432,
+      "abstained": 27
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 59,
+      "correct": 37,
+      "precision": 0.627,
+      "coverage": 0.542,
+      "recall": 0.446,
+      "abstained": 38
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.733,
+      "recall": 0.133,
+      "abstained": 4
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.875,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 22,
+     "lost": 40
+    },
+    "vsA1": {
+     "gained": 16,
+     "lost": 4
+    },
+    "decidedBy": {
+     "specification_table_cell": 18,
+     "clause:has": 7,
+     "table_link:same_section": 14,
+     "table_structure:table": 7,
+     "clause:produces": 6,
+     "test_context_in_sentence": 1,
+     "condition": 7,
+     "measuring_verb": 8,
+     "observation_verb:took": 2,
+     "table_link:ancestor_section": 2,
+     "clause:with a": 4,
+     "clause:rated": 10,
+     "clause:features": 1,
+     "label_value_outside_tests": 1,
+     "test_context_in_clause": 5,
+     "observation_verb:measured": 6,
+     "observation_verb:cleaned": 1,
+     "tested_document_setting": 6,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "clause:claims": 1,
+     "clause:up to": 8,
+     "clause:have": 2,
+     "clause:offers": 1,
+     "test_section_first_person": 3,
+     "observation_verb:covered": 2,
+     "instrument_in_sentence": 2
+    }
+   },
+   "C": {
+    "annotated": 180,
+    "abstained": 56,
+    "correct": 83,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 55,
+      "correct": 41,
+      "precision": 0.745,
+      "coverage": 0.757,
+      "recall": 0.554,
+      "abstained": 18
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 62,
+      "correct": 40,
+      "precision": 0.645,
+      "coverage": 0.602,
+      "recall": 0.482,
+      "abstained": 33
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.733,
+      "recall": 0.133,
+      "abstained": 4
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.875,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 24,
+     "lost": 30
+    },
+    "vsA1": {
+     "gained": 28,
+     "lost": 4
+    },
+    "decidedBy": {
+     "specification_table_cell": 18,
+     "clause:has": 7,
+     "bridge:same_section": 7,
+     "table_link:same_section": 14,
+     "table_structure:table": 7,
+     "clause:produces": 6,
+     "test_context_in_sentence": 1,
+     "condition": 7,
+     "measuring_verb": 8,
+     "observation_verb:took": 2,
+     "table_link:ancestor_section": 2,
+     "co_occurrence:neighbour_sentence": 7,
+     "clause:with a": 4,
+     "bridge:method_section": 1,
+     "clause:rated": 10,
+     "clause:features": 1,
+     "label_value_outside_tests": 1,
+     "test_context_in_clause": 5,
+     "observation_verb:measured": 6,
+     "observation_verb:cleaned": 1,
+     "tested_document_setting": 6,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "clause:claims": 1,
+     "clause:up to": 8,
+     "clause:have": 2,
+     "clause:offers": 1,
+     "observation_verb:covered": 2,
+     "test_section_first_person": 2,
+     "instrument_in_sentence": 2
+    }
+   },
+   "C1": {
+    "annotated": 180,
+    "abstained": 47,
+    "correct": 88,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 55,
+      "correct": 42,
+      "precision": 0.764,
+      "coverage": 0.824,
+      "recall": 0.568,
+      "abstained": 13
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 71,
+      "correct": 44,
+      "precision": 0.62,
+      "coverage": 0.639,
+      "recall": 0.53,
+      "abstained": 30
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.8,
+      "recall": 0.133,
+      "abstained": 3
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 0.875,
+      "recall": 0,
+      "abstained": 1
+     }
+    },
+    "vsA0": {
+     "gained": 27,
+     "lost": 28
+    },
+    "vsA1": {
+     "gained": 34,
+     "lost": 5
+    },
+    "decidedBy": {
+     "specification_table_cell": 18,
+     "clause:has": 7,
+     "situation_attributive": 10,
+     "situation_episodic": 11,
+     "table_link:same_section": 14,
+     "table_structure:table": 7,
+     "bridge:same_section": 4,
+     "clause:produces": 6,
+     "test_context_in_sentence": 1,
+     "condition": 7,
+     "measuring_verb": 8,
+     "observation_verb:took": 2,
+     "table_link:ancestor_section": 2,
+     "clause:with a": 4,
+     "clause:rated": 10,
+     "clause:features": 1,
+     "label_value_outside_tests": 1,
+     "co_occurrence:neighbour_sentence": 4,
+     "test_context_in_clause": 5,
+     "observation_verb:measured": 6,
+     "observation_verb:cleaned": 1,
+     "tested_document_setting": 4,
+     "declaration_cue:declaration_cue_in_clause": 2,
+     "clause:claims": 1,
+     "clause:up to": 8,
+     "clause:have": 2,
+     "clause:offers": 1,
+     "observation_verb:covered": 2,
+     "instrument_in_sentence": 2
+    }
+   },
+   "D": {
+    "annotated": 180,
+    "abstained": 10,
+    "correct": 95,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 114,
+      "correct": 62,
+      "precision": 0.544,
+      "coverage": 1,
+      "recall": 0.838,
+      "abstained": 0
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 49,
+      "correct": 31,
+      "precision": 0.633,
+      "coverage": 0.88,
+      "recall": 0.373,
+      "abstained": 10
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 1,
+      "recall": 0.133,
+      "abstained": 0
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 8,
+     "lost": 2
+    },
+    "vsA1": {
+     "gained": 52,
+     "lost": 16
+    },
+    "decidedBy": {}
+   },
+   "D2": {
+    "annotated": 180,
+    "abstained": 38,
+    "correct": 96,
+    "baselineAllMeasured": 74,
+    "baselineAllDeclared": 83,
+    "perClass": {
+     "measured_by_publisher": {
+      "reference": 74,
+      "predicted": 61,
+      "correct": 45,
+      "precision": 0.738,
+      "coverage": 0.838,
+      "recall": 0.608,
+      "abstained": 12
+     },
+     "declared_spec": {
+      "reference": 83,
+      "predicted": 74,
+      "correct": 49,
+      "precision": 0.662,
+      "coverage": 0.711,
+      "recall": 0.59,
+      "abstained": 24
+     },
+     "test_condition": {
+      "reference": 15,
+      "predicted": 7,
+      "correct": 2,
+      "precision": 0.286,
+      "coverage": 0.867,
+      "recall": 0.133,
+      "abstained": 2
+     },
+     "other": {
+      "reference": 8,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "coverage": 1,
+      "recall": 0,
+      "abstained": 0
+     }
+    },
+    "vsA0": {
+     "gained": 25,
+     "lost": 18
+    },
+    "vsA1": {
+     "gained": 38,
+     "lost": 1
+    },
+    "decidedBy": {
+     "label_model:-A0_with_reason -A1_local_evidence ": 8,
+     "table_links score -9.1902": 6,
+     "label_model:-A0_with_reason -A1_local_evidence score -9.1902": 23,
+     "label_model:-A1_local_evidence score -4.5951": 17,
+     "label_model:": 62,
+     "bridge -situation score -1.5412": 1,
+     "situation score 2.8387": 4,
+     "A0_with_reason ": 34,
+     "table_links score 4.5951": 10,
+     "label_model:-A0_with_reason -A1_local_evidence -table_links score -9.1902": 7,
+     "bridge score 1.2975": 4,
+     "label_model:-A1_local_evidence ": 5,
+     "situation score -1.7564": 2,
+     "situation score 7.4338": 4,
+     "A0_with_reason score 4.5951": 6,
+     "label_model:-A0_with_reason score -4.5951": 3,
+     "A1_local_evidence score 4.5951": 4,
+     "condition": 7,
+     "A1_local_evidence score 9.1902": 4,
+     "A1_local_evidence ": 15,
+     "situation score 12.0289": 6,
+     "co_occurrence ": 6,
+     "bridge ": 5,
+     "situation score 9.4252": 2,
+     "bridge score 10.4877": 2,
+     "situation score 4.1362": 1,
+     "situation score -6.3515": 1,
+     "label_model:-A0_with_reason -co_occurrence score -5.289": 1,
+     "label_model:-A0_with_reason -bridge -situation score -8.7313": 1,
+     "label_model:-situation score -2.8387": 2,
+     "A1_local_evidence -situation score 6.3515": 2,
+     "bridge score 5.8926": 1,
+     "label_model:-A1_local_evidence -bridge score -5.8926": 2,
+     "label_model:-A1_local_evidence -bridge ": 1,
+     "situation score -3.0539": 1,
+     "bridge score -7.8927": 1,
+     "co_occurrence -situation score -2.1448": 1,
+     "co_occurrence -bridge score 3.9915": 1,
+     "A0_with_reason -situation score 1.7564": 1,
+     "bridge score -3.2976": 1,
+     "label_model:-A1_local_evidence -co_occurrence ": 1,
+     "bridge score -3.9915": 1,
+     "label_model:-co_occurrence ": 1,
+     "bridge score 0.6036": 1,
+     "bridge score 6.5865": 1,
+     "situation score 14.0203": 1,
+     "bridge -situation score 3.0539": 1,
+     "situation score 12.7228": 2,
+     "label_model:-A0_with_reason ": 1,
+     "A1_local_evidence -situation score -2.8387": 1,
+     "co_occurrence score -3.9012": 2,
+     "situation score 8.7313": 1,
+     "A1_local_evidence -situation score 1.7564": 2
+    }
+   }
+  }
+ }
+}

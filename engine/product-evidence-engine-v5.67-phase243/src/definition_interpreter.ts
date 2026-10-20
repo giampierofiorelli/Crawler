@@ -14,6 +14,8 @@ import {UNIT_LEXICON272,TEST_CONTEXT272,type PlanMeasurement272} from './phase27
 import {classifyCondition87} from './observation_model.js';
 import {observationRole86c,otherProductInClause86c,type ObservationRole86c} from './phase225_transient_test_probe.js';
 import type {DocumentSemantics1D2} from './document_semantics.js';
+import {blockKind1G,dimensionsIn1G,cellElements1G,type DocumentModel1G,type Observation1G} from './table_interpreter1g.js';
+import {sentences} from './document_evidence.js';
 
 export const DEFINITION_INTERPRETER_VERSION='pee88.definition-interpreter.v1';
 export type SlotState='stated'|'inferred'|'ambiguous'|'unknown';
@@ -43,7 +45,89 @@ export interface StructuralContext {container:'table_cell'|'label_value'|'prose'
  /** S91: the value sits under a methodology heading (Step 1D-A2), and the page type the document announces. */
  methodSection?:boolean;pageType?:string|null;
  /** S91: the document reports its own testing somewhere (first-person test context in any block). */
- documentTests?:boolean}
+ documentTests?:boolean;
+ /** S92: links from the value to the document statements that say where it comes from (document-level relations). */
+ links?:EvidenceLink[]}
+
+/** S92 (owner review of S91): a link from a value to a statement of its document that establishes where the value comes
+ * from: the publisher's method or test, a declaration, or a calculation. Evidence selection follows EIDER / SciREX / DocRED
+ * (S87c C §6.2): co-occurrence in neighbouring sentences, a bridge through the quantity the statement names (same,
+ * ancestor or methodology section), and the 1G table links (method statements linked to a table, twin tables). Statements
+ * are typed by the 1G document model (blockKind1G); the quantity a statement names by dimensionsIn1G. `rank` is the
+ * distance (smaller is nearer); `pointer` locates the statement. */
+export interface EvidenceLink {role:'measured'|'declared'|'derived';relation:'co_occurrence'|'bridge'|'table_link'|'table_structure'|'parallel_table';
+ scope:'neighbour_sentence'|'same_section'|'ancestor_section'|'method_section'|'table';rank:number;pointer:string}
+/** The page-level readings a value's links are selected from: the 1G document model and, for table cells, the 1G table
+ * observations (with GL11/GL12 when the caller asks for them). */
+export interface DocumentRelations {model:DocumentModel1G;tableObservations?:readonly Observation1G[]}
+const KIND_ROLE={method:'measured',declaration:'declared',estimate:'derived'} as const;
+const RANK={neighbour1:2,neighbour2:2.5,tableStructure:1,tableLinkSame:2.5,tableLinkAncestor:3,parallel:3,sameSection:3,ancestorSection:4,tableLinkMethod:5,methodSection:5};
+/** S92: select the evidence links of one value. `container` is the value's 1D-A2 container: table observations are
+ * consulted only for a table cell, sentences and sections only for text. */
+export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStart:number,surface:string,value:number|null,container:StructuralContext['container'],use:{tables?:boolean;prose?:boolean}={tables:true,prose:true}):EvidenceLink[]{
+ const out:EvidenceLink[]=[];const nm=(x:string)=>x.replace(/\s+/g,' ').trim().toLowerCase();
+ const dims=[...new Set([...dimensionsIn1G(surface),...cellElements1G(surface).map(e=>e.dimension).filter((d):d is string=>!!d)])];
+ if(container==='table_cell'){if(!use.tables)return out;
+  const cand=(rel.tableObservations??[]).filter(o=>o.value===value&&blockText.includes(o.surface.trim().slice(0,6)));
+  for(const o of cand){const c=o.evidence.class,l=o.evidence.level??'';const role=c==='publisher_measured'?'measured':c==='manufacturer_declared'||c==='nominal_certified'?'declared':c==='derived_or_estimated'?'derived':null;if(!role)continue;
+   const [relation,scope,rank]:[EvidenceLink['relation'],EvidenceLink['scope'],number]=l==='linked_same_section'?['table_link','same_section',RANK.tableLinkSame]:l==='linked_ancestor_section'?['table_link','ancestor_section',RANK.tableLinkAncestor]:
+    l==='linked_method_section'?['table_link','method_section',RANK.tableLinkMethod]:l==='linked_parallel_table'?['parallel_table','table',RANK.parallel]:['table_structure','table',RANK.tableStructure];
+   out.push({role,relation,scope,rank,pointer:`table ${o.table} cell ${o.cell} (${l})`});}
+  return out;}
+ if(!use.prose)return out;
+ const lo=Math.max(0,valueStart-30),snip=nm(blockText.slice(lo,valueStart+surface.length+15)),core=nm(blockText.slice(Math.max(0,valueStart-10),valueStart+surface.length+5));
+ const b=rel.model.blocks.find(x=>x.text&&nm(x.text).includes(snip))??rel.model.blocks.find(x=>x.text&&nm(x.text).includes(core));if(!b)return out;
+ const at=Math.max(0,nm(b.text).indexOf(nm(blockText.slice(lo,valueStart)))+ (valueStart-lo));
+ const ss=sentences(b.text);let si=ss.findIndex((x,i)=>at>=x.start&&(i===ss.length-1||at<ss[i+1].start));if(si<0)si=0;
+ // co-occurrence: a typed statement in a neighbouring sentence; beyond the next sentence it must name the value's quantity
+ for(let j=Math.max(0,si-2);j<=Math.min(ss.length-1,si+2);j++){if(j===si)continue;const k=blockKind1G(ss[j].text);if(k==='other')continue;const d=Math.abs(j-si);
+  if(d===2&&!dimensionsIn1G(ss[j].text).some(x=>dims.includes(x)))continue;
+  out.push({role:KIND_ROLE[k],relation:'co_occurrence',scope:'neighbour_sentence',rank:d===1?RANK.neighbour1:RANK.neighbour2,pointer:`${b.locator} sentence ${j}`});}
+ // bridge: a typed statement elsewhere that names the value's quantity, by section scope (nearest of each scope)
+ if(dims.length){const own=b.sectionPath.join('/');const seen=new Set<string>();
+  for(const c of rel.model.blocks){if(c===b||!c.text||c.kind==='other'||!c.dimensions.some(x=>dims.includes(x)))continue;const cp=c.sectionPath.join('/');
+   const scope:EvidenceLink['scope']|null=cp===own?'same_section':cp&&own.startsWith(cp+'/')||!cp&&own?'ancestor_section':c.sectionPath.some(i=>rel.model.headings[i]?.isMethodHeading)?'method_section':null;
+   if(!scope||seen.has(scope+c.kind))continue;seen.add(scope+c.kind);
+   out.push({role:KIND_ROLE[c.kind],relation:'bridge',scope,rank:scope==='same_section'?RANK.sameSection:scope==='ancestor_section'?RANK.ancestorSection:RANK.methodSection,pointer:c.locator});}}
+ return out;
+}
+/** S92 it1: the situation type of the value's clause (Friedrich et al. 2016, situation entity types), from grammar only:
+ * an attributive measure phrase ("a 3L dust bag": the value modifies a noun) states a stable attribute of an object; an
+ * episodic predicate (a finite past-tense verb, not passive, not under an auxiliary or a determiner: "it lasted 13
+ * minutes") reports an event. English closed-class words only; no domain vocabulary. */
+const AUX=/^(?:is|are|was|were|be|been|being|am|has|have|had|having|will|would|can|could|may|might|must|shall|should|do|does|did|get|gets)$/i;
+const DET=/^(?:a|an|the|its|their|this|that|these|those|his|her|our|your|my|each|every|any|some|no)$/i;
+const IRREGULAR_PAST=new Set(['took','ran','got','made','kept','went','did','came','left','held','found','felt','saw','heard','sat','stood','fell','rose','drew','gave','brought','caught','wrote','spent','sent','built','lost','won','grew','threw','drove','rode','slept','swept','spun','sank','shrank','stuck','struck','sold','told','paid','led','fed','fought','bought','thought','began','became','showed']);
+const NOT_EVENT=new Set(['rated','claimed','advertised','listed','stated','quoted','equipped','designed','intended','priced','based','named','called','featured','included','supplied','powered','sized','shaped','related','dedicated','integrated','detailed','limited','attached','built-in']);
+export function situationTypeOf(sentence:string,start:number,end:number):'attributive'|'episodic'|null{
+ const after=sentence.slice(end);const before=sentence.slice(0,start);
+ // the value modifies the next word: a noun phrase head follows directly (not a verb, preposition, conjunction or punctuation)
+ const next=/^[\s-]*([A-Za-z][A-Za-z-]*)/.exec(after)?.[1]?.toLowerCase()??'';
+ const FUNC=/^(?:of|in|on|at|for|to|from|by|with|and|or|but|than|per|vs|versus|which|that|when|while|before|after|is|are|was|were|it|its|as|so|into|over|under|between|across|during|while|without|on|off|up|down|each|a|the|more|less|this|those|these)$/;
+ if(next&&!FUNC.test(next)&&!/(?:ed|ing|ly)$/.test(next)&&/^\s*(?:[-\s]?[A-Za-z])/.test(after)){const prev3=(before.toLowerCase().match(/[a-z(][a-z'-]*/g)??[]).slice(-3);
+  if(prev3.some(w=>DET.test(w)||w==='with'||w==='('||w==='of')&&!prev3.some(w=>/ed$/.test(w)&&!NOT_EVENT.has(w)))return 'attributive';}
+ // an episodic predicate in the value's clause
+ const clause=(before.split(/[;:()]|,\s(?:but|while|whereas|and)\s|\b(?:but|while|whereas)\b/i).at(-1)??'')+' '+(after.split(/[;:()]|,\s|\b(?:but|while|whereas|which)\b/i)[0]??'');
+ const toks=clause.toLowerCase().match(/[a-z][a-z'-]*/g)??[];
+ for(let i=0;i<toks.length;i++){const w=toks[i],prev=toks[i-1]??'';
+  const past=IRREGULAR_PAST.has(w)||(/^[a-z]{3,}ed$/.test(w)&&!NOT_EVENT.has(w));if(!past)continue;
+  if(AUX.test(prev)||DET.test(prev))continue;return 'episodic';}
+ return null;
+}
+/** S92: the role from the nearest evidence: the value's own clause and sentence (S91 positive evidence) and its document
+ * links. A calculation from the publisher's own data keeps the publisher's provenance (measured, reason 'derived'). Opposite
+ * roles at the same distance abstain; no evidence abstains. */
+const LOCALITY_RANK:Record<number,number>={3:0,2:1,1:4};
+export function roleFromLinks(ev:RoleEvidence,links:readonly EvidenceLink[]):{value:ObservationRole86c|null;reason:string|null}{
+ if(ev.quoted)return {value:'certified_or_quoted',reason:'quoted'};
+ if(ev.condition)return {value:'test_condition',reason:'condition'};
+ const c=[...ev.measured.map(e=>({role:'measured',rank:LOCALITY_RANK[locality(e)],why:e})),...ev.declared.map(e=>({role:'declared',rank:LOCALITY_RANK[locality(e)],why:e})),
+  ...links.map(l=>({role:l.role==='derived'?'measured':l.role,rank:l.rank,why:`${l.relation}:${l.scope}:${l.role}`}))];
+ if(!c.length)return {value:'unresolved',reason:'no_positive_evidence'};
+ const best=Math.min(...c.map(x=>x.rank));const top=c.filter(x=>x.rank===best);const roles=new Set(top.map(x=>x.role));
+ if(roles.size>1)return {value:'unresolved',reason:'conflicting_evidence_at_rank_'+best+':'+top.map(x=>x.why).join('+')};
+ return {value:[...roles][0]==='measured'?'measured_result':'declared_spec',reason:'nearest:'+top.map(x=>x.why).join('+')};
+}
 
 /** S90: the structural context of a value in reader block `bi` (textBlocks225 order, as Step 1D-A2 aligns it). The section
  * role comes from the heading path, innermost first, matched against the definitions' document-section cues (data). */
@@ -64,10 +148,14 @@ export function structuralContextOf(defs:PropertyDefinitions,sem:DocumentSemanti
 }
 /** S91: the documentary context of a value — structural label, container, section and its role, table context, methodology
  * section, page type — one object carried to the definitions (owner review of S90). */
-export function documentContextOf(defs:PropertyDefinitions,sem:DocumentSemantics1D2,blockTexts:readonly string[],bi:number,valueStart:number):StructuralContext{
+export function documentContextOf(defs:PropertyDefinitions,sem:DocumentSemantics1D2,blockTexts:readonly string[],bi:number,valueStart:number,
+ relations?:{rel:DocumentRelations;surface:string;value:number|null;use?:{tables?:boolean;prose?:boolean}}):StructuralContext{
  const base=structuralContextOf(defs,sem,blockTexts,bi,valueStart);const b=sem.blocks[bi];
- return {...base,methodSection:b?.sectionRole==='methodology'||(b?.sectionRole==='test_results'&&base.sectionRole===null)?true:false,pageType:sem.pageType?.kind??null,
+ const ctx:StructuralContext={...base,methodSection:b?.sectionRole==='methodology'||(b?.sectionRole==='test_results'&&base.sectionRole===null)?true:false,pageType:sem.pageType?.kind??null,
   documentTests:blockTexts.some(t=>TEST_CONTEXT272.test(t))};
+ // S92: document-level relations of the value, when the caller supplies the page-level readings
+ if(relations)ctx.links=evidenceLinksOf(relations.rel,blockTexts[bi]??'',valueStart,relations.surface,relations.value,base.container,relations.use);
+ return ctx;
 }
 /** S91: who states a value, from cues in its own clause: the manufacturer (declared), the publisher's own testing (first-person
  * test context or a measuring verb), or nobody identifiable. Positive evidence only; no default. */
@@ -99,7 +187,7 @@ export function roleEvidence(structure:StructuralContext|null|undefined,sentence
  * role stays unresolved (an abstention, never "measured by default"). */
 /** Locality of each kind of evidence: the clause (3) outranks the sentence or the structure around the value (2), which
  * outranks the section or the document (1). */
-const LOCALITY:Record<string,number>={measuring_verb:3,observation_verb:3,test_context_in_clause:3,instrument_in_sentence:2,test_context_in_sentence:2,test_table:2,
+const LOCALITY:Record<string,number>={situation_episodic:2,situation_attributive:2,measuring_verb:3,observation_verb:3,test_context_in_clause:3,instrument_in_sentence:2,test_context_in_sentence:2,test_table:2,
  test_section_first_person:1,tested_document_setting:1,test_section_procedure_condition:1,declaration_cue:3,clause:3,specification_table_cell:2,specification_label_value:2,label_value_outside_tests:1};
 const locality=(e:string)=>LOCALITY[e.split(':')[0]]??1;
 export function roleFromEvidence(ev:RoleEvidence):{value:ObservationRole86c|null;reason:string|null}{
@@ -274,7 +362,9 @@ export function basisOf(defs:PropertyDefinitions,d:PropertyDefinition|null,kind:
 }
 
 /** Interpret one observation with the definitions: attribution, conditions with relevance, missing defining dimensions, basis. */
-export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean;roleModel?:'s90'|'evidence'}={}):DefinitionInterpretation{
+export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKnowledge,o:ObservationInput,opts:{profileLicense?:boolean;roleModel?:'s90'|'evidence'|'links';
+ /** S92 it1: add the grammatical situation type of the value's clause as sentence-level evidence */
+ situation?:boolean}={}):DefinitionInterpretation{
  const category=o.category??null;const label=norm(o.label),context=norm(o.context);
  const property=attributeProperty(defs,qk,o,opts);const d=property.value?defs.properties.get(property.value)!:null;
  const readings:DimensionReading[]=[];const untyped:string[]=[];
@@ -296,9 +386,12 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
   if(opts.roleModel==='s90')role=roleFrom(o.structure,r,{text:head,declarationCues:defs.pack.evidenceCues?.declaration??[]});
   else{const tail=o.label.slice(end).split(/[.!?;]\s/)[0]??'';const clauseHead=head.split(/[,;()–—]|\b(?:but|while|whereas|than)\b/i).at(-1)??head;
    const clause=clauseHead+o.label.slice(o.valueAt,end)+(tail.split(/[,;()–—]|\b(?:but|while|whereas|than)\b/i)[0]??'');
-   role=roleFromEvidence(roleEvidence(o.structure,r,clause,head+o.label.slice(o.valueAt,end)+tail,defs.pack.evidenceCues?.declaration??[],
+   const ev=roleEvidence(o.structure,r,clause,head+o.label.slice(o.valueAt,end)+tail,defs.pack.evidenceCues?.declaration??[],
     {measurementCues:defs.pack.evidenceCues?.measurement??[],instrument:defs.dimensions.get('instrument')??null,setting:defs.dimensions.get('operating_setting')??null,
-     procedure:['response_tolerance','measurement_distance','acoustic_quantity'].map(x=>defs.dimensions.get(x)).filter((x):x is ConditionDimension=>!!x)}));}
+     procedure:['response_tolerance','measurement_distance','acoustic_quantity'].map(x=>defs.dimensions.get(x)).filter((x):x is ConditionDimension=>!!x)});
+   if(opts.roleModel==='links'&&opts.situation){const sentStart=o.label.slice(0,o.valueAt).search(/[^.!?]*$/);const sent=o.label.slice(sentStart);const stp=situationTypeOf(sent.split(/[.!?]\s/).slice(0,1).join('')||sent,o.valueAt-sentStart,end-sentStart);
+    if(stp==='episodic')ev.measured.push('situation_episodic');if(stp==='attributive')ev.declared.push('situation_attributive');}
+   role=opts.roleModel==='links'?roleFromLinks(ev,o.structure?.links??[]):roleFromEvidence(ev);}
   subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
  return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};

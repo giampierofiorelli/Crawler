@@ -10,7 +10,7 @@ import {createHash} from 'node:crypto';
 
 export type InterpreterLessonId1G='GL1_values_are_not_labels'|'GL2_hierarchy_needs_evidence'|'GL3_structured_entity_grounding'|'GL4_scoped_method_statements'|
  'GL5_recurrence_qualifies_costs'|'GL6_label_conditions'|'GL7_identity_from_key_properties'|'GL8_property_head_precedence'|
- 'GL9_prose_labels_state_no_conditions'|'GL10_structured_names_are_name_shaped';
+ 'GL9_prose_labels_state_no_conditions'|'GL10_structured_names_are_name_shaped'|'GL11_calculation_inputs_keep_method'|'GL12_parallel_tables_inherit_links';
 export interface InterpreterLesson1G {id:InterpreterLessonId1G;version:number;state:'active'|'provisional'|'rejected';
  rule:string;applicability:string[];counterexamples:string[];failedDecision:string;provenance:string[];tests:string[];evidence:string}
 
@@ -56,6 +56,14 @@ export const INTERPRETER_LESSONS1G:readonly InterpreterLesson1G[]=[
   rule:'a structured product name (JSON-LD, microdata) is used as the document subject only when it is name-shaped: at most 10 words, no sentence punctuation; editorial suffixes are removed',
   applicability:['single-subject tables'],counterexamples:['a long product name with a model code and variant (still at most 10 words)'],
   failedDecision:'attribution: a sentence in structured data, and a name with "Review", became the product',provenance:['eval-check-firstrun (C04, C09): found AFTER the check run, so the check set cannot validate it'],tests:['tests/table_interpreter1g.test.ts'],evidence:'post hoc: check wrong products 6 -> 3, dev unchanged (the check set suggested it). Provisional, not active'},
+ {id:'GL11_calculation_inputs_keep_method',version:1,state:'provisional',
+  rule:'when a method statement and a calculation (estimate) statement are both linked to a table in the same scope, a value whose quantity the method statement names is an input the publisher measured; only a cost of use or a value the calculation statement alone names is derived',
+  applicability:['evidence classification from linked statements in one scope'],counterexamples:['a projected yearly energy figure that only the calculation statement names','currency amounts (handled at value level)'],
+  failedDecision:'evidence classification: measured power draw beside a running-cost estimate became derived_or_estimated (S92 diagnosis, spent S91 pages)',provenance:['S92 diagnosis on spent S89-S91 pages (evaluation/s92/diagnosis-1g-vs-reference.json)'],tests:['tests/s92_document_relations.test.ts'],evidence:'S92 development (spent); provisional, run only on request'},
+ {id:'GL12_parallel_tables_inherit_links',version:1,state:'provisional',
+  rule:'a table without any applicable statement link inherits the linked evidence class of a twin table: same quantity signature (properties and dimensions of its values) under the same parent section; nearest-instance inheritance (S87c C §6.2)',
+  applicability:['tables of repeated test runs or sibling result sections'],counterexamples:['a specification table that repeats the quantities of a results table (different heading role: its own declaration cue wins at heading level first)'],
+  failedDecision:'evidence classification: the second of two identical particle-test tables in sibling sections had no evidence class (S92 diagnosis, spent S91 pages)',provenance:['S92 diagnosis on spent S89-S91 pages'],tests:['tests/s92_document_relations.test.ts'],evidence:'S92 development (spent); provisional, run only on request'},
 ];
 export const ALL_INTERPRETER_LESSONS1G:InterpreterLessonId1G[]=INTERPRETER_LESSONS1G.map(l=>l.id);
 export function activeInterpreterLessons1G(states:readonly InterpreterLesson1G['state'][]=['active']):InterpreterLessonId1G[]{

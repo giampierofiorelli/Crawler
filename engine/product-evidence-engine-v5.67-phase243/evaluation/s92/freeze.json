@@ -1,0 +1,111 @@
+{
+ "schema": "pee.s92.freeze.v1",
+ "frozenAt": "2026-10-20T02:36:34.824Z",
+ "note": "S92 arms frozen after development on spent S89-S91 material (role: two reformulations used of three; learning: one, rejected and reverted). Frozen before any check page is fetched.",
+ "files": {
+  "src/definition_interpreter.ts": "fa8ad274ca5a030f180711c3d32c3233b73f12c8ca6d2983059f4a8da7029488",
+  "src/definition_learning.ts": "30b92538562c145013f7f30482594cf61d42c23b3c0957e699a95c4968cab9b9",
+  "src/evidence_combination.ts": "9cd6cf4b843af9d16ebe220e29c5ec768d2e93a24b65496eee0109aeed6a99c9",
+  "src/table_interpreter1g.ts": "c2e6d27f1a8a50af0c9bb7d887cd5f7638b4ac3fde911f39d60b6a25c96d8d60",
+  "src/table_interpreter1g_lessons.ts": "03b0ac540959d51b29d40beac08469ed08d3ae54e4300a5b85bad8566d6afa5a",
+  "src/document_evidence.ts": "d3e87195a86a5e7716d73833eefa029e6118f25e30d1e82e3b56086b693ce086",
+  "src/document_semantics.ts": "58b36a439a757f2bc41a9ae06061dc9103b6965ca110bc07100cf2786d47fb4b",
+  "src/knowledge_translation.ts": "4d08daab9062cdf9c40c39d1637ab4d0064f99f36023a4c15d46ba6867f7b22f",
+  "src/property_definitions.ts": "9b42211ebaaac293aabed58471f3d65c41e9b3776a8a2eb57b30f2a55a8182b0",
+  "resources/property-definitions/property-definitions.v1.json": "af326a46d41477e11431eb0d613230bef13e58c4fcac2ac0ba74555a912f0bc7",
+  "scripts/s92-role-eval.mjs": "cc12d9a93c33a50fd12e0895f580a8cbff186953fe635aa9450496e166363a22",
+  "scripts/s92-learn-eval.mjs": "0331334fbd3de68d9a3e39e9fb48c07bb3d5272726b4563ec7f4ab4e74915dcb",
+  "tests/s92_document_relations.test.ts": "9c64f6067b15b644cbb65860ac113a03ea9984a9d57abb0b032c8569547ba86d"
+ },
+ "labelModelD2Dev": {
+  "sha256": "b0ebd581ee7dbdfece7ef337b49cd764799de9de58eb989c91d67b221938409d",
+  "model": {
+   "version": "pee92.label-model.v1",
+   "signals": [
+    "A0_with_reason",
+    "A1_local_evidence",
+    "table_links",
+    "co_occurrence",
+    "bridge",
+    "situation"
+   ],
+   "items": 951,
+   "coverage": [
+    0.3575,
+    0.3628,
+    0.1272,
+    0.0526,
+    0.1115,
+    0.2334
+   ],
+   "a": [
+    0.4641,
+    0.4327,
+    0,
+    0.0175,
+    0.0636,
+    0.2076
+   ],
+   "accuracy": [
+    0.99,
+    0.99,
+    0.5,
+    0.6668,
+    0.7854,
+    0.9447
+   ],
+   "weight": [
+    4.5951,
+    4.5951,
+    0,
+    0.6939,
+    1.2975,
+    2.8387
+   ],
+   "margin": 0.5,
+   "notes": []
+  }
+ },
+ "labelModelDDev": {
+  "sha256": "6edc9b479bfc1c5f98bb5f948536eadd81fde5a4d85df113788c7cb8c3d11adf"
+ },
+ "roleArms": {
+  "A0": "roleModel s90",
+  "A1": "roleModel evidence (S91)",
+  "B": "links, tables only, default 1G lessons",
+  "B2": "links, tables only, + GL11 GL12",
+  "C": "links, tables + prose, + GL11 GL12",
+  "C1": "C + situation type",
+  "D": "label model, 7 signals, margin 0.5 (refit on check items without gold; dev-fitted variant also run)",
+  "D2": "label model, 6 signals abstaining without evidence, margin 0.5 (refit on check items without gold, and the frozen dev-fitted model)"
+ },
+ "learningArms": {
+  "E0": {},
+  "E1": {
+   "typeGate": true
+  },
+  "E2": {
+   "typeGate": true,
+   "distributional": {
+    "minSimilarity": 0.3,
+    "margin": 0.05,
+    "window": 5,
+    "minCount": 3
+   }
+  },
+  "E3": {
+   "typeGate": true,
+   "distributional": {
+    "minSimilarity": 0.3,
+    "margin": 0.05,
+    "window": 5,
+    "minCount": 3
+   },
+   "relations": true
+  },
+  "rejected": {
+   "E1-grammar": "typeGate grammar: removed verbal frame-evoking terms with correct attributions (dev 103 -> 101)"
+  }
+ },
+ "learningSources": "S88 E4 items, S89 learn and check items, S90 check items, S91 check items (all spent)"
+}

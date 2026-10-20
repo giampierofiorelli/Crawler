@@ -18,11 +18,29 @@ import {createHash} from 'node:crypto';
 import {normText,hasPhrase,parseUnit,type QuantityKnowledge} from './quantity_knowledge.js';
 import {loadPropertyDefinitions,type DefinitionPack,type PropertyDefinitions} from './property_definitions.js';
 import {interpretWithDefinitions,ownWords,kindsOf,type ObservationInput} from './definition_interpreter.js';
+import {denotationOf,trainDistributional,phraseSimilarity,subjectHead,stem,type Denotation,type DistributionalModel} from './knowledge_translation.js';
 
 export const DEFINITION_LEARNING_VERSION='pee89.definition-learning.v1';
 export interface LearningObservation extends ObservationInput {docId:string;publisher:string}
-export interface LearnedTerm {property:string;term:string;state:'candidate'|'supported';evidence:{seedDocs:number;seedPublishers:number;seeds:number;occurrences:number;purity:number;docs:string[]}}
-export interface ProposedConcept {term:string;kind:string;state:'proposed';evidence:{docs:number;publishers:number;occurrences:number;categories:string[]}}
+export interface LearnedTerm {property:string;term:string;state:'candidate'|'supported';evidence:{seedDocs:number;seedPublishers:number;seeds:number;occurrences:number;purity:number;docs:string[];
+ /** S92 E2: a term proposed by distributional similarity to the property's terms (no seed of its own) */
+ similarity?:number;via?:'seeds'|'distributional'}}
+export interface ProposedConcept {term:string;kind:string;state:'proposed';evidence:{docs:number;publishers:number;occurrences:number;categories:string[]};
+ /** S92 E3 (knowledge-graph induction, R3 document concepts): what the phrase denotes, its consolidated key (head stem and
+  * kind) and typed relations to existing properties; never used for attribution. */
+ denotes?:Denotation;key?:string;relations?:{property:string;relation:'same_kind'|'contains_property_term'}[]}
+/** S92: switches for the R3 non-generative mechanisms in learning (owner review of S91). */
+export interface LearningOptions {
+ /** true: the R3 dn.1 semantic-type gate; 'grammar': dn.1 plus a nominal-head requirement (S92 development: REJECTED, it
+  * removed verbal frame-evoking terms such as "climbing" that carried correct attributions; FrameNet frames are evoked by
+  * verbs too). Kept switchable for reproduction. */
+ typeGate?:boolean|'grammar';distributional?:{minSimilarity:number;margin:number;window?:number;minCount?:number}|null;relations?:boolean}
+const REFUSED_DENOTATION:ReadonlySet<Denotation>=new Set(['condition','claim_or_label','source_or_evidence']);
+// English closed-class words and verb morphology (no domain vocabulary)
+const VERB_FORM=/^[a-z]+(?:ing|ed)$/;
+const PARTICLE=new Set(['up','down','upper','lower','over','under','off','on','out','in','into','onto','across','through','around','about','totaling','totalling','combines','combined']);
+const NOUN_PLURAL_OK=/^(?:watts|decibels|hours|minutes|seconds|litres|liters|hairs|obstacles|levels|speakers|channels)$/;
+const hasQuantityHead=(g:string)=>!/\b(?:tests?|testing|tested|trials?|review|reviews)$/.test(g);
 export const DEFAULT_THRESHOLDS={minSeedDocs:2,minSeedPublishers:2,minPurity:0.6,minSpecificity:0.7,minTermChars:4,maxN:3,minProposalDocs:2,minProposalPublishers:2,adjacentTokens:4};
 export interface LearnedLayer {schema:'pee.learned-definitions.v1';version:string;learnedFrom:{definitions:string;observations:number;documents:number;digest:string};
  thresholds:typeof DEFAULT_THRESHOLDS;terms:LearnedTerm[];proposals:ProposedConcept[]}
@@ -42,7 +60,11 @@ export function ngrams(span:string,maxN=3):string[]{
 }
 
 /** Harvest and verify. Pure: the same observations and definitions give the same layer. */
-export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge,obs:readonly LearningObservation[],th=DEFAULT_THRESHOLDS):LearnedLayer{
+export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge,obs:readonly LearningObservation[],th=DEFAULT_THRESHOLDS,opts:LearningOptions={}):LearnedLayer{
+ // E1 (R3 dn.1 semantic type, informed by grammar): a property term names a quantity, so its head is nominal; a term that
+ // denotes a condition, a claim, a source or a test, or whose words are verb forms or particles, is refused
+ const gate=(g:string)=>{if(!opts.typeGate)return true;const dn=denotationOf(qk,g);if(REFUSED_DENOTATION.has(dn))return false;if(opts.typeGate!=='grammar')return true;if(dn==='measurement_or_test'&&!hasQuantityHead(g))return false;
+  const ws=g.split(' ');const head=ws.at(-1)!;return !VERB_FORM.test(head)&&!PARTICLE.has(head)&&!ws.every(w=>PARTICLE.has(w)||VERB_FORM.test(w))&&!/^\w+s$/.test(head)||NOUN_PLURAL_OK.test(head);};
  const known=[...new Set((defs.pack.knownObjects?.objects??[]).flatMap(o=>o.nouns.map(n=>normText(n))))];
  const surfaceOf=new Map<string,string>();for(const p of defs.properties.values())for(const [t] of p.surface)surfaceOf.set(normText(t),p.id);
  type Occ={doc:string;pub:string;kinds:string[];seed:string|null;cat:string|null;identity:boolean};
@@ -69,7 +91,7 @@ export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge
    // specificity: the term accompanies values of the property's kinds, not values of any kind ("strong", a product class)
    const specificity=os.length?admitted.length/os.length:0;if(specificity<th.minSpecificity||os.some(x=>x.identity))continue;
    // S90 (owner review of S89): one source may teach a term, with an uncertainty state; independent sources corroborate it
-   if(docs.length>=th.minSeedDocs&&purity>=th.minPurity)terms.push({property:p,term:g,state:pubs.size>=th.minSeedPublishers?'supported':'candidate',evidence:{seedDocs:docs.length,seedPublishers:pubs.size,seeds:seeds.length,occurrences:admitted.length,purity:+purity.toFixed(3),docs:docs.sort()}});
+   if(docs.length>=th.minSeedDocs&&purity>=th.minPurity&&gate(g))terms.push({property:p,term:g,state:pubs.size>=th.minSeedPublishers?'supported':'candidate',evidence:{seedDocs:docs.length,seedPublishers:pubs.size,seeds:seeds.length,occurrences:admitted.length,purity:+purity.toFixed(3),docs:docs.sort()}});
    continue;}
   if(seedProps.size===0){
    // a recurring phrase next to values of one unit kind that no definition explains: a candidate concept (never attributed)
@@ -78,6 +100,22 @@ export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge
    if(!k||kindsAll.some(x=>x!==k)||g.split(' ').some(w=>parseUnit(qk,w))||g.split(' ').length<2&&g.length<8)continue;
    const docs=new Set(os.map(x=>x.doc));if(docs.size<th.minProposalDocs||new Set(os.map(x=>x.pub)).size<th.minProposalPublishers)continue;
    proposals.push({term:g,kind:k,state:'proposed',evidence:{docs:docs.size,publishers:new Set(os.map(x=>x.pub)).size,occurrences:os.length,categories:[...new Set(os.map(x=>x.cat).filter((x):x is string=>!!x))].sort()}});}}
+ // S92 E2: distributional proposals (R3 option 1, PPMI over the learning text): a phrase with no seed of its own, near a
+ // property's terms and accompanying values of that property's kinds, becomes a candidate term of it
+ if(opts.distributional){const D=opts.distributional;const model:DistributionalModel=trainDistributional(obs.map(o=>[o.label,o.context].filter(Boolean).join(' ')),{window:D.window,minCount:D.minCount});
+  const props=[...defs.properties.values()].filter(p=>p.quantity);
+  for(const [g,os] of [...occ.entries()].sort((a,b)=>a[0].localeCompare(b[0]))){if(os.some(x=>x.seed)||surfaceOf.has(g)||known.some(k=>k===g||hasPhrase(g,k))||os.some(x=>x.identity)||!gate(g))continue;
+   const docs=[...new Set(os.map(x=>x.doc))];if(docs.length<th.minSeedDocs)continue;
+   const scored=props.map(p=>({p,sim:Math.max(0,...p.surface.map(([t])=>phraseSimilarity(model,g,t)))})).sort((a,b)=>b.sim-a.sim);const [b1,b2]=scored;
+   if(!b1||b1.sim<D.minSimilarity||(b2&&b1.sim-b2.sim<D.margin))continue;
+   const admitted=os.filter(x=>x.kinds.some(k=>b1.p.quantity?.kinds.includes(k)));if(admitted.length/os.length<th.minSpecificity)continue;
+   if(terms.some(t=>t.term===g))continue;
+   terms.push({property:b1.p.id,term:g,state:'candidate',evidence:{seedDocs:0,seedPublishers:0,seeds:0,occurrences:admitted.length,purity:0,docs:docs.sort(),similarity:+b1.sim.toFixed(3),via:'distributional'}});}}
+ // S92 E3: knowledge-graph induction over the proposals: denotation, a consolidated key, typed relations to properties
+ if(opts.relations)for(const pr of proposals){pr.denotes=denotationOf(qk,pr.term);const head=subjectHead(pr.term)||pr.term;pr.key=stem(head.split(' ').at(-1)??head)+'@'+pr.kind;
+  const rel:NonNullable<ProposedConcept['relations']>=[];for(const p of defs.properties.values()){if(!p.quantity?.kinds.includes(pr.kind))continue;
+   rel.push({property:p.id,relation:p.surface.some(([t])=>hasPhrase(pr.term,normText(t)))?'contains_property_term':'same_kind'});}
+  pr.relations=rel.sort((a,b)=>(a.relation==='contains_property_term'?0:1)-(b.relation==='contains_property_term'?0:1)||a.property.localeCompare(b.property));}
  // keep the most specific learned term when a shorter one only repeats it
  const kept=terms.filter(t=>!terms.some(u=>u!==t&&u.property===t.property&&u.term.includes(t.term)&&u.evidence.seeds>=t.evidence.seeds&&u.term.length>t.term.length));
  const digest=createHash('sha256').update(JSON.stringify(obs.map(o=>[o.docId,o.value,o.unit,o.label,o.valueAt]))).digest('hex');
