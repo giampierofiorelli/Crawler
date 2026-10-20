@@ -12,7 +12,7 @@ test('retained metadata becomes a descriptor without inventing anything; unknown
  assert.equal(d.publisherCountry,'unknown','a .co.uk host is not a country');assert.equal(d.language,'und');assert.equal(d.productMarket,'unknown');
  assert.deepEqual([d.access.rights,d.access.robots,d.originality],['unreviewed','unknown','unknown']);
  assert.deepEqual(d.retained,{revisionId:'rev_1',sha256:'a'.repeat(64),fetchedAt:'2026-10-14T10:00:00.000Z',revisionState:'current',sourceTypeRecorded:'manufacturer',
-  roleBasis:'operator_asserted',attribution:'own_page',identityState:'extracted_unverified',criteriaDeclared:['budget_max','capacity_min'],hostAccess:'no_restriction_recorded'});
+  roleBasis:'operator_asserted',attribution:'own_page',identityState:'extracted_unverified',criteriaDeclared:['budget_max','capacity_max','capacity_min'] /* S103: a declared capacity also checks capacity_max */,hostAccess:'no_restriction_recorded'});
  for(const t of ['unknown','editorial','independent_original_test','reference_encyclopedia']){
   const u=validateSourceDescriptor258(descriptorFromRetained259(row({source_type:t})));
   assert.deepEqual(u.roles,['role_unknown'],t+' is not given a role by assumption');assert.equal(materialRoleFor196(u),'unclassified');}

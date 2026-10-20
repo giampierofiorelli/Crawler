@@ -108,8 +108,15 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  const stated=applicable.filter(c=>c.status==='stated_in_request');
  const pending=applicable.filter(c=>c.status==='candidate');
  ri.statedCriteria=stated.map(c=>c.criterion);ri.pendingCriteria=pending.map(c=>c.criterion);
- out.constraints=applicable.map(c=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence}));
- for(const c of pending)out.questions.push(`Did you mean that it must have ${c.bound==='max'?'at most':'at least'} ${c.value} ${c.unit} (${c.property.replace('_',' ')})? You wrote "${c.span}".`);
+ const shape=(c:typeof applicable[number])=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence,...(c.closure==='strict'?{closure:'strict' as const}:{})});
+ out.constraints=applicable.filter(c=>c.status==='stated_in_request'||c.status==='candidate').map(shape);
+ // S103: preferences, corrected and implied limits are reported, never applied
+ const others=applicable.filter(c=>c.status==='preference'||c.status==='superseded'||c.status==='implied');
+ if(others.length){out.otherLimits=others.map(c=>({...shape(c),note:c.note}));
+  const pref=others.filter(c=>c.status==='preference'),sup=others.filter(c=>c.status==='superseded');
+  if(pref.length)out.statements.push(`Noted as preferences, not used to exclude any product: ${pref.map(c=>`"${c.span}"`).join(', ')}.`);
+  if(sup.length)out.statements.push(`Replaced by your correction: ${sup.map(c=>`"${c.span}"`).join(', ')}.`);}
+ for(const c of pending)out.questions.push(c.question??`Did you mean that it must have ${c.bound==='max'?(c.closure==='strict'?'less than':'at most'):(c.closure==='strict'?'more than':'at least')} ${c.value} ${c.unit} (${c.property.replace('_',' ')})? You wrote "${c.span}".`);
  // Needs a declaration could check but whose value the user has not given: ask once, unless already stated.
  const statedCriteria=new Set(stated.map(c=>c.criterion));
  const entry=registry.find(e=>e.id===category);
@@ -130,7 +137,7 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  let snap=createDecision177('request_'+sha(text).slice(0,16));
  snap=applyDecisionAction177(snap,{type:'set_scope',source:'user_request_statement',scope:{task:'product_selection',category}}).snapshot;
  for(const c of stated)snap=applyDecisionAction177(snap,{type:'state_in_request',source:'user_request_statement',key:c.criterion,label:c.span.length>=3?c.span.slice(0,300):c.criterion,
-  value:{kind:'quantity',value:c.value,unit:c.unit.toLowerCase()},priority:'hard',referenceHash:sha(c.span)}).snapshot;
+  value:{kind:'quantity',value:c.value,unit:c.unit.toLowerCase(),...(c.closure==='strict'?{exclusive:true as const}:{})},priority:'hard',referenceHash:sha(c.span)}).snapshot;
  // 4. Eligible candidates, then the existing decision layer.
  const pool=eligibleCandidates253(store,category);
  for(const p of pool.filter(x=>!x.eligible))ri.ineligible.push({productId:p.candidate.productId,code:'product_line'});
@@ -149,7 +156,7 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  }
  const checked=out.shortlist.length+out.excluded.length;
  out.response=out.shortlist.length?'positive_shortlist':out.excluded.length?'justified_negative':'justified_abstention';
- const lim=stated.map(c=>`${c.criterion.replace(/_(?:min|max)$/,'').replace('_',' ')} ${c.bound==='max'?'≤':'≥'} ${c.value} ${c.unit} ("${c.span}")`).join('; ');
+ const lim=stated.map(c=>`${c.criterion.replace(/_(?:min|max)$/,'').replace('_',' ')} ${c.bound==='max'?(c.closure==='strict'?'<':'≤'):(c.closure==='strict'?'>':'≥')} ${c.value} ${c.unit} ("${c.span}")`).join('; ');
  out.statements.push(`Requirements taken from your request: ${lim}.`);
  out.statements.push(out.response==='positive_shortlist'?`${out.shortlist.length} of ${pool.length} known ${category.replace(/_/g,' ')} meet every stated requirement by their declared specifications (alphabetical, not ranked).`
   :out.response==='justified_negative'?`None of the ${checked} known ${category.replace(/_/g,' ')} that could be checked meets every stated requirement; ${out.unknown.length} could not be checked.`

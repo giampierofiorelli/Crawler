@@ -73,7 +73,8 @@ test('explicit quantities become typed constraints with spans; inferred or ambig
  assert.equal(c('for a family of four').constraints.length,0);
  assert.equal(c('enough to roast a 2 kg chicken').constraints.length,0);
  assert.ok(c('it does not need to be 5 litres').constraints.every(x=>x.status!=='stated_in_request'));
- assert.ok(c('no bigger than 3 litres').unmapped.length===1);
+ // S103: a maximum capacity is now a checkable criterion (capacity_max), needed for intervals
+ assert.deepEqual(c('no bigger than 3 litres').constraints.map(x=>x.criterion),['capacity_max']);
 });
 test('Phase177: a constraint stated verbatim may be confirmed only with its span hash; NLP candidates still cannot',()=>{
  let s=createDecision177('t');

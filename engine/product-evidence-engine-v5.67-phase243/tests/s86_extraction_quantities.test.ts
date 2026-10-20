@@ -80,7 +80,8 @@ test('S86b capability audit: a rated (declared) column is never read as a measur
  const {extractConstraints253}=await import('../src/phase253_request_constraints.js');
  const c=(t:string)=>extractConstraints253(t).constraints.map(x=>[x.criterion,x.value,x.bound,x.status]);
  assert.deepEqual(c('An air fryer with a capacity of 5 litres+'),[['capacity_min',5,'min','stated_in_request']]);
- assert.deepEqual(c('An air fryer between 3 litres and 5 litres'),[['capacity_min',3,'min','stated_in_request']]);
+ // S103: both ends of a stated interval are limits
+ assert.deepEqual(c('An air fryer between 3 litres and 5 litres'),[['capacity_min',3,'min','stated_in_request'],['capacity_max',5,'max','stated_in_request']]);
  assert.deepEqual(c('A dishwasher 45 cm wide or less'),[['width_max',45,'max','stated_in_request']]);
  assert.deepEqual(c('An air fryer with a capacity min. 5 litres please'),[['capacity_min',5,'min','stated_in_request']]);
  // counterexample: different units never join into one range

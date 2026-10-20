@@ -24,18 +24,22 @@ test('the observation-semantics program loads and every claim rule states field,
  const rs=observationClaimRules();assert.ok(rs.length>=80);
  const d=program.decision!;for(const r of rs){assert.ok((TIERS as readonly string[]).includes(r.tier),r.rule);assert.ok(d.fields[r.field].includes(r.value),r.rule);assert.ok(r.scope&&d.scopes.includes(r.scope),r.rule);assert.ok(r.statement.length>10,r.rule);}});
 
+// S103: the program now requires an admission record for every new rule; these tests give one so that they still test
+// what they were written for (contradiction, vocabulary, duplicates)
+const ADM={meaning:'test rule',scope:'test',prerequisites:['test'],exceptions:['test'],counterexamples:[{case:'test',expected:'test',test:'test'}],
+ provenance:{origin:'convention' as const,ref:'test'},consumers:['test'],classification:{class:'policy' as const,justification:'test rule'},evidence:['test'],admitted:'2026-10-20'};
 test('a new rule that silently contradicts existing ones fails to load', ()=>{
- const rs=clone();rs.programs[0].rules.push({id:'BAD1',rule:'claim(O,role,norm,inherited,source) :- cue(O,source_maker,source).',statement:'a maker page states norms',source:'test'});
+ const rs=clone();rs.programs[0].rules.push({admission:ADM,id:'BAD1',rule:'claim(O,role,norm,inherited,source) :- cue(O,source_maker,source).',statement:'a maker page states norms',source:'test'});
  assert.throws(()=>compileRuleSet(rs),/can contradict at tier inherited/);});
 
 test('a rule outside the declared vocabulary of the decision fails to load (field, value, scope, tier)', ()=>{
  for(const [rule,re] of [['claim(O,role,opinion,explicit,clause) :- cue(O,episodic,clause).',/not admissible/],['claim(O,colour,red,explicit,clause) :- cue(O,episodic,clause).',/undeclared field/],
   ['claim(O,role,result,explicit,paragraph) :- cue(O,episodic,clause).',/undeclared scope/],['claim(O,role,result,strong,clause) :- cue(O,episodic,clause).',/unknown tier/],
   ['claim(O,role,R,explicit,clause) :- cue(O,R,clause).',/constant field, value and tier/]] as const){
-  const rs=clone();rs.programs[0].rules.push({id:'BAD2',rule,statement:'test rule',source:'test'});assert.throws(()=>compileRuleSet(rs),re,rule);}});
+  const rs=clone();rs.programs[0].rules.push({admission:ADM,id:'BAD2',rule,statement:'test rule',source:'test'});assert.throws(()=>compileRuleSet(rs),re,rule);}});
 
 test('duplicate rules are rejected', ()=>{
- const rs=clone();const r0=rs.programs[0].rules[2];rs.programs[0].rules.push({...r0,id:'DUP'});assert.throws(()=>compileRuleSet(rs),/duplicates/);});
+ const rs=clone();const r0=rs.programs[0].rules[2];rs.programs[0].rules.push({...r0,id:'DUP',admission:ADM});assert.throws(()=>compileRuleSet(rs),/duplicates/);});
 
 test('every cue kind is declared, produced by a registered reader, and used by a rule', ()=>{
  const declared=new Set(RULES.cueKinds);const produced=new Set(CUE_READERS.flatMap(r=>r.kinds));
@@ -207,7 +211,7 @@ test('decide: constraint beats explicit, explicit beats inherited, and the narro
    {id:'T3',rule:'claim(O,colour,green,explicit,wide) :- e(O,stated_green).',statement:'stated green',source:'t'},
    {id:'T4',rule:'claim(O,colour,black,constraint,wide) :- e(O,must_black).',statement:'constraint',source:'t'},
    {id:'T5',rule:'claim(O,colour,red,default,wide) :- e(O,usually_red).',statement:'default',source:'t'}],
-   decision:{predicate:'claim',scopes:['narrow','wide'],fields:{colour:['red','blue','green','black']},contested:[{field:'colour',tier:'default',scopes:['wide'],values:['red'],why:'single'}]}}]};
+   decision:{predicate:'claim',scopes:['narrow','wide'],fields:{colour:['red','blue','green','black']},contested:[]}}]};
  const p=compileRuleSet(rs).get('toy')!;assert.equal(claimRules(p).length,5);
  const run=(...ks:string[])=>decide(evaluate(p,{e:ks.map(k=>['o',k])}))[0];
  assert.equal(run('wide_red','narrow_blue').value,'blue');

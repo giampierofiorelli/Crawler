@@ -1,7 +1,7 @@
 {
  "schema": "pee.knowledge-rules.v1",
- "version": "rq.1",
- "statement": "S102 (owner review of S100: 'Reuse the shared rule-governance principles wherever scientifically and architecturally appropriate. However, user requests express goals, preferences and constraints; source documents express factual claims and observations.'). Decisions about the REQUIREMENTS a request states, under the same precedence policy as the observation semantics (knowledge_rules decide). This program concludes requirement states only, never product facts.",
+ "version": "rq.2",
+ "statement": "S102/S103: decisions about the requirements a request states (bound, force) and how they combine (intersection, contradiction, alternatives, other objects), under the shared precedence policy. These programs conclude requirement states only, never product facts.",
  "vocabulary": [
   {
    "name": "reading",
@@ -10,8 +10,12 @@
     "reader",
     "bound"
    ],
-   "meaning": "a reader of the request found this bound for the requirement: reader 'local' (the request-constraint reader) or 'shared' (the quantity knowledge's bound words, also used to read documents)",
-   "role": "input"
+   "meaning": "a reader of the request found this bound for the requirement: reader 'local' (the request-constraint reader) or 'shared' (the quantity knowledge's bound words, also used to read documents) (one bound per reader)",
+   "role": "input",
+   "key": [
+    0,
+    1
+   ]
   },
   {
    "name": "space",
@@ -28,7 +32,10 @@
     "bound"
    ],
    "meaning": "a bare range with no bound word: the bound is inferred from the kind (a presumption only)",
-   "role": "input"
+   "role": "input",
+   "key": [
+    0
+   ]
   },
   {
    "name": "stated_limit",
@@ -36,7 +43,7 @@
     "criterion",
     "value"
    ],
-   "meaning": "a requirement stated in the request for this criterion with this value",
+   "meaning": "S102 input of RQ08 (superseded in S103): a requirement stated for this criterion with this value",
    "role": "input"
   },
   {
@@ -56,63 +63,567 @@
    "args": [
     "criterion"
    ],
-   "meaning": "the request states two different limits for one criterion: neither is a confirmed requirement",
+   "meaning": "S102 conclusion of RQ08 (superseded in S103): two different limits for one criterion",
+   "role": "derived"
+  },
+  {
+   "name": "stated_bound",
+   "args": [
+    "requirement"
+   ],
+   "meaning": "the request states the limit with a bound word or 'between' (an explicit limit, not a bare quantity)",
+   "role": "input",
+   "key": [
+    0
+   ]
+  },
+  {
+   "name": "hedge",
+   "args": [
+    "requirement"
+   ],
+   "meaning": "a preference word governs the requirement's phrase ('ideally', 'preferably', 'possibly', 'if possible', 'would be nice')",
+   "role": "input",
+   "key": [
+    0
+   ]
+  },
+  {
+   "name": "corrected_by",
+   "args": [
+    "requirement",
+    "later"
+   ],
+   "meaning": "a later statement of the request replaces this requirement ('actually', 'make it', 'I mean'), for the same property and object",
+   "role": "input"
+  },
+  {
+   "name": "mandatory",
+   "args": [
+    "requirement"
+   ],
+   "meaning": "the requirement's force was decided as a requirement (not a preference, not superseded)",
+   "role": "input",
+   "key": [
+    0
+   ]
+  },
+  {
+   "name": "preference",
+   "args": [
+    "requirement"
+   ],
+   "meaning": "the requirement's force was decided as a preference",
+   "role": "input",
+   "key": [
+    0
+   ]
+  },
+  {
+   "name": "frame",
+   "args": [
+    "requirement",
+    "property",
+    "object",
+    "scenario"
+   ],
+   "meaning": "what the requirement constrains: the property, the object (the product to buy, or another one the request mentions) and the scenario it belongs to ('base', or a scenario the request introduces with 'or', 'if', 'when')",
+   "role": "input",
+   "key": [
+    0
+   ]
+  },
+  {
+   "name": "limit",
+   "args": [
+    "requirement",
+    "side",
+    "value",
+    "closure"
+   ],
+   "meaning": "one end of the requirement's interval: side low or high, the value in the criterion's base unit, closure inclusive or strict",
+   "role": "input",
+   "key": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "same_frame",
+   "args": [
+    "a",
+    "b"
+   ],
+   "meaning": "two different requirements on the same property, object and scenario",
+   "role": "derived"
+  },
+  {
+   "name": "empty",
+   "args": [
+    "a",
+    "b"
+   ],
+   "meaning": "the low end of a is above the high end of b (or equal with a strict end): no value satisfies both",
+   "role": "derived"
+  },
+  {
+   "name": "contradiction",
+   "args": [
+    "a",
+    "b"
+   ],
+   "meaning": "two mandatory requirements on one frame that no value can satisfy together",
+   "role": "derived"
+  },
+  {
+   "name": "combines",
+   "args": [
+    "a",
+    "b"
+   ],
+   "meaning": "two mandatory requirements on one frame that hold together: the product must satisfy both (their intersection)",
+   "role": "derived"
+  },
+  {
+   "name": "alternative",
+   "args": [
+    "a",
+    "b"
+   ],
+   "meaning": "two mandatory requirements on one property and object in different scenarios: only the bound shared by every scenario is certain",
+   "role": "derived"
+  },
+  {
+   "name": "other_object",
+   "args": [
+    "a",
+    "b"
+   ],
+   "meaning": "two requirements on one property of different objects: never combined, never contradictory",
+   "role": "derived"
+  },
+  {
+   "name": "violation",
+   "args": [
+    "requirement"
+   ],
+   "meaning": "a preference was turned into a mandatory requirement (must never hold)",
    "role": "derived"
   }
  ],
  "programs": [
   {
    "id": "request_requirements",
-   "statement": "The bound of a stated requirement and conflicts between stated requirements. Two readers that disagree about a bound, or two different limits for one criterion, leave the requirement undecided: it becomes a candidate with a question, never a hard exclusion.",
+   "statement": "The bound and the force of each stated requirement (requirement, preference, superseded), under the shared precedence policy. Concludes requirement states only, never product facts.",
    "rules": [
     {
      "id": "RQ01",
      "rule": "claim(C,bound,min,explicit,phrase) :- reading(C,local,min).",
      "statement": "the request-constraint reader found a minimum",
-     "source": "src/phase253_request_constraints.ts"
+     "source": "src/phase253_request_constraints.ts",
+     "lifecycle": {
+      "state": "superseded",
+      "since": "2026-10-20",
+      "reason": "D31/F12: one bound reader. The Phase253 local word lists duplicated the quantity knowledge's; the census found no quantity where the local reader read a bound the shared reader missed, and the phrases the shared reader lacked are now pack data (qk.2.5). The local reader is removed from the code.",
+      "supersededBy": "RQ03",
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253"
+      ],
+      "evidence": [
+       "evaluation/s103/bound-reader-census.json",
+       "tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader"
+      ]
+     }
     },
     {
      "id": "RQ02",
      "rule": "claim(C,bound,max,explicit,phrase) :- reading(C,local,max).",
      "statement": "the request-constraint reader found a maximum",
-     "source": "src/phase253_request_constraints.ts"
+     "source": "src/phase253_request_constraints.ts",
+     "lifecycle": {
+      "state": "superseded",
+      "since": "2026-10-20",
+      "reason": "D31/F12: one bound reader. The Phase253 local word lists duplicated the quantity knowledge's; the census found no quantity where the local reader read a bound the shared reader missed, and the phrases the shared reader lacked are now pack data (qk.2.5). The local reader is removed from the code.",
+      "supersededBy": "RQ04",
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253"
+      ],
+      "evidence": [
+       "evaluation/s103/bound-reader-census.json",
+       "tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader"
+      ]
+     }
     },
     {
      "id": "RQ03",
      "rule": "claim(C,bound,min,explicit,phrase) :- reading(C,shared,min).",
      "statement": "the quantity knowledge's bound words read a minimum",
-     "source": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en"
+     "source": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en",
+     "admission": {
+      "meaning": "The quantity knowledge's bound words, also used to read documents, read a minimum.",
+      "scope": "the phrase around one quantity of a buying request",
+      "prerequisites": [],
+      "exceptions": [
+       "a kind comparative ('wider than') may read the opposite bound when negated"
+      ],
+      "counterexamples": [
+       {
+        "case": "'not more than 40 cm' (negated comparative)",
+        "expected": "a maximum",
+        "test": "tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader"
+       }
+      ],
+      "provenance": {
+       "origin": "existing_knowledge",
+       "ref": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "convention",
+       "justification": "The one bound reader of requests and documents (S103, D31/F12): English bound words are pack data (quantity-knowledge.v3.json language.en), read the same way wherever a quantity is bounded."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader",
+       "tests/s103_request_semantics.test.ts#strict and inclusive bounds are kept apart and checked strictly"
+      ],
+      "admitted": "2026-10-20"
+     }
     },
     {
      "id": "RQ04",
      "rule": "claim(C,bound,max,explicit,phrase) :- reading(C,shared,max).",
      "statement": "the quantity knowledge's bound words read a maximum",
-     "source": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en"
+     "source": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en",
+     "admission": {
+      "meaning": "The quantity knowledge's bound words read a maximum.",
+      "scope": "the phrase around one quantity of a buying request",
+      "prerequisites": [],
+      "exceptions": [
+       "as RQ03"
+      ],
+      "counterexamples": [
+       {
+        "case": "'not more than 40 cm' (negated comparative)",
+        "expected": "a maximum",
+        "test": "tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader"
+       }
+      ],
+      "provenance": {
+       "origin": "existing_knowledge",
+       "ref": "resources/quantity-knowledge/quantity-knowledge.v3.json language.en"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "convention",
+       "justification": "The one bound reader of requests and documents (S103, D31/F12): English bound words are pack data (quantity-knowledge.v3.json language.en), read the same way wherever a quantity is bounded."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader",
+       "tests/s103_request_semantics.test.ts#strict and inclusive bounds are kept apart and checked strictly"
+      ],
+      "admitted": "2026-10-20"
+     }
     },
     {
      "id": "RQ05",
      "rule": "claim(C,bound,max,inherited,clause) :- space(C).",
      "statement": "a size said of an available space is an upper limit for what must fit (convention)",
-     "source": "src/phase253_request_constraints.ts SPACE"
+     "source": "src/phase253_request_constraints.ts SPACE",
+     "admission": {
+      "meaning": "A size said of an available space (a cupboard, an opening) is an upper limit for what must fit.",
+      "scope": "a length requirement said of a space the product must fit into",
+      "prerequisites": [],
+      "exceptions": [
+       "'a space of at least 60 cm for it' with an explicit bound word: the explicit reading (narrower scope) decides"
+      ],
+      "counterexamples": [
+       {
+        "case": "'fits a gap of at least 60 cm' (an explicit minimum)",
+        "expected": "the explicit bound decides over the space convention",
+        "test": "tests/s103_request_semantics.test.ts#a space limit is a maximum unless a bound word says otherwise"
+       }
+      ],
+      "provenance": {
+       "origin": "convention",
+       "ref": "S85 request-constraint reader (SPACE)"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "convention",
+       "justification": "What fits inside a space is at most as large as the space; clearances are not added."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a space limit is a maximum unless a bound word says otherwise"
+      ],
+      "admitted": "2026-10-20"
+     }
     },
     {
      "id": "RQ06",
      "rule": "claim(C,bound,min,default,phrase) :- range_inferred(C,min).",
      "statement": "a bare range of a capacity, power or duration presumes a minimum (presumption: asked, never applied)",
-     "source": "src/phase253_request_constraints.ts"
+     "source": "src/phase253_request_constraints.ts",
+     "admission": {
+      "meaning": "A bare range of a capacity, power or duration presumes a minimum; a presumption is only asked.",
+      "scope": "a range without a bound word",
+      "prerequisites": [],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'2000-2400W' describing an owned product",
+        "expected": "a candidate to confirm, never a stated requirement",
+        "test": "tests/phase253_advice.test.ts#a bare range is a candidate to confirm; \"between\" states it"
+       }
+      ],
+      "provenance": {
+       "origin": "existing_knowledge",
+       "ref": "Phase253"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "policy",
+       "justification": "A presumption is reported for a question, never applied (defaults never decide)."
+      },
+      "evidence": [
+       "tests/phase253_advice.test.ts#a bare range is a candidate to confirm; \"between\" states it"
+      ],
+      "admitted": "2026-10-20"
+     }
     },
     {
      "id": "RQ07",
      "rule": "claim(C,bound,max,default,phrase) :- range_inferred(C,max).",
      "statement": "a bare range of another kind presumes a maximum (presumption: asked, never applied)",
-     "source": "src/phase253_request_constraints.ts"
+     "source": "src/phase253_request_constraints.ts",
+     "admission": {
+      "meaning": "A bare range of another kind presumes a maximum; asked only.",
+      "scope": "a range without a bound word",
+      "prerequisites": [],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "a bare range of widths",
+        "expected": "a candidate to confirm",
+        "test": "tests/phase253_advice.test.ts#a bare range is a candidate to confirm; \"between\" states it"
+       }
+      ],
+      "provenance": {
+       "origin": "existing_knowledge",
+       "ref": "Phase253"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "policy",
+       "justification": "As RQ06."
+      },
+      "evidence": [
+       "tests/phase253_advice.test.ts#a bare range is a candidate to confirm; \"between\" states it"
+      ],
+      "admitted": "2026-10-20"
+     }
     },
     {
      "id": "RQ08",
      "rule": "limit_conflict(K) :- stated_limit(K,V1), stated_limit(K,V2), V1 != V2.",
      "statement": "two different limits stated for one criterion contradict each other",
      "source": "S102 audit (docs/plans/s102-rule-ownership-audit.md: the last limit used to win silently)",
-     "invariant": true
+     "invariant": false,
+     "lifecycle": {
+      "state": "superseded",
+      "since": "2026-10-20",
+      "reason": "Wrong in general (owner review of S102): two different limits are not necessarily contradictory. Two mandatory minimums combine into the stricter one, a minimum and a preference are distinct, a correction replaces the earlier limit, limits for different objects or scenarios are distinct; only an empty intersection on one frame (a minimum above a maximum) is a contradiction (RC05, RC06).",
+      "supersededBy": "request_combination/RC05",
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one",
+       "tests/s103_request_semantics.test.ts#a minimum above a maximum is a contradiction and both are asked",
+       ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      ]
+     },
+     "admission": {
+      "meaning": "(rejected meaning) Two different limits stated for one criterion contradict each other.",
+      "scope": "stated limits of one criterion",
+      "prerequisites": [],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L and at least 6 L, both required'",
+        "expected": "the stricter (6 L) applies; no contradiction",
+        "test": "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one"
+       },
+       {
+        "case": "'at least 4 L, preferably 6 L'",
+        "expected": "a requirement and a preference",
+        "test": "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct"
+       },
+       {
+        "case": "'at least 4 L. Actually, make it 6'",
+        "expected": "the correction replaces 4 L",
+        "test": "tests/s103_request_semantics.test.ts#a correction replaces the earlier limit"
+       }
+      ],
+      "provenance": {
+       "origin": "failure_analysis",
+       "ref": "docs/plans/s102-rule-ownership-audit.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "policy",
+       "justification": "Adopted in S102 as a device against 'the last limit wins silently'; it is not a general property and is superseded."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one"
+      ],
+      "admitted": "2026-10-20",
+      "history": [
+       {
+        "date": "2026-10-20",
+        "change": "reclassified from invariant to policy",
+        "reason": "An invariant must be a justified general property, not a technical device adopted during development; RQ08 is not true in general (owner follow-up on S102).",
+        "ownerDecision": ".claude/skills/pee-guided-learning/references/owner-review-s102-followup-2026-10-20.md"
+       }
+      ]
+     }
+    },
+    {
+     "id": "RQ09",
+     "rule": "claim(C,force,requirement,inherited,request) :- stated_bound(C).",
+     "statement": "a limit stated with a bound word in a buying request is a requirement unless the phrase says otherwise",
+     "source": "S103 request semantics",
+     "admission": {
+      "meaning": "A limit the request states with a bound word ('at least 4 litres') is something the product must satisfy.",
+      "scope": "every stated limit of a buying request",
+      "prerequisites": [],
+      "exceptions": [
+       "a preference word in the phrase ('preferably at least 6')",
+       "a later correction",
+       "a limit on another product the request mentions"
+      ],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L, preferably 6 L'",
+        "expected": "6 L is a preference, not a requirement",
+        "test": "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "convention",
+       "justification": "Buying requests state limits to restrict the choice; the reading is defeasible: a hedge in the phrase (RQ10, explicit, narrower) or a correction (RQ11, constraint) overrides it."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one",
+       "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RQ10",
+     "rule": "claim(C,force,preference,explicit,phrase) :- hedge(C).",
+     "statement": "a preference word in the requirement's phrase makes it a preference",
+     "source": "S103 request semantics",
+     "admission": {
+      "meaning": "A preference word governing the limit ('ideally', 'preferably', 'possibly', 'if possible') makes it a preference: it describes what the user would like, not what the product must satisfy.",
+      "scope": "the phrase of one limit",
+      "prerequisites": [],
+      "exceptions": [
+       "'possibly' used epistemically about a fact, not as a wish (rare in requests)",
+       "'I would like' introducing the whole request is not a hedge of one limit"
+      ],
+      "counterexamples": [
+       {
+        "case": "'I'd like an air fryer of at least 4 litres'",
+        "expected": "a requirement ('I'd like' introduces the request, it is not a hedge)",
+        "test": "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "convention",
+       "justification": "Modal hedges weaken a requirement to a preference in ordinary English; the word list is vocabulary data."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct",
+       "tests/s103_request_semantics.test.ts#a preference never becomes a hard requirement (semantic invariant)"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RQ11",
+     "rule": "claim(C,force,superseded,constraint,request) :- corrected_by(C,_).",
+     "statement": "a limit the user corrects later is replaced",
+     "source": "S103 request semantics",
+     "admission": {
+      "meaning": "When the request corrects a limit ('at least 4 litres. Actually, make it 6'), the earlier limit no longer applies.",
+      "scope": "limits on the same property and object, in request order",
+      "prerequisites": [
+       "the later statement is a correction marker followed by a limit of the same property and object",
+       "it comes after the limit it corrects"
+      ],
+      "exceptions": [
+       "'4 litres, or 6 for a family' is an alternative, not a correction"
+      ],
+      "counterexamples": [
+       {
+        "case": "'at least 4 litres, or at least 6 for a family'",
+        "expected": "two scenarios, not a correction",
+        "test": "tests/s103_request_semantics.test.ts#alternative scenarios: the bound shared by every scenario applies, the others are asked"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "A correction is the user's own revision: the earlier statement is withdrawn by its author."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a correction replaces the earlier limit"
+      ],
+      "admitted": "2026-10-20"
+     }
     }
    ],
    "decision": {
@@ -126,34 +637,459 @@
      "bound": [
       "min",
       "max"
+     ],
+     "force": [
+      "requirement",
+      "preference",
+      "superseded"
      ]
     },
-    "contested": [
+    "contested": [],
+    "contestHistory": [
      {
-      "field": "bound",
-      "tier": "explicit",
-      "scopes": [
-       "phrase"
-      ],
-      "values": [
-       "min",
-       "max"
-      ],
-      "why": "the two readers of the request can disagree about a bound (different word lists): the requirement is undecided and asked, never applied"
+      "date": "2026-10-20",
+      "change": "S103: blanket contests replaced by named rules; RQ01/RQ02 and RQ03/RQ04 cannot fire together (one bound per reader, PredicateDef.key) and are no longer declared; defaults never decide and need no contest."
      },
      {
-      "field": "bound",
-      "tier": "default",
-      "scopes": [
-       "phrase"
-      ],
-      "values": [
-       "min",
-       "max"
-      ],
-      "why": "presumptions are only reported"
+      "date": "2026-10-20",
+      "change": "S103: B-READERS and B-READERS2 removed with RQ01/RQ02 (superseded): one bound reader remains, so no two readers can disagree about a bound."
      }
     ]
+   },
+   "admission": {
+    "required": true
+   }
+  },
+  {
+   "id": "request_combination",
+   "statement": "S103 (owner review of S102, RQ08): how the requirements of one request combine. Requirements on one property, object and scenario hold together (their intersection); an empty intersection is a contradiction (asked); different scenarios are alternatives (only what every scenario requires is certain); different objects never combine. The interval arithmetic itself (intersection, the stricter end, the hull of alternatives) is algorithmic and stays in code.",
+   "rules": [
+    {
+     "id": "RC01",
+     "rule": "same_frame(A,B) :- frame(A,P,O,S), frame(B,P,O,S), A != B.",
+     "statement": "two requirements on one property, object and scenario",
+     "source": "S103",
+     "admission": {
+      "meaning": "Two requirements constrain the same thing when they are about one property of one object in one scenario.",
+      "scope": "requirements of one request",
+      "prerequisites": [
+       "the property, object and scenario are read correctly"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L for this one and 6 L for my mother's'",
+        "expected": "different objects: not the same frame",
+        "test": "tests/s103_request_semantics.test.ts#limits for two different products are never combined"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "Identity of what is constrained: property, object and scenario together."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC02",
+     "rule": "empty(A,B) :- same_frame(A,B), limit(A,low,L,_), limit(B,high,H,_), L > H.",
+     "statement": "a low end above a high end leaves no value",
+     "source": "S103",
+     "admission": {
+      "meaning": "If one requirement's lower end is above another's upper end, no value satisfies both.",
+      "scope": "requirements on one frame",
+      "prerequisites": [
+       "both values are in the same base unit (normalised before the facts are made)"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L and at most 6 L'",
+        "expected": "compatible: the interval 4-6 L",
+        "test": "tests/s103_request_semantics.test.ts#between states both ends of an interval"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "Interval arithmetic: [L, ...] and [..., H] with L > H do not intersect."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a minimum above a maximum is a contradiction and both are asked"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC03",
+     "rule": "empty(A,B) :- same_frame(A,B), limit(A,low,V,strict), limit(B,high,V,_).",
+     "statement": "a strict low end equal to a high end leaves no value",
+     "source": "S103",
+     "admission": {
+      "meaning": "'More than 4' and 'at most 4' leave no value.",
+      "scope": "requirements on one frame",
+      "prerequisites": [
+       "same base unit"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 and at most 4'",
+        "expected": "compatible: exactly 4",
+        "test": "tests/s103_request_semantics.test.ts#strict and inclusive bounds are kept apart and checked strictly"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-rule-admission-authorisation-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "An open end at V excludes V itself."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#strict and inclusive bounds are kept apart and checked strictly"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC04",
+     "rule": "empty(A,B) :- same_frame(A,B), limit(A,low,V,_), limit(B,high,V,strict).",
+     "statement": "a low end equal to a strict high end leaves no value",
+     "source": "S103",
+     "admission": {
+      "meaning": "'At least 4' and 'under 4' leave no value.",
+      "scope": "requirements on one frame",
+      "prerequisites": [
+       "same base unit"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 and at most 4'",
+        "expected": "compatible: exactly 4",
+        "test": "tests/s103_request_semantics.test.ts#strict and inclusive bounds are kept apart and checked strictly"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-rule-admission-authorisation-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "An open end at V excludes V itself."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#strict and inclusive bounds are kept apart and checked strictly"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC05",
+     "rule": "contradiction(A,B) :- empty(A,B), mandatory(A), mandatory(B).",
+     "statement": "two mandatory requirements that no value satisfies contradict each other",
+     "source": "S103",
+     "admission": {
+      "meaning": "Two mandatory requirements on one frame with no common value contradict each other: neither can be applied without asking.",
+      "scope": "mandatory requirements on one frame",
+      "prerequisites": [
+       "both are mandatory",
+       "same property, object and scenario"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L, preferably at most 3 L'",
+        "expected": "not a contradiction: one is a preference",
+        "test": "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "Contradiction is the empty intersection of requirements that must all hold (owner's table: 'at least 6 L and at most 4 L, same property, same conditions')."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a minimum above a maximum is a contradiction and both are asked"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC06",
+     "rule": "contradiction(A,B) :- empty(B,A), mandatory(A), mandatory(B).",
+     "statement": "contradiction is symmetric",
+     "source": "S103",
+     "admission": {
+      "meaning": "Contradiction is symmetric.",
+      "scope": "as RC05",
+      "prerequisites": [
+       "as RC05"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at most 4 L and at least 6 L' (order reversed)",
+        "expected": "still a contradiction",
+        "test": "tests/s103_request_semantics.test.ts#a minimum above a maximum is a contradiction and both are asked"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "Symmetry of the relation."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a minimum above a maximum is a contradiction and both are asked"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC07",
+     "rule": "combines(A,B) :- same_frame(A,B), mandatory(A), mandatory(B), not contradiction(A,B).",
+     "statement": "two compatible mandatory requirements on one frame both apply: their intersection",
+     "source": "S103",
+     "admission": {
+      "meaning": "Two mandatory requirements on one frame that a value can satisfy together both apply; the product must lie in their intersection (for two minimums, the stricter one).",
+      "scope": "mandatory requirements on one frame",
+      "prerequisites": [
+       "both mandatory",
+       "same frame"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L, preferably 6 L'",
+        "expected": "not combined: 6 L is a preference",
+        "test": "tests/s103_request_semantics.test.ts#a requirement and a preference stay distinct"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "Conjunction of interval requirements is their intersection (owner's table: 'at least 4 L and at least 6 L, both mandatory: 6 L')."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC08",
+     "rule": "alternative(A,B) :- frame(A,P,O,S1), frame(B,P,O,S2), S1 != S2, mandatory(A), mandatory(B).",
+     "statement": "requirements of one property and object in different scenarios are alternatives",
+     "source": "S103",
+     "admission": {
+      "meaning": "Requirements of one property and object in different scenarios ('at least 4 L, or at least 6 for a family') are alternatives: only the bound every scenario shares is certain; the scenario-specific ones are asked.",
+      "scope": "mandatory requirements of one property and object",
+      "prerequisites": [
+       "the scenarios were introduced by the request ('or', 'if', 'when')"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L and at most 8 L' (no scenario words)",
+        "expected": "one scenario: combined, not alternatives",
+        "test": "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-followup-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "A product acceptable in any scenario satisfies the weakest bound common to all scenarios; which scenario applies is the user's to say (owner follow-up on S102)."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#alternative scenarios: the bound shared by every scenario applies, the others are asked"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC09",
+     "rule": "other_object(A,B) :- frame(A,P,O1,_), frame(B,P,O2,_), O1 != O2.",
+     "statement": "requirements of different objects never combine",
+     "source": "S103",
+     "admission": {
+      "meaning": "Limits about different objects ('4 L for this one and 6 L for the other') are distinct requirements: never combined, never contradictory.",
+      "scope": "requirements of one property",
+      "prerequisites": [
+       "the object of each limit is read correctly"
+      ],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'at least 4 L and at least 6 L' about one product",
+        "expected": "combined, not other objects",
+        "test": "tests/s103_request_semantics.test.ts#two mandatory minimums on one object combine to the stricter one"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "logical",
+       "justification": "A limit constrains only the object it is said of (owner's table: 'at least 4 L for one appliance and 6 L for another: two distinct requirements')."
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#limits for two different products are never combined"
+      ],
+      "admitted": "2026-10-20"
+     }
+    },
+    {
+     "id": "RC10",
+     "rule": "violation(C) :- preference(C), mandatory(C).",
+     "statement": "a preference never becomes a mandatory requirement",
+     "source": "S103",
+     "invariant": true,
+     "admission": {
+      "meaning": "A preference never becomes a mandatory requirement.",
+      "scope": "every requirement of every request",
+      "prerequisites": [],
+      "exceptions": [],
+      "counterexamples": [
+       {
+        "case": "'ideally at least 6 L'",
+        "expected": "a preference: reported, never used to exclude",
+        "test": "tests/s103_request_semantics.test.ts#a preference never becomes a hard requirement (semantic invariant)"
+       }
+      ],
+      "provenance": {
+       "origin": "owner_decision",
+       "ref": ".claude/skills/pee-guided-learning/references/owner-review-s102-followup-2026-10-20.md"
+      },
+      "consumers": [
+       "src/phase253_request_constraints.ts extractConstraints253",
+       "src/phase253_request_advice.ts adviseCore253 (decision snapshot)"
+      ],
+      "classification": {
+       "class": "invariant",
+       "justification": "A preference expresses what the user would like, not what the product must satisfy; turning it into a hard requirement would exclude products the user accepts, silently changing their intent. This holds for every request, category and wording (owner follow-up on S102: semantic invariant).",
+       "invariantKind": "semantic"
+      },
+      "evidence": [
+       "tests/s103_request_semantics.test.ts#a preference never becomes a hard requirement (semantic invariant)"
+      ],
+      "admitted": "2026-10-20"
+     }
+    }
+   ],
+   "exclusive": [
+    {
+     "preds": [
+      "contradiction",
+      "combines"
+     ],
+     "why": "two requirements cannot both contradict each other and hold together"
+    },
+    {
+     "preds": [
+      "same_frame",
+      "alternative"
+     ],
+     "why": "requirements in one scenario are not alternatives of each other"
+    },
+    {
+     "preds": [
+      "same_frame",
+      "other_object"
+     ],
+     "why": "requirements on one object are not about different objects"
+    },
+    {
+     "preds": [
+      "alternative",
+      "other_object"
+     ],
+     "why": "alternatives are scenarios of one object"
+    }
+   ],
+   "domains": [
+    {
+     "predicate": "limit",
+     "arg": 1,
+     "values": [
+      "low",
+      "high"
+     ]
+    },
+    {
+     "predicate": "limit",
+     "arg": 3,
+     "values": [
+      "inclusive",
+      "strict"
+     ],
+     "abstains": {
+      "inclusive": "An inclusive end needs no rule of its own: equal inclusive ends are compatible (exactly that value), and ends that cross are covered by RC02."
+     }
+    }
+   ],
+   "admission": {
+    "required": true
    }
   }
  ],
@@ -161,6 +1097,139 @@
   {
    "version": "rq.1",
    "note": "S102: first request decision program (bound of a requirement, conflicting limits)."
+  },
+  {
+   "version": "rq.2",
+   "note": "S103: RQ08 reclassified (owner decision) and superseded by request_combination (RC01-RC10); force of a limit (RQ09-RQ11); contests name rules; keys on single-valued inputs; closure and intent vocabulary as data; admission records for every rule that runs. RQ01/RQ02 superseded by RQ03/RQ04 (one bound reader, qk.2.5)."
   }
- ]
+ ],
+ "closure": {
+  "statement": "S103: whether the limit itself satisfies a requirement. Keyed by the bound phrase the readers report; a phrase not listed is inclusive (the cautious reading for a buyer: it never excludes a product at the limit) and is reported as such.",
+  "strict": [
+   "more than",
+   "over",
+   "above",
+   "bigger than",
+   "larger than",
+   "greater than",
+   "longer than",
+   "heavier than",
+   "wider than",
+   "taller than",
+   "higher than",
+   "deeper than",
+   "less than",
+   "under",
+   "below",
+   "smaller than",
+   "lighter than",
+   "narrower than",
+   "shorter than",
+   "fewer than",
+   "lower than",
+   "cheaper than",
+   "beneath"
+  ],
+  "inclusive": [
+   "at least",
+   "minimum",
+   "minimum of",
+   "min",
+   "min.",
+   "no less than",
+   "not less than",
+   "upwards of",
+   "at minimum",
+   "+",
+   "or more",
+   "or bigger",
+   "or larger",
+   "or longer",
+   "or above",
+   "or higher",
+   "at most",
+   "maximum",
+   "maximum of",
+   "max",
+   "max.",
+   "no more than",
+   "not more than",
+   "up to",
+   "within",
+   "no bigger than",
+   "no larger than",
+   "no wider than",
+   "no taller than",
+   "no higher than",
+   "no deeper than",
+   "no heavier than",
+   "no longer than",
+   "or less",
+   "or smaller",
+   "or narrower",
+   "or lighter",
+   "or shorter",
+   "or under",
+   "or below",
+   "between"
+  ]
+ },
+ "intent": {
+  "statement": "S103: words that change the force or the frame of a limit. Vocabulary data, read by src/phase253_request_constraints.ts; each list is evidence for one input fact of request_requirements or request_combination.",
+  "hedge": [
+   "ideally",
+   "preferably",
+   "preferable",
+   "possibly",
+   "if possible",
+   "would be nice",
+   "nice to have",
+   "hopefully",
+   "at best",
+   "even better",
+   "or better still",
+   "bonus if",
+   "i'd prefer",
+   "i would prefer",
+   "if it can"
+  ],
+  "correction": [
+   "actually",
+   "make it",
+   "make that",
+   "scratch that",
+   "on second thought",
+   "on second thoughts",
+   "i mean",
+   "correction",
+   "sorry",
+   "rather",
+   "let's say",
+   "let us say",
+   "no wait",
+   "wait"
+  ],
+  "alternative": [
+   "or",
+   "otherwise",
+   "alternatively",
+   "or else"
+  ],
+  "condition": [
+   "if",
+   "when",
+   "whenever",
+   "in case",
+   "for when"
+  ],
+  "otherObject": [
+   "another",
+   "the other",
+   "the other one",
+   "other one",
+   "a second one",
+   "second one"
+  ],
+  "otherObjectNote": "Read only when an earlier limit of the same property exists (two objects contrasted); 'another air fryer' alone describes the purchase, not a second object."
+ }
 }

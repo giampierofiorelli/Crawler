@@ -113,28 +113,33 @@ test('a lead whose reading has no product subject is stored without a product li
 // ---------------------------------------------------------------------------------------------------------------------
 // The user request: requirement states under the shared decision policy (never product facts)
 const C=(t:string)=>extractConstraints253(t).constraints.map(c=>`${c.criterion}=${c.value}:${c.status}`);
+// S103 (owner review of S102): RQ08 ("two different limits contradict") was wrong and is superseded. This test keeps its
+// S102 cases with the S103 readings: alternatives keep the bound every scenario shares; equal limits combine.
 test('request: an agreed bound stays a stated requirement; two different limits for one criterion are asked, never applied', ()=>{
  assert.deepEqual(C('A kettle of at least 1.5 litres'),['capacity_min=1.5:stated_in_request']);
- assert.deepEqual(C('An air fryer of at least 4 litres, or at least 6 litres for a family'),['capacity_min=4:candidate','capacity_min=6:candidate'],'the last limit no longer wins silently');
- assert.deepEqual(C('A kettle of at least 1.5 litres and a toaster of at least 1.5 litres'),['capacity_min=1.5:stated_in_request','capacity_min=1.5:stated_in_request'],'the same limit twice is not a conflict');
+ assert.deepEqual(C('An air fryer of at least 4 litres, or at least 6 litres for a family'),['capacity_min=4:stated_in_request','capacity_min=6:candidate'],'S103: the bound shared by both scenarios applies; the other is asked');
+ assert.deepEqual(C('A kettle of at least 1.5 litres and a toaster of at least 1.5 litres'),['capacity_min=1.5:stated_in_request','capacity_min=1.5:implied'],'the same limit twice is not a conflict');
  assert.deepEqual(C('A 2000-2400W kettle'),['power_min=2000:candidate'],'a bare range presumes a bound: asked, never applied');
- assert.deepEqual(C('a dehumidifier between 3 and 5 litres'),['capacity_min=3:stated_in_request'],'"between" states the range');
+ assert.deepEqual(C('a dehumidifier between 3 and 5 litres'),['capacity_min=3:stated_in_request','capacity_max=5:stated_in_request'],'"between" states both ends (S103)');
  assert.deepEqual(C('I do not need at least 5 litres'),['capacity_min=5:candidate'],'a negated requirement is never stated');
  assert.deepEqual(C('something nice for the kitchen'),[],'an unknown request states no requirement');});
 
+// S103 (D31/F12): the local reader (RQ01/RQ02) is superseded; one bound reader remains, so a local reading no longer counts
 test('request: two readers that disagree about a bound leave the requirement undecided (conflict, abstention)', ()=>{
  const p=requestSemanticsRules().program;const d=(r:string[][])=>decide(evaluate(p,{reading:r})).find(x=>x.field==='bound')!;
  assert.equal(d([['q','local','min'],['q','shared','min']]).value,'min');
- const c=d([['q','local','min'],['q','shared','max']]);assert.equal(c.value,null);assert.deepEqual(c.conflict!.values,['max','min']);
+ const c=d([['q','local','min'],['q','shared','max']]);assert.equal(c.value,'max','S103: the superseded local reading no longer competes');assert.equal(c.conflict,null);
  assert.equal(d([['q','shared','max']]).value,'max','the shared reading alone decides');
  const pres=decide(evaluate(p,{range_inferred:[['q','min']]})).find(x=>x.field==='bound')!;assert.equal(pres.value,null);assert.equal(pres.presumption,'min');
- assert.equal(decide(evaluate(p,{reading:[['q','local','min']],space:[['q']]})).find(x=>x.field==='bound')!.value,'min','an explicit bound outranks the space convention');});
+ assert.equal(decide(evaluate(p,{reading:[['q','shared','min']],space:[['q']]})).find(x=>x.field==='bound')!.value,'min','an explicit bound outranks the space convention');});
 
 test('request: the request program concludes requirement states only, never product facts', ()=>{
  const raw=JSON.parse(readFileSync(ROOT+'resources/request-semantics/request-semantics.v1.json','utf8'));
- const heads=raw.programs[0].rules.map((r:{rule:string})=>r.rule.split(':-')[0]);
- for(const h of heads)assert.match(h,/^\s*(?:claim\(C,bound,|limit_conflict\()/,'only bounds and limit conflicts: '+h);
- assert.ok(raw.programs[0].rules.find((r:{id:string;invariant?:boolean})=>r.id==='RQ08')?.invariant,'conflicting limits are an invariant');});
+ // S103: bound and force claims, and relations between requirements; RQ08 is kept (superseded) for its history
+ const heads=raw.programs.flatMap((p:{rules:{rule:string}[]})=>p.rules.map(r=>r.rule.split(':-')[0]));
+ for(const h of heads)assert.match(h,/^\s*(?:claim\(C,(?:bound|force),|limit_conflict\(|same_frame\(|empty\(|contradiction\(|combines\(|alternative\(|other_object\(|violation\()/,'only requirement states: '+h);
+ const rq08=raw.programs[0].rules.find((r:{id:string})=>r.id==='RQ08');
+ assert.equal(rq08.invariant,false,'S103: RQ08 is no longer an invariant (owner decision)');assert.equal(rq08.lifecycle.state,'superseded');});
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Introducing statements (D31/TCX) and lead-in clauses

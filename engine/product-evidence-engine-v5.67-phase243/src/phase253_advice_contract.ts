@@ -20,13 +20,17 @@ export const RESPONSES253=['positive_shortlist','clarification','justified_negat
 export type Response253=typeof RESPONSES253[number];
 export type TargetKind253='category'|'other'|'none'|'ambiguous';
 export interface Constraint253 {criterion:string;value:number;unit:string;bound?:'min'|'max';span?:string;
- status?:'stated_in_request'|'candidate';confidence?:'clear'|'ambiguous'}
+ status?:'stated_in_request'|'candidate'|'preference'|'superseded'|'implied';confidence?:'clear'|'ambiguous';
+ /** S103: a strict limit ("more than", "under") is not met by a value equal to it; absent means inclusive */ closure?:'inclusive'|'strict'}
 export interface CitedEvidence253 {declarationId:string;productId:string;rawValue:string;sourceUrl:string|null;sourceRole:string;variantId:string|null;observedAt?:string|null}
 export interface Advice253 {
  schema:'pee253.advice.v1';text:string;
  target:{kind:TargetKind253;category:string|null;other:string|null;basis:string};
  category:string|null;
  constraints:Constraint253[];unmappedConstraints:{span:string;reason:string}[];
+ /** S103: limits the request states that are not requirements to apply: preferences, limits the user corrected, and
+  * limits implied by a stricter one. Reported, never used to exclude a product. */
+ otherLimits?:(Constraint253&{note:string|null})[];
  needs:string[];unresolved:string[];
  response:Response253;
  /** True only for 'ranked_recommendation', produced by the existing Phase181 engine from a verified, signed, reviewed

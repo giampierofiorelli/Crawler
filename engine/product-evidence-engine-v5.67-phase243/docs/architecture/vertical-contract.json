@@ -660,7 +660,14 @@
      "consumers": [
       "all readers"
      ],
-     "verification": "one cue source per kind; a test fails if a cue word appears in two lists with different meanings"
+     "verification": "one cue source per kind; a test fails if a cue word appears in two lists with different meanings",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "S103",
+       "what": "bound words: one reader for requests and documents (the Phase253 local word lists retired into qk.2.5); the other duplicated vocabularies (negation, clause boundaries, 'up to', 'average', 'maximum', 'sensor') remain"
+      }
+     ]
     },
     {
      "id": "P245",
@@ -774,7 +781,16 @@
       "src/phase253_request_constraints.ts extractConstraints253",
       "resources/request-semantics/request-semantics.v1.json"
      ],
-     "verification": "constraint semantics distinguish mandatory requirement, preference, correction (later statement replaces earlier), object and condition; the four owner examples decide 6 L mandatory / 4 L required + 6 L preferred / contradiction / two requirements; RQ08 superseded through its lifecycle with an owner decision (it is an invariant); plus: 'at least 4, or at least 6 for a family' is read as two scenarios (or asked), never as an invented preference"
+     "verification": "constraint semantics distinguish mandatory requirement, preference, correction (later statement replaces earlier), object and condition; the four owner examples decide 6 L mandatory / 4 L required + 6 L preferred / contradiction / two requirements; RQ08 superseded through its lifecycle with an owner decision (it is an invariant); plus: 'at least 4, or at least 6 for a family' is read as two scenarios (or asked), never as an invented preference",
+     "resolved": {
+      "date": "2026-10-20",
+      "by": "S103",
+      "how": "RQ08 reclassified from invariant (owner decision) and superseded by request_combination (RC01-RC10): mandatory limits on one frame combine (the stricter applies), preferences and corrections are kept apart (RQ09-RQ11), alternatives keep only the bound every scenario shares and ask the rest, other objects never combine, an empty intersection is a contradiction (asked)",
+      "evidence": [
+       "tests/s103_request_semantics.test.ts"
+      ],
+      "remaining": "conditions of a limit ('at 50 % volume') are not read; objects are recognised only by 'another'/'the other one' after a limit of the same property"
+     }
     },
     {
      "id": "REDERIVE_SWEEP",
@@ -783,7 +799,14 @@
       "src/phase246_knowledge_store.ts",
       "scripts/phase246-knowledge.mjs"
      ],
-     "verification": "a store-wide re-derivation (from retained revisions) reports, after a rule or definition change, how many readings were re-derived, superseded or could not be re-read (bytes not retained)"
+     "verification": "a store-wide re-derivation (from retained revisions) reports, after a rule or definition change, how many readings were re-derived, superseded or could not be re-read (bytes not retained)",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "S103",
+       "what": "census (scripts/s103-rederivation-census.mjs, evaluation/s103/rederivation-census.json): the live store's 152 value-retaining revisions were derived by spec-extractor-7 (code: spec-extractor-8) and none of their page bytes is held, so none can be re-derived without a new authorised fetch; 3 metadata-only revisions keep no values; page copies used by evaluations exist only in the container (not in the private repository)"
+      }
+     ]
     },
     {
      "id": "INVARIANT_GOV",
@@ -792,7 +815,16 @@
       "src/knowledge_rules.ts (lifecycle, invariant)",
       "docs/architecture/vertical-contract.json interpretationRules"
      ],
-     "verification": "an invariant must state its kind (semantic, reliability, safety, legal, provenance) and justification and is reviewed before admission; a proposed rule is checked at admission for correctness, scope, exceptions, overlaps and counterexamples, not only for consistency"
+     "verification": "an invariant must state its kind (semantic, reliability, safety, legal, provenance) and justification and is reviewed before admission; a proposed rule is checked at admission for correctness, scope, exceptions, overlaps and counterexamples, not only for consistency",
+     "resolved": {
+      "date": "2026-10-20",
+      "by": "S103",
+      "how": "admission records required for every rule that runs in observation_semantics (86 legacy rules listed, ratchet), request_requirements and request_combination; invariants need kind and justification; leaving the invariant class needs an owner decision; static analysis at load",
+      "evidence": [
+       "tests/s103_rule_admission.test.ts"
+      ],
+      "remaining": "the 86 os rules admitted before S103 have no admission record yet; scientific correctness of a meaning is not checked mechanically (records name their evidence; the owner reviews)"
+     }
     }
    ]
   }
@@ -1062,7 +1094,7 @@
    {
     "file": "resources/scientific-reading/observation-semantics.v1.json",
     "program": "observation_semantics",
-    "version": "os.3",
+    "version": "os.4",
     "decides": [
      "role",
      "nature",
@@ -1071,7 +1103,8 @@
     "consumer": "src/scientific_reading98.ts (all three readers)",
     "tests": [
      "tests/s100_rule_governance.test.ts",
-     "tests/s99_observation_identity.test.ts"
+     "tests/s99_observation_identity.test.ts",
+     "tests/s103_rule_admission.test.ts"
     ]
    }
   ],
@@ -1437,11 +1470,31 @@
      "program": "request_requirements",
      "decides": [
       "bound",
-      "requirement_state"
+      "force (requirement, preference, superseded)"
      ],
      "consumer": "src/phase253_request_advice.ts applyQuantityRequirements253 and adviseCore253",
      "tests": [
-      "tests/s102_rule_lifecycle.test.ts"
+      "tests/s102_rule_lifecycle.test.ts",
+      "tests/s103_request_semantics.test.ts"
+     ],
+     "version": "rq.2"
+    },
+    {
+     "file": "resources/request-semantics/request-semantics.v1.json",
+     "program": "request_combination",
+     "version": "rq.2",
+     "decides": [
+      "same frame",
+      "contradiction",
+      "combination",
+      "alternative scenarios",
+      "other objects",
+      "preference invariant (RC10)"
+     ],
+     "consumer": "src/phase253_request_constraints.ts resolveRequestLimits253",
+     "tests": [
+      "tests/s103_request_semantics.test.ts",
+      "tests/s103_rule_admission.test.ts"
      ]
     }
    ],
@@ -1499,9 +1552,13 @@
      "decides": "bound of a requirement (local reading)",
      "class": "policy",
      "lifecycle": {
-      "state": "active",
+      "state": "retired",
       "since": "2026-10-20",
-      "reason": "S102: no longer overrides the shared reading; both readings are claims of the request_requirements decision"
+      "reason": "S103 (D31/F12): the Phase253 local bound reader (MIN_BEFORE, MAX_BEFORE, MIN_AFTER, MAX_AFTER) is removed from the code; its phrases are quantity-knowledge pack data (qk.2.5) read by the one shared bound reader (quantityBound); RQ01/RQ02 superseded by RQ03/RQ04. 'min' after a number is deliberately not a bound word (the minute).",
+      "evidence": [
+       "evaluation/s103/bound-reader-census.json",
+       "tests/s103_request_semantics.test.ts"
+      ]
      },
      "tests": [
       "tests/s102_rule_lifecycle.test.ts"
@@ -1516,11 +1573,12 @@
      "lifecycle": {
       "state": "active",
       "since": "2026-10-20",
-      "reason": "only a stated, bounded, non-negated, non-conflicting requirement becomes hard (S102 adds non-conflicting)"
+      "reason": "S103: only a stated, bounded, non-negated requirement whose force is 'requirement' (not a preference, not superseded by a correction), that contradicts no other mandatory limit of its frame and is not an unconfirmed alternative or another object's limit, becomes hard; strict limits are checked strictly (Phase177 exclusive, Phase249)"
      },
      "tests": [
       "tests/s102_rule_lifecycle.test.ts",
-      "tests/s85_safety_and_quantities.test.ts"
+      "tests/s85_safety_and_quantities.test.ts",
+      "tests/s103_request_semantics.test.ts"
      ]
     },
     {
@@ -1552,7 +1610,61 @@
      "tests": [
       "tests/s80_request_coverage.test.ts"
      ]
+    },
+    {
+     "id": "RQ8",
+     "file": "src/phase253_request_constraints.ts",
+     "function": "resolveRequestLimits253",
+     "decides": "interval arithmetic of the request limits (base unit, the stricter end, the end every scenario shares)",
+     "class": "algorithmic",
+     "lifecycle": {
+      "state": "active",
+      "since": "2026-10-20",
+      "reason": "S103: the decisions are the request_combination rules; this function only computes intervals and applies the outcome"
+     },
+     "tests": [
+      "tests/s103_request_semantics.test.ts"
+     ]
+    },
+    {
+     "id": "RQ9",
+     "file": "src/phase249_decision.ts",
+     "function": "checkCriterion",
+     "decides": "a requirement that cannot be verified from declarations never excludes a product (outcome unknown, not fails)",
+     "class": "invariant (reliability)",
+     "lifecycle": {
+      "state": "active",
+      "since": "2026-10-20",
+      "reason": "owner follow-up on S102: 'Un requisito non verificabile non può escludere definitivamente un prodotto' (reliability invariant); kept in code: it is the outcome of the check itself"
+     },
+     "tests": [
+      "tests/phase253_advice.test.ts",
+      "tests/s103_request_semantics.test.ts"
+     ]
     }
+   ]
+  },
+  "admission": {
+   "note": "S103 (owner authorisation 2026-10-20): rules are admitted, not only executed. knowledge_rules checks at load time the admission record of every rule that runs in a program whose admission is required (meaning, scope, prerequisites, exceptions, counterexamples with tests, provenance, consumers, classification, evidence), that an invariant names its kind and a justification as a general property, and that leaving the invariant class has an owner decision. Lifecycle states add experimental (shadow only, never decides) and rejected.",
+   "analysis": "knowledge_rules analyseProgram: overlap witnesses (verified by evaluation), contests named by rule (blanket contests refused), declared exclusions proved at load, redundant and never-firing rules, gaps over declared input domains; ANALYSIS_COVERAGE states the complete and partial classes",
+   "programs": {
+    "observation_semantics": {
+     "required": true,
+     "legacyUnreviewed": 86,
+     "note": "admitted before S103; the list may only shrink"
+    },
+    "request_requirements": {
+     "required": true,
+     "legacyUnreviewed": 0
+    },
+    "request_combination": {
+     "required": true,
+     "legacyUnreviewed": 0
+    }
+   },
+   "tests": [
+    "tests/s103_rule_admission.test.ts",
+    "tests/s103_request_semantics.test.ts"
    ]
   }
  }

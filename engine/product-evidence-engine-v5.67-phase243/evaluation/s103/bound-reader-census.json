@@ -1,0 +1,11 @@
+{
+ "schema": "pee.s103.bound-reader-census.v1",
+ "statement": "S103 (D31/F12, owner authorisation item 5): before retiring the Phase253 local bound reader (MIN_BEFORE, MAX_BEFORE, MIN_AFTER, MAX_AFTER), its readings were compared with the quantity-knowledge reader (quantityBound) on every quantity of the 206 regression requests and the request-path test texts, and phrase by phrase over the local reader's vocabulary. Counts only; the request texts are in the regression sets.",
+ "material": "206 regression requests (spent; scripts/s83-advice-regression.mjs) and string literals of tests/phase253_advice, s85_safety_and_quantities, s102_rule_lifecycle, s103_request_semantics, phase248_advisory_journey, s80_request_coverage",
+ "quantities": {"neither_bounded": 116, "both_min": 51, "both_max": 17, "local_none_shared_max": 1, "local_differs_from_shared": 0},
+ "sharedOnlyExample": "'no louder than 44 dB' (a level the local reader never read)",
+ "vocabulary": {"localPhrases": 49, "missingFromSharedBefore": ["min", "min.", "max", "max."], "missingFromSharedAfter": ["or bigger", "or larger", "or longer", "min", "or smaller", "or narrower", "or lighter", "or shorter", "or under", "<property word> or less", "<property word> max"],
+  "cause": "the shared reader treated the dot of 'min.'/'max.' as a sentence break and had no property-word prefix; 12 phrases were not in the pack",
+  "change": "qk.2.5 adds the phrases and boundPropertyWords to language.en; quantityBound skips abbreviation dots; after the change the shared reader covers all 49 local phrases (scratch script bound-vocab.mjs, re-run in tests/s103_request_semantics.test.ts#one bound reader reads every phrase of the retired local reader)"},
+ "decision": "RQ01 and RQ02 superseded by RQ03 and RQ04; the B-READERS contests removed (no second reader can disagree any more)"
+}

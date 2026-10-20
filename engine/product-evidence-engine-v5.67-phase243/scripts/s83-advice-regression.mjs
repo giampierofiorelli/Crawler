@@ -14,7 +14,7 @@ const SETS=['phase248/journey-dev.json','phase248/journey-heldout.json','phase24
 if(process.argv.includes('--diff')){
  const i=process.argv.indexOf('--diff');const A=JSON.parse(readFileSync(process.argv[i+1],'utf8')),B=JSON.parse(readFileSync(process.argv[i+2],'utf8'));
  const T={};const inc=(k,n=1)=>T[k]=(T[k]??0)+n;const ex=[];
- const fields=['category','response','decision','needs','unresolved','unassessedObjectives','statements','limitations','researchPlan','goalOutcomes','authorisationTrace','uninterpreted','quantityRequirements','featurePreferences','questions','constraints','unmappedConstraints','shortlist','excluded'];
+ const fields=['category','response','decision','needs','unresolved','unassessedObjectives','statements','limitations','researchPlan','goalOutcomes','authorisationTrace','uninterpreted','quantityRequirements','featurePreferences','questions','constraints','unmappedConstraints','otherLimits','shortlist','excluded'];
  for(const [id,a] of Object.entries(A.answers)){const b=B.answers[id];inc('requests');if(!b){inc('missing_in_new');continue;}
   let any=false;for(const f of fields){if(JSON.stringify(a[f]??null)!==JSON.stringify(b[f]??null)){inc('changed:'+f);any=true;}}
   if(any){inc('changed_requests');ex.push({id,changed:fields.filter(f=>JSON.stringify(a[f]??null)!==JSON.stringify(b[f]??null))});}
@@ -35,6 +35,6 @@ for(const [n,t] of uniq.entries()){const a=adviseFromRequest253(t,store,CATEGORY
  answers['r'+String(n).padStart(3,'0')]={text:t,category:a.category,response:a.response,decision:a.goalAssessment?.decision??null,needs:a.needs,unresolved:a.unresolved,
   unassessedObjectives:a.unassessedObjectives,statements:a.statements,limitations:a.limitations,researchPlan:a.researchPlan,goalOutcomes:a.goalAssessment?.outcomes??null,
   authorisationTrace:a.authorisationTrace??null,uninterpreted:a.uninterpreted??null,
-  quantityRequirements:a.quantityRequirements??null,featurePreferences:a.featurePreferences??null,questions:a.questions,constraints:a.constraints,unmappedConstraints:a.unmappedConstraints,shortlist:a.shortlist?.map(x=>x.productId??x.id??x)??null,excluded:a.excluded?.map(x=>x.productId??x.id??x)??null};}
+  quantityRequirements:a.quantityRequirements??null,featurePreferences:a.featurePreferences??null,questions:a.questions,constraints:a.constraints,unmappedConstraints:a.unmappedConstraints,otherLimits:a.otherLimits??null,shortlist:a.shortlist?.map(x=>x.productId??x.id??x)??null,excluded:a.excluded?.map(x=>x.productId??x.id??x)??null};}
 const out={schema:'pee.s83.advice-regression.v1',build:BUILD,store:'copy of the live store (read only use)',requests:uniq.length,answers};
 if(OUT)writeFileSync(OUT,JSON.stringify(out,null,1)+'\n');console.log(JSON.stringify({requests:uniq.length}));

@@ -1,0 +1,29 @@
+{
+ "schema": "pee.s103.property-seeds.v1",
+ "statement": "S103 (owner authorisation 2026-10-20: 'Store reproducible seeds and minimized counterexamples'). Fixed fast-check seeds of the property tests in tests/s103_rule_admission.test.ts and tests/s103_request_semantics.test.ts: a run with the same seed generates the same cases, and a failure reports its seed and path for exact replay. Counterexamples fast-check found and shrank during development are recorded below, each with the change it led to and the example test that now keeps it.",
+ "fastCheck": "4.10.2",
+ "seeds": {
+  "os-contests-governance-only": 1031,
+  "preference-never-hard": 2041,
+  "reorder-independent": 3061,
+  "reorder-correction": 4073,
+  "interval-emptiness": 5081,
+  "two-minimums": 6091,
+  "strict-check": 7103
+ },
+ "counterexamples": [
+  {
+   "test": "tests/s103_request_semantics.test.ts#property: two minimums apply the larger, in any unit",
+   "seed": 6091,
+   "found": "2026-10-20",
+   "shrunk": [
+    8383,
+    1
+   ],
+   "input": "A kettle of at least 8383 ml and at least 1 litres.",
+   "failure": "the applied limit's base value was 8.383000000000001 l (floating-point conversion of ml), not 8.383 l",
+   "change": "baseValue253 rounds the base value to 12 significant digits (src/phase253_request_constraints.ts); the same canonical value feeds the request_combination limit facts",
+   "keptBy": "tests/s103_request_semantics.test.ts#units are normalised before limits are compared"
+  }
+ ]
+}

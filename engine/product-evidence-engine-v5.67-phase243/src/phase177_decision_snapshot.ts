@@ -14,7 +14,8 @@ export type CriterionPriority177='hard'|'high'|'normal'|'low';
 export type CriterionValue177=
  {kind:'boolean';value:boolean}|
  {kind:'choice';value:string}|
- {kind:'quantity';value:number;unit:string};
+ {kind:'quantity';value:number;unit:string;
+  /** S103: the limit itself does not satisfy the criterion (strict bound) */ exclusive?:true};
 export type Task177='product_selection'|'solution_comparison'|'use_or_troubleshoot'|'unresolved';
 export interface Criterion177{
  key:string;label:string;value:CriterionValue177;status:CriterionStatus177;
@@ -58,6 +59,8 @@ function validatedValue(v:unknown):CriterionValue177{
  if(x.kind==='boolean'&&typeof x.value==='boolean'&&Object.keys(x).sort().join(',')==='kind,value')return {kind:x.kind,value:x.value};
  if(x.kind==='choice'&&typeof x.value==='string'&&x.value.length>0&&x.value.length<=120&&x.value.trim()===x.value&&!/[\u0000-\u001f]/.test(x.value)&&Object.keys(x).sort().join(',')==='kind,value')return {kind:x.kind,value:x.value};
  if(x.kind==='quantity'&&typeof x.value==='number'&&Number.isFinite(x.value)&&Math.abs(x.value)<=1e12&&keyOk(x.unit)&&Object.keys(x).sort().join(',')==='kind,unit,value')return {kind:x.kind,value:x.value,unit:x.unit};
+ // S103: a strict limit ("more than 4 L", "under £120") excludes the limit itself; absent means inclusive (unchanged)
+ if(x.kind==='quantity'&&typeof x.value==='number'&&Number.isFinite(x.value)&&Math.abs(x.value)<=1e12&&keyOk(x.unit)&&x.exclusive===true&&Object.keys(x).sort().join(',')==='exclusive,kind,unit,value')return {kind:x.kind,value:x.value,unit:x.unit,exclusive:true};
  throw Error('phase177_invalid_criterion_value');
 }
 function validatedScope(scope:ChoiceScope177):ChoiceScope177{

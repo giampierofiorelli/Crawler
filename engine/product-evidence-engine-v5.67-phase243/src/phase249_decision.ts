@@ -30,6 +30,8 @@ export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
  // A boiler is an internal heating vessel, not the product's capacity (reality check 2026-10-16: a coffee machine was
  // excluded on its boiler volume).
  capacity_min:{label:'capacity at least',property:/\b(?:capacity|volume)\b/i,exclude:/\b(?:battery|bin|tank|container|bag|collection|water|dust|boiler)\b/i,dimension:'volume',bound:'min'},
+ // S103: the upper end of a stated interval ("between 3 and 5 litres") is checkable too
+ capacity_max:{label:'capacity at most',property:/\b(?:capacity|volume)\b/i,exclude:/\b(?:battery|bin|tank|container|bag|collection|water|dust|boiler)\b/i,dimension:'volume',bound:'max'},
  water_tank_capacity_min:{label:'water tank capacity at least',property:/\b(?:water )?(?:tank|reservoir)\b/i,exclude:/\b(?:drip|waste|milk|bean|steam)\b/i,dimension:'volume',bound:'min',
   alsoWhen:{property:/^capacity$/i,rawValue:/\bwater tank\b/i}},
  width_max:{label:'width at most',property:/\bwidth\b/i,dimension:'length',bound:'max',axis:'W'},
@@ -37,6 +39,7 @@ export const SPEC_CRITERIA249:Readonly<Record<string,SpecCriterion249>>={
  depth_max:{label:'depth at most',property:/\bdepth\b/i,dimension:'length',bound:'max',axis:'D'},
  weight_max:{label:'weight at most',property:/\bweight\b/i,exclude:/\b(?:gross|shipping|box|package|packaging)\b/i,dimension:'mass',bound:'max'},
  power_min:{label:'power at least',property:/\b(?:power|wattage|rated power)\b/i,exclude:/\b(?:consumption|standby|supply|cord|levels?|source)\b/i,dimension:'power',bound:'min'},
+ power_max:{label:'power at most',property:/\b(?:power|wattage|rated power)\b/i,exclude:/\b(?:consumption|standby|supply|cord|levels?|source)\b/i,dimension:'power',bound:'max'},
  budget_max:{label:'price at most',property:/^price$/i,dimension:'price',bound:'max'},
  // Phase252: declared playback time; makers usually declare it as "up to" under their own conditions (volume, ANC off).
  battery_life_min:{label:'battery life at least',property:/\b(?:battery life|playback time|music playback|playtime)\b/i,exclude:/\b(?:charg\w*|standby|recharge|talk)\b/i,dimension:'duration',bound:'min'},
@@ -82,6 +85,9 @@ export interface Advice249 {
 function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):CriterionCheck249{
  if(c.value.kind!=='quantity')return {key:c.key,outcome:'unknown',code:'not_a_quantity',reason:'criterion is not a quantity',evidence:[]};
  const unit=c.value.unit,limit=c.value.value;
+ // S103: a strict limit ("more than", "under") is not met by a value equal to it
+ const strict=c.value.exclusive===true;const meets=(x:number)=>spec.bound==='min'?(strict?x>limit:x>=limit):(strict?x<limit:x<=limit);
+ const sym=spec.bound==='min'?(strict?'>':'≥'):(strict?'<':'≤');
  // Declarations of the base product (variant-specific values are not applied to the whole product).
  const rel=p.declarations.filter(d=>!d.variantId&&((spec.property.test(d.property)&&!(spec.exclude?.test(d.property)))||
   (!!spec.alsoWhen&&spec.alsoWhen.property.test(d.property)&&spec.alsoWhen.rawValue.test(d.rawValue))));
@@ -94,16 +100,16 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  if(!vals.length){
   const ub=rel.filter(d=>d.value?.kind==='quantity'&&d.value.bound==='max').map(d=>({d,n:comparable249({...d.value,bound:undefined} as Value245,spec.dimension,unit)})).filter(x=>x.n!==null) as {d:CandidateDeclaration249;n:number}[];
   if(ub.length&&spec.bound==='min'){const top=Math.max(...ub.map(x=>x.n));
-   return top<limit?{key:c.key,outcome:'fails',code:'fails',reason:`declared at most ${round(top)} ${unit} ("up to"); required ≥ ${limit} ${unit}`,evidence:ub.map(x=>ev(x.d))}
+   return !meets(top)?{key:c.key,outcome:'fails',code:'fails',reason:`declared at most ${round(top)} ${unit} ("up to"); required ${sym} ${limit} ${unit}`,evidence:ub.map(x=>ev(x.d))}
     :{key:c.key,outcome:'unknown',code:'upper_bound_only',reason:`declared "up to" ${round(top)} ${unit}: an upper bound under the maker's conditions, not the minimum you need`,evidence:ub.map(x=>ev(x.d))};}
   // Phase255: a declared range decides only when every declared value is on the same side of the limit.
   const ranges=rel.filter(d=>d.value?.kind==='range').map(d=>{const v=d.value as Extract<Value245,{kind:'range'}>;
    const q=(n:number)=>comparable249({kind:'quantity',number:n,unit:v.unit,approximate:false} as Value245,spec.dimension,unit);return {d,lo:v.approximate?null:q(v.min),hi:v.approximate?null:q(v.max)};})
    .filter(x=>x.lo!==null&&x.hi!==null) as {d:CandidateDeclaration249;lo:number;hi:number}[];
   if(ranges.length===1){const r=ranges[0];
-   const pass=spec.bound==='min'?r.lo>=limit:r.hi<=limit,fail=spec.bound==='min'?r.hi<limit:r.lo>limit;
-   return pass?{key:c.key,outcome:'meets',code:'meets',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:[ev(r.d)]}
-    :fail?{key:c.key,outcome:'fails',code:'fails',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:[ev(r.d)]}
+   const pass=spec.bound==='min'?meets(r.lo):meets(r.hi),fail=spec.bound==='min'?!meets(r.hi):!meets(r.lo);
+   return pass?{key:c.key,outcome:'meets',code:'meets',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit}; required ${sym} ${limit} ${unit}`,evidence:[ev(r.d)]}
+    :fail?{key:c.key,outcome:'fails',code:'fails',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit}; required ${sym} ${limit} ${unit}`,evidence:[ev(r.d)]}
     :{key:c.key,outcome:'unknown',code:'range_straddles',reason:`declared range ${round(r.lo)}–${round(r.hi)} ${unit} lies on both sides of the limit`,evidence:[ev(r.d)]};}
   // A number without its unit is retained evidence, not an absence; the unit is never guessed.
   const unitless=rel.filter(d=>d.value?.kind==='number');
@@ -118,8 +124,8 @@ function checkCriterion(c:Criterion177,spec:SpecCriterion249,p:Candidate249):Cri
  const lo=Math.min(...vals.map(x=>x.n)),hi=Math.max(...vals.map(x=>x.n));
  // Sources disagreeing by more than 2 % are a conflict to resolve, not a pass or a fail.
  if(hi-lo>Math.max(Math.abs(hi),Math.abs(lo))*0.02)return {key:c.key,outcome:'unknown',code:'sources_disagree',reason:`sources disagree (${round(lo)}–${round(hi)} ${unit})`,evidence:vals.map(x=>ev(x.d))};
- const ok=spec.bound==='min'?lo>=limit:hi<=limit;
- return {key:c.key,outcome:ok?'meets':'fails',code:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${spec.bound==='min'?'≥':'≤'} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
+ const ok=spec.bound==='min'?meets(lo):meets(hi);
+ return {key:c.key,outcome:ok?'meets':'fails',code:ok?'meets':'fails',reason:`declared ${round(spec.bound==='min'?lo:hi)} ${unit}; required ${sym} ${limit} ${unit}`,evidence:vals.map(x=>ev(x.d))};
 }
 const OVERALL_DIMENSIONS=/\b(?:dimensions?|size|measurements)\b/i;
 const COMPONENT_DIMENSIONS=/\b(?:gross|slot|slots|box|package|packaging|packed|shipping|carton|internal|interior|inner|cavity|drum|bowl|basket|jug|tank|plate|door|opening|cable|cord)\b/i;

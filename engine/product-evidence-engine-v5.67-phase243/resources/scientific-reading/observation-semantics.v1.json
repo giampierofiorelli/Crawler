@@ -1,6 +1,6 @@
 {
  "schema": "pee.knowledge-rules.v1",
- "version": "os.3",
+ "version": "os.4",
  "statement": "S100 (owner review of S99, 2026-10-20; verbatim in .claude/skills/pee-guided-learning/references/owner-review-s99-rule-governance-2026-10-20.md): the statement role, nature and provenance of an observation are decided once, by claims from typed evidence cues about that occurrence and its context, under the precedence policy of knowledge_rules.ts (constraint > explicit > inherited; narrowest scope; equal-level disagreement abstains; defaults are presumptions). Which extractor found the value is a presumption only. Cue readers in src/observation_semantics.ts emit the cues.",
  "vocabulary": [
   {
@@ -623,138 +623,775 @@
     },
     "contested": [
      {
+      "id": "R-VAL",
       "field": "role",
       "tier": "explicit",
-      "scopes": [
-       "value",
-       "cell",
-       "clause",
-       "header",
-       "row"
+      "between": [
+       [
+        "OS01"
+       ],
+       [
+        "OS02"
+       ]
       ],
-      "values": [
-       "result",
-       "specification",
-       "threshold",
-       "norm",
-       "target",
-       "condition"
-      ],
-      "why": "Different statements about one occurrence can disagree (a maker's claim and a measurement in one clause, a condition cue and a result verb): at equal authority and scope PEE abstains and reports the conflict."
+      "why": "A value that modifies both a norm noun and a threshold noun ('the 44 dB limit of the standard') could be either reference: abstain."
      },
      {
+      "id": "R-CL-RS",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS03",
+        "OS06",
+        "OS09",
+        "OS25"
+       ],
+       [
+        "OS13",
+        "OS15",
+        "OS17",
+        "OS20"
+       ]
+      ],
+      "why": "A measurement, observation or calculation and a maker's or certifier's statement in one clause ('measured at 62 dB against the claimed 60 dB'): the clause does not say which statement the value belongs to."
+     },
+     {
+      "id": "R-CL-RR",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS03",
+        "OS06",
+        "OS09",
+        "OS25"
+       ],
+       [
+        "OS27",
+        "OS28",
+        "OS29"
+       ]
+      ],
+      "why": "A measuring verb and a target, norm or threshold word in one clause ('measured 62 dB, above the 60 dB limit'): the value may be the result or the reference."
+     },
+     {
+      "id": "R-CL-SR",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS13",
+        "OS15",
+        "OS17",
+        "OS20"
+       ],
+       [
+        "OS27",
+        "OS28",
+        "OS29"
+       ]
+      ],
+      "why": "A declared figure stated against a target, norm or threshold ('rated 30 dB, below the 35 dB requirement'): the value may be the specification or the reference."
+     },
+     {
+      "id": "R-CL-REF1",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS27"
+       ],
+       [
+        "OS28",
+        "OS29"
+       ]
+      ],
+      "why": "Target and norm or threshold words in one clause (a target set by a standard): which reference role the value has is not settled by the clause."
+     },
+     {
+      "id": "R-CL-REF2",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS28"
+       ],
+       [
+        "OS29"
+       ]
+      ],
+      "why": "Norm and threshold words in one clause (a limit stated by a standard): which reference role the value has is not settled by the clause."
+     },
+     {
+      "id": "R-CL-COND",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS23"
+       ],
+       [
+        "OS03",
+        "OS06",
+        "OS09",
+        "OS25",
+        "OS13",
+        "OS15",
+        "OS17",
+        "OS20",
+        "OS27",
+        "OS28",
+        "OS29"
+       ]
+      ],
+      "why": "A condition-setting cue ('at 1 m', 'on the highest setting') with another role cue in one clause: the value may be the setting or the value obtained or declared under it."
+     },
+     {
+      "id": "R-CELL",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS30",
+        "OS38"
+       ],
+       [
+        "OS33",
+        "OS35"
+       ]
+      ],
+      "why": "A table cell whose own terms name a test or an estimate and a declaration or certification (a disputed 1G cell): undecided."
+     },
+     {
+      "id": "R-HEADER",
+      "field": "role",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS40",
+        "OS48"
+       ],
+       [
+        "OS43",
+        "OS45"
+       ]
+      ],
+      "why": "A column header that names a test or an estimate and a declaration or certification: undecided."
+     },
+     {
+      "id": "R-SENT",
+      "field": "role",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS52"
+       ],
+       [
+        "OS55"
+       ]
+      ],
+      "why": "The value's sentence states a test elsewhere and a declaration elsewhere: the context does not settle the role."
+     },
+     {
+      "id": "R-TABLE",
+      "field": "role",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS57",
+        "OS65"
+       ],
+       [
+        "OS60",
+        "OS62"
+       ]
+      ],
+      "why": "A caption, introduction or linked statement that names both tests or estimates and declarations ('specs and test results'): undecided."
+     },
+     {
+      "id": "R-SECTION",
+      "field": "role",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS67",
+        "OS75"
+       ],
+       [
+        "OS70",
+        "OS72"
+       ]
+      ],
+      "why": "A section heading that announces both tests or estimates and specifications: undecided."
+     },
+     {
+      "id": "N-CL-MD",
       "field": "nature",
       "tier": "explicit",
-      "scopes": [
-       "value",
-       "cell",
-       "clause",
-       "header",
-       "row"
+      "between": [
+       [
+        "OS04",
+        "OS07",
+        "OS10"
+       ],
+       [
+        "OS14",
+        "OS16",
+        "OS18",
+        "OS21"
+       ]
       ],
-      "values": [
-       "measured",
-       "declared",
-       "calculated",
-       "condition"
-      ],
-      "why": "A measurement verb and a calculation or declaration cue in one clause leave the nature undecided."
+      "why": "A measuring or observation verb and a declaration, maker's claim or certification in one clause: measured or declared is not settled."
      },
      {
+      "id": "N-CL-CALC",
+      "field": "nature",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS04",
+        "OS07",
+        "OS10",
+        "OS14",
+        "OS16",
+        "OS18",
+        "OS21"
+       ],
+       [
+        "OS26"
+       ]
+      ],
+      "why": "A calculation output and a measuring or declaring cue in one clause (a figure computed from a measurement or a declaration): undecided."
+     },
+     {
+      "id": "N-CL-COND",
+      "field": "nature",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS24"
+       ],
+       [
+        "OS04",
+        "OS07",
+        "OS10",
+        "OS14",
+        "OS16",
+        "OS18",
+        "OS21",
+        "OS26"
+       ]
+      ],
+      "why": "A condition-setting cue with a measuring, declaring or calculating cue in one clause: the value may be the condition or the measured, declared or calculated value."
+     },
+     {
+      "id": "N-CELL-MD",
+      "field": "nature",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS31"
+       ],
+       [
+        "OS34",
+        "OS36"
+       ]
+      ],
+      "why": "A cell naming a test and a declaration or certification: undecided."
+     },
+     {
+      "id": "N-CELL-CALC",
+      "field": "nature",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS31",
+        "OS34",
+        "OS36"
+       ],
+       [
+        "OS39"
+       ]
+      ],
+      "why": "A cell naming an estimate and a test or declaration: undecided."
+     },
+     {
+      "id": "N-HEADER-MD",
+      "field": "nature",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS41"
+       ],
+       [
+        "OS44",
+        "OS46"
+       ]
+      ],
+      "why": "A header naming a test and a declaration or certification: undecided."
+     },
+     {
+      "id": "N-HEADER-CALC",
+      "field": "nature",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS41",
+        "OS44",
+        "OS46"
+       ],
+       [
+        "OS49"
+       ]
+      ],
+      "why": "A header naming an estimate and a test or declaration: undecided."
+     },
+     {
+      "id": "N-SENT",
+      "field": "nature",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS53"
+       ],
+       [
+        "OS56"
+       ]
+      ],
+      "why": "Test and declaration statements elsewhere in the value's sentence: undecided."
+     },
+     {
+      "id": "N-TABLE-MD",
+      "field": "nature",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS58"
+       ],
+       [
+        "OS61",
+        "OS63"
+       ]
+      ],
+      "why": "Table context naming tests and declarations: undecided."
+     },
+     {
+      "id": "N-TABLE-CALC",
+      "field": "nature",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS58",
+        "OS61",
+        "OS63"
+       ],
+       [
+        "OS66"
+       ]
+      ],
+      "why": "Table context naming estimates and tests or declarations: undecided."
+     },
+     {
+      "id": "N-SECTION-MD",
+      "field": "nature",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS68"
+       ],
+       [
+        "OS71",
+        "OS73"
+       ]
+      ],
+      "why": "A section heading announcing tests and specifications: undecided."
+     },
+     {
+      "id": "N-SECTION-CALC",
+      "field": "nature",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS68",
+        "OS71",
+        "OS73"
+       ],
+       [
+        "OS76"
+       ]
+      ],
+      "why": "A section heading announcing estimates and tests or specifications: undecided."
+     },
+     {
+      "id": "P-CL-PUB",
       "field": "provenance",
       "tier": "explicit",
-      "scopes": [
-       "value",
-       "cell",
-       "clause",
-       "header",
-       "row"
+      "between": [
+       [
+        "OS05",
+        "OS08"
+       ],
+       [
+        "OS19",
+        "OS22"
+       ]
       ],
-      "values": [
-       "publisher",
-       "manufacturer",
-       "third_party"
-      ],
-      "why": "A first-person test and a maker's or certifier's statement about one value leave the provenance undecided."
+      "why": "A first-person test and a maker's or certifier's statement about one value in one clause: who produced the value is not settled."
      },
      {
-      "field": "role",
-      "tier": "inherited",
-      "scopes": [
-       "sentence",
-       "table",
-       "section",
-       "document",
-       "source"
+      "id": "P-CL-MAKER",
+      "field": "provenance",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS19"
+       ],
+       [
+        "OS22"
+       ]
       ],
-      "values": [
-       "result",
-       "specification"
-      ],
-      "why": "Context of one scope can name both a test and a specification (a heading 'specs and test results'): undecided."
+      "why": "A maker's claim and a certification in one clause (a maker citing a certified rating): manufacturer or third party is not settled."
      },
      {
-      "field": "nature",
-      "tier": "inherited",
-      "scopes": [
-       "sentence",
-       "table",
-       "section",
-       "document",
-       "source"
+      "id": "P-CELL",
+      "field": "provenance",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS32"
+       ],
+       [
+        "OS37"
+       ]
       ],
-      "values": [
-       "measured",
-       "declared",
-       "calculated"
-      ],
-      "why": "Context naming measurement and declaration or estimate at one scope leaves the nature undecided."
+      "why": "A cell naming the publisher's test and a certification: undecided."
      },
      {
+      "id": "P-HEADER",
+      "field": "provenance",
+      "tier": "explicit",
+      "between": [
+       [
+        "OS42"
+       ],
+       [
+        "OS47"
+       ]
+      ],
+      "why": "A header naming the publisher's test and a certification: undecided."
+     },
+     {
+      "id": "P-TABLE",
       "field": "provenance",
       "tier": "inherited",
-      "scopes": [
-       "sentence",
-       "table",
-       "section",
-       "document",
-       "source"
+      "between": [
+       [
+        "OS59"
+       ],
+       [
+        "OS64"
+       ]
       ],
-      "values": [
-       "publisher",
-       "manufacturer",
-       "third_party"
-      ],
-      "why": "Context naming the publisher's test and a maker's or certifier's statement at one scope leaves the provenance undecided."
+      "why": "Table context naming the publisher's tests and certifications: undecided."
      },
      {
-      "field": "role",
-      "tier": "default",
-      "scopes": [
-       "value",
-       "document"
+      "id": "P-SECTION",
+      "field": "provenance",
+      "tier": "inherited",
+      "between": [
+       [
+        "OS69"
+       ],
+       [
+        "OS74"
+       ]
       ],
-      "values": [
-       "result",
-       "specification"
-      ],
-      "why": "Presumptions are only reported."
-     },
+      "why": "A section heading announcing the publisher's tests and certifications: undecided."
+     }
+    ],
+    "contestHistory": [
      {
-      "field": "nature",
-      "tier": "default",
-      "scopes": [
-       "value",
-       "document"
-      ],
-      "values": [
-       "measured",
-       "declared"
-      ],
-      "why": "Presumptions are only reported."
+      "date": "2026-10-20",
+      "change": "S103: the eight blanket contests (by field, tier, scopes and values) are replaced by 30 contests that name the competing rules; the static analysis (knowledge_rules analyseProgram) verified that all 129 named pairs can fire together (a witness each) and that no other pair can conflict.",
+      "previous": [
+       {
+        "field": "role",
+        "tier": "explicit",
+        "scopes": [
+         "value",
+         "cell",
+         "clause",
+         "header",
+         "row"
+        ],
+        "values": [
+         "result",
+         "specification",
+         "threshold",
+         "norm",
+         "target",
+         "condition"
+        ],
+        "why": "Different statements about one occurrence can disagree (a maker's claim and a measurement in one clause, a condition cue and a result verb): at equal authority and scope PEE abstains and reports the conflict."
+       },
+       {
+        "field": "nature",
+        "tier": "explicit",
+        "scopes": [
+         "value",
+         "cell",
+         "clause",
+         "header",
+         "row"
+        ],
+        "values": [
+         "measured",
+         "declared",
+         "calculated",
+         "condition"
+        ],
+        "why": "A measurement verb and a calculation or declaration cue in one clause leave the nature undecided."
+       },
+       {
+        "field": "provenance",
+        "tier": "explicit",
+        "scopes": [
+         "value",
+         "cell",
+         "clause",
+         "header",
+         "row"
+        ],
+        "values": [
+         "publisher",
+         "manufacturer",
+         "third_party"
+        ],
+        "why": "A first-person test and a maker's or certifier's statement about one value leave the provenance undecided."
+       },
+       {
+        "field": "role",
+        "tier": "inherited",
+        "scopes": [
+         "sentence",
+         "table",
+         "section",
+         "document",
+         "source"
+        ],
+        "values": [
+         "result",
+         "specification"
+        ],
+        "why": "Context of one scope can name both a test and a specification (a heading 'specs and test results'): undecided."
+       },
+       {
+        "field": "nature",
+        "tier": "inherited",
+        "scopes": [
+         "sentence",
+         "table",
+         "section",
+         "document",
+         "source"
+        ],
+        "values": [
+         "measured",
+         "declared",
+         "calculated"
+        ],
+        "why": "Context naming measurement and declaration or estimate at one scope leaves the nature undecided."
+       },
+       {
+        "field": "provenance",
+        "tier": "inherited",
+        "scopes": [
+         "sentence",
+         "table",
+         "section",
+         "document",
+         "source"
+        ],
+        "values": [
+         "publisher",
+         "manufacturer",
+         "third_party"
+        ],
+        "why": "Context naming the publisher's test and a maker's or certifier's statement at one scope leaves the provenance undecided."
+       },
+       {
+        "field": "role",
+        "tier": "default",
+        "scopes": [
+         "value",
+         "document"
+        ],
+        "values": [
+         "result",
+         "specification"
+        ],
+        "why": "Presumptions are only reported."
+       },
+       {
+        "field": "nature",
+        "tier": "default",
+        "scopes": [
+         "value",
+         "document"
+        ],
+        "values": [
+         "measured",
+         "declared"
+        ],
+        "why": "Presumptions are only reported."
+       }
+      ]
      }
     ]
-   }
+   },
+   "admission": {
+    "required": true,
+    "legacyUnreviewed": [
+     "OS01",
+     "OS02",
+     "OS03",
+     "OS04",
+     "OS05",
+     "OS06",
+     "OS07",
+     "OS08",
+     "OS09",
+     "OS10",
+     "OS13",
+     "OS14",
+     "OS15",
+     "OS16",
+     "OS17",
+     "OS18",
+     "OS19",
+     "OS20",
+     "OS21",
+     "OS22",
+     "OS23",
+     "OS24",
+     "OS25",
+     "OS26",
+     "OS27",
+     "OS28",
+     "OS29",
+     "OS30",
+     "OS31",
+     "OS32",
+     "OS33",
+     "OS34",
+     "OS35",
+     "OS36",
+     "OS37",
+     "OS38",
+     "OS39",
+     "OS40",
+     "OS41",
+     "OS42",
+     "OS43",
+     "OS44",
+     "OS45",
+     "OS46",
+     "OS47",
+     "OS48",
+     "OS49",
+     "OS50",
+     "OS51",
+     "OS52",
+     "OS53",
+     "OS54",
+     "OS55",
+     "OS56",
+     "OS57",
+     "OS58",
+     "OS59",
+     "OS60",
+     "OS61",
+     "OS62",
+     "OS63",
+     "OS64",
+     "OS65",
+     "OS66",
+     "OS67",
+     "OS68",
+     "OS69",
+     "OS70",
+     "OS71",
+     "OS72",
+     "OS73",
+     "OS74",
+     "OS75",
+     "OS76",
+     "OS77",
+     "OS78",
+     "OS79",
+     "OS80",
+     "OS81",
+     "OS82",
+     "OS83",
+     "OS84",
+     "OS85",
+     "OS86",
+     "OS87",
+     "OS88"
+    ],
+    "legacyReason": "Admitted in S100-S102, before the S103 admission process. Each will receive an admission record (meaning, scope, prerequisites, exceptions, counterexamples with tests, classification) when it is next changed or reviewed; this list may only shrink (tests/s103_rule_admission.test.ts)."
+   },
+   "domains": [
+    {
+     "predicate": "cue",
+     "arg": 1,
+     "values": [
+      "attributive",
+      "calculation_output",
+      "cell_cert_term",
+      "cell_declaration_term",
+      "cell_estimate_term",
+      "cell_test_term",
+      "certified",
+      "condition_setting",
+      "declaration_verb",
+      "document_test_protocol",
+      "extractor_specification_row",
+      "extractor_test_lead",
+      "first_person_test",
+      "generic_threshold",
+      "header_cert_term",
+      "header_declaration_term",
+      "header_estimate_term",
+      "header_test_term",
+      "maker_claim",
+      "measuring_verb",
+      "norm_cue",
+      "observation_verb",
+      "own_property_stated",
+      "page_tests_default",
+      "record_condition",
+      "section_cert_term",
+      "section_declaration_term",
+      "section_estimate_term",
+      "section_test_term",
+      "sentence_declaration",
+      "sentence_test_context",
+      "source_maker",
+      "table_cert_term",
+      "table_declaration_term",
+      "table_estimate_term",
+      "table_test_term",
+      "target_cue",
+      "value_norm_reference",
+      "value_threshold_reference"
+     ],
+     "abstains": {
+      "own_property_stated": "A blocking cue only: it withdraws a condition reading when the clause states the value's own property (OS23, OS24, OS50, OS51); it supports no role, nature or provenance by itself."
+     }
+    }
+   ]
   }
  ],
  "cueKinds": [
@@ -810,6 +1447,10 @@
   {
    "version": "os.3",
    "note": "S102 (owner review of S100): rule lifecycle. OS11 and OS12 return to the file as retired rules with their reason and evidence instead of being deleted; retired rules are never executed. No change of decisions."
+  },
+  {
+   "version": "os.4",
+   "note": "S103 governance only: contests name the competing rules (30 contests, 129 verified pairs) instead of blanket value groups; admission policy (86 legacy rules listed); cue domain for gap analysis. No rule changed; every decision is identical to os.3 (tests/s103_rule_admission.test.ts)."
   }
  ]
 }

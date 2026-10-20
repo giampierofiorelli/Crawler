@@ -69,7 +69,8 @@ test('S85 A: the quantity knowledge reads rates, between-ranges and the inch mar
 });
 test('S85 A: Phase253 takes unit and kind from the quantity knowledge and keeps bound, property, space and criterion',()=>{
  const c=(t:string)=>extractConstraints253(t).constraints.map(x=>`${x.criterion}=${x.value}${x.unit}:${x.status}:${x.describes}`);
- assert.deepEqual(c('a dehumidifier between 3 and 5 litres'),['capacity_min=3l:stated_in_request:product']);
+ // S103 (owner: "between 3 and 5 litres is represented only partially"): both ends are limits
+ assert.deepEqual(c('a dehumidifier between 3 and 5 litres'),['capacity_min=3l:stated_in_request:product','capacity_max=5l:stated_in_request:product']);
  assert.deepEqual(c('a dishwasher that fits a space 40cm wide'),['width_max=40cm:stated_in_request:available_space']);
  assert.deepEqual(c('A kettle of at least 1.5 litres, no wider than 20 cm, at least 2000 W.'),['capacity_min=1.5l:stated_in_request:product','width_max=20cm:stated_in_request:product','power_min=2000W:stated_in_request:product']);
  assert.deepEqual(c('headphones with battery life of at least 30 hours'),['battery_life_min=30h:stated_in_request:product']);
@@ -81,7 +82,7 @@ test('S85 A: the six S84 counterexamples on the request path; nothing recognised
  const a1=ask(s,'I want a dehumidifier that extracts 12 litres a day');
  assert.deepEqual(a1.quantityRequirements!.map(q=>[q.span,q.bound,q.metric]),[['12 litres a day','unstated','dehumidifier_capacity']]);
  assert.ok(a1.questions.some(q=>/at least or at most 12 litres a day/.test(q)));assert.ok(!a1.questions.some(q=>/capacity\)\?/.test(q)&&/12 l\b/.test(q)));
- assert.deepEqual(ask(s,'a dehumidifier between 3 and 5 litres').constraints.map(c=>c.criterion),['capacity_min']);
+ assert.deepEqual(ask(s,'a dehumidifier between 3 and 5 litres').constraints.map(c=>c.criterion),['capacity_min','capacity_max'],'S103: both ends of the interval');
  assert.deepEqual(ask(s,'a dishwasher that fits a space 40cm wide').constraints.map(c=>c.criterion),['width_max']);
  assert.deepEqual(ask(s,'an air fryer with at least 2 kg capacity').quantityRequirements!.map(q=>[q.bound,q.kind]),[['min','mass']]);
  const tv=ask(s,'a tv at least 55 inches');assert.deepEqual(tv.quantityRequirements!.map(q=>[q.span,q.bound,q.kind]),[['at least 55 inches','min','length']]);

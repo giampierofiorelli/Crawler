@@ -1,7 +1,7 @@
 {
  "schema": "pee.quantity-knowledge.v1",
- "version": "qk.2.4",
- "statement": "Typed scientific knowledge about quantities: what a quantity is (kind, dimension), how it is expressed (units and their properties), which quantities are defined by a method (metrics) and which conditions make results comparable. General physics and metrology, never product facts. Written in PEE's own words; facts only, no third-party text reproduced. v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion.",
+ "version": "qk.2.5",
+ "statement": "Typed scientific knowledge about quantities: what a quantity is (kind, dimension), how it is expressed (units and their properties), which quantities are defined by a method (metrics) and which conditions make results comparable. General physics and metrology, never product facts. Written in PEE's own words; facts only, no third-party text reproduced. v2 (2026-10-18) adds test methods with their fixed conditions, physical and definitional relations, ordinal class scales, and label-reading language; entries prompted by the owner's category research packages are verified against the sources they name before inclusion. qk.2.5 (S103): the bound words of the retired Phase253 local request reader are pack data (one bound reader for requests and documents).",
  "dimensionBasis": [
   "L",
   "M",
@@ -2333,7 +2333,8 @@
     "over",
     "above",
     "greater than",
-    "upwards of"
+    "upwards of",
+    "min"
    ],
    "minAfter": [
     "or more",
@@ -2341,7 +2342,10 @@
     "or above",
     "minimum",
     "at least",
-    "+"
+    "+",
+    "or bigger",
+    "or larger",
+    "or longer"
    ],
    "max": [
     "at most",
@@ -2355,7 +2359,8 @@
     "below",
     "up to",
     "no greater than",
-    "within"
+    "within",
+    "max"
    ],
    "maxAfter": [
     "or less",
@@ -2363,7 +2368,12 @@
     "or below",
     "maximum",
     "max",
-    "at most"
+    "at most",
+    "or smaller",
+    "or narrower",
+    "or lighter",
+    "or shorter",
+    "or under"
    ],
    "perWords": [
     "per"
@@ -2729,7 +2739,17 @@
      "sdr"
     ],
     "note": "reading vocabulary for the structured qualitative model; a statement can be an observation (what was perceived), a judgement (an evaluation), or both"
-   }
+   },
+   "boundPropertyWords": [
+    "wide",
+    "high",
+    "tall",
+    "deep",
+    "long",
+    "heavy",
+    "across"
+   ],
+   "boundWordNote": "S103: 'min' after a number is not a bound word: it is also the symbol of the minute ('40 min.'), and readers that pass the number's span alone would read the unit as a minimum (found on spent S89-S99 pages: 7 run times). 'min' before a number ('min. 5 litres') stays a bound word."
   }
  },
  "methods": [

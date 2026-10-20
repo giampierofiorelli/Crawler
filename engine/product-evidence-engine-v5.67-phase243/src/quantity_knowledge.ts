@@ -59,6 +59,7 @@ export interface QuantityPack {schema:string;version:string;statement:string;dim
  metrics:MetricDef[];units:AtomDef[];levelUnits:LevelUnitDef[];methods?:MethodDef[];relations?:RelationDef[];scales?:ScaleDef[];kindEvidence?:KindEvidenceDef[];aspects?:AspectDef[];phenomena?:PhenomenonDef[];facets?:FacetDef[];useContexts?:{id:string;terms:string[]}[];
  language:{en:{min:string[];minAfter:string[];max:string[];maxAfter:string[];perWords:string[];exponentWords:Record<string,number>;increaseComparatives:string[];decreaseComparatives:string[];
   labelUnitPrepositions?:string[];basisWords?:Record<string,string>;axisLetters?:string[];
+  /** S103: property words that may stand between a quantity and its bound word ("40 cm wide or less") */ boundPropertyWords?:string[];
   evaluation?:{positive:string[];negative:string[];negators:string[];hedges:string[];reportedBy:string[]};
   qualitative?:{observationVerbs:string[];testCues:string[];experienceCues:string[];inferenceCues:string[];claimCues:string[];causeMarkers:string[];comparativeCues:string[];testMaterials:string[];environmentCues:string[]}}}}
 /** QE (qk.2.3): an observable descriptor (a whine, residue left, uneven browning), on an aspect and a facet. */
@@ -94,7 +95,9 @@ export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
  return out;
 }
 /** The default pack. v1 stays loadable (pass its JSON) to reproduce readings identified by qk.1. */
-/** qk.2.4 (audit S77): generic words no longer settle a specific metric. qk.2.3 kept in v2 for reproduction. */
+/** qk.2.4 (audit S77): generic words no longer settle a specific metric. qk.2.3 kept in v2 for reproduction.
+ * qk.2.5 (S103): the bound words of the retired Phase253 local reader ("min", "max", "or bigger", "or smaller", "or under",
+ * a property word before an after-bound) are pack data; the one bound reader serves requests and documents. */
 export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v3.json';
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
 /** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
@@ -573,11 +576,15 @@ export interface QuantityRequirement {span:string;start:number;end:number;bound:
  * by request requirements and (S99) document statements, where a bounded value is a limit, never a point result. */
 export function quantityBound(qk:QuantityKnowledge,text:string,start:number,end:number,kindIds:readonly string[]):{bound:'min'|'max'|null;cue:string|null;before:string;after:string}{
  const lang=qk.pack.language.en;
- let cs=0;for(const b of text.slice(0,start).matchAll(/[.;!?\n](?=\s|$)/g))cs=b.index!+1;
- const before=text.slice(Math.max(cs,start-70),start);const after=text.slice(end,end+40).split(/[.;!?\n](?=\s|$)|,/)[0];
+ // S103 (D31/F12, one bound reader): the dot of "min.", "max.", "approx." or "ca." is not a sentence break (fix carried over from
+ // the retired Phase253 local reader, S86b)
+ let cs=0;for(const b of text.slice(0,start).matchAll(/(?<!\b(?:[Mm]in|[Mm]ax|[Aa]pprox|[Cc]a))[.;!?\n](?=\s|$)/g))cs=b.index!+1;
+ const before=text.slice(Math.max(cs,start-70),start);const after=text.slice(end,end+40).split(/(?<!\b(?:[Mm]in|[Mm]ax|[Aa]pprox|[Cc]a))[.;!?\n](?=\s|$)|,/)[0];
  const lb=normText(before),la=normText(after);
  const ends=(ph:string)=>new RegExp('(?:^|[^\\p{L}])'+esc(normText(ph))+'\\s*$','u').test(lb);
- const starts=(ph:string)=>ph==='+'?/^\s*\+/.test(after):new RegExp('^\\s*'+esc(normText(ph))+'(?![\\p{L}])','u').test(la);
+ // S103: the bound may follow the property word ("45 cm wide or less", "30 hours long minimum"): words listed in the pack
+ const pw=(lang.boundPropertyWords??[]).map(w=>esc(normText(w))).join('|');const prop=pw?`(?:(?:${pw})\\s+)?`:'';
+ const starts=(ph:string)=>ph==='+'?/^\s*\+/.test(after):new RegExp('^\\s*'+prop+esc(normText(ph))+'(?![\\p{L}])','u').test(la);
  const kinds=kindIds.map(k=>qk.kinds.get(k)).filter((k):k is NonNullable<typeof k>=>!!k);
  let bound:'min'|'max'|null=null,cue:string|null=null;
  for(const k of kinds)for(const [b,ws] of Object.entries(k.comparatives??{}))for(const w of ws as string[])if(!bound&&ends(w)){bound=b as 'min'|'max';cue=w;}
