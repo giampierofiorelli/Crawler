@@ -1,0 +1,201 @@
+{
+ "schema": "pee.s99.integrity.v1",
+ "label": "check-firstrun-s98",
+ "set": "check",
+ "build": "other build (--build)",
+ "reader": "sr98.1",
+ "material": "sealed S99 check wave",
+ "reading": {
+  "pages": 6,
+  "declarations": 81,
+  "leads": 4,
+  "documentQuantities": 469,
+  "documentKept": 41,
+  "documentSkipped": {
+   "no_defined_property": 332,
+   "boilerplate_or_duplicate": 48,
+   "product_name_part": 19,
+   "not_a_point_value": 13,
+   "already_extracted": 16
+  },
+  "identity": {},
+  "msPerPage": 2010
+ },
+ "preservation": "not measurable: build without observation keys (pre-v12)",
+ "correctness": {
+  "total": {
+   "items": 111,
+   "property": {
+    "refPositive": 53,
+    "correct": 13,
+    "wrong": 3,
+    "notStored": 37,
+    "refNone": 35,
+    "falseStored": 2
+   },
+   "role": {
+    "compared": 21,
+    "agree": 11,
+    "confusion": {
+     "result->specification": 4,
+     "specification->result": 1,
+     "specification->specification": 7,
+     "result->result": 4,
+     "condition->result": 1,
+     "result->unresolved": 3,
+     "threshold->result": 1
+    }
+   },
+   "nature": {
+    "compared": 20,
+    "agree": 11,
+    "confusion": {
+     "measured->declared": 4,
+     "declared->measured": 1,
+     "declared->declared": 7,
+     "measured->measured": 4,
+     "condition->measured": 1,
+     "measured->unresolved": 3
+    }
+   },
+   "subject": {
+    "reviewed": 18,
+    "reviewedLinked": 17,
+    "other": 1,
+    "otherLinked": 0,
+    "none": 2,
+    "noneLinked": 2
+   },
+   "storedNoneByRole": {
+    "result": 2
+   },
+   "falseProductValue": 2,
+   "refNoneStoredAsNonValue": 0,
+   "labelGap": {
+    "items": 28,
+    "storedWithProperty": 4
+   },
+   "bound": {
+    "compared": 21,
+    "agree": 19
+   },
+   "productValue": {
+    "reference": 40,
+    "storedLinkedCorrect": 11
+   }
+  },
+  "bySet": {
+   "s99/wave": {
+    "items": 111,
+    "property": {
+     "refPositive": 53,
+     "correct": 13,
+     "wrong": 3,
+     "notStored": 37,
+     "refNone": 35,
+     "falseStored": 2
+    },
+    "role": {
+     "compared": 21,
+     "agree": 11,
+     "confusion": {
+      "result->specification": 4,
+      "specification->result": 1,
+      "specification->specification": 7,
+      "result->result": 4,
+      "condition->result": 1,
+      "result->unresolved": 3,
+      "threshold->result": 1
+     }
+    },
+    "nature": {
+     "compared": 20,
+     "agree": 11,
+     "confusion": {
+      "measured->declared": 4,
+      "declared->measured": 1,
+      "declared->declared": 7,
+      "measured->measured": 4,
+      "condition->measured": 1,
+      "measured->unresolved": 3
+     }
+    },
+    "subject": {
+     "reviewed": 18,
+     "reviewedLinked": 17,
+     "other": 1,
+     "otherLinked": 0,
+     "none": 2,
+     "noneLinked": 2
+    },
+    "storedNoneByRole": {
+     "result": 2
+    },
+    "falseProductValue": 2,
+    "refNoneStoredAsNonValue": 0,
+    "labelGap": {
+     "items": 28,
+     "storedWithProperty": 4
+    },
+    "bound": {
+     "compared": 21,
+     "agree": 19
+    },
+    "productValue": {
+     "reference": 40,
+     "storedLinkedCorrect": 11
+    }
+   }
+  }
+ },
+ "census": {
+  "readings": 126,
+  "byRole": {
+   "unresolved": 6,
+   "specification": 97,
+   "result": 23
+  },
+  "byNature": {
+   "unresolved": 6,
+   "declared": 97,
+   "measured": 22,
+   "calculated": 1
+  },
+  "bySubject": {
+   "n/a": 126
+  },
+  "byAssociation": {
+   "page_main_product_unverified": 33,
+   "as_subject_row": 85,
+   "subject_unresolved": 8
+  },
+  "bounded": 0
+ },
+ "comparability": {
+  "verdicts": {
+   "comparable": 1,
+   "conditions_unestablished": 157,
+   "not_comparable": 94
+  },
+  "reasons": {
+   "conditions_stated_and_equal_or_none_required": 1,
+   "missing_challenge_pollutant": 122,
+   "different_nature": 88,
+   "missing_fan_setting": 30,
+   "different_challenge_pollutant": 6,
+   "missing_measurement_distance": 4,
+   "conflicting_conditions": 1
+  }
+ },
+ "advice": {
+  "requests": 206,
+  "decisionChanged": 0,
+  "shortlistChanged": 0,
+  "withScientificEvidence": 1,
+  "verdicts": {
+   "comparable": 0,
+   "conditions_unestablished": 141,
+   "not_comparable": 58
+  }
+ }
+}
