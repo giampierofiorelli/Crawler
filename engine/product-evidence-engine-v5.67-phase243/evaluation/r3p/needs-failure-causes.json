@@ -1,0 +1,34 @@
+{
+ "schema": "pee.r3p.needs-failure-causes.v1",
+ "registered": "2026-10-20, before the needs material is sealed and before any stage-2 first run (owner review of NR, verbatim .claude/skills/pee-guided-learning/references/owner-review-nr-2026-10-20.md: the R3-P report must separate four failure causes)",
+ "status": "diagnosis protocol, not a metric. The preregistered metrics (preregistration.json) are unchanged; this classifies the failures they count. Applied only after the first runs are committed unchanged; its output is labelled post-hoc diagnosis.",
+ "inputs": [
+  "private runs/needs-check-<label>.json rows of the frozen first runs (arms A, B, C and the S103 baseline): needs, inferred (concept, support, provenance, typed path), candidate effects, trace (interpreted / uninterpreted spans), unsupported (concepts considered and not kept, with reason), stances, features, contexts, category",
+  "the sealed requests.json and reference.json (needs with basis, text and why; acceptable; notNeeds; features; limits; questions)",
+  "a read-only copy of the operational knowledge store (knowledge_statements, category_items, category_relations)",
+  "the existing off-path modules, run counterfactually on the same request texts (see cause M)"
+ ],
+ "units": {
+  "missed": "a reference need (expressed or inferred) absent from an arm's needs",
+  "invented": "an arm's need that the reference marks neither expressed, inferred nor acceptable",
+  "harmful_stance": "an arm's need that the reference lists under notNeeds (negated, rejected or indifferent)",
+  "feature_as_need": "an arm's need that the reference gives only as a feature's suggested outcome",
+  "missed_question": "a reference question with no matching question in the answer (as counted by the scorer)"
+ },
+ "causes": {
+  "L": "language recognition: the request words carrying the need were not read correctly (span uninterpreted; category not recognised; stance (negation, indifference, rejection, contrast) misread; a feature or scenario read as a need)",
+  "K": "knowledge relations: the words were read, but the knowledge needed is missing (K-missing: no stored statement or relation connects the cue's concept to the reference outcome in the request's category) or incorrect (K-incorrect: the statement used does not support the inference in this context: different subject, association only, wrong category scope, or it says something else)",
+  "S": "selection among plausible needs: the right outcome was reachable (it is among the arm's unsupported candidates, or has support) but another was kept, a threshold or the cap of one dropped it, or a rival was preferred",
+  "M": "existing modules not used: an off-path PEE module already represents what was missed (counterfactual check below); recorded as a secondary cause alongside the primary one, or as primary when nothing on the request path could have produced it"
+ },
+ "procedure": [
+  "1. For each unit and arm, apply the primary-cause tests in this order and stop at the first that holds; record the evidence (field and value) that decided it.",
+  "2. L first: (missed) the reference need's text lies inside a trace span marked uninterpreted, or the arm's category differs from the reference category, or the reference text is a negated/indifferent/rejected aspect read the wrong way; (invented, harmful_stance, feature_as_need) the arm's need comes from a span the reference marks as a notNeed, a feature only, or a scenario.",
+  "3. S next: (missed) the reference label is in the arm's unsupported list, or it had support but lost to another concept or the cap; (invented) the arm kept a concept while the reference label for the same cue was in unsupported.",
+  "4. K next: (missed inferred) the cue was interpreted, the reference label is not in unsupported, and a read-only search of the store finds no statement or relation of the category linking the cue's concept or words to the reference outcome: K-missing; (invented) the typed path exists but its statement does not support the inference for this context: K-incorrect. A K-incorrect judgement is confirmed by an independent Claude agent given only the request text, the reference why and the statement text; disagreement makes it undetermined.",
+  "5. M: for every missed unit, run the existing off-path modules counterfactually on the request text where they accept free text (phase172 researchUserGoal172: outcome candidates, hard-constraint candidates, questions) and check whether a module covers the missed aspect by its declared representation (phase56 scenario activation and 'irrelevant' importance; phase61 declared-capability vs observed-outcome lanes; phase116 failure modes; phase168 required/excluded/preferred/optional meaning; phase126/127 decision-relevant question). The correspondence between a module's ids and the reference labels is judged by an independent Claude agent from the ids' definitions. Record M as secondary when it holds, primary when no request-path component reached the aspect at all.",
+  "6. Otherwise: R (the reference itself is disputable; confirmed by the independent agent) or U (undetermined). R and U are reported, never redistributed."
+ ],
+ "report": "counts of primary causes and of secondary M, per arm, per unit type, per source (real / authored) and per category, over the whole reference; examples by id only in the public file; full detail private. No fix is designed from this diagnosis inside R3-P (owner review of NR: the development sequence is chosen after the report).",
+ "independence": "the classifier (main session) reads the material only after the first runs are committed; every judgement that is not a field comparison (K-incorrect, M correspondence, R) is confirmed by an independent agent that sees no PEE code or output beyond the items it judges"
+}

@@ -43,7 +43,10 @@ for(const r of REQ){const ref=REF.get(r.id);if(!ref||ref.notABuyingRequest){inc(
    const found=[...sys].filter(s=>E_.has(s)||I_.has(s));g(`${arm}:plan_for_correct_need`,ni.evidencePlan.filter(p=>found.includes(p.concept)&&p.measures.length).length);
    const qs=words(a.questions.join(' '));g(`${arm}:ref_questions`,(ref.questions??[]).length);g(`${arm}:ref_questions_asked`,(ref.questions??[]).filter(q=>[...words(q)].some(w=>qs.has(w))).length);
    g(`${arm}:features_found`,(ref.features??[]).filter(f=>ni.features.some(x=>[...words(f.feature)].some(w=>words(x.span).has(w)))).length);g(`ref:features`,arm==='A'?(ref.features??[]).length:0);}
-  rows.push({id:r.id,arm,needs:[...sys],inferred:BASE?[]:ni.inferred.map(i=>({concept:i.concept,support:i.support,provenance:i.provenance,path:i.path})),cand:BASE?[]:ni.candidateEffects??[],trace:BASE?[]:ni.trace,response:a.response});}
+  rows.push({id:r.id,arm,needs:[...sys],inferred:BASE?[]:ni.inferred.map(i=>({concept:i.concept,support:i.support,provenance:i.provenance,path:i.path})),cand:BASE?[]:ni.candidateEffects??[],trace:BASE?[]:ni.trace,response:a.response,
+   // diagnosis only (evaluation/r3p/needs-failure-causes.json): no metric reads these fields
+   unsupported:BASE?[]:ni.unsupported??[],stances:BASE?[]:ni.stances??[],features:BASE?[]:ni.features??[],contexts:BASE?[]:ni.contexts??[],
+   category:a.category??null});}
  // an inferred need must never change the exclusions: arms on one build must exclude the same products
  if(!BASE&&new Set(Object.values(excl)).size>1)g('improperExclusionChange');}
 const pub={schema:'pee.r3p.needs-check.v1',label:LABEL,build:BUILD,baseline:BASE,arms:BASE?['S103']:ARMS,seal:fz.files,
