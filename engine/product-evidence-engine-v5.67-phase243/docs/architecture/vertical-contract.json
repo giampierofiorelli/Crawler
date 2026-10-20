@@ -666,6 +666,11 @@
        "date": "2026-10-20",
        "by": "S103",
        "what": "bound words: one reader for requests and documents (the Phase253 local word lists retired into qk.2.5); the other duplicated vocabularies (negation, clause boundaries, 'up to', 'average', 'maximum', 'sensor') remain"
+      },
+      {
+       "date": "2026-10-20",
+       "by": "R3-P stage 1 (b4fd4dd)",
+       "what": "negation, clause-boundary, contrast, scope-ender and indifference vocabularies moved into the QK pack (language.en.scope); four local negator lists retired"
       }
      ]
     },
@@ -742,7 +747,14 @@
       "phase253_request_constraints",
       "request_coverage80"
      ],
-     "verification": "one declarative negation scope; 'not looking for anything bigger than 30 cm' read the same by need inference, constraints and coverage"
+     "verification": "one declarative negation scope; 'not looking for anything bigger than 30 cm' read the same by need inference, constraints and coverage",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "R3-P stage 1 (b4fd4dd)",
+       "what": "one declarative negation scope shared by the bound reader, the constraint reader (Phase253), need inference (Phase248 NEGATORS80/CLAUSE80 and the Phase252 indifference patterns retired), aspect and stated objectives (Phase253) and the document cue readers (observation_semantics, 1G table context). Still separate: phase248 category exclusion negated()/rejected(), phase225, phase265, product_facts, document_evidence, phase269, phase272 polarity272, knowledge_translation"
+      }
+     ]
     },
     {
      "id": "APP",
@@ -762,7 +774,14 @@
       "phase225",
       "document_evidence"
      ],
-     "verification": "one shared clause function; the same sentence splits identically everywhere"
+     "verification": "one shared clause function; the same sentence splits identically everywhere",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "R3-P stage 1 (b4fd4dd)",
+       "what": "language_scope.clauseAround is the shared clause function for the scope; the other clause splitters (observation_semantics.clauseOf, definition_interpreter, phase225, document_evidence, request_coverage80) are unchanged"
+      }
+     ]
     },
     {
      "id": "WITHA",
@@ -862,7 +881,17 @@
        "by": "post-S103 dependency study",
        "what": "reaches the answer: an air-fryer request worded 'nothing over N litres' (S103 q01 wording) gives a positive shortlist with capacity_min N strict applied (store copy). Cause: 'nothing' is in no negator list and request negation only demotes, never flips the side (docs/plans/post-s103-need-pilot-dependencies.md §2)"
       }
-     ]
+     ],
+     "resolved": {
+      "date": "2026-10-20",
+      "by": "R3-P stage 1 (b4fd4dd)",
+      "how": "one shared scope (src/language_scope.ts, vocabulary QK language.en.scope): a negator governing a bound word flips the side and the closure (proposition negation: 'nothing over 6 L' = at most 6 L, inclusive); a requirement word between negator and bound makes the limit a preference ('I don't need more than 6 L'); the quantityBound no/not special case and the Phase253 NEGATION/BOUND_NEGATIONS patterns are retired",
+      "evidence": [
+       "tests/r3p_language_scope.test.ts",
+       "evaluation/r3p/negation-check-firstrun-r3p.json (sealed T1 requests: inverted limits 1 -> 0, exact handling 20 -> 24, no limit applied against the reference)",
+       "evaluation/s103/request-check-r3p-dev-it2.json (spent: the q01 inverse limit no longer applied)"
+      ]
+     }
     },
     {
      "id": "HEDGE_AFTER",
@@ -901,7 +930,14 @@
       "observation_semantics clauseCues"
      ],
      "verification": "a negated declaration cue in an introduction does not count as declaration evidence; the introduction then decides result/measured",
-     "since": "S103 (docs/plans/s103-rule-admission.md)"
+     "since": "S103 (docs/plans/s103-rule-admission.md)",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "R3-P stage 1 (b4fd4dd)",
+       "what": "negated declaration cues are blanked in the 1G table context, block kinds and clause/sentence cues ('not what manufacturers claim' is no declaration cue); test cues only when the negation is adjacent (a negated observation is still the publisher's: spent S93 page). Not shown on the sealed synthetic passages: 68 of 91 values are not read by either build"
+      }
+     ]
     },
     {
      "id": "SCORER_PAIR",
