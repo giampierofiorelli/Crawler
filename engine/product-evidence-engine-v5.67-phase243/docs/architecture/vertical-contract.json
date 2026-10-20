@@ -769,12 +769,12 @@
     },
     {
      "id": "RQ08",
-     "what": "owner review of S102 (verbatim owner-review-s102-2026-10-20.md): RQ08 treats two different limits for one criterion as a conflict. Wrong in general: two mandatory minima for the same object combine (the stricter applies); 'at least 4, preferably 6' is a requirement plus a preference; 'at least 4, actually make it 6' is a correction; limits for different objects are distinct requirements; only incompatible limits (min above max) for the same property, object and conditions contradict. RQ08 compares criterion and number only, and is marked invariant, which protects a wrong concept. The current behaviour abstains (asks) and never excludes, so it is safe but loses information.",
+     "what": "owner review of S102 (verbatim owner-review-s102-2026-10-20.md): RQ08 treats two different limits for one criterion as a conflict. Wrong in general: two mandatory minima for the same object combine (the stricter applies); 'at least 4, preferably 6' is a requirement plus a preference; 'at least 4, actually make it 6' is a correction; limits for different objects are distinct requirements; only incompatible limits (min above max) for the same property, object and conditions contradict. RQ08 compares criterion and number only, and is marked invariant, which protects a wrong concept. The current behaviour abstains (asks) and never excludes, so it is safe but loses information. Correction (owner follow-up, owner-review-s102-followup-2026-10-20.md): Claude's answer called 'at least 4 litres, or at least 6 for a family' a requirement plus a preference; it may instead state two alternative scenarios. PEE must recognise which scenario each constraint belongs to and must not invent a preference the user did not state.",
      "consumers": [
       "src/phase253_request_constraints.ts extractConstraints253",
       "resources/request-semantics/request-semantics.v1.json"
      ],
-     "verification": "constraint semantics distinguish mandatory requirement, preference, correction (later statement replaces earlier), object and condition; the four owner examples decide 6 L mandatory / 4 L required + 6 L preferred / contradiction / two requirements; RQ08 superseded through its lifecycle with an owner decision (it is an invariant)"
+     "verification": "constraint semantics distinguish mandatory requirement, preference, correction (later statement replaces earlier), object and condition; the four owner examples decide 6 L mandatory / 4 L required + 6 L preferred / contradiction / two requirements; RQ08 superseded through its lifecycle with an owner decision (it is an invariant); plus: 'at least 4, or at least 6 for a family' is read as two scenarios (or asked), never as an invented preference"
     },
     {
      "id": "REDERIVE_SWEEP",
@@ -784,6 +784,15 @@
       "scripts/phase246-knowledge.mjs"
      ],
      "verification": "a store-wide re-derivation (from retained revisions) reports, after a rule or definition change, how many readings were re-derived, superseded or could not be re-read (bytes not retained)"
+    },
+    {
+     "id": "INVARIANT_GOV",
+     "what": "owner follow-up on S102: governing rules is not enough; their creation, classification, validation and revision must be governed. Today a rule can be marked invariant without a stated justification, and the lifecycle then protects it (RQ08 shows a technical choice made during development protected as an invariant). Rule quality (scientific correctness, coverage, scope, exceptions, generalisation) is checked only after it causes an error",
+     "consumers": [
+      "src/knowledge_rules.ts (lifecycle, invariant)",
+      "docs/architecture/vertical-contract.json interpretationRules"
+     ],
+     "verification": "an invariant must state its kind (semantic, reliability, safety, legal, provenance) and justification and is reviewed before admission; a proposed rule is checked at admission for correctness, scope, exceptions, overlaps and counterexamples, not only for consistency"
     }
    ]
   }
