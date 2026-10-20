@@ -1,0 +1,1273 @@
+{
+ "schema": "pee.s94.check.v1",
+ "label": "firstrun",
+ "note": "S94 independent check, first run of the frozen arms on never-examined pages (SSDs, monitors: never taught)",
+ "attribution": {
+  "base": {
+   "refPositive": 11,
+   "correct": 8,
+   "wrong": 0,
+   "abstained": 3,
+   "refNone": 229,
+   "falseAttribution": 2,
+   "toLearned": 0,
+   "learnedMatchesReferenceConcept": 0
+  },
+  "object": {
+   "refPositive": 11,
+   "correct": 8,
+   "wrong": 0,
+   "abstained": 3,
+   "refNone": 229,
+   "falseAttribution": 2,
+   "toLearned": 0,
+   "learnedMatchesReferenceConcept": 0
+  },
+  "learned": {
+   "refPositive": 11,
+   "correct": 8,
+   "wrong": 0,
+   "abstained": 3,
+   "refNone": 229,
+   "falseAttribution": 2,
+   "toLearned": 0,
+   "learnedMatchesReferenceConcept": 0
+  }
+ },
+ "learned": [
+  {
+   "id": "learned_aluminum_length",
+   "label": "aluminum",
+   "kind": "length",
+   "relations": []
+  },
+  {
+   "id": "learned_debris_duration",
+   "label": "worth of debris",
+   "kind": "duration",
+   "relations": []
+  },
+  {
+   "id": "learned_height_length",
+   "label": "robot height",
+   "kind": "length",
+   "relations": [
+    "different_object:obstacle_height"
+   ]
+  },
+  {
+   "id": "learned_hot_temperature",
+   "label": "c hot",
+   "kind": "temperature",
+   "relations": []
+  },
+  {
+   "id": "learned_midrang_length",
+   "label": "midrange",
+   "kind": "length",
+   "relations": []
+  },
+  {
+   "id": "learned_obstacl_length",
+   "label": "obstacles",
+   "kind": "length",
+   "relations": []
+  },
+  {
+   "id": "learned_replac_duration",
+   "label": "replaced",
+   "kind": "duration",
+   "relations": []
+  },
+  {
+   "id": "learned_side_length",
+   "label": "either side",
+   "kind": "length",
+   "relations": []
+  },
+  {
+   "id": "learned_speaker_length",
+   "label": "surround speakers",
+   "kind": "length",
+   "relations": []
+  },
+  {
+   "id": "learned_time_duration",
+   "label": "charging time",
+   "kind": "duration",
+   "relations": [
+    "shares_head_term:run_duration"
+   ]
+  },
+  {
+   "id": "learned_wash_temperature",
+   "label": "mop washing",
+   "kind": "temperature",
+   "relations": []
+  }
+ ],
+ "preregistration": "ef74885029f276503effbe4b3748ee6a663ae8f26a378511563a8e9759e7862b",
+ "results": {
+  "all": {
+   "C1": {
+    "items": 226,
+    "correct": 70,
+    "abstained": 59,
+    "provenanceCorrect": 103,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 77,
+      "correct": 22,
+      "precision": 0.286,
+      "recall": 0.524
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 68,
+      "correct": 42,
+      "precision": 0.618,
+      "recall": 0.378
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 0,
+    "links": {
+     "correctWithReferenceLine": 55,
+     "reachesLine": 32,
+     "elsewhere": 12,
+     "reachesElsewhere": 0,
+     "meanLines": 0.95
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "R1": {
+    "items": 226,
+    "correct": 59,
+    "abstained": 55,
+    "provenanceCorrect": 100,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 68,
+      "correct": 16,
+      "precision": 0.235,
+      "recall": 0.381
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 16,
+      "correct": 1,
+      "precision": 0.063,
+      "recall": 0.056
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 65,
+      "correct": 36,
+      "precision": 0.554,
+      "recall": 0.324
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 14,
+    "links": {
+     "correctWithReferenceLine": 46,
+     "reachesLine": 25,
+     "elsewhere": 10,
+     "reachesElsewhere": 1,
+     "meanLines": 0.91
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1": {
+    "items": 226,
+    "correct": 59,
+    "abstained": 55,
+    "provenanceCorrect": 100,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 68,
+      "correct": 16,
+      "precision": 0.235,
+      "recall": 0.381
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 16,
+      "correct": 1,
+      "precision": 0.063,
+      "recall": 0.056
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 65,
+      "correct": 36,
+      "precision": 0.554,
+      "recall": 0.324
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 14,
+    "links": {
+     "correctWithReferenceLine": 46,
+     "reachesLine": 25,
+     "elsewhere": 10,
+     "reachesElsewhere": 1,
+     "meanLines": 0.91
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1c": {
+    "items": 226,
+    "correct": 64,
+    "abstained": 52,
+    "provenanceCorrect": 100,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 66,
+      "correct": 16,
+      "precision": 0.242,
+      "recall": 0.381
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 21,
+      "correct": 6,
+      "precision": 0.286,
+      "recall": 0.333
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 65,
+      "correct": 36,
+      "precision": 0.554,
+      "recall": 0.324
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 14,
+    "links": {
+     "correctWithReferenceLine": 51,
+     "reachesLine": 26,
+     "elsewhere": 11,
+     "reachesElsewhere": 1,
+     "meanLines": 0.86
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-noarith": {
+    "items": 226,
+    "correct": 59,
+    "abstained": 55,
+    "provenanceCorrect": 100,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 68,
+      "correct": 16,
+      "precision": 0.235,
+      "recall": 0.381
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 16,
+      "correct": 1,
+      "precision": 0.063,
+      "recall": 0.056
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 65,
+      "correct": 36,
+      "precision": 0.554,
+      "recall": 0.324
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 14,
+    "links": {
+     "correctWithReferenceLine": 46,
+     "reachesLine": 25,
+     "elsewhere": 10,
+     "reachesElsewhere": 1,
+     "meanLines": 0.91
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-nostat": {
+    "items": 226,
+    "correct": 59,
+    "abstained": 55,
+    "provenanceCorrect": 100,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 68,
+      "correct": 16,
+      "precision": 0.235,
+      "recall": 0.381
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 16,
+      "correct": 1,
+      "precision": 0.063,
+      "recall": 0.056
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 65,
+      "correct": 36,
+      "precision": 0.554,
+      "recall": 0.324
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 14,
+    "links": {
+     "correctWithReferenceLine": 46,
+     "reachesLine": 25,
+     "elsewhere": 10,
+     "reachesElsewhere": 1,
+     "meanLines": 0.91
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-nomember": {
+    "items": 226,
+    "correct": 59,
+    "abstained": 55,
+    "provenanceCorrect": 100,
+    "perClass": {
+     "measured": {
+      "reference": 42,
+      "predicted": 68,
+      "correct": 16,
+      "precision": 0.235,
+      "recall": 0.381
+     },
+     "calculated": {
+      "reference": 18,
+      "predicted": 16,
+      "correct": 1,
+      "precision": 0.063,
+      "recall": 0.056
+     },
+     "declared": {
+      "reference": 111,
+      "predicted": 65,
+      "correct": 36,
+      "precision": 0.554,
+      "recall": 0.324
+     },
+     "condition": {
+      "reference": 38,
+      "predicted": 22,
+      "correct": 6,
+      "precision": 0.273,
+      "recall": 0.158
+     }
+    },
+    "falseCalculated": 14,
+    "links": {
+     "correctWithReferenceLine": 46,
+     "reachesLine": 25,
+     "elsewhere": 10,
+     "reachesElsewhere": 1,
+     "meanLines": 0.91
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 14,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 216,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   }
+  },
+  "s94_ssds": {
+   "C1": {
+    "items": 36,
+    "correct": 19,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 9,
+      "correct": 2,
+      "precision": 0.222,
+      "recall": 0.5
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 12,
+      "correct": 11,
+      "precision": 0.917,
+      "recall": 0.55
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 0,
+    "links": {
+     "correctWithReferenceLine": 19,
+     "reachesLine": 14,
+     "elsewhere": 5,
+     "reachesElsewhere": 0,
+     "meanLines": 0.84
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "R1": {
+    "items": 36,
+    "correct": 16,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.25
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 10,
+      "correct": 9,
+      "precision": 0.9,
+      "recall": 0.45
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 3,
+    "links": {
+     "correctWithReferenceLine": 16,
+     "reachesLine": 10,
+     "elsewhere": 4,
+     "reachesElsewhere": 1,
+     "meanLines": 0.75
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1": {
+    "items": 36,
+    "correct": 16,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.25
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 10,
+      "correct": 9,
+      "precision": 0.9,
+      "recall": 0.45
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 3,
+    "links": {
+     "correctWithReferenceLine": 16,
+     "reachesLine": 10,
+     "elsewhere": 4,
+     "reachesElsewhere": 1,
+     "meanLines": 0.75
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1c": {
+    "items": 36,
+    "correct": 16,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.25
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 10,
+      "correct": 9,
+      "precision": 0.9,
+      "recall": 0.45
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 3,
+    "links": {
+     "correctWithReferenceLine": 16,
+     "reachesLine": 10,
+     "elsewhere": 4,
+     "reachesElsewhere": 1,
+     "meanLines": 0.75
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-noarith": {
+    "items": 36,
+    "correct": 16,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.25
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 10,
+      "correct": 9,
+      "precision": 0.9,
+      "recall": 0.45
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 3,
+    "links": {
+     "correctWithReferenceLine": 16,
+     "reachesLine": 10,
+     "elsewhere": 4,
+     "reachesElsewhere": 1,
+     "meanLines": 0.75
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-nostat": {
+    "items": 36,
+    "correct": 16,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.25
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 10,
+      "correct": 9,
+      "precision": 0.9,
+      "recall": 0.45
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 3,
+    "links": {
+     "correctWithReferenceLine": 16,
+     "reachesLine": 10,
+     "elsewhere": 4,
+     "reachesElsewhere": 1,
+     "meanLines": 0.75
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-nomember": {
+    "items": 36,
+    "correct": 16,
+    "abstained": 7,
+    "provenanceCorrect": 25,
+    "perClass": {
+     "measured": {
+      "reference": 4,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.25
+     },
+     "calculated": {
+      "reference": 3,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 20,
+      "predicted": 10,
+      "correct": 9,
+      "precision": 0.9,
+      "recall": 0.45
+     },
+     "condition": {
+      "reference": 9,
+      "predicted": 8,
+      "correct": 6,
+      "precision": 0.75,
+      "recall": 0.667
+     }
+    },
+    "falseCalculated": 3,
+    "links": {
+     "correctWithReferenceLine": 16,
+     "reachesLine": 10,
+     "elsewhere": 4,
+     "reachesElsewhere": 1,
+     "meanLines": 0.75
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 1,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 32,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   }
+  },
+  "s94_monitors": {
+   "C1": {
+    "items": 190,
+    "correct": 51,
+    "abstained": 52,
+    "provenanceCorrect": 78,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 68,
+      "correct": 20,
+      "precision": 0.294,
+      "recall": 0.526
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 0,
+      "correct": 0,
+      "precision": null,
+      "recall": 0
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 56,
+      "correct": 31,
+      "precision": 0.554,
+      "recall": 0.341
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 0,
+    "links": {
+     "correctWithReferenceLine": 36,
+     "reachesLine": 18,
+     "elsewhere": 7,
+     "reachesElsewhere": 0,
+     "meanLines": 1
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "R1": {
+    "items": 190,
+    "correct": 43,
+    "abstained": 48,
+    "provenanceCorrect": 75,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 60,
+      "correct": 15,
+      "precision": 0.25,
+      "recall": 0.395
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 13,
+      "correct": 1,
+      "precision": 0.077,
+      "recall": 0.067
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 55,
+      "correct": 27,
+      "precision": 0.491,
+      "recall": 0.297
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 11,
+    "links": {
+     "correctWithReferenceLine": 30,
+     "reachesLine": 15,
+     "elsewhere": 6,
+     "reachesElsewhere": 0,
+     "meanLines": 1
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1": {
+    "items": 190,
+    "correct": 43,
+    "abstained": 48,
+    "provenanceCorrect": 75,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 60,
+      "correct": 15,
+      "precision": 0.25,
+      "recall": 0.395
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 13,
+      "correct": 1,
+      "precision": 0.077,
+      "recall": 0.067
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 55,
+      "correct": 27,
+      "precision": 0.491,
+      "recall": 0.297
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 11,
+    "links": {
+     "correctWithReferenceLine": 30,
+     "reachesLine": 15,
+     "elsewhere": 6,
+     "reachesElsewhere": 0,
+     "meanLines": 1
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1c": {
+    "items": 190,
+    "correct": 48,
+    "abstained": 45,
+    "provenanceCorrect": 75,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 58,
+      "correct": 15,
+      "precision": 0.259,
+      "recall": 0.395
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 18,
+      "correct": 6,
+      "precision": 0.333,
+      "recall": 0.4
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 55,
+      "correct": 27,
+      "precision": 0.491,
+      "recall": 0.297
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 11,
+    "links": {
+     "correctWithReferenceLine": 35,
+     "reachesLine": 16,
+     "elsewhere": 7,
+     "reachesElsewhere": 0,
+     "meanLines": 0.91
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-noarith": {
+    "items": 190,
+    "correct": 43,
+    "abstained": 48,
+    "provenanceCorrect": 75,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 60,
+      "correct": 15,
+      "precision": 0.25,
+      "recall": 0.395
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 13,
+      "correct": 1,
+      "precision": 0.077,
+      "recall": 0.067
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 55,
+      "correct": 27,
+      "precision": 0.491,
+      "recall": 0.297
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 11,
+    "links": {
+     "correctWithReferenceLine": 30,
+     "reachesLine": 15,
+     "elsewhere": 6,
+     "reachesElsewhere": 0,
+     "meanLines": 1
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-nostat": {
+    "items": 190,
+    "correct": 43,
+    "abstained": 48,
+    "provenanceCorrect": 75,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 60,
+      "correct": 15,
+      "precision": 0.25,
+      "recall": 0.395
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 13,
+      "correct": 1,
+      "precision": 0.077,
+      "recall": 0.067
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 55,
+      "correct": 27,
+      "precision": 0.491,
+      "recall": 0.297
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 11,
+    "links": {
+     "correctWithReferenceLine": 30,
+     "reachesLine": 15,
+     "elsewhere": 6,
+     "reachesElsewhere": 0,
+     "meanLines": 1
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   },
+   "T1-nomember": {
+    "items": 190,
+    "correct": 43,
+    "abstained": 48,
+    "provenanceCorrect": 75,
+    "perClass": {
+     "measured": {
+      "reference": 38,
+      "predicted": 60,
+      "correct": 15,
+      "precision": 0.25,
+      "recall": 0.395
+     },
+     "calculated": {
+      "reference": 15,
+      "predicted": 13,
+      "correct": 1,
+      "precision": 0.077,
+      "recall": 0.067
+     },
+     "declared": {
+      "reference": 91,
+      "predicted": 55,
+      "correct": 27,
+      "precision": 0.491,
+      "recall": 0.297
+     },
+     "condition": {
+      "reference": 29,
+      "predicted": 14,
+      "correct": 0,
+      "precision": 0,
+      "recall": 0
+     }
+    },
+    "falseCalculated": 11,
+    "links": {
+     "correctWithReferenceLine": 30,
+     "reachesLine": 15,
+     "elsewhere": 6,
+     "reachesElsewhere": 0,
+     "meanLines": 1
+    },
+    "inputs": {
+     "calculatedWithReferenceInputs": 13,
+     "foundAtLeastOne": 0
+    },
+    "subject": {
+     "withReference": 184,
+     "decided": 0,
+     "correct": 0,
+     "reviewedAsOther": 0,
+     "otherAsReviewed": 0
+    }
+   }
+  }
+ }
+}
