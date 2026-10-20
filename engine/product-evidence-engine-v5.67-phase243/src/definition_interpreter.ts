@@ -14,7 +14,7 @@ import {UNIT_LEXICON272,TEST_CONTEXT272,type PlanMeasurement272} from './phase27
 import {classifyCondition87} from './observation_model.js';
 import {observationRole86c,otherProductInClause86c,type ObservationRole86c} from './phase225_transient_test_probe.js';
 import type {DocumentSemantics1D2} from './document_semantics.js';
-import {blockKind1G,dimensionsIn1G,cellElements1G,statedParameters1G,isCalculationText1G,type DocumentModel1G,type Observation1G} from './table_interpreter1g.js';
+import {blockKind1G,dimensionsIn1G,cellElements1G,statedParameters1G,isCalculationText1G,type DocumentModel1G,type Observation1G,type TableRelations1G,type CellDerivation1G,type RowSubject1G,type TableMember1G} from './table_interpreter1g.js';
 import {sentences} from './document_evidence.js';
 
 export const DEFINITION_INTERPRETER_VERSION='pee88.definition-interpreter.v1';
@@ -37,6 +37,8 @@ export interface DefinitionInterpretation {version:string;definitions:string;cat
 export interface ObservationInput {value:number|null;unit:string;label?:string|null;context?:string|null;conditions?:readonly string[];category?:string|null;
  /** S89: offset of the value in the label; when given, a label term supports the value only if no other number lies between them. */
  valueAt?:number|null;
+ /** S94: the reader block the value sits in (a table cell's text), to find its table row */
+ block?:string|null;
  /** S89: the printed value (to locate its end) and the page's product name (to tell another product's value). */
  surface?:string|null;pageSubject?:string|null;
  /** S93: the document frame of the value (page title and section headings), where the object of interest may be named */
@@ -61,17 +63,33 @@ export interface StructuralContext {container:'table_cell'|'label_value'|'prose'
  * ancestor or methodology section), and the 1G table links (method statements linked to a table, twin tables). Statements
  * are typed by the 1G document model (blockKind1G); the quantity a statement names by dimensionsIn1G. `rank` is the
  * distance (smaller is nearer); `pointer` locates the statement. */
-export interface EvidenceLink {role:'measured'|'declared'|'derived';relation:'co_occurrence'|'bridge'|'table_link'|'table_structure'|'parallel_table';
+export interface EvidenceLink {role:'measured'|'declared'|'derived';relation:'co_occurrence'|'bridge'|'table_link'|'table_structure'|'parallel_table'|'table_derivation'|'table_member';
  scope:'neighbour_sentence'|'same_section'|'ancestor_section'|'method_section'|'table';rank:number;pointer:string;
  /** S93 (owner review of S92 §1): the originating statement(s) of the link, verifiable on the page: the 1G document block
   * (and sentence) that states the method, the declaration or the calculation; for a table value, the statements 1G linked
   * to its cell, not the cell. Empty for a link that rests on the table's own structure (headings, labels). */
- statements?:{locator:string;block:number;sentence:number|null;line?:number|null}[]}
+ statements?:{locator:string;block:number;sentence:number|null;line?:number|null;text?:string}[]}
 /** The page-level readings a value's links are selected from: the 1G document model and, for table cells, the 1G table
  * observations (with GL11/GL12 when the caller asks for them). */
-export interface DocumentRelations {model:DocumentModel1G;tableObservations?:readonly Observation1G[]}
+export interface DocumentRelations {model:DocumentModel1G;tableObservations?:readonly Observation1G[];
+ /** S94 Stage 1: whole-table relations (relative differences verified by arithmetic, statistic rows, row subjects) */
+ tableRelations?:TableRelations1G}
+const cellKey=(s:string)=>s.replace(/\s+/g,' ').trim().toLowerCase();
+/** S94: the table derivation of a value printed in a reader block: the same value, in a cell whose text is the block text
+ * (or contains it). Null when no table relation explains the value. */
+export function tableDerivationOf(rel:DocumentRelations|null|undefined,blockText:string,value:number|null):CellDerivation1G|null{
+ if(!rel?.tableRelations||value===null)return null;const b=cellKey(blockText);if(!b)return null;
+ return rel.tableRelations.derivations.find(d=>d.value===value&&(cellKey(d.cellText)===b||b.length>=6&&cellKey(d.cellText).includes(b)))??null;}
+/** S94: the comparison-table member a value is (collective typing), when a member cell's text is the block text. */
+export function tableMemberOf(rel:DocumentRelations|null|undefined,blockText:string,value:number|null):TableMember1G|null{
+ if(!rel?.tableRelations||value===null)return null;const b=cellKey(blockText);if(!b)return null;
+ return rel.tableRelations.members.find(d=>d.value===value&&(cellKey(d.cellText)===b||b.length>=6&&cellKey(d.cellText).includes(b)))??null;}
+/** S94: the subject of the table row a value sits in (reviewed product, another product, a set), when a row cell's text is
+ * the block text. */
+export function rowSubjectOf(rel:DocumentRelations|null|undefined,blockText:string):{subject:RowSubject1G;label:string}|null{
+ if(!rel?.tableRelations)return null;const b=cellKey(blockText);if(!b)return null;const r=rel.tableRelations.rows.find(x=>cellKey(x.text)===b);return r?{subject:r.subject,label:r.label}:null;}
 const KIND_ROLE={method:'measured',declaration:'declared',estimate:'derived'} as const;
-const RANK={neighbour1:2,neighbour2:2.5,tableStructure:1,tableLinkSame:2.5,tableLinkAncestor:3,parallel:3,sameSection:3,ancestorSection:4,tableLinkMethod:5,methodSection:5};
+const RANK={tableDerivation:0.5,tableMember:1.5,neighbour1:2,neighbour2:2.5,tableStructure:1,tableLinkSame:2.5,tableLinkAncestor:3,parallel:3,sameSection:3,ancestorSection:4,tableLinkMethod:5,methodSection:5};
 /** S92: select the evidence links of one value. `container` is the value's 1D-A2 container: table observations are
  * consulted only for a table cell, sentences and sections only for text. */
 export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStart:number,surface:string,value:number|null,container:StructuralContext['container'],use:{tables?:boolean;prose?:boolean;
@@ -80,6 +98,16 @@ export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStar
  selection?:'first'|'argument';subject?:string|null;instrumentTerms?:readonly string[]}={tables:true,prose:true}):EvidenceLink[]{
  const out:EvidenceLink[]=[];const nm=(x:string)=>x.replace(/\s+/g,' ').trim().toLowerCase();
  const dims=[...new Set([...dimensionsIn1G(surface),...cellElements1G(surface).map(e=>e.dimension).filter((d):d is string=>!!d)])];
+ // S94: a cell that a whole-table relation derives from other cells: the inputs (cells) and the table's context statement
+ // are the originating statements; arithmetic verification makes it the nearest evidence
+ const dv=use.tables===false?null:tableDerivationOf(rel,blockText,value);
+ if(dv)out.push({role:'derived',relation:'table_derivation',scope:'table',rank:RANK.tableDerivation,pointer:`table ${dv.table} cell ${dv.cell} (${dv.kind}${dv.formula?' '+dv.formula:''})`,
+  statements:[...dv.inputs.map(i=>({locator:`table ${dv.table} cell ${i.cell}`,block:-2,sentence:null,text:i.text})),...dv.methods.map(m=>({locator:rel.model.blocks[m.block]?.locator??'',block:m.block,sentence:null}))]});
+ // S94 collective typing: a base value of a verified comparison table is a result of its column's procedure, linked to the
+ // table's method statements (none: no link)
+ const mb=use.tables===false||dv?null:tableMemberOf(rel,blockText,value);
+ if(mb&&mb.methods.length)out.push({role:'measured',relation:'table_member',scope:'table',rank:RANK.tableMember,pointer:`table ${mb.table} cell ${mb.cell} (comparison table member)`,
+  statements:mb.methods.map(m=>({locator:rel.model.blocks[m.block]?.locator??'',block:m.block,sentence:null}))});
  if(container==='table_cell'){if(!use.tables)return out;
   const cand=(rel.tableObservations??[]).filter(o=>o.value===value&&blockText.includes(o.surface.trim().slice(0,6)));
   for(const o of cand){const c=o.evidence.class,l=o.evidence.level??'';const role=c==='publisher_measured'?'measured':c==='manufacturer_declared'||c==='nominal_certified'?'declared':c==='derived_or_estimated'?'derived':null;if(!role)continue;
@@ -140,12 +168,19 @@ function bestStatements(rel:DocumentRelations,blocks:readonly number[],dims:read
  * estimate or calculation word governs directly ("an estimated 30 kWh"). Inputs of a calculation keep their own nature. */
 export interface EvidenceReading {provenance:'publisher'|'manufacturer'|'third_party'|'unresolved';nature:'measured'|'calculated'|'declared'|'condition'|'unresolved';
  statements:{locator:string;block:number;sentence:number|null;relation:string;line?:number|null}[];
- calculation:{assumptions:{kind:string;text:string;from:'sentence'|'linked_statement'}[];inputsFromPublisher:boolean}|null;reason:string}
+ calculation:{assumptions:{kind:string;text:string;from:'sentence'|'linked_statement'|'table'}[];inputsFromPublisher:boolean;
+  /** S94: the cells a table relation computed the value from, and how */
+  derivation?:{kind:string;formula:string|null;inputs:{text:string;role:string}[];residual:number|null}}|null;reason:string;
+ /** S94: the product the value is about, when its table row names it */
+ subject?:{value:RowSubject1G;label:string}|null}
 const GOVERNED_CALC=/\b(?:estimated|calculated|projected|works out (?:at|to)|comes to|equates to|which means|results? in)\s+(?:an?\s+|about\s+|around\s+|roughly\s+|just\s+(?:over|under)\s+)?$/i;
 const AGGREGATE_BEFORE=/\b(?:average|mean|median|typical|most common|minimum|maximum|lowest|highest|least|most|range(?: of)?|total|overall|sum|aggregate)\b[^.!?:;]{0,40}:?\s*$/i;
 const FREQUENCY=/\b(?:every|each|once a|twice a|\d+\s*(?:times|x)\s*(?:a|per))\s+(?:day|week|month|year)\b|\b(?:daily|weekly)\b/gi;
+/** S94 (arm T1c): a percentage in a comparative construction states a relative difference between two values */
+const COMPARATIVE_AFTER=/^\s*(?:higher|lower|more|less|faster|slower|better|worse|greater|smaller|larger|bigger|longer|shorter|louder|quieter|brighter|darker|cheaper|dearer)\s+than\b|^\s*(?:above|below|over|under)\s+(?:the\s+)?(?:average|median|mean)\b|^\s*(?:away from|relative to|compared (?:to|with)|delta|difference)\b/i;
+const COMPARATIVE_BEFORE=/\b(?:delta|difference) (?:of|was|is)\s*$/i;
 const PER_PERIOD_AFTER=/^\s*(?:\/\s*|per\s+|a\s+|an\s+|each\s+)(?:year|yr|month|mo|week|day|annum)\b|^\s*(?:annually|yearly|monthly)\b/i;
-export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:string|null},o:{unit:string;label:string;valueAt:number;surface:string},links:readonly EvidenceLink[],rel:DocumentRelations|null,opts:{currency:boolean;periodUnit:boolean;headingLine?:number|null;qk?:QuantityKnowledge}):EvidenceReading{
+export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:string|null},o:{unit:string;label:string;valueAt:number;surface:string},links:readonly EvidenceLink[],rel:DocumentRelations|null,opts:{currency:boolean;periodUnit:boolean;headingLine?:number|null;qk?:QuantityKnowledge;comparatives?:boolean}):EvidenceReading{
  // sentence boundaries ignore decimal points ("PM2.5", "104.8"): a stop followed by space and a capital or digit, or the end
  const end=o.valueAt+o.surface.length;const head0=o.label.slice(0,o.valueAt);let sentStart=0;for(const m of head0.matchAll(/[.!?]["')\]]?\s+(?=[A-Z0-9"'(£$€])/g))sentStart=m.index!+m[0].length;
  const tailEnd=o.label.slice(end).search(/[.!?]["')\]]?(?:\s+(?=[A-Z0-9"'(£$€])|\s*$)/);const sentence=o.label.slice(sentStart,end)+(tailEnd>=0?o.label.slice(end,end+tailEnd):o.label.slice(end));
@@ -156,9 +191,11 @@ export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:s
  const aggregate=AGGREGATE_BEFORE.test(before);
  const derivedRatio=!!opts.qk&&/%|percent/i.test(o.surface+' '+o.unit)&&(()=>{const prior=findQuantities(opts.qk!,o.label.slice(sentStart,o.valueAt)).filter(q=>(q.value!==null||q.low!==undefined)&&!/%|percent/i.test(q.surface));
   const kinds=prior.flatMap(q=>q.low!==undefined&&q.high!==undefined?[...q.unit.kinds,...q.unit.kinds]:q.unit.kinds);return kinds.some(k=>kinds.filter(x=>x===k).length>=2);})();
- const output=GOVERNED_CALC.test(before)||aggregate||derivedRatio||(opts.currency||perPeriod)&&(isCalculationText1G(sentence)||calcLinks.length>0);
+ const tableDerived=links.find(l=>l.relation==="table_derivation")??null;
+ const comparative=!!opts.comparatives&&/%|percent/i.test(o.surface+' '+o.unit)&&(COMPARATIVE_AFTER.test(after)||COMPARATIVE_BEFORE.test(before));
+ const output=!!tableDerived||comparative||GOVERNED_CALC.test(before)||aggregate||derivedRatio||(opts.currency||perPeriod)&&(isCalculationText1G(sentence)||calcLinks.length>0);
  const top=links.length?Math.min(...links.map(l=>l.rank)):Infinity;
- const localDecision=/^nearest:/.test(role.reason??'')?!(role.reason??'').replace(/^nearest:/,'').split('+').some(p=>/^(?:co_occurrence|bridge|table_link|table_structure|parallel_table):/.test(p)):/^evidence:/.test(role.reason??'');
+ const localDecision=/^nearest:/.test(role.reason??'')?!(role.reason??'').replace(/^nearest:/,'').split('+').some(p=>/^(?:co_occurrence|bridge|table_link|table_structure|parallel_table|table_derivation|table_member):/.test(p)):/^evidence:/.test(role.reason??'');
  const structural=/(?:specification_|test_table|test_section|label_value_outside)/.test(role.reason??'')&&opts.headingLine!=null;
  const linked=links.filter(l=>l.rank===top).flatMap(l=>(l.statements??[]).map(s=>({...s,relation:l.relation})));
  // a decision resting on the table's own structure (heading, caption, labels) points to the line that announces it
@@ -173,8 +210,12 @@ export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:s
  const r=role.value;const why=role.reason??'';
  if(r==='certified_or_quoted')return {provenance:'third_party',nature:'declared',statements,calculation:null,reason:why};
  if(r==='test_condition'||r==='programme_preset')return {provenance:'publisher',nature:'condition',statements,calculation:null,reason:why};
- if(output){const prov=r==='declared_spec'?'manufacturer':publisherInputs||r==='measured_result'?'publisher':'unresolved';
-  return {provenance:prov,nature:'calculated',statements,calculation:{assumptions,inputsFromPublisher:publisherInputs},reason:'calculation_output:'+why};}
+ if(output){const prov=r==='declared_spec'?'manufacturer':publisherInputs||r==='measured_result'||tableDerived?'publisher':'unresolved';
+  // S94: a table derivation names its input cells; they are the calculation's inputs (and its stated assumptions)
+  const tIn=(tableDerived?.statements??[]).filter(s=>s.block===-2&&s.text).map(s=>({kind:'input',text:s.text!,from:'table' as const}));
+  return {provenance:prov,nature:'calculated',statements,calculation:{assumptions:[...assumptions,...tIn],inputsFromPublisher:publisherInputs||!!tableDerived,
+   ...(tableDerived?{derivation:{kind:/\(([a-z_]+)/.exec(tableDerived.pointer)?.[1]??'table',formula:/\((?:[a-z_]+) (.+)\)$/.exec(tableDerived.pointer)?.[1]??null,inputs:tIn.map(i=>({text:i.text,role:'input'})),residual:null}}:{})},
+   reason:'calculation_output:'+(tableDerived?'table_derivation:':comparative?'comparative:':'')+why};}
  if(r==='declared_spec')return {provenance:'manufacturer',nature:'declared',statements,calculation:null,reason:why};
  // a value decided only by calculation statements, and not their output, is not thereby a measurement
  const onlyCalc=/^nearest:/.test(why)&&why.replace(/^nearest:/,'').split('+').every(p=>p.endsWith(':derived'));
@@ -473,6 +514,7 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
  situation?:boolean;
  /** S93: report provenance and nature separately (needs roleModel 'links'); `relations` gives the page model for assumptions */
  provenance?:boolean;relations?:DocumentRelations|null;
+ /** S94 (arm T1c): comparative constructions state relative differences */ comparatives?:boolean;
  /** S93: the object of the value decides between same-kind properties (see attributeProperty) */
  objectResolution?:boolean}={}):DefinitionInterpretation{
  const category=o.category??null;const label=norm(o.label),context=norm(o.context);
@@ -505,7 +547,8 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
   subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
  let evidence:EvidenceReading|undefined;
  if(opts.provenance&&opts.roleModel==='links'&&o.valueAt!=null&&o.label)evidence=provenanceAndNature(role,{unit:o.unit,label:o.label,valueAt:o.valueAt,surface:String(o.surface??o.value??'')},o.structure?.links??[],opts.relations??null,
-  {currency:unitClass(defs,o.unit)!==null,periodUnit:unitPeriod(o.unit)||basis.value==='per_period',headingLine:o.structure?.sectionHeadingLine??null,qk});
+  {currency:unitClass(defs,o.unit)!==null,periodUnit:unitPeriod(o.unit)||basis.value==='per_period',headingLine:o.structure?.sectionHeadingLine??null,qk,comparatives:opts.comparatives});
+ if(evidence&&opts.relations?.tableRelations){const rs=rowSubjectOf(opts.relations,o.block??o.label??"");evidence.subject=rs?{value:rs.subject,label:rs.label}:null;}
  return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,evidence,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};
 }

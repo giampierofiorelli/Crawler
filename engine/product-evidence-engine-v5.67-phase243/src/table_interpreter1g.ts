@@ -548,16 +548,22 @@ export function interpretDocumentTables1G(html:string,opts:{lessons?:readonly In
 //  - row subject: the product a row is about (the reviewed product, another product, a set), from its label.
 export type TableDerivationKind1G='relative_difference'|'ratio_to_reference'|'statistic_over_set';
 export type RowSubject1G='reviewed_product'|'other_product'|'set'|'unclear';
-export interface CellDerivation1G {table:number;cell:number;surface:string;value:number;kind:TableDerivationKind1G;formula:string|null;
+export interface CellDerivation1G {table:number;cell:number;cellText:string;surface:string;value:number;kind:TableDerivationKind1G;formula:string|null;
  inputs:{cell:number;text:string;role:'own_value'|'reference_value'|'set'}[];reference:{cell:number;text:string;value:number;label:string}|null;residual:number|null;
- row:{label:string;subject:RowSubject1G};context:{block:number;text:string}|null}
-export interface TableRelations1G {schema:'pee.table-relations.v1';tables:{table:number;pairs:number;fit:{formula:string;reference:number;support:number}|null;referenceRows:string[]}[];
+ row:{label:string;subject:RowSubject1G};context:{block:number;text:string}|null;
+ /** the method statements of the table (collective method link): a method statement of its own or an ancestor section that
+  * names one of its quantities, else the document-wide method statements (a method statement naming no quantity) */
+ methods:{block:number;scope:'section'|'document'}[]}
+/** S94: a base value of a verified comparison table (collective typing): a result of the same procedure as its column */
+export interface TableMember1G {table:number;cell:number;cellText:string;value:number;row:{label:string;subject:RowSubject1G};methods:CellDerivation1G['methods']}
+export interface TableRelations1G {schema:'pee.table-relations.v1';members:TableMember1G[];tables:{table:number;pairs:number;fit:{formula:string;references:number[];support:number;groups:number}|null;referenceRows:string[]}[];
  derivations:CellDerivation1G[];rows:{table:number;cell:number;label:string;subject:RowSubject1G;text:string}[]}
 const STAT_ROW=/^\s*(?:average|mean|median|minimum|maximum|min|max|range|total|overall average)\b|\(\s*[^)]*\bn\s*=\s*\d+/i;
 const FORMULAS:{id:string;kind:TableDerivationKind1G;v0:(v:number,p:number)=>number|null;p:(v:number,v0:number)=>number}[]=[
  {id:'p=100*(v-v0)/v0',kind:'relative_difference',v0:(v,p)=>p>-100?v/(1+p/100):null,p:(v,v0)=>100*(v-v0)/v0},
  {id:'p=100*(v0-v)/v0',kind:'relative_difference',v0:(v,p)=>p<100?v/(1-p/100):null,p:(v,v0)=>100*(v0-v)/v0},
  {id:'p=100*(v0-v)/v',kind:'relative_difference',v0:(v,p)=>v*(1+p/100),p:(v,v0)=>100*(v0-v)/v},
+ {id:'p=100*(v-v0)/v',kind:'relative_difference',v0:(v,p)=>p<100?v*(1-p/100):null,p:(v,v0)=>100*(v-v0)/v},
  {id:'p=100*v/v0',kind:'ratio_to_reference',v0:(v,p)=>p>0?100*v/p:null,p:(v,v0)=>100*v/v0}];
 const decimals=(s:string)=>{const m=/\d+(?:[.,](\d+))?/.exec(s);return m?.[1]?.length??0;};
 /** The product a row label names, against the document's principal product (or its title): every name token of the
@@ -571,45 +577,72 @@ export function rowSubject1G(label:string,principal:string|null):RowSubject1G{
 export function tableRelations1G(html:string,opts:{principal?:string|null}={}):TableRelations1G{
  const acq0=acquireTables1F(html,{rendered:true});const acq={...acq0,tables:acq0.tables.map(renderedView1G)};
  const tx=(c:SourceCell1F)=>c.normalisedText.replace(/\s+/g,' ').trim();const doc=documentModel1G(html);const principal=opts.principal??nameShapedPrincipal1G(doc.principal);
- const out:TableRelations1G={schema:'pee.table-relations.v1',tables:[],derivations:[],rows:[]};
+ const out:TableRelations1G={schema:'pee.table-relations.v1',tables:[],derivations:[],rows:[],members:[]};
+ const docMethods=doc.blocks.filter(b=>b.kind==='method'&&b.tableIndex===null&&!b.dimensions.length).map(b=>({block:b.index,scope:'document' as const}));
  for(const t of acq.tables){const cells=t.cells.filter(c=>!c.droppedBy&&c.gridRow!==null&&!c.nestedTables.length);
   const byRow=new Map<number,SourceCell1F[]>();for(const c of cells)byRow.set(c.gridRow!,[...(byRow.get(c.gridRow!)??[]),c]);
   // the table's context statement: the nearest preceding prose block of its section (Limaye/TableMiner+ table context)
   const tb=doc.tableBlock.get(t.index);let context:CellDerivation1G['context']=null;
   if(tb!==undefined){const sec=doc.blocks[tb].sectionPath.join('/');for(let i=tb-1;i>=0;i--){const b=doc.blocks[i];if(b.sectionPath.join('/')!==sec)break;if(b.tableIndex===null&&b.text.length>=40){context={block:i,text:b.text};break;}}}
-  type Pair={row:number;label:string;name:string;base:{cell:SourceCell1F;e:Element1G};pct:{cell:SourceCell1F;e:Element1G}};const pairs:Pair[]=[];
-  for(const [row,rc0] of [...byRow.entries()].sort((a,b)=>a[0]-b[0])){const rc=[...rc0].sort((a,b)=>(a.gridCol??0)-(b.gridCol??0));if(rc.length<2)continue;
+  const tableRows:TableRelations1G['rows']=[];
+  const tdims=[...new Set(cells.flatMap(c=>[...dimensionsIn1G(tx(c)),...cellElements1G(tx(c)).map(e=>e.dimension).filter((d):d is string=>!!d)]))];
+  let methods:CellDerivation1G['methods']=docMethods;
+  if(tb!==undefined){const own=doc.blocks[tb].sectionPath;const sec=doc.blocks.filter(b=>b.kind==='method'&&b.tableIndex===null&&b.dimensions.some(d=>tdims.includes(d))&&b.sectionPath.length&&own.join('/').startsWith(b.sectionPath.join('/')))
+    .sort((a,b)=>b.sectionPath.length-a.sectionPath.length||Math.abs(a.index-tb)-Math.abs(b.index-tb));if(sec.length)methods=[{block:sec[0].index,scope:'section'}];}
+  type Pair={row:number;seg:number;label:string;name:string;base:{cell:SourceCell1F;e:Element1G};pct:{cell:SourceCell1F;e:Element1G}};const pairs:Pair[]=[];
+  // rows with a single cell head a row group (TUTA's header tree): each group may compare against its own reference
+  const valueRows:{row:number;seg:number;rc:SourceCell1F[];name:string}[]=[];let seg=0;
+  for(const [row,rc0] of [...byRow.entries()].sort((a,b)=>a[0]-b[0])){const rc=[...rc0].sort((a,b)=>(a.gridCol??0)-(b.gridCol??0));if(rc.length<2){seg++;continue;}
    const label=tx(rc[0]);const name=rc[0].normalisedText.split('\n')[0].trim();if(!label||cellElements1G(label).length&&!/[A-Za-z]{3}/.test(label))continue;const subject=rowSubject1G(name,principal);
-   for(const c of rc.slice(1)){const text=tx(c);if(text)out.rows.push({table:t.index,cell:c.id,label,subject,text});}
+   valueRows.push({row,seg,rc,name});
+   for(const c of rc.slice(1)){const text=tx(c);if(text)tableRows.push({table:t.index,cell:c.id,label,subject,text});}
    let prev:{cell:SourceCell1F;e:Element1G}|null=null;
    for(const c of rc.slice(1)){const els=cellElements1G(tx(c));
     for(const e of els){if(e.value===null)continue;const isPct=e.unit==='%';
-     if(isPct&&prev)pairs.push({row,label,name,base:prev,pct:{cell:c,e}});
+     if(isPct&&prev)pairs.push({row,seg,label,name,base:prev,pct:{cell:c,e}});
      if(!isPct&&(e.kind==='number'||e.kind==='quantity')&&!(prev&&prev.cell===c))prev={cell:c,e};
      if(STAT_ROW.test(label)&&!isPct&&(e.kind==='number'||e.kind==='quantity')&&prev?.e===e)
-      out.derivations.push({table:t.index,cell:c.id,surface:e.surface,value:e.value,kind:'statistic_over_set',formula:null,inputs:[{cell:rc[0].id,text:label,role:'set'}],reference:null,residual:null,row:{label,subject:'set'},context});}}}
-  // collective fit: one reference value v0 and one formula for the whole column; each row's printed precision bounds v0
-  let fit:TableRelations1G['tables'][number]['fit']=null;let best:{f:typeof FORMULAS[number];v0:number;ok:Pair[]}|null=null;let second=0;
-  const live=pairs.filter(p=>p.pct.e.value!==0);
-  if(live.length>=3)for(const f of FORMULAS){const iv=live.map(p=>{const v=p.base.e.value!,pv=p.pct.e.value!;const hp=0.5*10**-decimals(p.pct.e.surface),hv=0.5*10**-decimals(p.base.e.surface);
-     const xs=[f.v0(v-hv,pv-hp),f.v0(v+hv,pv-hp),f.v0(v-hv,pv+hp),f.v0(v+hv,pv+hp)].filter((x):x is number=>x!==null&&isFinite(x)&&x>0);
-     return xs.length===4?{p,lo:Math.min(...xs)*0.999,hi:Math.max(...xs)*1.001}:null;}).filter((x):x is {p:Pair;lo:number;hi:number}=>!!x);
-    // interval stabbing: the reference value that the most rows' intervals contain
-    let top:{x:number;ok:Pair[]}|null=null;for(const x of iv.flatMap(b=>[b.lo,b.hi])){const ok=iv.filter(b=>b.lo<=x&&x<=b.hi).map(b=>b.p);if(!top||ok.length>top.ok.length)top={x,ok};}
-    if(!top)continue;if(!best||top.ok.length>best.ok.length){if(best)second=Math.max(second,best.ok.length);best={f,v0:top.x,ok:top.ok};}else second=Math.max(second,top.ok.length);}
-  if(best&&best.ok.length>=3&&best.ok.length>=0.6*live.length&&best.ok.length>second){
-   const v0=best.v0;fit={formula:best.f.id,reference:+v0.toPrecision(6),support:best.ok.length};
-   const refPairs=pairs.filter(p=>Math.abs(p.base.e.value!-v0)<=Math.max(0.5*10**-decimals(p.base.e.surface),v0*0.002)&&Math.abs(best!.f.p(p.base.e.value!,v0))<=0.5);
-   const refRows=[...byRow.entries()].filter(([row,rc])=>!pairs.some(p=>p.row===row&&p.pct.e.value!==0)&&rc.some(c=>cellElements1G(tx(c)).some(e=>e.value!==null&&e.unit!=='%'&&Math.abs(e.value-v0)<=Math.max(0.5*10**-decimals(e.surface),v0*0.002))));
-   const ref=refPairs[0]??null;const refRow=ref?{cell:ref.base.cell.id,text:tx(ref.base.cell),value:ref.base.e.value!,label:ref.label}:null;
-   const refRow2=!refRow&&refRows.length?(()=>{const rc=[...refRows[0][1]].sort((a,b)=>(a.gridCol??0)-(b.gridCol??0));const c=rc.find(c=>cellElements1G(tx(c)).some(e=>e.value!==null&&e.unit!=='%'))!;
-    return {cell:c.id,text:tx(c),value:cellElements1G(tx(c)).find(e=>e.value!==null&&e.unit!=='%')!.value!,label:tx(rc[0])};})():null;
-   const reference=refRow??refRow2;
-   out.tables.push({table:t.index,pairs:pairs.length,fit,referenceRows:[...new Set([...refPairs.map(p=>p.label),...refRows.map(([,rc])=>[...rc].sort((a,b)=>(a.gridCol??0)-(b.gridCol??0))[0].normalisedText.split('\n')[0].trim())])]});
-   for(const p of [...best.ok,...refPairs.filter(r=>!best!.ok.includes(r))]){const v=p.base.e.value!;
-    out.derivations.push({table:t.index,cell:p.pct.cell.id,surface:p.pct.e.surface,value:p.pct.e.value!,kind:best.f.kind,formula:best.f.id,
-     inputs:[{cell:p.base.cell.id,text:tx(p.base.cell),role:'own_value'},...(reference?[{cell:reference.cell,text:reference.text,role:'reference_value' as const}]:[])],
-     reference,residual:+Math.abs(best.f.p(v,v0)-p.pct.e.value!).toFixed(3),row:{label:p.label,subject:rowSubject1G(p.name,principal)},context});}}
-  else if(pairs.length)out.tables.push({table:t.index,pairs:pairs.length,fit:null,referenceRows:[]});}
+      out.derivations.push({table:t.index,cell:c.id,cellText:tx(c),surface:e.surface,value:e.value,kind:'statistic_over_set',formula:null,inputs:[{cell:rc[0].id,text:label,role:'set'}],reference:null,residual:null,row:{label,subject:'set'},context,methods});}}}
+  // collective fit: ONE formula for the whole table and, in each row group, ONE reference value v0 that every row's
+  // printed precision admits (interval stabbing). A group is explained when 3 rows agree, or 2 rows and a reference row
+  // (a row of the group whose own value is v0 and that prints no difference)
+  const baseOf=(rc:SourceCell1F[])=>{for(const c of rc.slice(1)){const e=cellElements1G(tx(c)).find(e=>e.value!==null&&e.unit!=='%'&&(e.kind==='number'||e.kind==='quantity'));if(e)return {cell:c,e};}return null;};
+  const interval=(f:typeof FORMULAS[number],p:Pair)=>{const v=p.base.e.value!,pv=p.pct.e.value!;const hp=0.5*10**-decimals(p.pct.e.surface),hv=0.5*10**-decimals(p.base.e.surface);
+   const xs=[f.v0(v-hv,pv-hp),f.v0(v+hv,pv-hp),f.v0(v-hv,pv+hp),f.v0(v+hv,pv+hp)].filter((x):x is number=>x!==null&&isFinite(x)&&x>0);return xs.length===4?{lo:Math.min(...xs)*0.999,hi:Math.max(...xs)*1.001}:null;};
+  type SegFit={seg:number;v0:number;ok:Pair[];ref:{cell:SourceCell1F;e:Element1G;label:string}|null};
+  const fitSeg=(f:typeof FORMULAS[number],sg:number):SegFit|null=>{const all=pairs.filter(p=>p.seg===sg);const live=all.filter(p=>p.pct.e.value!==0);if(live.length<2)return null;
+   const iv=live.map(p=>({p,i:interval(f,p)})).filter((x):x is {p:Pair;i:{lo:number;hi:number}}=>!!x.i);let top:{x:number;n:number}|null=null;
+   for(const x of iv.flatMap(b=>[b.i.lo,b.i.hi])){const n=iv.filter(b=>b.i.lo<=x&&x<=b.i.hi).length;if(!top||n>top.n)top={x,n};}
+   if(!top||top.n<0.6*live.length)return null;
+   // the reference value is the centre of the intersection of the agreeing rows' intervals
+   const agree=iv.filter(b=>b.i.lo<=top!.x&&top!.x<=b.i.hi);const lo=Math.max(...agree.map(b=>b.i.lo)),hi=Math.min(...agree.map(b=>b.i.hi));const v0=(lo+hi)/2;
+   const nearV0=(e:Element1G)=>{const h=0.5*10**-decimals(e.surface);return e.value!+h>=lo&&e.value!-h<=hi;};
+   const ok=all.filter(p=>{const i=interval(f,p);return !!i&&i.lo<=v0&&v0<=i.hi;});
+   const rr=valueRows.filter(r=>r.seg===sg&&!pairs.some(p=>p.row===r.row&&p.pct.e.value!==0)).map(r=>({r,b:baseOf(r.rc)})).find(x=>x.b&&nearV0(x.b.e));
+   const ref=rr?{cell:rr.b!.cell,e:rr.b!.e,label:rr.r.name}:null;const nLive=ok.filter(p=>p.pct.e.value!==0).length;
+   return nLive>=3||nLive>=2&&ref?{seg:sg,v0,ok,ref}:null;};
+  const segs=[...new Set(pairs.map(p=>p.seg))];let fit:TableRelations1G['tables'][number]['fit']=null;
+  let bestF:typeof FORMULAS[number]|null=null,bestFits:SegFit[]=[],bestScore=0,second=0;
+  for(const f of FORMULAS){const fs=segs.map(sg=>fitSeg(f,sg)).filter((x):x is SegFit=>!!x);const score=fs.reduce((n,x)=>n+x.ok.length,0);
+   if(score>bestScore){second=bestScore;bestScore=score;bestF=f;bestFits=fs;}else second=Math.max(second,score);}
+  if(bestF&&bestScore>second){const F=bestF;
+   fit={formula:F.id,references:bestFits.map(x=>+x.v0.toPrecision(6)),support:bestScore,groups:bestFits.length};
+   out.tables.push({table:t.index,pairs:pairs.length,fit,referenceRows:[...new Set(bestFits.filter(x=>x.ref).map(x=>x.ref!.label))]});
+   for(const sf of bestFits){const reference=sf.ref?{cell:sf.ref.cell.id,text:tx(sf.ref.cell),value:sf.ref.e.value!,label:sf.ref.label}:null;
+    for(const p of sf.ok){const v=p.base.e.value!;
+     out.derivations.push({table:t.index,cell:p.pct.cell.id,cellText:tx(p.pct.cell),surface:p.pct.e.surface,value:p.pct.e.value!,kind:F.kind,formula:F.id,
+      inputs:[{cell:p.base.cell.id,text:tx(p.base.cell),role:'own_value'},...(reference?[{cell:reference.cell,text:reference.text,role:'reference_value' as const}]:[])],
+      reference,residual:+Math.abs(F.p(v,sf.v0)-p.pct.e.value!).toFixed(3),row:{label:p.label,subject:rowSubject1G(p.name,principal)},context,methods});
+     if(!STAT_ROW.test(p.label))out.members.push({table:t.index,cell:p.base.cell.id,cellText:tx(p.base.cell),value:v,row:{label:p.label,subject:rowSubject1G(p.name,principal)},methods});}
+    if(sf.ref)out.members.push({table:t.index,cell:sf.ref.cell.id,cellText:tx(sf.ref.cell),value:sf.ref.e.value!,row:{label:sf.ref.label,subject:rowSubject1G(sf.ref.label,principal)},methods});}}
+  else if(pairs.length)out.tables.push({table:t.index,pairs:pairs.length,fit:null,referenceRows:[]});
+  // the row axis names products only when the table itself shows it (Limaye/Sato: a column is typed by all its cells):
+  // a row names the reviewed product, or one relation ties the rows. Otherwise a header cell that names the reviewed
+  // product makes its column about that product. Otherwise no subject is decided.
+  const productRows=tableRows.some(r=>r.subject==='reviewed_product')||!!fit;
+  if(productRows)out.rows.push(...tableRows);
+  else{const top=Math.min(...cells.map(c=>c.gridRow!));const heads=cells.filter(c=>c.gridRow===top&&rowSubject1G(c.normalisedText.split('\n')[0].replace(/\([^)]*\)/g,''),principal)==='reviewed_product');
+   for(const h of heads)for(const c of cells)if(c.gridCol===h.gridCol&&c.gridRow!==top){const text=tx(c);if(text)out.rows.push({table:t.index,cell:c.id,label:tx(h),subject:'reviewed_product',text});}}
+  if(!productRows)for(const d of out.derivations)if(d.table===t.index&&d.row.subject!=='set')d.row.subject='unclear';}
  return out;
 }
