@@ -50,3 +50,12 @@ test('S89/S90 learning: one source teaches a candidate, independent publishers a
 test('S89 n-grams never start or end on a stopword or contain digits',()=>{
  assert.deepEqual(ngrams('the 2 deep clean score of',3).sort(),['clean','deep','deep clean'].sort());
 });
+
+test('S91 role from positive evidence only: measured, declared, or unresolved (never measured by default)',()=>{
+ const role=(label:string,v='45 dB')=>interpretWithDefinitions(defs,qk,{value:45,unit:'dB',label,valueAt:label.indexOf(v),surface:v}).role;
+ assert.equal(role('In our tests it peaked at 45 dB on the top setting').value,'measured_result');
+ assert.equal(role('It is rated at 45 dB by the manufacturer').value,'declared_spec');
+ // recorded gap (S91, not changed while frozen): 'the maker rates it' carries no cue in pd.5
+ assert.equal(role('Noise: 45 dB').value,'unresolved','a bare value with no evidence is an abstention');
+ assert.equal(role('Noise: 45 dB').reason,'no_positive_evidence');
+});
