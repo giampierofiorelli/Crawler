@@ -20,7 +20,7 @@
  */
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {findQuantities,namedPhrases,normText,parseUnit,type QuantityKnowledge} from './quantity_knowledge.js';
+import {findQuantities,namedPhrases,normText,parseUnit,hasPhrase,type QuantityKnowledge} from './quantity_knowledge.js';
 import type {TaughtConcept} from './knowledge_link.js';
 
 /** kt-cues.2 (R3 fidelity review): the split word is rendered; kt-cues.1 is kept for reproducing the held-out first run. */
@@ -584,3 +584,60 @@ export function alignHybrid(qk:QuantityKnowledge,phrase:string,pool:readonly Con
  const idn=out.filter(x=>x.relation==='identity');
  return {concept:idn.length===1?idn[0].id:null,status:idn.length===1?'aligned':'unresolved',denotes,candidates:out};
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// 9. S95 (owner "Procedi" on the S94 proposal): explicit multi-view concept representation and a symbolic second stage.
+//    MultiKE (Zhang et al. 2019): an entity is its name, its attributes and its relations, each a separate view. I-ADOPT:
+//    a variable is a property (quantity) of an object of interest under constraints. Every view is derived at run time
+//    from knowledge PEE already holds (quantity knowledge, property definitions, the concept graph); nothing is stored.
+//    BLINK (Wu et al. 2020): retrieve with representations, then decide in a second stage that sees mention and entity
+//    together; here the second stage is symbolic (clashes and anchors), never a similarity threshold alone.
+export interface PropertyLike {id:string;quantity?:{kinds:readonly string[]}|null;surface:readonly (readonly [string,string])[];objectNouns?:readonly string[]}
+export interface ConceptViews {id:string;kind:string|null;name:string;description:string;nameStems:string[];quantity:{kinds:string[];metrics:string[]};
+ object:string[];conditions:{axis:string;value:string}[];relations:{id:string;relation:string}[];properties:string[]}
+function viewsOf(qk:QuantityKnowledge,id:string,kind:string|null,name:string,description:string,relations:readonly {id:string;relation:string}[],props:readonly PropertyLike[]):ConceptViews{
+ const tn=typeSpan(qk,name);const td=typeSpan(qk,description);
+ const quantity={kinds:[...new Set(tn.kinds.length?tn.kinds:td.kinds)],metrics:[...new Set(tn.metrics.length?tn.metrics:td.metrics)]};
+ const nameWords=contentWords(name);const qWords=new Set(nameWords.filter(w=>{const t=typeSpan(qk,w);return t.kinds.length>0||t.metrics.length>0;}).map(stem));
+ const object=[...new Set(nameWords.map(stem).filter(w=>!qWords.has(w)))];
+ const text=normText(name+' . '+description.split(/(?<=[.;:])\s/)[0]);
+ const properties=props.filter(p=>p.surface.some(([t])=>{const n=normText(t);return n.length>=4&&hasPhrase(text,n);})&&(!quantity.kinds.length||!p.quantity?.kinds.length||p.quantity.kinds.some(k=>quantity.kinds.includes(k)))).map(p=>p.id);
+ return {id,kind,name,description,nameStems:nameWords.map(stem),quantity,object,conditions:td.axes,relations:[...relations],properties};}
+export function conceptViews(qk:QuantityKnowledge,c:ConceptNode,props:readonly PropertyLike[]=[]):ConceptViews{
+ return viewsOf(qk,c.id,c.kind??null,[words(c.id),...(c.aliases??[])].join(' . '),(c.statement??'').replace(/\s*\[[^\]]*\]\s*$/,'').split(/(?<=[.;:])\s/)[0]??'',c.neighbors??[],props);}
+export function mentionViews(qk:QuantityKnowledge,text:string,quote:string,props:readonly PropertyLike[]=[]):ConceptViews{return viewsOf(qk,'mention',null,text,quote,[],props);}
+export interface MultiViewCandidate {id:string;score:number;views:Record<string,number>;checks:{quantityClash:boolean;propertyClash:boolean;differentObject:boolean;anchor:'alias'|'name_word'|'object'|null};relation:HybridRelation}
+export interface MultiViewAlignment {concept:string|null;status:'aligned'|'unresolved';candidates:MultiViewCandidate[]}
+export interface MultiViewOptions {k?:number;views?:'all'|'name';rerank?:boolean;margin?:number;minScore?:number;objectSimilarity?:number}
+export function multiViewScore(m:DistributionalModel,men:ConceptViews,c:ConceptViews,opts:MultiViewOptions={}):Pick<MultiViewCandidate,'score'|'views'|'checks'>{
+ const v:Record<string,number>={};const cos=(a:string,b:string)=>a.trim()&&b.trim()?cosine(textVector(m,a),textVector(m,b)):0;
+ v.name=cos(men.name,c.name);if(c.description)v.description=cos(men.name,c.description);
+ const all=opts.views!=='name';
+ const typed=(x:ConceptViews)=>x.quantity.kinds.length+x.quantity.metrics.length>0;
+ const qa=[...men.quantity.kinds,...men.quantity.metrics],qb=[...c.quantity.kinds,...c.quantity.metrics];
+ if(all&&typed(men)&&typed(c))v.quantity=qa.filter(x=>qb.includes(x)).length/new Set([...qa,...qb]).size;
+ const os=opts.objectSimilarity??0.4;const objMatch=men.object.filter(w=>c.object.some(x=>x===w||wordSimilarity(m,w,x)>=os)).length;
+ if(all&&men.object.length&&c.object.length)v.object=objMatch/men.object.length;
+ if(all&&c.relations.length)v.relations=cos(men.description,c.relations.map(r=>words(r.relation)+' '+words(r.id)).join(' . '));
+ if(all&&men.properties.length&&c.properties.length)v.property=men.properties.some(p=>c.properties.includes(p))?1:0;
+ const vals=Object.values(v);const score=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+ const clash=(a:string[],b:string[])=>a.length>0&&b.length>0&&!a.some(x=>b.includes(x));
+ const quantityClash=clash(men.quantity.kinds,c.quantity.kinds)||clash(men.quantity.metrics,c.quantity.metrics);
+ const propertyClash=men.properties.length>0&&c.properties.length>0&&!men.properties.some(p=>c.properties.includes(p));
+ const differentObject=men.object.length>0&&c.object.length>0&&objMatch===0;
+ const alias=false;const nameWord=men.nameStems.some(w=>c.nameStems.includes(w));
+ return {score:+score.toFixed(4),views:Object.fromEntries(Object.entries(v).map(([a,b])=>[a,+b.toFixed(3)])),checks:{quantityClash,propertyClash,differentObject,anchor:alias?'alias':nameWord?'name_word':objMatch>0?'object':null}};}
+export function alignMultiView(qk:QuantityKnowledge,m:DistributionalModel,text:string,quote:string,pool:readonly ConceptNode[],props:readonly PropertyLike[]=[],opts:MultiViewOptions={}):MultiViewAlignment{
+ const men=mentionViews(qk,text,quote,props);
+ const scored=pool.map(c=>{const cv=conceptViews(qk,c,props);const s=multiViewScore(m,men,cv,opts);
+  const alias=(c.aliases??[]).some(a=>namedPhrases(text,[a]).size>0);if(alias)s.checks.anchor='alias';return {id:c.id,...s,relation:'none' as HybridRelation};})
+  .sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id)).slice(0,opts.k??5);
+ const margin=opts.margin??0.05,min=opts.minScore??0.3;
+ for(const c of scored){const blocked=c.checks.quantityClash||c.checks.propertyClash||c.checks.differentObject;
+  c.relation=c.checks.quantityClash||c.checks.propertyClash?'incompatible':c.score>=min*0.5||c.checks.anchor?'related':'none';void blocked;}
+ let pick:MultiViewCandidate|null=null;
+ if(opts.rerank===false){const [a,b]=scored;if(a&&a.score>=min&&a.score-(b?.score??0)>=margin)pick=a;}
+ else{const ok=scored.filter(c=>!c.checks.quantityClash&&!c.checks.propertyClash&&!c.checks.differentObject&&c.checks.anchor);
+  const [a,b]=ok;if(a&&a.score>=min&&a.score-(b?.score??0)>=margin)pick=a;}
+ if(pick)pick.relation='identity';
+ return {concept:pick?.id??null,status:pick?'aligned':'unresolved',candidates:scored};}

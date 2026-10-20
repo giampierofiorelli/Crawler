@@ -1,0 +1,24 @@
+{
+ "schema": "pee.s95.preregistration.v1",
+ "at": "2026-10-20",
+ "owner": "owner instruction 'Procedi' (2026-10-20) on Claude's proposal after the owner's S94 review (verbatim research in .claude/skills/pee-guided-learning/references/owner-research-s94-vectors-qualities-2026-10-20.md): give concepts an explicit I-ADOPT structure (object, quantity, conditions) linked to the property definitions; then test multi-view vector retrieval with a symbolic second-stage re-ranking (BLINK principle) on a new reference; no new dependencies",
+ "roadmapStep": "R3 / R3-C (unchanged; R3 stays open)",
+ "writtenBefore": "any S95 code, any new reference, any score",
+ "question": "Do explicit multi-view concept representations (MultiKE: name, attributes, relations), derived from PEE's existing scientific knowledge, (a) retrieve the right concept at least as well as PPMI and (b) let a symbolic second stage separate identity from relatedness better than the lexical identifier and the S94 hybrid, without promoting related or different-object concepts?",
+ "views": {
+  "name": "concept name and aliases (PPMI)",
+  "description": "first sentence of the concept statement (PPMI)",
+  "quantity": "quantity kinds and metrics typed by the quantity knowledge (QK); disjoint typing is a clash",
+  "object": "name words that are not quantity words: the object of interest and its constraints (I-ADOPT)",
+  "conditions": "condition axes and values typed by QK in the statement",
+  "relations": "graph neighbours and relation kinds (OWL2Vec* depth one)",
+  "property": "the property definitions the concept names, with their object nouns; two different defined properties of one kind are a clash"
+ },
+ "retrieval": "multi-view score: the unweighted mean of the available view similarities, fixed before any run; top-k candidates",
+ "rerank": "symbolic second stage: no quantity clash, no property clash, no different object; an anchor (alias, shared name word, or matching object term); the best surviving candidate with a margin. Vector similarity never decides identity alone",
+ "arms": {"identify": "cycle-2 lexical identifier", "align1": "S75 type gate", "H94": "S94 hybrid (frozen)", "MV": "multi-view retrieval + symbolic rerank", "MV-noviews": "ablation: name and description views only", "MV-norerank": "ablation: multi-view top-1 when it leads by the margin, no symbolic checks"},
+ "development": "the four examined references (R3 dev, held-out, S76 transfer, S94): spent. At most three reformulations, then freeze",
+ "independentCheck": "a NEW blind reference: 240 never-used mentions (40 per category: televisions, dishwashers, dehumidifiers from the transfer translation; air purifiers, coffee machines, air fryers from the R3 translations), excluding every mention of the four earlier references; candidates pooled from lexical, PPMI and multi-view top 4 plus one control; annotated blind with the unchanged R3 prompt and sealed before any arm runs on it",
+ "metrics": ["retrieval: reference identities among each method's top 5 (pool caveat: an identity no method retrieves is not in the reference)", "identity: decided, correct, precision, recall", "false identities: related, hierarchical or none promoted", "view coverage: concepts with a quantity, object, condition and property view", "concept-to-property links"],
+ "stopRule": "if MV does not recover more identities than the lexical identifier with no more false identities, multi-view identity is recorded as not demonstrated; retrieval is reported separately"
+}
