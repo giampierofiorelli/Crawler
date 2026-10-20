@@ -1,0 +1,50 @@
+{
+ "schema": "pee.s96.preregistration.v1",
+ "at": "2026-10-20",
+ "owner": "owner instruction 2026-10-20 (verbatim in .claude/skills/pee-guided-learning/references/owner-instruction-s96-entity-representation-2026-10-20.md): 'demonstrate whether a scientifically validated concept or relationship acquired from one source actually improves the reading of a later unseen source'",
+ "roadmapStep": "R3 (unchanged; R3 stays open)",
+ "writtenBefore": "any S96 arm run, any S96 wave, any score; after the audit and the entity module (src/scientific_entities.ts, resources/scientific-entities/entity-acquisition.v1.json ea.1 with the corroboration rule it1)",
+ "audit": {
+  "finding1": "PEE holds explicit typed knowledge in three places that do not reach each other: the property definitions (pd.5: 28 properties, the only representation the attribution reader uses), the quantity knowledge metrics (qk.2.4: 19 metrics with kind, terms, required conditions, non-equivalences, methods and source; 13 are linked to no definition, including every display metric), and the owner teaching tables (definition, unit, condition, method and trap columns that never became definitions)",
+  "finding2": "the store concepts (category_items) state no object, quantity, unit, method or condition: S95's views had to be derived from names",
+  "consequence": "the representation gap is explicit knowledge that exists but is not connected to the reader, not the absence of vectors"
+ },
+ "representation": {
+  "classes": "property (measurable, kind corroborated), attribute (stated, quantity not corroborated), feature (function or component, never a performance quality), method, instrument",
+  "attributes": "definition, quantity (kinds, metrics, units: typed/ambiguous/unknown), object of interest (unknown unless a dedicated column states it), conditions (typed to a QK axis when possible), method, what it does not establish (owner traps), stated relations (not_equivalent_to, derived_from, defined_by), provenance (file and line, or QK source), state (teaching_candidate, qk_metric)",
+  "rule": "a kind is admitted only when two independent cells of the row agree (unit column with subject or definition, or subject with definition); shared units, words or vector proximity never establish identity",
+  "reuse": "typed property entities without a definition become CANDIDATE property definitions in the existing pack (acq_* from rows, qkm_* from QK metrics); attribute entities with a stated definition become CANDIDATE aspects of the existing qualitative reader. No new store, no new reader, no category exception; candidates never carry decision authority"
+ },
+ "arms": {
+  "E0": "pd.5 unchanged (existing representation and reader)",
+  "E1": "pd.5 + every typed candidate (rows and QK metrics)",
+  "E1r": "ablation: rows of the teaching tables only",
+  "E1m": "ablation: QK metrics only",
+  "E2": "E1 restricted to candidates supported by at least one earlier document (a value of the candidate's kind labelled by one of its terms on a retained page of the spent S89-S94 waves): acquired from one source, validated on another, applied to a later one",
+  "E3": "hybrid: E1, and when E1 abstains for want of a term among unit-kind candidates, the PPMI-nearest candidate (similarity >= 0.2 and a lead of 0.1), fixed before any run",
+  "Q0": "qualitative reader with the QK aspects unchanged",
+  "Q1": "Q0 + candidate aspects from attribute entities with a stated definition"
+ },
+ "development": "spent S94 wave items (monitors, SSDs; 240 values) with a development key written before any run (private-eval/s96/dev-key.json); at most three reformulations, then freeze (evaluation/s96/freeze.json)",
+ "independentCheck": {
+  "material": "a new wave of never-examined pages from publishers never used by PEE: televisions (taught by owner package 07 and by QK display metrics) and monitors (unfamiliar: no package, no category profile), at least two publishers where accessible; robots, 403/429 and AI-agent refusals honoured, never bypassed",
+  "quantitativeItems": "same rule as S89-S94: every quantity with a QK unit in the text blocks, deduplicated, evenly sampled, at most 40 per page",
+  "qualitativeItems": "sentences of the reader's segments containing a word of the QK evaluative lexicon (identical in Q0 and Q1), 20-600 characters, evenly sampled, at most 15 per page",
+  "annotation": "blind Claude-agent annotators, never shown any arm output: per value the property from the union label set (pd.5 and every E1 candidate with its label and stated meaning) or 'none', alsoAcceptable, a free-text concept name, and whether it is a result or a test setting; per sentence the attribute assessed (QK aspects and Q1 candidates with their stated meaning, or 'other: name', or 'not an assessment'); sealed by SHA-256 in evaluation/s96/annotation-freeze.json before any arm runs on the check"
+ },
+ "metrics": [
+  "attribution: correct, wrong, abstained, false attribution (reference none), per arm, per category, worst category",
+  "values only an acquired candidate can reach, and how many each arm gets right",
+  "pd.5 regressions (E0 right, arm wrong)",
+  "hard pairs reported separately: input lag vs response time vs audio latency; peak vs minimum or test brightness; refresh rate result vs test refresh rate; HDR vs SDR luminance",
+  "qualitative: sentences with the reference attribute found, wrong attribute, false attribute (reference other or not an assessment)",
+  "resources: milliseconds per item per arm set, candidate counts"
+ ],
+ "stopRules": {
+  "acquisition": "if E1 does not get more check values right than E0 while adding at most as many false or wrong attributions as it adds correct ones, acquired knowledge is recorded as not improving the reading of later documents",
+  "validation": "E2 is preferred over E1 only if it removes more errors than correct attributions",
+  "hybrid": "the hybrid is justified only if E3 adds more correct attributions over E1 than wrong plus false ones; otherwise recorded as not justified and not integrated",
+  "qualitative": "Q1 is recorded as useful only if it finds more reference attributes than Q0 with fewer false attributes than new correct ones"
+ },
+ "notClaimed": "no promotion of any candidate; no ranking input; R3 not closed; no R4 recommendation without operational generalisation"
+}

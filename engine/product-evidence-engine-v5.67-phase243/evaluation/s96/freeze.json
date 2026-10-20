@@ -1,0 +1,139 @@
+{
+ "schema": "pee.s96.freeze.v1",
+ "at": "2026-10-20",
+ "frozenBefore": "any S96 wave request and any check annotation",
+ "reformulations": [
+  {
+   "id": "it0",
+   "change": "none (preregistered configuration)",
+   "dev": {
+    "E0": {
+     "correct": 6,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E1": {
+     "correct": 49,
+     "wrong": 1,
+     "falseAttribution": 10
+    },
+    "E1r": {
+     "correct": 6,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E1m": {
+     "correct": 49,
+     "wrong": 1,
+     "falseAttribution": 10
+    },
+    "E2": {
+     "correct": 49,
+     "wrong": 1,
+     "falseAttribution": 10
+    },
+    "E3": {
+     "correct": 53,
+     "wrong": 3,
+     "falseAttribution": 15
+    }
+   }
+  },
+  {
+   "id": "it1",
+   "change": "reader rule ownTermObject (attributeProperty): when the value's own words contain one of a definition's own surface terms, the known-object block (pd knownObjects: display, video signal) does not reject that definition; E0p isolates it with pd.5 alone",
+   "dev": {
+    "E0": {
+     "correct": 6,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E0p": {
+     "correct": 7,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E1": {
+     "correct": 61,
+     "wrong": 1,
+     "falseAttribution": 12
+    },
+    "E1r": {
+     "correct": 7,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E1m": {
+     "correct": 61,
+     "wrong": 1,
+     "falseAttribution": 12
+    },
+    "E2": {
+     "correct": 61,
+     "wrong": 1,
+     "falseAttribution": 12
+    },
+    "E3": {
+     "correct": 65,
+     "wrong": 2,
+     "falseAttribution": 17
+    }
+   }
+  },
+  {
+   "id": "it2",
+   "change": "aspect names (withAcquiredAspects): a word name required (no symbol or acronym), terms of function words only refused (ea.1 functionWords); qualitative only, attribution unchanged",
+   "dev": {
+    "E0": {
+     "correct": 6,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E0p": {
+     "correct": 7,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E1": {
+     "correct": 61,
+     "wrong": 1,
+     "falseAttribution": 12
+    },
+    "E1r": {
+     "correct": 7,
+     "wrong": 1,
+     "falseAttribution": 4
+    },
+    "E1m": {
+     "correct": 61,
+     "wrong": 1,
+     "falseAttribution": 12
+    },
+    "E2": {
+     "correct": 61,
+     "wrong": 1,
+     "falseAttribution": 12
+    },
+    "E3": {
+     "correct": 65,
+     "wrong": 2,
+     "falseAttribution": 17
+    }
+   },
+   "qualitativeDev": "Q1 adds 12 aspect links on the 686 evaluative sentences of the spent S94 pages (Q0 196, Q1 208 sentences with an aspect); one is a different object (NAND layer uniformity)"
+  }
+ ],
+ "devObservations": [
+  "all attribution gain comes from QK metrics (E1m = E1); the teaching rows add nothing on monitors and SSDs (E1r = E0p)",
+  "E2 = E1 on development: every candidate that fires is supported by an earlier page",
+  "E3 (hybrid) adds 4 correct for 6 wrong or false on development (it1, it2): below its preregistered justification; the rule decides on the check"
+ ],
+ "digests": {
+  "src/scientific_entities.ts": "f30d6c3c29c6b955c9c5a2cd7393d622467b5b12d183022bea548faf24c47170",
+  "src/definition_interpreter.ts": "9f25a1e1c3de4d0c9ae6ba6978ef38241e53ee3e9127a8e0f797f1b20dd15af5",
+  "resources/scientific-entities/entity-acquisition.v1.json": "1ae20eb798296f764eec4f97b0606205e00e4a037d7d3d477bbde6f4b7293484",
+  "resources/property-definitions/property-definitions.v1.json": "af326a46d41477e11431eb0d613230bef13e58c4fcac2ac0ba74555a912f0bc7",
+  "resources/quantity-knowledge/quantity-knowledge.v3.json": "f872a0f1aabfcd9015e8769e44bb6c86d19aa3842ca6302db390b78d100a907f"
+ },
+ "armsCode": "scripts/s96-entities.mjs functions attribute(), withAcquiredDefinitions/withAcquiredAspects options and E3 thresholds as in it2; check commands are added after this freeze without changing them"
+}

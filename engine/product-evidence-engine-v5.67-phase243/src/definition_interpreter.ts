@@ -409,7 +409,11 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
   * object of interest (I-ADOPT). When the term chosen belongs to a property whose object the definitions leave generic,
   * and the value's sentence or its document frame names the object of another property of the same kind, the object
   * decides. No vocabulary is added: only the definitions' objects. */
- objectResolution?:boolean}={}):PropertySlot{
+ objectResolution?:boolean;
+ /** S96 it1: the value's own words name one of the definition's own surface terms ("a 240Hz refresh rate"): the object
+  * named in the sentence is then this concept's, not another concept's (the known-object block guards definitions the
+  * value does not name). Off by default. */
+ ownTermObject?:boolean}={}):PropertySlot{
  const sl=o.structure?.label?norm(o.structure.label)+' | ':'';const fullLabel=sl+norm(o.label);const label=sl+norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
@@ -427,7 +431,7 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  const si=(()=>{const p=parseUnit(qk,String(o.unit??'').trim());return p&&o.value!==null?o.value*p.factor+(p.offset??0):null;})();
  const admissible=(d:PropertyDefinition)=>{
   if(d.plausibleSi&&si!==null&&(si<d.plausibleSi[0]||si>d.plausibleSi[1]))return false;
-  const ownObject=(d.objectNouns??[]).some(n=>has(label,n));
+  const ownObject=(d.objectNouns??[]).some(n=>has(label,n))||(opts.ownTermObject===true&&d.surface.some(([t])=>has(label,norm(t))));
   if(otherObjects.length&&!ownObject)return false;
   if(qkCompetitors.some(m=>!subsumes(d,m.id))&&!qkCompetitors.some(m=>subsumes(d,m.id))&&!ownObject)return false;
   return true;};
