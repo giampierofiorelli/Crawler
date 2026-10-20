@@ -1,0 +1,23 @@
+{
+ "schema": "pee.s92.preregistration-amendment.v1",
+ "at": "2026-10-20",
+ "before": "any check page is fetched (only robots files were requested)",
+ "exclusions": {
+  "www.hgtv.com": "robots.txt answered 403",
+  "www.bobvila.com": "transport refused: no safe public IPv4 address",
+  "canadianwoodworking.com": "robots request blocked",
+  "www.independent.co.uk": "robots response denied (encoded response)",
+  "goodhousekeeping.com, theguardian.com, wired.com, popularmechanics.com, theverge.com": "robots files allow the PEE agent, but these publishers refuse AI crawlers (the search service declined them for that reason); treated as a refusal of AI use and not fetched"
+ },
+ "removedPages": ["C-sv0","C-sv2","C-sv3","C-sv4","C-sv5","C-rb3"],
+ "addedPages": {
+  "stick_vacuums (never taught)": [
+   "C-sv7=https://www.reviewed.com/vacuums/content/electrolux-ergorapido-ehvs3510ar-cordless-vacuum-review",
+   "C-sv8=https://www.reviewed.com/vacuums/content/samsung-bespoke-jet-ai-cordless-vacuum-review",
+   "C-sv9=https://www.reviewed.com/vacuums/content/eufy-homevac-duo-cordless-stick-vacuum-review",
+   "C-sv10=https://www.reviewed.com/vacuums/content/hoover-onepwr-evolve-review",
+   "C-sv11=https://www.nbcnews.com/shopping/home/best-handheld-vacuum-n1275309"
+  ]
+ },
+ "note": "publisher diversity is lower than planned: stick vacuums come from 2 publishers (Reviewed, NBC Select), robots from 2 (Reviewed, BestReviews on NewsNation); reported by publisher group"
+}
