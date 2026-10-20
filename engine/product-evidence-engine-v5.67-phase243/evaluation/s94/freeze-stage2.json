@@ -1,0 +1,20 @@
+{
+ "schema": "pee.s94.freeze.v1",
+ "stage": 2,
+ "at": "2026-10-20T07:49:59.716Z",
+ "config": {
+  "H": {
+   "anchor": "word",
+   "relatedSimilarity": 0.4,
+   "minSimilarity": 0.5,
+   "margin": 0.05,
+   "graph": true
+  }
+ },
+ "note": "frozen after one reformulation (it0 head anchor only: 0 identities; it1 shared name word plus the vector clear first choice, symbolic veto). A second reformulation was not tried: on development the vector is as confident on related concepts (14-15 confident non-identities) as on identities (1 and 5 with margin), and the semantic-type check rejects most reference identities; no rule over these signals separates them. Stopped by the preregistered rule rather than tuned further.",
+ "files": {
+  "src/knowledge_translation.ts": "ebc2f860256d656f6347ea0f0bd922546f4599453ca0b5b22552d4eb480dc185",
+  "scripts/s94-align.mjs": "359406d529ff42cde6dfd6c1d3c071b0fb3042a780ffa6be58bf55b2ea0106e7",
+  "evaluation/s94/preregistration-stage2.json": "dfbf4bd5ea9f5180973b12e4130f7a2e0da17a32cb6825678ad49a967febef52"
+ }
+}

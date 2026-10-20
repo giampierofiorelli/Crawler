@@ -40,7 +40,7 @@ if(cmd==='score'){const dir=join(R3,'align',SIDE);const outF=`evaluation/s94/ali
  if(SIDE==='heldout'||SIDE==='transfer'){const fz=JSON.parse(readFileSync('evaluation/r3/align-freeze.json','utf8'));if(shaF(join(dir,'out.json'))!==fz[SIDE].annotation)throw Error('reference changed');}
  if(SIDE==='s94'){const fz=JSON.parse(readFileSync('evaluation/s94/align-freeze.json','utf8'));if(shaF(join(dir,'out.json'))!==fz.annotation)throw Error('reference changed');}
  const inp=JSON.parse(readFileSync(join(dir,'in.json'),'utf8')).mentions,ref=new Map(JSON.parse(readFileSync(join(dir,'out.json'),'utf8')).mentions.map(x=>[x.mention,x]));
- const ARMS={identify:null,align1:null,H:{model,graph:true},'H-novector':{model:null},'H-nograph':{model,graph:false},'H-notyping':{model,graph:true,typing:false}};
+ const HC=JSON.parse(process.env.S94_H??'{}');const ARMS={identify:null,align1:null,H:{model,graph:true,...HC},'H-novector':{model:null,...HC},'H-nograph':{model,graph:false,...HC},'H-notyping':{model,graph:true,typing:false,...HC},'H-nodenotation':{model,graph:true,...HC,denotation:false}};
  const res={};const detail=[];
  for(const [arm,cfg] of Object.entries(ARMS)){const C={mentions:0,referenceIdentities:0,decided:0,correct:0,relatedPromoted:0,hierarchyPromoted:0,noneOrUnannotatedPromoted:0,missed:0,
    hierarchy:{predicted:0,correct:0,unannotated:0},incompatibleOnIdentity:0,incompatiblePredicted:0,relatedPredicted:0,relatedCorrect:0,retrieval:{identitiesLexical:0,identitiesVector:0,identitiesEither:0}};

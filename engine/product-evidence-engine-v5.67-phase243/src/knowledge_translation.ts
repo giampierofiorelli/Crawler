@@ -549,7 +549,11 @@ function cosine(a:Map<string,number>,b:Map<string,number>):number{let d=0,na=0,n
 export function vectorRetrieve(m:DistributionalModel,phrase:string,pool:readonly ConceptNode[],k=5,graph=false):{id:string;similarity:number}[]{
  const p=textVector(m,phrase);if(!p.size)return [];
  return pool.map(c=>({id:c.id,similarity:+cosine(p,textVector(m,conceptDocument(c,graph))).toFixed(4)})).filter(x=>x.similarity>0).sort((a,b)=>b.similarity-a.similarity||a.id.localeCompare(b.id)).slice(0,k);}
-export function alignHybrid(qk:QuantityKnowledge,phrase:string,pool:readonly ConceptNode[],opts:{model?:DistributionalModel|null;k?:number;graph?:boolean;typing?:boolean;relatedSimilarity?:number}={}):HybridAlignment{
+export interface HybridOptions {model?:DistributionalModel|null;k?:number;graph?:boolean;typing?:boolean;relatedSimilarity?:number;
+ /** it1: 'word' accepts any shared word of the concept name as the lexical anchor when the vector ranks the candidate
+  * first among the candidates by `margin` and above `minSimilarity`; 'head' is the it0 rule (phrase head in the name) */
+ anchor?:'head'|'word';minSimilarity?:number;margin?:number;denotation?:boolean}
+export function alignHybrid(qk:QuantityKnowledge,phrase:string,pool:readonly ConceptNode[],opts:HybridOptions={}):HybridAlignment{
  const k=opts.k??5;const denotes=denotationOf(qk,phrase);const okKinds=new Set(loadDenotationCues().compatibleKinds[denotes]??[]);
  const lex=retrieveConcepts(phrase,pool,k);const vec=opts.model?vectorRetrieve(opts.model,phrase,pool,k,!!opts.graph):[];
  const ids=[...new Set([...lex.map(c=>c.id),...vec.map(c=>c.id)])];const have=new Set(contentWords(phrase).map(stem));
@@ -563,14 +567,20 @@ export function alignHybrid(qk:QuantityKnowledge,phrase:string,pool:readonly Con
   const quantity:'compatible'|'incompatible'|'untyped'=!tp.kinds.length&&!tp.metrics.length||!tc.kinds.length&&!tc.metrics.length?'untyped':clash(tp.kinds,tc.kinds)||clash(tp.metrics,tc.metrics)?'incompatible':'compatible';
   const similarity=sims.get(id)??(pv?+cosine(pv,textVector(opts.model!,conceptDocument(c,!!opts.graph))).toFixed(4):0);
   const via=[...(lex.some(x=>x.id===id)?['lexical' as const]:[]),...(sims.has(id)?['vector' as const]:[])];
-  let relation:HybridRelation;
+  let relation:HybridRelation;const denOk=opts.denotation===false||denotation;
   if(opts.typing!==false&&quantity==='incompatible')relation='incompatible';
-  else if(anchor&&denotation&&(anchor==='alias'||coverage>=0.6))relation='identity';
+  else if(anchor&&denOk&&(anchor==='alias'||coverage>=0.6))relation='identity';
   else if(anchor==='head'&&coverage<0.6)relation='narrower';
   else if(anchor&&!denotation)relation='related';
   else if(name.some(w=>have.has(w))||similarity>=(opts.relatedSimilarity??0.2))relation='related';
   else relation='none';
   return {id,relation,via,similarity,checks:{anchor,coverage:+coverage.toFixed(2),denotation,quantity}};});
+ // it1: a shared name word plus the vector's clear first choice (joint lexical and distributional evidence); the
+ // symbolic checks still veto. Never the vector alone.
+ if(opts.anchor==='word'&&opts.model&&!out.some(x=>x.relation==='identity')){const by=[...out].sort((a,b)=>b.similarity-a.similarity);const top=by[0],next=by[1];
+  if(top&&top.similarity>=(opts.minSimilarity??0.5)&&top.similarity-(next?.similarity??0)>=(opts.margin??0.05)&&top.relation!=='incompatible'){
+   const c=pool.find(x=>x.id===top.id)!;const shared=contentWords(words(c.id)).map(stem).some(w=>have.has(w));
+   if(shared&&(opts.denotation===false||top.checks.denotation))top.relation='identity';}}
  const idn=out.filter(x=>x.relation==='identity');
  return {concept:idn.length===1?idn[0].id:null,status:idn.length===1?'aligned':'unresolved',denotes,candidates:out};
 }
