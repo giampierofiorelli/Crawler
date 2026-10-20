@@ -1,0 +1,1597 @@
+{
+ "schema": "pee.s103.request-reference.v1",
+ "annotator": "an independent Claude agent (fresh context, no tools), given only evaluation/s103/request-annotation-guide.md and the 40 requests; 2026-10-20; unchanged",
+ "requests": [
+  {
+   "id": "q01",
+   "limits": [
+    {
+     "text": "at least 4 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 4,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "nothing over 6L",
+     "property": "capacity",
+     "side": "max",
+     "value": 6,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Under £100 ideally",
+     "property": "price",
+     "side": "max",
+     "value": 100,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q02",
+   "limits": [
+    {
+     "text": "Budget about $40-60",
+     "property": "price",
+     "side": "min",
+     "value": 40,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "approximate range with no bound word; lower end of a budget is unclear as a limit"
+    },
+    {
+     "text": "Budget about $40-60",
+     "property": "price",
+     "side": "max",
+     "value": 60,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "approximate range with no bound word"
+    }
+   ]
+  },
+  {
+   "id": "q03",
+   "limits": [
+    {
+     "text": "fits a 45cm gap",
+     "property": "width",
+     "side": "max",
+     "value": 45,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "quieter than 44 dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 44,
+     "unit": "dB",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "don't want to spend more than €550",
+     "property": "price",
+     "side": "max",
+     "value": 550,
+     "unit": "EUR",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q04",
+   "limits": [
+    {
+     "text": "a 12 litre dehumidifier",
+     "property": "other:extraction_rate",
+     "side": "min",
+     "value": 12,
+     "unit": "litre",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "replaced",
+     "handling": "report",
+     "note": "likely litres per day extraction, not tank volume; replaced by 20L"
+    },
+    {
+     "text": "20L would be better",
+     "property": "other:extraction_rate",
+     "side": "min",
+     "value": 20,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "likely litres per day; 'would be better' is somewhat tentative; closure unclear, inclusive assumed"
+    },
+    {
+     "text": "Max £250 either way",
+     "property": "price",
+     "side": "max",
+     "value": 250,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q05",
+   "limits": [
+    {
+     "text": "under 30 dB on the lowest setting",
+     "property": "other:noise",
+     "side": "max",
+     "value": 30,
+     "unit": "dB",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "15 m² room describes use, not a limit"
+    }
+   ]
+  },
+  {
+   "id": "q06",
+   "limits": [
+    {
+     "text": "must fit under my sofa which is 9cm off the floor",
+     "property": "height",
+     "side": "max",
+     "value": 9,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "fitting under a 9 cm gap may need strictly less than 9 cm; inclusive assumed"
+    },
+    {
+     "text": "battery at least 120 minutes",
+     "property": "battery_life",
+     "side": "min",
+     "value": 120,
+     "unit": "minutes",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "under $300",
+     "property": "price",
+     "side": "max",
+     "value": 300,
+     "unit": "USD",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q07",
+   "limits": [
+    {
+     "text": "under 2.5kg if there is such a thing",
+     "property": "weight",
+     "side": "max",
+     "value": 2.5,
+     "unit": "kg",
+     "closure": "strict",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "'if there is such a thing' read as 'if possible'"
+    },
+    {
+     "text": "Runtime 40 min+",
+     "property": "battery_life",
+     "side": "min",
+     "value": 40,
+     "unit": "min",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q08",
+   "limits": [
+    {
+     "text": "Water tank of 1.5 litres or more",
+     "property": "water_tank",
+     "side": "min",
+     "value": 1.5,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "no taller than 38 cm",
+     "property": "height",
+     "side": "max",
+     "value": 38,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q09",
+   "limits": [
+    {
+     "text": "20 to 25 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 20,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "range with no bound word"
+    },
+    {
+     "text": "20 to 25 litres",
+     "property": "capacity",
+     "side": "max",
+     "value": 25,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "range with no bound word"
+    },
+    {
+     "text": "800W is fine",
+     "property": "power",
+     "side": "min",
+     "value": 800,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "states an acceptable power rather than a restriction; unclear"
+    },
+    {
+     "text": "definitely not over £80",
+     "property": "price",
+     "side": "max",
+     "value": 80,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "limits": [
+    {
+     "text": "60cm wide ... must be smaller than that",
+     "property": "width",
+     "side": "max",
+     "value": 60,
+     "unit": "cm",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "'smaller than' is strict, though fitting a 60 cm space would usually allow 60 cm"
+    },
+    {
+     "text": "185cm high ... must be smaller than that",
+     "property": "height",
+     "side": "max",
+     "value": 185,
+     "unit": "cm",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "same as width"
+    },
+    {
+     "text": "we'd like at least 300 litres total",
+     "property": "capacity",
+     "side": "min",
+     "value": 300,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "'we'd like' contrasted with 'must'; could also be read as a requirement"
+    },
+    {
+     "text": "Around 700 quid",
+     "property": "price",
+     "side": "max",
+     "value": 700,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "approximate budget"
+    }
+   ]
+  },
+  {
+   "id": "q11",
+   "limits": [
+    {
+     "text": "9kg minimum",
+     "property": "other:load_capacity",
+     "side": "min",
+     "value": 9,
+     "unit": "kg",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "drum load in kg"
+    },
+    {
+     "text": "10 would be better",
+     "property": "other:load_capacity",
+     "side": "min",
+     "value": 10,
+     "unit": "kg",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": "unit from the earlier limit"
+    },
+    {
+     "text": "if it still fits 60x60",
+     "property": "width",
+     "side": "max",
+     "value": 60,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "unit not written; cm assumed"
+    },
+    {
+     "text": "if it still fits 60x60",
+     "property": "depth",
+     "side": "max",
+     "value": 60,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "unit not written; cm assumed"
+    },
+    {
+     "text": "Spin 1400rpm",
+     "property": "other:spin_speed",
+     "side": "min",
+     "value": 1400,
+     "unit": "rpm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "no bound word; minimum assumed"
+    }
+   ]
+  },
+  {
+   "id": "q12",
+   "limits": [
+    {
+     "text": "battery 30 hours plus",
+     "property": "battery_life",
+     "side": "min",
+     "value": 30,
+     "unit": "hours",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "weight below 250 g ideally",
+     "property": "weight",
+     "side": "max",
+     "value": 250,
+     "unit": "g",
+     "closure": "strict",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": ""
+    },
+    {
+     "text": "would rather stay below $350",
+     "property": "price",
+     "side": "max",
+     "value": 350,
+     "unit": "USD",
+     "closure": "strict",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q13",
+   "limits": [
+    {
+     "text": "15+ hours battery",
+     "property": "battery_life",
+     "side": "min",
+     "value": 15,
+     "unit": "hours",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q14",
+   "limits": [
+    {
+     "text": "14 inch",
+     "property": "other:screen_size",
+     "side": "min",
+     "value": 14,
+     "unit": "inch",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "exact size rather than a bound"
+    },
+    {
+     "text": "under 1.4 kg",
+     "property": "weight",
+     "side": "max",
+     "value": 1.4,
+     "unit": "kg",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "first to be relaxed if nothing meets all limits"
+    },
+    {
+     "text": "at least 16GB RAM",
+     "property": "other:ram",
+     "side": "min",
+     "value": 16,
+     "unit": "GB",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "10 hours battery",
+     "property": "battery_life",
+     "side": "min",
+     "value": 10,
+     "unit": "hours",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "governed by 'at least'"
+    },
+    {
+     "text": "£800 tops",
+     "property": "price",
+     "side": "max",
+     "value": 800,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q15",
+   "limits": [
+    {
+     "text": "27\"",
+     "property": "other:screen_size",
+     "side": "min",
+     "value": 27,
+     "unit": "inch",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "exact size; assumed to hold for both options"
+    },
+    {
+     "text": "1440p",
+     "property": "other:resolution",
+     "side": "min",
+     "value": 1440,
+     "unit": "p",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "apply",
+     "note": "at least 1440p holds in both the 1440p and 4K situations"
+    },
+    {
+     "text": "144Hz or more",
+     "property": "other:refresh_rate",
+     "side": "min",
+     "value": 144,
+     "unit": "Hz",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "ask",
+     "note": "only the 1440p option"
+    },
+    {
+     "text": "Under 300 euros",
+     "property": "price",
+     "side": "max",
+     "value": 300,
+     "unit": "EUR",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "4K",
+     "property": "other:resolution",
+     "side": "min",
+     "value": 4,
+     "unit": "K",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "ask",
+     "note": "tentative alternative ('not sure')"
+    },
+    {
+     "text": "at 60Hz",
+     "property": "other:refresh_rate",
+     "side": "min",
+     "value": 60,
+     "unit": "Hz",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "apply",
+     "note": "weakest refresh limit common to both situations"
+    }
+   ]
+  },
+  {
+   "id": "q16",
+   "limits": [
+    {
+     "text": "under 100Wh I think?",
+     "property": "other:battery_energy",
+     "side": "max",
+     "value": 100,
+     "unit": "Wh",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "shopper unsure of the airline rule (usually 100 Wh or less)"
+    },
+    {
+     "text": "charge my laptop at 65W",
+     "property": "power",
+     "side": "min",
+     "value": 65,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "output power"
+    },
+    {
+     "text": "20000mAh-ish",
+     "property": "other:battery_capacity",
+     "side": "min",
+     "value": 20000,
+     "unit": "mAh",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "approximate; direction unclear"
+    }
+   ]
+  },
+  {
+   "id": "q17",
+   "limits": [
+    {
+     "text": "2-slice",
+     "property": "other:slices",
+     "side": "min",
+     "value": 2,
+     "unit": "slice",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "product type, exact count"
+    }
+   ]
+  },
+  {
+   "id": "q18",
+   "limits": [
+    {
+     "text": "8kg",
+     "property": "other:load_capacity",
+     "side": "min",
+     "value": 8,
+     "unit": "kg",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "no bound word"
+    },
+    {
+     "text": "door has to open fully in a 62cm deep alcove",
+     "property": "depth",
+     "side": "max",
+     "value": 62,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "depth plus door clearance; exact meaning partly unclear"
+    },
+    {
+     "text": "can't go beyond £600",
+     "property": "price",
+     "side": "max",
+     "value": 600,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q19",
+   "limits": [
+    {
+     "text": "at least 1000W",
+     "property": "power",
+     "side": "min",
+     "value": 1000,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "blender"
+    },
+    {
+     "text": "jug 1.5L",
+     "property": "capacity",
+     "side": "min",
+     "value": 1.5,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "blender; no bound word"
+    },
+    {
+     "text": "Total budget for both is about $150",
+     "property": "price",
+     "side": "max",
+     "value": 150,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "combined budget for blender and hand mixer; approximate"
+    }
+   ]
+  },
+  {
+   "id": "q20",
+   "limits": [
+    {
+     "text": "under 50 pounds",
+     "property": "price",
+     "side": "max",
+     "value": 50,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q21",
+   "limits": [
+    {
+     "text": "at least 2 weeks",
+     "property": "battery_life",
+     "side": "min",
+     "value": 2,
+     "unit": "weeks",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Not more than 80€",
+     "property": "price",
+     "side": "max",
+     "value": 80,
+     "unit": "EUR",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q22",
+   "limits": [
+    {
+     "text": "shouldn't be wider than the TV (about 123 cm)",
+     "property": "width",
+     "side": "max",
+     "value": 123,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "55 inch describes the TV"
+    },
+    {
+     "text": "can't be taller than 6cm",
+     "property": "height",
+     "side": "max",
+     "value": 6,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Sub included if it's under £400",
+     "property": "price",
+     "side": "max",
+     "value": 400,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "ask",
+     "note": "applies to the bar-plus-subwoofer situation only; no budget given for the bar alone"
+    }
+   ]
+  },
+  {
+   "id": "q23",
+   "limits": [
+    {
+     "text": "about 1L uncooked / 5.5 cups",
+     "property": "capacity",
+     "side": "min",
+     "value": 1,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "approximate; 5.5 cups is the same limit"
+    },
+    {
+     "text": "I was going to say under $100",
+     "property": "price",
+     "side": "max",
+     "value": 100,
+     "unit": "USD",
+     "closure": "strict",
+     "product": "this",
+     "kind": "replaced",
+     "handling": "report",
+     "note": ""
+    },
+    {
+     "text": "I'd go to $200 for a good induction one",
+     "property": "price",
+     "side": "max",
+     "value": 200,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "stated for an induction model; may be read as tied to that situation"
+    }
+   ]
+  },
+  {
+   "id": "q24",
+   "limits": [
+    {
+     "text": "work in temps down to -15°C",
+     "property": "other:min_operating_temperature",
+     "side": "max",
+     "value": -15,
+     "unit": "°C",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "the product's lowest operating temperature must be -15°C or lower"
+    },
+    {
+     "text": "Capacity 200-250 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 200,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "range with no bound word"
+    },
+    {
+     "text": "Capacity 200-250 litres",
+     "property": "capacity",
+     "side": "max",
+     "value": 250,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "range with no bound word"
+    },
+    {
+     "text": "fit in 90 cm width",
+     "property": "width",
+     "side": "max",
+     "value": 90,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q25",
+   "limits": [
+    {
+     "text": "less than 1.5kg with battery",
+     "property": "weight",
+     "side": "max",
+     "value": 1.5,
+     "unit": "kg",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "18V",
+     "property": "other:voltage",
+     "side": "min",
+     "value": 18,
+     "unit": "V",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "exact value"
+    },
+    {
+     "text": "under £120 including a battery and charger",
+     "property": "price",
+     "side": "max",
+     "value": 120,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q26",
+   "limits": [
+    {
+     "text": "7 inch screen",
+     "property": "other:screen_size",
+     "side": "min",
+     "value": 7,
+     "unit": "inch",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "exact size"
+    }
+   ]
+  },
+  {
+   "id": "q27",
+   "limits": [
+    {
+     "text": "cools a 25 m2 room",
+     "property": "other:cooling_area",
+     "side": "min",
+     "value": 25,
+     "unit": "m2",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "room size stated as required cooling coverage"
+    },
+    {
+     "text": "under 52 dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 52,
+     "unit": "dB",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "uses less than 1kW",
+     "property": "power",
+     "side": "max",
+     "value": 1,
+     "unit": "kW",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "costs less than €300",
+     "property": "price",
+     "side": "max",
+     "value": 300,
+     "unit": "EUR",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "shopper suspects the set may be hard to meet"
+    }
+   ]
+  },
+  {
+   "id": "q28",
+   "limits": [
+    {
+     "text": "50 L or less",
+     "property": "capacity",
+     "side": "max",
+     "value": 50,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "below 35 dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 35,
+     "unit": "dB",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "max 50 cm wide",
+     "property": "width",
+     "side": "max",
+     "value": 50,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q29",
+   "limits": [
+    {
+     "text": "2400W or more",
+     "property": "power",
+     "side": "min",
+     "value": 2400,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "steam iron"
+    },
+    {
+     "text": "at least 300ml water tank",
+     "property": "water_tank",
+     "side": "min",
+     "value": 300,
+     "unit": "ml",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "steam iron"
+    },
+    {
+     "text": "I'd pay up to £60",
+     "property": "price",
+     "side": "max",
+     "value": 60,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "steam iron"
+    },
+    {
+     "text": "If so budget goes to £150",
+     "property": "price",
+     "side": "max",
+     "value": 150,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "other",
+     "kind": "alternative",
+     "handling": "ask",
+     "note": "applies only if a steam generator is chosen instead"
+    }
+   ]
+  },
+  {
+   "id": "q30",
+   "limits": [
+    {
+     "text": "Range at least 20 km real-world",
+     "property": "other:range",
+     "side": "min",
+     "value": 20,
+     "unit": "km",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "12 miles round trip describes use"
+    },
+    {
+     "text": "weight under 15kg",
+     "property": "weight",
+     "side": "max",
+     "value": 15,
+     "unit": "kg",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "top speed 25 km/h",
+     "property": "other:top_speed",
+     "side": "min",
+     "value": 25,
+     "unit": "km/h",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "no bound word; could be a minimum or a legal maximum"
+    },
+    {
+     "text": "Around $600-800",
+     "property": "price",
+     "side": "min",
+     "value": 600,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "approximate range with no bound word"
+    },
+    {
+     "text": "Around $600-800",
+     "property": "price",
+     "side": "max",
+     "value": 800,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "approximate range with no bound word"
+    }
+   ]
+  },
+  {
+   "id": "q31",
+   "limits": [
+    {
+     "text": "Between 3.5 and 6.5 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 3.5,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Between 3.5 and 6.5 litres, nothing bigger",
+     "property": "capacity",
+     "side": "max",
+     "value": 6.5,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q32",
+   "limits": [
+    {
+     "text": "under $70",
+     "property": "price",
+     "side": "max",
+     "value": 70,
+     "unit": "USD",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q33",
+   "limits": [
+    {
+     "text": "at least 2000 W",
+     "property": "power",
+     "side": "min",
+     "value": 2000,
+     "unit": "W",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "under 500 g",
+     "property": "weight",
+     "side": "max",
+     "value": 500,
+     "unit": "g",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Below £50 if possible",
+     "property": "price",
+     "side": "max",
+     "value": 50,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "preference",
+     "handling": "report",
+     "note": ""
+    },
+    {
+     "text": "otherwise up to £90",
+     "property": "price",
+     "side": "max",
+     "value": 90,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q34",
+   "limits": [
+    {
+     "text": "wall is about 3 m from the sofa",
+     "property": "other:throw_distance",
+     "side": "max",
+     "value": 3,
+     "unit": "m",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "describes the room but, with the 100\" image, constrains throw; approximate"
+    },
+    {
+     "text": "want 100\" image",
+     "property": "other:image_size",
+     "side": "min",
+     "value": 100,
+     "unit": "inch",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Fan noise under 30dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 30,
+     "unit": "dB",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "1080p minimum",
+     "property": "other:resolution",
+     "side": "min",
+     "value": 1080,
+     "unit": "p",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q35",
+   "limits": [
+    {
+     "text": "at least 7 days battery",
+     "property": "battery_life",
+     "side": "min",
+     "value": 7,
+     "unit": "days",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "no more than 40g",
+     "property": "weight",
+     "side": "max",
+     "value": 40,
+     "unit": "g",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q36",
+   "limits": [
+    {
+     "text": "Tank 2L or bigger",
+     "property": "water_tank",
+     "side": "min",
+     "value": 2,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "10°C describes the flat, not a stated limit"
+    },
+    {
+     "text": "under 45 dB",
+     "property": "other:noise",
+     "side": "max",
+     "value": 45,
+     "unit": "dB",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "about £200",
+     "property": "price",
+     "side": "max",
+     "value": 200,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "approximate budget"
+    }
+   ]
+  },
+  {
+   "id": "q37",
+   "limits": [
+    {
+     "text": "4-slice toaster",
+     "property": "other:slices",
+     "side": "min",
+     "value": 4,
+     "unit": "slice",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "exact count"
+    },
+    {
+     "text": "the kettle 1.7 litres",
+     "property": "capacity",
+     "side": "min",
+     "value": 1.7,
+     "unit": "litres",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "kettle; exact value, no bound word"
+    },
+    {
+     "text": "Both together under £70",
+     "property": "price",
+     "side": "max",
+     "value": 70,
+     "unit": "GBP",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": "combined budget for toaster and kettle"
+    }
+   ]
+  },
+  {
+   "id": "q38",
+   "limits": [
+    {
+     "text": "under 2 kg",
+     "property": "weight",
+     "side": "max",
+     "value": 2,
+     "unit": "kg",
+     "closure": "strict",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "My budget is 50 to 100 dollars",
+     "property": "price",
+     "side": "min",
+     "value": 50,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "range with no bound word; excludes shipping"
+    },
+    {
+     "text": "My budget is 50 to 100 dollars",
+     "property": "price",
+     "side": "max",
+     "value": 100,
+     "unit": "USD",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "ask",
+     "note": "range with no bound word; excludes shipping"
+    }
+   ]
+  },
+  {
+   "id": "q39",
+   "limits": [
+    {
+     "text": "Range cooker 90cm",
+     "property": "width",
+     "side": "max",
+     "value": 90,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "ask",
+     "note": "exact width; 100 cm acceptable if not much more expensive"
+    },
+    {
+     "text": "I could make 100cm fit",
+     "property": "width",
+     "side": "max",
+     "value": 100,
+     "unit": "cm",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "alternative",
+     "handling": "apply",
+     "note": "weakest width limit common to both situations; conditional on price"
+    },
+    {
+     "text": "The main oven should be 70L+",
+     "property": "capacity",
+     "side": "min",
+     "value": 70,
+     "unit": "L",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    },
+    {
+     "text": "Up to £1500",
+     "property": "price",
+     "side": "max",
+     "value": 1500,
+     "unit": "GBP",
+     "closure": "inclusive",
+     "product": "this",
+     "kind": "requirement",
+     "handling": "apply",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "q40",
+   "limits": []
+  }
+ ]
+}
