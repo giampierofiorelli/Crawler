@@ -1,0 +1,24 @@
+{
+ "schema": "pee.s94.preregistration.v1",
+ "stage": "2 of 3: hybrid vector-symbolic entity understanding",
+ "at": "2026-10-20",
+ "owner": "owner review of S93, verbatim in .claude/skills/pee-guided-learning/references/owner-review-s93-2026-10-20.md",
+ "writtenBefore": "any Stage 2 arm is scored and before the new reference is generated",
+ "question": "Does vector retrieval enriched by the concept graph, combined with symbolic checks (semantic type, quantity kind and metric, lexical anchor), recognise identities better than lexical retrieval with the S75 type gate, without promoting related concepts to identity; and does it type hierarchy, relatedness and incompatibility correctly?",
+ "references": ["Chen et al. 2021 OWL2Vec* (embedding concepts with their graph neighbourhood)", "Jimenez-Ruiz and Cuenca Grau 2011 LogMap (lexical anchors, then logical repair of incoherent mappings)", "Mavracic et al. 2021 ChemDataExtractor 2.0 (typed quantity parsing before relations)", "Magagna et al. 2021 I-ADOPT (a variable is a property of an object of interest)"],
+ "rule": "vector similarity only retrieves candidates and supports 'related'; identity requires a lexical anchor (alias, or the phrase head in the concept name with at least 60% of the name covered), a compatible semantic type, and no quantity-kind or metric clash; a head anchor with less of the name covered is a narrower candidate; disjoint quantity typing is incompatible",
+ "arms": {
+  "identify": "cycle-2 lexical identifier (frozen)",
+  "align1": "type-gated alignment v1 (frozen, S75)",
+  "H": "hybrid: lexical + PPMI retrieval with graph neighbourhood, symbolic checks",
+  "H-novector": "ablation: lexical retrieval only",
+  "H-nograph": "ablation: PPMI concept vectors without graph neighbours",
+  "H-notyping": "ablation: no quantity-typing check"
+ },
+ "vectorModel": "trainDistributional (PPMI, window 5, min count 3) on the owner's research packages (Markdown files in private-eval/r1v/packages); no external model",
+ "development": "the examined dev and held-out alignment references (R3 cycle 3). Their candidates were retrieved lexically, so a vector-only candidate is unannotated there: development scores decisions among annotated candidates only. At most three reformulations, then freeze",
+ "independentCheck": "a NEW blind reference: 120 mentions never used for alignment (televisions, dishwashers, dehumidifiers: translated statements of the transfer packages, excluding the S76 transfer mentions), candidates pooled from lexical top-4, vector top-4 and one control, annotated blind with the unchanged R3 prompt by a fresh-context agent, sealed by hash before any arm runs on it. Also reported: the S76 transfer reference (frozen examples, examined once in S76: second use, not blind)",
+ "metrics": ["identity: decided, correct (exact or close), precision, recall over reference identities", "related promoted to identity", "hierarchy candidates: precision of broader/narrower against the reference", "incompatible: reference identities wrongly typed incompatible", "retrieval: reference identities found by lexical, by vector, by either"],
+ "learningReuse": "the learning cycle (S93, relations now typed by kind and object) is re-measured on the Stage 4 wave: do learned candidate definitions attribute later unseen values correctly",
+ "stopRule": "if H does not improve identity recall over align1 on the new reference without more related-to-identity promotions, the hybrid is recorded as not demonstrated and not integrated"
+}

@@ -524,3 +524,53 @@ export function phraseSimilarity(m:DistributionalModel,a:string,b:string):number
  const A=contentWords(a),B=contentWords(b);if(!A.length||!B.length)return 0;
  return A.reduce((s,w)=>s+Math.max(...B.map(v=>wordSimilarity(m,w,v))),0)/A.length;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// 8. S94 Stage 2 (owner review of S93): hybrid vector-symbolic alignment. References, used as architecture, not as
+//    dependencies: OWL2Vec* (a concept is embedded with its graph neighbourhood, not only its label), LogMap (lexical
+//    anchors, then logical checks that reject incoherent mappings) and ChemDataExtractor 2.0 (typed parsing of quantities
+//    before relation decisions). The PPMI vectors (section 7) only RETRIEVE candidates and support `related`; an identity
+//    always needs a lexical anchor and passes the symbolic checks (semantic type, quantity kind and metric); a shared head
+//    with an uncovered name is a hierarchy candidate; disjoint quantity typing is `incompatible`. Vector similarity alone
+//    never establishes identity.
+export interface ConceptNode {id:string;kind?:string;aliases?:readonly string[];statement?:string;neighbors?:readonly {id:string;relation:string}[]}
+export type HybridRelation='identity'|'broader'|'narrower'|'related'|'incompatible'|'none';
+export interface HybridCandidate {id:string;relation:HybridRelation;via:('lexical'|'vector')[];similarity:number;
+ checks:{anchor:'alias'|'head'|null;coverage:number;denotation:boolean;quantity:'compatible'|'incompatible'|'untyped'}}
+export interface HybridAlignment {concept:string|null;status:'aligned'|'unresolved';denotes:Denotation;candidates:HybridCandidate[]}
+const words=(id:string)=>id.replace(/[_-]+/g,' ');
+/** The text a concept is embedded from: its name, aliases, the first sentence of its statement and, with `graph`, the
+ * names of its graph neighbours with the relation (OWL2Vec*'s walks, depth one). */
+export function conceptDocument(c:ConceptNode,graph=false):string{
+ return [words(c.id),...(c.aliases??[]),(c.statement??'').split(/(?<=[.;:])\s/)[0]??'',...(graph?(c.neighbors??[]).map(n=>words(n.relation)+' '+words(n.id)):[])].join(' . ');}
+function textVector(m:DistributionalModel,text:string):Map<string,number>{const v=new Map<string,number>();
+ for(const w of contentWords(text).map(stem)){const x=m.vectors.get(w);const n=m.norms.get(w)||1;if(!x)continue;for(const [k,y] of x)v.set(k,(v.get(k)??0)+y/n);}return v;}
+function cosine(a:Map<string,number>,b:Map<string,number>):number{let d=0,na=0,nb=0;for(const [k,x] of a){na+=x*x;const y=b.get(k);if(y)d+=x*y;}for(const y of b.values())nb+=y*y;return na&&nb?d/Math.sqrt(na*nb):0;}
+export function vectorRetrieve(m:DistributionalModel,phrase:string,pool:readonly ConceptNode[],k=5,graph=false):{id:string;similarity:number}[]{
+ const p=textVector(m,phrase);if(!p.size)return [];
+ return pool.map(c=>({id:c.id,similarity:+cosine(p,textVector(m,conceptDocument(c,graph))).toFixed(4)})).filter(x=>x.similarity>0).sort((a,b)=>b.similarity-a.similarity||a.id.localeCompare(b.id)).slice(0,k);}
+export function alignHybrid(qk:QuantityKnowledge,phrase:string,pool:readonly ConceptNode[],opts:{model?:DistributionalModel|null;k?:number;graph?:boolean;typing?:boolean;relatedSimilarity?:number}={}):HybridAlignment{
+ const k=opts.k??5;const denotes=denotationOf(qk,phrase);const okKinds=new Set(loadDenotationCues().compatibleKinds[denotes]??[]);
+ const lex=retrieveConcepts(phrase,pool,k);const vec=opts.model?vectorRetrieve(opts.model,phrase,pool,k,!!opts.graph):[];
+ const ids=[...new Set([...lex.map(c=>c.id),...vec.map(c=>c.id)])];const have=new Set(contentWords(phrase).map(stem));
+ const head=contentWords(subjectHead(phrase));const H=head.length?stem(head[head.length-1]):null;const tp=typeSpan(qk,phrase);
+ const sims=new Map(vec.map(v=>[v.id,v.similarity]));const pv=opts.model?textVector(opts.model,phrase):null;
+ const out:HybridCandidate[]=ids.map(id=>{const c=pool.find(x=>x.id===id)!;const name=contentWords(words(c.id)).map(stem);
+  const alias=(c.aliases??[]).some(a=>namedPhrases(phrase,[a]).size>0);const anchor:'alias'|'head'|null=alias?'alias':H!==null&&name.includes(H)?'head':null;
+  const coverage=name.length?name.filter(w=>have.has(w)).length/name.length:0;const denotation=!c.kind||okKinds.has(c.kind);
+  const tc=typeSpan(qk,[words(c.id),...(c.aliases??[])].join(' . '));
+  const clash=(a:string[],b:string[])=>a.length>0&&b.length>0&&!a.some(x=>b.includes(x));
+  const quantity:'compatible'|'incompatible'|'untyped'=!tp.kinds.length&&!tp.metrics.length||!tc.kinds.length&&!tc.metrics.length?'untyped':clash(tp.kinds,tc.kinds)||clash(tp.metrics,tc.metrics)?'incompatible':'compatible';
+  const similarity=sims.get(id)??(pv?+cosine(pv,textVector(opts.model!,conceptDocument(c,!!opts.graph))).toFixed(4):0);
+  const via=[...(lex.some(x=>x.id===id)?['lexical' as const]:[]),...(sims.has(id)?['vector' as const]:[])];
+  let relation:HybridRelation;
+  if(opts.typing!==false&&quantity==='incompatible')relation='incompatible';
+  else if(anchor&&denotation&&(anchor==='alias'||coverage>=0.6))relation='identity';
+  else if(anchor==='head'&&coverage<0.6)relation='narrower';
+  else if(anchor&&!denotation)relation='related';
+  else if(name.some(w=>have.has(w))||similarity>=(opts.relatedSimilarity??0.2))relation='related';
+  else relation='none';
+  return {id,relation,via,similarity,checks:{anchor,coverage:+coverage.toFixed(2),denotation,quantity}};});
+ const idn=out.filter(x=>x.relation==='identity');
+ return {concept:idn.length===1?idn[0].id:null,status:idn.length===1?'aligned':'unresolved',denotes,candidates:out};
+}
