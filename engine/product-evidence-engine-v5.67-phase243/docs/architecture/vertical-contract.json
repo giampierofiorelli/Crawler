@@ -725,7 +725,14 @@
      "consumers": [
       "src/phase253_request_advice.ts"
      ],
-     "verification": "a clarification answer lists the uncovered parts of the request"
+     "verification": "a clarification answer lists the uncovered parts of the request",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "post-S103 dependency study",
+       "what": "silent loss also in scope answers: 'I need an air purifier for my bedroom. I'm a light sleeper.' drops 'for my bedroom' (clause under 2 content words) and 'I'm a light sleeper' (sentence with no recognised word) without listing them; QK useContexts.night_bedroom holds both terms but is not read on the request path"
+      }
+     ]
     },
     {
      "id": "NEG",
@@ -848,7 +855,14 @@
       "phase253_request_constraints"
      ],
      "verification": "'nothing over 6L', 'not more than 6 L', 'nothing bigger than 30 cm' yield a maximum; a fixture where the negated bound would combine shows no applied minimum",
-     "since": "S103 (docs/plans/s103-rule-admission.md)"
+     "since": "S103 (docs/plans/s103-rule-admission.md)",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "post-S103 dependency study",
+       "what": "reaches the answer: an air-fryer request worded 'nothing over N litres' (S103 q01 wording) gives a positive shortlist with capacity_min N strict applied (store copy). Cause: 'nothing' is in no negator list and request negation only demotes, never flips the side (docs/plans/post-s103-need-pilot-dependencies.md §2)"
+      }
+     ]
     },
     {
      "id": "HEDGE_AFTER",
