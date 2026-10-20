@@ -59,7 +59,10 @@ if(cmd==='run'){const f=noOverwrite(join(ROOT,`run-${LABEL}.json`));const it=JSO
 if(cmd==='score'){const frz=JSON.parse(readFileSync(pub('annotation-freeze.json'),'utf8'));const rb=readFileSync(join(ROOT,'annotation','annotations.json'));if(sha(rb)!==frz.annotationsSha256)throw Error('reference does not match its seal');
  const ref=JSON.parse(rb).items;const run=JSON.parse(readFileSync(join(ROOT,`run-${LABEL}.json`),'utf8'));const pgOf=new Map(JSON.parse(readFileSync(join(ROOT,'check-items.json'),'utf8')).map(x=>[x.id,x]));
  const NAT=['measured','calculated','declared','condition'];
- const nat=(rs,arm)=>{const A=rs.filter(r=>ref[r.id]&&ref[r.id].property!=='none'&&ref[r.id].nature);const o={items:A.length,correct:A.filter(r=>r.arms[arm].nature===ref[r.id].nature).length,abstained:A.filter(r=>r.arms[arm].nature==='unresolved').length,
+ // nature, provenance and links do not depend on a defined property: every technical value counts (decided before the
+ // seal and before any run); the subset with a defined property is reported apart
+ const tech=r=>ref[r.id]&&ref[r.id].nature&&!/not a technical quantity/i.test(ref[r.id].concept??'');
+ const nat=(rs,arm)=>{const A=rs.filter(tech);const o={items:A.length,correct:A.filter(r=>r.arms[arm].nature===ref[r.id].nature).length,abstained:A.filter(r=>r.arms[arm].nature==='unresolved').length,
    provenanceCorrect:A.filter(r=>r.arms[arm].provenance===ref[r.id].provenance).length,perClass:{}};
   for(const c of NAT){const g=A.filter(r=>ref[r.id].nature===c),p=A.filter(r=>r.arms[arm].nature===c),ok=p.filter(r=>ref[r.id].nature===c).length;o.perClass[c]={reference:g.length,predicted:p.length,correct:ok,precision:p.length?+(ok/p.length).toFixed(3):null,recall:g.length?+(ok/g.length).toFixed(3):null,abstained:g.filter(r=>r.arms[arm].nature==='unresolved').length};}
   const el=A.filter(r=>ref[r.id].evidenceLine!=null&&r.arms[arm].nature===ref[r.id].nature);
@@ -69,7 +72,7 @@ if(cmd==='score'){const frz=JSON.parse(readFileSync(pub('annotation-freeze.json'
     foundAtLeastOne:calc.filter(r=>{const pg=pgOf.get(r.id).page;if(!pages.has(pg))pages.set(pg,readFileSync(join(ROOT,'annotation','pages',pg+'.txt'),'utf8').split('\n'));const lines=pages.get(pg);
      return r.arms.R1.assumptions.some(t=>ref[r.id].assumptionLines.some(L=>nm(lines[L]??'').includes(nm(t))));}).length};}
   return o;};
- const role=(rs,arm)=>{const A=rs.filter(r=>ref[r.id]&&ref[r.id].property!=='none'&&(ref[r.id].nature==='measured'||ref[r.id].nature==='declared'));const g=r=>ref[r.id].nature;const R=r=>r.arms[arm].role;
+ const role=(rs,arm)=>{const A=rs.filter(r=>tech(r)&&(ref[r.id].nature==='measured'||ref[r.id].nature==='declared'));const g=r=>ref[r.id].nature;const R=r=>r.arms[arm].role;
   const o={items:A.length,correct:A.filter(r=>R(r)===g(r)).length,abstained:A.filter(r=>R(r)==='unresolved').length,allMeasured:A.filter(r=>g(r)==='measured').length,allDeclared:A.filter(r=>g(r)==='declared').length};
   for(const c of ['measured','declared']){const p=A.filter(r=>R(r)===c),ok=p.filter(r=>g(r)===c).length,gg=A.filter(r=>g(r)===c);o[c]={reference:gg.length,predicted:p.length,correct:ok,precision:p.length?+(ok/p.length).toFixed(3):null,recall:gg.length?+(ok/gg.length).toFixed(3):null};}return o;};
  const attr=(rs,k)=>{const s={refPositive:0,correct:0,wrong:0,abstained:0,refNone:0,falseAttribution:0,toLearned:0,learnedMatchesReferenceConcept:0};
@@ -79,8 +82,9 @@ if(cmd==='score'){const frz=JSON.parse(readFileSync(pub('annotation-freeze.json'
    else{s.refPositive++;if(!v)s.abstained++;else if(v===a.property||v===a.alsoAcceptable)s.correct++;else s.wrong++;}}return s;};
  const groups={all:run.rows,...Object.fromEntries([...new Set(run.rows.map(r=>r.category))].map(c=>[c,run.rows.filter(r=>r.category===c)]))};
  const out={schema:'pee.s93.check-score.v1',label:LABEL,reference:frz.annotationsSha256,freeze:run.freeze,
-  referenceCounts:{items:Object.keys(ref).length,property:run.rows.filter(r=>ref[r.id]?.property!=='none').length,nature:['measured','calculated','declared','condition','other'].reduce((m,c)=>(m[c]=run.rows.filter(r=>ref[r.id]?.property!=='none'&&ref[r.id]?.nature===c).length,m),{})},
+  referenceCounts:{items:Object.keys(ref).length,property:run.rows.filter(r=>ref[r.id]?.property!=='none').length,technical:run.rows.filter(tech).length,nature:['measured','calculated','declared','condition','other'].reduce((m,c)=>(m[c]=run.rows.filter(r=>tech(r)&&ref[r.id]?.nature===c).length,m),{})},
   nature:Object.fromEntries(Object.entries(groups).map(([g,rs])=>[g,{R0_C1:nat(rs,'C1'),R1:nat(rs,'R1')}])),
+  natureWithProperty:{R0_C1:nat(run.rows.filter(r=>ref[r.id]?.property!=='none'),'C1'),R1:nat(run.rows.filter(r=>ref[r.id]?.property!=='none'),'R1')},
   role:Object.fromEntries(Object.entries(groups).map(([g,rs])=>[g,Object.fromEntries(['A0','A1','C1','D2','R1'].map(a=>[a,role(rs,a)]))])),
   attribution:Object.fromEntries(Object.entries(groups).map(([g,rs])=>[g,Object.fromEntries(['base','object','learned_inductive','learned_transductive'].map(k=>[k,attr(rs,k)]))])),
   learned:Object.fromEntries(Object.entries(run.learned).map(([k,v])=>[k,v.filter(p=>!p.verification.failed.length).map(p=>({id:p.id,terms:p.terms,relations:p.relations.map(r=>r.relation+':'+r.property)}))])),

@@ -1,0 +1,35 @@
+{
+ "schema": "pee.s93.annotation-freeze.v1",
+ "sealedAt": "2026-10-20T07:05:13.024Z",
+ "before": "any arm runs on the check items",
+ "method": "blind Claude-agent annotation from the whole page text, split by category between two independent agents (air purifiers; laptops) that read only the protocol, items.json and their pages; merged without change",
+ "annotationsSha256": "b84d9668daf7ee50160b94ad57a3eda0315fab99de4bd086abfc2deacbe6c3ce",
+ "partsSha256": {
+  "ap": "bc66b42d06bfd0c11fcb36060bab4a22a5ae41e3fe8c0143bff87c98181f3bca",
+  "lt": "d7959cbd8921daa24d2b081327575f4d4af77d98c4036152c5d519d700269819"
+ },
+ "itemsSha256": "70db01d87c02c4c2846768264fe5c5638158292eba5ecfc9a0d96bdaa3a090c7",
+ "protocolSha256": "7069f9f6fa5447500bdf77fc5a4f55730d85631048a5becf05b1ff42839e1a0d",
+ "checkScriptSha256": "ebb618487e6a0d91f058e0f03cb5ca27e099c1a10e4036843528753536570ebf",
+ "counts": {
+  "items": 462,
+  "technical": 407,
+  "propertyNone": 343,
+  "natureTechnical": {
+   "declared": 73,
+   "calculated": 180,
+   "condition": 38,
+   "measured": 112,
+   "other": 4
+  },
+  "provenanceTechnical": {
+   "manufacturer": 70,
+   "publisher": 332,
+   "unclear": 4,
+   "third_party": 1
+  },
+  "evidenceLine": 406,
+  "calculatedWithAssumptions": 129
+ },
+ "note": "Scoring of nature, provenance and links set to all technical values (not only values with a defined property) before this seal and before any run; laptops are a never-taught category (224 of 238 values without a defined property). Laptop pages are dominated by comparison-table deltas (+x%), annotated calculated with subject other_product."
+}
