@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {loadQuantityKnowledge} from '../src/quantity_knowledge.js';
 import {loadPropertyDefinitions} from '../src/property_definitions.js';
-import {attributeProperty} from '../src/definition_interpreter.js';
+import {attributeProperty,interpretWithDefinitions,compareByDefinition} from '../src/definition_interpreter.js';
 import {acquireEntities,metricEntities,withAcquiredDefinitions,withAcquiredAspects,documentSupport,subjectTerms,isWordName} from '../src/scientific_entities.js';
 
 // S96: typed scientific entities from teaching tables and the quantity knowledge. Every table text is invented for this test.
@@ -49,3 +49,14 @@ test('attribute entities become candidate aspects only under a word name; docume
  const A=withAcquiredAspects(qk,ents);assert.ok(A.qk.pack.aspects!.some(a=>a.terms.includes('glare handling')));
  const sup=documentSupport(qk,ents,[{id:'d1',blocks:['We measured a screen luminance of 410 cd/m² on a white window.']},{id:'d2',blocks:['The stand is 20 cm deep.']}]);
  assert.deepEqual(sup.get(ents.find(e=>e.name==='Screen luminance')!.id),['d1']);});
+
+test('S97 C1: conditions transferred into candidates keep comparability honest', ()=>{
+ const ms=metricEntities(qk,defs);const plain=withAcquiredDefinitions(qk,defs.pack,ms).defs;const withC=withAcquiredDefinitions(qk,defs.pack,ms,{transferConditions:true}).defs;
+ const p=withC.properties.get('qkm_peak_luminance')!;assert.ok(p.conditions.some(([d])=>withC.dimensions.get(d)?.qkAxis==='window_size'));
+ assert.equal(plain.properties.get('qkm_peak_luminance')!.conditions.length,0);
+ const v=(label:string)=>({value:1000,unit:'nits',label,valueAt:label.indexOf('1000'),category:'monitors'});
+ const a=interpretWithDefinitions(withC,qk,{...v('peak brightness of 1000 nits'),conditions:[]},{ownTermObject:true} as never);
+ const b=interpretWithDefinitions(withC,qk,{...v('peak brightness of 1000 nits'),conditions:[]},{ownTermObject:true} as never);
+ assert.equal(a.property.value,'qkm_peak_luminance');assert.equal(compareByDefinition(withC,a,b).verdict,'conditions_unestablished');
+ const a0=interpretWithDefinitions(plain,qk,{...v('peak brightness of 1000 nits'),conditions:[]},{ownTermObject:true} as never);
+ assert.equal(compareByDefinition(plain,a0,a0).verdict,'comparable','without the transfer the candidate is wrongly comparable');});

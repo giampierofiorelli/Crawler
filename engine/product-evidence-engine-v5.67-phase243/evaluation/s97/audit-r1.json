@@ -1,0 +1,373 @@
+{
+ "schema": "pee.s97.audit.v1",
+ "label": "r1",
+ "note": "post hoc diagnosis on spent material; counts only",
+ "configs": {
+  "E0": "pd.5:61c4e37a1893ba61",
+  "S0": "pd.5+acquired:25:e6d3323492869340",
+  "C1": "pd.5+acquired:25:161b1c9902329225",
+  "C3": "pd.5+acquired:25:d52023aadb09720d",
+  "C13": "pd.5+acquired:25:744c0946f007b67d"
+ },
+ "attribution": {
+  "s96_check_tv_monitors": {
+   "E0": {
+    "items": 229,
+    "correct": 1,
+    "wrong": 1,
+    "falseAttribution": 2,
+    "refPositive": 131
+   },
+   "S0": {
+    "items": 229,
+    "correct": 28,
+    "wrong": 2,
+    "falseAttribution": 2,
+    "refPositive": 131
+   },
+   "C1": {
+    "items": 229,
+    "correct": 28,
+    "wrong": 2,
+    "falseAttribution": 2,
+    "refPositive": 131
+   },
+   "C3": {
+    "items": 229,
+    "correct": 26,
+    "wrong": 13,
+    "falseAttribution": 5,
+    "refPositive": 131
+   },
+   "C13": {
+    "items": 229,
+    "correct": 26,
+    "wrong": 13,
+    "falseAttribution": 5,
+    "refPositive": 131
+   },
+   "changesC13vsS0": {
+    "fixed": 15,
+    "broken": 20
+   }
+  },
+  "s94_dev_monitors_ssds": {
+   "E0": {
+    "items": 240,
+    "correct": 6,
+    "wrong": 1,
+    "falseAttribution": 4,
+    "refPositive": 117
+   },
+   "S0": {
+    "items": 240,
+    "correct": 61,
+    "wrong": 1,
+    "falseAttribution": 12,
+    "refPositive": 117
+   },
+   "C1": {
+    "items": 240,
+    "correct": 61,
+    "wrong": 1,
+    "falseAttribution": 12,
+    "refPositive": 117
+   },
+   "C3": {
+    "items": 240,
+    "correct": 25,
+    "wrong": 1,
+    "falseAttribution": 10,
+    "refPositive": 117
+   },
+   "C13": {
+    "items": 240,
+    "correct": 25,
+    "wrong": 1,
+    "falseAttribution": 10,
+    "refPositive": 117
+   },
+   "changesC13vsS0": {
+    "fixed": 14,
+    "broken": 48
+   }
+  },
+  "s89_regression": {
+   "E0": {
+    "items": 341,
+    "correct": 58,
+    "wrong": 4,
+    "falseAttribution": 9,
+    "refPositive": 109
+   },
+   "S0": {
+    "items": 341,
+    "correct": 60,
+    "wrong": 4,
+    "falseAttribution": 9,
+    "refPositive": 109
+   },
+   "C1": {
+    "items": 341,
+    "correct": 60,
+    "wrong": 4,
+    "falseAttribution": 9,
+    "refPositive": 109
+   },
+   "C3": {
+    "items": 341,
+    "correct": 60,
+    "wrong": 5,
+    "falseAttribution": 12,
+    "refPositive": 109
+   },
+   "C13": {
+    "items": 341,
+    "correct": 60,
+    "wrong": 5,
+    "falseAttribution": 12,
+    "refPositive": 109
+   },
+   "changesC13vsS0": {
+    "fixed": 0,
+    "broken": 3
+   }
+  },
+  "s90_regression": {
+   "E0": {
+    "items": 208,
+    "correct": 37,
+    "wrong": 7,
+    "falseAttribution": 1,
+    "refPositive": 82
+   },
+   "S0": {
+    "items": 208,
+    "correct": 37,
+    "wrong": 7,
+    "falseAttribution": 1,
+    "refPositive": 82
+   },
+   "C1": {
+    "items": 208,
+    "correct": 37,
+    "wrong": 7,
+    "falseAttribution": 1,
+    "refPositive": 82
+   },
+   "C3": {
+    "items": 208,
+    "correct": 38,
+    "wrong": 7,
+    "falseAttribution": 1,
+    "refPositive": 82
+   },
+   "C13": {
+    "items": 208,
+    "correct": 38,
+    "wrong": 7,
+    "falseAttribution": 1,
+    "refPositive": 82
+   },
+   "changesC13vsS0": {
+    "fixed": 1,
+    "broken": 0
+   }
+  },
+  "s91_regression": {
+   "E0": {
+    "items": 402,
+    "correct": 88,
+    "wrong": 1,
+    "falseAttribution": 4,
+    "refPositive": 180
+   },
+   "S0": {
+    "items": 402,
+    "correct": 90,
+    "wrong": 1,
+    "falseAttribution": 5,
+    "refPositive": 180
+   },
+   "C1": {
+    "items": 402,
+    "correct": 90,
+    "wrong": 1,
+    "falseAttribution": 5,
+    "refPositive": 180
+   },
+   "C3": {
+    "items": 402,
+    "correct": 93,
+    "wrong": 1,
+    "falseAttribution": 11,
+    "refPositive": 180
+   },
+   "C13": {
+    "items": 402,
+    "correct": 93,
+    "wrong": 1,
+    "falseAttribution": 11,
+    "refPositive": 180
+   },
+   "changesC13vsS0": {
+    "fixed": 3,
+    "broken": 6
+   }
+  },
+  "s92_regression": {
+   "E0": {
+    "items": 191,
+    "correct": 57,
+    "wrong": 27,
+    "falseAttribution": 19,
+    "refPositive": 116
+   },
+   "S0": {
+    "items": 191,
+    "correct": 57,
+    "wrong": 27,
+    "falseAttribution": 19,
+    "refPositive": 116
+   },
+   "C1": {
+    "items": 191,
+    "correct": 57,
+    "wrong": 27,
+    "falseAttribution": 19,
+    "refPositive": 116
+   },
+   "C3": {
+    "items": 191,
+    "correct": 59,
+    "wrong": 27,
+    "falseAttribution": 21,
+    "refPositive": 116
+   },
+   "C13": {
+    "items": 191,
+    "correct": 59,
+    "wrong": 27,
+    "falseAttribution": 21,
+    "refPositive": 116
+   },
+   "changesC13vsS0": {
+    "fixed": 2,
+    "broken": 2
+   }
+  },
+  "s93_regression": {
+   "E0": {
+    "items": 462,
+    "correct": 31,
+    "wrong": 0,
+    "falseAttribution": 6,
+    "refPositive": 119
+   },
+   "S0": {
+    "items": 462,
+    "correct": 31,
+    "wrong": 0,
+    "falseAttribution": 7,
+    "refPositive": 119
+   },
+   "C1": {
+    "items": 462,
+    "correct": 31,
+    "wrong": 0,
+    "falseAttribution": 7,
+    "refPositive": 119
+   },
+   "C3": {
+    "items": 462,
+    "correct": 33,
+    "wrong": 0,
+    "falseAttribution": 10,
+    "refPositive": 119
+   },
+   "C13": {
+    "items": 462,
+    "correct": 33,
+    "wrong": 0,
+    "falseAttribution": 10,
+    "refPositive": 119
+   },
+   "changesC13vsS0": {
+    "fixed": 2,
+    "broken": 3
+   }
+  }
+ },
+ "conditions": {
+  "s96_check_tv_monitors": {
+   "S0": {
+    "attributed": 28,
+    "candidateWithDefiningConditions": 0,
+    "valuesWithAConditionRead": 0,
+    "missingDefiningReported": 0
+   },
+   "C1": {
+    "attributed": 28,
+    "candidateWithDefiningConditions": 20,
+    "valuesWithAConditionRead": 5,
+    "missingDefiningReported": 16
+   },
+   "C13": {
+    "attributed": 37,
+    "candidateWithDefiningConditions": 24,
+    "valuesWithAConditionRead": 2,
+    "missingDefiningReported": 23
+   }
+  },
+  "s94_dev_monitors_ssds": {
+   "S0": {
+    "attributed": 62,
+    "candidateWithDefiningConditions": 0,
+    "valuesWithAConditionRead": 0,
+    "missingDefiningReported": 0
+   },
+   "C1": {
+    "attributed": 62,
+    "candidateWithDefiningConditions": 16,
+    "valuesWithAConditionRead": 3,
+    "missingDefiningReported": 13
+   },
+   "C13": {
+    "attributed": 24,
+    "candidateWithDefiningConditions": 9,
+    "valuesWithAConditionRead": 3,
+    "missingDefiningReported": 6
+   }
+  }
+ },
+ "comparability": {
+  "s96_check_tv_monitors": {
+   "S0": {
+    "comparable": 95
+   },
+   "C1+C2": {
+    "comparable": 29,
+    "conditions_unestablished": 64,
+    "not_comparable": 2
+   },
+   "C13+C2": {
+    "conditions_unestablished": 133,
+    "comparable": 78
+   }
+  },
+  "s94_dev_monitors_ssds": {
+   "S0": {
+    "comparable": 1086
+   },
+   "C1+C2": {
+    "conditions_unestablished": 48,
+    "comparable": 1036,
+    "not_comparable": 2
+   },
+   "C13+C2": {
+    "comparable": 106,
+    "conditions_unestablished": 12
+   }
+  }
+ }
+}

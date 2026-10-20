@@ -413,7 +413,11 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  /** S96 it1: the value's own words name one of the definition's own surface terms ("a 240Hz refresh rate"): the object
   * named in the sentence is then this concept's, not another concept's (the known-object block guards definitions the
   * value does not name). Off by default. */
- ownTermObject?:boolean}={}):PropertySlot{
+ ownTermObject?:boolean;
+ /** S97 C3 (counterfactual, shadow): a definition whose stated object nouns the value's sentence names owns that object
+  * (the known-object block does not reject it), and when no term decides, the single admissible definition of the unit's
+  * kind whose object the sentence names is inferred (rule object_licence). Off by default. */
+ objectLicence?:boolean}={}):PropertySlot{
  const sl=o.structure?.label?norm(o.structure.label)+' | ':'';const fullLabel=sl+norm(o.label);const label=sl+norm(ownWords(String(o.label??''),o.valueAt,qk)),context=norm(o.context);const cls=unitClass(defs,o.unit);const kk=cls?{kind:null,candidates:[]}:kindsOf(qk,o);
  const pool=applicableProperties(defs,o.category);
  const unitNoun=norm(o.unit);
@@ -431,7 +435,7 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  const si=(()=>{const p=parseUnit(qk,String(o.unit??'').trim());return p&&o.value!==null?o.value*p.factor+(p.offset??0):null;})();
  const admissible=(d:PropertyDefinition)=>{
   if(d.plausibleSi&&si!==null&&(si<d.plausibleSi[0]||si>d.plausibleSi[1]))return false;
-  const ownObject=(d.objectNouns??[]).some(n=>has(label,n))||(opts.ownTermObject===true&&d.surface.some(([t])=>has(label,norm(t))));
+  const ownObject=(d.objectNouns??[]).some(n=>has(label,n))||(opts.ownTermObject===true&&d.surface.some(([t])=>has(label,norm(t))))||(opts.objectLicence===true&&(d.objectNouns??[]).some(n=>has(sentence,n)));
   if(otherObjects.length&&!ownObject)return false;
   if(qkCompetitors.some(m=>!subsumes(d,m.id))&&!qkCompetitors.some(m=>subsumes(d,m.id))&&!ownObject)return false;
   return true;};
@@ -446,6 +450,8 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
  const top=scored[0];
  if(top.score<=0){
   // the category profile licenses a unit-kind attribution when it lists exactly one property admitting the unit
+  if(opts.objectLicence===true){const own=byUnit.filter(admissible).filter(d=>(d.objectNouns??[]).some(n=>has(sentence,n)));
+   if(own.length===1)return {value:own[0].id,state:'inferred',evidence:['object:'+(own[0].objectNouns??[]).find(n=>has(sentence,n))],rule:'object_licence',alternatives:byUnit.filter(d=>d!==own[0]).map(d=>d.id),kind};}
   if(opts.profileLicense===true&&byUnit.length===1&&o.category&&defs.profiles.get(o.category)?.properties.includes(byUnit[0].id))
    return {value:byUnit[0].id,state:'inferred',evidence:['profile:'+o.category],rule:'profile_single_property_for_unit_kind',alternatives:[],kind};
   return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};}

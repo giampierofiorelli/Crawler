@@ -110,6 +110,13 @@ export function metricEntities(qk:QuantityKnowledge,existing?:PropertyDefinition
    relations:[...(m.notEquivalentTo??[]).map(t=>({type:'not_equivalent_to' as const,target:t})),...(m.derivedFrom??[]).map(t=>({type:'derived_from' as const,target:t})),...(m.definedBy??[]).map(x=>({type:'defined_by' as const,target:x.method}))],
    existingProperty:prop};});}
 export interface OverlayOptions {/** typed rows of the teaching tables */rows?:boolean;/** explicit QK metrics without a definition */metrics?:boolean;
+ /** S97 C1 (counterfactual, shadow): carry the conditions a record requires (QK `requires`, typed row conditions) into the
+  * candidate as defining dimensions; a QK axis no definition dimension names gets a derived dimension (a view of the axis) */
+ transferConditions?:boolean;
+ /** S97 C3 (counterfactual, shadow): a STATED owner relation from a known object (pd knownObjects id) to QK metrics; the
+  * metric-backed candidates receive that object's nouns as their object of interest. The statement itself is knowledge to be
+  * reviewed: S97 measures what it would change */
+ objectOwners?:Readonly<Record<string,readonly string[]>>;
  /** when given, only these entity ids become candidates (E2: validated by earlier documents) */only?:ReadonlySet<string>;sourceId?:string}
 /** Typed property entities that no existing definition covers become CANDIDATE property definitions in the existing pack: one
  * representation, read by the existing attribution and interpretation. A metric-backed candidate names its metric, so the
@@ -124,8 +131,17 @@ export function withAcquiredDefinitions(qk:QuantityKnowledge,pack:DefinitionPack
   if(e.quantity.status!=='typed')continue;const terms=e.terms.filter(t=>!existingTerms.has(t)&&/[a-z]{3}/.test(t)&&!/^[a-z]{1,3}$/.test(t));if(!terms.length)continue;
   const id=isMetric?'qkm_'+e.quantity.metrics[0]:'acq_'+slug(e.name)+'_'+e.id.slice(-6);if(p.properties.some(x=>x.id===id))continue;
   const metric=isMetric?e.quantity.metrics[0]:undefined;const related=isMetric?[]:e.quantity.metrics.filter(m=>qk.metrics.has(m));
-  p.properties.push({id,label:e.name,form:'quantity',quantity:{kinds:e.quantity.kinds,...(metric?{metric}:{}),...(related.length?{relatedMetrics:related}:{})},object:'unstated',basis:null,
-   surface:terms.map(t=>[t,'candidate']),conditions:[],state:'candidate',sources:[sourceId]});
+  const conds:[string,'defining'][]=[];
+  if(o.transferConditions)for(const ax of [...new Set(e.conditions.map(c=>c.axis).filter((a):a is string=>!!a&&qk.axes.has(a)))]){
+   let dim=p.conditionDimensions.find(d=>d.qkAxis===ax);
+   if(!dim){const a=qk.axes.get(ax)! as unknown as {id:string;values?:Record<string,string[]>;cues?:string[];freeText?:string[];valueKind?:string;operatingCondition?:boolean};
+    dim={id:'qkaxis_'+ax,qkAxis:ax,structure:a.operatingCondition?'operating_setting':'comparison_or_basis',label:ax.replace(/_/g,' '),values:a.values??{},cues:[...(a.cues??[]),...(a.freeText??[])],
+     ...(a.valueKind&&qk.kinds.has(a.valueKind)?{valueKinds:[a.valueKind]}:{}),state:'candidate',sources:[sourceId]};p.conditionDimensions.push(dim);}
+   if(!conds.some(c=>c[0]===dim!.id))conds.push([dim.id,'defining']);}
+  const owner=metric?Object.entries(o.objectOwners??{}).find(([,ms])=>ms.includes(metric))?.[0]:undefined;
+  const nouns=owner?(p.knownObjects?.objects.find(k=>k.id===owner)?.nouns??[]):[];
+  p.properties.push({id,label:e.name,form:'quantity',quantity:{kinds:e.quantity.kinds,...(metric?{metric}:{}),...(related.length?{relatedMetrics:related}:{})},object:owner??'unstated',...(nouns.length?{objectNouns:[...nouns]}:{}),basis:null,
+   surface:terms.map(t=>[t,'candidate']),conditions:conds,state:'candidate',sources:[sourceId]});
   for(const t of terms)existingTerms.add(t);added.push(id);byEntity.set(e.id,id);}
  p.version=pack.version+'+acquired:'+added.length;
  return {defs:loadPropertyDefinitions(qk,p),added,reused,byEntity};}
