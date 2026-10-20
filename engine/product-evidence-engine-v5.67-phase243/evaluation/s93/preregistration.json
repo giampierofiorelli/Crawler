@@ -1,0 +1,38 @@
+{
+ "schema": "pee.s93.preregistration.v1",
+ "at": "2026-10-20",
+ "owner": "owner review of S92, verbatim in .claude/skills/pee-guided-learning/references/owner-review-s92-2026-10-20.md",
+ "roadmapStep": "R3 / R3-C (unchanged; R3 stays open)",
+ "question": "Three effects the owner asked to verify before any claim: (1) links to the original statement that are actually correct; (2) a reliable distinction between declared, measured and calculated results, with provenance separate and calculation assumptions identifiable; (3) a new definition learned from documents that improves the reading of later documents. Also: the object-resolution principle on a never-taught category.",
+ "freeze": "evaluation/s93/freeze.json (written before any check page is fetched)",
+ "accessFirst": "sources were chosen for accessibility and measurement density BEFORE the categories (S92 lesson): Air Purifier First and Notebookcheck answered and allowed PEE in S91. Both publishers are known (pages are new): the check is independent in pages, not in publishers",
+ "checkPages": {
+  "air_purifiers (taught; calculated running costs)": [
+   "C-ap7=https://www.airpurifierfirst.com/review/airfanta-3pro/",
+   "C-ap8=https://www.airpurifierfirst.com/review/coway-airmega-150/",
+   "C-ap9=https://www.airpurifierfirst.com/review/fellowes-aeramax-dx55/",
+   "C-ap10=https://www.airpurifierfirst.com/review/membrane-solutions-msa3/",
+   "C-ap11=https://www.airpurifierfirst.com/review/xiaomi-4-lite/",
+   "C-ap12=https://www.airpurifierfirst.com/review/honeywell-air-genius-5/"
+  ],
+  "laptops (never taught: no definitions profile, no owner package)": [
+   "C-lt0=https://www.notebookcheck.net/MacBook-Neo-rival-with-Intel-Wildcat-Lake-for-449-Chuwi-UniBook-Laptop-Review.1360578.0.html",
+   "C-lt1=https://www.notebookcheck.net/Surprisingly-fast-with-32-GB-RAM-and-Ryzen-7-HP-EliteBook-8-G2a-16-laptop-review.1358548.0.html",
+   "C-lt2=https://www.notebookcheck.net/Flagship-business-laptop-with-almost-24-hours-of-battery-life-Lenovo-ThinkPad-X1-Carbon-Gen-14-Review.1332558.0.html",
+   "C-lt3=https://www.notebookcheck.net/Acer-Nitro-V-16-AI-Review-Affordable-gaming-laptop-with-great-battery-life.1156010.0.html",
+   "C-lt4=https://www.notebookcheck.net/Intel-clearly-beats-Snapdragon-Microsoft-Surface-Laptop-15-Gen-8-Review.1413537.0.html",
+   "C-lt5=https://www.notebookcheck.net/Dell-Pro-Max-16-Plus-review-One-of-a-kind-mobile-workstation.1132122.0.html"
+  ]
+ },
+ "items": "same rule as S89-S92 (every quantity with a QK unit in the text blocks, deduplicated, evenly sampled, at most 40 per page)",
+ "reference": "blind Claude-agent annotation from the whole page text: property (or none), provenance, nature (measured, calculated, declared, condition, other), evidence line, assumption lines, concept name for values outside the definitions; sealed by hash before any arm runs",
+ "metrics": [
+  "nature per class (precision, recall, abstention) and provenance; R0 against R1",
+  "links: correct decisions whose originating statement reaches the reference line, overall and when that line is elsewhere",
+  "calculations: calculated values with reference assumption lines for which at least one assumption is found",
+  "role (measured vs declared) for A0, C1, D2 against the trivial baselines",
+  "attribution: base, object resolution, learned definitions (inductive and transductive), both; learned definitions matching reference concepts and their false attributions",
+  "by category"
+ ],
+ "rules": ["first run committed unchanged", "no tuning on the check", "shadow only; no store migration; no ranking; no LLM"]
+}

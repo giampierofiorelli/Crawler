@@ -1,0 +1,359 @@
+{
+ "schema": "pee.s93.learning-cycle.v1",
+ "learnedFrom": {
+  "definitions": "pd.5:61c4e37a1893ba61",
+  "observations": 1653,
+  "documents": 86,
+  "digest": "26b0bfc49ac948e3159336045a83377b27189d08a192490b498923bbe22c7e18"
+ },
+ "transductive": true,
+ "options": {
+  "typeGate": true,
+  "distributional": {
+   "minSimilarity": 0.3,
+   "margin": 0.05,
+   "window": 5,
+   "minCount": 3
+  },
+  "relations": true,
+  "strongSeeds": true
+ },
+ "thresholds": {
+  "minPublishers": 2,
+  "minDocs": 2,
+  "minOccurrences": 3,
+  "maxLog10Spread": 1.5
+ },
+ "proposals": 27,
+ "promoted": [
+  {
+   "id": "learned_aluminum_length",
+   "label": "aluminum",
+   "kind": "length",
+   "terms": [
+    "aluminum"
+   ],
+   "relations": 1,
+   "verification": {
+    "publishers": 2,
+    "docs": 2,
+    "occurrences": 3,
+    "log10Spread": 0.602,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_debris_duration",
+   "label": "worth of debris",
+   "kind": "duration",
+   "terms": [
+    "worth of debris"
+   ],
+   "relations": 3,
+   "verification": {
+    "publishers": 2,
+    "docs": 3,
+    "occurrences": 6,
+    "log10Spread": 0.301,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_height_length",
+   "label": "robot height",
+   "kind": "length",
+   "terms": [
+    "robot height"
+   ],
+   "relations": 2,
+   "verification": {
+    "publishers": 3,
+    "docs": 4,
+    "occurrences": 6,
+    "log10Spread": 0.069,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_hot_temperature",
+   "label": "c hot",
+   "kind": "temperature",
+   "terms": [
+    "c hot"
+   ],
+   "relations": 0,
+   "verification": {
+    "publishers": 2,
+    "docs": 3,
+    "occurrences": 4,
+    "log10Spread": 0.013,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_midrang_length",
+   "label": "midrange",
+   "kind": "length",
+   "terms": [
+    "midrange"
+   ],
+   "relations": 1,
+   "verification": {
+    "publishers": 2,
+    "docs": 2,
+    "occurrences": 3,
+    "log10Spread": 0.229,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_obstacl_length",
+   "label": "obstacles",
+   "kind": "length",
+   "terms": [
+    "obstacles"
+   ],
+   "relations": 1,
+   "verification": {
+    "publishers": 3,
+    "docs": 5,
+    "occurrences": 5,
+    "log10Spread": 0.523,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_replac_duration",
+   "label": "replaced",
+   "kind": "duration",
+   "terms": [
+    "replaced"
+   ],
+   "relations": 3,
+   "verification": {
+    "publishers": 2,
+    "docs": 3,
+    "occurrences": 3,
+    "log10Spread": 0.301,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_side_length",
+   "label": "either side",
+   "kind": "length",
+   "terms": [
+    "either side"
+   ],
+   "relations": 1,
+   "verification": {
+    "publishers": 2,
+    "docs": 3,
+    "occurrences": 3,
+    "log10Spread": 0.312,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_speaker_length",
+   "label": "surround speakers",
+   "kind": "length",
+   "terms": [
+    "surround speakers"
+   ],
+   "relations": 1,
+   "verification": {
+    "publishers": 2,
+    "docs": 3,
+    "occurrences": 3,
+    "log10Spread": 0.163,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_time_duration",
+   "label": "charging time",
+   "kind": "duration",
+   "terms": [
+    "charging time"
+   ],
+   "relations": 4,
+   "verification": {
+    "publishers": 2,
+    "docs": 3,
+    "occurrences": 3,
+    "log10Spread": 0.778,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  },
+  {
+   "id": "learned_wash_temperature",
+   "label": "mop washing",
+   "kind": "temperature",
+   "terms": [
+    "mop washing"
+   ],
+   "relations": 0,
+   "verification": {
+    "publishers": 2,
+    "docs": 5,
+    "occurrences": 7,
+    "log10Spread": 0.025,
+    "passed": [
+     "publishers",
+     "documents",
+     "occurrences",
+     "magnitude_coherence",
+     "denotes_a_quantity",
+     "phrase_not_an_existing_term",
+     "values_vary"
+    ],
+    "failed": []
+   }
+  }
+ ],
+ "rejected": {
+  "occurrences": 10,
+  "values_vary": 6,
+  "magnitude_coherence": 2,
+  "denotes_a_quantity": 1
+ },
+ "attribution": {
+  "s92": {
+   "base": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20,
+    "toLearned": 0,
+    "learnedMatchesReferenceConcept": 0,
+    "learnedOnDefinedValue": 0
+   },
+   "object": {
+    "refPositive": 116,
+    "correct": 78,
+    "wrong": 6,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 20,
+    "toLearned": 0,
+    "learnedMatchesReferenceConcept": 0,
+    "learnedOnDefinedValue": 0
+   },
+   "learned": {
+    "refPositive": 116,
+    "correct": 57,
+    "wrong": 27,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 23,
+    "toLearned": 5,
+    "learnedMatchesReferenceConcept": 1,
+    "learnedOnDefinedValue": 0
+   },
+   "learned_object": {
+    "refPositive": 116,
+    "correct": 77,
+    "wrong": 7,
+    "abstained": 32,
+    "refNone": 75,
+    "falseAttribution": 23,
+    "toLearned": 6,
+    "learnedMatchesReferenceConcept": 1,
+    "learnedOnDefinedValue": 1
+   }
+  }
+ }
+}

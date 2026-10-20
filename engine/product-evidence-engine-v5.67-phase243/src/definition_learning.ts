@@ -25,12 +25,17 @@ export interface LearningObservation extends ObservationInput {docId:string;publ
 export interface LearnedTerm {property:string;term:string;state:'candidate'|'supported';evidence:{seedDocs:number;seedPublishers:number;seeds:number;occurrences:number;purity:number;docs:string[];
  /** S92 E2: a term proposed by distributional similarity to the property's terms (no seed of its own) */
  similarity?:number;via?:'seeds'|'distributional'}}
-export interface ProposedConcept {term:string;kind:string;state:'proposed';evidence:{docs:number;publishers:number;occurrences:number;categories:string[]};
+export interface ProposedConcept {term:string;kind:string;state:'proposed';evidence:{docs:number;publishers:number;occurrences:number;categories:string[];
+ /** S93: the values seen with the phrase, in SI (log10), for the magnitude-coherence check */
+ log10Si?:number[];publishersList?:string[];docsList?:string[]};
  /** S92 E3 (knowledge-graph induction, R3 document concepts): what the phrase denotes, its consolidated key (head stem and
   * kind) and typed relations to existing properties; never used for attribution. */
  denotes?:Denotation;key?:string;relations?:{property:string;relation:'same_kind'|'contains_property_term'}[]}
 /** S92: switches for the R3 non-generative mechanisms in learning (owner review of S91). */
 export interface LearningOptions {
+ /** S93: a value counts as explained by a definition (a seed) only when a SUPPORTED term of it names the value; a weak
+  * (candidate-term or context-only) attribution does not stop a new concept from being proposed */
+ strongSeeds?:boolean;
  /** true: the R3 dn.1 semantic-type gate; 'grammar': dn.1 plus a nominal-head requirement (S92 development: REJECTED, it
   * removed verbal frame-evoking terms such as "climbing" that carried correct attributions; FrameNet frames are evoked by
   * verbs too). Kept switchable for reproduction. */
@@ -67,10 +72,13 @@ export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge
   const ws=g.split(' ');const head=ws.at(-1)!;return !VERB_FORM.test(head)&&!PARTICLE.has(head)&&!ws.every(w=>PARTICLE.has(w)||VERB_FORM.test(w))&&!/^\w+s$/.test(head)||NOUN_PLURAL_OK.test(head);};
  const known=[...new Set((defs.pack.knownObjects?.objects??[]).flatMap(o=>o.nouns.map(n=>normText(n))))];
  const surfaceOf=new Map<string,string>();for(const p of defs.properties.values())for(const [t] of p.surface)surfaceOf.set(normText(t),p.id);
- type Occ={doc:string;pub:string;kinds:string[];seed:string|null;cat:string|null;identity:boolean};
+ type Occ={doc:string;pub:string;kinds:string[];seed:string|null;cat:string|null;identity:boolean;si:number|null};
  const occ=new Map<string,Occ[]>();
- for(const o of obs){const r=interpretWithDefinitions(defs,qk,o);const seed=r.property.state==='stated'?r.property.value:null;
+ for(const o of obs){const r=interpretWithDefinitions(defs,qk,o);
+  const supportedTerm=(id:string|null)=>!!id&&r.property.evidence.some(e=>e.startsWith('label:')&&(defs.properties.get(id)?.surface??[]).some(([t,st])=>st!=='candidate'&&normText(t)===e.slice(6)));
+  const seed=r.property.state==='stated'&&(!opts.strongSeeds||supportedTerm(r.property.value))?r.property.value:null;
   const kinds=kindsOf(qk,o).candidates;const label=String(o.label??'');const span=ownWords(label,o.valueAt,qk);
+  const pu=parseUnit(qk,String(o.unit??'').trim());const si=pu&&o.value!==null&&o.value>0?Math.log10(o.value*pu.factor+(pu.offset??0)):null;
   const structural=o.structure?.label?ngrams(o.structure.label,th.maxN):[];
   // only the words adjacent to the value (its own noun phrase), on either side within its own words
   const at=o.valueAt==null?-1:span.length-(label.length-o.valueAt)+0;const cut=at>=0?at:span.length;
@@ -79,7 +87,7 @@ export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge
   for(const g of [...new Set([...structural,...ngrams(left,th.maxN),...ngrams(right,th.maxN)])]){if(g.length<th.minTermChars)continue;let list=occ.get(g);if(!list){list=[];occ.set(g,list);}
    // words of the product's name are identity, not property vocabulary
    const idWords=new Set(tokens(String(o.pageSubject??'')).filter(w=>w.length>2));
-   list.push({doc:o.docId,pub:o.publisher,kinds,seed,cat:o.category??null,identity:g.split(' ').every(w=>idWords.has(w))});}}
+   list.push({doc:o.docId,pub:o.publisher,kinds,seed,cat:o.category??null,identity:g.split(' ').every(w=>idWords.has(w)),si});}}
  const terms:LearnedTerm[]=[];const proposals:ProposedConcept[]=[];
  for(const [g,os] of [...occ.entries()].sort((a,b)=>a[0].localeCompare(b[0]))){
   if(known.some(k=>k===g||hasPhrase(g,k)))continue;
@@ -99,7 +107,8 @@ export function learnFromDocuments(defs:PropertyDefinitions,qk:QuantityKnowledge
    // not a unit word ("inches"), not a single short word; the phrase must be a noun phrase of at least two words or a long word
    if(!k||kindsAll.some(x=>x!==k)||g.split(' ').some(w=>parseUnit(qk,w))||g.split(' ').length<2&&g.length<8)continue;
    const docs=new Set(os.map(x=>x.doc));if(docs.size<th.minProposalDocs||new Set(os.map(x=>x.pub)).size<th.minProposalPublishers)continue;
-   proposals.push({term:g,kind:k,state:'proposed',evidence:{docs:docs.size,publishers:new Set(os.map(x=>x.pub)).size,occurrences:os.length,categories:[...new Set(os.map(x=>x.cat).filter((x):x is string=>!!x))].sort()}});}}
+   proposals.push({term:g,kind:k,state:'proposed',evidence:{docs:docs.size,publishers:new Set(os.map(x=>x.pub)).size,occurrences:os.length,categories:[...new Set(os.map(x=>x.cat).filter((x):x is string=>!!x))].sort(),
+    log10Si:os.map(x=>x.si).filter((x):x is number=>x!==null).map(x=>+x.toFixed(3)),publishersList:[...new Set(os.map(x=>x.pub))].sort(),docsList:[...docs].sort()}});}}
  // S92 E2: distributional proposals (R3 option 1, PPMI over the learning text): a phrase with no seed of its own, near a
  // property's terms and accompanying values of that property's kinds, becomes a candidate term of it
  if(opts.distributional){const D=opts.distributional;const model:DistributionalModel=trainDistributional(obs.map(o=>[o.label,o.context].filter(Boolean).join(' ')),{window:D.window,minCount:D.minCount});
@@ -129,5 +138,50 @@ export function withLearned(qk:QuantityKnowledge,pack:DefinitionPack,layer:Learn
  const p=JSON.parse(JSON.stringify(pack)) as DefinitionPack;
  for(const t of layer.terms){const d=p.properties.find(x=>x.id===t.property);if(d&&!d.surface.some(([s])=>normText(s)===t.term))d.surface.push([t.term,t.state]);}
  p.version=pack.version+'+learned:'+layer.learnedFrom.digest.slice(0,8);
+ return loadPropertyDefinitions(qk,p);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// S93 (owner review of S92): the learning cycle. An induced concept becomes a candidate DEFINITION only after a
+// verification without gold, and as a definition it reaches every reader (attribution, interpretation, comparison).
+export interface DefinitionProposal {id:string;label:string;kind:string;terms:string[];object:string;objectNouns:string[];plausibleSi:[number,number];
+ relations:{property:string;relation:'same_kind'|'contains_property_term'|'narrower_than'}[];denotes:string|null;
+ verification:{publishers:number;docs:number;occurrences:number;log10Spread:number;passed:string[];failed:string[]}}
+export const PROMOTION_THRESHOLDS={minPublishers:2,minDocs:2,minOccurrences:3,maxLog10Spread:1.5};
+/** Group the layer's proposals by consolidated key (head stem and kind) and verify each group: independent publishers,
+ * documents, occurrences, one quantity kind, coherent magnitudes (the values of one concept agree within 1.5 decades),
+ * a denotation that is a quantity (not a condition, claim or source) and a head that no existing definition names. */
+export function proposeDefinitions(defs:PropertyDefinitions,layer:LearnedLayer,th=PROMOTION_THRESHOLDS):DefinitionProposal[]{
+ const groups=new Map<string,ProposedConcept[]>();for(const p of layer.proposals){if(!p.key)continue;groups.set(p.key,[...(groups.get(p.key)??[]),p]);}
+ const out:DefinitionProposal[]=[];
+ for(const [key,ps] of [...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0]))){const kind=ps[0].kind;
+  const pubs=new Set(ps.flatMap(p=>p.evidence.publishersList??[])),docs=new Set(ps.flatMap(p=>p.evidence.docsList??[]));const occ=ps.reduce((n,p)=>n+p.evidence.occurrences,0);
+  const si=ps.flatMap(p=>p.evidence.log10Si??[]);const spread=si.length?Math.max(...si)-Math.min(...si):Infinity;
+  const label=[...ps].sort((a,b)=>b.evidence.occurrences-a.evidence.occurrences||b.term.length-a.term.length)[0].term;const head=label.split(' ').at(-1)!;
+  const denotes=ps[0].denotes??null;const passed:string[]=[],failed:string[]=[];
+  (pubs.size>=th.minPublishers?passed:failed).push('publishers');(docs.size>=th.minDocs?passed:failed).push('documents');(occ>=th.minOccurrences?passed:failed).push('occurrences');
+  (spread<=th.maxLog10Spread?passed:failed).push('magnitude_coherence');(denotes&&['condition','claim_or_label','source_or_evidence'].includes(denotes)?failed:passed).push('denotes_a_quantity');
+  // the whole phrase must be new; a head that an existing property names makes the concept NARROWER than it (a
+  // knowledge-graph relation), not a duplicate ("charging time" under the generic "time")
+  const terms=[...new Set(ps.map(p=>p.term))];
+  ([...defs.properties.values()].some(d=>d.surface.some(([t])=>terms.includes(normText(t))))?failed:passed).push('phrase_not_an_existing_term');
+  const broader=[...defs.properties.values()].filter(d=>d.quantity?.kinds.includes(kind)&&d.surface.some(([t])=>normText(t)===head)).map(d=>d.id);
+  // a quantity concept varies across products: a single repeated value is a fixed phrase, not a measured concept
+  (new Set(si.map(x=>x.toFixed(2))).size>=2?passed:failed).push('values_vary');
+  const mods=label.split(' ').slice(0,-1).filter(w=>w.length>=4&&!/\d/.test(w));
+  const id='learned_'+key.replace(/@.*/,'').replace(/[^a-z0-9]+/g,'_')+'_'+kind.replace(/[^a-z0-9]+/g,'_');
+  out.push({id,label,kind,terms,object:label,objectNouns:mods.length?mods:[head],plausibleSi:si.length?[10**(Math.min(...si)-1),10**(Math.max(...si)+1)]:[0,1],
+   relations:[...(ps[0].relations??[]),...broader.map(b=>({property:b,relation:'narrower_than' as const}))],denotes,verification:{publishers:pubs.size,docs:docs.size,occurrences:occ,log10Spread:+spread.toFixed(3),passed,failed}});}
+ return out;
+}
+/** Add verified proposals to a definition pack as CANDIDATE properties (never decision-usable); the pack is loaded and
+ * validated like any other, so the new definitions reach every consumer. */
+export function withLearnedDefinitions(qk:QuantityKnowledge,pack:DefinitionPack,proposals:readonly DefinitionProposal[]):PropertyDefinitions{
+ const p=JSON.parse(JSON.stringify(pack)) as DefinitionPack;const ok=proposals.filter(x=>!x.verification.failed.length);
+ if(!p.sources.some(s=>s.id==='s93_learned'))p.sources.push({id:'s93_learned',kind:'learned',title:'S93 learning cycle: concepts induced from documents and verified without gold'} as never);
+ for(const d of ok){if(p.properties.some(x=>x.id===d.id))continue;
+  p.properties.push({id:d.id,label:d.label,form:'quantity',quantity:{kinds:[d.kind]},object:d.object,objectNouns:d.objectNouns,plausibleSi:d.plausibleSi,basis:null,
+   surface:d.terms.map(t=>[t,'candidate']),conditions:[],state:'candidate',sources:['s93_learned']} as never);}
+ p.version=pack.version+'+definitions:'+ok.length;
  return loadPropertyDefinitions(qk,p);
 }

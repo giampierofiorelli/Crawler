@@ -51,7 +51,9 @@ export interface StructuralContext {container:'table_cell'|'label_value'|'prose'
  /** S91: the document reports its own testing somewhere (first-person test context in any block). */
  documentTests?:boolean;
  /** S92: links from the value to the document statements that say where it comes from (document-level relations). */
- links?:EvidenceLink[]}
+ links?:EvidenceLink[];
+ /** S93: the reader line of the heading that announces the section's role (a structural decision points to it) */
+ sectionHeadingLine?:number|null}
 
 /** S92 (owner review of S91): a link from a value to a statement of its document that establishes where the value comes
  * from: the publisher's method or test, a declaration, or a calculation. Evidence selection follows EIDER / SciREX / DocRED
@@ -64,7 +66,7 @@ export interface EvidenceLink {role:'measured'|'declared'|'derived';relation:'co
  /** S93 (owner review of S92 §1): the originating statement(s) of the link, verifiable on the page: the 1G document block
   * (and sentence) that states the method, the declaration or the calculation; for a table value, the statements 1G linked
   * to its cell, not the cell. Empty for a link that rests on the table's own structure (headings, labels). */
- statements?:{locator:string;block:number;sentence:number|null}[]}
+ statements?:{locator:string;block:number;sentence:number|null;line?:number|null}[]}
 /** The page-level readings a value's links are selected from: the 1G document model and, for table cells, the 1G table
  * observations (with GL11/GL12 when the caller asks for them). */
 export interface DocumentRelations {model:DocumentModel1G;tableObservations?:readonly Observation1G[]}
@@ -84,6 +86,7 @@ export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStar
    const [relation,scope,rank]:[EvidenceLink['relation'],EvidenceLink['scope'],number]=l==='linked_same_section'?['table_link','same_section',RANK.tableLinkSame]:l==='linked_ancestor_section'?['table_link','ancestor_section',RANK.tableLinkAncestor]:
     l==='linked_method_section'?['table_link','method_section',RANK.tableLinkMethod]:l==='linked_parallel_table'?['parallel_table','table',RANK.parallel]:['table_structure','table',RANK.tableStructure];
    const tb=rel.model.tableBlock.get(o.table)??0;const st=use.selection==='argument'?bestStatements(rel,o.methodLinks,dims,tb,use):o.methodLinks;
+   if(use.selection==='argument'&&!st.length)corefLinks(rel,surface,tb,null).forEach(l=>out.push(l));
    out.push({role,relation,scope,rank,pointer:`table ${o.table} cell ${o.cell} (${l})`,statements:st.map(bi=>({locator:rel.model.blocks[bi]?.locator??'',block:bi,sentence:null}))});}
   return out;}
  if(!use.prose)return out;
@@ -95,6 +98,9 @@ export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStar
  for(let j=Math.max(0,si-2);j<=Math.min(ss.length-1,si+2);j++){if(j===si)continue;const k=blockKind1G(ss[j].text);if(k==='other')continue;const d=Math.abs(j-si);
   if(d===2&&!dimensionsIn1G(ss[j].text).some(x=>dims.includes(x)))continue;
   out.push({role:KIND_ROLE[k],relation:'co_occurrence',scope:'neighbour_sentence',rank:d===1?RANK.neighbour1:RANK.neighbour2,pointer:`${b.locator} sentence ${j}`,statements:[{locator:b.locator,block:b.index,sentence:j}]});}
+ // S93 coreference (EIDER's second rule): the same value stated elsewhere in the document, in a typed statement that says
+ // who stated or obtained it ("Eufy quotes 251 minutes"); the nearest such mention links
+ if(use.selection==='argument')corefLinks(rel,surface,b.index,b).forEach(l=>out.push(l));
  // bridge: a typed statement elsewhere that names the value's quantity, by section scope (nearest of each scope)
  if(dims.length){const own=b.sectionPath.join('/');const seen=new Set<string>();
   const cands:{c:typeof b;scope:EvidenceLink['scope']}[]=[];
@@ -107,6 +113,16 @@ export function evidenceLinksOf(rel:DocumentRelations,blockText:string,valueStar
    out.push({role:KIND_ROLE[kind],relation:'bridge',scope,rank:scope==='same_section'?RANK.sameSection:scope==='ancestor_section'?RANK.ancestorSection:RANK.methodSection,pointer:pick.locator,statements:[{locator:pick.locator,block:pick.index,sentence:null}]});}}
  return out;
 }
+/** S93: coreference of a value: other text blocks that print the same value (digits and unit letters), in a sentence typed
+ * method, declaration or calculation; the nearest by document position, one per kind. */
+function corefLinks(rel:DocumentRelations,surface:string,at:number,own:{index:number}|null):EvidenceLink[]{
+ const key=surface.toLowerCase().replace(/[\s,]/g,'');const num=/\d[\d.]*/.exec(key)?.[0];if(!num||key.length<3||!/[a-z%]/.test(key))return [];
+ const found:{bi:number;j:number;kind:'method'|'declaration'|'estimate';d:number}[]=[];
+ for(const c of rel.model.blocks){if(!c.text||(own&&c.index===own.index))continue;const flat=c.text.toLowerCase().replace(/[\s,]/g,'');if(!flat.includes(key))continue;
+  sentences(c.text).forEach((sn,j)=>{if(!sn.text.toLowerCase().replace(/[\s,]/g,'').includes(key))return;const k=blockKind1G(sn.text);if(k!=='other')found.push({bi:c.index,j,kind:k,d:Math.abs(c.index-at)});});}
+ const out:EvidenceLink[]=[];for(const kind of ['method','declaration','estimate'] as const){const f=found.filter(x=>x.kind===kind).sort((a,b)=>a.d-b.d)[0];if(!f)continue;
+  out.push({role:KIND_ROLE[kind],relation:'co_occurrence',scope:'neighbour_sentence',rank:RANK.neighbour2,pointer:`${rel.model.blocks[f.bi].locator} sentence ${f.j} (coreference)`,statements:[{locator:rel.model.blocks[f.bi].locator,block:f.bi,sentence:f.j}]});}
+ return out;}
 /** S93: argument-based choice among candidate statements (EIDER: evidence first; SciREX: n-ary arguments across sections):
  * a statement scores by the value's quantities it names, the page subject it names, an instrument it names, then by
  * proximity to the value's block. Returns the best block (ties all kept, in document order). */
@@ -123,22 +139,37 @@ function bestStatements(rel:DocumentRelations,blocks:readonly number[],dims:read
  * in a calculation context (a calculation cue in its sentence, or a linked calculation statement), or a value an
  * estimate or calculation word governs directly ("an estimated 30 kWh"). Inputs of a calculation keep their own nature. */
 export interface EvidenceReading {provenance:'publisher'|'manufacturer'|'third_party'|'unresolved';nature:'measured'|'calculated'|'declared'|'condition'|'unresolved';
- statements:{locator:string;block:number;sentence:number|null;relation:string}[];
+ statements:{locator:string;block:number;sentence:number|null;relation:string;line?:number|null}[];
  calculation:{assumptions:{kind:string;text:string;from:'sentence'|'linked_statement'}[];inputsFromPublisher:boolean}|null;reason:string}
 const GOVERNED_CALC=/\b(?:estimated|calculated|projected|works out (?:at|to)|comes to|equates to|which means|results? in)\s+(?:an?\s+|about\s+|around\s+|roughly\s+|just\s+(?:over|under)\s+)?$/i;
+const AGGREGATE_BEFORE=/\b(?:average|mean|median|typical|most common|minimum|maximum|lowest|highest|least|most|range(?: of)?|total|overall|sum|aggregate)\b[^.!?:;]{0,40}:?\s*$/i;
+const FREQUENCY=/\b(?:every|each|once a|twice a|\d+\s*(?:times|x)\s*(?:a|per))\s+(?:day|week|month|year)\b|\b(?:daily|weekly)\b/gi;
 const PER_PERIOD_AFTER=/^\s*(?:\/\s*|per\s+|a\s+|an\s+|each\s+)(?:year|yr|month|mo|week|day|annum)\b|^\s*(?:annually|yearly|monthly)\b/i;
-export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:string|null},o:{unit:string;label:string;valueAt:number;surface:string},links:readonly EvidenceLink[],rel:DocumentRelations|null,opts:{currency:boolean;periodUnit:boolean}):EvidenceReading{
- const end=o.valueAt+o.surface.length;const sentStart=o.label.slice(0,o.valueAt).search(/[^.!?]*$/);const sentence=o.label.slice(sentStart,end)+(o.label.slice(end).split(/[.!?](?:\s|$)/)[0]??'');
+export function provenanceAndNature(role:{value:ObservationRole86c|null;reason:string|null},o:{unit:string;label:string;valueAt:number;surface:string},links:readonly EvidenceLink[],rel:DocumentRelations|null,opts:{currency:boolean;periodUnit:boolean;headingLine?:number|null;qk?:QuantityKnowledge}):EvidenceReading{
+ // sentence boundaries ignore decimal points ("PM2.5", "104.8"): a stop followed by space and a capital or digit, or the end
+ const end=o.valueAt+o.surface.length;const head0=o.label.slice(0,o.valueAt);let sentStart=0;for(const m of head0.matchAll(/[.!?]["')\]]?\s+(?=[A-Z0-9"'(£$€])/g))sentStart=m.index!+m[0].length;
+ const tailEnd=o.label.slice(end).search(/[.!?]["')\]]?(?:\s+(?=[A-Z0-9"'(£$€])|\s*$)/);const sentence=o.label.slice(sentStart,end)+(tailEnd>=0?o.label.slice(end,end+tailEnd):o.label.slice(end));
  const before=o.label.slice(Math.max(0,o.valueAt-40),o.valueAt),after=o.label.slice(end,end+20);
  const perPeriod=opts.periodUnit||PER_PERIOD_AFTER.test(after);const calcLinks=links.filter(l=>l.role==='derived');
- const output=GOVERNED_CALC.test(before)||(opts.currency||perPeriod)&&(isCalculationText1G(sentence)||calcLinks.length>0);
+ // S93 it1: a statistic over a set (closed class of statistical operators) and a ratio derived from two values of one
+ // quantity in the same sentence ("from 104.8 to 8.3 µg/m³, a 92% improvement") are calculations too
+ const aggregate=AGGREGATE_BEFORE.test(before);
+ const derivedRatio=!!opts.qk&&/%|percent/i.test(o.surface+' '+o.unit)&&(()=>{const prior=findQuantities(opts.qk!,o.label.slice(sentStart,o.valueAt)).filter(q=>(q.value!==null||q.low!==undefined)&&!/%|percent/i.test(q.surface));
+  const kinds=prior.flatMap(q=>q.low!==undefined&&q.high!==undefined?[...q.unit.kinds,...q.unit.kinds]:q.unit.kinds);return kinds.some(k=>kinds.filter(x=>x===k).length>=2);})();
+ const output=GOVERNED_CALC.test(before)||aggregate||derivedRatio||(opts.currency||perPeriod)&&(isCalculationText1G(sentence)||calcLinks.length>0);
  const top=links.length?Math.min(...links.map(l=>l.rank)):Infinity;
  const localDecision=/^nearest:/.test(role.reason??'')?!(role.reason??'').replace(/^nearest:/,'').split('+').some(p=>/^(?:co_occurrence|bridge|table_link|table_structure|parallel_table):/.test(p)):/^evidence:/.test(role.reason??'');
- const statements=localDecision?[{locator:'own_sentence',block:-1,sentence:null,relation:'local'}]:links.filter(l=>l.rank===top).flatMap(l=>(l.statements??[]).map(s=>({...s,relation:l.relation})));
+ const structural=/(?:specification_|test_table|test_section|label_value_outside)/.test(role.reason??'')&&opts.headingLine!=null;
+ const linked=links.filter(l=>l.rank===top).flatMap(l=>(l.statements??[]).map(s=>({...s,relation:l.relation})));
+ // a decision resting on the table's own structure (heading, caption, labels) points to the line that announces it
+ const tableStructural=!localDecision&&!linked.length&&links.some(l=>l.rank===top&&l.relation==='table_structure')&&opts.headingLine!=null;
+ const statements=(structural&&localDecision)||tableStructural?[{locator:'section_heading',block:-1,sentence:null,relation:'structure',line:opts.headingLine}]:
+  localDecision?[{locator:'own_sentence',block:-1,sentence:null,relation:'local'}]:linked;
  const publisherInputs=links.some(l=>l.role==='measured')||/\b(?:we|our|i|my)\b/i.test(sentence);
- const assumptions=[...statedParameters1G(sentence).map(p=>({...p,from:'sentence' as const})),
+ const freq=(t:string)=>[...t.matchAll(new RegExp(FREQUENCY.source,'gi'))].map(m=>({kind:'frequency',text:m[0].trim()}));
+ const assumptions=[...statedParameters1G(sentence).map(p=>({...p,from:'sentence' as const})),...freq(sentence).map(p=>({...p,from:'sentence' as const})),
   ...(rel?calcLinks.flatMap(l=>(l.statements??[]).flatMap(s=>statedParameters1G(rel.model.blocks[s.block]?.text??'').map(p=>({...p,from:'linked_statement' as const})))):[])]
-  .filter(p=>p.kind==='tariff'||p.kind==='usage').filter((p,i,a)=>a.findIndex(q=>q.text===p.text)===i);
+  .filter(p=>p.kind==='tariff'||p.kind==='usage'||p.kind==='frequency').filter((p,i,a)=>a.findIndex(q=>q.text===p.text)===i);
  const r=role.value;const why=role.reason??'';
  if(r==='certified_or_quoted')return {provenance:'third_party',nature:'declared',statements,calculation:null,reason:why};
  if(r==='test_condition'||r==='programme_preset')return {provenance:'publisher',nature:'condition',statements,calculation:null,reason:why};
@@ -194,17 +225,18 @@ export function roleFromLinks(ev:RoleEvidence,links:readonly EvidenceLink[]):{va
 export function structuralContextOf(defs:PropertyDefinitions,sem:DocumentSemantics1D2,blockTexts:readonly string[],bi:number,valueStart:number):StructuralContext{
  const b=sem.blocks[bi];const cues=defs.pack.documentSections;
  const headings=(b?.headingPath??[]).map(i=>blockTexts[i]??'').filter(Boolean);
- let sectionRole:StructuralContext['sectionRole']=null;let section:string|null=headings.at(-1)??null;
- if(cues)for(const h of [...headings].reverse()){const t=norm(h);
-  if(cues.specification.some(c=>has(t,c))){sectionRole='specification';section=h;break;}
-  if(cues.comparison.some(c=>has(t,c))){sectionRole='comparison';section=h;break;}
-  if(cues.test.some(c=>has(t,c))){sectionRole='test';section=h;break;}}
+ let sectionRole:StructuralContext['sectionRole']=null;let section:string|null=headings.at(-1)??null;let headLine:number|null=null;
+ const hp=(b?.headingPath??[]).filter(i=>blockTexts[i]);
+ if(cues)for(const i of [...hp].reverse()){const h=blockTexts[i];const t=norm(h);
+  if(cues.specification.some(c=>has(t,c))){sectionRole='specification';section=h;headLine=i;break;}
+  if(cues.comparison.some(c=>has(t,c))){sectionRole='comparison';section=h;headLine=i;break;}
+  if(cues.test.some(c=>has(t,c))){sectionRole='test';section=h;headLine=i;break;}}
  if(b?.cell){const t=sem.tables.find(x=>x.index===b.cell!.table);const cell=t?.cells.find(c=>c.blockIndex===bi);
   const label=[...(cell?.rowLabels??[]),...(cell?.colLabels??[])].filter(x=>x&&x.length<=80).join(' | ')||null;
-  return {container:'table_cell',label,section,sectionRole,tableContext:t?.context??'unknown'};}
+  return {container:'table_cell',label,section,sectionRole,tableContext:t?.context??'unknown',sectionHeadingLine:headLine??(t?.headingBlock??null)};}
  const text=blockTexts[bi]??'';const lv=/^\s*([A-Za-z][^:\n]{1,48}):\s*/.exec(text);
- if(lv&&valueStart>=lv[0].length-1&&valueStart<=lv[0].length+40)return {container:'label_value',label:lv[1].trim(),section,sectionRole,tableContext:null};
- return {container:'prose',label:null,section,sectionRole,tableContext:null};
+ if(lv&&valueStart>=lv[0].length-1&&valueStart<=lv[0].length+40)return {container:'label_value',label:lv[1].trim(),section,sectionRole,tableContext:null,sectionHeadingLine:headLine};
+ return {container:'prose',label:null,section,sectionRole,tableContext:null,sectionHeadingLine:headLine};
 }
 /** S91: the documentary context of a value — structural label, container, section and its role, table context, methodology
  * section, page type — one object carried to the definitions (owner review of S90). */
@@ -373,7 +405,12 @@ export function attributeProperty(defs:PropertyDefinitions,qk:QuantityKnowledge,
    return {value:byUnit[0].id,state:'inferred',evidence:['profile:'+o.category],rule:'profile_single_property_for_unit_kind',alternatives:[],kind};
   return {value:null,state:'unknown',evidence:[],rule:'unit_kind_without_supporting_term',alternatives:byUnit.map(d=>d.id),kind};}
  const tied=scored.filter(s=>s.score===top.score);
- if(tied.length>1)return {value:null,state:'ambiguous',evidence:tied.flatMap(t=>t.evidence),rule:'equal_support',alternatives:tied.map(t=>t.d.id),kind};
+ // S93: lexical specificity: when one candidate's matched term contains every other candidate's matched term ("charging
+ // time" over "time"), the more specific (narrower) term decides
+ if(tied.length>1){const terms=(t:typeof tied[number])=>t.evidence.filter(e=>e.startsWith('label:')).map(e=>e.slice(6));
+  const spec=tied.filter(t=>tied.every(u=>u===t||terms(u).every(x=>terms(t).some(y=>y!==x&&has(y,x)))));
+  if(spec.length===1)return {value:spec[0].d.id,state:'stated',evidence:[...spec[0].evidence,'narrower_term'],rule:'most_specific_term',alternatives:tied.filter(t=>t!==spec[0]).map(t=>t.d.id),kind};
+  return {value:null,state:'ambiguous',evidence:tied.flatMap(t=>t.evidence),rule:'equal_support',alternatives:tied.map(t=>t.d.id),kind};}
  if(opts.objectResolution){const frame=norm(o.frame);const objEv=(d:PropertyDefinition)=>(d.objectNouns??[]).some(n=>has(sentence,n))?2:(d.objectNouns??[]).some(n=>has(frame,n))?1:0;
   if(!(top.d.objectNouns??[]).length&&objEv(top.d)===0){const sameKind=byUnit.filter(admissible).filter(d=>d!==top.d&&d.quantity?.kinds.some(k=>top.d.quantity?.kinds.includes(k))&&objEv(d)>0).sort((a,b)=>objEv(b)-objEv(a));
    if(sameKind.length&&(sameKind.length===1||objEv(sameKind[0])>objEv(sameKind[1]))){const p=sameKind[0];const noun=(p.objectNouns??[]).find(n=>has(sentence,n)||has(frame,n));
@@ -468,7 +505,7 @@ export function interpretWithDefinitions(defs:PropertyDefinitions,qk:QuantityKno
   subject=otherProductInClause86c(o.label,o.valueAt,end,o.pageSubject??null)?'other_product':o.pageSubject?'page_product':'unresolved';}
  let evidence:EvidenceReading|undefined;
  if(opts.provenance&&opts.roleModel==='links'&&o.valueAt!=null&&o.label)evidence=provenanceAndNature(role,{unit:o.unit,label:o.label,valueAt:o.valueAt,surface:String(o.surface??o.value??'')},o.structure?.links??[],opts.relations??null,
-  {currency:unitClass(defs,o.unit)!==null,periodUnit:unitPeriod(o.unit)||basis.value==='per_period'});
+  {currency:unitClass(defs,o.unit)!==null,periodUnit:unitPeriod(o.unit)||basis.value==='per_period',headingLine:o.structure?.sectionHeadingLine??null,qk});
  return {version:DEFINITION_INTERPRETER_VERSION,definitions:defs.identity,category,property,conditions:readings,missingDefining,untyped,basis,role,subject,evidence,
   object:d?{value:d.object,state:'inferred',rule:'definition_object_of_interest'}:{value:null,state:'unknown',rule:null}};
 }

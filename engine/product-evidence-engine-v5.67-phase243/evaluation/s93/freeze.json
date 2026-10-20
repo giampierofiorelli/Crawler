@@ -1,0 +1,56 @@
+{
+ "schema": "pee.s93.freeze.v1",
+ "frozenAt": "2026-10-20T06:55:24.349Z",
+ "note": "S93 frozen after development on spent material (nature/links: two reformulations of three, plus test-found bug fixes re-measured in the final development runs; learning cycle: one reformulation). Frozen before any check page is fetched.",
+ "files": {
+  "src/definition_interpreter.ts": "a8cdeb21c882da119f847c15aa7b501c12b79e5205243a87d59739bbcda086de",
+  "src/definition_learning.ts": "fe575d8231c3a6ed2cd093661bfe453a500f650e95d700268e152d7b372e3a5a",
+  "src/evidence_combination.ts": "9cd6cf4b843af9d16ebe220e29c5ec768d2e93a24b65496eee0109aeed6a99c9",
+  "src/table_interpreter1g.ts": "772a459c7bd8a5dc59d743d6033dce2ab908ed1db3477179b597063a32a252e6",
+  "src/table_interpreter1g_lessons.ts": "03b0ac540959d51b29d40beac08469ed08d3ae54e4300a5b85bad8566d6afa5a",
+  "src/document_evidence.ts": "d3e87195a86a5e7716d73833eefa029e6118f25e30d1e82e3b56086b693ce086",
+  "src/document_semantics.ts": "58b36a439a757f2bc41a9ae06061dc9103b6965ca110bc07100cf2786d47fb4b",
+  "src/knowledge_translation.ts": "4d08daab9062cdf9c40c39d1637ab4d0064f99f36023a4c15d46ba6867f7b22f",
+  "src/property_definitions.ts": "9b42211ebaaac293aabed58471f3d65c41e9b3776a8a2eb57b30f2a55a8182b0",
+  "resources/property-definitions/property-definitions.v1.json": "af326a46d41477e11431eb0d613230bef13e58c4fcac2ac0ba74555a912f0bc7",
+  "scripts/s93-nature-eval.mjs": "d1384ff22d1e3fa305a1ef7c7f444036c592946b7ee32e0d31204f12f447cfc6",
+  "scripts/s93-learning-cycle.mjs": "5b0279873167f77fe30365e3faf8b212f597c2e891d6899ecb61d6d379d3f10d",
+  "scripts/s93-label-model-audit.mjs": "7886de022d079e4a0146223cd99d0117c628a16b849f9f916b76233aea26dc66",
+  "tests/s93_provenance_learning.test.ts": "cb5f2e4850a400422584effdf2c793ec7c42e2e799d33d61237277c9331c58a2"
+ },
+ "arms": {
+  "nature": {
+   "R0": "S92 C1: links with the first statement in document order; nature read from the role (derived counted as measured)",
+   "R1": "S93: argument-based statement choice, coreference, structural pointers, provenance x nature (calculation outputs: costs and per-period values in a calculation context, statistics over a set, ratios derived from two readings; assumptions: tariff, usage, frequency)"
+  },
+  "role": {
+   "A0": "S90",
+   "C1": "S92 C1 (rules with abstention, the reference)",
+   "D2": "S92 label model refit on the check without gold (reported, not relied on: S93 audit)"
+  },
+  "attribution": {
+   "base": "definitions pd.5",
+   "object": "+ object resolution",
+   "learned": "+ learned candidate definitions (learning cycle, inductive from spent S88-S92 pages; and transductive with the check items without reference)",
+   "learned_object": "both"
+  },
+  "learningOptions": {
+   "typeGate": true,
+   "distributional": {
+    "minSimilarity": 0.3,
+    "margin": 0.05,
+    "window": 5,
+    "minCount": 3
+   },
+   "relations": true,
+   "strongSeeds": true
+  },
+  "promotion": {
+   "minPublishers": 2,
+   "minDocs": 2,
+   "minOccurrences": 3,
+   "maxLog10Spread": 1.5,
+   "valuesVary": true
+  }
+ }
+}
