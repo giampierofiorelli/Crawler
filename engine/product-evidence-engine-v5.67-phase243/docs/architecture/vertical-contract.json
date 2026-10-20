@@ -607,7 +607,7 @@
    "since": "S100 (docs/plans/s100-rule-governance.md)",
    "item": "Rule-governance residuals found by the S100 rule-interaction audit and not yet moved under the shared decision policy. Each conflict names the consumers it affects and the check that will show it resolved.",
    "resolvedStatus": "open",
-   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain. Development (spent S89-S99): role precision 87% (S99 85%), nature 81% (S99 63%), false product values 45 (S99 59), at the cost of coverage (reviewed-product values correctly linked 81, S99 98). Independent checks (s100: 7 pages, 4 new publishers; s101 table addendum: 4 pages, 2 new publishers): all preregistered stop rules hold; S100 becomes the gated reading. B1 (publisher table results read as specifications) was not exercised by the sealed references; outside them, the StorageReview measured leaderboard (17 rows) was read as specifications by S99 and left unresolved by S100. S102: rule lifecycle (knowledge_rules), rederivation on any rule/definition/QK change, IR7 closed for leads, introducing statements of tables (1G table_context), colon lead-ins, the request bound and limit conflicts under the shared policy (request-semantics rq.1). Development (spent, fixed scorer): reviewed-product values correctly linked 78 -> 97 (S99 98) with role precision 87% and nature 85%; S100 checks (held out from S102 development): no new error, one more abstention.",
+   "progress": "S100: role, nature and provenance of every gated reading are decided by one declarative program (observation_semantics, os.1) under knowledge_rules.decide; F1 (29:30), F2 (or less as a threshold cue), F3 (norm cues), F10 (known-object veto at sentence scope) fixed; the conflicts below remain. Development (spent S89-S99): role precision 87% (S99 85%), nature 81% (S99 63%), false product values 45 (S99 59), at the cost of coverage (reviewed-product values correctly linked 81, S99 98). Independent checks (s100: 7 pages, 4 new publishers; s101 table addendum: 4 pages, 2 new publishers): all preregistered stop rules hold; S100 becomes the gated reading. B1 (publisher table results read as specifications) was not exercised by the sealed references; outside them, the StorageReview measured leaderboard (17 rows) was read as specifications by S99 and left unresolved by S100. S102: rule lifecycle (knowledge_rules), rederivation on any rule/definition/QK change, IR7 closed for leads, introducing statements of tables (1G table_context), colon lead-ins, the request bound and limit conflicts under the shared policy (request-semantics rq.1). Development (spent, fixed scorer): reviewed-product values correctly linked 78 -> 97 (S99 98) with role precision 87% and nature 85%; S100 checks (held out from S102 development): no new error, one more abstention. S103 (docs/plans/s103-rule-admission.md): rule admission and invariant governance, named contests verified by a static analyser with declared coverage, request semantics rq.2 (intervals, strict/inclusive, force, correction, object, scenario, combination), one bound reader. Independent first runs: 40 Claude-authored requests (harmful errors 7 vs S102 8, closure 45/47 vs 29/45); 6 new table pages (no change vs S102; 0 items decided by a table introduction). RQ08 and INVARIANT_GOV resolved; NEG_BOUND, HEDGE_AFTER, BUDGET_READER, REQ_VOCAB, INTRO_NEG, SCORER_PAIR, OS_ADMISSION added.",
    "conflicts": [
     {
      "id": "F5",
@@ -701,7 +701,14 @@
       "scientific_reading98 readDeclaration98",
       "table_interpreter1g linked statements"
      ],
-     "verification": "a fixture with a measured table introduced only by a test sentence yields result/measured; a specification table introduced by 'the maker lists' yields specification"
+     "verification": "a fixture with a measured table introduced only by a test sentence yields result/measured; a specification table introduced by 'the maker lists' yields specification",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "S103",
+       "what": "validated on 6 new table pages of stated provenance (part B): 0 items decided by an introducing statement; one introduction failed through INTRO_NEG. Not resolved"
+      }
+     ]
     },
     {
      "id": "UNIT",
@@ -764,7 +771,14 @@
      "consumers": [
       "table_interpreter1g table_context"
      ],
-     "verification": "benchmark-result introductions are recognised through general vocabulary (e.g. 'results', 'scores', 'ranking of our tests'), never a phrase rule; the StorageReview leaderboard rows decide result"
+     "verification": "benchmark-result introductions are recognised through general vocabulary (e.g. 'results', 'scores', 'ranking of our tests'), never a phrase rule; the StorageReview leaderboard rows decide result",
+     "progress": [
+      {
+       "date": "2026-10-20",
+       "by": "S103",
+       "what": "validated on 6 new table pages of stated provenance (part B): 0 items decided by an introducing statement; one introduction failed through INTRO_NEG. Not resolved"
+      }
+     ]
     },
     {
      "id": "ATTR",
@@ -825,6 +839,73 @@
       ],
       "remaining": "the 86 os rules admitted before S103 have no admission record yet; scientific correctness of a meaning is not checked mechanically (records name their evidence; the owner reviews)"
      }
+    },
+    {
+     "id": "NEG_BOUND",
+     "what": "a negated bound ('nothing over 6L') is read with the opposite side (min 6, strict); S103 combination then applies it and reports the true minimum as redundant (S103 part A q01, the one new harmful error)",
+     "consumers": [
+      "quantity_knowledge quantityBound",
+      "phase253_request_constraints"
+     ],
+     "verification": "'nothing over 6L', 'not more than 6 L', 'nothing bigger than 30 cm' yield a maximum; a fixture where the negated bound would combine shows no applied minimum",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
+    },
+    {
+     "id": "HEDGE_AFTER",
+     "what": "hedges written after a limit ('Under £100 ideally', 'under 2.5kg if there is such a thing') and 'we'd like' are not read as preference: the limit is applied (S103 part A q01, q07, q10)",
+     "consumers": [
+      "phase253_request_constraints force decision (rq.2 intent vocabulary)"
+     ],
+     "verification": "the hedge after the limit and 'we'd like' make the limit a preference; 'I'd like it to be at least 4 L, it must fit' stays a requirement",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
+    },
+    {
+     "id": "BUDGET_READER",
+     "what": "budgets are read by the Phase125 budget reader, outside the S103 request semantics: a range '50 to 100 dollars' or a replaced budget ('I was going to say under $100') is applied (S103 part A q23, q38)",
+     "consumers": [
+      "phase125 budget reader",
+      "phase253_request_constraints"
+     ],
+     "verification": "budget limits pass through the same status, closure, force and combination decisions as other limits; a range without a bound word becomes a candidate",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
+    },
+    {
+     "id": "REQ_VOCAB",
+     "what": "request vocabulary gaps found by S103 part A: 'plus' after a quantity ('30 hours plus'), space-fit wording ('fits a 45cm gap', 'if it still fits 60x60'), a weight without a weight word; conditions ('Sub included if it's under £400') not read as scenarios",
+     "consumers": [
+      "quantity_knowledge request phrases",
+      "phase253_request_constraints"
+     ],
+     "verification": "each phrase class read on a held-out request set, measured by apply-limits missed (S103: 26 of 63)",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
+    },
+    {
+     "id": "INTRO_NEG",
+     "what": "a table introduction that denies one provenance ('real everyday use numbers, and not what manufacturers claim') fires both the measurement and the declaration cue: mixed evidence, no decision (S103 part B)",
+     "consumers": [
+      "table_interpreter1g table_context",
+      "observation_semantics clauseCues"
+     ],
+     "verification": "a negated declaration cue in an introduction does not count as declaration evidence; the introduction then decides result/measured",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
+    },
+    {
+     "id": "SCORER_PAIR",
+     "what": "the integrity scorer (scripts/s99-integrity.mjs) pairs a prose bound with a table cell of the same value, so a correct bound reading can count as a disagreement (S103 part B, '50Wh or smaller one')",
+     "consumers": [
+      "scripts/s99-integrity.mjs"
+     ],
+     "verification": "pairing uses the occurrence (line and surface), not the value alone; the S103 part B bound difference disappears under a labelled re-score",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
+    },
+    {
+     "id": "OS_ADMISSION",
+     "what": "86 os.4 rules are admitted as legacyUnreviewed under the S103 ratchet (no new rule may join the list); each lacks a reviewed admission record",
+     "consumers": [
+      "resources/scientific-reading/observation-semantics.v1.json"
+     ],
+     "verification": "the legacy list shrinks to 0, each rule reviewed with meaning, scope, counterexamples and tests, or superseded",
+     "since": "S103 (docs/plans/s103-rule-admission.md)"
     }
    ]
   }
