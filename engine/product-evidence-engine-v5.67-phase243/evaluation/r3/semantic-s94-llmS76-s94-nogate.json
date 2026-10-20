@@ -1,0 +1,40 @@
+{
+ "schema": "pee.r3.semantic-score.v1",
+ "generatedAt": "2026-10-20T09:28:26.993Z",
+ "method": "llmS76",
+ "side": "s94",
+ "tau": 0.5,
+ "gate": false,
+ "rule": "both",
+ "precision": 0,
+ "recall": 0,
+ "cost": {
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "load_seconds": 7.2,
+  "total_seconds": 1757.3,
+  "pairs": 622,
+  "seconds_per_pair": 2.814,
+  "max_rss_mb": 9349,
+  "threads": 4,
+  "device": "cpu"
+ },
+ "counts": {
+  "cand_none->associative_or_none": 438,
+  "cand_associative->hierarchical": 9,
+  "cand_associative->associative_or_none": 101,
+  "unresolved_none": 102,
+  "cand_none->hierarchical": 31,
+  "cand_hierarchical->associative_or_none": 3,
+  "cand_none->identity": 19,
+  "cand_associative->identity": 9,
+  "unresolved_several": 4,
+  "cand_identity->associative_or_none": 10,
+  "reference_identities": 11,
+  "identity_missed": 11,
+  "cand_hierarchical->hierarchical": 1,
+  "aligned": 14,
+  "aligned_wrong_none": 9,
+  "aligned_wrong_associative": 5,
+  "cand_identity->hierarchical": 1
+ }
+}

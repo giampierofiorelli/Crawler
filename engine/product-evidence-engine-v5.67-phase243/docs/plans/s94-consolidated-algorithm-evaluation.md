@@ -14,7 +14,7 @@ unchanged: 206 spent requests answered by the build at the end of S93 and by the
 | 1 | Whole-table relations: arithmetic cell dependencies, statistic rows, row subjects, collective method links | calculated 31 → 106 of 206; inputs 1 → 59 of 140; nature 225 → 304 of 700 | **New publishers (SSDs, monitors): no opportunity** (no HTML comparison tables). **Smartphones (known template):** calculated 8 → 48 of 94 (1 error), inputs 0 → 39 of 70, subject 52 of 52 | Works where tables carry the relation; generalisation across publishers **not shown** |
 | 2 | Hybrid vector-symbolic alignment (PPMI + graph neighbourhood for retrieval; symbolic checks for identity) | held-out: 2 of 3 decisions correct (19 identities) | **New sealed reference (11 identities): 0 correct** (1 related promoted). Vector retrieval puts 11 of 11 identities among the candidates (lexical 8) | Identity: **negative**. Retrieval: positive. Hierarchy: 0 of 22 |
 | 2 | Learned definitions reused on later pages | — | 11 promoted, **used 0 times** on 398 new values | Not demonstrated |
-| 3 | Qwen2.5-1.5B, S76 input vs structured input | — | see §4 | see §4 |
+| 3 | Qwen2.5-1.5B, S76 input vs structured input | — | 1 correct identity in 3 runs (25 reference identities); structured input 0 of 2 decided | **Negative; suspended by the owner** |
 
 ## 1. Stage 0: false hierarchies (owner correction)
 
@@ -120,7 +120,40 @@ including weak concepts ("aluminum", "c hot", "weighing"). On the 398 new values
 
 ## 4. Stage 3: controlled Qwen re-evaluation
 
-Runs in progress (3 of 4 complete); this section is completed when the last run ends.
+**Setup (preregistered in `preregistration-stage3.json`).**
+- Model: Qwen2.5-1.5B-Instruct, local CPU (4 threads), S77 full-sequence readout.
+- Isolation: a separate virtual environment and a weight cache outside the repositories; shadow only.
+- Decision rule: the S76 frozen rule, unchanged.
+- Structured input: the phrase's semantic type and quantity typing; the concept's typing and up to five graph
+  relations; the symbolic checks; the distributional relatedness, labelled as not identity.
+
+**Results (`evaluation/r3/semantic-s94-*.json`; with the semantic-type gate, without it in brackets):**
+
+| Run | Reference identities | Decided | Correct | Wrong: related promoted | Wrong: other |
+|---|---|---|---|---|---|
+| S76 input, S76 transfer examples | 14 | 1 (6) | 1 (0) | 0 (1) | 0 (5) |
+| Structured input, S76 transfer examples | 14 | 2 (2) | 0 (0) | 0 (0) | 2 (2) |
+| S76 input, new S94 reference | 11 | 8 (14) | 0 (0) | 4 (5) | 4 (9) |
+| Structured input, new S94 reference | 11 | — | — | — | — |
+
+The last run was stopped by the owner's decision after 6 of its estimated 30 minutes, and is **not executed**.
+
+**Costs:**
+- 2.8–3.7 s per candidate pair.
+- About 9.5 GB of memory (float32).
+- 22–29 minutes per run of 396–622 pairs.
+- 1 h 22 min in total for three runs, plus a 1.2 GB runtime and 3 GB of weights.
+
+**Verdict.**
+- The model recovers 1 identity in 3 runs.
+- The structured input does not help: 0 correct of 2 decided, against 1 of 1 with the S76 input on the same examples.
+- On new data the model promotes related or unrelated concepts to identity.
+- The best non-generative arm on the new reference, the lexical identifier, reaches 2 of 12.
+- The preregistered stop rule is met: no gain over the non-generative arms, more wrong identities, high cost.
+
+**Owner decision (2026-10-20, verbatim in `owner-decision-qwen-suspension-2026-10-20.md`):**
+- Qwen is suspended as an R3 development direction; code, results and reasons are kept.
+- This does not exclude language models for ever.
 
 ## 5. Is R3 met?
 
@@ -137,6 +170,7 @@ Runs in progress (3 of 4 complete); this section is completed when the last run 
 - Stage 1 table relations: precise, opt-in, no regression on pages without tables.
 
 **What should not:**
+- Qwen as an R3 direction (suspended by the owner).
 - The hybrid identity rule.
 - The S93 aggregate rule as written (maxima of one device are not statistics).
 
