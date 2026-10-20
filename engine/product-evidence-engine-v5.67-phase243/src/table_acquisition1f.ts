@@ -204,7 +204,9 @@ export function acquireTables1F(html:string,opts:{maxTables?:number;rendered?:bo
  const ids=new Map<string,Node245>();
  for(const n of walk245(root))if(n.kind==='element'){for(const k of ['id','name'])if(n.attrs[k]&&!ids.has(n.attrs[k]))ids.set(n.attrs[k],n);}
  const rawOf=(n:Node245)=>n.src?html.slice(n.src.start,n.src.end):null;
- const span=(n:Node245,withRaw=true):ContentSpan1F=>{
+ // resolveFragments=false for a fragment target's own text: its links are not kept, and resolving them again can cycle
+ // (S98: a page whose section anchors sit beside links to the other sections overflowed the stack).
+ const span=(n:Node245,withRaw=true,resolveFragments=true):ContentSpan1F=>{
   let text='';const elements:InlineElement1F[]=[];const links:LinkRef1F[]=[];const rawTextElements:ContentSpan1F['rawTextElements']=[];
   const walk=(x:Node245,depth:number)=>{
    if(x.kind==='text'){let t=decodeHtml5Text1F(x.rawText??x.text);
@@ -216,9 +218,9 @@ export function acquireTables1F(html:string,opts:{maxTables?:number;rendered?:bo
    for(const c of x.children)walk(c,depth+1);
    if(rec)rec.end=text.length;
    if(rec&&x.tag==='a'&&'href' in x.attrs){const rawHref=x.rawAttrs?.href??x.attrs.href;const href=decodeHtml5Attribute1F(rawHref);const l:LinkRef1F={href,rawHref,start,end:text.length};
-    if(href.startsWith('#')&&href.length>1){const t=ids.get(decodeURIComponentSafe(href.slice(1)));
+    if(resolveFragments&&href.startsWith('#')&&href.length>1){const t=ids.get(decodeURIComponentSafe(href.slice(1)));
      if(!t)l.fragmentTarget={resolved:false};else if(CONTAINERS.has(t.tag))l.fragmentTarget={resolved:true,locator:locator245(t),tag:t.tag,textOmitted:'container_element'};
-     else{let b:Node245=t;if(!/[^\t\n\f\r ]/.test(span(t,false).decodedText)&&t.parent&&!CONTAINERS.has(t.parent.tag))b=t.parent;l.fragmentTarget={resolved:true,locator:locator245(b),tag:b.tag,decodedText:span(b,false).decodedText};}}
+     else{let b:Node245=t;if(!/[^\t\n\f\r ]/.test(span(t,false,false).decodedText)&&t.parent&&!CONTAINERS.has(t.parent.tag))b=t.parent;l.fragmentTarget={resolved:true,locator:locator245(b),tag:b.tag,decodedText:span(b,false,false).decodedText};}}
     links.push(l);}
   };
   walk(n,0);

@@ -82,3 +82,13 @@ test('legacy parse is unchanged: keepSource only adds source fields',()=>{
   const a=parseHtml245(html),b=parseHtml245(html,{keepSource:true});assert.equal(ser(b.root),ser(a.root));
   assert.ok([...walk245(a.root)].every(n=>n.src===undefined&&n.rawText===undefined),'default parse carries no source fields');}
 });
+
+test('S98: fragment links whose targets sit beside links to each other do not recurse without end', ()=>{
+ // Each section anchor is empty, so its parent paragraph is the resolved target, and that paragraph links to the other section.
+ const html='<table><tr><td><a href="#s1">one</a> <a href="#s2">two</a></td></tr></table>'+
+  '<p><a id="s1"></a>First <a href="#s2">next</a></p><p><a id="s2"></a>Second <a href="#s1">back</a></p>';
+ const d=acquireTables1F(html);const links=d.tables[0].cells[0].links;
+ assert.equal(links.length,2);
+ assert.equal(links[0].fragmentTarget?.tag,'p');assert.match(links[0].fragmentTarget?.decodedText??'',/First next/);
+ assert.equal(links[1].fragmentTarget?.tag,'p');assert.match(links[1].fragmentTarget?.decodedText??'',/Second back/);
+});
