@@ -235,3 +235,18 @@ Post-hoc diagnosis (`evaluation/n1/l4-diagnosis-posthoc.json`, frozen code uncha
   copied to pee-knowledge `private-eval/n1/`. No page bytes, no store copies.
 - **Skill references:** decision rows N1-start and N1-result; roadmap progress entry; contract open debt D33.
 - **Full suite:** 5,051 passed, 0 failed, after the three test-list updates in §5.
+
+## 9. Owner review (2026-10-21, after this report)
+
+The owner's review is preserved verbatim in `.claude/skills/pee-guided-learning/references/owner-review-n1-2026-10-21.md`;
+its cited figures were checked against the committed records.
+
+- **Status:** N1 is a completed first experiment, not a failure to redo. The representation and its rebuild are
+  established; operational scientific capability is not validated. Claims stay off the live store.
+- **Not to do:** repeat N1 by adding header rules for the held-out categories.
+- **Fourth finding:** the guard requiring a request word that names the outcome can block the reasoning PEE should
+  develop. The protection stays, but a scientifically motivated hypothesis must be kept apart from a need attributed to
+  the user. A hypothesis may be considered, checked and turned into a question; it never becomes a requirement or an
+  exclusion automatically.
+- **Proposed next (not yet authorised):** C in shadow, and general semantic table understanding by comparing methods, in
+  parallel. Success should include handling new problems, recognising what PEE does not know and asking better questions.
