@@ -98,15 +98,16 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  ri.performanceNeedSpans=j.stages.need.concepts.filter(c=>ri.performanceNeeds.includes(c.id)).map(c=>({id:c.id,matched:c.matched}));
  ri.categoryBasis=j.stages.category.basis;
  ri.needSpans=j.stages.need.concepts.map(c=>({id:c.id,matched:c.matched}));
+ // G1 (F1, principle 8) and G1b (R1): what the shopper stated is kept in every answer, also when no category is established
+ // or the purchase is outside PEE's knowledge (nothing is checked then)
+ const applicable=ex.constraints.filter(c=>!!SPEC_CRITERIA249[c.criterion]);
+ const shape=(c:typeof applicable[number])=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence,...(c.closure==='strict'?{closure:'strict' as const}:{})});
+ out.constraints=applicable.filter(c=>c.status==='stated_in_request'||c.status==='candidate').map(shape);
  // 1. What is being bought.
  if(j.stages.target.kind==='other'){out.response='out_of_scope';
   out.statements.push(`You seem to be looking for ${j.stages.target.other}; the ${category??'product'} mentioned is context. PEE holds no knowledge or products for ${j.stages.target.other}.`);
   return out;}
- // G1 (F1, principle 8): what the shopper stated is kept even when no category is established (nothing is checked then)
- const applicable=ex.constraints.filter(c=>!!SPEC_CRITERIA249[c.criterion]);
- const shape=(c:typeof applicable[number])=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence,...(c.closure==='strict'?{closure:'strict' as const}:{})});
  if(!category){
-  out.constraints=applicable.filter(c=>c.status==='stated_in_request'||c.status==='candidate').map(shape);
   if(j.decision==='out_of_scope'){out.response='out_of_scope';out.statements.push(...j.reasons);return out;}
   out.response='clarification';out.questions.push(...j.clarificationQuestions);out.statements.push(...j.reasons);return out;}
  // Phase255: a category PEE has no category knowledge for (no modelled needs, mechanisms or tests) can still be checked
@@ -312,8 +313,9 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  if(opts.scientific98&&out.response!=='out_of_scope'){const ids=[...out.shortlist,...out.unknown,...out.excluded].map(x=>x.productId);
   if(ids.length&&store.schemaVersion()>=11)out.scientificEvidence98=scientificEvidence98(store,ids);}
- // G1 (F1): parts of the request are reported as not assessed also when no category was established
- if((out.response!=='out_of_scope'&&out.category)||(!out.category&&out.target.kind!=='other'))applyRequestCoverage80(out,text,registry);
+ // G1 (F1) and G1b (R1): parts of the request are reported as not assessed in every answer, also out of scope
+ applyRequestCoverage80(out,text,registry,opts.quantityKnowledge??null);
+ assignQuestionCauses253(out);
  // S80: "the list is unordered" speaks about the shortlist; without one it contradicts an ordered partial comparison
  // shown in the same answer (S80 first run, judge finding on D1).
  if(!out.shortlist.length)out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
@@ -330,15 +332,37 @@ export function withTaughtCategoriesG1(registry:readonly CategoryEntry248[],stor
  if(!taught.length)return registry;
  return [...registry,...taught.map(c=>{const plural=c.replace(/_/g,' ');return {id:c,aliases:[plural.replace(/s$/,''),plural],recognition:'name_only' as const};})];
 }
+/** G1b (R3): every question carries the cause that justifies it. The questions are PEE's own templates, so their origin
+ * decides the cause; a question about the product kind after PEE failed to relate a described problem is PEE's limit
+ * (not_understood) and the answer says so; an unknown template stays 'unclassified' (tests keep that at zero). */
+function assignQuestionCauses253(out:Advice253):void{
+ const C=(q:string):{cause:NonNullable<Advice253['questionCauses']>[number]['cause'];basis:string}=>{
+  if(/^Which kind of product are you looking for/.test(q))return out.unassessedObjectives.length
+   ?{cause:'not_understood',basis:'PEE could not relate the situation you described to the products or needs it knows'}
+   :{cause:'user_only',basis:'the request names no product and states no problem PEE could relate'};
+  if(/^Are you deciding between /.test(q))return {cause:'user_only',basis:'several product categories are named or fit'};
+  if(/^Is an? .+ what you are looking for\?$/.test(q))return {cause:'user_only',basis:'the category was inferred, not named'};
+  if(/^(?:Did you mean that it must have|Do you need at least or at most|Which label do you mean)/.test(q))return {cause:'user_only',basis:'a stated limit is ambiguous'};
+  if(/^(?:What matters most to you|What do you mainly want)/.test(q))return {cause:'user_only',basis:'the priority among the product\'s goals is the shopper\'s'};
+  if(/^(?:Is there a limit I should check|What capacity do you need|How much space do you have)/.test(q)||/\?$/.test(q)&&out.unresolved.length)return {cause:'user_only',basis:'the shopper\'s own limits'};
+  return {cause:'unclassified',basis:'question template without a recorded cause'};};
+ out.questionCauses=out.questions.map(q=>({question:q,...C(q)}));
+ if(out.questionCauses.some(x=>x.cause==='not_understood')&&!out.limitations.some(l=>/could not relate/.test(l)))
+  out.limitations.push('PEE could not relate what you described to the products or needs it knows; the question below makes up for that limit of PEE, not for anything unclear in your request.');
+}
 /** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */
-function applyRequestCoverage80(out:Advice253,text:string,registry:readonly CategoryEntry248[]):void{
+function applyRequestCoverage80(out:Advice253,text:string,registry:readonly CategoryEntry248[],qk:QuantityKnowledge|null=null):void{
+ const pk=(qk as unknown as {pack?:{aspects?:{terms:string[]}[];facets?:{needTerms:string[]}[]}}|null)?.pack;
+ const needTerms=[...(pk?.aspects??[]).flatMap(a=>a.terms),...(pk?.facets??[]).flatMap(f=>f.needTerms)].filter(t=>!/\s/.test(t));
  const entry=registry.find(e=>e.id===out.category);
  const matched=[...(out.researchInputs?.needSpans??[]).map(n=>n.matched),...(out.featurePreferences??[]).map(f=>f.matched),...(entry?.aliases??[]),...((entry as {cues?:readonly string[]}|undefined)?.cues??[]),
   ...statedObjectives253(text)];
- const spans=[...out.constraints.map(c=>c.span),...out.unmappedConstraints.map(u=>u.span),...(out.quantityRequirements??[]).map(q=>q.span),
+ // G1b (R2): a limit read but not mappable to anything PEE checks (unmappedConstraints) is reported as stated but not checked,
+ // never consumed silently
+ const spans=[...out.constraints.map(c=>c.span),...(out.quantityRequirements??[]).map(q=>q.span),
   ...(out.classRequirements??[]).map(c=>c.span)].filter((x):x is string=>typeof x==='string'&&x.length>0);
  const values=[...out.constraints.map(c=>c.value),...(out.quantityRequirements??[]).flatMap(q=>[q.value,q.low,q.high])].filter((v):v is number=>typeof v==='number');
- const u=requestCoverage80(text,{matched,spans,values});if(!u.length)return;
+ const u=requestCoverage80(text,{matched,spans,values,needTerms});if(!u.length)return;
  out.uninterpreted=u;
  for(const x of u)if(!out.unassessedObjectives.includes(x.span))out.unassessedObjectives.push(x.span);
  const i=out.statements.indexOf(NO_CHECKABLE253);

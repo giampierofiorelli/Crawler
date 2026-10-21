@@ -129,9 +129,9 @@
    }
   },
   "externalDbAccess": {
-   "sites": 118,
+   "sites": 121,
    "writes": 16,
-   "reads": 102,
+   "reads": 105,
    "other": 0,
    "modules": {
     "goal_understanding_c.ts": {
@@ -251,6 +251,12 @@
      "writeTables": [
       "relation_claims_n1"
      ]
+    },
+    "situation_knowledge_g1b.ts": {
+     "writes": 0,
+     "reads": 3,
+     "other": 0,
+     "writeTables": []
     }
    }
   }
@@ -497,6 +503,11 @@
    "date": "2026-10-21",
    "by": "G1 (owner authorisation 2026-10-21)",
    "change": "two read-only store.db accesses added: goal_understanding_c.ts (E3 diagnosis switch: family list from the store) and phase253_request_advice.ts (F5: categories taught in the store, recognised by name). No write, no event, no table changed; guarantees G1-G7 unaffected."
+  },
+  {
+   "date": "2026-10-21",
+   "by": "G1b (owner authorisation 2026-10-21)",
+   "change": "three read-only store.db accesses added in situation_knowledge_g1b.ts (shadow projection: category items, strategy concepts, measured_by relations). No write, no event, no table changed; guarantees G1-G7 unaffected."
   }
  ]
 }

@@ -1,0 +1,120 @@
+{
+ "schema": "pee.g1b.dev.v1",
+ "label": "it3-posthoc-keep-general-terms",
+ "material": "spent I3 R (development only)",
+ "projection": {
+  "rows": 926,
+  "strategies": 9,
+  "generalNeeds": 41,
+  "linkedRows": 167,
+  "categories": [
+   "air_fryers",
+   "air_purifiers",
+   "blenders",
+   "coffee_grinders",
+   "coffee_machines",
+   "dehumidifiers",
+   "dishwashers",
+   "food_processors",
+   "kettles",
+   "pressure_cookers",
+   "rice_cookers",
+   "stand_mixers",
+   "televisions",
+   "toaster_ovens",
+   "toasters",
+   "tumble_dryers"
+  ]
+ },
+ "params": {
+  "rowScore": 2,
+  "minCosine2": 0.15,
+  "keepShare": 0.5,
+  "maxCategories": 2,
+  "maxStrategies": 2,
+  "topRows": 3,
+  "minShared": 2,
+  "singleTermMaxDf": 3,
+  "neighbours": 3,
+  "minCosine": 0.25,
+  "linkScore": 3
+ },
+ "counts": {
+  "C1": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 9,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 0,
+    "with_any": 24,
+    "any_reached": 9,
+    "invented": 18,
+    "without_knowledge": 15,
+    "outside_or_abstain": 7
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 16,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 0,
+    "with_any": 36,
+    "any_reached": 16,
+    "invented": 25,
+    "without_knowledge": 24,
+    "outside_or_abstain": 12
+   },
+   "named": {
+    "requests": 21,
+    "invented": 7,
+    "without_knowledge": 9,
+    "outside_or_abstain": 5,
+    "with_taught_family": 11,
+    "family_reached": 7,
+    "with_any": 12,
+    "any_reached": 7,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 0
+   }
+  },
+  "M2": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 10,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 2,
+    "with_any": 24,
+    "any_reached": 11,
+    "invented": 52,
+    "without_knowledge": 15,
+    "outside_or_abstain": 4
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 18,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 4,
+    "with_any": 36,
+    "any_reached": 19,
+    "invented": 79,
+    "without_knowledge": 24,
+    "outside_or_abstain": 5
+   },
+   "named": {
+    "requests": 21,
+    "invented": 27,
+    "without_knowledge": 9,
+    "outside_or_abstain": 1,
+    "with_taught_family": 11,
+    "family_reached": 8,
+    "with_any": 12,
+    "any_reached": 8,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 2
+   }
+  }
+ }
+}

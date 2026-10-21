@@ -47,6 +47,10 @@ export interface Advice253 {
  excluded:{productId:string;name:string;reasons:string[]}[];
  conflicts:{productId:string;criterion:string;reason:string}[];
  questions:string[];statements:string[];limitations:string[];researchPlan:string[];
+ /** G1b (residue): why each question is asked. user_only: an uncertainty only the shopper can settle (their limits, priorities,
+  * which product they mean); not_understood: PEE could not relate what was described to anything it knows (its own limit,
+  * also stated); knowledge_gap: PEE lacks the knowledge; integration: a module could not use what another found. */
+ questionCauses?:{question:string;cause:'user_only'|'knowledge_gap'|'not_understood'|'integration'|'unclassified';basis:string}[];
  /** Phase269: consumer-goal relevance. For each recognised need: which measurements would establish it (category
   * knowledge), which proxies are rejected, which test conditions are required, whether supplied evidence assesses it
   * directly or only through a proxy, and the resulting decision. A proxy never assesses an outcome. */

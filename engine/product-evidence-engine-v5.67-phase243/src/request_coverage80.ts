@@ -12,7 +12,7 @@
 export interface Uninterpreted80 {span:string;reason:'not_interpreted'|'quantity_not_checked'}
 export const REQUEST_COVERAGE_VERSION='rc80.4';
 /** Function words and request framing ("I want", "which", "best"): never content on their own. */
-const FUNCTION=new Set(('a an the to of for and or but nor with without in on at by from into onto over under about than as so that this these '+
+export const FUNCTION_WORDS80=new Set(('a an the to of for and or but nor with without in on at by from into onto over under about than as so that this these '+
  'those it its is are was were be been being am do does did have has had will would could should can may might must shall i me my mine we us our '+
  'you your he she they them their his her which what who whom whose when where why how if then there here also too very really just quite '+
  'want wants wanted need needs needed looking look buy buying get gets got recommend recommendation please help best good great one ones '+
@@ -32,6 +32,9 @@ export interface CoverageInput80 {
  spans:readonly string[];
  /** Values of recognised constraints and quantities: a number equal to one of them is consumed. */
  values?:readonly number[];
+ /** G1b (R1): general-need terms (quantity-knowledge aspects, facets, use contexts): a one-word clause naming one ('and is
+  * quiet') is a stated requirement, reported when nothing used it */
+ needTerms?:readonly string[];
 }
 export function requestCoverage80(text:string,input:CoverageInput80):Uninterpreted80[]{
  const words:{w:string;start:number;end:number}[]=[];
@@ -68,13 +71,13 @@ export function requestCoverage80(text:string,input:CoverageInput80):Uninterpret
    if(cur.length&&(/[,;:()]/.test(gap)||BOUNDARY.test(x.w))){clauses.push(cur);cur=[];}cur.push(x);}
   if(cur.length)clauses.push(cur);
   for(const c of clauses){
-   const content=c.filter(x=>isNum(x.w)||!FUNCTION.has(x.w.toLowerCase()));
+   const content=c.filter(x=>isNum(x.w)||!FUNCTION_WORDS80.has(x.w.toLowerCase()));
    const span=text.slice(c[0].start,c.at(-1)!.end);
    const freeNumber=c.some(x=>isNum(x.w)&&!consumedNumber(x));
    if(freeNumber){out.push({span,reason:'quantity_not_checked'});continue;}
    const words2=content.filter(x=>!isNum(x.w)&&!identifier(x.w));
    // at least two content words; covered when at least half of them were used by a recognised element
-   if(words2.length<2)continue;
+   if(words2.length<2){const one=words2[0];if(one&&!used(one)&&(input.needTerms??[]).some(t=>t.toLowerCase()===one.w.toLowerCase()))out.push({span,reason:'not_interpreted'});continue;}
    if(words2.filter(used).length*2<words2.length)out.push({span,reason:'not_interpreted'});
   }
  }
