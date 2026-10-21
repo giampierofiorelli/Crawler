@@ -1,0 +1,1335 @@
+{
+ "schema": "pee.knowledge-rules.v1",
+ "version": "fa-i1.inference.km2.0",
+ "statement": "FA-I1 experimental inference program for the km.2 knowledge model (shadow, evaluation only; not a resource of the engine). Need-first and category-first conclusions with necessity/sufficiency, separate epistemic labels, owner contraindication rule; forbidden inferences F1-F12 are what these rules must never conclude.",
+ "vocabulary": [
+  {
+   "name": "et",
+   "args": [
+    "E",
+    "T"
+   ],
+   "role": "input",
+   "meaning": "entity E has type T"
+  },
+  {
+   "name": "skind",
+   "args": [
+    "S",
+    "K"
+   ],
+   "role": "input",
+   "meaning": "strategy S has kind K"
+  },
+  {
+   "name": "asr",
+   "args": [
+    "I",
+    "S",
+    "P",
+    "O",
+    "A",
+    "M",
+    "E"
+   ],
+   "role": "input",
+   "meaning": "assertion I: S P O, asserted A (affirmed|denied), modality M, effect E (none when absent)"
+  },
+  {
+   "name": "req",
+   "args": [
+    "T",
+    "F",
+    "G"
+   ],
+   "role": "input",
+   "meaning": "strategy T requires capability F in requirement group G (affirmed requires_capability)"
+  },
+  {
+   "name": "reqlevel",
+   "args": [
+    "T",
+    "F",
+    "P"
+   ],
+   "role": "input",
+   "meaning": "the requirement of F by T carries a level threshold on property P"
+  },
+  {
+   "name": "levelmet",
+   "args": [
+    "T",
+    "F",
+    "K"
+   ],
+   "role": "input",
+   "meaning": "an observation about K meets the level of requirement (T,F) in the same unit under conditions comparable to the request (computed numerically by the script)"
+  },
+  {
+   "name": "force",
+   "args": [
+    "I",
+    "F"
+   ],
+   "role": "input",
+   "meaning": "contraindication I has force F"
+  },
+  {
+   "name": "hyp",
+   "args": [
+    "I"
+   ],
+   "role": "input",
+   "meaning": "assertion I is a hypothesis, or labelled proposed_not_tested, synthetic or hypothesis by its source, or refuted"
+  },
+  {
+   "name": "cond",
+   "args": [
+    "I",
+    "K",
+    "R",
+    "F",
+    "S"
+   ],
+   "role": "input",
+   "meaning": "assertion I has a condition of kind K on R with force F and stance S"
+  },
+  {
+   "name": "ctx",
+   "args": [
+    "R",
+    "S"
+   ],
+   "role": "input",
+   "meaning": "in the request, context R is in state S (holds|does_not_hold|unknown)"
+  },
+  {
+   "name": "qtarget",
+   "args": [
+    "X"
+   ],
+   "role": "input",
+   "meaning": "the request states situation or need X"
+  },
+  {
+   "name": "qartefact",
+   "args": [
+    "K"
+   ],
+   "role": "input",
+   "meaning": "the request names or asks about artefact K"
+  },
+  {
+   "name": "excluded",
+   "args": [
+    "E"
+   ],
+   "role": "input",
+   "meaning": "the request negates or rejects E"
+  },
+  {
+   "name": "confirms",
+   "args": [
+    "C"
+   ],
+   "role": "input",
+   "meaning": "a user fact confirms cause C"
+  },
+  {
+   "name": "needdir",
+   "args": [
+    "N",
+    "D",
+    "R"
+   ],
+   "role": "input",
+   "meaning": "need N is direction R on dimension D"
+  },
+  {
+   "name": "obs",
+   "args": [
+    "O",
+    "K",
+    "P",
+    "S"
+   ],
+   "role": "input",
+   "meaning": "observation O about artefact K of property P with statistic S"
+  },
+  {
+   "name": "obsmeasured",
+   "args": [
+    "O"
+   ],
+   "role": "input",
+   "meaning": "observation O is a measured result"
+  },
+  {
+   "name": "obscond",
+   "args": [
+    "O",
+    "R"
+   ],
+   "role": "input",
+   "meaning": "observation O was obtained under measurement condition R"
+  },
+  {
+   "name": "contra",
+   "args": [
+    "I",
+    "J"
+   ],
+   "role": "input",
+   "meaning": "assertions I and J state the same relation with opposite asserted values and overlapping scope and conditions"
+  },
+  {
+   "name": "reduces",
+   "args": [
+    "E"
+   ],
+   "role": "constant",
+   "meaning": "effect E reduces its object"
+  },
+  {
+   "name": "usecond",
+   "args": [
+    "K"
+   ],
+   "role": "constant",
+   "meaning": "condition kind K constrains use (not a measurement condition)"
+  },
+  {
+   "name": "isa",
+   "args": [
+    "X",
+    "Y"
+   ],
+   "role": "derived",
+   "meaning": "X is a subtype, instance or variant of Y (transitive)"
+  },
+  {
+   "name": "artefact",
+   "args": [
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K is a category, subtype, product or variant"
+  },
+  {
+   "name": "member",
+   "args": [
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K is a single artefact (product or variant)"
+  },
+  {
+   "name": "capall",
+   "args": [
+    "K",
+    "F",
+    "I"
+   ],
+   "role": "derived",
+   "meaning": "assertion I documents that K (every member, or K itself) has capability F"
+  },
+  {
+   "name": "capsome",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "only some or most members of K have F"
+  },
+  {
+   "name": "capdenied",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "a source denies that K has F"
+  },
+  {
+   "name": "capconflict",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "sources affirm and deny that K has F"
+  },
+  {
+   "name": "capok",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "K has F, not denied, no essential condition violated"
+  },
+  {
+   "name": "capdoc",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "K has F by a non-hypothetical assertion"
+  },
+  {
+   "name": "caphyp",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "K has F only by hypothetical assertions"
+  },
+  {
+   "name": "capcond",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "K has F under a condition that is unknown or modifiable in the request"
+  },
+  {
+   "name": "presenceonly",
+   "args": [
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "K has F only through the presence of an enabling component (level never established)"
+  },
+  {
+   "name": "ctxknown",
+   "args": [
+    "R"
+   ],
+   "role": "derived",
+   "meaning": "the request states context R"
+  },
+  {
+   "name": "violated",
+   "args": [
+    "I"
+   ],
+   "role": "derived",
+   "meaning": "an essential condition of I does not hold in the request"
+  },
+  {
+   "name": "unknowncond",
+   "args": [
+    "I"
+   ],
+   "role": "derived",
+   "meaning": "a use condition of I is not stated in the request"
+  },
+  {
+   "name": "modviolated",
+   "args": [
+    "I"
+   ],
+   "role": "derived",
+   "meaning": "a modifiable condition of I does not hold"
+  },
+  {
+   "name": "addr",
+   "args": [
+    "T",
+    "X",
+    "I"
+   ],
+   "role": "derived",
+   "meaning": "assertion I says strategy T addresses the requested X"
+  },
+  {
+   "name": "contraid",
+   "args": [
+    "I"
+   ],
+   "role": "derived",
+   "meaning": "assertion I is contradicted by another"
+  },
+  {
+   "name": "relevant",
+   "args": [
+    "T",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "strategy T addresses requested X and is not contradicted or excluded"
+  },
+  {
+   "name": "deniedreport",
+   "args": [
+    "T",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "a source says T does not address requested X"
+  },
+  {
+   "name": "conflictreport",
+   "args": [
+    "T",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "contradictory sources on whether T addresses X"
+  },
+  {
+   "name": "exstrat",
+   "args": [
+    "T"
+   ],
+   "role": "derived",
+   "meaning": "strategy T is excluded by the request or opposes a requested need"
+  },
+  {
+   "name": "opposes",
+   "args": [
+    "T",
+    "N"
+   ],
+   "role": "derived",
+   "meaning": "T acts on the dimension of requested need N in the opposite direction"
+  },
+  {
+   "name": "conflictout",
+   "args": [
+    "T",
+    "N"
+   ],
+   "role": "derived",
+   "meaning": "a source says T conflicts with requested need N"
+  },
+  {
+   "name": "posscause",
+   "args": [
+    "X",
+    "C"
+   ],
+   "role": "derived",
+   "meaning": "C is a possible cause of requested situation X"
+  },
+  {
+   "name": "confirmedcause",
+   "args": [
+    "X",
+    "C"
+   ],
+   "role": "derived",
+   "meaning": "a user fact confirms C for X"
+  },
+  {
+   "name": "mechrel",
+   "args": [
+    "T",
+    "X",
+    "C"
+   ],
+   "role": "derived",
+   "meaning": "T acts to reduce a POSSIBLE cause C of X (mechanistic hypothesis)"
+  },
+  {
+   "name": "addrhyp",
+   "args": [
+    "T",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "T addresses X only by a hypothetical assertion"
+  },
+  {
+   "name": "stratviol",
+   "args": [
+    "T"
+   ],
+   "role": "derived",
+   "meaning": "an essential condition of T addressing the request is violated"
+  },
+  {
+   "name": "stratcond",
+   "args": [
+    "T"
+   ],
+   "role": "derived",
+   "meaning": "a condition of T is unknown or modifiable in the request"
+  },
+  {
+   "name": "cand",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K is evaluated as a realisation of strategy T"
+  },
+  {
+   "name": "gmet",
+   "args": [
+    "T",
+    "G",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K meets requirement group G of T"
+  },
+  {
+   "name": "gunmet",
+   "args": [
+    "T",
+    "G",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K does not meet requirement group G of T"
+  },
+  {
+   "name": "unmet",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "some requirement group of T is unmet by K"
+  },
+  {
+   "name": "realises",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K meets every requirement group of T"
+  },
+  {
+   "name": "partial",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K meets some but not all requirement groups of T (necessary, not sufficient)"
+  },
+  {
+   "name": "somemembers",
+   "args": [
+    "T",
+    "K",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "only some members of K have the missing capability F"
+  },
+  {
+   "name": "levelunv",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K realises T but a required level is not evidenced"
+  },
+  {
+   "name": "applies",
+   "args": [
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "X holds in the request"
+  },
+  {
+   "name": "contraart",
+   "args": [
+    "K",
+    "I",
+    "F"
+   ],
+   "role": "derived",
+   "meaning": "contraindication I of K with force F applies"
+  },
+  {
+   "name": "unsuitable",
+   "args": [
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "an essential contraindication of K applies"
+  },
+  {
+   "name": "condposs",
+   "args": [
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "a modifiable or unknown-force contraindication of K applies"
+  },
+  {
+   "name": "disadvantage",
+   "args": [
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "a nonessential contraindication of K applies"
+  },
+  {
+   "name": "solution",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K realises relevant purchase strategy T and is not unsuitable or excluded"
+  },
+  {
+   "name": "conditional",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "the solution holds only under a condition, an unverified level or a modifiable contraindication"
+  },
+  {
+   "name": "candidate",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "an unconditional candidate"
+  },
+  {
+   "name": "notsuitable",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K would realise relevant T but is unsuitable"
+  },
+  {
+   "name": "partialonly",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "K provides necessary capabilities of relevant T but not all (never a solution)"
+  },
+  {
+   "name": "nopurchase",
+   "args": [
+    "T"
+   ],
+   "role": "derived",
+   "meaning": "a relevant strategy that needs no purchase"
+  },
+  {
+   "name": "hypsolution",
+   "args": [
+    "T",
+    "K"
+   ],
+   "role": "derived",
+   "meaning": "the solution rests on a hypothetical assertion"
+  },
+  {
+   "name": "consult",
+   "args": [
+    "K",
+    "N",
+    "T"
+   ],
+   "role": "derived",
+   "meaning": "K provides a necessary capability of T, which addresses N (consultation only)"
+  },
+  {
+   "name": "serves",
+   "args": [
+    "K",
+    "N",
+    "T"
+   ],
+   "role": "derived",
+   "meaning": "K realises T, which addresses N (validated)"
+  },
+  {
+   "name": "deniedfor",
+   "args": [
+    "K",
+    "N"
+   ],
+   "role": "derived",
+   "meaning": "a source says a strategy realised with K does not address N"
+  },
+  {
+   "name": "contractx",
+   "args": [
+    "K",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "K is contraindicated for X"
+  },
+  {
+   "name": "assessesneed",
+   "args": [
+    "P",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "property P assesses X"
+  },
+  {
+   "name": "demo",
+   "args": [
+    "K",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "a measured result about K itself, under conditions comparable to the request, bears on X"
+  },
+  {
+   "name": "obsincomp",
+   "args": [
+    "O"
+   ],
+   "role": "derived",
+   "meaning": "a measurement condition of O does not hold in the request"
+  },
+  {
+   "name": "obsunk",
+   "args": [
+    "O"
+   ],
+   "role": "derived",
+   "meaning": "a measurement condition of O is not stated in the request"
+  },
+  {
+   "name": "related",
+   "args": [
+    "K",
+    "Y"
+   ],
+   "role": "derived",
+   "meaning": "K and Y are in the same artefact hierarchy"
+  },
+  {
+   "name": "measuredelsewhere",
+   "args": [
+    "K",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "a measured result about another artefact of the hierarchy bears on X (not transferred)"
+  },
+  {
+   "name": "measuredincomp",
+   "args": [
+    "K",
+    "X"
+   ],
+   "role": "derived",
+   "meaning": "a measured result about K bears on X but under non-comparable conditions"
+  }
+ ],
+ "programs": [
+  {
+   "id": "km2",
+   "statement": "admissible inferences of km.2",
+   "rules": [
+    {
+     "id": "K1",
+     "rule": "isa(X,Y) :- asr(_,X,subtype_of,Y,affirmed,_,_).",
+     "statement": "taxonomy",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K2",
+     "rule": "isa(X,Y) :- asr(_,X,instance_of,Y,affirmed,_,_).",
+     "statement": "membership",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K3",
+     "rule": "isa(X,Y) :- asr(_,X,variant_of,Y,affirmed,_,_).",
+     "statement": "variant",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K4",
+     "rule": "isa(X,Z) :- isa(X,Y), isa(Y,Z).",
+     "statement": "transitive",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K5",
+     "rule": "artefact(K) :- et(K,category).",
+     "statement": "artefact types",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K6",
+     "rule": "artefact(K) :- et(K,subtype).",
+     "statement": "artefact types",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K7",
+     "rule": "artefact(K) :- et(K,product).",
+     "statement": "artefact types",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K8",
+     "rule": "artefact(K) :- et(K,variant).",
+     "statement": "artefact types",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K9",
+     "rule": "member(K) :- et(K,product).",
+     "statement": "single artefact",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K10",
+     "rule": "member(K) :- et(K,variant).",
+     "statement": "single artefact",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K11",
+     "rule": "capall(K,F,I) :- asr(I,K,has_capability,F,affirmed,necessary,_).",
+     "statement": "every member has F",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K12",
+     "rule": "capall(K,F,I) :- asr(I,K,has_capability,F,affirmed,M,_), member(K), M != possible.",
+     "statement": "a single artefact has F",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K13",
+     "rule": "capall(X,F,I) :- isa(X,K), capall(K,F,I).",
+     "statement": "what every member of K has, each member has (downward only)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K14",
+     "rule": "capall(K,F,I) :- asr(_,K,has_component,C,affirmed,necessary,_), asr(I,C,enables,F,affirmed,_,_).",
+     "statement": "a component every member has enables F",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K15",
+     "rule": "capall(K,F,I) :- asr(_,K,has_component,C,affirmed,M,_), member(K), M != possible, asr(I,C,enables,F,affirmed,_,_).",
+     "statement": "a component the artefact has enables F",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K16",
+     "rule": "presenceonly(K,F) :- capall(K,F,I), asr(I,_,enables,F,affirmed,_,_).",
+     "statement": "presence of a component, level never established (F10)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K17",
+     "rule": "capsome(K,F) :- asr(_,K,has_capability,F,affirmed,M,_), M != necessary, not member(K).",
+     "statement": "some or most members have F (never inherited, F12)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K18",
+     "rule": "capdenied(K,F) :- asr(_,K,has_capability,F,denied,_,_).",
+     "statement": "denied",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K19",
+     "rule": "capdenied(X,F) :- isa(X,K), capdenied(K,F).",
+     "statement": "a denial for the family holds for its members",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K20",
+     "rule": "capconflict(K,F) :- capall(K,F,_), capdenied(K,F).",
+     "statement": "affirmed and denied (F7: reported, no conclusion)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K21",
+     "rule": "ctxknown(R) :- ctx(R,_).",
+     "statement": "context stated",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K22",
+     "rule": "violated(I) :- cond(I,applicability,R,essential,holds), ctx(R,does_not_hold).",
+     "statement": "essential applicability condition does not hold",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K23",
+     "rule": "violated(I) :- cond(I,prerequisite,R,essential,holds), ctx(R,does_not_hold).",
+     "statement": "essential prerequisite does not hold",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K24",
+     "rule": "violated(I) :- cond(I,exclusion,R,essential,holds), ctx(R,holds).",
+     "statement": "essential exclusion holds",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K25",
+     "rule": "unknowncond(I) :- cond(I,K,R,_,holds), usecond(K), not ctxknown(R).",
+     "statement": "a use condition is not stated in the request",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K26",
+     "rule": "unknowncond(I) :- cond(I,K,R,_,holds), usecond(K), ctx(R,unknown).",
+     "statement": "a use condition is unknown",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K27",
+     "rule": "modviolated(I) :- cond(I,applicability,R,modifiable,holds), ctx(R,does_not_hold).",
+     "statement": "modifiable condition not met",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K28",
+     "rule": "modviolated(I) :- cond(I,prerequisite,R,modifiable,holds), ctx(R,does_not_hold).",
+     "statement": "modifiable prerequisite not met",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K29",
+     "rule": "modviolated(I) :- cond(I,exclusion,R,modifiable,holds), ctx(R,holds).",
+     "statement": "modifiable exclusion holds",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K30",
+     "rule": "capok(K,F) :- capall(K,F,I), not capdenied(K,F), not violated(I).",
+     "statement": "K has F in this request",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K31",
+     "rule": "capdoc(K,F) :- capall(K,F,I), not hyp(I), not violated(I).",
+     "statement": "documented by a non-hypothetical assertion",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K32",
+     "rule": "caphyp(K,F) :- capok(K,F), not capdoc(K,F).",
+     "statement": "only hypothetical support (F11)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K33",
+     "rule": "capcond(K,F) :- capall(K,F,I), unknowncond(I).",
+     "statement": "condition unknown",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K34",
+     "rule": "capcond(K,F) :- capall(K,F,I), modviolated(I).",
+     "statement": "condition modifiable",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K35",
+     "rule": "addr(T,X,I) :- qtarget(X), asr(I,T,addresses,X,affirmed,_,_).",
+     "statement": "T addresses the requested X",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K36",
+     "rule": "contraid(I) :- contra(I,_).",
+     "statement": "contradicted",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K37",
+     "rule": "contraid(I) :- contra(_,I).",
+     "statement": "contradicted",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K38",
+     "rule": "opposes(T,N) :- qtarget(N), needdir(N,D,decrease), asr(_,T,acts_on,D,affirmed,_,increases).",
+     "statement": "opposite direction",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K39",
+     "rule": "opposes(T,N) :- qtarget(N), needdir(N,D,increase), asr(_,T,acts_on,D,affirmed,_,decreases).",
+     "statement": "opposite direction",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K40",
+     "rule": "conflictout(T,N) :- qtarget(N), asr(_,T,conflicts_with,N,affirmed,_,_).",
+     "statement": "stated conflict",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K41",
+     "rule": "exstrat(T) :- conflictout(T,_).",
+     "statement": "conflicts with a requested need (I4)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K42",
+     "rule": "exstrat(T) :- opposes(T,_).",
+     "statement": "opposes a requested need (I4)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K43",
+     "rule": "exstrat(T) :- excluded(T).",
+     "statement": "excluded by the request (I7)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K44",
+     "rule": "relevant(T,X) :- addr(T,X,I), not contraid(I), not exstrat(T).",
+     "statement": "relevant strategy (I1)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K45",
+     "rule": "deniedreport(T,X) :- qtarget(X), asr(_,T,addresses,X,denied,_,_).",
+     "statement": "denial reported (F6)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K46",
+     "rule": "conflictreport(T,X) :- addr(T,X,I), contraid(I).",
+     "statement": "contradiction reported (F7)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K47",
+     "rule": "addrhyp(T,X) :- addr(T,X,I), hyp(I).",
+     "statement": "hypothetical relevance",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K48",
+     "rule": "posscause(X,C) :- qtarget(X), asr(_,X,indicates,C,affirmed,_,_).",
+     "statement": "possible cause (F5)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K49",
+     "rule": "confirmedcause(X,C) :- posscause(X,C), confirms(C).",
+     "statement": "confirmed by a user fact",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K50",
+     "rule": "mechrel(T,X,C) :- posscause(X,C), et(T,strategy), asr(_,T,acts_on,C,affirmed,_,E), reduces(E), not exstrat(T).",
+     "statement": "mechanistic hypothesis on a possible cause (I2)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K51",
+     "rule": "stratviol(T) :- relevant(T,X), addr(T,X,I), violated(I).",
+     "statement": "essential condition of the strategy violated",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K52",
+     "rule": "stratcond(T) :- relevant(T,X), addr(T,X,I), unknowncond(I).",
+     "statement": "condition unknown",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K53",
+     "rule": "stratcond(T) :- relevant(T,X), addr(T,X,I), modviolated(I).",
+     "statement": "condition modifiable",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K54",
+     "rule": "cand(T,K) :- relevant(T,_), skind(T,acquire_artefact), req(T,F,_), capok(K,F), artefact(K).",
+     "statement": "evaluate artefacts with at least one required capability",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K55",
+     "rule": "cand(T,K) :- relevant(T,_), skind(T,acquire_artefact), qartefact(K), artefact(K).",
+     "statement": "evaluate the named artefact",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K56",
+     "rule": "cand(T,K) :- qartefact(K), artefact(K), req(T,F,_), capok(K,F).",
+     "statement": "category-first: evaluate the named artefact",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K57",
+     "rule": "gmet(T,G,K) :- cand(T,K), req(T,F,G), capok(K,F).",
+     "statement": "group met",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K58",
+     "rule": "gunmet(T,G,K) :- cand(T,K), req(T,_,G), not gmet(T,G,K).",
+     "statement": "group unmet",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K59",
+     "rule": "unmet(T,K) :- gunmet(T,_,K).",
+     "statement": "some group unmet",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K60",
+     "rule": "realises(T,K) :- cand(T,K), not unmet(T,K).",
+     "statement": "every requirement group met (C1)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K61",
+     "rule": "partial(T,K) :- cand(T,K), gmet(T,_,K), unmet(T,K).",
+     "statement": "necessary but not sufficient (F1)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K62",
+     "rule": "somemembers(T,K,F) :- gunmet(T,G,K), req(T,F,G), capsome(K,F).",
+     "statement": "only some members have the missing capability (F12)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K63",
+     "rule": "levelunv(T,K) :- realises(T,K), reqlevel(T,F,_), not levelmet(T,F,K).",
+     "statement": "required level not evidenced",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K64",
+     "rule": "applies(X) :- qtarget(X).",
+     "statement": "requested",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K65",
+     "rule": "applies(X) :- ctx(X,holds).",
+     "statement": "context holds",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K66",
+     "rule": "contraart(K,I,F) :- asr(I,K,contraindicated_for,X,affirmed,_,_), applies(X), force(I,F).",
+     "statement": "applicable contraindication",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K67",
+     "rule": "contraart(P,I,F) :- isa(P,K), contraart(K,I,F).",
+     "statement": "inherited by members",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K68",
+     "rule": "unsuitable(K) :- contraart(K,_,essential).",
+     "statement": "essential (owner rule)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K69",
+     "rule": "condposs(K) :- contraart(K,_,modifiable).",
+     "statement": "modifiable (owner rule)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K70",
+     "rule": "condposs(K) :- contraart(K,_,unknown).",
+     "statement": "unknown force treated as conditional",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K71",
+     "rule": "disadvantage(K) :- contraart(K,_,nonessential).",
+     "statement": "nonessential (owner rule)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K72",
+     "rule": "solution(T,K) :- realises(T,K), relevant(T,_), skind(T,acquire_artefact), not unsuitable(K), not excluded(K), not stratviol(T).",
+     "statement": "solution (I3 corrected)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K73",
+     "rule": "conditional(T,K) :- solution(T,K), levelunv(T,K).",
+     "statement": "level unverified",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K74",
+     "rule": "conditional(T,K) :- solution(T,K), condposs(K).",
+     "statement": "modifiable contraindication",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K75",
+     "rule": "conditional(T,K) :- solution(T,K), stratcond(T).",
+     "statement": "strategy condition open",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K76",
+     "rule": "conditional(T,K) :- solution(T,K), req(T,F,_), capcond(K,F).",
+     "statement": "capability condition open",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K77",
+     "rule": "candidate(T,K) :- solution(T,K), not conditional(T,K).",
+     "statement": "unconditional",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K78",
+     "rule": "notsuitable(T,K) :- realises(T,K), relevant(T,_), unsuitable(K).",
+     "statement": "stated as not suitable",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K79",
+     "rule": "partialonly(T,K) :- partial(T,K), relevant(T,_).",
+     "statement": "necessary not sufficient: never a solution",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K80",
+     "rule": "nopurchase(T) :- relevant(T,_), skind(T,S), S != acquire_artefact, not stratviol(T).",
+     "statement": "no-purchase strategy",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K81",
+     "rule": "hypsolution(T,K) :- solution(T,K), addrhyp(T,_).",
+     "statement": "rests on hypothetical relevance (F11)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K82",
+     "rule": "hypsolution(T,K) :- solution(T,K), req(T,F,_), caphyp(K,F).",
+     "statement": "rests on hypothetical capability (F11)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K83",
+     "rule": "consult(K,N,T) :- qartefact(K), artefact(K), req(T,F,_), capok(K,F), asr(_,T,addresses,N,affirmed,_,_).",
+     "statement": "category-first consultation only (C2)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K84",
+     "rule": "serves(K,N,T) :- consult(K,N,T), realises(T,K), not unsuitable(K).",
+     "statement": "category-first validated only when the forward realisation holds (C2)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K85",
+     "rule": "deniedfor(K,N) :- qartefact(K), req(T,F,_), capok(K,F), asr(_,T,addresses,N,denied,_,_).",
+     "statement": "category-first: stated non-service",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K86",
+     "rule": "contractx(K,X) :- qartefact(K), asr(_,K,contraindicated_for,X,affirmed,_,_).",
+     "statement": "category-first: where not to use",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K87",
+     "rule": "contractx(P,X) :- qartefact(P), isa(P,K), asr(_,K,contraindicated_for,X,affirmed,_,_).",
+     "statement": "inherited",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K88",
+     "rule": "assessesneed(P,X) :- asr(_,X,assessed_by,P,affirmed,_,_).",
+     "statement": "assessing property",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K89",
+     "rule": "obsincomp(O) :- obscond(O,R), ctx(R,does_not_hold).",
+     "statement": "non-comparable condition",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K90",
+     "rule": "obsunk(O) :- obscond(O,R), not ctxknown(R).",
+     "statement": "condition not stated",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K91",
+     "rule": "demo(K,X) :- qartefact(K), obs(O,K,P,_), obsmeasured(O), assessesneed(P,X), not obsincomp(O), not obsunk(O).",
+     "statement": "demonstrated for this artefact and conditions only",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K92",
+     "rule": "related(K,Y) :- isa(K,Y).",
+     "statement": "hierarchy",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K93",
+     "rule": "related(K,Y) :- isa(Y,K).",
+     "statement": "hierarchy",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K94",
+     "rule": "related(K,Y) :- isa(K,Z), isa(Y,Z).",
+     "statement": "siblings",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K95",
+     "rule": "measuredelsewhere(K,X) :- qartefact(K), related(K,Y), K != Y, obs(O,Y,P,_), obsmeasured(O), assessesneed(P,X).",
+     "statement": "not transferred (F4)",
+     "source": "FA-I1 km.2"
+    },
+    {
+     "id": "K96",
+     "rule": "measuredincomp(K,X) :- qartefact(K), obs(O,K,P,_), obsmeasured(O), assessesneed(P,X), obsincomp(O).",
+     "statement": "not transferred (F9)",
+     "source": "FA-I1 km.2"
+    }
+   ],
+   "constants": [
+    "reduces(decreases).",
+    "reduces(removes).",
+    "reduces(prevents).",
+    "usecond(applicability).",
+    "usecond(prerequisite).",
+    "usecond(exclusion)."
+   ]
+  }
+ ]
+}
