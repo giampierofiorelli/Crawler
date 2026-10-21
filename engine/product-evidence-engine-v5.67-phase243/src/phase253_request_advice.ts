@@ -301,7 +301,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  /** R3-P (experimental pilot): attach the need interpretation (src/need_interpretation.ts). knowledgeGuided switches the
   * scientific-knowledge path on (arm B); candidates are the admitted experimental C-lite rules (shadow). Never changes any
   * other field of the answer: inferred needs are never constraints, exclusions, ranking inputs or statements. */
- needInterpretation?:{knowledgeGuided:boolean;candidates?:CompiledProgram|null}}={}):Advice253{
+ needInterpretation?:{knowledgeGuided:boolean;candidates?:CompiledProgram|null;claims?:boolean}}={}):Advice253{
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  if(opts.scientific98&&out.response!=='out_of_scope'){const ids=[...out.shortlist,...out.unknown,...out.excluded].map(x=>x.productId);
@@ -311,7 +311,7 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
  // shown in the same answer (S80 first run, judge finding on D1).
  if(!out.shortlist.length)out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
  if(opts.needInterpretation){const words=registry.find(r=>r.id===out.category)?.aliases??[];
-  out.needInterpretation=interpretNeeds(text,out,store,{knowledgeGuided:opts.needInterpretation.knowledgeGuided,qk:opts.quantityKnowledge??undefined,categoryWords:words,candidates:opts.needInterpretation.candidates??null});}
+  out.needInterpretation=interpretNeeds(text,out,store,{knowledgeGuided:opts.needInterpretation.knowledgeGuided,qk:opts.quantityKnowledge??undefined,categoryWords:words,candidates:opts.needInterpretation.candidates??null,claims:!!opts.needInterpretation.claims});}
  return out;
 }
 /** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */

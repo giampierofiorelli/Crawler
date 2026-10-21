@@ -23,6 +23,7 @@ import {stanceAt,clauseAround,tokens,scopeVocabulary} from './language_scope.js'
 import {loadProductFunctions} from './product_facts.js';
 import {relations247,needKnowledge269} from './phase247_category_relations.js';
 import {evaluate,type CompiledProgram} from './knowledge_rules.js';
+import {claimsOfN1,type RowClaimN1} from './relation_claims_n1.js';
 
 export const NEED_INTERPRETATION_VERSION='ni.1';
 /** A1: how any consumer must read this block */
@@ -37,7 +38,7 @@ export const NI_THRESHOLDS={statementMatch:2.0,minSharedStems:1,conceptMatch:2.5
 
 export interface PathStep {step:'request_words'|'use_context'|'statement'|'concept'|'relation'|'candidate';ref:string;text:string}
 export interface InferredNeed {concept:string;category:string;kind:string;state:'experimental_unverified';support:number;score:number;
- from:string[];anchors:string[];path:PathStep[][];provenance:'existing_statement'|'existing_relation'}
+ from:string[];anchors:string[];path:PathStep[][];provenance:'existing_statement'|'existing_relation'|'recovered_relation'}
 export interface NeedInterpretation {
  schema:'pee.r3p.need-interpretation.v1';version:string;knowledgeGuided:boolean;category:string|null;
  /** A1 (owner 2026-10-21): the block declares itself; its inferences are never established facts */
@@ -87,13 +88,16 @@ export interface OutcomeSupport {c:ConceptText;stmts:Set<string>;score:number;fr
  * two informative words with the query (one of them the request's own) is mapped to the taught concept it is about (best
  * text match, with a margin), and a measurement concept to the outcomes it measures (stored measured_by relations).
  * Shared by arm B (request words + use-context words) and the C-lite candidate generator (use-context words alone). */
-export function knowledgeOutcomes(store:KnowledgeStore246,cat:string,reqStems:ReadonlySet<string>,ctxStems:ReadonlySet<string>=new Set(),contexts:readonly {id:string;term:string}[]=[]):OutcomeSupport[]{
+export function knowledgeOutcomes(store:KnowledgeStore246,cat:string,reqStems:ReadonlySet<string>,ctxStems:ReadonlySet<string>=new Set(),contexts:readonly {id:string;term:string}[]=[],
+ o:{claims?:boolean}={}):OutcomeSupport[]{
  const items=store.categoryItems246(cat).filter(i=>i.concept);
  const concepts:ConceptText[]=items.map(i=>({id:i.concept!.id,kind:i.concept!.kind,itemRef:'item:'+i.itemId,stems:stemsNI([i.statement,...i.concept!.aliases,i.concept!.id.replace(/_/g,' ')].join(' '))}));
  const cIdf=idfOf(concepts.map(c=>c.stems));
  const rels=relations247(store,cat);
  const outcomesOfMeasure=(ref:string)=>rels.filter(r=>r.kind==='measured_by'&&r.from===ref).map(r=>concepts.find(c=>c.itemRef===r.to)).filter((c):c is ConceptText=>!!c&&c.kind!=='measurement');
- const st=statementsOf(store,cat,{types:INFERENCE_TYPES});
+ // N1 (opt-in): the situation/need links of recovered row claims join the statements as situation -> outcome pairs; every
+ // guard below (shared words, concept margin, anchors, one inference per request) applies to them unchanged
+ const st=[...statementsOf(store,cat,{types:INFERENCE_TYPES}),...(o.claims?claimStatementsN1(claimsOfN1(store,cat)):[])];
  // the typed structure of a statement: in measured_by and requires the SUBJECT is the goal or situation and the object what
  // establishes or conditions it; in bears_on_outcome the subject is the situation and the OBJECT the outcome. The request is
  // compared with the goal/situation side; the outcome is read from the side that names it.
@@ -123,12 +127,51 @@ export function knowledgeOutcomes(store:KnowledgeStore246,cat:string,reqStems:Re
     {step:'statement',ref:s.statementId,text:`${s.type} (${s.sourceDocument}:${s.line}, ${s.reliability})`},
     {step:'concept',ref:best.c.id,text:`matched ${best.sim.toFixed(2)}`},
     ...(best.c.kind==='measurement'?[{step:'relation' as const,ref:`measured_by ${best.c.id} -> ${t.id}`,text:'stored category relation'}]:[])];
-   const a=agg.get(t.id)??{c:t,stmts:new Set<string>(),score:0,from:new Set<string>(),path:[],prov:best.c.kind==='measurement'?'existing_relation':'existing_statement',anchors:[...query].filter(x=>t.stems.has(x)&&specific(x)),via:new Set<string>()};
+   const a=agg.get(t.id)??{c:t,stmts:new Set<string>(),score:0,from:new Set<string>(),path:[],prov:s.statementId.startsWith('clm_')?'recovered_relation':best.c.kind==='measurement'?'existing_relation':'existing_statement',anchors:[...query].filter(x=>t.stems.has(x)&&specific(x)),via:new Set<string>()};
    if(!a.stmts.has(s.statementId)){a.stmts.add(s.statementId);a.score+=score;a.path.push(path);}own.forEach(x=>a.from.add(x));shared.forEach(x=>a.via.add(x));agg.set(t.id,a);}});
  return [...agg.values()].sort((x,y)=>y.score-x.score||x.c.id.localeCompare(y.c.id));
 }
 
+/** N1: the relevance links of row claims that start at a situation or need, as situation -> outcome statement pairs
+ * (subject = the situation or need cell, object = the cell it is relevant to or addressed by). Machine-derived and
+ * unreviewed; the statement id is the claim id with the link index. */
+export function claimStatementsN1(claims:readonly RowClaimN1[]):StoredStatementLike[]{
+ const out:StoredStatementLike[]=[];
+ const push=(c:RowClaimN1,ref:string,f:{text:string},t:{text:string},how:string)=>out.push({statementId:`${c.claimId}#${ref}`,categoryId:c.categoryId,sourceDocument:c.source.document,
+  line:c.source.line,headings:c.source.headings,type:'bears_on_outcome',polarity:'positive',hedge:null,status:[],scope:[],subject:{text:f.text},object:{text:t.text},parts:[],
+  rendered:`${f.text} -> ${how} -> ${t.text}`,selfCheck:[],translator:c.mapping,reliability:'machine_derived_unreviewed'});
+ for(const c of claims){
+  // the need column of a row interprets its situation column (a role pairing of the claim, not a link)
+  for(const sp of c.participants.filter(p=>p.role==='situation'))for(const np of c.participants.filter(p=>p.role==='need'))push(c,`s${sp.col}n${np.col}`,sp,np,'interpreted_as');
+  c.links.forEach((l,i)=>{const f=c.participants.find(p=>p.col===l.from),t=c.participants.find(p=>p.col===l.to);
+   if(!f||!t||(l.kind!=='relevant_to'&&l.kind!=='addressed_by')||(f.role!=='situation'&&f.role!=='need'))return;push(c,String(i),f,t,l.kind);});}
+ return out;
+}
+type StoredStatementLike=Omit<ReturnType<typeof statementsOf>[number],'subject'|'object'|'reliability'>&{subject:{text:string}|null;object:{text:string}|null;reliability:string};
+
+/** N1 L3: knowledge retrieved for a new situation, from the stored statements (R0: the arm-B statement texts) or from the
+ * recovered row claims (R1: their situation and need cells), with one scoring for both: inverse-document-frequency weight of
+ * the request words an item shares, over the items in scope, kept from the arm-B statement threshold. The category may be
+ * unknown (null): every category's items are pooled. Read-only; nothing here decides anything. */
+export function retrieveKnowledgeN1(store:KnowledgeStore246,text:string,o:{categoryId:string|null;source:'statements'|'claims';k?:number}):
+ {ref:string;categoryId:string;text:string;shared:string[];score:number}[]{
+ const cats=o.categoryId?[o.categoryId]:o.source==='claims'?[...new Set(claimsOfN1(store).map(c=>c.categoryId))]:
+  (store.db.prepare("SELECT DISTINCT category_id c FROM knowledge_statements WHERE state='current' ORDER BY c").all() as {c:string}[]).map(r=>r.c);
+ const items:{ref:string;categoryId:string;text:string;stems:Set<string>}[]=[];
+ const GOAL_SUBJECT=new Set(['measured_by','requires','bears_on_outcome']);
+ for(const cat of cats){
+  if(o.source==='claims')for(const c of claimsOfN1(store,cat)){const from=c.participants.filter(p=>p.role==='situation'||p.role==='need');
+   items.push({ref:c.claimId,categoryId:cat,text:c.participants.map(p=>`${p.header}: ${p.text}`).join(' | '),stems:stemsNI(from.map(p=>p.text).join(' '))});}
+  else for(const s of statementsOf(store,cat,{types:INFERENCE_TYPES}))
+   items.push({ref:s.statementId,categoryId:cat,text:s.rendered,stems:stemsNI(GOAL_SUBJECT.has(s.type)?(s.subject as {text?:string}|null)?.text||s.rendered:s.rendered)});}
+ const idf=idfOf(items.map(i=>i.stems));const q=stemsNI(text);
+ return items.map(i=>{const shared=[...i.stems].filter(x=>q.has(x));return {ref:i.ref,categoryId:i.categoryId,text:i.text,shared,score:Number(shared.reduce((a,x)=>a+idf(x),0).toFixed(3))};})
+  .filter(r=>r.shared.length>=NI_THRESHOLDS.minSharedStems&&r.score>=NI_THRESHOLDS.statementMatch)
+  .sort((a,b)=>b.score-a.score||a.ref.localeCompare(b.ref)).slice(0,o.k??5);
+}
+
 export interface NeedInterpretationOptions {knowledgeGuided?:boolean;qk?:QuantityKnowledge;
+ /** N1 (opt-in, experimental): recovered row claims join the arm-B knowledge (same code, same guards) */ claims?:boolean;
  /** words of the category's own names (they say which product, not which need) */ categoryWords?:readonly string[];
  /** C-lite: the admitted experimental candidate program (shadow) */ candidates?:CompiledProgram|null}
 
@@ -162,7 +205,7 @@ export function interpretNeeds(text:string,advice:Advice253,store:KnowledgeStore
   const reqStems=new Set([...stemsNI(text)].filter(s=>!setAside.has(s)&&!catStems.has(s)&&!explained.has(s)));
   const ctxStems=new Set(contexts.flatMap(c=>(qk.pack.useContexts??[]).find(u=>u.id===c.id)!.terms.flatMap(t=>[...stemsNI(t)])).filter(s=>!catStems.has(s)));
   const have=new Set(advice.needs);
-  for(const a of knowledgeOutcomes(store,cat,reqStems,ctxStems,contexts)){
+  for(const a of knowledgeOutcomes(store,cat,reqStems,ctxStems,contexts,{claims:!!o.claims})){
    if(have.has(a.c.id))continue;
    const blocked=[...a.c.stems].find(x=>setAside.has(x));
    if(blocked){unsupported.push({concept:a.c.id,reason:`the request sets "${blocked}" aside`,support:a.stmts.size});continue;}

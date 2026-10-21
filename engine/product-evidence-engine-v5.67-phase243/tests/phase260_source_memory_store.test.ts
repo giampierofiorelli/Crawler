@@ -50,7 +50,7 @@ const screen=(f:F,o:Partial<ScreeningDecision193>={},hash=PAGE_A):ScreeningDecis
  retainedCandidateVariantIds:[],...o});
 
 test('1-3. a permitted annotation persists, survives close and reopen, and is recovered without a rebuild',()=>{
- const f=fixture();assert.equal(f.s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(STORE_SCHEMA_VERSION246,13,'v5 (Phase265) test_measurements265, v6 (Phase268) condition codes, v7 (Phase270) qualitative codes, v8 (Phase271) comparative results, v9 (S78) relation assessments, v10 (S78) knowledge statements, v11 (S98) scientific readings, v12 (S99) observation identity and meaning of each reading, v13 (S100) how each meaning was decided');
+ const f=fixture();assert.equal(f.s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(STORE_SCHEMA_VERSION246,14,'v5 (Phase265) test_measurements265, v6 (Phase268) condition codes, v7 (Phase270) qualitative codes, v8 (Phase271) comparative results, v9 (S78) relation assessments, v10 (S78) knowledge statements, v11 (S98) scientific readings, v12 (S99) observation identity and meaning of each reading, v13 (S100) how each meaning was decided, v14 (N1) relation claims of teaching-table rows');
  assert.equal(descriptorWithMemory260(f.s,f.revA,f.prodA).descriptor.language,'und');
  const r=recordSourceMemory260(f.s,ann(f));assert.equal(r.status,'recorded');assert.equal(r.basis,'operator_annotation','no verifier: an operator claim, not a verified fact');
  f.s.close();
@@ -148,7 +148,7 @@ test('7. tampered history is detected; replay, recording and recovery refuse it'
 test('8. migration v3 -> v4 preserves every earlier record and the journal',()=>{
  const f=fixture();const path=f.path;
  // A Phase246 v3 store: the same records without the v4 objects.
- f.s.db.exec('DROP TABLE source_memory260; DROP TABLE test_measurements265; DROP TABLE qualitative_observations270; DROP TABLE comparative_results271; DROP TABLE relation_assessments; DROP TABLE knowledge_statements; DROP TABLE scientific_readings98; PRAGMA user_version=3;');
+ f.s.db.exec('DROP TABLE source_memory260; DROP TABLE test_measurements265; DROP TABLE qualitative_observations270; DROP TABLE comparative_results271; DROP TABLE relation_assessments; DROP TABLE knowledge_statements; DROP TABLE scientific_readings98; DROP TABLE relation_claims_n1; PRAGMA user_version=3;');
  const canon3=canonical(f.s),events3=f.s.verifyJournal();assert.ok(events3.ok);f.s.close();
  const s=new KnowledgeStore246(path);
  assert.equal(s.schemaVersion(),STORE_SCHEMA_VERSION246);assert.equal(canonical(s),canon3,'canonical tables unchanged by the migration');

@@ -53,7 +53,7 @@ export interface ScientificReadingRow98 {reading_id:string;revision_id:string;su
  provenance:string|null;result_basis:string|null;object:string|null;source_reader:string|null;observation_key:string|null;source_locator:string|null;source_offset:number|null;
  /** S100 (v13) */ semantics_json:string|null}
 const normName246=(s:string)=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-export const STORE_SCHEMA_VERSION246=13;
+export const STORE_SCHEMA_VERSION246=14;
 /** Version of the store's identity rules; part of the derivation version recorded per revision, so a rule
  * change re-derives revisions whose bytes are available, like an extractor change. */
 export const IDENTITY_RULES246='identity-4';
@@ -363,6 +363,19 @@ const MIGRATIONS:string[]=[
  // v13 (S100, owner review of S99: rule governance): how role, nature and provenance were decided (deciding tier, scope and
  // rules; a conflict and its values; a presumption that decided nothing), so every stored meaning can be traced to its rules
  `ALTER TABLE scientific_readings98 ADD COLUMN semantics_json TEXT;`,
+ // v14 (N1, owner authorisation 2026-10-21): relations of teaching-table rows as n-ary claims (src/relation_claims_n1.ts), a
+ // compatible extension of category_relations in the same store: participants with column roles, links with the qualifiers
+ // they carry, provenance (document SHA-256, header and row line, cell hashes) and the mapping version they were derived
+ // with. Teaching relevance only: never a ranking input; a review records a correct reading, never an established result.
+ `CREATE TABLE relation_claims_n1 (claim_id TEXT PRIMARY KEY, category_id TEXT NOT NULL, source_document TEXT NOT NULL,
+   source_sha256 TEXT NOT NULL, header_line INTEGER NOT NULL, line INTEGER NOT NULL, headings_json TEXT NOT NULL,
+   participants_json TEXT NOT NULL, identifier_columns_json TEXT NOT NULL, links_json TEXT NOT NULL, mapping TEXT NOT NULL,
+   claim_type TEXT NOT NULL CHECK(claim_type='teaching_relevance'),
+   support TEXT NOT NULL CHECK(support IN ('hypothesis','reviewed')),
+   epistemic TEXT NOT NULL CHECK(epistemic IN ('machine_derived_unreviewed','reviewed_relevance')),
+   review_json TEXT, ranking_input INTEGER NOT NULL DEFAULT 0 CHECK(ranking_input=0),
+   state TEXT NOT NULL CHECK(state IN ('current','superseded')), recorded_at TEXT NOT NULL);
+  CREATE INDEX relation_claims_n1_category ON relation_claims_n1(category_id,state);`,
 ];
 
 /** Phase271: a retained comparative result as read back (columns of comparative_results271 plus its source). */

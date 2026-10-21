@@ -129,9 +129,9 @@
    }
   },
   "externalDbAccess": {
-   "sites": 102,
-   "writes": 13,
-   "reads": 89,
+   "sites": 116,
+   "writes": 16,
+   "reads": 100,
    "other": 0,
    "modules": {
     "knowledge_statements.ts": {
@@ -144,7 +144,7 @@
     },
     "need_interpretation.ts": {
      "writes": 0,
-     "reads": 1,
+     "reads": 2,
      "other": 0,
      "writeTables": []
     },
@@ -237,6 +237,14 @@
      "reads": 2,
      "other": 0,
      "writeTables": []
+    },
+    "relation_claims_n1.ts": {
+     "writes": 3,
+     "reads": 10,
+     "other": 0,
+     "writeTables": [
+      "relation_claims_n1"
+     ]
     }
    }
   }
@@ -462,5 +470,20 @@
   "rebuildFunction": "rebuildSourceMemory260",
   "note": "found; comparison run by the A5 test on a store copy (tests/i1_store_write_census.test.ts)"
  },
- "reading": "identifiedByJournal: the row's primary key occurs in some event payload; contentCarriedByJournal: every non-key, non-timestamp value of the row occurs in one event payload, the minimum for rebuilding the row from the journal alone. A table with content carried 0 cannot be rebuilt from the journal, whichever method writes it."
+ "reading": "identifiedByJournal: the row's primary key occurs in some event payload; contentCarriedByJournal: every non-key, non-timestamp value of the row occurs in one event payload, the minimum for rebuilding the row from the journal alone. A table with content carried 0 cannot be rebuilt from the journal, whichever method writes it.",
+ "amendments": [
+  {
+   "date": "2026-10-21",
+   "by": "N1 (second increment)",
+   "what": "static census re-measured after N1 added relation_claims_n1 (migration v14) and its writes in src/relation_claims_n1.ts (record, supersede, review), each in one transaction with its journal event (relation_claims_recorded, relation_claim_reviewed carrying the full receipt). The store-copy part of the census (rows, journal coverage) is from the first increment and was not re-run here.",
+   "before": {
+    "dataWrites": 71,
+    "ext": 13
+   },
+   "after": {
+    "dataWrites": 71,
+    "ext": 16
+   }
+  }
+ ]
 }
