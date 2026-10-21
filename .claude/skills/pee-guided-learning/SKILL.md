@@ -41,7 +41,7 @@ Three kinds of learning reinforce one another:
 - **operational experience:** what successful and failed readings, ambiguities, corrections and counterexamples teach.
 
 The intended cycle is: scientific learning → better research → better extraction → better evaluation → new experiences →
-improved knowledge. Build it inside the existing modules and private stores: no parallel engines, no product-specific
+improved knowledge. Build it inside the existing modules and private stores: no parallel engines (dated note 2026-10-21, DC-start: the owner allows one isolated EXPERIMENTAL scientific-universe core as a controlled exception, never a second permanent architecture; it must state integration or abandonment criteria), no product-specific
 rules.
 
 **Uncertainty is a research problem.**
