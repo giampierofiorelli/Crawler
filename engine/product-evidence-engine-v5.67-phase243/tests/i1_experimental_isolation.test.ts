@@ -152,6 +152,7 @@ const REVIEWED_READERS:Record<string,string>={
  'scripts/r3p-needs-check.mjs':'evaluation scorer (private outputs, never shown to users)',
  'scripts/r3p-needs-dev.mjs':'evaluation development runner (private outputs)',
  'scripts/i1-reachability-record.mjs':'names the option configuration only; measures which modules run, never reads the field',
+ 'scripts/n1-needs-check.mjs':'N1 evaluation scorer (private outputs, never shown to users)',
 };
 test('A1 permanence: no unreviewed module or script reads an experimental field', ()=>{
  const root=new URL('../../',import.meta.url);const found:string[]=[];
