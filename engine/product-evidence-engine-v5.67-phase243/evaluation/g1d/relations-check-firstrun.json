@@ -1,0 +1,99 @@
+{
+ "schema": "pee.g1d.relations-check.v1",
+ "status": "first run, unchanged",
+ "reference": "sealed R (evaluation/g1d/ref-freeze.json): 100 rows x 9 strategies",
+ "method": "g1d.r1.3",
+ "R0": "G1b links (g1b.4)",
+ "relations": {
+  "R0": {
+   "proposed": 60,
+   "tp": 19,
+   "fp": 41,
+   "fn": 5,
+   "referencePositives": 24,
+   "polarityCorrect": 0,
+   "contraindicatedProposedAsApplicable": 0,
+   "referenceContraindicated": 0,
+   "crossCategory": {
+    "referencePositives": 4,
+    "tp": 2
+   },
+   "byStratum": {
+    "g1b_unlinked": {
+     "proposed": 0,
+     "tp": 0,
+     "referencePositives": 1
+    },
+    "g1b_linked": {
+     "proposed": 60,
+     "tp": 19,
+     "referencePositives": 23
+    }
+   },
+   "precision": 0.317,
+   "recall": 0.792
+  },
+  "R1": {
+   "proposed": 17,
+   "tp": 13,
+   "fp": 4,
+   "fn": 11,
+   "referencePositives": 24,
+   "polarityCorrect": 12,
+   "contraindicatedProposedAsApplicable": 0,
+   "referenceContraindicated": 0,
+   "crossCategory": {
+    "referencePositives": 4,
+    "tp": 1
+   },
+   "byStratum": {
+    "g1b_unlinked": {
+     "proposed": 1,
+     "tp": 0,
+     "referencePositives": 1
+    },
+    "g1b_linked": {
+     "proposed": 16,
+     "tp": 13,
+     "referencePositives": 23
+    }
+   },
+   "precision": 0.765,
+   "recall": 0.542
+  }
+ },
+ "category": {
+  "R1": {
+   "agree": 40,
+   "confusion": {
+    "suitable->suitable": 12,
+    "suitable->conditional": 17,
+    "unsuitable->conditional": 1,
+    "conditional->suitable": 23,
+    "conditional->not_a_purchase_situation": 11,
+    "unsuitable->not_a_purchase_situation": 2,
+    "conditional->conditional": 28,
+    "unsuitable->suitable": 4,
+    "not_a_purchase_situation->suitable": 2
+   }
+  },
+  "allSuitable": {
+   "agree": 29
+  },
+  "allConditional": {
+   "agree": 62
+  },
+  "refDistribution": {
+   "suitable": 29,
+   "unsuitable": 7,
+   "conditional": 62,
+   "not_a_purchase_situation": 2
+  },
+  "conditionKinds": {
+   "essential": 32,
+   "modifiable": 22,
+   "nonessential": 8
+  }
+ },
+ "note": "Claude-agent reference read from sources, not expert validation"
+}
