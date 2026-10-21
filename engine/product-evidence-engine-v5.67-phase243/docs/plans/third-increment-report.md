@@ -151,3 +151,10 @@ Real progress:
 - **Private material:** `$PEE_PRIVATE_EVAL_DIR/i3/` (requests, annotations, references, judgements, run detail), copied to
   pee-knowledge `private-eval/i3/`.
 - **Skill references:** decision rows I3-start and I3-result; roadmap entries; contract debt D34.
+
+## 8. Correction (2026-10-21, after the owner review)
+
+§0 said C "separates requested, owned, context and rejected objects". That holds for the representation only. On the
+sealed requests, 16 of the 18 objects in PEE's vocabulary were found, but only 7 of 18 roles were correct
+(`evaluation/i3/c-check-firstrun.json`). Object-role assignment is therefore **not** a demonstrated capability. The
+owner review that pointed this out is preserved in `.claude/skills/pee-guided-learning/references/owner-review-third-increment-2026-10-21.md`.
