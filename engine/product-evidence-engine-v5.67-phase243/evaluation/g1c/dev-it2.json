@@ -1,0 +1,366 @@
+{
+ "schema": "pee.g1c.dev.v1",
+ "label": "it2",
+ "material": "spent I3 R (development only); safety probes development-only, not used for selection",
+ "model": {
+  "id": "bge-small-en-v1.5",
+  "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+ },
+ "index": {
+  "units": 7094,
+  "byKind": {
+   "situation": 926,
+   "strategy": 9,
+   "general_need": 41,
+   "statement": 6118
+  },
+  "add": {
+   "added": 7094,
+   "unchanged": 0,
+   "replaced": 0,
+   "refused": 0
+  }
+ },
+ "costs": {
+  "loadMs": 550,
+  "indexMs": 80982,
+  "requestsMs": 12126,
+  "perRequestMs": 202,
+  "rssMB": 543
+ },
+ "projection": {
+  "rows": 926,
+  "linkedRows": 167,
+  "types": 70
+ },
+ "params": {
+  "maxCategories": 2,
+  "maxStrategies": 2,
+  "minRowSim": 0.62,
+  "keepShare": 0.5,
+  "topRows": 3,
+  "minStrategySim": 0.6,
+  "minTypeScore": 0.15,
+  "rrfK": 60,
+  "depth": 30,
+  "minSpecificWords": 2,
+  "minCorroboration": 2,
+  "strategyTopRank": 3
+ },
+ "counts": {
+  "C1": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 9,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 0,
+    "with_any": 24,
+    "any_reached": 9,
+    "invented": 18,
+    "without_knowledge": 15,
+    "outside_or_abstain": 7
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 16,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 0,
+    "with_any": 36,
+    "any_reached": 16,
+    "invented": 25,
+    "without_knowledge": 24,
+    "outside_or_abstain": 12
+   },
+   "named": {
+    "requests": 21,
+    "invented": 7,
+    "without_knowledge": 9,
+    "outside_or_abstain": 5,
+    "with_taught_family": 11,
+    "family_reached": 7,
+    "with_any": 12,
+    "any_reached": 7,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 0
+   }
+  },
+  "G1b": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 10,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 2,
+    "with_any": 24,
+    "any_reached": 11,
+    "invented": 51,
+    "without_knowledge": 15,
+    "outside_or_abstain": 4
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 18,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 4,
+    "with_any": 36,
+    "any_reached": 19,
+    "invented": 77,
+    "without_knowledge": 24,
+    "outside_or_abstain": 5
+   },
+   "named": {
+    "requests": 21,
+    "invented": 26,
+    "without_knowledge": 9,
+    "outside_or_abstain": 1,
+    "with_taught_family": 11,
+    "family_reached": 8,
+    "with_any": 12,
+    "any_reached": 8,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 2
+   }
+  },
+  "A": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 13,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 5,
+    "with_any": 24,
+    "any_reached": 14,
+    "invented": 121,
+    "without_knowledge": 15,
+    "outside_or_abstain": 2
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 22,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 6,
+    "with_any": 36,
+    "any_reached": 23,
+    "invented": 194,
+    "without_knowledge": 24,
+    "outside_or_abstain": 2
+   },
+   "named": {
+    "requests": 21,
+    "invented": 73,
+    "without_knowledge": 9,
+    "outside_or_abstain": 0,
+    "with_taught_family": 11,
+    "family_reached": 9,
+    "with_any": 12,
+    "any_reached": 9,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 1
+   }
+  },
+  "B": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 16,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 0,
+    "with_any": 24,
+    "any_reached": 16,
+    "invented": 83,
+    "without_knowledge": 15,
+    "outside_or_abstain": 1
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 24,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 2,
+    "with_any": 36,
+    "any_reached": 25,
+    "invented": 140,
+    "without_knowledge": 24,
+    "outside_or_abstain": 1
+   },
+   "named": {
+    "requests": 21,
+    "invented": 57,
+    "without_knowledge": 9,
+    "outside_or_abstain": 0,
+    "with_taught_family": 11,
+    "family_reached": 8,
+    "with_any": 12,
+    "any_reached": 9,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 2
+   }
+  },
+  "C": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 14,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 7,
+    "with_any": 24,
+    "any_reached": 16,
+    "invented": 123,
+    "without_knowledge": 15,
+    "outside_or_abstain": 1
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 23,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 10,
+    "with_any": 36,
+    "any_reached": 26,
+    "invented": 190,
+    "without_knowledge": 24,
+    "outside_or_abstain": 1
+   },
+   "named": {
+    "requests": 21,
+    "invented": 67,
+    "without_knowledge": 9,
+    "outside_or_abstain": 0,
+    "with_taught_family": 11,
+    "family_reached": 9,
+    "with_any": 12,
+    "any_reached": 10,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 3
+   }
+  },
+  "D": {
+   "problem": {
+    "requests": 39,
+    "with_taught_family": 24,
+    "family_reached": 14,
+    "with_relevant_strategy": 10,
+    "strategy_reached": 3,
+    "with_any": 24,
+    "any_reached": 14,
+    "invented": 66,
+    "without_knowledge": 15,
+    "outside_or_abstain": 2
+   },
+   "all": {
+    "requests": 60,
+    "with_taught_family": 35,
+    "family_reached": 22,
+    "with_relevant_strategy": 13,
+    "strategy_reached": 4,
+    "with_any": 36,
+    "any_reached": 22,
+    "invented": 100,
+    "without_knowledge": 24,
+    "outside_or_abstain": 2
+   },
+   "named": {
+    "requests": 21,
+    "invented": 34,
+    "without_knowledge": 9,
+    "outside_or_abstain": 0,
+    "with_taught_family": 11,
+    "family_reached": 8,
+    "with_any": 12,
+    "any_reached": 8,
+    "with_relevant_strategy": 3,
+    "strategy_reached": 1
+   }
+  }
+ },
+ "probes": {
+  "C1": {
+   "probes": 42,
+   "failed": 19,
+   "byType": {
+    "negation_or_contrary": 1,
+    "owned_vs_requested": 2,
+    "opposite_situation": 2,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 4,
+    "generic_need": 2,
+    "contraindication": 5
+   },
+   "acceptableReached": 15
+  },
+  "G1b": {
+   "probes": 42,
+   "failed": 20,
+   "byType": {
+    "negation_or_contrary": 3,
+    "owned_vs_requested": 4,
+    "opposite_situation": 1,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 2,
+    "generic_need": 2,
+    "contraindication": 5
+   },
+   "acceptableReached": 15
+  },
+  "A": {
+   "probes": 42,
+   "failed": 26,
+   "byType": {
+    "negation_or_contrary": 6,
+    "owned_vs_requested": 3,
+    "opposite_situation": 3,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 3,
+    "generic_need": 3,
+    "contraindication": 5
+   },
+   "acceptableReached": 17
+  },
+  "B": {
+   "probes": 42,
+   "failed": 35,
+   "byType": {
+    "negation_or_contrary": 6,
+    "owned_vs_requested": 5,
+    "opposite_situation": 4,
+    "cause_vs_symptom": 5,
+    "function_vs_result": 4,
+    "generic_need": 5,
+    "contraindication": 6
+   },
+   "acceptableReached": 22
+  },
+  "C": {
+   "probes": 42,
+   "failed": 36,
+   "byType": {
+    "negation_or_contrary": 6,
+    "owned_vs_requested": 4,
+    "opposite_situation": 5,
+    "cause_vs_symptom": 4,
+    "function_vs_result": 5,
+    "generic_need": 6,
+    "contraindication": 6
+   },
+   "acceptableReached": 22
+  },
+  "D": {
+   "probes": 42,
+   "failed": 26,
+   "byType": {
+    "negation_or_contrary": 3,
+    "owned_vs_requested": 4,
+    "opposite_situation": 2,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 5,
+    "generic_need": 4,
+    "contraindication": 5
+   },
+   "acceptableReached": 23
+  }
+ }
+}

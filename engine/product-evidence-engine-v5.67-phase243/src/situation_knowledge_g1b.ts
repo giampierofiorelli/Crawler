@@ -148,9 +148,10 @@ export interface GoalFirstG1b {schema:'pee.g1b.goal-first.v1';version:string;met
  questions:{text:string;cause:CauseG1b}[];
  researchNeeds:{kind:'missing_need_knowledge';subject:string;status:'pending_authorization'}[]}
 
-/** Goal-first reading of one request over the projection. Never changes the advice; never a requirement, exclusion or ranking. */
-export function goalFirstG1b(text:string,advice:Advice253,store:KnowledgeStore246,P:ProjectionG1b,o:{method?:MethodG1b;dist?:DistModelG1b|null;qk?:QuantityKnowledge;
- /** post-hoc diagnosis switch (not a reformulation): keep the request's general-need words as situation evidence */ keepGeneralNeedTerms?:boolean}={}):GoalFirstG1b{
+export interface RowMatchG1b {row:SituationRowG1b;score:number;shared:string[]}
+/** The lexical row matching of goalFirstG1b, exposed unchanged for G1c (fusion with other retrievers). */
+export function matchRowsG1b(text:string,advice:Advice253,store:KnowledgeStore246,P:ProjectionG1b,o:{method?:MethodG1b;dist?:DistModelG1b|null;qk?:QuantityKnowledge;
+ /** post-hoc diagnosis switch (not a reformulation): keep the request's general-need words as situation evidence */ keepGeneralNeedTerms?:boolean}={}){
  const method=o.method??'M2';const qk=o.qk??loadQuantityKnowledge();const v=scopeVocabulary(qk);
  const n0=needModelN0(text,advice,store,{qk});
  const named=n0.objects.find(x=>x.role==='requested')?.category??null;
@@ -172,7 +173,7 @@ export function goalFirstG1b(text:string,advice:Advice253,store:KnowledgeStore24
   for(const [t,c] of cands)weightOf.set(t,Math.max(weightOf.get(t)??0,c));}}
  const N=Math.max(1,P.rows.length);const idf=(s:string)=>Math.log((N+1)/((P.df.get(s)??0)+0.5));
  const spec=(s:string)=>method==='M1'?1:1/(P.spread.get(s)?.size??1);
- const matched:{row:SituationRowG1b;score:number;shared:string[]}[]=[];
+ const matched:RowMatchG1b[]=[];
  for(const r of P.rows){const st=P.rowStems.get(r.id)!;const shared=[...weightOf.keys()].filter(s=>st.has(s));if(!shared.length)continue;
   if(method!=='M1'&&shared.length<G1B_PARAMS.minShared&&!shared.some(s=>(P.df.get(s)??0)<=G1B_PARAMS.singleTermMaxDf))continue;
   const w=(s:string)=>idf(s)*spec(s);
@@ -182,6 +183,13 @@ export function goalFirstG1b(text:string,advice:Advice253,store:KnowledgeStore24
   const cos=shared.reduce((a,s)=>a+w(s)*w(s)*(weightOf.get(s)??1),0)/((nq||1)*(nr||1));
   if(cos>=G1B_PARAMS.minCosine2)matched.push({row:r,score:cos*10,shared});}
  matched.sort((a,b)=>b.score-a.score);
+ return {method,qk,n0,named,gn,matched,requestStems:[...weightOf.keys()]};
+}
+
+/** Goal-first reading of one request over the projection. Never changes the advice; never a requirement, exclusion or ranking. */
+export function goalFirstG1b(text:string,advice:Advice253,store:KnowledgeStore246,P:ProjectionG1b,o:{method?:MethodG1b;dist?:DistModelG1b|null;qk?:QuantityKnowledge;
+ /** post-hoc diagnosis switch (not a reformulation): keep the request's general-need words as situation evidence */ keepGeneralNeedTerms?:boolean}={}):GoalFirstG1b{
+ const {method,qk,n0,named,gn,matched}=matchRowsG1b(text,advice,store,P,o);
  // purchase strategies (categories) and no-purchase strategies, each with its supporting rows
  const byCat=new Map<string,typeof matched>();for(const m of matched)(byCat.get(m.row.category)??byCat.set(m.row.category,[]).get(m.row.category)!).push(m);
  const catScore=[...byCat].map(([c,ms])=>({c,ms:ms.slice(0,G1B_PARAMS.topRows),s:ms.slice(0,G1B_PARAMS.topRows).reduce((a,m)=>a+m.score,0)})).sort((a,b)=>b.s-a.s);

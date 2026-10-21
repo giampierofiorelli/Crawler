@@ -1,0 +1,150 @@
+{
+ "schema": "pee.g1c.l1.v1",
+ "pool": "it1",
+ "material": "spent I3 R (60 requests), development",
+ "judging": "662 pooled request-unit pairs, shuffled (seed 20261021), split across three blind Claude agents (one judgement per pair); method identity hidden",
+ "note": "A retrieves situation rows of its matched types (lexical); B, C and D retrieve the nearest situation, strategy and statement units of the (D: verified) request; agent judgements, not expert review",
+ "missingVerdicts": 0,
+ "methods": {
+  "A": {
+   "problem": {
+    "requests": 39,
+    "units": 185,
+    "relevant": 15,
+    "partly": 20,
+    "not": 150,
+    "withRelevant": 8,
+    "withRelevantOrPartly": 12,
+    "precisionAt5Strict": 0.081,
+    "precisionAt5Lenient": 0.189
+   },
+   "all": {
+    "requests": 60,
+    "units": 290,
+    "relevant": 18,
+    "partly": 25,
+    "not": 247,
+    "withRelevant": 10,
+    "withRelevantOrPartly": 15,
+    "precisionAt5Strict": 0.062,
+    "precisionAt5Lenient": 0.148
+   },
+   "named": {
+    "requests": 21,
+    "units": 105,
+    "relevant": 3,
+    "partly": 5,
+    "not": 97,
+    "withRelevant": 2,
+    "withRelevantOrPartly": 3,
+    "precisionAt5Strict": 0.029,
+    "precisionAt5Lenient": 0.076
+   }
+  },
+  "B": {
+   "problem": {
+    "requests": 39,
+    "units": 195,
+    "relevant": 36,
+    "partly": 39,
+    "not": 120,
+    "withRelevant": 13,
+    "withRelevantOrPartly": 28,
+    "precisionAt5Strict": 0.185,
+    "precisionAt5Lenient": 0.385
+   },
+   "all": {
+    "requests": 60,
+    "units": 300,
+    "relevant": 52,
+    "partly": 56,
+    "not": 192,
+    "withRelevant": 19,
+    "withRelevantOrPartly": 42,
+    "precisionAt5Strict": 0.173,
+    "precisionAt5Lenient": 0.36
+   },
+   "named": {
+    "requests": 21,
+    "units": 105,
+    "relevant": 16,
+    "partly": 17,
+    "not": 72,
+    "withRelevant": 6,
+    "withRelevantOrPartly": 14,
+    "precisionAt5Strict": 0.152,
+    "precisionAt5Lenient": 0.314
+   }
+  },
+  "C": {
+   "problem": {
+    "requests": 39,
+    "units": 195,
+    "relevant": 36,
+    "partly": 39,
+    "not": 120,
+    "withRelevant": 13,
+    "withRelevantOrPartly": 28,
+    "precisionAt5Strict": 0.185,
+    "precisionAt5Lenient": 0.385
+   },
+   "all": {
+    "requests": 60,
+    "units": 300,
+    "relevant": 52,
+    "partly": 56,
+    "not": 192,
+    "withRelevant": 19,
+    "withRelevantOrPartly": 42,
+    "precisionAt5Strict": 0.173,
+    "precisionAt5Lenient": 0.36
+   },
+   "named": {
+    "requests": 21,
+    "units": 105,
+    "relevant": 16,
+    "partly": 17,
+    "not": 72,
+    "withRelevant": 6,
+    "withRelevantOrPartly": 14,
+    "precisionAt5Strict": 0.152,
+    "precisionAt5Lenient": 0.314
+   }
+  },
+  "D": {
+   "problem": {
+    "requests": 39,
+    "units": 195,
+    "relevant": 37,
+    "partly": 27,
+    "not": 131,
+    "withRelevant": 13,
+    "withRelevantOrPartly": 24,
+    "precisionAt5Strict": 0.19,
+    "precisionAt5Lenient": 0.328
+   },
+   "all": {
+    "requests": 60,
+    "units": 300,
+    "relevant": 57,
+    "partly": 40,
+    "not": 203,
+    "withRelevant": 22,
+    "withRelevantOrPartly": 39,
+    "precisionAt5Strict": 0.19,
+    "precisionAt5Lenient": 0.323
+   },
+   "named": {
+    "requests": 21,
+    "units": 105,
+    "relevant": 20,
+    "partly": 13,
+    "not": 72,
+    "withRelevant": 9,
+    "withRelevantOrPartly": 15,
+    "precisionAt5Strict": 0.19,
+    "precisionAt5Lenient": 0.314
+   }
+  }
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "schema": "pee.g1c.freeze.v1",
+ "date": "2026-10-21",
+ "decision": "NO METHOD PASSED DEVELOPMENT. Nothing is promoted; the G1 sealed set and the G1b sealed set (75) stay sealed and unspent; no independent run.",
+ "criterion": "preregistration development.selection: on the 24 I3 problem requests with taught knowledge reach >= 12 with invented <= 18 (C1) on all 39 problem requests, at <= 2 categories + 2 strategies",
+ "iterations": {
+  "it0": {
+   "version": "g1c.0",
+   "what": "registered methods and parameters",
+   "problem": {
+    "C1": {
+     "reach": 9,
+     "of": 24,
+     "invented": 18
+    },
+    "G1b": {
+     "reach": 11,
+     "of": 24,
+     "invented": 51
+    },
+    "A": {
+     "reach": 14,
+     "of": 24,
+     "invented": 122
+    },
+    "B": {
+     "reach": 14,
+     "of": 24,
+     "invented": 74
+    },
+    "C": {
+     "reach": 17,
+     "of": 24,
+     "invented": 122
+    },
+    "D": {
+     "reach": 15,
+     "of": 24,
+     "invented": 75
+    }
+   }
+  },
+  "it1": {
+   "version": "g1c.1",
+   "what": "reformulation 1 (D only): corroboration by >= 2 independent retrievers; strategy must also rank in the top 3 strategy units for the verified request",
+   "problem": {
+    "A": {
+     "reach": 14,
+     "of": 24,
+     "invented": 122
+    },
+    "B": {
+     "reach": 14,
+     "of": 24,
+     "invented": 74
+    },
+    "C": {
+     "reach": 17,
+     "of": 24,
+     "invented": 122
+    },
+    "D": {
+     "reach": 15,
+     "of": 24,
+     "invented": 61
+    }
+   }
+  },
+  "it2": {
+   "version": "g1c.2",
+   "what": "reformulation 2 (defect found by a unit test): a category is scored by its best row, not by the sum of reciprocal ranks of three rows (which favoured categories with many weak rows)",
+   "problem": {
+    "A": {
+     "reach": 14,
+     "of": 24,
+     "invented": 121
+    },
+    "B": {
+     "reach": 16,
+     "of": 24,
+     "invented": 83
+    },
+    "C": {
+     "reach": 16,
+     "of": 24,
+     "invented": 123
+    },
+    "D": {
+     "reach": 14,
+     "of": 24,
+     "invented": 66
+    }
+   }
+  },
+  "reformulation3": "not used: the post-hoc frontier below shows no gate on the available signals reaches the criterion"
+ },
+ "posthocFrontier": {
+  "status": "post hoc on spent it0 detail; not a reformulation",
+  "points": [
+   {
+    "gate": "B and A and G1b agree on the category",
+    "reach": 7,
+    "invented": 12
+   },
+   {
+    "gate": "B and C1 agree",
+    "reach": 8,
+    "invented": 11
+   },
+   {
+    "gate": "B and A agree",
+    "reach": 10,
+    "invented": 20
+   },
+   {
+    "gate": "two of B, A, G1b, C1",
+    "reach": 14,
+    "invented": 38
+   }
+  ],
+  "reading": "every gate that keeps invented <= 18 reaches fewer requests than C1 (9); every gate that reaches >= 12 invents >= 35"
+ },
+ "modelSelection": {
+  "chosen": "bge-small-en-v1.5 (primary, unchanged)",
+  "why": "on the post-hoc separation sweep (evaluation/g1c/dev-posthoc-separation-*.json) bge separated plausible from invented categories better than all-MiniLM-L6-v2 (bge 13 plausible / 28 invented at 0.65; MiniLM at best 9 / 25)",
+  "pinned": "resources/semantic-retrieval/models.v1.json"
+ },
+ "files": {
+  "src/semantic_retrieval_g1c.ts": "a02afc53d39be6eaeb7bedc1f8d1c58653dc2a1e5ec77cc6edcead9b78d3567f",
+  "src/semantic_embedding_g1c.ts": "a366ce247f4023545406cdc893c9f41921717ad5844ace8d903cd6094f989a6b",
+  "src/situation_knowledge_g1b.ts": "259c65226750797cbd089b79df47cd5cb3c9e1830b9c839ad41d33960aa2f3ff",
+  "resources/semantic-retrieval/models.v1.json": "605a91c675bd5d15a805618c933cdeb289cb20aac706eaeada206b31442408e6"
+ },
+ "sealedSetsUntouched": [
+  "evaluation/g1/r-freeze.json (G1 set: no G1c run)",
+  "evaluation/g1b/n-freeze.json (G1b set: never read)"
+ ]
+}

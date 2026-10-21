@@ -1,0 +1,51 @@
+{
+ "schema": "pee.g1c.audit-l2.v1",
+ "level": "L2 scientific correctness of retrieved/linked knowledge",
+ "sample": "evaluation/g1c/audit-sample.json (seed 20261021; 60 unlinked + 60 strategy-linked rows of 926)",
+ "judges": "two blind Claude agents (J1, J2), disagreements adjudicated blind by a third (J3); none saw how the links were built",
+ "agreement": {
+  "situationCoherent": 120,
+  "categoryRelevant": 100,
+  "contraindicationsFaithful": 120,
+  "strategyVerdicts": 67,
+  "strategyTotal": 70
+ },
+ "unlinked": {
+  "items": 60,
+  "situationCoherent": {
+   "yes": 54,
+   "no": 6
+  },
+  "categoryRelevant": {
+   "yes": 46,
+   "partly": 13,
+   "no": 1
+  },
+  "contraindicationsFaithful": {
+   "none": 47,
+   "yes": 13
+  }
+ },
+ "linked": {
+  "items": 60,
+  "situationCoherent": {
+   "yes": 59,
+   "no": 1
+  },
+  "categoryRelevant": {
+   "yes": 43,
+   "partly": 15,
+   "no": 2
+  },
+  "contraindicationsFaithful": {
+   "none": 45,
+   "yes": 15
+  },
+  "strategyVerdicts": {
+   "appropriate": 14,
+   "inappropriate": 51,
+   "unclear": 5
+  }
+ },
+ "note": "agent judgements, not expert review; a sample of one projection (g1b.4)"
+}
