@@ -1,0 +1,60 @@
+{
+ "schema": "pee.i3.preregistration.v1",
+ "registered": "2026-10-21, before any third-increment code, material or run (owner authorisation verbatim: .claude/skills/pee-guided-learning/references/owner-third-increment-authorisation-2026-10-21.md)",
+ "questions": {
+  "C": "Given a buying message that names a product, only describes a problem or goal, mentions owned products, alternatives or context objects, or gives too little to choose, can PEE separate what was requested from what it hypothesises, keep several justified hypotheses with their reasons, conditions, support and counter-evidence, ask the question that best reduces the uncertainty, and abstain when nothing justifies a choice, without inventing families, needs or links and without changing any answer?",
+  "T": "Can PEE read the meaning of teaching-table relations (kind, direction, conditions, provenance) better than the frozen N1 mechanism on tables it has never seen, by comparing general methods rather than adding header words?",
+  "link": "Does knowledge extracted from tables (row claims) measurably help C on new problems (ablation: C with and without claims)?"
+ },
+ "material": {
+  "R_requests": {
+   "what": "60 fresh shopper messages written by a new independent Claude agent (fresh context; reads no package, store, code or earlier evaluation; a brief different from R3-P and N1 Q). Planned mix, by the author's brief (the reference, not the brief, decides each message's type): about 20 naming the product (some also mentioning owned products or alternatives), about 25 describing only a problem or goal (some fitting one family, some two or more, some better solved without buying), about 10 dominated by context objects, owned products or alternatives, about 5 with too little to choose. Families drawn from everyday home appliances and electronics, including families PEE has no teaching for.",
+   "reference": "two blind Claude-agent annotators with evaluation/i3/c-annotation-guide.md (written before annotation), adjudicated by a third; SHA-256 sealed before any C run",
+   "independence": "never seen by the developer before sealing; Claude-authored (tier T1)"
+  },
+  "H3_tables": {
+   "what": "rows sampled with a fixed seed from relation tables never sampled before (not in D1 validation, N1 development, H1 or H2), in documents of the owner packages, disjoint by table and by header template from every table used so far (a table whose header equals the header of a used table is excluded). Stratified by document; at most 6 rows per table.",
+   "reference": "two blind Claude-agent annotators with the N1 L1 guide (evaluation/n1/l1-annotation-guide.md, unchanged), adjudicated by a third; sealed before any run",
+   "independence_limit": "the developer saw every package table's HEADER during the D1 column-role adjudication (first increment); cells of these tables were never seen. Tables come from the same owner packages and categories already studied: this is document- and template-level held-out, not new-source held-out. Declared in the report; no claim of independence beyond this."
+  },
+  "development": {
+   "C": "R3-P requests (49) and N1 Q requests (48) with their adjudicated references (spent); development only",
+   "T": "N1 development rows (40) and N1 H1/H2 rows (80) with their adjudicated references (spent after the N1 first run); development only"
+  }
+ },
+ "arms": {
+  "C": {
+   "C0": "baseline: the operational path as it is (recognised category = commitment; advice.questions; need interpretation arm B)",
+   "C1": "C shadow interpretation without row claims",
+   "C2": "C shadow interpretation with row claims (same code, claims switched on)"
+  },
+  "T": {
+   "T1": "N1 frozen mechanism n1.1 (evaluation/n1/freeze.json)",
+   "T2": "the method chosen on development among at most three general alternatives (compared and recorded before freezing); the others are reported on H3 as secondary, never chosen after the held-out run"
+  }
+ },
+ "metrics": {
+  "C_objects": "object mentions: span found, role (requested, owned, context, alternative, rejected) correct; invented objects",
+  "C_named": "messages naming a product: requested family correct (C1/C2 vs C0)",
+  "C_goals": "stated goals: expressed needs found where the category has a label list (R3-P labels); otherwise reported as not measured",
+  "C_hypotheses": "problem and context messages: a reference primary family among the hypotheses; hypotheses in plausible or acceptable families (justified); hypotheses outside them (invented); per message and pooled",
+  "C_justification": "every hypothesis carries reason, support references, conditions and counter-evidence fields (structural, must be 100%); a blind judge rates on a sample whether the stated support is relevant to the message",
+  "C_sufficiency": "action (commit to one family / keep several and ask / abstain) vs the reference's sufficiency: correct abstentions, unjustified abstentions, unjustified commitments",
+  "C_questions": "blind pairwise judgement C question vs C0 question per message (better, equal, worse) and whether the C question targets the reference's key uncertainty (yes, partly, no)",
+  "C_harm": "answers changed by C (must be 0), hypotheses turned into constraints, exclusions or ranking inputs (0), a family the message rejects hypothesised (0)",
+  "T_relations": "as N1 L1: exact link precision and recall (pair, direction, kind), pair precision and recall, invented pairs, qualifier attachment, unsupported upgrades; per document; plus provenance completeness of every claim"
+ },
+ "thresholds": {
+  "C_shadow_capability_demonstrated": "on R: problem and context messages: primary-family hit at least 20 points above C0 AND invented hypotheses at most 15% of hypotheses; unjustified commitments not above C0; judge prefers the C question in at least 60% of non-tied pairs; justification fields 100%; harm counters 0. Otherwise reported as not demonstrated (a valid result).",
+  "link_claims_help_C": "C2 above C1 on primary-family hit by at least 3 messages with invented hypotheses not higher",
+  "T_admission_to_live_store": "unchanged from N1: on H3 exact link precision >= 0.80, recall >= 0.60, invented pairs <= 10%, unsupported upgrades 0, rebuild equal",
+  "T_improvement_claim": "T2 exact link F1 on H3 above T1 by at least 0.10 with invented pairs not higher"
+ },
+ "stop_rules": [
+  "per part, at most 3 reformulations after its first development run; then freeze (hashes committed) before any held-out run",
+  "no tuning after a held-out run; later runs are labelled tuned and never called held-out",
+  "C never changes an answer, a constraint, an exclusion or a ranking input; a hypothesis is never a need attributed to the user",
+  "if a fundamental architectural choice not yet agreed becomes necessary, stop only that part and document the alternatives"
+ ],
+ "sources": "cited literature is verified before use (evaluation/i3/source-verification.json); unverified items ground no design choice"
+}
