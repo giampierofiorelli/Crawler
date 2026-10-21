@@ -228,3 +228,28 @@ change.
 | Goal-first reading over it | not validated (development criterion not met) | inference |
 | Questions with a cause | **operational** | integration |
 | No silent loss of stated limits | **operational**, partial | integration |
+
+## 10. Correction (2026-10-21, after the owner review)
+
+**What §8 said.** "Neither the knowledge nor its representation is the bottleneck any more."
+
+**Why that is too definitive.** The owner's review
+(`.claude/skills/pee-guided-learning/references/owner-review-g1b-2026-10-21.md`) points out three things:
+- the tests show that the structure can be built, rebuilt and read in both directions, not that its links are
+  scientifically correct;
+- the N1 roles the projection relies on did not reach their accuracy threshold (H1 exact 0.37), so some roles and links
+  may be wrong or missing;
+- a perfect retriever cannot correct errors in the knowledge it indexes.
+
+**The corrected reading.** Three capabilities remain distinct and unmeasured, each needing its own measure:
+1. retrieval accuracy;
+2. the scientific correctness of the retrieved links;
+3. the final strategy decision.
+
+**On the comparison.** The PPMI similarity tested here (M3) is an elementary distributional method learned from the
+packages. It is **not** a test of a pretrained sentence-embedding model, and its failure says nothing about one. The
+§8 sequencing ("A first, then B") is superseded: the owner will send one consolidated prompt comparing:
+- A: typed situations;
+- B: local embeddings;
+- A+B;
+- A+B with relation checks.
