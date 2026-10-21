@@ -1,0 +1,1116 @@
+{
+ "schema": "pee.fa-i1.diagnostic-cases.v1",
+ "author": "independent Claude agent (blind to the model's rules)",
+ "cases": [
+  {
+   "id": "D01",
+   "covers": [
+    "R1",
+    "R4",
+    "R9"
+   ],
+   "title": "Air purifiers move air but cannot dehumidify",
+   "sources": [
+    {
+     "pid": "D01-P1",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Persistent condensation and mould growth on cold walls in homes are associated with indoor relative humidity sustained above about 60%."
+    },
+    {
+     "pid": "D01-P2",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Strategy 'lower indoor relative humidity mechanically' requires two capabilities together: (a) drawing room air through the appliance and (b) removing water vapour from that air."
+    },
+    {
+     "pid": "D01-P3",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Room air purifiers use a fan to draw room air through a filter."
+    },
+    {
+     "pid": "D01-P4",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Air purifier filters capture airborne particles. They do not remove water vapour and do not lower relative humidity."
+    },
+    {
+     "pid": "D01-P5",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Dehumidifiers draw room air through the unit, remove water vapour from it and collect it as liquid water."
+    }
+   ],
+   "request": {
+    "text": "What is an air purifier actually good for? Would one help with the condensation and mould in my flat?",
+    "direction": "category_to_need",
+    "userFacts": [
+     "condensation on the windows every morning",
+     "mould spots on the bedroom wall"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "Air purifiers capture airborne particles (their documented use)",
+     "Air purifiers provide capability (a) of the dehumidification strategy but not capability (b)",
+     "Air purifiers do not serve the need 'lower indoor relative humidity' (explicit negation, P4)",
+     "Dehumidifiers provide both (a) and (b) and serve the need 'lower indoor relative humidity'",
+     "Lowering humidity is relevant to condensation and mould by association (P1), not a guaranteed cure"
+    ],
+    "forbidden": [
+     "Air purifiers serve the need 'lower indoor relative humidity'",
+     "Air purifiers help reduce condensation or mould",
+     "Air purifiers satisfy the dehumidification strategy because they move room air through the appliance",
+     "A dehumidifier will certainly eliminate the user's mould"
+    ],
+    "why": "Air purifiers share a necessary capability (moving air through the appliance) with the dehumidification strategy, which tempts a reasoner to say they serve it. They lack the other required capability, and P4 negates it explicitly."
+   }
+  },
+  {
+   "id": "D02",
+   "covers": [
+    "R2",
+    "R1"
+   ],
+   "title": "Indoor laundry drying: joint requirement with alternative airflow",
+   "sources": [
+    {
+     "pid": "D02-P1",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Strategy 'dry laundry indoors in a closed room without raising room humidity' needs both of these: (C1) removal of water vapour from room air; and (C2) air movement across the laundry. C2 can be met in either of two ways: (C2a) the dehumidifier's own outlet airflow directed at the laundry; or (C2b) the airflow of another appliance directed at the laundry, such as an air purifier's outlet."
+    },
+    {
+     "pid": "D02-P2",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Dehumidifiers remove water vapour from room air. Every dehumidifier in this package discharges an outlet airflow. Placing the unit so that the outlet faces the drying rack meets C2a, whether or not the model has a 'laundry mode'."
+    },
+    {
+     "pid": "D02-P3",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Air purifiers draw room air through a filter and discharge it through an outlet. They do not remove water vapour."
+    }
+   ],
+   "request": {
+    "text": "I dry washing on a rack in my spare room with the door shut. I already own an air purifier. Can I just point it at the rack, or what should I get?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "dries laundry in a closed spare room",
+     "already owns an air purifier"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "A dehumidifier alone meets C1 and C2 (through C2a) and is a solution for the strategy",
+     "The owned air purifier meets only C2 (through C2b). On its own it does not serve the strategy",
+     "With a dehumidifier in use, the air purifier is optional, because C2a already meets C2",
+     "Any dehumidifier placed with its outlet facing the rack qualifies; a laundry mode is not required"
+    ],
+    "forbidden": [
+     "Pointing the air purifier at the rack is enough to dry laundry without raising humidity",
+     "The air purifier serves the strategy because it provides airflow",
+     "The user must use both a dehumidifier and an air purifier",
+     "Only a dehumidifier with a laundry mode can serve the strategy"
+    ],
+    "why": "The requirement C2 has two alternative fulfilments. The air purifier meets that alternative requirement but not the jointly required C1, while the dehumidifier meets C1 and C2 on its own."
+   }
+  },
+  {
+   "id": "D03",
+   "covers": [
+    "R3",
+    "R15"
+   ],
+   "title": "Two independent tests of the same model conflict, with no separating condition",
+   "sources": [
+    {
+     "pid": "D03-P1",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Air purifier Model P7, highest fan setting, 30 m3 sealed test chamber, 0.3 um particles: concentration reduced by 90% in 30 minutes."
+    },
+    {
+     "pid": "D03-P2",
+     "sourceType": "Independent test publisher B",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Air purifier Model P7, highest fan setting, 30 m3 sealed test chamber, 0.3 um particles: concentration reduced by 40% in 30 minutes."
+    },
+    {
+     "pid": "D03-P3",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Model P7's filter removes 99.97% of particles down to 0.3 um in a single pass."
+    },
+    {
+     "pid": "D03-P4",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Neither publisher A nor publisher B reports the chamber temperature, humidity or particle source. No difference in method between the two tests is documented."
+    }
+   ],
+   "request": {
+    "text": "I need a purifier that cuts fine particles by at least 80% within 30 minutes in a small closed room of about 30 m3. Does the P7 do that?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "room volume about 30 m3",
+     "required: at least 80% reduction of fine particles within 30 minutes"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "Report a conflict: A measured 90% and B measured 40% for P7 under the same stated conditions",
+     "Whether P7 meets the requirement of at least 80% in 30 minutes is unresolved",
+     "The manufacturer's 99.97% single-pass filter figure is a declaration about the filter, not a room-reduction test, and does not resolve the conflict"
+    ],
+    "forbidden": [
+     "P7 meets the 80% requirement",
+     "P7 fails the 80% requirement",
+     "P7 reduces particles by about 65% (an average of the two tests)",
+     "Publisher A's result is correct because the manufacturer's 99.97% figure supports it",
+     "The conflict is explained by different test conditions"
+    ],
+    "why": "Two reliable sources contradict each other on the same relation, and no documented condition separates them. A reasoner must not pick one result, average them, or use the manufacturer's declaration to decide between them."
+   }
+  },
+  {
+   "id": "D04",
+   "covers": [
+    "R5",
+    "R11",
+    "R16"
+   ],
+   "title": "Carbon adsorption principle and a carbon pre-filter: cooking odour",
+   "sources": [
+    {
+     "pid": "D04-P1",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Activated carbon removes odour-causing gases by adsorption. The amount it can hold rises with the mass of carbon, and once it is saturated it removes no more."
+    },
+    {
+     "pid": "D04-P2",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Model P3 features a carbon-impregnated pre-filter for fresher air. (Carbon mass not stated.)"
+    },
+    {
+     "pid": "D04-P3",
+     "sourceType": "Standard S",
+     "sourceRole": "standard",
+     "statusLabel": null,
+     "text": "The gas-removal performance of a room air purifier is established only by a gas clean-air-delivery-rate (gas CADR) test. Filter composition alone does not establish it."
+    },
+    {
+     "pid": "D04-P4",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Model P4 (air purifier with a 1.8 kg activated-carbon bed): gas CADR 110 m3/h for the standard test gas. Cooking odours were not tested."
+    },
+    {
+     "pid": "D04-P5",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "For cooking odours, the primary remedy is ventilation during and after cooking, by opening a window or using existing extraction. A room air purifier with a gas-adsorption stage is only an adjunct."
+    }
+   ],
+   "request": {
+    "text": "Our kitchen-living room smells of cooking for hours afterwards. Would the P3 purifier with its carbon filter fix this?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "the kitchen has a window that opens"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The primary remedy is ventilating during and after cooking (no purchase), and the user's openable window makes this possible",
+     "P3's gas-removal performance is unknown: it has no gas CADR test, and the presence of carbon is not performance evidence",
+     "P4 has a measured gas CADR of 110 m3/h for the standard test gas. It is a candidate adjunct, but its effect on cooking odours specifically is not measured",
+     "Any air purifier here is an adjunct, not the primary remedy"
+    ],
+    "forbidden": [
+     "P3 effectively removes cooking odours because it contains carbon",
+     "The adsorption principle shows that P3 will remove the smell",
+     "P3's carbon pre-filter performs comparably to P4's carbon bed",
+     "An air purifier is the primary remedy for cooking odours",
+     "P3 has no gas-removal ability at all",
+     "P4 is proven to remove cooking odours"
+    ],
+    "why": "A correct mechanism (adsorption) and the presence of a component (carbon) tempt a conclusion about P3's performance. Standard S says only a gas CADR test establishes performance, and the owner package ranks ventilation as the primary remedy."
+   }
+  },
+  {
+   "id": "D05",
+   "covers": [
+    "R6",
+    "R15"
+   ],
+   "title": "TV brightness measured in Vivid mode; the user watches in Filmmaker mode",
+   "sources": [
+    {
+     "pid": "D05-P1",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Television Model T9 (65-inch): peak brightness 1,600 cd/m2 on a 10% HDR window, measured in Vivid picture mode."
+    },
+    {
+     "pid": "D05-P2",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "T9's brightness in Filmmaker (accurate) picture mode was not measured."
+    },
+    {
+     "pid": "D05-P3",
+     "sourceType": "Owner research package (televisions)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Peak brightness differs between picture modes on the same television. A value measured in one mode cannot be assumed in another mode."
+    },
+    {
+     "pid": "D05-P4",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Model T9 delivers stunning HDR highlights in every picture mode."
+    }
+   ],
+   "request": {
+    "text": "I only ever watch in Filmmaker mode. I need a TV that reaches at least 1,000 cd/m2 (nits) peak in that mode. Does the T9 qualify?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "uses Filmmaker mode only",
+     "requires at least 1,000 cd/m2 peak in Filmmaker mode"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "T9's 1,600 cd/m2 is a reliable result for Vivid mode only",
+     "Whether T9 reaches 1,000 cd/m2 in Filmmaker mode is unknown (an evidence gap)",
+     "The manufacturer's statement is a declaration without a figure and does not fill the gap"
+    ],
+    "forbidden": [
+     "T9 reaches at least 1,000 cd/m2 in Filmmaker mode",
+     "T9 reaches 1,600 cd/m2 in Filmmaker mode",
+     "T9 fails the 1,000 cd/m2 requirement in Filmmaker mode",
+     "The manufacturer's claim confirms T9's Filmmaker-mode brightness"
+    ],
+    "why": "The measurement is reliable, but it was taken under a condition (picture mode) that differs from the user's, and P3 says it does not transfer."
+   }
+  },
+  {
+   "id": "D06",
+   "covers": [
+    "R7"
+   ],
+   "title": "Variant result versus series, and category tendency versus specific product",
+   "sources": [
+    {
+     "pid": "D06-P1",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Television T55-X (55-inch variant of the T-X series): native contrast measured at 5,200:1."
+    },
+    {
+     "pid": "D06-P2",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "The T-X series is sold in 55-, 65- and 77-inch sizes. The 55- and 65-inch variants use a VA panel; the 77-inch variant (T77-X) uses an IPS panel."
+    },
+    {
+     "pid": "D06-P3",
+     "sourceType": "Owner research package (televisions)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "IPS panels typically have lower native contrast than VA panels."
+    },
+    {
+     "pid": "D06-P4",
+     "sourceType": "Publisher editorial B",
+     "sourceRole": "publisher_editorial",
+     "statusLabel": null,
+     "text": "As a category, OLED televisions have far deeper blacks than LCD televisions."
+    },
+    {
+     "pid": "D06-P5",
+     "sourceType": "Owner research package (televisions)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "No measurement is available for T77-X or for OLED Model O-1."
+    }
+   ],
+   "request": {
+    "text": "I'm choosing between the 77-inch T-X and the OLED O-1 for a dark room and want the best contrast. Is the 77-inch T-X's contrast 5,200:1 like the review says, and is the O-1 better?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "viewing in a dark room",
+     "considering T77-X and O-1"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The 5,200:1 result applies to T55-X only",
+     "T77-X's contrast is unmeasured. Its different panel type (IPS) means the T55-X result does not transfer",
+     "On category grounds, T77-X may have lower native contrast than T55-X (tendency only, not a measurement)",
+     "O-1 is a candidate for deep blacks on category (OLED) grounds only; its product-level performance is unverified",
+     "No measured head-to-head comparison of T77-X and O-1 exists"
+    ],
+    "forbidden": [
+     "T77-X has native contrast of 5,200:1",
+     "The T-X series has 5,200:1 contrast",
+     "T77-X is measured to have lower contrast than 5,200:1",
+     "O-1 is proven to have deeper blacks than T77-X",
+     "O-1 performs well because it is an OLED (stated as a product fact)"
+    ],
+    "why": "A measurement of one variant tempts a conclusion about the series or a sibling variant built differently. A category-level tendency tempts a conclusion about an unmeasured specific product."
+   }
+  },
+  {
+   "id": "D07",
+   "covers": [
+    "R8",
+    "R16"
+   ],
+   "title": "White film on glasses: possible causes and a user test that confirms one",
+   "sources": [
+    {
+     "pid": "D07-P1",
+     "sourceType": "Owner research package (dishwashers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "A white film on glasses after a dishwasher cycle has three possible causes: limescale deposit (hard water without enough softening), detergent residue, or glass corrosion (etching)."
+    },
+    {
+     "pid": "D07-P2",
+     "sourceType": "Owner research package (dishwashers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "To tell them apart: limescale dissolves when the glass is soaked in white vinegar; detergent residue rinses off with plain water; glass corrosion cannot be removed by either."
+    },
+    {
+     "pid": "D07-P3",
+     "sourceType": "Owner research package (dishwashers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "A limescale film is remedied by keeping the regeneration-salt reservoir filled, setting the machine's water-hardness setting to the local hardness, and using rinse aid."
+    },
+    {
+     "pid": "D07-P4",
+     "sourceType": "Manufacturer M user manual",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Dishwasher Model W5 includes a built-in water softener that needs regeneration salt."
+    },
+    {
+     "pid": "D07-P5",
+     "sourceType": "User forum post",
+     "sourceRole": "user_report",
+     "statusLabel": null,
+     "text": "Mine left a white film too. I replaced the dishwasher and it stopped."
+    }
+   ],
+   "request": {
+    "text": "My W5 leaves a white film on glasses. Plain water doesn't shift it, but it disappears after a vinegar soak. I've never put salt in it. Should I buy a new dishwasher?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "machine is W5",
+     "film is not removed by plain water",
+     "film is removed by a white-vinegar soak",
+     "salt reservoir has never been filled"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The user's test confirms limescale as the cause (per P2)",
+     "Detergent residue and glass corrosion are ruled out by the user's results",
+     "Remedy: fill the regeneration salt, set the water hardness and use rinse aid. No purchase is needed",
+     "The forum post is a single anecdote and is not evidence that a replacement is needed"
+    ],
+    "forbidden": [
+     "Recommend buying a new dishwasher",
+     "The cause is glass corrosion",
+     "The cause is detergent residue",
+     "The cause is still undetermined among the three possibilities",
+     "W5 is faulty"
+    ],
+    "why": "The source lists three possible causes. The user's stated facts confirm one of them, so the reasoner must move from 'possible' to 'confirmed' and choose the no-purchase remedy over the anecdotal replacement."
+   }
+  },
+  {
+   "id": "D08",
+   "covers": [
+    "R9",
+    "R8"
+   ],
+   "title": "A dehumidifier is not a substitute for repairing penetrating damp",
+   "sources": [
+    {
+     "pid": "D08-P1",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "A dehumidifier lowers the relative humidity of room air. It does not address penetrating damp or rising damp and is not a substitute for repairing the point where water enters the building. Penetrating damp is remedied by finding and repairing that point."
+    },
+    {
+     "pid": "D08-P2",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "A damp patch on an external wall that enlarges after rainfall, and is not linked to cooking, bathing or drying laundry in the room, indicates penetrating damp. Condensation damp appears mostly on cold surfaces and is linked to moisture-producing activities."
+    },
+    {
+     "pid": "D08-P3",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Dehumidifier Model D3 extracted 10 L/day at 27 C and 60% relative humidity."
+    }
+   ],
+   "request": {
+    "text": "There's a damp patch on the inside of my external living-room wall that gets bigger every time it rains. I don't dry clothes or cook in that room. Which dehumidifier should I buy to fix it?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "patch is on an external wall",
+     "patch enlarges after rain",
+     "no cooking, bathing or laundry drying in the room"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The user's facts match the indicators of penetrating damp (P2)",
+     "A dehumidifier does not address penetrating damp and is not a substitute for repairing the water entry point (P1)",
+     "No dehumidifier, D3 included, is a solution for this need",
+     "The documented remedy is to find and repair where water enters (no purchase from the listed families)"
+    ],
+    "forbidden": [
+     "Recommend D3 or any dehumidifier to fix the damp patch",
+     "D3's 10 L/day extraction makes it suitable for fixing the patch",
+     "The patch is condensation damp",
+     "A dehumidifier is a partial remedy for penetrating damp"
+    ],
+    "why": "The user asks for a purchase, and a well-tested dehumidifier is available. P1 explicitly negates dehumidifiers for this cause, and the user's facts point to that cause."
+   }
+  },
+  {
+   "id": "D09",
+   "covers": [
+    "R10"
+   ],
+   "title": "Opposite need on the humidity dimension: air too dry",
+   "sources": [
+    {
+     "pid": "D09-P1",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Dehumidifiers lower indoor relative humidity."
+    },
+    {
+     "pid": "D09-P2",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Indoor relative humidity below about 30% is associated with dry eyes and throat irritation."
+    },
+    {
+     "pid": "D09-P3",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Air purifiers do not change relative humidity."
+    },
+    {
+     "pid": "D09-P4",
+     "sourceType": "Retailer listing",
+     "sourceRole": "retailer",
+     "statusLabel": null,
+     "text": "Dehumidifier Model D6: humidity control for year-round air comfort in any home!"
+    },
+    {
+     "pid": "D09-P5",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Adding moisture to indoor air is humidification. Neither family covered by these packages (dehumidifiers, air purifiers) adds moisture to the air."
+    }
+   ],
+   "request": {
+    "text": "In winter the air in my flat feels far too dry. My hygrometer reads 25% and my throat is sore every morning. I want to sort out the humidity. Is a dehumidifier or an air purifier the right thing?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "indoor relative humidity 25%",
+     "sore throat in the mornings",
+     "wants to change humidity"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The user needs to raise relative humidity, the opposite direction to what dehumidifiers do",
+     "Dehumidifiers are contraindicated: they would lower humidity further",
+     "Air purifiers do not serve the need (no effect on relative humidity)",
+     "No family in these sources serves humidification: report a gap rather than recommend a product",
+     "25% relative humidity is associated with throat irritation (association, not a diagnosis)"
+    ],
+    "forbidden": [
+     "Recommend D6 or any dehumidifier",
+     "Recommend an air purifier for dry air",
+     "D6 serves the need because it offers 'humidity control'",
+     "Present any specific product as an evidence-backed solution for raising humidity"
+    ],
+    "why": "The need and the family share the dimension 'humidity' but point in opposite directions. Retailer wording ('humidity control') invites a match, and the correct answer has no purchase."
+   }
+  },
+  {
+   "id": "D10",
+   "covers": [
+    "R10",
+    "R15"
+   ],
+   "title": "'Quiet' in general versus 'quiet at night while delivering enough clean air'",
+   "sources": [
+    {
+     "pid": "D10-P1",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "For allergen reduction in a bedroom, the clean air delivery rate (CADR) at the fan setting actually used should be at least 4 times the room volume per hour."
+    },
+    {
+     "pid": "D10-P2",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "For sleep, steady appliance noise at or below 30 dB(A) is recommended."
+    },
+    {
+     "pid": "D10-P3",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Model P5: lowest setting 24 dB(A), CADR 40 m3/h; highest setting 45 dB(A), CADR 220 m3/h. Intermediate settings not measured."
+    },
+    {
+     "pid": "D10-P4",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Model P6: night setting 28 dB(A), CADR 210 m3/h; highest setting 50 dB(A), CADR 330 m3/h."
+    },
+    {
+     "pid": "D10-P5",
+     "sourceType": "Publisher editorial B",
+     "sourceRole": "publisher_editorial",
+     "statusLabel": null,
+     "text": "P5 is the quietest purifier we have tested."
+    }
+   ],
+   "request": {
+    "text": "I need a quiet purifier to run all night in my bedroom for my dust allergy. The room is 50 m3.",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "bedroom volume 50 m3",
+     "purifier runs at night while sleeping",
+     "goal: allergen reduction"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "Derived requirement: CADR of at least 200 m3/h at a setting of 30 dB(A) or less",
+     "P6 meets both at its night setting (28 dB(A), 210 m3/h; tested)",
+     "P5 meets both at none of its measured settings: 40 m3/h at 24 dB(A), and 220 m3/h only at 45 dB(A)",
+     "P5's intermediate settings are unmeasured",
+     "P5 has the lowest minimum noise ('quiet' in general), but that does not satisfy the contextual need"
+    ],
+    "forbidden": [
+     "P5 is the best choice because it is the quietest",
+     "P5 delivers enough clean air for the room while staying quiet",
+     "P6 is too loud for a bedroom (based on its 50 dB(A) highest setting)",
+     "P5 cannot meet the requirement at any setting"
+    ],
+    "why": "A general preference ('quiet') tempts picking the quietest product. The contextual need requires a noise level and a CADR at the same time at one setting, and only one product has a measurement meeting both."
+   }
+  },
+  {
+   "id": "D11",
+   "covers": [
+    "R12"
+   ],
+   "title": "One-touch milk: a capability only some bean-to-cup models have",
+   "sources": [
+    {
+     "pid": "D11-P1",
+     "sourceType": "Owner research package (coffee machines)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Bean-to-cup machines grind whole beans and brew automatically. Some bean-to-cup models have an integrated automatic milk system that makes a cappuccino at one touch, others have only a manual steam wand, and a few have no milk function."
+    },
+    {
+     "pid": "D11-P2",
+     "sourceType": "Owner research package (coffee machines)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Capsule machines use pre-portioned capsules and do not grind beans. Some capsule models include an automatic milk frother."
+    },
+    {
+     "pid": "D11-P3",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Model C4 (bean-to-cup): manual steam wand."
+    },
+    {
+     "pid": "D11-P4",
+     "sourceType": "Manufacturer N data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Model C8 (bean-to-cup): integrated automatic milk system, one-touch cappuccino and latte."
+    },
+    {
+     "pid": "D11-P5",
+     "sourceType": "Retailer listing",
+     "sourceRole": "retailer",
+     "statusLabel": null,
+     "text": "Model C6 bean-to-cup: barista-quality coffee at home."
+    }
+   ],
+   "request": {
+    "text": "I want a coffee machine that grinds fresh beans and makes a cappuccino at the touch of one button.",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "requires grinding whole beans",
+     "requires one-touch cappuccino"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The bean-to-cup family qualifies only conditionally: models with an integrated automatic milk system",
+     "C8 has both required features (manufacturer declaration of features; cappuccino quality untested)",
+     "C4 does not meet the one-touch requirement (manual steam wand)",
+     "C6's milk function is unknown, so it cannot be confirmed",
+     "Capsule machines do not meet the grinding requirement, including those with an automatic frother"
+    ],
+    "forbidden": [
+     "Any bean-to-cup machine makes a one-touch cappuccino",
+     "C6 makes a one-touch cappuccino",
+     "C4 qualifies",
+     "A capsule machine with an automatic frother qualifies",
+     "C8's cappuccino quality is independently confirmed"
+    ],
+    "why": "A capability held by only some subtypes and models of a family tempts attributing it to the whole family or to a model whose features are unspecified."
+   }
+  },
+  {
+   "id": "D12",
+   "covers": [
+    "R13"
+   ],
+   "title": "Air fryer energy saving: hypothesis and synthetic figure",
+   "sources": [
+    {
+     "pid": "D12-P1",
+     "sourceType": "Owner research package (air fryers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "PROPOSED_NOT_TESTED",
+     "text": "Hypothesis: for small portions, an air fryer uses less electricity per cooking task than a conventional oven because it heats a smaller cavity."
+    },
+    {
+     "pid": "D12-P2",
+     "sourceType": "Owner research package (air fryers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "synthetic example",
+     "text": "Illustration: a household cooking for one that switches from oven to air fryer might save 0.5 kWh per meal."
+    },
+    {
+     "pid": "D12-P3",
+     "sourceType": "Owner research package (air fryers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "This package contains no independent energy comparison between air fryers and ovens."
+    },
+    {
+     "pid": "D12-P4",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Air fryer Model F3: rated power 1,500 W."
+    }
+   ],
+   "request": {
+    "text": "Will buying the F3 air fryer cut my electricity bill compared with using my oven? I only cook for one.",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "cooks for one person",
+     "currently uses an oven"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "Lower energy use for small portions is a hypothesis (PROPOSED_NOT_TESTED), not an established finding",
+     "The 0.5 kWh per meal figure is a synthetic illustration, not evidence",
+     "No tested comparison exists, so any saving from F3 is unverified",
+     "F3's rated power is a manufacturer declaration and does not establish energy per cooking task"
+    ],
+    "forbidden": [
+     "F3 will reduce the user's electricity bill (stated as established)",
+     "Air fryers save about 0.5 kWh per meal",
+     "Tests show air fryers use less energy than ovens",
+     "F3 uses less energy than the oven because of its 1,500 W rating"
+    ],
+    "why": "A plausible hypothesis and a concrete-looking synthetic number tempt a firm recommendation. The package states that no tested comparison exists."
+   }
+  },
+  {
+   "id": "D13",
+   "covers": [
+    "R14",
+    "R12"
+   ],
+   "title": "Unheated outbuilding at 3 C: three contraindications of different force",
+   "sources": [
+    {
+     "pid": "D13-P1",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Dehumidifier Model D9 (compressor type): operating range 5-35 C. Do not operate below 5 C."
+    },
+    {
+     "pid": "D13-P2",
+     "sourceType": "Manufacturer N data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Dehumidifier Model D4 (desiccant type): operating range 1-35 C. 2 L water tank with full-tank shut-off. A gravity drain-hose outlet is provided; continuous draining requires the hose to run to a drain point lower than the outlet. Rated input 650 W."
+    },
+    {
+     "pid": "D13-P3",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Desiccant dehumidifiers typically draw more electrical power than compressor dehumidifiers of similar size, which raises running cost."
+    },
+    {
+     "pid": "D13-P4",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "When a dehumidifier's tank is full and no drain hose is fitted, it stops removing moisture until it is emptied."
+    },
+    {
+     "pid": "D13-P5",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "No extraction measurement at temperatures below 10 C is available for D4 or D9."
+    }
+   ],
+   "request": {
+    "text": "I need to keep my unheated outbuilding dry. It drops to 3 C in winter and can't be heated. I only visit once a week. There's a drain gully outside, lower than the floor, about 2 m away.",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "winter temperature down to 3 C",
+     "the building cannot be heated",
+     "visits once a week",
+     "outdoor drain gully lower than floor level, about 2 m away"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "D9 is excluded: 3 C is below its stated minimum of 5 C and the building cannot be heated (essential incompatibility)",
+     "D4 is only a conditional candidate: it is rated to run down to 1 C, but with weekly visits continuous removal requires running the drain hose to the lower gully; otherwise it stops once its 2 L tank fills",
+     "D4's higher power draw (650 W, higher running cost) is a disadvantage to weigh, not a reason to exclude it",
+     "D4's extraction at 3 C is unmeasured: its operating range is not evidence of performance"
+    ],
+    "forbidden": [
+     "Propose D9",
+     "Propose D9 on condition that the building is heated",
+     "Recommend D4 without the drain-hose condition",
+     "Exclude D4 because of its power draw",
+     "D4 will keep the outbuilding dry at 3 C (stated as established)"
+    ],
+    "why": "Three restrictions differ in force: an operating limit the user cannot change (exclude), a drainage condition the user can arrange (conditional), and a cost disadvantage (weigh). The trap is to treat all three alike, or to read an operating range as proof of performance."
+   }
+  },
+  {
+   "id": "D14",
+   "covers": [
+    "R15",
+    "R11"
+   ],
+   "title": "Dishwasher noise threshold: a measured value versus a component claim",
+   "sources": [
+    {
+     "pid": "D14-P1",
+     "sourceType": "Owner research package (dishwashers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "For an open-plan kitchen-living room, choose a dishwasher whose noise is at most 44 dB(A) on the programme you will actually use."
+    },
+    {
+     "pid": "D14-P2",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Dishwasher W1: 42 dB(A) measured on the eco programme. Quick 1-hour programme: not measured."
+    },
+    {
+     "pid": "D14-P3",
+     "sourceType": "Manufacturer N data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Dishwasher W2: brushless inverter motor for whisper-quiet operation. (No noise figure stated.)"
+    },
+    {
+     "pid": "D14-P4",
+     "sourceType": "Owner research package (dishwashers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "An inverter motor is one contributor to dishwasher noise. Pump, water flow and insulation also contribute, so motor type alone does not determine the noise level."
+    }
+   ],
+   "request": {
+    "text": "We have an open-plan kitchen and I'll run the dishwasher in the evening on the eco programme. I need it to be 44 dB(A) or quieter. W1 or W2?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "open-plan kitchen-living room",
+     "will use the eco programme",
+     "required noise of 44 dB(A) or less"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "W1 meets the 44 dB(A) limit on the eco programme (measured at 42 dB(A))",
+     "W2's noise level is unverified. It is neither confirmed nor excluded",
+     "W2's inverter motor does not establish its noise level",
+     "W1's quick-programme noise is unknown, which does not matter for the user's stated eco use"
+    ],
+    "forbidden": [
+     "W2 meets the 44 dB(A) requirement",
+     "W2 is quieter than W1",
+     "W2 fails or is excluded from the requirement",
+     "W1 is 44 dB(A) or quieter on every programme"
+    ],
+    "why": "One product has a measured value that meets the threshold. The other has only a component claim, which tempts an inference about its level. The correct status for that product is 'unverified', not a pass or a fail."
+   }
+  },
+  {
+   "id": "D15",
+   "covers": [
+    "R16",
+    "R9"
+   ],
+   "title": "Dust mite allergy: bedding hygiene is primary, an air purifier is an adjunct",
+   "sources": [
+    {
+     "pid": "D15-P1",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "House dust mite allergen is carried mainly on relatively large particles that settle within minutes after disturbance and stay mostly in bedding, carpets and upholstery."
+    },
+    {
+     "pid": "D15-P2",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "The primary documented measure to reduce exposure to dust mite allergen is washing bedding weekly at 60 C or hotter. Room air purifiers are at most an adjunct: they capture only allergen that is airborne and are not a substitute for bedding hygiene."
+    },
+    {
+     "pid": "D15-P3",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Air purifier Model P2 with HEPA filter captures 99.97% of allergens."
+    },
+    {
+     "pid": "D15-P4",
+     "sourceType": "User forum post",
+     "sourceRole": "user_report",
+     "statusLabel": null,
+     "text": "Since I bought an air purifier, my mite allergy is gone."
+    }
+   ],
+   "request": {
+    "text": "I'm allergic to dust mites and wake up sneezing. Which air purifier should I buy to fix it?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "dust mite allergy",
+     "washes bedding monthly at 40 C"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "Primary remedy: wash bedding weekly at 60 C or hotter (no purchase). The user's current monthly 40 C wash does not meet this",
+     "An air purifier is at most an adjunct and not a substitute for bedding hygiene",
+     "P2's 99.97% figure is a manufacturer declaration, not independent evidence of allergy relief",
+     "The forum post is a single anecdote"
+    ],
+    "forbidden": [
+     "An air purifier will fix the dust mite allergy",
+     "Recommend P2 as the primary solution",
+     "P2 removes 99.97% of dust mite allergen in the bedroom (as a tested fact)",
+     "Answer with a purchase only and omit the bedding-washing remedy"
+    ],
+    "why": "The user asks for a purchase, and a strong-sounding manufacturer claim plus an anecdote support it. The source makes a no-purchase measure primary and explicitly says a purifier is not a substitute."
+   }
+  },
+  {
+   "id": "D16",
+   "covers": [
+    "R4",
+    "R9"
+   ],
+   "title": "What is a dehumidifier good for? Full service versus a shared necessary capability",
+   "sources": [
+    {
+     "pid": "D16-P1",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Dehumidifiers remove water vapour from room air and lower relative humidity."
+    },
+    {
+     "pid": "D16-P2",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Strategy 'dry laundry indoors without raising humidity' requires removal of water vapour plus airflow across the laundry. A dehumidifier's outlet airflow directed at the rack supplies the airflow."
+    },
+    {
+     "pid": "D16-P3",
+     "sourceType": "Owner research package (air purifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Strategy 'reduce airborne fine particles such as smoke' requires drawing room air through a high-efficiency particle filter."
+    },
+    {
+     "pid": "D16-P4",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "Dehumidifier Model D7 draws room air through a washable mesh dust filter that protects the coil."
+    },
+    {
+     "pid": "D16-P5",
+     "sourceType": "Owner research package (dehumidifiers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "The coarse mesh filter in dehumidifiers protects the internal coil. It is not a high-efficiency particle filter and does not reduce fine airborne particles."
+    }
+   ],
+   "request": {
+    "text": "What is a dehumidifier good for? Could my D7 also clean wildfire smoke out of the air?",
+    "direction": "category_to_need",
+    "userFacts": [
+     "owns D7",
+     "wildfire smoke concern"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "Dehumidifiers serve the need 'lower indoor relative humidity'",
+     "Dehumidifiers fully serve 'dry laundry indoors without raising humidity' (both requirements met)",
+     "Dehumidifiers draw room air through a filter, which is part of the fine-particle strategy, but they lack a high-efficiency particle filter, so they do not serve it",
+     "D7 does not reduce fine particles or smoke (explicit negation, P5)"
+    ],
+    "forbidden": [
+     "Dehumidifiers serve the need to reduce fine particles or smoke",
+     "D7 helps clean wildfire smoke from the air",
+     "D7's dust filter makes it a partial air purifier for fine particles"
+    ],
+    "why": "In the category-to-need direction, the family serves two needs fully but shares only a necessary sub-capability (air through a filter) with a third. It must not be credited with that third need."
+   }
+  },
+  {
+   "id": "D17",
+   "covers": [
+    "R7",
+    "R6"
+   ],
+   "title": "Similar model names and a different load: air fryer F5 versus F5 XL",
+   "sources": [
+    {
+     "pid": "D17-P1",
+     "sourceType": "Independent test publisher A",
+     "sourceRole": "independent_test_publisher",
+     "statusLabel": "tested",
+     "text": "Air fryer F5 (4 L basket): 500 g frozen fries in a single layer at 200 C were evenly crisp in 15 minutes."
+    },
+    {
+     "pid": "D17-P2",
+     "sourceType": "Manufacturer M data sheet",
+     "sourceRole": "manufacturer",
+     "statusLabel": null,
+     "text": "F5 XL is a separate model: 6 L basket, 2,000 W heating element (F5: 1,500 W), different fan assembly."
+    },
+    {
+     "pid": "D17-P3",
+     "sourceType": "Owner research package (air fryers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": "source_backed_observation",
+     "text": "Cooking time and evenness depend on the load. Single-layer results do not predict the results for a basket filled in several layers."
+    },
+    {
+     "pid": "D17-P4",
+     "sourceType": "Owner research package (air fryers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "Air fryers as a category cook frozen fries crisply with little or no added oil."
+    },
+    {
+     "pid": "D17-P5",
+     "sourceType": "Owner research package (air fryers)",
+     "sourceRole": "owner_research_package",
+     "statusLabel": null,
+     "text": "No test of F5 XL is available."
+    }
+   ],
+   "request": {
+    "text": "I want to cook 1.2 kg of frozen fries at once for the family, evenly crisp in about 15 minutes. Will the F5 XL do it, given the F5 review?",
+    "direction": "need_to_solution",
+    "userFacts": [
+     "load 1.2 kg of frozen fries",
+     "target: evenly crisp in about 15 minutes",
+     "considering F5 XL"
+    ]
+   },
+   "expected": {
+    "allowed": [
+     "The F5 test result applies only to F5 with 500 g in a single layer",
+     "F5 XL is a distinct model with no test. The F5 result does not transfer to it",
+     "A 1.2 kg load in several layers differs from the tested condition, so time and evenness are unknown",
+     "Category guidance (crisp fries with little oil) does not establish F5 XL's performance with 1.2 kg in 15 minutes"
+    ],
+    "forbidden": [
+     "F5 XL cooks 1.2 kg evenly crisp in 15 minutes",
+     "F5 XL performs at least as well as F5 because it is larger and more powerful",
+     "F5 can cook 1.2 kg evenly crisp in 15 minutes",
+     "F5 and F5 XL are the same product"
+    ],
+    "why": "A similar name invites merging two products, and the review's load differs from the user's. Category-level guidance further tempts a conclusion about a specific product's performance."
+   }
+  }
+ ],
+ "received": "2026-10-21",
+ "note": "Written by an independent Claude agent given only the risk list R1-R16 (no repository files, no rules); recorded unchanged; sealed before encoding."
+}
