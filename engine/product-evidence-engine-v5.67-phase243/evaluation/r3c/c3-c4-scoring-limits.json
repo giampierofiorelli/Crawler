@@ -1,0 +1,24 @@
+{
+ "schema": "pee.r3c.c3-c4-scoring-limits.v1",
+ "registered": "2026-10-21, first increment A4 (owner authorisation verbatim in .claude/skills/pee-guided-learning/references/owner-first-increment-authorisation-2026-10-21.md): \"Registra correttamente i limiti di C3/C4: finché il percorso decisionale è bloccato, valuta astensione giustificata ed evidenze mancanti, non classifiche inesistenti.\"",
+ "appliesWhile": {
+  "contract": "docs/architecture/vertical-contract.json",
+  "stagesBlocked": ["evidence_validation", "comparable_assessment", "authorised_ranking"],
+  "note": "tests/i1_c3c4_scoring_limits.test.ts checks this record against the contract: it applies exactly while any of these stages is blocked; when all are connected, this record must be superseded by a scoring that includes ranking."
+ },
+ "decisionStageScoring": {
+  "scored": {
+   "justified_abstention": "the answer does not order products and says why: which evidence is missing or which rule withholds the ranking (a correct refusal)",
+   "precise_missing_evidence": "the answer names, per stated need, the measurement, test conditions or identity that would be needed, at the level the knowledge holds (not a generic 'more evidence needed')",
+   "unjustified_abstention": "the answer abstains where the request or the evidence held allowed a justified specification answer, a question or a partial comparison (counted as an error, never as success)",
+   "harmful_conclusion": "an answer that orders, recommends or excludes on unvalidated evidence, a proxy, a declaration presented as a test, or an experimental inference"
+  },
+  "notScored": {
+   "ranking_quality": "no ranking can be justified while evidence validation, comparable assessment and authorised ranking are blocked; scoring an order that cannot exist would be scoring noise",
+   "ranked_recommendation_rate": "same reason"
+  },
+  "earlierStagesScoredAsBefore": ["goals understood", "evidence needed", "sources read", "attribution", "evidence classification"],
+  "firstFailingStage": "still named per request (C3 as registered in the roadmap)"
+ },
+ "consequence": "a C3/C4 result may claim at most: correct abstention and precise statements of missing evidence. It may not claim progress toward a correct ranking. An always-abstaining answer scores zero on precise_missing_evidence unless it names what is missing, and is penalised under unjustified_abstention where an answer was possible."
+}

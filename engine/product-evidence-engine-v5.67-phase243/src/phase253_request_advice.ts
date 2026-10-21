@@ -21,7 +21,10 @@ import {createDecision177,applyDecisionAction177} from './phase177_decision_snap
 import {extractConstraints253,type RequestConstraint253} from './phase253_request_constraints.js';
 import type {Advice253,AdviceResearchInputs253,CitedEvidence253} from './phase253_advice_contract.js';
 import {dynamicKnowledgeAnswer181,verifySignedCatalog181,type SignedCatalog181,type KnowledgeDimension181,type ProductKnowledgeCatalog181,type CatalogRejection181} from './phase181_dynamic_knowledge_ranking.js';
-import {relations247,sufficiencyOf247,type RankingBasis247} from './phase247_category_relations.js';
+import {needKnowledge269,type NeedKnowledge269} from './phase247_category_relations.js';
+/** A6 (first increment, 2026-10-21): needKnowledge269 now lives with the category relations it reads (phase247), which
+ * removes the R3-P import cycle need_interpretation <-> phase253; re-exported here unchanged for existing callers. */
+export {needKnowledge269,type NeedKnowledge269} from './phase247_category_relations.js';
 import {caveatsAbout} from './knowledge_statements.js';
 import {conditionsMetFromStoreRecords} from './knowledge_link.js';
 import type {StoredStatement} from './knowledge_statements.js';
@@ -193,44 +196,9 @@ function statedObjectives253(text:string):string[]{
   const phrase=[m[1],...kept].join(' ').toLowerCase();if(!out.includes(phrase))out.push(phrase);}
  return out;
 }
-/** Phase269: what category knowledge says about each recognised need. Measurements are 'measurement' concept items;
- * 'measured_by' links a measurement to the outcome it establishes, 'not_sufficient_for' marks a proxy (a declared
- * attribute or a measurement), 'requires_condition' the test conditions without which results are not comparable. */
-export interface NeedKnowledge269 {need:string;kind:string|null;relevant:string[];proxies:string[];conditions:string[];notes:Map<string,string>;statements:Map<string,string>;
- /** S78: per measurement linked by measured_by: its relation, the assessed sufficiency, and ITS required conditions. */
- byMeasure:Map<string,{relationId:string;sufficiency:'established'|'informs_only'|'unclear'|'contested'|'unassessed';conditions:string[];
-  /** S85: what supports an established verdict for ranking beyond same-model readings (null: nothing) */
-  rankingBasis:RankingBasis247|null}>}
 /** Context needs (not outcomes): equipment already owned ('*_alternative', a naming contract of the teaching) and stated use. */
 // Phase271: '*_constraint' (an installation constraint such as cannot plumb) is context too, but not owned equipment.
 const CONTEXT_NEEDS269={has:(id:string)=>id.endsWith('_alternative')||id.endsWith('_constraint')||id==='single_compartment_use'};
-export function needKnowledge269(store:KnowledgeStore246,category:string,needs:readonly string[]):NeedKnowledge269[]{
- const items=store.categoryItems246(category);const rels=relations247(store,category);
- const byRef=new Map(items.map(i=>['item:'+i.itemId,i]));
- const measureOf=(ref:string)=>{const i=byRef.get(ref);return i?.concept?.kind==='measurement'?i.concept.id:null;};
- const attrId=(ref:string)=>'attr:'+ref.slice(5).replace(/\s+/g,'_');
- return needs.map(need=>{
-  const targets=new Set(items.filter(i=>i.concept?.id===need&&i.concept.kind!=='measurement').map(i=>'item:'+i.itemId));
-  const into=rels.filter(r=>targets.has(r.to));
-  const relevant=[...new Set(into.filter(r=>r.kind==='measured_by').map(r=>measureOf(r.from)).filter((x):x is string=>!!x))].sort();
-  const notes=new Map<string,string>();const proxies:string[]=[];
-  for(const r of into.filter(r=>r.kind==='not_sufficient_for')){const id=r.from.startsWith('attr:')?attrId(r.from):measureOf(r.from);if(id&&!proxies.includes(id)){proxies.push(id);notes.set(id,r.qualification);}}
-  const relevantRefs=new Set(items.filter(i=>i.concept?.kind==='measurement'&&relevant.includes(i.concept.id)).map(i=>'item:'+i.itemId));
-  const conditions=[...new Set(rels.filter(r=>r.kind==='requires_condition'&&relevantRefs.has(r.from)).map(r=>measureOf(r.to)).filter((x):x is string=>!!x))].sort();
-  const statements=new Map(items.filter(i=>i.concept?.kind==='measurement').map(i=>[i.concept!.id,i.statement.replace(/\s*\[[^\]]*\]\s*$/,'')]));
-  const byMeasure:NeedKnowledge269['byMeasure']=new Map();
-  for(const r of into.filter(r=>r.kind==='measured_by')){const m=measureOf(r.from);if(!m)continue;
-   const conds=[...new Set(rels.filter(x=>x.kind==='requires_condition'&&x.from===r.from).map(x=>measureOf(x.to)).filter((x):x is string=>!!x))].sort();
-   const prev=byMeasure.get(m);const so=sufficiencyOf247(store,r.relationId);const suff=so.state;
-   // two measured_by relations for one measurement (two items of the same id): the weaker sufficiency holds
-   const rank={established:4,informs_only:2,unclear:1,unassessed:0,contested:-1} as const;
-   // S85: the weaker relation decides; with equal verdicts, a missing ranking basis is weaker
-   if(!prev||rank[suff]<rank[prev.sufficiency]||(rank[suff]===rank[prev.sufficiency]&&!so.rankingBasis))
-    byMeasure.set(m,{relationId:r.relationId,sufficiency:suff,conditions:[...new Set([...(prev?.conditions??[]),...conds])].sort(),rankingBasis:so.rankingBasis});
-   else byMeasure.set(m,{...prev,conditions:[...new Set([...prev.conditions,...conds])].sort()});}
-  return {need,kind:items.find(i=>i.concept?.id===need)?.concept?.kind??null,relevant,proxies:proxies.sort(),conditions,notes,statements,byMeasure};
- });
-}
 /** The measurement a catalog dimension carries: its key when it is a measurement concept, else the measurement of the
  * protocol its method names; null when unknown (the catalog then asserts relevance itself, as before Phase269). */
 function dimensionMeasure269(d:KnowledgeDimension181,measureIds:ReadonlySet<string>):string|null{

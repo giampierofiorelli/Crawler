@@ -273,6 +273,24 @@ priorities; the owner reviews R3 closure):
 - **C4 generalisable improvement.** Corrections made after C3 improve the end-to-end outcome on new material held back
   from diagnosis and fixing, with both builds run once, and add no new harmful conclusion. Otherwise R3 stays open
   and the result is reported as it is.
+- **Amendment 2026-10-21 (first increment A1–A4; owner authorisation verbatim in
+  `owner-first-increment-authorisation-2026-10-21.md`).**
+  - **C2** now holds under every experimental option (arms A, B, C-lite) and on the ranking path. Experimental
+    inferences sit only in fields listed in `EXPERIMENTAL_FIELDS253`, declare themselves unreviewed and have no decision
+    effect. A source scan fails when a new reader of those fields appears without review
+    (`tests/i1_experimental_isolation.test.ts`). The two withheld pairs are pinned end to end
+    (`tests/i1_withheld_pairs.test.ts`).
+  - **Contract.** It records the measured request path (imports and executed modules per option;
+    `tests/i1_reachability.test.ts`).
+  - **C3/C4 scoring limit.** While evidence validation, comparable assessment and authorised ranking are blocked, the
+    decision stage is scored only on these:
+    - justified abstention;
+    - precise missing evidence;
+    - unjustified abstention, counted as an error;
+    - harmful conclusions.
+
+    Ranking quality is never scored then (`evaluation/r3c/c3-c4-scoring-limits.json`, tied to the contract by
+    `tests/i1_c3c4_scoring_limits.test.ts`).
 
 Source discovery is Claude's in C3: PEE has no configured search service (Phase223 needs an operator SearXNG
 endpoint). This is reported as a limit of the path, never as PEE capability.

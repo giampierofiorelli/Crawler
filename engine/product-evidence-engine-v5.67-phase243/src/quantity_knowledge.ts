@@ -101,7 +101,10 @@ export function namedPhrases(text:string,phrases:readonly string[]):Set<string>{
 /** qk.2.4 (audit S77): generic words no longer settle a specific metric. qk.2.3 kept in v2 for reproduction.
  * qk.2.5 (S103): the bound words of the retired Phase253 local reader ("min", "max", "or bigger", "or smaller", "or under",
  * a property word before an after-bound) are pack data; the one bound reader serves requests and documents. */
-export const DEFAULT_QUANTITY_PACK='quantity-knowledge.v3.json';
+import {DEFAULT_QUANTITY_PACK} from './quantity_pack_file.js';
+/** A6 (first increment, 2026-10-21): the constant lives in quantity_pack_file.ts so that language_scope can read the
+ * default pack's scope words without importing this module (R3-P import cycle removed); re-exported unchanged. */
+export {DEFAULT_QUANTITY_PACK};
 /** Load and validate a pack (default: the committed v2 pack). Fails closed on any inconsistency. */
 /** The default declarative rules (KR): scope, kind, justification and comparability decisions. */
 /** kr.4 (S82): two differently named conditions with no documented relation are unestablished, not not_comparable; kr.3 (R1, 2026-10-18): a difference of conditions only when documented or definitional; rules.v2/v3 kept for reproduction. */

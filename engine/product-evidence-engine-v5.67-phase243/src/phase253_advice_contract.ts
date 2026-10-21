@@ -76,6 +76,17 @@ export interface Advice253 {
  /** R3-P (experimental pilot, opt-in): the need interpretation; never read by any decision */
  needInterpretation?:import('./need_interpretation.js').NeedInterpretation;
 }
+/** First increment A1 (owner 2026-10-21; C2 permanent): the fields of an answer that carry experimental, unreviewed
+ * inferences. They are isolated (never read by a decision), identified (each declares its status) and must never be
+ * presented as established facts. A presentation, export or any other consumer of an answer uses withoutExperimental253,
+ * or shows these fields explicitly labelled as experimental; tests/i1_experimental_isolation.test.ts fails when a new
+ * module or script reads them without review. */
+export const EXPERIMENTAL_FIELDS253=['needInterpretation'] as const;
+export type ExperimentalField253=typeof EXPERIMENTAL_FIELDS253[number];
+/** The answer without its experimental fields (a copy; the original is not changed). */
+export function withoutExperimental253(a:Advice253):Omit<Advice253,ExperimentalField253>{
+ const c={...a} as Partial<Advice253>;for(const f of EXPERIMENTAL_FIELDS253)delete c[f];return c as Omit<Advice253,ExperimentalField253>;
+}
 export interface QuantityRequirement253 {span:string;bound:'min'|'max'|'range'|'unstated';value:number|null;low?:number;high?:number;unit:string;
  kind:string|null;kindCandidates:string[];metric:string|null;weighting:string|null;status:'typed'|'kind_ambiguous';
  evidence:{target:string;methods:string[];conditions:string[];notEvidence:string[]};knowledge:string}

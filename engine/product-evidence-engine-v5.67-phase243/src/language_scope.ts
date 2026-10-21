@@ -12,7 +12,8 @@
  *  - the stance of a clause towards a term: 'indifferent' when a negated indifference predicate is in the term's clause
  *    ("noise doesn't bother me"), 'negated' when a negator governs the term ("I don't want wifi").
  * It never decides what a negated bound or cue means for a product: the readers do, each with its own documented rule. */
-import {loadQuantityKnowledge,type QuantityKnowledge} from './quantity_knowledge.js';
+import type {QuantityKnowledge} from './quantity_knowledge.js';
+import {readDefaultQuantityPack} from './quantity_pack_file.js';
 
 export interface ScopeVocabulary {negators:string[];notNegating:string[];requirementWords:string[];contrastMarkers:string[];indifferencePredicates:string[];
  /** words that open a new proposition and so end a negator's scope ("not loud and cheap": cheap is not negated) */ scopeEnders:string[];
@@ -23,7 +24,9 @@ export interface Token {w:string;start:number;end:number;kind:'word'|'number'|'b
 let V:ScopeVocabulary|null=null;
 export function scopeVocabulary(qk?:QuantityKnowledge):ScopeVocabulary{
  if(qk)return qk.pack.language.en.scope??fail();
- return V??=loadQuantityKnowledge().pack.language.en.scope??fail();
+ // A6 (2026-10-21): the default pack's own scope section, read without importing quantity_knowledge (which uses this
+ // module): the R3-P import cycle is removed. The loader validates no field of this section, so the words are the same.
+ return V??=(readDefaultQuantityPack() as {language?:{en?:{scope?:ScopeVocabulary}}}).language?.en?.scope??fail();
 }
 function fail():never{throw Error('language_scope: the quantity-knowledge pack has no language.en.scope');}
 

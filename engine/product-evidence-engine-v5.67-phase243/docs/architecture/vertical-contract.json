@@ -1,6 +1,6 @@
 {
  "schema": "pee.vertical-contract.v1",
- "updated": "2026-10-20",
+ "updated": "2026-10-21",
  "purpose": "The essential operational path of PEE, stage by stage. tests/vertical_contract.test.ts fails if a named component disappears, a cited test file is missing, or a status is not one of the defined classes. Update this file in the same commit as any change to a stage's connection or status (principles 2 and 10).",
  "statusClasses": {
   "authentic_verified": "implemented and verified with authentic data on the operational path",
@@ -599,7 +599,14 @@
    "since": "S97 (docs/plans/s97-causal-architecture-audit.md)",
    "item": "The S88-S96 reading line (property definitions pd.5, definition_interpreter, definition_learning, scientific_entities, document_evidence qualitative evidence, table_interpreter1g relations, QK conditions, methods, relations and aspects beyond single words) is reachable only from evaluation scripts: neither the store-writing path (phase246-live-wave observations: Phase245 specifications, Phase225/226/265 test leads, Phase269/270 qualitative codes) nor adviseFromRequest253 imports it. QK typed conditions are computed in typeObservedValue and discarded before storage; knowledge_statements (6118 rows) are read only by the uncalled teachingCaveatsShadow; qualitative_observations270 has no reader; comparative_results271 rows never link a product. Nine phases of reading improvements were measured on a parallel harness and never reached a stored row or an answer; this was not listed as debt until S97.",
    "resolvedStatus": "open",
-   "progress": "S97: causal audit and shadow counterfactuals only (owner review 2026-10-20). Integration needs an owner decision: which reader becomes the single operational reader, and which fields the store must keep. S98 (owner decision 2026-10-20): one shared scientific reading path (scientific_reading98) for the operational extractors' observations, persisted in store v11 scientific_readings98 and read by the user path (Advice253.scientificEvidence98); both gated. The registry scientificCapabilities lists every scientific module with status, consumer and validation; tests/s98_integration_fitness.test.ts fails when a capability is unregistered, claimed operational without runtime reachability, or shadow without naming this debt. S98 validation: spent S89-S96 (post hoc) 380 correct / 33 wrong / 50 false, rollback tables identical; independent check on 7 new pages (evaluation/s98/check-firstrun.json) 19 of 60 typed vs 0 baseline, 14 false under the sealed reference, 0 of 206 decisions changed. Kept gated (owner stop rule: false attributions); blockers in docs/plans/s98-operational-knowledge-path.md section 6. The debt stays open until the gated path is promoted or the shadow modules are integrated or retired. S99 (owner review of S98): the shared reading keeps each observation identity and meaning into store v12 (statement role, bound, stated subject, provenance, basis, object, observation key and source locator); scripts/s99-integrity.mjs shows 0 fields changed between reading and store and 0 product links without a stated subject on spent and new pages. Independent check (evaluation/s99/integrity-check-firstrun-s99.json): preregistered stop rules hold, correctness equal to S98; the S99 reader is the gated reading. Residual causes in docs/plans/s99-semantic-integrity.md section 4. Still gated, never a decision input."
+   "progress": "S97: causal audit and shadow counterfactuals only (owner review 2026-10-20). Integration needs an owner decision: which reader becomes the single operational reader, and which fields the store must keep. S98 (owner decision 2026-10-20): one shared scientific reading path (scientific_reading98) for the operational extractors' observations, persisted in store v11 scientific_readings98 and read by the user path (Advice253.scientificEvidence98); both gated. The registry scientificCapabilities lists every scientific module with status, consumer and validation; tests/s98_integration_fitness.test.ts fails when a capability is unregistered, claimed operational without runtime reachability, or shadow without naming this debt. S98 validation: spent S89-S96 (post hoc) 380 correct / 33 wrong / 50 false, rollback tables identical; independent check on 7 new pages (evaluation/s98/check-firstrun.json) 19 of 60 typed vs 0 baseline, 14 false under the sealed reference, 0 of 206 decisions changed. Kept gated (owner stop rule: false attributions); blockers in docs/plans/s98-operational-knowledge-path.md section 6. The debt stays open until the gated path is promoted or the shadow modules are integrated or retired. S99 (owner review of S98): the shared reading keeps each observation identity and meaning into store v12 (statement role, bound, stated subject, provenance, basis, object, observation key and source locator); scripts/s99-integrity.mjs shows 0 fields changed between reading and store and 0 product links without a stated subject on spent and new pages. Independent check (evaluation/s99/integrity-check-firstrun-s99.json): preregistered stop rules hold, correctness equal to S98; the S99 reader is the gated reading. Residual causes in docs/plans/s99-semantic-integrity.md section 4. Still gated, never a decision input.",
+   "corrections": [
+    {
+     "date": "2026-10-21",
+     "by": "first increment A2",
+     "what": "Correction: since R3-P stage 2, adviseFromRequest253 imports need_interpretation, which imports knowledge_statements and product_facts; they run only with opts.needInterpretation (experimental, isolated by A1). The statement above that knowledge_statements are read only by the uncalled teachingCaveatsShadow is superseded by the measured record in reachability. Introduced by R3-P without updating the contract (Claude's own debt, reported in the coordinated plan)."
+    }
+   ]
   },
   {
    "id": "D31",
@@ -987,6 +994,10 @@
    {
     "module": "scientific_evidence98.ts",
     "gate": "adviseFromRequest253 opts.scientific98"
+   },
+   {
+    "module": "need_interpretation.ts",
+    "gate": "adviseFromRequest253 opts.needInterpretation (experimental, A1-isolated)"
    }
   ],
   "modules": [
@@ -996,7 +1007,8 @@
     "consumer": "phase253_request_constraints (units, kinds), phase226 measurand typing, phase265 typeObservedValue",
     "validation": [
      "tests/quantity_knowledge.test.ts"
-    ]
+    ],
+    "requestPath": "executed_by_default"
    },
    {
     "module": "knowledge_rules.ts",
@@ -1004,7 +1016,8 @@
     "consumer": "quantity_knowledge kind and compare programs",
     "validation": [
      "tests/quantity_knowledge.test.ts"
-    ]
+    ],
+    "requestPath": "executed_by_default"
    },
    {
     "module": "knowledge_link.ts",
@@ -1012,7 +1025,8 @@
     "consumer": "phase253 derivedConditions83 (ranking trace only) and the S98 reader-condition axes",
     "validation": [
      "tests/s98_operational_path.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "document_semantics.ts",
@@ -1020,16 +1034,20 @@
     "consumer": "phase265 plan-guided reading (only with a plan)",
     "validation": [
      "tests/document_semantics.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "knowledge_statements.ts",
-    "status": "shadow",
-    "consumer": "none on any path: read only by the uncalled teachingCaveatsShadow",
+    "status": "gated",
+    "consumer": "need_interpretation statementsOf (only with opts.needInterpretation); teachingCaveatsShadow (exported, called by no path); imported at runtime by phase253_request_advice",
     "validation": [
-     "tests/knowledge_statements.test.ts"
+     "tests/knowledge_statements.test.ts",
+     "tests/i1_experimental_isolation.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "gate": "adviseFromRequest253 opts.needInterpretation (experimental pilot; isolated, no decision effect: tests/i1_experimental_isolation.test.ts)",
+    "requestPath": "executed_with_opt_in:needInterpretation"
    },
    {
     "module": "scientific_reading98.ts",
@@ -1040,7 +1058,8 @@
      "tests/s98_operational_path.test.ts",
      "tests/s98_integration_fitness.test.ts",
      "tests/s99_observation_identity.test.ts"
-    ]
+    ],
+    "requestPath": "not_imported"
    },
    {
     "module": "observation_semantics.ts",
@@ -1050,7 +1069,8 @@
      "tests/s100_rule_governance.test.ts",
      "tests/s99_observation_identity.test.ts"
     ],
-    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)"
+    "gate": "scripts/phase246-live-wave.mjs observations --scientific98 + scripts/phase246-knowledge.mjs ingest-observations --scientific98 (storage policy scientificReadings98)",
+    "requestPath": "not_imported"
    },
    {
     "module": "scientific_evidence98.ts",
@@ -1061,7 +1081,8 @@
      "tests/s98_operational_path.test.ts",
      "tests/s98_integration_fitness.test.ts",
      "tests/s99_observation_identity.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "definition_interpreter.ts",
@@ -1072,7 +1093,8 @@
      "tests/s98_operational_path.test.ts",
      "tests/s98_integration_fitness.test.ts",
      "tests/s96_scientific_entities.test.ts"
-    ]
+    ],
+    "requestPath": "not_imported"
    },
    {
     "module": "property_definitions.ts",
@@ -1082,7 +1104,8 @@
     "validation": [
      "tests/s98_operational_path.test.ts",
      "tests/s98_integration_fitness.test.ts"
-    ]
+    ],
+    "requestPath": "not_imported"
    },
    {
     "module": "scientific_entities.ts",
@@ -1093,7 +1116,8 @@
      "tests/s96_scientific_entities.test.ts",
      "tests/s98_operational_path.test.ts",
      "tests/s98_integration_fitness.test.ts"
-    ]
+    ],
+    "requestPath": "not_imported"
    },
    {
     "module": "document_evidence.ts",
@@ -1104,7 +1128,8 @@
      "tests/s98_operational_path.test.ts",
      "tests/s98_integration_fitness.test.ts",
      "tests/document_evidence.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "knowledge_translation.ts",
@@ -1113,7 +1138,8 @@
     "consumer": "scientific_entities (typeSpan, teaching parser)",
     "validation": [
      "tests/s96_scientific_entities.test.ts"
-    ]
+    ],
+    "requestPath": "not_imported"
    },
    {
     "module": "table_interpreter1g.ts",
@@ -1122,7 +1148,8 @@
     "consumer": "definition_interpreter document relations (imported); table relations not yet passed by scientific_reading98",
     "validation": [
      "tests/s94_table_relations.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "table_interpreter1g_knowledge.ts",
@@ -1131,7 +1158,8 @@
     "consumer": "document_evidence (QK-typed table reading)",
     "validation": [
      "tests/s94_table_relations.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "table_interpreter1g_lessons.ts",
@@ -1140,7 +1168,8 @@
     "consumer": "table_interpreter1g lessons",
     "validation": [
      "tests/s94_table_relations.test.ts"
-    ]
+    ],
+    "requestPath": "imported_not_executed"
    },
    {
     "module": "definition_learning.ts",
@@ -1150,7 +1179,8 @@
      "tests/s89_definition_learning.test.ts",
      "tests/s93_provenance_learning.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "requestPath": "not_imported"
    },
    {
     "module": "evidence_assessment.ts",
@@ -1158,7 +1188,8 @@
     "consumer": "scripts/s87a-assess.mjs only",
     "validation": [],
     "integrationDebt": "D30",
-    "validationMissing": true
+    "validationMissing": true,
+    "requestPath": "not_imported"
    },
    {
     "module": "observation_contract.ts",
@@ -1167,7 +1198,8 @@
     "validation": [
      "tests/s87d_observation_contract.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "requestPath": "not_imported"
    },
    {
     "module": "observation_model.ts",
@@ -1176,7 +1208,8 @@
     "validation": [
      "tests/s87b_observation_model.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "requestPath": "not_imported"
    },
    {
     "module": "observation_reconstruction.ts",
@@ -1185,16 +1218,20 @@
     "validation": [
      "tests/s87e_reconstruction.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "requestPath": "not_imported"
    },
    {
     "module": "product_facts.ts",
-    "status": "shadow",
-    "consumer": "evaluation scripts only",
+    "status": "gated",
+    "consumer": "need_interpretation loadProductFunctions (features named in the request, only with opts.needInterpretation); evaluation scripts",
     "validation": [
-     "tests/product_facts.test.ts"
+     "tests/product_facts.test.ts",
+     "tests/i1_experimental_isolation.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "gate": "adviseFromRequest253 opts.needInterpretation (experimental pilot; isolated, no decision effect)",
+    "requestPath": "executed_with_opt_in:needInterpretation"
    },
    {
     "module": "qualitative_needs.ts",
@@ -1203,7 +1240,28 @@
     "validation": [
      "tests/document_evidence.test.ts"
     ],
-    "integrationDebt": "D30"
+    "integrationDebt": "D30",
+    "requestPath": "not_imported"
+   },
+   {
+    "module": "need_interpretation.ts",
+    "status": "gated",
+    "gate": "adviseFromRequest253 opts.needInterpretation (experimental pilot, R3-P; isolated, no decision effect)",
+    "consumer": "Advice253.needInterpretation (experimental field; EXPERIMENTAL_FIELDS253; never read by a decision); scripts/r3p-needs-*.mjs",
+    "validation": [
+     "tests/r3p_need_interpretation.test.ts",
+     "tests/i1_experimental_isolation.test.ts"
+    ],
+    "requestPath": "executed_with_opt_in:needInterpretation"
+   },
+   {
+    "module": "language_scope.ts",
+    "status": "operational",
+    "consumer": "phase253_request_constraints, phase248 need inference, request coverage, quantity_knowledge (negation, indifference and clause scope; executed by default)",
+    "validation": [
+     "tests/r3p_language_scope.test.ts"
+    ],
+    "requestPath": "executed_by_default"
    }
   ]
  },
@@ -1798,5 +1856,163 @@
     "tests/s103_request_semantics.test.ts"
    ]
   }
+ },
+ "reachability": {
+  "added": "2026-10-21, first increment A2 (owner authorisation verbatim in .claude/skills/pee-guided-learning/references/owner-first-increment-authorisation-2026-10-21.md): the contract records the real request path, measured, not only the presence of exports",
+  "entry": "phase253_request_advice.adviseFromRequest253",
+  "method": {
+   "imported": "runtime import closure of dist/src from the entry module (import/export ... from and dynamic import(); type-only imports are erased by the compiler)",
+   "executed": "V8 coverage of the advice calls only (setup excluded with v8.takeCoverage) on the synthetic probe tests/request_path_probe.ts, one process per option configuration; a module counts as executed when one of its named functions ran"
+  },
+  "caveat": "executed sets depend on the probe requests: a module outside a set may still run on other inputs (e.g. scientific_evidence98 needs products and a v11 store). They prove reach, they do not prove absence.",
+  "requestPathImports": [
+   "adaptive_schema_evolution",
+   "approved_web_reader",
+   "category_cognitive_mesh",
+   "category_evidence_matrix",
+   "document_evidence",
+   "document_semantics",
+   "html5_named_references",
+   "knowledge_link",
+   "knowledge_rules",
+   "knowledge_statements",
+   "language_scope",
+   "need_interpretation",
+   "phase116_category_function_model",
+   "phase122_native_local_retrieval",
+   "phase122_native_question_to_research",
+   "phase123_local_semantic_evidence_bridge",
+   "phase123_native_learned_intent",
+   "phase124_end_to_end_attempt",
+   "phase125_compositional_dialogue_frame",
+   "phase128_category_cognition_dialogue_bridge",
+   "phase131_local_relation_learning",
+   "phase132_contextual_relation_guard",
+   "phase134_atomic_context_evidence",
+   "phase139_unmarked_english_candidate_reader",
+   "phase144_cross_category_observation_graph",
+   "phase145_unit_context_bridge",
+   "phase146_compound_conditions",
+   "phase147_local_claim_attachment",
+   "phase148_document_reference_hypotheses",
+   "phase149_bidirectional_discourse_candidates",
+   "phase151_type_aware_discourse_recovery",
+   "phase152_product_surface_safety",
+   "phase153_entity_inventory",
+   "phase154_context_graph",
+   "phase154_integrated_review",
+   "phase154_label_diagnostics",
+   "phase155_review_orchestrator",
+   "phase177_decision_snapshot",
+   "phase180_reviewed_first_answer",
+   "phase181_dynamic_knowledge_ranking",
+   "phase189_source_pilot_reasoning",
+   "phase191_sparse_source_integrity",
+   "phase192_lineage_marketplace_screen",
+   "phase193_screening_memory",
+   "phase223_public_metadata_access",
+   "phase225_transient_test_probe",
+   "phase226_transient_test_tables",
+   "phase245_html_dom",
+   "phase245_spec_extraction",
+   "phase245_table_grid",
+   "phase245_value_normalizer",
+   "phase246_knowledge_store",
+   "phase247_category_relations",
+   "phase248_advisory_journey",
+   "phase248_safety_notices",
+   "phase249_decision",
+   "phase249_retention_policy",
+   "phase253_request_advice",
+   "phase253_request_constraints",
+   "phase265_test_measurements",
+   "phase268_evidence_validation",
+   "phase270_comparative_results",
+   "phase271_comparative_evidence",
+   "phase272_extraction_plan",
+   "phase75_source_discovery",
+   "product_facts",
+   "quantity_knowledge",
+   "quantity_pack_file",
+   "request_coverage80",
+   "scientific_evidence98",
+   "table_acquisition1f",
+   "table_interpreter1g",
+   "table_interpreter1g_knowledge",
+   "table_interpreter1g_lessons",
+   "table_ledger1e",
+   "table_lessons1e",
+   "web_evidence_acquisition"
+  ],
+  "executed": {
+   "default": [
+    "knowledge_rules",
+    "language_scope",
+    "phase125_compositional_dialogue_frame",
+    "phase177_decision_snapshot",
+    "phase245_value_normalizer",
+    "phase246_knowledge_store",
+    "phase247_category_relations",
+    "phase248_advisory_journey",
+    "phase249_decision",
+    "phase253_request_advice",
+    "phase253_request_constraints",
+    "quantity_knowledge",
+    "quantity_pack_file",
+    "request_coverage80"
+   ],
+   "quantity": [
+    "knowledge_rules",
+    "language_scope",
+    "phase125_compositional_dialogue_frame",
+    "phase177_decision_snapshot",
+    "phase245_value_normalizer",
+    "phase246_knowledge_store",
+    "phase247_category_relations",
+    "phase248_advisory_journey",
+    "phase249_decision",
+    "phase253_request_advice",
+    "phase253_request_constraints",
+    "quantity_knowledge",
+    "quantity_pack_file",
+    "request_coverage80"
+   ],
+   "needInterpretation": [
+    "knowledge_rules",
+    "knowledge_statements",
+    "language_scope",
+    "need_interpretation",
+    "phase125_compositional_dialogue_frame",
+    "phase177_decision_snapshot",
+    "phase245_value_normalizer",
+    "phase246_knowledge_store",
+    "phase247_category_relations",
+    "phase248_advisory_journey",
+    "phase249_decision",
+    "phase253_request_advice",
+    "phase253_request_constraints",
+    "product_facts",
+    "quantity_knowledge",
+    "quantity_pack_file",
+    "request_coverage80"
+   ],
+   "scientific98": [
+    "knowledge_rules",
+    "language_scope",
+    "phase125_compositional_dialogue_frame",
+    "phase177_decision_snapshot",
+    "phase245_value_normalizer",
+    "phase246_knowledge_store",
+    "phase247_category_relations",
+    "phase248_advisory_journey",
+    "phase249_decision",
+    "phase253_request_advice",
+    "phase253_request_constraints",
+    "quantity_knowledge",
+    "quantity_pack_file",
+    "request_coverage80"
+   ]
+  },
+  "enforcedBy": "tests/i1_reachability.test.ts (exact equality: a change of the real path fails until this record and each module requestPath are reviewed)"
  }
 }

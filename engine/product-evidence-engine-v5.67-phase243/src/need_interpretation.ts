@@ -21,11 +21,12 @@ import {statementsOf} from './knowledge_statements.js';
 import {loadQuantityKnowledge,type QuantityKnowledge} from './quantity_knowledge.js';
 import {stanceAt,clauseAround,tokens,scopeVocabulary} from './language_scope.js';
 import {loadProductFunctions} from './product_facts.js';
-import {relations247} from './phase247_category_relations.js';
-import {needKnowledge269} from './phase253_request_advice.js';
+import {relations247,needKnowledge269} from './phase247_category_relations.js';
 import {evaluate,type CompiledProgram} from './knowledge_rules.js';
 
 export const NEED_INTERPRETATION_VERSION='ni.1';
+/** A1: how any consumer must read this block */
+export const STATUS_NOTE='Experimental pilot output from machine-translated, unreviewed knowledge: hypotheses for evaluation, not established facts; never a decision input.';
 /** The statement types that relate a situation, a goal or a measurement to something else (not method steps). */
 export const INFERENCE_TYPES=['bears_on_outcome','measured_by','requires','not_sufficient','limitation','depends_on','definition','applicability'] as const;
 /** Thresholds, fixed before any evaluation run (development material only; see evaluation/r3p/preregistration.json). */
@@ -39,6 +40,8 @@ export interface InferredNeed {concept:string;category:string;kind:string;state:
  from:string[];anchors:string[];path:PathStep[][];provenance:'existing_statement'|'existing_relation'}
 export interface NeedInterpretation {
  schema:'pee.r3p.need-interpretation.v1';version:string;knowledgeGuided:boolean;category:string|null;
+ /** A1 (owner 2026-10-21): the block declares itself; its inferences are never established facts */
+ status:'experimental_unreviewed';statusNote:string;
  expressed:{concept:string;span:string|null}[];
  inferred:InferredNeed[];
  unsupported:{concept:string;reason:string;support:number}[];
@@ -193,6 +196,7 @@ export function interpretNeeds(text:string,advice:Advice253,store:KnowledgeStore
   const span=cl.text.trim();if(!span)continue;const cs=stemsNI(span);if(!cs.size)continue;
   const by=used.filter(u=>[...cs].some(x=>u.stems.has(x))).map(u=>u.by);trace.push({span,status:by.length?'interpreted':'uninterpreted',by});}
  const scenarios=[...new Set(advice.constraints.map(c=>(c as {scenario?:string}).scenario).filter((s):s is string=>!!s&&s!=='base'))];
- return {schema:'pee.r3p.need-interpretation.v1',version:NEED_INTERPRETATION_VERSION,knowledgeGuided:kg,category:cat,expressed,inferred,unsupported:unsupported.slice(0,6),features,stances,contexts,
+ return {schema:'pee.r3p.need-interpretation.v1',version:NEED_INTERPRETATION_VERSION,knowledgeGuided:kg,category:cat,
+  status:'experimental_unreviewed',statusNote:STATUS_NOTE,expressed,inferred,unsupported:unsupported.slice(0,6),features,stances,contexts,
   scenarios,questions:advice.questions,trace,evidencePlan,...(candidateEffects?{candidateEffects}:{})};
 }
