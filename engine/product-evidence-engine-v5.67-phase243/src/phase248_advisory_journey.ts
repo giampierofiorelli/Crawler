@@ -14,6 +14,9 @@ import {relations247} from './phase247_category_relations.js';
 import {composeQuestion125,type CategorySchema125} from './phase125_compositional_dialogue_frame.js';
 
 export interface CategoryEntry248 {id:string;aliases:readonly string[];
+ /** G1 (F5): a category recognised by its own name only (taught in the store, absent from the code registry): it is never
+  * inferred from need words, since its concepts were never vetted as category evidence. */
+ recognition?:'name_only';
  /** Phrases in which an alias denotes a part or accessory, not this category ("milk steamer", "steamer basket"). */
  partPhrases?:readonly string[];
  /** Weaker single-word cues naming the category's typical product or use ("espresso", "crumpets"). */
@@ -246,8 +249,11 @@ function namedProductTerm(t:string,buyingOnly=false):string|null{
  const verbs=buyingOnly?buying:buying+'|what|need|want';
  const re=new RegExp(`\\b(?:${verbs})\\s+(?:is the best |s the best |a good |the best |a |an |the |me a |me an |me |some )?([a-z][a-z' ]{1,30}?)(?= for| to| that| which| with| under| from| is| are| should| do| would| can| but| please|$| and| or|\\?)`,'g');
  for(const m of t.matchAll(re)){
-  const term=m[1].trim().replace(/^(?:good|new|cheap|decent|great|sturdy) /,'');
-  if(!GENERIC.test(term)&&!/^(?:to|is|are|should|do|i|my|you|it)\b/.test(term))return term;
+  // G1 (F2): grammar, not a word list. After a buying verb an indirect object or a possessive is skipped ("buy him an
+  // automatic machine", "buy their tape"); a phrase that still begins with an auxiliary, a modal or a subject pronoun is a
+  // question form ("what can I do", "what would be recommended"), never a product
+  const term=m[1].trim().replace(/^(?:him|her|them|me|us|my|his|their|our|your)\s+(?:an?\s+|the\s+|some\s+)?/,'').replace(/^(?:good|new|cheap|decent|great|sturdy) /,'');
+  if(term&&!GENERIC.test(term)&&!/^(?:to|am|is|are|was|were|be|been|do|does|did|have|has|had|can|could|may|might|must|shall|should|will|would|i|you|he|she|it|we|they|my|your|its|what|which|who|how|why|when|where)\b/.test(term))return term;
  }
  return null;
 }
@@ -360,7 +366,7 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
   // Phase250: a need shared by several categories ("long lasting", "multipurpose", "small kitchen") does not identify
   // which product the user means; only needs specific to one category can infer it.
   const sharedNeed=(id:string)=>GENERIC_NEEDS250.has(id)||new Set(conceptEntries.filter(e=>e.key.split('|')[1]===id).map(e=>e.key.split('|')[0])).size>1;
-  const cats=[...new Set(conceptHits.filter(h=>!sharedNeed(h.key.split('|')[1])).map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c));
+  const cats=[...new Set(conceptHits.filter(h=>!sharedNeed(h.key.split('|')[1])).map(h=>h.key.split('|')[0]))].filter(c=>!excludedCategories.includes(c)&&registry.find(r=>r.id===c)?.recognition!=='name_only');
   // Phase250 (development): in a long request one need phrase ("living alone", "non-stick wearing off") is too weak
   // to decide the product; two distinct needs of the same category are required there.
   const distinct=(c:string)=>new Set(conceptHits.filter(h=>h.key.startsWith(c+'|')&&!sharedNeed(h.key.split('|')[1])).map(h=>h.key.split('|')[1])).size;
@@ -449,7 +455,8 @@ export function runJourney248(text:string,store:KnowledgeStore246,registry:reado
  if(safety?.candidateMatches.length)reasons.push(`${new Set(safety.candidateMatches.map(m=>m.productId)).size} candidate(s) are named by exact identifier in a UK product safety notice`);
  if(safety?.brandOnlyCandidates)plan.push(`check ${safety.brandOnlyCandidates} candidate(s) whose brand has a ${categoryId?.replace(/_/g,' ')} safety notice: model identifiers needed to tell whether it applies`);
  let decision:Decision248;let blocking:Stage248|null;
- const goalQuestion=(cat:string)=>{const goals=store.categoryItems246(cat).filter(i=>i.section==='user_goals'&&i.concept);
+ // G1 (F4): a no-purchase alternative or a constraint is not a goal of the product; it is never offered as one
+ const goalQuestion=(cat:string)=>{const goals=store.categoryItems246(cat).filter(i=>i.section==='user_goals'&&i.concept&&!/_(?:alternative|constraint)$/.test(i.concept.id));
   return goals.length?`What matters most to you: ${goals.slice(0,4).map(g=>g.statement.replace(/\.$/,'').toLowerCase()).join('; or ')}?`:`What do you mainly want the ${cat.replace(/_/g,' ')} to do for you?`;};
  if(basis==='ambiguous'){decision='clarify';blocking='category';
   const opts=(purchase.kind==='ambiguous'?[...new Set(purchase.phrases.filter(p=>p.category).map(p=>p.category!))]:explicit.length>1?explicit:[...new Set(conceptHits.map(h=>h.key.split('|')[0]))]).map(c=>c.replace(/_/g,' '));

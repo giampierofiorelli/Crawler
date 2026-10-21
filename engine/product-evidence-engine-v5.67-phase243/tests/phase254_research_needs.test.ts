@@ -46,7 +46,10 @@ test('missing and conflicting declarations become research needs attributed to t
   assert.equal(n.identity?.productId,n.productId);}
  s.close();
 });
-test('requests needing the user are clarifications, never research; a request with no category creates nothing',()=>{
+// G1 (owner authorisation 2026-10-21, verbatim owner-g1-authorisation-2026-10-21.md: "Prepara il collegamento fra lacune di
+// conoscenza e richieste di ricerca tipizzate, anche in assenza di una categoria") supersedes "a request with no category
+// creates nothing": such a request now raises only typed knowledge-gap needs, pending authorisation, which Phase257 never plans.
+test('requests needing the user are clarifications, never research; a request with no category raises only typed knowledge gaps',()=>{
  const s=fixture();
  const vague=researchNeedsFromAdvice254(A(s,'a good air fryer'),s);
  assert.ok(vague.length===0||vague.every(n=>n.destination==='user_clarification'));
@@ -55,7 +58,8 @@ test('requests needing the user are clarifications, never research; a request wi
  const fam=researchNeedsFromAdvice254(A(s,'A good air fryer for a family of four'),s);
  assert.ok(fam.some(n=>n.kind==='clarify_requirement'&&n.criterion==='batch_capacity'&&n.destination==='user_clarification'));
  assert.ok(fam.every(n=>n.destination!=='research'));
- assert.deepEqual(researchNeedsFromAdvice254(A(s,'What kind of tray can I use to put my air fryer on?'),s),[]);
+ const tray=researchNeedsFromAdvice254(A(s,'What kind of tray can I use to put my air fryer on?'),s);
+ assert.ok(tray.every(n=>['missing_category_knowledge','missing_need_knowledge'].includes(n.kind)&&n.status==='pending_authorization'&&n.categoryId==='unscoped'));
  s.close();
 });
 test('a performance need asks for independent tests of the shortlisted products only, never from declarations',()=>{

@@ -94,6 +94,8 @@ export interface ClassRequirement253 {span:string;value:string;bound:'min'|'exac
 export interface AdviceResearchInputs253 {
  targetKind:TargetKind253;category:string|null;statedCriteria:string[];pendingCriteria:string[];
  performanceNeeds:string[];unresolvedNeeds:string[];
+ /** G1 (F6): the product the request names that PEE holds no category for (typed, for research needs without a category). */
+ unknownTerm?:string|null;
  /** 2026-10-16: the words that stated each performance need, and how the category was established (for the ranking step). */
  performanceNeedSpans?:{id:string;matched:string}[];categoryBasis?:string;
  /** S80: the words every recognised need (performance, factual or context) was matched on. */

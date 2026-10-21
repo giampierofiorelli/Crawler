@@ -92,6 +92,7 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
   out.statements.push(`Asked for as a feature: ${features.map(c=>`"${c.matched}"`).join(', ')}. ${features.length>1?'These are features':'This is a feature'} of the product, not an outcome PEE assesses; no product is checked or ordered by ${features.length>1?'them':'it'}.`);
   for(const c of features)if(!out.unassessedObjectives.includes(c.matched))out.unassessedObjectives.push(c.matched);}
  const ri:AdviceResearchInputs253={targetKind:j.stages.target.kind,category,statedCriteria:[],pendingCriteria:[],performanceNeeds:[],unresolvedNeeds:[],productChecks:[],ineligible:[]};
+ ri.unknownTerm=j.stages.category.namedUnknownTerm??(j.stages.target.kind==='other'?j.stages.target.other??null:null);
  out.researchInputs=ri;
  ri.performanceNeeds=j.stages.need.concepts.filter(c=>!j.stages.requirements.factualRequirements.some(f=>f.conceptId===c.id)).map(c=>c.id);
  ri.performanceNeedSpans=j.stages.need.concepts.filter(c=>ri.performanceNeeds.includes(c.id)).map(c=>({id:c.id,matched:c.matched}));
@@ -101,7 +102,11 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  if(j.stages.target.kind==='other'){out.response='out_of_scope';
   out.statements.push(`You seem to be looking for ${j.stages.target.other}; the ${category??'product'} mentioned is context. PEE holds no knowledge or products for ${j.stages.target.other}.`);
   return out;}
+ // G1 (F1, principle 8): what the shopper stated is kept even when no category is established (nothing is checked then)
+ const applicable=ex.constraints.filter(c=>!!SPEC_CRITERIA249[c.criterion]);
+ const shape=(c:typeof applicable[number])=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence,...(c.closure==='strict'?{closure:'strict' as const}:{})});
  if(!category){
+  out.constraints=applicable.filter(c=>c.status==='stated_in_request'||c.status==='candidate').map(shape);
   if(j.decision==='out_of_scope'){out.response='out_of_scope';out.statements.push(...j.reasons);return out;}
   out.response='clarification';out.questions.push(...j.clarificationQuestions);out.statements.push(...j.reasons);return out;}
  // Phase255: a category PEE has no category knowledge for (no modelled needs, mechanisms or tests) can still be checked
@@ -110,11 +115,9 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  if(j.decision==='unsupported_category'&&!statedCheckable){out.response='out_of_scope';out.statements.push(...j.reasons);return out;}
  if(j.decision==='unsupported_category')out.limitations.push(`PEE has no category knowledge for ${category.replace(/_/g,' ')}: only the limits you stated are checked; other needs are not understood.`);
  // 2. Requirements the user stated (confirmed with their own provenance) and ones to confirm or ask about.
- const applicable=ex.constraints.filter(c=>!!SPEC_CRITERIA249[c.criterion]);
  const stated=applicable.filter(c=>c.status==='stated_in_request');
  const pending=applicable.filter(c=>c.status==='candidate');
  ri.statedCriteria=stated.map(c=>c.criterion);ri.pendingCriteria=pending.map(c=>c.criterion);
- const shape=(c:typeof applicable[number])=>({criterion:c.criterion,value:c.value,unit:c.unit,bound:c.bound,span:c.span,status:c.status,confidence:c.confidence,...(c.closure==='strict'?{closure:'strict' as const}:{})});
  out.constraints=applicable.filter(c=>c.status==='stated_in_request'||c.status==='candidate').map(shape);
  // S103: preferences, corrected and implied limits are reported, never applied
  const others=applicable.filter(c=>c.status==='preference'||c.status==='superseded'||c.status==='implied');
@@ -135,6 +138,8 @@ function adviseCore253(text:string,store:KnowledgeStore246,registry:readonly Cat
  if(!stated.length){
   out.response='clarification';
   if(!out.questions.length)out.questions.push(...j.clarificationQuestions.slice(0,2));
+  // G1 (F3): needs were recognised but none has a taught question: the limits are the shopper's to state
+  if(!out.questions.length)out.questions.push(`Is there a limit I should check for the ${category.replace(/_/g,' ').replace(/s$/,'')}, for example its size, price or noise level?`);
   out.statements.push(NO_CHECKABLE253);
   return out;}
  // 3. The decision snapshot: the scope only when the product was named, the stated limits as hard requirements.
@@ -302,17 +307,28 @@ export function adviseFromRequest253(text:string,store:KnowledgeStore246,registr
   * scientific-knowledge path on (arm B); candidates are the admitted experimental C-lite rules (shadow). Never changes any
   * other field of the answer: inferred needs are never constraints, exclusions, ranking inputs or statements. */
  needInterpretation?:{knowledgeGuided:boolean;candidates?:CompiledProgram|null;claims?:boolean}}={}):Advice253{
+ registry=withTaughtCategoriesG1(registry,store);
  const out=adviseFromRequestBase253(text,store,registry,opts);
  if(opts.quantityKnowledge&&out.response!=='out_of_scope'){applyQuantityRequirements253(out,text,opts.quantityKnowledge);applyClassRequirements253(out,text,opts.quantityKnowledge,opts.date);}
  if(opts.scientific98&&out.response!=='out_of_scope'){const ids=[...out.shortlist,...out.unknown,...out.excluded].map(x=>x.productId);
   if(ids.length&&store.schemaVersion()>=11)out.scientificEvidence98=scientificEvidence98(store,ids);}
- if(out.response!=='out_of_scope'&&out.category)applyRequestCoverage80(out,text,registry);
+ // G1 (F1): parts of the request are reported as not assessed also when no category was established
+ if((out.response!=='out_of_scope'&&out.category)||(!out.category&&out.target.kind!=='other'))applyRequestCoverage80(out,text,registry);
  // S80: "the list is unordered" speaks about the shortlist; without one it contradicts an ordered partial comparison
  // shown in the same answer (S80 first run, judge finding on D1).
  if(!out.shortlist.length)out.limitations=out.limitations.filter(l=>!/^The list is unordered/.test(l));
  if(opts.needInterpretation){const words=registry.find(r=>r.id===out.category)?.aliases??[];
   out.needInterpretation=interpretNeeds(text,out,store,{knowledgeGuided:opts.needInterpretation.knowledgeGuided,qk:opts.quantityKnowledge??undefined,categoryWords:words,candidates:opts.needInterpretation.candidates??null,claims:!!opts.needInterpretation.claims});}
  return out;
+}
+/** G1 (F5; diagnosis E3): a category the store teaches but the code registry omits (tumble dryers, Phase272) is recognised
+ * by its own name only: singular and plural of the category id. No learned alias is added (Phase272 learned aliases were
+ * generic dimension words, "energy", "wash"), so recognition cannot widen beyond the name. */
+export function withTaughtCategoriesG1(registry:readonly CategoryEntry248[],store:KnowledgeStore246):readonly CategoryEntry248[]{
+ const known=new Set(registry.map(r=>r.id));
+ const taught=(store.db.prepare("SELECT DISTINCT category_id c FROM category_items WHERE concept_id IS NOT NULL").all() as {c:string}[]).map(r=>r.c).filter(c=>!known.has(c)&&/^[a-z][a-z_]+s$/.test(c));
+ if(!taught.length)return registry;
+ return [...registry,...taught.map(c=>{const plural=c.replace(/_/g,' ');return {id:c,aliases:[plural.replace(/s$/,''),plural],recognition:'name_only' as const};})];
 }
 /** S80 (principle 8): parts of the request nothing recognised are stated, never silently dropped (request_coverage80.ts). */
 function applyRequestCoverage80(out:Advice253,text:string,registry:readonly CategoryEntry248[]):void{

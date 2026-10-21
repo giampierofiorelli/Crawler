@@ -129,11 +129,17 @@
    }
   },
   "externalDbAccess": {
-   "sites": 116,
+   "sites": 118,
    "writes": 16,
-   "reads": 100,
+   "reads": 102,
    "other": 0,
    "modules": {
+    "goal_understanding_c.ts": {
+     "writes": 0,
+     "reads": 1,
+     "other": 0,
+     "writeTables": []
+    },
     "knowledge_statements.ts": {
      "writes": 2,
      "reads": 4,
@@ -189,7 +195,7 @@
     },
     "phase253_request_advice.ts": {
      "writes": 0,
-     "reads": 5,
+     "reads": 6,
      "other": 0,
      "writeTables": []
     },
@@ -484,6 +490,13 @@
     "dataWrites": 71,
     "ext": 16
    }
+  }
+ ],
+ "reviews": [
+  {
+   "date": "2026-10-21",
+   "by": "G1 (owner authorisation 2026-10-21)",
+   "change": "two read-only store.db accesses added: goal_understanding_c.ts (E3 diagnosis switch: family list from the store) and phase253_request_advice.ts (F5: categories taught in the store, recognised by name). No write, no event, no table changed; guarantees G1-G7 unaffected."
   }
  ]
 }

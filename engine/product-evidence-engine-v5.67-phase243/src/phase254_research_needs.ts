@@ -22,7 +22,11 @@ import type {ResearchGap181} from './phase181_dynamic_knowledge_ranking.js';
 import {researchJobFromGap182,type ResearchJob182} from './phase182_gap_research_orchestrator.js';
 
 export type NeedKind254='missing_declaration'|'conflicting_declarations'|'missing_independent_test'|'identity_review'|'retained_needs_source_reinspection'|
- 'retained_not_comparable'|'clarify_requirement'|'clarify_purchase'|'not_actionable';
+ 'retained_not_comparable'|'clarify_requirement'|'clarify_purchase'|'not_actionable'|
+ /** G1 (F6): knowledge gaps found without a category: a named product PEE has no category for, or a goal or problem no
+  * taught knowledge could be related to. Research needs only, pending authorisation; Phase257 never plans them (its need
+  * kinds are unchanged), so no live read can follow without a new owner decision. */
+ 'missing_category_knowledge'|'missing_need_knowledge';
 /** Phase255: source_reinspection = the value is retained but incomplete (no unit, unlabelled axes, a straddling range):
  * re-reading the same permitted source page may settle it; it is neither new research nor a local re-parse. */
 export type Destination254='research'|'user_clarification'|'reextraction'|'source_reinspection'|'not_actionable';
@@ -37,6 +41,9 @@ export interface ResearchNeed254 {
  phase182:{eligible:false;reason:string;jobPreview:ResearchJob182|null};
  /** sha256 prefixes of the requests that raised the need (the text itself is not repeated). */
  requests:string[];priority:number;
+ /** G1 (F6): what the gap is about when there is no category (the unknown product term, or the goal or problem not related
+  * to any knowledge); null otherwise. */
+ gapSubject?:string|null;
 }
 export interface ResearchNeeds254 {
  schema:'pee254.research-needs.v1';needs:ResearchNeed254[];
@@ -67,7 +74,16 @@ function need(store:KnowledgeStore246,request:string,x:{kind:NeedKind254;destina
 
 /** The needs raised by one answer. Products that met or failed every stated limit raise none. */
 export function researchNeedsFromAdvice254(advice:Advice253,store:KnowledgeStore246):ResearchNeed254[]{
- const ri=advice.researchInputs;const cat=ri?.category;if(!ri||!cat||ri.targetKind==='other')return [];
+ const ri=advice.researchInputs;const cat=ri?.category;
+ // G1 (F6): without a category a gap is still a typed research need (never a live read: Phase257 does not plan these kinds)
+ if(ri&&!cat){const req0=sha(advice.text).slice(0,16);const out0:ResearchNeed254[]=[];
+  const term=ri.unknownTerm??null;
+  if(term)out0.push({...need(store,req0,{kind:'missing_category_knowledge',destination:'research',categoryId:'unscoped',criterion:null,productId:null,
+   reason:`PEE holds no category knowledge for "${term}": its goals, mechanisms and test methods would have to be researched before advising`}),gapSubject:term});
+  else for(const o of advice.unassessedObjectives.slice(0,3))out0.push({...need(store,req0,{kind:'missing_need_knowledge',destination:'research',categoryId:'unscoped',criterion:o.toLowerCase(),productId:null,
+   reason:'no taught knowledge could be related to this goal or problem; whether knowledge is missing or the request is ambiguous is not yet known'}),gapSubject:o});
+  return out0;}
+ if(!ri||!cat||ri.targetKind==='other')return [];
  const req=sha(advice.text).slice(0,16);const out:ResearchNeed254[]=[];const N=(x:Parameters<typeof need>[2])=>out.push(need(store,req,x));
  // 1. Only the user can close these.
  for(const k of ri.pendingCriteria)N({kind:'clarify_requirement',destination:'user_clarification',reason:'stated ambiguously (negated, unbounded or a bare range): confirm with the user',categoryId:cat,criterion:k,productId:null});
