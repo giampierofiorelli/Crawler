@@ -1,0 +1,58 @@
+{
+ "schema": "pee.r3p.needs-collection-receipt.v1",
+ "collected": [
+  "2026-10-20 first run (stopped by HTTP 429; quota honoured)",
+  "2026-10-21 00:07Z resume per needs-collection-amendment-1.json: 8 API requests, 0 failures"
+ ],
+ "source": "Stack Exchange API only, CC BY-SA (attribution per case in the private requests file; published with the material after the first runs)",
+ "screening": "independent Claude agents per stratum; exclusion reasons: a no licence, b not a choosing/buying/replacing question for the category, c non-English, d duplicate",
+ "strata": {
+  "air_purifiers": {
+   "candidates": 7,
+   "included": 2,
+   "excluded_a": 0,
+   "excluded_b": 5,
+   "excluded_c": 0,
+   "excluded_d": 0,
+   "not_reached": 0,
+   "quota": 12,
+   "shortfall": 10
+  },
+  "coffee_machines": {
+   "candidates": 13,
+   "included": 3,
+   "excluded_a": 2,
+   "excluded_b": 8,
+   "excluded_c": 0,
+   "excluded_d": 0,
+   "not_reached": 0,
+   "quota": 12,
+   "shortfall": 9
+  },
+  "dishwashers": {
+   "candidates": 14,
+   "included": 0,
+   "excluded_a": 2,
+   "excluded_b": 12,
+   "excluded_c": 0,
+   "excluded_d": 0,
+   "not_reached": 0,
+   "quota": 12,
+   "shortfall": 12
+  },
+  "dehumidifiers": {
+   "candidates": 12,
+   "included": 2,
+   "excluded_a": 2,
+   "excluded_b": 8,
+   "excluded_c": 0,
+   "excluded_d": 0,
+   "not_reached": 0,
+   "quota": 6,
+   "shortfall": 4
+  }
+ },
+ "realIncluded": 7,
+ "shortfallPolicy": "declared, never filled (needs-protocol.json); the agent-authored set (42) is the main test; dishwashers have no real request",
+ "annotation": "two blind Claude-agent annotations per set, adjudicated by a third agent (authored: 69 adjudications; real: 19)"
+}
