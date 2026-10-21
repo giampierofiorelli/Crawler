@@ -185,3 +185,100 @@ export function claimEdges247N1(c:RowClaimN1,align:(text:string)=>string|null){
   const a=align(text(l.to)),b=align(text(l.from));if(a&&b&&a!==b)out.push({from:a,to:b,kind,support:'hypothesis',qualifierColumns:[...l.qualifiers]});}
  return out;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Third increment (evaluation/i3/preregistration.json, part T): alternative column-typing methods, compared on spent
+// development material before one is chosen. The header vocabulary above (n1.1) stays the frozen default.
+//  - 'header+content': the header role, corrected by what the column's cells denote (the existing denotation reader of
+//    knowledge_translation: measurement or test, outcome, condition, product feature, claim, source);
+//  - 'learned' / 'learned+content': a multinomial naive Bayes model of column types learned from adjudicated annotations
+//    of spent rows (header words, the header's head word, and optionally the cells' denotation and shape), instead of a
+//    hand-written word list. The model is data with provenance (which annotations, which rows), rebuildable from them.
+import {denotationOf} from './knowledge_translation.js';
+import type {QuantityKnowledge} from './quantity_knowledge.js';
+export interface RoleModelN1 {schema:'pee.n1.role-model.v1';version:string;content:boolean;trainedOn:string;classes:string[];
+ prior:Record<string,number>;counts:Record<string,Record<string,number>>;totals:Record<string,number>;vocab:string[]}
+const median=(xs:number[])=>{const s=[...xs].sort((a,b)=>a-b);return s.length?s[Math.floor(s.length/2)]:0;};
+/** Features of one column: header words (stemmed), the header's last word, and with content the majority denotation of its
+ * cells and their shape (numeric share, median length). */
+export function columnFeaturesN1(t:TeachingTableN1,j:number,qk:QuantityKnowledge|null):string[]{
+ const ws=words(t.header[j]??'').map(stem).filter(w=>w.length>1);const f=ws.map(w=>'h:'+w);
+ const first=(t.header[j]??'').split(/\s[\/]\s?|\s?[\/]\s|[,;()–—]|\s+(?:or|and)\s+/i)[0];const fw=words(first).map(stem);if(fw.length)f.push('hl:'+fw[fw.length-1]);
+ if(qk){const cells=t.rows.map(r=>(r.cells[j]??'').trim()).filter(Boolean).slice(0,12);
+  const dn=new Map<string,number>();for(const c of cells){const d=denotationOf(qk,c);dn.set(d,(dn.get(d)??0)+1);}
+  const top=[...dn].sort((a,b)=>b[1]-a[1])[0];if(top)f.push('d:'+top[0]);
+  const len=median(cells.map(c=>words(c).length));f.push('len:'+(len<=3?'short':len<=10?'mid':'long'));
+  if(cells.length&&cells.filter(c=>/\d/.test(c)).length/cells.length>=0.5)f.push('digits');}
+ return f;
+}
+export function trainRoleModelN1(examples:readonly {table:TeachingTableN1;col:number;role:ColumnRoleN1}[],qk:QuantityKnowledge|null,trainedOn:string):RoleModelN1{
+ const counts:Record<string,Record<string,number>>={},totals:Record<string,number>={},prior:Record<string,number>={};const vocab=new Set<string>();
+ for(const e of examples){prior[e.role]=(prior[e.role]??0)+1;const c=counts[e.role]??={};
+  for(const x of columnFeaturesN1(e.table,e.col,qk)){c[x]=(c[x]??0)+1;totals[e.role]=(totals[e.role]??0)+1;vocab.add(x);}}
+ return {schema:'pee.n1.role-model.v1',version:'nb.1',content:!!qk,trainedOn,classes:Object.keys(prior).sort(),prior,counts,totals,vocab:[...vocab].sort()};
+}
+export function predictRoleN1(m:RoleModelN1,features:readonly string[]):ColumnRoleN1{
+ const n=Object.values(m.prior).reduce((a,b)=>a+b,0),V=m.vocab.length+1;let best:{c:string;s:number}|null=null;
+ for(const c of m.classes){let s=Math.log((m.prior[c]+1)/(n+m.classes.length));
+  for(const x of features){if(!m.vocab.includes(x))continue;s+=Math.log(((m.counts[c]?.[x]??0)+1)/((m.totals[c]??0)+V));}
+  if(!best||s>best.s)best={c,s};}
+ return (best?.c??'other') as ColumnRoleN1;
+}
+export type ColumnMethodN1='header'|'header+content'|'learned'|'learned+content';
+/** Column roles by one of the compared methods. Identifier and value columns are decided by cell shape first (as n1.1). */
+export function columnRolesByN1(t:TeachingTableN1,method:ColumnMethodN1,o:{qk?:QuantityKnowledge|null;model?:RoleModelN1|null}={}):ColumnRoleN1[]{
+ const base=columnRolesN1(t);if(method==='header')return base;
+ return base.map((r,j)=>{if(r==='identifier'||r==='value')return r;
+  if(method==='header+content'){if(!o.qk)return r;const cells=t.rows.map(x=>(x.cells[j]??'').trim()).filter(Boolean).slice(0,12);
+   const dn=new Map<string,number>();for(const c of cells){const d=denotationOf(o.qk,c);dn.set(d,(dn.get(d)??0)+1);}
+   const [d,n]=[...dn].sort((a,b)=>b[1]-a[1])[0]??['other',0];if(n<Math.max(2,cells.length/2))return r;
+   // the cells outvote the header only between roles a header often mislabels (what to verify vs how to verify)
+   if(r==='method'&&(d==='outcome'||d==='product_feature'))return d==='outcome'?'need':'property';
+   if((r==='property'||r==='need')&&d==='measurement_or_test')return 'method';
+   if(r==='other'&&d==='condition')return 'condition';
+   return r;}
+  if(!o.model)return r;return predictRoleN1(o.model,columnFeaturesN1(t,j,o.model.content?o.qk??null:null));});
+}
+/** Row claims with a chosen column method (same chain links, provenance and claim shape as deriveClaimsN1). */
+/** The frozen third-increment models (resources/knowledge-translation/relation-{role,link}-model.v1.json), trained on spent
+ * N1 annotations by scripts/i3-table-dev.mjs --train-final. */
+export function loadLearnedModelsN1():{role:RoleModelN1;link:LinkModelN1}{
+ return {role:JSON.parse(readFileSync(new URL('../../resources/knowledge-translation/relation-role-model.v1.json',import.meta.url),'utf8')),
+  link:JSON.parse(readFileSync(new URL('../../resources/knowledge-translation/relation-link-model.v1.json',import.meta.url),'utf8'))};}
+export function deriveClaimsByN1(md:string,src:ClaimSourceN1,method:ColumnMethodN1,o:{qk?:QuantityKnowledge|null;model?:RoleModelN1|null;linkModel?:LinkModelN1|null}={}):RowClaimN1[]{
+ if(method==='header')return deriveClaimsN1(md,src);
+ const {lex}=loadRelationRolesN1();const mapping=`${loadRelationRolesN1().mapping}+${method}${o.model?':'+o.model.version:''}${o.linkModel?'+'+o.linkModel.version:''}`;const out:RowClaimN1[]=[];
+ for(const t of teachingTablesN1(md)){const roles=columnRolesByN1(t,method,o);if(!relationTableN1(roles))continue;
+  for(const r of t.rows){const {links,identifierColumns}=o.linkModel?rowLinksLearnedN1(roles,r.cells,o.linkModel,lex):rowLinksN1(roles,r.cells,lex);if(!links.length)continue;
+   const used=new Set([...identifierColumns,...links.flatMap(l=>[l.from,l.to,...l.qualifiers])]);
+   const participants=[...used].sort((a,b)=>a-b).map(j=>{const text=(r.cells[j]??'').trim().slice(0,600);return {col:j,header:t.header[j]??'',role:roles[j],text,textSha256:sha(text)};});
+   out.push({claimId:'clm_'+sha([src.categoryId,src.sha256,r.line,mapping].join('|')).slice(0,24),categoryId:src.categoryId,claimType:N1_CLAIM_TYPE,epistemic:N1_EPISTEMIC,
+    support:'hypothesis',mapping,source:{document:src.document,sha256:src.sha256,headerLine:t.headerLine,line:r.line,headings:t.headings.slice(-2)},participants,identifierColumns,links});}}
+ return out;
+}
+
+/** Third increment T, development reformulation 1: which pairs of column types a row links, and with what kind and
+ * direction, learned from adjudicated annotations (counts per ordered type pair) instead of the fixed level chain.
+ * A pair is linked when the annotations linked it in more than half of the rows where both types occurred (with the
+ * kind and direction seen most); qualifiers attach as in rowLinksN1 (the spanning link, else the row's first link). */
+export interface LinkModelN1 {schema:'pee.n1.link-model.v1';version:string;trainedOn:string;
+ pairs:Record<string,{seen:number;linked:Record<string,number>}>}
+export function trainLinkModelN1(examples:readonly {types:readonly string[];links:readonly LinkN1[];filled:readonly boolean[]}[],trainedOn:string):LinkModelN1{
+ const pairs:LinkModelN1['pairs']={};
+ for(const e of examples){const T=e.types;
+  for(let i=0;i<T.length;i++)for(let j=i+1;j<T.length;j++){if(!e.filled[i]||!e.filled[j])continue;const key=`${T[i]}|${T[j]}`;const p=pairs[key]??={seen:0,linked:{}};p.seen++;
+   const l=e.links.find(x=>(x.from===i&&x.to===j)||(x.from===j&&x.to===i));if(l){const k=`${l.from===i?'fwd':'back'}:${l.kind}`;p.linked[k]=(p.linked[k]??0)+1;}}}
+ return {schema:'pee.n1.link-model.v1',version:'lk.1',trainedOn,pairs};
+}
+export function rowLinksLearnedN1(roles:readonly ColumnRoleN1[],cells:readonly string[],m:LinkModelN1,lex=loadRelationRolesN1().lex):{links:LinkN1[];identifierColumns:number[]}{
+ const filled=roles.map((_,j)=>!!(cells[j]??'').trim());const links:LinkN1[]=[];
+ for(let i=0;i<roles.length;i++)for(let j=i+1;j<roles.length;j++){if(!filled[i]||!filled[j])continue;
+  if(lex.qualifierRoles.includes(roles[i])||lex.qualifierRoles.includes(roles[j]))continue;
+  const p=m.pairs[`${roles[i]}|${roles[j]}`];if(!p||!p.seen)continue;const tot=Object.values(p.linked).reduce((a,b)=>a+b,0);if(tot*2<=p.seen)continue;
+  const [k]=Object.entries(p.linked).sort((a,b)=>b[1]-a[1])[0];const [dir,kind]=k.split(':');
+  links.push(dir==='fwd'?{from:i,to:j,kind:kind as LinkKindN1,qualifiers:[]}:{from:j,to:i,kind:kind as LinkKindN1,qualifiers:[]});}
+ if(links.length)for(let q=0;q<roles.length;q++){if(!lex.qualifierRoles.includes(roles[q])||!filled[q])continue;
+  const span=links.find(l=>Math.min(l.from,l.to)<q&&q<Math.max(l.from,l.to));(span??links[0]).qualifiers.push(q);}
+ const order=links.length?[...new Set(links.map(l=>l.from))].sort((a,b)=>a-b):[];
+ return {links,identifierColumns:order.length?[order[0]]:[]};
+}

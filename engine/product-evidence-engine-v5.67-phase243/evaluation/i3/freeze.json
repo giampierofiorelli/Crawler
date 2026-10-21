@@ -1,0 +1,39 @@
+{
+ "schema": "pee.i3.freeze.v1",
+ "frozenAt": "2026-10-21T06:19:23.251Z",
+ "rule": "C frozen after 3 development reformulations (c-dev-it1..it3); T2 = learned column types + learned links, chosen on development by leave-one-document-out (t-dev-it0, it1: one reformulation) and trained on all spent rows; no change before or after the first runs on R and H3",
+ "C": {
+  "version": "c.1",
+  "development": [
+   "evaluation/i3/c-dev-it0.json",
+   "c-dev-it1.json",
+   "c-dev-it2.json",
+   "c-dev-it3.json"
+  ],
+  "parameters": "C_PARAMS in src/goal_understanding_c.ts"
+ },
+ "T": {
+  "T1": "n1.1 header vocabulary (unchanged since evaluation/n1/freeze.json)",
+  "T2": "learned:nb.1 + lk.1 (resources/knowledge-translation/relation-{role,link}-model.v1.json)",
+  "development": [
+   "evaluation/i3/t-dev-it0.json",
+   "t-dev-it1.json",
+   "t-dev-final.json"
+  ],
+  "secondary": [
+   "header+content",
+   "learned (chain links)"
+  ]
+ },
+ "files": {
+  "src/goal_understanding_c.ts": "697dc770f1dc06530b37e3d54f6dc5abfa21a68a754f742e3fe519270e16c09e",
+  "src/relation_claims_n1.ts": "7e6c00250351a8f8be510d7c4164eb978ba45bf10d596976b706f968e3f26c9c",
+  "src/need_model_n0.ts": "ff835b480e20ea3d3f3578d4297f07a4ac2387925d960ed79677ad635457660b",
+  "src/need_interpretation.ts": "75677c6f8b879995bd5561d98b84b02fba972a37d7e006d8f682b50e713c1399",
+  "resources/knowledge-translation/relation-roles.v1.json": "2a2a26a10e5c749cd5d07d8eacf2fe09ee7ef180a92c71935bb69407a3c20184",
+  "resources/knowledge-translation/relation-role-model.v1.json": "03a6d126e258f1674ed35c324e3dc93f4ade7b638e3295462751752c9e246edb",
+  "resources/knowledge-translation/relation-link-model.v1.json": "3fd02f6d24e0b2bfd50196e883fe184b8a326985682c2ff1729caa771d634754",
+  "scripts/i3-c-check.mjs": "9f65dca68eccea8a14de6c96358d6f3d10a1be5521d421279bc75a601e903624",
+  "scripts/i3-table-check.mjs": "4e6c4096f6b3aeca483490cb09cc4424da287606492f37e358cb20afe00aefe2"
+ }
+}
