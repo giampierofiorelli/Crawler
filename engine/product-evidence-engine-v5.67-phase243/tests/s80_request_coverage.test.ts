@@ -43,3 +43,16 @@ test('S80 negation: words in the scope of "without" or "not" are never evidence 
  const b=adviseFromRequest253('Which air fryer needs counter space and cleaning effort?',s,CATEGORY_REGISTRY250);
  for(const n of a.needs)assert.ok(b.needs.includes(n),'a need inferred only under negation: '+n);
 });
+// G1c residue (owner authorisation 2026-10-21; evaluation/g1c/preregistration.json residue): a limit stated in a sentence
+// of its own was treated as background and lost (33 of 98 limits on the development-only set). Synthetic requests (T1).
+test('G1c coverage: a sentence stating a limit is checked even when nothing in it was recognised',()=>{
+ const t='Which toaster suits a student flat? Nothing bigger than a microwave, and it must be cheap to run.';
+ const u=requestCoverage80(t,{matched:['toaster'],spans:[]}).map(x=>x.span);
+ assert.ok(u.some(s=>/Nothing bigger/.test(s)),JSON.stringify(u));assert.ok(u.some(s=>/cheap to run/.test(s)),JSON.stringify(u));
+ const bg='I used to own a small café years ago. Which kettle boils quickly?';
+ assert.deepEqual(requestCoverage80(bg,{matched:['kettle','boils quickly'],spans:[]}),[],'a narrative sentence with no requirement cue stays background');
+});
+test('G1c coverage: a one-word limit opened by "without" or "than" is reported',()=>{
+ const u=requestCoverage80('Which heater warms the shed without guzzling?',{matched:['heater','warms','shed'],spans:[]});
+ assert.deepEqual(u.map(x=>x.span),['without guzzling']);
+});

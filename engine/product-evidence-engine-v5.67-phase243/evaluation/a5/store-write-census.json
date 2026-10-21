@@ -129,9 +129,9 @@
    }
   },
   "externalDbAccess": {
-   "sites": 121,
+   "sites": 122,
    "writes": 16,
-   "reads": 105,
+   "reads": 106,
    "other": 0,
    "modules": {
     "goal_understanding_c.ts": {
@@ -251,6 +251,12 @@
      "writeTables": [
       "relation_claims_n1"
      ]
+    },
+    "semantic_retrieval_g1c.ts": {
+     "writes": 0,
+     "reads": 1,
+     "other": 0,
+     "writeTables": []
     },
     "situation_knowledge_g1b.ts": {
      "writes": 0,
@@ -508,6 +514,11 @@
    "date": "2026-10-21",
    "by": "G1b (owner authorisation 2026-10-21)",
    "change": "three read-only store.db accesses added in situation_knowledge_g1b.ts (shadow projection: category items, strategy concepts, measured_by relations). No write, no event, no table changed; guarantees G1-G7 unaffected."
+  },
+  {
+   "date": "2026-10-21",
+   "by": "G1c (owner authorisation 2026-10-21)",
+   "change": "one read-only store.db access added in semantic_retrieval_g1c.ts (shadow knowledge-unit index: knowledge_statements rendered text, read from a store copy). No write, no event, no table changed; guarantees G1-G7 unaffected."
   }
  ]
 }

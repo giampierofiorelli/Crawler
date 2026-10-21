@@ -10,7 +10,7 @@
  * reported as NOT INTERPRETED. This recognises nothing new and never infers a need: it only makes the loss explicit.
  * General by construction: no category, product or phrase list; only English function words. */
 export interface Uninterpreted80 {span:string;reason:'not_interpreted'|'quantity_not_checked'}
-export const REQUEST_COVERAGE_VERSION='rc80.4';
+export const REQUEST_COVERAGE_VERSION='rc80.5';
 /** Function words and request framing ("I want", "which", "best"): never content on their own. */
 export const FUNCTION_WORDS80=new Set(('a an the to of for and or but nor with without in on at by from into onto over under about than as so that this these '+
  'those it its is are was were be been being am do does did have has had will would could should can may might must shall i me my mine we us our '+
@@ -23,6 +23,17 @@ export const FUNCTION_WORDS80=new Set(('a an the to of for and or but nor with w
 /** Words that open a new requirement clause (conjunctions, and the prepositions that introduce a stated condition).
  * rc80.2: not 'in', 'with', 'at', 'to': splitting there cut constraints and phrases in two on the spent request sets. */
 const BOUNDARY=/^(?:and|or|but|that|which|who|while|whilst|without|than|because|although|though|so|whereas|unless|except|on|for)$/i;
+/** rc80.5 (G1c residue): English function words that state a requirement (obligation and desire modals, negation,
+ * comparison and limit words). A sentence carrying one is part of the request, not background, even when nothing in it
+ * was recognised ("Nothing louder than a fridge, please"). */
+const REQUIREMENT_CUE80=new Set(("must mustn't should shouldn't need needs want wants prefer ideally please can't cannot won't doesn't don't "+
+ "isn't not no nothing never than without under below max maximum least").split(' '));
+/** rc80.5: cue-bearing sentences are checked in requests of at most this many sentences. On the 206 spent requests, 420
+ * of the 426 extra reports the cues produced were narrative in posts of four or more sentences; short requests state
+ * their limits, long posts carry background (rc80.2). Limits stated only in a cue sentence of a long post stay unreported. */
+const CUE_MAX_SENTENCES80=3;
+/** rc80.5: a one-word clause opened by one of these states a limit ('without guzzling', 'than a fridge') */
+const LIMIT_OPENER80=/^(?:without|than)$/i;
 const stem=(w:string)=>w.toLowerCase().replace(/'s$/,'').replace(/(?:iest|ier)$/,'y').replace(/(?:ness|ingly|edly|ing|ed|est|er|ly|y|es|s)$/,'')||w.toLowerCase();
 export interface CoverageInput80 {
  /** Strings recognised elements were matched on (need 'matched' values, aliases, constraint spans...). Matched strings
@@ -63,7 +74,7 @@ export function requestCoverage80(text:string,input:CoverageInput80):Uninterpret
  const identifier=(w:string)=>/^\p{L}+\d/u.test(w); // 'C3240', 'AF400UK': product names, not content to interpret
  // rc80.2: in a longer request only the sentences that carry the request (a recognised word or a number) are checked;
  // background sentences are context, not stated requirements.
- const ask=sentences.length<=1?sentences:sentences.filter(z=>z.some(x=>used(x)||isNum(x.w)));
+ const ask=sentences.length<=1?sentences:sentences.filter(z=>z.some(x=>used(x)||isNum(x.w)||(sentences.length<=CUE_MAX_SENTENCES80&&REQUIREMENT_CUE80.has(x.w.toLowerCase().replace(/’/g,"'")))));
  const out:Uninterpreted80[]=[];
  for(const z of ask){
   const clauses:(typeof words)[]=[];let cur:typeof words=[];
@@ -77,7 +88,8 @@ export function requestCoverage80(text:string,input:CoverageInput80):Uninterpret
    if(freeNumber){out.push({span,reason:'quantity_not_checked'});continue;}
    const words2=content.filter(x=>!isNum(x.w)&&!identifier(x.w));
    // at least two content words; covered when at least half of them were used by a recognised element
-   if(words2.length<2){const one=words2[0];if(one&&!used(one)&&(input.needTerms??[]).some(t=>t.toLowerCase()===one.w.toLowerCase()))out.push({span,reason:'not_interpreted'});continue;}
+   if(words2.length<2){const one=words2[0];
+    if(one&&!used(one)&&((input.needTerms??[]).some(t=>t.toLowerCase()===one.w.toLowerCase())||(sentences.length<=CUE_MAX_SENTENCES80&&LIMIT_OPENER80.test(c[0].w))))out.push({span,reason:'not_interpreted'});continue;}
    if(words2.filter(used).length*2<words2.length)out.push({span,reason:'not_interpreted'});
   }
  }
