@@ -10,7 +10,7 @@
  * reported as NOT INTERPRETED. This recognises nothing new and never infers a need: it only makes the loss explicit.
  * General by construction: no category, product or phrase list; only English function words. */
 export interface Uninterpreted80 {span:string;reason:'not_interpreted'|'quantity_not_checked'}
-export const REQUEST_COVERAGE_VERSION='rc80.5';
+export const REQUEST_COVERAGE_VERSION='rc80.6';
 /** Function words and request framing ("I want", "which", "best"): never content on their own. */
 export const FUNCTION_WORDS80=new Set(('a an the to of for and or but nor with without in on at by from into onto over under about than as so that this these '+
  'those it its is are was were be been being am do does did have has had will would could should can may might must shall i me my mine we us our '+
@@ -34,6 +34,12 @@ const REQUIREMENT_CUE80=new Set(("must mustn't should shouldn't need needs want 
 const CUE_MAX_SENTENCES80=3;
 /** rc80.5: a one-word clause opened by one of these states a limit ('without guzzling', 'than a fridge') */
 const LIMIT_OPENER80=/^(?:without|than)$/i;
+/** rc80.6 (G1d): in a long request (more than CUE_MAX_SENTENCES80 sentences) a background sentence is not skipped whole:
+ * each of its segments (split at punctuation and coordinating conjunctions) carrying a STRONG requirement cue (obligation,
+ * comparison or bound, explicit refusal) is checked on its own. English function words only. */
+const STRONG_CUE80=/\b(?:must|mustn't|has to|have to|needs? to|should(?:n't)?|nothing|no (?:more|bigger|wider|taller|deeper|louder|heavier) than|at least|at most|than|under|below|max(?:imum)?|preferabl[ey]|prefer|rather not|not keen|(?:don't|do not|doesn't|does not) want|won't|can't be|cannot be|ideally|essential)\b/i;
+const INTERROGATIVE80=/^(?:what|which|who|whom|whose|when|where|why|how|should|shall|can|could|would|will|do|does|did|is|are|was|were|has|have|had|may|might|must)$/i;
+const SEGMENT_SPLIT80=/[,;:()]|\s(?:and|but|so|because|although|though|while|whereas)\s/i;
 const stem=(w:string)=>w.toLowerCase().replace(/'s$/,'').replace(/(?:iest|ier)$/,'y').replace(/(?:ness|ingly|edly|ing|ed|est|er|ly|y|es|s)$/,'')||w.toLowerCase();
 export interface CoverageInput80 {
  /** Strings recognised elements were matched on (need 'matched' values, aliases, constraint spans...). Matched strings
@@ -76,6 +82,14 @@ export function requestCoverage80(text:string,input:CoverageInput80):Uninterpret
  // background sentences are context, not stated requirements.
  const ask=sentences.length<=1?sentences:sentences.filter(z=>z.some(x=>used(x)||isNum(x.w)||(sentences.length<=CUE_MAX_SENTENCES80&&REQUIREMENT_CUE80.has(x.w.toLowerCase().replace(/’/g,"'")))));
  const out:Uninterpreted80[]=[];
+ if(sentences.length>CUE_MAX_SENTENCES80)for(const z of sentences){if(ask.includes(z))continue;
+  const a=z[0].start,b=z.at(-1)!.end;let pos=a;
+  // a question asks; it states no limit ('What features should I look for?', 'Should I wait?')
+  if(/^\s*\?/.test(text.slice(b,b+3))||INTERROGATIVE80.test(z[0].w))continue;
+  for(const seg of text.slice(a,b).split(SEGMENT_SPLIT80)){const st=text.indexOf(seg,pos);if(st<0)continue;pos=st+seg.length;
+   if(!STRONG_CUE80.test(seg))continue;const ws=words.filter(x=>x.start>=st&&x.end<=st+seg.length);
+   const content=ws.filter(x=>!isNum(x.w)&&!FUNCTION_WORDS80.has(x.w.toLowerCase())&&!identifier(x.w));
+   if(content.length&&!content.every(used))out.push({span:seg.trim(),reason:'not_interpreted'});}}
  for(const z of ask){
   const clauses:(typeof words)[]=[];let cur:typeof words=[];
   for(let i=0;i<z.length;i++){const x=z[i];const gap=i?text.slice(z[i-1].end,x.start):'';

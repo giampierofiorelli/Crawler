@@ -131,7 +131,8 @@ function verifyRequest(text:string,n0:ReturnType<typeof matchRowsG1b>['n0'],qk:Q
  return {query:kept.join(' '),masked,specific,setAside:[...new Set(n0.objects.filter(x=>NOT_CANDIDATE_ROLES.has(x.role)).map(x=>x.category))]};
 }
 
-function typeScores(ctx:ContextG1c,req:readonly string[]):{type:SituationTypeG1c;score:number}[]{
+/** Exported for G1d (fused-ranking measurement); behaviour unchanged. */
+export function typeScores(ctx:ContextG1c,req:readonly string[]):{type:SituationTypeG1c;score:number}[]{
  if(!ctx.types?.length||!req.length)return [];
  const bags=ctx.types.map(t=>{const st=new Map<string,number>();
   for(const s of stemsNI(t.label+' '+t.definition))st.set(s,1);

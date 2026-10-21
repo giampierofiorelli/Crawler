@@ -56,3 +56,27 @@ test('G1c coverage: a one-word limit opened by "without" or "than" is reported',
  const u=requestCoverage80('Which heater warms the shed without guzzling?',{matched:['heater','warms','shed'],spans:[]});
  assert.deepEqual(u.map(x=>x.span),['without guzzling']);
 });
+// G1d (owner authorisation 2026-10-21, §5): in LONG requests (more than three sentences) limits stated in narrative
+// sentences were still lost (33 of 78 on the long development set). Synthetic requests (T1).
+test('G1d coverage: in a long request a clause carrying a strong requirement cue is reported; narrative is not',()=>{
+ const t='We moved into a terraced house last spring. The kitchen is tiny and the old kettle finally died on Sunday. '+
+  'My partner drinks tea all day and I mostly make coffee. Whatever we get, it has to be properly quiet in the mornings. '+
+  'Our last one was a gift from my aunt and it lasted ages.';
+ const u=requestCoverage80(t,{matched:['kettle'],spans:[]}).map(x=>x.span);
+ assert.ok(u.some(s=>/properly quiet/.test(s)),JSON.stringify(u));
+ assert.ok(!u.some(s=>/terraced house|gift from my aunt|tea all day/.test(s)),'narrative sentences stay background: '+JSON.stringify(u));
+});
+test('G1d coverage: comparison and refusal clauses in a long request are reported',()=>{
+ const t='I have been reading reviews for weeks and I am going round in circles. The flat is small and the hallway is narrow. '+
+  'The children leave toys everywhere, so it gets messy. I need a vacuum but nothing heavier than a bag of shopping. '+
+  'I am not keen on anything that relies on an app.';
+ const u=requestCoverage80(t,{matched:['vacuum'],spans:[]}).map(x=>x.span);
+ // the sentence naming the product is checked clause by clause (rc80.2): the limit is reported in its two clauses
+ assert.ok(u.some(s=>/nothing heavier/.test(s))&&u.some(s=>/a bag of shopping/.test(s)),JSON.stringify(u));
+ assert.ok(u.some(s=>/not keen on anything that relies on an app/.test(s)),JSON.stringify(u));
+});
+test('G1d coverage: in a long request a question is not a stated limit',()=>{
+ const t='I have been cooking for years and finally have some space. The old blender broke last month. '+
+  'My sister recommended a brand but I am not sure. What features should I look for when buying one? Should I wait for the sales?';
+ assert.deepEqual(requestCoverage80(t,{matched:['blender'],spans:[]}).map(x=>x.span).filter(s=>/should I/i.test(s)),[]);
+});

@@ -1,0 +1,38 @@
+{
+ "schema": "pee.g1d.limits.v1",
+ "set": "long",
+ "label": "after-rc806",
+ "material": "development-only limits set (independent Claude agent; never validation)",
+ "rule": "scripts/g1b-residue-check.mjs kept rule (+ unmappedConstraints)",
+ "counts": {
+  "messages": 40,
+  "expressed": 78,
+  "lost": 5,
+  "byKind": {
+   "noise": {
+    "expressed": 7,
+    "lost": 0
+   },
+   "budget": {
+    "expressed": 13,
+    "lost": 0
+   },
+   "size": {
+    "expressed": 18,
+    "lost": 1
+   },
+   "other": {
+    "expressed": 22,
+    "lost": 2
+   },
+   "time": {
+    "expressed": 10,
+    "lost": 0
+   },
+   "energy": {
+    "expressed": 8,
+    "lost": 2
+   }
+  }
+ }
+}

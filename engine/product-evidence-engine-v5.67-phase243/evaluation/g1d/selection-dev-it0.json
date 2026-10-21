@@ -1,0 +1,238 @@
+{
+ "schema": "pee.g1d.selection-dev.v1",
+ "label": "it0",
+ "material": "spent I3 R (development only); safety probes development-only",
+ "versions": {
+  "selection": "g1d.v0",
+  "relations": "g1d.r1.3"
+ },
+ "params": {
+  "depth": 30,
+  "rrfK": 60,
+  "minRowSim": 0.65,
+  "competeMargin": 0.02,
+  "maxCategories": 2,
+  "maxStrategies": 2
+ },
+ "knowledge": {
+  "relations": 61,
+  "rowsWithRelation": 50,
+  "byPolarity": {
+   "contraindicated": 6,
+   "applies": 47,
+   "conditional": 8
+  },
+  "categoryApplicability": {
+   "conditional": 475,
+   "not_a_purchase_situation": 108,
+   "unsuitable": 10,
+   "suitable": 333
+  }
+ },
+ "counts": {
+  "C1": {
+   "problem": {
+    "requests": 39,
+    "with_any": 24,
+    "any_reached": 9,
+    "invented": 18,
+    "action:ask": 7,
+    "without_knowledge": 15,
+    "outside_or_abstain": 7,
+    "action:commit": 15,
+    "action:abstain": 17
+   },
+   "all": {
+    "requests": 60,
+    "with_any": 36,
+    "any_reached": 16,
+    "invented": 25,
+    "action:ask": 8,
+    "without_knowledge": 24,
+    "outside_or_abstain": 12,
+    "action:abstain": 25,
+    "action:commit": 27
+   },
+   "named": {
+    "requests": 21,
+    "invented": 7,
+    "without_knowledge": 9,
+    "outside_or_abstain": 5,
+    "action:abstain": 8,
+    "action:ask": 1,
+    "with_any": 12,
+    "any_reached": 7,
+    "action:commit": 12
+   }
+  },
+  "G1b": {
+   "problem": {
+    "requests": 39,
+    "with_any": 24,
+    "any_reached": 11,
+    "invented": 51,
+    "action:ask": 21,
+    "without_knowledge": 15,
+    "outside_or_abstain": 4,
+    "action:propose": 12,
+    "action:outside_knowledge": 6
+   },
+   "all": {
+    "requests": 60,
+    "with_any": 36,
+    "any_reached": 19,
+    "invented": 77,
+    "action:ask": 30,
+    "without_knowledge": 24,
+    "outside_or_abstain": 5,
+    "action:propose": 22,
+    "action:outside_knowledge": 8
+   },
+   "named": {
+    "requests": 21,
+    "invented": 26,
+    "without_knowledge": 9,
+    "outside_or_abstain": 1,
+    "action:propose": 10,
+    "with_any": 12,
+    "any_reached": 8,
+    "action:ask": 9,
+    "action:outside_knowledge": 2
+   }
+  },
+  "G1cD": {
+   "problem": {
+    "requests": 39,
+    "with_any": 24,
+    "any_reached": 14,
+    "invented": 66,
+    "action:ask": 29,
+    "without_knowledge": 15,
+    "outside_or_abstain": 2,
+    "action:propose": 8,
+    "action:outside_knowledge": 2
+   },
+   "all": {
+    "requests": 60,
+    "with_any": 36,
+    "any_reached": 22,
+    "invented": 100,
+    "action:ask": 40,
+    "without_knowledge": 24,
+    "outside_or_abstain": 2,
+    "action:propose": 18,
+    "action:outside_knowledge": 2
+   },
+   "named": {
+    "requests": 21,
+    "invented": 34,
+    "without_knowledge": 9,
+    "outside_or_abstain": 0,
+    "action:propose": 10,
+    "with_any": 12,
+    "any_reached": 8,
+    "action:ask": 11
+   }
+  },
+  "V": {
+   "problem": {
+    "requests": 39,
+    "with_any": 24,
+    "any_reached": 11,
+    "invented": 37,
+    "action:ask": 5,
+    "conditional_possibilities": 26,
+    "not_suitable": 1,
+    "competing_sets": 8,
+    "questions": 5,
+    "without_knowledge": 15,
+    "outside_or_abstain": 4,
+    "action:propose": 29,
+    "action:research": 5
+   },
+   "all": {
+    "requests": 60,
+    "with_any": 36,
+    "any_reached": 19,
+    "invented": 64,
+    "action:ask": 8,
+    "conditional_possibilities": 34,
+    "not_suitable": 1,
+    "competing_sets": 14,
+    "questions": 8,
+    "without_knowledge": 24,
+    "outside_or_abstain": 4,
+    "action:propose": 47,
+    "action:research": 5
+   },
+   "named": {
+    "requests": 21,
+    "invented": 27,
+    "without_knowledge": 9,
+    "outside_or_abstain": 0,
+    "action:propose": 18,
+    "conditional_possibilities": 8,
+    "not_suitable": 0,
+    "competing_sets": 6,
+    "questions": 3,
+    "action:ask": 3,
+    "with_any": 12,
+    "any_reached": 8
+   }
+  }
+ },
+ "probes": {
+  "C1": {
+   "probes": 42,
+   "failed": 19,
+   "byType": {
+    "negation_or_contrary": 1,
+    "owned_vs_requested": 2,
+    "opposite_situation": 2,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 4,
+    "generic_need": 2,
+    "contraindication": 5
+   }
+  },
+  "G1b": {
+   "probes": 42,
+   "failed": 20,
+   "byType": {
+    "negation_or_contrary": 3,
+    "owned_vs_requested": 4,
+    "opposite_situation": 1,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 2,
+    "generic_need": 2,
+    "contraindication": 5
+   }
+  },
+  "G1cD": {
+   "probes": 42,
+   "failed": 26,
+   "byType": {
+    "negation_or_contrary": 3,
+    "owned_vs_requested": 4,
+    "opposite_situation": 2,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 5,
+    "generic_need": 4,
+    "contraindication": 5
+   }
+  },
+  "V": {
+   "probes": 42,
+   "failed": 26,
+   "byType": {
+    "negation_or_contrary": 5,
+    "owned_vs_requested": 3,
+    "opposite_situation": 3,
+    "cause_vs_symptom": 3,
+    "function_vs_result": 2,
+    "generic_need": 4,
+    "contraindication": 6
+   }
+  }
+ }
+}

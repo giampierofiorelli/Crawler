@@ -1,0 +1,134 @@
+{
+ "schema": "pee.g1d.l1.v1",
+ "pool": "it0",
+ "material": "spent I3 R (60), development",
+ "judging": "blind Claude agents; G1c verdicts reused, 491 new pairs judged by two agents (one judgement per pair); method identity hidden",
+ "note": "pooled recall is relative to units either ranking retrieved, not to all relevant knowledge",
+ "missingVerdicts": 0,
+ "methods": {
+  "vector": {
+   "problem": {
+    "requests": 39,
+    "relevantAt5": 33,
+    "lenientAt5": 66,
+    "units5": 195,
+    "relevantAt10": 42,
+    "units10": 390,
+    "poolRelevant": 50,
+    "recalled10": 42,
+    "withRelevant5": 14,
+    "precisionAt5": 0.169,
+    "lenientPrecisionAt5": 0.338,
+    "precisionAt10": 0.108,
+    "pooledRecallAt10": 0.84
+   },
+   "all": {
+    "requests": 60,
+    "relevantAt5": 45,
+    "lenientAt5": 91,
+    "units5": 300,
+    "relevantAt10": 57,
+    "units10": 600,
+    "poolRelevant": 67,
+    "recalled10": 57,
+    "withRelevant5": 21,
+    "precisionAt5": 0.15,
+    "lenientPrecisionAt5": 0.303,
+    "precisionAt10": 0.095,
+    "pooledRecallAt10": 0.851
+   },
+   "named": {
+    "requests": 21,
+    "relevantAt5": 12,
+    "lenientAt5": 25,
+    "units5": 105,
+    "relevantAt10": 15,
+    "units10": 210,
+    "poolRelevant": 17,
+    "recalled10": 15,
+    "withRelevant5": 7,
+    "precisionAt5": 0.114,
+    "lenientPrecisionAt5": 0.238,
+    "precisionAt10": 0.071,
+    "pooledRecallAt10": 0.882
+   }
+  },
+  "fused": {
+   "problem": {
+    "requests": 39,
+    "relevantAt5": 26,
+    "lenientAt5": 53,
+    "units5": 195,
+    "relevantAt10": 41,
+    "units10": 390,
+    "poolRelevant": 50,
+    "recalled10": 41,
+    "withRelevant5": 12,
+    "precisionAt5": 0.133,
+    "lenientPrecisionAt5": 0.272,
+    "precisionAt10": 0.105,
+    "pooledRecallAt10": 0.82
+   },
+   "all": {
+    "requests": 60,
+    "relevantAt5": 40,
+    "lenientAt5": 82,
+    "units5": 300,
+    "relevantAt10": 56,
+    "units10": 600,
+    "poolRelevant": 67,
+    "recalled10": 56,
+    "withRelevant5": 19,
+    "precisionAt5": 0.133,
+    "lenientPrecisionAt5": 0.273,
+    "precisionAt10": 0.093,
+    "pooledRecallAt10": 0.836
+   },
+   "named": {
+    "requests": 21,
+    "relevantAt5": 14,
+    "lenientAt5": 29,
+    "units5": 105,
+    "relevantAt10": 15,
+    "units10": 210,
+    "poolRelevant": 17,
+    "recalled10": 15,
+    "withRelevant5": 7,
+    "precisionAt5": 0.133,
+    "lenientPrecisionAt5": 0.276,
+    "precisionAt10": 0.071,
+    "pooledRecallAt10": 0.882
+   }
+  },
+  "category_first": {
+   "named": {
+    "requests": 8,
+    "relevantAt5": 12,
+    "lenientAt5": 21,
+    "units5": 38,
+    "relevantAt10": 12,
+    "units10": 38,
+    "poolRelevant": 0,
+    "recalled10": 0,
+    "withRelevant5": 6,
+    "precisionAt5": 0.316,
+    "lenientPrecisionAt5": 0.553,
+    "precisionAt10": 0.316
+   },
+   "all": {
+    "requests": 8,
+    "relevantAt5": 12,
+    "lenientAt5": 21,
+    "units5": 38,
+    "relevantAt10": 12,
+    "units10": 38,
+    "poolRelevant": 0,
+    "recalled10": 0,
+    "withRelevant5": 6,
+    "precisionAt5": 0.316,
+    "lenientPrecisionAt5": 0.553,
+    "precisionAt10": 0.316
+   }
+  }
+ }
+}
