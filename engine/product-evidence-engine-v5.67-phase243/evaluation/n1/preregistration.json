@@ -1,0 +1,47 @@
+{
+ "schema": "pee.n1.preregistration.v1",
+ "registered": "2026-10-21, before any N1 code, any gold material and any run (owner authorisation verbatim .claude/skills/pee-guided-learning/references/owner-n1-authorisation-2026-10-21.md; collateral research research-n1-scientific-relations-2026-10-21.txt)",
+ "question": "Can PEE recover the situation -> need -> criterion -> evidence relations its translation lost (D1), represent them with roles, conditions, provenance and status, rebuild them from immutable inputs, retrieve them for new situations (category known or not), and does using them improve need understanding on new requests without invented needs?",
+ "levels": {
+  "L0": "table structure: column roles inferred by the mechanism vs the D1 adjudicated roles (reference produced before this increment; held-out categories never used to build the role rules)",
+  "L1": "relation fidelity: row-level assertion bundles vs a sealed blind reference (participants, directed links, link kinds, qualifiers); invented links and unsupported upgrades counted separately",
+  "L2": "durability: rederivation from immutable inputs on an empty store copy equals the stored projection; idempotent re-run; assessments and existing guarantees (A5 G1-G7, C2, withheld pairs) unchanged",
+  "L3": "retrieval in new situations: for fresh requests (category named or not), relevant vs irrelevant vs contradicting items among the top 5, blind pooled judgement",
+  "L4": "need understanding: the same need-interpretation code with recovered relations on/off on fresh sealed requests (expressed, justified inferred, invented, stances respected, harm counters)"
+ },
+ "material": {
+  "development": "relation tables of the translated documents of air_fryers, air_purifiers, coffee_machines and dishwashers (all their translated documents). Used to design and tune the mechanism; spent.",
+  "heldout_tables_H1": "50 rows sampled with seed 20261022 from the relation tables (D1 adjudicated roles) of the translated documents of televisions (40 rows) and dehumidifiers (10 rows). Never used for development. Disclosure: Claude saw some of these tables' headers while adjudicating D1 column roles; no rule was built from them.",
+  "heldout_tables_H2": "30 rows sampled with seed 20261022 from relation tables of packages never translated (speakers 10, soundbars 10, robot floor cleaners 10): evaluation only (unseen categories and layouts). Nothing from H2 is written to any store (owner: no bulk translation of excluded packages).",
+  "requests_Q": "48 fresh shopper requests written by an independent agent that reads no package, store, code or earlier evaluation: 12 each for air_purifiers, dishwashers, coffee_machines, dehumidifiers; in each category 6 name the product and 6 only describe the situation. Annotated blind by two agents with the R3-P guide and label list (evaluation/r3p/needs-annotation-guide.md, needs-labels.json), adjudicated, sealed (SHA-256) before any run. Reported separately: named vs unnamed, category whose tables were development (air_purifiers, dishwashers, coffee_machines) vs held-out (dehumidifiers).",
+  "spent_not_heldout": "R3-P requests and references, D1 samples, S83 206 requests: regression or diagnosis only"
+ },
+ "references": {
+  "L1": "two independent Claude agents per row (headers, two nearest headings, row cells only), adjudicated by a third; output per row: identifier columns, directed links between columns with kind (relevant_to, addressed_by, assessed_by, qualified_by, alternative_of), conditions and caveats attached to the link they qualify, and 'no relation' when the row asserts none (e.g. a planning or reference table). Sealed before any run.",
+  "L3": "pooled blind judgement: for each request, the top-5 items of every arm, shuffled, without arm ids; the judge sees only the request and each item's text and answers relevant / irrelevant / contradicting (an item that would push towards a wrong conclusion)."
+ },
+ "arms": {
+  "L1": ["T0: the store as written (the 8cf307c translator's statements at the row)", "T1: the N1 mechanism (frozen after development)"],
+  "L3": ["R0: retrieval over existing statements (the arm-B statement matcher of need_interpretation, frozen)", "R1: retrieval over recovered relations (N1)"],
+  "L4": ["A: no knowledge", "B: statements (current arm B)", "B+N1: arm B plus recovered relations, same code, recovered relations switched on"]
+ },
+ "metrics": {
+  "L0": "column-role accuracy per column; per category",
+  "L1": "link precision and recall (column pair + direction + kind), invented links (predicted, not in reference), qualifier attachment accuracy, rows wrongly given relations when the reference says none, unsupported upgrades (any link typed as establishing or causal: must be 0)",
+  "L2": "canonical equality of rebuilt vs stored projection (rows, ids, provenance, status); re-run duplicates; G1-G7 tests; C2 tests; withheld-pair tests; 206-request regression",
+  "L3": "requests with at least one relevant item in top 5; relevant / irrelevant / contradicting counts; per category; named vs unnamed; category-unknown",
+  "L4": "reference needs found, invented needs, harmful stances, inferred needs turned into constraints, exclusions or ranking inputs (must be 0); per group"
+ },
+ "thresholds": {
+  "admission_of_recovered_relations_to_the_live_store": "L1 on H1: link precision >= 0.80, recall >= 0.60, invented links <= 10% of predicted, unsupported upgrades 0; L2 all equal. If not met, relations stay on store copies and the report says why.",
+  "admission_to_the_shadow_consumer_claim": "L4 B+N1 vs B on Q: reference needs found +3 or more, invented needs not more than B + 2, harm counters 0. Below this, N1 is reported as not improving need understanding (a valid result).",
+  "L3": "R1 has at least as many requests with a relevant item as R0, and its irrelevant share is at most R0's + 0.10; contradicting items <= 2 in total"
+ },
+ "stop_rules": [
+  "development: at most 3 reformulations of the mechanism after its first development run; then freeze",
+  "no tuning after any held-out run; later runs are labelled tuned and never called held-out",
+  "if a non-agreed fundamental decision becomes necessary, stop only that part, document alternatives and consequences"
+ ],
+ "representation_comparison": "Before choosing the persisted form, the development rows are encoded and decoded under (1) grouped phase247-style typed edges, (2) one claim bundle with roles and qualifiers, (3) both: bundles with projections to existing edge kinds where they fit. Measured: rows reconstructed exactly, extra pairs asserted, qualifiers lost, link kinds without a slot. The simplest form with no loss is chosen.",
+ "safety_invariants": "Recovered relations are teaching relevance: never establishing, never ranking inputs, never exclusions; machine-derived and unreviewed until a review record exists; reviews and assessments are never re-created by re-running a translator."
+}

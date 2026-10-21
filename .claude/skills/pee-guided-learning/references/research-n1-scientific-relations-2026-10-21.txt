@@ -1,0 +1,296 @@
+PRODUCT EVIDENCE ENGINE (PEE)
+COLLATERAL SCIENTIFIC AND ENGINEERING RESEARCH — N1
+Recovering, preserving, and using contextual scientific relations
+Research date: 21 October 2026 | Language: English | Version: independent methodological briefing 1.0
+
+PURPOSE AND BOUNDARY
+
+This document is scientific and architectural input for Claude Code, not an implementation order. Its purpose is to enlarge the set of justified design options for PEE and suggest falsifiable experiments. It is not a recommendation to adopt RDF, RML, a knowledge-graph database, a new AI model, or any specific dependency. Read and reconcile it with the current PEE guided-learning skill, owners' decisions, current repository, reports, and research-rights policy. Where this paper proposes an experiment or model, that is an analytical suggestion, not an established result.
+
+ABSTRACT
+
+In PEE's first coordinated increment, Claude reported 4,391 cell-pair relations in 161 tables across the available owner research packages; 1,910 came from documents not selected for translation. Among 2,481 relations in translated documents, only 266 were retained in some form and 151 (6.1%) retained in a typed form usable by the current reasoning machinery. These are counts under a specific definition of table-cell pair relations, not a census of all scientific claims, not an independent human validation, and not a measure of user-facing advisory quality. The translator was re-run against 27 matching translated documents and reportedly reproduced all 6,118 existing statements. This is strong evidence that an acquisition design is systematically losing relational structure; it does not establish that restoring structure will improve request understanding or recommendations.
+
+The research finds five useful principles. (1) A scientific relationship must be treated as an assertion with roles, scope, qualifiers and justification, not assumed to be a context-free binary fact. (2) Table semantics are not reducible to 'first column is the subject'; row headers, super-rows, captions, column headers, notes and methodology can determine a relation. (3) Provenance includes transformation history and the reason a conclusion is believed, not merely a URL or a hash. (4) Re-deriving deterministic derived facts from retained original inputs is a genuine alternative to full event sourcing, but mutable review assessments require their own complete recoverable record. (5) More stored edges do not equal more reliable user inferences: preservation, semantic fidelity, retrieval, inference quality and decision safety are distinct measurable levels.
+
+1. THE OBSERVED PEE PROBLEM — PRECISE SCOPE
+
+Source: 'first-increment-report.md', commit 00a7908 (Claude Code reporting); review decisions later recorded at 21886fa. This briefing relies on that report, not a new independent re-run.
+
+- 89 package documents (including 8 byte-identical duplicates), 313 tables, 161 relational tables, 4,391 counted cell-pair relations.
+- 1,910 relation pairs in documents never included in the translation input selection: robot floor cleaners, soundbars, speakers and some air-purifier/dehumidifier supplements.
+- 2,481 relation pairs located in translated documents; 151 survived typed, 115 untyped, 654 counted as altered, 518 as unrepresentable, 1,043 as lost.
+- Mechanisms identified: a subject defaulting to a row ID (e.g. N17); a single subject-to-cell slot instead of relationships between two other columns; role-bearing headers not recognised; some rows not translated; and 331 role-bearing cell losses whose exact individual mechanisms remain untraced.
+- 6,118 existing machine-translated statements reproduced exactly by the original translator; their reliability, concept linking and applicability should not be conflated with independently validated evidence.
+- D1 concerns TABLES. Relational knowledge in prose, figures, captions, footnotes, tests and documentary cross-references remains a separate investigation.
+
+The unit of counting is important. A row with situation, need, criterion and evidence may yield multiple cell-pair counts but still be just one related assertion bundle. Restoration measured only by number of edges might double-count a single statement or produce unsupported pairwise combinations.
+
+2. SCIENTIFIC STATEMENTS ARE QUALIFIED, NOT CONTEXT-FREE
+
+2.1 Binary relations versus qualified and n-ary assertions
+
+W3C's 'Defining N-ary Relations on the Semantic Web' (2006 Working Group Note) discusses relation patterns when a claim refers to more than two entities or carries properties such as certainty or strength [S1]. This is a MODELING PATTERN, not evidence that a new triplestore is required. The same ideas can be represented as ordinary relational tables with a relation/claim identity and associated typed participants and qualifiers.
+
+Example (hypothetical, not a product fact):
+
+  Shopper situation: limited counter space
+  Candidate need: usable compactness
+  Evaluation criterion: operating footprint INCLUDING access and working clearances
+  Evidence route: a product-specific verified dimension/configuration measurement
+  Qualification: intended placement, accessories and operating mode
+  Scientific status: relevance hypothesis, NOT proof that a given product fits
+
+Incorrect compression: 'limited space -> compact machine -> good performance'. That changes relevance into an effectiveness claim and may incorrectly treat physical width as sufficient evidence of fit.
+
+A better abstract form distinguishes:
+- asserted link: which roles are related and how;
+- claim type: teaching_relevance, measured_by, requires_condition, not_sufficient_for, mechanism hypothesis, observed_result, etc.;
+- evidence: source, row/cell(s), method, and whether the source actually supports the link;
+- qualification: boundaries, purpose, test configuration, counterexamples and alternatives;
+- epistemic level: proposed, unreviewed translation, reviewed interpretation, independent original evidence where legitimately established;
+- object of judgment: relation existence, applicability to a use, adequacy of a measurement, or sufficiency for a decision.
+
+Do not encode 'teaching relevance' as cause-and-effect. 'Often relevant when' is not 'guarantees outcome'. If one source says a method is informative and another says it is insufficient, both must remain representable without silently overwriting one another.
+
+2.2 Multiplicity and composition
+
+An n-ary claim may be stored as a claim plus role assignments, or as a set of relations connected to the same source row or evidence bundle. A binary edge table can also support N1 if edge groups and qualifiers remain recoverable; it need not be replaced by a general hypergraph. However, blindly generating every possible pair from a row is not equivalent to preserving the row's meaning. For example, an 'evidence type' column may describe WHAT COULD BE TESTED, not assert an actual result was observed. It is incorrect to convert a planning table into independent test evidence.
+
+When a row contains conditional text ('when', 'if', 'unless', 'for small rooms'), retain the condition explicitly. When a table asserts several alternative tests, avoid turning OR into AND, or either into an unconditional sufficiency verdict. Distinguish a source's claim from a developer's reconstructed hypothesis.
+
+3. SEMANTIC TABLE UNDERSTANDING
+
+3.1 Structural interpretation before relation projection
+
+The W3C Model for Tabular Data and Metadata on the Web (2015 Recommendation) separates table, row, column, cell and their metadata; the companion 'Generating RDF from Tabular Data' describes how annotated tables can be mapped downstream [S2, S3]. The structural lesson transfers to HTML and text even if CSVW or RDF is never installed.
+
+Useful retained intermediate structure:
+- stable document identity/version and table identity;
+- heading chain, caption and nearby methodological text;
+- normalized grid coordinates plus original cell positions, spans and scopes;
+- header relationships, including multilevel headings, stubs and super-rows;
+- the role of each column/cell (identifier, situation, task, need, measured quantity, condition, limitation, method, evidence or notes);
+- explicit references/footnote markers and units;
+- deterministic source locators and lineage to each derived relation.
+
+For source HTML, a `th` is not always semantic truth: CSS/layout tables exist; `rowspan`, `colspan`, `scope`, `headers`, caption, surrounding prose and flattened markup can mislead. Some tables use the first column as an ID, not a meaningful subject. The row 'N17 | ...' should not normally create a concept named 'N17'. Nevertheless N17 remains useful as a row locator.
+
+The paper 'Disentangling the structure of tables in scientific literature' [S4] explicitly decomposes scientific table analysis into structural, functional and semantic tasks: associating data cells with related headers, stubs and super-row cells matters before value interpretation. Scientific semantic-table work [S5, S6] shows why table meaning may depend on context elsewhere in the document. Those studies motivate investigation; their performance figures should not be imported into PEE's benchmarks.
+
+3.2 Mapping without hallucinating semantics
+
+A conservative pipeline should preserve a structural intermediate representation even when no justified semantic relation can yet be made. Each candidate relation can carry a reason for extraction, the exact source cells, relation kind, and a blocked/undetermined state if roles are ambiguous. This allows later learning without inventing a definite relation.
+
+The original translation's header vocabulary may be enlarged by learned general column-role categories, but 'more headers recognised' is not sufficient: precision on unfamiliar tables, role conflicts and examples of unsupported cross-cell pairing must be measured. A deterministic row ID plus content hashes should locate evidence without mistaking locators for subject entities.
+
+3.3 Cross-section evidence
+
+The document-level SciREX benchmark [S7] and the ReSel paper [S8] study relations whose relevant entities occur in different sections or modalities. They indicate why sentence-only or table-only extraction is incomplete. PEE's official R4 concerns links across the *same document*; N1 should preserve pointers and model structure that R4 can later use, but this research does not authorise implementing R4 or cross-document linking now.
+
+4. PROVENANCE AND RIGHTS: WHAT MUST SURVIVE
+
+4.1 Provenance as a derivation chain
+
+W3C PROV-DM and PROV-O define entities, activities, agents, derivations, use, generation and invalidation [S9, S10]. For PEE, an independently checkable lineage may have:
+
+  source document/version/hash
+       -> normalized table and cell locators
+       -> role interpretation (with uncertainty and method)
+       -> candidate relation (source attribution, mapping version)
+       -> proposed store representation
+       -> reviewer/assessment with independence and citation
+       -> controlled downstream retrieval, or documented abstention
+
+This is a conceptual model; the schema and APIs should be determined by comparative evaluation against the actual code.
+
+'Document hash + line number' alone may not locate a statement reliably if the file is reformatted. Consider redundant anchors: document SHA-256, table identity, row/column coordinates, cell checksum, nearby heading chain and permitted text-quote selector where rights permit. The W3C Web Annotation model's Selector concept is a useful precedent [S11]. No rule should require retaining third-party full-page bodies if prohibited by PEE policy; provenance metadata and lawful, non-infringing extracts are a separate matter.
+
+4.2 Why-/how-/where-provenance
+
+The survey 'Provenance in Databases: Why, How, and Where' [S12] distinguishes the supporting input witnesses for a result, how multiple witnesses combine, and which input value a result originated from. These distinctions matter when one inferred relation has multiple source rows or when the same interpretation is copied across sites. Duplicate publications do not automatically constitute independent support.
+
+Scientific judgments deserve separate identities. In PEE, sufficiency assessments, assessor identity/independence, citations and notes are DECISION RELEVANT; the A5 census reported 56 assessments whose content cannot be reconstructed from the existing journal or teaching code. Never rebuild an assessment merely by re-running the same-model translator, and never let a retranslation replace a human/independent review receipt with a machine-authored one.
+
+4.3 Versioning and rights
+
+Re-derivation depends on the exact transformation code/policy version and exact permitted input versions. Retain a manifest of input hashes, mapping-policy version, normalizer version, dependencies, output checksums, and independently recorded review transitions. Rights gates remain separate from data structures: a valid scientific relation does not imply a right to store its originating page body or to publish copied text.
+
+5. RECONSTRUCTION: AUDIT JOURNAL VERSUS SOURCE OF TRUTH
+
+An audit trail that logs 'category relation added: ID' is not sufficient to rebuild all row content. Event sourcing, described by Martin Fowler [S13], uses a complete event history to reconstruct current state. Microsoft Architecture Center notes event sourcing's substantial complexity, especially migration, schema evolution and concurrency [S14]. These are practitioner sources, not experimental evidence that event sourcing is intrinsically better for PEE.
+
+Compare at least three strategies before structural change:
+
+A. Input-derived projection with immutable, versioned source materials plus versioned deterministic translation, and separate durable review/assessment history. This may be the least disruptive for machine-derived teaching relations, if all inputs and transformation versions can actually be retained and rerun.
+
+B. Full content-bearing events and rebuildable projections for each new/modified relation, including all review events. Provides a single replayable history but increases event schema and migration burdens.
+
+C. Hybrid: deterministically re-derived machine propositions from immutable inputs; complete content-bearing events for non-rederivable human judgments and exceptions, with a reconciliation manifest linking the two.
+
+The choice should be justified by replay fidelity, rights, write atomicity, migration cost and repository constraints, not by event-sourcing fashion. The existing PEE journal must not be silently relabeled as source-of-truth.
+
+SQLite can support transactionally consistent writes, foreign key validation and triggers [S15, S16], but these primitives do not automatically ensure semantic integrity or sufficiently complete event contents. In particular, foreign keys must be enabled explicitly where applicable, and triggers have edge conditions. Test snapshots logically by row content and histories, not only by database file hashes or journal event counts.
+
+Suggested reconstructibility experiment on COPY of the store:
+1. Record the logical baseline of every affected table and all relevant reviews (including notes/independence/citation).
+2. Recreate from immutable inputs and their recorded transformation versions, or replay the proposed events.
+3. Compare canonical logical rows, versions, active/superseded status, review provenance, identity hashes, and behavior of decision-safety guards.
+4. Inject a review conflict, correction, duplicated input and partial failure into controlled copies.
+5. Confirm atomicity/idempotency and reversibility before any production migration.
+
+6. REVIEWABLE KNOWLEDGE, DEFEATERS, AND TRUTH MAINTENANCE
+
+Jon Doyle's Truth Maintenance System [S17] makes the reasons supporting beliefs first-class so beliefs can be revised on contradiction. This is conceptually useful for a scientific adviser: maintain a hypothesis with supporters, contradictions, conditions, and reasons for current status. It does not require installing a standalone truth-maintenance framework.
+
+Practical semantic distinctions:
+- proposed relevance versus experimentally demonstrated mechanism;
+- source assertion versus PEE-derived interpretation;
+- relation holds in one tested configuration versus broad generalization;
+- independent result versus manufacturer assertion;
+- sufficient metric versus merely correlated proxy;
+- accepted hypothesis, suspended hypothesis and defeater evidence;
+- invalidated mapping versus historically correct result derived under an old policy.
+
+Revision should add explicit supersession/withdrawal with provenance rather than deleting history. Negative evidence is not always logically equal to the negation of a claim: failure to measure may mean unknown, not false. Similarly, one source's untested warning should not veto every product. Strong exclusions still require documented failure of a genuinely essential condition or the user's explicit unambiguous requirement, not a weak inferred hypothesis.
+
+7. VALIDATION WITHOUT COMMITTING TO RDF
+
+W3C SHACL (2017 Recommendation) specifies RDF graph validation against shapes [S18]. The transferable design principle is schema/semantic validation before admission: required roles, allowed combinations, source identifiers, temporal/variant scope, supported epistemic transitions and forbidden self-links. A JSON Schema or SQL checks can implement analogous constraints without RDF. JSON Schema's 2020-12 vocabulary [S19] and SQLite constraints [S15] are available alternatives. Do not confuse shape validity with truth: a perfectly valid link may still misrepresent a scientific statement.
+
+RML [S20] is a declarative mapping approach for heterogeneous inputs. It is useful as a comparison against hardcoded extraction, but is maintained in the Knowledge Graph Construction community and is not an imposed W3C Recommendation. Its benefits should be tested against actual PEE table patterns, maintenance cost, execution rights and portability. Avoid an unneeded RDF/RML migration.
+
+8. ALTERNATIVE REPRESENTATION STRATEGIES FOR PEE
+
+Option 1 — Enrich the existing typed edge representation.
+- Keep existing Phase247 graph, add qualifying/condition/provenance roles and claim grouping as needed.
+- Strength: smallest architectural delta; existing review gates remain relevant.
+- Weakness: a pair of edges may no longer encode a single conditioned multi-role observation unless the link-group identity is explicit.
+- Critical test: round trip a source row to relations and back without asserting extra pairs.
+
+Option 2 — Reified assertion/event identity inside existing SQLite.
+- One source-grounded assertion with participant roles (situation, need, criterion, evidence), qualifiers and multiple provenance witnesses.
+- Strength: natural representation of a multi-column row and its own review history.
+- Weakness: schema/API complexity; risk of duplicating rather than extending Phase247 responsibilities.
+- Critical test: existing Phase247 consumers see equivalent old relations, or safe abstention on new kinds.
+
+Option 3 — An intermediate semantic table/claim representation, projected into existing store relations.
+- Preserve rich table semantics as versioned derivable intermediates; persist only approved structured metadata/claims as rights permit.
+- Strength: helps extraction and R4 without forcing all intermediate detail into live store.
+- Weakness: ensuring intermediate inputs are legally retainable and reproducible; source-locator drift.
+- Critical test: rederive exactly across code upgrades while existing reviews remain intact.
+
+Option 4 — External graph database or full RDF stack.
+- Potential advantage: graph tooling and standardized expression.
+- Costs: migration, extra operational dependencies, divergence from existing store, rights/backups, new failure modes.
+- Under current PEE constraints, this is a RESEARCH COMPARATOR, not an approved implementation option.
+
+A mixed strategy may be best: neither 'everything as a binary edge' nor 'everything as an n-ary object' must win globally. Compare the minimum information needed for sound inference and downstream consumers with the actual maintenance burden.
+
+9. RETRIEVAL WHEN THE PRODUCT CATEGORY IS UNKNOWN
+
+The earlier R3-P run showed a major upstream bottleneck in category/target recognition. N1 must not assume that a user has already selected a category. Yet retrieving a relevant statement is not evidence that a particular product category solves the user's problem.
+
+Consider a situation-only query: 'My clothes never dry in this cold, damp room.' The system might retrieve concepts concerning humidity, ventilation, drying arrangements or heat. An explicitly attributed 'may be relevant to' link should not become an unquestioned recommendation to buy a dehumidifier. More than one solution family may be considered, including non-purchase actions. Circumstances and safety limitations matter.
+
+A conceptual retrieval interface could return hypotheses with:
+- query situation features and provenance from user text;
+- candidate goal/criterion/solution-family;
+- scientific link(s) and their uncertainty;
+- applicability conditions and missing facts;
+- negative or contradictory links;
+- whether the candidate is an option to ask about rather than a conclusion.
+
+Critical distinction: 'the category is unknown' is different from 'the product is not named but category is evident'. Product, use-context object and already-owned equipment have different request roles. N0's shadow model is a possible input for these distinctions, but it has not yet been evaluated on independent requests.
+
+Semantic retrieval could eventually combine lexical search, typed neighbors and embeddings. Embeddings alone are not scientific truth: similarity does not license causal inference, and any proposed links must be traceable and adjudicable. N1 need only preserve the structure and interfaces needed for future Stream C; operational category decisions remain out of scope until separately validated.
+
+10. EXPERIMENTS THAT ACTUALLY DISCRIMINATE METHODS
+
+The aim is not just 'relations stored' but demonstrable scientific fidelity and use. Suggested evaluation layers:
+
+L0 — Capture and structural accuracy.
+- Hold out tables by document, template and category before tuning; deduplicate byte- or near-duplicates.
+- Measure correct table roles: column headings, identifier columns, super-row scope, caption/footnote links, units, conditions.
+
+L1 — Scientific relation fidelity.
+- Gold units should encode the entire assertion bundle (participants, directional links, conditions, qualifiers, provenance), not only the number of output pairs.
+- Measure exact-structure precision/recall plus partial scoring by role, relation type and conditional semantics.
+- Record harmful fabricated links separately; penalize unjustified 'establishes' or invented causal links more severely than a documented abstention.
+- Separate no relation, ambiguous relation, duplicate and unsupported inference.
+
+L2 — Durable representation and rederivation.
+- Immutable inputs + code version -> canonical projection equivalence on blank store.
+- Assessments/reviews round-trip intact, including independence, citation, note, supersession and review status.
+- Existing signed ranking authorisations, withheld pairs and C2 boundaries remain unchanged.
+
+L3 — Retrieval.
+- Query by situation without product category; by known category; by target outcome; and by explicit features.
+- Score relevant versus irrelevant or contradictory statements, condition-awareness, trace quality and abstentions.
+- Compare retrieval from original store, restored-relation store and a category-oracle diagnostic condition.
+
+L4 — Consumer understanding.
+- A/B same code with only admitted recovered relations switched on/off, no leakage from the gold.
+- Report named vs unnamed product, author-created vs authentic request, unseen category and unseen layout separately.
+- Compare expressed need, justified inferred need, invented need and decision-stability. Existing spent R3-P items can be regression/diagnostic, never new held-out evidence.
+
+L5 — Decision, later stage.
+- Only if authorised, test whether independent product evidence suffices for a decision and whether rankings remain deterministic and calibrated. N1 by itself is not an authorisation to change decisions or lift ranking guards.
+
+Guardrails:
+- preregister metrics, error weights, absolute acceptance threshold(s), maximum harmful links, stopping criterion and independent-reference procedure before new held-out runs;
+- use real owner research material where rights permit, and report all source and annotation limitations;
+- report per-category and worst-group results, not just pooled scores;
+- keep translation, learning, search and decision effects disaggregated;
+- favor counterfactual tests of one mechanism at a time rather than treating post-hoc categories as causal proof;
+- after observing held-out results, do not retune on them and still call the set untouched.
+
+11. OPEN QUESTIONS TO LET CLAUDE SOLVE, RATHER THAN ANSWERING FOR IT
+
+1. Is a grouped set of already-supported Phase247 relations semantically lossless enough for all important table patterns, or is a reified claim with roles necessary?
+2. Which conditions belong on a relationship, on the supporting evidence, on a measurement method, or on a particular product variant?
+3. How should the system model unknown/ambiguous column roles while still retaining lawful structural metadata?
+4. Which inputs and review actions cannot be recovered deterministically from current records?
+5. What is the minimum safe persistence change that makes derived relations replayable, without changing old ranking assessments?
+6. Can row-pair fidelity improve without a corresponding increase in spurious inter-column connections?
+7. How much of the gain survives unseen table layouts, new English shopper phrasing, and category-unknown queries?
+8. Can scientific applicability be represented without silently upgrading 'relevant' to 'effective'?
+9. Which findings require R4's across-document-section method rather than N1's immediate table rederivation?
+10. Which existing skill routines or modules already solve some part of these questions, and how can they be reused instead of duplicated?
+
+12. RESEARCH CONCLUSIONS — EVIDENCE VERSUS RECOMMENDATION
+
+Established in primary sources: scientific and tabular relationships often need structural context; qualified/n-ary models and explicit provenance exist; repeatable mappings and replay-based designs have mature methodological precedents; independent testing is needed for semantic extraction; revision of justified hypotheses must preserve reasons and changing evidence.
+
+Supported by Claude's PEE D1 investigation, not independently re-executed here: large measured losses in table-cell relations; exact reproduction of existing store statements by the old translator; gaps in journal content; partial need model in shadow; no demonstrated consumer-level gain yet.
+
+Hypotheses requiring PEE experiments: any particular schema design will raise usable relation survival to a given level; recovered relations improve inference on new requests; cross-category generalization increases; any single component of D1 loss causally explains the R3-P failures; a new representation outperforms Phase247 extension sufficiently to justify migration.
+
+Recommended decision discipline: preserve semantic and safety invariants, but leave Claude free to propose, compare and reject implementation strategies. Prefer a small working vertical slice and independent evidence over a large architecture built before its value is tested. Do not call a positive fixture test a general capability.
+
+13. PRIMARY SOURCES AND RESEARCH REFERENCES
+
+[S1] W3C, Defining N-ary Relations on the Semantic Web (2006, Working Group Note, NOT a Recommendation). https://www.w3.org/TR/swbp-n-aryRelations/
+[S2] W3C, Model for Tabular Data and Metadata on the Web (2015 Recommendation). https://www.w3.org/TR/tabular-data-model/
+[S3] W3C, Generating RDF from Tabular Data on the Web (2015 Recommendation). https://www.w3.org/TR/csv2rdf/
+[S4] Milosevic et al., Disentangling the structure of tables in scientific literature (scientific table structural/functional analysis). https://www.cs.man.ac.uk/~bparsia/2017/introexercise/Nenadic1_unblanked.pdf
+[S5] Liua et al., From Tabular Data to Knowledge Graphs: A Survey of Semantic Table Interpretation (survey, 2022). https://pmonnin.github.io/publications/liu-jows-2022.pdf
+[S6] Mulwad et al., Towards Semantic Exploration of Tables in Scientific Documents (2023). https://ceur-ws.org/Vol-3443/ESWC_2023_SemTech4STLD_paper_2.pdf
+[S7] Jain et al., SciREX: A Challenge Dataset for Document-Level Information Extraction (2020). https://arxiv.org/abs/2005.00512
+[S8] Zhuang et al., ReSel: N-ary Relation Extraction from Scientific Text and Tables by Learning to Retrieve and Select (EMNLP 2022). https://aclanthology.org/2022.emnlp-main.46.pdf
+[S9] W3C, PROV-DM: The PROV Data Model (2013 Recommendation). https://www.w3.org/TR/prov-dm/
+[S10] W3C, PROV-O: The PROV Ontology (2013 Recommendation). https://www.w3.org/TR/prov-o/
+[S11] W3C, Web Annotation Data Model (2017 Recommendation). https://www.w3.org/TR/annotation-model/
+[S12] Cheney, Chiticariu, Tan, Provenance in Databases: Why, How, and Where (2009, Foundations and Trends in Databases). https://dl.acm.org/doi/10.1561/1900000006 ; author version https://homepages.inf.ed.ac.uk/jcheney/publications/provdbsurvey.pdf
+[S13] Martin Fowler, Event Sourcing (practitioner exposition, 2005). https://martinfowler.com/eaaDev/EventSourcing.html
+[S14] Microsoft Learn, Event Sourcing pattern (practitioner design/trade-offs). https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing
+[S15] SQLite documentation, Foreign Key Support (transactions and constraints). https://www.sqlite.org/foreignkeys.html
+[S16] SQLite documentation, CREATE TRIGGER. https://www.sqlite.org/lang_createtrigger.html
+[S17] Doyle, A Truth Maintenance System (Artificial Intelligence, 1979). https://www.sciencedirect.com/science/article/abs/pii/0004370279900080
+[S18] W3C, Shapes Constraint Language SHACL (2017 Recommendation). https://www.w3.org/TR/shacl/ ; newer SHACL 1.2 Core is a 2026 Working Draft, NOT a Recommendation: https://www.w3.org/TR/shacl-core/
+[S19] JSON Schema project, specification 2020-12. https://json-schema.org/specification
+[S20] RML, RDF Mapping Language (Knowledge Graph Construction Community specification; NOT a W3C Recommendation). https://rml.io/specs/rml/
+[S21] W3C, Data on the Web Best Practices (2017 Recommendation). https://www.w3.org/TR/dwbp/
+[S22] Gao and Callan, Scientific Table Search Using Keyword Queries (2017, dataset + structured retrieval). https://arxiv.org/abs/1707.03423
+
+End of research briefing. The reader must verify the exact claims, licences, dates and applicability of any cited external standard before implementing an associated software dependency. This is a self-contained research synthesis; no external page text has been reproduced in bulk.
