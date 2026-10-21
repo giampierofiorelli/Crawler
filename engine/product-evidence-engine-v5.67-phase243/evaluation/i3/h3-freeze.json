@@ -1,0 +1,37 @@
+{
+ "schema": "pee.i3.h3-freeze.v1",
+ "sealedAt": "2026-10-21T06:02:55.684Z",
+ "rule": "input, key, two blind annotations, adjudicated reference and the guide hashed before any third-increment table run (evaluation/i3/preregistration.json)",
+ "counts": {
+  "rows": 70,
+  "tables": 18,
+  "documents": 9,
+  "perCategory": {
+   "speakers": 23,
+   "air_purifiers": 12,
+   "air_fryers": 27,
+   "robot_floor_cleaners": 8
+  },
+  "referenceLinks": 91
+ },
+ "selection": "relation tables never sampled before (D1 validation, N1 development, H1, H2), header template disjoint from every used table, archived duplicate version excluded; at most 4 rows per table; seed 20261025",
+ "agreementBeforeAdjudication": {
+  "exactLinksF1": 0.722,
+  "pairsF1": 0.742,
+  "columnTypes": 0.919
+ },
+ "disagreementsDecided": {
+  "A1": 40,
+  "A2": 10,
+  "new": 0
+ },
+ "files": {
+  "l1-annotation-guide.md": "f65653450d8be93a2e25a49c311711a898df67104ce9365c81a899abec748950",
+  "h3-annotation-input.json": "9664aa9a66010d3d507a6ff739b807f046083a6b646b0ce158fceee6109d3cd4",
+  "h3-rows-key.json": "f06e4dba08aadd58ec8a1b1ad9d016091d3db207fd7afbe7ff8b6837c02333c6",
+  "h3-annotation-1.json": "9f6dd81d75aa1df3a01de7a682655bdebd23846b5c2a03b6942cd4d749bcc4cb",
+  "h3-annotation-2.json": "8e9d687abf072b96ac486f22cfd500bdfad0a4eb087f3682ece7223abd542bc0",
+  "h3-reference.json": "e8f78223089cfb230972ea24626077ba590bdb6c4b0600896db21f07c9c3c18a"
+ },
+ "independenceLimit": "the developer saw these tables HEADERS during the D1 adjudication (first increment); cells never seen before this seal; the developer did not open annotations or reference (aggregate agreement only). Same owner packages and categories as earlier work (air fryers is an N1 development category; its tables here are different tables)."
+}
