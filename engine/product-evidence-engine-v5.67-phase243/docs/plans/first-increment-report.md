@@ -272,3 +272,13 @@ two are not comparable.
    - no archive moves;
    - no store split;
    - no regex removal.
+
+## 9. Note added after the owner review (2026-10-21)
+
+Owner review verbatim in `.claude/skills/pee-guided-learning/references/owner-review-first-increment-2026-10-21.md`.
+Two readings of this report are corrected, without changing its results:
+- **C2 "permanent".** The protections in §1 (A1) are automatic checks: the field list, the projection without
+  experimental fields, and the consumer scan. A static scan does not show that every future presentation is safe. An
+  explicit publication interface that exposes only authorised fields (an allow-list) is still open.
+- **N0.** "8 represented and tested" means represented and tested in shadow, on written cases. It does not mean 8
+  incompatibilities solved in operational behaviour. N0 is not validated on independent requests.
