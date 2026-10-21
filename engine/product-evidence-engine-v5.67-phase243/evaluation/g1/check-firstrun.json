@@ -1,0 +1,302 @@
+{
+ "schema": "pee.g1.check.v1",
+ "label": "firstrun",
+ "seal": {
+  "requests.json": "081452c5ee5c704a2ea912938f78979c2dc9ebf7002f71780185e4ee6815d376",
+  "reference.json": "7d238ea91a2540ba5fbe3913945a9b09e6ae7bd9d8b9fc71d8118f3cad09802e",
+  "annotation-1.json": "e4593595de860ed7bb64fe92d6f98acc6cc4bfae059e04222f2079a1e0fa364a",
+  "annotation-2.json": "d830eda598653ab94d612aba660270692d5c282c121090873576251fc4cb437e",
+  "author-intent.json": "9cb3b647a6e245cc387913252e90bc04e7a6433b5faad6e1fe2192f370c92413",
+  "author-generator.py": "73178e176241bf67d6a4a65bcf9e2d24ef8754df660a57ac9c8e5d7f05f94e63",
+  "agreement.json": "6d9c62bc7ebee138984f33f8c046698e4f9ff0bf3bac2ada477896a20e080660"
+ },
+ "storeCopySha256": "920e9265f14705962b37b6ee23d8c4480cc3c54a5289229d3d33a0fcc00c5415",
+ "tier": "T1: Claude-authored requests (independent author agent, aware of the catalogue), two blind Claude-agent annotations adjudicated by a third; no human validation",
+ "note": "GF (goal-first shadow) not run: stopped by the diagnosis gate (evaluation/g1/diag-firstrun.json). M7 cause: the operational path carries no question cause (0 by construction).",
+ "counts": {
+  "C0before": {
+   "NS": {
+    "requests": 9,
+    "with_relevant": 9,
+    "M1_reached": 6,
+    "M2_invented": 1,
+    "M2_named_unjustified": 1,
+    "M4_eligible": 7,
+    "M4_both": 1,
+    "M6_expressed": 2,
+    "M6_lost": 2,
+    "M7_with_cause": 0,
+    "M7_asked": 2,
+    "M7_user_only": 2
+   },
+   "all": {
+    "requests": 75,
+    "with_relevant": 40,
+    "M1_reached": 22,
+    "M2_invented": 5,
+    "M2_named_unjustified": 2,
+    "M4_eligible": 9,
+    "M4_both": 1,
+    "M6_expressed": 32,
+    "M6_lost": 21,
+    "M7_with_cause": 0,
+    "M3_outside": 7,
+    "M3_typed_research_need": 0,
+    "M3_wrong_commitment": 1,
+    "M7_asked": 43,
+    "M7_user_only": 40,
+    "M5_unjustified_abstention": 12
+   },
+   "X": {
+    "requests": 14,
+    "M2_invented": 1,
+    "M2_named_unjustified": 0,
+    "M3_outside": 3,
+    "M3_typed_research_need": 0,
+    "M3_wrong_commitment": 1,
+    "M6_expressed": 9,
+    "M6_lost": 9,
+    "M7_asked": 10,
+    "M7_user_only": 10,
+    "M7_with_cause": 0,
+    "with_relevant": 2,
+    "M1_reached": 0
+   },
+   "NA": {
+    "requests": 8,
+    "M2_invented": 0,
+    "M2_named_unjustified": 0,
+    "M3_outside": 4,
+    "M3_typed_research_need": 0,
+    "M3_wrong_commitment": 0,
+    "M7_with_cause": 0,
+    "M6_expressed": 2,
+    "M6_lost": 2,
+    "M7_asked": 4,
+    "M7_user_only": 4
+   },
+   "U": {
+    "requests": 13,
+    "with_relevant": 13,
+    "M1_reached": 3,
+    "M2_invented": 1,
+    "M2_named_unjustified": 0,
+    "M4_eligible": 2,
+    "M4_both": 0,
+    "M5_unjustified_abstention": 9,
+    "M6_expressed": 3,
+    "M6_lost": 2,
+    "M7_asked": 9,
+    "M7_user_only": 9,
+    "M7_with_cause": 0
+   },
+   "Z": {
+    "requests": 15,
+    "M2_invented": 2,
+    "M2_named_unjustified": 1,
+    "M7_asked": 9,
+    "M7_user_only": 6,
+    "M7_with_cause": 0,
+    "M6_expressed": 2,
+    "M6_lost": 2
+   },
+   "A": {
+    "requests": 16,
+    "with_relevant": 16,
+    "M1_reached": 13,
+    "M2_invented": 0,
+    "M2_named_unjustified": 0,
+    "M5_unjustified_abstention": 3,
+    "M6_expressed": 14,
+    "M6_lost": 4,
+    "M7_asked": 9,
+    "M7_user_only": 9,
+    "M7_with_cause": 0
+   }
+  },
+  "C0": {
+   "NS": {
+    "requests": 9,
+    "with_relevant": 9,
+    "M1_reached": 6,
+    "M2_invented": 1,
+    "M2_named_unjustified": 1,
+    "M4_eligible": 7,
+    "M4_both": 1,
+    "M6_expressed": 2,
+    "M6_lost": 2,
+    "M7_asked": 6,
+    "M7_user_only": 6,
+    "M7_with_cause": 0
+   },
+   "all": {
+    "requests": 75,
+    "with_relevant": 40,
+    "M1_reached": 22,
+    "M2_invented": 5,
+    "M2_named_unjustified": 2,
+    "M4_eligible": 9,
+    "M4_both": 1,
+    "M6_expressed": 32,
+    "M6_lost": 12,
+    "M7_asked": 54,
+    "M7_user_only": 50,
+    "M7_with_cause": 0,
+    "M3_outside": 13,
+    "M3_typed_research_need": 13,
+    "M3_wrong_commitment": 1,
+    "M5_unjustified_abstention": 12
+   },
+   "X": {
+    "requests": 14,
+    "M2_invented": 1,
+    "M2_named_unjustified": 0,
+    "M3_outside": 8,
+    "M3_typed_research_need": 8,
+    "M3_wrong_commitment": 1,
+    "M6_expressed": 9,
+    "M6_lost": 5,
+    "M7_asked": 11,
+    "M7_user_only": 11,
+    "M7_with_cause": 0,
+    "with_relevant": 2,
+    "M1_reached": 0
+   },
+   "NA": {
+    "requests": 8,
+    "M2_invented": 0,
+    "M2_named_unjustified": 0,
+    "M3_outside": 5,
+    "M3_typed_research_need": 5,
+    "M3_wrong_commitment": 0,
+    "M7_with_cause": 0,
+    "M6_expressed": 2,
+    "M6_lost": 1,
+    "M7_asked": 4,
+    "M7_user_only": 4
+   },
+   "U": {
+    "requests": 13,
+    "with_relevant": 13,
+    "M1_reached": 3,
+    "M2_invented": 1,
+    "M2_named_unjustified": 0,
+    "M4_eligible": 2,
+    "M4_both": 0,
+    "M5_unjustified_abstention": 9,
+    "M6_expressed": 3,
+    "M6_lost": 1,
+    "M7_asked": 9,
+    "M7_user_only": 9,
+    "M7_with_cause": 0
+   },
+   "Z": {
+    "requests": 15,
+    "M2_invented": 2,
+    "M2_named_unjustified": 1,
+    "M7_asked": 11,
+    "M7_user_only": 7,
+    "M7_with_cause": 0,
+    "M6_expressed": 2,
+    "M6_lost": 0
+   },
+   "A": {
+    "requests": 16,
+    "with_relevant": 16,
+    "M1_reached": 13,
+    "M2_invented": 0,
+    "M2_named_unjustified": 0,
+    "M5_unjustified_abstention": 3,
+    "M6_expressed": 14,
+    "M6_lost": 3,
+    "M7_asked": 13,
+    "M7_user_only": 13,
+    "M7_with_cause": 0
+   }
+  },
+  "C1": {
+   "NS": {
+    "requests": 9,
+    "with_relevant": 9,
+    "M1_reached": 6,
+    "M2_invented": 4,
+    "M2_named_unjustified": 1,
+    "M4_eligible": 7,
+    "M4_both": 0,
+    "M7_asked": 6,
+    "M7_user_only": 6
+   },
+   "all": {
+    "requests": 75,
+    "with_relevant": 40,
+    "M1_reached": 23,
+    "M2_invented": 23,
+    "M2_named_unjustified": 2,
+    "M4_eligible": 9,
+    "M4_both": 0,
+    "M7_asked": 53,
+    "M7_user_only": 48,
+    "M3_outside": 16,
+    "M3_typed_research_need": 0,
+    "M3_wrong_commitment": 2,
+    "M5_unjustified_abstention": 10
+   },
+   "X": {
+    "requests": 14,
+    "M2_invented": 2,
+    "M2_named_unjustified": 0,
+    "M3_outside": 12,
+    "M3_typed_research_need": 0,
+    "M3_wrong_commitment": 2,
+    "M7_asked": 12,
+    "M7_user_only": 12,
+    "with_relevant": 2,
+    "M1_reached": 0
+   },
+   "NA": {
+    "requests": 8,
+    "M2_invented": 7,
+    "M2_named_unjustified": 0,
+    "M3_outside": 4,
+    "M3_typed_research_need": 0,
+    "M3_wrong_commitment": 0,
+    "M7_asked": 8,
+    "M7_user_only": 8
+   },
+   "U": {
+    "requests": 13,
+    "with_relevant": 13,
+    "M1_reached": 3,
+    "M2_invented": 3,
+    "M2_named_unjustified": 0,
+    "M4_eligible": 2,
+    "M4_both": 0,
+    "M5_unjustified_abstention": 8,
+    "M7_asked": 9,
+    "M7_user_only": 9
+   },
+   "Z": {
+    "requests": 15,
+    "M2_invented": 2,
+    "M2_named_unjustified": 1,
+    "M7_asked": 14,
+    "M7_user_only": 9
+   },
+   "A": {
+    "requests": 16,
+    "with_relevant": 16,
+    "M1_reached": 14,
+    "M2_invented": 5,
+    "M2_named_unjustified": 0,
+    "M5_unjustified_abstention": 2,
+    "M7_asked": 4,
+    "M7_user_only": 4
+   }
+  },
+  "harm": {
+   "all": {
+    "decision_fields_changed_C0before_vs_C0": 0
+   }
+  }
+ }
+}
