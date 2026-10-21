@@ -1,0 +1,145 @@
+{
+ "schema": "pee.ar.c-cause-split.v1",
+ "date": "2026-10-21",
+ "tier": "post-hoc diagnosis on the spent I3 R set (60 Claude-authored requests, adjudicated Claude-agent reference); C1 re-run read-only on a copy of the live store with the frozen build; class assignment by Claude (single annotator), never held-out",
+ "classes": {
+  "in_knowledge": "a primary family is taught and registered",
+  "non_purchase_stored_alternative": "primary remedy needs no purchase and a matching *_alternative concept exists in the store under some category",
+  "non_purchase_absent": "primary remedy needs no purchase and the store holds nothing matching",
+  "family_held_unreachable": "primary family is taught in the store but not registered (tumble dryers) or documented in an owner package never translated (soundbars, speakers, robot cleaners)",
+  "family_absent": "primary family is unknown to PEE in any form",
+  "no_family_needed": "no primary family: vague, gift, nothing fits"
+ },
+ "byClass": {
+  "non_purchase_stored_alternative": {
+   "requests": 6,
+   "primary_found": 0,
+   "invented_hypotheses": 3,
+   "justified_hypotheses": 3,
+   "unjustified_commitments": 3,
+   "abstained": 1
+  },
+  "family_absent": {
+   "requests": 14,
+   "primary_found": 0,
+   "invented_hypotheses": 7,
+   "justified_hypotheses": 2,
+   "unjustified_commitments": 4,
+   "abstained": 6
+  },
+  "family_held_unreachable": {
+   "requests": 8,
+   "primary_found": 0,
+   "invented_hypotheses": 3,
+   "justified_hypotheses": 0,
+   "unjustified_commitments": 1,
+   "abstained": 4
+  },
+  "no_family_needed": {
+   "requests": 12,
+   "primary_found": 0,
+   "invented_hypotheses": 2,
+   "justified_hypotheses": 1,
+   "unjustified_commitments": 3,
+   "abstained": 9
+  },
+  "in_knowledge": {
+   "requests": 11,
+   "primary_found": 10,
+   "invented_hypotheses": 3,
+   "justified_hypotheses": 6,
+   "unjustified_commitments": 1,
+   "abstained": 1
+  },
+  "non_purchase_absent": {
+   "requests": 9,
+   "primary_found": 0,
+   "invented_hypotheses": 5,
+   "justified_hypotheses": 0,
+   "unjustified_commitments": 4,
+   "abstained": 4
+  }
+ },
+ "idsByClass": {
+  "non_purchase_stored_alternative": [
+   "R-01",
+   "R-23",
+   "R-26",
+   "R-33",
+   "R-39",
+   "R-46"
+  ],
+  "family_absent": [
+   "R-02",
+   "R-05",
+   "R-10",
+   "R-17",
+   "R-18",
+   "R-24",
+   "R-25",
+   "R-32",
+   "R-34",
+   "R-35",
+   "R-41",
+   "R-50",
+   "R-51",
+   "R-56"
+  ],
+  "family_held_unreachable": [
+   "R-03",
+   "R-21",
+   "R-38",
+   "R-43",
+   "R-47",
+   "R-53",
+   "R-57",
+   "R-59"
+  ],
+  "no_family_needed": [
+   "R-04",
+   "R-06",
+   "R-07",
+   "R-13",
+   "R-16",
+   "R-19",
+   "R-22",
+   "R-27",
+   "R-36",
+   "R-48",
+   "R-52",
+   "R-58"
+  ],
+  "in_knowledge": [
+   "R-08",
+   "R-09",
+   "R-12",
+   "R-15",
+   "R-20",
+   "R-28",
+   "R-30",
+   "R-31",
+   "R-37",
+   "R-40",
+   "R-60"
+  ],
+  "non_purchase_absent": [
+   "R-11",
+   "R-14",
+   "R-29",
+   "R-42",
+   "R-44",
+   "R-45",
+   "R-49",
+   "R-54",
+   "R-55"
+  ]
+ },
+ "hypothesisScore": {
+  "note": "C1 hypothesis scores; median of justified vs invented hypotheses",
+  "justifiedN": 12,
+  "inventedN": 23,
+  "medianJustified": 11.0,
+  "medianInvented": 11.04
+ },
+ "detail": "$PEE_PRIVATE_EVAL_DIR/ar/c-cause-split-detail.json (pee-knowledge private-eval/ar/)"
+}
