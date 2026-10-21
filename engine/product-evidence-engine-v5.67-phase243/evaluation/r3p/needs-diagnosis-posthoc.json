@@ -1,0 +1,150 @@
+{
+ "schema": "pee.r3p.needs-diagnosis.v1",
+ "status": "post-hoc diagnosis of the sealed first runs (7b3f48b) under evaluation/r3p/needs-failure-causes.json (amendments 1-3); tags are supported explanations, not causal proof; multi-label",
+ "judges": {
+  "K": "independent Claude agent r3p-diag-k (31 units; K-lost only with a reconstructed document-to-store chain; 2 chains re-checked by the main session)",
+  "invented": "independent Claude agent r3p-diag-inv (21 units)",
+  "M": "counterfactual run of phase172 researchUserGoal172 on all 49 texts: 4 coffee_machine, 5 refrigerator (misread noise), 40 unknown; no correct need recovered"
+ },
+ "perArm": {
+  "A|missed": {
+   "n": 93,
+   "tags": {
+    "L-category-unnamed": 42,
+    "REP-not-a-need-concept": 4,
+    "L-category-named": 21,
+    "concept-not-in-catalogue": 20,
+    "K-lost": 13,
+    "L-words": 15,
+    "K-absent": 3
+   },
+   "first": {
+    "L-category-unnamed": 42,
+    "REP-not-a-need-concept": 4,
+    "L-category-named": 21,
+    "K-lost": 10,
+    "L-words": 15,
+    "K-absent": 1
+   }
+  },
+  "B|missed": {
+   "n": 90,
+   "tags": {
+    "L-category-unnamed": 42,
+    "REP-not-a-need-concept": 4,
+    "L-category-named": 21,
+    "concept-not-in-catalogue": 20,
+    "K-lost": 13,
+    "L-words": 2,
+    "K-absent": 3,
+    "S": 10
+   },
+   "first": {
+    "L-category-unnamed": 42,
+    "REP-not-a-need-concept": 4,
+    "L-category-named": 21,
+    "K-lost": 10,
+    "L-words": 2,
+    "S": 10,
+    "K-absent": 1
+   }
+  },
+  "C|missed": {
+   "n": 89,
+   "tags": {
+    "L-category-unnamed": 42,
+    "REP-not-a-need-concept": 4,
+    "L-category-named": 21,
+    "concept-not-in-catalogue": 20,
+    "K-lost": 13,
+    "L-words": 2,
+    "K-absent": 3,
+    "S": 9
+   },
+   "first": {
+    "L-category-unnamed": 42,
+    "REP-not-a-need-concept": 4,
+    "L-category-named": 21,
+    "K-lost": 10,
+    "L-words": 2,
+    "S": 9,
+    "K-absent": 1
+   }
+  },
+  "A|invented": {
+   "n": 4,
+   "tags": {
+    "L-category": 2,
+    "R": 1,
+    "L-words": 1
+   },
+   "first": {
+    "L-category": 2,
+    "R": 1,
+    "L-words": 1
+   }
+  },
+  "B|invented": {
+   "n": 6,
+   "tags": {
+    "L-category": 2,
+    "R": 1,
+    "L-words": 1,
+    "K-incorrect": 2
+   },
+   "first": {
+    "L-category": 2,
+    "R": 1,
+    "L-words": 1,
+    "K-incorrect": 2
+   }
+  },
+  "C|invented": {
+   "n": 7,
+   "tags": {
+    "L-category": 2,
+    "R": 2,
+    "L-words": 1,
+    "K-incorrect": 2
+   },
+   "first": {
+    "L-category": 2,
+    "R": 2,
+    "L-words": 1,
+    "K-incorrect": 2
+   }
+  }
+ },
+ "kJudgements": {
+  "K-absent+notNeed": 1,
+  "K-lost": 13,
+  "K-present": 11,
+  "K-absent": 3,
+  "K-lost+notNeed": 1,
+  "undetermined+notNeed": 2
+ },
+ "oracleCategoryCounterfactual": {
+  "requests": 47,
+  "A:catOK": 46,
+  "A:expressed_found": 15,
+  "A:inferred_found": 6,
+  "ref:expressed": 76,
+  "ref:inferred": 22,
+  "A:correct": 21,
+  "B:catOK": 46,
+  "B:expressed_found": 22,
+  "B:inferred_found": 9,
+  "B:correct": 31,
+  "B:acceptable": 11,
+  "C:catOK": 46,
+  "C:expressed_found": 22,
+  "C:inferred_found": 9,
+  "C:correct": 31,
+  "C:acceptable": 11,
+  "A:invented": 5,
+  "B:invented": 12,
+  "C:invented": 12,
+  "A:acceptable": 2
+ },
+ "labelListLimit": "the preregistered label list holds outcome and environment concepts only; milk_drinks (task), scale_buildup (failure), grind_range (capability) are store concepts outside it; one correct milk_drinks output per arm (a21) was scored invented (reference used other:milk_drinks)"
+}
