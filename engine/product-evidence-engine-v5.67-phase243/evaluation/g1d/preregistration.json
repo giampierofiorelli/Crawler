@@ -1,0 +1,49 @@
+{
+ "schema": "pee.g1d.preregistration.v1",
+ "date": "2026-10-21",
+ "authorisation": ".claude/skills/pee-guided-learning/references/owner-g1d-authorisation-2026-10-21.md",
+ "basis": "G1c (ab8ebb0): docs/plans/g1c-report.md, evaluation/g1c/freeze.json",
+ "roadmapStep": "R3",
+ "principle": "embeddings retrieve candidate knowledge; typed scientific relations, conditions and evidence decide what may be inferred; similarity or agreement between retrievers never establishes a relation",
+ "material": {
+  "trace": "the 120 rows of the G1c L2 audit (spent; seed 20261021): source passages traced by two new blind Claude agents (relation per strategy from the source only, nature, quote, extraction fidelity, source status, separate expert plausibility). Diagnosis and development material for the relation method",
+  "reference": "R: 100 rows of the G1b projection never audited (50 G1b-linked, 50 unlinked; seed 20261023), annotated blind from the original source passages by two Claude agents (relation per strategy, category applicability with condition kind), disagreements adjudicated blind by a third; hash sealed in evaluation/g1d/ref-freeze.json BEFORE any relation method is run on it; never used for development",
+  "selectionDevelopment": "spent I3 R (60 requests, adjudicated reference, blind strategy key of G1), G1c safety probes (42, development only), G1c L1 pooled verdicts (662 pairs)",
+  "limits": "G1c development limits set (50, short) and a NEW development-only set of 40 long messages (4-10 sentences) by an independent agent; 206 spent requests for regression",
+  "sealed": "G1 set (evaluation/g1/r-freeze.json) and G1b set (evaluation/g1b/n-freeze.json): untouched unless every development gate below is met"
+ },
+ "relationMethods": {
+  "R0": "G1b links (g1b.4): guidance cell shares strategy-specific stems with summed idf >= 3",
+  "R1": "assertion-grounded derivation (developed on the trace rows only): a link exists only where a source unit asserts it - a structured-case field whose role names a strategy or rejection, a table cell whose column role is guidance/alternative/caveat, or a strategy's own teaching statement - and the asserting clause names the strategy's action; polarity (applies / conditional / contraindicated) and condition from the clause; epistemic status from the source's own label (e.g. PROPOSED_NOT_TESTED) or 'guidance'; provenance quote kept; co-mention never links"
+ },
+ "relationMetrics": {
+  "on": "R (sealed), pairs row x strategy (100 x 9)",
+  "positive": "reference relation supported or conditional",
+  "measures": ["link precision (proposed links whose reference relation is supported or conditional)", "link recall (reference positives proposed)", "polarity accuracy on proposed links (supported vs conditional vs contraindicated)", "contraindications detected", "category applicability: purchase situation vs not; suitable / conditional / unsuitable", "annotator agreement (Cohen kappa) and adjudications"],
+  "note": "Claude-agent judgements read from sources, not independent expert validation"
+ },
+ "retrieval": {
+  "methods": {"B": "vector-only (bge-small, G1c index)", "Cfused": "the actual reciprocal-rank-fused ranking of vector, G1b lexical and typed-situation retrievers (G1c exposed only B's neighbours for C)", "V": "G1d: retrieval followed by verification of the retrieved units' relations"},
+  "measures": "precision@5 and pooled recall@10 (relevant = judged relevant by blind judges among all units any method retrieved for the request; new pairs judged blind, G1c verdicts reused for pairs already judged), separately for need-first requests and category-first requests (named category + need)"
+ },
+ "selection": {
+  "pipeline": "three stages kept apart: (1) retrieval of candidate knowledge units, (2) verification of their relations and applicability conditions against R1-derived relations and the row's category applicability, (3) selection of strategies, categories, a user question or abstention",
+  "contraindications": "owner rule: a documented incompatibility with an essential requirement under the user's stated conditions -> not presented as suitable; dependence on a modifiable, unverified condition -> conditional possibility, never suitable; nonessential disadvantage -> assessed, not vetoed",
+  "questions": "only when at least two viable verified strategies remain and a user-specific fact distinguishes them; missing knowledge, unverified relations or algorithmic failure -> typed research need, diagnostic or abstention, never a question",
+  "competingHypotheses": "close candidates from different categories are kept as competing documented situations; neither is proposed on similarity alone",
+  "candidates": "at most 2 categories and 2 strategies (equal candidate count with G1c)",
+  "baselines": "C1, G1b M2, G1c D (g1c.2), each unchanged"
+ },
+ "gates": {
+  "relations": "R1 link precision on R >= 0.80 with recall above R0's, and no contraindicated pair proposed as applicable",
+  "selection": "on the 24 I3 problem requests with taught knowledge reach >= 12, invented <= 18 on all 39 problem requests (G1c criterion, unchanged)",
+  "safety": "safety-probe failures <= C1's (19 of 42)",
+  "maxReformulations": 3,
+  "rule": "the sealed sets are used only when all three gates are met; first runs committed unchanged; if a gate fails nothing is promoted and the sets stay sealed"
+ },
+ "limits": {
+  "rule": "general, test-first fixes; measured on short and long development sets separately; regression diff on the 206 spent requests; short-request performance is never reported as general coverage"
+ },
+ "integrity": "open-debt ledger and invariants (tests/contract_status_ledger.test.ts)",
+ "stopRules": ["no live-store migration, ranking promotion, autonomous scientific web browsing, paid service, new model or new category", "if relations cannot be validated adequately, stop their promotion rather than adding heuristics"]
+}
