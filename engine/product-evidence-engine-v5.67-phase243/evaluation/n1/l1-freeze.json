@@ -1,0 +1,33 @@
+{
+ "schema": "pee.n1.l1-freeze.v1",
+ "sealedAt": "2026-10-21T04:54:53.101Z",
+ "rule": "input, two blind annotations, adjudicated reference and the guide are hashed and committed before any N1 code runs on held-out material (evaluation/n1/preregistration.json)",
+ "counts": {
+  "rows": 80,
+  "H1": 50,
+  "H2": 30,
+  "referenceLinks": 126,
+  "noRelationRows": 0,
+  "duplicateRowContents": 6
+ },
+ "agreementBeforeAdjudication": {
+  "exactLinksF1": 0.792,
+  "unorderedPairsF1": 0.915,
+  "columnTypes": 0.844
+ },
+ "disagreementsDecided": {
+  "A1": 20,
+  "A2": 45,
+  "neither": 0,
+  "new": 0
+ },
+ "files": {
+  "l1-annotation-guide.md": "f65653450d8be93a2e25a49c311711a898df67104ce9365c81a899abec748950",
+  "l1-annotation-input.json": "69fc2758fd9ed78fd3ee336baa596ee0c063808d755f9735faabaad346015828",
+  "l1-rows-key.json": "f6d561ff602573545d41b9b2d207a62ffc50a497fee5a7b93c635e4fa1cd3754",
+  "l1-annotation-1.json": "b932796f7d5396b20767817d4406a93f9e6b9a757b38423412e698299b249600",
+  "l1-annotation-2.json": "52d4ec72d24ca8a5252a8a8b41263614f7e600c0500c55e5234cffcb18ba9abc",
+  "l1-reference.json": "b10cd9b9d6eb6b25013fcacc9bc74339a21097c3667b47bd958cd49d48276702"
+ },
+ "disclosure": "Before building the mechanism the developer saw the header and cells of one H1 row (H1-00) while checking the input format and some H1 table headers during the D1 adjudication; no rule was built from them. The developer never opened the annotations or the reference (only aggregate agreement counts)."
+}
