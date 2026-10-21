@@ -1,0 +1,45 @@
+{
+ "schema": "pee.d1.relation-survival-census.protocol.v1",
+ "registered": "2026-10-21, before any column-role annotation or survival judgement (owner first-increment authorisation, verbatim .claude/skills/pee-guided-learning/references/owner-first-increment-authorisation-2026-10-21.md, item D1)",
+ "status": "read-only diagnosis. No store write, no re-derivation (N1 not authorised). Counts are public; package text, cells and statement text stay private.",
+ "inputs": {
+  "packages": "every zip in pee-knowledge research-packages/ (unmodified), extracted to a private cache; byte-identical documents counted once (duplicateOf)",
+  "store": "a read-only copy of pee-knowledge snapshot/pee246.sqlite (the store a new session restores; SHA-256 in its manifest)",
+  "code": "src/knowledge_translation.ts and translation-cues.v4.json at the census commit, read to establish demonstrated mechanisms"
+ },
+ "units": {
+  "document": "a markdown document of a package; translated if the store holds statements whose source_document ends with its path",
+  "relation_table": "a markdown table whose columns include at least one consumer-side column (situation or need) and at least one product-side column (criterion or evidence), by the adjudicated column roles",
+  "relation_row": "a data row of a relation table",
+  "documented_relation": "an ordered pair of non-empty cells of one relation row whose roles form one of the links situation->need, situation->criterion, need->criterion, criterion->evidence, need->evidence, situation->evidence (condition and caveat cells are recorded as qualifiers of the row)"
+ },
+ "column_roles": {
+  "labels": ["situation", "need", "criterion", "evidence", "condition", "caveat", "identifier", "source", "other"],
+  "meaning": {
+   "situation": "the consumer's circumstance or wording (context, expression, scenario, user profile)",
+   "need": "what the consumer wants or must avoid (goal, outcome, benefit, problem to solve)",
+   "criterion": "the product property, feature, specification or design choice that bears on the need",
+   "evidence": "the test, metric, measurement, method or proof that would establish the criterion or outcome",
+   "condition": "a condition under which the relation applies or is measured",
+   "caveat": "a limitation, trap, misleading claim or what not to conclude",
+   "identifier": "a row id or code (N17, R04)",
+   "source": "a reference, citation or source id",
+   "other": "anything else (priority, notes, examples)"
+  },
+  "procedure": "two independent Claude agents label every column of every table from the header, the two nearest headings and two example rows only; they read no code, no store and no other output. The main session adjudicates disagreements and records each decision; agreement is reported (per column, Cohen's kappa)."
+ },
+ "survival_outcomes": {
+  "survived_usable": "a current statement at the row's line has one cell of the pair in its subject and the other in its object (either order), and at least one end is typed (category concept, QK metric or kind, unit or condition axis)",
+  "survived_untyped": "as above, but neither end is typed: the text is kept, the relation cannot be linked to knowledge (unlinked)",
+  "altered": "a statement at the row's line carries one cell of the pair, but its other end is a different cell (e.g. an identifier column) or a different relation type contradicting the column roles",
+  "lost_dropped_cell": "the document was translated, but one cell of the pair produced no statement at that line (its header has no translation role and no pattern matched)",
+  "unrepresentable": "the pair does not involve the cell the translator uses as row subject, so the binary subject->cell design cannot hold it (demonstrated from the code), and no statement at the line holds it",
+  "document_not_translated": "no statement cites the document at all"
+ },
+ "matching": "cell and statement texts are compared after the translator's own clean() normalisation and lower-casing; a cell is 'in' a slot when its normalised text is contained in the slot text or the slot text is contained in the cell text and is at least 60% of its length",
+ "validation": "an independent Claude agent judges a random sample of 60 relation pairs (seed recorded) from translated documents, seeing the row, its column roles and the statements at that line, and answers: can the documented relation be recovered correctly from the stored statements? Agreement with the mechanical outcome is reported. Disagreement is reported, not redistributed.",
+ "provenance_check": "for each translated document: the store's source_sha256 equals the package document's SHA-256; for every statement, the line exists in that document; the statement's quote_sha256 is recomputed where its definition allows (reported as verifiable / not verifiable)",
+ "store_dependencies": "recorded from the schema and the code: which tables and columns can hold a situation, a need, a criterion, an evidence link and a qualifier; whether the write is journalled per statement or per batch",
+ "demonstrated_vs_hypothesised": "a loss is demonstrated when the row exists and the store state shows it; a cause is demonstrated only when traced in code or data; otherwise it is reported as a hypothesis",
+ "report": "per category and per document: documents (translated / not), relation tables, rows, documented relations by link type, and outcome counts; validation agreement; provenance check; store dependencies. Public: counts and ids. Private: cells, statements, judgements."
+}
