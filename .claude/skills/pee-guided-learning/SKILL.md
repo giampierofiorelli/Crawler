@@ -322,6 +322,24 @@ duplicated facts.
    the user describes a problem. It also shows that PEE reuses the category's knowledge correctly when the category is
    named or becomes relevant.
 
+## 2c. Permanent method rule: design before implementation (owner, 2026-10-21)
+
+Recorded verbatim in [references/owner-foundational-architecture-review-2026-10-21.md](references/owner-foundational-architecture-review-2026-10-21.md).
+
+No increment may introduce a new fundamental capability before three questions have been answered in writing:
+
+1. **Where does it sit in the architecture?** Which entities, relations and stages of the scientific cycle does it belong to,
+   and which existing module owns that place?
+2. **Which knowledge does it use or change?** Name the canonical knowledge it reads and writes, and its provenance and
+   validation status.
+3. **How does it contribute to PEE's general learning?** Say how it works for a category PEE has never studied, and what it
+   leaves reusable.
+
+The owner's correction of 2026-10-21: the semantic universe (entities, relations, admissible inferences) must be designed and
+verified before mechanisms that retrieve or reason over it. Do not repeat the pattern "build a component, experiment,
+discover a missing distinction, add another structure". An increment whose answers depend on an undesigned part of the
+universe stops at design.
+
 ## 3. Workflow for material PEE work
 
 1. **Verify reality.**
