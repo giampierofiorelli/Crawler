@@ -52,15 +52,19 @@ interface ItemC {family:string;ref:string;kind:SupportC['kind'];text:string;stem
  /** the words that NAME the concept (its id and aliases), not merely occur in its sentence */ names?:Set<string>}
 const cache=new WeakMap<KnowledgeStore246,Map<string,ItemC[]>>();
 /** The goal- and situation-side knowledge of every family the store teaches (and, with claims, the row claims). */
-function knowledgeItems(store:KnowledgeStore246,claims:boolean):ItemC[]{
- const key=claims?'claims':'plain';let m=cache.get(store);if(!m){m=new Map();cache.set(store,m);}
+function knowledgeItems(store:KnowledgeStore246,claims:boolean,d:NonNullable<GoalUnderstandingOptionsC['diag']>={}):ItemC[]{
+ const key=[claims?'claims':'plain',d.families??'registry',d.strategyScope??'host'].join('|');let m=cache.get(store);if(!m){m=new Map();cache.set(store,m);}
  const hit=m.get(key);if(hit)return hit;
- const out:ItemC[]=[];const families=new Set(CATEGORY_REGISTRY250.map(r=>r.id));
+ const out:ItemC[]=[];const families=new Set(d.families==='store'
+  ?(store.db.prepare("SELECT DISTINCT category_id c FROM category_items WHERE category_id<>'pee_write_test'").all() as {c:string}[]).map(r=>r.c)
+  :CATEGORY_REGISTRY250.map(r=>r.id));
+ const isStrategy=(id:string)=>/_(?:alternative|constraint)$/.test(id);
  const GOAL_KINDS=new Set(['outcome','environment','failure','task','meaning']);
  for(const fam of families){
   for(const i of store.categoryItems246(fam).filter(i=>i.concept&&GOAL_KINDS.has(i.concept.kind as string))){
    const text=[i.concept!.id.replace(/_/g,' '),...i.concept!.aliases,i.statement].join(' ');
-   out.push({family:fam,ref:'item:'+i.itemId,kind:'concept',text:i.statement.slice(0,240),stems:stemsNI(text),conditions:i.concept!.kind==='environment'?[i.statement.slice(0,160)]:[],caveats:[],
+   const own=d.strategyScope==='own'&&isStrategy(i.concept!.id);
+   out.push({family:own?'strategy:'+i.concept!.id:fam,ref:'item:'+i.itemId,kind:'concept',text:i.statement.slice(0,240),stems:stemsNI(text),conditions:i.concept!.kind==='environment'?[i.statement.slice(0,160)]:[],caveats:[],
     names:stemsNI([i.concept!.id.replace(/_/g,' '),...i.concept!.aliases].join(' '))});}
   const st=statementsOf(store,fam,{types:INFERENCE_TYPES});
   for(const s of st){const side=['measured_by','requires','bears_on_outcome'].includes(s.type)?(s.subject as {text?:string}|null)?.text??'':'';if(!side)continue;
@@ -72,30 +76,39 @@ function knowledgeItems(store:KnowledgeStore246,claims:boolean):ItemC[]{
  m.set(key,out);return out;
 }
 
-export interface GoalUnderstandingOptionsC {qk?:QuantityKnowledge;claims?:boolean}
+export interface GoalUnderstandingOptionsC {qk?:QuantityKnowledge;claims?:boolean;
+ /** G1 diagnosis switches (evaluation/g1/preregistration.json; default = c.1 behaviour, unchanged):
+  *  E3 families: 'store' reads the family list from the store's taught categories instead of the code registry;
+  *  E2 strategyScope: 'own' lets alternative/constraint concepts stand as their own strategy candidates
+  *     ('strategy:<concept>') instead of supporting the family they are stored under;
+  *  E4 evidence: 'typed' counts only message words that NAME a taught concept (its id or aliases); words of
+  *     statement sentences never count;
+  *  E5 oracleRoles: object roles supplied from a reference (family -> role), replacing the interpreted ones. */
+ diag?:{families?:'registry'|'store';strategyScope?:'host'|'own';evidence?:'stems'|'typed';oracleRoles?:ReadonlyMap<string,ObjectRoleC>}}
 export function goalUnderstandingC(text:string,advice:Advice253,store:KnowledgeStore246,o:GoalUnderstandingOptionsC={}):GoalUnderstandingC{
- const qk=o.qk??loadQuantityKnowledge();const v=scopeVocabulary(qk);
+ const qk=o.qk??loadQuantityKnowledge();const v=scopeVocabulary(qk);const d=o.diag??{};
  // ---- objects: N0 roles; a negated or excluded mention is rejected
  const n0=needModelN0(text,advice,store,{qk});
  const objects=n0.objects.map((x:ObjectN0)=>{const st=stanceAt(text,x.start,x.end,v);
-  return {span:x.span,family:x.category,role:(st?.stance==='negated'?'rejected':x.role) as ObjectRoleC,cue:st?.negator??x.cue};});
+  const role=(d.oracleRoles?.get(x.category)??(st?.stance==='negated'?'rejected':x.role)) as ObjectRoleC;
+  return {span:x.span,family:x.category,role,cue:st?.negator??x.cue};});
  // c.1 dev-it3: when N0 finds no requested object, the operational purchase target counts as requested only if the message
  // names that family and does not mention it only as owned, context, alternative or rejected
  const requested=objects.find(x=>x.role==='requested')?.family??
-  (advice.category&&objects.some(x=>x.family===advice.category)&&!objects.some(x=>x.family===advice.category&&x.role!=='requested'&&x.role!=='hypothesised')?advice.category:null);
+  (d.oracleRoles?null:advice.category&&objects.some(x=>x.family===advice.category)&&!objects.some(x=>x.family===advice.category&&x.role!=='requested'&&x.role!=='hypothesised')?advice.category:null);
  const rejected=new Set(objects.filter(x=>x.role==='rejected').map(x=>x.family));
  // ---- message words: not set aside by the scope, not product names
  const aliasStems=new Set(CATEGORY_REGISTRY250.flatMap(r=>r.aliases).flatMap(a=>[...stemsNI(a)]));
  const setAside=new Set<string>();for(const t of tokens(text))if(t.kind==='word'&&stanceAt(text,t.start,t.end,v))for(const s of stemsNI(t.w))setAside.add(s);
  const words=new Set([...stemsNI(text)].filter(s=>!setAside.has(s)&&!aliasStems.has(s)));
  // ---- hypotheses: families whose goal- and situation-side knowledge shares specific words with the message
- const items=knowledgeItems(store,!!o.claims);
+ const items=knowledgeItems(store,!!o.claims,d).filter(it=>d.evidence!=='typed'||it.kind==='concept');
  const df=new Map<string,number>(),fams=new Map<string,Set<string>>();
  for(const it of items)for(const s of it.stems){df.set(s,(df.get(s)??0)+1);(fams.get(s)??fams.set(s,new Set()).get(s)!).add(it.family);}
  const N=Math.max(1,items.length);const idf=(s:string)=>Math.log((N+1)/((df.get(s)??0)+0.5));
  const spread=(s:string)=>fams.get(s)?.size??0;
  const byFam=new Map<string,{it:ItemC;score:number;shared:string[]}[]>();
- for(const it of items){const shared=[...it.stems].filter(s=>words.has(s)&&spread(s)<=C_PARAMS.maxSpread);if(!shared.length)continue;
+ for(const it of items){const shared=[...(d.evidence==='typed'?it.names??new Set<string>():it.stems)].filter(s=>words.has(s)&&spread(s)<=C_PARAMS.maxSpread);if(!shared.length)continue;
   // c.1 dev-it1: one shared word is support only when it NAMES a taught concept; a rare word that merely occurs in a
   // sentence of the teaching ("spare", "before", "morning") is not evidence of the family
   if(shared.length<C_PARAMS.minShared&&!shared.some(s=>it.names?.has(s)))continue;
