@@ -1,0 +1,67 @@
+{
+ "schema": "pee.g1d.trace.v1",
+ "material": "120 rows of the G1c L2 audit (spent), traced to original source passages",
+ "judges": "two new blind Claude agents (T1, T2), source-only relation judgement; not expert validation",
+ "counts": {
+  "rows": 120,
+  "pairs": 1080,
+  "g1bLinks": 70,
+  "g1bLinkByJudge": [
+   {
+    "not_addressed": 51,
+    "co_mention_only": 4,
+    "supported": 10,
+    "conditional": 5
+   },
+   {
+    "not_addressed": 51,
+    "co_mention_only": 4,
+    "supported": 8,
+    "conditional": 7
+   }
+  ],
+  "g1bLinkAgreed": {
+   "not_addressed": 51,
+   "co_mention_only": 4,
+   "supported": 8,
+   "conditional": 5
+  },
+  "g1bLinkAgreement": 68,
+  "sourcePositivesBoth": 24,
+  "sourcePositivesEither": 30,
+  "positivesLinkedByG1b": 15,
+  "positivesMissedByG1b": 9,
+  "missedBySourceType": {
+   "document_table_row": 8,
+   "structured_case": 1
+  },
+  "positivesBySourceType": {
+   "document_table_row": 19,
+   "structured_case": 4,
+   "store_teaching_item": 1
+  },
+  "natureOfPositives": {
+   "expert_guidance": 24
+  },
+  "pairAgreement": 1057,
+  "extraction": [
+   {
+    "partial": 33,
+    "yes": 87
+   },
+   {
+    "partial": 56,
+    "yes": 64
+   }
+  ],
+  "sourceStatus": {
+   "PROPOSED_NOT_TESTED; SYNTHETIC_TEACHING_SCENARIO_FROM_SOURCE": 19,
+   "none": 79,
+   "conditional hypotheses": 3,
+   "actual_survey_observation: false": 13,
+   "hypotheses for structured validation": 1,
+   "hypotheses, not universal results": 1,
+   "PROPOSED": 4
+  }
+ }
+}
