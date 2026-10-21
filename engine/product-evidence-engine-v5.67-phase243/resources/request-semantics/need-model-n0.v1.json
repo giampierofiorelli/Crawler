@@ -1,0 +1,167 @@
+{
+ "schema": "pee.n0.need-model-cues.v1",
+ "version": "n0.1",
+ "statement": "First increment B (owner authorisation 2026-10-21): general English grammar the N0 shadow model reads to tell an object's role in a request and the stance a negated or modal clause takes towards an aspect. Grammar, not domain knowledge: no product, category or feature word. Negation scope, clause boundaries and indifference predicates are NOT repeated here: they come from quantity-knowledge language.en.scope through src/language_scope.ts.",
+ "objectRoles": {
+  "owned": [
+   "already have",
+   "already own",
+   "already got",
+   "we have",
+   "i have",
+   "we've got",
+   "i've got",
+   "we own",
+   "i own",
+   "my current",
+   "our current",
+   "my old",
+   "our old",
+   "my existing",
+   "our existing",
+   "the one we have"
+  ],
+  "hypothesised": [
+   "will a",
+   "will an",
+   "would a",
+   "would an",
+   "could a",
+   "can a",
+   "does a",
+   "do i need a",
+   "do we need a",
+   "is a",
+   "is an",
+   "worth",
+   "should i get",
+   "should we get",
+   "thinking about",
+   "considering"
+  ],
+  "alternative": [
+   "or",
+   "instead of",
+   "rather than",
+   "versus",
+   "vs",
+   "compared to",
+   "compared with"
+  ],
+  "requestVerbs": [
+   "buy",
+   "buying",
+   "get",
+   "getting",
+   "looking for",
+   "need",
+   "want",
+   "recommend",
+   "choose",
+   "pick",
+   "replace",
+   "upgrade",
+   "new"
+  ]
+ },
+ "stances": {
+  "exclusionModals": [
+   "must not",
+   "mustn't",
+   "must never",
+   "cannot have",
+   "can't have",
+   "can not have",
+   "should not have",
+   "shouldn't have",
+   "must be without",
+   "absolutely no",
+   "under no circumstances"
+  ],
+  "notNeededVerbs": [
+   "need",
+   "needs",
+   "require",
+   "requires",
+   "necessary"
+  ],
+  "unwantedVerbs": [
+   "want",
+   "wants",
+   "like",
+   "fancy",
+   "keen on",
+   "interested in",
+   "without"
+  ]
+ },
+ "force": {
+  "requirement": [
+   "must",
+   "must have",
+   "has to",
+   "have to",
+   "essential",
+   "required",
+   "need",
+   "needs",
+   "non-negotiable"
+  ],
+  "preference": [
+   "ideally",
+   "prefer",
+   "preferably",
+   "would like",
+   "i'd like",
+   "nice to have",
+   "if possible",
+   "bonus",
+   "want",
+   "wants",
+   "like"
+  ]
+ },
+ "notes": [
+  "'without' counts as unwanted, not excluded: 'a machine without a milk frother' states a wish whose strength is not given (owner decision 2 of the N0 design review).",
+  "A request verb before an object in its clause makes it requested even after a possessive ('my next dishwasher' is requested, not owned)."
+ ],
+ "governed": {
+  "skip": [
+   "a",
+   "an",
+   "the",
+   "any",
+   "some",
+   "it",
+   "its",
+   "to",
+   "be",
+   "have",
+   "having",
+   "has",
+   "had",
+   "need",
+   "needs",
+   "want",
+   "wants",
+   "like",
+   "mind",
+   "care",
+   "bother",
+   "bothers",
+   "get",
+   "getting",
+   "with",
+   "really",
+   "that",
+   "this",
+   "one",
+   "much",
+   "more",
+   "all",
+   "at"
+  ],
+  "maxWords": 3,
+  "note": "after a negator or before a negated indifference predicate, the object phrase is the next (or previous) content words, skipping these function words; a phrase no reader types is kept as an unknown item with its stance (NR §8 X14)"
+ }
+}

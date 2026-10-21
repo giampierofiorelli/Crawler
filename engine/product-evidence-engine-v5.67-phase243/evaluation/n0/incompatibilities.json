@@ -1,0 +1,26 @@
+{
+ "schema": "pee.n0.incompatibilities.v1",
+ "registered": "2026-10-21, first increment B (N0 essential, shadow). Source: docs/plans/needs-model-inventory-n0.md section (b). Owner: verify the inventory's incompatibilities without claiming to resolve those outside the essential model.",
+ "statuses": {
+  "represented_and_tested": "the shadow model (src/need_model_n0.ts) represents the distinction and a test pins it",
+  "represented_owner_decision": "represented according to a recorded owner decision; a test pins the representation",
+  "outside_essential_model": "not resolved here: it belongs to a module or decision outside the essential model; reason given"
+ },
+ "items": [
+  {"id": "I-1", "title": "'don't need X' has four meanings", "status": "represented_owner_decision", "covers": ["owner-review-n0-inventory-2026-10-20.md (four stances)", "tests/i1_need_model_n0.test.ts: four mop stances"], "note": "not_needed is force optional, never excluded; the operational readers (phase248, phase253, phase165, phase125) keep their behaviour: shadow"},
+  {"id": "I-2", "title": "'don't want X' / 'without X'; no rejected-feature slot", "status": "represented_owner_decision", "covers": ["owner-review-n0-design-2026-10-20.md decision 2", "tests/i1_need_model_n0.test.ts: milk frother, mop"], "note": "unwanted with strength undetermined; excluded only with a necessity modal; the rejected function is an item with its stance, and the operational positive reading is reported as a conflict (the frozen path is unchanged)"},
+  {"id": "I-3", "title": "when a stated requirement may apply", "status": "represented_owner_decision", "covers": ["owner-review-n0-design-2026-10-20.md decision 1", "tests/i1_need_model_n0.test.ts: content kinds and force (a clear stated limit is a requirement)"], "note": "phase168/98 confirmation events are off the path and unchanged"},
+  {"id": "I-4", "title": "'candidate' means two different things", "status": "represented_and_tested", "covers": ["need_model_n0 vocabulary: force 'undetermined' (ask) is separate from epistemic 'experimental_unverified'"], "note": "phase127's internal contradiction (off path) is not changed"},
+  {"id": "I-5", "title": "default role of a positive mention", "status": "represented_and_tested", "covers": ["tests/i1_need_model_n0.test.ts: a named feature is a wanted function with force from its own cue (preference), never a requirement by default"]},
+  {"id": "I-6", "title": "'important' has two bases", "status": "outside_essential_model", "why": "importance weights belong to ranking inputs (needs_discovery, phase168, phase97), which are off the request path and blocked; the essential model carries no weights"},
+  {"id": "I-7", "title": "optional is lost in session state", "status": "outside_essential_model", "why": "the model has the value (not_needed / optional) but session state (phase164) is a dialogue module outside the essential model"},
+  {"id": "I-8", "title": "feature/outcome lane decided by different authorities", "status": "outside_essential_model", "why": "the model records the producer of each item (store concept kind, functions vocabulary, scope reader), so the deciding authority is visible; choosing one authority is an owner decision, not taken here. Example: 'milk frother' is a component word taught as an alias of the task milk_drinks"},
+  {"id": "I-9", "title": "relation kinds lost to Phase116", "status": "represented_and_tested", "covers": ["tests/i1_need_model_n0.test.ts: not_sufficient_for and requires_condition preserved"], "note": "the model reads the 247 relations through needKnowledge269, never the 116 model"},
+  {"id": "I-10", "title": "sufficiency spelling ('establishes' vs 'established')", "status": "outside_essential_model", "why": "an assessment-input vs derived-state naming of phase247, not a need representation"},
+  {"id": "I-11", "title": "two types named QualitativeNeed", "status": "outside_essential_model", "why": "a naming collision between two off-path modules (phase96, qualitative_needs); renaming is not needed by the essential model"},
+  {"id": "I-12", "title": "indifference vs rejection", "status": "represented_and_tested", "covers": ["tests/i1_need_model_n0.test.ts: X2 indifference; mop 'don't mind' indifferent vs 'don't want' unwanted"]},
+  {"id": "I-13", "title": "questions", "status": "outside_essential_model", "why": "question integration must keep the Phase126/127 checks (owner); the model only marks what is undetermined (force 'undetermined', strength 'undetermined')"},
+  {"id": "I-14", "title": "granularity of evidence requirements", "status": "represented_and_tested", "covers": ["tests/i1_need_model_n0.test.ts: per-need measures, conditions and proxies"]},
+  {"id": "I-15", "title": "lab_needs_bridge header claim", "status": "outside_essential_model", "why": "documentation of an off-path module; not a representation the model uses"}
+ ]
+}

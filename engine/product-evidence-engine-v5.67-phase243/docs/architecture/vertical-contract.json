@@ -605,6 +605,11 @@
      "date": "2026-10-21",
      "by": "first increment A2",
      "what": "Correction: since R3-P stage 2, adviseFromRequest253 imports need_interpretation, which imports knowledge_statements and product_facts; they run only with opts.needInterpretation (experimental, isolated by A1). The statement above that knowledge_statements are read only by the uncalled teachingCaveatsShadow is superseded by the measured record in reachability. Introduced by R3-P without updating the contract (Claude's own debt, reported in the coordinated plan)."
+    },
+    {
+     "date": "2026-10-21",
+     "by": "first increment D1",
+     "what": "Census of the owner packages (evaluation/d1/census-counts.json): of 4,391 documented situation/need/criterion/evidence relations, 1,910 are in documents never translated and 266 of 2,481 survive in knowledge_statements (151 typed). The store-writing translator reproduces all 6,118 statements; causes demonstrated in evaluation/d1/cause-trace.json. Input for N1 (not authorised yet)."
     }
    ]
   },
@@ -965,6 +970,14 @@
      "since": "S103 (docs/plans/s103-rule-admission.md)"
     }
    ]
+  },
+  {
+   "id": "D32",
+   "stage": "goal_interpretation",
+   "since": "2026-10-21 (N0 inventory 2026-10-20; first increment B)",
+   "item": "Need representations disagree across 15 documented incompatibilities (docs/plans/needs-model-inventory-n0.md). The operational path has no slot for a rejected function, conflates not-needed with indifference in Phase248, and reads a positive need from a rejected feature word (milk-frother artefact, frozen for R3-P). The N0 essential shared representation (src/need_model_n0.ts) exists in SHADOW only: it tells apart object role, content kind, five stances, force, provenance and epistemic status and keeps not_sufficient_for and requires_condition, but no decision reads it.",
+   "resolvedStatus": "open: integration into the answer contract needs an owner decision (which reader decides the feature/outcome lane, I-8; how a rejected function constrains products, decision 2 of the N0 design review); evaluation on sealed requests before any decision effect",
+   "progress": "2026-10-21 first increment B: shadow model, tests on the owner counterexamples and NR §8 cases, incompatibilities classified in evaluation/n0/incompatibilities.json (8 represented, 7 outside the essential model)"
   }
  ],
  "authenticValidationRequirement": {
@@ -1262,6 +1275,16 @@
      "tests/r3p_language_scope.test.ts"
     ],
     "requestPath": "executed_by_default"
+   },
+   {
+    "module": "need_model_n0.ts",
+    "status": "shadow",
+    "consumer": "tests and evaluation only (N0 essential shared representation; no decision effect)",
+    "validation": [
+     "tests/i1_need_model_n0.test.ts"
+    ],
+    "integrationDebt": "D32",
+    "requestPath": "not_imported"
    }
   ]
  },
