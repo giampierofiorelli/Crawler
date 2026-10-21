@@ -291,6 +291,37 @@ can execute today, and what is the next demonstrated obstacle to a trustworthy r
 Before closing any phase: run the vertical fitness and contract tests, the publication check on the commits to be
 pushed, the full suite, and update the contract if a stage's connection or status changed.
 
+## 2b. Permanent architectural requirement: bidirectional scientific knowledge (owner, 2026-10-21)
+
+Verbatim source: [references/owner-g1b-authorisation-2026-10-21.md](references/owner-g1b-authorisation-2026-10-21.md).
+The owner's formulation: "PEE deve avere una conoscenza scientifica bidirezionale, per bisogni e per categorie."
+
+**One interconnected body of knowledge, consultable from two directions.** There are no two databases and no
+duplicated facts.
+
+| Direction | Path |
+|---|---|
+| From the need | problem → strategies, including no-purchase ones → categories |
+| From the category | category → capabilities → needs it can serve |
+
+**What both directions share.** Mechanisms, relations, conditions, evidence, provenance and uncertainty.
+
+**Rules**
+
+1. **A general need is shared; its realisation is not.** "Low noise" in a bedroom at night, in a washing machine and in
+   a vacuum cleaner is one need. Its technical application and its measurement stay specific to each category. Results
+   are compared only when the evidence is compatible and appropriate.
+2. **A shared need is never evidence that a product is relevant.** It is also never stripped of its conditions and its
+   specific measures.
+3. **A need-side link keeps its conditions.** These include when a strategy is appropriate, insufficient or
+   counterproductive, its contraindications, its provenance and its epistemic status. Association or relevance is never
+   promoted to causation.
+4. **Learning flows both ways.** What PEE learns about a category can enrich the needs it may serve, and the reverse.
+   Demonstrated links and hypotheses stay distinct, and no efficacy is invented.
+5. **Every report on need or category reasoning shows both directions.** It shows that PEE starts from the need when
+   the user describes a problem. It also shows that PEE reuses the category's knowledge correctly when the category is
+   named or becomes relevant.
+
 ## 3. Workflow for material PEE work
 
 1. **Verify reality.**
