@@ -1,0 +1,169 @@
+{
+ "schema": "pee.g1b.inventory.v1",
+ "date": "2026-10-21",
+ "taughtCategoriesWithPackages": [
+  "air_fryers",
+  "coffee_machines",
+  "dehumidifiers",
+  "dishwashers",
+  "air_purifiers",
+  "televisions"
+ ],
+ "excluded": "untaught packages 05 robot cleaners, 08 soundbars, 09 speakers",
+ "packageRows": {
+  "air_fryers": {
+   "documents": 21,
+   "rows_situation_or_need": 135,
+   "rows_with_situation": 78,
+   "rows_with_need": 82,
+   "rows_with_function_or_property": 113,
+   "rows_with_method_or_evidence": 125,
+   "rows_with_condition_or_caveat": 86
+  },
+  "coffee_machines": {
+   "documents": 1,
+   "rows_situation_or_need": 43,
+   "rows_with_situation": 43,
+   "rows_with_need": 25,
+   "rows_with_condition_or_caveat": 35,
+   "rows_with_method_or_evidence": 33,
+   "rows_with_function_or_property": 29
+  },
+  "dehumidifiers": {
+   "documents": 2,
+   "rows_situation_or_need": 34,
+   "rows_with_need": 34,
+   "rows_with_condition_or_caveat": 34,
+   "rows_with_function_or_property": 34,
+   "rows_with_method_or_evidence": 34
+  },
+  "dishwashers": {
+   "documents": 24,
+   "rows_situation_or_need": 664,
+   "rows_with_situation": 664,
+   "rows_with_function_or_property": 664,
+   "rows_with_method_or_evidence": 216,
+   "structured_cases": 128,
+   "rows_with_condition_or_caveat": 448
+  },
+  "air_purifiers": {
+   "documents": 5,
+   "rows_situation_or_need": 229,
+   "rows_with_situation": 135,
+   "rows_with_need": 157,
+   "rows_with_condition_or_caveat": 166,
+   "rows_with_method_or_evidence": 186,
+   "rows_with_alternative": 27,
+   "rows_with_function_or_property": 88
+  },
+  "televisions": {
+   "documents": 8,
+   "rows_situation_or_need": 290,
+   "rows_with_situation": 290,
+   "rows_with_need": 30,
+   "rows_with_condition_or_caveat": 20,
+   "rows_with_method_or_evidence": 290,
+   "rows_with_alternative": 10,
+   "structured_cases": 130
+  }
+ },
+ "packageRowsTotal": 1653,
+ "store": {
+  "conceptItems": 194,
+  "byKind": {
+   "task": 6,
+   "outcome": 55,
+   "mechanism": 3,
+   "environment": 23,
+   "failure": 5,
+   "capability": 9,
+   "measurement": 93
+  },
+  "alternativesOrConstraints": 9,
+  "conceptsSharedByCategories": 9,
+  "sharedWithPerCategoryMeasurement": 0,
+  "shared": [
+   {
+    "conceptId": "small_kitchen",
+    "categories": [
+     "air_fryers",
+     "food_processors",
+     "toaster_ovens"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "cleaning_effort",
+    "categories": [
+     "air_fryers",
+     "blenders"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "scale_buildup",
+    "categories": [
+     "coffee_machines",
+     "kettles"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "ease_of_use",
+    "categories": [
+     "coffee_machines",
+     "pressure_cookers"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "low_noise",
+    "categories": [
+     "blenders",
+     "coffee_grinders",
+     "kettles"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "batch_capacity",
+    "categories": [
+     "air_fryers",
+     "coffee_machines",
+     "pressure_cookers",
+     "rice_cookers",
+     "stand_mixers",
+     "toaster_ovens",
+     "toasters"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "versatility",
+    "categories": [
+     "food_processors",
+     "pressure_cookers",
+     "stand_mixers",
+     "toaster_ovens"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "dough_kneading",
+    "categories": [
+     "food_processors",
+     "stand_mixers"
+    ],
+    "measuredIn": []
+   },
+   {
+    "conceptId": "low_energy_use",
+    "categories": [
+     "air_fryers",
+     "dehumidifiers"
+    ],
+    "measuredIn": []
+   }
+  ]
+ }
+}

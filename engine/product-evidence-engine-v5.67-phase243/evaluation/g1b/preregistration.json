@@ -1,0 +1,68 @@
+{
+ "schema": "pee.g1b.preregistration.v1",
+ "date": "2026-10-21",
+ "authorisation": ".claude/skills/pee-guided-learning/references/owner-g1b-authorisation-2026-10-21.md",
+ "permanentRequirement": "SKILL.md §2b bidirectional scientific knowledge (by need and by category, connected)",
+ "roadmapStep": "R3",
+ "knowledge": {
+  "sources": "only knowledge PEE holds for TAUGHT categories: owner-package situation/need rows (N1 roles on tables; structured consumer-need cases with goal, evidence and inference to avoid), the store's concept items (outcome, environment, failure, task, alternatives and constraints) and statements; inventory evaluation/g1b/inventory.json (1,653 rows, 839 distinct). Untaught packages excluded.",
+  "representation": "a derived, rebuildable projection (no store write, no schema change): situation descriptors linked to needs/goals, strategies (purchase = the source's category; no-purchase = alternative cells and stored alternatives), conditions, contraindications (caveats, inferences to avoid) and evidence, each with provenance (document SHA-256 and line or case id) and epistemic status 'documented_relevance' (never causation unless the source states a mechanism). General needs (concepts shared by categories, and need terms recurring across categories) are need nodes with per-category realisations; they never count as evidence that a category is relevant.",
+  "bidirectional": "need -> strategies -> categories and category -> needs it may serve are two indexes over the same rows"
+ },
+ "methods": {
+  "M0": "C1 (goal understanding C, c.1), baseline",
+  "M1": "lexical: idf-weighted word overlap between the request and situation descriptors",
+  "M2": "role- and specificity-gated: only the request's problem/goal/context content (N0 objects owned/context/rejected never count as evidence; negated or indifferent words excluded); a match must include terms specific to a situation (low spread across categories in the knowledge rows); general needs recognised separately, never family evidence; contraindications attached; outside-knowledge when no specific situation term is supported",
+  "M3": "M2 plus distributional similarity learned from the taught-package corpus (co-occurrence, PPMI, cosine), used only to relate request problem/goal terms to situation terms; no external model, no new dependency"
+ },
+ "development": {
+  "material": "spent only: I3 R (60, adjudicated reference; blind strategy key evaluation/g1 diag) and, for regression, N1 Q (48) and R3-P (49) requests and the 206-request set",
+  "selection": "the GF method is the one with the highest reach of relevant families and strategies on the I3 problem requests (non-named) with invented proposals per request not above C1 on the same set; ties -> fewer invented",
+  "maxReformulations": 3,
+  "freeze": "evaluation/g1b/freeze.json committed before any sealed run"
+ },
+ "firstCheck": {
+  "material": "G1 sealed set (75; evaluation/g1/r-freeze.json). Limit declared: aggregate results of C0 and C1 on it were seen in G1; no individual case was read; GF never ran on it.",
+  "arms": ["C0 (operational path at the freeze)", "C1", "GF"],
+  "metrics": {
+   "U_reach": "U stratum: a relevant catalogue entry among GF proposals",
+   "NS_nopurchase_reach": "NS stratum: the relevant no-purchase catalogue strategy among GF proposals",
+   "A_reach": "A stratum",
+   "invented": "proposals neither relevant nor acceptable in the reference (all strata)",
+   "outside": "NA+X: outside-knowledge stated with a typed research need; wrong commitments",
+   "multi": "requests whose reference has relevant purchase and no-purchase entries: both presented",
+   "unjustified_abstention": "A+U: abstain or outside although a relevant entry exists",
+   "category_direction": "A stratum: expressed constraints (noise, size, energy, time) linked to a realisation of the NAMED category (its own concept or measurement), not to another category",
+   "questions": "every GF question carries a cause; share asked when the reference records a user-only uncertainty",
+   "harm": "operational answers unchanged by GF (shadow)"
+  },
+  "thresholds": {
+   "U_reach": ">= 6 of 13 (C1 3/13: +20 points)",
+   "NS_nopurchase_reach": ">= 5 of 9",
+   "A_reach": ">= 13 of 16 (C1 14/16, at most one request lower)",
+   "invented": "<= 23 (C1) and <= 0.5 per request",
+   "outside": ">= 60% of NA+X with a typed research need; wrong commitments <= 4",
+   "multi": ">= 50%",
+   "unjustified_abstention": "<= 4 of 29",
+   "category_direction": ">= 60%",
+   "questions": "100% with cause; >= 70% user-only",
+   "harm": "0"
+  },
+  "admission": "GF passes the first check only if U_reach, NS_nopurchase_reach, invented, outside and harm all meet their thresholds; the others are reported"
+ },
+ "generalisationCheck": {
+  "material": "a NEW set of 75 requests sealed now by a new independent author agent and blind double annotation (evaluation/g1b/n-freeze.json); never seen, never used for development",
+  "rule": "run once only if the first check is passed; otherwise kept unspent",
+  "metrics": "the same as the first check, plus the operational residues measured on the new set: expressed limits lost (M6) and questions with a cause (M7) for C0 after the G1b residue fixes",
+  "thresholds": "the same as the first check; M6 lost <= 4 of the expressed limits in kinds budget/size/noise/energy/time; M7 operational questions with a cause 100%"
+ },
+ "residues": {
+  "lostInformation": "diagnose on spent material (206 set, I3 R, N1 Q) which explicit limits are still dropped and why; fix test-first on the operational path; never on the sealed sets",
+  "questionCause": "every operational question carries a typed cause: user_only (genuine ambiguity or the shopper's own limit or priority), knowledge_gap (PEE lacks knowledge; research need raised), not_understood (PEE could not relate the request: an interpretation limit stated as PEE's limit), integration (a module could not use what another found); a question whose cause is not user_only is labelled so and accompanied by a statement of PEE's limitation"
+ },
+ "stopRules": [
+  "first runs committed unchanged; no training or correction on any independent result",
+  "a refuted premise stops only the affected part",
+  "no ranking, evidence-authority, operational-store or network-read change; no new categories or services"
+ ]
+}
