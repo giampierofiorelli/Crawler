@@ -1,0 +1,51 @@
+{
+ "schema": "pee.i3.r-freeze.v1",
+ "sealedAt": "2026-10-21T06:13:28.081Z",
+ "rule": "60 fresh requests by an independent author agent, two blind annotations with evaluation/i3/c-annotation-guide.md, adjudicated reference; hashed before any C run on them (evaluation/i3/preregistration.json)",
+ "counts": {
+  "requests": 60,
+  "authorPlannedTypes": {
+   "problem": 25,
+   "named": 20,
+   "objects": 10,
+   "vague": 5
+  },
+  "reference": {
+   "type": {
+    "problem": 31,
+    "named": 21,
+    "mixed": 8
+   },
+   "sufficient": {
+    "false": 32,
+    "true": 24,
+    "nothing_fits": 4
+   },
+   "plausibleFamilies": {
+    "primary": 53,
+    "secondary": 78
+   }
+  }
+ },
+ "agreementBeforeAdjudication": {
+  "type": 0.933,
+  "sufficient": 0.917,
+  "sharedPrimaryFamily": 0.783
+ },
+ "decisions": {
+  "both": 304,
+  "RA1": 225,
+  "RA2": 41,
+  "new": 30,
+  "neither": 0
+ },
+ "files": {
+  "r-requests-authored.json": "4225b6c184b0814a0990ed399c97fec4c8c99d9c7d8f515dc64e889bf3568ad8",
+  "requests.json": "d81c731f0deb83b72eebb5f502d2ee73aa2c21f599bc44f581850b781422c001",
+  "c-annotation-guide.md": "0b6a316fa9a7b724889e0ad96094c6e28d84b544b91b3f3567dc061fc8f7a91f",
+  "annotation-1.json": "044b970b2d36240d96c2641ae1b5e43b543d22d019c7793866c28d3bec14e9af",
+  "annotation-2.json": "dbb6081eff3cfd8b62e531ed11954506d55985d734b035b7dd836b3422a6ef5c",
+  "reference.json": "fc728ff017c5648a2595ac1d61e172f3e6f47ea21b7cf8bd6aab9e13faa925d3"
+ },
+ "disclosure": "the developer never opened the requests, annotations or reference before this seal (counts only)"
+}
