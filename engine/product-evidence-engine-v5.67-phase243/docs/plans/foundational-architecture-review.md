@@ -270,6 +270,13 @@ Each cause is stated with its evidence. The design's remedy is under "Fix" (§3�
 
 ## 3. Recommended conceptual model
 
+> **Dated note (2026-10-21, FA-I1).** §3.2–§3.5 of this review (model km.1) were corrected into km.2
+> (`evaluation/fa-i1/schema-v2.json`) at the owner's request. km.2 was then tested and **not admitted** by the FA-I1
+> representability gate (`docs/plans/fa-i1-report.md`): critical losses of provenance, efficacy status, essential conditions
+> and negation, and three forbidden inferences. The corrections needed (km.3, K1–K10) are in that report. Read §3 together
+> with it; this text is kept unchanged as the record of the original proposal.
+
+
 ### 3.1 Principles
 
 1. **One canonical graph; category is an entity, not a key.**
