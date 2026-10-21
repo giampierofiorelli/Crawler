@@ -1,0 +1,80 @@
+{
+ "schema": "pee.g1.preregistration.v1",
+ "date": "2026-10-21",
+ "authorisation": ".claude/skills/pee-guided-learning/references/owner-g1-authorisation-2026-10-21.md",
+ "basis": "docs/plans/architectural-review-goal-first.md (243b1d1)",
+ "roadmapStep": "R3",
+ "storeVersion": {
+  "finding": "live store and snapshot at schema v10; code at v14. KnowledgeStore246 applies missing migrations when it opens a store; v11-v14 are additive (new tables, columns, indexes on new tables). The live store was last written 2026-10-19, before v11 (S98, 2026-10-20); since then every run used copies, and knowledge-snapshot.mjs opens the store read-only. Not a fault.",
+  "consequence": "the first open of the live store by the current build would add empty v11-v14 structures; after that, older builds refuse it (246_store_newer_than_software).",
+  "decision": "G1 never opens the live store with the store class; experiments run on copies under ~/.cache-g1/. Any operational schema change needs its own admission decision."
+ },
+ "diagnosis": {
+  "material": "spent I3 R set (60 Claude-authored requests, adjudicated reference, sealed evaluation/i3/r-freeze.json). Diagnostic only, never reported as held-out.",
+  "retrospectiveClasses": "evaluation/ar/c-cause-split.json: hypotheses to test, not proven",
+  "experiments": {
+   "E1_oracle_category": "Supply the reference's best catalogue family as a named category (the message prefixed with an explicit purchase phrase for that family) to the frozen operational path; measure whether downstream knowledge reaches the reference's relevant strategy (no-purchase alternative raised, goal or need knowledge found). Separates downstream capacity from entry (category) recognition.",
+   "E2_scope": "Holding C's matcher fixed, let the 9 stored alternative/constraint concepts act as their own strategy candidates instead of supporting their host family. Measure non-purchase requests reaching the relevant strategy and wrong host-family hypotheses removed. Separates representation (category scope) from knowledge absence.",
+   "E3_registry": "Holding C fixed, read the family list from the store (adds tumble dryers, taught but unregistered) instead of the code registry. Measure tumble-dryer requests reached. Separates integration from absence. Untranslated owner packages (soundbars, speakers, robot cleaners) stay untranslated (owner: no new categories); they are reported as documented-but-unusable.",
+   "E4_typed_evidence": "Holding knowledge fixed, replace stem-overlap support by typed evidence: a request word supports an item only if it NAMES a taught concept (concept id or alias) of a goal-side kind, or an N0 problem/goal span contains it; statement sentence words never count. Measure invented hypotheses, justified hypotheses kept and score separation (AUC justified vs invented). Separates algorithm from knowledge.",
+   "E5_oracle_roles": "Replace C's object roles by the reference roles for objects that map to families. Measure unjustified commitments and invented requested families. Separates role interpretation from the rest."
+  },
+  "gate": {
+   "proceedRepresentation": "E2 reaches the relevant strategy in at least 3 of the 6 stored-alternative requests with no added wrong strategy in more than 2 requests overall; otherwise the need-scoped representation is not supported by the diagnosis and that part stops with an alternative proposal.",
+   "proceedTypedMatching": "E4 removes at least 30% of invented hypotheses and keeps at least 9 of the 10 in-knowledge hits; otherwise typed matching as specified is refuted and an alternative is proposed.",
+   "proceedIntegration": "each integration defect of the review is reproduced by a failing test before it is fixed; a defect that does not reproduce is dropped."
+  },
+  "reformulations": "none: diagnostic arms are run once on the spent set and committed unchanged"
+ },
+ "development": {
+  "material": "spent only: I3 R (60), N1 Q (48), R3-P needs (49). Never the G1 sealed set.",
+  "maxReformulations": 3,
+  "freeze": "evaluation/g1/freeze.json (build commit and resource hashes) committed before the first run on the sealed set"
+ },
+ "independentSet": {
+  "author": "an independent Claude author agent with no access to PEE code, earlier request sets or G1 design; it receives the frozen knowledge catalogue (evaluation/g1/knowledge-catalogue.json) only to stratify the set",
+  "size": 75,
+  "strata": {
+   "A": "15 messages that name a product family present in the catalogue",
+   "U": "15 messages that describe a problem or goal (no product named) whose expert answer is a catalogue family",
+   "NS": "8 messages whose expert first step needs no purchase and is covered by a catalogue strategy",
+   "NA": "7 messages whose expert first step needs no purchase and is not covered by the catalogue",
+   "X": "15 messages whose answer is a product family absent from the catalogue (named or described)",
+   "Z": "15 messages where no product category is appropriate (vague, gift without hints, information only, nothing fits)"
+  },
+  "classAssignment": "after adjudication, mechanically from the reference (never from the author's intent): Z if categoryNeeded=none or sufficient=nothing_fits; else by the primary strategy: no_purchase in catalogue -> NS, no_purchase outside -> NA, catalogue family named by a requested object -> A, catalogue family not named -> U, outside the catalogue -> X. Requests may move between strata; counts are reported as assigned.",
+  "annotation": "two blind Claude-agent annotators with evaluation/g1/annotation-guide.md and the catalogue, then a Claude-agent adjudicator; agreement reported before adjudication",
+  "seal": "evaluation/g1/r-freeze.json (SHA-256 of requests and reference) committed before any G1 code runs on them; Claude does not read the requests or the reference before the first run",
+  "independenceLevel": "T1: Claude-authored and Claude-annotated; author aware of the catalogue; no human validation"
+ },
+ "arms": {
+  "C0": "frozen operational path (adviseFromRequest253 on a store copy): its category = its strategy",
+  "C1": "goal understanding C as frozen in I3 (c.1)",
+  "GF": "the G1 goal-first shadow output (frozen build)"
+ },
+ "metrics": {
+  "M1_reach": "share of requests whose reference has at least one relevant catalogue entry (primary or secondary strategy) where the arm proposes at least one of them; per stratum",
+  "M2_invented": "catalogue entries proposed that are neither relevant nor acceptable in the reference, per request; per stratum and overall; plus proposals the reference lists as unjustified",
+  "M3_outside": "on NA and X: share where the arm states that the need lies outside its knowledge and emits a typed research need, and share where it commits to a catalogue entry",
+  "M4_multi": "on requests whose reference has two or more relevant catalogue entries including a no-purchase one: share where the arm presents both a no-purchase and a purchase entry",
+  "M5_unjustified_abstention": "on A and U: share where the arm abstains or declares outside-knowledge although a relevant catalogue entry exists",
+  "M6_lost_information": "expressed constraints of the reference (budget, size, noise, energy, time) that the arm's output neither keeps nor reports as unassessed",
+  "M7_questions": "precision of the arm's questions: asked only when the reference records a user-only uncertainty, and every question carries its cause",
+  "harm": "operational answers changed outside the preregistered integration fixes; any ranking or evidence-guarantee change (must be 0)"
+ },
+ "thresholds": {
+  "M1": "GF >= C1 + 20 points on U; GF >= 50% and >= C1 + 30 points on NS; GF on A not lower than C1 by more than one request",
+  "M2": "GF invented per request <= C1 overall and <= 0.5",
+  "M3": "GF outside-knowledge with typed research need >= 60% on NA+X, and wrong commitments <= 20%",
+  "M4": "GF >= 50%",
+  "M5": "GF <= 15%",
+  "M6": "GF 0; operational path 0 after the integration fixes",
+  "M7": "GF precision >= 70% and 100% of questions with a cause",
+  "harm": "0"
+ },
+ "stopRules": [
+  "first runs on the sealed set are committed unchanged; no tuning on them",
+  "a refuted gate stops the affected part only; the rest proceeds where justified",
+  "no new categories, no package translation for untaught families, no live reads, no ranking or evidence-guarantee change"
+ ]
+}

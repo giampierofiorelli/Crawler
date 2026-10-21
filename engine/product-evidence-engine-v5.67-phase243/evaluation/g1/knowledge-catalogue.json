@@ -1,0 +1,185 @@
+{
+ "schema": "pee.g1.knowledge-catalogue.v1",
+ "date": "2026-10-21",
+ "source": "live knowledge store, read-only (schema v10), frozen for G1",
+ "note": "What PEE holds today at family and strategy level. Annotators mark which entries are relevant to each request; the catalogue does not change during G1 (no new categories).",
+ "families": [
+  {
+   "id": "family:air_fryers",
+   "label": "air fryers",
+   "kind": "purchase",
+   "taughtItems": 45,
+   "depth": "taught"
+  },
+  {
+   "id": "family:air_purifiers",
+   "label": "air purifiers",
+   "kind": "purchase",
+   "taughtItems": 37,
+   "depth": "taught"
+  },
+  {
+   "id": "family:blenders",
+   "label": "blenders",
+   "kind": "purchase",
+   "taughtItems": 6,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:coffee_grinders",
+   "label": "coffee grinders",
+   "kind": "purchase",
+   "taughtItems": 6,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:coffee_machines",
+   "label": "coffee machines",
+   "kind": "purchase",
+   "taughtItems": 27,
+   "depth": "taught"
+  },
+  {
+   "id": "family:dehumidifiers",
+   "label": "dehumidifiers",
+   "kind": "purchase",
+   "taughtItems": 20,
+   "depth": "taught"
+  },
+  {
+   "id": "family:dishwashers",
+   "label": "dishwashers",
+   "kind": "purchase",
+   "taughtItems": 38,
+   "depth": "taught"
+  },
+  {
+   "id": "family:food_processors",
+   "label": "food processors",
+   "kind": "purchase",
+   "taughtItems": 4,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:kettles",
+   "label": "kettles",
+   "kind": "purchase",
+   "taughtItems": 5,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:pressure_cookers",
+   "label": "pressure cookers",
+   "kind": "purchase",
+   "taughtItems": 6,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:rice_cookers",
+   "label": "rice cookers",
+   "kind": "purchase",
+   "taughtItems": 3,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:stand_mixers",
+   "label": "stand mixers",
+   "kind": "purchase",
+   "taughtItems": 5,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:televisions",
+   "label": "televisions",
+   "kind": "purchase",
+   "taughtItems": 41,
+   "depth": "taught"
+  },
+  {
+   "id": "family:toaster_ovens",
+   "label": "toaster ovens",
+   "kind": "purchase",
+   "taughtItems": 5,
+   "depth": "shallow"
+  },
+  {
+   "id": "family:toasters",
+   "label": "toasters",
+   "kind": "purchase",
+   "taughtItems": 17,
+   "depth": "taught"
+  },
+  {
+   "id": "family:tumble_dryers",
+   "label": "tumble dryers",
+   "kind": "purchase",
+   "taughtItems": 18,
+   "depth": "taught"
+  }
+ ],
+ "strategies": [
+  {
+   "id": "strategy:cannot_plumb_constraint",
+   "kind": "purchase_constraint",
+   "statement": "Cannot plumb an inlet or must not drill (renting): a tank-fed or countertop unit with reversible connections may fit, only if a lawful drain route exists.",
+   "storedUnder": "dishwashers",
+   "itemId": "cat_885e8fe71775ac688ce7"
+  },
+  {
+   "id": "strategy:cooker_extraction_alternative",
+   "kind": "no_purchase",
+   "statement": "Cooking fumes and NO2 from a gas hob need a ducted extractor venting outdoors.",
+   "storedUnder": "air_purifiers",
+   "itemId": "cat_584daa258a1d97072f6d"
+  },
+  {
+   "id": "strategy:handwashing_alternative",
+   "kind": "no_purchase",
+   "statement": "A small workload (a few cups or plates) may be met by efficient handwashing, so buying may be unnecessary.",
+   "storedUnder": "dishwashers",
+   "itemId": "cat_36b60a8d5aa70d69e5bd"
+  },
+  {
+   "id": "strategy:leak_or_structural_alternative",
+   "kind": "no_purchase",
+   "statement": "There may be a leak, rain penetration or structural damp: repair and ventilation come before any appliance.",
+   "storedUnder": "dehumidifiers",
+   "itemId": "cat_5a54521e2dc08130cca2"
+  },
+  {
+   "id": "strategy:moisture_mould_remediation_alternative",
+   "kind": "no_purchase",
+   "statement": "Damp or visible mould needs the moisture source fixed and remediation (dehumidifiers are a separate category); a purifier does not fix it.",
+   "storedUnder": "air_purifiers",
+   "itemId": "cat_ace2b68e89209a054cb9"
+  },
+  {
+   "id": "strategy:moka_alternative",
+   "kind": "no_purchase",
+   "statement": "Already owns a moka pot or another brewer that may meet the need, so buying may be unnecessary.",
+   "storedUnder": "coffee_machines",
+   "itemId": "cat_77f17253b968217526d0"
+  },
+  {
+   "id": "strategy:oven_alternative",
+   "kind": "no_purchase",
+   "statement": "Already owns an oven or another appliance that could do the job, so buying may be unnecessary.",
+   "storedUnder": "air_fryers",
+   "itemId": "cat_98c6c14b2b5cc523c324"
+  },
+  {
+   "id": "strategy:source_control_alternative",
+   "kind": "no_purchase",
+   "statement": "Remove or reduce the emission source (smoking, paint, sprays, new furniture) first.",
+   "storedUnder": "air_purifiers",
+   "itemId": "cat_c38f9acd28ec5884c140"
+  },
+  {
+   "id": "strategy:ventilation_alternative",
+   "kind": "no_purchase",
+   "statement": "Stuffy air or high CO2 needs outdoor-air ventilation, not recirculating filtration; buying may be unnecessary.",
+   "storedUnder": "air_purifiers",
+   "itemId": "cat_8a985906802767eedc13"
+  }
+ ]
+}
