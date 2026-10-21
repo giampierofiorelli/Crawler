@@ -1,0 +1,56 @@
+{
+ "schema": "pee.g1c.preregistration.v1",
+ "date": "2026-10-21",
+ "authorisation": ".claude/skills/pee-guided-learning/references/owner-g1c-authorisation-2026-10-21.md",
+ "basis": "G1b (e8d44a3) and the owner review (92ea4e3); permanent principle SKILL.md §2b",
+ "roadmapStep": "R3",
+ "model": {
+  "primary": "BAAI/bge-small-en-v1.5 at revision 5c38ec7c405ec4b44b94cc5a9bb96e735b38267a (official repository), MIT licence, 33M parameters, 384 dimensions, CLS pooling with the model's query instruction; ONNX fp32 133 MB",
+  "secondary": "sentence-transformers/all-MiniLM-L6-v2 at revision 1110a243fdf4706b3f48f1d95db1a4f5529b4d41 (official repository), Apache-2.0, 22M parameters, mean pooling; development comparison only",
+  "runtime": "onnxruntime-node 1.20.1 (MIT), CPU, exact version in devDependencies; WordPiece tokenizer implemented in src/semantic_embedding_g1c.ts (checked against the vocabulary: 'Hello world!' -> 101 7592 2088 999 102)",
+  "rationale": "small CPU-friendly models with permissive licences, official sources, pinned revisions and file SHA-256 (resources/semantic-retrieval/models.v1.json); bge-small for retrieval quality on short queries vs passages (MTEB retrieval), MiniLM as a widely used paraphrase baseline; transformers.js not used because it pulls sharp/libvips (LGPL)",
+  "costsMeasured": "load 0.4-0.6 s; 200 short passages 0.5-0.8 s on CPU; resident memory about 340-370 MB",
+  "selection": "the primary model is used for B, C and D unless MiniLM is better on the development criterion; the choice is recorded in evaluation/g1c/freeze.json before any independent run",
+  "privacy": "inference fully local; the only network read was the one-time download by scripts/g1c-fetch-models.mjs"
+ },
+ "knowledgeUnits": {
+  "indexed": "G1b projection rows (926 situations: package rows, structured cases, store concepts; ids, category, provenance, strategies, contraindications), the 9 stored strategies, the quantity-knowledge general needs, and the store's typed knowledge statements (scientific statements, for the category direction and the re-indexing check)",
+  "vectorRecord": "unit id (canonical: row id, strategy id, need id, statement id), unit kind, category or null, provenance, review status, model id and revision, text hash; vectors are a rebuildable projection (no store write, no remote database, no second decision engine)",
+  "notIndexed": "whole pages or documents"
+ },
+ "methods": {
+  "C1": "goal understanding C (c.1), baseline",
+  "G1b": "G1b M2 it3 (g1b.4), baseline",
+  "A": "typed scientific situations: rows grouped into Claude-authored situation types (inventory and assignment by an independent agent, provenance kept, status 'claude_typed_unreviewed'); a request is matched to types by lexical evidence pooled over each type's definition and member expressions; types carry their rows' categories and strategies",
+  "B": "local sentence embeddings: nearest situation rows and strategies by cosine to the request's content",
+  "C": "hybrid: reciprocal-rank fusion of B, the G1b lexical row scores and A's type scores",
+  "D": "C followed by verification: object roles (owned, context, rejected families are not candidates), negation scope of the matched request span, general needs never category evidence, contraindications kept as conditions (a purchase linked only through rows whose guidance directs against an appliance stays conditional), provenance required on every proposal",
+  "candidates": "every method proposes at most 2 categories and 2 strategies (equal candidate count)"
+ },
+ "levels": {
+  "L1_retrieval": "pooled relevance of retrieved knowledge units: the top 5 units of each method for each development request are pooled and judged blind (relevant / partly / not) by Claude agents who do not see which method retrieved them; precision@5 and requests with at least one relevant unit",
+  "L2_scientific_correctness": "blind audit of a preregistered seeded sample of G1b rows (60 random unlinked + 60 random strategy-linked; evaluation/g1c/audit-sample.json hash) by two independent Claude agents, disagreements adjudicated by a third: situation coherent, category relevance correct, each strategy link appropriate, contraindications faithful",
+  "L3_decisions": "family and strategy reach and invented proposals against the adjudicated references (development: spent I3 set; independent: G1 set, then the G1b set), plus outside-knowledge, unjustified abstention and category direction as preregistered in evaluation/g1b/preregistration.json"
+ },
+ "development": {
+  "material": "spent only: I3 R (60, its reference and the blind strategy key of G1); G1b development outputs; 206-request regression",
+  "selection": "a method passes development when, on the I3 problem requests with taught knowledge (24), it reaches at least 12 (C1 9) with invented proposals not above C1's 18 on all 39 problem requests, at the equal candidate count; best passing method by reach, then fewer invented",
+  "maxReformulations": 3,
+  "freeze": "evaluation/g1c/freeze.json before any sealed run"
+ },
+ "safety": {
+  "probes": "a development-only probe set written by an independent Claude agent (not used for selection): negation and contrary preferences, owned vs requested product, opposite situations, cause vs symptom, available function vs demonstrated result, generic needs across categories, contraindicating conditions; each probe states the behaviour that would be wrong; failures counted per method",
+  "rules": "similarity is a ranking signal only, never a probability; similarity alone never sets requirements, exclusions, efficacy claims or ranking (shadow; tests)"
+ },
+ "reindexing": "a new valid knowledge unit added to a copy of the projection is indexed incrementally and retrieved from at least two different need phrasings and from its category, while the statement count is unchanged elsewhere (no duplication); tested",
+ "independentChecks": {
+  "first": "G1 sealed set (limits declared in G1b): thresholds of evaluation/g1b/preregistration.json firstCheck (U_reach >= 6/13, NS no-purchase >= 5/9, A >= 13/16, invented <= 23, outside >= 60% of NA+X with typed research need and wrong commitments <= 4, harm 0; category direction and questions reported)",
+  "generalisation": "G1b sealed set (75, never read), run once only if the first check is passed; same thresholds; generalisation reported separately by stratum (needs vs categories) and by phrasing (named vs described)",
+  "rule": "first runs committed unchanged; no correction on them; if no method passes development, nothing is promoted and both sets stay sealed"
+ },
+ "residue": {
+  "material": "spent 206/I3/N1 requests and a NEW development-only set of requests with qualitative limits written by an independent agent (never used for validation)",
+  "rule": "general, test-first fixes with regression diffs; no ranking, exclusion or evidence-authority change"
+ },
+ "stopRules": ["no new categories, autonomous web research, operational-store change, paid service, remote database or promotion of unvalidated capability"]
+}

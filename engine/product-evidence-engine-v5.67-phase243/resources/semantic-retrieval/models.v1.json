@@ -1,0 +1,66 @@
+{
+ "schema": "pee.g1c.models.v1",
+ "runtime": {
+  "package": "onnxruntime-node",
+  "version": "1.20.1",
+  "license": "MIT"
+ },
+ "models": [
+  {
+   "id": "bge-small-en-v1.5",
+   "repo": "BAAI/bge-small-en-v1.5",
+   "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+   "license": "MIT",
+   "dim": 384,
+   "pooling": "cls",
+   "queryPrefix": "Represent this sentence for searching relevant passages: ",
+   "source": "https://huggingface.co/BAAI/bge-small-en-v1.5",
+   "files": {
+    "onnx/model.onnx": {
+     "sha256": "828e1496d7fabb79cfa4dcd84fa38625c0d3d21da474a00f08db0f559940cf35",
+     "bytes": 133093490
+    },
+    "vocab.txt": {
+     "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+     "bytes": 231508
+    },
+    "config.json": {
+     "sha256": "094f8e891b932f2000c92cfc663bac4c62069f5d8af5b5278c4306aef3084750",
+     "bytes": 743
+    },
+    "tokenizer_config.json": {
+     "sha256": "9261e7d79b44c8195c1cada2b453e55b00aeb81e907a6664974b4d7776172ab3",
+     "bytes": 366
+    }
+   }
+  },
+  {
+   "id": "all-MiniLM-L6-v2",
+   "repo": "sentence-transformers/all-MiniLM-L6-v2",
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "license": "Apache-2.0",
+   "dim": 384,
+   "pooling": "mean",
+   "queryPrefix": "",
+   "source": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+   "files": {
+    "onnx/model.onnx": {
+     "sha256": "6fd5d72fe4589f189f8ebc006442dbb529bb7ce38f8082112682524616046452",
+     "bytes": 90405214
+    },
+    "vocab.txt": {
+     "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+     "bytes": 231508
+    },
+    "config.json": {
+     "sha256": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+     "bytes": 612
+    },
+    "tokenizer_config.json": {
+     "sha256": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+     "bytes": 350
+    }
+   }
+  }
+ ]
+}
