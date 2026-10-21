@@ -1,0 +1,22 @@
+{
+ "schema": "pee.a5.guarantees.v1",
+ "registered": "2026-10-21, first increment A5 (census and verification only; owner: no structural change, no private db, no moving writes before the guarantees to preserve are shown)",
+ "basis": ["evaluation/a5/store-write-census.json", "evaluation/a5/rederivation-check.json", "evaluation/d1/cause-trace.json (knowledge_statements reproduced 6118/6118 from the packages and the translator source)", "evaluation/s103/rederivation-census.json (page-derived observations)"],
+ "findings": {
+  "events_vs_writes": "71 data writes in KnowledgeStore246; 62 append an event in the same method, 9 append none (scientific_readings98 2, research_gaps 1, derived_nodes 3, derived_edges 1, the events table itself 1, one computed table name 1). The audit's '71 writes vs 37 events' does not mean 34 unjournalled writes.",
+  "journal_is_an_audit_trail_not_a_source": "the events identify rows of 9 tables by key but carry the full content of no row except host_access (45/45) and part of product_keys (150/245) and revision_properties (7/2312): no other table can be rebuilt from the journal alone, whichever method writes it.",
+  "external_writes": "13 SQL writes through store.db outside the store class: knowledge_statements (2), phase247_category_relations (4: category_relations, relation_assessments), phase260_source_memory_store (7: store_meta, source_memory260). 89 external reads.",
+  "rederivable_from_inputs": "knowledge_statements: 6118 of 6118 from the owner packages and the translator source of commit 8cf307c; category items 251 of 284 and relations 179 of 200 by content id from code teaching; page-derived declarations 2364 only by refetch (S103).",
+  "not_rederivable": "relation_assessments 56 (journal holds value, basis, aspect and relation; not independence, citation, assessor, note); category_versions 6; 33 category items and 21 relations of categories with no code teaching (import and pilot scripts), including one write-test artefact item (category pee_write_test) in the persistent store."
+ },
+ "guarantees_to_preserve": [
+  {"id": "G1", "what": "journal hash chain continuity and event identity (kind, payload, previous hash) for every existing event", "status": "holds on the snapshot (0 chain breaks in 1919 events)"},
+  {"id": "G2", "what": "assessment independence, citation, assessor and note of each relation assessment: they decide ranking authorisation (S85 same-model refusal) and exist only in relation_assessments", "status": "not reconstructible from the journal or from code: any migration must carry them row by row"},
+  {"id": "G3", "what": "translated statements stay rederivable from (package document SHA-256, translator source hash): both are recorded per statement", "status": "demonstrated 6118/6118"},
+  {"id": "G4", "what": "content-derived ids of category items and relations (cat_/rel_ hashes) stay stable, so code teaching can be compared and re-applied", "status": "holds for 251 items and 179 relations"},
+  {"id": "G5", "what": "retirement and supersession state of items (9 retired) and statements (state, superseded_by)", "status": "held only in the tables; events record the retirement id"},
+  {"id": "G6", "what": "rights and retention fields of sources and declarations (S103: values not rederivable without refetch)", "status": "held only in the tables"},
+  {"id": "G7", "what": "the one journal projection (source_memory260) rebuilds identically from the journal", "status": "tested on synthetic stores (tests/phase260_source_memory_store.test.ts); empty in the snapshot"}
+ ],
+ "not_done_by_design": "no store structure changed, db not made private, no write moved, nothing deleted (including the write-test artefact): owner boundary for A5 in this increment"
+}

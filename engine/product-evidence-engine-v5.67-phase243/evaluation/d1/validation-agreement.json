@@ -1,0 +1,19 @@
+{
+ "schema": "pee.d1.validation-agreement.v1",
+ "sample": {
+  "size": 60,
+  "seed": 20261021,
+  "population": "documented relations of translated documents"
+ },
+ "judge": "independent Claude agent (sample file only; no key, code or store)",
+ "agreementFineGrained": 52,
+ "agreementSurvivedVsNot": 60,
+ "confusion": {
+  "altered -> altered": 17,
+  "lost -> lost": 33,
+  "altered -> lost": 8,
+  "survived_untyped -> survived_untyped": 1,
+  "survived_usable -> survived_usable": 1
+ },
+ "reading": "the mechanical outcome lost_dropped_cell and unrepresentable are compared as lost. All 8 disagreements are mechanical altered vs judge lost: where an identifier is the row subject but the documented link joins two other cells, the judge counted the relation lost; the mechanical altered count is therefore an upper bound, and lost a lower bound. Survival (usable or untyped) agrees in all units."
+}

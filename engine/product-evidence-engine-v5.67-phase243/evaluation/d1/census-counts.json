@@ -1,0 +1,965 @@
+{
+ "schema": "pee.d1.census-counts.v1",
+ "protocol": "evaluation/d1/census-protocol.json",
+ "store": {
+  "file": "pee-knowledge snapshot/pee246.sqlite (read-only copy)",
+  "sha256": "4618f8391d7866a9cb10fe9fdd39f12e7eb567738e5c80ae5ca156f37ba1d1d8"
+ },
+ "documents": 89,
+ "duplicates": 8,
+ "tables": 313,
+ "relationTables": 161,
+ "documentedRelations": 4391,
+ "outcomes": {
+  "document_not_translated": 1910,
+  "survived_usable": 151,
+  "lost_dropped_cell": 1043,
+  "survived_untyped": 115,
+  "unrepresentable": 518,
+  "altered": 654
+ },
+ "perCategory": {
+  "dehumidifiers": {
+   "documents": 3,
+   "documentsTranslated": 1,
+   "relationTables": 3,
+   "relationRows": 40,
+   "documentedRelations": 460,
+   "byLink": {
+    "situation->need": 74,
+    "situation->criterion": 68,
+    "need->criterion": 34,
+    "criterion->evidence": 68,
+    "need->evidence": 74,
+    "situation->evidence": 142
+   },
+   "outcomes": {
+    "document_not_translated": 221,
+    "lost_dropped_cell": 58,
+    "unrepresentable": 153,
+    "survived_usable": 23,
+    "survived_untyped": 5
+   },
+   "outcomesByLink": {
+    "situation->need": {
+     "document_not_translated": 34,
+     "lost_dropped_cell": 23,
+     "unrepresentable": 17
+    },
+    "situation->criterion": {
+     "document_not_translated": 34,
+     "lost_dropped_cell": 17,
+     "unrepresentable": 17
+    },
+    "need->criterion": {
+     "document_not_translated": 17,
+     "unrepresentable": 17
+    },
+    "criterion->evidence": {
+     "document_not_translated": 34,
+     "unrepresentable": 34
+    },
+    "need->evidence": {
+     "document_not_translated": 34,
+     "unrepresentable": 34,
+     "lost_dropped_cell": 6
+    },
+    "situation->evidence": {
+     "document_not_translated": 68,
+     "survived_usable": 23,
+     "unrepresentable": 34,
+     "lost_dropped_cell": 12,
+     "survived_untyped": 5
+    }
+   }
+  },
+  "air_purifiers": {
+   "documents": 5,
+   "documentsTranslated": 1,
+   "relationTables": 13,
+   "relationRows": 208,
+   "documentedRelations": 580,
+   "byLink": {
+    "situation->need": 114,
+    "need->evidence": 136,
+    "situation->evidence": 222,
+    "situation->criterion": 72,
+    "criterion->evidence": 36
+   },
+   "outcomes": {
+    "document_not_translated": 353,
+    "survived_usable": 29,
+    "lost_dropped_cell": 113,
+    "survived_untyped": 11,
+    "unrepresentable": 74
+   },
+   "outcomesByLink": {
+    "situation->need": {
+     "document_not_translated": 76,
+     "survived_usable": 7,
+     "survived_untyped": 5,
+     "lost_dropped_cell": 22,
+     "unrepresentable": 4
+    },
+    "need->evidence": {
+     "document_not_translated": 87,
+     "survived_usable": 7,
+     "lost_dropped_cell": 25,
+     "survived_untyped": 3,
+     "unrepresentable": 14
+    },
+    "situation->evidence": {
+     "document_not_translated": 136,
+     "survived_untyped": 3,
+     "unrepresentable": 20,
+     "survived_usable": 15,
+     "lost_dropped_cell": 48
+    },
+    "situation->criterion": {
+     "lost_dropped_cell": 18,
+     "unrepresentable": 18,
+     "document_not_translated": 36
+    },
+    "criterion->evidence": {
+     "unrepresentable": 18,
+     "document_not_translated": 18
+    }
+   }
+  },
+  "robot_floor_cleaners": {
+   "documents": 8,
+   "documentsTranslated": 0,
+   "relationTables": 14,
+   "relationRows": 148,
+   "documentedRelations": 404,
+   "byLink": {
+    "need->criterion": 20,
+    "situation->need": 128,
+    "need->evidence": 128,
+    "situation->evidence": 128
+   },
+   "outcomes": {
+    "document_not_translated": 404
+   },
+   "outcomesByLink": {
+    "need->criterion": {
+     "document_not_translated": 20
+    },
+    "situation->need": {
+     "document_not_translated": 128
+    },
+    "need->evidence": {
+     "document_not_translated": 128
+    },
+    "situation->evidence": {
+     "document_not_translated": 128
+    }
+   }
+  },
+  "dishwashers": {
+   "documents": 16,
+   "documentsTranslated": 15,
+   "relationTables": 38,
+   "relationRows": 344,
+   "documentedRelations": 1032,
+   "byLink": {
+    "situation->criterion": 344,
+    "criterion->evidence": 344,
+    "situation->evidence": 344
+   },
+   "outcomes": {
+    "altered": 654,
+    "lost_dropped_cell": 376,
+    "unrepresentable": 2
+   },
+   "outcomesByLink": {
+    "situation->criterion": {
+     "altered": 218,
+     "lost_dropped_cell": 124,
+     "unrepresentable": 2
+    },
+    "criterion->evidence": {
+     "altered": 218,
+     "lost_dropped_cell": 126
+    },
+    "situation->evidence": {
+     "altered": 218,
+     "lost_dropped_cell": 126
+    }
+   }
+  },
+  "televisions": {
+   "documents": 8,
+   "documentsTranslated": 8,
+   "relationTables": 34,
+   "relationRows": 328,
+   "documentedRelations": 388,
+   "byLink": {
+    "need->evidence": 58,
+    "situation->need": 30,
+    "situation->evidence": 280,
+    "situation->criterion": 10,
+    "need->criterion": 10
+   },
+   "outcomes": {
+    "survived_usable": 24,
+    "survived_untyped": 28,
+    "lost_dropped_cell": 302,
+    "unrepresentable": 34
+   },
+   "outcomesByLink": {
+    "need->evidence": {
+     "survived_usable": 12,
+     "survived_untyped": 8,
+     "unrepresentable": 20,
+     "lost_dropped_cell": 18
+    },
+    "situation->need": {
+     "lost_dropped_cell": 20,
+     "survived_untyped": 10
+    },
+    "situation->evidence": {
+     "survived_usable": 12,
+     "survived_untyped": 10,
+     "lost_dropped_cell": 254,
+     "unrepresentable": 4
+    },
+    "situation->criterion": {
+     "lost_dropped_cell": 10
+    },
+    "need->criterion": {
+     "unrepresentable": 10
+    }
+   }
+  },
+  "soundbars": {
+   "documents": 8,
+   "documentsTranslated": 0,
+   "relationTables": 6,
+   "relationRows": 48,
+   "documentedRelations": 80,
+   "byLink": {
+    "situation->criterion": 48,
+    "need->evidence": 32
+   },
+   "outcomes": {
+    "document_not_translated": 80
+   },
+   "outcomesByLink": {
+    "situation->criterion": {
+     "document_not_translated": 48
+    },
+    "need->evidence": {
+     "document_not_translated": 32
+    }
+   }
+  },
+  "speakers": {
+   "documents": 9,
+   "documentsTranslated": 0,
+   "relationTables": 34,
+   "relationRows": 300,
+   "documentedRelations": 836,
+   "byLink": {
+    "situation->criterion": 60,
+    "criterion->evidence": 60,
+    "situation->evidence": 238,
+    "need->evidence": 270,
+    "situation->need": 208
+   },
+   "outcomes": {
+    "document_not_translated": 836
+   },
+   "outcomesByLink": {
+    "situation->criterion": {
+     "document_not_translated": 60
+    },
+    "criterion->evidence": {
+     "document_not_translated": 60
+    },
+    "situation->evidence": {
+     "document_not_translated": 238
+    },
+    "need->evidence": {
+     "document_not_translated": 270
+    },
+    "situation->need": {
+     "document_not_translated": 208
+    }
+   }
+  },
+  "coffee_machines": {
+   "documents": 1,
+   "documentsTranslated": 1,
+   "relationTables": 2,
+   "relationRows": 27,
+   "documentedRelations": 130,
+   "byLink": {
+    "situation->need": 19,
+    "situation->criterion": 19,
+    "need->criterion": 19,
+    "criterion->evidence": 19,
+    "need->evidence": 19,
+    "situation->evidence": 35
+   },
+   "outcomes": {
+    "unrepresentable": 62,
+    "lost_dropped_cell": 41,
+    "survived_untyped": 10,
+    "survived_usable": 17
+   },
+   "outcomesByLink": {
+    "situation->need": {
+     "unrepresentable": 18,
+     "lost_dropped_cell": 1
+    },
+    "situation->criterion": {
+     "lost_dropped_cell": 19
+    },
+    "need->criterion": {
+     "survived_untyped": 5,
+     "survived_usable": 13,
+     "lost_dropped_cell": 1
+    },
+    "criterion->evidence": {
+     "lost_dropped_cell": 18,
+     "survived_usable": 1
+    },
+    "need->evidence": {
+     "unrepresentable": 18,
+     "lost_dropped_cell": 1
+    },
+    "situation->evidence": {
+     "unrepresentable": 26,
+     "lost_dropped_cell": 1,
+     "survived_untyped": 5,
+     "survived_usable": 3
+    }
+   }
+  },
+  "unassigned": {
+   "documents": 2,
+   "documentsTranslated": 0,
+   "relationTables": 0,
+   "relationRows": 0,
+   "documentedRelations": 0,
+   "byLink": {},
+   "outcomes": {},
+   "outcomesByLink": {}
+  },
+  "air_fryers": {
+   "documents": 21,
+   "documentsTranslated": 1,
+   "relationTables": 17,
+   "relationRows": 151,
+   "documentedRelations": 481,
+   "byLink": {
+    "situation->need": 59,
+    "situation->criterion": 45,
+    "need->criterion": 45,
+    "criterion->evidence": 63,
+    "need->evidence": 97,
+    "situation->evidence": 172
+   },
+   "outcomes": {
+    "survived_untyped": 61,
+    "lost_dropped_cell": 153,
+    "unrepresentable": 193,
+    "survived_usable": 58,
+    "document_not_translated": 16
+   },
+   "outcomesByLink": {
+    "situation->need": {
+     "survived_untyped": 21,
+     "lost_dropped_cell": 10,
+     "survived_usable": 5,
+     "unrepresentable": 23
+    },
+    "situation->criterion": {
+     "lost_dropped_cell": 29,
+     "survived_usable": 13,
+     "survived_untyped": 3
+    },
+    "need->criterion": {
+     "unrepresentable": 21,
+     "lost_dropped_cell": 24
+    },
+    "criterion->evidence": {
+     "unrepresentable": 21,
+     "survived_usable": 21,
+     "lost_dropped_cell": 19,
+     "survived_untyped": 2
+    },
+    "need->evidence": {
+     "unrepresentable": 76,
+     "lost_dropped_cell": 1,
+     "survived_untyped": 1,
+     "survived_usable": 3,
+     "document_not_translated": 16
+    },
+    "situation->evidence": {
+     "lost_dropped_cell": 70,
+     "survived_untyped": 34,
+     "survived_usable": 16,
+     "unrepresentable": 52
+    }
+   }
+  }
+ },
+ "provenance": [
+  {
+   "document": "PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-v1.2-CONSOLIDATED.md",
+   "localMatchBySha": true,
+   "statements": 848,
+   "linesBeyondDocument": 0,
+   "tableStatements": 287,
+   "tableQuoteHashRecomputed": 152
+  },
+  {
+   "document": "PEE-COFFEE-COMPLETE-CUMULATIVE-KNOWLEDGE-PACKAGE.md",
+   "localMatchBySha": true,
+   "statements": 747,
+   "linesBeyondDocument": 0,
+   "tableStatements": 205,
+   "tableQuoteHashRecomputed": 94
+  },
+  {
+   "document": "PEE-AIR-FRYERS-COMPLETE-COMPENDIUM-v2.2.0-RECOVERED.md",
+   "localMatchBySha": true,
+   "statements": 1420,
+   "linesBeyondDocument": 0,
+   "tableStatements": 444,
+   "tableQuoteHashRecomputed": 292
+  },
+  {
+   "document": "COMPLETE-RESEARCH-COMPENDIUM.md",
+   "localMatchBySha": true,
+   "statements": 342,
+   "linesBeyondDocument": 0,
+   "tableStatements": 103,
+   "tableQuoteHashRecomputed": 78
+  },
+  {
+   "document": "MASTER-RESEARCH.md",
+   "localMatchBySha": true,
+   "statements": 147,
+   "linesBeyondDocument": 0,
+   "tableStatements": 44,
+   "tableQuoteHashRecomputed": 30
+  },
+  {
+   "document": "PEE-TEACHING-CURRICULUM.md",
+   "localMatchBySha": true,
+   "statements": 25,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "README.md",
+   "localMatchBySha": true,
+   "statements": 19,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "SOURCE-REGISTER.md",
+   "localMatchBySha": true,
+   "statements": 18,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "SUPPLEMENT-01-IMAGING-PHYSICS-AND-TEST-PROTOCOLS.md",
+   "localMatchBySha": true,
+   "statements": 61,
+   "linesBeyondDocument": 0,
+   "tableStatements": 37,
+   "tableQuoteHashRecomputed": 34
+  },
+  {
+   "document": "SUPPLEMENT-02-CONSUMER-NEEDS.md",
+   "localMatchBySha": true,
+   "statements": 46,
+   "linesBeyondDocument": 0,
+   "tableStatements": 16,
+   "tableQuoteHashRecomputed": 8
+  },
+  {
+   "document": "SUPPLEMENT-03-BROADCAST-ACCESSIBILITY-SECURITY-LIFECYCLE.md",
+   "localMatchBySha": true,
+   "statements": 43,
+   "linesBeyondDocument": 0,
+   "tableStatements": 6,
+   "tableQuoteHashRecomputed": 6
+  },
+  {
+   "document": "COMPLETE-RESEARCH-COMPENDIUM.md",
+   "localMatchBySha": true,
+   "statements": 397,
+   "linesBeyondDocument": 0,
+   "tableStatements": 160,
+   "tableQuoteHashRecomputed": 98
+  },
+  {
+   "document": "CONSUMER-NEEDS-ATLAS.md",
+   "localMatchBySha": true,
+   "statements": 129,
+   "linesBeyondDocument": 0,
+   "tableStatements": 114,
+   "tableQuoteHashRecomputed": 68
+  },
+  {
+   "document": "MASTER-RESEARCH.md",
+   "localMatchBySha": true,
+   "statements": 97,
+   "linesBeyondDocument": 0,
+   "tableStatements": 13,
+   "tableQuoteHashRecomputed": 7
+  },
+  {
+   "document": "SAFETY-LIFECYCLE-AND-CROSS-CATEGORY.md",
+   "localMatchBySha": true,
+   "statements": 28,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "SOURCE-REGISTER.md",
+   "localMatchBySha": true,
+   "statements": 45,
+   "linesBeyondDocument": 0,
+   "tableStatements": 33,
+   "tableQuoteHashRecomputed": 23
+  },
+  {
+   "document": "TEACHING-CURRICULUM.md",
+   "localMatchBySha": true,
+   "statements": 47,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "TEST-PROTOCOLS.md",
+   "localMatchBySha": true,
+   "statements": 53,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "MASTER-RESEARCH.md",
+   "localMatchBySha": true,
+   "statements": 135,
+   "linesBeyondDocument": 0,
+   "tableStatements": 19,
+   "tableQuoteHashRecomputed": 9
+  },
+  {
+   "document": "PEE-CATEGORY-RESEARCH-06-COUNTERTOP-DISHWASHERS-CONSOLIDATED.md",
+   "localMatchBySha": true,
+   "statements": 497,
+   "linesBeyondDocument": 0,
+   "tableStatements": 198,
+   "tableQuoteHashRecomputed": 125
+  },
+  {
+   "document": "PEE-TEACHING-CURRICULUM.md",
+   "localMatchBySha": true,
+   "statements": 101,
+   "linesBeyondDocument": 0,
+   "tableStatements": 67,
+   "tableQuoteHashRecomputed": 59
+  },
+  {
+   "document": "README.md",
+   "localMatchBySha": true,
+   "statements": 13,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "SUPPLEMENT-01-PHYSICS-AND-TEST-PROTOCOLS.md",
+   "localMatchBySha": true,
+   "statements": 88,
+   "linesBeyondDocument": 0,
+   "tableStatements": 16,
+   "tableQuoteHashRecomputed": 15
+  },
+  {
+   "document": "SUPPLEMENT-02-CONSUMER-NEEDS.md",
+   "localMatchBySha": true,
+   "statements": 113,
+   "linesBeyondDocument": 0,
+   "tableStatements": 96,
+   "tableQuoteHashRecomputed": 42
+  },
+  {
+   "document": "SUPPLEMENT-03-HEALTH-SAFETY-REPAIR-AND-LIFECYCLE.md",
+   "localMatchBySha": true,
+   "statements": 63,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "README.md",
+   "localMatchBySha": true,
+   "statements": 11,
+   "linesBeyondDocument": 0,
+   "tableStatements": 0,
+   "tableQuoteHashRecomputed": 0
+  },
+  {
+   "document": "PEE-DEHUMIDIFIERS-CONSOLIDATED-RESEARCH-2026-10-15.md",
+   "localMatchBySha": true,
+   "statements": 585,
+   "linesBeyondDocument": 0,
+   "tableStatements": 162,
+   "tableQuoteHashRecomputed": 76
+  }
+ ],
+ "translationEvents": [
+  {
+   "category": "air_purifiers",
+   "document": "PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-v1.2-CONSOLIDATED.md",
+   "recorded": 848,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "coffee_machines",
+   "document": "PEE-COFFEE-COMPLETE-CUMULATIVE-KNOWLEDGE-PACKAGE.md",
+   "recorded": 747,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "air_fryers",
+   "document": "PEE-AIR-FRYERS-COMPLETE-COMPENDIUM-v2.2.0-RECOVERED.md",
+   "recorded": 1420,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "COMPLETE-RESEARCH-COMPENDIUM.md",
+   "recorded": 342,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "MASTER-RESEARCH.md",
+   "recorded": 147,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "PEE-TEACHING-CURRICULUM.md",
+   "recorded": 25,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "README.md",
+   "recorded": 19,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SOURCE-REGISTER.md",
+   "recorded": 18,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SUPPLEMENT-01-IMAGING-PHYSICS-AND-TEST-PROTOCOLS.md",
+   "recorded": 61,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SUPPLEMENT-02-CONSUMER-NEEDS.md",
+   "recorded": 46,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SUPPLEMENT-03-BROADCAST-ACCESSIBILITY-SECURITY-LIFECYCLE.md",
+   "recorded": 43,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "COMPLETE-RESEARCH-COMPENDIUM.md",
+   "recorded": 397,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "CONSUMER-NEEDS-ATLAS.md",
+   "recorded": 129,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "MASTER-RESEARCH.md",
+   "recorded": 97,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SAFETY-LIFECYCLE-AND-CROSS-CATEGORY.md",
+   "recorded": 28,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SOURCE-REGISTER.md",
+   "recorded": 45,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "TEACHING-CURRICULUM.md",
+   "recorded": 47,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "TEST-PROTOCOLS.md",
+   "recorded": 53,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "MASTER-RESEARCH.md",
+   "recorded": 135,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "PEE-CATEGORY-RESEARCH-06-COUNTERTOP-DISHWASHERS-CONSOLIDATED.md",
+   "recorded": 497,
+   "skippedSelfCheck": 1
+  },
+  {
+   "category": "dishwashers",
+   "document": "PEE-TEACHING-CURRICULUM.md",
+   "recorded": 101,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "README.md",
+   "recorded": 13,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SOURCE-REGISTER.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SUPPLEMENT-01-PHYSICS-AND-TEST-PROTOCOLS.md",
+   "recorded": 88,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SUPPLEMENT-02-CONSUMER-NEEDS.md",
+   "recorded": 113,
+   "skippedSelfCheck": 1
+  },
+  {
+   "category": "dishwashers",
+   "document": "SUPPLEMENT-03-HEALTH-SAFETY-REPAIR-AND-LIFECYCLE.md",
+   "recorded": 63,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "README.md",
+   "recorded": 11,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dehumidifiers",
+   "document": "PEE-DEHUMIDIFIERS-CONSOLIDATED-RESEARCH-2026-10-15.md",
+   "recorded": 585,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "air_purifiers",
+   "document": "PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-v1.2-CONSOLIDATED.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "coffee_machines",
+   "document": "PEE-COFFEE-COMPLETE-CUMULATIVE-KNOWLEDGE-PACKAGE.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "air_fryers",
+   "document": "PEE-AIR-FRYERS-COMPLETE-COMPENDIUM-v2.2.0-RECOVERED.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "COMPLETE-RESEARCH-COMPENDIUM.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "MASTER-RESEARCH.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "PEE-TEACHING-CURRICULUM.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "README.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SOURCE-REGISTER.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SUPPLEMENT-01-IMAGING-PHYSICS-AND-TEST-PROTOCOLS.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SUPPLEMENT-02-CONSUMER-NEEDS.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "televisions",
+   "document": "SUPPLEMENT-03-BROADCAST-ACCESSIBILITY-SECURITY-LIFECYCLE.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "COMPLETE-RESEARCH-COMPENDIUM.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "CONSUMER-NEEDS-ATLAS.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "MASTER-RESEARCH.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SAFETY-LIFECYCLE-AND-CROSS-CATEGORY.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SOURCE-REGISTER.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "TEACHING-CURRICULUM.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "TEST-PROTOCOLS.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "MASTER-RESEARCH.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "PEE-CATEGORY-RESEARCH-06-COUNTERTOP-DISHWASHERS-CONSOLIDATED.md",
+   "recorded": 0,
+   "skippedSelfCheck": 1
+  },
+  {
+   "category": "dishwashers",
+   "document": "PEE-TEACHING-CURRICULUM.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "README.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SOURCE-REGISTER.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SUPPLEMENT-01-PHYSICS-AND-TEST-PROTOCOLS.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "SUPPLEMENT-02-CONSUMER-NEEDS.md",
+   "recorded": 0,
+   "skippedSelfCheck": 1
+  },
+  {
+   "category": "dishwashers",
+   "document": "SUPPLEMENT-03-HEALTH-SAFETY-REPAIR-AND-LIFECYCLE.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dishwashers",
+   "document": "README.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  },
+  {
+   "category": "dehumidifiers",
+   "document": "PEE-DEHUMIDIFIERS-CONSOLIDATED-RESEARCH-2026-10-15.md",
+   "recorded": 0,
+   "skippedSelfCheck": 0
+  }
+ ]
+}

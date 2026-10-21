@@ -1,0 +1,40 @@
+{
+ "schema": "pee.d1.column-roles.v1",
+ "annotators": [
+  "d1-roles-1",
+  "d1-roles-2"
+ ],
+ "tables": 313,
+ "columns": 1170,
+ "agreed": 1018,
+ "cohenKappa": 0.849,
+ "disagreements": 152,
+ "adjudicationRules": {
+  "R1": "a column naming standards, protocols or methods (rows are named instruments) -> evidence",
+  "R2": "stage, module, status or code labels -> identifier",
+  "R3": "dish, food, cooking task or preparation columns (the consumer's task) -> situation; desired-outcome columns stay need",
+  "R4": "columns of measured values (times, kWh) -> evidence",
+  "R5": "'translate into physical/evaluable needs' whose cells are product or installation checks -> criterion",
+  "R6": "what PEE should find out, ask or establish about the user or their environment -> situation",
+  "R7": "status, confidence or practitioner-signal grades of evidence -> other",
+  "R8": "component or design function, capability or requirement statements (product side) -> criterion",
+  "R9": "failure modes, deterioration, design-specific transfer limits, counterexamples -> caveat",
+  "R10": "interpretation of a user expression into the outcome sought -> need",
+  "I": "individual decision (reason in the label choice)"
+ },
+ "decisionsByRule": {
+  "R8": 21,
+  "I": 47,
+  "R1": 16,
+  "R6": 9,
+  "R7": 6,
+  "R2": 11,
+  "R9": 6,
+  "R5": 14,
+  "R3": 14,
+  "R10": 2,
+  "R4": 6
+ },
+ "relationTables": 161,
+ "note": "labels, cells and headers are private (owner packages); public: counts only"
+}

@@ -1,0 +1,466 @@
+{
+ "schema": "pee.a5.store-write-census.v1",
+ "date": "2026-10-21",
+ "store": {
+  "file": "read-only copy of pee-knowledge snapshot/pee246.sqlite",
+  "sha256": "4618f8391d7866a9cb10fe9fdd39f12e7eb567738e5c80ae5ca156f37ba1d1d8",
+  "tables": 24,
+  "events": 1919,
+  "chainBreaks": 0,
+  "eventKinds": {
+   "source_registered": 94,
+   "revision_ingested": 423,
+   "category_item_added": 284,
+   "revision_seen_again": 41,
+   "category_version_committed": 6,
+   "host_suspended": 222,
+   "revision_rederived": 264,
+   "gap_resolved": 59,
+   "product_unsupported_after_rederivation": 9,
+   "category_relation_added": 200,
+   "concept_aliases_added": 47,
+   "source_policy_changed": 37,
+   "backup_written": 16,
+   "category_item_retired": 9,
+   "product_category_assigned": 57,
+   "product_identity_split": 1,
+   "source_type_classified": 20,
+   "test_measurements_ingested": 8,
+   "comparative_results_ingested": 4,
+   "qualitative_codes_ingested": 5,
+   "product_not_a_product": 1,
+   "category_relation_assessed": 56,
+   "knowledge_statements_recorded": 56
+  }
+ },
+ "static": {
+  "storeMethods": 70,
+  "methodsThatWrite": 30,
+  "dataWrites": 71,
+  "dataWritesJournalledInMethod": 62,
+  "dataWritesJournalledViaCalledMethod": 0,
+  "dataWritesWithoutAnyEvent": 9,
+  "schemaWrites": 1,
+  "eventCallSites": 35,
+  "writesByTable": {
+   "events": {
+    "writes": 1,
+    "withoutEvent": 1
+   },
+   "sources": {
+    "writes": 4,
+    "withoutEvent": 0
+   },
+   "host_access": {
+    "writes": 5,
+    "withoutEvent": 0
+   },
+   "sightings": {
+    "writes": 2,
+    "withoutEvent": 0
+   },
+   "product_sources": {
+    "writes": 4,
+    "withoutEvent": 0
+   },
+   "revision_properties": {
+    "writes": 2,
+    "withoutEvent": 0
+   },
+   "declarations": {
+    "writes": 9,
+    "withoutEvent": 0
+   },
+   "revisions": {
+    "writes": 5,
+    "withoutEvent": 0
+   },
+   "test_measurements265": {
+    "writes": 4,
+    "withoutEvent": 0
+   },
+   "products": {
+    "writes": 10,
+    "withoutEvent": 0
+   },
+   "product_keys": {
+    "writes": 4,
+    "withoutEvent": 0
+   },
+   "variants": {
+    "writes": 1,
+    "withoutEvent": 0
+   },
+   "qualitative_observations270": {
+    "writes": 2,
+    "withoutEvent": 0
+   },
+   "comparative_results271": {
+    "writes": 2,
+    "withoutEvent": 0
+   },
+   "scientific_readings98": {
+    "writes": 3,
+    "withoutEvent": 2
+   },
+   "research_gaps": {
+    "writes": 3,
+    "withoutEvent": 1
+   },
+   "category_items": {
+    "writes": 4,
+    "withoutEvent": 0
+   },
+   "category_versions": {
+    "writes": 1,
+    "withoutEvent": 0
+   },
+   "derived_nodes": {
+    "writes": 3,
+    "withoutEvent": 3
+   },
+   "derived_edges": {
+    "writes": 1,
+    "withoutEvent": 1
+   },
+   "null": {
+    "writes": 1,
+    "withoutEvent": 1
+   }
+  },
+  "externalDbAccess": {
+   "sites": 102,
+   "writes": 13,
+   "reads": 89,
+   "other": 0,
+   "modules": {
+    "knowledge_statements.ts": {
+     "writes": 2,
+     "reads": 4,
+     "other": 0,
+     "writeTables": [
+      "knowledge_statements"
+     ]
+    },
+    "need_interpretation.ts": {
+     "writes": 0,
+     "reads": 1,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase247_category_relations.ts": {
+     "writes": 4,
+     "reads": 15,
+     "other": 0,
+     "writeTables": [
+      "category_relations",
+      "relation_assessments"
+     ]
+    },
+    "phase247_relation_seeds.ts": {
+     "writes": 0,
+     "reads": 1,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase248_advisory_journey.ts": {
+     "writes": 0,
+     "reads": 2,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase249_decision.ts": {
+     "writes": 0,
+     "reads": 5,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase251_category_assignment.ts": {
+     "writes": 0,
+     "reads": 4,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase252_category_teaching.ts": {
+     "writes": 0,
+     "reads": 6,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase253_request_advice.ts": {
+     "writes": 0,
+     "reads": 5,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase253_source_classification.ts": {
+     "writes": 0,
+     "reads": 2,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase254_research_needs.ts": {
+     "writes": 0,
+     "reads": 1,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase260_source_memory_store.ts": {
+     "writes": 7,
+     "reads": 26,
+     "other": 0,
+     "writeTables": [
+      "store_meta",
+      "source_memory260"
+     ]
+    },
+    "phase261_discovery_bridge.ts": {
+     "writes": 0,
+     "reads": 5,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase262_job_search.ts": {
+     "writes": 0,
+     "reads": 7,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase263_operation_gates.ts": {
+     "writes": 0,
+     "reads": 3,
+     "other": 0,
+     "writeTables": []
+    },
+    "phase264_metadata_pilot.ts": {
+     "writes": 0,
+     "reads": 2,
+     "other": 0,
+     "writeTables": []
+    }
+   }
+  }
+ },
+ "journalCoverage": [
+  {
+   "table": "sources",
+   "rows": 94,
+   "primaryKey": [
+    "source_id"
+   ],
+   "identifiedByJournal": 94,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "revisions",
+   "rows": 159,
+   "primaryKey": [
+    "revision_id"
+   ],
+   "identifiedByJournal": 159,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "sightings",
+   "rows": 216,
+   "primaryKey": [
+    "revision_id",
+    "seen_at",
+    "run_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "products",
+   "rows": 200,
+   "primaryKey": [
+    "product_id"
+   ],
+   "identifiedByJournal": 111,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "variants",
+   "rows": 65,
+   "primaryKey": [
+    "variant_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "product_sources",
+   "rows": 202,
+   "primaryKey": [
+    "product_id",
+    "revision_id",
+    "role"
+   ],
+   "identifiedByJournal": 109,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "declarations",
+   "rows": 2385,
+   "primaryKey": [
+    "declaration_id"
+   ],
+   "identifiedByJournal": 266,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "category_items",
+   "rows": 284,
+   "primaryKey": [
+    "item_id"
+   ],
+   "identifiedByJournal": 284,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "category_versions",
+   "rows": 6,
+   "primaryKey": [
+    "category_id",
+    "version"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "derived_nodes",
+   "rows": 3,
+   "primaryKey": [
+    "node_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "derived_edges",
+   "rows": 3,
+   "primaryKey": [
+    "dep_key",
+    "node_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "host_access",
+   "rows": 45,
+   "primaryKey": [
+    "host"
+   ],
+   "identifiedByJournal": 18,
+   "contentCarriedByJournal": 45
+  },
+  {
+   "table": "research_gaps",
+   "rows": 80,
+   "primaryKey": [
+    "gap_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "store_meta",
+   "rows": 0,
+   "primaryKey": [
+    "k"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "product_keys",
+   "rows": 245,
+   "primaryKey": [
+    "key"
+   ],
+   "identifiedByJournal": 2,
+   "contentCarriedByJournal": 150
+  },
+  {
+   "table": "revision_properties",
+   "rows": 2312,
+   "primaryKey": [
+    "revision_id",
+    "product_id",
+    "property_key"
+   ],
+   "identifiedByJournal": 85,
+   "contentCarriedByJournal": 7
+  },
+  {
+   "table": "category_relations",
+   "rows": 200,
+   "primaryKey": [
+    "relation_id"
+   ],
+   "identifiedByJournal": 200,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "source_memory260",
+   "rows": 0,
+   "primaryKey": [
+    "record_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "test_measurements265",
+   "rows": 12,
+   "primaryKey": [
+    "measurement_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "qualitative_observations270",
+   "rows": 9,
+   "primaryKey": [
+    "observation_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "comparative_results271",
+   "rows": 87,
+   "primaryKey": [
+    "result_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "relation_assessments",
+   "rows": 56,
+   "primaryKey": [
+    "assessment_id"
+   ],
+   "identifiedByJournal": 56,
+   "contentCarriedByJournal": 0
+  },
+  {
+   "table": "knowledge_statements",
+   "rows": 6118,
+   "primaryKey": [
+    "statement_id"
+   ],
+   "identifiedByJournal": 0,
+   "contentCarriedByJournal": 0
+  }
+ ],
+ "projection": {
+  "rebuildFunction": "rebuildSourceMemory260",
+  "note": "found; comparison run by the A5 test on a store copy (tests/i1_store_write_census.test.ts)"
+ },
+ "reading": "identifiedByJournal: the row's primary key occurs in some event payload; contentCarriedByJournal: every non-key, non-timestamp value of the row occurs in one event payload, the minimum for rebuilding the row from the journal alone. A table with content carried 0 cannot be rebuilt from the journal, whichever method writes it."
+}
