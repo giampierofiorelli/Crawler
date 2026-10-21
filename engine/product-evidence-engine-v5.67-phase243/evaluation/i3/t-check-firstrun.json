@@ -1,0 +1,624 @@
+{
+ "schema": "pee.i3.t-check.v1",
+ "label": "firstrun",
+ "seal": {
+  "l1-annotation-guide.md": "f65653450d8be93a2e25a49c311711a898df67104ce9365c81a899abec748950",
+  "h3-annotation-input.json": "9664aa9a66010d3d507a6ff739b807f046083a6b646b0ce158fceee6109d3cd4",
+  "h3-rows-key.json": "f06e4dba08aadd58ec8a1b1ad9d016091d3db207fd7afbe7ff8b6837c02333c6",
+  "h3-annotation-1.json": "9f6dd81d75aa1df3a01de7a682655bdebd23846b5c2a03b6942cd4d749bcc4cb",
+  "h3-annotation-2.json": "8e9d687abf072b96ac486f22cfd500bdfad0a4eb087f3682ece7223abd542bc0",
+  "h3-reference.json": "e8f78223089cfb230972ea24626077ba590bdb6c4b0600896db21f07c9c3c18a"
+ },
+ "models": {
+  "role": "nb.1 spent N1 rows: development 40 (one blind annotator) + H1/H2 80 (two blind annotators, adjudicated); private-eval/n1",
+  "link": "lk.1"
+ },
+ "summary": {
+  "all": {
+   "T1": {
+    "precision": 0.375,
+    "recall": 0.429,
+    "f1": 0.4,
+    "pairPrecision": 0.529,
+    "pairRecall": 0.604,
+    "inventedPairs": 0.471,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.504,
+    "claimsAtRow": 58,
+    "provenanceComplete": 58
+   },
+   "T2": {
+    "precision": 0.132,
+    "recall": 0.154,
+    "f1": 0.142,
+    "pairPrecision": 0.358,
+    "pairRecall": 0.418,
+    "inventedPairs": 0.642,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.386,
+    "claimsAtRow": 58,
+    "provenanceComplete": 58
+   },
+   "header+content": {
+    "precision": 0.375,
+    "recall": 0.429,
+    "f1": 0.4,
+    "pairPrecision": 0.529,
+    "pairRecall": 0.604,
+    "inventedPairs": 0.471,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.504,
+    "claimsAtRow": 0,
+    "provenanceComplete": 0
+   },
+   "learned": {
+    "precision": 0.2,
+    "recall": 0.242,
+    "f1": 0.219,
+    "pairPrecision": 0.382,
+    "pairRecall": 0.462,
+    "inventedPairs": 0.618,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0.364,
+    "columnTypeAccuracy": 0.386,
+    "claimsAtRow": 0,
+    "provenanceComplete": 0
+   }
+  },
+  "cat:speakers": {
+   "T1": {
+    "precision": 0.605,
+    "recall": 0.767,
+    "f1": 0.676,
+    "pairPrecision": 0.605,
+    "pairRecall": 0.767,
+    "inventedPairs": 0.395,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.619
+   },
+   "T2": {
+    "precision": 0.348,
+    "recall": 0.267,
+    "f1": 0.302,
+    "pairPrecision": 0.348,
+    "pairRecall": 0.267,
+    "inventedPairs": 0.652,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.56
+   },
+   "header+content": {
+    "precision": 0.605,
+    "recall": 0.767,
+    "f1": 0.676,
+    "pairPrecision": 0.605,
+    "pairRecall": 0.767,
+    "inventedPairs": 0.395,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.619
+   },
+   "learned": {
+    "precision": 0.516,
+    "recall": 0.533,
+    "f1": 0.524,
+    "pairPrecision": 0.516,
+    "pairRecall": 0.533,
+    "inventedPairs": 0.484,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0.5,
+    "columnTypeAccuracy": 0.56
+   }
+  },
+  "doc:SUPPLEMENT-04-ITALIAN-AND-CULTURAL-EVIDENCE.md": {
+   "T1": {
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.667
+   },
+   "T2": {
+    "precision": null,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": null,
+    "pairRecall": 0,
+    "inventedPairs": null,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.667
+   },
+   "header+content": {
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.667
+   },
+   "learned": {
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 1,
+    "columnTypeAccuracy": 0.667
+   }
+  },
+  "cat:air_purifiers": {
+   "T1": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 0.667,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.583
+   },
+   "T2": {
+    "precision": 0.125,
+    "recall": 0.25,
+    "f1": 0.167,
+    "pairPrecision": 0.5,
+    "pairRecall": 1,
+    "inventedPairs": 0.5,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.646
+   },
+   "header+content": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 0.667,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.583
+   },
+   "learned": {
+    "precision": 0.188,
+    "recall": 0.25,
+    "f1": 0.215,
+    "pairPrecision": 0.75,
+    "pairRecall": 1,
+    "inventedPairs": 0.25,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.646
+   }
+  },
+  "doc:PEE-AIR-PURIFIERS-SUPPLEMENT-01-FILTERS-ROOMS-SMART.md": {
+   "T1": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.75
+   },
+   "T2": {
+    "precision": 0.125,
+    "recall": 0.25,
+    "f1": 0.167,
+    "pairPrecision": 0.5,
+    "pairRecall": 1,
+    "inventedPairs": 0.5,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.563
+   },
+   "header+content": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.75
+   },
+   "learned": {
+    "precision": 0.25,
+    "recall": 0.25,
+    "f1": 0.25,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.563
+   }
+  },
+  "doc:COMPLETE-RESEARCH-COMPENDIUM.md": {
+   "T1": {
+    "precision": 0.611,
+    "recall": 0.786,
+    "f1": 0.688,
+    "pairPrecision": 0.611,
+    "pairRecall": 0.786,
+    "inventedPairs": 0.389,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.6
+   },
+   "T2": {
+    "precision": 0.364,
+    "recall": 0.286,
+    "f1": 0.32,
+    "pairPrecision": 0.364,
+    "pairRecall": 0.286,
+    "inventedPairs": 0.636,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.575
+   },
+   "header+content": {
+    "precision": 0.611,
+    "recall": 0.786,
+    "f1": 0.688,
+    "pairPrecision": 0.611,
+    "pairRecall": 0.786,
+    "inventedPairs": 0.389,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.6
+   },
+   "learned": {
+    "precision": 0.533,
+    "recall": 0.571,
+    "f1": 0.551,
+    "pairPrecision": 0.533,
+    "pairRecall": 0.571,
+    "inventedPairs": 0.467,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0.5,
+    "columnTypeAccuracy": 0.575
+   }
+  },
+  "cat:air_fryers": {
+   "T1": {
+    "precision": 0.32,
+    "recall": 0.39,
+    "f1": 0.352,
+    "pairPrecision": 0.48,
+    "pairRecall": 0.585,
+    "inventedPairs": 0.52,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.481
+   },
+   "T2": {
+    "precision": 0.07,
+    "recall": 0.073,
+    "f1": 0.071,
+    "pairPrecision": 0.419,
+    "pairRecall": 0.439,
+    "inventedPairs": 0.581,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.204
+   },
+   "header+content": {
+    "precision": 0.32,
+    "recall": 0.39,
+    "f1": 0.352,
+    "pairPrecision": 0.48,
+    "pairRecall": 0.585,
+    "inventedPairs": 0.52,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.481
+   },
+   "learned": {
+    "precision": 0.064,
+    "recall": 0.073,
+    "f1": 0.068,
+    "pairPrecision": 0.298,
+    "pairRecall": 0.341,
+    "inventedPairs": 0.702,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.204
+   }
+  },
+  "doc:PEE-AIR-FRYERS-COMPLETE-COMPENDIUM-v2.2.0-RECOVERED.md": {
+   "T1": {
+    "precision": 0.32,
+    "recall": 0.432,
+    "f1": 0.368,
+    "pairPrecision": 0.48,
+    "pairRecall": 0.649,
+    "inventedPairs": 0.52,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.478
+   },
+   "T2": {
+    "precision": 0.086,
+    "recall": 0.081,
+    "f1": 0.083,
+    "pairPrecision": 0.4,
+    "pairRecall": 0.378,
+    "inventedPairs": 0.6,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.196
+   },
+   "header+content": {
+    "precision": 0.32,
+    "recall": 0.432,
+    "f1": 0.368,
+    "pairPrecision": 0.48,
+    "pairRecall": 0.649,
+    "inventedPairs": 0.52,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.478
+   },
+   "learned": {
+    "precision": 0.07,
+    "recall": 0.081,
+    "f1": 0.075,
+    "pairPrecision": 0.233,
+    "pairRecall": 0.27,
+    "inventedPairs": 0.767,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.196
+   }
+  },
+  "doc:PEE-CATEGORY-RESEARCH-04-AIR-PURIFIERS-v1.2-CONSOLIDATED.md": {
+   "T1": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 0.5,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.5
+   },
+   "T2": {
+    "precision": 0.125,
+    "recall": 0.25,
+    "f1": 0.167,
+    "pairPrecision": 0.5,
+    "pairRecall": 1,
+    "inventedPairs": 0.5,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.688
+   },
+   "header+content": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 0.5,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.5
+   },
+   "learned": {
+    "precision": 0.167,
+    "recall": 0.25,
+    "f1": 0.2,
+    "pairPrecision": 0.667,
+    "pairRecall": 1,
+    "inventedPairs": 0.333,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.688
+   }
+  },
+  "doc:MASTER-RESEARCH.md": {
+   "T1": {
+    "precision": 0.4,
+    "recall": 0.5,
+    "f1": 0.444,
+    "pairPrecision": 0.4,
+    "pairRecall": 0.5,
+    "inventedPairs": 0.6,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.479
+   },
+   "T2": {
+    "precision": 0.2,
+    "recall": 0.25,
+    "f1": 0.222,
+    "pairPrecision": 0.2,
+    "pairRecall": 0.25,
+    "inventedPairs": 0.8,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.396
+   },
+   "header+content": {
+    "precision": 0.4,
+    "recall": 0.5,
+    "f1": 0.444,
+    "pairPrecision": 0.4,
+    "pairRecall": 0.5,
+    "inventedPairs": 0.6,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.479
+   },
+   "learned": {
+    "precision": 0.2,
+    "recall": 0.25,
+    "f1": 0.222,
+    "pairPrecision": 0.2,
+    "pairRecall": 0.25,
+    "inventedPairs": 0.8,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": 0,
+    "columnTypeAccuracy": 0.396
+   }
+  },
+  "doc:PHASE15-REAL-WORLD-CONVENIENCE-AND-CLEANING-AUDIT.md": {
+   "T1": {
+    "precision": null,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": null,
+    "pairRecall": 0,
+    "inventedPairs": null,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.5
+   },
+   "T2": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0.5,
+    "pairRecall": 1,
+    "inventedPairs": 0.5,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.25
+   },
+   "header+content": {
+    "precision": null,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": null,
+    "pairRecall": 0,
+    "inventedPairs": null,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.5
+   },
+   "learned": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 1,
+    "pairRecall": 1,
+    "inventedPairs": 0,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.25
+   }
+  },
+  "cat:robot_floor_cleaners": {
+   "T1": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.156
+   },
+   "T2": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.156
+   },
+   "header+content": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.156
+   },
+   "learned": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.156
+   }
+  },
+  "doc:PEE-CATEGORY-RESEARCH-05-ROBOT-FLOOR-CLEANERS-CONSOLIDATED.md": {
+   "T1": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.125
+   },
+   "T2": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.125
+   },
+   "header+content": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.125
+   },
+   "learned": {
+    "precision": 0,
+    "recall": 0,
+    "f1": 0,
+    "pairPrecision": 0,
+    "pairRecall": 0,
+    "inventedPairs": 1,
+    "unsupportedUpgrades": 0,
+    "qualifierAgreement": null,
+    "columnTypeAccuracy": 0.125
+   }
+  }
+ }
+}
