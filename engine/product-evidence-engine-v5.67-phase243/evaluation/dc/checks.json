@@ -1,0 +1,91 @@
+{
+ "schema": "pee.dc.checks.v1",
+ "date": "2026-10-21",
+ "data": "synthetic",
+ "engine": "existing KR evaluator (stratified Datalog), used in isolation",
+ "checks": [
+  {
+   "id": "C1",
+   "claim": "no vacuous satisfaction needs existential import (documented guard); stratified Datalog suffices",
+   "result": {
+    "ok": true,
+    "facts": {
+     "documented": [
+      "dehumidify"
+     ],
+     "fails": [
+      "w5|dehumidify",
+      "purifier|dehumidify"
+     ],
+     "realisesNaive": [
+      "w5|buy_new",
+      "purifier|buy_new",
+      "dehumidifier|buy_new",
+      "dehumidifier|dehumidify"
+     ],
+     "realises": [
+      "dehumidifier|dehumidify"
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "id": "C2",
+   "claim": "grounded/WFS acceptance (undecided on mutual attack) is NOT expressible in the existing stratified engine: it rejects recursion through negation",
+   "result": {
+    "ok": false,
+    "error": "knowledge_rules_invalid: program p is not stratifiable (recursion through negation)"
+   },
+   "pass": true
+  },
+  {
+   "id": "C3",
+   "claim": "meta-principle \"association does not establish causation\" as a typed meta-rule over reified relation types (first-order semantics, stratified) works on the existing engine; it undercuts without asserting not-cause",
+   "result": {
+    "ok": true,
+    "facts": {
+     "candidate": [
+      "causes|low_rh|sore_throat|assoc_to_cause",
+      "causes|dose|effect|assoc_to_cause"
+     ],
+     "undercut": [
+      "causes|low_rh|sore_throat"
+     ],
+     "concluded": [
+      "causes|dose|effect"
+     ],
+     "reported": [
+      "low_rh|sore_throat|associated_causation_not_established"
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "id": "C4",
+   "claim": "requirements bound to one operating point need a shared setting variable (quantifier scope); the naive reading accepts the wrong product",
+   "result": {
+    "ok": true,
+    "facts": {
+     "okSame": [
+      "p6"
+     ],
+     "okNaive": [
+      "p5",
+      "p6"
+     ],
+     "noiseOk": [
+      "p5|low",
+      "p6|night"
+     ],
+     "cadrOk": [
+      "p5|high",
+      "p6|night"
+     ]
+    }
+   },
+   "pass": true
+  }
+ ]
+}
